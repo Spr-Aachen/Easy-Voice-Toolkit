@@ -1,0 +1,43 @@
+# _*_ coding:utf-8 _*_
+
+
+# Tool_AudioProcessor
+ipywidgets
+static-ffmpeg
+
+
+# Tool_VoiceIdentifier
+torch
+visualdl
+pyaudio
+torchsummary
+
+
+# Tool_VoiceTranscriber
+more-itertools
+transformers
+ffmpeg-python
+
+
+# Tool_DatasetCreator
+pydub
+soundfile
+num2words
+
+
+# Tool_VoiceEncoder
+numba
+numpy
+
+inflect
+unidecode
+eng_to_ipa
+pypinyin
+jieba
+cn2an
+
+scipy
+librosa
+matplotlib
+tensorboard
+protobuf
