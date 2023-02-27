@@ -4,6 +4,7 @@ Edited
 
 from typing import Optional
 import os
+import shutil
 import json
 import argparse
 import platform
@@ -61,7 +62,7 @@ class Preprocessing:
         FileList_Path_Training: str,
         Language: str = 'chinese',
         Config_Path_Load: Optional[str] = None,
-        Config_Dir_Save: str = 'C:/',
+        Config_Dir_Save: str = './',
         Set_Eval_Interval: int = 1000,
         Set_Epochs: int = 10000,
         Set_Batch_Size: int = 8,
@@ -114,7 +115,7 @@ class Preprocessing:
 
         Write_Config_Data(self.Config_Dir_Save, Get_Config_Data(self.Config_Path_Load))
 
-    def Preprocessor(self):
+    def Cleaner(self):
         '''
         Convert natural language text to symbols
         '''
@@ -529,7 +530,7 @@ class Voice_Encoding(Preprocessing, Training):
         FileList_Path_Training: str,
         Language: str = 'chinese',
         Config_Path_Load: Optional[str] = None,
-        Config_Dir_Save: str = 'C:/',
+        Config_Dir_Save: str = './',
         Set_Eval_Interval: int = 1000,
         Set_Epochs: int = 10000,
         Set_Batch_Size: int = 8,
@@ -538,17 +539,32 @@ class Voice_Encoding(Preprocessing, Training):
         Set_N_Speakers: int = 0,
         Set_Speakers: str = ["SpeakerName"],
         Num_Workers: int = 8,
-        Model_Dir: str = '',
-        Model_Name: str = 'MyModel'
+        Model_Path_Pretrained_G: Optional[str] = None,
+        Model_Path_Pretrained_D: Optional[str] = None,
+        Model_Dir_Save: str = './',
+        Model_Name_Save: str = 'MyModel'
     ):
         Preprocessing.__init__(self, FileList_Path_Validation, FileList_Path_Training, Language, Config_Path_Load, Config_Dir_Save, Set_Eval_Interval, Set_Epochs, Set_Batch_Size, Set_FP16_Run, IsSpeakerMultiple, Set_N_Speakers, Set_Speakers)
         Training.__init__(self, IsSpeakerMultiple, Num_Workers)
-        self.Model_Dir = Model_Dir
-        self.Model_Name = Model_Name
+        self.Model_Path_Pretrained_G = Model_Path_Pretrained_G
+        self.Model_Path_Pretrained_D = Model_Path_Pretrained_D
+        self.Model_Dir_Save = Model_Dir_Save
+        self.Model_Name_Save = Model_Name_Save
 
     def Preprocessing_and_Training(self):
+        # Preprocess
         self.Configurator()
-        self.Preprocessor()
+        self.Cleaner()
+
+        # Train
+        def GetPretrainedModel(Model_Path_Pretrained):
+            if Model_Path_Pretrained != None:
+                Checkpoint_Dir = os.path.join(self.Model_Dir_Save, 'checkpoints')
+                os.makedirs(Checkpoint_Dir, exist_ok = True)
+                shutil.move(Model_Path_Pretrained, Checkpoint_Dir)
+        
+        GetPretrainedModel(self.Model_Path_Pretrained_G)
+        GetPretrainedModel(self.Model_Path_Pretrained_D)
 
         """Assume Single Node Multi GPUs Training Only"""
         assert torch.cuda.is_available(), "CPU training is not allowed."
@@ -559,8 +575,8 @@ class Voice_Encoding(Preprocessing, Training):
 
         hps = utils.get_hparams(
             Config_Path = self.Config_Path_Edited,
-            Model_Dir = self.Model_Dir,
-            Model_Name = self.Model_Name,
+            Model_Dir = self.Model_Dir_Save,
+            Model_Name = self.Model_Name_Save,
             Init = True
         )
         mp.spawn(super().run, args = (n_gpus, hps,), nprocs = n_gpus)
