@@ -12,11 +12,11 @@ import numpy as np
 from tqdm import tqdm
 from typing import List, Optional, Union, TYPE_CHECKING
 
-from whisper.Model import Whisper, ModelDimensions
-from whisper.Transcribe import transcribe
-from whisper.Utils import optional_int, optional_float, str2bool, get_writer
+from .whisper.Transcribe import transcribe
+from .whisper.Utils import optional_int, optional_float, str2bool, get_writer
+from .whisper.Model import ModelDimensions
 if TYPE_CHECKING:
-    from whisper.Model import Whisper
+    from .whisper.Model import Whisper
 
 
 _MODELS = {

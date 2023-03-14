@@ -3,8 +3,8 @@ import shutil
 import librosa
 import soundfile
 
-from utils.Convert_Audio import Converter
-from utils.Slice_Audio import Slicer
+from .utils.Convert_Audio import Converter
+from .utils.Slice_Audio import Slicer
 
 
 class Audio_Processing:

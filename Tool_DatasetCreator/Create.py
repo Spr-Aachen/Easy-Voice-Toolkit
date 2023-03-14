@@ -10,15 +10,15 @@ import pandas as pd
 import os, sys, shutil
 from glob import glob
 
-from utils.Creating_Directories import create_directories
-from utils.Convert_SRT_to_CSV import change_encoding, convert_srt_to_csv
-from utils.Change_Sample_Rate import pre_process_audio
-from utils.Split_Audio import split_files
-from utils.Create_DS_CSV import create_DS_csv
-from utils.Merge_CSV import merge_csv
-from utils.Merge_Transcripts_and_Files import merge_transcripts_and_wav_files
-from utils.Clean import clean_unwanted_characters
-from utils.Create_Dataset_Loading_Script import Transcript_Writer
+from .utils.Creating_Directories import create_directories
+from .utils.Convert_SRT_to_CSV import change_encoding, convert_srt_to_csv
+from .utils.Change_Sample_Rate import pre_process_audio
+from .utils.Split_Audio import split_files
+from .utils.Create_DS_CSV import create_DS_csv
+from .utils.Merge_CSV import merge_csv
+from .utils.Merge_Transcripts_and_Files import merge_transcripts_and_wav_files
+from .utils.Clean import clean_unwanted_characters
+from .utils.Create_Dataset_Loading_Script import Transcript_Writer
 
 
 #start_time = time.time()

@@ -9,10 +9,10 @@ import os
 import numpy as np
 import shutil
 
-from modules.ECAPA_TDNN import EcapaTdnn, SpeakerIdetification
-from data_utils.Reader import load_audio, CustomDataset
-from utils.Utility import add_arguments, print_arguments
-from utils.Downloader import Execute_Model_Download
+from .modules.ECAPA_TDNN import EcapaTdnn, SpeakerIdetification
+from .data_utils.Reader import load_audio, CustomDataset
+from .utils.Utility import add_arguments, print_arguments
+from .utils.Downloader import Execute_Model_Download
 
 
 class Voice_Identifying:

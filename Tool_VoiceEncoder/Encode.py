@@ -20,34 +20,34 @@ from torch.nn.parallel import DistributedDataParallel as DDP
 from torch.cuda.amp import autocast, GradScaler
 torch.backends.cudnn.benchmark = True
 
-import vits.text as text
-import vits.Utils as utils
-from vits.Data_Utils import (
+import Tool_VoiceEncoder.vits.text as text
+import Tool_VoiceEncoder.vits.Utils as utils
+from .vits.Data_Utils import (
     TextAudioLoader,
     TextAudioCollate,
     TextAudioSpeakerLoader,
     TextAudioSpeakerCollate,
     DistributedBucketSampler
 )
-from vits.Models import (
+from .vits.Models import (
     SynthesizerTrn,
     MultiPeriodDiscriminator
 )
-from vits.Mel_Processing import (
+from .vits.Mel_Processing import (
     mel_spectrogram_torch,
     spec_to_mel_torch
 )
-from vits.Commons import (
+from .vits.Commons import (
     slice_segments,
     clip_grad_value_
 )
-from vits.Losses import (
+from .vits.Losses import (
     generator_loss,
     discriminator_loss,
     feature_loss,
     kl_loss
 )
-from vits.text.symbols import symbols
+from .vits.text.symbols import symbols
 
 
 global_step = 0
