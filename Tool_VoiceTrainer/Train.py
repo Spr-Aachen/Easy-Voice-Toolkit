@@ -20,8 +20,8 @@ from torch.nn.parallel import DistributedDataParallel as DDP
 from torch.cuda.amp import autocast, GradScaler
 torch.backends.cudnn.benchmark = True
 
-import Tool_VoiceEncoder.vits.text as text
-import Tool_VoiceEncoder.vits.Utils as utils
+import Tool_VoiceTrainer.vits.text as text
+import Tool_VoiceTrainer.vits.Utils as utils
 from .vits.Data_Utils import (
     TextAudioLoader,
     TextAudioCollate,
