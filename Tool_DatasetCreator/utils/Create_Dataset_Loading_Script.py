@@ -2,12 +2,12 @@ import os
 import pandas as pd
 
 
-def Transcript_Writer(CSV_Path, Encoder, IsSpeakerMultiple, Text_Path):
+def Transcript_Writer(CSV_Path, AutoEncoder, IsSpeakerMultiple, Text_Path):
     DF_Text = pd.read_csv(CSV_Path)
 
     os.makedirs(os.path.dirname(Text_Path), exist_ok = True)
 
-    if Encoder == 'VITS':
+    if AutoEncoder == 'VITS':
         DF_Text[['wav_filename', 'transcript']].to_csv(Text_Path, header = None, index = None, mode = 'w', sep = '|')
         if IsSpeakerMultiple:
             #Text_Path_New = Text_Path[:(len(Text_Path) - len('.txt'))] + '_re.txt'
@@ -32,4 +32,4 @@ def Transcript_Writer(CSV_Path, Encoder, IsSpeakerMultiple, Text_Path):
             os.rename(Text_Path_New, Text_Path)
     
     else:
-        raise Exception(f"{Encoder} is not supported!")
+        raise Exception(f"{AutoEncoder} is not supported!")
