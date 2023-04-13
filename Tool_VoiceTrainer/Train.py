@@ -520,7 +520,7 @@ class Training:
             scheduler_d.step()
 
 
-class Voice_Encoding(Preprocessing, Training):
+class Voice_Training(Preprocessing, Training):
     '''
     1. Preprocess
     2. Train
