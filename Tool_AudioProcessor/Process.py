@@ -60,7 +60,12 @@ class Audio_Processing:
                     Audio_Name_Output = Audio_Name_Input.rsplit('.', 1)[0] + f'_Sliced_{i}' + '.' + self.Media_Format_Output
                     soundfile.write(os.path.join(Audio_Dir, Audio_Name_Output), chunk, sr)  # Save sliced audio files.
                 Audio_Dir_Backup = os.path.join(os.path.dirname(Audio_Dir), 'Backup')
-                os.makedirs(Audio_Dir_Backup, exist_ok = True)
-                shutil.move(Audio_Path_Input, Audio_Dir_Backup)
+                os.makedirs(name = Audio_Dir_Backup, exist_ok = True)
+                try:
+                    os.remove(path = os.path.join(Audio_Dir_Backup, Audio_Name_Input))
+                except OSError:
+                    pass
+                else:
+                    shutil.move(src = Audio_Path_Input, dst = Audio_Dir_Backup)
             else:
                 pass
