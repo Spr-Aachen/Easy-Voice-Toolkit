@@ -5,7 +5,6 @@ Edited
 #as store it in a csv file. According to the info in this csv file, the audio is splitted
 #the splitted audio and transcripts are then merged and cleaned.
 
-import pandas as pd
 #import time, datetime
 import os, sys, shutil
 from glob import glob
