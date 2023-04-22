@@ -69,7 +69,7 @@ class Preprocessing:
         Set_FP16_Run: bool = True,
         IsSpeakerMultiple: bool = False,
         Set_N_Speakers: int = 0,
-        Set_Speakers: Optional[str] = ["SpeakerName"]
+        Set_Speakers: Optional[list] = ["SpeakerName"]
     ):
         self.FileList_Path_Validation = FileList_Path_Validation
         self.FileList_Path_Training = FileList_Path_Training
