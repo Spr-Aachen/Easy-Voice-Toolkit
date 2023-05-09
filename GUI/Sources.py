@@ -1,0 +1,1888 @@
+# Resource object code (Python 3)
+# Created by: object code
+# Created by: The Resource Compiler for Qt version 6.4.2
+# WARNING! All changes made in this file will be lost!
+
+from PySide6 import QtCore
+
+
+qt_resource_data = b"\
+\x00\x00\x07\xaf\
+\x89\
+PNG\x0d\x0a\x1a\x0a\x00\x00\x00\x0dIHDR\x00\
+\x00\x00B\x00\x00\x00B\x08\x06\x00\x00\x00\xe3T\x00\xe8\
+\x00\x00\x00\x09pHYs\x00\x00.#\x00\x00.#\
+\x01x\xa5?v\x00\x00\x06biTXtXML\
+:com.adobe.xmp\x00\x00\
+\x00\x00\x00<?xpacket beg\
+in=\x22\xef\xbb\xbf\x22 id=\x22W5M\
+0MpCehiHzreSzNTc\
+zkc9d\x22?> <x:xmpm\
+eta xmlns:x=\x22ado\
+be:ns:meta/\x22 x:x\
+mptk=\x22Adobe XMP \
+Core 5.6-c145 79\
+.163499, 2018/08\
+/13-16:40:22    \
+    \x22> <rdf:RDF \
+xmlns:rdf=\x22http:\
+//www.w3.org/199\
+9/02/22-rdf-synt\
+ax-ns#\x22> <rdf:De\
+scription rdf:ab\
+out=\x22\x22 xmlns:xmp\
+=\x22http://ns.adob\
+e.com/xap/1.0/\x22 \
+xmlns:dc=\x22http:/\
+/purl.org/dc/ele\
+ments/1.1/\x22 xmln\
+s:photoshop=\x22htt\
+p://ns.adobe.com\
+/photoshop/1.0/\x22\
+ xmlns:xmpMM=\x22ht\
+tp://ns.adobe.co\
+m/xap/1.0/mm/\x22 x\
+mlns:stEvt=\x22http\
+://ns.adobe.com/\
+xap/1.0/sType/Re\
+sourceEvent#\x22 xm\
+p:CreatorTool=\x22A\
+dobe Photoshop C\
+C 2019 (Windows)\
+\x22 xmp:CreateDate\
+=\x222023-03-31T18:\
+38:08+08:00\x22 xmp\
+:ModifyDate=\x22202\
+3-03-31T19:33:13\
++08:00\x22 xmp:Meta\
+dataDate=\x222023-0\
+3-31T19:33:13+08\
+:00\x22 dc:format=\x22\
+image/png\x22 photo\
+shop:ColorMode=\x22\
+3\x22 photoshop:ICC\
+Profile=\x22sRGB IE\
+C61966-2.1\x22 xmpM\
+M:InstanceID=\x22xm\
+p.iid:d2a38349-e\
+637-b14f-9fe8-60\
+784810280f\x22 xmpM\
+M:DocumentID=\x22ad\
+obe:docid:photos\
+hop:d4925632-6bf\
+2-4d4e-9444-0c22\
+9a7ecc7b\x22 xmpMM:\
+OriginalDocument\
+ID=\x22xmp.did:94ec\
+b373-c191-2d44-9\
+58d-719bdc0c3887\
+\x22> <xmpMM:Histor\
+y> <rdf:Seq> <rd\
+f:li stEvt:actio\
+n=\x22created\x22 stEv\
+t:instanceID=\x22xm\
+p.iid:94ecb373-c\
+191-2d44-958d-71\
+9bdc0c3887\x22 stEv\
+t:when=\x222023-03-\
+31T18:38:08+08:0\
+0\x22 stEvt:softwar\
+eAgent=\x22Adobe Ph\
+otoshop CC 2019 \
+(Windows)\x22/> <rd\
+f:li stEvt:actio\
+n=\x22converted\x22 st\
+Evt:parameters=\x22\
+from application\
+/vnd.adobe.photo\
+shop to image/pn\
+g\x22/> <rdf:li stE\
+vt:action=\x22saved\
+\x22 stEvt:instance\
+ID=\x22xmp.iid:d2a3\
+8349-e637-b14f-9\
+fe8-60784810280f\
+\x22 stEvt:when=\x2220\
+23-03-31T19:33:1\
+3+08:00\x22 stEvt:s\
+oftwareAgent=\x22Ad\
+obe Photoshop CC\
+ 2019 (Windows)\x22\
+ stEvt:changed=\x22\
+/\x22/> </rdf:Seq> \
+</xmpMM:History>\
+ </rdf:Descripti\
+on> </rdf:RDF> <\
+/x:xmpmeta> <?xp\
+acket end=\x22r\x22?>\xa2\
+\x04)\xf2\x00\x00\x00\xf3IDATx\xda\xed\xdaA\
+\x0e\x800\x08D\xd1\xde\xff\xd2\xb8w\xa5\x15\x99\x99\xe6\
+\x9b\xb8\x15|\xd1\x16\xd0UU\x8b\xb3\x16\x08@\x00\x01\
+\x04\x10@\x00\x01\x04\x10@\x00\x01\x04\x10@\x00\x01\x04\
+\x10\x86\x10\xf7#\xf5&\x1f\xdd\xc7\x9b\x0b\xd4\x01\x08m\
+\x10\x15\x8e\xd0\x0aQ\xc1\x08\xed\x10\x15\x8aP\xbb\xbbF\
+\x1a\xc6v\xbe\xbf^<\x05\xe1M\x1d\xe1\x8e\xf19\xbf\
+\xd1`\xae\x08;\x95\xa5\x1bF[>\xd2\xe0.\x08_\
+z\x0d5F{|\xabd\x94q-\x93R\xc4\xb3N\
+n2ND\x92\x13\xd8\x09\x8f\xed\xc8\x13\xe7\xfe\x0e\x8f\
+\xadA\xce\xab\xfa\xe8B\xec\xba\xc5\x8do\xcd\x8eE\x8f\
+\xa4>q\xab\x00e\x15\xabSO -\xdb]\x1a$\
+y#\xe7\xd42K\xbbY\xb7\xf9\x81l\xbe\xe18Q\
+\x92\x0cy\xa2\xc7k\xa7|\x04\xb6\x9a}F|\xa0\xe5\
+\xb7\x00 \x80\x00\x02\x08 \x80\x00\x02\x08 \x80\x00\x02\
+\x08 \x80\x00\x02\x08 \xce?/\x10r|_\xadx\
+\x5c2\x00\x00\x00\x00IEND\xaeB`\x82\
+\x00\x00\x08\xd6\
+\x89\
+PNG\x0d\x0a\x1a\x0a\x00\x00\x00\x0dIHDR\x00\
+\x00\x00\x15\x00\x00\x00\x15\x08\x06\x00\x00\x00\xa9\x17\xa5\x96\
+\x00\x00\x00\x09pHYs\x00\x00.#\x00\x00.#\
+\x01x\xa5?v\x00\x00\x072iTXtXML\
+:com.adobe.xmp\x00\x00\
+\x00\x00\x00<?xpacket beg\
+in=\x22\xef\xbb\xbf\x22 id=\x22W5M\
+0MpCehiHzreSzNTc\
+zkc9d\x22?> <x:xmpm\
+eta xmlns:x=\x22ado\
+be:ns:meta/\x22 x:x\
+mptk=\x22Adobe XMP \
+Core 5.6-c145 79\
+.163499, 2018/08\
+/13-16:40:22    \
+    \x22> <rdf:RDF \
+xmlns:rdf=\x22http:\
+//www.w3.org/199\
+9/02/22-rdf-synt\
+ax-ns#\x22> <rdf:De\
+scription rdf:ab\
+out=\x22\x22 xmlns:xmp\
+=\x22http://ns.adob\
+e.com/xap/1.0/\x22 \
+xmlns:dc=\x22http:/\
+/purl.org/dc/ele\
+ments/1.1/\x22 xmln\
+s:photoshop=\x22htt\
+p://ns.adobe.com\
+/photoshop/1.0/\x22\
+ xmlns:xmpMM=\x22ht\
+tp://ns.adobe.co\
+m/xap/1.0/mm/\x22 x\
+mlns:stEvt=\x22http\
+://ns.adobe.com/\
+xap/1.0/sType/Re\
+sourceEvent#\x22 xm\
+p:CreatorTool=\x22A\
+dobe Photoshop C\
+C 2019 (Windows)\
+\x22 xmp:CreateDate\
+=\x222023-03-28T20:\
+10:37+08:00\x22 xmp\
+:ModifyDate=\x22202\
+3-03-31T23:21:56\
++08:00\x22 xmp:Meta\
+dataDate=\x222023-0\
+3-31T23:21:56+08\
+:00\x22 dc:format=\x22\
+image/png\x22 photo\
+shop:ColorMode=\x22\
+3\x22 photoshop:ICC\
+Profile=\x22sRGB IE\
+C61966-2.1\x22 xmpM\
+M:InstanceID=\x22xm\
+p.iid:0c67dc28-c\
+44a-a243-94c3-30\
+f0922932d4\x22 xmpM\
+M:DocumentID=\x22ad\
+obe:docid:photos\
+hop:89632117-9a7\
+0-0e40-9454-f604\
+8bb8ba6c\x22 xmpMM:\
+OriginalDocument\
+ID=\x22xmp.did:6e68\
+cee9-b01f-4747-8\
+e19-c16f0e26e2ae\
+\x22> <xmpMM:Histor\
+y> <rdf:Seq> <rd\
+f:li stEvt:actio\
+n=\x22created\x22 stEv\
+t:instanceID=\x22xm\
+p.iid:6e68cee9-b\
+01f-4747-8e19-c1\
+6f0e26e2ae\x22 stEv\
+t:when=\x222023-03-\
+28T20:10:37+08:0\
+0\x22 stEvt:softwar\
+eAgent=\x22Adobe Ph\
+otoshop CC 2019 \
+(Windows)\x22/> <rd\
+f:li stEvt:actio\
+n=\x22converted\x22 st\
+Evt:parameters=\x22\
+from application\
+/vnd.adobe.photo\
+shop to image/pn\
+g\x22/> <rdf:li stE\
+vt:action=\x22saved\
+\x22 stEvt:instance\
+ID=\x22xmp.iid:4dbd\
+a40a-0886-6445-9\
+a5b-4c21ff4af87b\
+\x22 stEvt:when=\x2220\
+23-03-28T20:25:0\
+4+08:00\x22 stEvt:s\
+oftwareAgent=\x22Ad\
+obe Photoshop CC\
+ 2019 (Windows)\x22\
+ stEvt:changed=\x22\
+/\x22/> <rdf:li stE\
+vt:action=\x22saved\
+\x22 stEvt:instance\
+ID=\x22xmp.iid:0c67\
+dc28-c44a-a243-9\
+4c3-30f0922932d4\
+\x22 stEvt:when=\x2220\
+23-03-31T23:21:5\
+6+08:00\x22 stEvt:s\
+oftwareAgent=\x22Ad\
+obe Photoshop CC\
+ 2019 (Windows)\x22\
+ stEvt:changed=\x22\
+/\x22/> </rdf:Seq> \
+</xmpMM:History>\
+ </rdf:Descripti\
+on> </rdf:RDF> <\
+/x:xmpmeta> <?xp\
+acket end=\x22r\x22?>\x10\
+\x8f\x88\xb9\x00\x00\x01JIDAT8\x8d\xb5\xd51\
+K\x1cQ\x14\x05\xe0o&\x22Z\xc5BlDA,\
+\x036\xd6ba\xa1\x8d\x88\x85\xe0\x9f\xf0O\xd8\x89\x96\
+\xda\x04\xff\x81\x9dU\x88\x8dEbc\xa1\x88b\xb9b\
+'\x8a\xae\x10\x08\x18w\xaf\xc5<a\x89;\xab\x8e\xeb\
+\x81\xc3}\xdc7\xf7\xcc9\xf0\xe6\x8d\x88X\x8e\x88Z\
+D4\xba\xc0ZD,g\x11q\x85~\xec TG\
+\x86%\xfc\x15\x05\xb6#B\x17\xb8\x1d\x11\x91\xa3\xf9A\
+\x87\xad\x084{Z\xac\xb7\xc3\x17\xe4%{\xff\xda\xf4\
+2\xe8i\xb3\xd1\x8aM\xcc\xa6\xe7Z_\x5c\xc7T\xaa\
+/\xf0\x9a\xe80\xc6\xf0\x80\xc7v\xae\xaa\x88>\xa4:\
+\x8f\xfd\xb4\xeeMs\xf7UDs|\xc5\x1d.\x14q\
+\x9b8R\x12\xfb-\xa2\x03\x98D\x1f\x8e\x15g\x19n\
+\xb0\x86\x8dNn\xca\x90%\xe1~\xfc\xc2*~`\x10\
+\xeb\x98\xa8\xe2\xf4\x0fV\xd0\xc0wE\xf4\x1c?1\x83\
+i\x9c\xbcW\xb4\x81\xad\xffzM\x9c'\xd1\xf1\xb2\xc1\
+N\xf1gp\x8dS\x0c\xa5\xde\x10\x16\xd2z\xafl\xb0\
+\x93\xd3C\xdc\xe2\x1b\x0e\x14Q'0\x823\xfc\xae\xe2\
+\xf4\x16s\xd8MB\x8b\xa9\xee*\xcem\xbd\x8aS\xa8\
+)\xe2\x8e&^&v\xc4\xb3\xe8k\xb7\xd4\x9b\xc4\x9e\
+u\xf2\xc4\xd2\xef\xf8\x9d\xc8\x90\x7f\xda\xcd\xdf\xf5\x7f\xd4\
+\x13\xa5\x7f)\xd91\x82\xa6[\x00\x00\x00\x00IEN\
+D\xaeB`\x82\
+\x00\x00\x07\xd4\
+\x89\
+PNG\x0d\x0a\x1a\x0a\x00\x00\x00\x0dIHDR\x00\
+\x00\x00\x11\x00\x00\x00\x0f\x08\x06\x00\x00\x00\x02\xb1$\x11\
+\x00\x00\x00\x09pHYs\x00\x00.#\x00\x00.#\
+\x01x\xa5?v\x00\x00\x072iTXtXML\
+:com.adobe.xmp\x00\x00\
+\x00\x00\x00<?xpacket beg\
+in=\x22\xef\xbb\xbf\x22 id=\x22W5M\
+0MpCehiHzreSzNTc\
+zkc9d\x22?> <x:xmpm\
+eta xmlns:x=\x22ado\
+be:ns:meta/\x22 x:x\
+mptk=\x22Adobe XMP \
+Core 5.6-c145 79\
+.163499, 2018/08\
+/13-16:40:22    \
+    \x22> <rdf:RDF \
+xmlns:rdf=\x22http:\
+//www.w3.org/199\
+9/02/22-rdf-synt\
+ax-ns#\x22> <rdf:De\
+scription rdf:ab\
+out=\x22\x22 xmlns:xmp\
+=\x22http://ns.adob\
+e.com/xap/1.0/\x22 \
+xmlns:dc=\x22http:/\
+/purl.org/dc/ele\
+ments/1.1/\x22 xmln\
+s:photoshop=\x22htt\
+p://ns.adobe.com\
+/photoshop/1.0/\x22\
+ xmlns:xmpMM=\x22ht\
+tp://ns.adobe.co\
+m/xap/1.0/mm/\x22 x\
+mlns:stEvt=\x22http\
+://ns.adobe.com/\
+xap/1.0/sType/Re\
+sourceEvent#\x22 xm\
+p:CreatorTool=\x22A\
+dobe Photoshop C\
+C 2019 (Windows)\
+\x22 xmp:CreateDate\
+=\x222023-03-28T20:\
+44:24+08:00\x22 xmp\
+:ModifyDate=\x22202\
+3-03-31T23:19:33\
++08:00\x22 xmp:Meta\
+dataDate=\x222023-0\
+3-31T23:19:33+08\
+:00\x22 dc:format=\x22\
+image/png\x22 photo\
+shop:ColorMode=\x22\
+3\x22 photoshop:ICC\
+Profile=\x22sRGB IE\
+C61966-2.1\x22 xmpM\
+M:InstanceID=\x22xm\
+p.iid:d122c2e4-e\
+c18-3045-a876-d3\
+61350534ad\x22 xmpM\
+M:DocumentID=\x22ad\
+obe:docid:photos\
+hop:c2f8c062-2b6\
+d-1647-9b69-dfff\
+136c825a\x22 xmpMM:\
+OriginalDocument\
+ID=\x22xmp.did:b92a\
+05d3-4607-7345-9\
+a1a-8ed0a96abca7\
+\x22> <xmpMM:Histor\
+y> <rdf:Seq> <rd\
+f:li stEvt:actio\
+n=\x22created\x22 stEv\
+t:instanceID=\x22xm\
+p.iid:b92a05d3-4\
+607-7345-9a1a-8e\
+d0a96abca7\x22 stEv\
+t:when=\x222023-03-\
+28T20:44:24+08:0\
+0\x22 stEvt:softwar\
+eAgent=\x22Adobe Ph\
+otoshop CC 2019 \
+(Windows)\x22/> <rd\
+f:li stEvt:actio\
+n=\x22converted\x22 st\
+Evt:parameters=\x22\
+from application\
+/vnd.adobe.photo\
+shop to image/pn\
+g\x22/> <rdf:li stE\
+vt:action=\x22saved\
+\x22 stEvt:instance\
+ID=\x22xmp.iid:5c38\
+456c-7636-5f43-a\
+d08-451bc9b63f9b\
+\x22 stEvt:when=\x2220\
+23-03-28T20:47:3\
+8+08:00\x22 stEvt:s\
+oftwareAgent=\x22Ad\
+obe Photoshop CC\
+ 2019 (Windows)\x22\
+ stEvt:changed=\x22\
+/\x22/> <rdf:li stE\
+vt:action=\x22saved\
+\x22 stEvt:instance\
+ID=\x22xmp.iid:d122\
+c2e4-ec18-3045-a\
+876-d361350534ad\
+\x22 stEvt:when=\x2220\
+23-03-31T23:19:3\
+3+08:00\x22 stEvt:s\
+oftwareAgent=\x22Ad\
+obe Photoshop CC\
+ 2019 (Windows)\x22\
+ stEvt:changed=\x22\
+/\x22/> </rdf:Seq> \
+</xmpMM:History>\
+ </rdf:Descripti\
+on> </rdf:RDF> <\
+/x:xmpmeta> <?xp\
+acket end=\x22r\x22?>\x0a\
+<gj\x00\x00\x00HIDAT8\x8d\xcd\xd1A\
+\x0d\x00!\x00\x03\xc1\xe5\x82\x02\xc4\x80N\xb0\x02\xba\xb0\
+PD\xb4\x8f\xab\x80I\x93-\x926\xe6\x8a$\xb9H\
+\x05F\xe2\x89k\xf0\xd9B\x0a\xa9\xc0\x04\x9aa\xdcX\
+\x9d\x95x\xe2\x1e\xf9Y\x9d\xee\x22\xb1:\xc7E\x1e\x9d\
+\xc8\x1a\x05\x11X\xd5\xd3\x00\x00\x00\x00IEND\xae\
+B`\x82\
+\x00\x00\x08e\
+\x89\
+PNG\x0d\x0a\x1a\x0a\x00\x00\x00\x0dIHDR\x00\
+\x00\x00\x15\x00\x00\x00\x15\x08\x06\x00\x00\x00\xa9\x17\xa5\x96\
+\x00\x00\x00\x09pHYs\x00\x00.#\x00\x00.#\
+\x01x\xa5?v\x00\x00\x072iTXtXML\
+:com.adobe.xmp\x00\x00\
+\x00\x00\x00<?xpacket beg\
+in=\x22\xef\xbb\xbf\x22 id=\x22W5M\
+0MpCehiHzreSzNTc\
+zkc9d\x22?> <x:xmpm\
+eta xmlns:x=\x22ado\
+be:ns:meta/\x22 x:x\
+mptk=\x22Adobe XMP \
+Core 5.6-c145 79\
+.163499, 2018/08\
+/13-16:40:22    \
+    \x22> <rdf:RDF \
+xmlns:rdf=\x22http:\
+//www.w3.org/199\
+9/02/22-rdf-synt\
+ax-ns#\x22> <rdf:De\
+scription rdf:ab\
+out=\x22\x22 xmlns:xmp\
+=\x22http://ns.adob\
+e.com/xap/1.0/\x22 \
+xmlns:dc=\x22http:/\
+/purl.org/dc/ele\
+ments/1.1/\x22 xmln\
+s:photoshop=\x22htt\
+p://ns.adobe.com\
+/photoshop/1.0/\x22\
+ xmlns:xmpMM=\x22ht\
+tp://ns.adobe.co\
+m/xap/1.0/mm/\x22 x\
+mlns:stEvt=\x22http\
+://ns.adobe.com/\
+xap/1.0/sType/Re\
+sourceEvent#\x22 xm\
+p:CreatorTool=\x22A\
+dobe Photoshop C\
+C 2019 (Windows)\
+\x22 xmp:CreateDate\
+=\x222023-03-28T20:\
+10:37+08:00\x22 xmp\
+:ModifyDate=\x22202\
+3-03-31T23:23:25\
++08:00\x22 xmp:Meta\
+dataDate=\x222023-0\
+3-31T23:23:25+08\
+:00\x22 dc:format=\x22\
+image/png\x22 photo\
+shop:ColorMode=\x22\
+3\x22 photoshop:ICC\
+Profile=\x22sRGB IE\
+C61966-2.1\x22 xmpM\
+M:InstanceID=\x22xm\
+p.iid:6f6bc399-9\
+da3-ad44-9f90-da\
+1b0f25bc0f\x22 xmpM\
+M:DocumentID=\x22ad\
+obe:docid:photos\
+hop:420fa2ff-3c5\
+c-4444-83a1-7874\
+06379fcb\x22 xmpMM:\
+OriginalDocument\
+ID=\x22xmp.did:e198\
+bf3b-a0ed-e344-9\
+320-a6e1d7b3a64b\
+\x22> <xmpMM:Histor\
+y> <rdf:Seq> <rd\
+f:li stEvt:actio\
+n=\x22created\x22 stEv\
+t:instanceID=\x22xm\
+p.iid:e198bf3b-a\
+0ed-e344-9320-a6\
+e1d7b3a64b\x22 stEv\
+t:when=\x222023-03-\
+28T20:10:37+08:0\
+0\x22 stEvt:softwar\
+eAgent=\x22Adobe Ph\
+otoshop CC 2019 \
+(Windows)\x22/> <rd\
+f:li stEvt:actio\
+n=\x22converted\x22 st\
+Evt:parameters=\x22\
+from application\
+/vnd.adobe.photo\
+shop to image/pn\
+g\x22/> <rdf:li stE\
+vt:action=\x22saved\
+\x22 stEvt:instance\
+ID=\x22xmp.iid:7030\
+114c-0c87-674b-8\
+f82-862ba2f3ef71\
+\x22 stEvt:when=\x2220\
+23-03-28T20:24:2\
+7+08:00\x22 stEvt:s\
+oftwareAgent=\x22Ad\
+obe Photoshop CC\
+ 2019 (Windows)\x22\
+ stEvt:changed=\x22\
+/\x22/> <rdf:li stE\
+vt:action=\x22saved\
+\x22 stEvt:instance\
+ID=\x22xmp.iid:6f6b\
+c399-9da3-ad44-9\
+f90-da1b0f25bc0f\
+\x22 stEvt:when=\x2220\
+23-03-31T23:23:2\
+5+08:00\x22 stEvt:s\
+oftwareAgent=\x22Ad\
+obe Photoshop CC\
+ 2019 (Windows)\x22\
+ stEvt:changed=\x22\
+/\x22/> </rdf:Seq> \
+</xmpMM:History>\
+ </rdf:Descripti\
+on> </rdf:RDF> <\
+/x:xmpmeta> <?xp\
+acket end=\x22r\x22?>\x04\
+\xda\xb2i\x00\x00\x00\xd9IDAT8\x8d\xdd\xd51\
+J\x04A\x10\x05\xd07\xb3*.\x18\x08\x9e\xc7K\x08\
+\xc2\x1a\x18\x9by\x0f\xaf {\x03\x0f#\x98\x19\xc8\x1a\
+\xc9\x9a\x99\x99\xb8\xfb7\x98\x11&\xd1nv\xc6\xc4\x0f\
+E\x17\xd5\x9fOUwu\xb5$\x8b$\xab$\x9b\x09\
+l\x95d\xd1$y\xc7\x1c\x0f\x88\xfd\xd1\xe0\x12\x9f\xd2\
+a\x99\xc4\x04\xb6L\x92\x16\xdb\x91\x19\x0e\x11l\xdbA\
+\xea5\xe5\x1d\xa2-p~%\x0cq\x8dG<\xe3\xaa\
+D>(\xec\x1f\xe3\x0e\xb7\x83\xd8iI\xb4\x94\xe9Y\
+/\xf8\x84u\x1f\xdb\x8c\x15\x85{\x9c\xe3\xa5\x82\x8br\
+\xf9o\xb8\xe9\xfdy\xadh)\xd3\xfc\xe0\x8f\x12\xdd\x0b\
+\xffS\xf4\xa8_g%b\xe9\xf6\x87x\xc5\x09>\xa6\
+\x14\xbd\xd0\xbd\xedb\xf3\x7f\x8b\xd6\xb4\xcbW\x05't\
+g\xda\xaa\x9bR5h\xd0\xfe\xd9\xe4\x9f\xfc\x8f\xda\x01\
+\x18J\x09\xddYZ\xdc\xc3\x00\x00\x00\x00IEND\
+\xaeB`\x82\
+\x00\x00\x08\xbb\
+\x89\
+PNG\x0d\x0a\x1a\x0a\x00\x00\x00\x0dIHDR\x00\
+\x00\x00\x15\x00\x00\x00\x15\x08\x06\x00\x00\x00\xa9\x17\xa5\x96\
+\x00\x00\x00\x09pHYs\x00\x00.#\x00\x00.#\
+\x01x\xa5?v\x00\x00\x072iTXtXML\
+:com.adobe.xmp\x00\x00\
+\x00\x00\x00<?xpacket beg\
+in=\x22\xef\xbb\xbf\x22 id=\x22W5M\
+0MpCehiHzreSzNTc\
+zkc9d\x22?> <x:xmpm\
+eta xmlns:x=\x22ado\
+be:ns:meta/\x22 x:x\
+mptk=\x22Adobe XMP \
+Core 5.6-c145 79\
+.163499, 2018/08\
+/13-16:40:22    \
+    \x22> <rdf:RDF \
+xmlns:rdf=\x22http:\
+//www.w3.org/199\
+9/02/22-rdf-synt\
+ax-ns#\x22> <rdf:De\
+scription rdf:ab\
+out=\x22\x22 xmlns:xmp\
+=\x22http://ns.adob\
+e.com/xap/1.0/\x22 \
+xmlns:dc=\x22http:/\
+/purl.org/dc/ele\
+ments/1.1/\x22 xmln\
+s:photoshop=\x22htt\
+p://ns.adobe.com\
+/photoshop/1.0/\x22\
+ xmlns:xmpMM=\x22ht\
+tp://ns.adobe.co\
+m/xap/1.0/mm/\x22 x\
+mlns:stEvt=\x22http\
+://ns.adobe.com/\
+xap/1.0/sType/Re\
+sourceEvent#\x22 xm\
+p:CreatorTool=\x22A\
+dobe Photoshop C\
+C 2019 (Windows)\
+\x22 xmp:CreateDate\
+=\x222023-03-28T20:\
+10:37+08:00\x22 xmp\
+:ModifyDate=\x22202\
+3-03-31T23:22:23\
++08:00\x22 xmp:Meta\
+dataDate=\x222023-0\
+3-31T23:22:23+08\
+:00\x22 dc:format=\x22\
+image/png\x22 photo\
+shop:ColorMode=\x22\
+3\x22 photoshop:ICC\
+Profile=\x22sRGB IE\
+C61966-2.1\x22 xmpM\
+M:InstanceID=\x22xm\
+p.iid:8bf3d90c-c\
+3fc-524d-b7d6-b4\
+6b08961874\x22 xmpM\
+M:DocumentID=\x22ad\
+obe:docid:photos\
+hop:497e94f8-5cd\
+5-d04e-a6a1-5d71\
+281f7447\x22 xmpMM:\
+OriginalDocument\
+ID=\x22xmp.did:c526\
+1a1b-d49a-fd4b-9\
+198-0677e0129437\
+\x22> <xmpMM:Histor\
+y> <rdf:Seq> <rd\
+f:li stEvt:actio\
+n=\x22created\x22 stEv\
+t:instanceID=\x22xm\
+p.iid:c5261a1b-d\
+49a-fd4b-9198-06\
+77e0129437\x22 stEv\
+t:when=\x222023-03-\
+28T20:10:37+08:0\
+0\x22 stEvt:softwar\
+eAgent=\x22Adobe Ph\
+otoshop CC 2019 \
+(Windows)\x22/> <rd\
+f:li stEvt:actio\
+n=\x22converted\x22 st\
+Evt:parameters=\x22\
+from application\
+/vnd.adobe.photo\
+shop to image/pn\
+g\x22/> <rdf:li stE\
+vt:action=\x22saved\
+\x22 stEvt:instance\
+ID=\x22xmp.iid:d4b9\
+6a7d-c079-f040-b\
+c51-1e4aa050dc79\
+\x22 stEvt:when=\x2220\
+23-03-28T20:25:2\
+0+08:00\x22 stEvt:s\
+oftwareAgent=\x22Ad\
+obe Photoshop CC\
+ 2019 (Windows)\x22\
+ stEvt:changed=\x22\
+/\x22/> <rdf:li stE\
+vt:action=\x22saved\
+\x22 stEvt:instance\
+ID=\x22xmp.iid:8bf3\
+d90c-c3fc-524d-b\
+7d6-b46b08961874\
+\x22 stEvt:when=\x2220\
+23-03-31T23:22:2\
+3+08:00\x22 stEvt:s\
+oftwareAgent=\x22Ad\
+obe Photoshop CC\
+ 2019 (Windows)\x22\
+ stEvt:changed=\x22\
+/\x22/> </rdf:Seq> \
+</xmpMM:History>\
+ </rdf:Descripti\
+on> </rdf:RDF> <\
+/x:xmpmeta> <?xp\
+acket end=\x22r\x22?>\xf2\
+\xd2\xe2\xfa\x00\x00\x01/IDAT8\x8d\xb5\xd5\xb1\
+J\x03A\x10\xc6\xf1_b\x14E\xc1\xc6\xd6F\x10{\
+\x05\x1fC\xd2\x88\x01\x1b\xdf@\xd1\xc6B\x10\xb1\x15\xc1\
+>\xe2\x03hko\xed\x0b\x88U\x04\x0b\xb1P\xb0\x10\
+\x0b\x89cq\x1b84\xde]4~0\xcc\xed\xce\xec\
+\xf0\xbf\xdd\xbd9\x11\xd1\x8a\x88NDt\x87`\x9d\x88\
+h\xd5\x22\xe2\x11\x138G\xf8\xbdjX\xc5\x9b\xc8\xd4\
+\x8e\x08C\xb0vDD\x1d\x1f\x7f$\xcc+\xf0\xd1\xc8\
+\xa1W\xd1h\xf2\xdd\x04\xf3U5\xa8\x0f@q\x86\xdb\
+d+E\x89\x8d\xa2`Nk\xd8\xc8\x8d\xa7\x8b\x92\xab\
+\x90N\xe1\x00\xef\xb8Ns\xdd\xa2\x05UH\x0f\xb1\x80\
+}\xd9>.\x97-(#]\xc2\x16\x1ep\x82\xf1\x0a\
+\x10\xa5E\xf7\x92\xdf\xc5\x0b\xc6\xd2\xb8\xdf\xc9W*\xba\
+\x8e&\xaep!\xbbN#)\x96\x7f\xfe\xa6\xa2=m\
+&\xbf\x88\x9b\x04\xd0;\xf5\xe34\xbf9h\xd1'<\
+'\xa2\x99\x1c!L&\xeb\xab\xa2\xd7\xdf\xc1<\xe60\
+\x9b\xec4\xc5\xb6\x7f\xa2,#}M\x96\xd7\x1d:\xb8\
+\xef\x13\xabD\xdaOG\xb2;{Y\x94\xd4#\xad\xda\
+\xa5\xba\x8a\xbf\xa6 #\xad\xab\xde\xa5\xcaTC\xfd\xdf\
+:\xff\xd0\xffQ\x9fMG\x1c:G=|\x1b\x00\x00\
+\x00\x00IEND\xaeB`\x82\
+\x00\x00\x08\xe0\
+\x89\
+PNG\x0d\x0a\x1a\x0a\x00\x00\x00\x0dIHDR\x00\
+\x00\x00\x15\x00\x00\x00\x15\x08\x06\x00\x00\x00\xa9\x17\xa5\x96\
+\x00\x00\x00\x09pHYs\x00\x00.#\x00\x00.#\
+\x01x\xa5?v\x00\x00\x072iTXtXML\
+:com.adobe.xmp\x00\x00\
+\x00\x00\x00<?xpacket beg\
+in=\x22\xef\xbb\xbf\x22 id=\x22W5M\
+0MpCehiHzreSzNTc\
+zkc9d\x22?> <x:xmpm\
+eta xmlns:x=\x22ado\
+be:ns:meta/\x22 x:x\
+mptk=\x22Adobe XMP \
+Core 5.6-c145 79\
+.163499, 2018/08\
+/13-16:40:22    \
+    \x22> <rdf:RDF \
+xmlns:rdf=\x22http:\
+//www.w3.org/199\
+9/02/22-rdf-synt\
+ax-ns#\x22> <rdf:De\
+scription rdf:ab\
+out=\x22\x22 xmlns:xmp\
+=\x22http://ns.adob\
+e.com/xap/1.0/\x22 \
+xmlns:dc=\x22http:/\
+/purl.org/dc/ele\
+ments/1.1/\x22 xmln\
+s:photoshop=\x22htt\
+p://ns.adobe.com\
+/photoshop/1.0/\x22\
+ xmlns:xmpMM=\x22ht\
+tp://ns.adobe.co\
+m/xap/1.0/mm/\x22 x\
+mlns:stEvt=\x22http\
+://ns.adobe.com/\
+xap/1.0/sType/Re\
+sourceEvent#\x22 xm\
+p:CreatorTool=\x22A\
+dobe Photoshop C\
+C 2019 (Windows)\
+\x22 xmp:CreateDate\
+=\x222023-03-28T20:\
+10:37+08:00\x22 xmp\
+:ModifyDate=\x22202\
+3-03-31T23:22:49\
++08:00\x22 xmp:Meta\
+dataDate=\x222023-0\
+3-31T23:22:49+08\
+:00\x22 dc:format=\x22\
+image/png\x22 photo\
+shop:ColorMode=\x22\
+3\x22 photoshop:ICC\
+Profile=\x22sRGB IE\
+C61966-2.1\x22 xmpM\
+M:InstanceID=\x22xm\
+p.iid:c1c9f299-2\
+339-984b-ac7c-ec\
+3a1647d77f\x22 xmpM\
+M:DocumentID=\x22ad\
+obe:docid:photos\
+hop:669be32a-d38\
+8-7247-9b48-1b11\
+6f4a0eb4\x22 xmpMM:\
+OriginalDocument\
+ID=\x22xmp.did:37a0\
+c9ff-5f74-a840-b\
+562-8b7b38451591\
+\x22> <xmpMM:Histor\
+y> <rdf:Seq> <rd\
+f:li stEvt:actio\
+n=\x22created\x22 stEv\
+t:instanceID=\x22xm\
+p.iid:37a0c9ff-5\
+f74-a840-b562-8b\
+7b38451591\x22 stEv\
+t:when=\x222023-03-\
+28T20:10:37+08:0\
+0\x22 stEvt:softwar\
+eAgent=\x22Adobe Ph\
+otoshop CC 2019 \
+(Windows)\x22/> <rd\
+f:li stEvt:actio\
+n=\x22converted\x22 st\
+Evt:parameters=\x22\
+from application\
+/vnd.adobe.photo\
+shop to image/pn\
+g\x22/> <rdf:li stE\
+vt:action=\x22saved\
+\x22 stEvt:instance\
+ID=\x22xmp.iid:b74e\
+c05d-f51d-734b-8\
+1ff-d0e52f875274\
+\x22 stEvt:when=\x2220\
+23-03-28T20:25:3\
+4+08:00\x22 stEvt:s\
+oftwareAgent=\x22Ad\
+obe Photoshop CC\
+ 2019 (Windows)\x22\
+ stEvt:changed=\x22\
+/\x22/> <rdf:li stE\
+vt:action=\x22saved\
+\x22 stEvt:instance\
+ID=\x22xmp.iid:c1c9\
+f299-2339-984b-a\
+c7c-ec3a1647d77f\
+\x22 stEvt:when=\x2220\
+23-03-31T23:22:4\
+9+08:00\x22 stEvt:s\
+oftwareAgent=\x22Ad\
+obe Photoshop CC\
+ 2019 (Windows)\x22\
+ stEvt:changed=\x22\
+/\x22/> </rdf:Seq> \
+</xmpMM:History>\
+ </rdf:Descripti\
+on> </rdf:RDF> <\
+/x:xmpmeta> <?xp\
+acket end=\x22r\x22?>\xaf\
+F\x15\xfb\x00\x00\x01TIDAT8\x8d\xb5\xd5O\
+KUQ\x14\x05\xf0\xdf\xbb(!\x96\xa2\x8d\xd3\xfe\x80\
+\x93\x82j \x164j\x94A\x91Z\xf0\x10\xc4o\xd1\
+\x17\xe8k8p.\x0dl\xa2#A\x04u\xd0 \x8a\
+\x06O\xcd\x17M\xc4Y8H4t7\xb8\xa7|\x03\
+\xbb\xd7\xf7\xc7\x05\x8bs8g\xef\xc5\xe2\xec\xcd>\x22\
+\xa2\x1a\x11\xf5\x888\xe9\x00\xeb\x11Q\xadD\xc4>z\
+\xb0\x80\xd0:*x\x83C\x91c.\x22t\x80s\x11\
+\x11\x19N\xdbt\xd8\x88\xc0i\xd6`\xbd\x08\xc3x\x82\
+\xbe\x92\xb8\x0ad%A\xb7\xb0\x81-\xaca\x1b\x8b\xb8\
+]\x94\xd4Up7\x88e\x8c`\x07_0\x8e\x97\xb8\
+\x86g8>/\xb1\xc8\xe9h\x12^\xc5cLb6\
+\xdd\x8d%\xe1\xa6\x9d\xae\xe0&~9+\xe4^Z\x8f\
+p\xd2\x8a\xe8\xefD\x98\xc6]\xcc\xe0'\xde\xa5\xb5i\
+\xd1F\xbc\xc5\xfd\xb4\xff\x86\xf5\xa2\xe0\xb2\xea\xff\xc5+\
+\xf9\xbb\xbe\xc7\x1d,a\xa8\x15\xd1.\xf4\xa6\x98\xef\xd8\
+\xc4k\xfc\xc0\x00\x1e\xb5\x22\xfa\x1c\xbb\x98Gw:\xbb\
+\x81+i\x7fT\xe4\xe6\x7f\xa8\xe1\xba\xbc8\x0f\xe5\x8d\
+\xff\x14\xfd\xf8*o\xb5\xa6\x9d\xd60\x85\x8f\xb8\x87\x09\
+y\xb3\x7f\xc0\x0bmT\x7f1\xf1\x01\xae\xe23\x0eJ\
+r\xfe\x89\x96M\xa9OeB\x8d:Yb\xd9\x94\xba\
+(*\xc8.m\xf2w\xfc\x8f\xfa\x03d\x83(\xa1\x1a\
+\xe4m\xab\x00\x00\x00\x00IEND\xaeB`\x82\
+\x00\x00\x08\xcd\
+\x89\
+PNG\x0d\x0a\x1a\x0a\x00\x00\x00\x0dIHDR\x00\
+\x00\x00\x15\x00\x00\x00\x15\x08\x06\x00\x00\x00\xa9\x17\xa5\x96\
+\x00\x00\x00\x09pHYs\x00\x00.#\x00\x00.#\
+\x01x\xa5?v\x00\x00\x072iTXtXML\
+:com.adobe.xmp\x00\x00\
+\x00\x00\x00<?xpacket beg\
+in=\x22\xef\xbb\xbf\x22 id=\x22W5M\
+0MpCehiHzreSzNTc\
+zkc9d\x22?> <x:xmpm\
+eta xmlns:x=\x22ado\
+be:ns:meta/\x22 x:x\
+mptk=\x22Adobe XMP \
+Core 5.6-c145 79\
+.163499, 2018/08\
+/13-16:40:22    \
+    \x22> <rdf:RDF \
+xmlns:rdf=\x22http:\
+//www.w3.org/199\
+9/02/22-rdf-synt\
+ax-ns#\x22> <rdf:De\
+scription rdf:ab\
+out=\x22\x22 xmlns:xmp\
+=\x22http://ns.adob\
+e.com/xap/1.0/\x22 \
+xmlns:dc=\x22http:/\
+/purl.org/dc/ele\
+ments/1.1/\x22 xmln\
+s:photoshop=\x22htt\
+p://ns.adobe.com\
+/photoshop/1.0/\x22\
+ xmlns:xmpMM=\x22ht\
+tp://ns.adobe.co\
+m/xap/1.0/mm/\x22 x\
+mlns:stEvt=\x22http\
+://ns.adobe.com/\
+xap/1.0/sType/Re\
+sourceEvent#\x22 xm\
+p:CreatorTool=\x22A\
+dobe Photoshop C\
+C 2019 (Windows)\
+\x22 xmp:CreateDate\
+=\x222023-03-28T20:\
+10:37+08:00\x22 xmp\
+:ModifyDate=\x22202\
+3-03-31T23:23:09\
++08:00\x22 xmp:Meta\
+dataDate=\x222023-0\
+3-31T23:23:09+08\
+:00\x22 dc:format=\x22\
+image/png\x22 photo\
+shop:ColorMode=\x22\
+3\x22 photoshop:ICC\
+Profile=\x22sRGB IE\
+C61966-2.1\x22 xmpM\
+M:InstanceID=\x22xm\
+p.iid:e93630a6-3\
+749-f240-831d-b5\
+cde75f7283\x22 xmpM\
+M:DocumentID=\x22ad\
+obe:docid:photos\
+hop:0fe226cc-71e\
+6-3b4a-bd54-b83a\
+dd012a38\x22 xmpMM:\
+OriginalDocument\
+ID=\x22xmp.did:695b\
+41a5-f8e0-0c46-a\
+47c-5651e5385678\
+\x22> <xmpMM:Histor\
+y> <rdf:Seq> <rd\
+f:li stEvt:actio\
+n=\x22created\x22 stEv\
+t:instanceID=\x22xm\
+p.iid:695b41a5-f\
+8e0-0c46-a47c-56\
+51e5385678\x22 stEv\
+t:when=\x222023-03-\
+28T20:10:37+08:0\
+0\x22 stEvt:softwar\
+eAgent=\x22Adobe Ph\
+otoshop CC 2019 \
+(Windows)\x22/> <rd\
+f:li stEvt:actio\
+n=\x22converted\x22 st\
+Evt:parameters=\x22\
+from application\
+/vnd.adobe.photo\
+shop to image/pn\
+g\x22/> <rdf:li stE\
+vt:action=\x22saved\
+\x22 stEvt:instance\
+ID=\x22xmp.iid:5bda\
+bd2a-91dd-3d42-a\
+747-d1bce8d9274b\
+\x22 stEvt:when=\x2220\
+23-03-28T20:25:4\
+8+08:00\x22 stEvt:s\
+oftwareAgent=\x22Ad\
+obe Photoshop CC\
+ 2019 (Windows)\x22\
+ stEvt:changed=\x22\
+/\x22/> <rdf:li stE\
+vt:action=\x22saved\
+\x22 stEvt:instance\
+ID=\x22xmp.iid:e936\
+30a6-3749-f240-8\
+31d-b5cde75f7283\
+\x22 stEvt:when=\x2220\
+23-03-31T23:23:0\
+9+08:00\x22 stEvt:s\
+oftwareAgent=\x22Ad\
+obe Photoshop CC\
+ 2019 (Windows)\x22\
+ stEvt:changed=\x22\
+/\x22/> </rdf:Seq> \
+</xmpMM:History>\
+ </rdf:Descripti\
+on> </rdf:RDF> <\
+/x:xmpmeta> <?xp\
+acket end=\x22r\x22?>I\
+i\xeb\xcc\x00\x00\x01AIDAT8\x8d\xb5\xd5\xbf\
+J\x5cQ\x10\x06\xf0\xdf^\x96\x05\x85\xb5\x10l-\xac\
+l\xd3\xa5\x08\x04\xedl\x84\x04\x85\xb51\x90\x07\xf0\x15\
+\xf2\x08\x12R\xa4\xd9\x22\xd6\x16b\xa1\x8de\xc0.`\
+i\xb7\x88XX\x89\xa8Q\xd6?cqOq\x91\xdd\
+se]?\x18f\xce\xdc\xf3}g\x98s\xef\x5c\x11\
+\xd1\x89\x88^D<\x8e\xc1z\x11\xd1iD\xc49&\
+\xb0\x8d0:\x1aX\xc5\xad(\xd1\x8d\x08c\xb0nD\
+D\x81\xa77VXE\xe0\xa9\xa8\x94\x9e\xc3,>%\
+\x9fC\x03\x8a\x9aMs\xd8\xc51\xfe&\xbf\x9b\xf2C\
+\x91\x13m\xa1\x8be\xdca'\xf9\xe5\x94o\x8d\x22:\
+\x85\x85\x14/\xe2+>\xe3\x1a\x1f\xd1\x1eFlfD\
+o\xf1\x0bW8J\xb9\x13\xf41\x99\xe1eEo\xb0\
+\xf1\x22\xb7\x89i\xec\xe1r\x18\xb1\xee\xa2\xaaX\xc7\xf7\
+t\xd8\x0f<\xbcU\xf4\x1b\xb6\xf0\x1f_\xf0/\xb7\xf9\
+5\xa2k\xf8\x93\xe2\x15\x1c\xd4\x11r=\x85y\xfcL\
+\xf1o\x1c*{J\xf9\x16\xf4\x07\x91r\x95\xb6\xb1\x8f\
+\x99\xb4\xee\xe0\x0c\xa7\xc9\x96F\xa9\xb4\xa9\xeca\xaf\xb2\
+\xae~\xce\x03\xab\xac\x13\xbd\xc0\x87\xcc\xf3\xc7:\xd1a\
+S\xea>#:\x08A\xd9\xd3B\xfd\x94z-\x1a(\
+\xdem\xf2\x8f\xfd\x1f\xf5\x0c\xa2\x1e$\xb66D\xc0\xee\
+\x00\x00\x00\x00IEND\xaeB`\x82\
+\x00\x00\x09\x1f\
+\x89\
+PNG\x0d\x0a\x1a\x0a\x00\x00\x00\x0dIHDR\x00\
+\x00\x00\x17\x00\x00\x00\x15\x08\x06\x00\x00\x00\xad\xe2u\xab\
+\x00\x00\x00\x09pHYs\x00\x00.#\x00\x00.#\
+\x01x\xa5?v\x00\x00\x072iTXtXML\
+:com.adobe.xmp\x00\x00\
+\x00\x00\x00<?xpacket beg\
+in=\x22\xef\xbb\xbf\x22 id=\x22W5M\
+0MpCehiHzreSzNTc\
+zkc9d\x22?> <x:xmpm\
+eta xmlns:x=\x22ado\
+be:ns:meta/\x22 x:x\
+mptk=\x22Adobe XMP \
+Core 5.6-c145 79\
+.163499, 2018/08\
+/13-16:40:22    \
+    \x22> <rdf:RDF \
+xmlns:rdf=\x22http:\
+//www.w3.org/199\
+9/02/22-rdf-synt\
+ax-ns#\x22> <rdf:De\
+scription rdf:ab\
+out=\x22\x22 xmlns:xmp\
+=\x22http://ns.adob\
+e.com/xap/1.0/\x22 \
+xmlns:dc=\x22http:/\
+/purl.org/dc/ele\
+ments/1.1/\x22 xmln\
+s:photoshop=\x22htt\
+p://ns.adobe.com\
+/photoshop/1.0/\x22\
+ xmlns:xmpMM=\x22ht\
+tp://ns.adobe.co\
+m/xap/1.0/mm/\x22 x\
+mlns:stEvt=\x22http\
+://ns.adobe.com/\
+xap/1.0/sType/Re\
+sourceEvent#\x22 xm\
+p:CreatorTool=\x22A\
+dobe Photoshop C\
+C 2019 (Windows)\
+\x22 xmp:CreateDate\
+=\x222023-03-28T20:\
+45:45+08:00\x22 xmp\
+:ModifyDate=\x22202\
+3-03-31T21:48:58\
++08:00\x22 xmp:Meta\
+dataDate=\x222023-0\
+3-31T21:48:58+08\
+:00\x22 dc:format=\x22\
+image/png\x22 photo\
+shop:ColorMode=\x22\
+3\x22 photoshop:ICC\
+Profile=\x22sRGB IE\
+C61966-2.1\x22 xmpM\
+M:InstanceID=\x22xm\
+p.iid:7df9de3c-a\
+95a-1b41-9004-16\
+d3f7c66798\x22 xmpM\
+M:DocumentID=\x22ad\
+obe:docid:photos\
+hop:e90a7b42-a73\
+a-2c44-84b8-66d5\
+68ba5004\x22 xmpMM:\
+OriginalDocument\
+ID=\x22xmp.did:9dcd\
+af87-249d-d346-8\
+e6e-20e6a7ae9c16\
+\x22> <xmpMM:Histor\
+y> <rdf:Seq> <rd\
+f:li stEvt:actio\
+n=\x22created\x22 stEv\
+t:instanceID=\x22xm\
+p.iid:9dcdaf87-2\
+49d-d346-8e6e-20\
+e6a7ae9c16\x22 stEv\
+t:when=\x222023-03-\
+28T20:45:45+08:0\
+0\x22 stEvt:softwar\
+eAgent=\x22Adobe Ph\
+otoshop CC 2019 \
+(Windows)\x22/> <rd\
+f:li stEvt:actio\
+n=\x22converted\x22 st\
+Evt:parameters=\x22\
+from application\
+/vnd.adobe.photo\
+shop to image/pn\
+g\x22/> <rdf:li stE\
+vt:action=\x22saved\
+\x22 stEvt:instance\
+ID=\x22xmp.iid:8c59\
+4152-f3bc-1b4b-9\
+b18-e792d9cb3c7c\
+\x22 stEvt:when=\x2220\
+23-03-28T20:47:2\
+1+08:00\x22 stEvt:s\
+oftwareAgent=\x22Ad\
+obe Photoshop CC\
+ 2019 (Windows)\x22\
+ stEvt:changed=\x22\
+/\x22/> <rdf:li stE\
+vt:action=\x22saved\
+\x22 stEvt:instance\
+ID=\x22xmp.iid:7df9\
+de3c-a95a-1b41-9\
+004-16d3f7c66798\
+\x22 stEvt:when=\x2220\
+23-03-31T21:48:5\
+8+08:00\x22 stEvt:s\
+oftwareAgent=\x22Ad\
+obe Photoshop CC\
+ 2019 (Windows)\x22\
+ stEvt:changed=\x22\
+/\x22/> </rdf:Seq> \
+</xmpMM:History>\
+ </rdf:Descripti\
+on> </rdf:RDF> <\
+/x:xmpmeta> <?xp\
+acket end=\x22r\x22?>\xa5\
+\xd8!_\x00\x00\x01\x93IDAT8\x8d\x9d\x95\xbf\
+N\x14Q\x14\x87\xbf]W\x13\xc2\x12H\xachi\xec\
+y\x02\x13L\x16\x0a\xc4\xc6\xd6\xcaG\xa0\x87g\xe0-\
+\x94FCB\xc3\x9fJ;c\x01\x15\x95\x05\x85\x8d&\
+\x12\x90fY>\x8a9\xe8p\x99{gwOr3\
+w\xee\xf9\xceo\xce\x9c9\xf7\x0e*S\x8cm+\xfb\
+P\xe2\xbaLn=`#\xe6\xbbEr\x8a\xac\x97\xd5\
+\x1b\xf5\x97\xba0m\xe6\x9d\xcc\xfa2\xf0\x048\x03.\
+\x0a\x5c\xa3x\x1f8\x04\x0e\x80g\x0d\xfe\xf5\xb8~\x04\
+\x0c\xee0\xe2\x1eZ\xf2*s\xeaq|\xac?\xeal\
+\xe2_T\xaf\xd4\xa1\xba\xa4v\x833\xe2\xe6\xea|=\
+\xb0\xaf\x1e\x05x\xad\xae5\xd4\xf1]\xf8\xbf\xa8\x9dX\
+[\x0b\xde\x88\xef\xa7\xe2\xfdZ\xc6\xd7\xeaj\xe6#\xed\
+\x05\xb3\x99\xac\xaf\xd6\x1ep|\xff\x80\xb4\x14\x7f\xd5A\
+F\xf8\xa9z\x1e\xdcJ\x83\x7f\x10\xf1\xffJD\xad\x14\
+\xbf\x0b\xc2\xa8/\xd5\x91\xfaC\x9d\xc90\x83\xd0Q=\
+\xc2\xff\xb6U\x10F\xdd\x09n\xa7\x85\xdb\xba\x17\x1c7\
+\xf3\x99\xc8x\x14o\x90\x13~\x94\xf985_\x09\xff\
+\xb9U\xeds\xc2\x8fj>N\xb7l\x86o/#\x9c\
+\xed\x96\xb6>\xefX\xf5\xb5V}\x9e\x0a\xb7\xf6yn\
+\x87v\xadv\xe2\xd0jg.&\xfc\xac\x85\x1d\xdaK\
+N\x83K\xe05\xf0)\xeeo\xe3,\xe9\x01\xfb\xc0\xcf\
+\x84\x1f\x02\xdfb\xfe\x06\xb8*\x9d-\xf5\xd1\x89\xf15\
+2{_\xe0\x1a5JG\xae\xc0<\xf0\x02\x18\x01\xdf\
+\x0b\x5c\xa3\xb5\xfd\x89^\x01\xcf\x81S\xe0\xa4\x85\x9dX\
+\xfcm\x5c?\x037\x93\x8a\xdf\x01\xebd8\x9b\xf2F\
+\x90\x10\x00\x00\x00\x00IEND\xaeB`\x82\
+\x00\x00\x08\xc4\
+\x89\
+PNG\x0d\x0a\x1a\x0a\x00\x00\x00\x0dIHDR\x00\
+\x00\x00\x11\x00\x00\x00\x13\x08\x06\x00\x00\x00v\xa5\xe6\xf1\
+\x00\x00\x00\x09pHYs\x00\x00.#\x00\x00.#\
+\x01x\xa5?v\x00\x00\x072iTXtXML\
+:com.adobe.xmp\x00\x00\
+\x00\x00\x00<?xpacket beg\
+in=\x22\xef\xbb\xbf\x22 id=\x22W5M\
+0MpCehiHzreSzNTc\
+zkc9d\x22?> <x:xmpm\
+eta xmlns:x=\x22ado\
+be:ns:meta/\x22 x:x\
+mptk=\x22Adobe XMP \
+Core 5.6-c145 79\
+.163499, 2018/08\
+/13-16:40:22    \
+    \x22> <rdf:RDF \
+xmlns:rdf=\x22http:\
+//www.w3.org/199\
+9/02/22-rdf-synt\
+ax-ns#\x22> <rdf:De\
+scription rdf:ab\
+out=\x22\x22 xmlns:xmp\
+=\x22http://ns.adob\
+e.com/xap/1.0/\x22 \
+xmlns:dc=\x22http:/\
+/purl.org/dc/ele\
+ments/1.1/\x22 xmln\
+s:photoshop=\x22htt\
+p://ns.adobe.com\
+/photoshop/1.0/\x22\
+ xmlns:xmpMM=\x22ht\
+tp://ns.adobe.co\
+m/xap/1.0/mm/\x22 x\
+mlns:stEvt=\x22http\
+://ns.adobe.com/\
+xap/1.0/sType/Re\
+sourceEvent#\x22 xm\
+p:CreatorTool=\x22A\
+dobe Photoshop C\
+C 2019 (Windows)\
+\x22 xmp:CreateDate\
+=\x222023-03-28T20:\
+51:57+08:00\x22 xmp\
+:ModifyDate=\x22202\
+3-03-31T23:21:02\
++08:00\x22 xmp:Meta\
+dataDate=\x222023-0\
+3-31T23:21:02+08\
+:00\x22 dc:format=\x22\
+image/png\x22 photo\
+shop:ColorMode=\x22\
+3\x22 photoshop:ICC\
+Profile=\x22sRGB IE\
+C61966-2.1\x22 xmpM\
+M:InstanceID=\x22xm\
+p.iid:1c408f36-0\
+2b1-ad43-8037-de\
+38ac2eefcc\x22 xmpM\
+M:DocumentID=\x22ad\
+obe:docid:photos\
+hop:8f14e342-dd5\
+3-d74e-9770-2ef5\
+9b53d5ae\x22 xmpMM:\
+OriginalDocument\
+ID=\x22xmp.did:1cc1\
+c0cb-2fcc-ad46-9\
+459-f29b9477c41f\
+\x22> <xmpMM:Histor\
+y> <rdf:Seq> <rd\
+f:li stEvt:actio\
+n=\x22created\x22 stEv\
+t:instanceID=\x22xm\
+p.iid:1cc1c0cb-2\
+fcc-ad46-9459-f2\
+9b9477c41f\x22 stEv\
+t:when=\x222023-03-\
+28T20:51:57+08:0\
+0\x22 stEvt:softwar\
+eAgent=\x22Adobe Ph\
+otoshop CC 2019 \
+(Windows)\x22/> <rd\
+f:li stEvt:actio\
+n=\x22converted\x22 st\
+Evt:parameters=\x22\
+from application\
+/vnd.adobe.photo\
+shop to image/pn\
+g\x22/> <rdf:li stE\
+vt:action=\x22saved\
+\x22 stEvt:instance\
+ID=\x22xmp.iid:f180\
+72ea-b6ee-224a-8\
+be7-4da09dcd4060\
+\x22 stEvt:when=\x2220\
+23-03-28T20:52:4\
+4+08:00\x22 stEvt:s\
+oftwareAgent=\x22Ad\
+obe Photoshop CC\
+ 2019 (Windows)\x22\
+ stEvt:changed=\x22\
+/\x22/> <rdf:li stE\
+vt:action=\x22saved\
+\x22 stEvt:instance\
+ID=\x22xmp.iid:1c40\
+8f36-02b1-ad43-8\
+037-de38ac2eefcc\
+\x22 stEvt:when=\x2220\
+23-03-31T23:21:0\
+2+08:00\x22 stEvt:s\
+oftwareAgent=\x22Ad\
+obe Photoshop CC\
+ 2019 (Windows)\x22\
+ stEvt:changed=\x22\
+/\x22/> </rdf:Seq> \
+</xmpMM:History>\
+ </rdf:Descripti\
+on> </rdf:RDF> <\
+/x:xmpmeta> <?xp\
+acket end=\x22r\x22?>b\
+m\xce{\x00\x00\x018IDAT8\x8d\x9d\x91?\
+J\x03Q\x10\xc6\x7fkVL\xa5U\xb0\xf6\x00V\x82\
+`\xa5E\xd2\xd8\xd8Xo\x0e`\xa9\xd7\xb0\xc8\x05r\
+\x02[A;\xed=\x81\x08\x1e\xc0\x90E\x89I\xc4M\
+>\x8b\x9dG\x86\x97l\xfe\xf8\xc10of>~\xbc\
+y\x0fI,\x89\x96\xa4\x07\xcb\x95\xbeU\x80\x91J\x8d\
+\x1c\xe8B\xd2\x8d\xc5\xfe2HS\xd2\xd0\x00]\xcbC\
+I'\x92\xee4\xd3q\x15\xa4%\xe9\xdbL\x99\xf52\
+\xabsIo\x0er\xb4\x08\xd2r7\xc8\xa2Y\xa6y\
+\xcdA\xfc\x0a\xed\x8a5\xdb\x92&\x0er\xe8!\xeb\x00\
+<hj\xde\xcb\x00ij\xf6\x0b\xab\x00\x1e$I\x03\
+IM\xecPl\x00\xf0\xa0B\xd2\x00#v6\x04\x84\
+\xe8H\xd2\x16\xa5\xfa\xfcO}\x80\xd4\x8aZ4<\x00\
+\xae\x81\x1d \x01\x04\xfc\x00\xb7\xc0\xbb\xf3\xd5<$\xd6\
+)pe\xe7)\x10n\xfc\x12A\xc0\x0dcM,\x9f\
+\x03\x0d\xcb\xbe\xbf\x16$(\xa7\xdc;_f\x0a\x10E\
+\xfdP\xa7Q^\xe8\x0b\x90$\x1a\xc6uU?\x01H\
+$\x09\x18\x03\x1fn\xb8\x07\xec\x02g\xc03\xe5C?\
+\x01_\xc0\xa7\xf35\x80z\x0a\xdc\x03u`\xdb\x0d\x0b\
+\xe0\x17\xe8Y\xdd\x03\x1e\xcd\xe3\x7f\xf4\x15\x18\xff\x01\x08\
+6U\x5ctTf\xd4\x00\x00\x00\x00IEND\xae\
+B`\x82\
+\x00\x00\x07\xaf\
+\x89\
+PNG\x0d\x0a\x1a\x0a\x00\x00\x00\x0dIHDR\x00\
+\x00\x00B\x00\x00\x00B\x08\x06\x00\x00\x00\xe3T\x00\xe8\
+\x00\x00\x00\x09pHYs\x00\x00.#\x00\x00.#\
+\x01x\xa5?v\x00\x00\x06biTXtXML\
+:com.adobe.xmp\x00\x00\
+\x00\x00\x00<?xpacket beg\
+in=\x22\xef\xbb\xbf\x22 id=\x22W5M\
+0MpCehiHzreSzNTc\
+zkc9d\x22?> <x:xmpm\
+eta xmlns:x=\x22ado\
+be:ns:meta/\x22 x:x\
+mptk=\x22Adobe XMP \
+Core 5.6-c145 79\
+.163499, 2018/08\
+/13-16:40:22    \
+    \x22> <rdf:RDF \
+xmlns:rdf=\x22http:\
+//www.w3.org/199\
+9/02/22-rdf-synt\
+ax-ns#\x22> <rdf:De\
+scription rdf:ab\
+out=\x22\x22 xmlns:xmp\
+=\x22http://ns.adob\
+e.com/xap/1.0/\x22 \
+xmlns:dc=\x22http:/\
+/purl.org/dc/ele\
+ments/1.1/\x22 xmln\
+s:photoshop=\x22htt\
+p://ns.adobe.com\
+/photoshop/1.0/\x22\
+ xmlns:xmpMM=\x22ht\
+tp://ns.adobe.co\
+m/xap/1.0/mm/\x22 x\
+mlns:stEvt=\x22http\
+://ns.adobe.com/\
+xap/1.0/sType/Re\
+sourceEvent#\x22 xm\
+p:CreatorTool=\x22A\
+dobe Photoshop C\
+C 2019 (Windows)\
+\x22 xmp:CreateDate\
+=\x222023-03-31T18:\
+38:08+08:00\x22 xmp\
+:ModifyDate=\x22202\
+3-03-31T19:33:13\
++08:00\x22 xmp:Meta\
+dataDate=\x222023-0\
+3-31T19:33:13+08\
+:00\x22 dc:format=\x22\
+image/png\x22 photo\
+shop:ColorMode=\x22\
+3\x22 photoshop:ICC\
+Profile=\x22sRGB IE\
+C61966-2.1\x22 xmpM\
+M:InstanceID=\x22xm\
+p.iid:d2a38349-e\
+637-b14f-9fe8-60\
+784810280f\x22 xmpM\
+M:DocumentID=\x22ad\
+obe:docid:photos\
+hop:d4925632-6bf\
+2-4d4e-9444-0c22\
+9a7ecc7b\x22 xmpMM:\
+OriginalDocument\
+ID=\x22xmp.did:94ec\
+b373-c191-2d44-9\
+58d-719bdc0c3887\
+\x22> <xmpMM:Histor\
+y> <rdf:Seq> <rd\
+f:li stEvt:actio\
+n=\x22created\x22 stEv\
+t:instanceID=\x22xm\
+p.iid:94ecb373-c\
+191-2d44-958d-71\
+9bdc0c3887\x22 stEv\
+t:when=\x222023-03-\
+31T18:38:08+08:0\
+0\x22 stEvt:softwar\
+eAgent=\x22Adobe Ph\
+otoshop CC 2019 \
+(Windows)\x22/> <rd\
+f:li stEvt:actio\
+n=\x22converted\x22 st\
+Evt:parameters=\x22\
+from application\
+/vnd.adobe.photo\
+shop to image/pn\
+g\x22/> <rdf:li stE\
+vt:action=\x22saved\
+\x22 stEvt:instance\
+ID=\x22xmp.iid:d2a3\
+8349-e637-b14f-9\
+fe8-60784810280f\
+\x22 stEvt:when=\x2220\
+23-03-31T19:33:1\
+3+08:00\x22 stEvt:s\
+oftwareAgent=\x22Ad\
+obe Photoshop CC\
+ 2019 (Windows)\x22\
+ stEvt:changed=\x22\
+/\x22/> </rdf:Seq> \
+</xmpMM:History>\
+ </rdf:Descripti\
+on> </rdf:RDF> <\
+/x:xmpmeta> <?xp\
+acket end=\x22r\x22?>\xa2\
+\x04)\xf2\x00\x00\x00\xf3IDATx\xda\xed\xdaA\
+\x0e\x800\x08D\xd1\xde\xff\xd2\xb8w\xa5\x15\x99\x99\xe6\
+\x9b\xb8\x15|\xd1\x16\xd0UU\x8b\xb3\x16\x08@\x00\x01\
+\x04\x10@\x00\x01\x04\x10@\x00\x01\x04\x10@\x00\x01\x04\
+\x10\x86\x10\xf7#\xf5&\x1f\xdd\xc7\x9b\x0b\xd4\x01\x08m\
+\x10\x15\x8e\xd0\x0aQ\xc1\x08\xed\x10\x15\x8aP\xbb\xbbF\
+\x1a\xc6v\xbe\xbf^<\x05\xe1M\x1d\xe1\x8e\xf19\xbf\
+\xd1`\xae\x08;\x95\xa5\x1bF[>\xd2\xe0.\x08_\
+z\x0d5F{|\xabd\x94q-\x93R\xc4\xb3N\
+n2ND\x92\x13\xd8\x09\x8f\xed\xc8\x13\xe7\xfe\x0e\x8f\
+\xadA\xce\xab\xfa\xe8B\xec\xba\xc5\x8do\xcd\x8eE\x8f\
+\xa4>q\xab\x00e\x15\xabSO -\xdb]\x1a$\
+y#\xe7\xd42K\xbbY\xb7\xf9\x81l\xbe\xe18Q\
+\x92\x0cy\xa2\xc7k\xa7|\x04\xb6\x9a}F|\xa0\xe5\
+\xb7\x00 \x80\x00\x02\x08 \x80\x00\x02\x08 \x80\x00\x02\
+\x08 \x80\x00\x02\x08 \xce?/\x10r|_\xadx\
+\x5c2\x00\x00\x00\x00IEND\xaeB`\x82\
+\x00\x00\x07\x9e\
+\x89\
+PNG\x0d\x0a\x1a\x0a\x00\x00\x00\x0dIHDR\x00\
+\x00\x00B\x00\x00\x00B\x08\x06\x00\x00\x00\xe3T\x00\xe8\
+\x00\x00\x00\x09pHYs\x00\x00.#\x00\x00.#\
+\x01x\xa5?v\x00\x00\x06biTXtXML\
+:com.adobe.xmp\x00\x00\
+\x00\x00\x00<?xpacket beg\
+in=\x22\xef\xbb\xbf\x22 id=\x22W5M\
+0MpCehiHzreSzNTc\
+zkc9d\x22?> <x:xmpm\
+eta xmlns:x=\x22ado\
+be:ns:meta/\x22 x:x\
+mptk=\x22Adobe XMP \
+Core 5.6-c145 79\
+.163499, 2018/08\
+/13-16:40:22    \
+    \x22> <rdf:RDF \
+xmlns:rdf=\x22http:\
+//www.w3.org/199\
+9/02/22-rdf-synt\
+ax-ns#\x22> <rdf:De\
+scription rdf:ab\
+out=\x22\x22 xmlns:xmp\
+=\x22http://ns.adob\
+e.com/xap/1.0/\x22 \
+xmlns:dc=\x22http:/\
+/purl.org/dc/ele\
+ments/1.1/\x22 xmln\
+s:photoshop=\x22htt\
+p://ns.adobe.com\
+/photoshop/1.0/\x22\
+ xmlns:xmpMM=\x22ht\
+tp://ns.adobe.co\
+m/xap/1.0/mm/\x22 x\
+mlns:stEvt=\x22http\
+://ns.adobe.com/\
+xap/1.0/sType/Re\
+sourceEvent#\x22 xm\
+p:CreatorTool=\x22A\
+dobe Photoshop C\
+C 2019 (Windows)\
+\x22 xmp:CreateDate\
+=\x222023-04-02T11:\
+12:51+08:00\x22 xmp\
+:ModifyDate=\x22202\
+3-04-02T11:16:19\
++08:00\x22 xmp:Meta\
+dataDate=\x222023-0\
+4-02T11:16:19+08\
+:00\x22 dc:format=\x22\
+image/png\x22 photo\
+shop:ColorMode=\x22\
+3\x22 photoshop:ICC\
+Profile=\x22sRGB IE\
+C61966-2.1\x22 xmpM\
+M:InstanceID=\x22xm\
+p.iid:847319e3-3\
+dc6-3447-92ac-b6\
+4a5a55b8ea\x22 xmpM\
+M:DocumentID=\x22ad\
+obe:docid:photos\
+hop:8df73591-7ce\
+a-fd41-be98-2844\
+992036aa\x22 xmpMM:\
+OriginalDocument\
+ID=\x22xmp.did:ab91\
+e7ca-95b9-6846-b\
+cab-620c80d1f261\
+\x22> <xmpMM:Histor\
+y> <rdf:Seq> <rd\
+f:li stEvt:actio\
+n=\x22created\x22 stEv\
+t:instanceID=\x22xm\
+p.iid:ab91e7ca-9\
+5b9-6846-bcab-62\
+0c80d1f261\x22 stEv\
+t:when=\x222023-04-\
+02T11:12:51+08:0\
+0\x22 stEvt:softwar\
+eAgent=\x22Adobe Ph\
+otoshop CC 2019 \
+(Windows)\x22/> <rd\
+f:li stEvt:actio\
+n=\x22converted\x22 st\
+Evt:parameters=\x22\
+from application\
+/vnd.adobe.photo\
+shop to image/pn\
+g\x22/> <rdf:li stE\
+vt:action=\x22saved\
+\x22 stEvt:instance\
+ID=\x22xmp.iid:8473\
+19e3-3dc6-3447-9\
+2ac-b64a5a55b8ea\
+\x22 stEvt:when=\x2220\
+23-04-02T11:16:1\
+9+08:00\x22 stEvt:s\
+oftwareAgent=\x22Ad\
+obe Photoshop CC\
+ 2019 (Windows)\x22\
+ stEvt:changed=\x22\
+/\x22/> </rdf:Seq> \
+</xmpMM:History>\
+ </rdf:Descripti\
+on> </rdf:RDF> <\
+/x:xmpmeta> <?xp\
+acket end=\x22r\x22?>\x1c\
+ah(\x00\x00\x00\xe2IDATx\xda\xed\xdaA\
+\x0e\x800\x08D\xd1\xde\xff\xd2uob\xd4\x16(\x03\
+\x9f\xa4[\xc1\xb7\x11\xa8c\xce98s\x80\x00\x04\x10\
+@\x00\x01\x04\x10@\x00\x01\x04\x10@\x00\x01\x04\x10@\
+\x00\xd1\x14\xe2\x1e-!\x9e\xa2\x15\xc4[\xb4\x80\xf8\x1a\
+\xa5!\xfeFI\x88\xd5(\x05\xb1\x1b% \xbe\xbe\xe4\
+Q\x8cl_\x87c\x18\x19?\x91G0\xb2\xf6\x09\xe1\
+\x18\x99\x9b\xa5P\x8c\xec\x1dc\x18\x86B\xdb\x1c\x82\xa1\
+2;\xb8c(\x0dP\xaey\xd4\xa6H\xb7|\x8a\xa3\
+\xb4K^\xd5}\x82y~\xe5\xa5\x8ai\x1d\xea\x9b%\
+\xb3z\xa4\xd7k\x96u\xa9#\x98\xd5W\x01\xc1\xa4\xce\
+*\x08\xdb\xf5VB\xd8\xaa{\xf5\x81\xd9\xaf\xf0B \
+T\xee3]!\xd4.w] To\xba\xb7!\xf8\
+-\x00\x08 8 \x00\x01\x04\x10@\x00\x01\x04\x10@\
+\x00\x01\x04\x10@\x00\xe1\x7f.2\xd7|_;\xae\x15\
+s\x00\x00\x00\x00IEND\xaeB`\x82\
+\x00\x00\x07\x8b\
+\x89\
+PNG\x0d\x0a\x1a\x0a\x00\x00\x00\x0dIHDR\x00\
+\x00\x00B\x00\x00\x00B\x08\x06\x00\x00\x00\xe3T\x00\xe8\
+\x00\x00\x00\x09pHYs\x00\x00.#\x00\x00.#\
+\x01x\xa5?v\x00\x00\x06biTXtXML\
+:com.adobe.xmp\x00\x00\
+\x00\x00\x00<?xpacket beg\
+in=\x22\xef\xbb\xbf\x22 id=\x22W5M\
+0MpCehiHzreSzNTc\
+zkc9d\x22?> <x:xmpm\
+eta xmlns:x=\x22ado\
+be:ns:meta/\x22 x:x\
+mptk=\x22Adobe XMP \
+Core 5.6-c145 79\
+.163499, 2018/08\
+/13-16:40:22    \
+    \x22> <rdf:RDF \
+xmlns:rdf=\x22http:\
+//www.w3.org/199\
+9/02/22-rdf-synt\
+ax-ns#\x22> <rdf:De\
+scription rdf:ab\
+out=\x22\x22 xmlns:xmp\
+=\x22http://ns.adob\
+e.com/xap/1.0/\x22 \
+xmlns:dc=\x22http:/\
+/purl.org/dc/ele\
+ments/1.1/\x22 xmln\
+s:photoshop=\x22htt\
+p://ns.adobe.com\
+/photoshop/1.0/\x22\
+ xmlns:xmpMM=\x22ht\
+tp://ns.adobe.co\
+m/xap/1.0/mm/\x22 x\
+mlns:stEvt=\x22http\
+://ns.adobe.com/\
+xap/1.0/sType/Re\
+sourceEvent#\x22 xm\
+p:CreatorTool=\x22A\
+dobe Photoshop C\
+C 2019 (Windows)\
+\x22 xmp:CreateDate\
+=\x222023-04-02T11:\
+28:44+08:00\x22 xmp\
+:ModifyDate=\x22202\
+3-04-02T11:36:54\
++08:00\x22 xmp:Meta\
+dataDate=\x222023-0\
+4-02T11:36:54+08\
+:00\x22 dc:format=\x22\
+image/png\x22 photo\
+shop:ColorMode=\x22\
+3\x22 photoshop:ICC\
+Profile=\x22sRGB IE\
+C61966-2.1\x22 xmpM\
+M:InstanceID=\x22xm\
+p.iid:cc20937b-d\
+037-f845-8fbd-8d\
+431387eb54\x22 xmpM\
+M:DocumentID=\x22ad\
+obe:docid:photos\
+hop:179efc62-b38\
+a-5342-bec3-874b\
+b0830b9e\x22 xmpMM:\
+OriginalDocument\
+ID=\x22xmp.did:c081\
+b975-fbb7-294f-a\
+43f-6f39f82f2220\
+\x22> <xmpMM:Histor\
+y> <rdf:Seq> <rd\
+f:li stEvt:actio\
+n=\x22created\x22 stEv\
+t:instanceID=\x22xm\
+p.iid:c081b975-f\
+bb7-294f-a43f-6f\
+39f82f2220\x22 stEv\
+t:when=\x222023-04-\
+02T11:28:44+08:0\
+0\x22 stEvt:softwar\
+eAgent=\x22Adobe Ph\
+otoshop CC 2019 \
+(Windows)\x22/> <rd\
+f:li stEvt:actio\
+n=\x22converted\x22 st\
+Evt:parameters=\x22\
+from application\
+/vnd.adobe.photo\
+shop to image/pn\
+g\x22/> <rdf:li stE\
+vt:action=\x22saved\
+\x22 stEvt:instance\
+ID=\x22xmp.iid:cc20\
+937b-d037-f845-8\
+fbd-8d431387eb54\
+\x22 stEvt:when=\x2220\
+23-04-02T11:36:5\
+4+08:00\x22 stEvt:s\
+oftwareAgent=\x22Ad\
+obe Photoshop CC\
+ 2019 (Windows)\x22\
+ stEvt:changed=\x22\
+/\x22/> </rdf:Seq> \
+</xmpMM:History>\
+ </rdf:Descripti\
+on> </rdf:RDF> <\
+/x:xmpmeta> <?xp\
+acket end=\x22r\x22?>\xc6\
+Q\xf9\x94\x00\x00\x00\xcfIDATx\xda\xed\xdaa\
+\x0e\x83 \x0c\x06P\xee\x7f\xe9\xee\x00\xdb\x14\xe6\xc0R\
+_\x13\xfe\x1a}&h\xcb\xd7\x22\xa2Y\xd1 \x80\x00\
+\x01\x02\x04\x08\x10 @\x80\x00\x91\x0a\x22[-\x85\xd8\
+\xa5\xa6A\xecZ\x7f\x83\xa8R\x97 \xaa\xd5O\x10;\
+\xbd\xd1\xcb\xd7\xc9\x8e0k3\xef\x82\xd8\xfa38\xf0\
+\x1c\x87\x10U\x10\x861\xb2A\xcc\xf8k\x1c\x86\xa8\x88\
+\xd0\x8d\x91\x05bE?\xd1\x05Q\x1d\xe1\x14\xe3n\x88\
+\x96\x09\x22\x1e\x04\xd1\x8en\xe4I\x08 \xce0@\x80\
+\xc8\x01\xd1@\x80\x00\x01\xc2f\x09\x02\x84^\xa3\x12\x84\
+6\xdc`\xe6\x1d\xc2\xa8\xce\xf0\xd68\xff\xeb8\xdf\x01\
+O8\xf2s\x08\x1cb\x01\x82\x22\xa2C!L&^\
+(p\xba\x1aB\x04\x19\x04\x08\x10 @\x80\x00\x01\x02\
+\x02\x08\x10\x9f\xd6\x0b\xf8\x00V\xcb\x7f\x8b\x85\x19\x00\x00\
+\x00\x00IEND\xaeB`\x82\
+\x00\x00\x07\xa1\
+\x89\
+PNG\x0d\x0a\x1a\x0a\x00\x00\x00\x0dIHDR\x00\
+\x00\x00B\x00\x00\x00B\x08\x06\x00\x00\x00\xe3T\x00\xe8\
+\x00\x00\x00\x09pHYs\x00\x00.#\x00\x00.#\
+\x01x\xa5?v\x00\x00\x06biTXtXML\
+:com.adobe.xmp\x00\x00\
+\x00\x00\x00<?xpacket beg\
+in=\x22\xef\xbb\xbf\x22 id=\x22W5M\
+0MpCehiHzreSzNTc\
+zkc9d\x22?> <x:xmpm\
+eta xmlns:x=\x22ado\
+be:ns:meta/\x22 x:x\
+mptk=\x22Adobe XMP \
+Core 5.6-c145 79\
+.163499, 2018/08\
+/13-16:40:22    \
+    \x22> <rdf:RDF \
+xmlns:rdf=\x22http:\
+//www.w3.org/199\
+9/02/22-rdf-synt\
+ax-ns#\x22> <rdf:De\
+scription rdf:ab\
+out=\x22\x22 xmlns:xmp\
+=\x22http://ns.adob\
+e.com/xap/1.0/\x22 \
+xmlns:dc=\x22http:/\
+/purl.org/dc/ele\
+ments/1.1/\x22 xmln\
+s:photoshop=\x22htt\
+p://ns.adobe.com\
+/photoshop/1.0/\x22\
+ xmlns:xmpMM=\x22ht\
+tp://ns.adobe.co\
+m/xap/1.0/mm/\x22 x\
+mlns:stEvt=\x22http\
+://ns.adobe.com/\
+xap/1.0/sType/Re\
+sourceEvent#\x22 xm\
+p:CreatorTool=\x22A\
+dobe Photoshop C\
+C 2019 (Windows)\
+\x22 xmp:CreateDate\
+=\x222023-04-02T11:\
+28:11+08:00\x22 xmp\
+:ModifyDate=\x22202\
+3-04-02T11:36:44\
++08:00\x22 xmp:Meta\
+dataDate=\x222023-0\
+4-02T11:36:44+08\
+:00\x22 dc:format=\x22\
+image/png\x22 photo\
+shop:ColorMode=\x22\
+3\x22 photoshop:ICC\
+Profile=\x22sRGB IE\
+C61966-2.1\x22 xmpM\
+M:InstanceID=\x22xm\
+p.iid:f54186fe-e\
+b7c-6b4a-b962-95\
+a5dbbe313a\x22 xmpM\
+M:DocumentID=\x22ad\
+obe:docid:photos\
+hop:4e7863b0-654\
+6-e04c-82ac-5d0a\
+c52db76a\x22 xmpMM:\
+OriginalDocument\
+ID=\x22xmp.did:e6ef\
+b2f8-8e5b-7145-a\
+989-42dca67b4e6b\
+\x22> <xmpMM:Histor\
+y> <rdf:Seq> <rd\
+f:li stEvt:actio\
+n=\x22created\x22 stEv\
+t:instanceID=\x22xm\
+p.iid:e6efb2f8-8\
+e5b-7145-a989-42\
+dca67b4e6b\x22 stEv\
+t:when=\x222023-04-\
+02T11:28:11+08:0\
+0\x22 stEvt:softwar\
+eAgent=\x22Adobe Ph\
+otoshop CC 2019 \
+(Windows)\x22/> <rd\
+f:li stEvt:actio\
+n=\x22converted\x22 st\
+Evt:parameters=\x22\
+from application\
+/vnd.adobe.photo\
+shop to image/pn\
+g\x22/> <rdf:li stE\
+vt:action=\x22saved\
+\x22 stEvt:instance\
+ID=\x22xmp.iid:f541\
+86fe-eb7c-6b4a-b\
+962-95a5dbbe313a\
+\x22 stEvt:when=\x2220\
+23-04-02T11:36:4\
+4+08:00\x22 stEvt:s\
+oftwareAgent=\x22Ad\
+obe Photoshop CC\
+ 2019 (Windows)\x22\
+ stEvt:changed=\x22\
+/\x22/> </rdf:Seq> \
+</xmpMM:History>\
+ </rdf:Descripti\
+on> </rdf:RDF> <\
+/x:xmpmeta> <?xp\
+acket end=\x22r\x22?>\xec\
+6\xac)\x00\x00\x00\xe5IDATx\xda\xed\xdaQ\
+\x0e\x83 \x0c\x00P\xee\x7fi\xf6m\xb6E\x11iA\
+^\x13\xfetm^\x8c\xc3\xd2Rk-V-\x10@\
+\x80\x00\x01\x02\x04\x08\x10 @\x80\x98\x0ab\xb6\x08\x85\
+X%\x86A\xac\x1a\x8fA\xbc%\xba \xde\x16\xb7 \
+\x9e\xd2\x8ex\xd9u\xe7\xe8\xf9\xe1Q\x05G\xfc\x93]\
+\x82\x18]\xe8\x9492\x0a\x9c\x12\xa3\xe5\xc6\x11;\xba\
+l\x8c\x9f\x10\xd1\x08\x91yOs\x5c\xb98b\xaf\x9f\
+\x89q\x80\xc8D\x88\xac\xe1o\x8e\x99 J\xe6S1\
+\x13B\xeaS\x01\xe2\x04\x22\xb3I\x12Q\xcf\xb2\x10\x15\
+\xc4\xc6\x10\x05\x04\x08\x10 \xbc,A\xac\xb9\xa1\xb2\xc5\
+\xde\x19\xc2g\xb8\xc6\xcc7\x84V\x9d\xe6\xadv\xfe\xed\
+s\x8d\xad\x0ex\x1c\xf99\x046\x16`P\xa4\x05\xc2\
+\xe8\xd0\x8b@\x8c\x17\xb6,\x03\xa7F\x90A\x80\x00\x01\
+\x02\x04\x08\x10 @\x80\x001p}\x00\xcag\x19\xec\
+49&\x87\x00\x00\x00\x00IEND\xaeB`\x82\
+\
+"
+
+qt_resource_name = b"\
+\x00\x0d\
+\x054\xc8^\
+\x00C\
+\x00h\x00e\x00c\x00k\x00B\x00o\x00x\x00_\x00I\x00c\x00o\x00n\
+\x00\x14\
+\x06@$\xde\
+\x00(\
+\x00D\x00o\x00u\x00b\x00l\x00e\x00)\x00S\x00p\x00i\x00n\x00B\x00o\x00x\x00_\x00I\
+\x00c\x00o\x00n\
+\x00\x0b\
+\x06\xd0q>\
+\x00B\
+\x00u\x00t\x00t\x00o\x00n\x00_\x00I\x00c\x00o\x00n\
+\x00\x0d\
+\x02$\xe0^\
+\x00C\
+\x00o\x00m\x00b\x00o\x00B\x00o\x00x\x00_\x00I\x00c\x00o\x00n\
+\x00\x07\
+\x0al\x89c\
+\x00S\
+\x00o\x00u\x00r\x00c\x00e\x00s\
+\x00\x0d\
+\x0f\xb6\x07G\
+\x00D\
+\x00o\x00w\x00n\x00A\x00r\x00r\x00o\x00w\x00.\x00p\x00n\x00g\
+\x00\x09\
+\x0d\x88\xfb\xa7\
+\x00P\
+\x00a\x00g\x00e\x005\x00.\x00p\x00n\x00g\
+\x00\x08\
+\x0cX]'\
+\x00M\
+\x00e\x00n\x00u\x00.\x00p\x00n\x00g\
+\x00\x09\
+\x0d\x84\xfb\xa7\
+\x00P\
+\x00a\x00g\x00e\x001\x00.\x00p\x00n\x00g\
+\x00\x09\
+\x0d\x87\xfb\xa7\
+\x00P\
+\x00a\x00g\x00e\x004\x00.\x00p\x00n\x00g\
+\x00\x09\
+\x0d\x86\xfb\xa7\
+\x00P\
+\x00a\x00g\x00e\x003\x00.\x00p\x00n\x00g\
+\x00\x09\
+\x0d\x85\xfb\xa7\
+\x00P\
+\x00a\x00g\x00e\x002\x00.\x00p\x00n\x00g\
+\x00\x0b\
+\x06\xb4\x9c\x07\
+\x00C\
+\x00o\x00n\x00s\x00o\x00l\x00e\x00.\x00p\x00n\x00g\
+\x00\x08\
+\x068^\xa7\
+\x00H\
+\x00o\x00m\x00e\x00.\x00p\x00n\x00g\
+\x00\x0b\
+\x09\xd2\xc6g\
+\x00U\
+\x00p\x00A\x00r\x00r\x00o\x00w\x00.\x00p\x00n\x00g\
+\x00\x0c\
+\x05J\xeb\x07\
+\x00T\
+\x00o\x00g\x00g\x00l\x00e\x00O\x00n\x00.\x00p\x00n\x00g\
+\x00\x0d\
+\x03r\x93\xe7\
+\x00T\
+\x00o\x00g\x00g\x00l\x00e\x00O\x00f\x00f\x00.\x00p\x00n\x00g\
+"
+
+qt_resource_struct = b"\
+\x00\x00\x00\x00\x00\x02\x00\x00\x00\x04\x00\x00\x00\x01\
+\x00\x00\x00\x00\x00\x00\x00\x00\
+\x00\x00\x00j\x00\x02\x00\x00\x00\x01\x00\x00\x00\x14\
+\x00\x00\x00\x00\x00\x00\x00\x00\
+\x00\x00\x00\x00\x00\x02\x00\x00\x00\x01\x00\x00\x00\x11\
+\x00\x00\x00\x00\x00\x00\x00\x00\
+\x00\x00\x00 \x00\x02\x00\x00\x00\x01\x00\x00\x00\x0e\
+\x00\x00\x00\x00\x00\x00\x00\x00\
+\x00\x00\x00N\x00\x02\x00\x00\x00\x01\x00\x00\x00\x05\
+\x00\x00\x00\x00\x00\x00\x00\x00\
+\x00\x00\x00\x8a\x00\x02\x00\x00\x00\x08\x00\x00\x00\x06\
+\x00\x00\x00\x00\x00\x00\x00\x00\
+\x00\x00\x01h\x00\x00\x00\x00\x00\x01\x00\x00De\
+\x00\x00\x01\x878B\x016\
+\x00\x00\x01L\x00\x00\x00\x00\x00\x01\x00\x00;B\
+\x00\x00\x01\x877\xed\xb7C\
+\x00\x00\x00\xd6\x00\x00\x00\x00\x00\x01\x00\x00\x10\x8d\
+\x00\x00\x01\x878@\xa5\xd8\
+\x00\x00\x00\xec\x00\x00\x00\x00\x00\x01\x00\x00\x18e\
+\x00\x00\x01\x878D/T\
+\x00\x00\x014\x00\x00\x00\x00\x00\x01\x00\x002q\
+\x00\x00\x01\x878C\xf2%\
+\x00\x00\x01\x1c\x00\x00\x00\x00\x00\x01\x00\x00)\x8d\
+\x00\x00\x01\x878C\xa3\xf9\
+\x00\x00\x01\x04\x00\x00\x00\x00\x00\x01\x00\x00 \xce\
+\x00\x00\x01\x878C?\x0f\
+\x00\x00\x00\xbe\x00\x00\x00\x00\x00\x01\x00\x00\x07\xb3\
+\x00\x00\x01\x878B\xd4\xcb\
+\x00\x00\x00\x8a\x00\x02\x00\x00\x00\x02\x00\x00\x00\x0f\
+\x00\x00\x00\x00\x00\x00\x00\x00\
+\x00\x00\x01~\x00\x00\x00\x00\x00\x01\x00\x00T\xe0\
+\x00\x00\x01\x87?\xf7@\xdd\
+\x00\x00\x00\x9e\x00\x00\x00\x00\x00\x01\x00\x00M-\
+\x00\x00\x01\x877qv\xc3\
+\x00\x00\x00\x8a\x00\x02\x00\x00\x00\x02\x00\x00\x00\x12\
+\x00\x00\x00\x00\x00\x00\x00\x00\
+\x00\x00\x01\xb8\x00\x00\x00\x00\x00\x01\x00\x00d\x11\
+\x00\x00\x01\x87@\x09\xee_\
+\x00\x00\x01\x9a\x00\x00\x00\x00\x00\x01\x00\x00\x5c\x82\
+\x00\x00\x01\x87@\x0a\x16\xc8\
+\x00\x00\x00\x8a\x00\x02\x00\x00\x00\x01\x00\x00\x00\x15\
+\x00\x00\x00\x00\x00\x00\x00\x00\
+\x00\x00\x00\x9e\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\
+\x00\x00\x01\x877qv\xc3\
+"
+
+def qInitResources():
+    QtCore.qRegisterResourceData(0x03, qt_resource_struct, qt_resource_name, qt_resource_data)
+
+def qCleanupResources():
+    QtCore.qUnregisterResourceData(0x03, qt_resource_struct, qt_resource_name, qt_resource_data)
+
+qInitResources()
