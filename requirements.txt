@@ -7,7 +7,6 @@ static-ffmpeg
 
 
 # Tool_VoiceIdentifier
-torch
 visualdl
 pyaudio
 torchsummary
