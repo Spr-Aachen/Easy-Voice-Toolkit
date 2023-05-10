@@ -2,6 +2,7 @@ import os
 import sys
 import re
 from typing import Optional
+from PySide6 import __file__ as PySide6_File
 from PySide6.QtCore import QObject, QThread, QMutex, Signal, Slot, QPropertyAnimation, QEasingCurve, QEventLoop, QTimer
 from PySide6.QtGui import QTextCursor
 from PySide6.QtWidgets import *
@@ -14,6 +15,12 @@ from Tool_VoiceIdentifier.Identify import Voice_Identifying
 from Tool_VoiceTranscriber.Transcribe import Voice_Transcribing
 from Tool_DatasetCreator.Create import Dataset_Creating
 from Tool_VoiceTrainer.Train import Voice_Training
+
+
+# Redirect PATH environment variable 'QT_QPA_PLATFORM_PLUGIN_PATH' to Pyside6 '/plugins/platforms' folder's path
+PySide6_Dirname = os.path.dirname(PySide6_File)
+PySide6_PluginPath = os.path.join(PySide6_Dirname, 'plugins', 'platforms')
+os.environ['QT_QPA_PLATFORM_PLUGIN_PATH'] = PySide6_PluginPath
 
 
 # Handle the consol's output
