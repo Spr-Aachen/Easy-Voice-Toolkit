@@ -3,7 +3,7 @@ import sys
 import re
 from typing import Optional
 from PySide6 import __file__ as PySide6_File
-from PySide6.QtCore import QObject, QThread, QMutex, Signal, Slot, QPropertyAnimation, QEasingCurve, QEventLoop, QTimer
+from PySide6.QtCore import QObject, QThread, Signal, QPropertyAnimation, QEasingCurve
 from PySide6.QtGui import QTextCursor
 from PySide6.QtWidgets import *
 
@@ -23,50 +23,6 @@ PySide6_PluginPath = os.path.join(PySide6_Dirname, 'plugins', 'platforms')
 os.environ['QT_QPA_PLATFORM_PLUGIN_PATH'] = PySide6_PluginPath
 
 
-# Handle the consol's output
-class ConsolOutputHandler(QThread):
-    '''
-    Intercept the output of the consol and send to the UI
-    '''
-    Signal_ConsoleInfo = Signal(str)
-
-    def __init__(self):
-        super().__init__()
-        
-        self.Mutex = QMutex()
-
-    def run(self):
-        '''
-        Function to redirect stdout & stderr to the childthread
-        '''
-        sys.stdout = self
-        sys.stderr = self
-
-    def write(self,
-        Info: object
-    ):
-        '''
-        Function to override the default write functions of sys.stdout & sys.stderr
-        '''
-        self.Mutex.lock()
-
-        self.Signal_ConsoleInfo.emit(str(Info))
-        
-        self.Mutex.unlock()
-        
-        '''
-        EventLoop = QEventLoop()
-        QTimer.singleShot(123, EventLoop.quit)
-        EventLoop.exec()
-        '''
-
-    def flush(self):
-        '''
-        Function to override the default flush functions of sys.stdout & sys.stderr
-        '''
-        pass
-
-
 # Where to store custom signals
 class CustomSignals(QObject):
     '''
@@ -84,12 +40,11 @@ class Execute_Audio_Processing(QObject):
     '''
     Change media format to WAV and cut off the silent parts
     '''
-    finished = Signal() # Customize a "finished" signal
+    finished = Signal()
 
     def __init__(self):
         super().__init__()
 
-    #@Slot(list)
     def Execute(self, Params):
         AudioConvertandSlice = Audio_Processing(*Params)
         TaskAccelerating(
@@ -98,7 +53,7 @@ class Execute_Audio_Processing(QObject):
             TypeList = ['MultiThreading', 'MultiThreading']
         )
 
-        self.finished.emit() # Emit the "finished" signal at the end
+        self.finished.emit()
 
 
 # Tool2: VoiceIdentifier
@@ -111,7 +66,6 @@ class Execute_Voice_Identifying(QObject):
     def __init__(self):
         super().__init__()
 
-    #@Slot(list)
     def Execute(self, Params):
         AudioContrastInference = Voice_Identifying(*Params)
         TaskAccelerating(
@@ -133,7 +87,6 @@ class Execute_Voice_Transcribing(QObject):
     def __init__(self):
         super().__init__()
 
-    #@Slot(list)
     def Execute(self, Params):
         WAVtoSRT = Voice_Transcribing(*Params)
         TaskAccelerating(
@@ -155,7 +108,6 @@ class Execute_Dataset_Creating(QObject):
     def __init__(self):
         super().__init__()
 
-    #@Slot(list)
     def Execute(self, Params):
         SRTtoCSVandSplitAudio = Dataset_Creating(*Params)
         TaskAccelerating(
@@ -177,7 +129,6 @@ class Execute_Voice_Training(QObject):
     def __init__(self):
         super().__init__()
 
-    #@Slot(list)
     def Execute(self, Params):
         PreprocessandTrain = Voice_Training(*Params)
         TaskAccelerating(
@@ -204,8 +155,6 @@ class MainWindow(Window_Customizing):
         self.ui.setupUi(self)
 
         self.CustomSignals = CustomSignals()
-
-        self.ConsoleInfo = ConsolOutputHandler()
 
     def Function_FindParentUI(self,
         ChildUI: QObject,
@@ -280,7 +229,7 @@ class MainWindow(Window_Customizing):
 
         return InsertUI
 
-    def Function_SwitchStackedWidget(self,
+    def Function_AnimateStackedWidget(self,
         StackedWidget: QStackedWidget,
         TargetIndex: int = 0,
         Duration: int = 0
@@ -292,14 +241,14 @@ class MainWindow(Window_Customizing):
 
         WidgetAnimation = QPropertyAnimation(StackedWidget, b"currentIndex")
 
-        def AnimateWidget(Index_Altered):
+        def AnimateStackedWidget(Index_Altered):
             WidgetAnimation.setDuration(Duration)
             WidgetAnimation.setStartValue(Index_Current)
             WidgetAnimation.setEndValue(Index_Altered)
             WidgetAnimation.setEasingCurve(QEasingCurve.InOutQuart)
             WidgetAnimation.start()
 
-        AnimateWidget(TargetIndex)
+        AnimateStackedWidget(TargetIndex)
 
     def Function_AnimateFrame(self,
         Frame: QFrame,
@@ -336,48 +285,31 @@ class MainWindow(Window_Customizing):
                 AnimateFrame(MinWidth)
                 self.CustomSignals.Signal_FrameStatus.emit(f"{Frame.objectName()}Reduced")
 
-    #@Slot(str)
     def Function_AnimateButton(self,
         Button: QPushButton,
         Frame: Optional[QFrame] = None,
         FrameStatus: str = ...,
-        Text: str = ...,
-        Duration: int = 0
+        Text: str = ...
     ):
         '''
         Function to animate button
         '''
-        '''
-        Text_Current = Button.text()
-
-        self.ButtonAnimation = QPropertyAnimation(Button, b"text")
-
-        def AnimateButton(Text_Altered):
-            self.ButtonAnimation.setDuration(Duration)
-            self.ButtonAnimation.setStartValue(Text_Current)
-            self.ButtonAnimation.setEndValue(Text_Altered)
-            self.ButtonAnimation.setEasingCurve(QEasingCurve.InOutQuart)
-            self.ButtonAnimation.start()
-        '''
-
         Frame = self.Function_FindParentUI(
             ChildUI = Button,
             ParentType = QFrame
         ) if Frame == None else Frame
 
         if FrameStatus == f"{Frame.objectName()}Extended":
-            Button.setText(Text) #AnimateButton(Text)
+            Button.setText(Text)
         if FrameStatus == f"{Frame.objectName()}Reduced":
-            Button.setText("") #AnimateButton("")
-    
-    #@Slot(str, str)
+            Button.setText("")
+
     def Function_PrintText(self,
         Panel: QPlainTextEdit,
         Frame: Optional[QFrame] = None,
         FrameStatus: str = ...,
         Text: str = ...,
-        ShowCursor: bool = False,
-        Duration: int = 0
+        ShowCursor: bool = False
     ):
         '''
         Function to print text on panel while its parent frame is extended
@@ -388,28 +320,15 @@ class MainWindow(Window_Customizing):
         Panel.setTextCursor(TextCursor)
         Panel.ensureCursorVisible() if ShowCursor == True else None
 
-        '''
-        Visibility_Current = Panel.isVisible()
-
-        self.PanelAnimation = QPropertyAnimation(Panel, b"visible")
-
-        def AnimatePanel(Visibility_Altered):
-            self.PanelAnimation.setDuration(Duration)
-            self.PanelAnimation.setStartValue(Visibility_Current)
-            self.PanelAnimation.setEndValue(Visibility_Altered)
-            self.PanelAnimation.setEasingCurve(QEasingCurve.InOutQuart)
-            self.PanelAnimation.start()
-        '''
-
         Frame = self.Function_FindParentUI(
             ChildUI = Panel,
             ParentType = QFrame
         ) if Frame == None else Frame
 
         if FrameStatus == f"{Frame.objectName()}Extended":
-            Panel.setVisible(True) #AnimatePanel(True)
+            Panel.setVisible(True)
         if FrameStatus == f"{Frame.objectName()}Reduced":
-            Panel.setVisible(False) #AnimatePanel(False)
+            Panel.setVisible(False)
 
     def Function_SetText(self,
         Panel: QObject,
@@ -437,15 +356,12 @@ class MainWindow(Window_Customizing):
                 repl = "<br>",
                 string = Content
             )
-            return f"<p style={Style}>{Content}</p>" #return f"<p><span style={Style}>{Content}</span></p>"
+            return f"<p style={Style}>{Content}</p>"
 
         Text = (
             "<html>"
-            "<head>"
-            f"<title>{ToHtml(Title, TitleAlign, TitleSize, TitleWeight, TitleColor, TitleLineHeight)}</title>" # Not Working
-            "</head>"
             "<body>"
-            f"{ToHtml(Title, TitleAlign, TitleSize, TitleWeight, TitleColor, TitleLineHeight)}" # Added
+            f"{ToHtml(Title, TitleAlign, TitleSize, TitleWeight, TitleColor, TitleLineHeight)}"
             f"{ToHtml(Body, BodyAlign, BodySize, BodyWeight, BodyColor, BodyLineHeight)}"
             "</body>"
             "</html>"
@@ -674,7 +590,7 @@ class MainWindow(Window_Customizing):
         WorkerThread = QThread(self)
         ClassInstance = globals()[ClassName]()
         ClassInstance.moveToThread(WorkerThread)
-        ClassInstance.finished.connect(WorkerThread.quit) # Thread would quit after recieving the customized "finished" signal
+        ClassInstance.finished.connect(WorkerThread.quit)
 
         MethodName = str(Method.__qualname__).split('.')[1]
 
@@ -694,20 +610,11 @@ class MainWindow(Window_Customizing):
             
             self.CustomSignals.Signal_ExecuteTask.connect(getattr(ClassInstance, MethodName))
             self.CustomSignals.Signal_ExecuteTask.emit(Params)
-            WorkerThread.started.connect(lambda: self.Function_AnimateProgressBar(ProgressBar = ProgressBar, IsTaskAlive = True)) # Slot connected by original 'started' signal would run in new thread
-            WorkerThread.started.connect(lambda: self.Function_SwitchStackedWidget(StackedWidget = StackedWidget, TargetIndex = 1))
+            WorkerThread.started.connect(lambda: self.Function_AnimateProgressBar(ProgressBar = ProgressBar, IsTaskAlive = True))
+            WorkerThread.started.connect(lambda: self.Function_AnimateStackedWidget(StackedWidget = StackedWidget, TargetIndex = 1))
             WorkerThread.finished.connect(lambda: self.Function_AnimateProgressBar(ProgressBar = ProgressBar, IsTaskAlive = False))
-            WorkerThread.finished.connect(lambda: self.Function_SwitchStackedWidget(StackedWidget = StackedWidget, TargetIndex = 0))
-            #WorkerThread.finished.connect(ClassInstance.deleteLater)
-            #WorkerThread.finished.connect(WorkerThread.deleteLater)
+            WorkerThread.finished.connect(lambda: self.Function_AnimateStackedWidget(StackedWidget = StackedWidget, TargetIndex = 0))
             WorkerThread.start()
-
-            self.Function_AnimateFrame(
-                Frame = self.ui.Frame_Console,
-                MinWidth = 45,
-                MaxWidth = 333,
-                Mode = "Extend"
-            )
 
         ExecuteButton.clicked.connect(ExecuteMethod)
         ExecuteButton.setText("Execute 执行")
@@ -723,13 +630,6 @@ class MainWindow(Window_Customizing):
                     WorkerThread.quit()
         
             ProgressBar.setValue(0)
-        
-            self.Function_AnimateFrame(
-                Frame = self.ui.Frame_Console,
-                MinWidth = 45,
-                MaxWidth = 333,
-                Mode = "Reduce"
-            )
 
         TerminateButton.clicked.connect(TerminateMethod)
         TerminateButton.setText("Terminate 终止")
@@ -762,7 +662,7 @@ class MainWindow(Window_Customizing):
             )
         )
         self.ui.Button_Home.clicked.connect(
-            lambda: self.Function_SwitchStackedWidget(
+            lambda: self.Function_AnimateStackedWidget(
                 StackedWidget = self.ui.StackedWidget_Pages,
                 TargetIndex = 0
             )
@@ -782,7 +682,7 @@ class MainWindow(Window_Customizing):
             )
         )
         self.ui.Button_Page_1.clicked.connect(
-            lambda: self.Function_SwitchStackedWidget(
+            lambda: self.Function_AnimateStackedWidget(
                 StackedWidget = self.ui.StackedWidget_Pages,
                 TargetIndex = 1
             )
@@ -802,7 +702,7 @@ class MainWindow(Window_Customizing):
             )
         )
         self.ui.Button_Page_2.clicked.connect(
-            lambda: self.Function_SwitchStackedWidget(
+            lambda: self.Function_AnimateStackedWidget(
                 StackedWidget = self.ui.StackedWidget_Pages,
                 TargetIndex = 2
             )
@@ -822,7 +722,7 @@ class MainWindow(Window_Customizing):
             )
         )
         self.ui.Button_Page_3.clicked.connect(
-            lambda: self.Function_SwitchStackedWidget(
+            lambda: self.Function_AnimateStackedWidget(
                 StackedWidget = self.ui.StackedWidget_Pages,
                 TargetIndex = 3
             )
@@ -842,7 +742,7 @@ class MainWindow(Window_Customizing):
             )
         )
         self.ui.Button_Page_4.clicked.connect(
-            lambda: self.Function_SwitchStackedWidget(
+            lambda: self.Function_AnimateStackedWidget(
                 StackedWidget = self.ui.StackedWidget_Pages,
                 TargetIndex = 4
             )
@@ -862,7 +762,7 @@ class MainWindow(Window_Customizing):
             )
         )
         self.ui.Button_Page_5.clicked.connect(
-            lambda: self.Function_SwitchStackedWidget(
+            lambda: self.Function_AnimateStackedWidget(
                 StackedWidget = self.ui.StackedWidget_Pages,
                 TargetIndex = 5
             )
@@ -1699,18 +1599,6 @@ class MainWindow(Window_Customizing):
         self.ui.Button_Toggle_Console.setAutoExclusive(False)
         self.ui.Button_Toggle_Console.setToolTipDuration(-1)
         self.ui.Button_Toggle_Console.setToolTip("Click to toggle/burger console")
-        
-        # Print Console
-        self.CustomSignals.Signal_FrameStatus.connect(
-            lambda FrameStatus: self.ConsoleInfo.Signal_ConsoleInfo.connect(
-                lambda Info: self.Function_PrintText(
-                    Panel = self.ui.PlainTextEdit_Console,
-                    FrameStatus = FrameStatus,
-                    Text = Info
-                )
-            )
-        )
-        self.ConsoleInfo.start()
 
         # Show MainWindow
         self.show()
