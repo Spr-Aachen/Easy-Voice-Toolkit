@@ -7,8 +7,4 @@ class Env_Configurator:
     '''
     def FFmpeg_Installer():
         if Execute_FFmpeg_Installation() == False:
-            print("Failed to install Static FFmpeg, some funtions might not work properly")
-
-
-# Install ffmpeg
-Env_Configurator.FFmpeg_Installer()
+            print("Failed to install Static FFmpeg.")

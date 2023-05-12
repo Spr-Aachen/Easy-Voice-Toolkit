@@ -3,16 +3,14 @@ import platform
 import static_ffmpeg
 
 
-def FFmpeg_Installation(Video):
+def FFmpeg_Installation():
     # ffmpeg installed on first call to add_paths(), threadsafe.
     static_ffmpeg.add_paths()  # blocks until files are downloaded
-    # Now ffmpeg and ffprobe will use static_ffmpeg versions.
-    os.system(f"ffmpeg -i {Video} ...") # Input a video for call
 
 
 def Execute_FFmpeg_Installation():
     try:
-        FFmpeg_Installation("None.mp4") # Video is not actually needed
+        FFmpeg_Installation()
 
     except:
         try:
@@ -20,7 +18,7 @@ def Execute_FFmpeg_Installation():
             if platform.system() == 'Windows':
                 os.system("ipconfig /flushdns & ipconfig /release & ipconfig /renew")
             # Try again
-            FFmpeg_Installation("None.mp4")
+            FFmpeg_Installation()
             print("FFmpeg installed")
         except:
             return False
