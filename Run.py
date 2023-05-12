@@ -10,6 +10,7 @@ from PySide6.QtWidgets import *
 from GUI.WindowCustomizer import Window_Customizing
 from GUI.UI import Ui_MainWindow
 from GUI.Utils import TaskAccelerating
+from EnvConfigurator.Configure import Env_Configurator
 from Tool_AudioProcessor.Process import Audio_Processing
 from Tool_VoiceIdentifier.Identify import Voice_Identifying
 from Tool_VoiceTranscriber.Transcribe import Voice_Transcribing
@@ -33,6 +34,22 @@ class CustomSignals(QObject):
 
     # Run task
     Signal_ExecuteTask = Signal(list)
+
+
+# Task: Configurate environment
+class Execute_Env_Configurator(QObject):
+    '''
+    Install ffmpeg
+    '''
+    finished = Signal()
+
+    def __init__(self):
+        super().__init__()
+
+    def Execute(self):
+        Env_Configurator.FFmpeg_Installer()
+
+        self.finished.emit()
 
 
 # Tool1: AudioProcessor
@@ -576,8 +593,8 @@ class MainWindow(Window_Customizing):
 
     def Function_ExecuteMethod(self,
         ExecuteButton: QPushButton,
-        TerminateButton: QPushButton,
-        ProgressBar: QProgressBar,
+        TerminateButton: Optional[QPushButton],
+        ProgressBar: Optional[QProgressBar],
         Method: object,
         ParamsFrom: list = [],
         EmptyAllowed: list = []
@@ -606,14 +623,14 @@ class MainWindow(Window_Customizing):
             StackedWidget = self.Function_FindParentUI(
                 ChildUI = ExecuteButton, #ChildUI = TerminateButton,
                 ParentType = QStackedWidget
-            )
+            ) if TerminateButton else None
             
             self.CustomSignals.Signal_ExecuteTask.connect(getattr(ClassInstance, MethodName))
             self.CustomSignals.Signal_ExecuteTask.emit(Params)
-            WorkerThread.started.connect(lambda: self.Function_AnimateProgressBar(ProgressBar = ProgressBar, IsTaskAlive = True))
-            WorkerThread.started.connect(lambda: self.Function_AnimateStackedWidget(StackedWidget = StackedWidget, TargetIndex = 1))
-            WorkerThread.finished.connect(lambda: self.Function_AnimateProgressBar(ProgressBar = ProgressBar, IsTaskAlive = False))
-            WorkerThread.finished.connect(lambda: self.Function_AnimateStackedWidget(StackedWidget = StackedWidget, TargetIndex = 0))
+            WorkerThread.started.connect(lambda: self.Function_AnimateProgressBar(ProgressBar = ProgressBar, IsTaskAlive = True)) if ProgressBar else None
+            WorkerThread.started.connect(lambda: self.Function_AnimateStackedWidget(StackedWidget = StackedWidget, TargetIndex = 1)) if TerminateButton else None
+            WorkerThread.finished.connect(lambda: self.Function_AnimateProgressBar(ProgressBar = ProgressBar, IsTaskAlive = False)) if ProgressBar else None
+            WorkerThread.finished.connect(lambda: self.Function_AnimateStackedWidget(StackedWidget = StackedWidget, TargetIndex = 0)) if TerminateButton else None
             WorkerThread.start()
 
         ExecuteButton.clicked.connect(ExecuteMethod)
@@ -631,8 +648,8 @@ class MainWindow(Window_Customizing):
         
             ProgressBar.setValue(0)
 
-        TerminateButton.clicked.connect(TerminateMethod)
-        TerminateButton.setText("Terminate 终止")
+        TerminateButton.clicked.connect(TerminateMethod) if TerminateButton else None
+        TerminateButton.setText("Terminate 终止") if TerminateButton else None
 
     def Main(self):
         '''
@@ -799,13 +816,18 @@ class MainWindow(Window_Customizing):
                 "[提示]\n"
                 "请确保已经正确安装了FFmpeg\n"
         )
-        self.Button = self.Function_InsertUI(
+        self.Function_ExecuteMethod(
+            ExecuteButton = self.Function_InsertUI(
                 ParentUI = self.ui.TextBrowser_Tool_AudioProcessor,
                 InsertType = QPushButton,
                 InsertPosition = "End",
                 UIParam = "Install 安装",
                 UIToolTip = "尝试安装FFmpeg (有概率失败)"
-            )
+            ),
+            TerminateButton = None,
+            ProgressBar = None,
+            Method = Execute_Env_Configurator.Execute
+        )
 
         self.Function_ExecuteMethod(
             ExecuteButton = self.ui.Button_Tool_AudioProcessor_Execute,
