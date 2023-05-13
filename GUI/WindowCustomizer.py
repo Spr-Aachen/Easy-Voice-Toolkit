@@ -59,15 +59,23 @@ class CustomTitleBar:
         self.close_btn.setStyleSheet(
             "QPushButton"
             "{"
-                "background: #ff625f;"
+                "background: rgba(210, 123, 123, 0.6);"
                 "border-radius: 9px;"
             "}"
             "QPushButton:hover"
             "{"
-                "background: #eb4845;"
+                "background: rgba(210, 123, 123, 0.9);"
+            "}"
+
+            "QToolTip"
+            "{"
+                "color: white;"
+                "background-color: transparent;"
             "}"
         )
         self.close_btn.setCursor(Qt.PointingHandCursor)
+        self.close_btn.setToolTipDuration(-1)
+        self.close_btn.setToolTip("Close 关闭")
         self.close_btn.clicked.connect(self.window.close) # 绑定窗口关闭事件
 
         # 添加最大化按钮
@@ -76,15 +84,23 @@ class CustomTitleBar:
         self.max_btn.setStyleSheet(
             "QPushButton"
             "{"
-                "background: #ffbe2f;"
+                "background: rgba(210, 210, 123, 0.6);"
                 "border-radius: 9px;"
             "}"
             "QPushButton:hover"
             "{"
-                "background: #ecae27;"
+                "background: rgba(210, 210, 123, 0.9);"
+            "}"
+
+            "QToolTip"
+            "{"
+                "color: white;"
+                "background-color: transparent;"
             "}"
         )
         self.max_btn.setCursor(Qt.PointingHandCursor)
+        self.max_btn.setToolTipDuration(-1)
+        self.max_btn.setToolTip("Maximize 最大化")
         self.max_btn.clicked.connect(self.setMaxEvent) # 绑定窗口最大化事件（自定义函数）
 
         # 添加最小化按钮
@@ -93,15 +109,23 @@ class CustomTitleBar:
         self.min_btn.setStyleSheet(
             "QPushButton"
             "{"
-                "background: #29c941;"
+                "background: rgba(123, 210, 123, 0.6);"
                 "border-radius: 9px;"
             "}"
             "QPushButton:hover"
             "{"
-                "background: #1ac033;"
+                "background: rgba(123, 210, 123, 0.9);"
+            "}"
+
+            "QToolTip"
+            "{"
+                "color: white;"
+                "background-color: transparent;"
             "}"
         )
         self.min_btn.setCursor(Qt.PointingHandCursor)
+        self.min_btn.setToolTipDuration(-1)
+        self.min_btn.setToolTip("Minimize 最小化")
         self.min_btn.clicked.connect(self.window.showMinimized) # 绑定窗口最小化事件
 
     def setMaxEvent(self):
@@ -110,8 +134,10 @@ class CustomTitleBar:
         '''
         if self.window.isMaximized():
             self.window.showNormal()
+            self.max_btn.setToolTip("Restore 还原")
         else:
             self.window.showMaximized()
+            self.max_btn.setToolTip("Maximize 最大化")
 
     def mouseDoubleClickEvent(self, a0: QtGui.QMouseEvent) -> None:
         '''
