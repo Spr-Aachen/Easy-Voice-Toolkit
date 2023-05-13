@@ -65,7 +65,7 @@ class Audio_Processing:
                     os.remove(path = os.path.join(Audio_Dir_Backup, Audio_Name_Input))
                 except OSError:
                     pass
-                else:
+                finally:
                     shutil.move(src = Audio_Path_Input, dst = Audio_Dir_Backup)
             else:
                 pass
