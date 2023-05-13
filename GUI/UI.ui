@@ -133,6 +133,12 @@ QPushButton:checked {
 	/*border-left-width: 3px;
 	border-left-color: rgb(120, 180, 240);
 	padding-left: 10.5px;*/
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
             </property>
            </widget>
@@ -222,6 +228,12 @@ QPushButton:checked {
 	/*border-right-width: 3px;
 	border-right-color: rgb(120, 180, 240);
 	padding-right: 8px;*/
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
             </property>
            </widget>
@@ -339,6 +351,12 @@ QPushButton:checked {
 	border-left-color: rgb(120, 180, 240);
 	border-right-color: rgb(45, 45, 45);
 	padding-left: 10.5px;
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
                </property>
                <property name="flat">
@@ -380,6 +398,12 @@ QPushButton:checked {
 	border-left-color: rgb(120, 180, 240);
 	border-right-color: rgb(45, 45, 45);
 	padding-left: 9px;
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
                </property>
               </widget>
@@ -418,6 +442,12 @@ QPushButton:checked {
 	border-left-color: rgb(120, 180, 240);
 	border-right-color: rgb(45, 45, 45);
 	padding-left: 9px;
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
                </property>
               </widget>
@@ -456,6 +486,12 @@ QPushButton:checked {
 	border-left-color: rgb(120, 180, 240);
 	border-right-color: rgb(45, 45, 45);
 	padding-left: 9px;
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
                </property>
               </widget>
@@ -494,6 +530,12 @@ QPushButton:checked {
 	border-left-color: rgb(120, 180, 240);
 	border-right-color: rgb(45, 45, 45);
 	padding-left: 9px;
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
                </property>
               </widget>
@@ -532,6 +574,12 @@ QPushButton:checked {
 	border-left-color: rgb(120, 180, 240);
 	border-right-color: rgb(45, 45, 45);
 	padding-left: 9px;
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
                </property>
               </widget>
@@ -980,6 +1028,12 @@ QScrollBar::handle:horizontal:hover {
 }
 QPushButton:hover {
 	background-color: rgb(120, 120, 120);
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
                           </property>
                          </widget>
@@ -1024,6 +1078,12 @@ QPushButton:hover {
 }
 QPushButton:hover {
 	background-color: rgb(120, 120, 120);
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
                           </property>
                          </widget>
@@ -1335,6 +1395,12 @@ QFrame:hover {
 }
 QLineEdit:hover {
 	background-color: rgb(120, 120, 120);
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
                                 </property>
                                </widget>
@@ -1366,6 +1432,12 @@ QLineEdit:hover {
 }
 QPushButton:hover {
 	background-color: rgb(120, 120, 120);
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
                                 </property>
                                 <property name="text">
@@ -1581,6 +1653,12 @@ QComboBox QAbstractScrollArea QScrollBar::handle:horizontal {
 }
 QComboBox QAbstractScrollArea QScrollBar::handle:horizontal:hover {
 	background-color: rgb(120, 120, 120);
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
                              </property>
                             </widget>
@@ -1680,6 +1758,12 @@ QDoubleSpinBox::down-button {
 }
 QDoubleSpinBox::down-arrow {
 	border-image: url(:/(Double)SpinBox_Icon/Sources/DownArrow.png);
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
                              </property>
                              <property name="minimum">
@@ -1782,6 +1866,12 @@ QSpinBox::down-button {
 }
 QSpinBox::down-arrow {
 	border-image: url(:/(Double)SpinBox_Icon/Sources/DownArrow.png);
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
                              </property>
                              <property name="minimum">
@@ -1884,6 +1974,12 @@ QSpinBox::down-button {
 }
 QSpinBox::down-arrow {
 	border-image: url(:/(Double)SpinBox_Icon/Sources/DownArrow.png);
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
                              </property>
                              <property name="minimum">
@@ -1986,6 +2082,12 @@ QSpinBox::down-button {
 }
 QSpinBox::down-arrow {
 	border-image: url(:/(Double)SpinBox_Icon/Sources/DownArrow.png);
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
                              </property>
                              <property name="minimum">
@@ -2088,6 +2190,12 @@ QSpinBox::down-button {
 }
 QSpinBox::down-arrow {
 	border-image: url(:/(Double)SpinBox_Icon/Sources/DownArrow.png);
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
                              </property>
                              <property name="minimum">
@@ -2205,6 +2313,12 @@ QFrame:hover {
 }
 QLineEdit:hover {
 	background-color: rgb(120, 120, 120);
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
                                 </property>
                                </widget>
@@ -2236,6 +2350,12 @@ QLineEdit:hover {
 }
 QPushButton:hover {
 	background-color: rgb(120, 120, 120);
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
                                 </property>
                                 <property name="text">
@@ -2561,6 +2681,12 @@ QScrollBar::handle:horizontal:hover {
 }
 QPushButton:hover {
 	background-color: rgb(120, 120, 120);
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
                           </property>
                          </widget>
@@ -2611,6 +2737,12 @@ QPushButton:hover {
 }
 QPushButton:hover {
 	background-color: rgb(120, 120, 120);
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
                           </property>
                          </widget>
@@ -2922,6 +3054,12 @@ QFrame:hover {
 }
 QLineEdit:hover {
 	background-color: rgb(120, 120, 120);
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
                                 </property>
                                </widget>
@@ -2953,6 +3091,12 @@ QLineEdit:hover {
 }
 QPushButton:hover {
 	background-color: rgb(120, 120, 120);
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
                                 </property>
                                 <property name="text">
@@ -3070,6 +3214,12 @@ QFrame:hover {
 }
 QLineEdit:hover {
 	background-color: rgb(120, 120, 120);
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
                                 </property>
                                </widget>
@@ -3101,6 +3251,12 @@ QLineEdit:hover {
 }
 QPushButton:hover {
 	background-color: rgb(120, 120, 120);
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
                                 </property>
                                 <property name="text">
@@ -3218,6 +3374,12 @@ QFrame:hover {
 }
 QLineEdit:hover {
 	background-color: rgb(120, 120, 120);
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
                                 </property>
                                </widget>
@@ -3249,6 +3411,12 @@ QLineEdit:hover {
 }
 QPushButton:hover {
 	background-color: rgb(120, 120, 120);
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
                                 </property>
                                 <property name="text">
@@ -3464,6 +3632,12 @@ QComboBox QAbstractScrollArea QScrollBar::handle:horizontal {
 }
 QComboBox QAbstractScrollArea QScrollBar::handle:horizontal:hover {
 	background-color: rgb(120, 120, 120);
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
                              </property>
                             </widget>
@@ -3673,6 +3847,12 @@ QComboBox QAbstractScrollArea QScrollBar::handle:horizontal {
 }
 QComboBox QAbstractScrollArea QScrollBar::handle:horizontal:hover {
 	background-color: rgb(120, 120, 120);
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
                              </property>
                             </widget>
@@ -3882,6 +4062,12 @@ QComboBox QAbstractScrollArea QScrollBar::handle:horizontal {
 }
 QComboBox QAbstractScrollArea QScrollBar::handle:horizontal:hover {
 	background-color: rgb(120, 120, 120);
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
                              </property>
                             </widget>
@@ -3981,6 +4167,12 @@ QDoubleSpinBox::down-button {
 }
 QDoubleSpinBox::down-arrow {
 	border-image: url(:/(Double)SpinBox_Icon/Sources/DownArrow.png);
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
                              </property>
                              <property name="minimum">
@@ -4086,6 +4278,12 @@ QDoubleSpinBox::down-button {
 }
 QDoubleSpinBox::down-arrow {
 	border-image: url(:/(Double)SpinBox_Icon/Sources/DownArrow.png);
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
                              </property>
                              <property name="minimum">
@@ -4203,6 +4401,12 @@ QFrame:hover {
 }
 QLineEdit:hover {
 	background-color: rgb(120, 120, 120);
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
                                 </property>
                                </widget>
@@ -4234,6 +4438,12 @@ QLineEdit:hover {
 }
 QPushButton:hover {
 	background-color: rgb(120, 120, 120);
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
                                 </property>
                                 <property name="text">
@@ -4563,6 +4773,12 @@ QScrollBar::handle:horizontal:hover {
 }
 QPushButton:hover {
 	background-color: rgb(120, 120, 120);
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
                           </property>
                          </widget>
@@ -4613,6 +4829,12 @@ QPushButton:hover {
 }
 QPushButton:hover {
 	background-color: rgb(120, 120, 120);
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
                           </property>
                          </widget>
@@ -4924,6 +5146,12 @@ QFrame:hover {
 }
 QLineEdit:hover {
 	background-color: rgb(120, 120, 120);
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
                                 </property>
                                </widget>
@@ -4955,6 +5183,12 @@ QLineEdit:hover {
 }
 QPushButton:hover {
 	background-color: rgb(120, 120, 120);
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
                                 </property>
                                 <property name="text">
@@ -5072,6 +5306,12 @@ QFrame:hover {
 }
 QLineEdit:hover {
 	background-color: rgb(120, 120, 120);
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
                                 </property>
                                </widget>
@@ -5103,6 +5343,12 @@ QLineEdit:hover {
 }
 QPushButton:hover {
 	background-color: rgb(120, 120, 120);
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
                                 </property>
                                 <property name="text">
@@ -5318,6 +5564,12 @@ QComboBox QAbstractScrollArea QScrollBar::handle:horizontal {
 }
 QComboBox QAbstractScrollArea QScrollBar::handle:horizontal:hover {
 	background-color: rgb(120, 120, 120);
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
                              </property>
                             </widget>
@@ -5414,7 +5666,12 @@ QCheckBox::indicator:unchecked {
 QCheckBox::indicator:checked {
 	border-image: url(:/CheckBox_Icon/Sources/ToggleOn.png);
 }
-</string>
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
+}</string>
                              </property>
                              <property name="text">
                               <string>CheckBox</string>
@@ -5513,7 +5770,12 @@ QCheckBox::indicator:unchecked {
 QCheckBox::indicator:checked {
 	border-image: url(:/CheckBox_Icon/Sources/ToggleOn.png);
 }
-</string>
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
+}</string>
                              </property>
                              <property name="text">
                               <string>CheckBox</string>
@@ -5612,7 +5874,12 @@ QCheckBox::indicator:unchecked {
 QCheckBox::indicator:checked {
 	border-image: url(:/CheckBox_Icon/Sources/ToggleOn.png);
 }
-</string>
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
+}</string>
                              </property>
                              <property name="text">
                               <string>CheckBox</string>
@@ -5726,6 +5993,12 @@ QFrame:hover {
 }
 QLineEdit:hover {
 	background-color: rgb(120, 120, 120);
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
                                 </property>
                                </widget>
@@ -5757,6 +6030,12 @@ QLineEdit:hover {
 }
 QPushButton:hover {
 	background-color: rgb(120, 120, 120);
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
                                 </property>
                                 <property name="text">
@@ -6011,6 +6290,12 @@ QComboBox QAbstractScrollArea QScrollBar::handle:horizontal {
 }
 QComboBox QAbstractScrollArea QScrollBar::handle:horizontal:hover {
 	background-color: rgb(120, 120, 120);
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
                              </property>
                             </widget>
@@ -6390,6 +6675,12 @@ QScrollBar::handle:horizontal:hover {
 }
 QPushButton:hover {
 	background-color: rgb(120, 120, 120);
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
                           </property>
                          </widget>
@@ -6440,6 +6731,12 @@ QPushButton:hover {
 }
 QPushButton:hover {
 	background-color: rgb(120, 120, 120);
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
                           </property>
                          </widget>
@@ -6750,6 +7047,12 @@ QFrame:hover {
 }
 QLineEdit:hover {
 	background-color: rgb(120, 120, 120);
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
                                 </property>
                                </widget>
@@ -6781,6 +7084,12 @@ QLineEdit:hover {
 }
 QPushButton:hover {
 	background-color: rgb(120, 120, 120);
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
                                 </property>
                                 <property name="text">
@@ -6882,6 +7191,12 @@ QSpinBox::down-button {
 }
 QSpinBox::down-arrow {
 	border-image: url(:/(Double)SpinBox_Icon/Sources/DownArrow.png);
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
                              </property>
                              <property name="minimum">
@@ -7096,6 +7411,12 @@ QComboBox QAbstractScrollArea QScrollBar::handle:horizontal {
 }
 QComboBox QAbstractScrollArea QScrollBar::handle:horizontal:hover {
 	background-color: rgb(120, 120, 120);
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
                              </property>
                             </widget>
@@ -7206,6 +7527,12 @@ QFrame:hover {
 }
 QLineEdit:hover {
 	background-color: rgb(120, 120, 120);
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
                                 </property>
                                </widget>
@@ -7237,6 +7564,12 @@ QLineEdit:hover {
 }
 QPushButton:hover {
 	background-color: rgb(120, 120, 120);
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
                                 </property>
                                 <property name="text">
@@ -7384,6 +7717,12 @@ QLineEdit:hover {
 }
 QPushButton:hover {
 	background-color: rgb(120, 120, 120);
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
                                 </property>
                                 <property name="text">
@@ -7598,6 +7937,12 @@ QComboBox QAbstractScrollArea QScrollBar::handle:horizontal {
 }
 QComboBox QAbstractScrollArea QScrollBar::handle:horizontal:hover {
 	background-color: rgb(120, 120, 120);
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
                              </property>
                             </widget>
@@ -7693,7 +8038,12 @@ QCheckBox::indicator:unchecked {
 QCheckBox::indicator:checked {
 	border-image: url(:/CheckBox_Icon/Sources/ToggleOn.png);
 }
-</string>
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
+}</string>
                              </property>
                              <property name="text">
                               <string>CheckBox</string>
@@ -7806,6 +8156,12 @@ QFrame:hover {
 }
 QLineEdit:hover {
 	background-color: rgb(120, 120, 120);
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
                                 </property>
                                </widget>
@@ -7837,6 +8193,12 @@ QLineEdit:hover {
 }
 QPushButton:hover {
 	background-color: rgb(120, 120, 120);
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
                                 </property>
                                 <property name="text">
@@ -7953,6 +8315,12 @@ QFrame:hover {
 }
 QLineEdit:hover {
 	background-color: rgb(120, 120, 120);
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
                                 </property>
                                </widget>
@@ -7984,6 +8352,12 @@ QLineEdit:hover {
 }
 QPushButton:hover {
 	background-color: rgb(120, 120, 120);
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
                                 </property>
                                 <property name="text">
@@ -8313,6 +8687,12 @@ QScrollBar::handle:horizontal:hover {
 }
 QPushButton:hover {
 	background-color: rgb(120, 120, 120);
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
                           </property>
                          </widget>
@@ -8363,6 +8743,12 @@ QPushButton:hover {
 }
 QPushButton:hover {
 	background-color: rgb(120, 120, 120);
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
                           </property>
                          </widget>
@@ -8680,6 +9066,12 @@ QFrame:hover {
 }
 QLineEdit:hover {
 	background-color: rgb(120, 120, 120);
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
                                 </property>
                                </widget>
@@ -8711,6 +9103,12 @@ QLineEdit:hover {
 }
 QPushButton:hover {
 	background-color: rgb(120, 120, 120);
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
                                 </property>
                                 <property name="text">
@@ -8828,6 +9226,12 @@ QFrame:hover {
 }
 QLineEdit:hover {
 	background-color: rgb(120, 120, 120);
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
                                 </property>
                                </widget>
@@ -8859,6 +9263,12 @@ QLineEdit:hover {
 }
 QPushButton:hover {
 	background-color: rgb(120, 120, 120);
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
                                 </property>
                                 <property name="text">
@@ -9074,6 +9484,12 @@ QComboBox QAbstractScrollArea QScrollBar::handle:horizontal {
 }
 QComboBox QAbstractScrollArea QScrollBar::handle:horizontal:hover {
 	background-color: rgb(120, 120, 120);
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
                              </property>
                             </widget>
@@ -9170,6 +9586,12 @@ QSpinBox::down-button {
 }
 QSpinBox::down-arrow {
 	border-image: url(:/(Double)SpinBox_Icon/Sources/DownArrow.png);
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
                              </property>
                              <property name="minimum">
@@ -9272,6 +9694,12 @@ QSpinBox::down-button {
 }
 QSpinBox::down-arrow {
 	border-image: url(:/(Double)SpinBox_Icon/Sources/DownArrow.png);
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
                              </property>
                              <property name="minimum">
@@ -9374,6 +9802,12 @@ QSpinBox::down-button {
 }
 QSpinBox::down-arrow {
 	border-image: url(:/(Double)SpinBox_Icon/Sources/DownArrow.png);
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
                              </property>
                              <property name="minimum">
@@ -9476,6 +9910,12 @@ QSpinBox::down-button {
 }
 QSpinBox::down-arrow {
 	border-image: url(:/(Double)SpinBox_Icon/Sources/DownArrow.png);
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
                              </property>
                              <property name="minimum">
@@ -9578,7 +10018,12 @@ QCheckBox::indicator:unchecked {
 QCheckBox::indicator:checked {
 	border-image: url(:/CheckBox_Icon/Sources/ToggleOn.png);
 }
-</string>
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
+}</string>
                              </property>
                              <property name="text">
                               <string>CheckBox</string>
@@ -9677,7 +10122,12 @@ QCheckBox::indicator:unchecked {
 QCheckBox::indicator:checked {
 	border-image: url(:/CheckBox_Icon/Sources/ToggleOn.png);
 }
-</string>
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
+}</string>
                              </property>
                              <property name="text">
                               <string>CheckBox</string>
@@ -9776,6 +10226,12 @@ QSpinBox::down-button {
 }
 QSpinBox::down-arrow {
 	border-image: url(:/(Double)SpinBox_Icon/Sources/DownArrow.png);
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
                              </property>
                              <property name="minimum">
@@ -9864,6 +10320,12 @@ QFrame:hover {
 }
 QLineEdit:hover {
 	background-color: rgb(120, 120, 120);
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
                              </property>
                             </widget>
@@ -9975,6 +10437,12 @@ QFrame:hover {
 }
 QLineEdit:hover {
 	background-color: rgb(120, 120, 120);
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
                                 </property>
                                </widget>
@@ -10006,6 +10474,12 @@ QLineEdit:hover {
 }
 QPushButton:hover {
 	background-color: rgb(120, 120, 120);
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
                                 </property>
                                 <property name="text">
@@ -10094,6 +10568,12 @@ QFrame:hover {
 }
 QLineEdit:hover {
 	background-color: rgb(120, 120, 120);
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
                              </property>
                             </widget>
@@ -10205,6 +10685,12 @@ QFrame:hover {
 }
 QLineEdit:hover {
 	background-color: rgb(120, 120, 120);
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
                                 </property>
                                </widget>
@@ -10236,6 +10722,12 @@ QLineEdit:hover {
 }
 QPushButton:hover {
 	background-color: rgb(120, 120, 120);
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
                                 </property>
                                 <property name="text">
@@ -10398,6 +10890,12 @@ QFrame:hover {
 }
 QLineEdit:hover {
 	background-color: rgb(120, 120, 120);
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
                                 </property>
                                </widget>
@@ -10429,6 +10927,12 @@ QLineEdit:hover {
 }
 QPushButton:hover {
 	background-color: rgb(120, 120, 120);
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
                                 </property>
                                 <property name="text">
@@ -10546,6 +11050,12 @@ QFrame:hover {
 }
 QLineEdit:hover {
 	background-color: rgb(120, 120, 120);
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
                                 </property>
                                </widget>
@@ -10577,6 +11087,12 @@ QLineEdit:hover {
 }
 QPushButton:hover {
 	background-color: rgb(120, 120, 120);
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
                                 </property>
                                 <property name="text">
@@ -10694,6 +11210,12 @@ QFrame:hover {
 }
 QLineEdit:hover {
 	background-color: rgb(120, 120, 120);
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
                                 </property>
                                </widget>
@@ -10725,6 +11247,12 @@ QLineEdit:hover {
 }
 QPushButton:hover {
 	background-color: rgb(120, 120, 120);
+}
+
+
+QToolTip {
+	color: white;
+	background-color: transparent;
 }</string>
                                 </property>
                                 <property name="text">

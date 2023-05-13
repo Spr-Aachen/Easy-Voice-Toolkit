@@ -219,6 +219,12 @@ class MainWindow(Window_Customizing):
                 "{"
                     "background-color: rgb(120, 120, 120);"
                 "}"
+
+                "QToolTip"
+                "{"
+                    "color: white;"
+                    "background-color: transparent;"
+                "}"
             )
         else:
             pass

@@ -1,26 +1,15 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'UIDZdjVo.ui'
+## Form generated from reading UI file 'UIEjutPs.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.4.2
+## Created by: Qt User Interface Compiler version 6.5.0
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
-from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
-    QMetaObject, QObject, QPoint, QRect,
-    QSize, QTime, QUrl, Qt)
-from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
-    QFont, QFontDatabase, QGradient, QIcon,
-    QImage, QKeySequence, QLinearGradient, QPainter,
-    QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox, QDoubleSpinBox,
-    QFrame, QGridLayout, QGroupBox, QHBoxLayout,
-    QLabel, QLineEdit, QMainWindow, QPlainTextEdit,
-    QProgressBar, QPushButton, QScrollArea, QSizePolicy,
-    QSpacerItem, QSpinBox, QStackedWidget, QStatusBar,
-    QTextBrowser, QVBoxLayout, QWidget)
+from PySide6.QtCore import (QCoreApplication, QMetaObject, QRect, QSize, Qt)
+from PySide6.QtWidgets import (QCheckBox, QComboBox, QDoubleSpinBox, QFrame, QGridLayout, QGroupBox, QHBoxLayout, QLabel, QLineEdit, QPlainTextEdit, QProgressBar, QPushButton, QScrollArea, QSizePolicy, QSpacerItem, QSpinBox, QStackedWidget, QStatusBar, QTextBrowser, QVBoxLayout, QWidget)
 
 from . import Sources
 
@@ -89,6 +78,12 @@ class Ui_MainWindow(object):
 "	/*border-left-width: 3px;\n"
 "	border-left-color: rgb(120, 180, 240);\n"
 "	padding-left: 10.5px;*/\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
 
         self.verticalLayout_2.addWidget(self.Button_Toggle_Menu)
@@ -148,6 +143,12 @@ class Ui_MainWindow(object):
 "	/*border-right-width: 3px;\n"
 "	border-right-color: rgb(120, 180, 240);\n"
 "	padding-right: 8px;*/\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
 
         self.verticalLayout_6.addWidget(self.Button_Toggle_Console)
@@ -211,6 +212,12 @@ class Ui_MainWindow(object):
 "	border-left-color: rgb(120, 180, 240);\n"
 "	border-right-color: rgb(45, 45, 45);\n"
 "	padding-left: 10.5px;\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
         self.Button_Home.setFlat(False)
 
@@ -244,6 +251,12 @@ class Ui_MainWindow(object):
 "	border-left-color: rgb(120, 180, 240);\n"
 "	border-right-color: rgb(45, 45, 45);\n"
 "	padding-left: 9px;\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
 
         self.verticalLayout_4.addWidget(self.Button_Page_1)
@@ -276,6 +289,12 @@ class Ui_MainWindow(object):
 "	border-left-color: rgb(120, 180, 240);\n"
 "	border-right-color: rgb(45, 45, 45);\n"
 "	padding-left: 9px;\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
 
         self.verticalLayout_4.addWidget(self.Button_Page_2)
@@ -308,6 +327,12 @@ class Ui_MainWindow(object):
 "	border-left-color: rgb(120, 180, 240);\n"
 "	border-right-color: rgb(45, 45, 45);\n"
 "	padding-left: 9px;\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
 
         self.verticalLayout_4.addWidget(self.Button_Page_3)
@@ -340,6 +365,12 @@ class Ui_MainWindow(object):
 "	border-left-color: rgb(120, 180, 240);\n"
 "	border-right-color: rgb(45, 45, 45);\n"
 "	padding-left: 9px;\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
 
         self.verticalLayout_4.addWidget(self.Button_Page_4)
@@ -372,6 +403,12 @@ class Ui_MainWindow(object):
 "	border-left-color: rgb(120, 180, 240);\n"
 "	border-right-color: rgb(45, 45, 45);\n"
 "	padding-left: 9px;\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
 
         self.verticalLayout_4.addWidget(self.Button_Page_5)
@@ -700,6 +737,12 @@ class Ui_MainWindow(object):
 "}\n"
 "QPushButton:hover {\n"
 "	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
 
         self.verticalLayout_86.addWidget(self.Button_Tool_AudioProcessor_Execute)
@@ -726,6 +769,12 @@ class Ui_MainWindow(object):
 "}\n"
 "QPushButton:hover {\n"
 "	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
 
         self.verticalLayout_87.addWidget(self.Button_Tool_AudioProcessor_Terminate)
@@ -947,6 +996,12 @@ class Ui_MainWindow(object):
 "}\n"
 "QLineEdit:hover {\n"
 "	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
 
         self.horizontalLayout_8.addWidget(self.LineEdit_Tool_AudioProcessor_Media_Dir_Input)
@@ -971,6 +1026,12 @@ class Ui_MainWindow(object):
 "}\n"
 "QPushButton:hover {\n"
 "	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
 
         self.horizontalLayout_8.addWidget(self.Button_Tool_AudioProcessor_Media_Dir_Input)
@@ -1162,6 +1223,12 @@ class Ui_MainWindow(object):
 "}\n"
 "QComboBox QAbstractScrollArea QScrollBar::handle:horizontal:hover {\n"
 "	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
 
         self.verticalLayout_36.addWidget(self.ComboBox_Tool_AudioProcessor_Media_Format_Output)
@@ -1235,6 +1302,12 @@ class Ui_MainWindow(object):
 "}\n"
 "QDoubleSpinBox::down-arrow {\n"
 "	border-image: url(:/(Double)SpinBox_Icon/Sources/DownArrow.png);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
         self.DoubleSpinBox_Tool_AudioProcessor_RMS_Threshold.setMinimum(-999999.000000000000000)
         self.DoubleSpinBox_Tool_AudioProcessor_RMS_Threshold.setMaximum(999999.000000000000000)
@@ -1309,6 +1382,12 @@ class Ui_MainWindow(object):
 "}\n"
 "QSpinBox::down-arrow {\n"
 "	border-image: url(:/(Double)SpinBox_Icon/Sources/DownArrow.png);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
         self.SpinBox_Tool_AudioProcessor_Audio_Length_Min.setMinimum(-999999)
         self.SpinBox_Tool_AudioProcessor_Audio_Length_Min.setMaximum(999999)
@@ -1383,6 +1462,12 @@ class Ui_MainWindow(object):
 "}\n"
 "QSpinBox::down-arrow {\n"
 "	border-image: url(:/(Double)SpinBox_Icon/Sources/DownArrow.png);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
         self.SpinBox_Tool_AudioProcessor_Silent_Interval_Min.setMinimum(-999999)
         self.SpinBox_Tool_AudioProcessor_Silent_Interval_Min.setMaximum(999999)
@@ -1457,6 +1542,12 @@ class Ui_MainWindow(object):
 "}\n"
 "QSpinBox::down-arrow {\n"
 "	border-image: url(:/(Double)SpinBox_Icon/Sources/DownArrow.png);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
         self.SpinBox_Tool_AudioProcessor_Hop_Size.setMinimum(-999999)
         self.SpinBox_Tool_AudioProcessor_Hop_Size.setMaximum(999999)
@@ -1531,6 +1622,12 @@ class Ui_MainWindow(object):
 "}\n"
 "QSpinBox::down-arrow {\n"
 "	border-image: url(:/(Double)SpinBox_Icon/Sources/DownArrow.png);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
         self.SpinBox_Tool_AudioProcessor_Silence_Kept_Max.setMinimum(-999999)
         self.SpinBox_Tool_AudioProcessor_Silence_Kept_Max.setMaximum(999999)
@@ -1602,6 +1699,12 @@ class Ui_MainWindow(object):
 "}\n"
 "QLineEdit:hover {\n"
 "	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
 
         self.horizontalLayout_9.addWidget(self.LineEdit_Tool_AudioProcessor_Media_Dir_Output)
@@ -1623,6 +1726,12 @@ class Ui_MainWindow(object):
 "}\n"
 "QPushButton:hover {\n"
 "	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
 
         self.horizontalLayout_9.addWidget(self.Button_Tool_AudioProcessor_Media_Dir_Output)
@@ -1855,6 +1964,12 @@ class Ui_MainWindow(object):
 "}\n"
 "QPushButton:hover {\n"
 "	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
 
         self.verticalLayout_88.addWidget(self.Button_Tool_VoiceIdentifier_Execute)
@@ -1883,6 +1998,12 @@ class Ui_MainWindow(object):
 "}\n"
 "QPushButton:hover {\n"
 "	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
 
         self.verticalLayout_89.addWidget(self.Button_Tool_VoiceIdentifier_Terminate)
@@ -2101,6 +2222,12 @@ class Ui_MainWindow(object):
 "}\n"
 "QLineEdit:hover {\n"
 "	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
 
         self.horizontalLayout_10.addWidget(self.LineEdit_Tool_VoiceIdentifier_Audio_Dir_Input)
@@ -2122,6 +2249,12 @@ class Ui_MainWindow(object):
 "}\n"
 "QPushButton:hover {\n"
 "	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
 
         self.horizontalLayout_10.addWidget(self.Button_Tool_VoiceIdentifier_Audio_Dir_Input)
@@ -2194,6 +2327,12 @@ class Ui_MainWindow(object):
 "}\n"
 "QLineEdit:hover {\n"
 "	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
 
         self.horizontalLayout_11.addWidget(self.LineEdit_Tool_VoiceIdentifier_Audio_Path_Std)
@@ -2215,6 +2354,12 @@ class Ui_MainWindow(object):
 "}\n"
 "QPushButton:hover {\n"
 "	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
 
         self.horizontalLayout_11.addWidget(self.Button_Tool_VoiceIdentifier_Audio_Path_Std)
@@ -2287,6 +2432,12 @@ class Ui_MainWindow(object):
 "}\n"
 "QLineEdit:hover {\n"
 "	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
 
         self.horizontalLayout_12.addWidget(self.LineEdit_Tool_VoiceIdentifier_Model_Dir)
@@ -2308,6 +2459,12 @@ class Ui_MainWindow(object):
 "}\n"
 "QPushButton:hover {\n"
 "	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
 
         self.horizontalLayout_12.addWidget(self.Button_Tool_VoiceIdentifier_Model_Dir)
@@ -2499,6 +2656,12 @@ class Ui_MainWindow(object):
 "}\n"
 "QComboBox QAbstractScrollArea QScrollBar::handle:horizontal:hover {\n"
 "	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
 
         self.verticalLayout_46.addWidget(self.ComboBox_Tool_VoiceIdentifier_Model_Type)
@@ -2687,6 +2850,12 @@ class Ui_MainWindow(object):
 "}\n"
 "QComboBox QAbstractScrollArea QScrollBar::handle:horizontal:hover {\n"
 "	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
 
         self.verticalLayout_47.addWidget(self.ComboBox_Tool_VoiceIdentifier_Model_Name)
@@ -2875,6 +3044,12 @@ class Ui_MainWindow(object):
 "}\n"
 "QComboBox QAbstractScrollArea QScrollBar::handle:horizontal:hover {\n"
 "	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
 
         self.verticalLayout_48.addWidget(self.ComboBox_Tool_VoiceIdentifier_Feature_Method)
@@ -2948,6 +3123,12 @@ class Ui_MainWindow(object):
 "}\n"
 "QDoubleSpinBox::down-arrow {\n"
 "	border-image: url(:/(Double)SpinBox_Icon/Sources/DownArrow.png);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
         self.DoubleSpinBox_Tool_VoiceIdentifier_DecisionThreshold.setMinimum(-999999.000000000000000)
         self.DoubleSpinBox_Tool_VoiceIdentifier_DecisionThreshold.setMaximum(999999.000000000000000)
@@ -3023,6 +3204,12 @@ class Ui_MainWindow(object):
 "}\n"
 "QDoubleSpinBox::down-arrow {\n"
 "	border-image: url(:/(Double)SpinBox_Icon/Sources/DownArrow.png);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
         self.DoubleSpinBox_Tool_VoiceIdentifier_Duration_of_Audio.setMinimum(-999999.000000000000000)
         self.DoubleSpinBox_Tool_VoiceIdentifier_Duration_of_Audio.setMaximum(999999.000000000000000)
@@ -3094,6 +3281,12 @@ class Ui_MainWindow(object):
 "}\n"
 "QLineEdit:hover {\n"
 "	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
 
         self.horizontalLayout_13.addWidget(self.LineEdit_Tool_VoiceIdentifier_Audio_Dir_Output)
@@ -3115,6 +3308,12 @@ class Ui_MainWindow(object):
 "}\n"
 "QPushButton:hover {\n"
 "	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
 
         self.horizontalLayout_13.addWidget(self.Button_Tool_VoiceIdentifier_Audio_Dir_Output)
@@ -3354,6 +3553,12 @@ class Ui_MainWindow(object):
 "}\n"
 "QPushButton:hover {\n"
 "	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
 
         self.verticalLayout_90.addWidget(self.Button_Tool_VoiceTranscriber_Execute)
@@ -3382,6 +3587,12 @@ class Ui_MainWindow(object):
 "}\n"
 "QPushButton:hover {\n"
 "	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
 
         self.verticalLayout_91.addWidget(self.Button_Tool_VoiceTranscriber_Terminate)
@@ -3600,6 +3811,12 @@ class Ui_MainWindow(object):
 "}\n"
 "QLineEdit:hover {\n"
 "	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
 
         self.horizontalLayout_14.addWidget(self.LineEdit_Tool_VoiceTranscriber_WAV_Dir)
@@ -3621,6 +3838,12 @@ class Ui_MainWindow(object):
 "}\n"
 "QPushButton:hover {\n"
 "	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
 
         self.horizontalLayout_14.addWidget(self.Button_Tool_VoiceTranscriber_WAV_Dir)
@@ -3693,6 +3916,12 @@ class Ui_MainWindow(object):
 "}\n"
 "QLineEdit:hover {\n"
 "	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
 
         self.horizontalLayout_15.addWidget(self.LineEdit_Tool_VoiceTranscriber_Model_Dir)
@@ -3714,6 +3943,12 @@ class Ui_MainWindow(object):
 "}\n"
 "QPushButton:hover {\n"
 "	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
 
         self.horizontalLayout_15.addWidget(self.Button_Tool_VoiceTranscriber_Model_Dir)
@@ -3905,6 +4140,12 @@ class Ui_MainWindow(object):
 "}\n"
 "QComboBox QAbstractScrollArea QScrollBar::handle:horizontal:hover {\n"
 "	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
 
         self.verticalLayout_54.addWidget(self.ComboBox_Tool_VoiceTranscriber_Model_Name)
@@ -3977,7 +4218,12 @@ class Ui_MainWindow(object):
 "QCheckBox::indicator:checked {\n"
 "	border-image: url(:/CheckBox_Icon/Sources/ToggleOn.png);\n"
 "}\n"
-"")
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
+"}")
 
         self.verticalLayout_55.addWidget(self.CheckBox_Tool_VoiceTranscriber_Verbose)
 
@@ -4049,7 +4295,12 @@ class Ui_MainWindow(object):
 "QCheckBox::indicator:checked {\n"
 "	border-image: url(:/CheckBox_Icon/Sources/ToggleOn.png);\n"
 "}\n"
-"")
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
+"}")
 
         self.verticalLayout_56.addWidget(self.CheckBox_Tool_VoiceTranscriber_Condition_on_Previous_Text)
 
@@ -4121,7 +4372,12 @@ class Ui_MainWindow(object):
 "QCheckBox::indicator:checked {\n"
 "	border-image: url(:/CheckBox_Icon/Sources/ToggleOn.png);\n"
 "}\n"
-"")
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
+"}")
 
         self.verticalLayout_57.addWidget(self.CheckBox_Tool_VoiceTranscriber_fp16)
 
@@ -4190,6 +4446,12 @@ class Ui_MainWindow(object):
 "}\n"
 "QLineEdit:hover {\n"
 "	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
 
         self.horizontalLayout_16.addWidget(self.LineEdit_Tool_VoiceTranscriber_SRT_Dir)
@@ -4211,6 +4473,12 @@ class Ui_MainWindow(object):
 "}\n"
 "QPushButton:hover {\n"
 "	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
 
         self.horizontalLayout_16.addWidget(self.Button_Tool_VoiceTranscriber_SRT_Dir)
@@ -4427,6 +4695,12 @@ class Ui_MainWindow(object):
 "}\n"
 "QComboBox QAbstractScrollArea QScrollBar::handle:horizontal:hover {\n"
 "	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
 
         self.verticalLayout_59.addWidget(self.ComboBox_Tool_VoiceTranscriber_Language)
@@ -4718,6 +4992,12 @@ class Ui_MainWindow(object):
 "}\n"
 "QPushButton:hover {\n"
 "	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
 
         self.verticalLayout_92.addWidget(self.Button_Tool_DatasetCreator_Execute)
@@ -4746,6 +5026,12 @@ class Ui_MainWindow(object):
 "}\n"
 "QPushButton:hover {\n"
 "	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
 
         self.verticalLayout_93.addWidget(self.Button_Tool_DatasetCreator_Terminate)
@@ -4963,6 +5249,12 @@ class Ui_MainWindow(object):
 "}\n"
 "QLineEdit:hover {\n"
 "	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
 
         self.horizontalLayout_17.addWidget(self.LineEdit_Tool_DatasetCreator_WAV_Dir)
@@ -4984,6 +5276,12 @@ class Ui_MainWindow(object):
 "}\n"
 "QPushButton:hover {\n"
 "	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
 
         self.horizontalLayout_17.addWidget(self.Button_Tool_DatasetCreator_WAV_Dir)
@@ -5058,6 +5356,12 @@ class Ui_MainWindow(object):
 "}\n"
 "QSpinBox::down-arrow {\n"
 "	border-image: url(:/(Double)SpinBox_Icon/Sources/DownArrow.png);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
         self.SpinBox_Tool_DatasetCreator_Sample_Rate.setMinimum(-999999)
         self.SpinBox_Tool_DatasetCreator_Sample_Rate.setMaximum(999999)
@@ -5247,6 +5551,12 @@ class Ui_MainWindow(object):
 "}\n"
 "QComboBox QAbstractScrollArea QScrollBar::handle:horizontal:hover {\n"
 "	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
 
         self.verticalLayout_62.addWidget(self.ComboBox_Tool_DatasetCreator_Subtype)
@@ -5315,6 +5625,12 @@ class Ui_MainWindow(object):
 "}\n"
 "QLineEdit:hover {\n"
 "	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
 
         self.horizontalLayout_18.addWidget(self.LineEdit_Tool_DatasetCreator_WAV_Dir_Split)
@@ -5336,6 +5652,12 @@ class Ui_MainWindow(object):
 "}\n"
 "QPushButton:hover {\n"
 "	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
 
         self.horizontalLayout_18.addWidget(self.Button_Tool_DatasetCreator_WAV_Dir_Split)
@@ -5428,6 +5750,12 @@ class Ui_MainWindow(object):
 "}\n"
 "QPushButton:hover {\n"
 "	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
 
         self.horizontalLayout_19.addWidget(self.Button_Tool_DatasetCreator_SRT_Dir)
@@ -5618,6 +5946,12 @@ class Ui_MainWindow(object):
 "}\n"
 "QComboBox QAbstractScrollArea QScrollBar::handle:horizontal:hover {\n"
 "	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
 
         self.verticalLayout_68.addWidget(self.ComboBox_Tool_DatasetCreator_AutoEncoder)
@@ -5689,7 +6023,12 @@ class Ui_MainWindow(object):
 "QCheckBox::indicator:checked {\n"
 "	border-image: url(:/CheckBox_Icon/Sources/ToggleOn.png);\n"
 "}\n"
-"")
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
+"}")
 
         self.verticalLayout_67.addWidget(self.CheckBox_Tool_DatasetCreator_IsSpeakerMultiple)
 
@@ -5757,6 +6096,12 @@ class Ui_MainWindow(object):
 "}\n"
 "QLineEdit:hover {\n"
 "	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
 
         self.horizontalLayout_20.addWidget(self.LineEdit_Tool_DatasetCreator_FileList_Path_Training)
@@ -5778,6 +6123,12 @@ class Ui_MainWindow(object):
 "}\n"
 "QPushButton:hover {\n"
 "	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
 
         self.horizontalLayout_20.addWidget(self.Button_Tool_DatasetCreator_FileList_Path_Training)
@@ -5849,6 +6200,12 @@ class Ui_MainWindow(object):
 "}\n"
 "QLineEdit:hover {\n"
 "	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
 
         self.horizontalLayout_21.addWidget(self.LineEdit_Tool_DatasetCreator_FileList_Path_Validation)
@@ -5870,6 +6227,12 @@ class Ui_MainWindow(object):
 "}\n"
 "QPushButton:hover {\n"
 "	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
 
         self.horizontalLayout_21.addWidget(self.Button_Tool_DatasetCreator_FileList_Path_Validation)
@@ -6109,6 +6472,12 @@ class Ui_MainWindow(object):
 "}\n"
 "QPushButton:hover {\n"
 "	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
 
         self.verticalLayout_94.addWidget(self.Button_Tool_VoiceTrainer_Execute)
@@ -6137,6 +6506,12 @@ class Ui_MainWindow(object):
 "}\n"
 "QPushButton:hover {\n"
 "	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
 
         self.verticalLayout_95.addWidget(self.Button_Tool_VoiceTrainer_Terminate)
@@ -6356,6 +6731,12 @@ class Ui_MainWindow(object):
 "}\n"
 "QLineEdit:hover {\n"
 "	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
 
         self.horizontalLayout_22.addWidget(self.LineEdit_Tool_VoiceTrainer_FileList_Path_Training)
@@ -6377,6 +6758,12 @@ class Ui_MainWindow(object):
 "}\n"
 "QPushButton:hover {\n"
 "	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
 
         self.horizontalLayout_22.addWidget(self.Button_Tool_VoiceTrainer_FileList_Path_Training)
@@ -6449,6 +6836,12 @@ class Ui_MainWindow(object):
 "}\n"
 "QLineEdit:hover {\n"
 "	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
 
         self.horizontalLayout_23.addWidget(self.LineEdit_Tool_VoiceTrainer_FileList_Path_Validation)
@@ -6470,6 +6863,12 @@ class Ui_MainWindow(object):
 "}\n"
 "QPushButton:hover {\n"
 "	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
 
         self.horizontalLayout_23.addWidget(self.Button_Tool_VoiceTrainer_FileList_Path_Validation)
@@ -6661,6 +7060,12 @@ class Ui_MainWindow(object):
 "}\n"
 "QComboBox QAbstractScrollArea QScrollBar::handle:horizontal:hover {\n"
 "	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
 
         self.verticalLayout_71.addWidget(self.ComboBox_Tool_VoiceTrainer_Language)
@@ -6733,6 +7138,12 @@ class Ui_MainWindow(object):
 "}\n"
 "QSpinBox::down-arrow {\n"
 "	border-image: url(:/(Double)SpinBox_Icon/Sources/DownArrow.png);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
         self.SpinBox_Tool_VoiceTrainer_Eval_Interval.setMinimum(-999999)
         self.SpinBox_Tool_VoiceTrainer_Eval_Interval.setMaximum(999999)
@@ -6807,6 +7218,12 @@ class Ui_MainWindow(object):
 "}\n"
 "QSpinBox::down-arrow {\n"
 "	border-image: url(:/(Double)SpinBox_Icon/Sources/DownArrow.png);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
         self.SpinBox_Tool_VoiceTrainer_Epochs.setMinimum(-999999)
         self.SpinBox_Tool_VoiceTrainer_Epochs.setMaximum(999999)
@@ -6881,6 +7298,12 @@ class Ui_MainWindow(object):
 "}\n"
 "QSpinBox::down-arrow {\n"
 "	border-image: url(:/(Double)SpinBox_Icon/Sources/DownArrow.png);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
         self.SpinBox_Tool_VoiceTrainer_Batch_Size.setMinimum(-999999)
         self.SpinBox_Tool_VoiceTrainer_Batch_Size.setMaximum(999999)
@@ -6955,6 +7378,12 @@ class Ui_MainWindow(object):
 "}\n"
 "QSpinBox::down-arrow {\n"
 "	border-image: url(:/(Double)SpinBox_Icon/Sources/DownArrow.png);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
         self.SpinBox_Tool_VoiceTrainer_Num_Workers.setMinimum(-999999)
         self.SpinBox_Tool_VoiceTrainer_Num_Workers.setMaximum(999999)
@@ -7029,7 +7458,12 @@ class Ui_MainWindow(object):
 "QCheckBox::indicator:checked {\n"
 "	border-image: url(:/CheckBox_Icon/Sources/ToggleOn.png);\n"
 "}\n"
-"")
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
+"}")
 
         self.verticalLayout_76.addWidget(self.CheckBox_Tool_VoiceTrainer_FP16_Run)
 
@@ -7101,7 +7535,12 @@ class Ui_MainWindow(object):
 "QCheckBox::indicator:checked {\n"
 "	border-image: url(:/CheckBox_Icon/Sources/ToggleOn.png);\n"
 "}\n"
-"")
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
+"}")
 
         self.verticalLayout_77.addWidget(self.CheckBox_Tool_VoiceTrainer_IsSpeakerMultiple)
 
@@ -7173,6 +7612,12 @@ class Ui_MainWindow(object):
 "}\n"
 "QSpinBox::down-arrow {\n"
 "	border-image: url(:/(Double)SpinBox_Icon/Sources/DownArrow.png);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
         self.SpinBox_Tool_VoiceTrainer_N_Speakers.setMinimum(-999999)
         self.SpinBox_Tool_VoiceTrainer_N_Speakers.setMaximum(999999)
@@ -7232,6 +7677,12 @@ class Ui_MainWindow(object):
 "}\n"
 "QLineEdit:hover {\n"
 "	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
 
         self.verticalLayout_79.addWidget(self.LineEdit_Tool_VoiceTrainer_Speakers)
@@ -7301,6 +7752,12 @@ class Ui_MainWindow(object):
 "}\n"
 "QLineEdit:hover {\n"
 "	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
 
         self.horizontalLayout_24.addWidget(self.LineEdit_Tool_VoiceTrainer_Config_Dir_Save)
@@ -7322,6 +7779,12 @@ class Ui_MainWindow(object):
 "}\n"
 "QPushButton:hover {\n"
 "	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
 
         self.horizontalLayout_24.addWidget(self.Button_Tool_VoiceTrainer_Config_Dir_Save)
@@ -7379,6 +7842,12 @@ class Ui_MainWindow(object):
 "}\n"
 "QLineEdit:hover {\n"
 "	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
 
         self.verticalLayout_81.addWidget(self.LineEdit_Tool_VoiceTrainer_Model_Name_Save)
@@ -7448,6 +7917,12 @@ class Ui_MainWindow(object):
 "}\n"
 "QLineEdit:hover {\n"
 "	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
 
         self.horizontalLayout_25.addWidget(self.LineEdit_Tool_VoiceTrainer_Model_Dir_Save)
@@ -7469,6 +7944,12 @@ class Ui_MainWindow(object):
 "}\n"
 "QPushButton:hover {\n"
 "	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
 
         self.horizontalLayout_25.addWidget(self.Button_Tool_VoiceTrainer_Model_Dir_Save)
@@ -7567,6 +8048,12 @@ class Ui_MainWindow(object):
 "}\n"
 "QLineEdit:hover {\n"
 "	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
 
         self.horizontalLayout_26.addWidget(self.LineEdit_Tool_VoiceTrainer_Config_Path_Load)
@@ -7588,6 +8075,12 @@ class Ui_MainWindow(object):
 "}\n"
 "QPushButton:hover {\n"
 "	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
 
         self.horizontalLayout_26.addWidget(self.Button_Tool_VoiceTrainer_Config_Path_Load)
@@ -7660,6 +8153,12 @@ class Ui_MainWindow(object):
 "}\n"
 "QLineEdit:hover {\n"
 "	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
 
         self.horizontalLayout_27.addWidget(self.LineEdit_Tool_VoiceTrainer_Model_Path_Pretrained_G)
@@ -7681,6 +8180,12 @@ class Ui_MainWindow(object):
 "}\n"
 "QPushButton:hover {\n"
 "	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
 
         self.horizontalLayout_27.addWidget(self.Button_Tool_VoiceTrainer_Model_Path_Pretrained_G)
@@ -7753,6 +8258,12 @@ class Ui_MainWindow(object):
 "}\n"
 "QLineEdit:hover {\n"
 "	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
 
         self.horizontalLayout_28.addWidget(self.LineEdit_Tool_VoiceTrainer_Model_Path_Pretrained_D)
@@ -7774,6 +8285,12 @@ class Ui_MainWindow(object):
 "}\n"
 "QPushButton:hover {\n"
 "	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
 "}")
 
         self.horizontalLayout_28.addWidget(self.Button_Tool_VoiceTrainer_Model_Path_Pretrained_D)
