@@ -1423,6 +1423,7 @@ class MainWindow(Window_Customizing):
                 self.ui.LineEdit_Tool_VoiceTrainer_Model_Name_Save
             ],
             EmptyAllowed = [
+                self.ui.LineEdit_Tool_VoiceTrainer_Speakers,
                 self.ui.LineEdit_Tool_VoiceTrainer_Config_Path_Load,
                 self.ui.LineEdit_Tool_VoiceTrainer_Model_Path_Pretrained_G,
                 self.ui.LineEdit_Tool_VoiceTrainer_Model_Path_Pretrained_D
