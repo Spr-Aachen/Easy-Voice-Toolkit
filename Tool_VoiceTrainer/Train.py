@@ -99,8 +99,8 @@ class Preprocessing:
                 Params_Old["train"]["epochs"]           = self.Set_Epochs
                 Params_Old["train"]["batch_size"]       = self.Set_Batch_Size
                 Params_Old["train"]["fp16_run"]         = self.Set_FP16_Run
-                Params_Old["data"]["training_files"]    = (self.FileList_Path_Training.split(":", 1)[-1] + "." + self.Out_Extension).lower()
-                Params_Old["data"]["validation_files"]  = (self.FileList_Path_Validation.split(":", 1)[-1] + "." + self.Out_Extension).lower()
+                Params_Old["data"]["training_files"]    = (self.FileList_Path_Training + "." + self.Out_Extension).lower()
+                Params_Old["data"]["validation_files"]  = (self.FileList_Path_Validation + "." + self.Out_Extension).lower()
                 Params_Old["data"]["n_speakers"]        = self.Set_N_Speakers if self.IsSpeakerMultiple == True else 0
                 Params_Old["speakers"]                  = json.dumps(self.Set_Speakers) if self.IsSpeakerMultiple == True else json.dumps(None)
                 Params_New = Params_Old
