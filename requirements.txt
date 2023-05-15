@@ -24,7 +24,7 @@ soundfile
 num2words
 
 
-# Tool_VoiceEncoder
+# Tool_VoiceTrainer
 numba
 numpy
 
@@ -34,6 +34,7 @@ eng_to_ipa
 pypinyin
 jieba
 cn2an
+#opencc
 
 scipy
 librosa
