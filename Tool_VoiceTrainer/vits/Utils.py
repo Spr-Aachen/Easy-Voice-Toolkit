@@ -149,8 +149,7 @@ def load_filepaths_and_text(filename, split="|"):
 def get_hparams(
     Config_Path: str,
     Model_Dir: str,
-    Model_Name: str,
-    Init:bool
+    Model_Name: str
 ):
     parser = argparse.ArgumentParser()
     parser.add_argument('--ConfigPath',   '-c',   type = str,   default = Config_Path,  help = 'JSON file path for configuration')
@@ -163,40 +162,13 @@ def get_hparams(
         os.makedirs(model_dir)
 
     config_path = args.ConfigPath
-    config_save_path = os.path.join(model_dir, "config.json")
-    if Init:
-        with open(config_path, "r") as f:
-            data = f.read()
-        with open(config_save_path, "w") as f:
-            f.write(data)
-    else:
-        with open(config_save_path, "r") as f:
-            data = f.read()
+    with open(config_path, "r") as f:
+        data = f.read()
     config = json.loads(data)
 
     hparams = HParams(**config)
     hparams.model_dir = model_dir
     return hparams
-
-
-def get_hparams_from_dir(model_dir):
-  config_save_path = os.path.join(model_dir, "config.json")
-  with open(config_save_path, "r") as f:
-    data = f.read()
-  config = json.loads(data)
-
-  hparams =HParams(**config)
-  hparams.model_dir = model_dir
-  return hparams
-
-
-def get_hparams_from_file(config_path):
-  with open(config_path, "r") as f:
-    data = f.read()
-  config = json.loads(data)
-
-  hparams =HParams(**config)
-  return hparams
 
 
 def check_git_hash(model_dir):

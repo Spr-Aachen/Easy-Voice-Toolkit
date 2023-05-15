@@ -60,7 +60,7 @@ class Preprocessing:
     def __init__(self,
         FileList_Path_Validation: str,
         FileList_Path_Training: str,
-        Language: str = 'chinese',
+        Language: str = 'mandarin_english',
         Config_Path_Load: Optional[str] = None,
         Config_Dir_Save: str = './',
         Set_Eval_Interval: int = 1000,
@@ -528,7 +528,7 @@ class Voice_Training(Preprocessing, Training):
     def __init__(self,
         FileList_Path_Validation: str,
         FileList_Path_Training: str,
-        Language: str = 'chinese',
+        Language: str = 'mandarin_english',
         Config_Path_Load: Optional[str] = None,
         Config_Dir_Save: str = './',
         Set_Eval_Interval: int = 1000,
@@ -576,7 +576,6 @@ class Voice_Training(Preprocessing, Training):
         hps = utils.get_hparams(
             Config_Path = self.Config_Path_Edited,
             Model_Dir = self.Model_Dir_Save,
-            Model_Name = self.Model_Name_Save,
-            Init = True
+            Model_Name = self.Model_Name_Save
         )
         mp.spawn(super().run, args = (n_gpus, hps,), nprocs = n_gpus)
