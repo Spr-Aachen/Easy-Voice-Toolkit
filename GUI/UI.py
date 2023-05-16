@@ -6639,7 +6639,7 @@ class Ui_MainWindow(object):
         self.ScrollArea_Right_Page_5.setWidgetResizable(True)
         self.ScrollArea_Right_WidgetContents_Page_5 = QWidget()
         self.ScrollArea_Right_WidgetContents_Page_5.setObjectName(u"ScrollArea_Right_WidgetContents_Page_5")
-        self.ScrollArea_Right_WidgetContents_Page_5.setGeometry(QRect(0, 0, 619, 2230))
+        self.ScrollArea_Right_WidgetContents_Page_5.setGeometry(QRect(0, 0, 619, 2107))
         self.ScrollArea_Right_WidgetContents_Page_5.setMinimumSize(QSize(0, 0))
         self.verticalLayout_22 = QVBoxLayout(self.ScrollArea_Right_WidgetContents_Page_5)
         self.verticalLayout_22.setSpacing(21)
@@ -7795,66 +7795,6 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_33.addWidget(self.Frame_Tool_VoiceTrainer_Config_Dir_Save)
 
-        self.Frame_Tool_VoiceTrainer_Model_Name_Save = QFrame(self.GroupBox_EssentialParams_Page_5)
-        self.Frame_Tool_VoiceTrainer_Model_Name_Save.setObjectName(u"Frame_Tool_VoiceTrainer_Model_Name_Save")
-        self.Frame_Tool_VoiceTrainer_Model_Name_Save.setMinimumSize(QSize(0, 123))
-        self.Frame_Tool_VoiceTrainer_Model_Name_Save.setStyleSheet(u"QFrame {\n"
-"	color: rgb(255, 255, 255);\n"
-"	background-color: rgb(45, 45, 45);\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QFrame:hover {\n"
-"	background-color: rgb(60, 60, 60);\n"
-"}")
-        self.verticalLayout_81 = QVBoxLayout(self.Frame_Tool_VoiceTrainer_Model_Name_Save)
-        self.verticalLayout_81.setSpacing(12)
-        self.verticalLayout_81.setObjectName(u"verticalLayout_81")
-        self.verticalLayout_81.setContentsMargins(21, 12, 21, 12)
-        self.Label_Tool_VoiceTrainer_Model_Name_Save = QLabel(self.Frame_Tool_VoiceTrainer_Model_Name_Save)
-        self.Label_Tool_VoiceTrainer_Model_Name_Save.setObjectName(u"Label_Tool_VoiceTrainer_Model_Name_Save")
-        self.Label_Tool_VoiceTrainer_Model_Name_Save.setStyleSheet(u"QLabel {\n"
-"	/*text-align: center;*/\n"
-"	/*color: rgb(255, 255, 255);*/\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.verticalLayout_81.addWidget(self.Label_Tool_VoiceTrainer_Model_Name_Save)
-
-        self.LineEdit_Tool_VoiceTrainer_Model_Name_Save = QLineEdit(self.Frame_Tool_VoiceTrainer_Model_Name_Save)
-        self.LineEdit_Tool_VoiceTrainer_Model_Name_Save.setObjectName(u"LineEdit_Tool_VoiceTrainer_Model_Name_Save")
-        sizePolicy4.setHeightForWidth(self.LineEdit_Tool_VoiceTrainer_Model_Name_Save.sizePolicy().hasHeightForWidth())
-        self.LineEdit_Tool_VoiceTrainer_Model_Name_Save.setSizePolicy(sizePolicy4)
-        self.LineEdit_Tool_VoiceTrainer_Model_Name_Save.setStyleSheet(u"QLineEdit {\n"
-"	text-align: left;\n"
-"	color: rgb(255, 255, 255);\n"
-"	selection-background-color: darkgrey;\n"
-"	background-color: rgb(90, 90, 90);\n"
-"	padding: 1.5px;\n"
-"	border-width: 1px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QLineEdit:hover {\n"
-"	background-color: rgb(120, 120, 120);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: white;\n"
-"	background-color: transparent;\n"
-"}")
-
-        self.verticalLayout_81.addWidget(self.LineEdit_Tool_VoiceTrainer_Model_Name_Save)
-
-
-        self.verticalLayout_33.addWidget(self.Frame_Tool_VoiceTrainer_Model_Name_Save)
-
         self.Frame_Tool_VoiceTrainer_Model_Dir_Save = QFrame(self.GroupBox_EssentialParams_Page_5)
         self.Frame_Tool_VoiceTrainer_Model_Dir_Save.setObjectName(u"Frame_Tool_VoiceTrainer_Model_Dir_Save")
         self.Frame_Tool_VoiceTrainer_Model_Dir_Save.setMinimumSize(QSize(0, 123))
@@ -8579,7 +8519,6 @@ class Ui_MainWindow(object):
         self.Label_Tool_VoiceTrainer_Speakers.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Tool_VoiceTrainer_Config_Dir_Save.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Button_Tool_VoiceTrainer_Config_Dir_Save.setText(QCoreApplication.translate("MainWindow", u"...", None))
-        self.Label_Tool_VoiceTrainer_Model_Name_Save.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Tool_VoiceTrainer_Model_Dir_Save.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Button_Tool_VoiceTrainer_Model_Dir_Save.setText(QCoreApplication.translate("MainWindow", u"...", None))
         self.Label_Tool_VoiceTrainer_Config_Path_Load.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
@@ -8589,4 +8528,3 @@ class Ui_MainWindow(object):
         self.Label_Tool_VoiceTrainer_Model_Path_Pretrained_D.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Button_Tool_VoiceTrainer_Model_Path_Pretrained_D.setText(QCoreApplication.translate("MainWindow", u"...", None))
     # retranslateUi
-

@@ -1419,8 +1419,7 @@ class MainWindow(Window_Customizing):
                 self.ui.SpinBox_Tool_VoiceTrainer_Num_Workers,
                 self.ui.LineEdit_Tool_VoiceTrainer_Model_Path_Pretrained_G,
                 self.ui.LineEdit_Tool_VoiceTrainer_Model_Path_Pretrained_D,
-                self.ui.LineEdit_Tool_VoiceTrainer_Model_Dir_Save,
-                self.ui.LineEdit_Tool_VoiceTrainer_Model_Name_Save
+                self.ui.LineEdit_Tool_VoiceTrainer_Model_Dir_Save
             ],
             EmptyAllowed = [
                 self.ui.LineEdit_Tool_VoiceTrainer_Speakers,
@@ -1467,13 +1466,13 @@ class MainWindow(Window_Customizing):
             Title = "Language",
             Body = "所用语言。音频中说话人所使用的语言。"
         )
-        self.ui.ComboBox_Tool_VoiceTrainer_Language.addItems(['chinese'])
-        self.ui.ComboBox_Tool_VoiceTrainer_Language.setCurrentText('chinese')
+        self.ui.ComboBox_Tool_VoiceTrainer_Language.addItems(['mandarin', 'mandarin_english'])
+        self.ui.ComboBox_Tool_VoiceTrainer_Language.setCurrentText('mandarin_english')
 
         self.Function_SetText(
             Panel = self.ui.Label_Tool_VoiceTrainer_Eval_Interval,
             Title = "Eval Interval",
-            Body = "保存间隔。每保存一次模型所间隔的迭代次数。"
+            Body = "评估间隔。每次评估并保存模型所间隔的step数。"
         )
         self.ui.SpinBox_Tool_VoiceTrainer_Eval_Interval.setSingleStep(1)
         self.ui.SpinBox_Tool_VoiceTrainer_Eval_Interval.setValue(1000)
@@ -1483,7 +1482,7 @@ class MainWindow(Window_Customizing):
         self.Function_SetText(
             Panel = self.ui.Label_Tool_VoiceTrainer_Epochs,
             Title = "Epochs",
-            Body = "迭代次数。将训练集中所有样本训练一次的次数。"
+            Body = "迭代轮数。将全部样本完整迭代一轮的次数。"
         )
         self.ui.SpinBox_Tool_VoiceTrainer_Epochs.setSingleStep(1)
         self.ui.SpinBox_Tool_VoiceTrainer_Epochs.setValue(10000)
@@ -1493,7 +1492,7 @@ class MainWindow(Window_Customizing):
         self.Function_SetText(
             Panel = self.ui.Label_Tool_VoiceTrainer_Batch_Size,
             Title = "Batch Size",
-            Body = "批处理量。每次训练所使用的样本个数，若用户GPU性能较弱可减小该值。"
+            Body = "批处理量。每轮迭代中单位批次的样本数量，若用户GPU性能较弱可减小该值。"
         )
         self.ui.SpinBox_Tool_VoiceTrainer_Batch_Size.setSingleStep(1)
         self.ui.SpinBox_Tool_VoiceTrainer_Batch_Size.setValue(8)
@@ -1553,14 +1552,6 @@ class MainWindow(Window_Customizing):
             Mode = "SelectDir",
             DisplayText = "None"
         )
-
-        self.Function_SetText(
-            Panel = self.ui.Label_Tool_VoiceTrainer_Model_Name_Save,
-            Title = "Model Name Save",
-            Body = "模型保存名字。最后生成的模型的名字。"
-        )
-        self.ui.LineEdit_Tool_VoiceTrainer_Model_Name_Save.setReadOnly(False)
-        self.ui.LineEdit_Tool_VoiceTrainer_Model_Name_Save.setText('')
 
         self.Function_SetText(
             Panel = self.ui.Label_Tool_VoiceTrainer_Model_Dir_Save,

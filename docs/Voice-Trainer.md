@@ -18,12 +18,12 @@
 <br>用于提供验证集音频路径及其语音内容的验证集txt文件的路径
 > - 所用语言<br>Language
 <br>音频中说话人所使用的语言
-> - 保存间隔<br>Eval Interval
-<br>每保存一次模型所间隔的迭代次数
-> - 迭代次数<br>Epochs
-<br>将训练集中所有样本训练一次的次数
+> - 评估间隔<br>Eval Interval
+<br>每次评估并保存模型所间隔的step数
+> - 迭代轮数<br>Epochs
+<br>将全部样本完整迭代一轮的次数
 > - 批处理量<br>Batch Size
-<br>每次训练所使用的样本个数，若用户GPU性能较弱可减小该值
+<br>每轮迭代中单位批次的样本数量，若用户GPU性能较弱可减小该值
 <br>注意：最好设置为2的幂次。设置为1会导致网络很难收敛
 > - 进程数量<br>Num Workers
 <br>进行数据加载时可使用的子进程数量，若用户CPU性能较弱可减小该值
@@ -38,8 +38,6 @@
 <br>注意：不同人物名之间要用逗号隔开
 > - 配置保存目录<br>Config Dir Save
 <br>用于保存根据以上设置更新参数后的配置文件的目录
-> - 模型保存名字<br>Model Name Save
-<br>生成的模型的名字
 > - 模型保存目录<br>Model Dir Save
 <br>用于存放生成的模型的目录
 > - [可选] 配置加载路径<br>[Optional] Config Path Load
