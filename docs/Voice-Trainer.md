@@ -43,9 +43,9 @@
 > - [可选] 配置加载路径<br>[Optional] Config Path Load
 <br>用于替代默认配置文件的用户配置文件的路径
 > - [可选] 预训练G模型路径<br>[Optional] Model Path Pretrained G
-<br>用作断点的预训练Gradient模型的路径
+<br>用作断点的预训练生成器（Generator）模型的路径
 > - [可选] 预训练D模型路径<br>[Optional] Model Path Pretrained D
-<br>用作断点的预训练Descent模型的路径
+<br>用作断点的预训练判别器（Discriminator）模型的路径
 
 2. 运行工具
 <br>点击左下方的`Execute`按钮以开始执行，执行过程中点击`Terminate`按钮以终止进程
