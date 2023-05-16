@@ -73,7 +73,7 @@ def summarize(writer, global_step, scalars={}, histograms={}, images={}, audios=
 
 
 def latest_checkpoint_path(dir_path, regex="G_*.pth"):
-  f_list = glob.glob(os.path.join(dir_path, regex))
+  f_list = glob.glob(os.path.normpath(os.path.join(dir_path, regex)))
   f_list.sort(key=lambda f: int("".join(filter(str.isdigit, f))))
   x = f_list[-1]
   print(x)
@@ -148,18 +148,15 @@ def load_filepaths_and_text(filename, split="|"):
 
 def get_hparams(
     Config_Path: str,
-    Model_Dir: str,
-    Model_Name: str
+    Model_Dir: str
 ):
     parser = argparse.ArgumentParser()
     parser.add_argument('--ConfigPath',   '-c',   type = str,   default = Config_Path,  help = 'JSON file path for configuration')
-    parser.add_argument('--ModelDir',     '-f',   type = str,   default = Model_Dir,    help = 'Folder path to store your model')
-    parser.add_argument('--ModelName',    '-m',   type = str,   default = Model_Name,   help = 'The name of your model')
+    parser.add_argument('--ModelDir',     '-m',   type = str,   default = Model_Dir,    help = 'Folder path to store your model')
     args = parser.parse_args(args = [])
 
-    model_dir = os.path.join(args.ModelDir, args.ModelName)
-    if not os.path.exists(model_dir):
-        os.makedirs(model_dir)
+    if not os.path.exists(args.ModelDir):
+        os.makedirs(args.ModelDir)
 
     config_path = args.ConfigPath
     with open(config_path, "r") as f:
@@ -167,19 +164,19 @@ def get_hparams(
     config = json.loads(data)
 
     hparams = HParams(**config)
-    hparams.model_dir = model_dir
+    hparams.model_dir = args.ModelDir
     return hparams
 
 
 def check_git_hash(model_dir):
   source_dir = os.path.dirname(os.path.realpath(__file__))
-  if not os.path.exists(os.path.join(source_dir, ".git")):
+  if not os.path.exists(os.path.normpath(os.path.join(source_dir, ".git"))):
     logger.warn(f"{source_dir} is not a git repository, therefore hash value comparison will be ignored.")
     return
 
   cur_hash = subprocess.getoutput("git rev-parse HEAD")
 
-  path = os.path.join(model_dir, "githash")
+  path = os.path.normpath(os.path.join(model_dir, "githash"))
   if os.path.exists(path):
     saved_hash = open(path).read()
     if saved_hash != cur_hash:
@@ -196,7 +193,7 @@ def get_logger(model_dir, filename="train.log"):
   formatter = logging.Formatter("%(asctime)s\t%(name)s\t%(levelname)s\t%(message)s")
   if not os.path.exists(model_dir):
     os.makedirs(model_dir)
-  h = logging.FileHandler(os.path.join(model_dir, filename))
+  h = logging.FileHandler(os.path.normpath(os.path.join(model_dir, filename)))
   h.setLevel(logging.DEBUG)
   h.setFormatter(formatter)
   logger.addHandler(h)

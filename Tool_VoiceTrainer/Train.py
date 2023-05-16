@@ -83,8 +83,8 @@ class Preprocessing:
         self.Set_N_Speakers = Set_N_Speakers
         self.Set_Speakers = Set_Speakers
 
-        self.Config_Path_Load = Config_Path_Load if Config_Path_Load != None else os.path.join(os.path.dirname(__file__), './configs', (self.Language + '_base.json'))
-        self.Config_Path_Edited = os.path.join(Config_Dir_Save, (self.Language + '_base.json'))
+        self.Config_Path_Load = Config_Path_Load if Config_Path_Load != None else os.path.normpath(os.path.join(os.path.dirname(__file__), './configs', (self.Language + '_base.json')))
+        self.Config_Path_Edited = os.path.normpath(os.path.join(Config_Dir_Save, (self.Language + '_base.json')))
         self.Out_Extension = "cleaned"
 
     def Configurator(self):
@@ -327,10 +327,10 @@ class Training:
 
                     if global_step % hps.train.eval_interval == 0:
                         self.evaluate(hps, net_g, eval_loader, writer_eval)
-                        utils.save_checkpoint(net_g, optim_g, hps.train.learning_rate, epoch, os.path.join(hps.model_dir, "G_{}.pth".format(global_step)))
-                        utils.save_checkpoint(net_d, optim_d, hps.train.learning_rate, epoch, os.path.join(hps.model_dir, "D_{}.pth".format(global_step)))
-                        old_g=os.path.join(hps.model_dir, "G_{}.pth".format(global_step-2000))
-                        old_d=os.path.join(hps.model_dir, "D_{}.pth".format(global_step-2000))
+                        utils.save_checkpoint(net_g, optim_g, hps.train.learning_rate, epoch, os.path.normpath(os.path.join(hps.model_dir, "G_{}.pth".format(global_step))))
+                        utils.save_checkpoint(net_d, optim_d, hps.train.learning_rate, epoch, os.path.normpath(os.path.join(hps.model_dir, "D_{}.pth".format(global_step))))
+                        old_g=os.path.normpath(os.path.join(hps.model_dir, "G_{}.pth".format(global_step-2000)))
+                        old_d=os.path.normpath(os.path.join(hps.model_dir, "D_{}.pth".format(global_step-2000)))
                         if os.path.exists(old_g):
                             os.remove(old_g)
                         if os.path.exists(old_d):
@@ -425,10 +425,10 @@ class Training:
 
                     if global_step % hps.train.eval_interval == 0:
                         self.evaluate(hps, net_g, eval_loader, writer_eval)
-                        utils.save_checkpoint(net_g, optim_g, hps.train.learning_rate, epoch, os.path.join(hps.model_dir, "G_{}.pth".format(global_step)))
-                        utils.save_checkpoint(net_d, optim_d, hps.train.learning_rate, epoch, os.path.join(hps.model_dir, "D_{}.pth".format(global_step)))
-                        old_g=os.path.join(hps.model_dir, "G_{}.pth".format(global_step-2000))
-                        old_d=os.path.join(hps.model_dir, "D_{}.pth".format(global_step-2000))
+                        utils.save_checkpoint(net_g, optim_g, hps.train.learning_rate, epoch, os.path.normpath(os.path.join(hps.model_dir, "G_{}.pth".format(global_step))))
+                        utils.save_checkpoint(net_d, optim_d, hps.train.learning_rate, epoch, os.path.normpath(os.path.join(hps.model_dir, "D_{}.pth".format(global_step))))
+                        old_g=os.path.normpath(os.path.join(hps.model_dir, "G_{}.pth".format(global_step-2000)))
+                        old_d=os.path.normpath(os.path.join(hps.model_dir, "D_{}.pth".format(global_step-2000)))
                         if os.path.exists(old_g):
                             os.remove(old_g)
                         if os.path.exists(old_d):
@@ -445,7 +445,7 @@ class Training:
             logger.info(hps)
             utils.check_git_hash(hps.model_dir)
             writer = SummaryWriter(log_dir=hps.model_dir)
-            writer_eval = SummaryWriter(log_dir=os.path.join(hps.model_dir, "eval"))
+            writer_eval = SummaryWriter(log_dir=os.path.normpath(os.path.join(hps.model_dir, "eval")))
 
         if platform.system() == 'Windows': # Windows不支持NCCL backend，故使用GLOO
             dist.init_process_group(backend='gloo', init_method='env://', world_size=n_gpus, rank=rank)
@@ -541,15 +541,13 @@ class Voice_Training(Preprocessing, Training):
         Num_Workers: int = 8,
         Model_Path_Pretrained_G: Optional[str] = None,
         Model_Path_Pretrained_D: Optional[str] = None,
-        Model_Dir_Save: str = './',
-        Model_Name_Save: str = 'MyModel'
+        Model_Dir_Save: str = './'
     ):
         Preprocessing.__init__(self, FileList_Path_Validation, FileList_Path_Training, Language, Config_Path_Load, Config_Dir_Save, Set_Eval_Interval, Set_Epochs, Set_Batch_Size, Set_FP16_Run, IsSpeakerMultiple, Set_N_Speakers, Set_Speakers)
         Training.__init__(self, IsSpeakerMultiple, Num_Workers)
         self.Model_Path_Pretrained_G = Model_Path_Pretrained_G
         self.Model_Path_Pretrained_D = Model_Path_Pretrained_D
         self.Model_Dir_Save = Model_Dir_Save
-        self.Model_Name_Save = Model_Name_Save
 
     def Preprocessing_and_Training(self):
         # Preprocess
@@ -559,7 +557,7 @@ class Voice_Training(Preprocessing, Training):
         # Train
         def GetPretrainedModel(Model_Path_Pretrained):
             if Model_Path_Pretrained != None:
-                Checkpoint_Dir = os.path.join(self.Model_Dir_Save, 'checkpoints')
+                Checkpoint_Dir = os.path.normpath(os.path.join(self.Model_Dir_Save, 'checkpoints'))
                 os.makedirs(Checkpoint_Dir, exist_ok = True)
                 shutil.move(Model_Path_Pretrained, Checkpoint_Dir)
         
@@ -575,7 +573,6 @@ class Voice_Training(Preprocessing, Training):
 
         hps = utils.get_hparams(
             Config_Path = self.Config_Path_Edited,
-            Model_Dir = self.Model_Dir_Save,
-            Model_Name = self.Model_Name_Save
+            Model_Dir = self.Model_Dir_Save
         )
         mp.spawn(super().run, args = (n_gpus, hps,), nprocs = n_gpus)
