@@ -3,6 +3,7 @@ Edited
 '''
 
 from typing import Optional
+from datetime import datetime
 import os
 import shutil
 import json
@@ -84,7 +85,7 @@ class Preprocessing:
         self.Set_Speakers = Set_Speakers
 
         self.Config_Path_Load = Config_Path_Load if Config_Path_Load != None else os.path.normpath(os.path.join(os.path.dirname(__file__), './configs', (self.Language + '_base.json')))
-        self.Config_Path_Edited = os.path.normpath(os.path.join(Config_Dir_Save, (self.Language + '_base.json')))
+        self.Config_Path_Edited = os.path.normpath(os.path.join(Config_Dir_Save, (self.Language + f"_{datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}.json")))
         self.Out_Extension = "cleaned"
 
     def Configurator(self):
@@ -573,6 +574,6 @@ class Voice_Training(Preprocessing, Training):
 
         hps = utils.get_hparams(
             Config_Path = self.Config_Path_Edited,
-            Model_Dir = self.Model_Dir_Save
+            Model_Dir = os.path.normpath(os.path.join(self.Model_Dir_Save, f"{datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}"))
         )
         mp.spawn(super().run, args = (n_gpus, hps,), nprocs = n_gpus)
