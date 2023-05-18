@@ -197,17 +197,33 @@ class Voice_Transcribing:
         Writer = get_writer("srt", self.SRT_Dir)
 
         for Audio_Path in PathList:
-            Writer(
-                transcribe(
-                    model = Model,
-                    audio = Audio_Path,
-                    verbose = self.Verbose,
-                    temperature = Temperature,
-                    compression_ratio_threshold = self.Compression_Ratio_Threshold,
-                    logprob_threshold = self.Logprob_Threshold,
-                    no_speech_threshold = self.No_Speech_Threshold,
-                    condition_on_previous_text = self.Condition_on_Previous_Text,
-                    initial_prompt = self.Initial_Prompt
-                ),
-                Audio_Path
-            )
+            try:
+                Writer(
+                    transcribe(
+                        model = Model,
+                        audio = Audio_Path,
+                        verbose = self.Verbose,
+                        temperature = Temperature,
+                        compression_ratio_threshold = self.Compression_Ratio_Threshold,
+                        logprob_threshold = self.Logprob_Threshold,
+                        no_speech_threshold = self.No_Speech_Threshold,
+                        condition_on_previous_text = self.Condition_on_Previous_Text,
+                        initial_prompt = self.Initial_Prompt
+                    ),
+                    Audio_Path
+                )
+            except: # To avoid encountering the ValueError (https://github.com/openai/whisper/discussions/1068)
+                Writer(
+                    transcribe(
+                        model = Model,
+                        audio = Audio_Path,
+                        verbose = self.Verbose,
+                        temperature = [self.Temperature], # This means setting 'Temperature_Increment_on_Fallback' to None
+                        compression_ratio_threshold = self.Compression_Ratio_Threshold,
+                        logprob_threshold = self.Logprob_Threshold,
+                        no_speech_threshold = self.No_Speech_Threshold,
+                        condition_on_previous_text = self.Condition_on_Previous_Text,
+                        initial_prompt = self.Initial_Prompt
+                    ),
+                    Audio_Path
+                )
