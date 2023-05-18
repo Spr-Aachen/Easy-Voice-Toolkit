@@ -1,5 +1,6 @@
 import os
 import pandas as pd
+import re
 
 
 def Transcript_Writer(CSV_Path, AutoEncoder, IsSpeakerMultiple, Text_Path):
@@ -8,28 +9,25 @@ def Transcript_Writer(CSV_Path, AutoEncoder, IsSpeakerMultiple, Text_Path):
     os.makedirs(os.path.dirname(Text_Path), exist_ok = True)
 
     if AutoEncoder == 'VITS':
-        DF_Text[['wav_filename', 'transcript']].to_csv(Text_Path, header = None, index = None, mode = 'w', sep = '|')
+        DF_Text[['wav_filename', 'transcript']].to_csv(
+            path_or_buf = Text_Path,
+            header = None,
+            index = None,
+            mode = 'w',
+            sep = '|'
+        )
         if IsSpeakerMultiple:
-            #Text_Path_New = Text_Path[:(len(Text_Path) - len('.txt'))] + '_re.txt'
-            Text_Path_New = Text_Path.rsplit('.', 1)[0] + '_re.txt'
-            File_Old = open(Text_Path, encoding = 'utf-8')
-            File_New = open(Text_Path_New, mode = 'w', encoding = 'utf-8')
-            while True:
-                line = File_Old.readline()
-                if line != None:
-                    Path = line.split('|')[0]
-                    text = line.split("|")[1]
-                    line = line.split('/')[-1]
-                    speakerId = line.split('_')[0]
-                    Path.split('/')[1]
-                    line = Path + "|" + speakerId + "|" + text
-                    File_New.write(line)
-                else:
-                    break
-            File_Old.close()
-            File_New.close()
-            os.remove(Text_Path)
-            os.rename(Text_Path_New, Text_Path)
-    
+            with open(file = Text_Path, mode = 'r', encoding = 'utf-8') as File_Old:
+                Lines = File_Old.readlines()
+            for Sequence, Line in enumerate(Lines):
+                Line_Old = Line
+                Line_Old_Path = Line_Old.split('|')[0]
+                SpeakerId = re.split(r'[\[\]]', re.split(r'[/\\\\]', Line_Old_Path)[-1])[1]
+                Line_Old_Text = Line_Old.split("|")[1]
+                Line_New = Line_Old_Path + f"|{SpeakerId}|" + Line_Old_Text
+                Lines[Sequence] = Line.replace(Line_Old, Line_New)
+            with open(file = Text_Path, mode = 'w', encoding = 'utf-8') as File_New:
+                File_New.writelines(Lines)
+
     else:
         raise Exception(f"{AutoEncoder} is not supported!")
