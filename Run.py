@@ -978,7 +978,11 @@ class MainWindow(Window_Customizing):
                 self.ui.ComboBox_Tool_VoiceIdentifier_Model_Name,
                 self.ui.ComboBox_Tool_VoiceIdentifier_Feature_Method,
                 self.ui.DoubleSpinBox_Tool_VoiceIdentifier_DecisionThreshold,
-                self.ui.DoubleSpinBox_Tool_VoiceIdentifier_Duration_of_Audio
+                self.ui.DoubleSpinBox_Tool_VoiceIdentifier_Duration_of_Audio,
+                self.ui.SpinBox_Tool_VoiceIdentifier_SpeakerID
+            ],
+            EmptyAllowed = [
+                self.ui.SpinBox_Tool_VoiceIdentifier_SpeakerID
             ]
         )
         self.ui.Button_Tool_VoiceIdentifier_Execute.setToolTipDuration(-1)
@@ -1076,6 +1080,18 @@ class MainWindow(Window_Customizing):
             Mode = "SelectDir",
             DisplayText = "None"
         )
+
+        self.ui.GroupBox_OptionalParams_Page_2.setTitle("OptionalParams 可选参数")
+
+        self.Function_SetText(
+            Panel = self.ui.Label_Tool_VoiceIdentifier_SpeakerID,
+            Title = "SpeakerID",
+            Body = "人物编号。说话人物的编号，单人模型可不填写，多人模型需填写对应编号。"
+        )
+        #self.ui.SpinBox_Tool_VoiceIdentifier_SpeakerID.setSingleStep(1)
+        self.ui.SpinBox_Tool_VoiceIdentifier_SpeakerID.setValue(0)
+        self.ui.SpinBox_Tool_VoiceIdentifier_SpeakerID.setToolTipDuration(-1)
+        self.ui.SpinBox_Tool_VoiceIdentifier_SpeakerID.setToolTip("注意，第一个人物的编号为0，第二个为1，以此类推")
 
         # Page3: Tool_VoiceTranscriber
         self.Function_SetText(
@@ -1526,7 +1542,7 @@ class MainWindow(Window_Customizing):
         self.Function_SetText(
             Panel = self.ui.Label_Tool_VoiceTrainer_N_Speakers,
             Title = "N Speakers",
-            Body = "说话人数。单人模型设置为0，多人模型可设置为实际人数。"
+            Body = "说话人数。说话人物的数量，单人模型设置为0，多人模型可设置为实际人数。"
         )
         self.ui.SpinBox_Tool_VoiceTrainer_N_Speakers.setSingleStep(1)
         self.ui.SpinBox_Tool_VoiceTrainer_N_Speakers.setValue(0)
@@ -1534,7 +1550,7 @@ class MainWindow(Window_Customizing):
         self.Function_SetText(
             Panel = self.ui.Label_Tool_VoiceTrainer_Speakers,
             Title = "Speakers",
-            Body = "人物名字。单人模型可不填写，多人模型需填写对应名字。"
+            Body = "人物名字。说话人物的名字，单人模型可不填写，多人模型需填写对应名字。"
         )
         self.ui.LineEdit_Tool_VoiceTrainer_Speakers.setReadOnly(False)
         self.ui.LineEdit_Tool_VoiceTrainer_Speakers.setText('')
@@ -1565,7 +1581,7 @@ class MainWindow(Window_Customizing):
             DisplayText = "None"
         )
 
-        self.ui.GroupBox_OptionaParams_Page_5.setTitle("OptionalParams 可选参数")
+        self.ui.GroupBox_OptionalParams_Page_5.setTitle("OptionalParams 可选参数")
 
         self.Function_SetText(
             Panel = self.ui.Label_Tool_VoiceTrainer_Config_Path_Load,
