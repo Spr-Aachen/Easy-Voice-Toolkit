@@ -86,12 +86,19 @@ class WriteSRT(ResultWriter):
 
     def write_result(self, result: dict, file: TextIO):
         for i, segment in enumerate(result["segments"], start=1):
+            # get language
+            LANGUAGES = {
+                "zh": "ZH",
+                "en": "EN",
+                "ja": "JA"
+            }
+            language = LANGUAGES[result['language']] if result['language'] in LANGUAGES else result['language'].upper()
             # write srt lines
             print(
                 f"{i}\n"
                 f"{format_timestamp(segment['start'], always_include_hours=True, decimal_marker=',')} --> "
                 f"{format_timestamp(segment['end'], always_include_hours=True, decimal_marker=',')}\n"
-                f"{segment['text'].strip().replace('-->', '->')}\n",
+                f"[{language}]{segment['text'].strip().replace('-->', '->')}[{language}]\n",
                 file=file,
                 flush=True,
             )
