@@ -40,12 +40,15 @@
 <br>用于保存根据以上设置更新参数后的配置文件的目录
 > - 模型保存目录<br>Model Dir Save
 <br>用于存放生成的模型的目录
+<br>注意：请不要在目录中存放由不同数据集训练得到的模型
 > - [可选] 配置加载路径<br>[Optional] Config Path Load
 <br>用于替代默认配置文件的用户配置文件的路径
 > - [可选] 预训练G模型路径<br>[Optional] Model Path Pretrained G
-<br>用作断点的预训练生成器（Generator）模型的路径
+<br>用作检查点的预训练生成器（Generator）模型的路径
+<br>提示：该模型文件会被复制到模型保存目录下的"checkpoints"文件夹中
 > - [可选] 预训练D模型路径<br>[Optional] Model Path Pretrained D
-<br>用作断点的预训练判别器（Discriminator）模型的路径
+<br>用作检查点的预训练判别器（Discriminator）模型的路径
+<br>提示：该模型文件会被复制到模型保存目录下的"checkpoints"文件夹中
 
 2. 运行工具
 <br>点击左下方的`Execute`按钮以开始执行，执行过程中点击`Terminate`按钮以终止进程
