@@ -72,7 +72,7 @@ def Execute_Model_Download(
     Model_Name: str
 ):
     URL = ModelList_S[Model_Name] if Feature_Method == 'spectrogram' else ModelList_M[Model_Name]
-    DownloadDir = os.path.join(Model_Dir, "Temp")
+    DownloadDir = os.path.join(Model_Dir, "Temp", f"{Model_Type}_{Feature_Method}")
     ExtractDir = os.path.join(Model_Dir, Model_Type, Feature_Method)
     Format = 'zip'
     SHA = SHA256List_S[Model_Name] if Feature_Method == 'spectrogram' else SHA256List_M[Model_Name]

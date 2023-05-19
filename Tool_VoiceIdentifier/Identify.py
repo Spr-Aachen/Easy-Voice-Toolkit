@@ -60,11 +60,8 @@ class Voice_Identifying:
         Add_Arg('Feature_Method',   str,      self.Feature_Method,       '音频特征提取方法',           choices = self.MethodList)
         Args = Parser.parse_args(args = [])
 
-        # Download Models
-        for Model_Type in self.TypeList:
-            for Feature_Method in self.MethodList:
-                for Model_Name in self.NameList:
-                    Execute_Model_Download(self.Model_Dir, Model_Type, Feature_Method, Model_Name)
+        # Download Model
+        Execute_Model_Download(self.Model_Dir, self.Model_Type, self.Feature_Method, self.Model_Name)
 
         # 获取模型
         DataSet = CustomDataset(data_list_path = None, feature_method = Args.Feature_Method)
