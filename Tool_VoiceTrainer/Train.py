@@ -575,6 +575,6 @@ class Voice_Training(Preprocessing, Training):
 
         hps = utils.get_hparams(
             Config_Path = self.Config_Path_Edited,
-            Model_Dir = os.path.normpath(os.path.join(self.Model_Dir_Save, f"{datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}"))
+            Model_Dir = self.Model_Dir_Save
         )
         mp.spawn(super().run, args = (n_gpus, hps,), nprocs = n_gpus)

@@ -1580,6 +1580,8 @@ class MainWindow(Window_Customizing):
             Mode = "SelectDir",
             DisplayText = "None"
         )
+        self.ui.Label_Tool_VoiceTrainer_Model_Dir_Save.setToolTipDuration(-1)
+        self.ui.Label_Tool_VoiceTrainer_Model_Dir_Save.setToolTip("注意，请勿将不同数据集训练得到的模型置于同一目录下。")
 
         self.ui.GroupBox_OptionalParams_Page_5.setTitle("OptionalParams 可选参数")
 
@@ -1599,7 +1601,7 @@ class MainWindow(Window_Customizing):
         self.Function_SetText(
             Panel = self.ui.Label_Tool_VoiceTrainer_Model_Path_Pretrained_G,
             Title = "Model Path Pretrained G",
-            Body = "预训练G模型路径。该路径对应的预训练生成器（Generator）模型将被视作断点。"
+            Body = "预训练G模型路径。该路径对应的预训练生成器（Generator）模型会被视作检查点。"
         )
         self.Function_SetFileDialog(
             Button = self.ui.Button_Tool_VoiceTrainer_Model_Path_Pretrained_G,
@@ -1612,7 +1614,7 @@ class MainWindow(Window_Customizing):
         self.Function_SetText(
             Panel = self.ui.Label_Tool_VoiceTrainer_Model_Path_Pretrained_D,
             Title = "Model Path Pretrained D",
-            Body = "预训练D模型路径。该路径对应的预训练判别器（Discriminator）模型将被视作断点。"
+            Body = "预训练D模型路径。该路径对应的预训练判别器（Discriminator）模型会被视作检查点。"
         )
         self.Function_SetFileDialog(
             Button = self.ui.Button_Tool_VoiceTrainer_Model_Path_Pretrained_D,
