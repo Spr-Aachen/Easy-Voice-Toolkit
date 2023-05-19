@@ -561,7 +561,7 @@ class Voice_Training(Preprocessing, Training):
             if Model_Path_Pretrained != None:
                 Checkpoint_Dir = os.path.normpath(os.path.join(self.Model_Dir_Save, 'checkpoints'))
                 os.makedirs(Checkpoint_Dir, exist_ok = True)
-                shutil.move(Model_Path_Pretrained, Checkpoint_Dir)
+                shutil.copy(Model_Path_Pretrained, Checkpoint_Dir)
         
         GetPretrainedModel(self.Model_Path_Pretrained_G)
         GetPretrainedModel(self.Model_Path_Pretrained_D)
