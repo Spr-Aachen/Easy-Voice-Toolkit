@@ -1,7 +1,11 @@
+<div align = "center">
+
 ## 语音识别和筛选<br>Voice Identifier
 
 ![Voice Identifier](/docs/media/Page2.png)
 注意：当前版本已移除终端集成功能，解释器输出信息请见命令行窗口
+
+</div>
 
 
 ### 介绍<br>Intro

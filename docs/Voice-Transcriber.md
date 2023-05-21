@@ -1,7 +1,11 @@
+<div align = "center">
+
 ## 语音转文字字幕<br>Voice Transcriber
 
 ![Voice Transcriber](/docs/media/Page3.png)
 注意：当前版本已移除终端集成功能，解释器输出信息请见命令行窗口
+
+</div>
 
 
 ### 介绍<br>Intro

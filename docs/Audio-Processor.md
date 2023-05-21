@@ -1,7 +1,11 @@
+<div align = "center">
+
 ## 音频转换和分割<br>Audio Processor
 
 ![Audio Processor](/docs/media/Page1.png)
 注意：当前版本已移除终端集成功能，解释器输出信息请见命令行窗口
+
+</div>
 
 
 ### 介绍<br>Intro
@@ -14,7 +18,7 @@
 1. 设置参数
 > - 媒体输入目录<br>Media Dir Input
 <br>需要输出为音频文件的媒体文件的目录
-<br>注意：会在该目录的上级目录下创建名为"Backup"的备份文件夹以存放被分割处理的原音频文件
+<br>提示：会在该目录的上级目录下创建名为"Backup"的备份文件夹以存放被分割处理的原音频文件
 > - 媒体输出格式<br>Media Format Output
 <br>需要输出为的音频文件的格式
 > - 均方根阈值<br>RMS Threshold
@@ -26,7 +30,7 @@
 <br>注意：这个值必须小于 Audio Length Min，大于 Hop Size
 > - 最大静音长度<br>Silence Kept Max
 <br>被分割的音频周围保持静音的最大长度
-<br>注意：这个值无需完全对应被分割音频中的静音长度。算法将自行检索最佳的分割位置
+<br>提示：这个值无需完全对应被分割音频中的静音长度。算法将自行检索最佳的分割位置
 > - 最小音频长度<br>Audio Length Min
 <br>每个被分割的音频片段所需的最小长度
 > - 媒体输出目录<br>Media Dir Output
