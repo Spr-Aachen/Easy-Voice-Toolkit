@@ -6744,7 +6744,7 @@ class Ui_MainWindow(object):
         self.ScrollArea_Right_Page_5.setWidgetResizable(True)
         self.ScrollArea_Right_WidgetContents_Page_5 = QWidget()
         self.ScrollArea_Right_WidgetContents_Page_5.setObjectName(u"ScrollArea_Right_WidgetContents_Page_5")
-        self.ScrollArea_Right_WidgetContents_Page_5.setGeometry(QRect(0, 0, 619, 2107))
+        self.ScrollArea_Right_WidgetContents_Page_5.setGeometry(QRect(0, 0, 619, 1984))
         self.ScrollArea_Right_WidgetContents_Page_5.setMinimumSize(QSize(0, 0))
         self.verticalLayout_22 = QVBoxLayout(self.ScrollArea_Right_WidgetContents_Page_5)
         self.verticalLayout_22.setSpacing(21)
@@ -7652,86 +7652,6 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_33.addWidget(self.Frame_Tool_VoiceTrainer_IsSpeakerMultiple)
 
-        self.Frame_Tool_VoiceTrainer_N_Speakers = QFrame(self.GroupBox_EssentialParams_Page_5)
-        self.Frame_Tool_VoiceTrainer_N_Speakers.setObjectName(u"Frame_Tool_VoiceTrainer_N_Speakers")
-        self.Frame_Tool_VoiceTrainer_N_Speakers.setMinimumSize(QSize(0, 123))
-        self.Frame_Tool_VoiceTrainer_N_Speakers.setStyleSheet(u"QFrame {\n"
-"	color: rgb(255, 255, 255);\n"
-"	background-color: rgb(45, 45, 45);\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QFrame:hover {\n"
-"	background-color: rgb(60, 60, 60);\n"
-"}")
-        self.verticalLayout_78 = QVBoxLayout(self.Frame_Tool_VoiceTrainer_N_Speakers)
-        self.verticalLayout_78.setSpacing(12)
-        self.verticalLayout_78.setObjectName(u"verticalLayout_78")
-        self.verticalLayout_78.setContentsMargins(21, 12, 21, 12)
-        self.Label_Tool_VoiceTrainer_N_Speakers = QLabel(self.Frame_Tool_VoiceTrainer_N_Speakers)
-        self.Label_Tool_VoiceTrainer_N_Speakers.setObjectName(u"Label_Tool_VoiceTrainer_N_Speakers")
-        self.Label_Tool_VoiceTrainer_N_Speakers.setStyleSheet(u"QLabel {\n"
-"	/*text-align: center;*/\n"
-"	/*color: rgb(255, 255, 255);*/\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.verticalLayout_78.addWidget(self.Label_Tool_VoiceTrainer_N_Speakers)
-
-        self.SpinBox_Tool_VoiceTrainer_N_Speakers = QSpinBox(self.Frame_Tool_VoiceTrainer_N_Speakers)
-        self.SpinBox_Tool_VoiceTrainer_N_Speakers.setObjectName(u"SpinBox_Tool_VoiceTrainer_N_Speakers")
-        self.SpinBox_Tool_VoiceTrainer_N_Speakers.setStyleSheet(u"QSpinBox {\n"
-"	text-align: left;\n"
-"	color: rgb(255, 255, 255);\n"
-"	selection-background-color: darkgrey;\n"
-"	background-color: rgb(90, 90, 90);\n"
-"	padding: 1.5px;\n"
-"	border-width: 1px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QSpinBox:hover {\n"
-"	background-color: rgb(120, 120, 120);\n"
-"}\n"
-"\n"
-"QSpinBox::up-button {\n"
-"	subcontrol-origin: padding;\n"
-"	subcontrol-position: top right;\n"
-"	margin-right: 3px;\n"
-"	border-width: 0px;\n"
-"}\n"
-"QSpinBox::up-arrow {\n"
-"	border-image: url(:/(Double)SpinBox_Icon/Sources/UpArrow.png);\n"
-"}\n"
-"\n"
-"QSpinBox::down-button {\n"
-"	subcontrol-origin: padding;\n"
-"	subcontrol-position: bottom right;\n"
-"	margin-right: 3px;\n"
-"	border-width: 0px;\n"
-"}\n"
-"QSpinBox::down-arrow {\n"
-"	border-image: url(:/(Double)SpinBox_Icon/Sources/DownArrow.png);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: white;\n"
-"	background-color: transparent;\n"
-"}")
-        self.SpinBox_Tool_VoiceTrainer_N_Speakers.setMinimum(-999999)
-        self.SpinBox_Tool_VoiceTrainer_N_Speakers.setMaximum(999999)
-
-        self.verticalLayout_78.addWidget(self.SpinBox_Tool_VoiceTrainer_N_Speakers)
-
-
-        self.verticalLayout_33.addWidget(self.Frame_Tool_VoiceTrainer_N_Speakers)
-
         self.Frame_Tool_VoiceTrainer_Speakers = QFrame(self.GroupBox_EssentialParams_Page_5)
         self.Frame_Tool_VoiceTrainer_Speakers.setObjectName(u"Frame_Tool_VoiceTrainer_Speakers")
         self.Frame_Tool_VoiceTrainer_Speakers.setMinimumSize(QSize(0, 123))
@@ -8621,7 +8541,6 @@ class Ui_MainWindow(object):
         self.CheckBox_Tool_VoiceTrainer_FP16_Run.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
         self.Label_Tool_VoiceTrainer_IsSpeakerMultiple.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.CheckBox_Tool_VoiceTrainer_IsSpeakerMultiple.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
-        self.Label_Tool_VoiceTrainer_N_Speakers.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Tool_VoiceTrainer_Speakers.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Tool_VoiceTrainer_Config_Dir_Save.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Button_Tool_VoiceTrainer_Config_Dir_Save.setText(QCoreApplication.translate("MainWindow", u"...", None))

@@ -1430,7 +1430,6 @@ class MainWindow(Window_Customizing):
                 self.ui.SpinBox_Tool_VoiceTrainer_Batch_Size,
                 self.ui.CheckBox_Tool_VoiceTrainer_FP16_Run,
                 self.ui.CheckBox_Tool_VoiceTrainer_IsSpeakerMultiple,
-                self.ui.SpinBox_Tool_VoiceTrainer_N_Speakers,
                 self.ui.LineEdit_Tool_VoiceTrainer_Speakers,
                 self.ui.SpinBox_Tool_VoiceTrainer_Num_Workers,
                 self.ui.LineEdit_Tool_VoiceTrainer_Model_Path_Pretrained_G,
@@ -1538,14 +1537,6 @@ class MainWindow(Window_Customizing):
         )
         self.ui.CheckBox_Tool_VoiceTrainer_IsSpeakerMultiple.setCheckable(True)
         self.ui.CheckBox_Tool_VoiceTrainer_IsSpeakerMultiple.setChecked(False)
-
-        self.Function_SetText(
-            Panel = self.ui.Label_Tool_VoiceTrainer_N_Speakers,
-            Title = "N Speakers",
-            Body = "说话人数。说话人物的数量，单人模型设置为0，多人模型可设置为实际人数。"
-        )
-        self.ui.SpinBox_Tool_VoiceTrainer_N_Speakers.setSingleStep(1)
-        self.ui.SpinBox_Tool_VoiceTrainer_N_Speakers.setValue(0)
 
         self.Function_SetText(
             Panel = self.ui.Label_Tool_VoiceTrainer_Speakers,

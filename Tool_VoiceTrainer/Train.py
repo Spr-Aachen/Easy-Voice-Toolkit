@@ -69,7 +69,6 @@ class Preprocessing:
         Set_Batch_Size: int = 8,
         Set_FP16_Run: bool = True,
         IsSpeakerMultiple: bool = False,
-        Set_N_Speakers: int = 0,
         Set_Speakers: Optional[list] = ["SpeakerName"]
     ):
         self.FileList_Path_Validation = FileList_Path_Validation
@@ -81,7 +80,6 @@ class Preprocessing:
         self.Set_Batch_Size = Set_Batch_Size
         self.Set_FP16_Run = Set_FP16_Run
         self.IsSpeakerMultiple = IsSpeakerMultiple
-        self.Set_N_Speakers = Set_N_Speakers
         self.Set_Speakers = Set_Speakers
 
         self.Config_Path_Load = Config_Path_Load if Config_Path_Load != None else os.path.normpath(os.path.join(os.path.dirname(__file__), './configs', (self.Language + '_base.json')))
@@ -103,7 +101,7 @@ class Preprocessing:
                 Params_Old["data"]["training_files"]    = (self.FileList_Path_Training + "." + self.Out_Extension).lower()
                 Params_Old["data"]["validation_files"]  = (self.FileList_Path_Validation + "." + self.Out_Extension).lower()
                 Params_Old["data"]["text_cleaners"]     = (self.Language + "_cleaners").lower()
-                Params_Old["data"]["n_speakers"]        = self.Set_N_Speakers if self.IsSpeakerMultiple == True else 0
+                Params_Old["data"]["n_speakers"]        = len(self.Set_Speakers) if self.IsSpeakerMultiple == True else 0
                 Params_Old["speakers"]                  = self.Set_Speakers if self.IsSpeakerMultiple == True else None
                 Params_New = Params_Old
             f.close()
@@ -449,10 +447,12 @@ class Training:
             writer = SummaryWriter(log_dir=hps.model_dir)
             writer_eval = SummaryWriter(log_dir=os.path.normpath(os.path.join(hps.model_dir, "eval")))
 
-        if platform.system() == 'Windows': # Windows不支持NCCL backend，故使用GLOO
-            dist.init_process_group(backend='gloo', init_method='env://', world_size=n_gpus, rank=rank)
-        else:
-            dist.init_process_group(backend='nccl', init_method='env://', world_size=n_gpus, rank=rank)
+        dist.init_process_group(
+            backend = 'gloo' if platform.system() == 'Windows' else 'nccl', # Windows不支持NCCL backend，故使用GLOO
+            init_method = 'env://',
+            world_size = n_gpus,
+            rank = rank
+        )
 
         torch.manual_seed(hps.train.seed)
         torch.cuda.set_device(rank)
@@ -475,7 +475,7 @@ class Training:
             batch_sampler=train_sampler)
         if rank == 0:
             eval_dataset = TextAudioSpeakerLoader(hps.data.validation_files, hps.data) if self.IsSpeakerMultiple == True else TextAudioLoader(hps.data.validation_files, hps.data)
-            eval_loader = DataLoader(eval_dataset, num_workers=self.Num_Workers, shuffle=False,
+            eval_loader = DataLoader(eval_dataset, num_workers=0, shuffle=False,
                 batch_size=hps.train.batch_size, pin_memory=True,
                 drop_last=False, collate_fn=collate_fn)
 
@@ -538,14 +538,13 @@ class Voice_Training(Preprocessing, Training):
         Set_Batch_Size: int = 8,
         Set_FP16_Run: bool = True,
         IsSpeakerMultiple: bool = False,
-        Set_N_Speakers: int = 0,
         Set_Speakers: str = ["SpeakerName"],
         Num_Workers: int = 8,
         Model_Path_Pretrained_G: Optional[str] = None,
         Model_Path_Pretrained_D: Optional[str] = None,
         Model_Dir_Save: str = './'
     ):
-        Preprocessing.__init__(self, FileList_Path_Validation, FileList_Path_Training, Language, Config_Path_Load, Config_Dir_Save, Set_Eval_Interval, Set_Epochs, Set_Batch_Size, Set_FP16_Run, IsSpeakerMultiple, Set_N_Speakers, Set_Speakers)
+        Preprocessing.__init__(self, FileList_Path_Validation, FileList_Path_Training, Language, Config_Path_Load, Config_Dir_Save, Set_Eval_Interval, Set_Epochs, Set_Batch_Size, Set_FP16_Run, IsSpeakerMultiple, Set_Speakers)
         Training.__init__(self, IsSpeakerMultiple, Num_Workers)
         self.Model_Path_Pretrained_G = Model_Path_Pretrained_G
         self.Model_Path_Pretrained_D = Model_Path_Pretrained_D
