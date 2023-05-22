@@ -23,6 +23,11 @@ from .english import english_to_ipa2#, english_to_lazy_ipa2
 
 def mandarin_cleaners(text):
    '''Pipeline for Chinese text'''
+   text = re.sub(
+      pattern = r'\[ZH\]',
+      repl = '',
+      string = text
+   )
    text = number_to_chinese(text)
    text = chinese_to_bopomofo(text)
    text = latin_to_bopomofo(text)
