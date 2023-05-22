@@ -1,12 +1,15 @@
 '''
 Edited
 '''
-# Defines the set of symbols used in text input to the model.
 
-# chinese_cleaners
+'''
+Defines the set of symbols used in text input to the model.
+'''
+
+# mandarin_english_cleaners
 _pad        = '_'
-_punctuation = '，。！？—…'
-_letters = 'ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦㄧㄨㄩˉˊˇˋ˙ '
+_punctuation = ',.!?-~…'
+_letters = 'NQabdefghijklmnopstuvwxyzɑæʃʑçɯɪɔɛɹðəɫɥɸʊɾʒθβŋɦ⁼ʰ`^#*=ˈˌ→↓↑ '
 
 # Export all symbols:
 symbols = [_pad] + list(_punctuation) + list(_letters)
