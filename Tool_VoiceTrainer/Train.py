@@ -121,7 +121,8 @@ class Preprocessing:
         '''
         Parser = argparse.ArgumentParser()
         Parser.add_argument("--Out_Extension",    type = str,                       default = self.Out_Extension)
-        Parser.add_argument("--Text_Index",       type = int,                       default = 1)
+        Parser.add_argument("--Path_Index",       type = int,                       default = 0)
+        Parser.add_argument("--Text_Index",       type = int,                       default = 2 if self.IsSpeakerMultiple == True else 1)
         Parser.add_argument("--FileLists",        type = list,     nargs = "+",     default = [self.FileList_Path_Validation, self.FileList_Path_Training])
         Parser.add_argument("--Text_Cleaners",    type = str,      nargs = "+",     default = [self.Language + "_cleaners"])
         Args = Parser.parse_args(args = [])
@@ -129,15 +130,13 @@ class Preprocessing:
         for FileList in Args.FileLists:
             print("START:", FileList)
             
-            Paths_SID_Text = utils.load_audiopaths_sid_text(FileList)
-            for i in range(len(Paths_SID_Text)):
-                original_text = Paths_SID_Text[i][Args.Text_Index]
-                cleaned_text = text._clean_text(original_text, Args.Text_Cleaners)
-                Paths_SID_Text[i][Args.Text_Index] = cleaned_text
+            Path_SID_Text = utils.load_audiopaths_sid_text(FileList)
+            for i in range(len(Path_SID_Text)):
+                Path_SID_Text[i][Args.Text_Index] = text._clean_text(Path_SID_Text[i][Args.Text_Index], Args.Text_Cleaners)
 
-            New_Filelist = FileList + "." + Args.Out_Extension
-            with open(New_Filelist, "w", encoding = "utf-8") as f:
-                f.writelines(["|".join(x) + "\n" for x in Paths_SID_Text])
+            Filelist_Cleaned = FileList + "." + Args.Out_Extension
+            with open(Filelist_Cleaned, "w", encoding = "utf-8") as f:
+                f.writelines(["|".join(x) + "\n" for x in Path_SID_Text])
 
 
 class Training:
@@ -544,7 +543,7 @@ class Voice_Training(Preprocessing, Training):
         Model_Path_Pretrained_D: Optional[str] = None,
         Model_Dir_Save: str = './'
     ):
-        IsSpeakerMultiple = True if len(self.Set_Speakers) >= 2 else False
+        IsSpeakerMultiple = True if len(Set_Speakers) >= 2 else False
 
         Preprocessing.__init__(self, FileList_Path_Validation, FileList_Path_Training, Language, Config_Path_Load, Config_Dir_Save, Set_Eval_Interval, Set_Epochs, Set_Batch_Size, Set_FP16_Run, IsSpeakerMultiple, Set_Speakers)
         Training.__init__(self, IsSpeakerMultiple, Num_Workers)
