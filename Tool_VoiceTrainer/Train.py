@@ -5,6 +5,7 @@ Edited
 from typing import Optional
 from datetime import datetime
 import os
+import re
 import shutil
 import json
 import argparse
@@ -86,6 +87,17 @@ class Preprocessing:
         '''
         Edit JSON file
         '''
+        def Get_Speakers(Text_Path_Training, Text_Path_Validation):
+            Speakers = []
+            for Text_Path in [Text_Path_Training, Text_Path_Validation]:
+                with open(file = Text_Path, mode = 'r', encoding = 'utf-8') as File:
+                    Lines = File.readlines()
+                for _, Line in enumerate(Lines):
+                    Line_Path = Line.split('|')[0]
+                    Speaker = re.split(r'[\[\]]', re.split(r'[/\\\\]', Line_Path)[-1])[1]
+                    Speakers.append(Speaker) if Speaker not in Speakers else None
+            return Speakers
+
         def Get_Config_Data(Config_Path_Load):
             Params_New = {}
             with open(Config_Path_Load, 'rb') as f:
@@ -97,8 +109,8 @@ class Preprocessing:
                 Params_Old["data"]["training_files"]    = (self.FileList_Path_Training + "." + self.Out_Extension).lower()
                 Params_Old["data"]["validation_files"]  = (self.FileList_Path_Validation + "." + self.Out_Extension).lower()
                 Params_Old["data"]["text_cleaners"]     = (self.Language + "_cleaners").lower()
-                Params_Old["data"]["n_speakers"]        = len(self.Set_Speakers)
-                Params_Old["speakers"]                  = self.Set_Speakers
+                Params_Old["data"]["n_speakers"]        = len(Get_Speakers(self.FileList_Path_Training, self.FileList_Path_Validation)) if self.Set_Speakers == None else len(self.Set_Speakers)
+                Params_Old["speakers"]                  = Get_Speakers(self.FileList_Path_Training, self.FileList_Path_Validation) if self.Set_Speakers == None else self.Set_Speakers
                 Params_New = Params_Old
             f.close()
             return Params_New

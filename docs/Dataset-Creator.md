@@ -28,8 +28,6 @@
 <br>需要转为适用于模型训练的csv文件的srt文件的目录
 > - 自编码器<br>AutoEncoder
 <br>模型训练所使用的自动编码器
-> - 是否多人<br>Is Speaker Multiple
-<br>是否进行多人模型训练
 > - 训练集文本路径<br>FileList Path Training
 <br>用于保存最后生成的训练集txt文件的路径
 > - 验证集文本路径<br>FileList Path Validation

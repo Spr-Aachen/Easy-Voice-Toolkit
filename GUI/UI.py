@@ -2131,7 +2131,7 @@ class Ui_MainWindow(object):
         self.ScrollArea_Right_Page_2.setWidgetResizable(True)
         self.ScrollArea_Right_WidgetContents_Page_2 = QWidget()
         self.ScrollArea_Right_WidgetContents_Page_2.setObjectName(u"ScrollArea_Right_WidgetContents_Page_2")
-        self.ScrollArea_Right_WidgetContents_Page_2.setGeometry(QRect(0, 0, 619, 1369))
+        self.ScrollArea_Right_WidgetContents_Page_2.setGeometry(QRect(0, -764, 619, 1369))
         self.ScrollArea_Right_WidgetContents_Page_2.setMinimumSize(QSize(0, 0))
         self.verticalLayout_16 = QVBoxLayout(self.ScrollArea_Right_WidgetContents_Page_2)
         self.verticalLayout_16.setSpacing(21)
@@ -3349,10 +3349,10 @@ class Ui_MainWindow(object):
         self.verticalLayout_81.setSpacing(0)
         self.verticalLayout_81.setObjectName(u"verticalLayout_81")
         self.verticalLayout_81.setContentsMargins(0, 12, 0, 12)
-        self.Frame_Tool_VoiceIdentifier_SpeakerID = QFrame(self.GroupBox_OptionalParams_Page_2)
-        self.Frame_Tool_VoiceIdentifier_SpeakerID.setObjectName(u"Frame_Tool_VoiceIdentifier_SpeakerID")
-        self.Frame_Tool_VoiceIdentifier_SpeakerID.setMinimumSize(QSize(0, 123))
-        self.Frame_Tool_VoiceIdentifier_SpeakerID.setStyleSheet(u"QFrame {\n"
+        self.Frame_Tool_VoiceIdentifier_Speaker = QFrame(self.GroupBox_OptionalParams_Page_2)
+        self.Frame_Tool_VoiceIdentifier_Speaker.setObjectName(u"Frame_Tool_VoiceIdentifier_Speaker")
+        self.Frame_Tool_VoiceIdentifier_Speaker.setMinimumSize(QSize(0, 123))
+        self.Frame_Tool_VoiceIdentifier_Speaker.setStyleSheet(u"QFrame {\n"
 "	color: rgb(255, 255, 255);\n"
 "	background-color: rgb(45, 45, 45);\n"
 "	border-width: 0px;\n"
@@ -3361,13 +3361,13 @@ class Ui_MainWindow(object):
 "QFrame:hover {\n"
 "	background-color: rgb(60, 60, 60);\n"
 "}")
-        self.verticalLayout_96 = QVBoxLayout(self.Frame_Tool_VoiceIdentifier_SpeakerID)
-        self.verticalLayout_96.setSpacing(12)
-        self.verticalLayout_96.setObjectName(u"verticalLayout_96")
-        self.verticalLayout_96.setContentsMargins(21, 12, 21, 12)
-        self.Label_Tool_VoiceIdentifier_SpeakerID = QLabel(self.Frame_Tool_VoiceIdentifier_SpeakerID)
-        self.Label_Tool_VoiceIdentifier_SpeakerID.setObjectName(u"Label_Tool_VoiceIdentifier_SpeakerID")
-        self.Label_Tool_VoiceIdentifier_SpeakerID.setStyleSheet(u"QLabel {\n"
+        self.verticalLayout_77 = QVBoxLayout(self.Frame_Tool_VoiceIdentifier_Speaker)
+        self.verticalLayout_77.setSpacing(12)
+        self.verticalLayout_77.setObjectName(u"verticalLayout_77")
+        self.verticalLayout_77.setContentsMargins(21, 12, 21, 12)
+        self.Label_Tool_VoiceIdentifier_Speaker = QLabel(self.Frame_Tool_VoiceIdentifier_Speaker)
+        self.Label_Tool_VoiceIdentifier_Speaker.setObjectName(u"Label_Tool_VoiceIdentifier_Speaker")
+        self.Label_Tool_VoiceIdentifier_Speaker.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	/*color: rgb(255, 255, 255);*/\n"
 "	background-color: transparent;\n"
@@ -3377,11 +3377,11 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}")
 
-        self.verticalLayout_96.addWidget(self.Label_Tool_VoiceIdentifier_SpeakerID)
+        self.verticalLayout_77.addWidget(self.Label_Tool_VoiceIdentifier_Speaker)
 
-        self.SpinBox_Tool_VoiceIdentifier_SpeakerID = QSpinBox(self.Frame_Tool_VoiceIdentifier_SpeakerID)
-        self.SpinBox_Tool_VoiceIdentifier_SpeakerID.setObjectName(u"SpinBox_Tool_VoiceIdentifier_SpeakerID")
-        self.SpinBox_Tool_VoiceIdentifier_SpeakerID.setStyleSheet(u"QSpinBox {\n"
+        self.LineEdit_Tool_VoiceIdentifier_Speaker = QLineEdit(self.Frame_Tool_VoiceIdentifier_Speaker)
+        self.LineEdit_Tool_VoiceIdentifier_Speaker.setObjectName(u"LineEdit_Tool_VoiceIdentifier_Speaker")
+        self.LineEdit_Tool_VoiceIdentifier_Speaker.setStyleSheet(u"QLineEdit {\n"
 "	text-align: left;\n"
 "	color: rgb(255, 255, 255);\n"
 "	selection-background-color: darkgrey;\n"
@@ -3392,28 +3392,8 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "	border-color: rgb(90, 90, 90);\n"
 "}\n"
-"QSpinBox:hover {\n"
+"QLineEdit:hover {\n"
 "	background-color: rgb(120, 120, 120);\n"
-"}\n"
-"\n"
-"QSpinBox::up-button {\n"
-"	subcontrol-origin: padding;\n"
-"	subcontrol-position: top right;\n"
-"	margin-right: 3px;\n"
-"	border-width: 0px;\n"
-"}\n"
-"QSpinBox::up-arrow {\n"
-"	border-image: url(:/(Double)SpinBox_Icon/Sources/UpArrow.png);\n"
-"}\n"
-"\n"
-"QSpinBox::down-button {\n"
-"	subcontrol-origin: padding;\n"
-"	subcontrol-position: bottom right;\n"
-"	margin-right: 3px;\n"
-"	border-width: 0px;\n"
-"}\n"
-"QSpinBox::down-arrow {\n"
-"	border-image: url(:/(Double)SpinBox_Icon/Sources/DownArrow.png);\n"
 "}\n"
 "\n"
 "\n"
@@ -3421,13 +3401,11 @@ class Ui_MainWindow(object):
 "	color: white;\n"
 "	background-color: transparent;\n"
 "}")
-        self.SpinBox_Tool_VoiceIdentifier_SpeakerID.setMinimum(-999999)
-        self.SpinBox_Tool_VoiceIdentifier_SpeakerID.setMaximum(999999)
 
-        self.verticalLayout_96.addWidget(self.SpinBox_Tool_VoiceIdentifier_SpeakerID)
+        self.verticalLayout_77.addWidget(self.LineEdit_Tool_VoiceIdentifier_Speaker)
 
 
-        self.verticalLayout_81.addWidget(self.Frame_Tool_VoiceIdentifier_SpeakerID)
+        self.verticalLayout_81.addWidget(self.Frame_Tool_VoiceIdentifier_Speaker)
 
 
         self.verticalLayout_16.addWidget(self.GroupBox_OptionalParams_Page_2)
@@ -5264,7 +5242,7 @@ class Ui_MainWindow(object):
         self.ScrollArea_Right_Page_4.setWidgetResizable(True)
         self.ScrollArea_Right_WidgetContents_Page_4 = QWidget()
         self.ScrollArea_Right_WidgetContents_Page_4.setObjectName(u"ScrollArea_Right_WidgetContents_Page_4")
-        self.ScrollArea_Right_WidgetContents_Page_4.setGeometry(QRect(0, 0, 619, 1187))
+        self.ScrollArea_Right_WidgetContents_Page_4.setGeometry(QRect(0, 0, 619, 1064))
         self.ScrollArea_Right_WidgetContents_Page_4.setMinimumSize(QSize(0, 0))
         self.verticalLayout_20 = QVBoxLayout(self.ScrollArea_Right_WidgetContents_Page_4)
         self.verticalLayout_20.setSpacing(21)
@@ -6063,82 +6041,6 @@ class Ui_MainWindow(object):
 
 
         self.verticalLayout_32.addWidget(self.Frame_Tool_DatasetCreator_AutoEncoder)
-
-        self.Frame_Tool_DatasetCreator_IsSpeakerMultiple = QFrame(self.GroupBox_EssentialParams_Page_4)
-        self.Frame_Tool_DatasetCreator_IsSpeakerMultiple.setObjectName(u"Frame_Tool_DatasetCreator_IsSpeakerMultiple")
-        self.Frame_Tool_DatasetCreator_IsSpeakerMultiple.setMinimumSize(QSize(0, 123))
-        self.Frame_Tool_DatasetCreator_IsSpeakerMultiple.setStyleSheet(u"QFrame {\n"
-"	color: rgb(255, 255, 255);\n"
-"	background-color: rgb(45, 45, 45);\n"
-"	border: 0px solid;\n"
-"}\n"
-"QFrame:hover {\n"
-"	background-color: rgb(60, 60, 60);\n"
-"}")
-        self.verticalLayout_67 = QVBoxLayout(self.Frame_Tool_DatasetCreator_IsSpeakerMultiple)
-        self.verticalLayout_67.setSpacing(12)
-        self.verticalLayout_67.setObjectName(u"verticalLayout_67")
-        self.verticalLayout_67.setContentsMargins(21, 12, 21, 12)
-        self.Label_Tool_DatasetCreator_IsSpeakerMultiple = QLabel(self.Frame_Tool_DatasetCreator_IsSpeakerMultiple)
-        self.Label_Tool_DatasetCreator_IsSpeakerMultiple.setObjectName(u"Label_Tool_DatasetCreator_IsSpeakerMultiple")
-        self.Label_Tool_DatasetCreator_IsSpeakerMultiple.setStyleSheet(u"QLabel {\n"
-"	/*text-align: center;*/\n"
-"	/*color: rgb(255, 255, 255);*/\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.verticalLayout_67.addWidget(self.Label_Tool_DatasetCreator_IsSpeakerMultiple)
-
-        self.CheckBox_Tool_DatasetCreator_IsSpeakerMultiple = QCheckBox(self.Frame_Tool_DatasetCreator_IsSpeakerMultiple)
-        self.CheckBox_Tool_DatasetCreator_IsSpeakerMultiple.setObjectName(u"CheckBox_Tool_DatasetCreator_IsSpeakerMultiple")
-        self.CheckBox_Tool_DatasetCreator_IsSpeakerMultiple.setStyleSheet(u"QCheckBox {\n"
-"	spacing: 12px;\n"
-"	color: rgb(255, 255, 255);\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: transparent;\n"
-"}\n"
-"QCheckBox:hover {\n"
-"	background-color:transparent;\n"
-"}\n"
-"\n"
-"QCheckBox::indicator {\n"
-"	width: 30px;\n"
-"	height: 30px;\n"
-"    background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: transparent;\n"
-"}\n"
-"QCheckBox::indicator:hover {\n"
-"	background-color:rgb(90, 90, 90);\n"
-"}\n"
-"QCheckBox::indicator:unchecked {\n"
-"	border-image: url(:/CheckBox_Icon/Sources/ToggleOff.png);\n"
-"}\n"
-"QCheckBox::indicator:checked {\n"
-"	border-image: url(:/CheckBox_Icon/Sources/ToggleOn.png);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: white;\n"
-"	background-color: transparent;\n"
-"}")
-
-        self.verticalLayout_67.addWidget(self.CheckBox_Tool_DatasetCreator_IsSpeakerMultiple)
-
-
-        self.verticalLayout_32.addWidget(self.Frame_Tool_DatasetCreator_IsSpeakerMultiple)
 
         self.Frame_Tool_DatasetCreator_FileList_Path_Training = QFrame(self.GroupBox_EssentialParams_Page_4)
         self.Frame_Tool_DatasetCreator_FileList_Path_Training.setObjectName(u"Frame_Tool_DatasetCreator_FileList_Path_Training")
@@ -7575,69 +7477,6 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_33.addWidget(self.Frame_Tool_VoiceTrainer_FP16_Run)
 
-        self.Frame_Tool_VoiceTrainer_Speakers = QFrame(self.GroupBox_EssentialParams_Page_5)
-        self.Frame_Tool_VoiceTrainer_Speakers.setObjectName(u"Frame_Tool_VoiceTrainer_Speakers")
-        self.Frame_Tool_VoiceTrainer_Speakers.setMinimumSize(QSize(0, 123))
-        self.Frame_Tool_VoiceTrainer_Speakers.setStyleSheet(u"QFrame {\n"
-"	color: rgb(255, 255, 255);\n"
-"	background-color: rgb(45, 45, 45);\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QFrame:hover {\n"
-"	background-color: rgb(60, 60, 60);\n"
-"}")
-        self.verticalLayout_79 = QVBoxLayout(self.Frame_Tool_VoiceTrainer_Speakers)
-        self.verticalLayout_79.setSpacing(12)
-        self.verticalLayout_79.setObjectName(u"verticalLayout_79")
-        self.verticalLayout_79.setContentsMargins(21, 12, 21, 12)
-        self.Label_Tool_VoiceTrainer_Speakers = QLabel(self.Frame_Tool_VoiceTrainer_Speakers)
-        self.Label_Tool_VoiceTrainer_Speakers.setObjectName(u"Label_Tool_VoiceTrainer_Speakers")
-        self.Label_Tool_VoiceTrainer_Speakers.setStyleSheet(u"QLabel {\n"
-"	/*text-align: center;*/\n"
-"	/*color: rgb(255, 255, 255);*/\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.verticalLayout_79.addWidget(self.Label_Tool_VoiceTrainer_Speakers)
-
-        self.LineEdit_Tool_VoiceTrainer_Speakers = QLineEdit(self.Frame_Tool_VoiceTrainer_Speakers)
-        self.LineEdit_Tool_VoiceTrainer_Speakers.setObjectName(u"LineEdit_Tool_VoiceTrainer_Speakers")
-        sizePolicy4 = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
-        sizePolicy4.setHorizontalStretch(0)
-        sizePolicy4.setVerticalStretch(0)
-        sizePolicy4.setHeightForWidth(self.LineEdit_Tool_VoiceTrainer_Speakers.sizePolicy().hasHeightForWidth())
-        self.LineEdit_Tool_VoiceTrainer_Speakers.setSizePolicy(sizePolicy4)
-        self.LineEdit_Tool_VoiceTrainer_Speakers.setStyleSheet(u"QLineEdit {\n"
-"	text-align: left;\n"
-"	color: rgb(255, 255, 255);\n"
-"	selection-background-color: darkgrey;\n"
-"	background-color: rgb(90, 90, 90);\n"
-"	padding: 1.5px;\n"
-"	border-width: 1px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QLineEdit:hover {\n"
-"	background-color: rgb(120, 120, 120);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: white;\n"
-"	background-color: transparent;\n"
-"}")
-
-        self.verticalLayout_79.addWidget(self.LineEdit_Tool_VoiceTrainer_Speakers)
-
-
-        self.verticalLayout_33.addWidget(self.Frame_Tool_VoiceTrainer_Speakers)
-
         self.Frame_Tool_VoiceTrainer_Config_Dir_Save = QFrame(self.GroupBox_EssentialParams_Page_5)
         self.Frame_Tool_VoiceTrainer_Config_Dir_Save.setObjectName(u"Frame_Tool_VoiceTrainer_Config_Dir_Save")
         self.Frame_Tool_VoiceTrainer_Config_Dir_Save.setMinimumSize(QSize(0, 123))
@@ -7874,6 +7713,69 @@ class Ui_MainWindow(object):
         self.verticalLayout_34.setSpacing(0)
         self.verticalLayout_34.setObjectName(u"verticalLayout_34")
         self.verticalLayout_34.setContentsMargins(0, 12, 0, 12)
+        self.Frame_Tool_VoiceTrainer_Speakers = QFrame(self.GroupBox_OptionalParams_Page_5)
+        self.Frame_Tool_VoiceTrainer_Speakers.setObjectName(u"Frame_Tool_VoiceTrainer_Speakers")
+        self.Frame_Tool_VoiceTrainer_Speakers.setMinimumSize(QSize(0, 123))
+        self.Frame_Tool_VoiceTrainer_Speakers.setStyleSheet(u"QFrame {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: rgb(45, 45, 45);\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QFrame:hover {\n"
+"	background-color: rgb(60, 60, 60);\n"
+"}")
+        self.verticalLayout_79 = QVBoxLayout(self.Frame_Tool_VoiceTrainer_Speakers)
+        self.verticalLayout_79.setSpacing(12)
+        self.verticalLayout_79.setObjectName(u"verticalLayout_79")
+        self.verticalLayout_79.setContentsMargins(21, 12, 21, 12)
+        self.Label_Tool_VoiceTrainer_Speakers = QLabel(self.Frame_Tool_VoiceTrainer_Speakers)
+        self.Label_Tool_VoiceTrainer_Speakers.setObjectName(u"Label_Tool_VoiceTrainer_Speakers")
+        self.Label_Tool_VoiceTrainer_Speakers.setStyleSheet(u"QLabel {\n"
+"	/*text-align: center;*/\n"
+"	/*color: rgb(255, 255, 255);*/\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.verticalLayout_79.addWidget(self.Label_Tool_VoiceTrainer_Speakers)
+
+        self.LineEdit_Tool_VoiceTrainer_Speakers = QLineEdit(self.Frame_Tool_VoiceTrainer_Speakers)
+        self.LineEdit_Tool_VoiceTrainer_Speakers.setObjectName(u"LineEdit_Tool_VoiceTrainer_Speakers")
+        sizePolicy4 = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
+        sizePolicy4.setHorizontalStretch(0)
+        sizePolicy4.setVerticalStretch(0)
+        sizePolicy4.setHeightForWidth(self.LineEdit_Tool_VoiceTrainer_Speakers.sizePolicy().hasHeightForWidth())
+        self.LineEdit_Tool_VoiceTrainer_Speakers.setSizePolicy(sizePolicy4)
+        self.LineEdit_Tool_VoiceTrainer_Speakers.setStyleSheet(u"QLineEdit {\n"
+"	text-align: left;\n"
+"	color: rgb(255, 255, 255);\n"
+"	selection-background-color: darkgrey;\n"
+"	background-color: rgb(90, 90, 90);\n"
+"	padding: 1.5px;\n"
+"	border-width: 1px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QLineEdit:hover {\n"
+"	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: white;\n"
+"	background-color: transparent;\n"
+"}")
+
+        self.verticalLayout_79.addWidget(self.LineEdit_Tool_VoiceTrainer_Speakers)
+
+
+        self.verticalLayout_34.addWidget(self.Frame_Tool_VoiceTrainer_Speakers)
+
         self.Frame_Tool_VoiceTrainer_Config_Path_Load = QFrame(self.GroupBox_OptionalParams_Page_5)
         self.Frame_Tool_VoiceTrainer_Config_Path_Load.setObjectName(u"Frame_Tool_VoiceTrainer_Config_Path_Load")
         self.Frame_Tool_VoiceTrainer_Config_Path_Load.setMinimumSize(QSize(0, 123))
@@ -8421,7 +8323,7 @@ class Ui_MainWindow(object):
         self.Label_Tool_VoiceIdentifier_Duration_of_Audio.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Tool_VoiceIdentifier_Audio_Dir_Output.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Button_Tool_VoiceIdentifier_Audio_Dir_Output.setText(QCoreApplication.translate("MainWindow", u"...", None))
-        self.Label_Tool_VoiceIdentifier_SpeakerID.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.Label_Tool_VoiceIdentifier_Speaker.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Tool_VoiceTranscriber_WAV_Dir.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Button_Tool_VoiceTranscriber_WAV_Dir.setText(QCoreApplication.translate("MainWindow", u"...", None))
         self.Label_Tool_VoiceTranscriber_Model_Dir.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
@@ -8445,8 +8347,6 @@ class Ui_MainWindow(object):
         self.Label_Tool_DatasetCreator_SRT_Dir.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Button_Tool_DatasetCreator_SRT_Dir.setText(QCoreApplication.translate("MainWindow", u"...", None))
         self.Label_Tool_DatasetCreator_AutoEncoder.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.Label_Tool_DatasetCreator_IsSpeakerMultiple.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.CheckBox_Tool_DatasetCreator_IsSpeakerMultiple.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
         self.Label_Tool_DatasetCreator_FileList_Path_Training.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Button_Tool_DatasetCreator_FileList_Path_Training.setText(QCoreApplication.translate("MainWindow", u"...", None))
         self.Label_Tool_DatasetCreator_FileList_Path_Validation.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
@@ -8462,11 +8362,11 @@ class Ui_MainWindow(object):
         self.Label_Tool_VoiceTrainer_Num_Workers.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Tool_VoiceTrainer_FP16_Run.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.CheckBox_Tool_VoiceTrainer_FP16_Run.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
-        self.Label_Tool_VoiceTrainer_Speakers.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Tool_VoiceTrainer_Config_Dir_Save.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Button_Tool_VoiceTrainer_Config_Dir_Save.setText(QCoreApplication.translate("MainWindow", u"...", None))
         self.Label_Tool_VoiceTrainer_Model_Dir_Save.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Button_Tool_VoiceTrainer_Model_Dir_Save.setText(QCoreApplication.translate("MainWindow", u"...", None))
+        self.Label_Tool_VoiceTrainer_Speakers.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Tool_VoiceTrainer_Config_Path_Load.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Button_Tool_VoiceTrainer_Config_Path_Load.setText(QCoreApplication.translate("MainWindow", u"...", None))
         self.Label_Tool_VoiceTrainer_Model_Path_Pretrained_G.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))

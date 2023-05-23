@@ -32,7 +32,7 @@ class Voice_Identifying:
         Feature_Method: str = 'melspectrogram',
         DecisionThreshold: float = 0.60,
         Duration_of_Audio: float = 4.20,
-        SpeakerID: Optional[int] = None
+        Speaker: Optional[str] = None
     ):
         self.Audio_Dir_Input = Audio_Dir_Input
         self.Audio_Dir_Output = Audio_Dir_Output
@@ -44,7 +44,7 @@ class Voice_Identifying:
         self.Feature_Method = Feature_Method
         self.DecisionThreshold = DecisionThreshold
         self.Duration_of_Audio = Duration_of_Audio
-        self.SpeakerID = SpeakerID
+        self.Speaker = Speaker
 
         self.TypeList = ['Ecapa-Tdnn']
         self.NameList = ['small']
@@ -100,7 +100,7 @@ class Voice_Identifying:
         Add_Arg('Feature_Method',   str,      self.Feature_Method,       '音频特征提取方法',           choices = self.MethodList)
         Add_Arg('Threshold',        float,    self.DecisionThreshold,    '判断是否为同一个人的阈值')
         Add_Arg('Audio_Duration',   float,    self.Duration_of_Audio,    '预测的音频长度，单位秒')
-        Add_Arg('SpeakerID',Optional[int],    self.SpeakerID,            '说话人物的编号')
+        Add_Arg('Speaker',          str,      self.Speaker,              '说话人物的名字')
         Args = Parser.parse_args(args = [])
         
         #print_arguments(Args)
@@ -128,7 +128,7 @@ class Voice_Identifying:
                 print(f"{Args.Audio_Path_Std} 和 {Audio_Path_Chk} 为同一个人，相似度为：{Dist}")
                 shutil.copy(
                     src = Audio_Path_Chk,
-                    dst = os.path.join(Args.NewDir, f"[{self.SpeakerID}]{File_Name}") if self.SpeakerID != None else Args.NewDir
-                ) # 复制音频至新目录并实现选择性重命名："[说话人物的编号]原文件名“
+                    dst = os.path.join(Args.NewDir, f"[{Args.Speaker}]{File_Name}") if self.Speaker != None else Args.NewDir
+                ) # 复制音频至新目录并实现选择性重命名：“[说话人物的名字]原文件名”
             else:
                 print(f"{Args.Audio_Path_Std} 和 {Audio_Path_Chk} 不是同一个人，相似度为：{Dist}")

@@ -902,7 +902,7 @@ class MainWindow(Window_Customizing):
         self.ui.SpinBox_Tool_AudioProcessor_Silent_Interval_Min.setSingleStep(1)
         self.ui.SpinBox_Tool_AudioProcessor_Silent_Interval_Min.setValue(300)
         self.ui.SpinBox_Tool_AudioProcessor_Silent_Interval_Min.setToolTipDuration(-1)
-        self.ui.SpinBox_Tool_AudioProcessor_Silent_Interval_Min.setToolTip("注意，这个值必须小于 Audio Length Min，大于 Hop Size。")
+        self.ui.SpinBox_Tool_AudioProcessor_Silent_Interval_Min.setToolTip("注意：这个值必须小于 Audio Length Min，大于 Hop Size。")
 
         self.Function_SetText(
             Panel = self.ui.Label_Tool_AudioProcessor_Silence_Kept_Max,
@@ -912,7 +912,7 @@ class MainWindow(Window_Customizing):
         self.ui.SpinBox_Tool_AudioProcessor_Silence_Kept_Max.setSingleStep(1)
         self.ui.SpinBox_Tool_AudioProcessor_Silence_Kept_Max.setValue(1000)
         self.ui.SpinBox_Tool_AudioProcessor_Silence_Kept_Max.setToolTipDuration(-1)
-        self.ui.SpinBox_Tool_AudioProcessor_Silence_Kept_Max.setToolTip("注意，这个值无需完全对应被分割音频中的静音长度。算法将自行检索最佳的分割位置。")
+        self.ui.SpinBox_Tool_AudioProcessor_Silence_Kept_Max.setToolTip("注意：这个值无需完全对应被分割音频中的静音长度。算法将自行检索最佳的分割位置。")
 
         self.Function_SetText(
             Panel = self.ui.Label_Tool_AudioProcessor_Audio_Length_Min,
@@ -979,10 +979,10 @@ class MainWindow(Window_Customizing):
                 self.ui.ComboBox_Tool_VoiceIdentifier_Feature_Method,
                 self.ui.DoubleSpinBox_Tool_VoiceIdentifier_DecisionThreshold,
                 self.ui.DoubleSpinBox_Tool_VoiceIdentifier_Duration_of_Audio,
-                self.ui.SpinBox_Tool_VoiceIdentifier_SpeakerID
+                self.ui.LineEdit_Tool_VoiceIdentifier_Speaker
             ],
             EmptyAllowed = [
-                self.ui.SpinBox_Tool_VoiceIdentifier_SpeakerID
+                self.ui.LineEdit_Tool_VoiceIdentifier_Speaker
             ]
         )
         self.ui.Button_Tool_VoiceIdentifier_Execute.setToolTipDuration(-1)
@@ -1084,14 +1084,13 @@ class MainWindow(Window_Customizing):
         self.ui.GroupBox_OptionalParams_Page_2.setTitle("OptionalParams 可选参数")
 
         self.Function_SetText(
-            Panel = self.ui.Label_Tool_VoiceIdentifier_SpeakerID,
-            Title = "SpeakerID",
-            Body = "人物编号。说话人物的编号，单人模型可不填写，多人模型需填写对应编号。"
+            Panel = self.ui.Label_Tool_VoiceIdentifier_Speaker,
+            Title = "Speaker",
+            Body = "人物名字。说话人物的名字，若有进行语音模型训练的需求则推荐填写。"
         )
-        #self.ui.SpinBox_Tool_VoiceIdentifier_SpeakerID.setSingleStep(1)
-        self.ui.SpinBox_Tool_VoiceIdentifier_SpeakerID.setValue(0)
-        self.ui.SpinBox_Tool_VoiceIdentifier_SpeakerID.setToolTipDuration(-1)
-        self.ui.SpinBox_Tool_VoiceIdentifier_SpeakerID.setToolTip("注意，第一个人物的编号为0，第二个为1，以此类推")
+        self.ui.LineEdit_Tool_VoiceIdentifier_Speaker.setText("")
+        self.ui.LineEdit_Tool_VoiceIdentifier_Speaker.setToolTipDuration(-1)
+        self.ui.LineEdit_Tool_VoiceIdentifier_Speaker.setToolTip("注意：名字中尽量不要出现特殊符号")
 
         # Page3: Tool_VoiceTranscriber
         self.Function_SetText(
@@ -1272,7 +1271,6 @@ class MainWindow(Window_Customizing):
                 self.ui.ComboBox_Tool_DatasetCreator_Subtype,
                 self.ui.LineEdit_Tool_DatasetCreator_WAV_Dir_Split,
                 self.ui.ComboBox_Tool_DatasetCreator_AutoEncoder,
-                self.ui.CheckBox_Tool_DatasetCreator_IsSpeakerMultiple,
                 self.ui.LineEdit_Tool_DatasetCreator_FileList_Path_Training,
                 self.ui.LineEdit_Tool_DatasetCreator_FileList_Path_Validation
             ]
@@ -1343,14 +1341,6 @@ class MainWindow(Window_Customizing):
         )
         self.ui.ComboBox_Tool_DatasetCreator_AutoEncoder.addItems(['VITS'])
         self.ui.ComboBox_Tool_DatasetCreator_AutoEncoder.setCurrentText('VITS')
-
-        self.Function_SetText(
-            Panel = self.ui.Label_Tool_DatasetCreator_IsSpeakerMultiple,
-            Title = "Is Speaker Multiple",
-            Body = "是否多人。启用以支持多人模型训练。"
-        )
-        self.ui.CheckBox_Tool_DatasetCreator_IsSpeakerMultiple.setCheckable(True)
-        self.ui.CheckBox_Tool_DatasetCreator_IsSpeakerMultiple.setChecked(False)
 
         self.Function_SetText(
             Panel = self.ui.Label_Tool_DatasetCreator_FileList_Path_Training,
@@ -1433,10 +1423,10 @@ class MainWindow(Window_Customizing):
                 self.ui.LineEdit_Tool_VoiceTrainer_Model_Dir_Save
             ],
             EmptyAllowed = [
-                self.ui.LineEdit_Tool_VoiceTrainer_Speakers,
                 self.ui.LineEdit_Tool_VoiceTrainer_Config_Path_Load,
                 self.ui.LineEdit_Tool_VoiceTrainer_Model_Path_Pretrained_G,
-                self.ui.LineEdit_Tool_VoiceTrainer_Model_Path_Pretrained_D
+                self.ui.LineEdit_Tool_VoiceTrainer_Model_Path_Pretrained_D,
+                self.ui.LineEdit_Tool_VoiceTrainer_Speakers
             ]
         )
         self.ui.Button_Tool_VoiceTrainer_Execute.setToolTipDuration(-1)
@@ -1488,7 +1478,7 @@ class MainWindow(Window_Customizing):
         self.ui.SpinBox_Tool_VoiceTrainer_Eval_Interval.setSingleStep(1)
         self.ui.SpinBox_Tool_VoiceTrainer_Eval_Interval.setValue(1000)
         self.ui.SpinBox_Tool_VoiceTrainer_Eval_Interval.setToolTipDuration(-1)
-        self.ui.SpinBox_Tool_VoiceTrainer_Eval_Interval.setToolTip("建议设置为默认的一千以满足保存的需求")
+        self.ui.SpinBox_Tool_VoiceTrainer_Eval_Interval.setToolTip("提示：建议设置为默认的一千以满足保存的需求")
 
         self.Function_SetText(
             Panel = self.ui.Label_Tool_VoiceTrainer_Epochs,
@@ -1498,7 +1488,7 @@ class MainWindow(Window_Customizing):
         self.ui.SpinBox_Tool_VoiceTrainer_Epochs.setSingleStep(1)
         self.ui.SpinBox_Tool_VoiceTrainer_Epochs.setValue(10000)
         self.ui.SpinBox_Tool_VoiceTrainer_Epochs.setToolTipDuration(-1)
-        self.ui.SpinBox_Tool_VoiceTrainer_Epochs.setToolTip("建议为设置一万到两万以获得最佳效果")
+        self.ui.SpinBox_Tool_VoiceTrainer_Epochs.setToolTip("提示：建议为设置一万到两万以获得最佳效果")
 
         self.Function_SetText(
             Panel = self.ui.Label_Tool_VoiceTrainer_Batch_Size,
@@ -1508,7 +1498,7 @@ class MainWindow(Window_Customizing):
         self.ui.SpinBox_Tool_VoiceTrainer_Batch_Size.setSingleStep(1)
         self.ui.SpinBox_Tool_VoiceTrainer_Batch_Size.setValue(8)
         self.ui.SpinBox_Tool_VoiceTrainer_Batch_Size.setToolTipDuration(-1)
-        self.ui.SpinBox_Tool_VoiceTrainer_Batch_Size.setToolTip("注意，最好设置为2的幂次。设置为1会导致网络很难收敛。")
+        self.ui.SpinBox_Tool_VoiceTrainer_Batch_Size.setToolTip("注意：最好设置为2的幂次。设置为1会导致网络很难收敛。")
 
         self.Function_SetText(
             Panel = self.ui.Label_Tool_VoiceTrainer_Num_Workers,
@@ -1525,16 +1515,6 @@ class MainWindow(Window_Customizing):
         )
         self.ui.CheckBox_Tool_VoiceTrainer_FP16_Run.setCheckable(True)
         self.ui.CheckBox_Tool_VoiceTrainer_FP16_Run.setChecked(True)
-
-        self.Function_SetText(
-            Panel = self.ui.Label_Tool_VoiceTrainer_Speakers,
-            Title = "Speakers",
-            Body = "人物名字。说话人物的名字，单人模型可不填写，多人模型需填写对应名字。"
-        )
-        self.ui.LineEdit_Tool_VoiceTrainer_Speakers.setReadOnly(False)
-        self.ui.LineEdit_Tool_VoiceTrainer_Speakers.setText('')
-        self.ui.LineEdit_Tool_VoiceTrainer_Speakers.setToolTipDuration(-1)
-        self.ui.LineEdit_Tool_VoiceTrainer_Speakers.setToolTip("注意，不同人物名之间要用逗号隔开。")
 
         self.Function_SetText(
             Panel = self.ui.Label_Tool_VoiceTrainer_Config_Dir_Save,
@@ -1560,7 +1540,7 @@ class MainWindow(Window_Customizing):
             DisplayText = "None"
         )
         self.ui.Label_Tool_VoiceTrainer_Model_Dir_Save.setToolTipDuration(-1)
-        self.ui.Label_Tool_VoiceTrainer_Model_Dir_Save.setToolTip("注意，请勿将不同数据集训练得到的模型置于同一目录下。")
+        self.ui.Label_Tool_VoiceTrainer_Model_Dir_Save.setToolTip("注意：请勿将不同数据集训练得到的模型置于同一目录下。")
 
         self.ui.GroupBox_OptionalParams_Page_5.setTitle("OptionalParams 可选参数")
 
@@ -1602,6 +1582,16 @@ class MainWindow(Window_Customizing):
             FileType = "pth类型 (*.pth)",
             DisplayText = "None"
         )
+
+        self.Function_SetText(
+            Panel = self.ui.Label_Tool_VoiceTrainer_Speakers,
+            Title = "Speakers",
+            Body = "人物名字。若数据集非本工具箱生成且未包含人名信息，则应按序号填写并用逗号隔开。"
+        )
+        self.ui.LineEdit_Tool_VoiceTrainer_Speakers.setReadOnly(False)
+        self.ui.LineEdit_Tool_VoiceTrainer_Speakers.setText('')
+        self.ui.LineEdit_Tool_VoiceTrainer_Speakers.setToolTipDuration(-1)
+        self.ui.LineEdit_Tool_VoiceTrainer_Speakers.setToolTip("注意：逗号后面不需要加空格")
 
         # Toggle/Burger Console
         self.ui.Button_Toggle_Console.clicked.connect(

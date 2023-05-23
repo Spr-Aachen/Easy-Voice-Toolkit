@@ -37,7 +37,6 @@ class Dataset_Creating:
         WAV_Dir_Split: str = './WAV_Files_Split',
         #WAV_Time_Limitation: float = 10.00,
         AutoEncoder: str = 'VITS',
-        IsSpeakerMultiple: bool = False,
         FileList_Path_Training: str = './FileLists/Train_FileList.txt',
         FileList_Path_Validation: str = './FileLists/Val_FileList.txt'
     ):
@@ -48,7 +47,6 @@ class Dataset_Creating:
         self.WAV_Dir_Split = WAV_Dir_Split
         #self.WAV_Time_Limitation = WAV_Time_Limitation
         self.AutoEncoder = AutoEncoder
-        self.IsSpeakerMultiple = IsSpeakerMultiple
         self.FileList_Path_Training = FileList_Path_Training
         self.FileList_Path_Validation = FileList_Path_Validation
 
@@ -144,8 +142,7 @@ class Dataset_Creating:
         print('---------------------------------------------------------------------')
 
         # Write transcript to text-file for model training
-        Transcript_Writer(CSV_Path_Final_Cleaned, self.AutoEncoder, self.IsSpeakerMultiple, self.FileList_Path_Training)
-        Transcript_Writer(CSV_Path_Final_Cleaned, self.AutoEncoder, self.IsSpeakerMultiple, self.FileList_Path_Validation)
+        Transcript_Writer(CSV_Path_Final_Cleaned, self.AutoEncoder, self.FileList_Path_Training, self.FileList_Path_Validation)
         print('Transcript written.')
         print('---------------------------------------------------------------------')
 
