@@ -1392,7 +1392,6 @@ class MainWindow(Window_Customizing):
                 "若有使用完整流程的需求，建议检查以下设置是否正确衔接了前面工具的输出项以及部分设定：\n"
                 "FileList Path Training\n"
                 "FileList Path Validation\n"
-                "Is Speaker Multiple\n"
         )
         self.Function_ParamsSynchronizer(
             Button = self.Function_InsertUI(
@@ -1404,13 +1403,11 @@ class MainWindow(Window_Customizing):
             ),
             ParamsFrom = [
                 self.ui.LineEdit_Tool_DatasetCreator_FileList_Path_Training,
-                self.ui.LineEdit_Tool_DatasetCreator_FileList_Path_Validation,
-                self.ui.CheckBox_Tool_DatasetCreator_IsSpeakerMultiple
+                self.ui.LineEdit_Tool_DatasetCreator_FileList_Path_Validation
             ],
             ParamsTo = [
                 self.ui.LineEdit_Tool_VoiceTrainer_FileList_Path_Training,
-                self.ui.LineEdit_Tool_VoiceTrainer_FileList_Path_Validation,
-                self.ui.CheckBox_Tool_VoiceTrainer_IsSpeakerMultiple
+                self.ui.LineEdit_Tool_VoiceTrainer_FileList_Path_Validation
             ]
         )
 
@@ -1429,7 +1426,6 @@ class MainWindow(Window_Customizing):
                 self.ui.SpinBox_Tool_VoiceTrainer_Epochs,
                 self.ui.SpinBox_Tool_VoiceTrainer_Batch_Size,
                 self.ui.CheckBox_Tool_VoiceTrainer_FP16_Run,
-                self.ui.CheckBox_Tool_VoiceTrainer_IsSpeakerMultiple,
                 self.ui.LineEdit_Tool_VoiceTrainer_Speakers,
                 self.ui.SpinBox_Tool_VoiceTrainer_Num_Workers,
                 self.ui.LineEdit_Tool_VoiceTrainer_Model_Path_Pretrained_G,
@@ -1529,14 +1525,6 @@ class MainWindow(Window_Customizing):
         )
         self.ui.CheckBox_Tool_VoiceTrainer_FP16_Run.setCheckable(True)
         self.ui.CheckBox_Tool_VoiceTrainer_FP16_Run.setChecked(True)
-
-        self.Function_SetText(
-            Panel = self.ui.Label_Tool_VoiceTrainer_IsSpeakerMultiple,
-            Title = "Is Speaker Multiple",
-            Body = "是否多人。启用以支持多人模型训练。"
-        )
-        self.ui.CheckBox_Tool_VoiceTrainer_IsSpeakerMultiple.setCheckable(True)
-        self.ui.CheckBox_Tool_VoiceTrainer_IsSpeakerMultiple.setChecked(False)
 
         self.Function_SetText(
             Panel = self.ui.Label_Tool_VoiceTrainer_Speakers,

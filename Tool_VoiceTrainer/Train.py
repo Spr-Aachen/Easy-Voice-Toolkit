@@ -537,13 +537,14 @@ class Voice_Training(Preprocessing, Training):
         Set_Epochs: int = 10000,
         Set_Batch_Size: int = 8,
         Set_FP16_Run: bool = True,
-        IsSpeakerMultiple: bool = False,
         Set_Speakers: str = ["SpeakerName"],
         Num_Workers: int = 8,
         Model_Path_Pretrained_G: Optional[str] = None,
         Model_Path_Pretrained_D: Optional[str] = None,
         Model_Dir_Save: str = './'
     ):
+        IsSpeakerMultiple = True if len(self.Set_Speakers) >= 2 else False
+
         Preprocessing.__init__(self, FileList_Path_Validation, FileList_Path_Training, Language, Config_Path_Load, Config_Dir_Save, Set_Eval_Interval, Set_Epochs, Set_Batch_Size, Set_FP16_Run, IsSpeakerMultiple, Set_Speakers)
         Training.__init__(self, IsSpeakerMultiple, Num_Workers)
         self.Model_Path_Pretrained_G = Model_Path_Pretrained_G

@@ -6744,7 +6744,7 @@ class Ui_MainWindow(object):
         self.ScrollArea_Right_Page_5.setWidgetResizable(True)
         self.ScrollArea_Right_WidgetContents_Page_5 = QWidget()
         self.ScrollArea_Right_WidgetContents_Page_5.setObjectName(u"ScrollArea_Right_WidgetContents_Page_5")
-        self.ScrollArea_Right_WidgetContents_Page_5.setGeometry(QRect(0, 0, 619, 1984))
+        self.ScrollArea_Right_WidgetContents_Page_5.setGeometry(QRect(0, 0, 619, 1861))
         self.ScrollArea_Right_WidgetContents_Page_5.setMinimumSize(QSize(0, 0))
         self.verticalLayout_22 = QVBoxLayout(self.ScrollArea_Right_WidgetContents_Page_5)
         self.verticalLayout_22.setSpacing(21)
@@ -7574,83 +7574,6 @@ class Ui_MainWindow(object):
 
 
         self.verticalLayout_33.addWidget(self.Frame_Tool_VoiceTrainer_FP16_Run)
-
-        self.Frame_Tool_VoiceTrainer_IsSpeakerMultiple = QFrame(self.GroupBox_EssentialParams_Page_5)
-        self.Frame_Tool_VoiceTrainer_IsSpeakerMultiple.setObjectName(u"Frame_Tool_VoiceTrainer_IsSpeakerMultiple")
-        self.Frame_Tool_VoiceTrainer_IsSpeakerMultiple.setMinimumSize(QSize(0, 123))
-        self.Frame_Tool_VoiceTrainer_IsSpeakerMultiple.setStyleSheet(u"QFrame {\n"
-"	color: rgb(255, 255, 255);\n"
-"	background-color: rgb(45, 45, 45);\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QFrame:hover {\n"
-"	background-color: rgb(60, 60, 60);\n"
-"}")
-        self.verticalLayout_77 = QVBoxLayout(self.Frame_Tool_VoiceTrainer_IsSpeakerMultiple)
-        self.verticalLayout_77.setSpacing(12)
-        self.verticalLayout_77.setObjectName(u"verticalLayout_77")
-        self.verticalLayout_77.setContentsMargins(21, 12, 21, 12)
-        self.Label_Tool_VoiceTrainer_IsSpeakerMultiple = QLabel(self.Frame_Tool_VoiceTrainer_IsSpeakerMultiple)
-        self.Label_Tool_VoiceTrainer_IsSpeakerMultiple.setObjectName(u"Label_Tool_VoiceTrainer_IsSpeakerMultiple")
-        self.Label_Tool_VoiceTrainer_IsSpeakerMultiple.setStyleSheet(u"QLabel {\n"
-"	/*text-align: center;*/\n"
-"	/*color: rgb(255, 255, 255);*/\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.verticalLayout_77.addWidget(self.Label_Tool_VoiceTrainer_IsSpeakerMultiple)
-
-        self.CheckBox_Tool_VoiceTrainer_IsSpeakerMultiple = QCheckBox(self.Frame_Tool_VoiceTrainer_IsSpeakerMultiple)
-        self.CheckBox_Tool_VoiceTrainer_IsSpeakerMultiple.setObjectName(u"CheckBox_Tool_VoiceTrainer_IsSpeakerMultiple")
-        self.CheckBox_Tool_VoiceTrainer_IsSpeakerMultiple.setStyleSheet(u"QCheckBox {\n"
-"	spacing: 12px;\n"
-"	color: rgb(255, 255, 255);\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: transparent;\n"
-"}\n"
-"QCheckBox:hover {\n"
-"	background-color:transparent;\n"
-"}\n"
-"\n"
-"QCheckBox::indicator {\n"
-"	width: 30px;\n"
-"	height: 30px;\n"
-"    background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: transparent;\n"
-"}\n"
-"QCheckBox::indicator:hover {\n"
-"	background-color:rgb(90, 90, 90);\n"
-"}\n"
-"QCheckBox::indicator:unchecked {\n"
-"	border-image: url(:/CheckBox_Icon/Sources/ToggleOff.png);\n"
-"}\n"
-"QCheckBox::indicator:checked {\n"
-"	border-image: url(:/CheckBox_Icon/Sources/ToggleOn.png);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: white;\n"
-"	background-color: transparent;\n"
-"}")
-
-        self.verticalLayout_77.addWidget(self.CheckBox_Tool_VoiceTrainer_IsSpeakerMultiple)
-
-
-        self.verticalLayout_33.addWidget(self.Frame_Tool_VoiceTrainer_IsSpeakerMultiple)
 
         self.Frame_Tool_VoiceTrainer_Speakers = QFrame(self.GroupBox_EssentialParams_Page_5)
         self.Frame_Tool_VoiceTrainer_Speakers.setObjectName(u"Frame_Tool_VoiceTrainer_Speakers")
@@ -8539,8 +8462,6 @@ class Ui_MainWindow(object):
         self.Label_Tool_VoiceTrainer_Num_Workers.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Tool_VoiceTrainer_FP16_Run.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.CheckBox_Tool_VoiceTrainer_FP16_Run.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
-        self.Label_Tool_VoiceTrainer_IsSpeakerMultiple.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.CheckBox_Tool_VoiceTrainer_IsSpeakerMultiple.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
         self.Label_Tool_VoiceTrainer_Speakers.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Tool_VoiceTrainer_Config_Dir_Save.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Button_Tool_VoiceTrainer_Config_Dir_Save.setText(QCoreApplication.translate("MainWindow", u"...", None))
