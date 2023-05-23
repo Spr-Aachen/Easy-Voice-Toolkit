@@ -128,15 +128,16 @@ class Preprocessing:
 
         for FileList in Args.FileLists:
             print("START:", FileList)
-            Paths_and_Text = utils.load_filepaths_and_text(FileList)
-            for i in range(len(Paths_and_Text)):
-                original_text = Paths_and_Text[i][Args.Text_Index]
+            
+            Paths_SID_Text = utils.load_audiopaths_sid_text(FileList)
+            for i in range(len(Paths_SID_Text)):
+                original_text = Paths_SID_Text[i][Args.Text_Index]
                 cleaned_text = text._clean_text(original_text, Args.Text_Cleaners)
-                Paths_and_Text[i][Args.Text_Index] = cleaned_text
+                Paths_SID_Text[i][Args.Text_Index] = cleaned_text
 
             New_Filelist = FileList + "." + Args.Out_Extension
             with open(New_Filelist, "w", encoding = "utf-8") as f:
-                f.writelines(["|".join(x) + "\n" for x in Paths_and_Text])
+                f.writelines(["|".join(x) + "\n" for x in Paths_SID_Text])
 
 
 class Training:
