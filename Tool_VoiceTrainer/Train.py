@@ -24,8 +24,6 @@ torch.backends.cudnn.benchmark = True
 import Tool_VoiceTrainer.vits.text as text
 import Tool_VoiceTrainer.vits.Utils as utils
 from .vits.Data_Utils import (
-    TextAudioLoader,
-    TextAudioCollate,
     TextAudioSpeakerLoader,
     TextAudioSpeakerCollate,
     DistributedBucketSampler
@@ -68,7 +66,6 @@ class Preprocessing:
         Set_Epochs: int = 10000,
         Set_Batch_Size: int = 8,
         Set_FP16_Run: bool = True,
-        IsSpeakerMultiple: bool = False,
         Set_Speakers: Optional[list] = ["SpeakerName"]
     ):
         self.FileList_Path_Validation = FileList_Path_Validation
@@ -79,7 +76,6 @@ class Preprocessing:
         self.Set_Epochs = Set_Epochs
         self.Set_Batch_Size = Set_Batch_Size
         self.Set_FP16_Run = Set_FP16_Run
-        self.IsSpeakerMultiple = IsSpeakerMultiple
         self.Set_Speakers = Set_Speakers
 
         self.Config_Path_Load = Config_Path_Load if Config_Path_Load != None else os.path.normpath(os.path.join(os.path.dirname(__file__), './configs', (self.Language + '_base.json')))
@@ -101,8 +97,8 @@ class Preprocessing:
                 Params_Old["data"]["training_files"]    = (self.FileList_Path_Training + "." + self.Out_Extension).lower()
                 Params_Old["data"]["validation_files"]  = (self.FileList_Path_Validation + "." + self.Out_Extension).lower()
                 Params_Old["data"]["text_cleaners"]     = (self.Language + "_cleaners").lower()
-                Params_Old["data"]["n_speakers"]        = len(self.Set_Speakers) if self.IsSpeakerMultiple == True else 0
-                Params_Old["speakers"]                  = self.Set_Speakers if self.IsSpeakerMultiple == True else None
+                Params_Old["data"]["n_speakers"]        = len(self.Set_Speakers)
+                Params_Old["speakers"]                  = self.Set_Speakers
                 Params_New = Params_Old
             f.close()
             return Params_New
@@ -122,7 +118,7 @@ class Preprocessing:
         Parser = argparse.ArgumentParser()
         Parser.add_argument("--Out_Extension",    type = str,                       default = self.Out_Extension)
         Parser.add_argument("--Path_Index",       type = int,                       default = 0)
-        Parser.add_argument("--Text_Index",       type = int,                       default = 2 if self.IsSpeakerMultiple == True else 1)
+        Parser.add_argument("--Text_Index",       type = int,                       default = 2)
         Parser.add_argument("--FileLists",        type = list,     nargs = "+",     default = [self.FileList_Path_Validation, self.FileList_Path_Training])
         Parser.add_argument("--Text_Cleaners",    type = str,      nargs = "+",     default = [self.Language + "_cleaners"])
         Args = Parser.parse_args(args = [])
@@ -144,47 +140,29 @@ class Training:
     Train
     '''
     def __init__(self,
-        IsSpeakerMultiple: bool,
         Num_Workers: int = 8
     ):
-        self.IsSpeakerMultiple = IsSpeakerMultiple
         self.Num_Workers = Num_Workers
 
     def evaluate(self, hps, generator, eval_loader, writer_eval):
         generator.eval()
         with torch.no_grad():
-            if self.IsSpeakerMultiple:
-                for batch_idx, (x, x_lengths, spec, spec_lengths, y, y_lengths, speakers) in enumerate(eval_loader):
-                    x, x_lengths = x.cuda(0), x_lengths.cuda(0)
-                    spec, spec_lengths = spec.cuda(0), spec_lengths.cuda(0)
-                    y, y_lengths = y.cuda(0), y_lengths.cuda(0)
-                    speakers = speakers.cuda(0)
+            for batch_idx, (x, x_lengths, spec, spec_lengths, y, y_lengths, speakers) in enumerate(eval_loader):
+                x, x_lengths = x.cuda(0), x_lengths.cuda(0)
+                spec, spec_lengths = spec.cuda(0), spec_lengths.cuda(0)
+                y, y_lengths = y.cuda(0), y_lengths.cuda(0)
+                speakers = speakers.cuda(0)
 
-                    # remove else
-                    x = x[:1]
-                    x_lengths = x_lengths[:1]
-                    spec = spec[:1]
-                    spec_lengths = spec_lengths[:1]
-                    y = y[:1]
-                    y_lengths = y_lengths[:1]
-                    speakers = speakers[:1]
-                    break
-                y_hat, attn, mask, *_ = generator.module.infer(x, x_lengths, speakers, max_len=1000)
-            else:
-                for batch_idx, (x, x_lengths, spec, spec_lengths, y, y_lengths) in enumerate(eval_loader):
-                    x, x_lengths = x.cuda(0), x_lengths.cuda(0)
-                    spec, spec_lengths = spec.cuda(0), spec_lengths.cuda(0)
-                    y, y_lengths = y.cuda(0), y_lengths.cuda(0)
-
-                    # remove else
-                    x = x[:1]
-                    x_lengths = x_lengths[:1]
-                    spec = spec[:1]
-                    spec_lengths = spec_lengths[:1]
-                    y = y[:1]
-                    y_lengths = y_lengths[:1]
-                    break
-            y_hat, attn, mask, *_ = generator.module.infer(x, x_lengths, max_len=1000)
+                # remove else
+                x = x[:1]
+                x_lengths = x_lengths[:1]
+                spec = spec[:1]
+                spec_lengths = spec_lengths[:1]
+                y = y[:1]
+                y_lengths = y_lengths[:1]
+                speakers = speakers[:1]
+                break
+            y_hat, attn, mask, *_ = generator.module.infer(x, x_lengths, speakers, max_len=1000)
             y_hat_lengths = mask.sum([1,2]).long() * hps.data.hop_length
 
             mel = spec_to_mel_torch(
@@ -238,202 +216,103 @@ class Training:
         net_g.train()
         net_d.train()
         
-        if self.IsSpeakerMultiple == True:
-            for batch_idx, (x, x_lengths, spec, spec_lengths, y, y_lengths, speakers) in enumerate(train_loader):
-                x, x_lengths = x.cuda(rank, non_blocking=True), x_lengths.cuda(rank, non_blocking=True)
-                spec, spec_lengths = spec.cuda(rank, non_blocking=True), spec_lengths.cuda(rank, non_blocking=True)
-                y, y_lengths = y.cuda(rank, non_blocking=True), y_lengths.cuda(rank, non_blocking=True)
-                speakers = speakers.cuda(rank, non_blocking=True)
+        for batch_idx, (x, x_lengths, spec, spec_lengths, y, y_lengths, speakers) in enumerate(train_loader):
+            x, x_lengths = x.cuda(rank, non_blocking=True), x_lengths.cuda(rank, non_blocking=True)
+            spec, spec_lengths = spec.cuda(rank, non_blocking=True), spec_lengths.cuda(rank, non_blocking=True)
+            y, y_lengths = y.cuda(rank, non_blocking=True), y_lengths.cuda(rank, non_blocking=True)
+            speakers = speakers.cuda(rank, non_blocking=True)
 
-                with autocast(enabled=hps.train.fp16_run):
-                    y_hat, l_length, attn, ids_slice, x_mask, z_mask,\
-                    (z, z_p, m_p, logs_p, m_q, logs_q) = net_g(x, x_lengths, spec, spec_lengths, speakers)
+            with autocast(enabled=hps.train.fp16_run):
+                y_hat, l_length, attn, ids_slice, x_mask, z_mask,\
+                (z, z_p, m_p, logs_p, m_q, logs_q) = net_g(x, x_lengths, spec, spec_lengths, speakers)
 
-                    mel = spec_to_mel_torch(
-                        spec,
-                        hps.data.filter_length,
-                        hps.data.n_mel_channels,
-                        hps.data.sampling_rate,
-                        hps.data.mel_fmin,
-                        hps.data.mel_fmax)
-                    y_mel = slice_segments(mel, ids_slice, hps.train.segment_size // hps.data.hop_length)
-                    y_hat_mel = mel_spectrogram_torch(
-                        y_hat.squeeze(1),
-                        hps.data.filter_length,
-                        hps.data.n_mel_channels,
-                        hps.data.sampling_rate,
-                        hps.data.hop_length,
-                        hps.data.win_length,
-                        hps.data.mel_fmin,
-                        hps.data.mel_fmax)
+                mel = spec_to_mel_torch(
+                    spec,
+                    hps.data.filter_length,
+                    hps.data.n_mel_channels,
+                    hps.data.sampling_rate,
+                    hps.data.mel_fmin,
+                    hps.data.mel_fmax)
+                y_mel = slice_segments(mel, ids_slice, hps.train.segment_size // hps.data.hop_length)
+                y_hat_mel = mel_spectrogram_torch(
+                    y_hat.squeeze(1),
+                    hps.data.filter_length,
+                    hps.data.n_mel_channels,
+                    hps.data.sampling_rate,
+                    hps.data.hop_length,
+                    hps.data.win_length,
+                    hps.data.mel_fmin,
+                    hps.data.mel_fmax)
 
-                    y = slice_segments(y, ids_slice * hps.data.hop_length, hps.train.segment_size) # slice
+                y = slice_segments(y, ids_slice * hps.data.hop_length, hps.train.segment_size) # slice
 
-                    # Discriminator
-                    y_d_hat_r, y_d_hat_g, _, _ = net_d(y, y_hat.detach())
-                    with autocast(enabled=False):
-                        loss_disc, losses_disc_r, losses_disc_g = discriminator_loss(y_d_hat_r, y_d_hat_g)
-                        loss_disc_all = loss_disc
-                optim_d.zero_grad()
-                scaler.scale(loss_disc_all).backward()
-                scaler.unscale_(optim_d)
-                grad_norm_d = clip_grad_value_(net_d.parameters(), None)
-                scaler.step(optim_d)
+                # Discriminator
+                y_d_hat_r, y_d_hat_g, _, _ = net_d(y, y_hat.detach())
+                with autocast(enabled=False):
+                    loss_disc, losses_disc_r, losses_disc_g = discriminator_loss(y_d_hat_r, y_d_hat_g)
+                    loss_disc_all = loss_disc
+            optim_d.zero_grad()
+            scaler.scale(loss_disc_all).backward()
+            scaler.unscale_(optim_d)
+            grad_norm_d = clip_grad_value_(net_d.parameters(), None)
+            scaler.step(optim_d)
 
-                with autocast(enabled=hps.train.fp16_run):
-                    # Generator
-                    y_d_hat_r, y_d_hat_g, fmap_r, fmap_g = net_d(y, y_hat)
-                    with autocast(enabled=False):
-                        loss_dur = torch.sum(l_length.float())
-                        loss_mel = F.l1_loss(y_mel, y_hat_mel) * hps.train.c_mel
-                        loss_kl = kl_loss(z_p, logs_q, m_p, logs_p, z_mask) * hps.train.c_kl
+            with autocast(enabled=hps.train.fp16_run):
+                # Generator
+                y_d_hat_r, y_d_hat_g, fmap_r, fmap_g = net_d(y, y_hat)
+                with autocast(enabled=False):
+                    loss_dur = torch.sum(l_length.float())
+                    loss_mel = F.l1_loss(y_mel, y_hat_mel) * hps.train.c_mel
+                    loss_kl = kl_loss(z_p, logs_q, m_p, logs_p, z_mask) * hps.train.c_kl
 
-                        loss_fm = feature_loss(fmap_r, fmap_g)
-                        loss_gen, losses_gen = generator_loss(y_d_hat_g)
-                        loss_gen_all = loss_gen + loss_fm + loss_mel + loss_dur + loss_kl
-                optim_g.zero_grad()
-                scaler.scale(loss_gen_all).backward()
-                scaler.unscale_(optim_g)
-                grad_norm_g = clip_grad_value_(net_g.parameters(), None)
-                scaler.step(optim_g)
-                scaler.update()
+                    loss_fm = feature_loss(fmap_r, fmap_g)
+                    loss_gen, losses_gen = generator_loss(y_d_hat_g)
+                    loss_gen_all = loss_gen + loss_fm + loss_mel + loss_dur + loss_kl
+            optim_g.zero_grad()
+            scaler.scale(loss_gen_all).backward()
+            scaler.unscale_(optim_g)
+            grad_norm_g = clip_grad_value_(net_g.parameters(), None)
+            scaler.step(optim_g)
+            scaler.update()
 
-                if rank==0:
-                    if global_step % hps.train.log_interval == 0:
-                        lr = optim_g.param_groups[0]['lr']
-                        losses = [loss_disc, loss_gen, loss_fm, loss_mel, loss_dur, loss_kl]
-                        logger.info('Train Epoch: {} [{:.0f}%]'.format(
-                            epoch,
-                            100. * batch_idx / len(train_loader)))
-                        logger.info([x.item() for x in losses] + [global_step, lr])
+            if rank==0:
+                if global_step % hps.train.log_interval == 0:
+                    lr = optim_g.param_groups[0]['lr']
+                    losses = [loss_disc, loss_gen, loss_fm, loss_mel, loss_dur, loss_kl]
+                    logger.info('Train Epoch: {} [{:.0f}%]'.format(
+                        epoch,
+                        100. * batch_idx / len(train_loader)))
+                    logger.info([x.item() for x in losses] + [global_step, lr])
 
-                        scalar_dict = {"loss/g/total": loss_gen_all, "loss/d/total": loss_disc_all, "learning_rate": lr, "grad_norm_d": grad_norm_d, "grad_norm_g": grad_norm_g}
-                        scalar_dict.update({"loss/g/fm": loss_fm, "loss/g/mel": loss_mel, "loss/g/dur": loss_dur, "loss/g/kl": loss_kl})
+                    scalar_dict = {"loss/g/total": loss_gen_all, "loss/d/total": loss_disc_all, "learning_rate": lr, "grad_norm_d": grad_norm_d, "grad_norm_g": grad_norm_g}
+                    scalar_dict.update({"loss/g/fm": loss_fm, "loss/g/mel": loss_mel, "loss/g/dur": loss_dur, "loss/g/kl": loss_kl})
 
-                        scalar_dict.update({"loss/g/{}".format(i): v for i, v in enumerate(losses_gen)})
-                        scalar_dict.update({"loss/d_r/{}".format(i): v for i, v in enumerate(losses_disc_r)})
-                        scalar_dict.update({"loss/d_g/{}".format(i): v for i, v in enumerate(losses_disc_g)})
-                        image_dict = {
-                            "slice/mel_org": utils.plot_spectrogram_to_numpy(y_mel[0].data.cpu().numpy()),
-                            "slice/mel_gen": utils.plot_spectrogram_to_numpy(y_hat_mel[0].data.cpu().numpy()),
-                            "all/mel": utils.plot_spectrogram_to_numpy(mel[0].data.cpu().numpy()),
-                            "all/attn": utils.plot_alignment_to_numpy(attn[0,0].data.cpu().numpy())
-                        }
-                        utils.summarize(
-                            writer=writer,
-                            global_step=global_step,
-                            images=image_dict,
-                            scalars=scalar_dict)
+                    scalar_dict.update({"loss/g/{}".format(i): v for i, v in enumerate(losses_gen)})
+                    scalar_dict.update({"loss/d_r/{}".format(i): v for i, v in enumerate(losses_disc_r)})
+                    scalar_dict.update({"loss/d_g/{}".format(i): v for i, v in enumerate(losses_disc_g)})
+                    image_dict = {
+                        "slice/mel_org": utils.plot_spectrogram_to_numpy(y_mel[0].data.cpu().numpy()),
+                        "slice/mel_gen": utils.plot_spectrogram_to_numpy(y_hat_mel[0].data.cpu().numpy()),
+                        "all/mel": utils.plot_spectrogram_to_numpy(mel[0].data.cpu().numpy()),
+                        "all/attn": utils.plot_alignment_to_numpy(attn[0,0].data.cpu().numpy())
+                    }
+                    utils.summarize(
+                        writer=writer,
+                        global_step=global_step,
+                        images=image_dict,
+                        scalars=scalar_dict)
 
-                    if global_step % hps.train.eval_interval == 0:
-                        self.evaluate(hps, net_g, eval_loader, writer_eval)
-                        utils.save_checkpoint(net_g, optim_g, hps.train.learning_rate, epoch, os.path.normpath(os.path.join(hps.model_dir, "G_{}.pth".format(global_step))))
-                        utils.save_checkpoint(net_d, optim_d, hps.train.learning_rate, epoch, os.path.normpath(os.path.join(hps.model_dir, "D_{}.pth".format(global_step))))
-                        old_g=os.path.normpath(os.path.join(hps.model_dir, "G_{}.pth".format(global_step-2000)))
-                        old_d=os.path.normpath(os.path.join(hps.model_dir, "D_{}.pth".format(global_step-2000)))
-                        if os.path.exists(old_g):
-                            os.remove(old_g)
-                        if os.path.exists(old_d):
-                            os.remove(old_d)
-                global_step += 1
-                
-        else:
-            for batch_idx, (x, x_lengths, spec, spec_lengths, y, y_lengths) in enumerate(train_loader):
-                x, x_lengths = x.cuda(rank, non_blocking=True), x_lengths.cuda(rank, non_blocking=True)
-                spec, spec_lengths = spec.cuda(rank, non_blocking=True), spec_lengths.cuda(rank, non_blocking=True)
-                y, y_lengths = y.cuda(rank, non_blocking=True), y_lengths.cuda(rank, non_blocking=True)
-
-                with autocast(enabled=hps.train.fp16_run):
-                    y_hat, l_length, attn, ids_slice, x_mask, z_mask,\
-                    (z, z_p, m_p, logs_p, m_q, logs_q) = net_g(x, x_lengths, spec, spec_lengths)
-
-                    mel = spec_to_mel_torch(
-                        spec,
-                        hps.data.filter_length,
-                        hps.data.n_mel_channels,
-                        hps.data.sampling_rate,
-                        hps.data.mel_fmin,
-                        hps.data.mel_fmax)
-                    y_mel = slice_segments(mel, ids_slice, hps.train.segment_size // hps.data.hop_length)
-                    y_hat_mel = mel_spectrogram_torch(
-                        y_hat.squeeze(1),
-                        hps.data.filter_length,
-                        hps.data.n_mel_channels,
-                        hps.data.sampling_rate,
-                        hps.data.hop_length,
-                        hps.data.win_length,
-                        hps.data.mel_fmin,
-                        hps.data.mel_fmax)
-
-                    y = slice_segments(y, ids_slice * hps.data.hop_length, hps.train.segment_size) # slice
-
-                    # Discriminator
-                    y_d_hat_r, y_d_hat_g, _, _ = net_d(y, y_hat.detach())
-                    with autocast(enabled=False):
-                        loss_disc, losses_disc_r, losses_disc_g = discriminator_loss(y_d_hat_r, y_d_hat_g)
-                        loss_disc_all = loss_disc
-                optim_d.zero_grad()
-                scaler.scale(loss_disc_all).backward()
-                scaler.unscale_(optim_d)
-                grad_norm_d = clip_grad_value_(net_d.parameters(), None)
-                scaler.step(optim_d)
-
-                with autocast(enabled=hps.train.fp16_run):
-                    # Generator
-                    y_d_hat_r, y_d_hat_g, fmap_r, fmap_g = net_d(y, y_hat)
-                    with autocast(enabled=False):
-                        loss_dur = torch.sum(l_length.float())
-                        loss_mel = F.l1_loss(y_mel, y_hat_mel) * hps.train.c_mel
-                        loss_kl = kl_loss(z_p, logs_q, m_p, logs_p, z_mask) * hps.train.c_kl
-
-                        loss_fm = feature_loss(fmap_r, fmap_g)
-                        loss_gen, losses_gen = generator_loss(y_d_hat_g)
-                        loss_gen_all = loss_gen + loss_fm + loss_mel + loss_dur + loss_kl
-                optim_g.zero_grad()
-                scaler.scale(loss_gen_all).backward()
-                scaler.unscale_(optim_g)
-                grad_norm_g = clip_grad_value_(net_g.parameters(), None)
-                scaler.step(optim_g)
-                scaler.update()
-
-                if rank==0:
-                    if global_step % hps.train.log_interval == 0:
-                        lr = optim_g.param_groups[0]['lr']
-                        losses = [loss_disc, loss_gen, loss_fm, loss_mel, loss_dur, loss_kl]
-                        logger.info('Train Epoch: {} [{:.0f}%]'.format(
-                            epoch,
-                            100. * batch_idx / len(train_loader)))
-                        logger.info([x.item() for x in losses] + [global_step, lr])
-
-                        scalar_dict = {"loss/g/total": loss_gen_all, "loss/d/total": loss_disc_all, "learning_rate": lr, "grad_norm_d": grad_norm_d, "grad_norm_g": grad_norm_g}
-                        scalar_dict.update({"loss/g/fm": loss_fm, "loss/g/mel": loss_mel, "loss/g/dur": loss_dur, "loss/g/kl": loss_kl})
-
-                        scalar_dict.update({"loss/g/{}".format(i): v for i, v in enumerate(losses_gen)})
-                        scalar_dict.update({"loss/d_r/{}".format(i): v for i, v in enumerate(losses_disc_r)})
-                        scalar_dict.update({"loss/d_g/{}".format(i): v for i, v in enumerate(losses_disc_g)})
-                        image_dict = {
-                            "slice/mel_org": utils.plot_spectrogram_to_numpy(y_mel[0].data.cpu().numpy()),
-                            "slice/mel_gen": utils.plot_spectrogram_to_numpy(y_hat_mel[0].data.cpu().numpy()),
-                            "all/mel": utils.plot_spectrogram_to_numpy(mel[0].data.cpu().numpy()),
-                            "all/attn": utils.plot_alignment_to_numpy(attn[0,0].data.cpu().numpy())
-                        }
-                        utils.summarize(
-                            writer=writer,
-                            global_step=global_step,
-                            images=image_dict,
-                            scalars=scalar_dict)
-
-                    if global_step % hps.train.eval_interval == 0:
-                        self.evaluate(hps, net_g, eval_loader, writer_eval)
-                        utils.save_checkpoint(net_g, optim_g, hps.train.learning_rate, epoch, os.path.normpath(os.path.join(hps.model_dir, "G_{}.pth".format(global_step))))
-                        utils.save_checkpoint(net_d, optim_d, hps.train.learning_rate, epoch, os.path.normpath(os.path.join(hps.model_dir, "D_{}.pth".format(global_step))))
-                        old_g=os.path.normpath(os.path.join(hps.model_dir, "G_{}.pth".format(global_step-2000)))
-                        old_d=os.path.normpath(os.path.join(hps.model_dir, "D_{}.pth".format(global_step-2000)))
-                        if os.path.exists(old_g):
-                            os.remove(old_g)
-                        if os.path.exists(old_d):
-                            os.remove(old_d)
-                global_step += 1
+                if global_step % hps.train.eval_interval == 0:
+                    self.evaluate(hps, net_g, eval_loader, writer_eval)
+                    utils.save_checkpoint(net_g, optim_g, hps.train.learning_rate, epoch, os.path.normpath(os.path.join(hps.model_dir, "G_{}.pth".format(global_step))))
+                    utils.save_checkpoint(net_d, optim_d, hps.train.learning_rate, epoch, os.path.normpath(os.path.join(hps.model_dir, "D_{}.pth".format(global_step))))
+                    old_g=os.path.normpath(os.path.join(hps.model_dir, "G_{}.pth".format(global_step-2000)))
+                    old_d=os.path.normpath(os.path.join(hps.model_dir, "D_{}.pth".format(global_step-2000)))
+                    if os.path.exists(old_g):
+                        os.remove(old_g)
+                    if os.path.exists(old_d):
+                        os.remove(old_d)
+            global_step += 1
 
         if rank == 0:
             logger.info('====> Epoch: {}'.format(epoch))
@@ -457,7 +336,7 @@ class Training:
         torch.manual_seed(hps.train.seed)
         torch.cuda.set_device(rank)
 
-        train_dataset = TextAudioSpeakerLoader(hps.data.training_files, hps.data) if self.IsSpeakerMultiple == True else TextAudioLoader(hps.data.training_files, hps.data)
+        train_dataset = TextAudioSpeakerLoader(hps.data.training_files, hps.data)
         train_sampler = DistributedBucketSampler(
             train_dataset,
             hps.train.batch_size,
@@ -465,7 +344,7 @@ class Training:
             num_replicas=n_gpus,
             rank=rank,
             shuffle=True)
-        collate_fn = TextAudioSpeakerCollate() if self.IsSpeakerMultiple == True else TextAudioCollate()
+        collate_fn = TextAudioSpeakerCollate()
         train_loader = DataLoader(
             train_dataset,
             num_workers=self.Num_Workers,
@@ -474,7 +353,7 @@ class Training:
             collate_fn=collate_fn,
             batch_sampler=train_sampler)
         if rank == 0:
-            eval_dataset = TextAudioSpeakerLoader(hps.data.validation_files, hps.data) if self.IsSpeakerMultiple == True else TextAudioLoader(hps.data.validation_files, hps.data)
+            eval_dataset = TextAudioSpeakerLoader(hps.data.validation_files, hps.data)
             eval_loader = DataLoader(eval_dataset, num_workers=0, shuffle=False,
                 batch_size=hps.train.batch_size, pin_memory=True,
                 drop_last=False, collate_fn=collate_fn)
@@ -483,7 +362,7 @@ class Training:
             len(symbols),
             hps.data.filter_length // 2 + 1,
             hps.train.segment_size // hps.data.hop_length,
-            n_speakers=hps.data.n_speakers if self.IsSpeakerMultiple == True else 0,
+            n_speakers=hps.data.n_speakers,
             **hps.model).cuda(rank)
         net_d = MultiPeriodDiscriminator(hps.model.use_spectral_norm).cuda(rank)
         optim_g = torch.optim.AdamW(
@@ -543,10 +422,8 @@ class Voice_Training(Preprocessing, Training):
         Model_Path_Pretrained_D: Optional[str] = None,
         Model_Dir_Save: str = './'
     ):
-        IsSpeakerMultiple = True if len(Set_Speakers) >= 2 else False
-
-        Preprocessing.__init__(self, FileList_Path_Validation, FileList_Path_Training, Language, Config_Path_Load, Config_Dir_Save, Set_Eval_Interval, Set_Epochs, Set_Batch_Size, Set_FP16_Run, IsSpeakerMultiple, Set_Speakers)
-        Training.__init__(self, IsSpeakerMultiple, Num_Workers)
+        Preprocessing.__init__(self, FileList_Path_Validation, FileList_Path_Training, Language, Config_Path_Load, Config_Dir_Save, Set_Eval_Interval, Set_Epochs, Set_Batch_Size, Set_FP16_Run, Set_Speakers)
+        Training.__init__(self, Num_Workers)
         self.Model_Path_Pretrained_G = Model_Path_Pretrained_G
         self.Model_Path_Pretrained_D = Model_Path_Pretrained_D
         self.Model_Dir_Save = Model_Dir_Save
