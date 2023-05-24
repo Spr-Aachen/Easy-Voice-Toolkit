@@ -98,30 +98,29 @@ class Preprocessing:
                     Speakers.append(Speaker) if Speaker not in Speakers else None
             return Speakers
 
-        def Get_Config_Data(Config_Path_Load):
-            Params_New = {}
-            with open(Config_Path_Load, 'rb') as f:
-                Params_Old = json.load(f)
+        def Write_Config_Data(Config_Path_Load, Config_Dir_Save):
+            os.makedirs(Config_Dir_Save, exist_ok = True)
+            with open(Config_Path_Load, 'rb') as File_Old:
+                Params = json.load(File_Old)
+            try:
+                Params_Old = Params
                 Params_Old["train"]["eval_interval"]    = self.Set_Eval_Interval
                 Params_Old["train"]["epochs"]           = self.Set_Epochs
                 Params_Old["train"]["batch_size"]       = self.Set_Batch_Size
                 Params_Old["train"]["fp16_run"]         = self.Set_FP16_Run
-                Params_Old["data"]["training_files"]    = (self.FileList_Path_Training + "." + self.Out_Extension).lower()
-                Params_Old["data"]["validation_files"]  = (self.FileList_Path_Validation + "." + self.Out_Extension).lower()
+                Params_Old["data"]["training_files"]    = os.path.normpath(self.FileList_Path_Training + "." + self.Out_Extension)
+                Params_Old["data"]["validation_files"]  = os.path.normpath(self.FileList_Path_Validation + "." + self.Out_Extension)
                 Params_Old["data"]["text_cleaners"]     = (self.Language + "_cleaners").lower()
                 Params_Old["data"]["n_speakers"]        = len(Get_Speakers(self.FileList_Path_Training, self.FileList_Path_Validation)) if self.Set_Speakers == None else len(self.Set_Speakers)
                 Params_Old["speakers"]                  = Get_Speakers(self.FileList_Path_Training, self.FileList_Path_Validation) if self.Set_Speakers == None else self.Set_Speakers
                 Params_New = Params_Old
-            f.close()
-            return Params_New
+            except:
+                raise Exception("Please check if params exist")
+            with open(self.Config_Path_Edited, 'w') as File_New:
+                json.dump(Params_New, File_New, indent = 4)
+            print(f"Config created in {Config_Dir_Save}")
 
-        def Write_Config_Data(Config_Dir_Save, Params_New):
-            os.makedirs(Config_Dir_Save, exist_ok = True)
-            with open(self.Config_Path_Edited, 'w') as r:
-                json.dump(Params_New, r, indent = 4)
-            r.close()
-
-        Write_Config_Data(self.Config_Dir_Save, Get_Config_Data(self.Config_Path_Load))
+        Write_Config_Data(self.Config_Path_Load, self.Config_Dir_Save)
 
     def Cleaner(self):
         '''
@@ -429,7 +428,7 @@ class Voice_Training(Preprocessing, Training):
         Set_Batch_Size: int = 8,
         Set_FP16_Run: bool = True,
         Set_Speakers: str = ["SpeakerName"],
-        Num_Workers: int = 8,
+        Num_Workers: int = 2,
         Model_Path_Pretrained_G: Optional[str] = None,
         Model_Path_Pretrained_D: Optional[str] = None,
         Model_Dir_Save: str = './'

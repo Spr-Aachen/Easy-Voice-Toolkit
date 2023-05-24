@@ -1503,10 +1503,10 @@ class MainWindow(Window_Customizing):
         self.Function_SetText(
             Panel = self.ui.Label_Tool_VoiceTrainer_Num_Workers,
             Title = "Num Workers",
-            Body = "进程数量。进行数据加载时可使用的子进程数量，若用户CPU性能较弱可减小该值。"
+            Body = "进程数量。进行数据加载时可并行的进程数量，若用户CPU性能较弱可减小该值。"
         )
         self.ui.SpinBox_Tool_VoiceTrainer_Num_Workers.setSingleStep(1)
-        self.ui.SpinBox_Tool_VoiceTrainer_Num_Workers.setValue(8)
+        self.ui.SpinBox_Tool_VoiceTrainer_Num_Workers.setValue(4)
 
         self.Function_SetText(
             Panel = self.ui.Label_Tool_VoiceTrainer_FP16_Run,
