@@ -138,7 +138,7 @@ QPushButton:checked {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
             </property>
            </widget>
@@ -233,7 +233,7 @@ QPushButton:checked {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
             </property>
            </widget>
@@ -356,7 +356,7 @@ QPushButton:checked {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                </property>
                <property name="flat">
@@ -403,7 +403,7 @@ QPushButton:checked {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                </property>
               </widget>
@@ -447,7 +447,7 @@ QPushButton:checked {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                </property>
               </widget>
@@ -491,7 +491,7 @@ QPushButton:checked {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                </property>
               </widget>
@@ -535,7 +535,7 @@ QPushButton:checked {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                </property>
               </widget>
@@ -579,7 +579,7 @@ QPushButton:checked {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                </property>
               </widget>
@@ -1033,7 +1033,7 @@ QPushButton:hover {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                           </property>
                          </widget>
@@ -1083,7 +1083,7 @@ QPushButton:hover {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                           </property>
                          </widget>
@@ -1400,7 +1400,7 @@ QLineEdit:hover {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                                 </property>
                                </widget>
@@ -1437,7 +1437,7 @@ QPushButton:hover {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                                 </property>
                                 <property name="text">
@@ -1658,7 +1658,7 @@ QComboBox QAbstractScrollArea QScrollBar::handle:horizontal:hover {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                              </property>
                             </widget>
@@ -1763,7 +1763,7 @@ QDoubleSpinBox::down-arrow {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                              </property>
                              <property name="minimum">
@@ -1871,7 +1871,7 @@ QSpinBox::down-arrow {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                              </property>
                              <property name="minimum">
@@ -1979,7 +1979,7 @@ QSpinBox::down-arrow {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                              </property>
                              <property name="minimum">
@@ -2087,7 +2087,7 @@ QSpinBox::down-arrow {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                              </property>
                              <property name="minimum">
@@ -2195,7 +2195,7 @@ QSpinBox::down-arrow {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                              </property>
                              <property name="minimum">
@@ -2318,7 +2318,7 @@ QLineEdit:hover {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                                 </property>
                                </widget>
@@ -2355,7 +2355,7 @@ QPushButton:hover {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                                 </property>
                                 <property name="text">
@@ -2686,7 +2686,7 @@ QPushButton:hover {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                           </property>
                          </widget>
@@ -2742,7 +2742,7 @@ QPushButton:hover {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                           </property>
                          </widget>
@@ -2881,7 +2881,7 @@ QScrollBar::handle:horizontal:hover {
                     <property name="geometry">
                      <rect>
                       <x>0</x>
-                      <y>-764</y>
+                      <y>0</y>
                       <width>619</width>
                       <height>1369</height>
                      </rect>
@@ -3059,7 +3059,7 @@ QLineEdit:hover {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                                 </property>
                                </widget>
@@ -3096,7 +3096,7 @@ QPushButton:hover {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                                 </property>
                                 <property name="text">
@@ -3219,7 +3219,7 @@ QLineEdit:hover {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                                 </property>
                                </widget>
@@ -3256,7 +3256,7 @@ QPushButton:hover {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                                 </property>
                                 <property name="text">
@@ -3379,7 +3379,7 @@ QLineEdit:hover {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                                 </property>
                                </widget>
@@ -3416,7 +3416,7 @@ QPushButton:hover {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                                 </property>
                                 <property name="text">
@@ -3637,7 +3637,7 @@ QComboBox QAbstractScrollArea QScrollBar::handle:horizontal:hover {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                              </property>
                             </widget>
@@ -3852,7 +3852,7 @@ QComboBox QAbstractScrollArea QScrollBar::handle:horizontal:hover {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                              </property>
                             </widget>
@@ -4067,7 +4067,7 @@ QComboBox QAbstractScrollArea QScrollBar::handle:horizontal:hover {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                              </property>
                             </widget>
@@ -4172,7 +4172,7 @@ QDoubleSpinBox::down-arrow {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                              </property>
                              <property name="minimum">
@@ -4283,7 +4283,7 @@ QDoubleSpinBox::down-arrow {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                              </property>
                              <property name="minimum">
@@ -4406,7 +4406,7 @@ QLineEdit:hover {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                                 </property>
                                </widget>
@@ -4443,7 +4443,7 @@ QPushButton:hover {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                                 </property>
                                 <property name="text">
@@ -4570,7 +4570,7 @@ QLineEdit:hover {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                              </property>
                             </widget>
@@ -4899,7 +4899,7 @@ QPushButton:hover {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                           </property>
                          </widget>
@@ -4955,7 +4955,7 @@ QPushButton:hover {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                           </property>
                          </widget>
@@ -5272,7 +5272,7 @@ QLineEdit:hover {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                                 </property>
                                </widget>
@@ -5309,7 +5309,7 @@ QPushButton:hover {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                                 </property>
                                 <property name="text">
@@ -5432,7 +5432,7 @@ QLineEdit:hover {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                                 </property>
                                </widget>
@@ -5469,7 +5469,7 @@ QPushButton:hover {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                                 </property>
                                 <property name="text">
@@ -5690,7 +5690,7 @@ QComboBox QAbstractScrollArea QScrollBar::handle:horizontal:hover {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                              </property>
                             </widget>
@@ -5791,7 +5791,7 @@ QCheckBox::indicator:checked {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                              </property>
                              <property name="text">
@@ -5895,7 +5895,7 @@ QCheckBox::indicator:checked {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                              </property>
                              <property name="text">
@@ -5999,7 +5999,7 @@ QCheckBox::indicator:checked {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                              </property>
                              <property name="text">
@@ -6119,7 +6119,7 @@ QLineEdit:hover {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                                 </property>
                                </widget>
@@ -6156,7 +6156,7 @@ QPushButton:hover {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                                 </property>
                                 <property name="text">
@@ -6416,7 +6416,7 @@ QComboBox QAbstractScrollArea QScrollBar::handle:horizontal:hover {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                              </property>
                             </widget>
@@ -6801,7 +6801,7 @@ QPushButton:hover {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                           </property>
                          </widget>
@@ -6857,7 +6857,7 @@ QPushButton:hover {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                           </property>
                          </widget>
@@ -7173,7 +7173,7 @@ QLineEdit:hover {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                                 </property>
                                </widget>
@@ -7210,7 +7210,7 @@ QPushButton:hover {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                                 </property>
                                 <property name="text">
@@ -7317,7 +7317,7 @@ QSpinBox::down-arrow {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                              </property>
                              <property name="minimum">
@@ -7537,7 +7537,7 @@ QComboBox QAbstractScrollArea QScrollBar::handle:horizontal:hover {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                              </property>
                             </widget>
@@ -7653,7 +7653,7 @@ QLineEdit:hover {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                                 </property>
                                </widget>
@@ -7690,7 +7690,7 @@ QPushButton:hover {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                                 </property>
                                 <property name="text">
@@ -7843,7 +7843,7 @@ QPushButton:hover {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                                 </property>
                                 <property name="text">
@@ -8063,7 +8063,7 @@ QComboBox QAbstractScrollArea QScrollBar::handle:horizontal:hover {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                              </property>
                             </widget>
@@ -8179,7 +8179,7 @@ QLineEdit:hover {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                                 </property>
                                </widget>
@@ -8216,7 +8216,7 @@ QPushButton:hover {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                                 </property>
                                 <property name="text">
@@ -8338,7 +8338,7 @@ QLineEdit:hover {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                                 </property>
                                </widget>
@@ -8375,7 +8375,7 @@ QPushButton:hover {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                                 </property>
                                 <property name="text">
@@ -8710,7 +8710,7 @@ QPushButton:hover {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                           </property>
                          </widget>
@@ -8766,7 +8766,7 @@ QPushButton:hover {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                           </property>
                          </widget>
@@ -9089,7 +9089,7 @@ QLineEdit:hover {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                                 </property>
                                </widget>
@@ -9126,7 +9126,7 @@ QPushButton:hover {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                                 </property>
                                 <property name="text">
@@ -9249,7 +9249,7 @@ QLineEdit:hover {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                                 </property>
                                </widget>
@@ -9286,7 +9286,7 @@ QPushButton:hover {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                                 </property>
                                 <property name="text">
@@ -9507,7 +9507,7 @@ QComboBox QAbstractScrollArea QScrollBar::handle:horizontal:hover {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                              </property>
                             </widget>
@@ -9609,7 +9609,7 @@ QSpinBox::down-arrow {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                              </property>
                              <property name="minimum">
@@ -9717,7 +9717,7 @@ QSpinBox::down-arrow {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                              </property>
                              <property name="minimum">
@@ -9825,7 +9825,7 @@ QSpinBox::down-arrow {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                              </property>
                              <property name="minimum">
@@ -9933,7 +9933,7 @@ QSpinBox::down-arrow {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                              </property>
                              <property name="minimum">
@@ -10040,7 +10040,7 @@ QCheckBox::indicator:checked {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                              </property>
                              <property name="text">
@@ -10160,7 +10160,7 @@ QLineEdit:hover {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                                 </property>
                                </widget>
@@ -10197,7 +10197,7 @@ QPushButton:hover {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                                 </property>
                                 <property name="text">
@@ -10320,7 +10320,7 @@ QLineEdit:hover {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                                 </property>
                                </widget>
@@ -10357,7 +10357,7 @@ QPushButton:hover {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                                 </property>
                                 <property name="text">
@@ -10416,94 +10416,6 @@ QGroupBox::title {
                         <property name="bottomMargin">
                          <number>12</number>
                         </property>
-                        <item>
-                         <widget class="QFrame" name="Frame_Tool_VoiceTrainer_Speakers">
-                          <property name="minimumSize">
-                           <size>
-                            <width>0</width>
-                            <height>123</height>
-                           </size>
-                          </property>
-                          <property name="styleSheet">
-                           <string notr="true">QFrame {
-	color: rgb(255, 255, 255);
-	background-color: rgb(45, 45, 45);
-	border-width: 0px;
-	border-style: solid;
-}
-QFrame:hover {
-	background-color: rgb(60, 60, 60);
-}</string>
-                          </property>
-                          <layout class="QVBoxLayout" name="verticalLayout_79">
-                           <property name="spacing">
-                            <number>12</number>
-                           </property>
-                           <property name="leftMargin">
-                            <number>21</number>
-                           </property>
-                           <property name="topMargin">
-                            <number>12</number>
-                           </property>
-                           <property name="rightMargin">
-                            <number>21</number>
-                           </property>
-                           <property name="bottomMargin">
-                            <number>12</number>
-                           </property>
-                           <item>
-                            <widget class="QLabel" name="Label_Tool_VoiceTrainer_Speakers">
-                             <property name="styleSheet">
-                              <string notr="true">QLabel {
-	/*text-align: center;*/
-	/*color: rgb(255, 255, 255);*/
-	background-color: transparent;
-	padding: 0px;
-	border-width: 0px;
-	border-radius: 0px;
-	border-style: solid;
-}</string>
-                             </property>
-                             <property name="text">
-                              <string>TextLabel</string>
-                             </property>
-                            </widget>
-                           </item>
-                           <item>
-                            <widget class="QLineEdit" name="LineEdit_Tool_VoiceTrainer_Speakers">
-                             <property name="sizePolicy">
-                              <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-                               <horstretch>0</horstretch>
-                               <verstretch>0</verstretch>
-                              </sizepolicy>
-                             </property>
-                             <property name="styleSheet">
-                              <string notr="true">QLineEdit {
-	text-align: left;
-	color: rgb(255, 255, 255);
-	selection-background-color: darkgrey;
-	background-color: rgb(90, 90, 90);
-	padding: 1.5px;
-	border-width: 1px;
-	border-radius: 6px;
-	border-style: solid;
-	border-color: rgb(90, 90, 90);
-}
-QLineEdit:hover {
-	background-color: rgb(120, 120, 120);
-}
-
-
-QToolTip {
-	color: white;
-	background-color: transparent;
-}</string>
-                             </property>
-                            </widget>
-                           </item>
-                          </layout>
-                         </widget>
-                        </item>
                         <item>
                          <widget class="QFrame" name="Frame_Tool_VoiceTrainer_Config_Path_Load">
                           <property name="minimumSize">
@@ -10613,7 +10525,7 @@ QLineEdit:hover {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                                 </property>
                                </widget>
@@ -10650,7 +10562,7 @@ QPushButton:hover {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                                 </property>
                                 <property name="text">
@@ -10773,7 +10685,7 @@ QLineEdit:hover {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                                 </property>
                                </widget>
@@ -10810,7 +10722,7 @@ QPushButton:hover {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                                 </property>
                                 <property name="text">
@@ -10933,7 +10845,7 @@ QLineEdit:hover {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                                 </property>
                                </widget>
@@ -10970,7 +10882,7 @@ QPushButton:hover {
 
 QToolTip {
 	color: white;
-	background-color: transparent;
+	background-color: black;
 }</string>
                                 </property>
                                 <property name="text">
@@ -10979,6 +10891,94 @@ QToolTip {
                                </widget>
                               </item>
                              </layout>
+                            </widget>
+                           </item>
+                          </layout>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QFrame" name="Frame_Tool_VoiceTrainer_Speakers">
+                          <property name="minimumSize">
+                           <size>
+                            <width>0</width>
+                            <height>123</height>
+                           </size>
+                          </property>
+                          <property name="styleSheet">
+                           <string notr="true">QFrame {
+	color: rgb(255, 255, 255);
+	background-color: rgb(45, 45, 45);
+	border-width: 0px;
+	border-style: solid;
+}
+QFrame:hover {
+	background-color: rgb(60, 60, 60);
+}</string>
+                          </property>
+                          <layout class="QVBoxLayout" name="verticalLayout_79">
+                           <property name="spacing">
+                            <number>12</number>
+                           </property>
+                           <property name="leftMargin">
+                            <number>21</number>
+                           </property>
+                           <property name="topMargin">
+                            <number>12</number>
+                           </property>
+                           <property name="rightMargin">
+                            <number>21</number>
+                           </property>
+                           <property name="bottomMargin">
+                            <number>12</number>
+                           </property>
+                           <item>
+                            <widget class="QLabel" name="Label_Tool_VoiceTrainer_Speakers">
+                             <property name="styleSheet">
+                              <string notr="true">QLabel {
+	/*text-align: center;*/
+	/*color: rgb(255, 255, 255);*/
+	background-color: transparent;
+	padding: 0px;
+	border-width: 0px;
+	border-radius: 0px;
+	border-style: solid;
+}</string>
+                             </property>
+                             <property name="text">
+                              <string>TextLabel</string>
+                             </property>
+                            </widget>
+                           </item>
+                           <item>
+                            <widget class="QLineEdit" name="LineEdit_Tool_VoiceTrainer_Speakers">
+                             <property name="sizePolicy">
+                              <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                               <horstretch>0</horstretch>
+                               <verstretch>0</verstretch>
+                              </sizepolicy>
+                             </property>
+                             <property name="styleSheet">
+                              <string notr="true">QLineEdit {
+	text-align: left;
+	color: rgb(255, 255, 255);
+	selection-background-color: darkgrey;
+	background-color: rgb(90, 90, 90);
+	padding: 1.5px;
+	border-width: 1px;
+	border-radius: 6px;
+	border-style: solid;
+	border-color: rgb(90, 90, 90);
+}
+QLineEdit:hover {
+	background-color: rgb(120, 120, 120);
+}
+
+
+QToolTip {
+	color: white;
+	background-color: black;
+}</string>
+                             </property>
                             </widget>
                            </item>
                           </layout>

@@ -1496,9 +1496,9 @@ class MainWindow(Window_Customizing):
             Body = "批处理量。每轮迭代中单位批次的样本数量，若用户GPU性能较弱可减小该值。"
         )
         self.ui.SpinBox_Tool_VoiceTrainer_Batch_Size.setSingleStep(1)
-        self.ui.SpinBox_Tool_VoiceTrainer_Batch_Size.setValue(8)
+        self.ui.SpinBox_Tool_VoiceTrainer_Batch_Size.setValue(16)
         self.ui.SpinBox_Tool_VoiceTrainer_Batch_Size.setToolTipDuration(-1)
-        self.ui.SpinBox_Tool_VoiceTrainer_Batch_Size.setToolTip("注意：最好设置为2的幂次。设置为1会导致网络很难收敛。")
+        self.ui.SpinBox_Tool_VoiceTrainer_Batch_Size.setToolTip("注意：最好设置为2的幂次，若设置为1会导致网络很难收敛。")
 
         self.Function_SetText(
             Panel = self.ui.Label_Tool_VoiceTrainer_Num_Workers,
@@ -1507,6 +1507,8 @@ class MainWindow(Window_Customizing):
         )
         self.ui.SpinBox_Tool_VoiceTrainer_Num_Workers.setSingleStep(1)
         self.ui.SpinBox_Tool_VoiceTrainer_Num_Workers.setValue(4)
+        self.ui.SpinBox_Tool_VoiceTrainer_Num_Workers.setToolTipDuration(-1)
+        self.ui.SpinBox_Tool_VoiceTrainer_Num_Workers.setToolTip("提示：如果配置属于低U高显的话不妨试试把数值降到2。")
 
         self.Function_SetText(
             Panel = self.ui.Label_Tool_VoiceTrainer_FP16_Run,
@@ -1531,7 +1533,7 @@ class MainWindow(Window_Customizing):
         self.Function_SetText(
             Panel = self.ui.Label_Tool_VoiceTrainer_Model_Dir_Save,
             Title = "Model Dir Save",
-            Body = "模型保存目录。最后生成的模型的存放目录。"
+            Body = "模型保存目录。训练得到的模型的存放目录，若目录中已存在模型则会将其视为检查点。"
         )
         self.Function_SetFileDialog(
             Button = self.ui.Button_Tool_VoiceTrainer_Model_Dir_Save,
@@ -1540,7 +1542,7 @@ class MainWindow(Window_Customizing):
             DisplayText = "None"
         )
         self.ui.Label_Tool_VoiceTrainer_Model_Dir_Save.setToolTipDuration(-1)
-        self.ui.Label_Tool_VoiceTrainer_Model_Dir_Save.setToolTip("注意：请勿将不同数据集训练得到的模型置于同一目录下。")
+        self.ui.Label_Tool_VoiceTrainer_Model_Dir_Save.setToolTip("提示：当目录中存在多个模型时，编号最大的那个会被选为检查点。")
 
         self.ui.GroupBox_OptionalParams_Page_5.setTitle("OptionalParams 可选参数")
 
@@ -1560,7 +1562,7 @@ class MainWindow(Window_Customizing):
         self.Function_SetText(
             Panel = self.ui.Label_Tool_VoiceTrainer_Model_Path_Pretrained_G,
             Title = "Model Path Pretrained G",
-            Body = "预训练G模型路径。该路径对应的预训练生成器（Generator）模型会被视作检查点。"
+            Body = "预训练G模型路径。该路径对应的预训练生成器（Generator）模型会被视为检查点。"
         )
         self.Function_SetFileDialog(
             Button = self.ui.Button_Tool_VoiceTrainer_Model_Path_Pretrained_G,
@@ -1573,7 +1575,7 @@ class MainWindow(Window_Customizing):
         self.Function_SetText(
             Panel = self.ui.Label_Tool_VoiceTrainer_Model_Path_Pretrained_D,
             Title = "Model Path Pretrained D",
-            Body = "预训练D模型路径。该路径对应的预训练判别器（Discriminator）模型会被视作检查点。"
+            Body = "预训练D模型路径。该路径对应的预训练判别器（Discriminator）模型会被视为检查点。"
         )
         self.Function_SetFileDialog(
             Button = self.ui.Button_Tool_VoiceTrainer_Model_Path_Pretrained_D,

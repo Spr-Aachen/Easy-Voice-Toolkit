@@ -56,11 +56,11 @@ def TaskAccelerating(
         ) if ShowMessages == True and Asynchronous == False else print('')
     
     ProcessPool.shutdown(
-        wait = False,
+        wait = True,
         cancel_futures = True
     )
     ThreadPool.shutdown(
-        wait = False,
+        wait = True,
         cancel_futures = True
     )
 
