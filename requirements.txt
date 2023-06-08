@@ -2,11 +2,13 @@
 
 
 # Tool_AudioProcessor
+librosa
 ipywidgets
 static-ffmpeg
 
 
 # Tool_VoiceIdentifier
+numpy
 visualdl
 pyaudio
 torchsummary
@@ -26,8 +28,10 @@ num2words
 
 # Tool_VoiceTrainer
 numba
-numpy
-
+scipy
+matplotlib
+protobuf
+tensorboard
 inflect
 unidecode
 eng_to_ipa
@@ -35,9 +39,3 @@ pypinyin
 jieba
 cn2an
 #opencc
-
-scipy
-librosa
-matplotlib
-tensorboard
-protobuf
