@@ -110,7 +110,7 @@ class Preprocessing:
                 Params_Old["train"]["fp16_run"]         = self.Set_FP16_Run
                 Params_Old["data"]["training_files"]    = os.path.normpath(self.FileList_Path_Training + "." + self.Out_Extension)
                 Params_Old["data"]["validation_files"]  = os.path.normpath(self.FileList_Path_Validation + "." + self.Out_Extension)
-                Params_Old["data"]["text_cleaners"]     = (self.Language + "_cleaners").lower()
+                Params_Old["data"]["text_cleaners"]     = [(self.Language + "_cleaners").lower()]
                 Params_Old["data"]["n_speakers"]        = len(Get_Speakers(self.FileList_Path_Training, self.FileList_Path_Validation)) if self.Set_Speakers == None else len(self.Set_Speakers)
                 Params_Old["speakers"]                  = Get_Speakers(self.FileList_Path_Training, self.FileList_Path_Validation) if self.Set_Speakers == None else self.Set_Speakers
                 Params_New = Params_Old
