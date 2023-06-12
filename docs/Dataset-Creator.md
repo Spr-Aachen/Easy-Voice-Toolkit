@@ -28,6 +28,8 @@
 <br>需要转为适用于模型训练的csv文件的srt文件的目录
 > - 自编码器<br>AutoEncoder
 <br>模型训练所使用的自动编码器
+> - 训练集占比<br>TrainRatio
+<br>划分给训练集的数据在数据集中所占的比例
 > - 训练集文本路径<br>FileList Path Training
 <br>用于保存最后生成的训练集txt文件的路径
 > - 验证集文本路径<br>FileList Path Validation

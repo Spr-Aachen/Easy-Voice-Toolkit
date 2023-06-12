@@ -5995,7 +5995,7 @@ class Ui_MainWindow(object):
         self.ScrollArea_Right_Tool_DatasetCreator.setWidgetResizable(True)
         self.ScrollArea_Right_WidgetContents_Tool_DatasetCreator = QWidget()
         self.ScrollArea_Right_WidgetContents_Tool_DatasetCreator.setObjectName(u"ScrollArea_Right_WidgetContents_Tool_DatasetCreator")
-        self.ScrollArea_Right_WidgetContents_Tool_DatasetCreator.setGeometry(QRect(0, 0, 619, 1064))
+        self.ScrollArea_Right_WidgetContents_Tool_DatasetCreator.setGeometry(QRect(0, 0, 619, 1187))
         self.ScrollArea_Right_WidgetContents_Tool_DatasetCreator.setMinimumSize(QSize(0, 0))
         self.verticalLayout_20 = QVBoxLayout(self.ScrollArea_Right_WidgetContents_Tool_DatasetCreator)
         self.verticalLayout_20.setSpacing(21)
@@ -6020,10 +6020,10 @@ class Ui_MainWindow(object):
 "	subcontrol-position: top left;\n"
 "	padding: 3px;\n"
 "}")
-        self.verticalLayout_32 = QVBoxLayout(self.GroupBox_EssentialParams_Tool_DatasetCreator)
-        self.verticalLayout_32.setSpacing(0)
-        self.verticalLayout_32.setObjectName(u"verticalLayout_32")
-        self.verticalLayout_32.setContentsMargins(0, 12, 0, 12)
+        self.verticalLayout_4 = QVBoxLayout(self.GroupBox_EssentialParams_Tool_DatasetCreator)
+        self.verticalLayout_4.setSpacing(0)
+        self.verticalLayout_4.setObjectName(u"verticalLayout_4")
+        self.verticalLayout_4.setContentsMargins(0, 12, 0, 12)
         self.Frame_Tool_DatasetCreator_WAV_Dir = QFrame(self.GroupBox_EssentialParams_Tool_DatasetCreator)
         self.Frame_Tool_DatasetCreator_WAV_Dir.setObjectName(u"Frame_Tool_DatasetCreator_WAV_Dir")
         self.Frame_Tool_DatasetCreator_WAV_Dir.setMinimumSize(QSize(0, 123))
@@ -6130,7 +6130,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_60.addWidget(self.ChildFrame_Tool_DatasetCreator_WAV_Dir)
 
 
-        self.verticalLayout_32.addWidget(self.Frame_Tool_DatasetCreator_WAV_Dir)
+        self.verticalLayout_4.addWidget(self.Frame_Tool_DatasetCreator_WAV_Dir)
 
         self.Frame_Tool_DatasetCreator_Sample_Rate = QFrame(self.GroupBox_EssentialParams_Tool_DatasetCreator)
         self.Frame_Tool_DatasetCreator_Sample_Rate.setObjectName(u"Frame_Tool_DatasetCreator_Sample_Rate")
@@ -6212,7 +6212,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_61.addWidget(self.SpinBox_Tool_DatasetCreator_Sample_Rate)
 
 
-        self.verticalLayout_32.addWidget(self.Frame_Tool_DatasetCreator_Sample_Rate)
+        self.verticalLayout_4.addWidget(self.Frame_Tool_DatasetCreator_Sample_Rate)
 
         self.Frame_Tool_DatasetCreator_Subtype = QFrame(self.GroupBox_EssentialParams_Tool_DatasetCreator)
         self.Frame_Tool_DatasetCreator_Subtype.setObjectName(u"Frame_Tool_DatasetCreator_Subtype")
@@ -6409,7 +6409,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_62.addWidget(self.ComboBox_Tool_DatasetCreator_Subtype)
 
 
-        self.verticalLayout_32.addWidget(self.Frame_Tool_DatasetCreator_Subtype)
+        self.verticalLayout_4.addWidget(self.Frame_Tool_DatasetCreator_Subtype)
 
         self.Frame_Tool_DatasetCreator_WAV_Dir_Split = QFrame(self.GroupBox_EssentialParams_Tool_DatasetCreator)
         self.Frame_Tool_DatasetCreator_WAV_Dir_Split.setObjectName(u"Frame_Tool_DatasetCreator_WAV_Dir_Split")
@@ -6517,7 +6517,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_63.addWidget(self.ChildFrame_Tool_DatasetCreator_WAV_Dir_Split)
 
 
-        self.verticalLayout_32.addWidget(self.Frame_Tool_DatasetCreator_WAV_Dir_Split)
+        self.verticalLayout_4.addWidget(self.Frame_Tool_DatasetCreator_WAV_Dir_Split)
 
         self.Frame_Tool_DatasetCreator_SRT_Dir = QFrame(self.GroupBox_EssentialParams_Tool_DatasetCreator)
         self.Frame_Tool_DatasetCreator_SRT_Dir.setObjectName(u"Frame_Tool_DatasetCreator_SRT_Dir")
@@ -6617,7 +6617,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_64.addWidget(self.ChildFrame_Tool_DatasetCreator_SRT_Dir)
 
 
-        self.verticalLayout_32.addWidget(self.Frame_Tool_DatasetCreator_SRT_Dir)
+        self.verticalLayout_4.addWidget(self.Frame_Tool_DatasetCreator_SRT_Dir)
 
         self.Frame_Tool_DatasetCreator_AutoEncoder = QFrame(self.GroupBox_EssentialParams_Tool_DatasetCreator)
         self.Frame_Tool_DatasetCreator_AutoEncoder.setObjectName(u"Frame_Tool_DatasetCreator_AutoEncoder")
@@ -6814,7 +6814,91 @@ class Ui_MainWindow(object):
         self.verticalLayout_68.addWidget(self.ComboBox_Tool_DatasetCreator_AutoEncoder)
 
 
-        self.verticalLayout_32.addWidget(self.Frame_Tool_DatasetCreator_AutoEncoder)
+        self.verticalLayout_4.addWidget(self.Frame_Tool_DatasetCreator_AutoEncoder)
+
+        self.Frame_Tool_DatasetCreator_TrainRatio = QFrame(self.GroupBox_EssentialParams_Tool_DatasetCreator)
+        self.Frame_Tool_DatasetCreator_TrainRatio.setObjectName(u"Frame_Tool_DatasetCreator_TrainRatio")
+        self.Frame_Tool_DatasetCreator_TrainRatio.setMinimumSize(QSize(0, 123))
+        self.Frame_Tool_DatasetCreator_TrainRatio.setStyleSheet(u"QFrame {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: rgb(45, 45, 45);\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QFrame:hover {\n"
+"	background-color: rgb(60, 60, 60);\n"
+"}")
+        self.verticalLayout_108 = QVBoxLayout(self.Frame_Tool_DatasetCreator_TrainRatio)
+        self.verticalLayout_108.setSpacing(12)
+        self.verticalLayout_108.setObjectName(u"verticalLayout_108")
+        self.verticalLayout_108.setContentsMargins(21, 12, 21, 12)
+        self.Label_Tool_DatasetCreator_TrainRatio = QLabel(self.Frame_Tool_DatasetCreator_TrainRatio)
+        self.Label_Tool_DatasetCreator_TrainRatio.setObjectName(u"Label_Tool_DatasetCreator_TrainRatio")
+        self.Label_Tool_DatasetCreator_TrainRatio.setStyleSheet(u"QLabel {\n"
+"	/*text-align: center;*/\n"
+"	/*color: rgb(255, 255, 255);*/\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.verticalLayout_108.addWidget(self.Label_Tool_DatasetCreator_TrainRatio)
+
+        self.DoubleSpinBox_Tool_DatasetCreator_TrainRatio = QDoubleSpinBox(self.Frame_Tool_DatasetCreator_TrainRatio)
+        self.DoubleSpinBox_Tool_DatasetCreator_TrainRatio.setObjectName(u"DoubleSpinBox_Tool_DatasetCreator_TrainRatio")
+        self.DoubleSpinBox_Tool_DatasetCreator_TrainRatio.setEnabled(True)
+        self.DoubleSpinBox_Tool_DatasetCreator_TrainRatio.setStyleSheet(u"QDoubleSpinBox {\n"
+"	text-align: left;\n"
+"	color: rgb(255, 255, 255);\n"
+"	selection-background-color: darkgrey;\n"
+"	background-color: rgb(90, 90, 90);\n"
+"	padding: 1.5px;\n"
+"	border-width: 1px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QDoubleSpinBox:hover {\n"
+"	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"QDoubleSpinBox::up-button {\n"
+"	subcontrol-origin: padding;\n"
+"	subcontrol-position: top right;\n"
+"	margin-right: 3px;\n"
+"	border-width: 0px;\n"
+"}\n"
+"QDoubleSpinBox::up-arrow {\n"
+"	border-image: url(:/(Double)SpinBox_Icon/Sources/UpArrow.png);\n"
+"}\n"
+"\n"
+"QDoubleSpinBox::down-button {\n"
+"	subcontrol-origin: padding;\n"
+"	subcontrol-position: bottom right;\n"
+"	margin-right: 3px;\n"
+"	border-width: 0px;\n"
+"}\n"
+"QDoubleSpinBox::down-arrow {\n"
+"	border-image: url(:/(Double)SpinBox_Icon/Sources/DownArrow.png);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-w"
+                        "idth: 0px;\n"
+"	border-style: solid;\n"
+"}")
+        self.DoubleSpinBox_Tool_DatasetCreator_TrainRatio.setMinimum(-999999.000000000000000)
+        self.DoubleSpinBox_Tool_DatasetCreator_TrainRatio.setMaximum(999999.000000000000000)
+
+        self.verticalLayout_108.addWidget(self.DoubleSpinBox_Tool_DatasetCreator_TrainRatio)
+
+
+        self.verticalLayout_4.addWidget(self.Frame_Tool_DatasetCreator_TrainRatio)
 
         self.Frame_Tool_DatasetCreator_FileList_Path_Training = QFrame(self.GroupBox_EssentialParams_Tool_DatasetCreator)
         self.Frame_Tool_DatasetCreator_FileList_Path_Training.setObjectName(u"Frame_Tool_DatasetCreator_FileList_Path_Training")
@@ -6922,7 +7006,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_66.addWidget(self.ChildFrame_Tool_DatasetCreator_FileList_Path_Training)
 
 
-        self.verticalLayout_32.addWidget(self.Frame_Tool_DatasetCreator_FileList_Path_Training)
+        self.verticalLayout_4.addWidget(self.Frame_Tool_DatasetCreator_FileList_Path_Training)
 
         self.Frame_Tool_DatasetCreator_FileList_Path_Validation = QFrame(self.GroupBox_EssentialParams_Tool_DatasetCreator)
         self.Frame_Tool_DatasetCreator_FileList_Path_Validation.setObjectName(u"Frame_Tool_DatasetCreator_FileList_Path_Validation")
@@ -7030,7 +7114,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_65.addWidget(self.ChildFrame_Tool_DatasetCreator_FileList_Path_Validation)
 
 
-        self.verticalLayout_32.addWidget(self.Frame_Tool_DatasetCreator_FileList_Path_Validation)
+        self.verticalLayout_4.addWidget(self.Frame_Tool_DatasetCreator_FileList_Path_Validation)
 
 
         self.verticalLayout_20.addWidget(self.GroupBox_EssentialParams_Tool_DatasetCreator)
@@ -11630,6 +11714,7 @@ class Ui_MainWindow(object):
         self.Label_Tool_DatasetCreator_SRT_Dir.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Button_Tool_DatasetCreator_SRT_Dir.setText(QCoreApplication.translate("MainWindow", u"...", None))
         self.Label_Tool_DatasetCreator_AutoEncoder.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.Label_Tool_DatasetCreator_TrainRatio.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Tool_DatasetCreator_FileList_Path_Training.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Button_Tool_DatasetCreator_FileList_Path_Training.setText(QCoreApplication.translate("MainWindow", u"...", None))
         self.Label_Tool_DatasetCreator_FileList_Path_Validation.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))

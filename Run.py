@@ -719,7 +719,7 @@ class MainWindow(Window_Customizing):
             Body = QCA.translate("Label", "判断是否为同一人的阈值，若参与比对的说话人声音相识度较高可以增加该值。")
         )
         #self.ui.DoubleSpinBox_Tool_VoiceIdentifier_DecisionThreshold.setSingleStep(0.01)
-        self.ui.DoubleSpinBox_Tool_VoiceIdentifier_DecisionThreshold.setValue(0.84)
+        self.ui.DoubleSpinBox_Tool_VoiceIdentifier_DecisionThreshold.setValue(0.75)
 
         Function_SetText(
             Panel = self.ui.Label_Tool_VoiceIdentifier_Duration_of_Audio,
@@ -981,6 +981,7 @@ class MainWindow(Window_Customizing):
                 self.ui.ComboBox_Tool_DatasetCreator_Subtype,
                 self.ui.LineEdit_Tool_DatasetCreator_WAV_Dir_Split,
                 self.ui.ComboBox_Tool_DatasetCreator_AutoEncoder,
+                self.ui.DoubleSpinBox_Tool_DatasetCreator_TrainRatio,
                 self.ui.LineEdit_Tool_DatasetCreator_FileList_Path_Training,
                 self.ui.LineEdit_Tool_DatasetCreator_FileList_Path_Validation
             ]
@@ -1047,6 +1048,15 @@ class MainWindow(Window_Customizing):
         )
         self.ui.ComboBox_Tool_DatasetCreator_AutoEncoder.addItems(['VITS'])
         self.ui.ComboBox_Tool_DatasetCreator_AutoEncoder.setCurrentText('VITS')
+
+        Function_SetText(
+            Panel = self.ui.Label_Tool_DatasetCreator_TrainRatio,
+            Title = "训练集占比",
+            Body = QCA.translate("Label", "划分给训练集的数据在数据集中所占的比例。")
+        )
+        self.ui.DoubleSpinBox_Tool_DatasetCreator_TrainRatio.setRange(0.5, 0.9)
+        self.ui.DoubleSpinBox_Tool_DatasetCreator_TrainRatio.setSingleStep(0.1)
+        self.ui.DoubleSpinBox_Tool_DatasetCreator_TrainRatio.setValue(0.7)
 
         Function_SetText(
             Panel = self.ui.Label_Tool_DatasetCreator_FileList_Path_Training,
