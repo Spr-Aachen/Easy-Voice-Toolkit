@@ -13,7 +13,7 @@ class CustomTitleBar:
     def __init__(self, window: QtWidgets, window_title: str = ""):
         self.window = window
 
-        self.DEFAULT_TITILE_BAR_HEIGHT = 39 # 默认标题栏高度
+        self.DEFAULT_TITILE_BAR_HEIGHT = 27 # 默认标题栏高度
 
         self.mouseDoubleClickEvent_parent = self.window.mouseDoubleClickEvent # 存储父类的双击事件
         self.window.mouseDoubleClickEvent = self.mouseDoubleClickEvent # 将本类的双击事件赋值给将父类的双击事件
@@ -50,17 +50,17 @@ class CustomTitleBar:
             "}"
         )
         self.title.setAlignment(Qt.AlignLeft | Qt.AlignVCenter)
-        self.title.setFont(QFont("STKaiti", 15))
+        self.title.setFont(QFont("Microsoft YaHei", 11.1, QFont.Normal))
         self.title.setMouseTracking(True)
 
         # 添加关闭按钮
         self.close_btn = QPushButton("", self.window)
-        self.close_btn.setGeometry(self.window.width() - 33, 10, 20, 20)
+        self.close_btn.setGeometry(self.window.width() - 33, 6, 15, 15)
         self.close_btn.setStyleSheet(
             "QPushButton"
             "{"
                 "background: rgba(210, 123, 123, 0.6);"
-                "border-radius: 9px;"
+                "border-radius: 6.6px;"
             "}"
             "QPushButton:hover"
             "{"
@@ -69,8 +69,10 @@ class CustomTitleBar:
 
             "QToolTip"
             "{"
-                "color: white;"
+                "color: rgba(255, 255, 255, 210);"
                 "background-color: transparent;"
+                "border-width: 0px;"
+                "border-style: solid;"
             "}"
         )
         self.close_btn.setCursor(Qt.PointingHandCursor)
@@ -80,12 +82,12 @@ class CustomTitleBar:
 
         # 添加最大化按钮
         self.max_btn = QPushButton("", self.window)
-        self.max_btn.setGeometry(self.window.width() - 66, 10, 20, 20)
+        self.max_btn.setGeometry(self.window.width() - 66, 6, 15, 15)
         self.max_btn.setStyleSheet(
             "QPushButton"
             "{"
                 "background: rgba(210, 210, 123, 0.6);"
-                "border-radius: 9px;"
+                "border-radius: 6.6px;"
             "}"
             "QPushButton:hover"
             "{"
@@ -94,8 +96,10 @@ class CustomTitleBar:
 
             "QToolTip"
             "{"
-                "color: white;"
+                "color: rgba(255, 255, 255, 210);"
                 "background-color: transparent;"
+                "border-width: 0px;"
+                "border-style: solid;"
             "}"
         )
         self.max_btn.setCursor(Qt.PointingHandCursor)
@@ -105,12 +109,12 @@ class CustomTitleBar:
 
         # 添加最小化按钮
         self.min_btn = QPushButton("", self.window)
-        self.min_btn.setGeometry(self.window.width() - 99, 10, 20, 20)
+        self.min_btn.setGeometry(self.window.width() - 99, 6, 15, 15)
         self.min_btn.setStyleSheet(
             "QPushButton"
             "{"
                 "background: rgba(123, 210, 123, 0.6);"
-                "border-radius: 9px;"
+                "border-radius: 6.6px;"
             "}"
             "QPushButton:hover"
             "{"
@@ -119,8 +123,10 @@ class CustomTitleBar:
 
             "QToolTip"
             "{"
-                "color: white;"
+                "color: rgba(255, 255, 255, 210);"
                 "background-color: transparent;"
+                "border-width: 0px;"
+                "border-style: solid;"
             "}"
         )
         self.min_btn.setCursor(Qt.PointingHandCursor)
@@ -153,9 +159,9 @@ class CustomTitleBar:
         窗口缩放事件
         '''
         # 最大化最小化的时候，需要去改变按钮组位置
-        self.close_btn.move(self.window.width() - 33, 10)
-        self.max_btn.move(self.window.width() - 66, 10)
-        self.min_btn.move(self.window.width() - 99, 10)
+        self.close_btn.move(self.window.width() - 33, 6)
+        self.max_btn.move(self.window.width() - 66, 6)
+        self.min_btn.move(self.window.width() - 99, 6)
         self.title.resize(self.window.width(), self.DEFAULT_TITILE_BAR_HEIGHT)
         return self.resizeEvent_parent(a0)
 
@@ -225,9 +231,9 @@ class Window_Customizing(QMainWindow):
         self.yRadius = 6 # 窗体圆角Y半径
 
         self.min_width = 60 # 窗体的最小宽度
-        self.min_height = 60 # 窗体的最小高度
+        self.min_height = 24 # 窗体的最小高度
 
-        self.move_event_height = 30 # 顶部可移动窗口高度
+        self.move_event_height = 27 # 顶部可移动窗口高度
 
     def paintEvent(self, event: QPaintEvent) -> None:
         '''

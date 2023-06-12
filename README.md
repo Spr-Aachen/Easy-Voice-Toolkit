@@ -36,6 +36,9 @@
 - [语音模型训练](/docs/Voice-Trainer.md)
 <br>Speech Model Training
 
+- [语音模型推理](/docs/Voice-Converter.md)
+<br>Speech Model Inference
+
 <br>这些功能彼此之间相互独立，但又能无缝衔接地形成一套完整的工作流
 <br>These functions are independent of each other but seamlessly integrated to form a complete workflow
 <br>用户可以根据自己的需求有选择性地使用，亦或者依次通过这些工具将未经处理的语音文件逐步变为理想的语音模型
@@ -98,6 +101,11 @@
         <th style = "text-align:center;">&#160</th>
         <th style = "text-align:center;">&#10006</th>
     </tr>
+    </tr>
+        <th style = "text-align:center;">语音模型推理<br>Voice Converter</th>
+        <th style = "text-align:center;">&#10004</th>
+        <th style = "text-align:center;">&#160</th>
+        <th style = "text-align:center;">&#10006</th>
 </table>
 
 ### 提示<br>Tooltip
@@ -120,8 +128,8 @@ Windows系统用户请将系统默认编码更改为UTF-8，具体操作：在 �
 - 请确保您已安装了`版本≥3.8`的[Python](https://www.python.org/downloads/)
 <br>Please make sure that you've installed [Python](https://www.python.org/downloads/) `version 3.8 or higher`
 
-- 请确保您已安装了[FFmpeg](https://ffmpeg.org/download.html)，您也可以尝试使用工具箱内置的安装功能（有概率失败）
-<br>Please make sure that you've installed [FFmpeg](https://ffmpeg.org/download.html), or you can try using the toolkit's built-in install function (possibly failed)
+- 请确保您已安装了[FFmpeg](https://ffmpeg.org/download.html)，您也可以尝试使用工具箱内置的安装功能（注意有概率会失败）
+<br>Please make sure that you've installed [FFmpeg](https://ffmpeg.org/download.html), or you can try using the toolkit's built-in install function (Please remind that the installation may fail)
 
 #### 获取项目<br>Obtain Project
 
@@ -155,7 +163,7 @@ Windows系统用户请将系统默认编码更改为UTF-8，具体操作：在 �
 - 安装GUI依赖
 <br>Install GUI dependency
     ```shell
-    pip install pyside6
+    pip install pyside6 pynvml PyGithub
     ```
 
 #### 运行程序<br>Run Programm
@@ -200,17 +208,14 @@ Windows系统用户请将系统默认编码更改为UTF-8，具体操作：在 �
 -   **Q**: 为什么不将项目打包成exe文件并发布？
 <br>**A**: 考虑到用户cuda版本不一致以及torch本身包体过大的问题，故目前不提供打包版本
 
--   **Q**: 为什么不在最后面加一个TTS推理功能？
-<br>**A**: 因为已经存在了不少如MoeGoe这样优秀的推理项目且基本都带有UI界面，故暂时没有制作
-
--   **Q**: 为什么内置的FFmpeg安装总是提示失败？
-<br>**A**: 因为Static-FFmpeg项目还在维护中并且不支持win64，所以抱歉啦（去官网下一个其实挺快的）
+-   **Q**: 内置的FFmpeg安装提示失败该怎么办？
+<br>**A**: 若遇到该问题请前往FFmpeg官网下载压缩包并解压，然后将bin文件夹的路径添加到环境变量的Path中
 
 -   **Q**: 好多参数都不清楚要如何设置该怎么办？
 <br>**A**: 不明白的话使用默认值就好，但像语音识别工具里的“判断阈值”这种参数则可能要视实际效果多调试几次
 
--   **Q**: 工具箱右上角的Console是干嘛用的？
-<br>**A**: 那个原本是用来显示Pyhton解释器的输出信息的（即终端工具），但由于技术问题导致效果不如预期而暂时禁用了
+-   **Q**: 内置的控制台显示信息是不是不全？
+<br>**A**: 是的，你可以在系统的命令行窗口中找到缺失的输出信息，很抱歉给你们造成了困扰
 
 -   **Q**: 你这永久免费开源...它保真吗？
 <br>**A**: 嗯哼~♪

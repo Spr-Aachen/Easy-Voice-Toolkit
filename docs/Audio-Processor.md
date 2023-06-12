@@ -3,7 +3,7 @@
 ## 音频转换和分割<br>Audio Processor
 
 ![Audio Processor](/docs/media/Page1.png)
-注意：当前版本已移除终端集成功能，解释器输出信息请见命令行窗口
+注意：当前版本的终端集成功能并不完善，缺失的解释器输出信息请见命令行窗口
 
 </div>
 
@@ -13,7 +13,7 @@
 
 ### 用法<br>Usage
 0. 检查是否已安装FFmpeg
-<br>若未安装，可以通过点击左下方的`Install`按钮进行一键部署，但有概率会提示安装失败
+<br>若未安装，可以通过点击左下方的`安装`按钮进行一键部署，但有概率会提示安装失败
 
 1. 设置参数
 > - 媒体输入目录<br>Media Dir Input
@@ -37,7 +37,7 @@
 <br>用于保存最后生成的音频文件的目录
 
 2. 运行工具
-<br>点击左下方的`Execute`按钮以开始执行，执行过程中点击`Terminate`按钮以终止进程
+<br>点击底部的`执行`按钮以开始执行，执行过程中点击`终止`按钮以终止进程
 
 ### 参考<br>Reference
 https://github.com/zackees/static_ffmpeg
