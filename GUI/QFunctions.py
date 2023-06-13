@@ -681,6 +681,7 @@ def Function_ExecuteMethod(
     ClassInstance.moveToThread(WorkerThread)
     ClassInstance.finished.connect(WorkerThread.quit)
     #ClassInstance.finished.connect(WorkerThread.wait)
+    ClassInstance.finished.connect(lambda: Function_ShowMessageBox(WindowTitle = "提示", Text = "执行完成，可跳转至下一工具界面"))
 
     @Slot()
     def ExecuteMethod():
@@ -701,7 +702,6 @@ def Function_ExecuteMethod(
         WorkerThread.finished.connect(lambda: Function_AnimateProgressBar(ProgressBar = ProgressBar, IsTaskAlive = False)) if ProgressBar else None
         WorkerThread.finished.connect(lambda: Function_AnimateStackedWidget(StackedWidget = StackedWidget, TargetIndex = 0)) if TerminateButton else None
         WorkerThread.finished.connect(lambda: Function_AnimateFrame(Frame = ConsoleFrame, MinHeight = 0, MaxHeight = 210, Mode = "Reduce")) if ConsoleFrame else None
-        WorkerThread.finished.connect(lambda: Function_ShowMessageBox(WindowTitle = "提示", Text = "执行结束"))
         WorkerThread.finished.connect(lambda: Signals.Signal_ExecuteTask.disconnect(getattr(ClassInstance, MethodName)))
         WorkerThread.start()
 

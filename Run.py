@@ -532,14 +532,16 @@ class MainWindow(Window_Customizing):
             Title = QCA.translate("Label", "均方根阈值 (db)"),
             Body = QCA.translate("Label", "低于该阈值的片段将被视作静音进行处理，若有降噪需求可以增加该值。")
         )
+        self.ui.DoubleSpinBox_Tool_AudioProcessor_RMS_Threshold.setRange(-100, 0)
         #self.ui.DoubleSpinBox_Tool_AudioProcessor_RMS_Threshold.setSingleStep(0.01)
         self.ui.DoubleSpinBox_Tool_AudioProcessor_RMS_Threshold.setValue(-40.)
 
         Function_SetText(
             Panel = self.ui.Label_Tool_AudioProcessor_Hop_Size,
-            Title = QCA.translate("Label", "跳跃大小 (ms)"),
+            Title = QCA.translate("Label", "跃点大小 (ms)"),
             Body = QCA.translate("Label", "每个RMS帧的长度，增加该值能够提高分割精度但会减慢进程。")
         )
+        self.ui.SpinBox_Tool_AudioProcessor_Hop_Size.setRange(0, 100)
         self.ui.SpinBox_Tool_AudioProcessor_Hop_Size.setSingleStep(1)
         self.ui.SpinBox_Tool_AudioProcessor_Hop_Size.setValue(10)
 
@@ -548,16 +550,18 @@ class MainWindow(Window_Customizing):
             Title = QCA.translate("Label", "最小静音间隔 (ms)"),
             Body = QCA.translate("Label", "静音部分被分割成的最小长度，若音频只包含短暂中断可以减小该值。")
         )
+        self.ui.SpinBox_Tool_AudioProcessor_Silent_Interval_Min.setRange(0, 3000)
         self.ui.SpinBox_Tool_AudioProcessor_Silent_Interval_Min.setSingleStep(1)
         self.ui.SpinBox_Tool_AudioProcessor_Silent_Interval_Min.setValue(300)
         self.ui.SpinBox_Tool_AudioProcessor_Silent_Interval_Min.setToolTipDuration(-1)
-        self.ui.SpinBox_Tool_AudioProcessor_Silent_Interval_Min.setToolTip(QCA.translate("ToolTip", "注意：这个值必须小于 Audio Length Min，大于 Hop Size。"))
+        self.ui.SpinBox_Tool_AudioProcessor_Silent_Interval_Min.setToolTip(QCA.translate("ToolTip", "注意：这个值必须小于最小音频长度，大于跃点大小。"))
 
         Function_SetText(
             Panel = self.ui.Label_Tool_AudioProcessor_Silence_Kept_Max,
             Title = QCA.translate("Label", "最大静音长度 (ms)"),
             Body = QCA.translate("Label", "被分割的音频周围保持静音的最大长度。")
         )
+        self.ui.SpinBox_Tool_AudioProcessor_Silence_Kept_Max.setRange(0, 10000)
         self.ui.SpinBox_Tool_AudioProcessor_Silence_Kept_Max.setSingleStep(1)
         self.ui.SpinBox_Tool_AudioProcessor_Silence_Kept_Max.setValue(1000)
         self.ui.SpinBox_Tool_AudioProcessor_Silence_Kept_Max.setToolTipDuration(-1)
@@ -568,8 +572,9 @@ class MainWindow(Window_Customizing):
             Title = QCA.translate("Label", "最小音频长度 (ms)"),
             Body = QCA.translate("Label", "每个被分割的音频片段所需的最小长度。")
         )
+        self.ui.SpinBox_Tool_AudioProcessor_Audio_Length_Min.setRange(300, 30000)
         self.ui.SpinBox_Tool_AudioProcessor_Audio_Length_Min.setSingleStep(1)
-        self.ui.SpinBox_Tool_AudioProcessor_Audio_Length_Min.setValue(5000)
+        self.ui.SpinBox_Tool_AudioProcessor_Audio_Length_Min.setValue(3000)
 
         Function_SetText(
             Panel = self.ui.Label_Tool_AudioProcessor_Media_Dir_Output,
@@ -718,6 +723,7 @@ class MainWindow(Window_Customizing):
             Title = "判断阈值",
             Body = QCA.translate("Label", "判断是否为同一人的阈值，若参与比对的说话人声音相识度较高可以增加该值。")
         )
+        self.ui.DoubleSpinBox_Tool_VoiceIdentifier_DecisionThreshold.setRange(0.5, 1)
         #self.ui.DoubleSpinBox_Tool_VoiceIdentifier_DecisionThreshold.setSingleStep(0.01)
         self.ui.DoubleSpinBox_Tool_VoiceIdentifier_DecisionThreshold.setValue(0.75)
 
@@ -726,6 +732,7 @@ class MainWindow(Window_Customizing):
             Title = "音频长度",
             Body = QCA.translate("Label", "用于预测的音频长度。")
         )
+        self.ui.DoubleSpinBox_Tool_VoiceIdentifier_Duration_of_Audio.setRange(0, 30)
         #self.ui.DoubleSpinBox_Tool_VoiceIdentifier_Duration_of_Audio.setSingleStep(0.01)
         self.ui.DoubleSpinBox_Tool_VoiceIdentifier_Duration_of_Audio.setValue(3.00)
 
@@ -1006,6 +1013,7 @@ class MainWindow(Window_Customizing):
             Title = "采样率 (HZ)",
             Body = QCA.translate("Label", "音频将要使用的新采样率。")
         )
+        self.ui.SpinBox_Tool_DatasetCreator_Sample_Rate.setRange(16000, 96000)
         self.ui.SpinBox_Tool_DatasetCreator_Sample_Rate.setSingleStep(1)
         self.ui.SpinBox_Tool_DatasetCreator_Sample_Rate.setValue(22050)
 
@@ -1205,6 +1213,7 @@ class MainWindow(Window_Customizing):
             Title = "评估间隔",
             Body = QCA.translate("Label", "每次评估并保存模型所间隔的step数。")
         )
+        self.ui.SpinBox_Tool_VoiceTrainer_Eval_Interval.setRange(0, 10000)
         self.ui.SpinBox_Tool_VoiceTrainer_Eval_Interval.setSingleStep(1)
         self.ui.SpinBox_Tool_VoiceTrainer_Eval_Interval.setValue(1000)
         self.ui.SpinBox_Tool_VoiceTrainer_Eval_Interval.setToolTipDuration(-1)
@@ -1215,6 +1224,7 @@ class MainWindow(Window_Customizing):
             Title = "迭代轮数",
             Body = QCA.translate("Label", "将全部样本完整迭代一轮的次数。")
         )
+        self.ui.SpinBox_Tool_VoiceTrainer_Epochs.setRange(0, 1000000)
         self.ui.SpinBox_Tool_VoiceTrainer_Epochs.setSingleStep(1)
         self.ui.SpinBox_Tool_VoiceTrainer_Epochs.setValue(10000)
         self.ui.SpinBox_Tool_VoiceTrainer_Epochs.setToolTipDuration(-1)
@@ -1225,16 +1235,18 @@ class MainWindow(Window_Customizing):
             Title = "批处理量",
             Body = QCA.translate("Label", "每轮迭代中单位批次的样本数量，若用户GPU性能较弱可减小该值。")
         )
-        self.ui.SpinBox_Tool_VoiceTrainer_Batch_Size.setSingleStep(1)
+        self.ui.SpinBox_Tool_VoiceTrainer_Batch_Size.setRange(0, 128)
+        self.ui.SpinBox_Tool_VoiceTrainer_Batch_Size.setSingleStep(2)
         self.ui.SpinBox_Tool_VoiceTrainer_Batch_Size.setValue(16)
         self.ui.SpinBox_Tool_VoiceTrainer_Batch_Size.setToolTipDuration(-1)
-        self.ui.SpinBox_Tool_VoiceTrainer_Batch_Size.setToolTip("注意：最好设置为2的幂次，若设置为1会导致网络很难收敛。")
+        self.ui.SpinBox_Tool_VoiceTrainer_Batch_Size.setToolTip("注意：最好设置为2的幂次。")
 
         Function_SetText(
             Panel = self.ui.Label_Tool_VoiceTrainer_Num_Workers,
             Title = "进程数量",
             Body = QCA.translate("Label", "进行数据加载时可并行的进程数量，若用户CPU性能较弱可减小该值。")
         )
+        self.ui.SpinBox_Tool_VoiceTrainer_Num_Workers.setRange(2, 16)
         self.ui.SpinBox_Tool_VoiceTrainer_Num_Workers.setSingleStep(1)
         self.ui.SpinBox_Tool_VoiceTrainer_Num_Workers.setValue(4)
         self.ui.SpinBox_Tool_VoiceTrainer_Num_Workers.setToolTipDuration(-1)
@@ -1443,26 +1455,28 @@ class MainWindow(Window_Customizing):
             Body = QCA.translate("Label", "情感的变化程度。")
         )
         self.ui.HorizontalSlider_Tool_VoiceConverter_EmotionStrength.setMinimum(0)
-        self.ui.HorizontalSlider_Tool_VoiceConverter_EmotionStrength.setMaximum(1000)
+        self.ui.HorizontalSlider_Tool_VoiceConverter_EmotionStrength.setMaximum(100)
         self.ui.HorizontalSlider_Tool_VoiceConverter_EmotionStrength.setTickInterval(1)
-        self.ui.HorizontalSlider_Tool_VoiceConverter_EmotionStrength.setValue(667)
+        self.ui.HorizontalSlider_Tool_VoiceConverter_EmotionStrength.setValue(67)
         Function_ParamsSynchronizer(
             Trigger = self.ui.HorizontalSlider_Tool_VoiceConverter_EmotionStrength,
             ParamsFrom = [
                 self.ui.HorizontalSlider_Tool_VoiceConverter_EmotionStrength
             ],
-            Times = 0.001,
+            Times = 0.01,
             ParamsTo = [
                 self.ui.DoubleSpinBox_Tool_VoiceConverter_EmotionStrength
             ]
         )
-        self.ui.DoubleSpinBox_Tool_VoiceConverter_EmotionStrength.setValue(0.667)
+        self.ui.DoubleSpinBox_Tool_VoiceConverter_EmotionStrength.setRange(0, 1)
+        self.ui.DoubleSpinBox_Tool_VoiceConverter_EmotionStrength.setSingleStep(0.01)
+        self.ui.DoubleSpinBox_Tool_VoiceConverter_EmotionStrength.setValue(0.67)
         Function_ParamsSynchronizer(
             Trigger = self.ui.DoubleSpinBox_Tool_VoiceConverter_EmotionStrength,
             ParamsFrom = [
                 self.ui.DoubleSpinBox_Tool_VoiceConverter_EmotionStrength
             ],
-            Times = 1000,
+            Times = 100,
             ParamsTo = [
                 self.ui.HorizontalSlider_Tool_VoiceConverter_EmotionStrength
             ]
@@ -1487,6 +1501,8 @@ class MainWindow(Window_Customizing):
                 self.ui.DoubleSpinBox_Tool_VoiceConverter_PhonemeDuration
             ]
         )
+        self.ui.DoubleSpinBox_Tool_VoiceConverter_PhonemeDuration.setRange(0, 1)
+        self.ui.DoubleSpinBox_Tool_VoiceConverter_PhonemeDuration.setSingleStep(0.1)
         self.ui.DoubleSpinBox_Tool_VoiceConverter_PhonemeDuration.setValue(0.8)
         Function_ParamsSynchronizer(
             Trigger = self.ui.DoubleSpinBox_Tool_VoiceConverter_PhonemeDuration,
@@ -1518,6 +1534,8 @@ class MainWindow(Window_Customizing):
                 self.ui.DoubleSpinBox_Tool_VoiceConverter_SpeechRate
             ]
         )
+        self.ui.DoubleSpinBox_Tool_VoiceConverter_SpeechRate.setRange(0, 2)
+        self.ui.DoubleSpinBox_Tool_VoiceConverter_SpeechRate.setSingleStep(0.1)
         self.ui.DoubleSpinBox_Tool_VoiceConverter_SpeechRate.setValue(1.)
         Function_ParamsSynchronizer(
             Trigger = self.ui.DoubleSpinBox_Tool_VoiceConverter_SpeechRate,

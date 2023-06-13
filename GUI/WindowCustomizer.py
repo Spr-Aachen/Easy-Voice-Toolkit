@@ -39,12 +39,12 @@ class CustomTitleBar:
         self.title.setStyleSheet(
             "QLabel"
             "{"
-                "background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 rgb(123, 123, 123), stop:1 rgb(99, 99, 99));"
-                "color: #333333;"
-                "padding: 3px;"
+                "background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 rgba(63, 63, 63, 210), stop:1 rgba(51, 51, 51, 210));"
+                "color: rgba(210, 210, 210, 210);"
+                "padding: 3.3px;"
                 "border-width: 0px;"
-                "border-top-left-radius: 3px;"
-                "border-top-right-radius: 3px;"
+                #"border-top-left-radius: 3px;"
+                #"border-top-right-radius: 3px;"
                 "border-style: solid;"
                 #"border-color: rgb(111, 111, 111);"
             "}"
@@ -227,9 +227,6 @@ class Window_Customizing(QMainWindow):
 
         self.edge_size = 6 # 窗体边缘尺寸（出现缩放标记的范围）
 
-        self.xRadius = 6 # 窗体圆角X半径
-        self.yRadius = 6 # 窗体圆角Y半径
-
         self.min_width = 60 # 窗体的最小宽度
         self.min_height = 24 # 窗体的最小高度
 
@@ -237,12 +234,12 @@ class Window_Customizing(QMainWindow):
 
     def paintEvent(self, event: QPaintEvent) -> None:
         '''
-        设置边框圆角
+        设置边框
         '''
         painter = QPainter(self)
         painter.setRenderHint(QPainter.RenderHint.Antialiasing) # 设置抗锯齿，不然边框会有明显锯齿
         painter.setBrush(Qt.white) # 设置窗体颜色
-        painter.drawRoundedRect(self.rect(), self.xRadius, self.yRadius)
+        #painter.drawRoundedRect(self.rect(), 3, 3) #画边框圆角
         super().paintEvent(event)
 
     def mouseMoveEvent(self, event):
