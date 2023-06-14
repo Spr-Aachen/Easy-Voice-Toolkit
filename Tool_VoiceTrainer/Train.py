@@ -151,12 +151,16 @@ class Training:
     '''
     def __init__(self,
         Num_Workers: int = 4,
+        Find_Unused_Parameters: bool = False,
         Model_Path_Pretrained_G: Optional[str] = None,
         Model_Path_Pretrained_D: Optional[str] = None
     ):
         self.Num_Workers = Num_Workers
+        self.Find_Unused_Parameters = Find_Unused_Parameters
         self.Model_Path_Pretrained_G = Model_Path_Pretrained_G
         self.Model_Path_Pretrained_D = Model_Path_Pretrained_D
+
+        self.CheckIfContinue = True
 
     def evaluate(self, hps, generator, eval_loader, writer_eval):
         generator.eval()
@@ -389,19 +393,23 @@ class Training:
             hps.train.learning_rate,
             betas=hps.train.betas,
             eps=hps.train.eps)
-        # 启用寻找没用到的参数以防止在对梯度进行平均时报错，但这会带来额外的运行开销
-        net_g = DDP(net_g, device_ids = [rank], find_unused_parameters = True)
-        net_d = DDP(net_d, device_ids = [rank], find_unused_parameters = True)
+        net_g = DDP(net_g, device_ids = [rank], find_unused_parameters = self.Find_Unused_Parameters)
+        net_d = DDP(net_d, device_ids = [rank], find_unused_parameters = self.Find_Unused_Parameters)
 
         try:
-            if None not in (self.Model_Path_Pretrained_G, self.Model_Path_Pretrained_D):
-                _, _, _, epoch_str = utils.load_checkpoint(self.Model_Path_Pretrained_G, net_g, optim_g)
-                _, _, _, epoch_str = utils.load_checkpoint(self.Model_Path_Pretrained_D, net_d, optim_d)
-                print("Loaded from pretrained models")
+            if self.CheckIfContinue == True:
+                if None not in (self.Model_Path_Pretrained_G, self.Model_Path_Pretrained_D):
+                    _, _, _, epoch_str = utils.load_checkpoint(self.Model_Path_Pretrained_G, net_g, optim_g)
+                    _, _, _, epoch_str = utils.load_checkpoint(self.Model_Path_Pretrained_D, net_d, optim_d)
+                    print("Loaded from pretrained models")
+                else:
+                    _, _, _, epoch_str = utils.load_checkpoint(utils.latest_checkpoint_path(hps.model_dir, "G_*.pth"), net_g, optim_g)
+                    _, _, _, epoch_str = utils.load_checkpoint(utils.latest_checkpoint_path(hps.model_dir, "D_*.pth"), net_d, optim_d)
+                    print("Loaded from latest checkpoint")
+                self.CheckIfContinue = False
             else:
                 _, _, _, epoch_str = utils.load_checkpoint(utils.latest_checkpoint_path(hps.model_dir, "G_*.pth"), net_g, optim_g)
                 _, _, _, epoch_str = utils.load_checkpoint(utils.latest_checkpoint_path(hps.model_dir, "D_*.pth"), net_d, optim_d)
-                print("Loaded from latest checkpoint")
 
             global_step = (epoch_str - 1) * len(train_loader) # > 0
             print(f"Continue from step {global_step}")
@@ -442,12 +450,13 @@ class Voice_Training(Preprocessing, Training):
         Set_FP16_Run: bool = True,
         Set_Speakers: str = ["SpeakerName"],
         Num_Workers: int = 4,
+        Find_Unused_Parameters: bool = False,
         Model_Path_Pretrained_G: Optional[str] = None,
         Model_Path_Pretrained_D: Optional[str] = None,
         Model_Dir_Save: str = './'
     ):
         Preprocessing.__init__(self, FileList_Path_Validation, FileList_Path_Training, Language, Config_Path_Load, Config_Dir_Save, Set_Eval_Interval, Set_Epochs, Set_Batch_Size, Set_FP16_Run, Set_Speakers)
-        Training.__init__(self, Num_Workers, Model_Path_Pretrained_G, Model_Path_Pretrained_D)
+        Training.__init__(self, Num_Workers, Find_Unused_Parameters, Model_Path_Pretrained_G, Model_Path_Pretrained_D)
         self.Model_Dir_Save = Model_Dir_Save
 
     def Preprocessing_and_Training(self):

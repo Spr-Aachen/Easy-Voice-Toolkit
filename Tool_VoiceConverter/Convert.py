@@ -62,7 +62,7 @@ class Voice_Converting:
         with torch.no_grad():
             x_tst = stn_tst.cuda().unsqueeze(0)
             x_tst_lengths = torch.LongTensor([stn_tst.size(0)]).cuda()
-            sid = torch.LongTensor([hps.speakers.index(self.Speaker)]).cuda()
+            sid = torch.LongTensor([hps.speakers.index(self.Speaker)]).cuda() if self.Speaker is not None else 0
             audio = net_g.infer(x_tst, x_tst_lengths, sid=sid, noise_scale=self.EmotionStrength, noise_scale_w=self.PhonemeDuration, length_scale=self.SpeechRate)[0][0,0].data.cpu().float().numpy()
             write(os.path.normpath(f"{self.Audio_Dir_Save}/{datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}.wav"), hps.data.sampling_rate, audio) #ipd.display(ipd.Audio(audio, rate=hps.data.sampling_rate, normalize=False))
 

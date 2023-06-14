@@ -24,26 +24,21 @@ def load_checkpoint(checkpoint_path, model, optimizer=None):
     checkpoint_dict = torch.load(checkpoint_path, map_location='cpu')
     iteration = checkpoint_dict['iteration']
     learning_rate = checkpoint_dict['learning_rate']
-    if optimizer is not None:
-        optimizer.load_state_dict(checkpoint_dict['optimizer'])
-    saved_state_dict = checkpoint_dict['model']
+    optimizer.load_state_dict(checkpoint_dict['optimizer']) if optimizer is not None else None
+    def get_new_state(state_dict, saved_state_dict):
+        new_state_dict= {}
+        for k, v in state_dict.items():
+            try:
+                new_state_dict[k] = saved_state_dict[k]
+            except:
+                logger.info("%s is not in the checkpoint" % k)
+                new_state_dict[k] = v
+        return new_state_dict
     if hasattr(model, 'module'):
-        state_dict = model.module.state_dict()
+        model.module.load_state_dict(get_new_state(model.module.state_dict(), checkpoint_dict['model']))
     else:
-        state_dict = model.state_dict()
-    new_state_dict= {}
-    for k, v in state_dict.items():
-        try:
-            new_state_dict[k] = saved_state_dict[k]
-        except:
-            logger.info("%s is not in the checkpoint" % k)
-            new_state_dict[k] = v
-    if hasattr(model, 'module'):
-        model.module.load_state_dict(new_state_dict)
-    else:
-        model.load_state_dict(new_state_dict)
-    logger.info("Loaded checkpoint '{}' (iteration {})" .format(
-        checkpoint_path, iteration))
+        model.load_state_dict(get_new_state(model.state_dict(), checkpoint_dict['model']))
+    logger.info(f"Loaded checkpoint '{checkpoint_path}' (iteration {iteration})")
     return model, optimizer, learning_rate, iteration
 
 
