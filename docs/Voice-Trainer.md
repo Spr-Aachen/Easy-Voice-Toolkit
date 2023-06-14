@@ -41,12 +41,10 @@
 <br>提示：当目录中存在多个模型时，编号最大的那个会被选为检查点
 > - [可选] 配置加载路径<br>[Optional] Config Path Load
 <br>用于替代默认配置文件的用户配置文件的路径
-> - [可选] 预训练G模型路径<br>[Optional] Model Path Pretrained G
-<br>用作检查点的预训练生成器（Generator）模型的路径
-<br>提示：该模型文件会被复制到模型保存目录下的"checkpoints"文件夹中
-> - [可选] 预训练D模型路径<br>[Optional] Model Path Pretrained D
-<br>用作检查点的预训练判别器（Discriminator）模型的路径
-<br>提示：该模型文件会被复制到模型保存目录下的"checkpoints"文件夹中
+> - [可选] 预训练G_*模型路径<br>[Optional] Model Path Pretrained G_*
+<br>预训练生成器（Generator）模型的所在路径，载入优先级高于检查点
+> - [可选] 预训练D_*模型路径<br>[Optional] Model Path Pretrained D_*
+<br>预训练判别器（Discriminator）模型的所在路径，载入优先级高于检查点
 > - [可选] 人物名字<br>[Optional] Speakers
 <br>若数据集非本工具箱生成且未包含人名信息，则应按序号填写并用逗号隔开
 <br>注意：不同人物名之间要用逗号隔开；逗号后面不需要加空格

@@ -6,7 +6,6 @@ from typing import Optional
 from datetime import datetime
 import os
 import re
-import shutil
 import json
 import argparse
 import platform
@@ -65,7 +64,7 @@ class Preprocessing:
         Config_Dir_Save: str = './',
         Set_Eval_Interval: int = 1000,
         Set_Epochs: int = 10000,
-        Set_Batch_Size: int = 8,
+        Set_Batch_Size: int = 16,
         Set_FP16_Run: bool = True,
         Set_Speakers: Optional[list] = ["SpeakerName"]
     ):
@@ -151,9 +150,13 @@ class Training:
     Train
     '''
     def __init__(self,
-        Num_Workers: int = 8
+        Num_Workers: int = 4,
+        Model_Path_Pretrained_G: Optional[str] = None,
+        Model_Path_Pretrained_D: Optional[str] = None
     ):
         self.Num_Workers = Num_Workers
+        self.Model_Path_Pretrained_G = Model_Path_Pretrained_G
+        self.Model_Path_Pretrained_D = Model_Path_Pretrained_D
 
     def evaluate(self, hps, generator, eval_loader, writer_eval):
         generator.eval()
@@ -391,12 +394,22 @@ class Training:
         net_d = DDP(net_d, device_ids = [rank], find_unused_parameters = True)
 
         try:
-            _, _, _, epoch_str = utils.load_checkpoint(utils.latest_checkpoint_path(hps.model_dir, "G_*.pth"), net_g, optim_g)
-            _, _, _, epoch_str = utils.load_checkpoint(utils.latest_checkpoint_path(hps.model_dir, "D_*.pth"), net_d, optim_d)
-            global_step = (epoch_str - 1) * len(train_loader)
+            if None not in (self.Model_Path_Pretrained_G, self.Model_Path_Pretrained_D):
+                _, _, _, epoch_str = utils.load_checkpoint(self.Model_Path_Pretrained_G, net_g, optim_g)
+                _, _, _, epoch_str = utils.load_checkpoint(self.Model_Path_Pretrained_D, net_d, optim_d)
+                print("Loaded from pretrained models")
+            else:
+                _, _, _, epoch_str = utils.load_checkpoint(utils.latest_checkpoint_path(hps.model_dir, "G_*.pth"), net_g, optim_g)
+                _, _, _, epoch_str = utils.load_checkpoint(utils.latest_checkpoint_path(hps.model_dir, "D_*.pth"), net_d, optim_d)
+                print("Loaded from latest checkpoint")
+
+            global_step = (epoch_str - 1) * len(train_loader) # > 0
+            print(f"Continue from step {global_step}")
+
         except:
             epoch_str = 1
             global_step = 0
+            print(f"Start from step 0")
 
         scheduler_g = torch.optim.lr_scheduler.ExponentialLR(optim_g, gamma=hps.train.lr_decay, last_epoch=epoch_str-2)
         scheduler_d = torch.optim.lr_scheduler.ExponentialLR(optim_d, gamma=hps.train.lr_decay, last_epoch=epoch_str-2)
@@ -425,18 +438,16 @@ class Voice_Training(Preprocessing, Training):
         Config_Dir_Save: str = './',
         Set_Eval_Interval: int = 1000,
         Set_Epochs: int = 10000,
-        Set_Batch_Size: int = 8,
+        Set_Batch_Size: int = 16,
         Set_FP16_Run: bool = True,
         Set_Speakers: str = ["SpeakerName"],
-        Num_Workers: int = 2,
+        Num_Workers: int = 4,
         Model_Path_Pretrained_G: Optional[str] = None,
         Model_Path_Pretrained_D: Optional[str] = None,
         Model_Dir_Save: str = './'
     ):
         Preprocessing.__init__(self, FileList_Path_Validation, FileList_Path_Training, Language, Config_Path_Load, Config_Dir_Save, Set_Eval_Interval, Set_Epochs, Set_Batch_Size, Set_FP16_Run, Set_Speakers)
-        Training.__init__(self, Num_Workers)
-        self.Model_Path_Pretrained_G = Model_Path_Pretrained_G
-        self.Model_Path_Pretrained_D = Model_Path_Pretrained_D
+        Training.__init__(self, Num_Workers, Model_Path_Pretrained_G, Model_Path_Pretrained_D)
         self.Model_Dir_Save = Model_Dir_Save
 
     def Preprocessing_and_Training(self):
@@ -445,15 +456,6 @@ class Voice_Training(Preprocessing, Training):
         self.Cleaner()
 
         # Train
-        def GetPretrainedModel(Model_Path_Pretrained):
-            if Model_Path_Pretrained != None:
-                Checkpoint_Dir = os.path.normpath(os.path.join(self.Model_Dir_Save, 'checkpoints'))
-                os.makedirs(Checkpoint_Dir, exist_ok = True)
-                shutil.copy(Model_Path_Pretrained, Checkpoint_Dir)
-        
-        GetPretrainedModel(self.Model_Path_Pretrained_G)
-        GetPretrainedModel(self.Model_Path_Pretrained_D)
-
         """Assume Single Node Multi GPUs Training Only"""
         assert torch.cuda.is_available(), "CPU training is not allowed."
 
