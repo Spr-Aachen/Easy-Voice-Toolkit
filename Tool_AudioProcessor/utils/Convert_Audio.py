@@ -21,43 +21,42 @@ def Converter(
         try:
             Media_Path = os.path.join(Media_Dir_Input, Media_Name_Input)
 
-            if Media_Name_Input.endswith('.mp3') and Media_Format_New != 'mp3':
+            if Media_Name_Input.endswith('.mp3'):
                 Media = AudioSegment.from_mp3(Media_Path)
 
-            if Media_Name_Input.endswith('.wav') and Media_Format_New != 'wav':
+            if Media_Name_Input.endswith('.wav'):
                 Media = AudioSegment.from_wav(Media_Path)
 
-            if Media_Name_Input.endswith('.ogg') and Media_Format_New != 'ogg':
+            if Media_Name_Input.endswith('.ogg'):
                 Media = AudioSegment.from_ogg(Media_Path)
 
-            if Media_Name_Input.endswith('.mp4') and Media_Format_New != 'mp4':
+            if Media_Name_Input.endswith('.mp4'):
                 Media = AudioSegment.from_mp4(Media_Path)
 
-            if Media_Name_Input.endswith('.flv') and Media_Format_New != 'flv':
+            if Media_Name_Input.endswith('.flv'):
                 Media = AudioSegment.from_flv(Media_Path)
 
             Media_Name_Output = Media_Name_Input.rsplit('.', 1)[0] + '.' + Media_Format_New
             Media.export(os.path.join(Meida_Dir_Output, Media_Name_Output), format = Media_Format_New)
-        
+
         except:
             print(f"Convertion of file {Media_Name_Input} failed!")
     '''
-    
-    ExtensionList = ('*.mp3', '*.wav', '*.ogg', '*.mp4', '*.flv')
-    
-    os.chdir(Media_Dir_Input)
-    
-    for Extension in ExtensionList:
-        if Extension.rsplit('.', 1)[-1] == Media_Format_New:
-            pass
-        
-        else:
-            for Media_Name_Input in glob.glob(Extension):
+
+    OldExtensions = ['*.flac', '*.wav', '*.mp3', '*.aac', '*.ogg', '*.m4a', '*.wma', '*.aiff', '*.au', '*.mp4', '*.flv']
+    NewExtensions = ['*.flac', '*.wav', '*.mp3', '*.aac', '*.ogg', '*.m4a', '*.wma', '*.aiff', '*.au']
+
+    if f'*.{Media_Format_New}'.lower() not in NewExtensions:
+        raise Exception(f"Format '{Media_Format_New}' is currently not supported!")
+    else:
+        os.chdir(Media_Dir_Input)
+        for OldExtension in OldExtensions:
+            for Media_Name_Input in glob.glob(OldExtension):
                 try:
                     Media_Name_Output = os.path.splitext(os.path.basename(Media_Name_Input))[0] + '.' + Media_Format_New
                     AudioSegment.from_file(Media_Name_Input).export(os.path.join(Meida_Dir_Output, Media_Name_Output), format = Media_Format_New)
 
                 except:
                     print(f"Convertion of file {Media_Name_Input} failed!")
-    
+
     #print("Conversion done!")
