@@ -99,7 +99,7 @@ class Preprocessing:
 
         def Write_Config_Data(Config_Path_Load, Config_Dir_Save):
             os.makedirs(Config_Dir_Save, exist_ok = True)
-            with open(Config_Path_Load, 'rb') as File_Old:
+            with open(Config_Path_Load, 'rb', encoding = 'utf-8') as File_Old:
                 Params = json.load(File_Old)
             try:
                 Params_Old = Params
@@ -115,7 +115,7 @@ class Preprocessing:
                 Params_New = Params_Old
             except:
                 raise Exception("Please check if params exist")
-            with open(self.Config_Path_Edited, 'w') as File_New:
+            with open(self.Config_Path_Edited, 'w', encoding = 'utf-8') as File_New:
                 json.dump(Params_New, File_New, indent = 4)
             print(f"Config created in {Config_Dir_Save}")
 
@@ -141,7 +141,7 @@ class Preprocessing:
                 Path_SID_Text[i][Args.Text_Index] = text._clean_text(Path_SID_Text[i][Args.Text_Index], Args.Text_Cleaners)
 
             Filelist_Cleaned = FileList + "." + Args.Out_Extension
-            with open(Filelist_Cleaned, "w", encoding = "utf-8") as f:
+            with open(Filelist_Cleaned, 'w', encoding = 'utf-8') as f:
                 f.writelines(["|".join(x) + "\n" for x in Path_SID_Text])
 
 
@@ -250,7 +250,8 @@ class Training:
                     hps.data.n_mel_channels,
                     hps.data.sampling_rate,
                     hps.data.mel_fmin,
-                    hps.data.mel_fmax)
+                    hps.data.mel_fmax
+                )
                 y_mel = slice_segments(mel, ids_slice, hps.train.segment_size // hps.data.hop_length)
                 y_hat_mel = mel_spectrogram_torch(
                     y_hat.squeeze(1),
@@ -260,8 +261,8 @@ class Training:
                     hps.data.hop_length,
                     hps.data.win_length,
                     hps.data.mel_fmin,
-                    hps.data.mel_fmax)
-
+                    hps.data.mel_fmax
+                )
                 y = slice_segments(y, ids_slice * hps.data.hop_length, hps.train.segment_size) # slice
 
                 # Discriminator
@@ -293,13 +294,11 @@ class Training:
             scaler.step(optim_g)
             scaler.update()
 
-            if rank==0:
+            if rank == 0:
                 if global_step % hps.train.log_interval == 0:
                     lr = optim_g.param_groups[0]['lr']
                     losses = [loss_disc, loss_gen, loss_fm, loss_mel, loss_dur, loss_kl]
-                    logger.info('Train Epoch: {} [{:.0f}%]'.format(
-                        epoch,
-                        100. * batch_idx / len(train_loader)))
+                    logger.info(f'Train Epoch: {epoch} [{100. * batch_idx / len(train_loader):.0f}%]')
                     logger.info([x.item() for x in losses] + [global_step, lr])
 
                     scalar_dict = {"loss/g/total": loss_gen_all, "loss/d/total": loss_disc_all, "learning_rate": lr, "grad_norm_d": grad_norm_d, "grad_norm_g": grad_norm_g}

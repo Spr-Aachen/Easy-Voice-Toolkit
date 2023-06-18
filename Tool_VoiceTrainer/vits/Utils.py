@@ -135,7 +135,7 @@ def load_wav_to_torch(full_path):
 
 
 def load_audiopaths_sid_text(filename, split = "|"):
-    with open(filename, "r", encoding = 'utf-8') as f:
+    with open(filename, 'r', encoding = 'utf-8') as f:
         audiopaths_sid_text = [line.strip().split(split) for line in f]
     return audiopaths_sid_text
 
@@ -153,7 +153,7 @@ def get_hparams(
         os.makedirs(args.ModelDir)
 
     config_path = args.ConfigPath
-    with open(config_path, "r") as f:
+    with open(config_path, 'r', encoding = 'utf-8') as f:
         data = f.read()
     config = json.loads(data)
 

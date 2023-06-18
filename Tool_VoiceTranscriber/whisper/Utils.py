@@ -74,8 +74,8 @@ class ResultWriter:
         audio_basename = os.path.basename(audio_path).rsplit('.', 1)[0]   #audio_basename = os.path.basename(audio_path)
         output_path = os.path.join(self.output_dir, audio_basename + "." + self.extension)
 
-        with open(output_path, "w", encoding="utf-8") as f:
-            self.write_result(result, file=f)
+        with open(output_path, 'w', encoding = 'utf-8') as f:
+            self.write_result(result, file = f)
 
     def write_result(self, result: dict, file: TextIO):
         raise NotImplementedError

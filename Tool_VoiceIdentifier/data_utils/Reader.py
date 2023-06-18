@@ -115,7 +115,7 @@ class CustomDataset(data.Dataset):
         super(CustomDataset, self).__init__()
         # 当预测时不需要获取数据
         if data_list_path is not None:
-            with open(data_list_path, 'r') as f:
+            with open(data_list_path, 'r', encoding = 'utf-8') as f:
                 self.lines = f.readlines()
         self.feature_method = feature_method
         self.mode = mode
