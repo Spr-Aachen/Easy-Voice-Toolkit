@@ -28,10 +28,13 @@ CurrentDir = os.path.dirname(os.path.abspath('__file__'))
 os.chdir(CurrentDir)
 
 
-# Redirect PATH environment variable 'QT_QPA_PLATFORM_PLUGIN_PATH' to Pyside6 '/plugins/platforms' folder's path
-PySide6_Dirname = os.path.dirname(PySide6_File)
-PySide6_PluginPath = os.path.join(PySide6_Dirname, 'plugins', 'platforms')
-os.environ['QT_QPA_PLATFORM_PLUGIN_PATH'] = PySide6_PluginPath
+# Redirect PATH variable 'QT_QPA_PLATFORM_PLUGIN_PATH' to Pyside6 '/plugins/platforms' folder's path
+try:
+    PySide6_Dirname = os.path.dirname(PySide6_File)
+    PySide6_PluginPath = os.path.join(PySide6_Dirname, 'plugins', 'platforms')
+    os.environ['QT_QPA_PLATFORM_PLUGIN_PATH'] = PySide6_PluginPath
+except:
+    pass
 
 
 # Task: Configurate environment
@@ -176,7 +179,7 @@ class Execute_Voice_Training(QObject):
 # Tool6: VoiceConverter
 def Get_Speakers(Config_Path_Load):
     try:
-        with open(Config_Path_Load, "r") as File:
+        with open(Config_Path_Load, 'r', encoding = 'utf-8') as File:
             Params = json.load(File)
         Speakers = Params["speakers"]
         return Speakers
@@ -524,8 +527,41 @@ class MainWindow(Window_Customizing):
             Title = QCA.translate("Label", "媒体输出格式"),
             Body = QCA.translate("Label", "媒体文件将会以设置的格式输出为音频文件。")
         )
-        self.ui.ComboBox_Tool_AudioProcessor_Media_Format_Output.addItems(['wav', 'mp3'])
+        self.ui.ComboBox_Tool_AudioProcessor_Media_Format_Output.addItems(['flac', 'wav', 'mp3', 'aac', 'ogg', 'm4a', 'wma', 'aiff', 'au'])
         self.ui.ComboBox_Tool_AudioProcessor_Media_Format_Output.setCurrentText('wav')
+
+        Function_SetText(
+            Panel = self.ui.Label_Tool_AudioProcessor_Media_Dir_Output,
+            Title = QCA.translate("Label", "媒体输出目录"),
+            Body = QCA.translate("Label", "最后生成的音频文件将被保存到该目录中。")
+        )
+        Function_SetFileDialog(
+            Button = self.ui.Button_Tool_AudioProcessor_Media_Dir_Output,
+            LineEdit = self.ui.LineEdit_Tool_AudioProcessor_Media_Dir_Output,
+            Mode = "SelectDir",
+            DisplayText = QCA.translate("LineEdit", "None")
+        )
+
+        self.ui.CheckBox_Toggle_AdvanceSettings_Tool_AudioProcessor.setText("高级设置（隐藏）")
+        self.ui.CheckBox_Toggle_AdvanceSettings_Tool_AudioProcessor.setCheckable(True)
+        self.ui.CheckBox_Toggle_AdvanceSettings_Tool_AudioProcessor.setChecked(False)
+        Function_ConfigureCheckBox(
+            CheckBox = self.ui.CheckBox_Toggle_AdvanceSettings_Tool_AudioProcessor,
+            CheckedText = "高级设置（显示）",
+            CheckedPermEventList = [
+                Function_AnimateFrame
+            ],
+            CheckedPermArgsList = [
+                (self.ui.Frame_AdvanceSettings_Tool_AudioProcessor,...,...,0,self.ui.Frame_Tool_AudioProcessor_RMS_Threshold.height()+self.ui.Frame_Tool_AudioProcessor_Hop_Size.height()+self.ui.Frame_Tool_AudioProcessor_Silent_Interval_Min.height()+self.ui.Frame_Tool_AudioProcessor_Silence_Kept_Max.height()+self.ui.Frame_Tool_AudioProcessor_Audio_Length_Min.height(),0,'Extend')
+            ],
+            UncheckedText = "高级设置（隐藏）",
+            UncheckedPermEventList = [
+                Function_AnimateFrame
+            ],
+            UncheckedPermArgsList = [
+                (self.ui.Frame_AdvanceSettings_Tool_AudioProcessor,...,...,0,self.ui.Frame_Tool_AudioProcessor_RMS_Threshold.height()+self.ui.Frame_Tool_AudioProcessor_Hop_Size.height()+self.ui.Frame_Tool_AudioProcessor_Silent_Interval_Min.height()+self.ui.Frame_Tool_AudioProcessor_Silence_Kept_Max.height()+self.ui.Frame_Tool_AudioProcessor_Audio_Length_Min.height(),0,'Reduce')
+            ]
+        )
 
         Function_SetText(
             Panel = self.ui.Label_Tool_AudioProcessor_RMS_Threshold,
@@ -576,18 +612,6 @@ class MainWindow(Window_Customizing):
         self.ui.SpinBox_Tool_AudioProcessor_Audio_Length_Min.setSingleStep(1)
         self.ui.SpinBox_Tool_AudioProcessor_Audio_Length_Min.setValue(3000)
 
-        Function_SetText(
-            Panel = self.ui.Label_Tool_AudioProcessor_Media_Dir_Output,
-            Title = QCA.translate("Label", "媒体输出目录"),
-            Body = QCA.translate("Label", "最后生成的音频文件将被保存到该目录中。")
-        )
-        Function_SetFileDialog(
-            Button = self.ui.Button_Tool_AudioProcessor_Media_Dir_Output,
-            LineEdit = self.ui.LineEdit_Tool_AudioProcessor_Media_Dir_Output,
-            Mode = "SelectDir",
-            DisplayText = QCA.translate("LineEdit", "None")
-        )
-
         # Tool_VoiceIdentifier
         Function_SetText(
             Panel = self.ui.TextBrowser_Tool_VoiceIdentifier,
@@ -602,6 +626,7 @@ class MainWindow(Window_Customizing):
                 "[用法]\n"
                 "1. 设置位于页面右侧的参数\n"
                 "2. 点击位于页面底部的“执行”按钮\n"
+                "3. 若还有筛选其它人物的需要，可在更改“标准音频路径”和“人物名字”参数后重新执行\n"
                 "\n"
                 "[提示]\n"
                 "1. 您可以通过开启“自动同步...”选项以保持前后工具的部分参数设置一致，或者点击“同步...”按钮以快速设置当前工具的下列参数：\n"
@@ -655,7 +680,7 @@ class MainWindow(Window_Customizing):
             ]
         )
 
-        self.ui.GroupBox_EssentialParams_Tool_VoiceIdentifier.setTitle("EssentialParams 必要参数")
+        self.ui.GroupBox_EssentialParams_Tool_VoiceIdentifier.setTitle("必要参数")
 
         Function_SetText(
             Panel = self.ui.Label_Tool_VoiceIdentifier_Audio_Dir_Input,
@@ -672,7 +697,7 @@ class MainWindow(Window_Customizing):
         Function_SetText(
             Panel = self.ui.Label_Tool_VoiceIdentifier_Audio_Path_Std,
             Title = "标准音频路径",
-            Body = QCA.translate("Label", "该路径对应的音频将会作为识别的比对标准，即期望值。")
+            Body = QCA.translate("Label", "包含目标人物语音的音频文件的所在路径，尽量不要混入杂音。")
         )
         Function_SetFileDialog(
             Button = self.ui.Button_Tool_VoiceIdentifier_Audio_Path_Std,
@@ -680,6 +705,57 @@ class MainWindow(Window_Customizing):
             Mode = "SelectFile",
             FileType = "音频类型 (*.mp3 *.aac *.wav *.flac)",
             DisplayText = QCA.translate("LineEdit", "None")
+        )
+
+        Function_SetText(
+            Panel = self.ui.Label_Tool_VoiceIdentifier_Speaker,
+            Title = "人物名字",
+            Body = QCA.translate("Label", "说话人物的名字，若没有进行语音模型训练的需求可以跳过该设置。")
+        )
+        self.ui.LineEdit_Tool_VoiceIdentifier_Speaker.setText("")
+        self.ui.LineEdit_Tool_VoiceIdentifier_Speaker.setToolTipDuration(-1)
+        self.ui.LineEdit_Tool_VoiceIdentifier_Speaker.setToolTip("注意：名字中尽量不要出现特殊符号")
+
+        Function_SetText(
+            Panel = self.ui.Label_Tool_VoiceIdentifier_DecisionThreshold,
+            Title = "判断阈值",
+            Body = QCA.translate("Label", "判断是否为同一人的阈值，若参与比对的说话人声音相识度较高可以增加该值。")
+        )
+        self.ui.DoubleSpinBox_Tool_VoiceIdentifier_DecisionThreshold.setRange(0.5, 1)
+        #self.ui.DoubleSpinBox_Tool_VoiceIdentifier_DecisionThreshold.setSingleStep(0.01)
+        self.ui.DoubleSpinBox_Tool_VoiceIdentifier_DecisionThreshold.setValue(0.75)
+
+        Function_SetText(
+            Panel = self.ui.Label_Tool_VoiceIdentifier_Audio_Dir_Output,
+            Title = "音频输出目录",
+            Body = QCA.translate("Label", "最后筛选出的音频文件将被复制到该目录中。")
+        )
+        Function_SetFileDialog(
+            Button = self.ui.Button_Tool_VoiceIdentifier_Audio_Dir_Output,
+            LineEdit = self.ui.LineEdit_Tool_VoiceIdentifier_Audio_Dir_Output,
+            Mode = "SelectDir",
+            DisplayText = QCA.translate("LineEdit", "None")
+        )
+
+        self.ui.CheckBox_Toggle_AdvanceSettings_Tool_VoiceIdentifier.setText("高级设置（隐藏）")
+        self.ui.CheckBox_Toggle_AdvanceSettings_Tool_VoiceIdentifier.setCheckable(True)
+        self.ui.CheckBox_Toggle_AdvanceSettings_Tool_VoiceIdentifier.setChecked(False)
+        Function_ConfigureCheckBox(
+            CheckBox = self.ui.CheckBox_Toggle_AdvanceSettings_Tool_VoiceIdentifier,
+            CheckedText = "高级设置（显示）",
+            CheckedPermEventList = [
+                Function_AnimateFrame
+            ],
+            CheckedPermArgsList = [
+                (self.ui.Frame_AdvanceSettings_Tool_VoiceIdentifier,...,...,0,self.ui.Frame_Tool_VoiceIdentifier_Model_Dir.height()+self.ui.Frame_Tool_VoiceIdentifier_Model_Type.height()+self.ui.Frame_Tool_VoiceIdentifier_Model_Name.height()+self.ui.Frame_Tool_VoiceIdentifier_Feature_Method.height()+self.ui.Frame_Tool_VoiceIdentifier_Duration_of_Audio.height(),0,'Extend')
+            ],
+            UncheckedText = "高级设置（隐藏）",
+            UncheckedPermEventList = [
+                Function_AnimateFrame
+            ],
+            UncheckedPermArgsList = [
+                (self.ui.Frame_AdvanceSettings_Tool_VoiceIdentifier,...,...,0,self.ui.Frame_Tool_VoiceIdentifier_Model_Dir.height()+self.ui.Frame_Tool_VoiceIdentifier_Model_Type.height()+self.ui.Frame_Tool_VoiceIdentifier_Model_Name.height()+self.ui.Frame_Tool_VoiceIdentifier_Feature_Method.height()+self.ui.Frame_Tool_VoiceIdentifier_Duration_of_Audio.height(),0,'Reduce')
+            ]
         )
 
         Function_SetText(
@@ -693,6 +769,7 @@ class MainWindow(Window_Customizing):
             Mode = "SelectDir",
             DisplayText = QCA.translate("LineEdit", "None")
         )
+        self.ui.LineEdit_Tool_VoiceIdentifier_Model_Dir.setText(os.path.join(CurrentDir, 'Download'))
 
         Function_SetText(
             Panel = self.ui.Label_Tool_VoiceIdentifier_Model_Type,
@@ -719,15 +796,6 @@ class MainWindow(Window_Customizing):
         self.ui.ComboBox_Tool_VoiceIdentifier_Feature_Method.setCurrentText('spectrogram')
 
         Function_SetText(
-            Panel = self.ui.Label_Tool_VoiceIdentifier_DecisionThreshold,
-            Title = "判断阈值",
-            Body = QCA.translate("Label", "判断是否为同一人的阈值，若参与比对的说话人声音相识度较高可以增加该值。")
-        )
-        self.ui.DoubleSpinBox_Tool_VoiceIdentifier_DecisionThreshold.setRange(0.5, 1)
-        #self.ui.DoubleSpinBox_Tool_VoiceIdentifier_DecisionThreshold.setSingleStep(0.01)
-        self.ui.DoubleSpinBox_Tool_VoiceIdentifier_DecisionThreshold.setValue(0.75)
-
-        Function_SetText(
             Panel = self.ui.Label_Tool_VoiceIdentifier_Duration_of_Audio,
             Title = "音频长度",
             Body = QCA.translate("Label", "用于预测的音频长度。")
@@ -735,29 +803,6 @@ class MainWindow(Window_Customizing):
         self.ui.DoubleSpinBox_Tool_VoiceIdentifier_Duration_of_Audio.setRange(0, 30)
         #self.ui.DoubleSpinBox_Tool_VoiceIdentifier_Duration_of_Audio.setSingleStep(0.01)
         self.ui.DoubleSpinBox_Tool_VoiceIdentifier_Duration_of_Audio.setValue(3.00)
-
-        Function_SetText(
-            Panel = self.ui.Label_Tool_VoiceIdentifier_Audio_Dir_Output,
-            Title = "音频输出目录",
-            Body = QCA.translate("Label", "最后筛选出的音频文件将被复制到该目录中。")
-        )
-        Function_SetFileDialog(
-            Button = self.ui.Button_Tool_VoiceIdentifier_Audio_Dir_Output,
-            LineEdit = self.ui.LineEdit_Tool_VoiceIdentifier_Audio_Dir_Output,
-            Mode = "SelectDir",
-            DisplayText = QCA.translate("LineEdit", "None")
-        )
-
-        self.ui.GroupBox_OptionalParams_Tool_VoiceIdentifier.setTitle("OptionalParams 可选参数")
-
-        Function_SetText(
-            Panel = self.ui.Label_Tool_VoiceIdentifier_Speaker,
-            Title = "人物名字",
-            Body = QCA.translate("Label", "说话人物的名字，若有进行语音模型训练的需求则推荐设置。")
-        )
-        self.ui.LineEdit_Tool_VoiceIdentifier_Speaker.setText("")
-        self.ui.LineEdit_Tool_VoiceIdentifier_Speaker.setToolTipDuration(-1)
-        self.ui.LineEdit_Tool_VoiceIdentifier_Speaker.setToolTip("注意：名字中尽量不要出现特殊符号")
 
         # Tool_VoiceTranscriber
         Function_SetText(
@@ -827,7 +872,7 @@ class MainWindow(Window_Customizing):
             ]
         )
 
-        self.ui.GroupBox_EssentialParams_Tool_VoiceTranscriber.setTitle("EssentialParams 必要参数")
+        self.ui.GroupBox_EssentialParams_Tool_VoiceTranscriber.setTitle("必要参数")
 
         Function_SetText(
             Panel = self.ui.Label_Tool_VoiceTranscriber_WAV_Dir,
@@ -842,6 +887,39 @@ class MainWindow(Window_Customizing):
         )
 
         Function_SetText(
+            Panel = self.ui.Label_Tool_VoiceTranscriber_SRT_Dir,
+            Title = "字幕输出目录",
+            Body = QCA.translate("Label", "最后生成的字幕文件将会保存到该目录中。")
+        )
+        Function_SetFileDialog(
+            Button = self.ui.Button_Tool_VoiceTranscriber_SRT_Dir,
+            LineEdit = self.ui.LineEdit_Tool_VoiceTranscriber_SRT_Dir,
+            Mode = "SelectDir",
+            DisplayText = QCA.translate("LineEdit", "None")
+        )
+
+        self.ui.CheckBox_Toggle_AdvanceSettings_Tool_VoiceTranscriber.setText("高级设置（隐藏）")
+        self.ui.CheckBox_Toggle_AdvanceSettings_Tool_VoiceTranscriber.setCheckable(True)
+        self.ui.CheckBox_Toggle_AdvanceSettings_Tool_VoiceTranscriber.setChecked(False)
+        Function_ConfigureCheckBox(
+            CheckBox = self.ui.CheckBox_Toggle_AdvanceSettings_Tool_VoiceTranscriber,
+            CheckedText = "高级设置（显示）",
+            CheckedPermEventList = [
+                Function_AnimateFrame
+            ],
+            CheckedPermArgsList = [
+                (self.ui.Frame_AdvanceSettings_Tool_VoiceTranscriber,...,...,0,self.ui.Frame_Tool_VoiceTranscriber_Model_Dir.height()+self.ui.Frame_Tool_VoiceTranscriber_Model_Name.height()+self.ui.Frame_Tool_VoiceTranscriber_Verbose.height()+self.ui.Frame_Tool_VoiceTranscriber_Condition_on_Previous_Text.height()+self.ui.Frame_Tool_VoiceTranscriber_fp16.height(),0,'Extend')
+            ],
+            UncheckedText = "高级设置（隐藏）",
+            UncheckedPermEventList = [
+                Function_AnimateFrame
+            ],
+            UncheckedPermArgsList = [
+                (self.ui.Frame_AdvanceSettings_Tool_VoiceTranscriber,...,...,0,self.ui.Frame_Tool_VoiceTranscriber_Model_Dir.height()+self.ui.Frame_Tool_VoiceTranscriber_Model_Name.height()+self.ui.Frame_Tool_VoiceTranscriber_Verbose.height()+self.ui.Frame_Tool_VoiceTranscriber_Condition_on_Previous_Text.height()+self.ui.Frame_Tool_VoiceTranscriber_fp16.height(),0,'Reduce')
+            ]
+        )
+
+        Function_SetText(
             Panel = self.ui.Label_Tool_VoiceTranscriber_Model_Dir,
             Title = "模型存放目录",
             Body = QCA.translate("Label", "该目录将会用于存放下载的语音识别模型，若模型已存在会直接使用。")
@@ -852,6 +930,7 @@ class MainWindow(Window_Customizing):
             Mode = "SelectDir",
             DisplayText = QCA.translate("LineEdit", "None")
         )
+        self.ui.LineEdit_Tool_VoiceTranscriber_Model_Dir.setText(os.path.join(CurrentDir, 'Download'))
 
         Function_SetText(
             Panel = self.ui.Label_Tool_VoiceTranscriber_Model_Name,
@@ -903,19 +982,7 @@ class MainWindow(Window_Customizing):
             UncheckedText = "未启用"
         )
 
-        Function_SetText(
-            Panel = self.ui.Label_Tool_VoiceTranscriber_SRT_Dir,
-            Title = "字幕输出目录",
-            Body = QCA.translate("Label", "最后生成的字幕文件将会保存到该目录中。")
-        )
-        Function_SetFileDialog(
-            Button = self.ui.Button_Tool_VoiceTranscriber_SRT_Dir,
-            LineEdit = self.ui.LineEdit_Tool_VoiceTranscriber_SRT_Dir,
-            Mode = "SelectDir",
-            DisplayText = QCA.translate("LineEdit", "None")
-        )
-
-        self.ui.GroupBox_OptionalParams_Tool_VoiceTranscriber.setTitle("OptionalParams 可选参数")
+        self.ui.GroupBox_OptionalParams_Tool_VoiceTranscriber.setTitle("可选参数")
 
         Function_SetText(
             Panel = self.ui.Label_Tool_VoiceTranscriber_Language,
@@ -944,7 +1011,7 @@ class MainWindow(Window_Customizing):
                 "1. 您可以通过开启“自动同步...”选项以保持前后工具的部分参数设置一致，或者点击“同步...”按钮以快速设置当前工具的下列参数：\n"
                 "   WAV Dir\n"
                 "   SRT Dir\n"
-                "2. 您可以通过点击“打开输出目录”按钮以查看当前工具在执行完毕后输出的文件\n"
+                "2. 您可以通过点击“打开输出文件”按钮以查看当前工具在执行完毕后输出的文件\n"
             )
         )
         
@@ -961,7 +1028,7 @@ class MainWindow(Window_Customizing):
             ]
         )
 
-        self.ui.Button_CheckOutput_Tool_DatasetCreator.setText(QCA.translate("Button", "打开输出目录"))
+        self.ui.Button_CheckOutput_Tool_DatasetCreator.setText(QCA.translate("Button", "打开输出文件"))
         Function_SetURL(
             Button = self.ui.Button_CheckOutput_Tool_DatasetCreator,
             URL = [
@@ -994,7 +1061,7 @@ class MainWindow(Window_Customizing):
             ]
         )
 
-        self.ui.GroupBox_EssentialParams_Tool_DatasetCreator.setTitle("EssentialParams 必要参数")
+        self.ui.GroupBox_EssentialParams_Tool_DatasetCreator.setTitle("必要参数")
 
         Function_SetText(
             Panel = self.ui.Label_Tool_DatasetCreator_WAV_Dir,
@@ -1004,35 +1071,6 @@ class MainWindow(Window_Customizing):
         Function_SetFileDialog(
             Button = self.ui.Button_Tool_DatasetCreator_WAV_Dir,
             LineEdit = self.ui.LineEdit_Tool_DatasetCreator_WAV_Dir,
-            Mode = "SelectDir",
-            DisplayText = QCA.translate("LineEdit", "None")
-        )
-
-        Function_SetText(
-            Panel = self.ui.Label_Tool_DatasetCreator_Sample_Rate,
-            Title = "采样率 (HZ)",
-            Body = QCA.translate("Label", "音频将要使用的新采样率。")
-        )
-        self.ui.SpinBox_Tool_DatasetCreator_Sample_Rate.setRange(16000, 96000)
-        self.ui.SpinBox_Tool_DatasetCreator_Sample_Rate.setSingleStep(1)
-        self.ui.SpinBox_Tool_DatasetCreator_Sample_Rate.setValue(22050)
-
-        Function_SetText(
-            Panel = self.ui.Label_Tool_DatasetCreator_Subtype,
-            Title = "采样格式",
-            Body = QCA.translate("Label", "音频将要使用的新采样格式。")
-        )
-        self.ui.ComboBox_Tool_DatasetCreator_Subtype.addItems(['PCM_16'])
-        self.ui.ComboBox_Tool_DatasetCreator_Subtype.setCurrentText('PCM_16')
-
-        Function_SetText(
-            Panel = self.ui.Label_Tool_DatasetCreator_WAV_Dir_Split,
-            Title = "音频输出目录",
-            Body = QCA.translate("Label", "最后处理完成的音频将会保存到该目录中。")
-        )
-        Function_SetFileDialog(
-            Button = self.ui.Button_Tool_DatasetCreator_WAV_Dir_Split,
-            LineEdit = self.ui.LineEdit_Tool_DatasetCreator_WAV_Dir_Split,
             Mode = "SelectDir",
             DisplayText = QCA.translate("LineEdit", "None")
         )
@@ -1058,13 +1096,16 @@ class MainWindow(Window_Customizing):
         self.ui.ComboBox_Tool_DatasetCreator_AutoEncoder.setCurrentText('VITS')
 
         Function_SetText(
-            Panel = self.ui.Label_Tool_DatasetCreator_TrainRatio,
-            Title = "训练集占比",
-            Body = QCA.translate("Label", "划分给训练集的数据在数据集中所占的比例。")
+            Panel = self.ui.Label_Tool_DatasetCreator_WAV_Dir_Split,
+            Title = "音频输出目录",
+            Body = QCA.translate("Label", "最后处理完成的音频将会保存到该目录中。")
         )
-        self.ui.DoubleSpinBox_Tool_DatasetCreator_TrainRatio.setRange(0.5, 0.9)
-        self.ui.DoubleSpinBox_Tool_DatasetCreator_TrainRatio.setSingleStep(0.1)
-        self.ui.DoubleSpinBox_Tool_DatasetCreator_TrainRatio.setValue(0.7)
+        Function_SetFileDialog(
+            Button = self.ui.Button_Tool_DatasetCreator_WAV_Dir_Split,
+            LineEdit = self.ui.LineEdit_Tool_DatasetCreator_WAV_Dir_Split,
+            Mode = "SelectDir",
+            DisplayText = QCA.translate("LineEdit", "None")
+        )
 
         Function_SetText(
             Panel = self.ui.Label_Tool_DatasetCreator_FileList_Path_Training,
@@ -1092,6 +1133,53 @@ class MainWindow(Window_Customizing):
             DisplayText = QCA.translate("LineEdit", "None")
         )
 
+        self.ui.CheckBox_Toggle_AdvanceSettings_Tool_DatasetCreator.setText("高级设置（隐藏）")
+        self.ui.CheckBox_Toggle_AdvanceSettings_Tool_DatasetCreator.setCheckable(True)
+        self.ui.CheckBox_Toggle_AdvanceSettings_Tool_DatasetCreator.setChecked(False)
+        Function_ConfigureCheckBox(
+            CheckBox = self.ui.CheckBox_Toggle_AdvanceSettings_Tool_DatasetCreator,
+            CheckedText = "高级设置（显示）",
+            CheckedPermEventList = [
+                Function_AnimateFrame
+            ],
+            CheckedPermArgsList = [
+                (self.ui.Frame_AdvanceSettings_Tool_DatasetCreator,...,...,0,self.ui.Frame_Tool_DatasetCreator_Sample_Rate.height()+self.ui.Frame_Tool_DatasetCreator_Subtype.height()+self.ui.Frame_Tool_DatasetCreator_TrainRatio.height(),0,'Extend')
+            ],
+            UncheckedText = "高级设置（隐藏）",
+            UncheckedPermEventList = [
+                Function_AnimateFrame
+            ],
+            UncheckedPermArgsList = [
+                (self.ui.Frame_AdvanceSettings_Tool_DatasetCreator,...,...,0,self.ui.Frame_Tool_DatasetCreator_Sample_Rate.height()+self.ui.Frame_Tool_DatasetCreator_Subtype.height()+self.ui.Frame_Tool_DatasetCreator_TrainRatio.height(),0,'Reduce')
+            ]
+        )
+
+        Function_SetText(
+            Panel = self.ui.Label_Tool_DatasetCreator_Sample_Rate,
+            Title = "采样率 (HZ)",
+            Body = QCA.translate("Label", "音频将要使用的新采样率。")
+        )
+        self.ui.SpinBox_Tool_DatasetCreator_Sample_Rate.setRange(16000, 96000)
+        self.ui.SpinBox_Tool_DatasetCreator_Sample_Rate.setSingleStep(1)
+        self.ui.SpinBox_Tool_DatasetCreator_Sample_Rate.setValue(22050)
+
+        Function_SetText(
+            Panel = self.ui.Label_Tool_DatasetCreator_Subtype,
+            Title = "采样格式",
+            Body = QCA.translate("Label", "音频将要使用的新采样格式。")
+        )
+        self.ui.ComboBox_Tool_DatasetCreator_Subtype.addItems(['PCM_16'])
+        self.ui.ComboBox_Tool_DatasetCreator_Subtype.setCurrentText('PCM_16')
+
+        Function_SetText(
+            Panel = self.ui.Label_Tool_DatasetCreator_TrainRatio,
+            Title = "训练集占比",
+            Body = QCA.translate("Label", "划分给训练集的数据在数据集中所占的比例。")
+        )
+        self.ui.DoubleSpinBox_Tool_DatasetCreator_TrainRatio.setRange(0.5, 0.9)
+        self.ui.DoubleSpinBox_Tool_DatasetCreator_TrainRatio.setSingleStep(0.1)
+        self.ui.DoubleSpinBox_Tool_DatasetCreator_TrainRatio.setValue(0.7)
+
         # Tool_VoiceTrainer
         Function_SetText(
             Panel = self.ui.TextBrowser_Tool_VoiceTrainer,
@@ -1106,6 +1194,7 @@ class MainWindow(Window_Customizing):
                 "[用法]\n"
                 "1. 设置页面右侧的参数\n"
                 "2. 点击位于页面底部的“执行”按钮\n"
+                "3. 执行过程中若要查看迭代轮数，请见系统的命令行窗口\n"
                 "\n"
                 "[提示]\n"
                 "1. 您可以通过开启“自动同步...”选项以保持前后工具的部分参数设置一致，或者点击“同步...”按钮以快速设置当前工具的下列参数：\n"
@@ -1160,6 +1249,7 @@ class MainWindow(Window_Customizing):
                 self.ui.CheckBox_Tool_VoiceTrainer_FP16_Run,
                 self.ui.LineEdit_Tool_VoiceTrainer_Speakers,
                 self.ui.SpinBox_Tool_VoiceTrainer_Num_Workers,
+                self.ui.CheckBox_Tool_VoiceTrainer_Find_Unused_Parameters,
                 self.ui.LineEdit_Tool_VoiceTrainer_Model_Path_Pretrained_G,
                 self.ui.LineEdit_Tool_VoiceTrainer_Model_Path_Pretrained_D,
                 self.ui.LineEdit_Tool_VoiceTrainer_Model_Dir_Save
@@ -1172,12 +1262,12 @@ class MainWindow(Window_Customizing):
             ]
         )
 
-        self.ui.GroupBox_EssentialParams_Tool_VoiceTrainer.setTitle("EssentialParams 必要参数")
+        self.ui.GroupBox_EssentialParams_Tool_VoiceTrainer.setTitle("必要参数")
         
         Function_SetText(
             Panel = self.ui.Label_Tool_VoiceTrainer_FileList_Path_Training,
             Title = "训练集文本路径",
-            Body = QCA.translate("Label", "该路径对应的训练集txt文件将用于提供训练集音频路径及其语音内容。")
+            Body = QCA.translate("Label", "用于提供训练集音频路径及其语音内容的训练集txt文件的所在路径。")
         )
         Function_SetFileDialog(
             Button = self.ui.Button_Tool_VoiceTrainer_FileList_Path_Training,
@@ -1190,7 +1280,7 @@ class MainWindow(Window_Customizing):
         Function_SetText(
             Panel = self.ui.Label_Tool_VoiceTrainer_FileList_Path_Validation,
             Title = "验证集文本路径",
-            Body = QCA.translate("Label", "该路径对应的验证集txt文件将用于提供验证集音频路径及其语音内容。")
+            Body = QCA.translate("Label", "用于提供验证集音频路径及其语音内容的验证集txt文件的所在路径。")
         )
         Function_SetFileDialog(
             Button = self.ui.Button_Tool_VoiceTrainer_FileList_Path_Validation,
@@ -1209,17 +1299,6 @@ class MainWindow(Window_Customizing):
         self.ui.ComboBox_Tool_VoiceTrainer_Language.setCurrentText('中英')
 
         Function_SetText(
-            Panel = self.ui.Label_Tool_VoiceTrainer_Eval_Interval,
-            Title = "评估间隔",
-            Body = QCA.translate("Label", "每次评估并保存模型所间隔的step数。")
-        )
-        self.ui.SpinBox_Tool_VoiceTrainer_Eval_Interval.setRange(0, 10000)
-        self.ui.SpinBox_Tool_VoiceTrainer_Eval_Interval.setSingleStep(1)
-        self.ui.SpinBox_Tool_VoiceTrainer_Eval_Interval.setValue(1000)
-        self.ui.SpinBox_Tool_VoiceTrainer_Eval_Interval.setToolTipDuration(-1)
-        self.ui.SpinBox_Tool_VoiceTrainer_Eval_Interval.setToolTip("提示：建议设置为默认的一千以满足保存的需求")
-
-        Function_SetText(
             Panel = self.ui.Label_Tool_VoiceTrainer_Epochs,
             Title = "迭代轮数",
             Body = QCA.translate("Label", "将全部样本完整迭代一轮的次数。")
@@ -1229,42 +1308,6 @@ class MainWindow(Window_Customizing):
         self.ui.SpinBox_Tool_VoiceTrainer_Epochs.setValue(10000)
         self.ui.SpinBox_Tool_VoiceTrainer_Epochs.setToolTipDuration(-1)
         self.ui.SpinBox_Tool_VoiceTrainer_Epochs.setToolTip("提示：建议为设置一万到两万以获得最佳效果")
-
-        Function_SetText(
-            Panel = self.ui.Label_Tool_VoiceTrainer_Batch_Size,
-            Title = "批处理量",
-            Body = QCA.translate("Label", "每轮迭代中单位批次的样本数量，若用户GPU性能较弱可减小该值。")
-        )
-        self.ui.SpinBox_Tool_VoiceTrainer_Batch_Size.setRange(0, 128)
-        self.ui.SpinBox_Tool_VoiceTrainer_Batch_Size.setSingleStep(2)
-        self.ui.SpinBox_Tool_VoiceTrainer_Batch_Size.setValue(16)
-        self.ui.SpinBox_Tool_VoiceTrainer_Batch_Size.setToolTipDuration(-1)
-        self.ui.SpinBox_Tool_VoiceTrainer_Batch_Size.setToolTip("注意：最好设置为2的幂次。")
-
-        Function_SetText(
-            Panel = self.ui.Label_Tool_VoiceTrainer_Num_Workers,
-            Title = "进程数量",
-            Body = QCA.translate("Label", "进行数据加载时可并行的进程数量，若用户CPU性能较弱可减小该值。")
-        )
-        self.ui.SpinBox_Tool_VoiceTrainer_Num_Workers.setRange(2, 16)
-        self.ui.SpinBox_Tool_VoiceTrainer_Num_Workers.setSingleStep(1)
-        self.ui.SpinBox_Tool_VoiceTrainer_Num_Workers.setValue(4)
-        self.ui.SpinBox_Tool_VoiceTrainer_Num_Workers.setToolTipDuration(-1)
-        self.ui.SpinBox_Tool_VoiceTrainer_Num_Workers.setToolTip("提示：如果配置属于低U高显的话不妨试试把数值降到2。")
-
-        Function_SetText(
-            Panel = self.ui.Label_Tool_VoiceTrainer_FP16_Run,
-            Title = "半精度训练",
-            Body = QCA.translate("Label", "通过混合了float16精度的训练方式减小显存占用以支持更大的批处理量。")
-        )
-        self.ui.CheckBox_Tool_VoiceTrainer_FP16_Run.setText("已启用")
-        self.ui.CheckBox_Tool_VoiceTrainer_FP16_Run.setCheckable(True)
-        self.ui.CheckBox_Tool_VoiceTrainer_FP16_Run.setChecked(True)
-        Function_ConfigureCheckBox(
-            CheckBox = self.ui.CheckBox_Tool_VoiceTrainer_FP16_Run,
-            CheckedText = "已启用",
-            UncheckedText = "未启用"
-        )
 
         Function_SetText(
             Panel = self.ui.Label_Tool_VoiceTrainer_Config_Dir_Save,
@@ -1292,25 +1335,94 @@ class MainWindow(Window_Customizing):
         self.ui.Label_Tool_VoiceTrainer_Model_Dir_Save.setToolTipDuration(-1)
         self.ui.Label_Tool_VoiceTrainer_Model_Dir_Save.setToolTip("提示：当目录中存在多个模型时，编号最大的那个会被选为检查点。")
 
-        self.ui.GroupBox_OptionalParams_Tool_VoiceTrainer.setTitle("OptionalParams 可选参数")
+        self.ui.CheckBox_Toggle_AdvanceSettings_Tool_VoiceTrainer.setText("高级设置（隐藏）")
+        self.ui.CheckBox_Toggle_AdvanceSettings_Tool_VoiceTrainer.setCheckable(True)
+        self.ui.CheckBox_Toggle_AdvanceSettings_Tool_VoiceTrainer.setChecked(False)
+        Function_ConfigureCheckBox(
+            CheckBox = self.ui.CheckBox_Toggle_AdvanceSettings_Tool_VoiceTrainer,
+            CheckedText = "高级设置（显示）",
+            CheckedPermEventList = [
+                Function_AnimateFrame
+            ],
+            CheckedPermArgsList = [
+                (self.ui.Frame_AdvanceSettings_Tool_VoiceTrainer,...,...,0,self.ui.Frame_Tool_VoiceTrainer_Eval_Interval.height()+self.ui.Frame_Tool_VoiceTrainer_Batch_Size.height()+self.ui.Frame_Tool_VoiceTrainer_Num_Workers.height()+self.ui.Frame_Tool_VoiceTrainer_Batch_Size.height()+self.ui.Frame_Tool_VoiceTrainer_FP16_Run.height()+self.ui.Label_Tool_VoiceTrainer_Find_Unused_Parameters.height(),0,'Extend')
+            ],
+            UncheckedText = "高级设置（隐藏）",
+            UncheckedPermEventList = [
+                Function_AnimateFrame
+            ],
+            UncheckedPermArgsList = [
+                (self.ui.Frame_AdvanceSettings_Tool_VoiceTrainer,...,...,0,self.ui.Frame_Tool_VoiceTrainer_Eval_Interval.height()+self.ui.Frame_Tool_VoiceTrainer_Batch_Size.height()+self.ui.Frame_Tool_VoiceTrainer_Num_Workers.height()+self.ui.Frame_Tool_VoiceTrainer_Batch_Size.height()+self.ui.Frame_Tool_VoiceTrainer_FP16_Run.height()+self.ui.Label_Tool_VoiceTrainer_Find_Unused_Parameters.height(),0,'Reduce')
+            ]
+        )
 
         Function_SetText(
-            Panel = self.ui.Label_Tool_VoiceTrainer_Config_Path_Load,
-            Title = "配置加载路径",
-            Body = QCA.translate("Label", "该路径对应的配置文件将会替代默认的配置文件。")
+            Panel = self.ui.Label_Tool_VoiceTrainer_Eval_Interval,
+            Title = "评估间隔",
+            Body = QCA.translate("Label", "每次评估并保存模型所间隔的step数。")
         )
-        Function_SetFileDialog(
-            Button = self.ui.Button_Tool_VoiceTrainer_Config_Path_Load,
-            LineEdit = self.ui.LineEdit_Tool_VoiceTrainer_Config_Path_Load,
-            Mode = "SelectFile",
-            FileType = "json类型 (*.json)",
-            DisplayText = QCA.translate("LineEdit", "None")
+        self.ui.SpinBox_Tool_VoiceTrainer_Eval_Interval.setRange(0, 10000)
+        self.ui.SpinBox_Tool_VoiceTrainer_Eval_Interval.setSingleStep(1)
+        self.ui.SpinBox_Tool_VoiceTrainer_Eval_Interval.setValue(1000)
+        self.ui.SpinBox_Tool_VoiceTrainer_Eval_Interval.setToolTipDuration(-1)
+        self.ui.SpinBox_Tool_VoiceTrainer_Eval_Interval.setToolTip("提示：建议设置为默认的一千以满足保存的需求")
+
+        Function_SetText(
+            Panel = self.ui.Label_Tool_VoiceTrainer_Batch_Size,
+            Title = "批处理量",
+            Body = QCA.translate("Label", "每轮迭代中单位批次的样本数量，若用户GPU性能较弱可减小该值。")
         )
+        self.ui.SpinBox_Tool_VoiceTrainer_Batch_Size.setRange(2, 128)
+        self.ui.SpinBox_Tool_VoiceTrainer_Batch_Size.setSingleStep(2)
+        self.ui.SpinBox_Tool_VoiceTrainer_Batch_Size.setValue(16)
+        self.ui.SpinBox_Tool_VoiceTrainer_Batch_Size.setToolTipDuration(-1)
+        self.ui.SpinBox_Tool_VoiceTrainer_Batch_Size.setToolTip("注意：最好设置为2的幂次。")
+
+        Function_SetText(
+            Panel = self.ui.Label_Tool_VoiceTrainer_Num_Workers,
+            Title = "进程数量",
+            Body = QCA.translate("Label", "进行数据加载时可并行的进程数量，若用户CPU性能较弱可减小该值。")
+        )
+        self.ui.SpinBox_Tool_VoiceTrainer_Num_Workers.setRange(2, 32)
+        self.ui.SpinBox_Tool_VoiceTrainer_Num_Workers.setSingleStep(2)
+        self.ui.SpinBox_Tool_VoiceTrainer_Num_Workers.setValue(4)
+        self.ui.SpinBox_Tool_VoiceTrainer_Num_Workers.setToolTipDuration(-1)
+        self.ui.SpinBox_Tool_VoiceTrainer_Num_Workers.setToolTip("提示：如果配置属于低U高显的话不妨试试把数值降到2。")
+
+        Function_SetText(
+            Panel = self.ui.Label_Tool_VoiceTrainer_FP16_Run,
+            Title = "半精度训练",
+            Body = QCA.translate("Label", "通过混合了float16精度的训练方式减小显存占用以支持更大的批处理量。")
+        )
+        self.ui.CheckBox_Tool_VoiceTrainer_FP16_Run.setText("已启用")
+        self.ui.CheckBox_Tool_VoiceTrainer_FP16_Run.setCheckable(True)
+        self.ui.CheckBox_Tool_VoiceTrainer_FP16_Run.setChecked(True)
+        Function_ConfigureCheckBox(
+            CheckBox = self.ui.CheckBox_Tool_VoiceTrainer_FP16_Run,
+            CheckedText = "已启用",
+            UncheckedText = "未启用"
+        )
+
+        Function_SetText(
+            Panel = self.ui.Label_Tool_VoiceTrainer_Find_Unused_Parameters,
+            Title = "寻找未用参数",
+            Body = QCA.translate("Label", "寻找没用到的参数以防止在对梯度进行平均时报错，但会带来额外的运行开销。")
+        )
+        self.ui.CheckBox_Tool_VoiceTrainer_Find_Unused_Parameters.setText("已启用")
+        self.ui.CheckBox_Tool_VoiceTrainer_Find_Unused_Parameters.setCheckable(True)
+        self.ui.CheckBox_Tool_VoiceTrainer_Find_Unused_Parameters.setChecked(True)
+        Function_ConfigureCheckBox(
+            CheckBox = self.ui.CheckBox_Tool_VoiceTrainer_Find_Unused_Parameters,
+            CheckedText = "已启用",
+            UncheckedText = "未启用"
+        )
+
+        self.ui.GroupBox_OptionalParams_Tool_VoiceTrainer.setTitle("可选参数")
 
         Function_SetText(
             Panel = self.ui.Label_Tool_VoiceTrainer_Model_Path_Pretrained_G,
-            Title = "预训练G_0模型路径",
-            Body = QCA.translate("Label", "该路径对应的预训练生成器（Generator）模型会被视为检查点。")
+            Title = "预训练G_*模型路径",
+            Body = QCA.translate("Label", "预训练生成器（Generator）模型的所在路径，载入优先级高于检查点。")
         )
         Function_SetFileDialog(
             Button = self.ui.Button_Tool_VoiceTrainer_Model_Path_Pretrained_G,
@@ -1322,14 +1434,48 @@ class MainWindow(Window_Customizing):
 
         Function_SetText(
             Panel = self.ui.Label_Tool_VoiceTrainer_Model_Path_Pretrained_D,
-            Title = "预训练D_0模型路径",
-            Body = QCA.translate("Label", "该路径对应的预训练判别器（Discriminator）模型会被视为检查点。")
+            Title = "预训练D_*模型路径",
+            Body = QCA.translate("Label", "预训练判别器（Discriminator）模型的所在路径，载入优先级高于检查点。")
         )
         Function_SetFileDialog(
             Button = self.ui.Button_Tool_VoiceTrainer_Model_Path_Pretrained_D,
             LineEdit = self.ui.LineEdit_Tool_VoiceTrainer_Model_Path_Pretrained_D,
             Mode = "SelectFile",
             FileType = "pth类型 (*.pth)",
+            DisplayText = QCA.translate("LineEdit", "None")
+        )
+
+        self.ui.CheckBox_Toggle_AdvanceOptionalSettings_Tool_VoiceTrainer.setText("高级设置（隐藏）")
+        self.ui.CheckBox_Toggle_AdvanceOptionalSettings_Tool_VoiceTrainer.setCheckable(True)
+        self.ui.CheckBox_Toggle_AdvanceOptionalSettings_Tool_VoiceTrainer.setChecked(False)
+        Function_ConfigureCheckBox(
+            CheckBox = self.ui.CheckBox_Toggle_AdvanceOptionalSettings_Tool_VoiceTrainer,
+            CheckedText = "高级设置（显示）",
+            CheckedPermEventList = [
+                Function_AnimateFrame
+            ],
+            CheckedPermArgsList = [
+                (self.ui.Frame_AdvanceOptionalSettings_Tool_VoiceTrainer,...,...,0,self.ui.Frame_Tool_VoiceTrainer_Config_Path_Load.height()+self.ui.Frame_Tool_VoiceTrainer_Speakers.height(),0,'Extend')
+            ],
+            UncheckedText = "高级设置（隐藏）",
+            UncheckedPermEventList = [
+                Function_AnimateFrame
+            ],
+            UncheckedPermArgsList = [
+                (self.ui.Frame_AdvanceOptionalSettings_Tool_VoiceTrainer,...,...,0,self.ui.Frame_Tool_VoiceTrainer_Config_Path_Load.height()+self.ui.Frame_Tool_VoiceTrainer_Speakers.height(),0,'Reduce')
+            ]
+        )
+
+        Function_SetText(
+            Panel = self.ui.Label_Tool_VoiceTrainer_Config_Path_Load,
+            Title = "配置加载路径",
+            Body = QCA.translate("Label", "该路径对应的配置文件将会替代默认的配置文件。")
+        )
+        Function_SetFileDialog(
+            Button = self.ui.Button_Tool_VoiceTrainer_Config_Path_Load,
+            LineEdit = self.ui.LineEdit_Tool_VoiceTrainer_Config_Path_Load,
+            Mode = "SelectFile",
+            FileType = "json类型 (*.json)",
             DisplayText = QCA.translate("LineEdit", "None")
         )
 
@@ -1357,6 +1503,7 @@ class MainWindow(Window_Customizing):
                 "[用法]\n"
                 "1. 设置页面右侧的参数\n"
                 "2. 点击位于页面底部的“执行”按钮\n"
+                "3. 执行过程中若要查看推理情况，请见系统的命令行窗口\n"
                 "\n"
                 "[提示]\n"
                 "1. 您可以通过点击“打开输出目录”按钮以查看当前工具在执行完毕后输出的文件\n"
@@ -1390,6 +1537,9 @@ class MainWindow(Window_Customizing):
                 self.ui.DoubleSpinBox_Tool_VoiceConverter_PhonemeDuration,
                 self.ui.DoubleSpinBox_Tool_VoiceConverter_SpeechRate,
                 self.ui.LineEdit_Tool_VoiceConverter_Audio_Dir_Save
+            ],
+            EmptyAllowed = [
+                self.ui.ComboBox_Tool_VoiceConverter_Speaker
             ]
         )
 
@@ -1398,7 +1548,7 @@ class MainWindow(Window_Customizing):
         Function_SetText(
             Panel = self.ui.Label_Tool_VoiceConverter_Config_Path_Load,
             Title = "配置加载路径",
-            Body = QCA.translate("Label", "该路径对应的配置文件会用于推理。")
+            Body = QCA.translate("Label", "用于推理的配置文件的所在路径。")
         )
         Function_SetFileDialog(
             Button = self.ui.Button_Tool_VoiceConverter_Config_Path_Load,
@@ -1416,7 +1566,7 @@ class MainWindow(Window_Customizing):
         Function_SetText(
             Panel = self.ui.Label_Tool_VoiceConverter_Model_Path_Load,
             Title = "G_*模型加载路径",
-            Body = QCA.translate("Label", "该路径对应的生成器（Generator）模型会用于推理。")
+            Body = QCA.translate("Label", "用于推理的生成器（Generator）模型的所在路径。")
         )
         Function_SetFileDialog(
             Button = self.ui.Button_Tool_VoiceConverter_Model_Path_Load,
@@ -1448,6 +1598,27 @@ class MainWindow(Window_Customizing):
         )
         #self.ui.ComboBox_Tool_VoiceConverter_Speaker.addItems(Get_Speakers)
         self.ui.ComboBox_Tool_VoiceConverter_Speaker.setCurrentText('')
+
+        self.ui.CheckBox_Toggle_AdvanceSettings_Tool_VoiceConverter.setText("高级设置（隐藏）")
+        self.ui.CheckBox_Toggle_AdvanceSettings_Tool_VoiceConverter.setCheckable(True)
+        self.ui.CheckBox_Toggle_AdvanceSettings_Tool_VoiceConverter.setChecked(False)
+        Function_ConfigureCheckBox(
+            CheckBox = self.ui.CheckBox_Toggle_AdvanceSettings_Tool_VoiceConverter,
+            CheckedText = "高级设置（显示）",
+            CheckedPermEventList = [
+                Function_AnimateFrame
+            ],
+            CheckedPermArgsList = [
+                (self.ui.Frame_AdvanceSettings_Tool_VoiceConverter,...,...,0,self.ui.Frame_Tool_VoiceConverter_EmotionStrength.height()+self.ui.Frame_Tool_VoiceConverter_PhonemeDuration.height()+self.ui.Frame_Tool_VoiceConverter_SpeechRate.height(),0,'Extend')
+            ],
+            UncheckedText = "高级设置（隐藏）",
+            UncheckedPermEventList = [
+                Function_AnimateFrame
+            ],
+            UncheckedPermArgsList = [
+                (self.ui.Frame_AdvanceSettings_Tool_VoiceConverter,...,...,0,self.ui.Frame_Tool_VoiceConverter_EmotionStrength.height()+self.ui.Frame_Tool_VoiceConverter_PhonemeDuration.height()+self.ui.Frame_Tool_VoiceConverter_SpeechRate.height(),0,'Reduce')
+            ]
+        )
 
         Function_SetText(
             Panel = self.ui.Label_Tool_VoiceConverter_EmotionStrength,

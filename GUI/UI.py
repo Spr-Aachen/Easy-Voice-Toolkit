@@ -943,17 +943,16 @@ class Ui_MainWindow(object):
         self.CheckBox_Tools_Synchronizer.setObjectName(u"CheckBox_Tools_Synchronizer")
         self.CheckBox_Tools_Synchronizer.setStyleSheet(u"QCheckBox {\n"
 "	font-size: 15px;\n"
-"	spacing: 12px;\n"
-"	color: rgb(255, 255, 255);\n"
+"	spacing: 12.3px;\n"
+"	color: rgba(255, 255, 255, 210);\n"
 "	background-color: transparent;\n"
 "	padding: 0px;\n"
 "	border-width: 0px;\n"
 "	border-radius: 6px;\n"
 "	border-style: solid;\n"
-"	border-color: transparent;\n"
 "}\n"
 "QCheckBox:hover {\n"
-"	background-color:transparent;\n"
+"	color: rgb(255, 255, 255);\n"
 "}\n"
 "\n"
 "QCheckBox::indicator {\n"
@@ -964,10 +963,9 @@ class Ui_MainWindow(object):
 "	border-width: 0px;\n"
 "	border-radius: 6px;\n"
 "	border-style: solid;\n"
-"	border-color: transparent;\n"
 "}\n"
 "QCheckBox::indicator:hover {\n"
-"	background-color:rgb(90, 90, 90);\n"
+"	background-color: rgba(255, 255, 255, 21);\n"
 "}\n"
 "QCheckBox::indicator:unchecked {\n"
 "	border-image: url(:/CheckBox_Icon/Sources/ToggleOff.png);\n"
@@ -1345,7 +1343,7 @@ class Ui_MainWindow(object):
         self.ScrollArea_Right_Tool_AudioProcessor.setWidgetResizable(True)
         self.ScrollArea_Right_WidgetContents_Tool_AudioProcessor = QWidget()
         self.ScrollArea_Right_WidgetContents_Tool_AudioProcessor.setObjectName(u"ScrollArea_Right_WidgetContents_Tool_AudioProcessor")
-        self.ScrollArea_Right_WidgetContents_Tool_AudioProcessor.setGeometry(QRect(0, 0, 619, 1064))
+        self.ScrollArea_Right_WidgetContents_Tool_AudioProcessor.setGeometry(QRect(0, 0, 619, 1076))
         self.ScrollArea_Right_WidgetContents_Tool_AudioProcessor.setMinimumSize(QSize(0, 0))
         self.verticalLayout_13 = QVBoxLayout(self.ScrollArea_Right_WidgetContents_Tool_AudioProcessor)
         self.verticalLayout_13.setSpacing(21)
@@ -1353,7 +1351,6 @@ class Ui_MainWindow(object):
         self.verticalLayout_13.setContentsMargins(9, 21, 0, 21)
         self.GroupBox_EssentialParams_Tool_AudioProcessor = QGroupBox(self.ScrollArea_Right_WidgetContents_Tool_AudioProcessor)
         self.GroupBox_EssentialParams_Tool_AudioProcessor.setObjectName(u"GroupBox_EssentialParams_Tool_AudioProcessor")
-        self.GroupBox_EssentialParams_Tool_AudioProcessor.setMaximumSize(QSize(16777215, 16777215))
         self.GroupBox_EssentialParams_Tool_AudioProcessor.setStyleSheet(u"QGroupBox {\n"
 "	font-size: 15px;\n"
 "	margin-top: 1.5ex;\n"
@@ -1687,422 +1684,6 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_28.addWidget(self.Frame_Tool_AudioProcessor_Media_Format_Output)
 
-        self.Frame_Tool_AudioProcessor_RMS_Threshold = QFrame(self.GroupBox_EssentialParams_Tool_AudioProcessor)
-        self.Frame_Tool_AudioProcessor_RMS_Threshold.setObjectName(u"Frame_Tool_AudioProcessor_RMS_Threshold")
-        self.Frame_Tool_AudioProcessor_RMS_Threshold.setMinimumSize(QSize(0, 123))
-        self.Frame_Tool_AudioProcessor_RMS_Threshold.setStyleSheet(u"QFrame {\n"
-"	color: rgb(255, 255, 255);\n"
-"	background-color: rgb(45, 45, 45);\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QFrame:hover {\n"
-"	background-color: rgb(60, 60, 60);\n"
-"}")
-        self.verticalLayout_38 = QVBoxLayout(self.Frame_Tool_AudioProcessor_RMS_Threshold)
-        self.verticalLayout_38.setSpacing(12)
-        self.verticalLayout_38.setObjectName(u"verticalLayout_38")
-        self.verticalLayout_38.setContentsMargins(21, 12, 21, 12)
-        self.Label_Tool_AudioProcessor_RMS_Threshold = QLabel(self.Frame_Tool_AudioProcessor_RMS_Threshold)
-        self.Label_Tool_AudioProcessor_RMS_Threshold.setObjectName(u"Label_Tool_AudioProcessor_RMS_Threshold")
-        self.Label_Tool_AudioProcessor_RMS_Threshold.setStyleSheet(u"QLabel {\n"
-"	/*text-align: center;*/\n"
-"	/*color: rgb(255, 255, 255);*/\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.verticalLayout_38.addWidget(self.Label_Tool_AudioProcessor_RMS_Threshold)
-
-        self.DoubleSpinBox_Tool_AudioProcessor_RMS_Threshold = QDoubleSpinBox(self.Frame_Tool_AudioProcessor_RMS_Threshold)
-        self.DoubleSpinBox_Tool_AudioProcessor_RMS_Threshold.setObjectName(u"DoubleSpinBox_Tool_AudioProcessor_RMS_Threshold")
-        self.DoubleSpinBox_Tool_AudioProcessor_RMS_Threshold.setEnabled(True)
-        self.DoubleSpinBox_Tool_AudioProcessor_RMS_Threshold.setStyleSheet(u"QDoubleSpinBox {\n"
-"	text-align: left;\n"
-"	color: rgb(255, 255, 255);\n"
-"	selection-background-color: darkgrey;\n"
-"	background-color: rgb(90, 90, 90);\n"
-"	padding: 1.5px;\n"
-"	border-width: 1px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QDoubleSpinBox:hover {\n"
-"	background-color: rgb(120, 120, 120);\n"
-"}\n"
-"\n"
-"QDoubleSpinBox::up-button {\n"
-"	subcontrol-origin: padding;\n"
-"	subcontrol-position: top right;\n"
-"	margin-right: 3px;\n"
-"	border-width: 0px;\n"
-"}\n"
-"QDoubleSpinBox::up-arrow {\n"
-"	border-image: url(:/(Double)SpinBox_Icon/Sources/UpArrow.png);\n"
-"}\n"
-"\n"
-"QDoubleSpinBox::down-button {\n"
-"	subcontrol-origin: padding;\n"
-"	subcontrol-position: bottom right;\n"
-"	margin-right: 3px;\n"
-"	border-width: 0px;\n"
-"}\n"
-"QDoubleSpinBox::down-arrow {\n"
-"	border-image: url(:/(Double)SpinBox_Icon/Sources/DownArrow.png);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-w"
-                        "idth: 0px;\n"
-"	border-style: solid;\n"
-"}")
-        self.DoubleSpinBox_Tool_AudioProcessor_RMS_Threshold.setMinimum(-999999.000000000000000)
-        self.DoubleSpinBox_Tool_AudioProcessor_RMS_Threshold.setMaximum(999999.000000000000000)
-
-        self.verticalLayout_38.addWidget(self.DoubleSpinBox_Tool_AudioProcessor_RMS_Threshold)
-
-
-        self.verticalLayout_28.addWidget(self.Frame_Tool_AudioProcessor_RMS_Threshold)
-
-        self.Frame_Tool_AudioProcessor_Audio_Length_Min = QFrame(self.GroupBox_EssentialParams_Tool_AudioProcessor)
-        self.Frame_Tool_AudioProcessor_Audio_Length_Min.setObjectName(u"Frame_Tool_AudioProcessor_Audio_Length_Min")
-        self.Frame_Tool_AudioProcessor_Audio_Length_Min.setMinimumSize(QSize(0, 123))
-        self.Frame_Tool_AudioProcessor_Audio_Length_Min.setStyleSheet(u"QFrame {\n"
-"	color: rgb(255, 255, 255);\n"
-"	background-color: rgb(45, 45, 45);\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QFrame:hover {\n"
-"	background-color: rgb(60, 60, 60);\n"
-"}")
-        self.verticalLayout_39 = QVBoxLayout(self.Frame_Tool_AudioProcessor_Audio_Length_Min)
-        self.verticalLayout_39.setSpacing(12)
-        self.verticalLayout_39.setObjectName(u"verticalLayout_39")
-        self.verticalLayout_39.setContentsMargins(21, 12, 21, 12)
-        self.Label_Tool_AudioProcessor_Audio_Length_Min = QLabel(self.Frame_Tool_AudioProcessor_Audio_Length_Min)
-        self.Label_Tool_AudioProcessor_Audio_Length_Min.setObjectName(u"Label_Tool_AudioProcessor_Audio_Length_Min")
-        self.Label_Tool_AudioProcessor_Audio_Length_Min.setStyleSheet(u"QLabel {\n"
-"	/*text-align: center;*/\n"
-"	/*color: rgb(255, 255, 255);*/\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.verticalLayout_39.addWidget(self.Label_Tool_AudioProcessor_Audio_Length_Min)
-
-        self.SpinBox_Tool_AudioProcessor_Audio_Length_Min = QSpinBox(self.Frame_Tool_AudioProcessor_Audio_Length_Min)
-        self.SpinBox_Tool_AudioProcessor_Audio_Length_Min.setObjectName(u"SpinBox_Tool_AudioProcessor_Audio_Length_Min")
-        self.SpinBox_Tool_AudioProcessor_Audio_Length_Min.setStyleSheet(u"QSpinBox {\n"
-"	text-align: left;\n"
-"	color: rgb(255, 255, 255);\n"
-"	selection-background-color: darkgrey;\n"
-"	background-color: rgb(90, 90, 90);\n"
-"	padding: 1.5px;\n"
-"	border-width: 1px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QSpinBox:hover {\n"
-"	background-color: rgb(120, 120, 120);\n"
-"}\n"
-"\n"
-"QSpinBox::up-button {\n"
-"	subcontrol-origin: padding;\n"
-"	subcontrol-position: top right;\n"
-"	margin-right: 3px;\n"
-"	border-width: 0px;\n"
-"}\n"
-"QSpinBox::up-arrow {\n"
-"	border-image: url(:/(Double)SpinBox_Icon/Sources/UpArrow.png);\n"
-"}\n"
-"\n"
-"QSpinBox::down-button {\n"
-"	subcontrol-origin: padding;\n"
-"	subcontrol-position: bottom right;\n"
-"	margin-right: 3px;\n"
-"	border-width: 0px;\n"
-"}\n"
-"QSpinBox::down-arrow {\n"
-"	border-image: url(:/(Double)SpinBox_Icon/Sources/DownArrow.png);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;"
-                        "\n"
-"}")
-        self.SpinBox_Tool_AudioProcessor_Audio_Length_Min.setMinimum(-999999)
-        self.SpinBox_Tool_AudioProcessor_Audio_Length_Min.setMaximum(999999)
-
-        self.verticalLayout_39.addWidget(self.SpinBox_Tool_AudioProcessor_Audio_Length_Min)
-
-
-        self.verticalLayout_28.addWidget(self.Frame_Tool_AudioProcessor_Audio_Length_Min)
-
-        self.Frame_Tool_AudioProcessor_Silent_Interval_Min = QFrame(self.GroupBox_EssentialParams_Tool_AudioProcessor)
-        self.Frame_Tool_AudioProcessor_Silent_Interval_Min.setObjectName(u"Frame_Tool_AudioProcessor_Silent_Interval_Min")
-        self.Frame_Tool_AudioProcessor_Silent_Interval_Min.setMinimumSize(QSize(0, 123))
-        self.Frame_Tool_AudioProcessor_Silent_Interval_Min.setStyleSheet(u"QFrame {\n"
-"	color: rgb(255, 255, 255);\n"
-"	background-color: rgb(45, 45, 45);\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QFrame:hover {\n"
-"	background-color: rgb(60, 60, 60);\n"
-"}")
-        self.verticalLayout_40 = QVBoxLayout(self.Frame_Tool_AudioProcessor_Silent_Interval_Min)
-        self.verticalLayout_40.setSpacing(12)
-        self.verticalLayout_40.setObjectName(u"verticalLayout_40")
-        self.verticalLayout_40.setContentsMargins(21, 12, 21, 12)
-        self.Label_Tool_AudioProcessor_Silent_Interval_Min = QLabel(self.Frame_Tool_AudioProcessor_Silent_Interval_Min)
-        self.Label_Tool_AudioProcessor_Silent_Interval_Min.setObjectName(u"Label_Tool_AudioProcessor_Silent_Interval_Min")
-        self.Label_Tool_AudioProcessor_Silent_Interval_Min.setStyleSheet(u"QLabel {\n"
-"	/*text-align: center;*/\n"
-"	/*color: rgb(255, 255, 255);*/\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.verticalLayout_40.addWidget(self.Label_Tool_AudioProcessor_Silent_Interval_Min)
-
-        self.SpinBox_Tool_AudioProcessor_Silent_Interval_Min = QSpinBox(self.Frame_Tool_AudioProcessor_Silent_Interval_Min)
-        self.SpinBox_Tool_AudioProcessor_Silent_Interval_Min.setObjectName(u"SpinBox_Tool_AudioProcessor_Silent_Interval_Min")
-        self.SpinBox_Tool_AudioProcessor_Silent_Interval_Min.setStyleSheet(u"QSpinBox {\n"
-"	text-align: left;\n"
-"	color: rgb(255, 255, 255);\n"
-"	selection-background-color: darkgrey;\n"
-"	background-color: rgb(90, 90, 90);\n"
-"	padding: 1.5px;\n"
-"	border-width: 1px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QSpinBox:hover {\n"
-"	background-color: rgb(120, 120, 120);\n"
-"}\n"
-"\n"
-"QSpinBox::up-button {\n"
-"	subcontrol-origin: padding;\n"
-"	subcontrol-position: top right;\n"
-"	margin-right: 3px;\n"
-"	border-width: 0px;\n"
-"}\n"
-"QSpinBox::up-arrow {\n"
-"	border-image: url(:/(Double)SpinBox_Icon/Sources/UpArrow.png);\n"
-"}\n"
-"\n"
-"QSpinBox::down-button {\n"
-"	subcontrol-origin: padding;\n"
-"	subcontrol-position: bottom right;\n"
-"	margin-right: 3px;\n"
-"	border-width: 0px;\n"
-"}\n"
-"QSpinBox::down-arrow {\n"
-"	border-image: url(:/(Double)SpinBox_Icon/Sources/DownArrow.png);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;"
-                        "\n"
-"}")
-        self.SpinBox_Tool_AudioProcessor_Silent_Interval_Min.setMinimum(-999999)
-        self.SpinBox_Tool_AudioProcessor_Silent_Interval_Min.setMaximum(999999)
-
-        self.verticalLayout_40.addWidget(self.SpinBox_Tool_AudioProcessor_Silent_Interval_Min)
-
-
-        self.verticalLayout_28.addWidget(self.Frame_Tool_AudioProcessor_Silent_Interval_Min)
-
-        self.Frame_Tool_AudioProcessor_Hop_Size = QFrame(self.GroupBox_EssentialParams_Tool_AudioProcessor)
-        self.Frame_Tool_AudioProcessor_Hop_Size.setObjectName(u"Frame_Tool_AudioProcessor_Hop_Size")
-        self.Frame_Tool_AudioProcessor_Hop_Size.setMinimumSize(QSize(0, 123))
-        self.Frame_Tool_AudioProcessor_Hop_Size.setStyleSheet(u"QFrame {\n"
-"	color: rgb(255, 255, 255);\n"
-"	background-color: rgb(45, 45, 45);\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QFrame:hover {\n"
-"	background-color: rgb(60, 60, 60);\n"
-"}")
-        self.verticalLayout_41 = QVBoxLayout(self.Frame_Tool_AudioProcessor_Hop_Size)
-        self.verticalLayout_41.setSpacing(12)
-        self.verticalLayout_41.setObjectName(u"verticalLayout_41")
-        self.verticalLayout_41.setContentsMargins(21, 12, 21, 12)
-        self.Label_Tool_AudioProcessor_Hop_Size = QLabel(self.Frame_Tool_AudioProcessor_Hop_Size)
-        self.Label_Tool_AudioProcessor_Hop_Size.setObjectName(u"Label_Tool_AudioProcessor_Hop_Size")
-        self.Label_Tool_AudioProcessor_Hop_Size.setStyleSheet(u"QLabel {\n"
-"	/*text-align: center;*/\n"
-"	/*color: rgb(255, 255, 255);*/\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.verticalLayout_41.addWidget(self.Label_Tool_AudioProcessor_Hop_Size)
-
-        self.SpinBox_Tool_AudioProcessor_Hop_Size = QSpinBox(self.Frame_Tool_AudioProcessor_Hop_Size)
-        self.SpinBox_Tool_AudioProcessor_Hop_Size.setObjectName(u"SpinBox_Tool_AudioProcessor_Hop_Size")
-        self.SpinBox_Tool_AudioProcessor_Hop_Size.setStyleSheet(u"QSpinBox {\n"
-"	text-align: left;\n"
-"	color: rgb(255, 255, 255);\n"
-"	selection-background-color: darkgrey;\n"
-"	background-color: rgb(90, 90, 90);\n"
-"	padding: 1.5px;\n"
-"	border-width: 1px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QSpinBox:hover {\n"
-"	background-color: rgb(120, 120, 120);\n"
-"}\n"
-"\n"
-"QSpinBox::up-button {\n"
-"	subcontrol-origin: padding;\n"
-"	subcontrol-position: top right;\n"
-"	margin-right: 3px;\n"
-"	border-width: 0px;\n"
-"}\n"
-"QSpinBox::up-arrow {\n"
-"	border-image: url(:/(Double)SpinBox_Icon/Sources/UpArrow.png);\n"
-"}\n"
-"\n"
-"QSpinBox::down-button {\n"
-"	subcontrol-origin: padding;\n"
-"	subcontrol-position: bottom right;\n"
-"	margin-right: 3px;\n"
-"	border-width: 0px;\n"
-"}\n"
-"QSpinBox::down-arrow {\n"
-"	border-image: url(:/(Double)SpinBox_Icon/Sources/DownArrow.png);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;"
-                        "\n"
-"}")
-        self.SpinBox_Tool_AudioProcessor_Hop_Size.setMinimum(-999999)
-        self.SpinBox_Tool_AudioProcessor_Hop_Size.setMaximum(999999)
-
-        self.verticalLayout_41.addWidget(self.SpinBox_Tool_AudioProcessor_Hop_Size)
-
-
-        self.verticalLayout_28.addWidget(self.Frame_Tool_AudioProcessor_Hop_Size)
-
-        self.Frame_Tool_AudioProcessor_Silence_Kept_Max = QFrame(self.GroupBox_EssentialParams_Tool_AudioProcessor)
-        self.Frame_Tool_AudioProcessor_Silence_Kept_Max.setObjectName(u"Frame_Tool_AudioProcessor_Silence_Kept_Max")
-        self.Frame_Tool_AudioProcessor_Silence_Kept_Max.setMinimumSize(QSize(0, 123))
-        self.Frame_Tool_AudioProcessor_Silence_Kept_Max.setStyleSheet(u"QFrame {\n"
-"	color: rgb(255, 255, 255);\n"
-"	background-color: rgb(45, 45, 45);\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QFrame:hover {\n"
-"	background-color: rgb(60, 60, 60);\n"
-"}")
-        self.verticalLayout_42 = QVBoxLayout(self.Frame_Tool_AudioProcessor_Silence_Kept_Max)
-        self.verticalLayout_42.setSpacing(12)
-        self.verticalLayout_42.setObjectName(u"verticalLayout_42")
-        self.verticalLayout_42.setContentsMargins(21, 12, 21, 12)
-        self.Label_Tool_AudioProcessor_Silence_Kept_Max = QLabel(self.Frame_Tool_AudioProcessor_Silence_Kept_Max)
-        self.Label_Tool_AudioProcessor_Silence_Kept_Max.setObjectName(u"Label_Tool_AudioProcessor_Silence_Kept_Max")
-        self.Label_Tool_AudioProcessor_Silence_Kept_Max.setStyleSheet(u"QLabel {\n"
-"	/*text-align: center;*/\n"
-"	/*color: rgb(255, 255, 255);*/\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.verticalLayout_42.addWidget(self.Label_Tool_AudioProcessor_Silence_Kept_Max)
-
-        self.SpinBox_Tool_AudioProcessor_Silence_Kept_Max = QSpinBox(self.Frame_Tool_AudioProcessor_Silence_Kept_Max)
-        self.SpinBox_Tool_AudioProcessor_Silence_Kept_Max.setObjectName(u"SpinBox_Tool_AudioProcessor_Silence_Kept_Max")
-        self.SpinBox_Tool_AudioProcessor_Silence_Kept_Max.setStyleSheet(u"QSpinBox {\n"
-"	text-align: left;\n"
-"	color: rgb(255, 255, 255);\n"
-"	selection-background-color: darkgrey;\n"
-"	background-color: rgb(90, 90, 90);\n"
-"	padding: 1.5px;\n"
-"	border-width: 1px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QSpinBox:hover {\n"
-"	background-color: rgb(120, 120, 120);\n"
-"}\n"
-"\n"
-"QSpinBox::up-button {\n"
-"	subcontrol-origin: padding;\n"
-"	subcontrol-position: top right;\n"
-"	margin-right: 3px;\n"
-"	border-width: 0px;\n"
-"}\n"
-"QSpinBox::up-arrow {\n"
-"	border-image: url(:/(Double)SpinBox_Icon/Sources/UpArrow.png);\n"
-"}\n"
-"\n"
-"QSpinBox::down-button {\n"
-"	subcontrol-origin: padding;\n"
-"	subcontrol-position: bottom right;\n"
-"	margin-right: 3px;\n"
-"	border-width: 0px;\n"
-"}\n"
-"QSpinBox::down-arrow {\n"
-"	border-image: url(:/(Double)SpinBox_Icon/Sources/DownArrow.png);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;"
-                        "\n"
-"}")
-        self.SpinBox_Tool_AudioProcessor_Silence_Kept_Max.setMinimum(-999999)
-        self.SpinBox_Tool_AudioProcessor_Silence_Kept_Max.setMaximum(999999)
-
-        self.verticalLayout_42.addWidget(self.SpinBox_Tool_AudioProcessor_Silence_Kept_Max)
-
-
-        self.verticalLayout_28.addWidget(self.Frame_Tool_AudioProcessor_Silence_Kept_Max)
-
         self.Frame_Tool_AudioProcessor_Media_Dir_Output = QFrame(self.GroupBox_EssentialParams_Tool_AudioProcessor)
         self.Frame_Tool_AudioProcessor_Media_Dir_Output.setObjectName(u"Frame_Tool_AudioProcessor_Media_Dir_Output")
         self.Frame_Tool_AudioProcessor_Media_Dir_Output.setMinimumSize(QSize(0, 123))
@@ -2211,6 +1792,477 @@ class Ui_MainWindow(object):
 
 
         self.verticalLayout_28.addWidget(self.Frame_Tool_AudioProcessor_Media_Dir_Output)
+
+        self.CheckBox_Toggle_AdvanceSettings_Tool_AudioProcessor = QCheckBox(self.GroupBox_EssentialParams_Tool_AudioProcessor)
+        self.CheckBox_Toggle_AdvanceSettings_Tool_AudioProcessor.setObjectName(u"CheckBox_Toggle_AdvanceSettings_Tool_AudioProcessor")
+        self.CheckBox_Toggle_AdvanceSettings_Tool_AudioProcessor.setStyleSheet(u"QCheckBox {\n"
+"	font-size: 12px;\n"
+"	font-weight: 630;\n"
+"	spacing: 12px;\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QCheckBox:hover {\n"
+"	color: rgb(255, 255, 255);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator {\n"
+"	width: 12px;\n"
+"	height: 12px;\n"
+"    background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QCheckBox::indicator:hover {\n"
+"	background-color: transparent;\n"
+"}\n"
+"QCheckBox::indicator:unchecked {\n"
+"	border-image: url(:/CheckBox_Icon/Sources/RightCaret.png);\n"
+"}\n"
+"QCheckBox::indicator:checked {\n"
+"	border-image: url(:/CheckBox_Icon/Sources/DownCaret.png);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.verticalLayout_28.addWidget(self.CheckBox_Toggle_AdvanceSettings_Tool_AudioProcessor)
+
+        self.Frame_AdvanceSettings_Tool_AudioProcessor = QFrame(self.GroupBox_EssentialParams_Tool_AudioProcessor)
+        self.Frame_AdvanceSettings_Tool_AudioProcessor.setObjectName(u"Frame_AdvanceSettings_Tool_AudioProcessor")
+        self.verticalLayout_33 = QVBoxLayout(self.Frame_AdvanceSettings_Tool_AudioProcessor)
+        self.verticalLayout_33.setSpacing(0)
+        self.verticalLayout_33.setObjectName(u"verticalLayout_33")
+        self.verticalLayout_33.setContentsMargins(0, 0, 0, 0)
+        self.Frame_Tool_AudioProcessor_RMS_Threshold = QFrame(self.Frame_AdvanceSettings_Tool_AudioProcessor)
+        self.Frame_Tool_AudioProcessor_RMS_Threshold.setObjectName(u"Frame_Tool_AudioProcessor_RMS_Threshold")
+        self.Frame_Tool_AudioProcessor_RMS_Threshold.setMinimumSize(QSize(0, 123))
+        self.Frame_Tool_AudioProcessor_RMS_Threshold.setStyleSheet(u"QFrame {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: rgb(45, 45, 45);\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QFrame:hover {\n"
+"	background-color: rgb(60, 60, 60);\n"
+"}")
+        self.verticalLayout_38 = QVBoxLayout(self.Frame_Tool_AudioProcessor_RMS_Threshold)
+        self.verticalLayout_38.setSpacing(12)
+        self.verticalLayout_38.setObjectName(u"verticalLayout_38")
+        self.verticalLayout_38.setContentsMargins(21, 12, 21, 12)
+        self.Label_Tool_AudioProcessor_RMS_Threshold = QLabel(self.Frame_Tool_AudioProcessor_RMS_Threshold)
+        self.Label_Tool_AudioProcessor_RMS_Threshold.setObjectName(u"Label_Tool_AudioProcessor_RMS_Threshold")
+        self.Label_Tool_AudioProcessor_RMS_Threshold.setStyleSheet(u"QLabel {\n"
+"	/*text-align: center;*/\n"
+"	/*color: rgb(255, 255, 255);*/\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.verticalLayout_38.addWidget(self.Label_Tool_AudioProcessor_RMS_Threshold)
+
+        self.DoubleSpinBox_Tool_AudioProcessor_RMS_Threshold = QDoubleSpinBox(self.Frame_Tool_AudioProcessor_RMS_Threshold)
+        self.DoubleSpinBox_Tool_AudioProcessor_RMS_Threshold.setObjectName(u"DoubleSpinBox_Tool_AudioProcessor_RMS_Threshold")
+        self.DoubleSpinBox_Tool_AudioProcessor_RMS_Threshold.setEnabled(True)
+        self.DoubleSpinBox_Tool_AudioProcessor_RMS_Threshold.setStyleSheet(u"QDoubleSpinBox {\n"
+"	text-align: left;\n"
+"	color: rgb(255, 255, 255);\n"
+"	selection-background-color: darkgrey;\n"
+"	background-color: rgb(90, 90, 90);\n"
+"	padding: 1.5px;\n"
+"	border-width: 1px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QDoubleSpinBox:hover {\n"
+"	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"QDoubleSpinBox::up-button {\n"
+"	subcontrol-origin: padding;\n"
+"	subcontrol-position: top right;\n"
+"	margin-right: 3px;\n"
+"	border-width: 0px;\n"
+"}\n"
+"QDoubleSpinBox::up-arrow {\n"
+"	border-image: url(:/(Double)SpinBox_Icon/Sources/UpArrow.png);\n"
+"}\n"
+"\n"
+"QDoubleSpinBox::down-button {\n"
+"	subcontrol-origin: padding;\n"
+"	subcontrol-position: bottom right;\n"
+"	margin-right: 3px;\n"
+"	border-width: 0px;\n"
+"}\n"
+"QDoubleSpinBox::down-arrow {\n"
+"	border-image: url(:/(Double)SpinBox_Icon/Sources/DownArrow.png);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-w"
+                        "idth: 0px;\n"
+"	border-style: solid;\n"
+"}")
+        self.DoubleSpinBox_Tool_AudioProcessor_RMS_Threshold.setMinimum(-999999.000000000000000)
+        self.DoubleSpinBox_Tool_AudioProcessor_RMS_Threshold.setMaximum(999999.000000000000000)
+
+        self.verticalLayout_38.addWidget(self.DoubleSpinBox_Tool_AudioProcessor_RMS_Threshold)
+
+
+        self.verticalLayout_33.addWidget(self.Frame_Tool_AudioProcessor_RMS_Threshold)
+
+        self.Frame_Tool_AudioProcessor_Audio_Length_Min = QFrame(self.Frame_AdvanceSettings_Tool_AudioProcessor)
+        self.Frame_Tool_AudioProcessor_Audio_Length_Min.setObjectName(u"Frame_Tool_AudioProcessor_Audio_Length_Min")
+        self.Frame_Tool_AudioProcessor_Audio_Length_Min.setMinimumSize(QSize(0, 123))
+        self.Frame_Tool_AudioProcessor_Audio_Length_Min.setStyleSheet(u"QFrame {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: rgb(45, 45, 45);\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QFrame:hover {\n"
+"	background-color: rgb(60, 60, 60);\n"
+"}")
+        self.verticalLayout_39 = QVBoxLayout(self.Frame_Tool_AudioProcessor_Audio_Length_Min)
+        self.verticalLayout_39.setSpacing(12)
+        self.verticalLayout_39.setObjectName(u"verticalLayout_39")
+        self.verticalLayout_39.setContentsMargins(21, 12, 21, 12)
+        self.Label_Tool_AudioProcessor_Audio_Length_Min = QLabel(self.Frame_Tool_AudioProcessor_Audio_Length_Min)
+        self.Label_Tool_AudioProcessor_Audio_Length_Min.setObjectName(u"Label_Tool_AudioProcessor_Audio_Length_Min")
+        self.Label_Tool_AudioProcessor_Audio_Length_Min.setStyleSheet(u"QLabel {\n"
+"	/*text-align: center;*/\n"
+"	/*color: rgb(255, 255, 255);*/\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.verticalLayout_39.addWidget(self.Label_Tool_AudioProcessor_Audio_Length_Min)
+
+        self.SpinBox_Tool_AudioProcessor_Audio_Length_Min = QSpinBox(self.Frame_Tool_AudioProcessor_Audio_Length_Min)
+        self.SpinBox_Tool_AudioProcessor_Audio_Length_Min.setObjectName(u"SpinBox_Tool_AudioProcessor_Audio_Length_Min")
+        self.SpinBox_Tool_AudioProcessor_Audio_Length_Min.setStyleSheet(u"QSpinBox {\n"
+"	text-align: left;\n"
+"	color: rgb(255, 255, 255);\n"
+"	selection-background-color: darkgrey;\n"
+"	background-color: rgb(90, 90, 90);\n"
+"	padding: 1.5px;\n"
+"	border-width: 1px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QSpinBox:hover {\n"
+"	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"QSpinBox::up-button {\n"
+"	subcontrol-origin: padding;\n"
+"	subcontrol-position: top right;\n"
+"	margin-right: 3px;\n"
+"	border-width: 0px;\n"
+"}\n"
+"QSpinBox::up-arrow {\n"
+"	border-image: url(:/(Double)SpinBox_Icon/Sources/UpArrow.png);\n"
+"}\n"
+"\n"
+"QSpinBox::down-button {\n"
+"	subcontrol-origin: padding;\n"
+"	subcontrol-position: bottom right;\n"
+"	margin-right: 3px;\n"
+"	border-width: 0px;\n"
+"}\n"
+"QSpinBox::down-arrow {\n"
+"	border-image: url(:/(Double)SpinBox_Icon/Sources/DownArrow.png);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;"
+                        "\n"
+"}")
+        self.SpinBox_Tool_AudioProcessor_Audio_Length_Min.setMinimum(-999999)
+        self.SpinBox_Tool_AudioProcessor_Audio_Length_Min.setMaximum(999999)
+
+        self.verticalLayout_39.addWidget(self.SpinBox_Tool_AudioProcessor_Audio_Length_Min)
+
+
+        self.verticalLayout_33.addWidget(self.Frame_Tool_AudioProcessor_Audio_Length_Min)
+
+        self.Frame_Tool_AudioProcessor_Silent_Interval_Min = QFrame(self.Frame_AdvanceSettings_Tool_AudioProcessor)
+        self.Frame_Tool_AudioProcessor_Silent_Interval_Min.setObjectName(u"Frame_Tool_AudioProcessor_Silent_Interval_Min")
+        self.Frame_Tool_AudioProcessor_Silent_Interval_Min.setMinimumSize(QSize(0, 123))
+        self.Frame_Tool_AudioProcessor_Silent_Interval_Min.setStyleSheet(u"QFrame {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: rgb(45, 45, 45);\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QFrame:hover {\n"
+"	background-color: rgb(60, 60, 60);\n"
+"}")
+        self.verticalLayout_40 = QVBoxLayout(self.Frame_Tool_AudioProcessor_Silent_Interval_Min)
+        self.verticalLayout_40.setSpacing(12)
+        self.verticalLayout_40.setObjectName(u"verticalLayout_40")
+        self.verticalLayout_40.setContentsMargins(21, 12, 21, 12)
+        self.Label_Tool_AudioProcessor_Silent_Interval_Min = QLabel(self.Frame_Tool_AudioProcessor_Silent_Interval_Min)
+        self.Label_Tool_AudioProcessor_Silent_Interval_Min.setObjectName(u"Label_Tool_AudioProcessor_Silent_Interval_Min")
+        self.Label_Tool_AudioProcessor_Silent_Interval_Min.setStyleSheet(u"QLabel {\n"
+"	/*text-align: center;*/\n"
+"	/*color: rgb(255, 255, 255);*/\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.verticalLayout_40.addWidget(self.Label_Tool_AudioProcessor_Silent_Interval_Min)
+
+        self.SpinBox_Tool_AudioProcessor_Silent_Interval_Min = QSpinBox(self.Frame_Tool_AudioProcessor_Silent_Interval_Min)
+        self.SpinBox_Tool_AudioProcessor_Silent_Interval_Min.setObjectName(u"SpinBox_Tool_AudioProcessor_Silent_Interval_Min")
+        self.SpinBox_Tool_AudioProcessor_Silent_Interval_Min.setStyleSheet(u"QSpinBox {\n"
+"	text-align: left;\n"
+"	color: rgb(255, 255, 255);\n"
+"	selection-background-color: darkgrey;\n"
+"	background-color: rgb(90, 90, 90);\n"
+"	padding: 1.5px;\n"
+"	border-width: 1px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QSpinBox:hover {\n"
+"	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"QSpinBox::up-button {\n"
+"	subcontrol-origin: padding;\n"
+"	subcontrol-position: top right;\n"
+"	margin-right: 3px;\n"
+"	border-width: 0px;\n"
+"}\n"
+"QSpinBox::up-arrow {\n"
+"	border-image: url(:/(Double)SpinBox_Icon/Sources/UpArrow.png);\n"
+"}\n"
+"\n"
+"QSpinBox::down-button {\n"
+"	subcontrol-origin: padding;\n"
+"	subcontrol-position: bottom right;\n"
+"	margin-right: 3px;\n"
+"	border-width: 0px;\n"
+"}\n"
+"QSpinBox::down-arrow {\n"
+"	border-image: url(:/(Double)SpinBox_Icon/Sources/DownArrow.png);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;"
+                        "\n"
+"}")
+        self.SpinBox_Tool_AudioProcessor_Silent_Interval_Min.setMinimum(-999999)
+        self.SpinBox_Tool_AudioProcessor_Silent_Interval_Min.setMaximum(999999)
+
+        self.verticalLayout_40.addWidget(self.SpinBox_Tool_AudioProcessor_Silent_Interval_Min)
+
+
+        self.verticalLayout_33.addWidget(self.Frame_Tool_AudioProcessor_Silent_Interval_Min)
+
+        self.Frame_Tool_AudioProcessor_Hop_Size = QFrame(self.Frame_AdvanceSettings_Tool_AudioProcessor)
+        self.Frame_Tool_AudioProcessor_Hop_Size.setObjectName(u"Frame_Tool_AudioProcessor_Hop_Size")
+        self.Frame_Tool_AudioProcessor_Hop_Size.setMinimumSize(QSize(0, 123))
+        self.Frame_Tool_AudioProcessor_Hop_Size.setStyleSheet(u"QFrame {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: rgb(45, 45, 45);\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QFrame:hover {\n"
+"	background-color: rgb(60, 60, 60);\n"
+"}")
+        self.verticalLayout_41 = QVBoxLayout(self.Frame_Tool_AudioProcessor_Hop_Size)
+        self.verticalLayout_41.setSpacing(12)
+        self.verticalLayout_41.setObjectName(u"verticalLayout_41")
+        self.verticalLayout_41.setContentsMargins(21, 12, 21, 12)
+        self.Label_Tool_AudioProcessor_Hop_Size = QLabel(self.Frame_Tool_AudioProcessor_Hop_Size)
+        self.Label_Tool_AudioProcessor_Hop_Size.setObjectName(u"Label_Tool_AudioProcessor_Hop_Size")
+        self.Label_Tool_AudioProcessor_Hop_Size.setStyleSheet(u"QLabel {\n"
+"	/*text-align: center;*/\n"
+"	/*color: rgb(255, 255, 255);*/\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.verticalLayout_41.addWidget(self.Label_Tool_AudioProcessor_Hop_Size)
+
+        self.SpinBox_Tool_AudioProcessor_Hop_Size = QSpinBox(self.Frame_Tool_AudioProcessor_Hop_Size)
+        self.SpinBox_Tool_AudioProcessor_Hop_Size.setObjectName(u"SpinBox_Tool_AudioProcessor_Hop_Size")
+        self.SpinBox_Tool_AudioProcessor_Hop_Size.setStyleSheet(u"QSpinBox {\n"
+"	text-align: left;\n"
+"	color: rgb(255, 255, 255);\n"
+"	selection-background-color: darkgrey;\n"
+"	background-color: rgb(90, 90, 90);\n"
+"	padding: 1.5px;\n"
+"	border-width: 1px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QSpinBox:hover {\n"
+"	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"QSpinBox::up-button {\n"
+"	subcontrol-origin: padding;\n"
+"	subcontrol-position: top right;\n"
+"	margin-right: 3px;\n"
+"	border-width: 0px;\n"
+"}\n"
+"QSpinBox::up-arrow {\n"
+"	border-image: url(:/(Double)SpinBox_Icon/Sources/UpArrow.png);\n"
+"}\n"
+"\n"
+"QSpinBox::down-button {\n"
+"	subcontrol-origin: padding;\n"
+"	subcontrol-position: bottom right;\n"
+"	margin-right: 3px;\n"
+"	border-width: 0px;\n"
+"}\n"
+"QSpinBox::down-arrow {\n"
+"	border-image: url(:/(Double)SpinBox_Icon/Sources/DownArrow.png);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;"
+                        "\n"
+"}")
+        self.SpinBox_Tool_AudioProcessor_Hop_Size.setMinimum(-999999)
+        self.SpinBox_Tool_AudioProcessor_Hop_Size.setMaximum(999999)
+
+        self.verticalLayout_41.addWidget(self.SpinBox_Tool_AudioProcessor_Hop_Size)
+
+
+        self.verticalLayout_33.addWidget(self.Frame_Tool_AudioProcessor_Hop_Size)
+
+        self.Frame_Tool_AudioProcessor_Silence_Kept_Max = QFrame(self.Frame_AdvanceSettings_Tool_AudioProcessor)
+        self.Frame_Tool_AudioProcessor_Silence_Kept_Max.setObjectName(u"Frame_Tool_AudioProcessor_Silence_Kept_Max")
+        self.Frame_Tool_AudioProcessor_Silence_Kept_Max.setMinimumSize(QSize(0, 123))
+        self.Frame_Tool_AudioProcessor_Silence_Kept_Max.setStyleSheet(u"QFrame {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: rgb(45, 45, 45);\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QFrame:hover {\n"
+"	background-color: rgb(60, 60, 60);\n"
+"}")
+        self.verticalLayout_42 = QVBoxLayout(self.Frame_Tool_AudioProcessor_Silence_Kept_Max)
+        self.verticalLayout_42.setSpacing(12)
+        self.verticalLayout_42.setObjectName(u"verticalLayout_42")
+        self.verticalLayout_42.setContentsMargins(21, 12, 21, 12)
+        self.Label_Tool_AudioProcessor_Silence_Kept_Max = QLabel(self.Frame_Tool_AudioProcessor_Silence_Kept_Max)
+        self.Label_Tool_AudioProcessor_Silence_Kept_Max.setObjectName(u"Label_Tool_AudioProcessor_Silence_Kept_Max")
+        self.Label_Tool_AudioProcessor_Silence_Kept_Max.setStyleSheet(u"QLabel {\n"
+"	/*text-align: center;*/\n"
+"	/*color: rgb(255, 255, 255);*/\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.verticalLayout_42.addWidget(self.Label_Tool_AudioProcessor_Silence_Kept_Max)
+
+        self.SpinBox_Tool_AudioProcessor_Silence_Kept_Max = QSpinBox(self.Frame_Tool_AudioProcessor_Silence_Kept_Max)
+        self.SpinBox_Tool_AudioProcessor_Silence_Kept_Max.setObjectName(u"SpinBox_Tool_AudioProcessor_Silence_Kept_Max")
+        self.SpinBox_Tool_AudioProcessor_Silence_Kept_Max.setStyleSheet(u"QSpinBox {\n"
+"	text-align: left;\n"
+"	color: rgb(255, 255, 255);\n"
+"	selection-background-color: darkgrey;\n"
+"	background-color: rgb(90, 90, 90);\n"
+"	padding: 1.5px;\n"
+"	border-width: 1px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QSpinBox:hover {\n"
+"	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"QSpinBox::up-button {\n"
+"	subcontrol-origin: padding;\n"
+"	subcontrol-position: top right;\n"
+"	margin-right: 3px;\n"
+"	border-width: 0px;\n"
+"}\n"
+"QSpinBox::up-arrow {\n"
+"	border-image: url(:/(Double)SpinBox_Icon/Sources/UpArrow.png);\n"
+"}\n"
+"\n"
+"QSpinBox::down-button {\n"
+"	subcontrol-origin: padding;\n"
+"	subcontrol-position: bottom right;\n"
+"	margin-right: 3px;\n"
+"	border-width: 0px;\n"
+"}\n"
+"QSpinBox::down-arrow {\n"
+"	border-image: url(:/(Double)SpinBox_Icon/Sources/DownArrow.png);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;"
+                        "\n"
+"}")
+        self.SpinBox_Tool_AudioProcessor_Silence_Kept_Max.setMinimum(-999999)
+        self.SpinBox_Tool_AudioProcessor_Silence_Kept_Max.setMaximum(999999)
+
+        self.verticalLayout_42.addWidget(self.SpinBox_Tool_AudioProcessor_Silence_Kept_Max)
+
+
+        self.verticalLayout_33.addWidget(self.Frame_Tool_AudioProcessor_Silence_Kept_Max)
+
+
+        self.verticalLayout_28.addWidget(self.Frame_AdvanceSettings_Tool_AudioProcessor)
 
 
         self.verticalLayout_13.addWidget(self.GroupBox_EssentialParams_Tool_AudioProcessor)
@@ -2693,7 +2745,7 @@ class Ui_MainWindow(object):
         self.ScrollArea_Right_Tool_VoiceIdentifier.setWidgetResizable(True)
         self.ScrollArea_Right_WidgetContents_Tool_VoiceIdentifier = QWidget()
         self.ScrollArea_Right_WidgetContents_Tool_VoiceIdentifier.setObjectName(u"ScrollArea_Right_WidgetContents_Tool_VoiceIdentifier")
-        self.ScrollArea_Right_WidgetContents_Tool_VoiceIdentifier.setGeometry(QRect(0, 0, 619, 1369))
+        self.ScrollArea_Right_WidgetContents_Tool_VoiceIdentifier.setGeometry(QRect(0, 0, 619, 1322))
         self.ScrollArea_Right_WidgetContents_Tool_VoiceIdentifier.setMinimumSize(QSize(0, 0))
         self.verticalLayout_16 = QVBoxLayout(self.ScrollArea_Right_WidgetContents_Tool_VoiceIdentifier)
         self.verticalLayout_16.setSpacing(21)
@@ -2940,7 +2992,312 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_29.addWidget(self.Frame_Tool_VoiceIdentifier_Audio_Path_Std)
 
-        self.Frame_Tool_VoiceIdentifier_Model_Dir = QFrame(self.GroupBox_EssentialParams_Tool_VoiceIdentifier)
+        self.Frame_Tool_VoiceIdentifier_Speaker = QFrame(self.GroupBox_EssentialParams_Tool_VoiceIdentifier)
+        self.Frame_Tool_VoiceIdentifier_Speaker.setObjectName(u"Frame_Tool_VoiceIdentifier_Speaker")
+        self.Frame_Tool_VoiceIdentifier_Speaker.setMinimumSize(QSize(0, 123))
+        self.Frame_Tool_VoiceIdentifier_Speaker.setStyleSheet(u"QFrame {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: rgb(45, 45, 45);\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QFrame:hover {\n"
+"	background-color: rgb(60, 60, 60);\n"
+"}")
+        self.verticalLayout_77 = QVBoxLayout(self.Frame_Tool_VoiceIdentifier_Speaker)
+        self.verticalLayout_77.setSpacing(12)
+        self.verticalLayout_77.setObjectName(u"verticalLayout_77")
+        self.verticalLayout_77.setContentsMargins(21, 12, 21, 12)
+        self.Label_Tool_VoiceIdentifier_Speaker = QLabel(self.Frame_Tool_VoiceIdentifier_Speaker)
+        self.Label_Tool_VoiceIdentifier_Speaker.setObjectName(u"Label_Tool_VoiceIdentifier_Speaker")
+        self.Label_Tool_VoiceIdentifier_Speaker.setStyleSheet(u"QLabel {\n"
+"	/*text-align: center;*/\n"
+"	/*color: rgb(255, 255, 255);*/\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.verticalLayout_77.addWidget(self.Label_Tool_VoiceIdentifier_Speaker)
+
+        self.LineEdit_Tool_VoiceIdentifier_Speaker = QLineEdit(self.Frame_Tool_VoiceIdentifier_Speaker)
+        self.LineEdit_Tool_VoiceIdentifier_Speaker.setObjectName(u"LineEdit_Tool_VoiceIdentifier_Speaker")
+        self.LineEdit_Tool_VoiceIdentifier_Speaker.setStyleSheet(u"QLineEdit {\n"
+"	text-align: left;\n"
+"	color: rgb(255, 255, 255);\n"
+"	selection-background-color: darkgrey;\n"
+"	background-color: rgb(90, 90, 90);\n"
+"	padding: 1.5px;\n"
+"	border-width: 1px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QLineEdit:hover {\n"
+"	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.verticalLayout_77.addWidget(self.LineEdit_Tool_VoiceIdentifier_Speaker)
+
+
+        self.verticalLayout_29.addWidget(self.Frame_Tool_VoiceIdentifier_Speaker)
+
+        self.Frame_Tool_VoiceIdentifier_DecisionThreshold = QFrame(self.GroupBox_EssentialParams_Tool_VoiceIdentifier)
+        self.Frame_Tool_VoiceIdentifier_DecisionThreshold.setObjectName(u"Frame_Tool_VoiceIdentifier_DecisionThreshold")
+        self.Frame_Tool_VoiceIdentifier_DecisionThreshold.setMinimumSize(QSize(0, 123))
+        self.Frame_Tool_VoiceIdentifier_DecisionThreshold.setStyleSheet(u"QFrame {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: rgb(45, 45, 45);\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QFrame:hover {\n"
+"	background-color: rgb(60, 60, 60);\n"
+"}")
+        self.verticalLayout_49 = QVBoxLayout(self.Frame_Tool_VoiceIdentifier_DecisionThreshold)
+        self.verticalLayout_49.setSpacing(12)
+        self.verticalLayout_49.setObjectName(u"verticalLayout_49")
+        self.verticalLayout_49.setContentsMargins(21, 12, 21, 12)
+        self.Label_Tool_VoiceIdentifier_DecisionThreshold = QLabel(self.Frame_Tool_VoiceIdentifier_DecisionThreshold)
+        self.Label_Tool_VoiceIdentifier_DecisionThreshold.setObjectName(u"Label_Tool_VoiceIdentifier_DecisionThreshold")
+        self.Label_Tool_VoiceIdentifier_DecisionThreshold.setStyleSheet(u"QLabel {\n"
+"	/*text-align: center;*/\n"
+"	/*color: rgb(255, 255, 255);*/\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.verticalLayout_49.addWidget(self.Label_Tool_VoiceIdentifier_DecisionThreshold)
+
+        self.DoubleSpinBox_Tool_VoiceIdentifier_DecisionThreshold = QDoubleSpinBox(self.Frame_Tool_VoiceIdentifier_DecisionThreshold)
+        self.DoubleSpinBox_Tool_VoiceIdentifier_DecisionThreshold.setObjectName(u"DoubleSpinBox_Tool_VoiceIdentifier_DecisionThreshold")
+        self.DoubleSpinBox_Tool_VoiceIdentifier_DecisionThreshold.setEnabled(True)
+        self.DoubleSpinBox_Tool_VoiceIdentifier_DecisionThreshold.setStyleSheet(u"QDoubleSpinBox {\n"
+"	text-align: left;\n"
+"	color: rgb(255, 255, 255);\n"
+"	selection-background-color: darkgrey;\n"
+"	background-color: rgb(90, 90, 90);\n"
+"	padding: 1.5px;\n"
+"	border-width: 1px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QDoubleSpinBox:hover {\n"
+"	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"QDoubleSpinBox::up-button {\n"
+"	subcontrol-origin: padding;\n"
+"	subcontrol-position: top right;\n"
+"	margin-right: 3px;\n"
+"	border-width: 0px;\n"
+"}\n"
+"QDoubleSpinBox::up-arrow {\n"
+"	border-image: url(:/(Double)SpinBox_Icon/Sources/UpArrow.png);\n"
+"}\n"
+"\n"
+"QDoubleSpinBox::down-button {\n"
+"	subcontrol-origin: padding;\n"
+"	subcontrol-position: bottom right;\n"
+"	margin-right: 3px;\n"
+"	border-width: 0px;\n"
+"}\n"
+"QDoubleSpinBox::down-arrow {\n"
+"	border-image: url(:/(Double)SpinBox_Icon/Sources/DownArrow.png);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-w"
+                        "idth: 0px;\n"
+"	border-style: solid;\n"
+"}")
+        self.DoubleSpinBox_Tool_VoiceIdentifier_DecisionThreshold.setMinimum(-999999.000000000000000)
+        self.DoubleSpinBox_Tool_VoiceIdentifier_DecisionThreshold.setMaximum(999999.000000000000000)
+
+        self.verticalLayout_49.addWidget(self.DoubleSpinBox_Tool_VoiceIdentifier_DecisionThreshold)
+
+
+        self.verticalLayout_29.addWidget(self.Frame_Tool_VoiceIdentifier_DecisionThreshold)
+
+        self.Frame_Tool_VoiceIdentifier_Audio_Dir_Output = QFrame(self.GroupBox_EssentialParams_Tool_VoiceIdentifier)
+        self.Frame_Tool_VoiceIdentifier_Audio_Dir_Output.setObjectName(u"Frame_Tool_VoiceIdentifier_Audio_Dir_Output")
+        self.Frame_Tool_VoiceIdentifier_Audio_Dir_Output.setMinimumSize(QSize(0, 123))
+        self.Frame_Tool_VoiceIdentifier_Audio_Dir_Output.setStyleSheet(u"QFrame {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: rgb(45, 45, 45);\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QFrame:hover {\n"
+"	background-color: rgb(60, 60, 60);\n"
+"}")
+        self.verticalLayout_51 = QVBoxLayout(self.Frame_Tool_VoiceIdentifier_Audio_Dir_Output)
+        self.verticalLayout_51.setSpacing(12)
+        self.verticalLayout_51.setObjectName(u"verticalLayout_51")
+        self.verticalLayout_51.setContentsMargins(21, 12, 21, 12)
+        self.Label_Tool_VoiceIdentifier_Audio_Dir_Output = QLabel(self.Frame_Tool_VoiceIdentifier_Audio_Dir_Output)
+        self.Label_Tool_VoiceIdentifier_Audio_Dir_Output.setObjectName(u"Label_Tool_VoiceIdentifier_Audio_Dir_Output")
+        self.Label_Tool_VoiceIdentifier_Audio_Dir_Output.setStyleSheet(u"QLabel {\n"
+"	/*text-align: center;*/\n"
+"	/*color: rgb(255, 255, 255);*/\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.verticalLayout_51.addWidget(self.Label_Tool_VoiceIdentifier_Audio_Dir_Output)
+
+        self.ChildFrame_Tool_VoiceIdentifier_Audio_Dir_Output = QFrame(self.Frame_Tool_VoiceIdentifier_Audio_Dir_Output)
+        self.ChildFrame_Tool_VoiceIdentifier_Audio_Dir_Output.setObjectName(u"ChildFrame_Tool_VoiceIdentifier_Audio_Dir_Output")
+        sizePolicy2.setHeightForWidth(self.ChildFrame_Tool_VoiceIdentifier_Audio_Dir_Output.sizePolicy().hasHeightForWidth())
+        self.ChildFrame_Tool_VoiceIdentifier_Audio_Dir_Output.setSizePolicy(sizePolicy2)
+        self.ChildFrame_Tool_VoiceIdentifier_Audio_Dir_Output.setStyleSheet(u"QFrame {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QFrame:hover {\n"
+"	background-color: transparent;\n"
+"}")
+        self.horizontalLayout_13 = QHBoxLayout(self.ChildFrame_Tool_VoiceIdentifier_Audio_Dir_Output)
+        self.horizontalLayout_13.setSpacing(12)
+        self.horizontalLayout_13.setObjectName(u"horizontalLayout_13")
+        self.horizontalLayout_13.setContentsMargins(0, 0, 0, 0)
+        self.LineEdit_Tool_VoiceIdentifier_Audio_Dir_Output = QLineEdit(self.ChildFrame_Tool_VoiceIdentifier_Audio_Dir_Output)
+        self.LineEdit_Tool_VoiceIdentifier_Audio_Dir_Output.setObjectName(u"LineEdit_Tool_VoiceIdentifier_Audio_Dir_Output")
+        self.LineEdit_Tool_VoiceIdentifier_Audio_Dir_Output.setStyleSheet(u"QLineEdit {\n"
+"	text-align: left;\n"
+"	color: rgb(255, 255, 255);\n"
+"	selection-background-color: darkgrey;\n"
+"	background-color: rgb(90, 90, 90);\n"
+"	padding: 1.5px;\n"
+"	border-width: 1px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QLineEdit:hover {\n"
+"	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.horizontalLayout_13.addWidget(self.LineEdit_Tool_VoiceIdentifier_Audio_Dir_Output)
+
+        self.Button_Tool_VoiceIdentifier_Audio_Dir_Output = QPushButton(self.ChildFrame_Tool_VoiceIdentifier_Audio_Dir_Output)
+        self.Button_Tool_VoiceIdentifier_Audio_Dir_Output.setObjectName(u"Button_Tool_VoiceIdentifier_Audio_Dir_Output")
+        sizePolicy3.setHeightForWidth(self.Button_Tool_VoiceIdentifier_Audio_Dir_Output.sizePolicy().hasHeightForWidth())
+        self.Button_Tool_VoiceIdentifier_Audio_Dir_Output.setSizePolicy(sizePolicy3)
+        self.Button_Tool_VoiceIdentifier_Audio_Dir_Output.setMaximumSize(QSize(24, 24))
+        self.Button_Tool_VoiceIdentifier_Audio_Dir_Output.setStyleSheet(u"QPushButton {\n"
+"	text-align: center;\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: rgb(90, 90, 90);\n"
+"	padding: 6px;\n"
+"	border-width: 1px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.horizontalLayout_13.addWidget(self.Button_Tool_VoiceIdentifier_Audio_Dir_Output)
+
+
+        self.verticalLayout_51.addWidget(self.ChildFrame_Tool_VoiceIdentifier_Audio_Dir_Output)
+
+
+        self.verticalLayout_29.addWidget(self.Frame_Tool_VoiceIdentifier_Audio_Dir_Output)
+
+        self.CheckBox_Toggle_AdvanceSettings_Tool_VoiceIdentifier = QCheckBox(self.GroupBox_EssentialParams_Tool_VoiceIdentifier)
+        self.CheckBox_Toggle_AdvanceSettings_Tool_VoiceIdentifier.setObjectName(u"CheckBox_Toggle_AdvanceSettings_Tool_VoiceIdentifier")
+        self.CheckBox_Toggle_AdvanceSettings_Tool_VoiceIdentifier.setStyleSheet(u"QCheckBox {\n"
+"	font-size: 12px;\n"
+"	font-weight: 630;\n"
+"	spacing: 12px;\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QCheckBox:hover {\n"
+"	color: rgb(255, 255, 255);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator {\n"
+"	width: 12px;\n"
+"	height: 12px;\n"
+"    background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QCheckBox::indicator:hover {\n"
+"	background-color: transparent;\n"
+"}\n"
+"QCheckBox::indicator:unchecked {\n"
+"	border-image: url(:/CheckBox_Icon/Sources/RightCaret.png);\n"
+"}\n"
+"QCheckBox::indicator:checked {\n"
+"	border-image: url(:/CheckBox_Icon/Sources/DownCaret.png);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.verticalLayout_29.addWidget(self.CheckBox_Toggle_AdvanceSettings_Tool_VoiceIdentifier)
+
+        self.Frame_AdvanceSettings_Tool_VoiceIdentifier = QFrame(self.GroupBox_EssentialParams_Tool_VoiceIdentifier)
+        self.Frame_AdvanceSettings_Tool_VoiceIdentifier.setObjectName(u"Frame_AdvanceSettings_Tool_VoiceIdentifier")
+        self.verticalLayout_4 = QVBoxLayout(self.Frame_AdvanceSettings_Tool_VoiceIdentifier)
+        self.verticalLayout_4.setSpacing(0)
+        self.verticalLayout_4.setObjectName(u"verticalLayout_4")
+        self.verticalLayout_4.setContentsMargins(0, 0, 0, 0)
+        self.Frame_Tool_VoiceIdentifier_Model_Dir = QFrame(self.Frame_AdvanceSettings_Tool_VoiceIdentifier)
         self.Frame_Tool_VoiceIdentifier_Model_Dir.setObjectName(u"Frame_Tool_VoiceIdentifier_Model_Dir")
         self.Frame_Tool_VoiceIdentifier_Model_Dir.setMinimumSize(QSize(0, 123))
         self.Frame_Tool_VoiceIdentifier_Model_Dir.setStyleSheet(u"QFrame {\n"
@@ -3047,9 +3404,9 @@ class Ui_MainWindow(object):
         self.verticalLayout_45.addWidget(self.ChildFrame_Tool_VoiceIdentifier_Model_Dir)
 
 
-        self.verticalLayout_29.addWidget(self.Frame_Tool_VoiceIdentifier_Model_Dir)
+        self.verticalLayout_4.addWidget(self.Frame_Tool_VoiceIdentifier_Model_Dir)
 
-        self.Frame_Tool_VoiceIdentifier_Model_Type = QFrame(self.GroupBox_EssentialParams_Tool_VoiceIdentifier)
+        self.Frame_Tool_VoiceIdentifier_Model_Type = QFrame(self.Frame_AdvanceSettings_Tool_VoiceIdentifier)
         self.Frame_Tool_VoiceIdentifier_Model_Type.setObjectName(u"Frame_Tool_VoiceIdentifier_Model_Type")
         self.Frame_Tool_VoiceIdentifier_Model_Type.setMinimumSize(QSize(0, 123))
         self.Frame_Tool_VoiceIdentifier_Model_Type.setStyleSheet(u"QFrame {\n"
@@ -3245,9 +3602,9 @@ class Ui_MainWindow(object):
         self.verticalLayout_46.addWidget(self.ComboBox_Tool_VoiceIdentifier_Model_Type)
 
 
-        self.verticalLayout_29.addWidget(self.Frame_Tool_VoiceIdentifier_Model_Type)
+        self.verticalLayout_4.addWidget(self.Frame_Tool_VoiceIdentifier_Model_Type)
 
-        self.Frame_Tool_VoiceIdentifier_Model_Name = QFrame(self.GroupBox_EssentialParams_Tool_VoiceIdentifier)
+        self.Frame_Tool_VoiceIdentifier_Model_Name = QFrame(self.Frame_AdvanceSettings_Tool_VoiceIdentifier)
         self.Frame_Tool_VoiceIdentifier_Model_Name.setObjectName(u"Frame_Tool_VoiceIdentifier_Model_Name")
         self.Frame_Tool_VoiceIdentifier_Model_Name.setMinimumSize(QSize(0, 123))
         self.Frame_Tool_VoiceIdentifier_Model_Name.setStyleSheet(u"QFrame {\n"
@@ -3443,9 +3800,9 @@ class Ui_MainWindow(object):
         self.verticalLayout_47.addWidget(self.ComboBox_Tool_VoiceIdentifier_Model_Name)
 
 
-        self.verticalLayout_29.addWidget(self.Frame_Tool_VoiceIdentifier_Model_Name)
+        self.verticalLayout_4.addWidget(self.Frame_Tool_VoiceIdentifier_Model_Name)
 
-        self.Frame_Tool_VoiceIdentifier_Feature_Method = QFrame(self.GroupBox_EssentialParams_Tool_VoiceIdentifier)
+        self.Frame_Tool_VoiceIdentifier_Feature_Method = QFrame(self.Frame_AdvanceSettings_Tool_VoiceIdentifier)
         self.Frame_Tool_VoiceIdentifier_Feature_Method.setObjectName(u"Frame_Tool_VoiceIdentifier_Feature_Method")
         self.Frame_Tool_VoiceIdentifier_Feature_Method.setMinimumSize(QSize(0, 123))
         self.Frame_Tool_VoiceIdentifier_Feature_Method.setStyleSheet(u"QFrame {\n"
@@ -3641,93 +3998,9 @@ class Ui_MainWindow(object):
         self.verticalLayout_48.addWidget(self.ComboBox_Tool_VoiceIdentifier_Feature_Method)
 
 
-        self.verticalLayout_29.addWidget(self.Frame_Tool_VoiceIdentifier_Feature_Method)
+        self.verticalLayout_4.addWidget(self.Frame_Tool_VoiceIdentifier_Feature_Method)
 
-        self.Frame_Tool_VoiceIdentifier_DecisionThreshold = QFrame(self.GroupBox_EssentialParams_Tool_VoiceIdentifier)
-        self.Frame_Tool_VoiceIdentifier_DecisionThreshold.setObjectName(u"Frame_Tool_VoiceIdentifier_DecisionThreshold")
-        self.Frame_Tool_VoiceIdentifier_DecisionThreshold.setMinimumSize(QSize(0, 123))
-        self.Frame_Tool_VoiceIdentifier_DecisionThreshold.setStyleSheet(u"QFrame {\n"
-"	color: rgb(255, 255, 255);\n"
-"	background-color: rgb(45, 45, 45);\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QFrame:hover {\n"
-"	background-color: rgb(60, 60, 60);\n"
-"}")
-        self.verticalLayout_49 = QVBoxLayout(self.Frame_Tool_VoiceIdentifier_DecisionThreshold)
-        self.verticalLayout_49.setSpacing(12)
-        self.verticalLayout_49.setObjectName(u"verticalLayout_49")
-        self.verticalLayout_49.setContentsMargins(21, 12, 21, 12)
-        self.Label_Tool_VoiceIdentifier_DecisionThreshold = QLabel(self.Frame_Tool_VoiceIdentifier_DecisionThreshold)
-        self.Label_Tool_VoiceIdentifier_DecisionThreshold.setObjectName(u"Label_Tool_VoiceIdentifier_DecisionThreshold")
-        self.Label_Tool_VoiceIdentifier_DecisionThreshold.setStyleSheet(u"QLabel {\n"
-"	/*text-align: center;*/\n"
-"	/*color: rgb(255, 255, 255);*/\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.verticalLayout_49.addWidget(self.Label_Tool_VoiceIdentifier_DecisionThreshold)
-
-        self.DoubleSpinBox_Tool_VoiceIdentifier_DecisionThreshold = QDoubleSpinBox(self.Frame_Tool_VoiceIdentifier_DecisionThreshold)
-        self.DoubleSpinBox_Tool_VoiceIdentifier_DecisionThreshold.setObjectName(u"DoubleSpinBox_Tool_VoiceIdentifier_DecisionThreshold")
-        self.DoubleSpinBox_Tool_VoiceIdentifier_DecisionThreshold.setEnabled(True)
-        self.DoubleSpinBox_Tool_VoiceIdentifier_DecisionThreshold.setStyleSheet(u"QDoubleSpinBox {\n"
-"	text-align: left;\n"
-"	color: rgb(255, 255, 255);\n"
-"	selection-background-color: darkgrey;\n"
-"	background-color: rgb(90, 90, 90);\n"
-"	padding: 1.5px;\n"
-"	border-width: 1px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QDoubleSpinBox:hover {\n"
-"	background-color: rgb(120, 120, 120);\n"
-"}\n"
-"\n"
-"QDoubleSpinBox::up-button {\n"
-"	subcontrol-origin: padding;\n"
-"	subcontrol-position: top right;\n"
-"	margin-right: 3px;\n"
-"	border-width: 0px;\n"
-"}\n"
-"QDoubleSpinBox::up-arrow {\n"
-"	border-image: url(:/(Double)SpinBox_Icon/Sources/UpArrow.png);\n"
-"}\n"
-"\n"
-"QDoubleSpinBox::down-button {\n"
-"	subcontrol-origin: padding;\n"
-"	subcontrol-position: bottom right;\n"
-"	margin-right: 3px;\n"
-"	border-width: 0px;\n"
-"}\n"
-"QDoubleSpinBox::down-arrow {\n"
-"	border-image: url(:/(Double)SpinBox_Icon/Sources/DownArrow.png);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-w"
-                        "idth: 0px;\n"
-"	border-style: solid;\n"
-"}")
-        self.DoubleSpinBox_Tool_VoiceIdentifier_DecisionThreshold.setMinimum(-999999.000000000000000)
-        self.DoubleSpinBox_Tool_VoiceIdentifier_DecisionThreshold.setMaximum(999999.000000000000000)
-
-        self.verticalLayout_49.addWidget(self.DoubleSpinBox_Tool_VoiceIdentifier_DecisionThreshold)
-
-
-        self.verticalLayout_29.addWidget(self.Frame_Tool_VoiceIdentifier_DecisionThreshold)
-
-        self.Frame_Tool_VoiceIdentifier_Duration_of_Audio = QFrame(self.GroupBox_EssentialParams_Tool_VoiceIdentifier)
+        self.Frame_Tool_VoiceIdentifier_Duration_of_Audio = QFrame(self.Frame_AdvanceSettings_Tool_VoiceIdentifier)
         self.Frame_Tool_VoiceIdentifier_Duration_of_Audio.setObjectName(u"Frame_Tool_VoiceIdentifier_Duration_of_Audio")
         self.Frame_Tool_VoiceIdentifier_Duration_of_Audio.setMinimumSize(QSize(0, 123))
         self.Frame_Tool_VoiceIdentifier_Duration_of_Audio.setStyleSheet(u"QFrame {\n"
@@ -3809,204 +4082,13 @@ class Ui_MainWindow(object):
         self.verticalLayout_50.addWidget(self.DoubleSpinBox_Tool_VoiceIdentifier_Duration_of_Audio)
 
 
-        self.verticalLayout_29.addWidget(self.Frame_Tool_VoiceIdentifier_Duration_of_Audio)
-
-        self.Frame_Tool_VoiceIdentifier_Audio_Dir_Output = QFrame(self.GroupBox_EssentialParams_Tool_VoiceIdentifier)
-        self.Frame_Tool_VoiceIdentifier_Audio_Dir_Output.setObjectName(u"Frame_Tool_VoiceIdentifier_Audio_Dir_Output")
-        self.Frame_Tool_VoiceIdentifier_Audio_Dir_Output.setMinimumSize(QSize(0, 123))
-        self.Frame_Tool_VoiceIdentifier_Audio_Dir_Output.setStyleSheet(u"QFrame {\n"
-"	color: rgb(255, 255, 255);\n"
-"	background-color: rgb(45, 45, 45);\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QFrame:hover {\n"
-"	background-color: rgb(60, 60, 60);\n"
-"}")
-        self.verticalLayout_51 = QVBoxLayout(self.Frame_Tool_VoiceIdentifier_Audio_Dir_Output)
-        self.verticalLayout_51.setSpacing(12)
-        self.verticalLayout_51.setObjectName(u"verticalLayout_51")
-        self.verticalLayout_51.setContentsMargins(21, 12, 21, 12)
-        self.Label_Tool_VoiceIdentifier_Audio_Dir_Output = QLabel(self.Frame_Tool_VoiceIdentifier_Audio_Dir_Output)
-        self.Label_Tool_VoiceIdentifier_Audio_Dir_Output.setObjectName(u"Label_Tool_VoiceIdentifier_Audio_Dir_Output")
-        self.Label_Tool_VoiceIdentifier_Audio_Dir_Output.setStyleSheet(u"QLabel {\n"
-"	/*text-align: center;*/\n"
-"	/*color: rgb(255, 255, 255);*/\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.verticalLayout_51.addWidget(self.Label_Tool_VoiceIdentifier_Audio_Dir_Output)
-
-        self.ChildFrame_Tool_VoiceIdentifier_Audio_Dir_Output = QFrame(self.Frame_Tool_VoiceIdentifier_Audio_Dir_Output)
-        self.ChildFrame_Tool_VoiceIdentifier_Audio_Dir_Output.setObjectName(u"ChildFrame_Tool_VoiceIdentifier_Audio_Dir_Output")
-        sizePolicy2.setHeightForWidth(self.ChildFrame_Tool_VoiceIdentifier_Audio_Dir_Output.sizePolicy().hasHeightForWidth())
-        self.ChildFrame_Tool_VoiceIdentifier_Audio_Dir_Output.setSizePolicy(sizePolicy2)
-        self.ChildFrame_Tool_VoiceIdentifier_Audio_Dir_Output.setStyleSheet(u"QFrame {\n"
-"	color: rgb(255, 255, 255);\n"
-"	background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QFrame:hover {\n"
-"	background-color: transparent;\n"
-"}")
-        self.horizontalLayout_13 = QHBoxLayout(self.ChildFrame_Tool_VoiceIdentifier_Audio_Dir_Output)
-        self.horizontalLayout_13.setSpacing(12)
-        self.horizontalLayout_13.setObjectName(u"horizontalLayout_13")
-        self.horizontalLayout_13.setContentsMargins(0, 0, 0, 0)
-        self.LineEdit_Tool_VoiceIdentifier_Audio_Dir_Output = QLineEdit(self.ChildFrame_Tool_VoiceIdentifier_Audio_Dir_Output)
-        self.LineEdit_Tool_VoiceIdentifier_Audio_Dir_Output.setObjectName(u"LineEdit_Tool_VoiceIdentifier_Audio_Dir_Output")
-        self.LineEdit_Tool_VoiceIdentifier_Audio_Dir_Output.setStyleSheet(u"QLineEdit {\n"
-"	text-align: left;\n"
-"	color: rgb(255, 255, 255);\n"
-"	selection-background-color: darkgrey;\n"
-"	background-color: rgb(90, 90, 90);\n"
-"	padding: 1.5px;\n"
-"	border-width: 1px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QLineEdit:hover {\n"
-"	background-color: rgb(120, 120, 120);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.horizontalLayout_13.addWidget(self.LineEdit_Tool_VoiceIdentifier_Audio_Dir_Output)
-
-        self.Button_Tool_VoiceIdentifier_Audio_Dir_Output = QPushButton(self.ChildFrame_Tool_VoiceIdentifier_Audio_Dir_Output)
-        self.Button_Tool_VoiceIdentifier_Audio_Dir_Output.setObjectName(u"Button_Tool_VoiceIdentifier_Audio_Dir_Output")
-        sizePolicy3.setHeightForWidth(self.Button_Tool_VoiceIdentifier_Audio_Dir_Output.sizePolicy().hasHeightForWidth())
-        self.Button_Tool_VoiceIdentifier_Audio_Dir_Output.setSizePolicy(sizePolicy3)
-        self.Button_Tool_VoiceIdentifier_Audio_Dir_Output.setMaximumSize(QSize(24, 24))
-        self.Button_Tool_VoiceIdentifier_Audio_Dir_Output.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	color: rgb(255, 255, 255);\n"
-"	background-color: rgb(90, 90, 90);\n"
-"	padding: 6px;\n"
-"	border-width: 1px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	background-color: rgb(120, 120, 120);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.horizontalLayout_13.addWidget(self.Button_Tool_VoiceIdentifier_Audio_Dir_Output)
+        self.verticalLayout_4.addWidget(self.Frame_Tool_VoiceIdentifier_Duration_of_Audio)
 
 
-        self.verticalLayout_51.addWidget(self.ChildFrame_Tool_VoiceIdentifier_Audio_Dir_Output)
-
-
-        self.verticalLayout_29.addWidget(self.Frame_Tool_VoiceIdentifier_Audio_Dir_Output)
+        self.verticalLayout_29.addWidget(self.Frame_AdvanceSettings_Tool_VoiceIdentifier)
 
 
         self.verticalLayout_16.addWidget(self.GroupBox_EssentialParams_Tool_VoiceIdentifier)
-
-        self.GroupBox_OptionalParams_Tool_VoiceIdentifier = QGroupBox(self.ScrollArea_Right_WidgetContents_Tool_VoiceIdentifier)
-        self.GroupBox_OptionalParams_Tool_VoiceIdentifier.setObjectName(u"GroupBox_OptionalParams_Tool_VoiceIdentifier")
-        self.GroupBox_OptionalParams_Tool_VoiceIdentifier.setStyleSheet(u"QGroupBox {\n"
-"	font-size: 15px;\n"
-"	margin-top: 1.5ex;\n"
-"	color: rgb(255, 255, 255);\n"
-"	background-color: rgb(45, 45, 45);\n"
-"	border-width: 1px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(60, 60, 60);\n"
-"}\n"
-"QGroupBox::title {\n"
-"	left: 9px;\n"
-"	margin-left: 0px;\n"
-"	subcontrol-origin: margin;\n"
-"	subcontrol-position: top left;\n"
-"	padding: 3px;\n"
-"}")
-        self.verticalLayout_81 = QVBoxLayout(self.GroupBox_OptionalParams_Tool_VoiceIdentifier)
-        self.verticalLayout_81.setSpacing(0)
-        self.verticalLayout_81.setObjectName(u"verticalLayout_81")
-        self.verticalLayout_81.setContentsMargins(0, 12, 0, 12)
-        self.Frame_Tool_VoiceIdentifier_Speaker = QFrame(self.GroupBox_OptionalParams_Tool_VoiceIdentifier)
-        self.Frame_Tool_VoiceIdentifier_Speaker.setObjectName(u"Frame_Tool_VoiceIdentifier_Speaker")
-        self.Frame_Tool_VoiceIdentifier_Speaker.setMinimumSize(QSize(0, 123))
-        self.Frame_Tool_VoiceIdentifier_Speaker.setStyleSheet(u"QFrame {\n"
-"	color: rgb(255, 255, 255);\n"
-"	background-color: rgb(45, 45, 45);\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QFrame:hover {\n"
-"	background-color: rgb(60, 60, 60);\n"
-"}")
-        self.verticalLayout_77 = QVBoxLayout(self.Frame_Tool_VoiceIdentifier_Speaker)
-        self.verticalLayout_77.setSpacing(12)
-        self.verticalLayout_77.setObjectName(u"verticalLayout_77")
-        self.verticalLayout_77.setContentsMargins(21, 12, 21, 12)
-        self.Label_Tool_VoiceIdentifier_Speaker = QLabel(self.Frame_Tool_VoiceIdentifier_Speaker)
-        self.Label_Tool_VoiceIdentifier_Speaker.setObjectName(u"Label_Tool_VoiceIdentifier_Speaker")
-        self.Label_Tool_VoiceIdentifier_Speaker.setStyleSheet(u"QLabel {\n"
-"	/*text-align: center;*/\n"
-"	/*color: rgb(255, 255, 255);*/\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.verticalLayout_77.addWidget(self.Label_Tool_VoiceIdentifier_Speaker)
-
-        self.LineEdit_Tool_VoiceIdentifier_Speaker = QLineEdit(self.Frame_Tool_VoiceIdentifier_Speaker)
-        self.LineEdit_Tool_VoiceIdentifier_Speaker.setObjectName(u"LineEdit_Tool_VoiceIdentifier_Speaker")
-        self.LineEdit_Tool_VoiceIdentifier_Speaker.setStyleSheet(u"QLineEdit {\n"
-"	text-align: left;\n"
-"	color: rgb(255, 255, 255);\n"
-"	selection-background-color: darkgrey;\n"
-"	background-color: rgb(90, 90, 90);\n"
-"	padding: 1.5px;\n"
-"	border-width: 1px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QLineEdit:hover {\n"
-"	background-color: rgb(120, 120, 120);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.verticalLayout_77.addWidget(self.LineEdit_Tool_VoiceIdentifier_Speaker)
-
-
-        self.verticalLayout_81.addWidget(self.Frame_Tool_VoiceIdentifier_Speaker)
-
-
-        self.verticalLayout_16.addWidget(self.GroupBox_OptionalParams_Tool_VoiceIdentifier)
 
         self.ScrollArea_Right_Tool_VoiceIdentifier.setWidget(self.ScrollArea_Right_WidgetContents_Tool_VoiceIdentifier)
 
@@ -4493,7 +4575,7 @@ class Ui_MainWindow(object):
         self.ScrollArea_Right_Tool_VoiceTranscriber.setWidgetResizable(True)
         self.ScrollArea_Right_WidgetContents_Tool_VoiceTranscriber = QWidget()
         self.ScrollArea_Right_WidgetContents_Tool_VoiceTranscriber.setObjectName(u"ScrollArea_Right_WidgetContents_Tool_VoiceTranscriber")
-        self.ScrollArea_Right_WidgetContents_Tool_VoiceTranscriber.setGeometry(QRect(0, 0, 619, 1123))
+        self.ScrollArea_Right_WidgetContents_Tool_VoiceTranscriber.setGeometry(QRect(0, 0, 619, 1135))
         self.ScrollArea_Right_WidgetContents_Tool_VoiceTranscriber.setMinimumSize(QSize(0, 0))
         self.verticalLayout_19 = QVBoxLayout(self.ScrollArea_Right_WidgetContents_Tool_VoiceTranscriber)
         self.verticalLayout_19.setSpacing(21)
@@ -4518,10 +4600,10 @@ class Ui_MainWindow(object):
 "	subcontrol-position: top left;\n"
 "	padding: 3px;\n"
 "}")
-        self.verticalLayout_30 = QVBoxLayout(self.GroupBox_EssentialParams_Tool_VoiceTranscriber)
-        self.verticalLayout_30.setSpacing(0)
-        self.verticalLayout_30.setObjectName(u"verticalLayout_30")
-        self.verticalLayout_30.setContentsMargins(0, 12, 0, 12)
+        self.verticalLayout_32 = QVBoxLayout(self.GroupBox_EssentialParams_Tool_VoiceTranscriber)
+        self.verticalLayout_32.setSpacing(0)
+        self.verticalLayout_32.setObjectName(u"verticalLayout_32")
+        self.verticalLayout_32.setContentsMargins(0, 12, 0, 12)
         self.Frame_Tool_VoiceTranscriber_WAV_Dir = QFrame(self.GroupBox_EssentialParams_Tool_VoiceTranscriber)
         self.Frame_Tool_VoiceTranscriber_WAV_Dir.setObjectName(u"Frame_Tool_VoiceTranscriber_WAV_Dir")
         self.Frame_Tool_VoiceTranscriber_WAV_Dir.setMinimumSize(QSize(0, 123))
@@ -4629,9 +4711,170 @@ class Ui_MainWindow(object):
         self.verticalLayout_52.addWidget(self.ChildFrame_Tool_VoiceTranscriber_WAV_Dir)
 
 
-        self.verticalLayout_30.addWidget(self.Frame_Tool_VoiceTranscriber_WAV_Dir)
+        self.verticalLayout_32.addWidget(self.Frame_Tool_VoiceTranscriber_WAV_Dir)
 
-        self.Frame_Tool_VoiceTranscriber_Model_Dir = QFrame(self.GroupBox_EssentialParams_Tool_VoiceTranscriber)
+        self.Frame_Tool_VoiceTranscriber_SRT_Dir = QFrame(self.GroupBox_EssentialParams_Tool_VoiceTranscriber)
+        self.Frame_Tool_VoiceTranscriber_SRT_Dir.setObjectName(u"Frame_Tool_VoiceTranscriber_SRT_Dir")
+        self.Frame_Tool_VoiceTranscriber_SRT_Dir.setMinimumSize(QSize(0, 123))
+        self.Frame_Tool_VoiceTranscriber_SRT_Dir.setStyleSheet(u"QFrame {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: rgb(45, 45, 45);\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QFrame:hover {\n"
+"	background-color: rgb(60, 60, 60);\n"
+"}")
+        self.verticalLayout_58 = QVBoxLayout(self.Frame_Tool_VoiceTranscriber_SRT_Dir)
+        self.verticalLayout_58.setSpacing(12)
+        self.verticalLayout_58.setObjectName(u"verticalLayout_58")
+        self.verticalLayout_58.setContentsMargins(21, 12, 21, 12)
+        self.Label_Tool_VoiceTranscriber_SRT_Dir = QLabel(self.Frame_Tool_VoiceTranscriber_SRT_Dir)
+        self.Label_Tool_VoiceTranscriber_SRT_Dir.setObjectName(u"Label_Tool_VoiceTranscriber_SRT_Dir")
+        self.Label_Tool_VoiceTranscriber_SRT_Dir.setStyleSheet(u"QLabel {\n"
+"	/*text-align: center;*/\n"
+"	/*color: rgb(255, 255, 255);*/\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.verticalLayout_58.addWidget(self.Label_Tool_VoiceTranscriber_SRT_Dir)
+
+        self.ChildFrame_Tool_VoiceTranscriber_SRT_Dir = QFrame(self.Frame_Tool_VoiceTranscriber_SRT_Dir)
+        self.ChildFrame_Tool_VoiceTranscriber_SRT_Dir.setObjectName(u"ChildFrame_Tool_VoiceTranscriber_SRT_Dir")
+        sizePolicy2.setHeightForWidth(self.ChildFrame_Tool_VoiceTranscriber_SRT_Dir.sizePolicy().hasHeightForWidth())
+        self.ChildFrame_Tool_VoiceTranscriber_SRT_Dir.setSizePolicy(sizePolicy2)
+        self.ChildFrame_Tool_VoiceTranscriber_SRT_Dir.setStyleSheet(u"QFrame {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QFrame:hover {\n"
+"	background-color: transparent;\n"
+"}")
+        self.horizontalLayout_16 = QHBoxLayout(self.ChildFrame_Tool_VoiceTranscriber_SRT_Dir)
+        self.horizontalLayout_16.setSpacing(12)
+        self.horizontalLayout_16.setObjectName(u"horizontalLayout_16")
+        self.horizontalLayout_16.setContentsMargins(0, 0, 0, 0)
+        self.LineEdit_Tool_VoiceTranscriber_SRT_Dir = QLineEdit(self.ChildFrame_Tool_VoiceTranscriber_SRT_Dir)
+        self.LineEdit_Tool_VoiceTranscriber_SRT_Dir.setObjectName(u"LineEdit_Tool_VoiceTranscriber_SRT_Dir")
+        self.LineEdit_Tool_VoiceTranscriber_SRT_Dir.setStyleSheet(u"QLineEdit {\n"
+"	text-align: left;\n"
+"	color: rgb(255, 255, 255);\n"
+"	selection-background-color: darkgrey;\n"
+"	background-color: rgb(90, 90, 90);\n"
+"	padding: 1.5px;\n"
+"	border-width: 1px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QLineEdit:hover {\n"
+"	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.horizontalLayout_16.addWidget(self.LineEdit_Tool_VoiceTranscriber_SRT_Dir)
+
+        self.Button_Tool_VoiceTranscriber_SRT_Dir = QPushButton(self.ChildFrame_Tool_VoiceTranscriber_SRT_Dir)
+        self.Button_Tool_VoiceTranscriber_SRT_Dir.setObjectName(u"Button_Tool_VoiceTranscriber_SRT_Dir")
+        sizePolicy3.setHeightForWidth(self.Button_Tool_VoiceTranscriber_SRT_Dir.sizePolicy().hasHeightForWidth())
+        self.Button_Tool_VoiceTranscriber_SRT_Dir.setSizePolicy(sizePolicy3)
+        self.Button_Tool_VoiceTranscriber_SRT_Dir.setMaximumSize(QSize(24, 24))
+        self.Button_Tool_VoiceTranscriber_SRT_Dir.setStyleSheet(u"QPushButton {\n"
+"	text-align: center;\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: rgb(90, 90, 90);\n"
+"	padding: 6px;\n"
+"	border-width: 1px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.horizontalLayout_16.addWidget(self.Button_Tool_VoiceTranscriber_SRT_Dir)
+
+
+        self.verticalLayout_58.addWidget(self.ChildFrame_Tool_VoiceTranscriber_SRT_Dir)
+
+
+        self.verticalLayout_32.addWidget(self.Frame_Tool_VoiceTranscriber_SRT_Dir)
+
+        self.CheckBox_Toggle_AdvanceSettings_Tool_VoiceTranscriber = QCheckBox(self.GroupBox_EssentialParams_Tool_VoiceTranscriber)
+        self.CheckBox_Toggle_AdvanceSettings_Tool_VoiceTranscriber.setObjectName(u"CheckBox_Toggle_AdvanceSettings_Tool_VoiceTranscriber")
+        self.CheckBox_Toggle_AdvanceSettings_Tool_VoiceTranscriber.setStyleSheet(u"QCheckBox {\n"
+"	font-size: 12px;\n"
+"	font-weight: 630;\n"
+"	spacing: 12px;\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QCheckBox:hover {\n"
+"	color: rgb(255, 255, 255);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator {\n"
+"	width: 12px;\n"
+"	height: 12px;\n"
+"    background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QCheckBox::indicator:hover {\n"
+"	background-color: transparent;\n"
+"}\n"
+"QCheckBox::indicator:unchecked {\n"
+"	border-image: url(:/CheckBox_Icon/Sources/RightCaret.png);\n"
+"}\n"
+"QCheckBox::indicator:checked {\n"
+"	border-image: url(:/CheckBox_Icon/Sources/DownCaret.png);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.verticalLayout_32.addWidget(self.CheckBox_Toggle_AdvanceSettings_Tool_VoiceTranscriber)
+
+        self.Frame_AdvanceSettings_Tool_VoiceTranscriber = QFrame(self.GroupBox_EssentialParams_Tool_VoiceTranscriber)
+        self.Frame_AdvanceSettings_Tool_VoiceTranscriber.setObjectName(u"Frame_AdvanceSettings_Tool_VoiceTranscriber")
+        self.verticalLayout_30 = QVBoxLayout(self.Frame_AdvanceSettings_Tool_VoiceTranscriber)
+        self.verticalLayout_30.setSpacing(0)
+        self.verticalLayout_30.setObjectName(u"verticalLayout_30")
+        self.verticalLayout_30.setContentsMargins(0, 0, 0, 0)
+        self.Frame_Tool_VoiceTranscriber_Model_Dir = QFrame(self.Frame_AdvanceSettings_Tool_VoiceTranscriber)
         self.Frame_Tool_VoiceTranscriber_Model_Dir.setObjectName(u"Frame_Tool_VoiceTranscriber_Model_Dir")
         self.Frame_Tool_VoiceTranscriber_Model_Dir.setMinimumSize(QSize(0, 123))
         self.Frame_Tool_VoiceTranscriber_Model_Dir.setStyleSheet(u"QFrame {\n"
@@ -4740,7 +4983,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_30.addWidget(self.Frame_Tool_VoiceTranscriber_Model_Dir)
 
-        self.Frame_Tool_VoiceTranscriber_Model_Name = QFrame(self.GroupBox_EssentialParams_Tool_VoiceTranscriber)
+        self.Frame_Tool_VoiceTranscriber_Model_Name = QFrame(self.Frame_AdvanceSettings_Tool_VoiceTranscriber)
         self.Frame_Tool_VoiceTranscriber_Model_Name.setObjectName(u"Frame_Tool_VoiceTranscriber_Model_Name")
         self.Frame_Tool_VoiceTranscriber_Model_Name.setMinimumSize(QSize(0, 123))
         self.Frame_Tool_VoiceTranscriber_Model_Name.setStyleSheet(u"QFrame {\n"
@@ -4938,7 +5181,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_30.addWidget(self.Frame_Tool_VoiceTranscriber_Model_Name)
 
-        self.Frame_Tool_VoiceTranscriber_Verbose = QFrame(self.GroupBox_EssentialParams_Tool_VoiceTranscriber)
+        self.Frame_Tool_VoiceTranscriber_Verbose = QFrame(self.Frame_AdvanceSettings_Tool_VoiceTranscriber)
         self.Frame_Tool_VoiceTranscriber_Verbose.setObjectName(u"Frame_Tool_VoiceTranscriber_Verbose")
         self.Frame_Tool_VoiceTranscriber_Verbose.setMinimumSize(QSize(0, 123))
         self.Frame_Tool_VoiceTranscriber_Verbose.setStyleSheet(u"QFrame {\n"
@@ -4971,31 +5214,30 @@ class Ui_MainWindow(object):
         self.CheckBox_Tool_VoiceTranscriber_Verbose = QCheckBox(self.Frame_Tool_VoiceTranscriber_Verbose)
         self.CheckBox_Tool_VoiceTranscriber_Verbose.setObjectName(u"CheckBox_Tool_VoiceTranscriber_Verbose")
         self.CheckBox_Tool_VoiceTranscriber_Verbose.setStyleSheet(u"QCheckBox {\n"
-"	spacing: 12px;\n"
-"	color: rgb(255, 255, 255);\n"
+"	font-size: 12px;\n"
+"	spacing: 12.3px;\n"
+"	color: rgba(255, 255, 255, 210);\n"
 "	background-color: transparent;\n"
 "	padding: 0px;\n"
 "	border-width: 0px;\n"
 "	border-radius: 6px;\n"
 "	border-style: solid;\n"
-"	border-color: transparent;\n"
 "}\n"
 "QCheckBox:hover {\n"
-"	background-color:transparent;\n"
+"	color: rgb(255, 255, 255);\n"
 "}\n"
 "\n"
 "QCheckBox::indicator {\n"
-"	width: 30px;\n"
-"	height: 30px;\n"
+"	width: 24px;\n"
+"	height: 24px;\n"
 "    background-color: transparent;\n"
-"	padding: 0px;\n"
+"	padding: 1.2px;\n"
 "	border-width: 0px;\n"
 "	border-radius: 6px;\n"
 "	border-style: solid;\n"
-"	border-color: transparent;\n"
 "}\n"
 "QCheckBox::indicator:hover {\n"
-"	background-color:rgb(90, 90, 90);\n"
+"	background-color: rgba(255, 255, 255, 21);\n"
 "}\n"
 "QCheckBox::indicator:unchecked {\n"
 "	border-image: url(:/CheckBox_Icon/Sources/ToggleOff.png);\n"
@@ -5017,7 +5259,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_30.addWidget(self.Frame_Tool_VoiceTranscriber_Verbose)
 
-        self.Frame_Tool_VoiceTranscriber_Condition_on_Previous_Text = QFrame(self.GroupBox_EssentialParams_Tool_VoiceTranscriber)
+        self.Frame_Tool_VoiceTranscriber_Condition_on_Previous_Text = QFrame(self.Frame_AdvanceSettings_Tool_VoiceTranscriber)
         self.Frame_Tool_VoiceTranscriber_Condition_on_Previous_Text.setObjectName(u"Frame_Tool_VoiceTranscriber_Condition_on_Previous_Text")
         self.Frame_Tool_VoiceTranscriber_Condition_on_Previous_Text.setMinimumSize(QSize(0, 123))
         self.Frame_Tool_VoiceTranscriber_Condition_on_Previous_Text.setStyleSheet(u"QFrame {\n"
@@ -5050,31 +5292,30 @@ class Ui_MainWindow(object):
         self.CheckBox_Tool_VoiceTranscriber_Condition_on_Previous_Text = QCheckBox(self.Frame_Tool_VoiceTranscriber_Condition_on_Previous_Text)
         self.CheckBox_Tool_VoiceTranscriber_Condition_on_Previous_Text.setObjectName(u"CheckBox_Tool_VoiceTranscriber_Condition_on_Previous_Text")
         self.CheckBox_Tool_VoiceTranscriber_Condition_on_Previous_Text.setStyleSheet(u"QCheckBox {\n"
-"	spacing: 12px;\n"
-"	color: rgb(255, 255, 255);\n"
+"	font-size: 12px;\n"
+"	spacing: 12.3px;\n"
+"	color: rgba(255, 255, 255, 210);\n"
 "	background-color: transparent;\n"
 "	padding: 0px;\n"
 "	border-width: 0px;\n"
 "	border-radius: 6px;\n"
 "	border-style: solid;\n"
-"	border-color: transparent;\n"
 "}\n"
 "QCheckBox:hover {\n"
-"	background-color:transparent;\n"
+"	color: rgb(255, 255, 255);\n"
 "}\n"
 "\n"
 "QCheckBox::indicator {\n"
-"	width: 30px;\n"
-"	height: 30px;\n"
+"	width: 24px;\n"
+"	height: 24px;\n"
 "    background-color: transparent;\n"
-"	padding: 0px;\n"
+"	padding: 1.2px;\n"
 "	border-width: 0px;\n"
 "	border-radius: 6px;\n"
 "	border-style: solid;\n"
-"	border-color: transparent;\n"
 "}\n"
 "QCheckBox::indicator:hover {\n"
-"	background-color:rgb(90, 90, 90);\n"
+"	background-color: rgba(255, 255, 255, 21);\n"
 "}\n"
 "QCheckBox::indicator:unchecked {\n"
 "	border-image: url(:/CheckBox_Icon/Sources/ToggleOff.png);\n"
@@ -5096,7 +5337,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_30.addWidget(self.Frame_Tool_VoiceTranscriber_Condition_on_Previous_Text)
 
-        self.Frame_Tool_VoiceTranscriber_fp16 = QFrame(self.GroupBox_EssentialParams_Tool_VoiceTranscriber)
+        self.Frame_Tool_VoiceTranscriber_fp16 = QFrame(self.Frame_AdvanceSettings_Tool_VoiceTranscriber)
         self.Frame_Tool_VoiceTranscriber_fp16.setObjectName(u"Frame_Tool_VoiceTranscriber_fp16")
         self.Frame_Tool_VoiceTranscriber_fp16.setMinimumSize(QSize(0, 123))
         self.Frame_Tool_VoiceTranscriber_fp16.setStyleSheet(u"QFrame {\n"
@@ -5129,31 +5370,30 @@ class Ui_MainWindow(object):
         self.CheckBox_Tool_VoiceTranscriber_fp16 = QCheckBox(self.Frame_Tool_VoiceTranscriber_fp16)
         self.CheckBox_Tool_VoiceTranscriber_fp16.setObjectName(u"CheckBox_Tool_VoiceTranscriber_fp16")
         self.CheckBox_Tool_VoiceTranscriber_fp16.setStyleSheet(u"QCheckBox {\n"
-"	spacing: 12px;\n"
-"	color: rgb(255, 255, 255);\n"
+"	font-size: 12px;\n"
+"	spacing: 12.3px;\n"
+"	color: rgba(255, 255, 255, 210);\n"
 "	background-color: transparent;\n"
 "	padding: 0px;\n"
 "	border-width: 0px;\n"
 "	border-radius: 6px;\n"
 "	border-style: solid;\n"
-"	border-color: transparent;\n"
 "}\n"
 "QCheckBox:hover {\n"
-"	background-color:transparent;\n"
+"	color: rgb(255, 255, 255);\n"
 "}\n"
 "\n"
 "QCheckBox::indicator {\n"
-"	width: 30px;\n"
-"	height: 30px;\n"
+"	width: 24px;\n"
+"	height: 24px;\n"
 "    background-color: transparent;\n"
-"	padding: 0px;\n"
+"	padding: 1.2px;\n"
 "	border-width: 0px;\n"
 "	border-radius: 6px;\n"
 "	border-style: solid;\n"
-"	border-color: transparent;\n"
 "}\n"
 "QCheckBox::indicator:hover {\n"
-"	background-color:rgb(90, 90, 90);\n"
+"	background-color: rgba(255, 255, 255, 21);\n"
 "}\n"
 "QCheckBox::indicator:unchecked {\n"
 "	border-image: url(:/CheckBox_Icon/Sources/ToggleOff.png);\n"
@@ -5175,114 +5415,8 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_30.addWidget(self.Frame_Tool_VoiceTranscriber_fp16)
 
-        self.Frame_Tool_VoiceTranscriber_SRT_Dir = QFrame(self.GroupBox_EssentialParams_Tool_VoiceTranscriber)
-        self.Frame_Tool_VoiceTranscriber_SRT_Dir.setObjectName(u"Frame_Tool_VoiceTranscriber_SRT_Dir")
-        self.Frame_Tool_VoiceTranscriber_SRT_Dir.setMinimumSize(QSize(0, 123))
-        self.Frame_Tool_VoiceTranscriber_SRT_Dir.setStyleSheet(u"QFrame {\n"
-"	color: rgb(255, 255, 255);\n"
-"	background-color: rgb(45, 45, 45);\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QFrame:hover {\n"
-"	background-color: rgb(60, 60, 60);\n"
-"}")
-        self.verticalLayout_58 = QVBoxLayout(self.Frame_Tool_VoiceTranscriber_SRT_Dir)
-        self.verticalLayout_58.setSpacing(12)
-        self.verticalLayout_58.setObjectName(u"verticalLayout_58")
-        self.verticalLayout_58.setContentsMargins(21, 12, 21, 12)
-        self.Label_Tool_VoiceTranscriber_SRT_Dir = QLabel(self.Frame_Tool_VoiceTranscriber_SRT_Dir)
-        self.Label_Tool_VoiceTranscriber_SRT_Dir.setObjectName(u"Label_Tool_VoiceTranscriber_SRT_Dir")
-        self.Label_Tool_VoiceTranscriber_SRT_Dir.setStyleSheet(u"QLabel {\n"
-"	/*text-align: center;*/\n"
-"	/*color: rgb(255, 255, 255);*/\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}")
 
-        self.verticalLayout_58.addWidget(self.Label_Tool_VoiceTranscriber_SRT_Dir)
-
-        self.ChildFrame_Tool_VoiceTranscriber_SRT_Dir = QFrame(self.Frame_Tool_VoiceTranscriber_SRT_Dir)
-        self.ChildFrame_Tool_VoiceTranscriber_SRT_Dir.setObjectName(u"ChildFrame_Tool_VoiceTranscriber_SRT_Dir")
-        sizePolicy2.setHeightForWidth(self.ChildFrame_Tool_VoiceTranscriber_SRT_Dir.sizePolicy().hasHeightForWidth())
-        self.ChildFrame_Tool_VoiceTranscriber_SRT_Dir.setSizePolicy(sizePolicy2)
-        self.ChildFrame_Tool_VoiceTranscriber_SRT_Dir.setStyleSheet(u"QFrame {\n"
-"	color: rgb(255, 255, 255);\n"
-"	background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QFrame:hover {\n"
-"	background-color: transparent;\n"
-"}")
-        self.horizontalLayout_16 = QHBoxLayout(self.ChildFrame_Tool_VoiceTranscriber_SRT_Dir)
-        self.horizontalLayout_16.setSpacing(12)
-        self.horizontalLayout_16.setObjectName(u"horizontalLayout_16")
-        self.horizontalLayout_16.setContentsMargins(0, 0, 0, 0)
-        self.LineEdit_Tool_VoiceTranscriber_SRT_Dir = QLineEdit(self.ChildFrame_Tool_VoiceTranscriber_SRT_Dir)
-        self.LineEdit_Tool_VoiceTranscriber_SRT_Dir.setObjectName(u"LineEdit_Tool_VoiceTranscriber_SRT_Dir")
-        self.LineEdit_Tool_VoiceTranscriber_SRT_Dir.setStyleSheet(u"QLineEdit {\n"
-"	text-align: left;\n"
-"	color: rgb(255, 255, 255);\n"
-"	selection-background-color: darkgrey;\n"
-"	background-color: rgb(90, 90, 90);\n"
-"	padding: 1.5px;\n"
-"	border-width: 1px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QLineEdit:hover {\n"
-"	background-color: rgb(120, 120, 120);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.horizontalLayout_16.addWidget(self.LineEdit_Tool_VoiceTranscriber_SRT_Dir)
-
-        self.Button_Tool_VoiceTranscriber_SRT_Dir = QPushButton(self.ChildFrame_Tool_VoiceTranscriber_SRT_Dir)
-        self.Button_Tool_VoiceTranscriber_SRT_Dir.setObjectName(u"Button_Tool_VoiceTranscriber_SRT_Dir")
-        sizePolicy3.setHeightForWidth(self.Button_Tool_VoiceTranscriber_SRT_Dir.sizePolicy().hasHeightForWidth())
-        self.Button_Tool_VoiceTranscriber_SRT_Dir.setSizePolicy(sizePolicy3)
-        self.Button_Tool_VoiceTranscriber_SRT_Dir.setMaximumSize(QSize(24, 24))
-        self.Button_Tool_VoiceTranscriber_SRT_Dir.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	color: rgb(255, 255, 255);\n"
-"	background-color: rgb(90, 90, 90);\n"
-"	padding: 6px;\n"
-"	border-width: 1px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	background-color: rgb(120, 120, 120);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.horizontalLayout_16.addWidget(self.Button_Tool_VoiceTranscriber_SRT_Dir)
-
-
-        self.verticalLayout_58.addWidget(self.ChildFrame_Tool_VoiceTranscriber_SRT_Dir)
-
-
-        self.verticalLayout_30.addWidget(self.Frame_Tool_VoiceTranscriber_SRT_Dir)
+        self.verticalLayout_32.addWidget(self.Frame_AdvanceSettings_Tool_VoiceTranscriber)
 
 
         self.verticalLayout_19.addWidget(self.GroupBox_EssentialParams_Tool_VoiceTranscriber)
@@ -5995,7 +6129,7 @@ class Ui_MainWindow(object):
         self.ScrollArea_Right_Tool_DatasetCreator.setWidgetResizable(True)
         self.ScrollArea_Right_WidgetContents_Tool_DatasetCreator = QWidget()
         self.ScrollArea_Right_WidgetContents_Tool_DatasetCreator.setObjectName(u"ScrollArea_Right_WidgetContents_Tool_DatasetCreator")
-        self.ScrollArea_Right_WidgetContents_Tool_DatasetCreator.setGeometry(QRect(0, 0, 619, 1187))
+        self.ScrollArea_Right_WidgetContents_Tool_DatasetCreator.setGeometry(QRect(0, 0, 619, 1201))
         self.ScrollArea_Right_WidgetContents_Tool_DatasetCreator.setMinimumSize(QSize(0, 0))
         self.verticalLayout_20 = QVBoxLayout(self.ScrollArea_Right_WidgetContents_Tool_DatasetCreator)
         self.verticalLayout_20.setSpacing(21)
@@ -6020,10 +6154,10 @@ class Ui_MainWindow(object):
 "	subcontrol-position: top left;\n"
 "	padding: 3px;\n"
 "}")
-        self.verticalLayout_4 = QVBoxLayout(self.GroupBox_EssentialParams_Tool_DatasetCreator)
-        self.verticalLayout_4.setSpacing(0)
-        self.verticalLayout_4.setObjectName(u"verticalLayout_4")
-        self.verticalLayout_4.setContentsMargins(0, 12, 0, 12)
+        self.verticalLayout_111 = QVBoxLayout(self.GroupBox_EssentialParams_Tool_DatasetCreator)
+        self.verticalLayout_111.setSpacing(0)
+        self.verticalLayout_111.setObjectName(u"verticalLayout_111")
+        self.verticalLayout_111.setContentsMargins(0, 12, 0, 12)
         self.Frame_Tool_DatasetCreator_WAV_Dir = QFrame(self.GroupBox_EssentialParams_Tool_DatasetCreator)
         self.Frame_Tool_DatasetCreator_WAV_Dir.setObjectName(u"Frame_Tool_DatasetCreator_WAV_Dir")
         self.Frame_Tool_DatasetCreator_WAV_Dir.setMinimumSize(QSize(0, 123))
@@ -6130,394 +6264,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_60.addWidget(self.ChildFrame_Tool_DatasetCreator_WAV_Dir)
 
 
-        self.verticalLayout_4.addWidget(self.Frame_Tool_DatasetCreator_WAV_Dir)
-
-        self.Frame_Tool_DatasetCreator_Sample_Rate = QFrame(self.GroupBox_EssentialParams_Tool_DatasetCreator)
-        self.Frame_Tool_DatasetCreator_Sample_Rate.setObjectName(u"Frame_Tool_DatasetCreator_Sample_Rate")
-        self.Frame_Tool_DatasetCreator_Sample_Rate.setMinimumSize(QSize(0, 123))
-        self.Frame_Tool_DatasetCreator_Sample_Rate.setStyleSheet(u"QFrame {\n"
-"	color: rgb(255, 255, 255);\n"
-"	background-color: rgb(45, 45, 45);\n"
-"	border: 0px solid;\n"
-"}\n"
-"QFrame:hover {\n"
-"	background-color: rgb(60, 60, 60);\n"
-"}")
-        self.verticalLayout_61 = QVBoxLayout(self.Frame_Tool_DatasetCreator_Sample_Rate)
-        self.verticalLayout_61.setSpacing(12)
-        self.verticalLayout_61.setObjectName(u"verticalLayout_61")
-        self.verticalLayout_61.setContentsMargins(21, 12, 21, 12)
-        self.Label_Tool_DatasetCreator_Sample_Rate = QLabel(self.Frame_Tool_DatasetCreator_Sample_Rate)
-        self.Label_Tool_DatasetCreator_Sample_Rate.setObjectName(u"Label_Tool_DatasetCreator_Sample_Rate")
-        self.Label_Tool_DatasetCreator_Sample_Rate.setStyleSheet(u"QLabel {\n"
-"	/*text-align: center;*/\n"
-"	/*color: rgb(255, 255, 255);*/\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.verticalLayout_61.addWidget(self.Label_Tool_DatasetCreator_Sample_Rate)
-
-        self.SpinBox_Tool_DatasetCreator_Sample_Rate = QSpinBox(self.Frame_Tool_DatasetCreator_Sample_Rate)
-        self.SpinBox_Tool_DatasetCreator_Sample_Rate.setObjectName(u"SpinBox_Tool_DatasetCreator_Sample_Rate")
-        self.SpinBox_Tool_DatasetCreator_Sample_Rate.setStyleSheet(u"QSpinBox {\n"
-"	text-align: left;\n"
-"	color: rgb(255, 255, 255);\n"
-"	selection-background-color: darkgrey;\n"
-"	background-color: rgb(90, 90, 90);\n"
-"	padding: 1.5px;\n"
-"	border-width: 1px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QSpinBox:hover {\n"
-"	background-color: rgb(120, 120, 120);\n"
-"}\n"
-"\n"
-"QSpinBox::up-button {\n"
-"	subcontrol-origin: padding;\n"
-"	subcontrol-position: top right;\n"
-"	margin-right: 3px;\n"
-"	border-width: 0px;\n"
-"}\n"
-"QSpinBox::up-arrow {\n"
-"	border-image: url(:/(Double)SpinBox_Icon/Sources/UpArrow.png);\n"
-"}\n"
-"\n"
-"QSpinBox::down-button {\n"
-"	subcontrol-origin: padding;\n"
-"	subcontrol-position: bottom right;\n"
-"	margin-right: 3px;\n"
-"	border-width: 0px;\n"
-"}\n"
-"QSpinBox::down-arrow {\n"
-"	border-image: url(:/(Double)SpinBox_Icon/Sources/DownArrow.png);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;"
-                        "\n"
-"}")
-        self.SpinBox_Tool_DatasetCreator_Sample_Rate.setMinimum(-999999)
-        self.SpinBox_Tool_DatasetCreator_Sample_Rate.setMaximum(999999)
-
-        self.verticalLayout_61.addWidget(self.SpinBox_Tool_DatasetCreator_Sample_Rate)
-
-
-        self.verticalLayout_4.addWidget(self.Frame_Tool_DatasetCreator_Sample_Rate)
-
-        self.Frame_Tool_DatasetCreator_Subtype = QFrame(self.GroupBox_EssentialParams_Tool_DatasetCreator)
-        self.Frame_Tool_DatasetCreator_Subtype.setObjectName(u"Frame_Tool_DatasetCreator_Subtype")
-        self.Frame_Tool_DatasetCreator_Subtype.setMinimumSize(QSize(0, 123))
-        self.Frame_Tool_DatasetCreator_Subtype.setStyleSheet(u"QFrame {\n"
-"	color: rgb(255, 255, 255);\n"
-"	background-color: rgb(45, 45, 45);\n"
-"	border: 0px solid;\n"
-"}\n"
-"QFrame:hover {\n"
-"	background-color: rgb(60, 60, 60);\n"
-"}")
-        self.verticalLayout_62 = QVBoxLayout(self.Frame_Tool_DatasetCreator_Subtype)
-        self.verticalLayout_62.setSpacing(12)
-        self.verticalLayout_62.setObjectName(u"verticalLayout_62")
-        self.verticalLayout_62.setContentsMargins(21, 12, 21, 12)
-        self.Label_Tool_DatasetCreator_Subtype = QLabel(self.Frame_Tool_DatasetCreator_Subtype)
-        self.Label_Tool_DatasetCreator_Subtype.setObjectName(u"Label_Tool_DatasetCreator_Subtype")
-        self.Label_Tool_DatasetCreator_Subtype.setStyleSheet(u"QLabel {\n"
-"	/*text-align: center;*/\n"
-"	/*color: rgb(255, 255, 255);*/\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.verticalLayout_62.addWidget(self.Label_Tool_DatasetCreator_Subtype)
-
-        self.ComboBox_Tool_DatasetCreator_Subtype = QComboBox(self.Frame_Tool_DatasetCreator_Subtype)
-        self.ComboBox_Tool_DatasetCreator_Subtype.setObjectName(u"ComboBox_Tool_DatasetCreator_Subtype")
-        self.ComboBox_Tool_DatasetCreator_Subtype.setStyleSheet(u"QComboBox {\n"
-"	text-align: left;\n"
-"	color: rgb(255, 255, 255);\n"
-"	background-color: rgb(90, 90, 90);\n"
-"	padding: 1.5px;\n"
-"	border-width: 1px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QComboBox:hover {\n"
-"	background-color: rgb(120, 120, 120);\n"
-"}\n"
-"\n"
-"QComboBox::drop-down {\n"
-"	subcontrol-origin: padding;\n"
-"	subcontrol-position: right;\n"
-"	margin-right: 3px;\n"
-"	border-width: 0px;\n"
-"}\n"
-"QComboBox::down-arrow {\n"
-"	border-image: url(:/ComboBox_Icon/Sources/DownArrow.png);\n"
-"}\n"
-"\n"
-"\n"
-"QComboBox QAbstractItemView {\n"
-"	color: rgb(255, 255, 255);\n"
-"	background-color: rgb(90, 90, 90);\n"
-"	padding: -1.5px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"	outline: 0px;\n"
-"}\n"
-"\n"
-"QComboBox QAbstractItemView::item {\n"
-"	/* height: 30px; */\n"
-"	background-color: rgb(90, 90, 90);\n"
-"	padding: 1.5px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	b"
-                        "order-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QComboBox QAbstractItemView::item:selected {\n"
-"	background-color: darkgrey;\n"
-"}\n"
-"\n"
-"\n"
-"QComboBox QAbstractScrollArea QScrollBar::vertical {\n"
-"	width: 9px;\n"
-"	background-color: rgb(45, 45, 45);\n"
-"	border-width: 1px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: transparent;\n"
-"	margin: 0px;\n"
-"}\n"
-"QComboBox QAbstractScrollArea QScrollBar::vertical:hover {\n"
-"	background-color: rgb(60, 60, 60);\n"
-"}\n"
-"\n"
-"QComboBox QAbstractScrollArea QScrollBar::add-line:vertical {\n"
-"	height: 0px;\n"
-"	background-color: transparent;\n"
-"	subcontrol-position: left;\n"
-"	subcontrol-origin: margin;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"\n"
-"QComboBox QAbstractScrollArea QScrollBar::sub-line:vertical {\n"
-"	height: 0px;\n"
-"	background-color: transparent;\n"
-"	subcontrol-position: right;\n"
-"	subcontrol-origin: margin;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-""
-                        "	border-style: solid;\n"
-"}\n"
-"\n"
-"QComboBox QAbstractScrollArea QScrollBar::add-page:vertical, QComboBox QAbstractScrollArea QScrollBar::sub-page:vertical {\n"
-"	width: 0px;\n"
-"	height: 0px;\n"
-"	background-color: transparent;\n"
-"}\n"
-"\n"
-"QComboBox QAbstractScrollArea QScrollBar::handle:vertical {\n"
-"	background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QComboBox QAbstractScrollArea QScrollBar::handle:vertical:hover {\n"
-"	background-color: rgb(120, 120, 120);\n"
-"}\n"
-"\n"
-"\n"
-"QComboBox QAbstractScrollArea QScrollBar::horizontal {\n"
-"	height: 9px;\n"
-"	background-color: rgb(45, 45, 45);\n"
-"	border-width: 1px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: transparent;\n"
-"	margin: 0px;\n"
-"}\n"
-"QComboBox QAbstractScrollArea QScrollBar::horizontal:hover {\n"
-"	background-color: rgb(60, 60, 60);\n"
-"}\n"
-"\n"
-"QComboBox QAbstractScrollArea QScrollBar::add-line:horizontal {\n"
-"	width: 0px;\n"
-"	background-color: t"
-                        "ransparent;\n"
-"	subcontrol-position: left;\n"
-"	subcontrol-origin: margin;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"\n"
-"QComboBox QAbstractScrollArea QScrollBar::sub-line:horizontal {\n"
-"	width: 0px;\n"
-"	background-color: transparent;\n"
-"	subcontrol-position: right;\n"
-"	subcontrol-origin: margin;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"\n"
-"QComboBox QAbstractScrollArea QScrollBar::add-page:horizontal, QComboBox QAbstractScrollArea QScrollBar::sub-page:horizontal {\n"
-"	width: 0px;\n"
-"	height: 0px;\n"
-"	background-color: transparent;\n"
-"}\n"
-"\n"
-"QComboBox QAbstractScrollArea QScrollBar::handle:horizontal {\n"
-"	background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QComboBox QAbstractScrollArea QScrollBar::handle:horizontal:hover {\n"
-"	background-color: rgb(120, 120, 120);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    bac"
-                        "kground-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.verticalLayout_62.addWidget(self.ComboBox_Tool_DatasetCreator_Subtype)
-
-
-        self.verticalLayout_4.addWidget(self.Frame_Tool_DatasetCreator_Subtype)
-
-        self.Frame_Tool_DatasetCreator_WAV_Dir_Split = QFrame(self.GroupBox_EssentialParams_Tool_DatasetCreator)
-        self.Frame_Tool_DatasetCreator_WAV_Dir_Split.setObjectName(u"Frame_Tool_DatasetCreator_WAV_Dir_Split")
-        self.Frame_Tool_DatasetCreator_WAV_Dir_Split.setMinimumSize(QSize(0, 123))
-        self.Frame_Tool_DatasetCreator_WAV_Dir_Split.setStyleSheet(u"QFrame {\n"
-"	color: rgb(255, 255, 255);\n"
-"	background-color: rgb(45, 45, 45);\n"
-"	border: 0px solid;\n"
-"}\n"
-"QFrame:hover {\n"
-"	background-color: rgb(60, 60, 60);\n"
-"}")
-        self.verticalLayout_63 = QVBoxLayout(self.Frame_Tool_DatasetCreator_WAV_Dir_Split)
-        self.verticalLayout_63.setSpacing(12)
-        self.verticalLayout_63.setObjectName(u"verticalLayout_63")
-        self.verticalLayout_63.setContentsMargins(21, 12, 21, 12)
-        self.Label_Tool_DatasetCreator_WAV_Dir_Split = QLabel(self.Frame_Tool_DatasetCreator_WAV_Dir_Split)
-        self.Label_Tool_DatasetCreator_WAV_Dir_Split.setObjectName(u"Label_Tool_DatasetCreator_WAV_Dir_Split")
-        self.Label_Tool_DatasetCreator_WAV_Dir_Split.setStyleSheet(u"QLabel {\n"
-"	/*text-align: center;*/\n"
-"	/*color: rgb(255, 255, 255);*/\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.verticalLayout_63.addWidget(self.Label_Tool_DatasetCreator_WAV_Dir_Split)
-
-        self.ChildFrame_Tool_DatasetCreator_WAV_Dir_Split = QFrame(self.Frame_Tool_DatasetCreator_WAV_Dir_Split)
-        self.ChildFrame_Tool_DatasetCreator_WAV_Dir_Split.setObjectName(u"ChildFrame_Tool_DatasetCreator_WAV_Dir_Split")
-        sizePolicy2.setHeightForWidth(self.ChildFrame_Tool_DatasetCreator_WAV_Dir_Split.sizePolicy().hasHeightForWidth())
-        self.ChildFrame_Tool_DatasetCreator_WAV_Dir_Split.setSizePolicy(sizePolicy2)
-        self.ChildFrame_Tool_DatasetCreator_WAV_Dir_Split.setStyleSheet(u"QFrame {\n"
-"	color: rgb(255, 255, 255);\n"
-"	background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QFrame:hover {\n"
-"	background-color: transparent;\n"
-"}")
-        self.horizontalLayout_18 = QHBoxLayout(self.ChildFrame_Tool_DatasetCreator_WAV_Dir_Split)
-        self.horizontalLayout_18.setSpacing(12)
-        self.horizontalLayout_18.setObjectName(u"horizontalLayout_18")
-        self.horizontalLayout_18.setContentsMargins(0, 0, 0, 0)
-        self.LineEdit_Tool_DatasetCreator_WAV_Dir_Split = QLineEdit(self.ChildFrame_Tool_DatasetCreator_WAV_Dir_Split)
-        self.LineEdit_Tool_DatasetCreator_WAV_Dir_Split.setObjectName(u"LineEdit_Tool_DatasetCreator_WAV_Dir_Split")
-        self.LineEdit_Tool_DatasetCreator_WAV_Dir_Split.setStyleSheet(u"QLineEdit {\n"
-"	text-align: left;\n"
-"	color: rgb(255, 255, 255);\n"
-"	selection-background-color: darkgrey;\n"
-"	background-color: rgb(90, 90, 90);\n"
-"	padding: 1.5px;\n"
-"	border-width: 1px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QLineEdit:hover {\n"
-"	background-color: rgb(120, 120, 120);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.horizontalLayout_18.addWidget(self.LineEdit_Tool_DatasetCreator_WAV_Dir_Split)
-
-        self.Button_Tool_DatasetCreator_WAV_Dir_Split = QPushButton(self.ChildFrame_Tool_DatasetCreator_WAV_Dir_Split)
-        self.Button_Tool_DatasetCreator_WAV_Dir_Split.setObjectName(u"Button_Tool_DatasetCreator_WAV_Dir_Split")
-        sizePolicy3.setHeightForWidth(self.Button_Tool_DatasetCreator_WAV_Dir_Split.sizePolicy().hasHeightForWidth())
-        self.Button_Tool_DatasetCreator_WAV_Dir_Split.setSizePolicy(sizePolicy3)
-        self.Button_Tool_DatasetCreator_WAV_Dir_Split.setMaximumSize(QSize(24, 24))
-        self.Button_Tool_DatasetCreator_WAV_Dir_Split.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	color: rgb(255, 255, 255);\n"
-"	background-color: rgb(90, 90, 90);\n"
-"	padding: 6px;\n"
-"	border-width: 1px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	background-color: rgb(120, 120, 120);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.horizontalLayout_18.addWidget(self.Button_Tool_DatasetCreator_WAV_Dir_Split)
-
-
-        self.verticalLayout_63.addWidget(self.ChildFrame_Tool_DatasetCreator_WAV_Dir_Split)
-
-
-        self.verticalLayout_4.addWidget(self.Frame_Tool_DatasetCreator_WAV_Dir_Split)
+        self.verticalLayout_111.addWidget(self.Frame_Tool_DatasetCreator_WAV_Dir)
 
         self.Frame_Tool_DatasetCreator_SRT_Dir = QFrame(self.GroupBox_EssentialParams_Tool_DatasetCreator)
         self.Frame_Tool_DatasetCreator_SRT_Dir.setObjectName(u"Frame_Tool_DatasetCreator_SRT_Dir")
@@ -6617,7 +6364,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_64.addWidget(self.ChildFrame_Tool_DatasetCreator_SRT_Dir)
 
 
-        self.verticalLayout_4.addWidget(self.Frame_Tool_DatasetCreator_SRT_Dir)
+        self.verticalLayout_111.addWidget(self.Frame_Tool_DatasetCreator_SRT_Dir)
 
         self.Frame_Tool_DatasetCreator_AutoEncoder = QFrame(self.GroupBox_EssentialParams_Tool_DatasetCreator)
         self.Frame_Tool_DatasetCreator_AutoEncoder.setObjectName(u"Frame_Tool_DatasetCreator_AutoEncoder")
@@ -6814,27 +6561,26 @@ class Ui_MainWindow(object):
         self.verticalLayout_68.addWidget(self.ComboBox_Tool_DatasetCreator_AutoEncoder)
 
 
-        self.verticalLayout_4.addWidget(self.Frame_Tool_DatasetCreator_AutoEncoder)
+        self.verticalLayout_111.addWidget(self.Frame_Tool_DatasetCreator_AutoEncoder)
 
-        self.Frame_Tool_DatasetCreator_TrainRatio = QFrame(self.GroupBox_EssentialParams_Tool_DatasetCreator)
-        self.Frame_Tool_DatasetCreator_TrainRatio.setObjectName(u"Frame_Tool_DatasetCreator_TrainRatio")
-        self.Frame_Tool_DatasetCreator_TrainRatio.setMinimumSize(QSize(0, 123))
-        self.Frame_Tool_DatasetCreator_TrainRatio.setStyleSheet(u"QFrame {\n"
+        self.Frame_Tool_DatasetCreator_WAV_Dir_Split = QFrame(self.GroupBox_EssentialParams_Tool_DatasetCreator)
+        self.Frame_Tool_DatasetCreator_WAV_Dir_Split.setObjectName(u"Frame_Tool_DatasetCreator_WAV_Dir_Split")
+        self.Frame_Tool_DatasetCreator_WAV_Dir_Split.setMinimumSize(QSize(0, 123))
+        self.Frame_Tool_DatasetCreator_WAV_Dir_Split.setStyleSheet(u"QFrame {\n"
 "	color: rgb(255, 255, 255);\n"
 "	background-color: rgb(45, 45, 45);\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
+"	border: 0px solid;\n"
 "}\n"
 "QFrame:hover {\n"
 "	background-color: rgb(60, 60, 60);\n"
 "}")
-        self.verticalLayout_108 = QVBoxLayout(self.Frame_Tool_DatasetCreator_TrainRatio)
-        self.verticalLayout_108.setSpacing(12)
-        self.verticalLayout_108.setObjectName(u"verticalLayout_108")
-        self.verticalLayout_108.setContentsMargins(21, 12, 21, 12)
-        self.Label_Tool_DatasetCreator_TrainRatio = QLabel(self.Frame_Tool_DatasetCreator_TrainRatio)
-        self.Label_Tool_DatasetCreator_TrainRatio.setObjectName(u"Label_Tool_DatasetCreator_TrainRatio")
-        self.Label_Tool_DatasetCreator_TrainRatio.setStyleSheet(u"QLabel {\n"
+        self.verticalLayout_63 = QVBoxLayout(self.Frame_Tool_DatasetCreator_WAV_Dir_Split)
+        self.verticalLayout_63.setSpacing(12)
+        self.verticalLayout_63.setObjectName(u"verticalLayout_63")
+        self.verticalLayout_63.setContentsMargins(21, 12, 21, 12)
+        self.Label_Tool_DatasetCreator_WAV_Dir_Split = QLabel(self.Frame_Tool_DatasetCreator_WAV_Dir_Split)
+        self.Label_Tool_DatasetCreator_WAV_Dir_Split.setObjectName(u"Label_Tool_DatasetCreator_WAV_Dir_Split")
+        self.Label_Tool_DatasetCreator_WAV_Dir_Split.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	/*color: rgb(255, 255, 255);*/\n"
 "	background-color: transparent;\n"
@@ -6844,12 +6590,28 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}")
 
-        self.verticalLayout_108.addWidget(self.Label_Tool_DatasetCreator_TrainRatio)
+        self.verticalLayout_63.addWidget(self.Label_Tool_DatasetCreator_WAV_Dir_Split)
 
-        self.DoubleSpinBox_Tool_DatasetCreator_TrainRatio = QDoubleSpinBox(self.Frame_Tool_DatasetCreator_TrainRatio)
-        self.DoubleSpinBox_Tool_DatasetCreator_TrainRatio.setObjectName(u"DoubleSpinBox_Tool_DatasetCreator_TrainRatio")
-        self.DoubleSpinBox_Tool_DatasetCreator_TrainRatio.setEnabled(True)
-        self.DoubleSpinBox_Tool_DatasetCreator_TrainRatio.setStyleSheet(u"QDoubleSpinBox {\n"
+        self.ChildFrame_Tool_DatasetCreator_WAV_Dir_Split = QFrame(self.Frame_Tool_DatasetCreator_WAV_Dir_Split)
+        self.ChildFrame_Tool_DatasetCreator_WAV_Dir_Split.setObjectName(u"ChildFrame_Tool_DatasetCreator_WAV_Dir_Split")
+        sizePolicy2.setHeightForWidth(self.ChildFrame_Tool_DatasetCreator_WAV_Dir_Split.sizePolicy().hasHeightForWidth())
+        self.ChildFrame_Tool_DatasetCreator_WAV_Dir_Split.setSizePolicy(sizePolicy2)
+        self.ChildFrame_Tool_DatasetCreator_WAV_Dir_Split.setStyleSheet(u"QFrame {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QFrame:hover {\n"
+"	background-color: transparent;\n"
+"}")
+        self.horizontalLayout_18 = QHBoxLayout(self.ChildFrame_Tool_DatasetCreator_WAV_Dir_Split)
+        self.horizontalLayout_18.setSpacing(12)
+        self.horizontalLayout_18.setObjectName(u"horizontalLayout_18")
+        self.horizontalLayout_18.setContentsMargins(0, 0, 0, 0)
+        self.LineEdit_Tool_DatasetCreator_WAV_Dir_Split = QLineEdit(self.ChildFrame_Tool_DatasetCreator_WAV_Dir_Split)
+        self.LineEdit_Tool_DatasetCreator_WAV_Dir_Split.setObjectName(u"LineEdit_Tool_DatasetCreator_WAV_Dir_Split")
+        self.LineEdit_Tool_DatasetCreator_WAV_Dir_Split.setStyleSheet(u"QLineEdit {\n"
 "	text-align: left;\n"
 "	color: rgb(255, 255, 255);\n"
 "	selection-background-color: darkgrey;\n"
@@ -6860,45 +6622,54 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "	border-color: rgb(90, 90, 90);\n"
 "}\n"
-"QDoubleSpinBox:hover {\n"
+"QLineEdit:hover {\n"
 "	background-color: rgb(120, 120, 120);\n"
-"}\n"
-"\n"
-"QDoubleSpinBox::up-button {\n"
-"	subcontrol-origin: padding;\n"
-"	subcontrol-position: top right;\n"
-"	margin-right: 3px;\n"
-"	border-width: 0px;\n"
-"}\n"
-"QDoubleSpinBox::up-arrow {\n"
-"	border-image: url(:/(Double)SpinBox_Icon/Sources/UpArrow.png);\n"
-"}\n"
-"\n"
-"QDoubleSpinBox::down-button {\n"
-"	subcontrol-origin: padding;\n"
-"	subcontrol-position: bottom right;\n"
-"	margin-right: 3px;\n"
-"	border-width: 0px;\n"
-"}\n"
-"QDoubleSpinBox::down-arrow {\n"
-"	border-image: url(:/(Double)SpinBox_Icon/Sources/DownArrow.png);\n"
 "}\n"
 "\n"
 "\n"
 "QToolTip {\n"
 "	color: rgba(255, 255, 255, 210);\n"
 "    background-color: transparent;\n"
-"	border-w"
-                        "idth: 0px;\n"
+"	border-width: 0px;\n"
 "	border-style: solid;\n"
 "}")
-        self.DoubleSpinBox_Tool_DatasetCreator_TrainRatio.setMinimum(-999999.000000000000000)
-        self.DoubleSpinBox_Tool_DatasetCreator_TrainRatio.setMaximum(999999.000000000000000)
 
-        self.verticalLayout_108.addWidget(self.DoubleSpinBox_Tool_DatasetCreator_TrainRatio)
+        self.horizontalLayout_18.addWidget(self.LineEdit_Tool_DatasetCreator_WAV_Dir_Split)
+
+        self.Button_Tool_DatasetCreator_WAV_Dir_Split = QPushButton(self.ChildFrame_Tool_DatasetCreator_WAV_Dir_Split)
+        self.Button_Tool_DatasetCreator_WAV_Dir_Split.setObjectName(u"Button_Tool_DatasetCreator_WAV_Dir_Split")
+        sizePolicy3.setHeightForWidth(self.Button_Tool_DatasetCreator_WAV_Dir_Split.sizePolicy().hasHeightForWidth())
+        self.Button_Tool_DatasetCreator_WAV_Dir_Split.setSizePolicy(sizePolicy3)
+        self.Button_Tool_DatasetCreator_WAV_Dir_Split.setMaximumSize(QSize(24, 24))
+        self.Button_Tool_DatasetCreator_WAV_Dir_Split.setStyleSheet(u"QPushButton {\n"
+"	text-align: center;\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: rgb(90, 90, 90);\n"
+"	padding: 6px;\n"
+"	border-width: 1px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.horizontalLayout_18.addWidget(self.Button_Tool_DatasetCreator_WAV_Dir_Split)
 
 
-        self.verticalLayout_4.addWidget(self.Frame_Tool_DatasetCreator_TrainRatio)
+        self.verticalLayout_63.addWidget(self.ChildFrame_Tool_DatasetCreator_WAV_Dir_Split)
+
+
+        self.verticalLayout_111.addWidget(self.Frame_Tool_DatasetCreator_WAV_Dir_Split)
 
         self.Frame_Tool_DatasetCreator_FileList_Path_Training = QFrame(self.GroupBox_EssentialParams_Tool_DatasetCreator)
         self.Frame_Tool_DatasetCreator_FileList_Path_Training.setObjectName(u"Frame_Tool_DatasetCreator_FileList_Path_Training")
@@ -7006,7 +6777,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_66.addWidget(self.ChildFrame_Tool_DatasetCreator_FileList_Path_Training)
 
 
-        self.verticalLayout_4.addWidget(self.Frame_Tool_DatasetCreator_FileList_Path_Training)
+        self.verticalLayout_111.addWidget(self.Frame_Tool_DatasetCreator_FileList_Path_Training)
 
         self.Frame_Tool_DatasetCreator_FileList_Path_Validation = QFrame(self.GroupBox_EssentialParams_Tool_DatasetCreator)
         self.Frame_Tool_DatasetCreator_FileList_Path_Validation.setObjectName(u"Frame_Tool_DatasetCreator_FileList_Path_Validation")
@@ -7114,7 +6885,427 @@ class Ui_MainWindow(object):
         self.verticalLayout_65.addWidget(self.ChildFrame_Tool_DatasetCreator_FileList_Path_Validation)
 
 
-        self.verticalLayout_4.addWidget(self.Frame_Tool_DatasetCreator_FileList_Path_Validation)
+        self.verticalLayout_111.addWidget(self.Frame_Tool_DatasetCreator_FileList_Path_Validation)
+
+        self.CheckBox_Toggle_AdvanceSettings_Tool_DatasetCreator = QCheckBox(self.GroupBox_EssentialParams_Tool_DatasetCreator)
+        self.CheckBox_Toggle_AdvanceSettings_Tool_DatasetCreator.setObjectName(u"CheckBox_Toggle_AdvanceSettings_Tool_DatasetCreator")
+        self.CheckBox_Toggle_AdvanceSettings_Tool_DatasetCreator.setStyleSheet(u"QCheckBox {\n"
+"	font-size: 12px;\n"
+"	font-weight: 630;\n"
+"	spacing: 12px;\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QCheckBox:hover {\n"
+"	color: rgb(255, 255, 255);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator {\n"
+"	width: 12px;\n"
+"	height: 12px;\n"
+"    background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QCheckBox::indicator:hover {\n"
+"	background-color: transparent;\n"
+"}\n"
+"QCheckBox::indicator:unchecked {\n"
+"	border-image: url(:/CheckBox_Icon/Sources/RightCaret.png);\n"
+"}\n"
+"QCheckBox::indicator:checked {\n"
+"	border-image: url(:/CheckBox_Icon/Sources/DownCaret.png);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.verticalLayout_111.addWidget(self.CheckBox_Toggle_AdvanceSettings_Tool_DatasetCreator)
+
+        self.Frame_AdvanceSettings_Tool_DatasetCreator = QFrame(self.GroupBox_EssentialParams_Tool_DatasetCreator)
+        self.Frame_AdvanceSettings_Tool_DatasetCreator.setObjectName(u"Frame_AdvanceSettings_Tool_DatasetCreator")
+        self.Frame_AdvanceSettings_Tool_DatasetCreator.setFrameShape(QFrame.StyledPanel)
+        self.Frame_AdvanceSettings_Tool_DatasetCreator.setFrameShadow(QFrame.Raised)
+        self.verticalLayout_67 = QVBoxLayout(self.Frame_AdvanceSettings_Tool_DatasetCreator)
+        self.verticalLayout_67.setSpacing(0)
+        self.verticalLayout_67.setObjectName(u"verticalLayout_67")
+        self.verticalLayout_67.setContentsMargins(0, 0, 0, 0)
+        self.Frame_Tool_DatasetCreator_Sample_Rate = QFrame(self.Frame_AdvanceSettings_Tool_DatasetCreator)
+        self.Frame_Tool_DatasetCreator_Sample_Rate.setObjectName(u"Frame_Tool_DatasetCreator_Sample_Rate")
+        self.Frame_Tool_DatasetCreator_Sample_Rate.setMinimumSize(QSize(0, 123))
+        self.Frame_Tool_DatasetCreator_Sample_Rate.setStyleSheet(u"QFrame {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: rgb(45, 45, 45);\n"
+"	border: 0px solid;\n"
+"}\n"
+"QFrame:hover {\n"
+"	background-color: rgb(60, 60, 60);\n"
+"}")
+        self.verticalLayout_61 = QVBoxLayout(self.Frame_Tool_DatasetCreator_Sample_Rate)
+        self.verticalLayout_61.setSpacing(12)
+        self.verticalLayout_61.setObjectName(u"verticalLayout_61")
+        self.verticalLayout_61.setContentsMargins(21, 12, 21, 12)
+        self.Label_Tool_DatasetCreator_Sample_Rate = QLabel(self.Frame_Tool_DatasetCreator_Sample_Rate)
+        self.Label_Tool_DatasetCreator_Sample_Rate.setObjectName(u"Label_Tool_DatasetCreator_Sample_Rate")
+        self.Label_Tool_DatasetCreator_Sample_Rate.setStyleSheet(u"QLabel {\n"
+"	/*text-align: center;*/\n"
+"	/*color: rgb(255, 255, 255);*/\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.verticalLayout_61.addWidget(self.Label_Tool_DatasetCreator_Sample_Rate)
+
+        self.SpinBox_Tool_DatasetCreator_Sample_Rate = QSpinBox(self.Frame_Tool_DatasetCreator_Sample_Rate)
+        self.SpinBox_Tool_DatasetCreator_Sample_Rate.setObjectName(u"SpinBox_Tool_DatasetCreator_Sample_Rate")
+        self.SpinBox_Tool_DatasetCreator_Sample_Rate.setStyleSheet(u"QSpinBox {\n"
+"	text-align: left;\n"
+"	color: rgb(255, 255, 255);\n"
+"	selection-background-color: darkgrey;\n"
+"	background-color: rgb(90, 90, 90);\n"
+"	padding: 1.5px;\n"
+"	border-width: 1px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QSpinBox:hover {\n"
+"	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"QSpinBox::up-button {\n"
+"	subcontrol-origin: padding;\n"
+"	subcontrol-position: top right;\n"
+"	margin-right: 3px;\n"
+"	border-width: 0px;\n"
+"}\n"
+"QSpinBox::up-arrow {\n"
+"	border-image: url(:/(Double)SpinBox_Icon/Sources/UpArrow.png);\n"
+"}\n"
+"\n"
+"QSpinBox::down-button {\n"
+"	subcontrol-origin: padding;\n"
+"	subcontrol-position: bottom right;\n"
+"	margin-right: 3px;\n"
+"	border-width: 0px;\n"
+"}\n"
+"QSpinBox::down-arrow {\n"
+"	border-image: url(:/(Double)SpinBox_Icon/Sources/DownArrow.png);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;"
+                        "\n"
+"}")
+        self.SpinBox_Tool_DatasetCreator_Sample_Rate.setMinimum(-999999)
+        self.SpinBox_Tool_DatasetCreator_Sample_Rate.setMaximum(999999)
+
+        self.verticalLayout_61.addWidget(self.SpinBox_Tool_DatasetCreator_Sample_Rate)
+
+
+        self.verticalLayout_67.addWidget(self.Frame_Tool_DatasetCreator_Sample_Rate)
+
+        self.Frame_Tool_DatasetCreator_Subtype = QFrame(self.Frame_AdvanceSettings_Tool_DatasetCreator)
+        self.Frame_Tool_DatasetCreator_Subtype.setObjectName(u"Frame_Tool_DatasetCreator_Subtype")
+        self.Frame_Tool_DatasetCreator_Subtype.setMinimumSize(QSize(0, 123))
+        self.Frame_Tool_DatasetCreator_Subtype.setStyleSheet(u"QFrame {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: rgb(45, 45, 45);\n"
+"	border: 0px solid;\n"
+"}\n"
+"QFrame:hover {\n"
+"	background-color: rgb(60, 60, 60);\n"
+"}")
+        self.verticalLayout_62 = QVBoxLayout(self.Frame_Tool_DatasetCreator_Subtype)
+        self.verticalLayout_62.setSpacing(12)
+        self.verticalLayout_62.setObjectName(u"verticalLayout_62")
+        self.verticalLayout_62.setContentsMargins(21, 12, 21, 12)
+        self.Label_Tool_DatasetCreator_Subtype = QLabel(self.Frame_Tool_DatasetCreator_Subtype)
+        self.Label_Tool_DatasetCreator_Subtype.setObjectName(u"Label_Tool_DatasetCreator_Subtype")
+        self.Label_Tool_DatasetCreator_Subtype.setStyleSheet(u"QLabel {\n"
+"	/*text-align: center;*/\n"
+"	/*color: rgb(255, 255, 255);*/\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.verticalLayout_62.addWidget(self.Label_Tool_DatasetCreator_Subtype)
+
+        self.ComboBox_Tool_DatasetCreator_Subtype = QComboBox(self.Frame_Tool_DatasetCreator_Subtype)
+        self.ComboBox_Tool_DatasetCreator_Subtype.setObjectName(u"ComboBox_Tool_DatasetCreator_Subtype")
+        self.ComboBox_Tool_DatasetCreator_Subtype.setStyleSheet(u"QComboBox {\n"
+"	text-align: left;\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: rgb(90, 90, 90);\n"
+"	padding: 1.5px;\n"
+"	border-width: 1px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QComboBox:hover {\n"
+"	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"QComboBox::drop-down {\n"
+"	subcontrol-origin: padding;\n"
+"	subcontrol-position: right;\n"
+"	margin-right: 3px;\n"
+"	border-width: 0px;\n"
+"}\n"
+"QComboBox::down-arrow {\n"
+"	border-image: url(:/ComboBox_Icon/Sources/DownArrow.png);\n"
+"}\n"
+"\n"
+"\n"
+"QComboBox QAbstractItemView {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: rgb(90, 90, 90);\n"
+"	padding: -1.5px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"	outline: 0px;\n"
+"}\n"
+"\n"
+"QComboBox QAbstractItemView::item {\n"
+"	/* height: 30px; */\n"
+"	background-color: rgb(90, 90, 90);\n"
+"	padding: 1.5px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	b"
+                        "order-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QComboBox QAbstractItemView::item:selected {\n"
+"	background-color: darkgrey;\n"
+"}\n"
+"\n"
+"\n"
+"QComboBox QAbstractScrollArea QScrollBar::vertical {\n"
+"	width: 9px;\n"
+"	background-color: rgb(45, 45, 45);\n"
+"	border-width: 1px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: transparent;\n"
+"	margin: 0px;\n"
+"}\n"
+"QComboBox QAbstractScrollArea QScrollBar::vertical:hover {\n"
+"	background-color: rgb(60, 60, 60);\n"
+"}\n"
+"\n"
+"QComboBox QAbstractScrollArea QScrollBar::add-line:vertical {\n"
+"	height: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: left;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QComboBox QAbstractScrollArea QScrollBar::sub-line:vertical {\n"
+"	height: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: right;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+""
+                        "	border-style: solid;\n"
+"}\n"
+"\n"
+"QComboBox QAbstractScrollArea QScrollBar::add-page:vertical, QComboBox QAbstractScrollArea QScrollBar::sub-page:vertical {\n"
+"	width: 0px;\n"
+"	height: 0px;\n"
+"	background-color: transparent;\n"
+"}\n"
+"\n"
+"QComboBox QAbstractScrollArea QScrollBar::handle:vertical {\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QComboBox QAbstractScrollArea QScrollBar::handle:vertical:hover {\n"
+"	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QComboBox QAbstractScrollArea QScrollBar::horizontal {\n"
+"	height: 9px;\n"
+"	background-color: rgb(45, 45, 45);\n"
+"	border-width: 1px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: transparent;\n"
+"	margin: 0px;\n"
+"}\n"
+"QComboBox QAbstractScrollArea QScrollBar::horizontal:hover {\n"
+"	background-color: rgb(60, 60, 60);\n"
+"}\n"
+"\n"
+"QComboBox QAbstractScrollArea QScrollBar::add-line:horizontal {\n"
+"	width: 0px;\n"
+"	background-color: t"
+                        "ransparent;\n"
+"	subcontrol-position: left;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QComboBox QAbstractScrollArea QScrollBar::sub-line:horizontal {\n"
+"	width: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: right;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QComboBox QAbstractScrollArea QScrollBar::add-page:horizontal, QComboBox QAbstractScrollArea QScrollBar::sub-page:horizontal {\n"
+"	width: 0px;\n"
+"	height: 0px;\n"
+"	background-color: transparent;\n"
+"}\n"
+"\n"
+"QComboBox QAbstractScrollArea QScrollBar::handle:horizontal {\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QComboBox QAbstractScrollArea QScrollBar::handle:horizontal:hover {\n"
+"	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    bac"
+                        "kground-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.verticalLayout_62.addWidget(self.ComboBox_Tool_DatasetCreator_Subtype)
+
+
+        self.verticalLayout_67.addWidget(self.Frame_Tool_DatasetCreator_Subtype)
+
+        self.Frame_Tool_DatasetCreator_TrainRatio = QFrame(self.Frame_AdvanceSettings_Tool_DatasetCreator)
+        self.Frame_Tool_DatasetCreator_TrainRatio.setObjectName(u"Frame_Tool_DatasetCreator_TrainRatio")
+        self.Frame_Tool_DatasetCreator_TrainRatio.setMinimumSize(QSize(0, 123))
+        self.Frame_Tool_DatasetCreator_TrainRatio.setStyleSheet(u"QFrame {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: rgb(45, 45, 45);\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QFrame:hover {\n"
+"	background-color: rgb(60, 60, 60);\n"
+"}")
+        self.verticalLayout_108 = QVBoxLayout(self.Frame_Tool_DatasetCreator_TrainRatio)
+        self.verticalLayout_108.setSpacing(12)
+        self.verticalLayout_108.setObjectName(u"verticalLayout_108")
+        self.verticalLayout_108.setContentsMargins(21, 12, 21, 12)
+        self.Label_Tool_DatasetCreator_TrainRatio = QLabel(self.Frame_Tool_DatasetCreator_TrainRatio)
+        self.Label_Tool_DatasetCreator_TrainRatio.setObjectName(u"Label_Tool_DatasetCreator_TrainRatio")
+        self.Label_Tool_DatasetCreator_TrainRatio.setStyleSheet(u"QLabel {\n"
+"	/*text-align: center;*/\n"
+"	/*color: rgb(255, 255, 255);*/\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.verticalLayout_108.addWidget(self.Label_Tool_DatasetCreator_TrainRatio)
+
+        self.DoubleSpinBox_Tool_DatasetCreator_TrainRatio = QDoubleSpinBox(self.Frame_Tool_DatasetCreator_TrainRatio)
+        self.DoubleSpinBox_Tool_DatasetCreator_TrainRatio.setObjectName(u"DoubleSpinBox_Tool_DatasetCreator_TrainRatio")
+        self.DoubleSpinBox_Tool_DatasetCreator_TrainRatio.setEnabled(True)
+        self.DoubleSpinBox_Tool_DatasetCreator_TrainRatio.setStyleSheet(u"QDoubleSpinBox {\n"
+"	text-align: left;\n"
+"	color: rgb(255, 255, 255);\n"
+"	selection-background-color: darkgrey;\n"
+"	background-color: rgb(90, 90, 90);\n"
+"	padding: 1.5px;\n"
+"	border-width: 1px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QDoubleSpinBox:hover {\n"
+"	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"QDoubleSpinBox::up-button {\n"
+"	subcontrol-origin: padding;\n"
+"	subcontrol-position: top right;\n"
+"	margin-right: 3px;\n"
+"	border-width: 0px;\n"
+"}\n"
+"QDoubleSpinBox::up-arrow {\n"
+"	border-image: url(:/(Double)SpinBox_Icon/Sources/UpArrow.png);\n"
+"}\n"
+"\n"
+"QDoubleSpinBox::down-button {\n"
+"	subcontrol-origin: padding;\n"
+"	subcontrol-position: bottom right;\n"
+"	margin-right: 3px;\n"
+"	border-width: 0px;\n"
+"}\n"
+"QDoubleSpinBox::down-arrow {\n"
+"	border-image: url(:/(Double)SpinBox_Icon/Sources/DownArrow.png);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-w"
+                        "idth: 0px;\n"
+"	border-style: solid;\n"
+"}")
+        self.DoubleSpinBox_Tool_DatasetCreator_TrainRatio.setMinimum(-999999.000000000000000)
+        self.DoubleSpinBox_Tool_DatasetCreator_TrainRatio.setMaximum(999999.000000000000000)
+
+        self.verticalLayout_108.addWidget(self.DoubleSpinBox_Tool_DatasetCreator_TrainRatio)
+
+
+        self.verticalLayout_67.addWidget(self.Frame_Tool_DatasetCreator_TrainRatio)
+
+
+        self.verticalLayout_111.addWidget(self.Frame_AdvanceSettings_Tool_DatasetCreator)
 
 
         self.verticalLayout_20.addWidget(self.GroupBox_EssentialParams_Tool_DatasetCreator)
@@ -7604,7 +7795,7 @@ class Ui_MainWindow(object):
         self.ScrollArea_Right_Tool_VoiceTrainer.setWidgetResizable(True)
         self.ScrollArea_Right_WidgetContents_Tool_VoiceTrainer = QWidget()
         self.ScrollArea_Right_WidgetContents_Tool_VoiceTrainer.setObjectName(u"ScrollArea_Right_WidgetContents_Tool_VoiceTrainer")
-        self.ScrollArea_Right_WidgetContents_Tool_VoiceTrainer.setGeometry(QRect(0, 0, 619, 1861))
+        self.ScrollArea_Right_WidgetContents_Tool_VoiceTrainer.setGeometry(QRect(0, 0, 619, 2012))
         self.ScrollArea_Right_WidgetContents_Tool_VoiceTrainer.setMinimumSize(QSize(0, 0))
         self.verticalLayout_22 = QVBoxLayout(self.ScrollArea_Right_WidgetContents_Tool_VoiceTrainer)
         self.verticalLayout_22.setSpacing(21)
@@ -7630,10 +7821,10 @@ class Ui_MainWindow(object):
 "	subcontrol-position: top left;\n"
 "	padding: 3px;\n"
 "}")
-        self.verticalLayout_33 = QVBoxLayout(self.GroupBox_EssentialParams_Tool_VoiceTrainer)
-        self.verticalLayout_33.setSpacing(0)
-        self.verticalLayout_33.setObjectName(u"verticalLayout_33")
-        self.verticalLayout_33.setContentsMargins(0, 12, 0, 12)
+        self.verticalLayout_114 = QVBoxLayout(self.GroupBox_EssentialParams_Tool_VoiceTrainer)
+        self.verticalLayout_114.setSpacing(0)
+        self.verticalLayout_114.setObjectName(u"verticalLayout_114")
+        self.verticalLayout_114.setContentsMargins(0, 12, 0, 12)
         self.Frame_Tool_VoiceTrainer_FileList_Path_Training = QFrame(self.GroupBox_EssentialParams_Tool_VoiceTrainer)
         self.Frame_Tool_VoiceTrainer_FileList_Path_Training.setObjectName(u"Frame_Tool_VoiceTrainer_FileList_Path_Training")
         self.Frame_Tool_VoiceTrainer_FileList_Path_Training.setMinimumSize(QSize(0, 123))
@@ -7741,7 +7932,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_69.addWidget(self.ChildFrame_Tool_VoiceTrainer_FileList_Path_Training)
 
 
-        self.verticalLayout_33.addWidget(self.Frame_Tool_VoiceTrainer_FileList_Path_Training)
+        self.verticalLayout_114.addWidget(self.Frame_Tool_VoiceTrainer_FileList_Path_Training)
 
         self.Frame_Tool_VoiceTrainer_FileList_Path_Validation = QFrame(self.GroupBox_EssentialParams_Tool_VoiceTrainer)
         self.Frame_Tool_VoiceTrainer_FileList_Path_Validation.setObjectName(u"Frame_Tool_VoiceTrainer_FileList_Path_Validation")
@@ -7850,7 +8041,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_70.addWidget(self.ChildFrame_Tool_VoiceTrainer_FileList_Path_Validation)
 
 
-        self.verticalLayout_33.addWidget(self.Frame_Tool_VoiceTrainer_FileList_Path_Validation)
+        self.verticalLayout_114.addWidget(self.Frame_Tool_VoiceTrainer_FileList_Path_Validation)
 
         self.Frame_Tool_VoiceTrainer_Language = QFrame(self.GroupBox_EssentialParams_Tool_VoiceTrainer)
         self.Frame_Tool_VoiceTrainer_Language.setObjectName(u"Frame_Tool_VoiceTrainer_Language")
@@ -8048,90 +8239,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_71.addWidget(self.ComboBox_Tool_VoiceTrainer_Language)
 
 
-        self.verticalLayout_33.addWidget(self.Frame_Tool_VoiceTrainer_Language)
-
-        self.Frame_Tool_VoiceTrainer_Eval_Interval = QFrame(self.GroupBox_EssentialParams_Tool_VoiceTrainer)
-        self.Frame_Tool_VoiceTrainer_Eval_Interval.setObjectName(u"Frame_Tool_VoiceTrainer_Eval_Interval")
-        self.Frame_Tool_VoiceTrainer_Eval_Interval.setMinimumSize(QSize(0, 123))
-        self.Frame_Tool_VoiceTrainer_Eval_Interval.setStyleSheet(u"QFrame {\n"
-"	color: rgb(255, 255, 255);\n"
-"	background-color: rgb(45, 45, 45);\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QFrame:hover {\n"
-"	background-color: rgb(60, 60, 60);\n"
-"}")
-        self.verticalLayout_72 = QVBoxLayout(self.Frame_Tool_VoiceTrainer_Eval_Interval)
-        self.verticalLayout_72.setSpacing(12)
-        self.verticalLayout_72.setObjectName(u"verticalLayout_72")
-        self.verticalLayout_72.setContentsMargins(21, 12, 21, 12)
-        self.Label_Tool_VoiceTrainer_Eval_Interval = QLabel(self.Frame_Tool_VoiceTrainer_Eval_Interval)
-        self.Label_Tool_VoiceTrainer_Eval_Interval.setObjectName(u"Label_Tool_VoiceTrainer_Eval_Interval")
-        self.Label_Tool_VoiceTrainer_Eval_Interval.setStyleSheet(u"QLabel {\n"
-"	/*text-align: center;*/\n"
-"	/*color: rgb(255, 255, 255);*/\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.verticalLayout_72.addWidget(self.Label_Tool_VoiceTrainer_Eval_Interval)
-
-        self.SpinBox_Tool_VoiceTrainer_Eval_Interval = QSpinBox(self.Frame_Tool_VoiceTrainer_Eval_Interval)
-        self.SpinBox_Tool_VoiceTrainer_Eval_Interval.setObjectName(u"SpinBox_Tool_VoiceTrainer_Eval_Interval")
-        self.SpinBox_Tool_VoiceTrainer_Eval_Interval.setStyleSheet(u"QSpinBox {\n"
-"	text-align: left;\n"
-"	color: rgb(255, 255, 255);\n"
-"	selection-background-color: darkgrey;\n"
-"	background-color: rgb(90, 90, 90);\n"
-"	padding: 1.5px;\n"
-"	border-width: 1px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QSpinBox:hover {\n"
-"	background-color: rgb(120, 120, 120);\n"
-"}\n"
-"\n"
-"QSpinBox::up-button {\n"
-"	subcontrol-origin: padding;\n"
-"	subcontrol-position: top right;\n"
-"	margin-right: 3px;\n"
-"	border-width: 0px;\n"
-"}\n"
-"QSpinBox::up-arrow {\n"
-"	border-image: url(:/(Double)SpinBox_Icon/Sources/UpArrow.png);\n"
-"}\n"
-"\n"
-"QSpinBox::down-button {\n"
-"	subcontrol-origin: padding;\n"
-"	subcontrol-position: bottom right;\n"
-"	margin-right: 3px;\n"
-"	border-width: 0px;\n"
-"}\n"
-"QSpinBox::down-arrow {\n"
-"	border-image: url(:/(Double)SpinBox_Icon/Sources/DownArrow.png);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;"
-                        "\n"
-"}")
-        self.SpinBox_Tool_VoiceTrainer_Eval_Interval.setMinimum(-999999)
-        self.SpinBox_Tool_VoiceTrainer_Eval_Interval.setMaximum(999999)
-
-        self.verticalLayout_72.addWidget(self.SpinBox_Tool_VoiceTrainer_Eval_Interval)
-
-
-        self.verticalLayout_33.addWidget(self.Frame_Tool_VoiceTrainer_Eval_Interval)
+        self.verticalLayout_114.addWidget(self.Frame_Tool_VoiceTrainer_Language)
 
         self.Frame_Tool_VoiceTrainer_Epochs = QFrame(self.GroupBox_EssentialParams_Tool_VoiceTrainer)
         self.Frame_Tool_VoiceTrainer_Epochs.setObjectName(u"Frame_Tool_VoiceTrainer_Epochs")
@@ -8214,252 +8322,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_73.addWidget(self.SpinBox_Tool_VoiceTrainer_Epochs)
 
 
-        self.verticalLayout_33.addWidget(self.Frame_Tool_VoiceTrainer_Epochs)
-
-        self.Frame_Tool_VoiceTrainer_Batch_Size = QFrame(self.GroupBox_EssentialParams_Tool_VoiceTrainer)
-        self.Frame_Tool_VoiceTrainer_Batch_Size.setObjectName(u"Frame_Tool_VoiceTrainer_Batch_Size")
-        self.Frame_Tool_VoiceTrainer_Batch_Size.setMinimumSize(QSize(0, 123))
-        self.Frame_Tool_VoiceTrainer_Batch_Size.setStyleSheet(u"QFrame {\n"
-"	color: rgb(255, 255, 255);\n"
-"	background-color: rgb(45, 45, 45);\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QFrame:hover {\n"
-"	background-color: rgb(60, 60, 60);\n"
-"}")
-        self.verticalLayout_74 = QVBoxLayout(self.Frame_Tool_VoiceTrainer_Batch_Size)
-        self.verticalLayout_74.setSpacing(12)
-        self.verticalLayout_74.setObjectName(u"verticalLayout_74")
-        self.verticalLayout_74.setContentsMargins(21, 12, 21, 12)
-        self.Label_Tool_VoiceTrainer_Batch_Size = QLabel(self.Frame_Tool_VoiceTrainer_Batch_Size)
-        self.Label_Tool_VoiceTrainer_Batch_Size.setObjectName(u"Label_Tool_VoiceTrainer_Batch_Size")
-        self.Label_Tool_VoiceTrainer_Batch_Size.setStyleSheet(u"QLabel {\n"
-"	/*text-align: center;*/\n"
-"	/*color: rgb(255, 255, 255);*/\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.verticalLayout_74.addWidget(self.Label_Tool_VoiceTrainer_Batch_Size)
-
-        self.SpinBox_Tool_VoiceTrainer_Batch_Size = QSpinBox(self.Frame_Tool_VoiceTrainer_Batch_Size)
-        self.SpinBox_Tool_VoiceTrainer_Batch_Size.setObjectName(u"SpinBox_Tool_VoiceTrainer_Batch_Size")
-        self.SpinBox_Tool_VoiceTrainer_Batch_Size.setStyleSheet(u"QSpinBox {\n"
-"	text-align: left;\n"
-"	color: rgb(255, 255, 255);\n"
-"	selection-background-color: darkgrey;\n"
-"	background-color: rgb(90, 90, 90);\n"
-"	padding: 1.5px;\n"
-"	border-width: 1px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QSpinBox:hover {\n"
-"	background-color: rgb(120, 120, 120);\n"
-"}\n"
-"\n"
-"QSpinBox::up-button {\n"
-"	subcontrol-origin: padding;\n"
-"	subcontrol-position: top right;\n"
-"	margin-right: 3px;\n"
-"	border-width: 0px;\n"
-"}\n"
-"QSpinBox::up-arrow {\n"
-"	border-image: url(:/(Double)SpinBox_Icon/Sources/UpArrow.png);\n"
-"}\n"
-"\n"
-"QSpinBox::down-button {\n"
-"	subcontrol-origin: padding;\n"
-"	subcontrol-position: bottom right;\n"
-"	margin-right: 3px;\n"
-"	border-width: 0px;\n"
-"}\n"
-"QSpinBox::down-arrow {\n"
-"	border-image: url(:/(Double)SpinBox_Icon/Sources/DownArrow.png);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;"
-                        "\n"
-"}")
-        self.SpinBox_Tool_VoiceTrainer_Batch_Size.setMinimum(-999999)
-        self.SpinBox_Tool_VoiceTrainer_Batch_Size.setMaximum(999999)
-
-        self.verticalLayout_74.addWidget(self.SpinBox_Tool_VoiceTrainer_Batch_Size)
-
-
-        self.verticalLayout_33.addWidget(self.Frame_Tool_VoiceTrainer_Batch_Size)
-
-        self.Frame_Tool_VoiceTrainer_Num_Workers = QFrame(self.GroupBox_EssentialParams_Tool_VoiceTrainer)
-        self.Frame_Tool_VoiceTrainer_Num_Workers.setObjectName(u"Frame_Tool_VoiceTrainer_Num_Workers")
-        self.Frame_Tool_VoiceTrainer_Num_Workers.setMinimumSize(QSize(0, 123))
-        self.Frame_Tool_VoiceTrainer_Num_Workers.setStyleSheet(u"QFrame {\n"
-"	color: rgb(255, 255, 255);\n"
-"	background-color: rgb(45, 45, 45);\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QFrame:hover {\n"
-"	background-color: rgb(60, 60, 60);\n"
-"}")
-        self.verticalLayout_75 = QVBoxLayout(self.Frame_Tool_VoiceTrainer_Num_Workers)
-        self.verticalLayout_75.setSpacing(12)
-        self.verticalLayout_75.setObjectName(u"verticalLayout_75")
-        self.verticalLayout_75.setContentsMargins(21, 12, 21, 12)
-        self.Label_Tool_VoiceTrainer_Num_Workers = QLabel(self.Frame_Tool_VoiceTrainer_Num_Workers)
-        self.Label_Tool_VoiceTrainer_Num_Workers.setObjectName(u"Label_Tool_VoiceTrainer_Num_Workers")
-        self.Label_Tool_VoiceTrainer_Num_Workers.setStyleSheet(u"QLabel {\n"
-"	/*text-align: center;*/\n"
-"	/*color: rgb(255, 255, 255);*/\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.verticalLayout_75.addWidget(self.Label_Tool_VoiceTrainer_Num_Workers)
-
-        self.SpinBox_Tool_VoiceTrainer_Num_Workers = QSpinBox(self.Frame_Tool_VoiceTrainer_Num_Workers)
-        self.SpinBox_Tool_VoiceTrainer_Num_Workers.setObjectName(u"SpinBox_Tool_VoiceTrainer_Num_Workers")
-        self.SpinBox_Tool_VoiceTrainer_Num_Workers.setStyleSheet(u"QSpinBox {\n"
-"	text-align: left;\n"
-"	color: rgb(255, 255, 255);\n"
-"	selection-background-color: darkgrey;\n"
-"	background-color: rgb(90, 90, 90);\n"
-"	padding: 1.5px;\n"
-"	border-width: 1px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QSpinBox:hover {\n"
-"	background-color: rgb(120, 120, 120);\n"
-"}\n"
-"\n"
-"QSpinBox::up-button {\n"
-"	subcontrol-origin: padding;\n"
-"	subcontrol-position: top right;\n"
-"	margin-right: 3px;\n"
-"	border-width: 0px;\n"
-"}\n"
-"QSpinBox::up-arrow {\n"
-"	border-image: url(:/(Double)SpinBox_Icon/Sources/UpArrow.png);\n"
-"}\n"
-"\n"
-"QSpinBox::down-button {\n"
-"	subcontrol-origin: padding;\n"
-"	subcontrol-position: bottom right;\n"
-"	margin-right: 3px;\n"
-"	border-width: 0px;\n"
-"}\n"
-"QSpinBox::down-arrow {\n"
-"	border-image: url(:/(Double)SpinBox_Icon/Sources/DownArrow.png);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;"
-                        "\n"
-"}")
-        self.SpinBox_Tool_VoiceTrainer_Num_Workers.setMinimum(-999999)
-        self.SpinBox_Tool_VoiceTrainer_Num_Workers.setMaximum(999999)
-
-        self.verticalLayout_75.addWidget(self.SpinBox_Tool_VoiceTrainer_Num_Workers)
-
-
-        self.verticalLayout_33.addWidget(self.Frame_Tool_VoiceTrainer_Num_Workers)
-
-        self.Frame_Tool_VoiceTrainer_FP16_Run = QFrame(self.GroupBox_EssentialParams_Tool_VoiceTrainer)
-        self.Frame_Tool_VoiceTrainer_FP16_Run.setObjectName(u"Frame_Tool_VoiceTrainer_FP16_Run")
-        self.Frame_Tool_VoiceTrainer_FP16_Run.setMinimumSize(QSize(0, 123))
-        self.Frame_Tool_VoiceTrainer_FP16_Run.setStyleSheet(u"QFrame {\n"
-"	color: rgb(255, 255, 255);\n"
-"	background-color: rgb(45, 45, 45);\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QFrame:hover {\n"
-"	background-color: rgb(60, 60, 60);\n"
-"}")
-        self.verticalLayout_76 = QVBoxLayout(self.Frame_Tool_VoiceTrainer_FP16_Run)
-        self.verticalLayout_76.setSpacing(12)
-        self.verticalLayout_76.setObjectName(u"verticalLayout_76")
-        self.verticalLayout_76.setContentsMargins(21, 12, 21, 12)
-        self.Label_Tool_VoiceTrainer_FP16_Run = QLabel(self.Frame_Tool_VoiceTrainer_FP16_Run)
-        self.Label_Tool_VoiceTrainer_FP16_Run.setObjectName(u"Label_Tool_VoiceTrainer_FP16_Run")
-        self.Label_Tool_VoiceTrainer_FP16_Run.setStyleSheet(u"QLabel {\n"
-"	/*text-align: center;*/\n"
-"	/*color: rgb(255, 255, 255);*/\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.verticalLayout_76.addWidget(self.Label_Tool_VoiceTrainer_FP16_Run)
-
-        self.CheckBox_Tool_VoiceTrainer_FP16_Run = QCheckBox(self.Frame_Tool_VoiceTrainer_FP16_Run)
-        self.CheckBox_Tool_VoiceTrainer_FP16_Run.setObjectName(u"CheckBox_Tool_VoiceTrainer_FP16_Run")
-        self.CheckBox_Tool_VoiceTrainer_FP16_Run.setStyleSheet(u"QCheckBox {\n"
-"	spacing: 12px;\n"
-"	color: rgb(255, 255, 255);\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: transparent;\n"
-"}\n"
-"QCheckBox:hover {\n"
-"	background-color:transparent;\n"
-"}\n"
-"\n"
-"QCheckBox::indicator {\n"
-"	width: 30px;\n"
-"	height: 30px;\n"
-"    background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: transparent;\n"
-"}\n"
-"QCheckBox::indicator:hover {\n"
-"	background-color:rgb(90, 90, 90);\n"
-"}\n"
-"QCheckBox::indicator:unchecked {\n"
-"	border-image: url(:/CheckBox_Icon/Sources/ToggleOff.png);\n"
-"}\n"
-"QCheckBox::indicator:checked {\n"
-"	border-image: url(:/CheckBox_Icon/Sources/ToggleOn.png);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.verticalLayout_76.addWidget(self.CheckBox_Tool_VoiceTrainer_FP16_Run)
-
-
-        self.verticalLayout_33.addWidget(self.Frame_Tool_VoiceTrainer_FP16_Run)
+        self.verticalLayout_114.addWidget(self.Frame_Tool_VoiceTrainer_Epochs)
 
         self.Frame_Tool_VoiceTrainer_Config_Dir_Save = QFrame(self.GroupBox_EssentialParams_Tool_VoiceTrainer)
         self.Frame_Tool_VoiceTrainer_Config_Dir_Save.setObjectName(u"Frame_Tool_VoiceTrainer_Config_Dir_Save")
@@ -8568,7 +8431,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_80.addWidget(self.ChildFrame_Tool_VoiceTrainer_Config_Dir_Save)
 
 
-        self.verticalLayout_33.addWidget(self.Frame_Tool_VoiceTrainer_Config_Dir_Save)
+        self.verticalLayout_114.addWidget(self.Frame_Tool_VoiceTrainer_Config_Dir_Save)
 
         self.Frame_Tool_VoiceTrainer_Model_Dir_Save = QFrame(self.GroupBox_EssentialParams_Tool_VoiceTrainer)
         self.Frame_Tool_VoiceTrainer_Model_Dir_Save.setObjectName(u"Frame_Tool_VoiceTrainer_Model_Dir_Save")
@@ -8677,7 +8540,469 @@ class Ui_MainWindow(object):
         self.verticalLayout_82.addWidget(self.ChildFrame_Tool_VoiceTrainer_Model_Dir_Save)
 
 
-        self.verticalLayout_33.addWidget(self.Frame_Tool_VoiceTrainer_Model_Dir_Save)
+        self.verticalLayout_114.addWidget(self.Frame_Tool_VoiceTrainer_Model_Dir_Save)
+
+        self.CheckBox_Toggle_AdvanceSettings_Tool_VoiceTrainer = QCheckBox(self.GroupBox_EssentialParams_Tool_VoiceTrainer)
+        self.CheckBox_Toggle_AdvanceSettings_Tool_VoiceTrainer.setObjectName(u"CheckBox_Toggle_AdvanceSettings_Tool_VoiceTrainer")
+        self.CheckBox_Toggle_AdvanceSettings_Tool_VoiceTrainer.setStyleSheet(u"QCheckBox {\n"
+"	font-size: 12px;\n"
+"	font-weight: 630;\n"
+"	spacing: 12px;\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QCheckBox:hover {\n"
+"	color: rgb(255, 255, 255);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator {\n"
+"	width: 12px;\n"
+"	height: 12px;\n"
+"    background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QCheckBox::indicator:hover {\n"
+"	background-color: transparent;\n"
+"}\n"
+"QCheckBox::indicator:unchecked {\n"
+"	border-image: url(:/CheckBox_Icon/Sources/RightCaret.png);\n"
+"}\n"
+"QCheckBox::indicator:checked {\n"
+"	border-image: url(:/CheckBox_Icon/Sources/DownCaret.png);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.verticalLayout_114.addWidget(self.CheckBox_Toggle_AdvanceSettings_Tool_VoiceTrainer)
+
+        self.Frame_AdvanceSettings_Tool_VoiceTrainer = QFrame(self.GroupBox_EssentialParams_Tool_VoiceTrainer)
+        self.Frame_AdvanceSettings_Tool_VoiceTrainer.setObjectName(u"Frame_AdvanceSettings_Tool_VoiceTrainer")
+        self.Frame_AdvanceSettings_Tool_VoiceTrainer.setFrameShape(QFrame.StyledPanel)
+        self.Frame_AdvanceSettings_Tool_VoiceTrainer.setFrameShadow(QFrame.Raised)
+        self.verticalLayout_115 = QVBoxLayout(self.Frame_AdvanceSettings_Tool_VoiceTrainer)
+        self.verticalLayout_115.setSpacing(0)
+        self.verticalLayout_115.setObjectName(u"verticalLayout_115")
+        self.verticalLayout_115.setContentsMargins(0, 0, 0, 0)
+        self.Frame_Tool_VoiceTrainer_Eval_Interval = QFrame(self.Frame_AdvanceSettings_Tool_VoiceTrainer)
+        self.Frame_Tool_VoiceTrainer_Eval_Interval.setObjectName(u"Frame_Tool_VoiceTrainer_Eval_Interval")
+        self.Frame_Tool_VoiceTrainer_Eval_Interval.setMinimumSize(QSize(0, 123))
+        self.Frame_Tool_VoiceTrainer_Eval_Interval.setStyleSheet(u"QFrame {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: rgb(45, 45, 45);\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QFrame:hover {\n"
+"	background-color: rgb(60, 60, 60);\n"
+"}")
+        self.verticalLayout_72 = QVBoxLayout(self.Frame_Tool_VoiceTrainer_Eval_Interval)
+        self.verticalLayout_72.setSpacing(12)
+        self.verticalLayout_72.setObjectName(u"verticalLayout_72")
+        self.verticalLayout_72.setContentsMargins(21, 12, 21, 12)
+        self.Label_Tool_VoiceTrainer_Eval_Interval = QLabel(self.Frame_Tool_VoiceTrainer_Eval_Interval)
+        self.Label_Tool_VoiceTrainer_Eval_Interval.setObjectName(u"Label_Tool_VoiceTrainer_Eval_Interval")
+        self.Label_Tool_VoiceTrainer_Eval_Interval.setStyleSheet(u"QLabel {\n"
+"	/*text-align: center;*/\n"
+"	/*color: rgb(255, 255, 255);*/\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.verticalLayout_72.addWidget(self.Label_Tool_VoiceTrainer_Eval_Interval)
+
+        self.SpinBox_Tool_VoiceTrainer_Eval_Interval = QSpinBox(self.Frame_Tool_VoiceTrainer_Eval_Interval)
+        self.SpinBox_Tool_VoiceTrainer_Eval_Interval.setObjectName(u"SpinBox_Tool_VoiceTrainer_Eval_Interval")
+        self.SpinBox_Tool_VoiceTrainer_Eval_Interval.setStyleSheet(u"QSpinBox {\n"
+"	text-align: left;\n"
+"	color: rgb(255, 255, 255);\n"
+"	selection-background-color: darkgrey;\n"
+"	background-color: rgb(90, 90, 90);\n"
+"	padding: 1.5px;\n"
+"	border-width: 1px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QSpinBox:hover {\n"
+"	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"QSpinBox::up-button {\n"
+"	subcontrol-origin: padding;\n"
+"	subcontrol-position: top right;\n"
+"	margin-right: 3px;\n"
+"	border-width: 0px;\n"
+"}\n"
+"QSpinBox::up-arrow {\n"
+"	border-image: url(:/(Double)SpinBox_Icon/Sources/UpArrow.png);\n"
+"}\n"
+"\n"
+"QSpinBox::down-button {\n"
+"	subcontrol-origin: padding;\n"
+"	subcontrol-position: bottom right;\n"
+"	margin-right: 3px;\n"
+"	border-width: 0px;\n"
+"}\n"
+"QSpinBox::down-arrow {\n"
+"	border-image: url(:/(Double)SpinBox_Icon/Sources/DownArrow.png);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;"
+                        "\n"
+"}")
+        self.SpinBox_Tool_VoiceTrainer_Eval_Interval.setMinimum(-999999)
+        self.SpinBox_Tool_VoiceTrainer_Eval_Interval.setMaximum(999999)
+
+        self.verticalLayout_72.addWidget(self.SpinBox_Tool_VoiceTrainer_Eval_Interval)
+
+
+        self.verticalLayout_115.addWidget(self.Frame_Tool_VoiceTrainer_Eval_Interval)
+
+        self.Frame_Tool_VoiceTrainer_Batch_Size = QFrame(self.Frame_AdvanceSettings_Tool_VoiceTrainer)
+        self.Frame_Tool_VoiceTrainer_Batch_Size.setObjectName(u"Frame_Tool_VoiceTrainer_Batch_Size")
+        self.Frame_Tool_VoiceTrainer_Batch_Size.setMinimumSize(QSize(0, 123))
+        self.Frame_Tool_VoiceTrainer_Batch_Size.setStyleSheet(u"QFrame {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: rgb(45, 45, 45);\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QFrame:hover {\n"
+"	background-color: rgb(60, 60, 60);\n"
+"}")
+        self.verticalLayout_74 = QVBoxLayout(self.Frame_Tool_VoiceTrainer_Batch_Size)
+        self.verticalLayout_74.setSpacing(12)
+        self.verticalLayout_74.setObjectName(u"verticalLayout_74")
+        self.verticalLayout_74.setContentsMargins(21, 12, 21, 12)
+        self.Label_Tool_VoiceTrainer_Batch_Size = QLabel(self.Frame_Tool_VoiceTrainer_Batch_Size)
+        self.Label_Tool_VoiceTrainer_Batch_Size.setObjectName(u"Label_Tool_VoiceTrainer_Batch_Size")
+        self.Label_Tool_VoiceTrainer_Batch_Size.setStyleSheet(u"QLabel {\n"
+"	/*text-align: center;*/\n"
+"	/*color: rgb(255, 255, 255);*/\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.verticalLayout_74.addWidget(self.Label_Tool_VoiceTrainer_Batch_Size)
+
+        self.SpinBox_Tool_VoiceTrainer_Batch_Size = QSpinBox(self.Frame_Tool_VoiceTrainer_Batch_Size)
+        self.SpinBox_Tool_VoiceTrainer_Batch_Size.setObjectName(u"SpinBox_Tool_VoiceTrainer_Batch_Size")
+        self.SpinBox_Tool_VoiceTrainer_Batch_Size.setStyleSheet(u"QSpinBox {\n"
+"	text-align: left;\n"
+"	color: rgb(255, 255, 255);\n"
+"	selection-background-color: darkgrey;\n"
+"	background-color: rgb(90, 90, 90);\n"
+"	padding: 1.5px;\n"
+"	border-width: 1px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QSpinBox:hover {\n"
+"	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"QSpinBox::up-button {\n"
+"	subcontrol-origin: padding;\n"
+"	subcontrol-position: top right;\n"
+"	margin-right: 3px;\n"
+"	border-width: 0px;\n"
+"}\n"
+"QSpinBox::up-arrow {\n"
+"	border-image: url(:/(Double)SpinBox_Icon/Sources/UpArrow.png);\n"
+"}\n"
+"\n"
+"QSpinBox::down-button {\n"
+"	subcontrol-origin: padding;\n"
+"	subcontrol-position: bottom right;\n"
+"	margin-right: 3px;\n"
+"	border-width: 0px;\n"
+"}\n"
+"QSpinBox::down-arrow {\n"
+"	border-image: url(:/(Double)SpinBox_Icon/Sources/DownArrow.png);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;"
+                        "\n"
+"}")
+        self.SpinBox_Tool_VoiceTrainer_Batch_Size.setMinimum(-999999)
+        self.SpinBox_Tool_VoiceTrainer_Batch_Size.setMaximum(999999)
+
+        self.verticalLayout_74.addWidget(self.SpinBox_Tool_VoiceTrainer_Batch_Size)
+
+
+        self.verticalLayout_115.addWidget(self.Frame_Tool_VoiceTrainer_Batch_Size)
+
+        self.Frame_Tool_VoiceTrainer_Num_Workers = QFrame(self.Frame_AdvanceSettings_Tool_VoiceTrainer)
+        self.Frame_Tool_VoiceTrainer_Num_Workers.setObjectName(u"Frame_Tool_VoiceTrainer_Num_Workers")
+        self.Frame_Tool_VoiceTrainer_Num_Workers.setMinimumSize(QSize(0, 123))
+        self.Frame_Tool_VoiceTrainer_Num_Workers.setStyleSheet(u"QFrame {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: rgb(45, 45, 45);\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QFrame:hover {\n"
+"	background-color: rgb(60, 60, 60);\n"
+"}")
+        self.verticalLayout_75 = QVBoxLayout(self.Frame_Tool_VoiceTrainer_Num_Workers)
+        self.verticalLayout_75.setSpacing(12)
+        self.verticalLayout_75.setObjectName(u"verticalLayout_75")
+        self.verticalLayout_75.setContentsMargins(21, 12, 21, 12)
+        self.Label_Tool_VoiceTrainer_Num_Workers = QLabel(self.Frame_Tool_VoiceTrainer_Num_Workers)
+        self.Label_Tool_VoiceTrainer_Num_Workers.setObjectName(u"Label_Tool_VoiceTrainer_Num_Workers")
+        self.Label_Tool_VoiceTrainer_Num_Workers.setStyleSheet(u"QLabel {\n"
+"	/*text-align: center;*/\n"
+"	/*color: rgb(255, 255, 255);*/\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.verticalLayout_75.addWidget(self.Label_Tool_VoiceTrainer_Num_Workers)
+
+        self.SpinBox_Tool_VoiceTrainer_Num_Workers = QSpinBox(self.Frame_Tool_VoiceTrainer_Num_Workers)
+        self.SpinBox_Tool_VoiceTrainer_Num_Workers.setObjectName(u"SpinBox_Tool_VoiceTrainer_Num_Workers")
+        self.SpinBox_Tool_VoiceTrainer_Num_Workers.setStyleSheet(u"QSpinBox {\n"
+"	text-align: left;\n"
+"	color: rgb(255, 255, 255);\n"
+"	selection-background-color: darkgrey;\n"
+"	background-color: rgb(90, 90, 90);\n"
+"	padding: 1.5px;\n"
+"	border-width: 1px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QSpinBox:hover {\n"
+"	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"QSpinBox::up-button {\n"
+"	subcontrol-origin: padding;\n"
+"	subcontrol-position: top right;\n"
+"	margin-right: 3px;\n"
+"	border-width: 0px;\n"
+"}\n"
+"QSpinBox::up-arrow {\n"
+"	border-image: url(:/(Double)SpinBox_Icon/Sources/UpArrow.png);\n"
+"}\n"
+"\n"
+"QSpinBox::down-button {\n"
+"	subcontrol-origin: padding;\n"
+"	subcontrol-position: bottom right;\n"
+"	margin-right: 3px;\n"
+"	border-width: 0px;\n"
+"}\n"
+"QSpinBox::down-arrow {\n"
+"	border-image: url(:/(Double)SpinBox_Icon/Sources/DownArrow.png);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;"
+                        "\n"
+"}")
+        self.SpinBox_Tool_VoiceTrainer_Num_Workers.setMinimum(-999999)
+        self.SpinBox_Tool_VoiceTrainer_Num_Workers.setMaximum(999999)
+
+        self.verticalLayout_75.addWidget(self.SpinBox_Tool_VoiceTrainer_Num_Workers)
+
+
+        self.verticalLayout_115.addWidget(self.Frame_Tool_VoiceTrainer_Num_Workers)
+
+        self.Frame_Tool_VoiceTrainer_FP16_Run = QFrame(self.Frame_AdvanceSettings_Tool_VoiceTrainer)
+        self.Frame_Tool_VoiceTrainer_FP16_Run.setObjectName(u"Frame_Tool_VoiceTrainer_FP16_Run")
+        self.Frame_Tool_VoiceTrainer_FP16_Run.setMinimumSize(QSize(0, 123))
+        self.Frame_Tool_VoiceTrainer_FP16_Run.setStyleSheet(u"QFrame {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: rgb(45, 45, 45);\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QFrame:hover {\n"
+"	background-color: rgb(60, 60, 60);\n"
+"}")
+        self.verticalLayout_76 = QVBoxLayout(self.Frame_Tool_VoiceTrainer_FP16_Run)
+        self.verticalLayout_76.setSpacing(12)
+        self.verticalLayout_76.setObjectName(u"verticalLayout_76")
+        self.verticalLayout_76.setContentsMargins(21, 12, 21, 12)
+        self.Label_Tool_VoiceTrainer_FP16_Run = QLabel(self.Frame_Tool_VoiceTrainer_FP16_Run)
+        self.Label_Tool_VoiceTrainer_FP16_Run.setObjectName(u"Label_Tool_VoiceTrainer_FP16_Run")
+        self.Label_Tool_VoiceTrainer_FP16_Run.setStyleSheet(u"QLabel {\n"
+"	/*text-align: center;*/\n"
+"	/*color: rgb(255, 255, 255);*/\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.verticalLayout_76.addWidget(self.Label_Tool_VoiceTrainer_FP16_Run)
+
+        self.CheckBox_Tool_VoiceTrainer_FP16_Run = QCheckBox(self.Frame_Tool_VoiceTrainer_FP16_Run)
+        self.CheckBox_Tool_VoiceTrainer_FP16_Run.setObjectName(u"CheckBox_Tool_VoiceTrainer_FP16_Run")
+        self.CheckBox_Tool_VoiceTrainer_FP16_Run.setStyleSheet(u"QCheckBox {\n"
+"	font-size: 12px;\n"
+"	spacing: 12.3px;\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QCheckBox:hover {\n"
+"	color: rgb(255, 255, 255);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator {\n"
+"	width: 24px;\n"
+"	height: 24px;\n"
+"    background-color: transparent;\n"
+"	padding: 1.2px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QCheckBox::indicator:hover {\n"
+"	background-color: rgba(255, 255, 255, 21);\n"
+"}\n"
+"QCheckBox::indicator:unchecked {\n"
+"	border-image: url(:/CheckBox_Icon/Sources/ToggleOff.png);\n"
+"}\n"
+"QCheckBox::indicator:checked {\n"
+"	border-image: url(:/CheckBox_Icon/Sources/ToggleOn.png);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.verticalLayout_76.addWidget(self.CheckBox_Tool_VoiceTrainer_FP16_Run)
+
+
+        self.verticalLayout_115.addWidget(self.Frame_Tool_VoiceTrainer_FP16_Run)
+
+        self.Frame_Tool_VoiceTrainer_Find_Unused_Parameters = QFrame(self.Frame_AdvanceSettings_Tool_VoiceTrainer)
+        self.Frame_Tool_VoiceTrainer_Find_Unused_Parameters.setObjectName(u"Frame_Tool_VoiceTrainer_Find_Unused_Parameters")
+        self.Frame_Tool_VoiceTrainer_Find_Unused_Parameters.setMinimumSize(QSize(0, 123))
+        self.Frame_Tool_VoiceTrainer_Find_Unused_Parameters.setStyleSheet(u"QFrame {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: rgb(45, 45, 45);\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QFrame:hover {\n"
+"	background-color: rgb(60, 60, 60);\n"
+"}")
+        self.verticalLayout_110 = QVBoxLayout(self.Frame_Tool_VoiceTrainer_Find_Unused_Parameters)
+        self.verticalLayout_110.setSpacing(12)
+        self.verticalLayout_110.setObjectName(u"verticalLayout_110")
+        self.verticalLayout_110.setContentsMargins(21, 12, 21, 12)
+        self.Label_Tool_VoiceTrainer_Find_Unused_Parameters = QLabel(self.Frame_Tool_VoiceTrainer_Find_Unused_Parameters)
+        self.Label_Tool_VoiceTrainer_Find_Unused_Parameters.setObjectName(u"Label_Tool_VoiceTrainer_Find_Unused_Parameters")
+        self.Label_Tool_VoiceTrainer_Find_Unused_Parameters.setStyleSheet(u"QLabel {\n"
+"	/*text-align: center;*/\n"
+"	/*color: rgb(255, 255, 255);*/\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.verticalLayout_110.addWidget(self.Label_Tool_VoiceTrainer_Find_Unused_Parameters)
+
+        self.CheckBox_Tool_VoiceTrainer_Find_Unused_Parameters = QCheckBox(self.Frame_Tool_VoiceTrainer_Find_Unused_Parameters)
+        self.CheckBox_Tool_VoiceTrainer_Find_Unused_Parameters.setObjectName(u"CheckBox_Tool_VoiceTrainer_Find_Unused_Parameters")
+        self.CheckBox_Tool_VoiceTrainer_Find_Unused_Parameters.setStyleSheet(u"QCheckBox {\n"
+"	font-size: 12px;\n"
+"	spacing: 12.3px;\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QCheckBox:hover {\n"
+"	color: rgb(255, 255, 255);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator {\n"
+"	width: 24px;\n"
+"	height: 24px;\n"
+"    background-color: transparent;\n"
+"	padding: 1.2px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QCheckBox::indicator:hover {\n"
+"	background-color: rgba(255, 255, 255, 21);\n"
+"}\n"
+"QCheckBox::indicator:unchecked {\n"
+"	border-image: url(:/CheckBox_Icon/Sources/ToggleOff.png);\n"
+"}\n"
+"QCheckBox::indicator:checked {\n"
+"	border-image: url(:/CheckBox_Icon/Sources/ToggleOn.png);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.verticalLayout_110.addWidget(self.CheckBox_Tool_VoiceTrainer_Find_Unused_Parameters)
+
+
+        self.verticalLayout_115.addWidget(self.Frame_Tool_VoiceTrainer_Find_Unused_Parameters)
+
+
+        self.verticalLayout_114.addWidget(self.Frame_AdvanceSettings_Tool_VoiceTrainer)
 
 
         self.verticalLayout_22.addWidget(self.GroupBox_EssentialParams_Tool_VoiceTrainer)
@@ -8705,115 +9030,6 @@ class Ui_MainWindow(object):
         self.verticalLayout_34.setSpacing(0)
         self.verticalLayout_34.setObjectName(u"verticalLayout_34")
         self.verticalLayout_34.setContentsMargins(0, 12, 0, 12)
-        self.Frame_Tool_VoiceTrainer_Config_Path_Load = QFrame(self.GroupBox_OptionalParams_Tool_VoiceTrainer)
-        self.Frame_Tool_VoiceTrainer_Config_Path_Load.setObjectName(u"Frame_Tool_VoiceTrainer_Config_Path_Load")
-        self.Frame_Tool_VoiceTrainer_Config_Path_Load.setMinimumSize(QSize(0, 123))
-        self.Frame_Tool_VoiceTrainer_Config_Path_Load.setStyleSheet(u"QFrame {\n"
-"	color: rgb(255, 255, 255);\n"
-"	background-color: rgb(45, 45, 45);\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QFrame:hover {\n"
-"	background-color: rgb(60, 60, 60);\n"
-"}")
-        self.verticalLayout_83 = QVBoxLayout(self.Frame_Tool_VoiceTrainer_Config_Path_Load)
-        self.verticalLayout_83.setSpacing(12)
-        self.verticalLayout_83.setObjectName(u"verticalLayout_83")
-        self.verticalLayout_83.setContentsMargins(21, 12, 21, 12)
-        self.Label_Tool_VoiceTrainer_Config_Path_Load = QLabel(self.Frame_Tool_VoiceTrainer_Config_Path_Load)
-        self.Label_Tool_VoiceTrainer_Config_Path_Load.setObjectName(u"Label_Tool_VoiceTrainer_Config_Path_Load")
-        self.Label_Tool_VoiceTrainer_Config_Path_Load.setStyleSheet(u"QLabel {\n"
-"	/*text-align: center;*/\n"
-"	/*color: rgb(255, 255, 255);*/\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.verticalLayout_83.addWidget(self.Label_Tool_VoiceTrainer_Config_Path_Load)
-
-        self.ChildFrame_Tool_VoiceTrainer_Config_Path_Load = QFrame(self.Frame_Tool_VoiceTrainer_Config_Path_Load)
-        self.ChildFrame_Tool_VoiceTrainer_Config_Path_Load.setObjectName(u"ChildFrame_Tool_VoiceTrainer_Config_Path_Load")
-        sizePolicy2.setHeightForWidth(self.ChildFrame_Tool_VoiceTrainer_Config_Path_Load.sizePolicy().hasHeightForWidth())
-        self.ChildFrame_Tool_VoiceTrainer_Config_Path_Load.setSizePolicy(sizePolicy2)
-        self.ChildFrame_Tool_VoiceTrainer_Config_Path_Load.setStyleSheet(u"QFrame {\n"
-"	color: rgb(255, 255, 255);\n"
-"	background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QFrame:hover {\n"
-"	background-color: transparent;\n"
-"}")
-        self.horizontalLayout_26 = QHBoxLayout(self.ChildFrame_Tool_VoiceTrainer_Config_Path_Load)
-        self.horizontalLayout_26.setSpacing(12)
-        self.horizontalLayout_26.setObjectName(u"horizontalLayout_26")
-        self.horizontalLayout_26.setContentsMargins(0, 0, 0, 0)
-        self.LineEdit_Tool_VoiceTrainer_Config_Path_Load = QLineEdit(self.ChildFrame_Tool_VoiceTrainer_Config_Path_Load)
-        self.LineEdit_Tool_VoiceTrainer_Config_Path_Load.setObjectName(u"LineEdit_Tool_VoiceTrainer_Config_Path_Load")
-        self.LineEdit_Tool_VoiceTrainer_Config_Path_Load.setStyleSheet(u"QLineEdit {\n"
-"	text-align: left;\n"
-"	color: rgb(255, 255, 255);\n"
-"	selection-background-color: darkgrey;\n"
-"	background-color: rgb(90, 90, 90);\n"
-"	padding: 1.5px;\n"
-"	border-width: 1px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QLineEdit:hover {\n"
-"	background-color: rgb(120, 120, 120);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.horizontalLayout_26.addWidget(self.LineEdit_Tool_VoiceTrainer_Config_Path_Load)
-
-        self.Button_Tool_VoiceTrainer_Config_Path_Load = QPushButton(self.ChildFrame_Tool_VoiceTrainer_Config_Path_Load)
-        self.Button_Tool_VoiceTrainer_Config_Path_Load.setObjectName(u"Button_Tool_VoiceTrainer_Config_Path_Load")
-        sizePolicy3.setHeightForWidth(self.Button_Tool_VoiceTrainer_Config_Path_Load.sizePolicy().hasHeightForWidth())
-        self.Button_Tool_VoiceTrainer_Config_Path_Load.setSizePolicy(sizePolicy3)
-        self.Button_Tool_VoiceTrainer_Config_Path_Load.setMaximumSize(QSize(24, 24))
-        self.Button_Tool_VoiceTrainer_Config_Path_Load.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	color: rgb(255, 255, 255);\n"
-"	background-color: rgb(90, 90, 90);\n"
-"	padding: 6px;\n"
-"	border-width: 1px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	background-color: rgb(120, 120, 120);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.horizontalLayout_26.addWidget(self.Button_Tool_VoiceTrainer_Config_Path_Load)
-
-
-        self.verticalLayout_83.addWidget(self.ChildFrame_Tool_VoiceTrainer_Config_Path_Load)
-
-
-        self.verticalLayout_34.addWidget(self.Frame_Tool_VoiceTrainer_Config_Path_Load)
-
         self.Frame_Tool_VoiceTrainer_Model_Path_Pretrained_G = QFrame(self.GroupBox_OptionalParams_Tool_VoiceTrainer)
         self.Frame_Tool_VoiceTrainer_Model_Path_Pretrained_G.setObjectName(u"Frame_Tool_VoiceTrainer_Model_Path_Pretrained_G")
         self.Frame_Tool_VoiceTrainer_Model_Path_Pretrained_G.setMinimumSize(QSize(0, 123))
@@ -9032,7 +9248,170 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_34.addWidget(self.Frame_Tool_VoiceTrainer_Model_Path_Pretrained_D)
 
-        self.Frame_Tool_VoiceTrainer_Speakers = QFrame(self.GroupBox_OptionalParams_Tool_VoiceTrainer)
+        self.CheckBox_Toggle_AdvanceOptionalSettings_Tool_VoiceTrainer = QCheckBox(self.GroupBox_OptionalParams_Tool_VoiceTrainer)
+        self.CheckBox_Toggle_AdvanceOptionalSettings_Tool_VoiceTrainer.setObjectName(u"CheckBox_Toggle_AdvanceOptionalSettings_Tool_VoiceTrainer")
+        self.CheckBox_Toggle_AdvanceOptionalSettings_Tool_VoiceTrainer.setStyleSheet(u"QCheckBox {\n"
+"	font-size: 12px;\n"
+"	font-weight: 630;\n"
+"	spacing: 12px;\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QCheckBox:hover {\n"
+"	color: rgb(255, 255, 255);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator {\n"
+"	width: 12px;\n"
+"	height: 12px;\n"
+"    background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QCheckBox::indicator:hover {\n"
+"	background-color: transparent;\n"
+"}\n"
+"QCheckBox::indicator:unchecked {\n"
+"	border-image: url(:/CheckBox_Icon/Sources/RightCaret.png);\n"
+"}\n"
+"QCheckBox::indicator:checked {\n"
+"	border-image: url(:/CheckBox_Icon/Sources/DownCaret.png);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.verticalLayout_34.addWidget(self.CheckBox_Toggle_AdvanceOptionalSettings_Tool_VoiceTrainer)
+
+        self.Frame_AdvanceOptionalSettings_Tool_VoiceTrainer = QFrame(self.GroupBox_OptionalParams_Tool_VoiceTrainer)
+        self.Frame_AdvanceOptionalSettings_Tool_VoiceTrainer.setObjectName(u"Frame_AdvanceOptionalSettings_Tool_VoiceTrainer")
+        self.Frame_AdvanceOptionalSettings_Tool_VoiceTrainer.setFrameShape(QFrame.StyledPanel)
+        self.Frame_AdvanceOptionalSettings_Tool_VoiceTrainer.setFrameShadow(QFrame.Raised)
+        self.verticalLayout_116 = QVBoxLayout(self.Frame_AdvanceOptionalSettings_Tool_VoiceTrainer)
+        self.verticalLayout_116.setSpacing(0)
+        self.verticalLayout_116.setObjectName(u"verticalLayout_116")
+        self.verticalLayout_116.setContentsMargins(0, 0, 0, 0)
+        self.Frame_Tool_VoiceTrainer_Config_Path_Load = QFrame(self.Frame_AdvanceOptionalSettings_Tool_VoiceTrainer)
+        self.Frame_Tool_VoiceTrainer_Config_Path_Load.setObjectName(u"Frame_Tool_VoiceTrainer_Config_Path_Load")
+        self.Frame_Tool_VoiceTrainer_Config_Path_Load.setMinimumSize(QSize(0, 123))
+        self.Frame_Tool_VoiceTrainer_Config_Path_Load.setStyleSheet(u"QFrame {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: rgb(45, 45, 45);\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QFrame:hover {\n"
+"	background-color: rgb(60, 60, 60);\n"
+"}")
+        self.verticalLayout_83 = QVBoxLayout(self.Frame_Tool_VoiceTrainer_Config_Path_Load)
+        self.verticalLayout_83.setSpacing(12)
+        self.verticalLayout_83.setObjectName(u"verticalLayout_83")
+        self.verticalLayout_83.setContentsMargins(21, 12, 21, 12)
+        self.Label_Tool_VoiceTrainer_Config_Path_Load = QLabel(self.Frame_Tool_VoiceTrainer_Config_Path_Load)
+        self.Label_Tool_VoiceTrainer_Config_Path_Load.setObjectName(u"Label_Tool_VoiceTrainer_Config_Path_Load")
+        self.Label_Tool_VoiceTrainer_Config_Path_Load.setStyleSheet(u"QLabel {\n"
+"	/*text-align: center;*/\n"
+"	/*color: rgb(255, 255, 255);*/\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.verticalLayout_83.addWidget(self.Label_Tool_VoiceTrainer_Config_Path_Load)
+
+        self.ChildFrame_Tool_VoiceTrainer_Config_Path_Load = QFrame(self.Frame_Tool_VoiceTrainer_Config_Path_Load)
+        self.ChildFrame_Tool_VoiceTrainer_Config_Path_Load.setObjectName(u"ChildFrame_Tool_VoiceTrainer_Config_Path_Load")
+        sizePolicy2.setHeightForWidth(self.ChildFrame_Tool_VoiceTrainer_Config_Path_Load.sizePolicy().hasHeightForWidth())
+        self.ChildFrame_Tool_VoiceTrainer_Config_Path_Load.setSizePolicy(sizePolicy2)
+        self.ChildFrame_Tool_VoiceTrainer_Config_Path_Load.setStyleSheet(u"QFrame {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QFrame:hover {\n"
+"	background-color: transparent;\n"
+"}")
+        self.horizontalLayout_26 = QHBoxLayout(self.ChildFrame_Tool_VoiceTrainer_Config_Path_Load)
+        self.horizontalLayout_26.setSpacing(12)
+        self.horizontalLayout_26.setObjectName(u"horizontalLayout_26")
+        self.horizontalLayout_26.setContentsMargins(0, 0, 0, 0)
+        self.LineEdit_Tool_VoiceTrainer_Config_Path_Load = QLineEdit(self.ChildFrame_Tool_VoiceTrainer_Config_Path_Load)
+        self.LineEdit_Tool_VoiceTrainer_Config_Path_Load.setObjectName(u"LineEdit_Tool_VoiceTrainer_Config_Path_Load")
+        self.LineEdit_Tool_VoiceTrainer_Config_Path_Load.setStyleSheet(u"QLineEdit {\n"
+"	text-align: left;\n"
+"	color: rgb(255, 255, 255);\n"
+"	selection-background-color: darkgrey;\n"
+"	background-color: rgb(90, 90, 90);\n"
+"	padding: 1.5px;\n"
+"	border-width: 1px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QLineEdit:hover {\n"
+"	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.horizontalLayout_26.addWidget(self.LineEdit_Tool_VoiceTrainer_Config_Path_Load)
+
+        self.Button_Tool_VoiceTrainer_Config_Path_Load = QPushButton(self.ChildFrame_Tool_VoiceTrainer_Config_Path_Load)
+        self.Button_Tool_VoiceTrainer_Config_Path_Load.setObjectName(u"Button_Tool_VoiceTrainer_Config_Path_Load")
+        sizePolicy3.setHeightForWidth(self.Button_Tool_VoiceTrainer_Config_Path_Load.sizePolicy().hasHeightForWidth())
+        self.Button_Tool_VoiceTrainer_Config_Path_Load.setSizePolicy(sizePolicy3)
+        self.Button_Tool_VoiceTrainer_Config_Path_Load.setMaximumSize(QSize(24, 24))
+        self.Button_Tool_VoiceTrainer_Config_Path_Load.setStyleSheet(u"QPushButton {\n"
+"	text-align: center;\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: rgb(90, 90, 90);\n"
+"	padding: 6px;\n"
+"	border-width: 1px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.horizontalLayout_26.addWidget(self.Button_Tool_VoiceTrainer_Config_Path_Load)
+
+
+        self.verticalLayout_83.addWidget(self.ChildFrame_Tool_VoiceTrainer_Config_Path_Load)
+
+
+        self.verticalLayout_116.addWidget(self.Frame_Tool_VoiceTrainer_Config_Path_Load)
+
+        self.Frame_Tool_VoiceTrainer_Speakers = QFrame(self.Frame_AdvanceOptionalSettings_Tool_VoiceTrainer)
         self.Frame_Tool_VoiceTrainer_Speakers.setObjectName(u"Frame_Tool_VoiceTrainer_Speakers")
         self.Frame_Tool_VoiceTrainer_Speakers.setMinimumSize(QSize(0, 123))
         self.Frame_Tool_VoiceTrainer_Speakers.setStyleSheet(u"QFrame {\n"
@@ -9090,7 +9469,10 @@ class Ui_MainWindow(object):
         self.verticalLayout_79.addWidget(self.LineEdit_Tool_VoiceTrainer_Speakers)
 
 
-        self.verticalLayout_34.addWidget(self.Frame_Tool_VoiceTrainer_Speakers)
+        self.verticalLayout_116.addWidget(self.Frame_Tool_VoiceTrainer_Speakers)
+
+
+        self.verticalLayout_34.addWidget(self.Frame_AdvanceOptionalSettings_Tool_VoiceTrainer)
 
 
         self.verticalLayout_22.addWidget(self.GroupBox_OptionalParams_Tool_VoiceTrainer)
@@ -9542,7 +9924,7 @@ class Ui_MainWindow(object):
         self.ScrollArea_Right_Tool_VoiceConverter.setWidgetResizable(True)
         self.ScrollArea_Right_WidgetContents_Tool_VoiceConverter = QWidget()
         self.ScrollArea_Right_WidgetContents_Tool_VoiceConverter.setObjectName(u"ScrollArea_Right_WidgetContents_Tool_VoiceConverter")
-        self.ScrollArea_Right_WidgetContents_Tool_VoiceConverter.setGeometry(QRect(0, 0, 619, 1286))
+        self.ScrollArea_Right_WidgetContents_Tool_VoiceConverter.setGeometry(QRect(0, 0, 619, 1300))
         self.ScrollArea_Right_WidgetContents_Tool_VoiceConverter.setMinimumSize(QSize(0, 0))
         self.verticalLayout_26 = QVBoxLayout(self.ScrollArea_Right_WidgetContents_Tool_VoiceConverter)
         self.verticalLayout_26.setSpacing(21)
@@ -9568,10 +9950,10 @@ class Ui_MainWindow(object):
 "	subcontrol-position: top left;\n"
 "	padding: 3px;\n"
 "}")
-        self.verticalLayout_67 = QVBoxLayout(self.GroupBox_EssentialParams_Tool_VoiceConverter)
-        self.verticalLayout_67.setSpacing(0)
-        self.verticalLayout_67.setObjectName(u"verticalLayout_67")
-        self.verticalLayout_67.setContentsMargins(0, 12, 0, 12)
+        self.verticalLayout_117 = QVBoxLayout(self.GroupBox_EssentialParams_Tool_VoiceConverter)
+        self.verticalLayout_117.setSpacing(0)
+        self.verticalLayout_117.setObjectName(u"verticalLayout_117")
+        self.verticalLayout_117.setContentsMargins(0, 12, 0, 12)
         self.Frame_Tool_VoiceConverter_Config_Path_Load = QFrame(self.GroupBox_EssentialParams_Tool_VoiceConverter)
         self.Frame_Tool_VoiceConverter_Config_Path_Load.setObjectName(u"Frame_Tool_VoiceConverter_Config_Path_Load")
         self.Frame_Tool_VoiceConverter_Config_Path_Load.setMinimumSize(QSize(0, 123))
@@ -9679,7 +10061,116 @@ class Ui_MainWindow(object):
         self.verticalLayout_78.addWidget(self.ChildFrame_Tool_VoiceConverter_Config_Path_Load)
 
 
-        self.verticalLayout_67.addWidget(self.Frame_Tool_VoiceConverter_Config_Path_Load)
+        self.verticalLayout_117.addWidget(self.Frame_Tool_VoiceConverter_Config_Path_Load)
+
+        self.Frame_Tool_VoiceConverter_Model_Path_Load = QFrame(self.GroupBox_EssentialParams_Tool_VoiceConverter)
+        self.Frame_Tool_VoiceConverter_Model_Path_Load.setObjectName(u"Frame_Tool_VoiceConverter_Model_Path_Load")
+        self.Frame_Tool_VoiceConverter_Model_Path_Load.setMinimumSize(QSize(0, 123))
+        self.Frame_Tool_VoiceConverter_Model_Path_Load.setStyleSheet(u"QFrame {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: rgb(45, 45, 45);\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QFrame:hover {\n"
+"	background-color: rgb(60, 60, 60);\n"
+"}")
+        self.verticalLayout_96 = QVBoxLayout(self.Frame_Tool_VoiceConverter_Model_Path_Load)
+        self.verticalLayout_96.setSpacing(12)
+        self.verticalLayout_96.setObjectName(u"verticalLayout_96")
+        self.verticalLayout_96.setContentsMargins(21, 12, 21, 12)
+        self.Label_Tool_VoiceConverter_Model_Path_Load = QLabel(self.Frame_Tool_VoiceConverter_Model_Path_Load)
+        self.Label_Tool_VoiceConverter_Model_Path_Load.setObjectName(u"Label_Tool_VoiceConverter_Model_Path_Load")
+        self.Label_Tool_VoiceConverter_Model_Path_Load.setStyleSheet(u"QLabel {\n"
+"	/*text-align: center;*/\n"
+"	/*color: rgb(255, 255, 255);*/\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.verticalLayout_96.addWidget(self.Label_Tool_VoiceConverter_Model_Path_Load)
+
+        self.ChildFrame_Tool_VoiceConverter_Model_Path_Load = QFrame(self.Frame_Tool_VoiceConverter_Model_Path_Load)
+        self.ChildFrame_Tool_VoiceConverter_Model_Path_Load.setObjectName(u"ChildFrame_Tool_VoiceConverter_Model_Path_Load")
+        sizePolicy2.setHeightForWidth(self.ChildFrame_Tool_VoiceConverter_Model_Path_Load.sizePolicy().hasHeightForWidth())
+        self.ChildFrame_Tool_VoiceConverter_Model_Path_Load.setSizePolicy(sizePolicy2)
+        self.ChildFrame_Tool_VoiceConverter_Model_Path_Load.setStyleSheet(u"QFrame {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QFrame:hover {\n"
+"	background-color: transparent;\n"
+"}")
+        self.horizontalLayout_42 = QHBoxLayout(self.ChildFrame_Tool_VoiceConverter_Model_Path_Load)
+        self.horizontalLayout_42.setSpacing(12)
+        self.horizontalLayout_42.setObjectName(u"horizontalLayout_42")
+        self.horizontalLayout_42.setContentsMargins(0, 0, 0, 0)
+        self.LineEdit_Tool_VoiceConverter_Model_Path_Load = QLineEdit(self.ChildFrame_Tool_VoiceConverter_Model_Path_Load)
+        self.LineEdit_Tool_VoiceConverter_Model_Path_Load.setObjectName(u"LineEdit_Tool_VoiceConverter_Model_Path_Load")
+        self.LineEdit_Tool_VoiceConverter_Model_Path_Load.setStyleSheet(u"QLineEdit {\n"
+"	text-align: left;\n"
+"	color: rgb(255, 255, 255);\n"
+"	selection-background-color: darkgrey;\n"
+"	background-color: rgb(90, 90, 90);\n"
+"	padding: 1.5px;\n"
+"	border-width: 1px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QLineEdit:hover {\n"
+"	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.horizontalLayout_42.addWidget(self.LineEdit_Tool_VoiceConverter_Model_Path_Load)
+
+        self.Button_Tool_VoiceConverter_Model_Path_Load = QPushButton(self.ChildFrame_Tool_VoiceConverter_Model_Path_Load)
+        self.Button_Tool_VoiceConverter_Model_Path_Load.setObjectName(u"Button_Tool_VoiceConverter_Model_Path_Load")
+        sizePolicy3.setHeightForWidth(self.Button_Tool_VoiceConverter_Model_Path_Load.sizePolicy().hasHeightForWidth())
+        self.Button_Tool_VoiceConverter_Model_Path_Load.setSizePolicy(sizePolicy3)
+        self.Button_Tool_VoiceConverter_Model_Path_Load.setMaximumSize(QSize(24, 24))
+        self.Button_Tool_VoiceConverter_Model_Path_Load.setStyleSheet(u"QPushButton {\n"
+"	text-align: center;\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: rgb(90, 90, 90);\n"
+"	padding: 6px;\n"
+"	border-width: 1px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.horizontalLayout_42.addWidget(self.Button_Tool_VoiceConverter_Model_Path_Load)
+
+
+        self.verticalLayout_96.addWidget(self.ChildFrame_Tool_VoiceConverter_Model_Path_Load)
+
+
+        self.verticalLayout_117.addWidget(self.Frame_Tool_VoiceConverter_Model_Path_Load)
 
         self.Frame_Tool_VoiceConverter_Text = QFrame(self.GroupBox_EssentialParams_Tool_VoiceConverter)
         self.Frame_Tool_VoiceConverter_Text.setObjectName(u"Frame_Tool_VoiceConverter_Text")
@@ -9831,116 +10322,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_98.addWidget(self.PlainTextEdit_Tool_VoiceConverter_Text)
 
 
-        self.verticalLayout_67.addWidget(self.Frame_Tool_VoiceConverter_Text)
-
-        self.Frame_Tool_VoiceConverter_Model_Path_Load = QFrame(self.GroupBox_EssentialParams_Tool_VoiceConverter)
-        self.Frame_Tool_VoiceConverter_Model_Path_Load.setObjectName(u"Frame_Tool_VoiceConverter_Model_Path_Load")
-        self.Frame_Tool_VoiceConverter_Model_Path_Load.setMinimumSize(QSize(0, 123))
-        self.Frame_Tool_VoiceConverter_Model_Path_Load.setStyleSheet(u"QFrame {\n"
-"	color: rgb(255, 255, 255);\n"
-"	background-color: rgb(45, 45, 45);\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QFrame:hover {\n"
-"	background-color: rgb(60, 60, 60);\n"
-"}")
-        self.verticalLayout_96 = QVBoxLayout(self.Frame_Tool_VoiceConverter_Model_Path_Load)
-        self.verticalLayout_96.setSpacing(12)
-        self.verticalLayout_96.setObjectName(u"verticalLayout_96")
-        self.verticalLayout_96.setContentsMargins(21, 12, 21, 12)
-        self.Label_Tool_VoiceConverter_Model_Path_Load = QLabel(self.Frame_Tool_VoiceConverter_Model_Path_Load)
-        self.Label_Tool_VoiceConverter_Model_Path_Load.setObjectName(u"Label_Tool_VoiceConverter_Model_Path_Load")
-        self.Label_Tool_VoiceConverter_Model_Path_Load.setStyleSheet(u"QLabel {\n"
-"	/*text-align: center;*/\n"
-"	/*color: rgb(255, 255, 255);*/\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.verticalLayout_96.addWidget(self.Label_Tool_VoiceConverter_Model_Path_Load)
-
-        self.ChildFrame_Tool_VoiceConverter_Model_Path_Load = QFrame(self.Frame_Tool_VoiceConverter_Model_Path_Load)
-        self.ChildFrame_Tool_VoiceConverter_Model_Path_Load.setObjectName(u"ChildFrame_Tool_VoiceConverter_Model_Path_Load")
-        sizePolicy2.setHeightForWidth(self.ChildFrame_Tool_VoiceConverter_Model_Path_Load.sizePolicy().hasHeightForWidth())
-        self.ChildFrame_Tool_VoiceConverter_Model_Path_Load.setSizePolicy(sizePolicy2)
-        self.ChildFrame_Tool_VoiceConverter_Model_Path_Load.setStyleSheet(u"QFrame {\n"
-"	color: rgb(255, 255, 255);\n"
-"	background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QFrame:hover {\n"
-"	background-color: transparent;\n"
-"}")
-        self.horizontalLayout_42 = QHBoxLayout(self.ChildFrame_Tool_VoiceConverter_Model_Path_Load)
-        self.horizontalLayout_42.setSpacing(12)
-        self.horizontalLayout_42.setObjectName(u"horizontalLayout_42")
-        self.horizontalLayout_42.setContentsMargins(0, 0, 0, 0)
-        self.LineEdit_Tool_VoiceConverter_Model_Path_Load = QLineEdit(self.ChildFrame_Tool_VoiceConverter_Model_Path_Load)
-        self.LineEdit_Tool_VoiceConverter_Model_Path_Load.setObjectName(u"LineEdit_Tool_VoiceConverter_Model_Path_Load")
-        self.LineEdit_Tool_VoiceConverter_Model_Path_Load.setStyleSheet(u"QLineEdit {\n"
-"	text-align: left;\n"
-"	color: rgb(255, 255, 255);\n"
-"	selection-background-color: darkgrey;\n"
-"	background-color: rgb(90, 90, 90);\n"
-"	padding: 1.5px;\n"
-"	border-width: 1px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QLineEdit:hover {\n"
-"	background-color: rgb(120, 120, 120);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.horizontalLayout_42.addWidget(self.LineEdit_Tool_VoiceConverter_Model_Path_Load)
-
-        self.Button_Tool_VoiceConverter_Model_Path_Load = QPushButton(self.ChildFrame_Tool_VoiceConverter_Model_Path_Load)
-        self.Button_Tool_VoiceConverter_Model_Path_Load.setObjectName(u"Button_Tool_VoiceConverter_Model_Path_Load")
-        sizePolicy3.setHeightForWidth(self.Button_Tool_VoiceConverter_Model_Path_Load.sizePolicy().hasHeightForWidth())
-        self.Button_Tool_VoiceConverter_Model_Path_Load.setSizePolicy(sizePolicy3)
-        self.Button_Tool_VoiceConverter_Model_Path_Load.setMaximumSize(QSize(24, 24))
-        self.Button_Tool_VoiceConverter_Model_Path_Load.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	color: rgb(255, 255, 255);\n"
-"	background-color: rgb(90, 90, 90);\n"
-"	padding: 6px;\n"
-"	border-width: 1px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	background-color: rgb(120, 120, 120);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.horizontalLayout_42.addWidget(self.Button_Tool_VoiceConverter_Model_Path_Load)
-
-
-        self.verticalLayout_96.addWidget(self.ChildFrame_Tool_VoiceConverter_Model_Path_Load)
-
-
-        self.verticalLayout_67.addWidget(self.Frame_Tool_VoiceConverter_Model_Path_Load)
+        self.verticalLayout_117.addWidget(self.Frame_Tool_VoiceConverter_Text)
 
         self.Frame_Tool_VoiceConverter_Language = QFrame(self.GroupBox_EssentialParams_Tool_VoiceConverter)
         self.Frame_Tool_VoiceConverter_Language.setObjectName(u"Frame_Tool_VoiceConverter_Language")
@@ -10138,7 +10520,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_97.addWidget(self.ComboBox_Tool_VoiceConverter_Language)
 
 
-        self.verticalLayout_67.addWidget(self.Frame_Tool_VoiceConverter_Language)
+        self.verticalLayout_117.addWidget(self.Frame_Tool_VoiceConverter_Language)
 
         self.Frame_Tool_VoiceConverter_Speaker = QFrame(self.GroupBox_EssentialParams_Tool_VoiceConverter)
         self.Frame_Tool_VoiceConverter_Speaker.setObjectName(u"Frame_Tool_VoiceConverter_Speaker")
@@ -10336,9 +10718,172 @@ class Ui_MainWindow(object):
         self.verticalLayout_104.addWidget(self.ComboBox_Tool_VoiceConverter_Speaker)
 
 
-        self.verticalLayout_67.addWidget(self.Frame_Tool_VoiceConverter_Speaker)
+        self.verticalLayout_117.addWidget(self.Frame_Tool_VoiceConverter_Speaker)
 
-        self.Frame_Tool_VoiceConverter_EmotionStrength = QFrame(self.GroupBox_EssentialParams_Tool_VoiceConverter)
+        self.Frame_Tool_VoiceConverter_Audio_Dir_Save = QFrame(self.GroupBox_EssentialParams_Tool_VoiceConverter)
+        self.Frame_Tool_VoiceConverter_Audio_Dir_Save.setObjectName(u"Frame_Tool_VoiceConverter_Audio_Dir_Save")
+        self.Frame_Tool_VoiceConverter_Audio_Dir_Save.setMinimumSize(QSize(0, 123))
+        self.Frame_Tool_VoiceConverter_Audio_Dir_Save.setStyleSheet(u"QFrame {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: rgb(45, 45, 45);\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QFrame:hover {\n"
+"	background-color: rgb(60, 60, 60);\n"
+"}")
+        self.verticalLayout_107 = QVBoxLayout(self.Frame_Tool_VoiceConverter_Audio_Dir_Save)
+        self.verticalLayout_107.setSpacing(12)
+        self.verticalLayout_107.setObjectName(u"verticalLayout_107")
+        self.verticalLayout_107.setContentsMargins(21, 12, 21, 12)
+        self.Label_Tool_VoiceConverter_Audio_Dir_Save = QLabel(self.Frame_Tool_VoiceConverter_Audio_Dir_Save)
+        self.Label_Tool_VoiceConverter_Audio_Dir_Save.setObjectName(u"Label_Tool_VoiceConverter_Audio_Dir_Save")
+        self.Label_Tool_VoiceConverter_Audio_Dir_Save.setStyleSheet(u"QLabel {\n"
+"	/*text-align: center;*/\n"
+"	/*color: rgb(255, 255, 255);*/\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.verticalLayout_107.addWidget(self.Label_Tool_VoiceConverter_Audio_Dir_Save)
+
+        self.ChildFrame_Tool_VoiceConverter_Audio_Dir_Save = QFrame(self.Frame_Tool_VoiceConverter_Audio_Dir_Save)
+        self.ChildFrame_Tool_VoiceConverter_Audio_Dir_Save.setObjectName(u"ChildFrame_Tool_VoiceConverter_Audio_Dir_Save")
+        sizePolicy2.setHeightForWidth(self.ChildFrame_Tool_VoiceConverter_Audio_Dir_Save.sizePolicy().hasHeightForWidth())
+        self.ChildFrame_Tool_VoiceConverter_Audio_Dir_Save.setSizePolicy(sizePolicy2)
+        self.ChildFrame_Tool_VoiceConverter_Audio_Dir_Save.setStyleSheet(u"QFrame {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QFrame:hover {\n"
+"	background-color: transparent;\n"
+"}")
+        self.horizontalLayout_46 = QHBoxLayout(self.ChildFrame_Tool_VoiceConverter_Audio_Dir_Save)
+        self.horizontalLayout_46.setSpacing(12)
+        self.horizontalLayout_46.setObjectName(u"horizontalLayout_46")
+        self.horizontalLayout_46.setContentsMargins(0, 0, 0, 0)
+        self.LineEdit_Tool_VoiceConverter_Audio_Dir_Save = QLineEdit(self.ChildFrame_Tool_VoiceConverter_Audio_Dir_Save)
+        self.LineEdit_Tool_VoiceConverter_Audio_Dir_Save.setObjectName(u"LineEdit_Tool_VoiceConverter_Audio_Dir_Save")
+        self.LineEdit_Tool_VoiceConverter_Audio_Dir_Save.setStyleSheet(u"QLineEdit {\n"
+"	text-align: left;\n"
+"	color: rgb(255, 255, 255);\n"
+"	selection-background-color: darkgrey;\n"
+"	background-color: rgb(90, 90, 90);\n"
+"	padding: 1.5px;\n"
+"	border-width: 1px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QLineEdit:hover {\n"
+"	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.horizontalLayout_46.addWidget(self.LineEdit_Tool_VoiceConverter_Audio_Dir_Save)
+
+        self.Button_Tool_VoiceConverter_Audio_Dir_Save = QPushButton(self.ChildFrame_Tool_VoiceConverter_Audio_Dir_Save)
+        self.Button_Tool_VoiceConverter_Audio_Dir_Save.setObjectName(u"Button_Tool_VoiceConverter_Audio_Dir_Save")
+        sizePolicy3.setHeightForWidth(self.Button_Tool_VoiceConverter_Audio_Dir_Save.sizePolicy().hasHeightForWidth())
+        self.Button_Tool_VoiceConverter_Audio_Dir_Save.setSizePolicy(sizePolicy3)
+        self.Button_Tool_VoiceConverter_Audio_Dir_Save.setMaximumSize(QSize(24, 24))
+        self.Button_Tool_VoiceConverter_Audio_Dir_Save.setStyleSheet(u"QPushButton {\n"
+"	text-align: center;\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: rgb(90, 90, 90);\n"
+"	padding: 6px;\n"
+"	border-width: 1px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.horizontalLayout_46.addWidget(self.Button_Tool_VoiceConverter_Audio_Dir_Save)
+
+
+        self.verticalLayout_107.addWidget(self.ChildFrame_Tool_VoiceConverter_Audio_Dir_Save)
+
+
+        self.verticalLayout_117.addWidget(self.Frame_Tool_VoiceConverter_Audio_Dir_Save)
+
+        self.CheckBox_Toggle_AdvanceSettings_Tool_VoiceConverter = QCheckBox(self.GroupBox_EssentialParams_Tool_VoiceConverter)
+        self.CheckBox_Toggle_AdvanceSettings_Tool_VoiceConverter.setObjectName(u"CheckBox_Toggle_AdvanceSettings_Tool_VoiceConverter")
+        self.CheckBox_Toggle_AdvanceSettings_Tool_VoiceConverter.setStyleSheet(u"QCheckBox {\n"
+"	font-size: 12px;\n"
+"	font-weight: 630;\n"
+"	spacing: 12px;\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QCheckBox:hover {\n"
+"	color: rgb(255, 255, 255);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator {\n"
+"	width: 12px;\n"
+"	height: 12px;\n"
+"    background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QCheckBox::indicator:hover {\n"
+"	background-color: transparent;\n"
+"}\n"
+"QCheckBox::indicator:unchecked {\n"
+"	border-image: url(:/CheckBox_Icon/Sources/RightCaret.png);\n"
+"}\n"
+"QCheckBox::indicator:checked {\n"
+"	border-image: url(:/CheckBox_Icon/Sources/DownCaret.png);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.verticalLayout_117.addWidget(self.CheckBox_Toggle_AdvanceSettings_Tool_VoiceConverter)
+
+        self.Frame_AdvanceSettings_Tool_VoiceConverter = QFrame(self.GroupBox_EssentialParams_Tool_VoiceConverter)
+        self.Frame_AdvanceSettings_Tool_VoiceConverter.setObjectName(u"Frame_AdvanceSettings_Tool_VoiceConverter")
+        self.Frame_AdvanceSettings_Tool_VoiceConverter.setFrameShape(QFrame.StyledPanel)
+        self.Frame_AdvanceSettings_Tool_VoiceConverter.setFrameShadow(QFrame.Raised)
+        self.verticalLayout_118 = QVBoxLayout(self.Frame_AdvanceSettings_Tool_VoiceConverter)
+        self.verticalLayout_118.setSpacing(0)
+        self.verticalLayout_118.setObjectName(u"verticalLayout_118")
+        self.verticalLayout_118.setContentsMargins(0, 0, 0, 0)
+        self.Frame_Tool_VoiceConverter_EmotionStrength = QFrame(self.Frame_AdvanceSettings_Tool_VoiceConverter)
         self.Frame_Tool_VoiceConverter_EmotionStrength.setObjectName(u"Frame_Tool_VoiceConverter_EmotionStrength")
         self.Frame_Tool_VoiceConverter_EmotionStrength.setMinimumSize(QSize(0, 123))
         self.Frame_Tool_VoiceConverter_EmotionStrength.setStyleSheet(u"QFrame {\n"
@@ -10470,9 +11015,9 @@ class Ui_MainWindow(object):
         self.verticalLayout_103.addWidget(self.ChildFrame_Tool_VoiceConverter_EmotionStrength)
 
 
-        self.verticalLayout_67.addWidget(self.Frame_Tool_VoiceConverter_EmotionStrength)
+        self.verticalLayout_118.addWidget(self.Frame_Tool_VoiceConverter_EmotionStrength)
 
-        self.Frame_Tool_VoiceConverter_PhonemeDuration = QFrame(self.GroupBox_EssentialParams_Tool_VoiceConverter)
+        self.Frame_Tool_VoiceConverter_PhonemeDuration = QFrame(self.Frame_AdvanceSettings_Tool_VoiceConverter)
         self.Frame_Tool_VoiceConverter_PhonemeDuration.setObjectName(u"Frame_Tool_VoiceConverter_PhonemeDuration")
         self.Frame_Tool_VoiceConverter_PhonemeDuration.setMinimumSize(QSize(0, 123))
         self.Frame_Tool_VoiceConverter_PhonemeDuration.setStyleSheet(u"QFrame {\n"
@@ -10604,9 +11149,9 @@ class Ui_MainWindow(object):
         self.verticalLayout_105.addWidget(self.ChildFrame_Tool_VoiceConverter_PhonemeDuration)
 
 
-        self.verticalLayout_67.addWidget(self.Frame_Tool_VoiceConverter_PhonemeDuration)
+        self.verticalLayout_118.addWidget(self.Frame_Tool_VoiceConverter_PhonemeDuration)
 
-        self.Frame_Tool_VoiceConverter_SpeechRate = QFrame(self.GroupBox_EssentialParams_Tool_VoiceConverter)
+        self.Frame_Tool_VoiceConverter_SpeechRate = QFrame(self.Frame_AdvanceSettings_Tool_VoiceConverter)
         self.Frame_Tool_VoiceConverter_SpeechRate.setObjectName(u"Frame_Tool_VoiceConverter_SpeechRate")
         self.Frame_Tool_VoiceConverter_SpeechRate.setMinimumSize(QSize(0, 123))
         self.Frame_Tool_VoiceConverter_SpeechRate.setStyleSheet(u"QFrame {\n"
@@ -10738,116 +11283,10 @@ class Ui_MainWindow(object):
         self.verticalLayout_106.addWidget(self.ChildFrame_Tool_VoiceConverter_SpeechRate)
 
 
-        self.verticalLayout_67.addWidget(self.Frame_Tool_VoiceConverter_SpeechRate)
-
-        self.Frame_Tool_VoiceConverter_Audio_Dir_Save = QFrame(self.GroupBox_EssentialParams_Tool_VoiceConverter)
-        self.Frame_Tool_VoiceConverter_Audio_Dir_Save.setObjectName(u"Frame_Tool_VoiceConverter_Audio_Dir_Save")
-        self.Frame_Tool_VoiceConverter_Audio_Dir_Save.setMinimumSize(QSize(0, 123))
-        self.Frame_Tool_VoiceConverter_Audio_Dir_Save.setStyleSheet(u"QFrame {\n"
-"	color: rgb(255, 255, 255);\n"
-"	background-color: rgb(45, 45, 45);\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QFrame:hover {\n"
-"	background-color: rgb(60, 60, 60);\n"
-"}")
-        self.verticalLayout_107 = QVBoxLayout(self.Frame_Tool_VoiceConverter_Audio_Dir_Save)
-        self.verticalLayout_107.setSpacing(12)
-        self.verticalLayout_107.setObjectName(u"verticalLayout_107")
-        self.verticalLayout_107.setContentsMargins(21, 12, 21, 12)
-        self.Label_Tool_VoiceConverter_Audio_Dir_Save = QLabel(self.Frame_Tool_VoiceConverter_Audio_Dir_Save)
-        self.Label_Tool_VoiceConverter_Audio_Dir_Save.setObjectName(u"Label_Tool_VoiceConverter_Audio_Dir_Save")
-        self.Label_Tool_VoiceConverter_Audio_Dir_Save.setStyleSheet(u"QLabel {\n"
-"	/*text-align: center;*/\n"
-"	/*color: rgb(255, 255, 255);*/\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.verticalLayout_107.addWidget(self.Label_Tool_VoiceConverter_Audio_Dir_Save)
-
-        self.ChildFrame_Tool_VoiceConverter_Audio_Dir_Save = QFrame(self.Frame_Tool_VoiceConverter_Audio_Dir_Save)
-        self.ChildFrame_Tool_VoiceConverter_Audio_Dir_Save.setObjectName(u"ChildFrame_Tool_VoiceConverter_Audio_Dir_Save")
-        sizePolicy2.setHeightForWidth(self.ChildFrame_Tool_VoiceConverter_Audio_Dir_Save.sizePolicy().hasHeightForWidth())
-        self.ChildFrame_Tool_VoiceConverter_Audio_Dir_Save.setSizePolicy(sizePolicy2)
-        self.ChildFrame_Tool_VoiceConverter_Audio_Dir_Save.setStyleSheet(u"QFrame {\n"
-"	color: rgb(255, 255, 255);\n"
-"	background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QFrame:hover {\n"
-"	background-color: transparent;\n"
-"}")
-        self.horizontalLayout_46 = QHBoxLayout(self.ChildFrame_Tool_VoiceConverter_Audio_Dir_Save)
-        self.horizontalLayout_46.setSpacing(12)
-        self.horizontalLayout_46.setObjectName(u"horizontalLayout_46")
-        self.horizontalLayout_46.setContentsMargins(0, 0, 0, 0)
-        self.LineEdit_Tool_VoiceConverter_Audio_Dir_Save = QLineEdit(self.ChildFrame_Tool_VoiceConverter_Audio_Dir_Save)
-        self.LineEdit_Tool_VoiceConverter_Audio_Dir_Save.setObjectName(u"LineEdit_Tool_VoiceConverter_Audio_Dir_Save")
-        self.LineEdit_Tool_VoiceConverter_Audio_Dir_Save.setStyleSheet(u"QLineEdit {\n"
-"	text-align: left;\n"
-"	color: rgb(255, 255, 255);\n"
-"	selection-background-color: darkgrey;\n"
-"	background-color: rgb(90, 90, 90);\n"
-"	padding: 1.5px;\n"
-"	border-width: 1px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QLineEdit:hover {\n"
-"	background-color: rgb(120, 120, 120);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.horizontalLayout_46.addWidget(self.LineEdit_Tool_VoiceConverter_Audio_Dir_Save)
-
-        self.Button_Tool_VoiceConverter_Audio_Dir_Save = QPushButton(self.ChildFrame_Tool_VoiceConverter_Audio_Dir_Save)
-        self.Button_Tool_VoiceConverter_Audio_Dir_Save.setObjectName(u"Button_Tool_VoiceConverter_Audio_Dir_Save")
-        sizePolicy3.setHeightForWidth(self.Button_Tool_VoiceConverter_Audio_Dir_Save.sizePolicy().hasHeightForWidth())
-        self.Button_Tool_VoiceConverter_Audio_Dir_Save.setSizePolicy(sizePolicy3)
-        self.Button_Tool_VoiceConverter_Audio_Dir_Save.setMaximumSize(QSize(24, 24))
-        self.Button_Tool_VoiceConverter_Audio_Dir_Save.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	color: rgb(255, 255, 255);\n"
-"	background-color: rgb(90, 90, 90);\n"
-"	padding: 6px;\n"
-"	border-width: 1px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	background-color: rgb(120, 120, 120);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.horizontalLayout_46.addWidget(self.Button_Tool_VoiceConverter_Audio_Dir_Save)
+        self.verticalLayout_118.addWidget(self.Frame_Tool_VoiceConverter_SpeechRate)
 
 
-        self.verticalLayout_107.addWidget(self.ChildFrame_Tool_VoiceConverter_Audio_Dir_Save)
-
-
-        self.verticalLayout_67.addWidget(self.Frame_Tool_VoiceConverter_Audio_Dir_Save)
+        self.verticalLayout_117.addWidget(self.Frame_AdvanceSettings_Tool_VoiceConverter)
 
 
         self.verticalLayout_26.addWidget(self.GroupBox_EssentialParams_Tool_VoiceConverter)
@@ -11246,16 +11685,16 @@ class Ui_MainWindow(object):
         self.CheckBox_Setting_AutoUpdate.setMaximumSize(QSize(123, 16777215))
         self.CheckBox_Setting_AutoUpdate.setStyleSheet(u"QCheckBox {\n"
 "	font-size: 15px;\n"
-"	spacing: 12px;\n"
-"	color: rgb(255, 255, 255);\n"
+"	spacing: 12.3px;\n"
+"	color: rgba(255, 255, 255, 210);\n"
 "	background-color: transparent;\n"
-"	padding: 1.5px;\n"
+"	padding: 0px;\n"
 "	border-width: 0px;\n"
 "	border-radius: 6px;\n"
 "	border-style: solid;\n"
 "}\n"
 "QCheckBox:hover {\n"
-"	background-color:transparent;\n"
+"	color: rgb(255, 255, 255);\n"
 "}\n"
 "\n"
 "QCheckBox::indicator {\n"
@@ -11266,10 +11705,9 @@ class Ui_MainWindow(object):
 "	border-width: 0px;\n"
 "	border-radius: 6px;\n"
 "	border-style: solid;\n"
-"	border-color: transparent;\n"
 "}\n"
 "QCheckBox::indicator:hover {\n"
-"	background-color:rgb(90, 90, 90);\n"
+"	background-color: rgba(255, 255, 255, 21);\n"
 "}\n"
 "QCheckBox::indicator:unchecked {\n"
 "	border-image: url(:/CheckBox_Icon/Sources/ToggleOff.png);\n"
@@ -11670,29 +12108,31 @@ class Ui_MainWindow(object):
         self.Label_Tool_AudioProcessor_Media_Dir_Input.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Button_Tool_AudioProcessor_Media_Dir_Input.setText(QCoreApplication.translate("MainWindow", u"...", None))
         self.Label_Tool_AudioProcessor_Media_Format_Output.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.Label_Tool_AudioProcessor_Media_Dir_Output.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.Button_Tool_AudioProcessor_Media_Dir_Output.setText(QCoreApplication.translate("MainWindow", u"...", None))
         self.Label_Tool_AudioProcessor_RMS_Threshold.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Tool_AudioProcessor_Audio_Length_Min.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Tool_AudioProcessor_Silent_Interval_Min.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Tool_AudioProcessor_Hop_Size.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Tool_AudioProcessor_Silence_Kept_Max.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.Label_Tool_AudioProcessor_Media_Dir_Output.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.Button_Tool_AudioProcessor_Media_Dir_Output.setText(QCoreApplication.translate("MainWindow", u"...", None))
         self.Label_Tool_VoiceIdentifier_Audio_Dir_Input.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Button_Tool_VoiceIdentifier_Audio_Dir_Input.setText(QCoreApplication.translate("MainWindow", u"...", None))
         self.Label_Tool_VoiceIdentifier_Audio_Path_Std.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Button_Tool_VoiceIdentifier_Audio_Path_Std.setText(QCoreApplication.translate("MainWindow", u"...", None))
+        self.Label_Tool_VoiceIdentifier_Speaker.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.Label_Tool_VoiceIdentifier_DecisionThreshold.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.Label_Tool_VoiceIdentifier_Audio_Dir_Output.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.Button_Tool_VoiceIdentifier_Audio_Dir_Output.setText(QCoreApplication.translate("MainWindow", u"...", None))
         self.Label_Tool_VoiceIdentifier_Model_Dir.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Button_Tool_VoiceIdentifier_Model_Dir.setText(QCoreApplication.translate("MainWindow", u"...", None))
         self.Label_Tool_VoiceIdentifier_Model_Type.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Tool_VoiceIdentifier_Model_Name.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Tool_VoiceIdentifier_Feature_Method.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.Label_Tool_VoiceIdentifier_DecisionThreshold.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Tool_VoiceIdentifier_Duration_of_Audio.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.Label_Tool_VoiceIdentifier_Audio_Dir_Output.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.Button_Tool_VoiceIdentifier_Audio_Dir_Output.setText(QCoreApplication.translate("MainWindow", u"...", None))
-        self.Label_Tool_VoiceIdentifier_Speaker.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Tool_VoiceTranscriber_WAV_Dir.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Button_Tool_VoiceTranscriber_WAV_Dir.setText(QCoreApplication.translate("MainWindow", u"...", None))
+        self.Label_Tool_VoiceTranscriber_SRT_Dir.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.Button_Tool_VoiceTranscriber_SRT_Dir.setText(QCoreApplication.translate("MainWindow", u"...", None))
         self.Label_Tool_VoiceTranscriber_Model_Dir.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Button_Tool_VoiceTranscriber_Model_Dir.setText(QCoreApplication.translate("MainWindow", u"...", None))
         self.Label_Tool_VoiceTranscriber_Model_Name.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
@@ -11702,61 +12142,61 @@ class Ui_MainWindow(object):
         self.CheckBox_Tool_VoiceTranscriber_Condition_on_Previous_Text.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
         self.Label_Tool_VoiceTranscriber_fp16.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.CheckBox_Tool_VoiceTranscriber_fp16.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
-        self.Label_Tool_VoiceTranscriber_SRT_Dir.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.Button_Tool_VoiceTranscriber_SRT_Dir.setText(QCoreApplication.translate("MainWindow", u"...", None))
         self.Label_Tool_VoiceTranscriber_Language.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Tool_DatasetCreator_WAV_Dir.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Button_Tool_DatasetCreator_WAV_Dir.setText(QCoreApplication.translate("MainWindow", u"...", None))
-        self.Label_Tool_DatasetCreator_Sample_Rate.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.Label_Tool_DatasetCreator_Subtype.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.Label_Tool_DatasetCreator_WAV_Dir_Split.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.Button_Tool_DatasetCreator_WAV_Dir_Split.setText(QCoreApplication.translate("MainWindow", u"...", None))
         self.Label_Tool_DatasetCreator_SRT_Dir.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Button_Tool_DatasetCreator_SRT_Dir.setText(QCoreApplication.translate("MainWindow", u"...", None))
         self.Label_Tool_DatasetCreator_AutoEncoder.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.Label_Tool_DatasetCreator_TrainRatio.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.Label_Tool_DatasetCreator_WAV_Dir_Split.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.Button_Tool_DatasetCreator_WAV_Dir_Split.setText(QCoreApplication.translate("MainWindow", u"...", None))
         self.Label_Tool_DatasetCreator_FileList_Path_Training.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Button_Tool_DatasetCreator_FileList_Path_Training.setText(QCoreApplication.translate("MainWindow", u"...", None))
         self.Label_Tool_DatasetCreator_FileList_Path_Validation.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Button_Tool_DatasetCreator_FileList_Path_Validation.setText(QCoreApplication.translate("MainWindow", u"...", None))
+        self.Label_Tool_DatasetCreator_Sample_Rate.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.Label_Tool_DatasetCreator_Subtype.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.Label_Tool_DatasetCreator_TrainRatio.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Tool_VoiceTrainer_FileList_Path_Training.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Button_Tool_VoiceTrainer_FileList_Path_Training.setText(QCoreApplication.translate("MainWindow", u"...", None))
         self.Label_Tool_VoiceTrainer_FileList_Path_Validation.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Button_Tool_VoiceTrainer_FileList_Path_Validation.setText(QCoreApplication.translate("MainWindow", u"...", None))
         self.Label_Tool_VoiceTrainer_Language.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.Label_Tool_VoiceTrainer_Eval_Interval.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Tool_VoiceTrainer_Epochs.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.Label_Tool_VoiceTrainer_Batch_Size.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.Label_Tool_VoiceTrainer_Num_Workers.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.Label_Tool_VoiceTrainer_FP16_Run.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.CheckBox_Tool_VoiceTrainer_FP16_Run.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
         self.Label_Tool_VoiceTrainer_Config_Dir_Save.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Button_Tool_VoiceTrainer_Config_Dir_Save.setText(QCoreApplication.translate("MainWindow", u"...", None))
         self.Label_Tool_VoiceTrainer_Model_Dir_Save.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Button_Tool_VoiceTrainer_Model_Dir_Save.setText(QCoreApplication.translate("MainWindow", u"...", None))
-        self.Label_Tool_VoiceTrainer_Config_Path_Load.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.Button_Tool_VoiceTrainer_Config_Path_Load.setText(QCoreApplication.translate("MainWindow", u"...", None))
+        self.Label_Tool_VoiceTrainer_Eval_Interval.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.Label_Tool_VoiceTrainer_Batch_Size.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.Label_Tool_VoiceTrainer_Num_Workers.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.Label_Tool_VoiceTrainer_FP16_Run.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.CheckBox_Tool_VoiceTrainer_FP16_Run.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
+        self.Label_Tool_VoiceTrainer_Find_Unused_Parameters.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.CheckBox_Tool_VoiceTrainer_Find_Unused_Parameters.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
         self.Label_Tool_VoiceTrainer_Model_Path_Pretrained_G.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Button_Tool_VoiceTrainer_Model_Path_Pretrained_G.setText(QCoreApplication.translate("MainWindow", u"...", None))
         self.Label_Tool_VoiceTrainer_Model_Path_Pretrained_D.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Button_Tool_VoiceTrainer_Model_Path_Pretrained_D.setText(QCoreApplication.translate("MainWindow", u"...", None))
+        self.Label_Tool_VoiceTrainer_Config_Path_Load.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.Button_Tool_VoiceTrainer_Config_Path_Load.setText(QCoreApplication.translate("MainWindow", u"...", None))
         self.Label_Tool_VoiceTrainer_Speakers.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Tool_VoiceConverter_Config_Path_Load.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Button_Tool_VoiceConverter_Config_Path_Load.setText(QCoreApplication.translate("MainWindow", u"...", None))
-        self.Label_Tool_VoiceConverter_Text.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Tool_VoiceConverter_Model_Path_Load.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Button_Tool_VoiceConverter_Model_Path_Load.setText(QCoreApplication.translate("MainWindow", u"...", None))
+        self.Label_Tool_VoiceConverter_Text.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Tool_VoiceConverter_Language.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Tool_VoiceConverter_Speaker.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.Label_Tool_VoiceConverter_Audio_Dir_Save.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.Button_Tool_VoiceConverter_Audio_Dir_Save.setText(QCoreApplication.translate("MainWindow", u"...", None))
         self.Label_Tool_VoiceConverter_EmotionStrength.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Tool_VoiceConverter_PhonemeDuration.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Tool_VoiceConverter_SpeechRate.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.Label_Tool_VoiceConverter_Audio_Dir_Save.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.Button_Tool_VoiceConverter_Audio_Dir_Save.setText(QCoreApplication.translate("MainWindow", u"...", None))
         self.Label_Setting_Language.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Setting_AutoUpdate.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.CheckBox_Setting_AutoUpdate.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
         self.Label_Tools.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.Label_Usage_CPU.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.Label_Usage_GPU.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.Label_Usage_CPU.setText(QCoreApplication.translate("MainWindow", u"--", None))
+        self.Label_Usage_GPU.setText(QCoreApplication.translate("MainWindow", u"--", None))
         self.Label_Version.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))

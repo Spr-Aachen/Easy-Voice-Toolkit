@@ -215,7 +215,7 @@ Windows系统用户请将系统默认编码更改为UTF-8，具体操作：在 �
 <br>**A**: 不明白的话使用默认值就好，但像语音识别工具里的“判断阈值”这种参数则可能要视实际效果多调试几次
 
 -   **Q**: 内置的控制台显示信息是不是不全？
-<br>**A**: 是的，你可以在系统的命令行窗口中找到缺失的输出信息，很抱歉给你们造成了困扰
+<br>**A**: 是的，缺失的输出信息可以在系统的命令行窗口中找到，很抱歉给你们造成了困扰
 
 -   **Q**: 你这永久免费开源...它保真吗？
 <br>**A**: 嗯哼~♪
@@ -236,6 +236,8 @@ Windows系统用户请将系统默认编码更改为UTF-8，具体操作：在 �
 5. If you distribute this repository's code or publish any results produced by this project publicly (including but not limited to video sharing platforms), please indicate the original author and code source (this repository).
 
 6. If you use this project for any other plan, please contact and inform the author of this repository in advance. Thank you very much.
+
+Reference: [so-vits-svc](https://github.com/svc-develop-team/so-vits-svc)
 
 
 ## 联系方式<br>Contact Details

@@ -461,8 +461,9 @@ def Function_ShowMessageBox(
     WindowTitle: str = ...,
     Text: str = ...,
     Buttons: object = QMessageBox.Ok,
-    EventsButtons: list = [],
-    Events: list = []
+    EventButtons: list = [],
+    EventLists: list = [[]],
+    ParamLists: list = [[()]]
 ):
     '''
     Function to pop up a msgbox
@@ -521,8 +522,11 @@ def Function_ShowMessageBox(
     @Slot(QPushButton)
     @Slot(QToolButton)
     def ConnectEvent(Button):
-        if Button in EventsButtons:
-            Events[EventsButtons.index(Button)]
+        if Button in EventButtons:
+            EventList = EventLists[EventButtons.index(Button)]
+            ParamList = ParamLists[EventButtons.index(Button)]
+            for Index, Event in enumerate(EventList):
+                Event(*ParamList[Index])
         else:
             pass
     MsgBox.buttonClicked.connect(
@@ -662,7 +666,9 @@ def Function_ExecuteMethod(
     ConsoleFrame: Optional[QFrame],
     Method: object,
     ParamsFrom: list = [],
-    EmptyAllowed: list = []
+    EmptyAllowed: list = [],
+    FinishEventList: Optional[list] = [],
+    FinishParamList: Optional[list] = [()]
 ):
     '''
     Function to execute outer class methods (through button)
@@ -681,7 +687,10 @@ def Function_ExecuteMethod(
     ClassInstance.moveToThread(WorkerThread)
     ClassInstance.finished.connect(WorkerThread.quit)
     #ClassInstance.finished.connect(WorkerThread.wait)
-    ClassInstance.finished.connect(lambda: Function_ShowMessageBox(WindowTitle = "提示", Text = "执行完成，可跳转至下一工具界面"))
+    def ConnectEvent():
+        for Index, FinishEvent in FinishEventList:
+            FinishEvent(*FinishParamList[Index])
+    ClassInstance.finished.connect(ConnectEvent) #ClassInstance.finished.connect(lambda: Function_ShowMessageBox(WindowTitle = "提示", Text = "执行完成，可跳转至下一工具界面"))
 
     @Slot()
     def ExecuteMethod():
