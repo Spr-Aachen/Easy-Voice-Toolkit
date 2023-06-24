@@ -18,6 +18,7 @@ import re
 
 from .mandarin import number_to_chinese, chinese_to_bopomofo, latin_to_bopomofo, chinese_to_ipa#, chinese_to_ipa2
 from .english import english_to_ipa2#, english_to_lazy_ipa2
+from .japanese import japanese_to_ipa2
 #from .chinesedialect import chinesedialect_to_ipa
 
 
@@ -39,7 +40,7 @@ def mandarin_cleaners(text):
     return text
 
 
-def mandarin_english_cleaners(text):
+def mandarin_english_japanese_cleaners(text):
     text = re.sub(
         pattern = r'\[ZH\](.*?)\[ZH\]',
         repl = lambda x: chinese_to_ipa(x.group(1)) + ' ',
@@ -48,6 +49,11 @@ def mandarin_english_cleaners(text):
     text = re.sub(
         pattern = r'\[EN\](.*?)\[EN\]',
         repl = lambda x: english_to_ipa2(x.group(1)) + ' ',
+        string = text
+    )
+    text = re.sub(
+        pattern = r'\[JA\](.*?)\[JA\]',
+        repl = lambda x: japanese_to_ipa2(x.group(1)) + ' ',
         string = text
     )
     text = re.sub(

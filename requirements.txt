@@ -4,7 +4,6 @@
 # Tool_AudioProcessor
 librosa
 ipywidgets
-static-ffmpeg
 
 
 # Tool_VoiceIdentifier
@@ -39,3 +38,4 @@ pypinyin
 jieba
 cn2an
 #opencc
+#pyopenjtalk
