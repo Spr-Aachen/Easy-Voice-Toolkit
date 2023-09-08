@@ -1,19 +1,25 @@
 import enum
+from typing import Optional
 from dataclasses import dataclass
 from PySide6 import QtGui, QtWidgets
-from PySide6.QtCore import Qt
+from PySide6.QtCore import Qt, QObject
 from PySide6.QtGui import QFont, QPainter, QPaintEvent
 from PySide6.QtWidgets import QMainWindow, QPushButton, QLabel
+
+from .UI import Ui_MainWindow
 
 
 class CustomTitleBar:
     '''
     自定义标题栏
     '''
-    def __init__(self, window: QtWidgets, window_title: str = ""):
+    def __init__(self,
+        window: QtWidgets,
+        title_bar: Optional[QObject] = ...,
+        title_bar_text: Optional[str] = "",
+        title_bar_height: Optional[int] = ...
+    ):
         self.window = window
-
-        self.DEFAULT_TITILE_BAR_HEIGHT = 27 # 默认标题栏高度
 
         self.mouseDoubleClickEvent_parent = self.window.mouseDoubleClickEvent # 存储父类的双击事件
         self.window.mouseDoubleClickEvent = self.mouseDoubleClickEvent # 将本类的双击事件赋值给将父类的双击事件
@@ -21,37 +27,33 @@ class CustomTitleBar:
         self.resizeEvent_parent = self.window.resizeEvent # 存储父类的窗口大小改变事件
         self.window.resizeEvent = self.resizeEvent # 将本类的窗口大小改变事件赋值给将父类的窗口大小改变事件
 
-        self.window.setContentsMargins(0, self.DEFAULT_TITILE_BAR_HEIGHT, 0, 0) # 设置ui文件里main_layout上边距，以免遮挡标题栏
+        if isinstance(title_bar, QObject):
+            self.title_bar = title_bar
+            self.DEFAULT_TITILE_BAR_HEIGHT = title_bar.height()
 
-        self.window.setWindowFlags(
-            Qt.Window
-            | Qt.FramelessWindowHint
-            | Qt.WindowSystemMenuHint
-            | Qt.WindowMinimizeButtonHint
-            | Qt.WindowMaximizeButtonHint
-        ) # 设置无边框
+        elif isinstance(title_bar_height, (int, float)):
+            self.title_bar = QLabel(title_bar_text, self.window)
+            self.DEFAULT_TITILE_BAR_HEIGHT = title_bar_height # 默认标题栏高度
 
-        #self.window.setAttribute(Qt.WA_TranslucentBackground) # 设置透明背景
-
-        # 添加自定义的标题栏到最顶部
-        self.title = QLabel(window_title, self.window)
-        self.title.setGeometry(0, 0, self.window.width(), self.DEFAULT_TITILE_BAR_HEIGHT)
-        self.title.setStyleSheet(
-            "QLabel"
-            "{"
-                "background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 rgba(63, 63, 63, 210), stop:1 rgba(51, 51, 51, 210));"
-                "color: rgba(210, 210, 210, 210);"
-                "padding: 3.3px;"
-                "border-width: 0px;"
-                #"border-top-left-radius: 3px;"
-                #"border-top-right-radius: 3px;"
-                "border-style: solid;"
-                #"border-color: rgb(111, 111, 111);"
-            "}"
-        )
-        self.title.setAlignment(Qt.AlignLeft | Qt.AlignVCenter)
-        self.title.setFont(QFont("Microsoft YaHei", 11.1, QFont.Normal))
-        self.title.setMouseTracking(True)
+            self.title_bar.setGeometry(0, 0, self.window.width(), self.DEFAULT_TITILE_BAR_HEIGHT) # 将自定义的标题栏置于最顶部
+            self.title_bar.setStyleSheet(
+                "QLabel"
+                "{"
+                    "background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 rgba(63, 63, 63, 210), stop:1 rgba(51, 51, 51, 210));"
+                    "color: rgba(210, 210, 210, 210);"
+                    "padding: 3.3px;"
+                    "border-width: 0px;"
+                    #"border-top-left-radius: 3px;"
+                    #"border-top-right-radius: 3px;"
+                    "border-style: solid;"
+                    #"border-color: rgb(111, 111, 111);"
+                "}"
+            )
+            self.title_bar.setAlignment(Qt.AlignLeft | Qt.AlignVCenter)
+            self.title_bar.setFont(QFont("Microsoft YaHei", 11.1, QFont.Normal))
+            self.title_bar.setMouseTracking(True)
+            
+            self.window.setContentsMargins(0, self.DEFAULT_TITILE_BAR_HEIGHT, 0, 0) # 设置ui文件里main_layout上边距，以免遮挡标题栏
 
         # 添加关闭按钮
         self.close_btn = QPushButton("", self.window)
@@ -76,9 +78,7 @@ class CustomTitleBar:
             "}"
         )
         self.close_btn.setCursor(Qt.PointingHandCursor)
-        self.close_btn.setToolTipDuration(-1)
-        self.close_btn.setToolTip("Close 关闭")
-        self.close_btn.clicked.connect(self.window.close) # 绑定窗口关闭事件
+        self.close_btn.clicked.connect(self.setCloseEvent) # 绑定窗口关闭事件
 
         # 添加最大化按钮
         self.max_btn = QPushButton("", self.window)
@@ -103,8 +103,6 @@ class CustomTitleBar:
             "}"
         )
         self.max_btn.setCursor(Qt.PointingHandCursor)
-        self.max_btn.setToolTipDuration(-1)
-        self.max_btn.setToolTip("Maximize 最大化")
         self.max_btn.clicked.connect(self.setMaxEvent) # 绑定窗口最大化事件（自定义函数）
 
         # 添加最小化按钮
@@ -130,9 +128,15 @@ class CustomTitleBar:
             "}"
         )
         self.min_btn.setCursor(Qt.PointingHandCursor)
-        self.min_btn.setToolTipDuration(-1)
-        self.min_btn.setToolTip("Minimize 最小化")
-        self.min_btn.clicked.connect(self.window.showMinimized) # 绑定窗口最小化事件
+        self.min_btn.clicked.connect(self.setMinEvent) # 绑定窗口最小化事件
+
+    def setCloseEvent(self):
+        '''
+        窗口关闭事件
+        '''
+        self.window.close()
+        self.close_btn.setToolTipDuration(-1)
+        self.close_btn.setToolTip("Close 关闭")
 
     def setMaxEvent(self):
         '''
@@ -143,14 +147,23 @@ class CustomTitleBar:
             self.max_btn.setToolTip("Restore 还原")
         else:
             self.window.showMaximized()
+            self.max_btn.setToolTipDuration(-1)
             self.max_btn.setToolTip("Maximize 最大化")
+
+    def setMinEvent(self):
+        '''
+        窗口最小化事件
+        '''
+        self.window.showMinimized()
+        self.min_btn.setToolTipDuration(-1)
+        self.min_btn.setToolTip("Minimize 最小化")
 
     def mouseDoubleClickEvent(self, a0: QtGui.QMouseEvent) -> None:
         '''
         鼠标双击事件
         '''
         # 如果双击的是鼠标左键且在标题栏范围内，则放大缩小窗口
-        if a0.button() == Qt.MouseButton.LeftButton and a0.position().y() < self.title.height():
+        if a0.button() == Qt.MouseButton.LeftButton and a0.position().y() < self.title_bar.height():
             self.setMaxEvent()
         return self.mouseDoubleClickEvent_parent(a0)
 
@@ -162,7 +175,7 @@ class CustomTitleBar:
         self.close_btn.move(self.window.width() - 33, 6)
         self.max_btn.move(self.window.width() - 66, 6)
         self.min_btn.move(self.window.width() - 99, 6)
-        self.title.resize(self.window.width(), self.DEFAULT_TITILE_BAR_HEIGHT)
+        self.title_bar.resize(self.window.width(), self.DEFAULT_TITILE_BAR_HEIGHT)
         return self.resizeEvent_parent(a0)
 
 
@@ -201,17 +214,27 @@ class EdgePress:
 
 
 class Window_Customizing(QMainWindow):
+    ui = Ui_MainWindow()
+
     def __init__(self,
-        parent = None,
-        window_title = "Title"
+        parent: QObject = None,
+        title_bar_name: Optional[str] = ...,
+        title_bar_text: Optional[str] = "Title - by Spr_Aachen",
+        title_bar_height: Optional[int] = 33,
+        edge_size: int = 3,
+        min_width: int = 1280,
+        min_height: int = 720,
+        move_event_height: int = 30
     ):
         super().__init__(parent)
 
-        CustomTitleBar(self, window_title = window_title)
+        self.ui.setupUi(self)
+
+        title_bar = self.ui.TitleBar
+
+        CustomTitleBar(window = self, title_bar = title_bar, title_bar_text = title_bar_text, title_bar_height = title_bar_height)
 
         self.setMouseTracking(True)
-
-        self.resize(100, 100)
 
         self.setWindowFlags(
             Qt.Window
@@ -219,18 +242,18 @@ class Window_Customizing(QMainWindow):
             | Qt.WindowSystemMenuHint
             | Qt.WindowMinimizeButtonHint
             | Qt.WindowMaximizeButtonHint
-        )
+        ) # 设置无边框
 
-        self.setAttribute(Qt.WA_TranslucentBackground)
+        self.setAttribute(Qt.WA_TranslucentBackground) # 设置透明背景
 
         self.edge_press = EdgePress() # 拖放标记
 
-        self.edge_size = 6 # 窗体边缘尺寸（出现缩放标记的范围）
+        self.edge_size = edge_size # 窗体边缘尺寸（出现缩放标记的范围）
 
-        self.min_width = 60 # 窗体的最小宽度
-        self.min_height = 24 # 窗体的最小高度
+        self.min_width = min_width # 窗体的最小宽度
+        self.min_height = min_height # 窗体的最小高度
 
-        self.move_event_height = 27 # 顶部可移动窗口高度
+        self.move_event_height = move_event_height # 顶部可移动窗口高度
 
     def paintEvent(self, event: QPaintEvent) -> None:
         '''
@@ -241,109 +264,6 @@ class Window_Customizing(QMainWindow):
         painter.setBrush(Qt.white) # 设置窗体颜色
         #painter.drawRoundedRect(self.rect(), 3, 3) #画边框圆角
         super().paintEvent(event)
-
-    def mouseMoveEvent(self, event):
-        '''
-        根据鼠标按钮是否按下来检查鼠标位置与更新窗口光标
-        '''
-        if event.buttons() == Qt.MouseButton.NoButton:
-            pos = event.globalPosition().toPoint() - self.pos()
-            edges = self._get_edges(pos)
-            if edges == Edge.LeftEdge or edges == Edge.RightEdge:
-                self.setCursor(Qt.SizeHorCursor)
-            elif edges == Edge.TopEdge or edges == Edge.BottomEdge:
-                self.setCursor(Qt.SizeVerCursor)
-            elif edges == Edge.LeftTopEdge or edges == Edge.RightBottomEdge:
-                self.setCursor(Qt.CursorShape.SizeFDiagCursor)
-            elif edges == Edge.LeftBottomEdge or edges == Edge.RightTopEdge:
-                self.setCursor(Qt.CursorShape.SizeBDiagCursor)
-            else:
-                self.setCursor(Qt.CursorShape.ArrowCursor)
-    
-        elif event.buttons() == Qt.MouseButton.LeftButton:
-            if self.edge_press.moveEdgePress:
-                self.move(event.globalPosition().toPoint() - self.edge_press.movePosition) # 移动窗口
-            elif self._get_edge_press() is not Edge.NoEdge:
-                self._resize_window(event.globalPosition().toPoint() - self.pos()) # 缩放窗口
-
-    def mousePressEvent(self, event) -> None:
-        pos = event.globalPosition().toPoint() - self.pos()
-        edges = self._get_edges(pos)
-        if edges == Edge.LeftEdge:
-            self.edge_press.leftEdgePress = True
-        elif edges == Edge.RightEdge:
-            self.edge_press.rightEdgePress = True
-        elif edges == Edge.TopEdge:
-            self.edge_press.topEdgePress = True
-        elif edges == Edge.BottomEdge:
-            self.edge_press.bottomEdgePress = True
-        elif edges == Edge.LeftTopEdge:
-            self.edge_press.leftTopEdgePress = True
-        elif edges == Edge.RightBottomEdge:
-            self.edge_press.rightBottomEdgePress = True
-        elif edges == Edge.LeftBottomEdge:
-            self.edge_press.leftBottomEdgePress = True
-        elif edges == Edge.RightTopEdge:
-            self.edge_press.rightTopEdgePress = True
-        else: # 移动事件
-            if self._get_move_edges(pos):
-                self.edge_press.moveEdgePress = True
-                self.edge_press.movePosition = event.globalPosition().toPoint() - self.pos()
-                self.setCursor(Qt.CursorShape.OpenHandCursor)
-
-    def mouseReleaseEvent(self, event) -> None:
-        self.edge_press.leftEdgePress = False
-        self.edge_press.rightEdgePress = False
-        self.edge_press.topEdgePress = False
-        self.edge_press.bottomEdgePress = False
-        self.edge_press.leftTopEdgePress = False
-        self.edge_press.rightBottomEdgePress = False
-        self.edge_press.leftBottomEdgePress = False
-        self.edge_press.rightTopEdgePress = False
-        self.edge_press.moveEdgePress = False
-        self.setCursor(Qt.CursorShape.ArrowCursor)
-
-    def _get_move_edges(self, pos):
-        '''
-        获取移动窗口事件标记
-        '''
-        in_move_edge: bool = pos.y() <= self.move_event_height # 是否在可移动区域内
-        not_in_edges: bool = self._get_edges(pos) == Edge.NoEdge # 是否在非缩放区域内
-        return in_move_edge and not_in_edges
-
-    def _get_edges(self, pos):
-        '''
-        获取边缘类型
-        '''
-        edges = Edge.NoEdge
- 
-        in_left_edge: bool = pos.x() <= self.edge_size # 左
-        in_right_edge: bool = pos.x() >= (self.width() - self.edge_size) # 右
-        in_top_edge: bool = pos.y() <= self.edge_size # 上
-        in_bottom_edge: bool = pos.y() >= (self.height() - self.edge_size) # 下
-
-        size = len([i for i in [in_left_edge, in_right_edge, in_top_edge, in_bottom_edge] if i])
-
-        if size == 0:
-            return edges
-        if size == 1:
-            if in_left_edge:
-                return Edge.LeftEdge
-            if in_right_edge:
-                return Edge.RightEdge
-            if in_top_edge:
-                return Edge.TopEdge
-            if in_bottom_edge:
-                return Edge.BottomEdge
-        if size == 2:
-            if in_left_edge and in_top_edge:
-                return Edge.LeftTopEdge
-            if in_left_edge and in_bottom_edge:
-                return Edge.LeftBottomEdge
-            if in_right_edge and in_top_edge:
-                return Edge.RightTopEdge
-            if in_right_edge and in_bottom_edge:
-                return Edge.RightBottomEdge
 
     def _get_edge_press(self):
         '''
@@ -432,6 +352,109 @@ class Window_Customizing(QMainWindow):
             if height <= self.min_height:
                 height = geo.height()
         self.setGeometry(x, y, width, height)
+
+    def mouseMoveEvent(self, event):
+        '''
+        根据鼠标按钮是否按下来检查鼠标位置与更新窗口光标
+        '''
+        if event.buttons() == Qt.MouseButton.NoButton:
+            pos = event.globalPosition().toPoint() - self.pos()
+            edges = self._get_edges(pos)
+            if edges == Edge.LeftEdge or edges == Edge.RightEdge:
+                self.setCursor(Qt.SizeHorCursor)
+            elif edges == Edge.TopEdge or edges == Edge.BottomEdge:
+                self.setCursor(Qt.SizeVerCursor)
+            elif edges == Edge.LeftTopEdge or edges == Edge.RightBottomEdge:
+                self.setCursor(Qt.CursorShape.SizeFDiagCursor)
+            elif edges == Edge.LeftBottomEdge or edges == Edge.RightTopEdge:
+                self.setCursor(Qt.CursorShape.SizeBDiagCursor)
+            else:
+                self.setCursor(Qt.CursorShape.ArrowCursor)
+    
+        elif event.buttons() == Qt.MouseButton.LeftButton:
+            if self.edge_press.moveEdgePress:
+                self.move(event.globalPosition().toPoint() - self.edge_press.movePosition) # 移动窗口
+            elif self._get_edge_press() is not Edge.NoEdge:
+                self._resize_window(event.globalPosition().toPoint() - self.pos()) # 缩放窗口
+
+    def mouseReleaseEvent(self, event) -> None:
+        self.edge_press.leftEdgePress = False
+        self.edge_press.rightEdgePress = False
+        self.edge_press.topEdgePress = False
+        self.edge_press.bottomEdgePress = False
+        self.edge_press.leftTopEdgePress = False
+        self.edge_press.rightBottomEdgePress = False
+        self.edge_press.leftBottomEdgePress = False
+        self.edge_press.rightTopEdgePress = False
+        self.edge_press.moveEdgePress = False
+        self.setCursor(Qt.CursorShape.ArrowCursor)
+
+    def _get_edges(self, pos):
+        '''
+        获取边缘类型
+        '''
+        edges = Edge.NoEdge
+ 
+        in_left_edge: bool = pos.x() <= self.edge_size # 左
+        in_right_edge: bool = pos.x() >= (self.width() - self.edge_size) # 右
+        in_top_edge: bool = pos.y() <= self.edge_size # 上
+        in_bottom_edge: bool = pos.y() >= (self.height() - self.edge_size) # 下
+
+        size = len([i for i in [in_left_edge, in_right_edge, in_top_edge, in_bottom_edge] if i])
+
+        if size == 0:
+            return edges
+        if size == 1:
+            if in_left_edge:
+                return Edge.LeftEdge
+            if in_right_edge:
+                return Edge.RightEdge
+            if in_top_edge:
+                return Edge.TopEdge
+            if in_bottom_edge:
+                return Edge.BottomEdge
+        if size == 2:
+            if in_left_edge and in_top_edge:
+                return Edge.LeftTopEdge
+            if in_left_edge and in_bottom_edge:
+                return Edge.LeftBottomEdge
+            if in_right_edge and in_top_edge:
+                return Edge.RightTopEdge
+            if in_right_edge and in_bottom_edge:
+                return Edge.RightBottomEdge
+
+    def _get_move_edges(self, pos):
+        '''
+        获取移动窗口事件标记
+        '''
+        in_move_edge: bool = pos.y() <= self.move_event_height # 是否在可移动区域内
+        not_in_edges: bool = self._get_edges(pos) == Edge.NoEdge # 是否在非缩放区域内
+        return in_move_edge and not_in_edges
+
+    def mousePressEvent(self, event) -> None:
+        pos = event.globalPosition().toPoint() - self.pos()
+        edges = self._get_edges(pos)
+        if edges == Edge.LeftEdge:
+            self.edge_press.leftEdgePress = True
+        elif edges == Edge.RightEdge:
+            self.edge_press.rightEdgePress = True
+        elif edges == Edge.TopEdge:
+            self.edge_press.topEdgePress = True
+        elif edges == Edge.BottomEdge:
+            self.edge_press.bottomEdgePress = True
+        elif edges == Edge.LeftTopEdge:
+            self.edge_press.leftTopEdgePress = True
+        elif edges == Edge.RightBottomEdge:
+            self.edge_press.rightBottomEdgePress = True
+        elif edges == Edge.LeftBottomEdge:
+            self.edge_press.leftBottomEdgePress = True
+        elif edges == Edge.RightTopEdge:
+            self.edge_press.rightTopEdgePress = True
+        else: # 移动事件
+            if self._get_move_edges(pos):
+                self.edge_press.moveEdgePress = True
+                self.edge_press.movePosition = event.globalPosition().toPoint() - self.pos()
+                self.setCursor(Qt.CursorShape.OpenHandCursor)
 
     def resizeEvent(self, event):
         '''

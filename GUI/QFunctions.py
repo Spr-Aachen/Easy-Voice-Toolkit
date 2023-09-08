@@ -4,12 +4,13 @@ sys.path.append('..')
 import re
 import psutil
 import pynvml
-from typing import Optional
-from PySide6.QtCore import QObject, QThread, QMutex, Signal, Slot, QPropertyAnimation, QEasingCurve, QUrl#, QTimer, QEventLoop
-from PySide6.QtGui import QTextCursor, QDesktopServices
+from typing import Union, Optional
+from PySide6.QtCore import Qt, QObject, QThread, QMutex, Signal, Slot, QPropertyAnimation, QEasingCurve, QUrl#, QTimer, QEventLoop
+from PySide6.QtGui import QFont, QTextCursor, QDesktopServices
 from PySide6.QtWidgets import *
 
-from Run import (Execute_Env_Configurator, Execute_Audio_Processing, Execute_Voice_Identifying, Execute_Voice_Transcribing, Execute_Dataset_Creating, Execute_Voice_Training, Execute_Voice_Converting)
+from .EnvConfigurator import *
+from Run import * #(Execute_Audio_Processing, Execute_Voice_Identifying, Execute_Voice_Transcribing, Execute_Dataset_Creating, Execute_Voice_Training, Execute_Voice_Converting)
 
 
 # Handle the consol's output
@@ -86,6 +87,7 @@ class MonitorUsage(QThread):
 
         self.Signal_UsageInfo.emit(Usage_CPU, Usage_GPU)
     '''
+
     def run(self):
         while True:
             Usage_CPU_Percent = psutil.cpu_percent(interval = 1.)
@@ -105,8 +107,30 @@ class MonitorUsage(QThread):
             self.msleep(1000)
 
 
+# Monitor the file's content
+class MonitorFile(QThread):
+    '''
+    Get the content of file and send to the UI
+    '''
+    Signal_FileContent = Signal(str)
+
+    def __init__(self, FilePath):
+        super().__init__()
+
+        self.FilePath = FilePath
+
+    def run(self):
+        while True:
+            with open(self.FilePath, 'r') as File:
+                FileContent = File.read()
+            
+            self.Signal_FileContent.emit(FileContent)
+
+            self.msleep(100)
+
+
 # Where to store custom signals
-class CustomSignals(QObject):
+class CustomSignals_QFunctions(QObject):
     '''
     Set up signals for custom functions
     '''
@@ -114,14 +138,14 @@ class CustomSignals(QObject):
     Signal_FrameStatus = Signal(str)
 
     # Run task
-    Signal_ExecuteTask = Signal(list)
+    Signal_ExecuteTask = Signal(tuple)
 
 
-Signals = CustomSignals()
+QFunctionsSignals = CustomSignals_QFunctions()
 
 
 def Function_FindParentUI(
-    ChildUI: QObject,
+    ChildUI: QWidget,
     ParentType: object
 ):
     '''
@@ -139,7 +163,7 @@ def Function_FindParentUI(
 
 
 def Function_InsertUI(
-    ParentUI: QObject,
+    ParentUI: QWidget,
     InsertType: object,
     InsertPosition: str = "End",
     UIParam: Optional[str] = None,
@@ -201,6 +225,87 @@ def Function_InsertUI(
     InsertUI.setToolTip(UIToolTip)
 
     return InsertUI
+
+
+def Function_ScrollToWidget(
+    Trigger: QWidget,
+    TargetWidget: Optional[QWidget],
+    ScrollArea: QScrollArea,
+    #Alignment: str = 'Top'
+):
+    '''
+    '''
+    def ScrollToWidget():
+        if TargetWidget is not None:
+            TargetRect = TargetWidget.geometry()
+        else:
+            try:
+                TargetRect = ScrollArea.widget().layout().itemAt(Trigger.property("Index")).geometry()
+            except:
+                raise Exception("Please set property 'Index' for Trigger widget!")
+
+        ScrollArea.verticalScrollBar().setValue(TargetRect.top())
+
+    if isinstance(Trigger, QTreeWidgetItem):
+        def TreeWidgetEvent(Item, Column):
+            ScrollToWidget() if Item == Trigger else None
+        Trigger.treeWidget().itemClicked.connect(TreeWidgetEvent)
+
+    if isinstance(Trigger, (QPushButton, QToolButton)):
+        Trigger.clicked.connect(ScrollToWidget)
+
+
+def Function_SetTreeWidget(
+    TreeWidget: QTreeWidget,
+    RootItemTexts: list = [],
+    ChildItemTexts: list = [()],
+    AddVertically: bool = False,
+    HideHeader: bool = True,
+    ExpandItems: bool = True
+):
+    '''
+    '''
+    TreeWidget.clear()
+
+    RootItems = []
+
+    for Index, RootItemText in enumerate(RootItemTexts):
+        RootItem = QTreeWidgetItem(TreeWidget)
+        RootItem.setText(0 if AddVertically else Index, RootItemText)
+        RootItemTextFont = QFont()
+        RootItemTextFont.setPixelSize(15)
+        RootItem.setFont(0 if AddVertically else Index, RootItemTextFont)
+        for ChildItemText in ChildItemTexts[Index]:
+            ChildItem = QTreeWidgetItem(RootItem)
+            ChildItem.setText(0 if AddVertically else Index, ChildItemText)
+            ChildItemTextFont = QFont()
+            ChildItemTextFont.setPixelSize(12)
+            ChildItem.setFont(0 if AddVertically else Index, ChildItemTextFont)
+
+        RootItems.append(RootItem)
+
+    TreeWidget.setColumnCount(1) if AddVertically else None
+    TreeWidget.addTopLevelItems(RootItems)
+
+    TreeWidget.setHeaderHidden(HideHeader)
+
+    TreeWidget.expandAll() if ExpandItems else None
+
+
+def Function_SetTreeView(
+    TreeView: QTreeView,
+    HeaderTexts: list = [],
+    RootItemTexts: list = [()],
+    ChildItemTexts: list = [(())],
+    AddVertically: bool = False
+):
+    '''
+    '''
+    
+
+    for Index, HeaderText in enumerate(HeaderTexts):
+        TreeView.setHeaderLabels(HeaderTexts)
+        TreeView.header().setOrientation(Qt.Vertical)
 
 
 def Function_ConfigureCheckBox(
@@ -300,31 +405,31 @@ def Function_AnimateFrame(
             AnimateFrame("Width", MaxWidth)
         if MaxHeight != ...:
             AnimateFrame("Height", MaxHeight)
-        Signals.Signal_FrameStatus.emit(f"{Frame.objectName()}Extended")
+        QFunctionsSignals.Signal_FrameStatus.emit(f"{Frame.objectName()}Extended")
     if Mode == "Reduce":
         if MinWidth != ...:
             AnimateFrame("Width", MinWidth)
         if MinHeight != ...:
             AnimateFrame("Height", MinHeight)
-        Signals.Signal_FrameStatus.emit(f"{Frame.objectName()}Reduced")
+        QFunctionsSignals.Signal_FrameStatus.emit(f"{Frame.objectName()}Reduced")
     if Mode == "Toggle":
         if Width_Current == MinWidth or Height_Current == MinHeight:
             if MaxWidth != ...:
                 AnimateFrame("Width", MaxWidth)
             if MaxHeight != ...:
                 AnimateFrame("Height", MaxHeight)
-            Signals.Signal_FrameStatus.emit(f"{Frame.objectName()}Extended")
+            QFunctionsSignals.Signal_FrameStatus.emit(f"{Frame.objectName()}Extended")
         else:
             if MinWidth != ...:
                 AnimateFrame("Width", MinWidth)
             if MinHeight != ...:
                 AnimateFrame("Height", MinHeight)
-            Signals.Signal_FrameStatus.emit(f"{Frame.objectName()}Reduced")
+            QFunctionsSignals.Signal_FrameStatus.emit(f"{Frame.objectName()}Reduced")
 
 
 @Slot(str)
 def Function_AnimateButton(
-    Button: QPushButton,
+    Button: QToolButton,
     Frame: Optional[QFrame] = None,
     FrameStatus: str = ...,
     Text: str = ...
@@ -344,20 +449,23 @@ def Function_AnimateButton(
 
 
 def Function_PrintText(
-    Panel: QPlainTextEdit,
+    Panel: QObject,
     Frame: Optional[QFrame] = None,
     FrameStatus: str = ...,
     Text: str = ...,
-    ShowCursor: bool = False
+    ShowCursor: Optional[bool] = None
 ):
     '''
     Function to print text on panel while its parent frame is extended
     '''
-    TextCursor = Panel.textCursor()
-    TextCursor.movePosition(QTextCursor.End)
-    TextCursor.insertText(Text)
-    Panel.setTextCursor(TextCursor)
-    Panel.ensureCursorVisible() if ShowCursor == True else None
+    if isinstance(Panel, (QLabel, QComboBox, QCheckBox, QTextBrowser)):
+        Panel.setText(Text)
+    if isinstance(Panel, (QLineEdit, QTextEdit, QPlainTextEdit)):
+        TextCursor = Panel.textCursor()
+        TextCursor.movePosition(QTextCursor.End)
+        TextCursor.insertText(Text)
+        Panel.setTextCursor(TextCursor)
+        Panel.ensureCursorVisible() if ShowCursor else None
 
     Frame = Function_FindParentUI(
         ChildUI = Panel,
@@ -386,7 +494,7 @@ def Function_SetText(
     BodyColor: str = "#ffffff",
 ):
     '''
-    Function to set text for label or textbrowser
+    Function to set text for panel
     '''
     def ToHtml(Content, Align, Size, Weight, Color, LineHeight):
         Style = f"'text-align:{Align}; font-size:{Size}pt; font-weight:{Weight}; color:{Color}; line-height:{LineHeight}px'"
@@ -411,13 +519,13 @@ def Function_SetText(
 
     if isinstance(Panel, QLabel):
         Panel.setText(Text)
-    if isinstance(Panel, QTextBrowser):
+    if isinstance(Panel, (QTextEdit, QPlainTextEdit, QTextBrowser)):
         Panel.setHtml(Text)
 
 
 def Function_SetFileDialog(
     Button: QPushButton,
-    LineEdit: QLabel,
+    LineEdit: QLineEdit,
     Mode: str,
     FileType: Optional[str] = None,
     DisplayText: str = "None",
@@ -461,9 +569,9 @@ def Function_ShowMessageBox(
     WindowTitle: str = ...,
     Text: str = ...,
     Buttons: object = QMessageBox.Ok,
-    EventButtons: list = [],
-    EventLists: list = [[]],
-    ParamLists: list = [[()]]
+    EventButtons: list = [], #EventRoles: list = [],
+    EventLists: list = [[], ],
+    ParamLists: list = [[()], ]
 ):
     '''
     Function to pop up a msgbox
@@ -518,22 +626,26 @@ def Function_ShowMessageBox(
             "background-color: rgb(120, 120, 120);"
         "}"
     )
-
+    '''
     @Slot(QPushButton)
     @Slot(QToolButton)
-    def ConnectEvent(Button):
-        if Button in EventButtons:
-            EventList = EventLists[EventButtons.index(Button)]
-            ParamList = ParamLists[EventButtons.index(Button)]
+    def ConnectEvent(Button: QAbstractButton):
+        if Button.role() in EventRoles:
+            EventList = EventLists[EventRoles.index(Button.role())]
+            Params = ParamLists[EventRoles.index(Button.role())]
             for Index, Event in enumerate(EventList):
-                Event(*ParamList[Index])
+                Event(*Params[Index])
         else:
             pass
-    MsgBox.buttonClicked.connect(
-        lambda Button: ConnectEvent(Button)
-    )
+    MsgBox.buttonClicked.connect(ConnectEvent)
+    '''
+    Result = MsgBox.exec()
 
-    MsgBox.exec()
+    if Result in EventButtons:
+        EventList = EventLists[EventButtons.index(Result)]
+        Params = ParamLists[EventButtons.index(Result)]
+        for Index, Event in enumerate(EventList):
+            Event(*Params[Index])
 
 
 def Function_ParamsHandler(
@@ -633,8 +745,10 @@ def Function_ParamsChecker(
         else:
             pass
         Params.append(Param)
+    
+    Args = tuple(Params)#if Params != [] else None
 
-    return Params
+    return Args
 
 
 def Function_AnimateProgressBar(
@@ -661,12 +775,13 @@ def Function_AnimateProgressBar(
 
 def Function_ExecuteMethod(
     ExecuteButton: QPushButton,
-    TerminateButton: Optional[QPushButton],
-    ProgressBar: Optional[QProgressBar],
-    ConsoleFrame: Optional[QFrame],
-    Method: object,
-    ParamsFrom: list = [],
-    EmptyAllowed: list = [],
+    TerminateButton: Optional[QPushButton] = None,
+    ProgressBar: Optional[QProgressBar] = None,
+    ConsoleFrame: Optional[QFrame] = None,
+    Method: object = ...,
+    Params: Optional[tuple] = (),
+    ParamsFrom: Optional[list] = [],
+    EmptyAllowed: Optional[list] = [],
     FinishEventList: Optional[list] = [],
     FinishParamList: Optional[list] = [()]
 ):
@@ -690,20 +805,23 @@ def Function_ExecuteMethod(
     def ConnectEvent():
         for Index, FinishEvent in FinishEventList:
             FinishEvent(*FinishParamList[Index])
-    ClassInstance.finished.connect(ConnectEvent) #ClassInstance.finished.connect(lambda: Function_ShowMessageBox(WindowTitle = "提示", Text = "执行完成，可跳转至下一工具界面"))
+    ClassInstance.finished.connect(ConnectEvent)
 
     @Slot()
     def ExecuteMethod():
         '''
         Update the attributes for outer class methods and wait to execute with multithreading
         '''
+        Args = Params#if Params != () else None
+        if ParamsFrom not in ([], None):
+            Args = Function_ParamsChecker(ParamsFrom, EmptyAllowed)
+            if Args == "Abort":
+                return print("Aborted.")
+            else:
+                pass #print("Continued.\n")
 
-        if Function_ParamsChecker(ParamsFrom, EmptyAllowed) != "Abort":
-            Params = Function_ParamsChecker(ParamsFrom, EmptyAllowed)
-        else:
-            return print("Aborted.")
-
-        Signals.Signal_ExecuteTask.connect(getattr(ClassInstance, MethodName))
+        QFunctionsSignals = CustomSignals_QFunctions()
+        QFunctionsSignals.Signal_ExecuteTask.connect(getattr(ClassInstance, MethodName)) #QFunctionsSignals.Signal_ExecuteTask.connect(lambda Args: getattr(ClassInstance, MethodName)(*Args))
 
         WorkerThread.started.connect(lambda: Function_AnimateFrame(Frame = ConsoleFrame, MinHeight = 0, MaxHeight = 210, Mode = "Extend")) if ConsoleFrame else None
         WorkerThread.started.connect(lambda: Function_AnimateProgressBar(ProgressBar = ProgressBar, IsTaskAlive = True)) if ProgressBar else None
@@ -711,13 +829,13 @@ def Function_ExecuteMethod(
         WorkerThread.finished.connect(lambda: Function_AnimateProgressBar(ProgressBar = ProgressBar, IsTaskAlive = False)) if ProgressBar else None
         WorkerThread.finished.connect(lambda: Function_AnimateStackedWidget(StackedWidget = StackedWidget, TargetIndex = 0)) if TerminateButton else None
         WorkerThread.finished.connect(lambda: Function_AnimateFrame(Frame = ConsoleFrame, MinHeight = 0, MaxHeight = 210, Mode = "Reduce")) if ConsoleFrame else None
-        WorkerThread.finished.connect(lambda: Signals.Signal_ExecuteTask.disconnect(getattr(ClassInstance, MethodName)))
+        #WorkerThread.finished.connect(lambda: QFunctionsSignals.Signal_ExecuteTask.disconnect(getattr(ClassInstance, MethodName)))
         WorkerThread.start()
 
-        Signals.Signal_ExecuteTask.emit(Params)
+        QFunctionsSignals.Signal_ExecuteTask.emit(Args)
 
-    ExecuteButton.clicked.connect(ExecuteMethod)
-    ExecuteButton.setText("Execute 执行") if ExecuteButton.text() == "" else None
+    ExecuteButton.clicked.connect(ExecuteMethod)#if ExecuteButton else ExecuteMethod()
+    ExecuteButton.setText("Execute 执行") if ExecuteButton != None and ExecuteButton.text() == "" else None
 
     @Slot()
     def TerminateMethod():

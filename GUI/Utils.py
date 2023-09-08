@@ -1,8 +1,9 @@
 import os
 import configparser
 #import time
-import hashlib
 import shutil
+import subprocess
+import hashlib
 import urllib
 from github import Github
 from tqdm import tqdm
@@ -18,13 +19,13 @@ class ManageConfig:
     def __init__(self,
         Config_Path: Optional[str] = None
     ):
-        self.Config_Path = os.path.join(os.path.dirname(os.path.abspath('__file__')), 'Config.ini') if Config_Path == None or not os.path.exists(Config_Path) else Config_Path
-    
+        self.Config_Path = os.path.join(os.path.dirname(os.path.abspath('__file__')), 'Config.ini') if Config_Path == None else Config_Path
+
     def ReadConfig(self):
         ConfigParser = configparser.ConfigParser()
-        ConfigParser.read(self.Config_Path, encoding = 'utf-8')
+        ConfigParser.read(self.Config_Path)
         return ConfigParser
-            
+
     def EditConfig(self,
         Section: str = ...,
         Option: str = ...,
@@ -57,8 +58,11 @@ class ManageConfig:
                 raise Exception("Need initial value")
         return Value
 
+#############################################################################################################
 
-def CheckUpdate(AccessToken: str, RepoOwner: str, RepoName: str, FileName: str, Version_Current: str):
+def CheckUpdate(AccessToken: str, RepoOwner: str, RepoName: str, FileName: str, FileFormat: str, Version_Current: str):
+    '''
+    '''
     try:
         PersonalGit = Github(AccessToken)
         Repo = PersonalGit.get_repo(f"{RepoOwner}/{RepoName}")
@@ -75,7 +79,7 @@ def CheckUpdate(AccessToken: str, RepoOwner: str, RepoName: str, FileName: str, 
     try:
         CommitSHA_Latest = Repo.get_latest_release().raw_data["target_commitish"]
         for File in Repo.get_commit(CommitSHA_Latest).raw_data["Files"]:
-            if File["filename"] == FileName:
+            if File["filename"] == f"{FileName}.{FileFormat}":
                 SHA = File["sha"]
     except:
         raise Exception("Failed to get commit")
@@ -83,8 +87,9 @@ def CheckUpdate(AccessToken: str, RepoOwner: str, RepoName: str, FileName: str, 
     return IsUpdateNeeded, URL, SHA
 
 
-def FileDownload(URL: str, DownloadDir: str, FileName: str, FileFormat: str, SHA_Expected: str) -> Tuple[Union[bytes, str], str]:
-    
+def FileDownload(URL: str, DownloadDir: str, FileName: str, FileFormat: str, SHA_Expected: Optional[str]) -> Tuple[Union[bytes, str], str]:
+    '''
+    '''
     os.makedirs(DownloadDir, exist_ok = True)
 
     DownloadPath = os.path.join(DownloadDir, FileName) + '.' + FileFormat
@@ -103,14 +108,16 @@ def FileDownload(URL: str, DownloadDir: str, FileName: str, FileFormat: str, SHA
     if os.path.exists(DownloadPath):
         if os.path.isfile(DownloadPath) == False:
             raise RuntimeError(f"{DownloadPath} exists and is not a regular file")
-        else:
+        elif SHA_Expected is not None:
             with open(DownloadPath, "rb") as f:
                 FileBytes = f.read()
             if len(SHA_Expected) == 40:
                 SHA_Current = hashlib.sha1(FileBytes).hexdigest()
             if len(SHA_Expected) == 64:
                 SHA_Current = hashlib.sha256(FileBytes).hexdigest()
-            Download() if SHA_Current != SHA_Expected else None
+            FileBytes = Download() if SHA_Current != SHA_Expected else FileBytes #Download() if SHA_Current != SHA_Expected else None
+        else:
+            FileBytes = Download()
     else:
         FileBytes = Download()
 
@@ -121,17 +128,18 @@ def Updater(
     CurrentVersion: str = ...,
     DownloadDir: str = ...,
     Name: str = ...,
-    #Format: str = 'zip',
+    Format: str = 'zip',
     ExtractDir: str = ...
 ):
-    Format = 'zip'
-
+    '''
+    '''
     try:
         IsUpdateNeeded, URL, SHA = CheckUpdate(
             AccessToken = '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',
             RepoOwner = 'Spr-Aachen',
             RepoName = 'Easy-Voice-Toolkit',
-            FileName = f'EVT.{Format}',
+            FileName = 'EVT',
+            FileFormat = 'zip',
             Version_Current = CurrentVersion
         )
         
@@ -187,13 +195,83 @@ def Updater(
         else:
             print("Already up to date!")
 
+#############################################################################################################
+
+def GetPath(
+    Dir: str,
+    Name: str
+):
+    '''
+    '''
+    for dirpath, dirnames, filenames in os.walk(Dir):
+        for dirname in dirnames:
+            if dirname == Name:
+                return os.path.join(dirpath, dirname)
+        for filename in filenames:
+            if filename == Name:
+                return os.path.join(dirpath, filename)
+
+
+def MoveFiles(
+    Dir: str,
+    Dst: str
+):
+    '''
+    '''
+    for dirpath, dirnames, filenames in os.walk(Dir):
+        for dirname in dirnames:
+            if Dir != Dst:
+                shutil.move(os.path.join(dirpath, dirname), Dst)
+        for filename in filenames:
+            if Dir != Dst:
+                shutil.move(os.path.join(dirpath, filename), Dst)
+
+#############################################################################################################
+
+def RunCMD(
+    Args: list
+):
+    '''
+    '''
+    Input = str()
+    for Arg in Args:
+        Input += f'{Arg}\n'
+    Input = Input.encode('gbk')
+    Subprocess = subprocess.Popen(['cmd'], stdin = subprocess.PIPE, stdout = subprocess.PIPE, stderr = subprocess.STDOUT)
+    Subprocess.communicate(Input)
+
+
+def SetEnvPath(
+    Path: str,
+    Type: str
+):
+    '''
+    '''
+    if Type == 'Sys':
+        RunCMD(
+            Args = [
+                'for /f "usebackq tokens=2,*" %A in (`reg query "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" /v PATH`) do set SYSPATH=%B',
+                f'setx PATH "%SYSPATH%;{Path}" /M'
+            ]
+        )
+    if Type == 'User':
+        RunCMD(
+            Args = [
+                'for /f "usebackq tokens=2,*" %A in (`reg query HKCU\Environment /v PATH`) do set userPATH=%B',
+                f'setx PATH "%userPATH%;{Path}"'
+            ]
+        )
+    if Type == 'Temp':
+        os.environ['PATH'] += ';' + Path if not Path in os.environ['PATH'] else None
+
+#############################################################################################################
 
 def ItemReplacer(
     Dict: dict,
     Item: object
 ):
     '''
-    Function to replace items using dictionary lookup
+    Function to replace item using dictionary lookup
     '''
     if isinstance(Item, str):
         return Dict.get(Item)
@@ -214,6 +292,45 @@ def ItemReplacer(
     if isinstance(Item, (int, float, bool)):
         return ItemList_New[0]
 
+"""
+def ItemsReplacer(
+    Dict: dict,
+    *Items: object
+):
+    '''
+    Function to replace items using dictionary lookup
+    '''
+    Items_New = []
+
+    for Item in Items:
+        if isinstance(Item, str):
+            return Dict.get(Item)
+        else:
+            try:
+                iter(Item)
+                ItemList = Item
+            except:
+                ItemList = []
+                ItemList.append(Item)
+
+        ItemList_New = [Dict.get(Item, Item) if isinstance(Item, str) else Item for Item in ItemList]
+
+        if isinstance(Item, list):
+            Item_New = ItemList_New
+        if isinstance(Item, tuple):
+            Item_New = tuple(ItemList_New)
+        if isinstance(Item, (int, float, bool)):
+            Item_New = ItemList_New[0]
+
+        Items_New.append(Item_New)
+
+    def Unpack(*args):
+        return args
+
+    return Unpack(Items_New)
+"""
+
+#############################################################################################################
 
 def TaskAccelerating(
     TargetList: list,
@@ -280,3 +397,5 @@ def TaskAccelerating(
     ) if ShowMessages == True else print('')
 
     #Endtime = int(time.time())
+
+#############################################################################################################

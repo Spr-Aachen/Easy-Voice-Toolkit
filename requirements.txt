@@ -38,4 +38,4 @@ pypinyin
 jieba
 cn2an
 #opencc
-#pyopenjtalk
+pyopenjtalk
