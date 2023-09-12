@@ -1,6 +1,7 @@
 from PySide6.QtCore import (QCoreApplication, QMetaObject, QRect, QSize, Qt)
 from PySide6.QtWidgets import (QCheckBox, QComboBox, QDoubleSpinBox, QFrame, QGroupBox, QHBoxLayout, QGridLayout, QLabel, QLineEdit, QPlainTextEdit, QProgressBar, QToolButton, QPushButton, QScrollArea, QSizePolicy, QSlider, QSpacerItem, QSpinBox, QStackedWidget, QTreeWidget, QTreeWidgetItem, QTextBrowser, QVBoxLayout, QWidget)
 
+from .ComponentsCustomizer import TableWidget_ButtonMixed
 from . import Sources
 
 
@@ -716,10 +717,10 @@ class Ui_MainWindow(object):
         self.Frame_Low_Home = QFrame(self.Page_Home)
         self.Frame_Low_Home.setObjectName(u"Frame_Low_Home")
         self.Frame_Low_Home.setMinimumSize(QSize(0, 90))
-        self.horizontalLayout_29 = QHBoxLayout(self.Frame_Low_Home)
-        self.horizontalLayout_29.setSpacing(0)
-        self.horizontalLayout_29.setObjectName(u"horizontalLayout_29")
-        self.horizontalLayout_29.setContentsMargins(12, 0, 12, 0)
+        self.horizontalLayout_5 = QHBoxLayout(self.Frame_Low_Home)
+        self.horizontalLayout_5.setSpacing(0)
+        self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
+        self.horizontalLayout_5.setContentsMargins(12, 0, 12, 0)
         self.Button_Demo = QToolButton(self.Frame_Low_Home)
         self.Button_Demo.setObjectName(u"Button_Demo")
         sizePolicy2 = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
@@ -729,15 +730,8 @@ class Ui_MainWindow(object):
         self.Button_Demo.setSizePolicy(sizePolicy2)
         self.Button_Demo.setMinimumSize(QSize(210, 75))
         self.Button_Demo.setStyleSheet(u"QToolButton {\n"
-"	text-align: right;\n"
-"	font-size: 15px;\n"
-"	color: rgb(255, 255, 255);\n"
-"	background-image: url(:/Button_Icon/Sources/Play.png);\n"
-"	background-repeat: no-repeat;\n"
-"	background-origin: content;\n"
-"	background-position: left;\n"
 "	background-color: transparent;\n"
-"	padding: 12px 60px;\n"
+"	/*padding: 12px 60px;*/\n"
 "	border-width: 1.5px;\n"
 "	border-radius: 6px;\n"
 "	border-style: solid;\n"
@@ -754,12 +748,53 @@ class Ui_MainWindow(object):
 "	border-width: 0px;\n"
 "	border-style: solid;\n"
 "}")
+        self.horizontalLayout_70 = QHBoxLayout(self.Button_Demo)
+        self.horizontalLayout_70.setSpacing(12)
+        self.horizontalLayout_70.setObjectName(u"horizontalLayout_70")
+        self.horizontalLayout_70.setContentsMargins(21, 12, 21, 12)
+        self.Label_Demo_Icon = QLabel(self.Button_Demo)
+        self.Label_Demo_Icon.setObjectName(u"Label_Demo_Icon")
+        self.Label_Demo_Icon.setMinimumSize(QSize(48, 48))
+        self.Label_Demo_Icon.setMaximumSize(QSize(48, 16777215))
+        self.Label_Demo_Icon.setStyleSheet(u"QLabel {\n"
+"	/*text-align: center;\n"
+"	font-size: 15px;*/\n"
+"	margin: 12px;\n"
+"	border-image: url(:/Button_Icon/Sources/Play.png);\n"
+"	/*background-repeat: no-repeat;\n"
+"	background-origin: content;\n"
+"	background-position: center;*/\n"
+"	background-color: transparent;\n"
+"	/*padding: 11.1px;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"	border-color: transparent;*/\n"
+"}")
 
-        self.horizontalLayout_29.addWidget(self.Button_Demo)
+        self.horizontalLayout_70.addWidget(self.Label_Demo_Icon)
+
+        self.Label_Demo_Text = QLabel(self.Button_Demo)
+        self.Label_Demo_Text.setObjectName(u"Label_Demo_Text")
+        self.Label_Demo_Text.setStyleSheet(u"QLabel {\n"
+"	font-size: 15px;\n"
+"	text-align: center;\n"
+"	color: rgb(210, 222, 234);\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.horizontalLayout_70.addWidget(self.Label_Demo_Text)
+
+
+        self.horizontalLayout_5.addWidget(self.Button_Demo)
 
         self.HorizontalSpacer_Low_Home_1 = QSpacerItem(107, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
-        self.horizontalLayout_29.addItem(self.HorizontalSpacer_Low_Home_1)
+        self.horizontalLayout_5.addItem(self.HorizontalSpacer_Low_Home_1)
 
         self.Button_Server = QToolButton(self.Frame_Low_Home)
         self.Button_Server.setObjectName(u"Button_Server")
@@ -767,15 +802,8 @@ class Ui_MainWindow(object):
         self.Button_Server.setSizePolicy(sizePolicy2)
         self.Button_Server.setMinimumSize(QSize(210, 75))
         self.Button_Server.setStyleSheet(u"QToolButton {\n"
-"	text-align: right;\n"
-"	font-size: 15px;\n"
-"	color: rgb(255, 255, 255);\n"
-"	background-image: url(:/Button_Icon/Sources/Server.png);\n"
-"	background-repeat: no-repeat;\n"
-"	background-origin: content;\n"
-"	background-position: left;\n"
 "	background-color: transparent;\n"
-"	padding: 12px 60px;\n"
+"	/*padding: 12px 60px;*/\n"
 "	border-width: 1.5px;\n"
 "	border-radius: 6px;\n"
 "	border-style: solid;\n"
@@ -792,12 +820,53 @@ class Ui_MainWindow(object):
 "	border-width: 0px;\n"
 "	border-style: solid;\n"
 "}")
+        self.horizontalLayout_71 = QHBoxLayout(self.Button_Server)
+        self.horizontalLayout_71.setSpacing(12)
+        self.horizontalLayout_71.setObjectName(u"horizontalLayout_71")
+        self.horizontalLayout_71.setContentsMargins(21, 12, 21, 12)
+        self.Label_Server_Icon = QLabel(self.Button_Server)
+        self.Label_Server_Icon.setObjectName(u"Label_Server_Icon")
+        self.Label_Server_Icon.setMinimumSize(QSize(48, 48))
+        self.Label_Server_Icon.setMaximumSize(QSize(48, 16777215))
+        self.Label_Server_Icon.setStyleSheet(u"QLabel {\n"
+"	/*text-align: center;\n"
+"	font-size: 15px;*/\n"
+"	margin: 12px;\n"
+"	border-image: url(:/Button_Icon/Sources/Server.png);\n"
+"	/*background-repeat: no-repeat;\n"
+"	background-origin: content;\n"
+"	background-position: center;*/\n"
+"	background-color: transparent;\n"
+"	/*padding: 11.1px;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"	border-color: transparent;*/\n"
+"}")
 
-        self.horizontalLayout_29.addWidget(self.Button_Server)
+        self.horizontalLayout_71.addWidget(self.Label_Server_Icon)
+
+        self.Label_Server_Text = QLabel(self.Button_Server)
+        self.Label_Server_Text.setObjectName(u"Label_Server_Text")
+        self.Label_Server_Text.setStyleSheet(u"QLabel {\n"
+"	font-size: 15px;\n"
+"	text-align: center;\n"
+"	color: rgb(210, 222, 234);\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.horizontalLayout_71.addWidget(self.Label_Server_Text)
+
+
+        self.horizontalLayout_5.addWidget(self.Button_Server)
 
         self.HorizontalSpacer_Low_Home_2 = QSpacerItem(106, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
-        self.horizontalLayout_29.addItem(self.HorizontalSpacer_Low_Home_2)
+        self.horizontalLayout_5.addItem(self.HorizontalSpacer_Low_Home_2)
 
         self.Button_Repo = QToolButton(self.Frame_Low_Home)
         self.Button_Repo.setObjectName(u"Button_Repo")
@@ -805,15 +874,8 @@ class Ui_MainWindow(object):
         self.Button_Repo.setSizePolicy(sizePolicy2)
         self.Button_Repo.setMinimumSize(QSize(210, 75))
         self.Button_Repo.setStyleSheet(u"QToolButton {\n"
-"	text-align: right;\n"
-"	font-size: 15px;\n"
-"	color: rgb(255, 255, 255);\n"
-"	background-image: url(:/Button_Icon/Sources/GitHub.png);\n"
-"	background-repeat: no-repeat;\n"
-"	background-origin: content;\n"
-"	background-position: left;\n"
 "	background-color: transparent;\n"
-"	padding: 12px 60px;\n"
+"	/*padding: 12px 60px;*/\n"
 "	border-width: 1.5px;\n"
 "	border-radius: 6px;\n"
 "	border-style: solid;\n"
@@ -830,12 +892,53 @@ class Ui_MainWindow(object):
 "	border-width: 0px;\n"
 "	border-style: solid;\n"
 "}")
+        self.horizontalLayout_76 = QHBoxLayout(self.Button_Repo)
+        self.horizontalLayout_76.setSpacing(12)
+        self.horizontalLayout_76.setObjectName(u"horizontalLayout_76")
+        self.horizontalLayout_76.setContentsMargins(21, 12, 21, 12)
+        self.Label_Repo_Icon = QLabel(self.Button_Repo)
+        self.Label_Repo_Icon.setObjectName(u"Label_Repo_Icon")
+        self.Label_Repo_Icon.setMinimumSize(QSize(48, 48))
+        self.Label_Repo_Icon.setMaximumSize(QSize(48, 16777215))
+        self.Label_Repo_Icon.setStyleSheet(u"QLabel {\n"
+"	/*text-align: center;\n"
+"	font-size: 15px;*/\n"
+"	margin: 12px;\n"
+"	border-image: url(:/Button_Icon/Sources/GitHub.png);\n"
+"	/*background-repeat: no-repeat;\n"
+"	background-origin: content;\n"
+"	background-position: center;*/\n"
+"	background-color: transparent;\n"
+"	/*padding: 11.1px;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"	border-color: transparent;*/\n"
+"}")
 
-        self.horizontalLayout_29.addWidget(self.Button_Repo)
+        self.horizontalLayout_76.addWidget(self.Label_Repo_Icon)
+
+        self.Label_Repo_Text = QLabel(self.Button_Repo)
+        self.Label_Repo_Text.setObjectName(u"Label_Repo_Text")
+        self.Label_Repo_Text.setStyleSheet(u"QLabel {\n"
+"	font-size: 15px;\n"
+"	text-align: center;\n"
+"	color: rgb(210, 222, 234);\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.horizontalLayout_76.addWidget(self.Label_Repo_Text)
+
+
+        self.horizontalLayout_5.addWidget(self.Button_Repo)
 
         self.HorizontalSpacer_Low_Home_3 = QSpacerItem(107, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
-        self.horizontalLayout_29.addItem(self.HorizontalSpacer_Low_Home_3)
+        self.horizontalLayout_5.addItem(self.HorizontalSpacer_Low_Home_3)
 
         self.Button_Donate = QToolButton(self.Frame_Low_Home)
         self.Button_Donate.setObjectName(u"Button_Donate")
@@ -843,15 +946,8 @@ class Ui_MainWindow(object):
         self.Button_Donate.setSizePolicy(sizePolicy2)
         self.Button_Donate.setMinimumSize(QSize(210, 75))
         self.Button_Donate.setStyleSheet(u"QToolButton {\n"
-"	text-align: right;\n"
-"	font-size: 15px;\n"
-"	color: rgb(255, 255, 255);\n"
-"	background-image: url(:/Button_Icon/Sources/Heart.png);\n"
-"	background-repeat: no-repeat;\n"
-"	background-origin: content;\n"
-"	background-position: left;\n"
 "	background-color: transparent;\n"
-"	padding: 12px 60px;\n"
+"	/*padding: 12px 60px;*/\n"
 "	border-width: 1.5px;\n"
 "	border-radius: 6px;\n"
 "	border-style: solid;\n"
@@ -868,8 +964,49 @@ class Ui_MainWindow(object):
 "	border-width: 0px;\n"
 "	border-style: solid;\n"
 "}")
+        self.horizontalLayout_79 = QHBoxLayout(self.Button_Donate)
+        self.horizontalLayout_79.setSpacing(12)
+        self.horizontalLayout_79.setObjectName(u"horizontalLayout_79")
+        self.horizontalLayout_79.setContentsMargins(21, 12, 21, 12)
+        self.Label_Donate_Icon = QLabel(self.Button_Donate)
+        self.Label_Donate_Icon.setObjectName(u"Label_Donate_Icon")
+        self.Label_Donate_Icon.setMinimumSize(QSize(48, 48))
+        self.Label_Donate_Icon.setMaximumSize(QSize(48, 16777215))
+        self.Label_Donate_Icon.setStyleSheet(u"QLabel {\n"
+"	/*text-align: center;\n"
+"	font-size: 15px;*/\n"
+"	margin: 12px;\n"
+"	border-image: url(:/Button_Icon/Sources/Heart.png);\n"
+"	/*background-repeat: no-repeat;\n"
+"	background-origin: content;\n"
+"	background-position: center;*/\n"
+"	background-color: transparent;\n"
+"	/*padding: 11.1px;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"	border-color: transparent;*/\n"
+"}")
 
-        self.horizontalLayout_29.addWidget(self.Button_Donate)
+        self.horizontalLayout_79.addWidget(self.Label_Donate_Icon)
+
+        self.Label_Donate_Text = QLabel(self.Button_Donate)
+        self.Label_Donate_Text.setObjectName(u"Label_Donate_Text")
+        self.Label_Donate_Text.setStyleSheet(u"QLabel {\n"
+"	font-size: 15px;\n"
+"	text-align: center;\n"
+"	color: rgb(210, 222, 234);\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.horizontalLayout_79.addWidget(self.Label_Donate_Text)
+
+
+        self.horizontalLayout_5.addWidget(self.Button_Donate)
 
 
         self.verticalLayout_99.addWidget(self.Frame_Low_Home)
@@ -3699,7 +3836,7 @@ class Ui_MainWindow(object):
         self.ScrollArea_Middle_Tool_VoiceIdentifier.setWidgetResizable(True)
         self.ScrollArea_Right_WidgetContents_Tool_VoiceIdentifier = QWidget()
         self.ScrollArea_Right_WidgetContents_Tool_VoiceIdentifier.setObjectName(u"ScrollArea_Right_WidgetContents_Tool_VoiceIdentifier")
-        self.ScrollArea_Right_WidgetContents_Tool_VoiceIdentifier.setGeometry(QRect(0, 0, 621, 1342))
+        self.ScrollArea_Right_WidgetContents_Tool_VoiceIdentifier.setGeometry(QRect(0, 0, 621, 1219))
         self.ScrollArea_Right_WidgetContents_Tool_VoiceIdentifier.setMinimumSize(QSize(0, 0))
         self.verticalLayout_28 = QVBoxLayout(self.ScrollArea_Right_WidgetContents_Tool_VoiceIdentifier)
         self.verticalLayout_28.setSpacing(12)
@@ -3896,10 +4033,10 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_137.addWidget(self.Frame_Tool_VoiceIdentifier_Audio_Dir_Input)
 
-        self.Frame_Tool_VoiceIdentifier_Audio_Path_Std = QFrame(self.Frame_BasicSettings_Tool_VoiceIdentifier)
-        self.Frame_Tool_VoiceIdentifier_Audio_Path_Std.setObjectName(u"Frame_Tool_VoiceIdentifier_Audio_Path_Std")
-        self.Frame_Tool_VoiceIdentifier_Audio_Path_Std.setMinimumSize(QSize(0, 123))
-        self.Frame_Tool_VoiceIdentifier_Audio_Path_Std.setStyleSheet(u"QFrame {\n"
+        self.Frame_Tool_VoiceIdentifier_StdAudioSpeaker = QFrame(self.Frame_BasicSettings_Tool_VoiceIdentifier)
+        self.Frame_Tool_VoiceIdentifier_StdAudioSpeaker.setObjectName(u"Frame_Tool_VoiceIdentifier_StdAudioSpeaker")
+        self.Frame_Tool_VoiceIdentifier_StdAudioSpeaker.setMinimumSize(QSize(0, 123))
+        self.Frame_Tool_VoiceIdentifier_StdAudioSpeaker.setStyleSheet(u"QFrame {\n"
 "	color: rgb(255, 255, 255);\n"
 "	background-color: transparent;\n"
 "	border-width: 0px;\n"
@@ -3908,13 +4045,14 @@ class Ui_MainWindow(object):
 "QFrame:hover {\n"
 "	background-color: rgb(33, 33, 33);\n"
 "}")
-        self.verticalLayout_138 = QVBoxLayout(self.Frame_Tool_VoiceIdentifier_Audio_Path_Std)
-        self.verticalLayout_138.setSpacing(12)
-        self.verticalLayout_138.setObjectName(u"verticalLayout_138")
-        self.verticalLayout_138.setContentsMargins(21, 12, 21, 12)
-        self.Label_Tool_VoiceIdentifier_Audio_Path_Std = QLabel(self.Frame_Tool_VoiceIdentifier_Audio_Path_Std)
-        self.Label_Tool_VoiceIdentifier_Audio_Path_Std.setObjectName(u"Label_Tool_VoiceIdentifier_Audio_Path_Std")
-        self.Label_Tool_VoiceIdentifier_Audio_Path_Std.setStyleSheet(u"QLabel {\n"
+        self.verticalLayout_12 = QVBoxLayout(self.Frame_Tool_VoiceIdentifier_StdAudioSpeaker)
+        self.verticalLayout_12.setSpacing(12)
+        self.verticalLayout_12.setObjectName(u"verticalLayout_12")
+        self.verticalLayout_12.setContentsMargins(21, 12, 21, 12)
+        self.Label_Tool_VoiceIdentifier_StdAudioSpeaker = QLabel(self.Frame_Tool_VoiceIdentifier_StdAudioSpeaker)
+        self.Label_Tool_VoiceIdentifier_StdAudioSpeaker.setObjectName(u"Label_Tool_VoiceIdentifier_StdAudioSpeaker")
+        self.Label_Tool_VoiceIdentifier_StdAudioSpeaker.setMinimumSize(QSize(0, 60))
+        self.Label_Tool_VoiceIdentifier_StdAudioSpeaker.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	/*color: rgb(255, 255, 255);*/\n"
 "	background-color: transparent;\n"
@@ -3924,157 +4062,15 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}")
 
-        self.verticalLayout_138.addWidget(self.Label_Tool_VoiceIdentifier_Audio_Path_Std)
+        self.verticalLayout_12.addWidget(self.Label_Tool_VoiceIdentifier_StdAudioSpeaker)
 
-        self.ChildFrame_Tool_VoiceIdentifier_Audio_Path_Std = QFrame(self.Frame_Tool_VoiceIdentifier_Audio_Path_Std)
-        self.ChildFrame_Tool_VoiceIdentifier_Audio_Path_Std.setObjectName(u"ChildFrame_Tool_VoiceIdentifier_Audio_Path_Std")
-        sizePolicy4.setHeightForWidth(self.ChildFrame_Tool_VoiceIdentifier_Audio_Path_Std.sizePolicy().hasHeightForWidth())
-        self.ChildFrame_Tool_VoiceIdentifier_Audio_Path_Std.setSizePolicy(sizePolicy4)
-        self.ChildFrame_Tool_VoiceIdentifier_Audio_Path_Std.setStyleSheet(u"QFrame {\n"
-"	color: rgb(255, 255, 255);\n"
-"	background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QFrame:hover {\n"
-"	background-color: transparent;\n"
-"}")
-        self.horizontalLayout_32 = QHBoxLayout(self.ChildFrame_Tool_VoiceIdentifier_Audio_Path_Std)
-        self.horizontalLayout_32.setSpacing(12)
-        self.horizontalLayout_32.setObjectName(u"horizontalLayout_32")
-        self.horizontalLayout_32.setContentsMargins(0, 0, 0, 0)
-        self.LineEdit_Tool_VoiceIdentifier_Audio_Path_Std = QLineEdit(self.ChildFrame_Tool_VoiceIdentifier_Audio_Path_Std)
-        self.LineEdit_Tool_VoiceIdentifier_Audio_Path_Std.setObjectName(u"LineEdit_Tool_VoiceIdentifier_Audio_Path_Std")
-        self.LineEdit_Tool_VoiceIdentifier_Audio_Path_Std.setStyleSheet(u"QLineEdit {\n"
-"	/*font-size: 12px;*/\n"
-"	text-align: left;\n"
-"	color: rgb(255, 255, 255);\n"
-"	selection-background-color: darkgrey;\n"
-"	background-color: transparent;\n"
-"	padding-top: 3px;\n"
-"	padding-left: 6px;\n"
-"	padding-bottom: 3px;\n"
-"	padding-right: 6px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgba(201, 210, 222, 123);\n"
-"}\n"
-"QLineEdit:hover {\n"
-"	border-color: rgba(201, 210, 222, 210);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
+        self.Table_Tool_VoiceIdentifier_StdAudioSpeaker = TableWidget_ButtonMixed(self.Frame_Tool_VoiceIdentifier_StdAudioSpeaker)
+        self.Table_Tool_VoiceIdentifier_StdAudioSpeaker.setObjectName(u"Table_Tool_VoiceIdentifier_StdAudioSpeaker")
 
-        self.horizontalLayout_32.addWidget(self.LineEdit_Tool_VoiceIdentifier_Audio_Path_Std)
-
-        self.Button_Tool_VoiceIdentifier_Audio_Path_Std = QPushButton(self.ChildFrame_Tool_VoiceIdentifier_Audio_Path_Std)
-        self.Button_Tool_VoiceIdentifier_Audio_Path_Std.setObjectName(u"Button_Tool_VoiceIdentifier_Audio_Path_Std")
-        sizePolicy1.setHeightForWidth(self.Button_Tool_VoiceIdentifier_Audio_Path_Std.sizePolicy().hasHeightForWidth())
-        self.Button_Tool_VoiceIdentifier_Audio_Path_Std.setSizePolicy(sizePolicy1)
-        self.Button_Tool_VoiceIdentifier_Audio_Path_Std.setMaximumSize(QSize(24, 24))
-        self.Button_Tool_VoiceIdentifier_Audio_Path_Std.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	color: rgb(255, 255, 255);\n"
-"	background-color: transparent;\n"
-"	padding-top: 3px;\n"
-"	padding-left: 6px;\n"
-"	padding-bottom: 3px;\n"
-"	padding-right: 6px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgba(201, 210, 222, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(201, 210, 222, 210);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.horizontalLayout_32.addWidget(self.Button_Tool_VoiceIdentifier_Audio_Path_Std)
+        self.verticalLayout_12.addWidget(self.Table_Tool_VoiceIdentifier_StdAudioSpeaker)
 
 
-        self.verticalLayout_138.addWidget(self.ChildFrame_Tool_VoiceIdentifier_Audio_Path_Std)
-
-
-        self.verticalLayout_137.addWidget(self.Frame_Tool_VoiceIdentifier_Audio_Path_Std)
-
-        self.Frame_Tool_VoiceIdentifier_Speaker = QFrame(self.Frame_BasicSettings_Tool_VoiceIdentifier)
-        self.Frame_Tool_VoiceIdentifier_Speaker.setObjectName(u"Frame_Tool_VoiceIdentifier_Speaker")
-        self.Frame_Tool_VoiceIdentifier_Speaker.setMinimumSize(QSize(0, 123))
-        self.Frame_Tool_VoiceIdentifier_Speaker.setStyleSheet(u"QFrame {\n"
-"	color: rgb(255, 255, 255);\n"
-"	background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QFrame:hover {\n"
-"	background-color: rgb(33, 33, 33);\n"
-"}")
-        self.verticalLayout_139 = QVBoxLayout(self.Frame_Tool_VoiceIdentifier_Speaker)
-        self.verticalLayout_139.setSpacing(12)
-        self.verticalLayout_139.setObjectName(u"verticalLayout_139")
-        self.verticalLayout_139.setContentsMargins(21, 12, 21, 12)
-        self.Label_Tool_VoiceIdentifier_Speaker = QLabel(self.Frame_Tool_VoiceIdentifier_Speaker)
-        self.Label_Tool_VoiceIdentifier_Speaker.setObjectName(u"Label_Tool_VoiceIdentifier_Speaker")
-        self.Label_Tool_VoiceIdentifier_Speaker.setStyleSheet(u"QLabel {\n"
-"	/*text-align: center;*/\n"
-"	/*color: rgb(255, 255, 255);*/\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.verticalLayout_139.addWidget(self.Label_Tool_VoiceIdentifier_Speaker)
-
-        self.LineEdit_Tool_VoiceIdentifier_Speaker = QLineEdit(self.Frame_Tool_VoiceIdentifier_Speaker)
-        self.LineEdit_Tool_VoiceIdentifier_Speaker.setObjectName(u"LineEdit_Tool_VoiceIdentifier_Speaker")
-        self.LineEdit_Tool_VoiceIdentifier_Speaker.setStyleSheet(u"QLineEdit {\n"
-"	/*font-size: 12px;*/\n"
-"	text-align: left;\n"
-"	color: rgb(255, 255, 255);\n"
-"	selection-background-color: darkgrey;\n"
-"	background-color: transparent;\n"
-"	padding-top: 3px;\n"
-"	padding-left: 6px;\n"
-"	padding-bottom: 3px;\n"
-"	padding-right: 6px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgba(201, 210, 222, 123);\n"
-"}\n"
-"QLineEdit:hover {\n"
-"	border-color: rgba(201, 210, 222, 210);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.verticalLayout_139.addWidget(self.LineEdit_Tool_VoiceIdentifier_Speaker)
-
-
-        self.verticalLayout_137.addWidget(self.Frame_Tool_VoiceIdentifier_Speaker)
+        self.verticalLayout_137.addWidget(self.Frame_Tool_VoiceIdentifier_StdAudioSpeaker)
 
         self.Frame_Tool_VoiceIdentifier_DecisionThreshold = QFrame(self.Frame_BasicSettings_Tool_VoiceIdentifier)
         self.Frame_Tool_VoiceIdentifier_DecisionThreshold.setObjectName(u"Frame_Tool_VoiceIdentifier_DecisionThreshold")
@@ -14300,6 +14296,10 @@ class Ui_MainWindow(object):
         self.Label_Menu_Download_Text.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Menu_Tools_Text.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Menu_Settings_Text.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.Label_Demo_Text.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.Label_Server_Text.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.Label_Repo_Text.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.Label_Donate_Text.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.ToolButton_Download_Title.setText(QCoreApplication.translate("MainWindow", u"Label", None))
         self.Label_Download_FFmpeg.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Download_GCC.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
@@ -14352,9 +14352,7 @@ class Ui_MainWindow(object):
         self.CheckBox_Toggle_BasicSettings_Tool_VoiceIdentifier.setText(QCoreApplication.translate("MainWindow", u"CheckBox1", None))
         self.Label_Tool_VoiceIdentifier_Audio_Dir_Input.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Button_Tool_VoiceIdentifier_Audio_Dir_Input.setText(QCoreApplication.translate("MainWindow", u"...", None))
-        self.Label_Tool_VoiceIdentifier_Audio_Path_Std.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.Button_Tool_VoiceIdentifier_Audio_Path_Std.setText(QCoreApplication.translate("MainWindow", u"...", None))
-        self.Label_Tool_VoiceIdentifier_Speaker.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.Label_Tool_VoiceIdentifier_StdAudioSpeaker.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Tool_VoiceIdentifier_DecisionThreshold.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Tool_VoiceIdentifier_Audio_Dir_Output.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Button_Tool_VoiceIdentifier_Audio_Dir_Output.setText(QCoreApplication.translate("MainWindow", u"...", None))

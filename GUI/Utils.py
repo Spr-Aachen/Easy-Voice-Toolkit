@@ -266,6 +266,22 @@ def SetEnvPath(
 
 #############################################################################################################
 
+def IterChecker(
+    Item,
+    #Type: str = 'list'
+):
+    '''
+    '''
+    try:
+        iter(Item)
+        ItemList = Item
+    except:
+        ItemList = []
+        ItemList.append(Item)
+
+    return ItemList
+
+
 def ItemReplacer(
     Dict: dict,
     Item: object
@@ -276,12 +292,7 @@ def ItemReplacer(
     if isinstance(Item, str):
         return Dict.get(Item)
     else:
-        try:
-            iter(Item)
-            ItemList = Item
-        except:
-            ItemList = []
-            ItemList.append(Item)
+        ItemList = IterChecker(Item)
 
     ItemList_New = [Dict.get(Item, Item) if isinstance(Item, str) else Item for Item in ItemList]
 

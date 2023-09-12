@@ -9,6 +9,7 @@ from PySide6.QtCore import Qt, QObject, QThread, QMutex, Signal, Slot, QProperty
 from PySide6.QtGui import QFont, QTextCursor, QDesktopServices
 from PySide6.QtWidgets import *
 
+from .ComponentsCustomizer import *
 from .EnvConfigurator import *
 from Run import * #(Execute_Audio_Processing, Execute_Voice_Identifying, Execute_Voice_Transcribing, Execute_Dataset_Creating, Execute_Voice_Training, Execute_Voice_Converting)
 
@@ -528,13 +529,13 @@ def Function_SetFileDialog(
     LineEdit: QLineEdit,
     Mode: str,
     FileType: Optional[str] = None,
-    DisplayText: str = "None",
+    #DisplayText: str = "None",
     ButtonTooltip: str = "Browse"
 ):
     '''
     Function to select/save file path (through button)
     '''
-    LineEdit.setText(DisplayText)
+    #LineEdit.setText(DisplayText)
 
     @Slot()
     def SetFileDialog():
@@ -667,6 +668,10 @@ def Function_ParamsHandler(
             return UI.value()
         if isinstance(UI, (QCheckBox, QRadioButton)):
             return UI.isChecked()
+
+        if isinstance(UI, TableWidget_ButtonMixed):
+            return UI.GetValue
+
     if Mode == "Set":
         if isinstance(UI, QLineEdit):
             UI.setText(Param)
@@ -678,6 +683,9 @@ def Function_ParamsHandler(
             UI.setValue(Param)
         if isinstance(UI, (QCheckBox, QRadioButton)):
             UI.setChecked(Param)
+
+        if isinstance(UI, TableWidget_ButtonMixed):
+            UI.SetValue(Param)
 
 
 def Function_ParamsSynchronizer(
@@ -698,12 +706,7 @@ def Function_ParamsSynchronizer(
             Param_Get = Param_Get * Times if isinstance(Param_Get, (int, float, complex)) else Param_Get
             Function_ParamsHandler(UI_Set, Param_Get, "Set")
     
-    try:
-        iter(Trigger)
-        TriggerList = Trigger
-    except:
-        TriggerList = []
-        TriggerList.append(Trigger)
+    TriggerList = IterChecker(Trigger)
 
     for Trigger in TriggerList:
         if isinstance(Trigger, (QPushButton, QToolButton)):
@@ -882,12 +885,7 @@ def Function_SetURL(
         if isinstance(URL, str):
             toQURL(URL)
         else:
-            try:
-                iter(URL)
-                URLList = URL
-            except:
-                URLList = []
-                URLList.append(URL)
+            URLList = IterChecker(URL)
             for Index, URL in enumerate(URLList):
                 URL = Function_ParamsChecker(URLList)[Index] if isinstance(URL, QObject) else URL
                 toQURL(URL)

@@ -394,25 +394,25 @@ class MainWindow(Window_Customizing):
             BodyWeight = 420
         )
 
-        self.ui.Button_Demo.setText(QCA.translate("Button", "视频演示"))
+        self.ui.Label_Demo_Text.setText(QCA.translate("Button", "视频演示"))
         Function_SetURL(
             Button = self.ui.Button_Demo,
             URL = "https://www.bilibili.com/video/BV",
             ButtonTooltip = "Click to view demo video"
         )
-        self.ui.Button_Server.setText(QCA.translate("Button", "云端版本"))
+        self.ui.Label_Server_Text.setText(QCA.translate("Button", "云端版本"))
         Function_SetURL(
             Button = self.ui.Button_Server,
             URL = "https://colab.research.google.com/github/Spr-Aachen/EVT-Resources/blob/main/Easy_Voice_Toolkit_for_Colab.ipynb",
             ButtonTooltip = "Click to run on server"
         )
-        self.ui.Button_Repo.setText(QCA.translate("Button", "项目仓库"))
+        self.ui.Label_Repo_Text.setText(QCA.translate("Button", "项目仓库"))
         Function_SetURL(
             Button = self.ui.Button_Repo,
             URL = "https://github.com/Spr-Aachen/Easy-Voice-Toolkit",
             ButtonTooltip = "Click to view github repo"
         )
-        self.ui.Button_Donate.setText(QCA.translate("Button", "赞助作者"))
+        self.ui.Label_Donate_Text.setText(QCA.translate("Button", "赞助作者"))
         Function_SetURL(
             Button = self.ui.Button_Donate,
             URL = "https://",
@@ -828,11 +828,10 @@ class MainWindow(Window_Customizing):
         Function_SetFileDialog(
             Button = self.ui.Button_Tool_AudioProcessor_Media_Dir_Input,
             LineEdit = self.ui.LineEdit_Tool_AudioProcessor_Media_Dir_Input,
-            Mode = "SelectDir",
-            DisplayText = QCA.translate("LineEdit", "None")
+            Mode = "SelectDir"
         )
         self.ui.LineEdit_Tool_AudioProcessor_Media_Dir_Input.setText(
-            str(Config_Tool_AudioProcessor.GetValue('AudioProcessor', 'Media_Dir_Input', ''))
+            str(Config_Tool_AudioProcessor.GetValue('AudioProcessor', 'Media_Dir_Input', 'None'))
         )
         self.ui.LineEdit_Tool_AudioProcessor_Media_Dir_Input.textChanged.connect(
             lambda Value: Config_Tool_AudioProcessor.EditConfig('AudioProcessor', 'Media_Dir_Input', str(Value))
@@ -859,11 +858,10 @@ class MainWindow(Window_Customizing):
         Function_SetFileDialog(
             Button = self.ui.Button_Tool_AudioProcessor_Media_Dir_Output,
             LineEdit = self.ui.LineEdit_Tool_AudioProcessor_Media_Dir_Output,
-            Mode = "SelectDir",
-            DisplayText = QCA.translate("LineEdit", "None")
+            Mode = "SelectDir"
         )
         self.ui.LineEdit_Tool_AudioProcessor_Media_Dir_Output.setText(
-            str(Config_Tool_AudioProcessor.GetValue('AudioProcessor', 'Media_Dir_Output', ''))
+            str(Config_Tool_AudioProcessor.GetValue('AudioProcessor', 'Media_Dir_Output', 'None'))
         )
         self.ui.LineEdit_Tool_AudioProcessor_Media_Dir_Output.textChanged.connect(
             lambda Value: Config_Tool_AudioProcessor.EditConfig('AudioProcessor', 'Media_Dir_Output', str(Value))
@@ -1029,6 +1027,12 @@ class MainWindow(Window_Customizing):
                 self.ui.SpinBox_Tool_AudioProcessor_Silent_Interval_Min,
                 self.ui.SpinBox_Tool_AudioProcessor_Hop_Size,
                 self.ui.SpinBox_Tool_AudioProcessor_Silence_Kept_Max
+            ],
+            FinishEventList = [
+                Function_ShowMessageBox
+            ],
+            FinishParamList = [
+                ("Ask","当前任务已执行完成，是否跳转至下一工具界面？",QMessageBox.Yes|QMessageBox.No,[QMessageBox.Yes],[[Function_AnimateStackedWidget,self.ui.Frame_Tools_Top.layout().itemAt(self.ui.StackedWidget_Pages_Tools.currentIndex()+1).click]],[[(self.ui.StackedWidget_Pages_Tools,self.ui.StackedWidget_Pages_Tools.currentIndex()+1),()]])
             ]
         )
 
@@ -1104,48 +1108,26 @@ class MainWindow(Window_Customizing):
         Function_SetFileDialog(
             Button = self.ui.Button_Tool_VoiceIdentifier_Audio_Dir_Input,
             LineEdit = self.ui.LineEdit_Tool_VoiceIdentifier_Audio_Dir_Input,
-            Mode = "SelectDir",
-            DisplayText = QCA.translate("LineEdit", "无")
+            Mode = "SelectDir"
         )
         self.ui.LineEdit_Tool_VoiceIdentifier_Audio_Dir_Input.setText(
-            str(Config_Tool_VoiceIdentifier.GetValue('VoiceIdentifier', 'Audio_Dir_Input', ''))
+            str(Config_Tool_VoiceIdentifier.GetValue('VoiceIdentifier', 'Audio_Dir_Input', 'None'))
         )
         self.ui.LineEdit_Tool_VoiceIdentifier_Audio_Dir_Input.textChanged.connect(
             lambda Value: Config_Tool_VoiceIdentifier.EditConfig('VoiceIdentifier', 'Audio_Dir_Input', str(Value))
         )
 
         Function_SetText(
-            Panel = self.ui.Label_Tool_VoiceIdentifier_Audio_Path_Std,
-            Title = "标准音频路径",
-            Body = QCA.translate("Label", "包含目标人物语音的音频文件的所在路径，尽量不要混入杂音。")
+            Panel = self.ui.Label_Tool_VoiceIdentifier_StdAudioSpeaker,
+            Title = "目标人物与音频",
+            Body = QCA.translate("Label", "目标人物的名字及其语音文件的所在路径，音频中尽量不要混入杂音。")
         )
-        Function_SetFileDialog(
-            Button = self.ui.Button_Tool_VoiceIdentifier_Audio_Path_Std,
-            LineEdit = self.ui.LineEdit_Tool_VoiceIdentifier_Audio_Path_Std,
-            Mode = "SelectFile",
-            FileType = "音频类型 (*.mp3 *.aac *.wav *.flac)",
-            DisplayText = QCA.translate("LineEdit", "None")
+        self.ui.Table_Tool_VoiceIdentifier_StdAudioSpeaker.SetValue(
+            eval(Config_Tool_VoiceIdentifier.GetValue('VoiceIdentifier', 'StdAudioSpeaker', '{'': ''}'))
         )
-        self.ui.LineEdit_Tool_VoiceIdentifier_Audio_Path_Std.setText(
-            str(Config_Tool_VoiceIdentifier.GetValue('VoiceIdentifier', 'Audio_Path_Std', ''))
+        self.ui.Table_Tool_VoiceIdentifier_StdAudioSpeaker.ValueChanged.connect(
+            lambda Value: Config_Tool_VoiceIdentifier.EditConfig('VoiceIdentifier', 'StdAudioSpeaker', str(Value))
         )
-        self.ui.LineEdit_Tool_VoiceIdentifier_Audio_Path_Std.textChanged.connect(
-            lambda Value: Config_Tool_VoiceIdentifier.EditConfig('VoiceIdentifier', 'Audio_Path_Std', str(Value))
-        )
-
-        Function_SetText(
-            Panel = self.ui.Label_Tool_VoiceIdentifier_Speaker,
-            Title = "人物名字",
-            Body = QCA.translate("Label", "说话人物的名字，若没有进行语音模型训练的需求可以跳过该设置。")
-        )
-        self.ui.LineEdit_Tool_VoiceIdentifier_Speaker.setText(
-            str(Config_Tool_VoiceIdentifier.GetValue('VoiceIdentifier', 'Speaker', ''))
-        )
-        self.ui.LineEdit_Tool_VoiceIdentifier_Speaker.textChanged.connect(
-            lambda Value: Config_Tool_VoiceIdentifier.EditConfig('VoiceIdentifier', 'Speaker', str(Value))
-        )
-        self.ui.LineEdit_Tool_VoiceIdentifier_Speaker.setToolTipDuration(-1)
-        self.ui.LineEdit_Tool_VoiceIdentifier_Speaker.setToolTip("注意：名字中尽量不要出现特殊符号")
 
         Function_SetText(
             Panel = self.ui.Label_Tool_VoiceIdentifier_DecisionThreshold,
@@ -1169,11 +1151,10 @@ class MainWindow(Window_Customizing):
         Function_SetFileDialog(
             Button = self.ui.Button_Tool_VoiceIdentifier_Audio_Dir_Output,
             LineEdit = self.ui.LineEdit_Tool_VoiceIdentifier_Audio_Dir_Output,
-            Mode = "SelectDir",
-            DisplayText = QCA.translate("LineEdit", "None")
+            Mode = "SelectDir"
         )
         self.ui.LineEdit_Tool_VoiceIdentifier_Audio_Dir_Output.setText(
-            str(Config_Tool_VoiceIdentifier.GetValue('VoiceIdentifier', 'Audio_Dir_Output', ''))
+            str(Config_Tool_VoiceIdentifier.GetValue('VoiceIdentifier', 'Audio_Dir_Output', 'None'))
         )
         self.ui.LineEdit_Tool_VoiceIdentifier_Audio_Dir_Output.textChanged.connect(
             lambda Value: Config_Tool_VoiceIdentifier.EditConfig('VoiceIdentifier', 'Audio_Dir_Output', str(Value))
@@ -1208,8 +1189,7 @@ class MainWindow(Window_Customizing):
         Function_SetFileDialog(
             Button = self.ui.Button_Tool_VoiceIdentifier_Model_Dir,
             LineEdit = self.ui.LineEdit_Tool_VoiceIdentifier_Model_Dir,
-            Mode = "SelectDir",
-            DisplayText = QCA.translate("LineEdit", "None")
+            Mode = "SelectDir"
         )
         self.ui.LineEdit_Tool_VoiceIdentifier_Model_Dir.setText(
             str(Config_Tool_VoiceIdentifier.GetValue('VoiceIdentifier', 'Model_Dir', os.path.join(CurrentDir, 'Download')))
@@ -1333,7 +1313,7 @@ class MainWindow(Window_Customizing):
             ConsoleFrame = self.ui.Frame_Console,
             Method = Execute_Voice_Identifying.Execute,
             ParamsFrom = [
-                self.ui.LineEdit_Tool_VoiceIdentifier_Audio_Path_Std,
+                self.ui.Table_Tool_VoiceIdentifier_StdAudioSpeaker,
                 self.ui.LineEdit_Tool_VoiceIdentifier_Audio_Dir_Input,
                 self.ui.LineEdit_Tool_VoiceIdentifier_Audio_Dir_Output,
                 self.ui.LineEdit_Tool_VoiceIdentifier_Model_Dir,
@@ -1341,11 +1321,13 @@ class MainWindow(Window_Customizing):
                 self.ui.ComboBox_Tool_VoiceIdentifier_Model_Name,
                 self.ui.ComboBox_Tool_VoiceIdentifier_Feature_Method,
                 self.ui.DoubleSpinBox_Tool_VoiceIdentifier_DecisionThreshold,
-                self.ui.DoubleSpinBox_Tool_VoiceIdentifier_Duration_of_Audio,
-                self.ui.LineEdit_Tool_VoiceIdentifier_Speaker
+                self.ui.DoubleSpinBox_Tool_VoiceIdentifier_Duration_of_Audio
             ],
-            EmptyAllowed = [
-                self.ui.LineEdit_Tool_VoiceIdentifier_Speaker
+            FinishEventList = [
+                Function_ShowMessageBox
+            ],
+            FinishParamList = [
+                ("Ask","当前任务已执行完成，是否跳转至下一工具界面？",QMessageBox.Yes|QMessageBox.No,[QMessageBox.Yes],[[Function_AnimateStackedWidget,self.ui.Frame_Tools_Top.layout().itemAt(self.ui.StackedWidget_Pages_Tools.currentIndex()+1).click]],[[(self.ui.StackedWidget_Pages_Tools,self.ui.StackedWidget_Pages_Tools.currentIndex()+1),()]])
             ]
         )
 
@@ -1420,11 +1402,10 @@ class MainWindow(Window_Customizing):
         Function_SetFileDialog(
             Button = self.ui.Button_Tool_VoiceTranscriber_WAV_Dir,
             LineEdit = self.ui.LineEdit_Tool_VoiceTranscriber_WAV_Dir,
-            Mode = "SelectDir",
-            DisplayText = QCA.translate("LineEdit", "None")
+            Mode = "SelectDir"
         )
         self.ui.LineEdit_Tool_VoiceTranscriber_WAV_Dir.setText(
-            (Config_Tool_VoiceTranscriber.GetValue('VoiceTranscriber', 'WAV_Dir', ''))
+            str(Config_Tool_VoiceTranscriber.GetValue('VoiceTranscriber', 'WAV_Dir', 'None'))
         )
         self.ui.LineEdit_Tool_VoiceTranscriber_WAV_Dir.textChanged.connect(
             lambda Value: Config_Tool_VoiceTranscriber.EditConfig('VoiceTranscriber', 'WAV_Dir', str(Value))
@@ -1438,11 +1419,10 @@ class MainWindow(Window_Customizing):
         Function_SetFileDialog(
             Button = self.ui.Button_Tool_VoiceTranscriber_SRT_Dir,
             LineEdit = self.ui.LineEdit_Tool_VoiceTranscriber_SRT_Dir,
-            Mode = "SelectDir",
-            DisplayText = QCA.translate("LineEdit", "None")
+            Mode = "SelectDir"
         )
         self.ui.LineEdit_Tool_VoiceTranscriber_SRT_Dir.setText(
-            str(Config_Tool_VoiceTranscriber.GetValue('VoiceTranscriber', 'SRT_Dir', ''))
+            str(Config_Tool_VoiceTranscriber.GetValue('VoiceTranscriber', 'SRT_Dir', 'None'))
         )
         self.ui.LineEdit_Tool_VoiceTranscriber_SRT_Dir.textChanged.connect(
             lambda Value: Config_Tool_VoiceTranscriber.EditConfig('VoiceTranscriber', 'SRT_Dir', str(Value))
@@ -1477,8 +1457,7 @@ class MainWindow(Window_Customizing):
         Function_SetFileDialog(
             Button = self.ui.Button_Tool_VoiceTranscriber_Model_Dir,
             LineEdit = self.ui.LineEdit_Tool_VoiceTranscriber_Model_Dir,
-            Mode = "SelectDir",
-            DisplayText = QCA.translate("LineEdit", "None")
+            Mode = "SelectDir"
         )
         self.ui.LineEdit_Tool_VoiceTranscriber_Model_Dir.setText(
             str(Config_Tool_VoiceTranscriber.GetValue('VoiceTranscriber', 'Model_Dir', os.path.join(CurrentDir, 'Download')))
@@ -1727,6 +1706,12 @@ class MainWindow(Window_Customizing):
             ],
             EmptyAllowed = [
                 self.ui.ComboBox_Tool_VoiceTranscriber_Language
+            ],
+            FinishEventList = [
+                Function_ShowMessageBox
+            ],
+            FinishParamList = [
+                ("Ask","当前任务已执行完成，是否跳转至下一工具界面？",QMessageBox.Yes|QMessageBox.No,[QMessageBox.Yes],[[Function_AnimateStackedWidget,self.ui.Frame_Tools_Top.layout().itemAt(self.ui.StackedWidget_Pages_Tools.currentIndex()+1).click]],[[(self.ui.StackedWidget_Pages_Tools,self.ui.StackedWidget_Pages_Tools.currentIndex()+1),()]])
             ]
         )
 
@@ -1802,11 +1787,10 @@ class MainWindow(Window_Customizing):
         Function_SetFileDialog(
             Button = self.ui.Button_Tool_DatasetCreator_WAV_Dir,
             LineEdit = self.ui.LineEdit_Tool_DatasetCreator_WAV_Dir,
-            Mode = "SelectDir",
-            DisplayText = QCA.translate("LineEdit", "None")
+            Mode = "SelectDir"
         )
         self.ui.LineEdit_Tool_DatasetCreator_WAV_Dir.setText(
-            str(Config_Tool_DatasetCreator.GetValue('DatasetCreator', 'WAV_Dir', ''))
+            str(Config_Tool_DatasetCreator.GetValue('DatasetCreator', 'WAV_Dir', 'None'))
         )
         self.ui.LineEdit_Tool_DatasetCreator_WAV_Dir.textChanged.connect(
             lambda Value: Config_Tool_DatasetCreator.EditConfig('DatasetCreator', 'WAV_Dir', str(Value))
@@ -1820,11 +1804,10 @@ class MainWindow(Window_Customizing):
         Function_SetFileDialog(
             Button = self.ui.Button_Tool_DatasetCreator_SRT_Dir,
             LineEdit = self.ui.LineEdit_Tool_DatasetCreator_SRT_Dir,
-            Mode = "SelectDir",
-            DisplayText = QCA.translate("LineEdit", "None")
+            Mode = "SelectDir"
         )
         self.ui.LineEdit_Tool_DatasetCreator_SRT_Dir.setText(
-            str(Config_Tool_DatasetCreator.GetValue('DatasetCreator', 'SRT_Dir', ''))
+            str(Config_Tool_DatasetCreator.GetValue('DatasetCreator', 'SRT_Dir', 'None'))
         )
         self.ui.LineEdit_Tool_DatasetCreator_SRT_Dir.textChanged.connect(
             lambda Value: Config_Tool_DatasetCreator.EditConfig('DatasetCreator', 'SRT_Dir', str(Value))
@@ -1851,11 +1834,10 @@ class MainWindow(Window_Customizing):
         Function_SetFileDialog(
             Button = self.ui.Button_Tool_DatasetCreator_WAV_Dir_Split,
             LineEdit = self.ui.LineEdit_Tool_DatasetCreator_WAV_Dir_Split,
-            Mode = "SelectDir",
-            DisplayText = QCA.translate("LineEdit", "None")
+            Mode = "SelectDir"
         )
         self.ui.LineEdit_Tool_DatasetCreator_WAV_Dir_Split.setText(
-            str(Config_Tool_DatasetCreator.GetValue('DatasetCreator', 'WAV_Dir_Split', ''))
+            str(Config_Tool_DatasetCreator.GetValue('DatasetCreator', 'WAV_Dir_Split', 'None'))
         )
         self.ui.LineEdit_Tool_DatasetCreator_WAV_Dir_Split.textChanged.connect(
             lambda Value: Config_Tool_DatasetCreator.EditConfig('DatasetCreator', 'WAV_Dir_Split', str(Value))
@@ -1870,11 +1852,10 @@ class MainWindow(Window_Customizing):
             Button = self.ui.Button_Tool_DatasetCreator_FileList_Path_Training,
             LineEdit = self.ui.LineEdit_Tool_DatasetCreator_FileList_Path_Training,
             Mode = "SaveFile",
-            FileType = "txt类型 (*.txt)",
-            DisplayText = QCA.translate("LineEdit", "None")
+            FileType = "txt类型 (*.txt)"
         )
         self.ui.LineEdit_Tool_DatasetCreator_FileList_Path_Training.setText(
-            str(Config_Tool_DatasetCreator.GetValue('DatasetCreator', 'FileList_Path_Training', ''))
+            str(Config_Tool_DatasetCreator.GetValue('DatasetCreator', 'FileList_Path_Training', 'None'))
         )
         self.ui.LineEdit_Tool_DatasetCreator_FileList_Path_Training.textChanged.connect(
             lambda Value: Config_Tool_DatasetCreator.EditConfig('DatasetCreator', 'FileList_Path_Training', str(Value))
@@ -1889,11 +1870,10 @@ class MainWindow(Window_Customizing):
             Button = self.ui.Button_Tool_DatasetCreator_FileList_Path_Validation,
             LineEdit = self.ui.LineEdit_Tool_DatasetCreator_FileList_Path_Validation,
             Mode = "SaveFile",
-            FileType = "txt类型 (*.txt)",
-            DisplayText = QCA.translate("LineEdit", "None")
+            FileType = "txt类型 (*.txt)"
         )
         self.ui.LineEdit_Tool_DatasetCreator_FileList_Path_Validation.setText(
-            str(Config_Tool_DatasetCreator.GetValue('DatasetCreator', 'FileList_Path_Validation', ''))
+            str(Config_Tool_DatasetCreator.GetValue('DatasetCreator', 'FileList_Path_Validation', 'None'))
         )
         self.ui.LineEdit_Tool_DatasetCreator_FileList_Path_Validation.textChanged.connect(
             lambda Value: Config_Tool_DatasetCreator.EditConfig('DatasetCreator', 'FileList_Path_Validation', str(Value))
@@ -2037,6 +2017,12 @@ class MainWindow(Window_Customizing):
                 self.ui.DoubleSpinBox_Tool_DatasetCreator_TrainRatio,
                 self.ui.LineEdit_Tool_DatasetCreator_FileList_Path_Training,
                 self.ui.LineEdit_Tool_DatasetCreator_FileList_Path_Validation
+            ],
+            FinishEventList = [
+                Function_ShowMessageBox
+            ],
+            FinishParamList = [
+                ("Ask","当前任务已执行完成，是否跳转至下一工具界面？",QMessageBox.Yes|QMessageBox.No,[QMessageBox.Yes],[[Function_AnimateStackedWidget,self.ui.Frame_Tools_Top.layout().itemAt(self.ui.StackedWidget_Pages_Tools.currentIndex()+1).click]],[[(self.ui.StackedWidget_Pages_Tools,self.ui.StackedWidget_Pages_Tools.currentIndex()+1),()]])
             ]
         )
 
@@ -2114,11 +2100,10 @@ class MainWindow(Window_Customizing):
             Button = self.ui.Button_Tool_VoiceTrainer_FileList_Path_Training,
             LineEdit = self.ui.LineEdit_Tool_VoiceTrainer_FileList_Path_Training,
             Mode = "SelectFile",
-            FileType = "txt类型 (*.txt)",
-            DisplayText = QCA.translate("LineEdit", "None")
+            FileType = "txt类型 (*.txt)"
         )
         self.ui.LineEdit_Tool_VoiceTrainer_FileList_Path_Training.setText(
-            str(Config_Tool_VoiceTrainer.GetValue('VoiceTrainer', 'FileList_Path_Training', ''))
+            str(Config_Tool_VoiceTrainer.GetValue('VoiceTrainer', 'FileList_Path_Training', 'None'))
         )
         self.ui.LineEdit_Tool_VoiceTrainer_FileList_Path_Training.textChanged.connect(
             lambda Value: Config_Tool_VoiceTrainer.EditConfig('VoiceTrainer', 'FileList_Path_Training', str(Value))
@@ -2133,11 +2118,10 @@ class MainWindow(Window_Customizing):
             Button = self.ui.Button_Tool_VoiceTrainer_FileList_Path_Validation,
             LineEdit = self.ui.LineEdit_Tool_VoiceTrainer_FileList_Path_Validation,
             Mode = "SelectFile",
-            FileType = "txt类型 (*.txt)",
-            DisplayText = QCA.translate("LineEdit", "None")
+            FileType = "txt类型 (*.txt)"
         )
         self.ui.LineEdit_Tool_VoiceTrainer_FileList_Path_Validation.setText(
-            str(Config_Tool_VoiceTrainer.GetValue('VoiceTrainer', 'FileList_Path_Validation', ''))
+            str(Config_Tool_VoiceTrainer.GetValue('VoiceTrainer', 'FileList_Path_Validation', 'None'))
         )
         self.ui.LineEdit_Tool_VoiceTrainer_FileList_Path_Validation.textChanged.connect(
             lambda Value: Config_Tool_VoiceTrainer.EditConfig('VoiceTrainer', 'FileList_Path_Validation', str(Value))
@@ -2196,11 +2180,10 @@ class MainWindow(Window_Customizing):
         Function_SetFileDialog(
             Button = self.ui.Button_Tool_VoiceTrainer_Config_Dir_Save,
             LineEdit = self.ui.LineEdit_Tool_VoiceTrainer_Config_Dir_Save,
-            Mode = "SelectDir",
-            DisplayText = QCA.translate("LineEdit", "None")
+            Mode = "SelectDir"
         )
         self.ui.LineEdit_Tool_VoiceTrainer_Config_Dir_Save.setText(
-            str(Config_Tool_VoiceTrainer.GetValue('VoiceTrainer', 'Config_Dir_Save', ''))
+            str(Config_Tool_VoiceTrainer.GetValue('VoiceTrainer', 'Config_Dir_Save', 'None'))
         )
         self.ui.LineEdit_Tool_VoiceTrainer_Config_Dir_Save.textChanged.connect(
             lambda Value: Config_Tool_VoiceTrainer.EditConfig('VoiceTrainer', 'Config_Dir_Save', str(Value))
@@ -2214,11 +2197,10 @@ class MainWindow(Window_Customizing):
         Function_SetFileDialog(
             Button = self.ui.Button_Tool_VoiceTrainer_Model_Dir_Save,
             LineEdit = self.ui.LineEdit_Tool_VoiceTrainer_Model_Dir_Save,
-            Mode = "SelectDir",
-            DisplayText = QCA.translate("LineEdit", "None")
+            Mode = "SelectDir"
         )
         self.ui.LineEdit_Tool_VoiceTrainer_Model_Dir_Save.setText(
-            str(Config_Tool_VoiceTrainer.GetValue('VoiceTrainer', 'Model_Dir_Save', ''))
+            str(Config_Tool_VoiceTrainer.GetValue('VoiceTrainer', 'Model_Dir_Save', 'None'))
         )
         self.ui.LineEdit_Tool_VoiceTrainer_Model_Dir_Save.textChanged.connect(
             lambda Value: Config_Tool_VoiceTrainer.EditConfig('VoiceTrainer', 'Model_Dir_Save', str(Value))
@@ -2383,11 +2365,10 @@ class MainWindow(Window_Customizing):
             Button = self.ui.Button_Tool_VoiceTrainer_Model_Path_Pretrained_G,
             LineEdit = self.ui.LineEdit_Tool_VoiceTrainer_Model_Path_Pretrained_G,
             Mode = "SelectFile",
-            FileType = "pth类型 (*.pth)",
-            DisplayText = QCA.translate("LineEdit", "None")
+            FileType = "pth类型 (*.pth)"
         )
         self.ui.LineEdit_Tool_VoiceTrainer_Model_Path_Pretrained_G.setText(
-            str(Config_Tool_VoiceTrainer.GetValue('VoiceTrainer', 'Model_Path_Pretrained_G', ''))
+            str(Config_Tool_VoiceTrainer.GetValue('VoiceTrainer', 'Model_Path_Pretrained_G', 'None'))
         )
         self.ui.LineEdit_Tool_VoiceTrainer_Model_Path_Pretrained_G.textChanged.connect(
             lambda Value: Config_Tool_VoiceTrainer.EditConfig('VoiceTrainer', 'Model_Path_Pretrained_G', str(Value))
@@ -2402,11 +2383,10 @@ class MainWindow(Window_Customizing):
             Button = self.ui.Button_Tool_VoiceTrainer_Model_Path_Pretrained_D,
             LineEdit = self.ui.LineEdit_Tool_VoiceTrainer_Model_Path_Pretrained_D,
             Mode = "SelectFile",
-            FileType = "pth类型 (*.pth)",
-            DisplayText = QCA.translate("LineEdit", "None")
+            FileType = "pth类型 (*.pth)"
         )
         self.ui.LineEdit_Tool_VoiceTrainer_Model_Path_Pretrained_D.setText(
-            str(Config_Tool_VoiceTrainer.GetValue('VoiceTrainer', 'Model_Path_Pretrained_D', ''))
+            str(Config_Tool_VoiceTrainer.GetValue('VoiceTrainer', 'Model_Path_Pretrained_D', 'None'))
         )
         self.ui.LineEdit_Tool_VoiceTrainer_Model_Path_Pretrained_D.textChanged.connect(
             lambda Value: Config_Tool_VoiceTrainer.EditConfig('VoiceTrainer', 'Model_Path_Pretrained_D', str(Value))
@@ -2442,11 +2422,10 @@ class MainWindow(Window_Customizing):
             Button = self.ui.Button_Tool_VoiceTrainer_Config_Path_Load,
             LineEdit = self.ui.LineEdit_Tool_VoiceTrainer_Config_Path_Load,
             Mode = "SelectFile",
-            FileType = "json类型 (*.json)",
-            DisplayText = QCA.translate("LineEdit", "None")
+            FileType = "json类型 (*.json)"
         )
         self.ui.LineEdit_Tool_VoiceTrainer_Config_Path_Load.setText(
-            str(Config_Tool_VoiceTrainer.GetValue('VoiceTrainer', 'Config_Path_Load', ''))
+            str(Config_Tool_VoiceTrainer.GetValue('VoiceTrainer', 'Config_Path_Load', 'None'))
         )
         self.ui.LineEdit_Tool_VoiceTrainer_Config_Path_Load.textChanged.connect(
             lambda Value: Config_Tool_VoiceTrainer.EditConfig('VoiceTrainer', 'Config_Path_Load', str(Value))
@@ -2570,6 +2549,12 @@ class MainWindow(Window_Customizing):
                 self.ui.LineEdit_Tool_VoiceTrainer_Model_Path_Pretrained_G,
                 self.ui.LineEdit_Tool_VoiceTrainer_Model_Path_Pretrained_D,
                 self.ui.LineEdit_Tool_VoiceTrainer_Speakers
+            ],
+            FinishEventList = [
+                Function_ShowMessageBox
+            ],
+            FinishParamList = [
+                ("Ask","当前任务已执行完成，是否跳转至下一工具界面？",QMessageBox.Yes|QMessageBox.No,[QMessageBox.Yes],[[Function_AnimateStackedWidget,self.ui.Frame_Tools_Top.layout().itemAt(self.ui.StackedWidget_Pages_Tools.currentIndex()+1).click]],[[(self.ui.StackedWidget_Pages_Tools,self.ui.StackedWidget_Pages_Tools.currentIndex()+1),()]])
             ]
         )
 
@@ -2644,11 +2629,10 @@ class MainWindow(Window_Customizing):
             Button = self.ui.Button_Tool_VoiceConverter_Config_Path_Load,
             LineEdit = self.ui.LineEdit_Tool_VoiceConverter_Config_Path_Load,
             Mode = "SelectFile",
-            FileType = "json类型 (*.json)",
-            DisplayText = QCA.translate("LineEdit", "None")
+            FileType = "json类型 (*.json)"
         )
         self.ui.LineEdit_Tool_VoiceConverter_Config_Path_Load.setText(
-            str(Config_Tool_VoiceConverter.GetValue('VoiceConverter', 'Config_Path_Load', ''))
+            str(Config_Tool_VoiceConverter.GetValue('VoiceConverter', 'Config_Path_Load', 'None'))
         )
         self.ui.LineEdit_Tool_VoiceConverter_Config_Path_Load.textChanged.connect(
             lambda Value: Config_Tool_VoiceConverter.EditConfig('VoiceConverter', 'Config_Path_Load', str(Value))
@@ -2668,11 +2652,10 @@ class MainWindow(Window_Customizing):
             Button = self.ui.Button_Tool_VoiceConverter_Model_Path_Load,
             LineEdit = self.ui.LineEdit_Tool_VoiceConverter_Model_Path_Load,
             Mode = "SelectFile",
-            FileType = "pth类型 (*.pth)",
-            DisplayText = QCA.translate("LineEdit", "None")
+            FileType = "pth类型 (*.pth)"
         )
         self.ui.LineEdit_Tool_VoiceConverter_Model_Path_Load.setText(
-            str(Config_Tool_VoiceConverter.GetValue('VoiceConverter', 'Model_Path_Load', ''))
+            str(Config_Tool_VoiceConverter.GetValue('VoiceConverter', 'Model_Path_Load', 'None'))
         )
         self.ui.LineEdit_Tool_VoiceConverter_Model_Path_Load.textChanged.connect(
             lambda Value: Config_Tool_VoiceConverter.EditConfig('VoiceConverter', 'Model_Path_Load', str(Value))
@@ -2869,11 +2852,10 @@ class MainWindow(Window_Customizing):
         Function_SetFileDialog(
             Button = self.ui.Button_Tool_VoiceConverter_Audio_Dir_Save,
             LineEdit = self.ui.LineEdit_Tool_VoiceConverter_Audio_Dir_Save,
-            Mode = "SelectDir",
-            DisplayText = QCA.translate("LineEdit", "None")
+            Mode = "SelectDir"
         )
         self.ui.LineEdit_Tool_VoiceConverter_Audio_Dir_Save.setText(
-            str(Config_Tool_VoiceConverter.GetValue('VoiceConverter', 'Audio_Dir_Save', ''))
+            str(Config_Tool_VoiceConverter.GetValue('VoiceConverter', 'Audio_Dir_Save', 'None'))
         )
         self.ui.LineEdit_Tool_VoiceConverter_Audio_Dir_Save.textChanged.connect(
             lambda Value: Config_Tool_VoiceConverter.EditConfig('VoiceConverter', 'Audio_Dir_Save', str(Value))
@@ -2942,6 +2924,12 @@ class MainWindow(Window_Customizing):
             ],
             EmptyAllowed = [
                 self.ui.ComboBox_Tool_VoiceConverter_Speaker
+            ],
+            FinishEventList = [
+                Function_ShowMessageBox
+            ],
+            FinishParamList = [
+                ("Tip","当前任务已执行完成！",QMessageBox.Ok)
             ]
         )
 
