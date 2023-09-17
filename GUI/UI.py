@@ -1,8 +1,8 @@
 from PySide6.QtCore import (QCoreApplication, QMetaObject, QRect, QSize, Qt)
 from PySide6.QtWidgets import (QCheckBox, QComboBox, QDoubleSpinBox, QFrame, QGroupBox, QHBoxLayout, QGridLayout, QLabel, QLineEdit, QPlainTextEdit, QProgressBar, QToolButton, QPushButton, QScrollArea, QSizePolicy, QSlider, QSpacerItem, QSpinBox, QStackedWidget, QTreeWidget, QTreeWidgetItem, QTextBrowser, QVBoxLayout, QWidget)
 
-from .ComponentsCustomizer import TableWidget_ButtonMixed
-from . import Sources
+from .Components import TableWidget_ButtonMixed
+from .QSimpleWidgets import Sources
 
 
 class Ui_MainWindow(object):
@@ -4035,7 +4035,7 @@ class Ui_MainWindow(object):
 
         self.Frame_Tool_VoiceIdentifier_StdAudioSpeaker = QFrame(self.Frame_BasicSettings_Tool_VoiceIdentifier)
         self.Frame_Tool_VoiceIdentifier_StdAudioSpeaker.setObjectName(u"Frame_Tool_VoiceIdentifier_StdAudioSpeaker")
-        self.Frame_Tool_VoiceIdentifier_StdAudioSpeaker.setMinimumSize(QSize(0, 123))
+        self.Frame_Tool_VoiceIdentifier_StdAudioSpeaker.setMinimumSize(QSize(0, 222))
         self.Frame_Tool_VoiceIdentifier_StdAudioSpeaker.setStyleSheet(u"QFrame {\n"
 "	color: rgb(255, 255, 255);\n"
 "	background-color: transparent;\n"

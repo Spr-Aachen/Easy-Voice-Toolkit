@@ -6,9 +6,10 @@ from PySide6.QtCore import Qt, QObject, Signal, Slot
 from PySide6.QtCore import QCoreApplication as QCA
 from PySide6.QtWidgets import *
 
-from GUI.WindowCustomizer import Window_Customizing
-from GUI.QFunctions import *
-from GUI.Utils import *
+from GUI.QSimpleWidgets.Utils import *
+from GUI.QSimpleWidgets.QTasks import *
+from GUI.Window import Window_Customizing
+from GUI.Functions import *
 from GUI.EnvConfigurator import *
 
 
@@ -37,13 +38,13 @@ except:
 # Import Tools
 def ToolsImporter():
     os.chdir(os.path.dirname(os.path.realpath('__file__')))
-    if 'Undetected' not in [
-        ManageConfig(ConfigPath).GetValue('Env', 'FFmpeg'),
-        ManageConfig(ConfigPath).GetValue('Env', 'GCC'),
-        ManageConfig(ConfigPath).GetValue('Env', 'CMake'),
-        ManageConfig(ConfigPath).GetValue('Env', 'Python'),
-        ManageConfig(ConfigPath).GetValue('Env', 'PyReqs'),
-        ManageConfig(ConfigPath).GetValue('Env', 'Pytorch')
+    if 'Undetected' and 'Checking' not in [
+        ManageConfig(ConfigPath).GetValue('Env', 'FFmpeg',  'Checking'),
+        ManageConfig(ConfigPath).GetValue('Env', 'GCC',     'Checking'),
+        ManageConfig(ConfigPath).GetValue('Env', 'CMake',   'Checking'),
+        ManageConfig(ConfigPath).GetValue('Env', 'Python',  'Checking'),
+        ManageConfig(ConfigPath).GetValue('Env', 'PyReqs',  'Checking'),
+        ManageConfig(ConfigPath).GetValue('Env', 'Pytorch', 'Checking')
     ]:
         try:
             from Tool_AudioProcessor.Process import Audio_Processing
@@ -243,16 +244,7 @@ class MainWindow(Window_Customizing):
     ui = Window_Customizing.ui
 
     def __init__(self):
-        Window_Customizing.__init__(self,
-            parent = None,
-            title_bar_name = "TitleBar",
-            #title_text = QCA.translate("Window", "简易语音工具箱"),
-            #title_bar_height = 33,
-            edge_size = 3,
-            min_width = 1280,
-            min_height = 720,
-            move_event_height = 30
-        )
+        super().__init__()
 
         self.ConsoleInfo = ConsolOutputHandler()
         self.ConsoleInfo.start()
@@ -719,7 +711,7 @@ class MainWindow(Window_Customizing):
         self.ui.ToolButton_Tools_Title_VoiceTranscriber.setCheckable(True)
         self.ui.ToolButton_Tools_Title_VoiceTranscriber.setChecked(False)
         self.ui.ToolButton_Tools_Title_VoiceTranscriber.setAutoExclusive(True)
-        self.ui.ToolButton_Tools_Title_VoiceIdentifier.clicked.connect(
+        self.ui.ToolButton_Tools_Title_VoiceTranscriber.clicked.connect(
             lambda: Function_AnimateStackedWidget(
                 StackedWidget = self.ui.StackedWidget_Pages_Tools,
                 TargetIndex = 2
@@ -1032,7 +1024,7 @@ class MainWindow(Window_Customizing):
                 Function_ShowMessageBox
             ],
             FinishParamList = [
-                ("Ask","当前任务已执行完成，是否跳转至下一工具界面？",QMessageBox.Yes|QMessageBox.No,[QMessageBox.Yes],[[Function_AnimateStackedWidget,self.ui.Frame_Tools_Top.layout().itemAt(self.ui.StackedWidget_Pages_Tools.currentIndex()+1).click]],[[(self.ui.StackedWidget_Pages_Tools,self.ui.StackedWidget_Pages_Tools.currentIndex()+1),()]])
+                ("Ask","当前任务已执行完成，是否跳转至下一工具界面？",QMessageBox.Yes|QMessageBox.No,[QMessageBox.Yes],[[Function_AnimateStackedWidget,self.ui.Frame_Tools_Top.layout().itemAt(self.ui.StackedWidget_Pages_Tools.currentIndex()+1).widget().click]],[[(self.ui.StackedWidget_Pages_Tools,self.ui.StackedWidget_Pages_Tools.currentIndex()+1),()]])
             ]
         )
 
@@ -1086,7 +1078,7 @@ class MainWindow(Window_Customizing):
                 #Config_Tool_VoiceIdentifier.EditConfig
             ],
             CheckedPermArgsList = [
-                (self.ui.Frame_BasicSettings_Tool_VoiceIdentifier,...,...,0,self.ui.Frame_Tool_VoiceIdentifier_Audio_Dir_Input.height()+self.ui.Frame_Tool_VoiceIdentifier_Audio_Path_Std.height()+self.ui.Frame_Tool_VoiceIdentifier_Speaker.height()+self.ui.Frame_Tool_VoiceIdentifier_DecisionThreshold.height()+self.ui.Frame_Tool_VoiceIdentifier_Audio_Dir_Output.height(),0,'Extend'),
+                (self.ui.Frame_BasicSettings_Tool_VoiceIdentifier,...,...,0,self.ui.Frame_Tool_VoiceIdentifier_Audio_Dir_Input.height()+self.ui.Frame_Tool_VoiceIdentifier_StdAudioSpeaker.height()+self.ui.Frame_Tool_VoiceIdentifier_DecisionThreshold.height()+self.ui.Frame_Tool_VoiceIdentifier_Audio_Dir_Output.height(),0,'Extend'),
                 #('VoiceIdentifier', 'Toggle_BasicSettings', 'True')
             ],
             UncheckedText = "基础设置（隐藏）",
@@ -1095,7 +1087,7 @@ class MainWindow(Window_Customizing):
                 #Config_Tool_VoiceIdentifier.EditConfig
             ],
             UncheckedPermArgsList = [
-                (self.ui.Frame_BasicSettings_Tool_VoiceIdentifier,...,...,0,self.ui.Frame_Tool_VoiceIdentifier_Audio_Dir_Input.height()+self.ui.Frame_Tool_VoiceIdentifier_Audio_Path_Std.height()+self.ui.Frame_Tool_VoiceIdentifier_Speaker.height()+self.ui.Frame_Tool_VoiceIdentifier_DecisionThreshold.height()+self.ui.Frame_Tool_VoiceIdentifier_Audio_Dir_Output.height(),0,'Reduce'),
+                (self.ui.Frame_BasicSettings_Tool_VoiceIdentifier,...,...,0,self.ui.Frame_Tool_VoiceIdentifier_Audio_Dir_Input.height()+self.ui.Frame_Tool_VoiceIdentifier_StdAudioSpeaker.height()+self.ui.Frame_Tool_VoiceIdentifier_DecisionThreshold.height()+self.ui.Frame_Tool_VoiceIdentifier_Audio_Dir_Output.height(),0,'Reduce'),
                 #('VoiceIdentifier', 'Toggle_BasicSettings', 'False')
             ]
         )
@@ -1123,7 +1115,7 @@ class MainWindow(Window_Customizing):
             Body = QCA.translate("Label", "目标人物的名字及其语音文件的所在路径，音频中尽量不要混入杂音。")
         )
         self.ui.Table_Tool_VoiceIdentifier_StdAudioSpeaker.SetValue(
-            eval(Config_Tool_VoiceIdentifier.GetValue('VoiceIdentifier', 'StdAudioSpeaker', '{'': ''}'))
+            eval(Config_Tool_VoiceIdentifier.GetValue('VoiceIdentifier', 'StdAudioSpeaker', '{"": ""}'))
         )
         self.ui.Table_Tool_VoiceIdentifier_StdAudioSpeaker.ValueChanged.connect(
             lambda Value: Config_Tool_VoiceIdentifier.EditConfig('VoiceIdentifier', 'StdAudioSpeaker', str(Value))
@@ -1327,7 +1319,7 @@ class MainWindow(Window_Customizing):
                 Function_ShowMessageBox
             ],
             FinishParamList = [
-                ("Ask","当前任务已执行完成，是否跳转至下一工具界面？",QMessageBox.Yes|QMessageBox.No,[QMessageBox.Yes],[[Function_AnimateStackedWidget,self.ui.Frame_Tools_Top.layout().itemAt(self.ui.StackedWidget_Pages_Tools.currentIndex()+1).click]],[[(self.ui.StackedWidget_Pages_Tools,self.ui.StackedWidget_Pages_Tools.currentIndex()+1),()]])
+                ("Ask","当前任务已执行完成，是否跳转至下一工具界面？",QMessageBox.Yes|QMessageBox.No,[QMessageBox.Yes],[[Function_AnimateStackedWidget,self.ui.Frame_Tools_Top.layout().itemAt(self.ui.StackedWidget_Pages_Tools.currentIndex()+1).widget().click]],[[(self.ui.StackedWidget_Pages_Tools,self.ui.StackedWidget_Pages_Tools.currentIndex()+1),()]])
             ]
         )
 
@@ -1711,7 +1703,7 @@ class MainWindow(Window_Customizing):
                 Function_ShowMessageBox
             ],
             FinishParamList = [
-                ("Ask","当前任务已执行完成，是否跳转至下一工具界面？",QMessageBox.Yes|QMessageBox.No,[QMessageBox.Yes],[[Function_AnimateStackedWidget,self.ui.Frame_Tools_Top.layout().itemAt(self.ui.StackedWidget_Pages_Tools.currentIndex()+1).click]],[[(self.ui.StackedWidget_Pages_Tools,self.ui.StackedWidget_Pages_Tools.currentIndex()+1),()]])
+                ("Ask","当前任务已执行完成，是否跳转至下一工具界面？",QMessageBox.Yes|QMessageBox.No,[QMessageBox.Yes],[[Function_AnimateStackedWidget,self.ui.Frame_Tools_Top.layout().itemAt(self.ui.StackedWidget_Pages_Tools.currentIndex()+1).widget().click]],[[(self.ui.StackedWidget_Pages_Tools,self.ui.StackedWidget_Pages_Tools.currentIndex()+1),()]])
             ]
         )
 
@@ -2022,7 +2014,7 @@ class MainWindow(Window_Customizing):
                 Function_ShowMessageBox
             ],
             FinishParamList = [
-                ("Ask","当前任务已执行完成，是否跳转至下一工具界面？",QMessageBox.Yes|QMessageBox.No,[QMessageBox.Yes],[[Function_AnimateStackedWidget,self.ui.Frame_Tools_Top.layout().itemAt(self.ui.StackedWidget_Pages_Tools.currentIndex()+1).click]],[[(self.ui.StackedWidget_Pages_Tools,self.ui.StackedWidget_Pages_Tools.currentIndex()+1),()]])
+                ("Ask","当前任务已执行完成，是否跳转至下一工具界面？",QMessageBox.Yes|QMessageBox.No,[QMessageBox.Yes],[[Function_AnimateStackedWidget,self.ui.Frame_Tools_Top.layout().itemAt(self.ui.StackedWidget_Pages_Tools.currentIndex()+1).widget().click]],[[(self.ui.StackedWidget_Pages_Tools,self.ui.StackedWidget_Pages_Tools.currentIndex()+1),()]])
             ]
         )
 
@@ -2554,7 +2546,7 @@ class MainWindow(Window_Customizing):
                 Function_ShowMessageBox
             ],
             FinishParamList = [
-                ("Ask","当前任务已执行完成，是否跳转至下一工具界面？",QMessageBox.Yes|QMessageBox.No,[QMessageBox.Yes],[[Function_AnimateStackedWidget,self.ui.Frame_Tools_Top.layout().itemAt(self.ui.StackedWidget_Pages_Tools.currentIndex()+1).click]],[[(self.ui.StackedWidget_Pages_Tools,self.ui.StackedWidget_Pages_Tools.currentIndex()+1),()]])
+                ("Ask","当前任务已执行完成，是否跳转至下一工具界面？",QMessageBox.Yes|QMessageBox.No,[QMessageBox.Yes],[[Function_AnimateStackedWidget,self.ui.Frame_Tools_Top.layout().itemAt(self.ui.StackedWidget_Pages_Tools.currentIndex()+1).widget().click]],[[(self.ui.StackedWidget_Pages_Tools,self.ui.StackedWidget_Pages_Tools.currentIndex()+1),()]])
             ]
         )
 

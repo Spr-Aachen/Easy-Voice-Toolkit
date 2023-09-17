@@ -8,8 +8,9 @@ import pkg_resources
 from packaging import version
 from PySide6.QtCore import QObject, Signal
 
-from .Utils import *
+from .QSimpleWidgets.Utils import *
 
+##############################################################################################################################
 
 # Where to store custom signals
 class CustomSignals_EnvConfigurator(QObject):
@@ -37,6 +38,7 @@ class CustomSignals_EnvConfigurator(QObject):
 
 EnvConfiguratorSignals = CustomSignals_EnvConfigurator()
 
+##############################################################################################################################
 
 class FFmpeg_Installer(QObject):
     '''
@@ -406,3 +408,5 @@ class Pytorch_Installer(QObject):
         )
 
         self.finished.emit()
+
+##############################################################################################################################

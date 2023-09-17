@@ -1,0 +1,9 @@
+MainWindowBase {
+    color: rgb(210, 222, 234);
+    background-color: rgba(24, 24, 24, 240);
+}
+
+
+TitleBarBase {
+    
+}

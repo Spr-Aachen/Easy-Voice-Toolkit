@@ -1,8 +1,10 @@
 /__pycache__/
+/Tools
+/Tools.zip
 /venv
 /Run.spec
 /Setup.py
 /UI.ui
-/GUI/Sources
-/GUI/Sources.qrc
+/GUI/QSimpleWidgets/Sources
+/GUI/QSimpleWidgets/Sources.qrc
 /GUI/README.ipynb
