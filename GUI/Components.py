@@ -65,7 +65,7 @@ class TableWidget_ButtonMixed(TableWidgetBase):
     def DelRow(self):
         self.removeRow(self.currentRow()) if self.rowCount() > 1 else None
 
-    def AddRow(self, Param: Optional[tuple] = None):
+    def AddRow(self, Param: Optional[tuple] = None, FileType: Optional[str] = None):
         CurrentColumnCount = self.columnCount()
         CurrentRowCount = self.rowCount()
 
@@ -74,7 +74,7 @@ class TableWidget_ButtonMixed(TableWidgetBase):
             self.setCellWidget(CurrentRowCount, ColumnCount, QWidget())
 
             if ColumnCount == 1 + 0:
-                LineEdit0 = QLineEdit(Param[ColumnCount] if Param else 'None')
+                LineEdit0 = LineEdit_NoBorder(Param[ColumnCount] if Param else 'None')
                 LineEdit0.textChanged.connect(
                     lambda: self.ValueChanged.emit(self.GetValue())
                 )
@@ -86,12 +86,12 @@ class TableWidget_ButtonMixed(TableWidgetBase):
                 self.horizontalHeader().setSectionResizeMode(ColumnCount, QHeaderView.ResizeToContents)
 
             if ColumnCount == 1 + 1:
-                LineEdit1 = QLineEdit(Param[ColumnCount] if Param else 'None')
+                LineEdit1 = LineEdit_NoBorder(Param[ColumnCount] if Param else 'None')
                 LineEdit1.textChanged.connect(
                     lambda: self.ValueChanged.emit(self.GetValue())
                 )
                 Button = ToolButtonBase("...")
-                Function_SetFileDialog(Button, LineEdit1, "SelectFile")
+                Function_SetFileDialog(Button, LineEdit1, "SelectFile", FileType)
                 Column1Layout = QHBoxLayout()
                 Column1Layout.setContentsMargins(3, 3, 3, 3)
                 Column1Layout.setSpacing(3)
@@ -119,14 +119,14 @@ class TableWidget_ButtonMixed(TableWidgetBase):
                 self.cellWidget(CurrentRowCount, ColumnCount).setLayout(Column2Layout)
                 self.horizontalHeader().setSectionResizeMode(ColumnCount, QHeaderView.ResizeToContents)
 
-    def SetValue(self, Params: dict = {'': ''}):
+    def SetValue(self, Params: dict = {'': ''}, FileType: Optional[str] = None):
         ParamDict = Params #ParamDict = IterChecker(Params)
         for Key, Value in ParamDict.items():
-            Param = tuple(('',) + (Key, Value)) #if self.IsIndexShown else Param
+            Param = tuple(('',) + (Key, Value))
             Index = next((i for i, key in enumerate(ParamDict) if key == Key), None)
             if Index == 1 + self.ColumnCount:
                 return print("Maximum params reached")
-            self.AddRow(Param)
+            self.AddRow(Param, FileType)
 
     def GetValue(self):
         ValueDict = {}
@@ -141,10 +141,10 @@ class TableWidget_ButtonMixed(TableWidgetBase):
 
     def SetHorizontalHeaders(self, Headers: list = ['', '', '']):
         HeaderList = IterChecker(Headers)
-        HeaderList.insert(0, '') #if self.IsIndexShown else None
-        for Index, Header in enumerate(HeaderList):
+        HeaderList.insert(0, '')
+        for Index, Header in enumerate(HeaderList, 1):
             if Index == 1 + self.ColumnCount:
                 return print("Maximum headers reached")
-            self.setHorizontalHeaderItem(1 + Index, QTableWidgetItem(Header))
+            self.setHorizontalHeaderItem(Index, QTableWidgetItem(HeaderList[Index]))
 
 ##############################################################################################################################

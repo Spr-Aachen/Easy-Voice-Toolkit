@@ -9,8 +9,8 @@ from PySide6.QtWidgets import *
 
 from .Components import *
 from .QSimpleWidgets.Utils import *
-from .EnvConfigurator import (FFmpeg_Installer, GCC_Installer, CMake_Installer, Python_Installer, PyReqs_Installer, Pytorch_Installer)
-from Run import (Execute_Audio_Processing, Execute_Voice_Identifying, Execute_Voice_Transcribing, Execute_Dataset_Creating, Execute_Voice_Training, Execute_Voice_Converting)
+from .EnvConfigurator import (FFmpeg_Installer, Python_Installer, PyReqs_Installer, Pytorch_Installer)
+from Run import (Integrity_Checker, Execute_Audio_Processing, Execute_Voice_Identifying, Execute_Voice_Transcribing, Execute_Dataset_Creating, Execute_Voice_Training, Execute_Voice_Converting)
 
 ##############################################################################################################################
 
@@ -459,56 +459,13 @@ def Function_ShowMessageBox(
     '''
     Function to pop up a msgbox
     '''
-    MsgBox = QMessageBox()
+    MsgBox = MessageBoxBase()
 
     MsgBox.setIcon(MessageType)
     MsgBox.setWindowTitle(WindowTitle)
     MsgBox.setText(Text)
     MsgBox.setStandardButtons(Buttons)
-    MsgBox.setStyleSheet(
-        "QMessageBox"
-        "{"
-            "background-color: rgb(60, 60, 60);"
-            "padding: 0px;"
-            "border-width: 0px;"
-            "border-radius: 6px;"
-            "border-style: solid;"
-        "}"
 
-        "QMessageBox QLabel#qt_msgbox_label"
-        "{"
-            "text-align: center;"
-            "font-size: 12px;"
-            "color: rgb(255, 255, 255);"
-            "background-color: transparent;"
-            "min-width: 240px;"
-            "min-height: 40px;"
-        "}"
-
-        "QMessageBox QLabel#qt_msgboxex_icon_label"
-        "{"
-            "background-color: transparent;"
-            "width: 40px;"
-            "height: 40px;"
-        "}"
-
-        "QMessageBox QPushButton"
-        "{"
-            "font-size: 12pt;"
-            "color: rgb(255, 255, 255);"
-            "background-color: rgb(90, 90, 90);"
-            "border-width: 0px;"
-            "border-radius: 6px;"
-            "border-style: solid;"
-            "min-width: 70px;"
-            "min-height: 25px;"
-        "}"
-
-        "QMessageBox QPushButton:hover"
-        "{"
-            "background-color: rgb(120, 120, 120);"
-        "}"
-    )
     '''
     @Slot(QPushButton)
     @Slot(QToolButton)
@@ -552,7 +509,7 @@ def Function_ParamsHandler(
             return UI.isChecked()
 
         if isinstance(UI, TableWidget_ButtonMixed):
-            return UI.GetValue
+            return UI.GetValue()
 
     if Mode == "Set":
         if isinstance(UI, QLineEdit):
@@ -616,6 +573,7 @@ def Function_ParamsChecker(
                     Param = None
                 else:
                     Function_ShowMessageBox(
+                        MessageType = QMessageBox.Warning,
                         WindowTitle = "Warning",
                         Text = "Empty param detected!\n检测到参数空缺！"
                     )
@@ -627,6 +585,19 @@ def Function_ParamsChecker(
                         string = Param,
                         maxsplit = 0
                     )
+        if isinstance(Param, dict):
+            if "None" in Param or "None" in Param.values() or "" in Param or "" in Param.values():
+                if UI in EmptyAllowed:
+                    Param = None
+                else:
+                    Function_ShowMessageBox(
+                        MessageType = QMessageBox.Warning,
+                        WindowTitle = "Warning",
+                        Text = "Empty param detected!\n检测到参数空缺！"
+                    )
+                    return "Abort"
+            else:
+                pass
         else:
             pass
         Params.append(Param)
@@ -688,7 +659,7 @@ def Function_ExecuteMethod(
     ClassInstance.finished.connect(WorkerThread.quit)
     #ClassInstance.finished.connect(WorkerThread.wait)
     def ConnectEvent():
-        for Index, FinishEvent in FinishEventList:
+        for Index, FinishEvent in enumerate(FinishEventList):
             FinishEvent(*FinishParamList[Index])
     ClassInstance.finished.connect(ConnectEvent)
 

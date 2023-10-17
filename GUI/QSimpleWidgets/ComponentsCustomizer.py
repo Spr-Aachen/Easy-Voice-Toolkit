@@ -6,20 +6,45 @@ from .QFunctions import *
 
 ##############################################################################################################################
 
+class LineEditBase(QLineEdit):
+    '''
+    '''
+    def __init__(self,
+        arg__1: str,
+        parent: Optional[QWidget] = None
+    ):
+        super().__init__(arg__1, parent)
+
+        ComponentsSignals.Signal_SetTheme.connect(
+            lambda Theme: self.setStyleSheet(Function_GetStyleSheet('Edit', Theme))
+        )
+        ComponentsSignals.Signal_SetTheme.emit('Auto')
+
+
+class LineEdit_NoBorder(LineEditBase):
+    '''
+    Check its stylesheet in qss file
+    '''
+
+##############################################################################################################################
+
 class ToolButtonBase(QToolButton):
     '''
     '''
-    def __init__(self, text: str, parent: QWidget = None):
+    def __init__(self,
+        text: str,
+        parent: Optional[QWidget] = None
+    ):
         super().__init__(parent)
 
-        self.setStyleSheet(Function_GetStyleSheet('Button'))
         ComponentsSignals.Signal_SetTheme.connect(
             lambda Theme: self.setStyleSheet(Function_GetStyleSheet('Button', Theme))
         )
+        ComponentsSignals.Signal_SetTheme.emit('Auto')
 
         self.setFont('Microsoft YaHei')
         self.setText(text)
-    '''
+    """
         self.setIconSize(QSize(16, 16))
         self.setIcon(QIcon())
 
@@ -73,7 +98,7 @@ class ToolButtonBase(QToolButton):
     def leaveEvent(self, e):
         self.isHover = False
         self.update()
-    '''
+    """
 
 class ToolButton_UnderLined(ToolButtonBase):
     '''
@@ -85,13 +110,15 @@ class ToolButton_UnderLined(ToolButtonBase):
 class TableWidgetBase(QTableWidget):
     '''
     '''
-    def __init__(self, parent: QWidget = None):
+    def __init__(self,
+        parent: Optional[QWidget] = None
+    ):
         super().__init__(parent)
 
-        self.setStyleSheet(Function_GetStyleSheet('Table'))
         ComponentsSignals.Signal_SetTheme.connect(
             lambda Theme: self.setStyleSheet(Function_GetStyleSheet('Table', Theme))
         )
+        ComponentsSignals.Signal_SetTheme.emit('Auto')
 
         self.setSelectionMode(QAbstractItemView.NoSelection)
         self.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred) #self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
@@ -125,5 +152,62 @@ class TableWidgetBase(QTableWidget):
         if not ShowIndexHeader and self.IsIndexShown:
             self.hideColumn(0)
             self.IsIndexShown = False
+
+##############################################################################################################################
+
+class DialogBase(QDialog):
+    '''
+    '''
+    def __init__(self,
+        parent: Optional[QWidget] = None,
+        #f: WindowType = ...
+    ):
+        super().__init__(parent)
+
+        ComponentsSignals.Signal_SetTheme.connect(
+            lambda Theme: self.setStyleSheet(Function_GetStyleSheet('Dialog', Theme))
+        )
+        ComponentsSignals.Signal_SetTheme.emit('Auto')
+
+"""
+class MessageBoxBase(DialogBase):
+    '''
+    '''
+    def __init__(self,
+        parent: Optional[QWidget] = None
+    ):  
+        super().__init__(parent)
+
+        self.setWindowModality(Qt.ApplicationModal)
+        self.setWindowTitle("Custom Dialog")
+        self.resize(400, 200)
+
+        layout = QVBoxLayout(self)
+
+        message_label = QLabel("This is a custom dialog.", self)
+        layout.addWidget(message_label)
+
+        ok_button = QPushButton("OK", self)
+        ok_button.clicked.connect(self.accept)
+        cancel_button = QPushButton("Cancel", self)
+        cancel_button.clicked.connect(self.reject)
+        button_layout = QHBoxLayout()
+        button_layout.addStretch()
+        button_layout.addWidget(ok_button)
+        button_layout.addWidget(cancel_button)
+        layout.addLayout(button_layout)
+"""
+class MessageBoxBase(QMessageBox):
+    '''
+    '''
+    def __init__(self,
+        parent: Optional[QWidget] = None
+    ):
+        super().__init__(parent)
+
+        ComponentsSignals.Signal_SetTheme.connect(
+            lambda Theme: self.setStyleSheet(Function_GetStyleSheet('Dialog', Theme))
+        )
+        ComponentsSignals.Signal_SetTheme.emit('Auto')
 
 ##############################################################################################################################

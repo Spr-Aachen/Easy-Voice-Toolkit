@@ -1,8 +1,9 @@
 import os
 import sys
 import json
+from pathlib import Path
 from PySide6 import __file__ as PySide6_File
-from PySide6.QtCore import Qt, QObject, Signal, Slot
+from PySide6.QtCore import Qt, QObject, Signal, Slot, QMutex
 from PySide6.QtCore import QCoreApplication as QCA
 from PySide6.QtWidgets import *
 
@@ -12,55 +13,127 @@ from GUI.Window import Window_Customizing
 from GUI.Functions import *
 from GUI.EnvConfigurator import *
 
+##############################################################################################################################
 
-# Current version
+# Set current version
 CurrentVersion = "v1.0.0"
 
+# Set whether environment is configured
+IsEnvConfigured = False #IsEnvConfigured = True
 
-# Set working directory
-CurrentDir = os.path.dirname(os.path.abspath(__file__))
+##############################################################################################################################
+
+# Check whether python file is compiled
+IsFileCompiled = CheckIfFileIsCompiled()
+
+# Change working directory
+CurrentDir = NormPath(Path(__file__ if IsFileCompiled == False else sys.executable).absolute().parent)
 os.chdir(CurrentDir)
 
+# Set up environment variables
+if IsFileCompiled == False:
+    SetEnvVar( # Redirect PATH variable 'QT_QPA_PLATFORM_PLUGIN_PATH' to Pyside6 '/plugins/platforms' folder's path
+        Variable = 'QT_QPA_PLATFORM_PLUGIN_PATH',
+        Value = NormPath(Path(PySide6_File).absolute().parent.joinpath('plugins', 'platforms')),
+        Type = 'Temp'
+    )
+if IsEnvConfigured == True:
+    SetEnvVar(
+        Variable = 'PYTHONPATH',
+        Value = NormPath(Path(CurrentDir).joinpath('Python')),
+        Type = 'User'
+    )
 
-# Set path to config
-ConfigPath = os.path.join(CurrentDir, 'Config.ini')
+# Set up config
+ConfigPath = NormPath(Path(CurrentDir).joinpath('Config.ini'))
+Config = ManageConfig(ConfigPath)
+Config.EditConfig('Info', 'CurrentVersion', str(CurrentVersion))
+#Config.EditConfig('Info', 'IsEnvConfigured', str(IsEnvConfigured))
+
+##############################################################################################################################
+
+def UpdaterExecuter():
+    '''
+    Execute updater
+    '''
+    if Config.GetValue('Settings', 'AutoUpdate', 'Enabled') == 'Enabled':
+        if Config.GetValue('Updater', 'Status', 'Checking') != 'Executed':
+            subprocess.Popen(['python.exe', NormPath(Path(CurrentDir).joinpath('Updater.py'))] if IsFileCompiled == False else [NormPath(Path(CurrentDir).joinpath('Updater.exe'))], env = os.environ)
+            #Config.EditConfig('Updater', 'Status', 'Executed')
+            sys.exit()
+        else:
+            Config.EditConfig('Updater', 'Status', 'Unexecuted')
+
+##############################################################################################################################
+
+Mutex = QMutex()
 
 
-# Redirect PATH variable 'QT_QPA_PLATFORM_PLUGIN_PATH' to Pyside6 '/plugins/platforms' folder's path
-try:
-    PySide6_Dirname = os.path.dirname(PySide6_File)
-    PySide6_PluginPath = os.path.join(PySide6_Dirname, 'plugins', 'platforms')
-    os.environ['QT_QPA_PLATFORM_PLUGIN_PATH'] = PySide6_PluginPath
-except:
-    pass
+def ClientRebooter():
+    '''
+    Reboot EVT client
+    '''
+    Mutex.lock()
+    UpdaterExecuter() #os.execl(sys.executable, 'python', __file__, *sys.argv[1:]) else os.execl(sys.executable, sys.executable, *sys.argv)
+    #Mutex.unlock()
 
 
-# Import Tools
-def ToolsImporter():
-    os.chdir(os.path.dirname(os.path.realpath('__file__')))
-    if 'Undetected' and 'Checking' not in [
-        ManageConfig(ConfigPath).GetValue('Env', 'FFmpeg',  'Checking'),
-        ManageConfig(ConfigPath).GetValue('Env', 'GCC',     'Checking'),
-        ManageConfig(ConfigPath).GetValue('Env', 'CMake',   'Checking'),
-        ManageConfig(ConfigPath).GetValue('Env', 'Python',  'Checking'),
-        ManageConfig(ConfigPath).GetValue('Env', 'PyReqs',  'Checking'),
-        ManageConfig(ConfigPath).GetValue('Env', 'Pytorch', 'Checking')
-    ]:
-        try:
-            from Tool_AudioProcessor.Process import Audio_Processing
-            from Tool_VoiceIdentifier.Identify import Voice_Identifying
-            from Tool_VoiceTranscriber.Transcribe import Voice_Transcribing
-            from Tool_DatasetCreator.Create import Dataset_Creating
-            from Tool_VoiceTrainer.Train import Voice_Training
-            from Tool_VoiceConverter.Convert import Voice_Converting
-        except: # Unpack & Restart
-            shutil.unpack_archive(
-                filename = './Tools.zip',
-                extract_dir = './',
-                format = 'zip'
-            )
-            os.execv(sys.executable, [sys.executable] + sys.argv) #os.execl(sys.executable, sys.executable, *sys.argv)
+class Integrity_Checker(QObject):
+    '''
+    Check File integrity
+    '''
+    finished = Signal()
 
+    def __init__(self):
+        super().__init__()
+
+    def ToolsImporter(self):
+        '''
+        Import Tools
+        '''
+        #os.chdir(CurrentDir)
+        if 'Undetected' not in [
+            Config.GetValue('Env', 'FFmpeg'),
+            #Config.GetValue('Env', 'GCC'),
+            #Config.GetValue('Env', 'CMake'),
+            Config.GetValue('Env', 'Python'),
+            Config.GetValue('Env', 'PyReqs'),
+            Config.GetValue('Env', 'Pytorch')
+        ]:
+            try:
+                Mutex.lock()
+                RunCMD(
+                    Args = [
+                        f'cd {CurrentDir}',
+                        'python -c "'
+                        'from Tool_AudioProcessor.Process import Audio_Processing; '
+                        'from Tool_VoiceIdentifier.Identify import Voice_Identifying; '
+                        'from Tool_VoiceTranscriber.Transcribe import Voice_Transcribing; '
+                        'from Tool_DatasetCreator.Create import Dataset_Creating; '
+                        'from Tool_VoiceTrainer.Train import Voice_Training; '
+                        'from Tool_VoiceConverter.Convert import Voice_Converting"'
+                    ],
+                    PathType = 'Posix'
+                )
+            except:
+                print("Error occurred while importing tools")
+                shutil.unpack_archive(
+                    filename = './Tools.zip',
+                    extract_dir = './',
+                    format = 'zip'
+                )
+            finally:
+                Mutex.unlock()
+
+    @Slot(tuple)
+    def Execute(self):
+        TaskAccelerating(
+            TargetList = [self.ToolsImporter],
+            ArgsList = [()],
+            TypeList = ['MultiThreading']
+        )
+
+##############################################################################################################################
 
 # Tool1: AudioProcessor
 class Execute_Audio_Processing(QObject):
@@ -74,11 +147,25 @@ class Execute_Audio_Processing(QObject):
 
     @Slot(tuple)
     def Execute(self, Params: tuple):
+        '''
+        from Tool_AudioProcessor.Process import Audio_Processing
         AudioConvertandSlice = Audio_Processing(*Params)
         TaskAccelerating(
             TargetList = [AudioConvertandSlice.Convert_Media, AudioConvertandSlice.Slice_Audio],
             ArgsList = [(), ()],
             TypeList = ['MultiThreading', 'MultiThreading']
+        )
+        '''
+        RunCMD(
+            Args = [
+                f'cd {CurrentDir}',
+                'python -c "'
+                'from Tool_AudioProcessor.Process import Audio_Processing; '
+                f"AudioConvertandSlice = Audio_Processing('{Params[0]}','{Params[1]}','{Params[2]}',{Params[3]},{Params[4]},{Params[5]},{Params[6]},{Params[7]}); "
+                'AudioConvertandSlice.Convert_Media(); '
+                'AudioConvertandSlice.Slice_Audio()"'
+            ],
+            PathType = 'Posix'
         )
 
         self.finished.emit()
@@ -96,11 +183,25 @@ class Execute_Voice_Identifying(QObject):
 
     @Slot(tuple)
     def Execute(self, Params: tuple):
+        '''
+        from Tool_VoiceIdentifier.Identify import Voice_Identifying
         AudioContrastInference = Voice_Identifying(*Params)
         TaskAccelerating(
             TargetList = [AudioContrastInference.GetModel, AudioContrastInference.Inference],
             ArgsList = [(), ()],
             TypeList = ['MultiThreading', 'MultiThreading']
+        )
+        '''
+        RunCMD(
+            Args = [
+                f'cd {CurrentDir}',
+                'python -c "'
+                'from Tool_VoiceIdentifier.Identify import Voice_Identifying; '
+                f"AudioContrastInference = Voice_Identifying({Params[0]},'{Params[1]}','{Params[2]}','{Params[3]}','{Params[4]}','{Params[5]}','{Params[6]}',{Params[7]},{Params[8]}); "
+                'AudioContrastInference.GetModel(); '
+                'AudioContrastInference.Inference()"'
+            ],
+            PathType = 'Posix'
         )
 
         self.finished.emit()
@@ -126,11 +227,24 @@ class Execute_Voice_Transcribing(QObject):
             "日":       "ja",
             "japanese": "ja"
         }
+        '''
+        from Tool_VoiceTranscriber.Transcribe import Voice_Transcribing
         WAVtoSRT = Voice_Transcribing(*ItemReplacer(LANGUAGES, Params))
         TaskAccelerating(
             TargetList = [WAVtoSRT.Transcriber],
             ArgsList = [()],
             TypeList = ['MultiThreading']
+        )
+        '''
+        RunCMD(
+            Args = [
+                f'cd {CurrentDir}',
+                'python -c "'
+                'from Tool_VoiceTranscriber.Transcribe import Voice_Transcribing; '
+                f"WAVtoSRT = Voice_Transcribing('{Params[0]}','{Params[1]}','{Params[2]}','{Params[3]}',{Params[4]},'{Params[5]}',{f'{LANGUAGES.get(Params[6])}' if Params[6] else None},{Params[7]},{Params[8]}); "
+                'WAVtoSRT.Transcriber()"'
+            ],
+            PathType = 'Posix'
         )
 
         self.finished.emit()
@@ -148,11 +262,24 @@ class Execute_Dataset_Creating(QObject):
 
     @Slot(tuple)
     def Execute(self, Params: tuple):
+        '''
+        from Tool_DatasetCreator.Create import Dataset_Creating
         SRTtoCSVandSplitAudio = Dataset_Creating(*Params)
         TaskAccelerating(
             TargetList = [SRTtoCSVandSplitAudio.CallingFunctions],
             ArgsList = [()],
             TypeList = ['MultiThreading']
+        )
+        '''
+        RunCMD(
+            Args = [
+                f'cd {CurrentDir}',
+                'python -c "'
+                'from Tool_DatasetCreator.Create import Dataset_Creating; '
+                f"SRTtoCSVandSplitAudio = Dataset_Creating('{Params[0]}','{Params[1]}',{Params[2]},'{Params[3]}','{Params[4]}','{Params[5]}',{Params[6]},'{Params[7]}','{Params[8]}'); "
+                'SRTtoCSVandSplitAudio.CallingFunctions()"'
+            ],
+            PathType = 'Posix'
         )
 
         self.finished.emit()
@@ -176,11 +303,24 @@ class Execute_Voice_Training(QObject):
             "中英日":                        "mandarin_english_japanese",
             "Mandarin & English & Japanese": "mandarin_english_japanese"
         }
+        '''
+        from Tool_VoiceTrainer.Train import Voice_Training
         PreprocessandTrain = Voice_Training(*ItemReplacer(LANGUAGES, Params))
         TaskAccelerating(
             TargetList = [PreprocessandTrain.Preprocessing_and_Training],
             ArgsList = [()],
             TypeList = ['MultiThreading']
+        )
+        '''
+        RunCMD(
+            Args = [
+                f'cd {CurrentDir}',
+                'python -c "'
+                'from Tool_VoiceTrainer.Train import Voice_Training; '
+                f"PreprocessandTrain = Voice_Training('{Params[0]}','{Params[1]}','{LANGUAGES.get(Params[2])}',{f'{Params[3]}' if Params[3] else None},'{Params[4]}',{Params[5]},{Params[6]},{Params[7]},{Params[8]},'{Params[9]}',{Params[10]},{Params[11]},{f'{Params[12]}' if Params[12] else None},{f'{Params[13]}' if Params[13] else None},'{Params[14]}'); "
+                'PreprocessandTrain.Preprocessing_and_Training()"'
+            ],
+            PathType = 'Posix'
         )
 
         self.finished.emit()
@@ -215,15 +355,29 @@ class Execute_Voice_Converting(QObject):
             "日":       "[JA]",
             "Japanese": "[JA]"
         }
+        '''
+        from Tool_VoiceConverter.Convert import Voice_Converting
         TTS = Voice_Converting(*ItemReplacer(LANGUAGES, Params))
         TaskAccelerating(
             TargetList = [TTS.Converting],
             ArgsList = [()],
             TypeList = ['MultiThreading']
         )
+        '''
+        RunCMD(
+            Args = [
+                f'cd {CurrentDir}',
+                'python -c "'
+                'from Tool_VoiceConverter.Convert import Voice_Converting; '
+                f"TTS = Voice_Converting('{Params[0]}','{Params[1]}','{Params[2]}','{LANGUAGES.get(Params[3])}','{Params[4]}',{Params[5]},{Params[6]},{Params[7]},'{Params[8]}'); "
+                'TTS.Converting()"'
+            ],
+            PathType = 'Posix'
+        )
 
         self.finished.emit()
 
+##############################################################################################################################
 
 # Where to store custom signals
 class CustomSignals_MainWindow(QObject):
@@ -235,6 +389,7 @@ class CustomSignals_MainWindow(QObject):
 
 MainWindowSignals = CustomSignals_MainWindow()
 
+##############################################################################################################################
 
 # Show GUI
 class MainWindow(Window_Customizing):
@@ -251,8 +406,6 @@ class MainWindow(Window_Customizing):
 
         self.MonitorUsage = MonitorUsage()
         self.MonitorUsage.start()
-
-        self.ManageConfig = ManageConfig(ConfigPath)
 
     def Main(self):
         '''
@@ -430,7 +583,7 @@ class MainWindow(Window_Customizing):
         self.ui.Button_Install_FFmpeg.setToolTipDuration(-1)
         self.ui.Button_Install_FFmpeg.setToolTip(QCA.translate("ToolTip", "重新下载"))
         EnvConfiguratorSignals.Signal_FFmpegUndetected.connect(
-            lambda: self.ManageConfig.EditConfig('Env', 'FFmpeg', 'Undetected'),
+            lambda: Config.EditConfig('Env', 'FFmpeg', 'Undetected'),
         )
         EnvConfiguratorSignals.Signal_FFmpegUndetected.connect(
             lambda: Function_ShowMessageBox(
@@ -438,25 +591,31 @@ class MainWindow(Window_Customizing):
                 Text = "未检测到FFmpeg，已开始下载",
                 EventButtons = [QMessageBox.Ok],
                 EventLists = [
-                    [Function_AnimateStackedWidget, self.ui.Button_Menu_Download.click]
+                    [self.ui.Button_Menu_Download.click]
                 ],
                 ParamLists = [
-                    [(self.ui.StackedWidget_Pages,1), ()]
+                    [()]
                 ]
             )
         )
+        #EnvConfiguratorSignals.Signal_FFmpegInstalled.connect(self.ui.Button_Setting_ClientRebooter.click)
+        EnvConfiguratorSignals.Signal_FFmpegInstallFailed.connect(
+            lambda: Function_ShowMessageBox(
+                WindowTitle = "Warning",
+                Text = "安装FFmpeg出错",
+                EventButtons = [QMessageBox.Ok]
+            )
+        )
         EnvConfiguratorSignals.Signal_FFmpegDetected.connect(
-            lambda: self.ManageConfig.EditConfig('Env', 'FFmpeg', 'Detected'),
+            lambda: Config.EditConfig('Env', 'FFmpeg', 'Detected'),
             type = Qt.QueuedConnection
         )
         EnvConfiguratorSignals.Signal_FFmpegDetected.connect(
-            ToolsImporter,
+            lambda: self.ui.ProgressBar_Download_FFmpeg.setValue(100),
             type = Qt.QueuedConnection
-        )
-        EnvConfiguratorSignals.Signal_FFmpegDetected.connect(
-            lambda: self.ui.ProgressBar_Download_FFmpeg.setValue(100)
         )
 
+        '''
         self.ui.Label_Download_GCC.setText("GCC")
         Function_ExecuteMethod(
             ExecuteButton = self.ui.Button_Install_GCC,
@@ -470,7 +629,7 @@ class MainWindow(Window_Customizing):
         self.ui.Button_Install_GCC.setToolTipDuration(-1)
         self.ui.Button_Install_GCC.setToolTip(QCA.translate("ToolTip", "重新下载"))
         EnvConfiguratorSignals.Signal_GCCUndetected.connect(
-            lambda: self.ManageConfig.EditConfig('Env', 'GCC', 'Undetected'),
+            lambda: Config.EditConfig('Env', 'GCC', 'Undetected'),
         )
         EnvConfiguratorSignals.Signal_GCCUndetected.connect(
             lambda: Function_ShowMessageBox(
@@ -478,23 +637,28 @@ class MainWindow(Window_Customizing):
                 Text = "未检测到GCC，已开始下载",
                 EventButtons = [QMessageBox.Ok],
                 EventLists = [
-                    [Function_AnimateStackedWidget, self.ui.Button_Menu_Download.click]
+                    [self.ui.Button_Menu_Download.click]
                 ],
                 ParamLists = [
-                    [(self.ui.StackedWidget_Pages,1), ()]
+                    [()]
                 ]
             )
         )
+        #EnvConfiguratorSignals.Signal_GCCInstalled.connect(self.ui.Button_Setting_ClientRebooter.click)
+        EnvConfiguratorSignals.Signal_GCCInstallFailed.connect(
+            lambda: Function_ShowMessageBox(
+                WindowTitle = "Warning",
+                Text = "安装GCC出错",
+                EventButtons = [QMessageBox.Ok]
+            )
+        )
         EnvConfiguratorSignals.Signal_GCCDetected.connect(
-            lambda: self.ManageConfig.EditConfig('Env', 'GCC', 'Detected'),
+            lambda: Config.EditConfig('Env', 'GCC', 'Detected'),
             type = Qt.QueuedConnection
         )
         EnvConfiguratorSignals.Signal_GCCDetected.connect(
-            ToolsImporter,
+            lambda: self.ui.ProgressBar_Download_GCC.setValue(100),
             type = Qt.QueuedConnection
-        )
-        EnvConfiguratorSignals.Signal_GCCDetected.connect(
-            lambda: self.ui.ProgressBar_Download_GCC.setValue(100)
         )
 
         self.ui.Label_Download_CMake.setText("CMake")
@@ -504,13 +668,13 @@ class MainWindow(Window_Customizing):
             Method = CMake_Installer.Execute,
             Params = ()
         )
-        EnvConfiguratorSignals.Signal_GCCDetected.connect(self.ui.Button_Install_CMake.click) #MainWindowSignals.Signal_MainWindowShown.connect(self.ui.Button_Install_CMake.click)
+        EnvConfiguratorSignals.Signal_GCCDetected.connect(self.ui.Button_Install_CMake.click)
         self.ui.Button_Install_CMake.setText('')
         self.ui.Button_Install_CMake.setCheckable(True)
         self.ui.Button_Install_CMake.setToolTipDuration(-1)
         self.ui.Button_Install_CMake.setToolTip(QCA.translate("ToolTip", "重新下载"))
         EnvConfiguratorSignals.Signal_CMakeUndetected.connect(
-            lambda: self.ManageConfig.EditConfig('Env', 'CMake', 'Undetected'),
+            lambda: Config.EditConfig('Env', 'CMake', 'Undetected'),
         )
         EnvConfiguratorSignals.Signal_CMakeUndetected.connect(
             lambda: Function_ShowMessageBox(
@@ -518,24 +682,30 @@ class MainWindow(Window_Customizing):
                 Text = "未检测到CMake，已开始下载",
                 EventButtons = [QMessageBox.Ok],
                 EventLists = [
-                    [Function_AnimateStackedWidget, self.ui.Button_Menu_Download.click]
+                    [self.ui.Button_Menu_Download.click]
                 ],
                 ParamLists = [
-                    [(self.ui.StackedWidget_Pages,1), ()]
+                    [()]
                 ]
             )
         )
+        #EnvConfiguratorSignals.Signal_CMakeInstalled.connect(self.ui.Button_Setting_ClientRebooter.click)
+        EnvConfiguratorSignals.Signal_CMakeInstallFailed.connect(
+            lambda: Function_ShowMessageBox(
+                WindowTitle = "Warning",
+                Text = "安装CMake出错",
+                EventButtons = [QMessageBox.Ok]
+            )
+        )
         EnvConfiguratorSignals.Signal_CMakeDetected.connect(
-            lambda: self.ManageConfig.EditConfig('Env', 'CMake', 'Detected'),
+            lambda: Config.EditConfig('Env', 'CMake', 'Detected'),
             type = Qt.QueuedConnection
         )
         EnvConfiguratorSignals.Signal_CMakeDetected.connect(
-            ToolsImporter,
+            lambda: self.ui.ProgressBar_Download_CMake.setValue(100),
             type = Qt.QueuedConnection
         )
-        EnvConfiguratorSignals.Signal_CMakeDetected.connect(
-            lambda: self.ui.ProgressBar_Download_CMake.setValue(100)
-        )
+        '''
 
         self.ui.Label_Download_Python.setText("Python")
         Function_ExecuteMethod(
@@ -544,13 +714,13 @@ class MainWindow(Window_Customizing):
             Method = Python_Installer.Execute,
             Params = ('3.9', )
         )
-        EnvConfiguratorSignals.Signal_CMakeDetected.connect(self.ui.Button_Install_Python.click) #MainWindowSignals.Signal_MainWindowShown.connect(self.ui.Button_Install_Python.click)
+        MainWindowSignals.Signal_MainWindowShown.connect(self.ui.Button_Install_Python.click) #EnvConfiguratorSignals.Signal_CMakeDetected.connect(self.ui.Button_Install_Python.click)
         self.ui.Button_Install_Python.setText('')
         self.ui.Button_Install_Python.setCheckable(True)
         self.ui.Button_Install_Python.setToolTipDuration(-1)
         self.ui.Button_Install_Python.setToolTip(QCA.translate("ToolTip", "重新下载"))
         EnvConfiguratorSignals.Signal_PythonUndetected.connect(
-            lambda: self.ManageConfig.EditConfig('Env', 'Python', 'Undetected'),
+            lambda: Config.EditConfig('Env', 'Python', 'Undetected'),
         )
         EnvConfiguratorSignals.Signal_PythonUndetected.connect(
             lambda: Function_ShowMessageBox(
@@ -558,23 +728,28 @@ class MainWindow(Window_Customizing):
                 Text = "未检测到Python，已开始下载",
                 EventButtons = [QMessageBox.Ok],
                 EventLists = [
-                    [Function_AnimateStackedWidget, self.ui.Button_Menu_Download.click]
+                    [self.ui.Button_Menu_Download.click]
                 ],
                 ParamLists = [
-                    [(self.ui.StackedWidget_Pages,1), ()]
+                    [()]
                 ]
             )
         )
+        #EnvConfiguratorSignals.Signal_PythonInstalled.connect(self.ui.Button_Setting_ClientRebooter.click)
+        EnvConfiguratorSignals.Signal_PythonInstallFailed.connect(
+            lambda: Function_ShowMessageBox(
+                WindowTitle = "Warning",
+                Text = "安装Python出错",
+                EventButtons = [QMessageBox.Ok]
+            )
+        )
         EnvConfiguratorSignals.Signal_PythonDetected.connect(
-            lambda: self.ManageConfig.EditConfig('Env', 'Python', 'Detected'),
+            lambda: Config.EditConfig('Env', 'Python', 'Detected'),
             type = Qt.QueuedConnection
         )
         EnvConfiguratorSignals.Signal_PythonDetected.connect(
-            ToolsImporter,
+            lambda: self.ui.ProgressBar_Download_Python.setValue(100),
             type = Qt.QueuedConnection
-        )
-        EnvConfiguratorSignals.Signal_PythonDetected.connect(
-            lambda: self.ui.ProgressBar_Download_Python.setValue(100)
         )
 
         self.ui.Label_Download_PyReqs.setText("Python Requirements")
@@ -582,15 +757,15 @@ class MainWindow(Window_Customizing):
             ExecuteButton = self.ui.Button_Install_PyReqs,
             ProgressBar = self.ui.ProgressBar_Download_PyReqs,
             Method = PyReqs_Installer.Execute,
-            Params = (os.path.join(CurrentDir, 'requirements.txt'), )
+            Params = (NormPath(Path(CurrentDir).joinpath('requirements.txt')), )
         )
-        EnvConfiguratorSignals.Signal_PythonDetected.connect(self.ui.Button_Install_PyReqs.click) #MainWindowSignals.Signal_MainWindowShown.connect(self.ui.Button_Install_PyReqs.click)
+        EnvConfiguratorSignals.Signal_PythonDetected.connect(self.ui.Button_Install_PyReqs.click)
         self.ui.Button_Install_PyReqs.setText('')
         self.ui.Button_Install_PyReqs.setCheckable(True)
         self.ui.Button_Install_PyReqs.setToolTipDuration(-1)
         self.ui.Button_Install_PyReqs.setToolTip(QCA.translate("ToolTip", "重新下载"))
         EnvConfiguratorSignals.Signal_PyReqsUndetected.connect(
-            lambda: self.ManageConfig.EditConfig('Env', 'PyReqs', 'Undetected'),
+            lambda: Config.EditConfig('Env', 'PyReqs', 'Undetected'),
         )
         EnvConfiguratorSignals.Signal_PyReqsUndetected.connect(
             lambda: Function_ShowMessageBox(
@@ -598,23 +773,28 @@ class MainWindow(Window_Customizing):
                 Text = "未检测到Python依赖库，已开始下载",
                 EventButtons = [QMessageBox.Ok],
                 EventLists = [
-                    [Function_AnimateStackedWidget, self.ui.Button_Menu_Download.click]
+                    [self.ui.Button_Menu_Download.click]
                 ],
                 ParamLists = [
-                    [(self.ui.StackedWidget_Pages,1), ()]
+                    [()]
                 ]
             )
         )
+        #EnvConfiguratorSignals.Signal_PyReqsInstalled.connect(self.ui.Button_Setting_ClientRebooter.click)
+        EnvConfiguratorSignals.Signal_PythonInstallFailed.connect(
+            lambda: Function_ShowMessageBox(
+                WindowTitle = "Warning",
+                Text = "安装Python依赖库出错",
+                EventButtons = [QMessageBox.Ok]
+            )
+        )
         EnvConfiguratorSignals.Signal_PyReqsDetected.connect(
-            lambda: self.ManageConfig.EditConfig('Env', 'PyReqs', 'Detected'),
+            lambda: Config.EditConfig('Env', 'PyReqs', 'Detected'),
             type = Qt.QueuedConnection
         )
         EnvConfiguratorSignals.Signal_PyReqsDetected.connect(
-            ToolsImporter,
+            lambda: self.ui.ProgressBar_Download_PyReqs.setValue(100),
             type = Qt.QueuedConnection
-        )
-        EnvConfiguratorSignals.Signal_PyReqsDetected.connect(
-            lambda: self.ui.ProgressBar_Download_PyReqs.setValue(100)
         )
 
         self.ui.Label_Download_Pytorch.setText("Pytorch")
@@ -624,13 +804,13 @@ class MainWindow(Window_Customizing):
             Method = Pytorch_Installer.Execute,
             Params = ()
         )
-        EnvConfiguratorSignals.Signal_PythonDetected.connect(self.ui.Button_Install_Pytorch.click) #MainWindowSignals.Signal_MainWindowShown.connect(self.ui.Button_Install_Pytorch.click)
+        EnvConfiguratorSignals.Signal_PythonDetected.connect(self.ui.Button_Install_Pytorch.click)
         self.ui.Button_Install_Pytorch.setText('')
         self.ui.Button_Install_Pytorch.setCheckable(True)
         self.ui.Button_Install_Pytorch.setToolTipDuration(-1)
         self.ui.Button_Install_Pytorch.setToolTip(QCA.translate("ToolTip", "重新下载"))
         EnvConfiguratorSignals.Signal_PytorchUndetected.connect(
-            lambda: self.ManageConfig.EditConfig('Env', 'Pytorch', 'Undetected'),
+            lambda: Config.EditConfig('Env', 'Pytorch', 'Undetected'),
         )
         EnvConfiguratorSignals.Signal_PytorchUndetected.connect(
             lambda: Function_ShowMessageBox(
@@ -638,23 +818,28 @@ class MainWindow(Window_Customizing):
                 Text = "未检测到Pytorch，已开始下载",
                 EventButtons = [QMessageBox.Ok],
                 EventLists = [
-                    [Function_AnimateStackedWidget, self.ui.Button_Menu_Download.click]
+                    [self.ui.Button_Menu_Download.click]
                 ],
                 ParamLists = [
-                    [(self.ui.StackedWidget_Pages,1), ()]
+                    [()]
                 ]
             )
         )
+        #EnvConfiguratorSignals.Signal_PytorchInstalled.connect(self.ui.Button_Setting_ClientRebooter.click)
+        EnvConfiguratorSignals.Signal_PytorchInstallFailed.connect(
+            lambda: Function_ShowMessageBox(
+                WindowTitle = "Warning",
+                Text = "安装Pytorch出错",
+                EventButtons = [QMessageBox.Ok]
+            )
+        )
         EnvConfiguratorSignals.Signal_PytorchDetected.connect(
-            lambda: self.ManageConfig.EditConfig('Env', 'Pytorch', 'Detected'),
+            lambda: Config.EditConfig('Env', 'Pytorch', 'Detected'),
             type = Qt.QueuedConnection
         )
         EnvConfiguratorSignals.Signal_PytorchDetected.connect(
-            ToolsImporter,
+            lambda: self.ui.ProgressBar_Download_Pytorch.setValue(100),
             type = Qt.QueuedConnection
-        )
-        EnvConfiguratorSignals.Signal_PytorchDetected.connect(
-            lambda: self.ui.ProgressBar_Download_Pytorch.setValue(100)
         )
 
         ##########################################################
@@ -773,9 +958,9 @@ class MainWindow(Window_Customizing):
         )
         '''
 
-        Path_Config_Tool_AudioProcessor = os.path.join(CurrentDir, 'Config_Tool_AudioProcessor.ini')
+        Path_Config_Tool_AudioProcessor = NormPath(Path(CurrentDir).joinpath('Config_Tool_AudioProcessor.ini'))
         Config_Tool_AudioProcessor = ManageConfig(
-            self.ManageConfig.GetValue(
+            Config.GetValue(
                 'ConfigPath',
                 'Path_Config_Tool_AudioProcessor',
                 Path_Config_Tool_AudioProcessor
@@ -788,7 +973,7 @@ class MainWindow(Window_Customizing):
         self.ui.CheckBox_Toggle_BasicSettings_Tool_AudioProcessor.setText("基础设置（显示）")
         self.ui.CheckBox_Toggle_BasicSettings_Tool_AudioProcessor.setCheckable(True)
         self.ui.CheckBox_Toggle_BasicSettings_Tool_AudioProcessor.setChecked(
-            True #bool(Config_Tool_AudioProcessor.GetValue('AudioProcessor', 'Toggle_BasicSettings', ''))
+            True #eval(Config_Tool_AudioProcessor.GetValue('AudioProcessor', 'Toggle_BasicSettings', ''))
         )
         Function_ConfigureCheckBox(
             CheckBox = self.ui.CheckBox_Toggle_BasicSettings_Tool_AudioProcessor,
@@ -862,7 +1047,7 @@ class MainWindow(Window_Customizing):
         self.ui.CheckBox_Toggle_AdvanceSettings_Tool_AudioProcessor.setText("高级设置（隐藏）")
         self.ui.CheckBox_Toggle_AdvanceSettings_Tool_AudioProcessor.setCheckable(True)
         self.ui.CheckBox_Toggle_AdvanceSettings_Tool_AudioProcessor.setChecked(
-            False #bool(Config_Tool_AudioProcessor.GetValue('AudioProcessor', 'Toggle_AdvanceSettings', ''))
+            False #eval(Config_Tool_AudioProcessor.GetValue('AudioProcessor', 'Toggle_AdvanceSettings', ''))
         )
         Function_ConfigureCheckBox(
             CheckBox = self.ui.CheckBox_Toggle_AdvanceSettings_Tool_AudioProcessor,
@@ -1008,7 +1193,7 @@ class MainWindow(Window_Customizing):
             ExecuteButton = self.ui.Button_Tool_AudioProcessor_Execute,
             TerminateButton = self.ui.Button_Tool_AudioProcessor_Terminate,
             ProgressBar = self.ui.ProgressBar_Tool_AudioProcessor,
-            ConsoleFrame = self.ui.Frame_Console,
+            #ConsoleFrame = self.ui.Frame_Console,
             Method = Execute_Audio_Processing.Execute,
             ParamsFrom = [
                 self.ui.LineEdit_Tool_AudioProcessor_Media_Dir_Input,
@@ -1024,7 +1209,7 @@ class MainWindow(Window_Customizing):
                 Function_ShowMessageBox
             ],
             FinishParamList = [
-                ("Ask","当前任务已执行完成，是否跳转至下一工具界面？",QMessageBox.Yes|QMessageBox.No,[QMessageBox.Yes],[[Function_AnimateStackedWidget,self.ui.Frame_Tools_Top.layout().itemAt(self.ui.StackedWidget_Pages_Tools.currentIndex()+1).widget().click]],[[(self.ui.StackedWidget_Pages_Tools,self.ui.StackedWidget_Pages_Tools.currentIndex()+1),()]])
+                (QMessageBox.Question,"Ask","当前任务已执行结束，是否跳转至下一工具界面？",QMessageBox.Yes|QMessageBox.No,[QMessageBox.Yes],[[self.ui.Frame_Tools_Top.layout().itemAt(1).widget().click]],[[()]])
             ]
         )
 
@@ -1053,9 +1238,9 @@ class MainWindow(Window_Customizing):
         )
         '''
 
-        Path_Config_Tool_VoiceIdentifier = os.path.join(CurrentDir, 'Config_Tool_VoiceIdentifier.ini')
+        Path_Config_Tool_VoiceIdentifier = NormPath(Path(CurrentDir).joinpath('Config_Tool_VoiceIdentifier.ini'))
         Config_Tool_VoiceIdentifier = ManageConfig(
-            self.ManageConfig.GetValue(
+            Config.GetValue(
                 'ConfigPath',
                 'Path_Config_Tool_VoiceIdentifier',
                 Path_Config_Tool_VoiceIdentifier
@@ -1068,7 +1253,7 @@ class MainWindow(Window_Customizing):
         self.ui.CheckBox_Toggle_BasicSettings_Tool_VoiceIdentifier.setText("基础设置（显示）")
         self.ui.CheckBox_Toggle_BasicSettings_Tool_VoiceIdentifier.setCheckable(True)
         self.ui.CheckBox_Toggle_BasicSettings_Tool_VoiceIdentifier.setChecked(
-            True #bool(Config_Tool_VoiceIdentifier.GetValue('VoiceIdentifier', 'Toggle_BasicSettings', ''))
+            True #eval(Config_Tool_VoiceIdentifier.GetValue('VoiceIdentifier', 'Toggle_BasicSettings', ''))
         )
         Function_ConfigureCheckBox(
             CheckBox = self.ui.CheckBox_Toggle_BasicSettings_Tool_VoiceIdentifier,
@@ -1114,8 +1299,10 @@ class MainWindow(Window_Customizing):
             Title = "目标人物与音频",
             Body = QCA.translate("Label", "目标人物的名字及其语音文件的所在路径，音频中尽量不要混入杂音。")
         )
+        self.ui.Table_Tool_VoiceIdentifier_StdAudioSpeaker.SetHorizontalHeaders(['人物姓名', '音频路径', '增删'])
         self.ui.Table_Tool_VoiceIdentifier_StdAudioSpeaker.SetValue(
-            eval(Config_Tool_VoiceIdentifier.GetValue('VoiceIdentifier', 'StdAudioSpeaker', '{"": ""}'))
+            eval(Config_Tool_VoiceIdentifier.GetValue('VoiceIdentifier', 'StdAudioSpeaker', '{"": ""}')),
+            FileType = "音频类型 (*.mp3 *.aac *.wav *.flac)"
         )
         self.ui.Table_Tool_VoiceIdentifier_StdAudioSpeaker.ValueChanged.connect(
             lambda Value: Config_Tool_VoiceIdentifier.EditConfig('VoiceIdentifier', 'StdAudioSpeaker', str(Value))
@@ -1127,7 +1314,7 @@ class MainWindow(Window_Customizing):
             Body = QCA.translate("Label", "判断是否为同一人的阈值，若参与比对的说话人声音相识度较高可以增加该值。")
         )
         self.ui.DoubleSpinBox_Tool_VoiceIdentifier_DecisionThreshold.setRange(0.5, 1)
-        #self.ui.DoubleSpinBox_Tool_VoiceIdentifier_DecisionThreshold.setSingleStep(0.01)
+        self.ui.DoubleSpinBox_Tool_VoiceIdentifier_DecisionThreshold.setSingleStep(0.01)
         self.ui.DoubleSpinBox_Tool_VoiceIdentifier_DecisionThreshold.setValue(
             float(Config_Tool_VoiceIdentifier.GetValue('VoiceIdentifier', 'DecisionThreshold', '0.75'))
         )
@@ -1184,7 +1371,7 @@ class MainWindow(Window_Customizing):
             Mode = "SelectDir"
         )
         self.ui.LineEdit_Tool_VoiceIdentifier_Model_Dir.setText(
-            str(Config_Tool_VoiceIdentifier.GetValue('VoiceIdentifier', 'Model_Dir', os.path.join(CurrentDir, 'Download')))
+            str(Config_Tool_VoiceIdentifier.GetValue('VoiceIdentifier', 'Model_Dir', NormPath(Path(CurrentDir).joinpath('Download'), 'Posix')))
         )
         self.ui.LineEdit_Tool_VoiceIdentifier_Model_Dir.textChanged.connect(
             lambda Value: Config_Tool_VoiceIdentifier.EditConfig('VoiceIdentifier', 'Model_Dir', str(Value))
@@ -1302,7 +1489,7 @@ class MainWindow(Window_Customizing):
             ExecuteButton = self.ui.Button_Tool_VoiceIdentifier_Execute,
             TerminateButton = self.ui.Button_Tool_VoiceIdentifier_Terminate,
             ProgressBar = self.ui.ProgressBar_Tool_VoiceIdentifier,
-            ConsoleFrame = self.ui.Frame_Console,
+            #ConsoleFrame = self.ui.Frame_Console,
             Method = Execute_Voice_Identifying.Execute,
             ParamsFrom = [
                 self.ui.Table_Tool_VoiceIdentifier_StdAudioSpeaker,
@@ -1319,7 +1506,7 @@ class MainWindow(Window_Customizing):
                 Function_ShowMessageBox
             ],
             FinishParamList = [
-                ("Ask","当前任务已执行完成，是否跳转至下一工具界面？",QMessageBox.Yes|QMessageBox.No,[QMessageBox.Yes],[[Function_AnimateStackedWidget,self.ui.Frame_Tools_Top.layout().itemAt(self.ui.StackedWidget_Pages_Tools.currentIndex()+1).widget().click]],[[(self.ui.StackedWidget_Pages_Tools,self.ui.StackedWidget_Pages_Tools.currentIndex()+1),()]])
+                (QMessageBox.Question,"Ask","当前任务已执行结束，是否跳转至下一工具界面？",QMessageBox.Yes|QMessageBox.No,[QMessageBox.Yes],[[self.ui.Frame_Tools_Top.layout().itemAt(2).widget().click]],[[()]])
             ]
         )
 
@@ -1347,9 +1534,9 @@ class MainWindow(Window_Customizing):
         )
         '''
 
-        Path_Config_Tool_VoiceTranscriber = os.path.join(CurrentDir, 'Config_Tool_VoiceTranscriber.ini')
+        Path_Config_Tool_VoiceTranscriber = NormPath(Path(CurrentDir).joinpath('Config_Tool_VoiceTranscriber.ini'))
         Config_Tool_VoiceTranscriber = ManageConfig(
-            self.ManageConfig.GetValue(
+            Config.GetValue(
                 'ConfigPath',
                 'Path_Config_Tool_VoiceTranscriber',
                 Path_Config_Tool_VoiceTranscriber
@@ -1362,7 +1549,7 @@ class MainWindow(Window_Customizing):
         self.ui.CheckBox_Toggle_BasicSettings_Tool_VoiceTranscriber.setText("基础设置（显示）")
         self.ui.CheckBox_Toggle_BasicSettings_Tool_VoiceTranscriber.setCheckable(True)
         self.ui.CheckBox_Toggle_BasicSettings_Tool_VoiceTranscriber.setChecked(
-            True #bool(Config_Tool_VoiceTranscriber.GetValue('VoiceTranscriber', 'Toggle_BasicSettings', ''))
+            True #eval(Config_Tool_VoiceTranscriber.GetValue('VoiceTranscriber', 'Toggle_BasicSettings', ''))
         )
         Function_ConfigureCheckBox(
             CheckBox = self.ui.CheckBox_Toggle_BasicSettings_Tool_VoiceTranscriber,
@@ -1452,7 +1639,7 @@ class MainWindow(Window_Customizing):
             Mode = "SelectDir"
         )
         self.ui.LineEdit_Tool_VoiceTranscriber_Model_Dir.setText(
-            str(Config_Tool_VoiceTranscriber.GetValue('VoiceTranscriber', 'Model_Dir', os.path.join(CurrentDir, 'Download')))
+            str(Config_Tool_VoiceTranscriber.GetValue('VoiceTranscriber', 'Model_Dir', NormPath(Path(CurrentDir).joinpath('Download'), 'Posix')))
         )
         self.ui.LineEdit_Tool_VoiceTranscriber_Model_Dir.textChanged.connect(
             lambda Value: Config_Tool_VoiceTranscriber.EditConfig('VoiceTranscriber', 'Model_Dir', str(Value))
@@ -1479,7 +1666,7 @@ class MainWindow(Window_Customizing):
         self.ui.CheckBox_Tool_VoiceTranscriber_Verbose.setText("已启用")
         self.ui.CheckBox_Tool_VoiceTranscriber_Verbose.setCheckable(True)
         self.ui.CheckBox_Tool_VoiceTranscriber_Verbose.setChecked(
-            bool(Config_Tool_VoiceTranscriber.GetValue('VoiceTranscriber', 'Verbose', 'True'))
+            eval(Config_Tool_VoiceTranscriber.GetValue('VoiceTranscriber', 'Verbose', 'True'))
         )
         '''
         self.ui.CheckBox_Tool_VoiceTranscriber_Verbose.stateChanged.connect(
@@ -1512,7 +1699,7 @@ class MainWindow(Window_Customizing):
         self.ui.CheckBox_Tool_VoiceTranscriber_Condition_on_Previous_Text.setText("已启用")
         self.ui.CheckBox_Tool_VoiceTranscriber_Condition_on_Previous_Text.setCheckable(True)
         self.ui.CheckBox_Tool_VoiceTranscriber_Condition_on_Previous_Text.setChecked(
-            bool(Config_Tool_VoiceTranscriber.GetValue('VoiceTranscriber', 'Condition_on_Previous_Text', 'True'))
+            eval(Config_Tool_VoiceTranscriber.GetValue('VoiceTranscriber', 'Condition_on_Previous_Text', 'True'))
         )
         '''
         self.ui.CheckBox_Tool_VoiceTranscriber_Condition_on_Previous_Text.stateChanged.connect(
@@ -1545,7 +1732,7 @@ class MainWindow(Window_Customizing):
         self.ui.CheckBox_Tool_VoiceTranscriber_fp16.setText("已启用")
         self.ui.CheckBox_Tool_VoiceTranscriber_fp16.setCheckable(True)
         self.ui.CheckBox_Tool_VoiceTranscriber_fp16.setChecked(
-            bool(Config_Tool_VoiceTranscriber.GetValue('VoiceTranscriber', 'fp16', 'True'))
+            eval(Config_Tool_VoiceTranscriber.GetValue('VoiceTranscriber', 'fp16', 'True'))
         )
         '''
         self.ui.CheckBox_Tool_VoiceTranscriber_fp16.stateChanged.connect(
@@ -1575,7 +1762,7 @@ class MainWindow(Window_Customizing):
         self.ui.CheckBox_Toggle_BasicOptionalSettings_Tool_VoiceTranscriber.setText("基础设置（显示）")
         self.ui.CheckBox_Toggle_BasicOptionalSettings_Tool_VoiceTranscriber.setCheckable(True)
         self.ui.CheckBox_Toggle_BasicOptionalSettings_Tool_VoiceTranscriber.setChecked(
-            True #bool(Config_Tool_VoiceTranscriber.GetValue('VoiceTranscriber', 'Toggle_BasicOptionalSettings', ''))
+            True #eval(Config_Tool_VoiceTranscriber.GetValue('VoiceTranscriber', 'Toggle_BasicOptionalSettings', ''))
         )
         Function_ConfigureCheckBox(
             CheckBox = self.ui.CheckBox_Toggle_BasicOptionalSettings_Tool_VoiceTranscriber,
@@ -1684,7 +1871,7 @@ class MainWindow(Window_Customizing):
             ExecuteButton = self.ui.Button_Tool_VoiceTranscriber_Execute,
             TerminateButton = self.ui.Button_Tool_VoiceTranscriber_Terminate,
             ProgressBar = self.ui.ProgressBar_Tool_VoiceTranscriber,
-            ConsoleFrame = self.ui.Frame_Console,
+            #ConsoleFrame = self.ui.Frame_Console,
             Method = Execute_Voice_Transcribing.Execute,
             ParamsFrom = [
                 self.ui.ComboBox_Tool_VoiceTranscriber_Model_Name,
@@ -1692,6 +1879,7 @@ class MainWindow(Window_Customizing):
                 self.ui.LineEdit_Tool_VoiceTranscriber_WAV_Dir,
                 self.ui.LineEdit_Tool_VoiceTranscriber_SRT_Dir,
                 self.ui.CheckBox_Tool_VoiceTranscriber_Verbose,
+                'transcribe', #self.ui.ComboBox_Tool_VoiceTranscriber_Task
                 self.ui.ComboBox_Tool_VoiceTranscriber_Language,
                 self.ui.CheckBox_Tool_VoiceTranscriber_Condition_on_Previous_Text,
                 self.ui.CheckBox_Tool_VoiceTranscriber_fp16
@@ -1703,7 +1891,7 @@ class MainWindow(Window_Customizing):
                 Function_ShowMessageBox
             ],
             FinishParamList = [
-                ("Ask","当前任务已执行完成，是否跳转至下一工具界面？",QMessageBox.Yes|QMessageBox.No,[QMessageBox.Yes],[[Function_AnimateStackedWidget,self.ui.Frame_Tools_Top.layout().itemAt(self.ui.StackedWidget_Pages_Tools.currentIndex()+1).widget().click]],[[(self.ui.StackedWidget_Pages_Tools,self.ui.StackedWidget_Pages_Tools.currentIndex()+1),()]])
+                (QMessageBox.Question,"Ask","当前任务已执行结束，是否跳转至下一工具界面？",QMessageBox.Yes|QMessageBox.No,[QMessageBox.Yes],[[self.ui.Frame_Tools_Top.layout().itemAt(3).widget().click]],[[()]])
             ]
         )
 
@@ -1732,9 +1920,9 @@ class MainWindow(Window_Customizing):
         )
         '''
 
-        Path_Config_Tool_DatasetCreator = os.path.join(CurrentDir, 'Config_Tool_DatasetCreator.ini')
+        Path_Config_Tool_DatasetCreator = NormPath(Path(CurrentDir).joinpath('Config_Tool_DatasetCreator.ini'))
         Config_Tool_DatasetCreator = ManageConfig(
-            self.ManageConfig.GetValue(
+            Config.GetValue(
                 'ConfigPath',
                 'Path_Config_Tool_DatasetCreator',
                 Path_Config_Tool_DatasetCreator
@@ -1747,7 +1935,7 @@ class MainWindow(Window_Customizing):
         self.ui.CheckBox_Toggle_BasicSettings_Tool_DatasetCreator.setText("基础设置（显示）")
         self.ui.CheckBox_Toggle_BasicSettings_Tool_DatasetCreator.setCheckable(True)
         self.ui.CheckBox_Toggle_BasicSettings_Tool_DatasetCreator.setChecked(
-            True #bool(Config_Tool_DatasetCreator.GetValue('DatasetCreator', 'Toggle_BasicSettings', ''))
+            True #eval(Config_Tool_DatasetCreator.GetValue('DatasetCreator', 'Toggle_BasicSettings', ''))
         )
         Function_ConfigureCheckBox(
             CheckBox = self.ui.CheckBox_Toggle_BasicSettings_Tool_DatasetCreator,
@@ -1997,7 +2185,7 @@ class MainWindow(Window_Customizing):
             ExecuteButton = self.ui.Button_Tool_DatasetCreator_Execute,
             TerminateButton = self.ui.Button_Tool_DatasetCreator_Terminate,
             ProgressBar = self.ui.ProgressBar_Tool_DatasetCreator,
-            ConsoleFrame = self.ui.Frame_Console,
+            #ConsoleFrame = self.ui.Frame_Console,
             Method = Execute_Dataset_Creating.Execute,
             ParamsFrom = [
                 self.ui.LineEdit_Tool_DatasetCreator_SRT_Dir,
@@ -2014,7 +2202,7 @@ class MainWindow(Window_Customizing):
                 Function_ShowMessageBox
             ],
             FinishParamList = [
-                ("Ask","当前任务已执行完成，是否跳转至下一工具界面？",QMessageBox.Yes|QMessageBox.No,[QMessageBox.Yes],[[Function_AnimateStackedWidget,self.ui.Frame_Tools_Top.layout().itemAt(self.ui.StackedWidget_Pages_Tools.currentIndex()+1).widget().click]],[[(self.ui.StackedWidget_Pages_Tools,self.ui.StackedWidget_Pages_Tools.currentIndex()+1),()]])
+                (QMessageBox.Question,"Ask","当前任务已执行结束，是否跳转至下一工具界面？",QMessageBox.Yes|QMessageBox.No,[QMessageBox.Yes],[[self.ui.Frame_Tools_Top.layout().itemAt(4).widget().click]],[[()]])
             ]
         )
 
@@ -2044,9 +2232,9 @@ class MainWindow(Window_Customizing):
         )
         '''
 
-        Path_Config_Tool_VoiceTrainer = os.path.join(CurrentDir, 'Config_Tool_VoiceTrainer.ini')
+        Path_Config_Tool_VoiceTrainer = NormPath(Path(CurrentDir).joinpath('Config_Tool_VoiceTrainer.ini'))
         Config_Tool_VoiceTrainer = ManageConfig(
-            self.ManageConfig.GetValue(
+            Config.GetValue(
                 'ConfigPath',
                 'Path_Config_Tool_VoiceTrainer',
                 Path_Config_Tool_VoiceTrainer
@@ -2059,7 +2247,7 @@ class MainWindow(Window_Customizing):
         self.ui.CheckBox_Toggle_BasicSettings_Tool_VoiceTrainer.setText("基础设置（显示）")
         self.ui.CheckBox_Toggle_BasicSettings_Tool_VoiceTrainer.setCheckable(True)
         self.ui.CheckBox_Toggle_BasicSettings_Tool_VoiceTrainer.setChecked(
-            True #bool(Config_Tool_VoiceTrainer.GetValue('VoiceTrainer', 'Toggle_BasicSettings', ''))
+            True #eval(Config_Tool_VoiceTrainer.GetValue('VoiceTrainer', 'Toggle_BasicSettings', ''))
         )
         Function_ConfigureCheckBox(
             CheckBox = self.ui.CheckBox_Toggle_BasicSettings_Tool_VoiceTrainer,
@@ -2261,7 +2449,7 @@ class MainWindow(Window_Customizing):
         self.ui.CheckBox_Tool_VoiceTrainer_FP16_Run.setText("已启用")
         self.ui.CheckBox_Tool_VoiceTrainer_FP16_Run.setCheckable(True)
         self.ui.CheckBox_Tool_VoiceTrainer_FP16_Run.setChecked(
-            bool(Config_Tool_VoiceTrainer.GetValue('VoiceTrainer', 'FP16_Run', 'True'))
+            eval(Config_Tool_VoiceTrainer.GetValue('VoiceTrainer', 'FP16_Run', 'True'))
         )
         '''
         self.ui.CheckBox_Tool_VoiceTrainer_FP16_Run.stateChanged.connect(
@@ -2294,7 +2482,7 @@ class MainWindow(Window_Customizing):
         self.ui.CheckBox_Tool_VoiceTrainer_Find_Unused_Parameters.setText("已启用")
         self.ui.CheckBox_Tool_VoiceTrainer_Find_Unused_Parameters.setCheckable(True)
         self.ui.CheckBox_Tool_VoiceTrainer_Find_Unused_Parameters.setChecked(
-            bool(Config_Tool_VoiceTrainer.GetValue('VoiceTrainer', 'Find_Unused_Parameters', 'True'))
+            eval(Config_Tool_VoiceTrainer.GetValue('VoiceTrainer', 'Find_Unused_Parameters', 'True'))
         )
         '''
         self.ui.CheckBox_Tool_VoiceTrainer_Find_Unused_Parameters.stateChanged.connect(
@@ -2324,7 +2512,7 @@ class MainWindow(Window_Customizing):
         self.ui.CheckBox_Toggle_BasicOptionalSettings_Tool_VoiceTrainer.setText("基础设置（显示）")
         self.ui.CheckBox_Toggle_BasicOptionalSettings_Tool_VoiceTrainer.setCheckable(True)
         self.ui.CheckBox_Toggle_BasicOptionalSettings_Tool_VoiceTrainer.setChecked(
-            True #bool(Config_Tool_VoiceTrainer.GetValue('VoiceTrainer', 'Toggle_BasicOptionalSettings', ''))
+            True #eval(Config_Tool_VoiceTrainer.GetValue('VoiceTrainer', 'Toggle_BasicOptionalSettings', ''))
         )
         Function_ConfigureCheckBox(
             CheckBox = self.ui.CheckBox_Toggle_BasicOptionalSettings_Tool_VoiceTrainer,
@@ -2517,7 +2705,7 @@ class MainWindow(Window_Customizing):
             ExecuteButton = self.ui.Button_Tool_VoiceTrainer_Execute,
             TerminateButton = self.ui.Button_Tool_VoiceTrainer_Terminate,
             ProgressBar = self.ui.ProgressBar_Tool_VoiceTrainer,
-            ConsoleFrame = self.ui.Frame_Console,
+            #ConsoleFrame = self.ui.Frame_Console,
             Method = Execute_Voice_Training.Execute,
             ParamsFrom = [
                 self.ui.LineEdit_Tool_VoiceTrainer_FileList_Path_Validation,
@@ -2546,7 +2734,7 @@ class MainWindow(Window_Customizing):
                 Function_ShowMessageBox
             ],
             FinishParamList = [
-                ("Ask","当前任务已执行完成，是否跳转至下一工具界面？",QMessageBox.Yes|QMessageBox.No,[QMessageBox.Yes],[[Function_AnimateStackedWidget,self.ui.Frame_Tools_Top.layout().itemAt(self.ui.StackedWidget_Pages_Tools.currentIndex()+1).widget().click]],[[(self.ui.StackedWidget_Pages_Tools,self.ui.StackedWidget_Pages_Tools.currentIndex()+1),()]])
+                (QMessageBox.Question,"Ask","当前任务已执行结束，是否跳转至下一工具界面？",QMessageBox.Yes|QMessageBox.No,[QMessageBox.Yes],[[self.ui.Frame_Tools_Top.layout().itemAt(5).widget().click]],[[()]])
             ]
         )
 
@@ -2573,9 +2761,9 @@ class MainWindow(Window_Customizing):
         )
         '''
 
-        Path_Config_Tool_VoiceConverter = os.path.join(CurrentDir, 'Config_Tool_VoiceConverter.ini')
+        Path_Config_Tool_VoiceConverter = NormPath(Path(CurrentDir).joinpath('Config_Tool_VoiceConverter.ini'))
         Config_Tool_VoiceConverter = ManageConfig(
-            self.ManageConfig.GetValue(
+            Config.GetValue(
                 'ConfigPath',
                 'Path_Config_Tool_VoiceConverter',
                 Path_Config_Tool_VoiceConverter
@@ -2588,7 +2776,7 @@ class MainWindow(Window_Customizing):
         self.ui.CheckBox_Toggle_BasicSettings_Tool_VoiceConverter.setText("基础设置（显示）")
         self.ui.CheckBox_Toggle_BasicSettings_Tool_VoiceConverter.setCheckable(True)
         self.ui.CheckBox_Toggle_BasicSettings_Tool_VoiceConverter.setChecked(
-            True #bool(Config_Tool_VoiceConverter.GetValue('VoiceConverter', 'Toggle_BasicSettings', ''))
+            True #eval(Config_Tool_VoiceConverter.GetValue('VoiceConverter', 'Toggle_BasicSettings', ''))
         )
         Function_ConfigureCheckBox(
             CheckBox = self.ui.CheckBox_Toggle_BasicSettings_Tool_VoiceConverter,
@@ -2598,7 +2786,7 @@ class MainWindow(Window_Customizing):
                 #Config_Tool_VoiceConverter.EditConfig
             ],
             CheckedPermArgsList = [
-                (self.ui.Frame_BasicSettings_Tool_VoiceConverter,...,...,0,self.ui.Frame_Tool_VoiceConverter_Config_Path_Load.height()+self.ui.Frame_Tool_VoiceConverter_Model_Path_Load.height()+self.ui.Frame_Tool_VoiceConverter_Text.height()+self.ui.Frame_Tool_VoiceConverter_Language.height(),0,'Extend'),
+                (self.ui.Frame_BasicSettings_Tool_VoiceConverter,...,...,0,self.ui.Frame_Tool_VoiceConverter_Config_Path_Load.height()+self.ui.Frame_Tool_VoiceConverter_Model_Path_Load.height()+self.ui.Frame_Tool_VoiceConverter_Text.height()+self.ui.Frame_Tool_VoiceConverter_Language.height()+self.ui.Frame_Tool_VoiceConverter_Speaker.height()+self.ui.Frame_Tool_VoiceConverter_Audio_Dir_Save.height(),0,'Extend'),
                 #('VoiceConverter', 'Toggle_BasicSettings', 'True')
             ],
             UncheckedText = "基础设置（隐藏）",
@@ -2607,7 +2795,7 @@ class MainWindow(Window_Customizing):
                 #Config_Tool_VoiceConverter.EditConfig
             ],
             UncheckedPermArgsList = [
-                (self.ui.Frame_BasicSettings_Tool_VoiceConverter,...,...,0,self.ui.Frame_Tool_VoiceConverter_Config_Path_Load.height()+self.ui.Frame_Tool_VoiceConverter_Model_Path_Load.height()+self.ui.Frame_Tool_VoiceConverter_Text.height()+self.ui.Frame_Tool_VoiceConverter_Language.height(),0,'Reduce'),
+                (self.ui.Frame_BasicSettings_Tool_VoiceConverter,...,...,0,self.ui.Frame_Tool_VoiceConverter_Config_Path_Load.height()+self.ui.Frame_Tool_VoiceConverter_Model_Path_Load.height()+self.ui.Frame_Tool_VoiceConverter_Text.height()+self.ui.Frame_Tool_VoiceConverter_Language.height()+self.ui.Frame_Tool_VoiceConverter_Speaker.height()+self.ui.Frame_Tool_VoiceConverter_Audio_Dir_Save.height(),0,'Reduce'),
                 #('VoiceConverter', 'Toggle_BasicSettings', 'False')
             ]
         )
@@ -2901,7 +3089,7 @@ class MainWindow(Window_Customizing):
             ExecuteButton = self.ui.Button_Tool_VoiceConverter_Execute,
             TerminateButton = self.ui.Button_Tool_VoiceConverter_Terminate,
             ProgressBar = self.ui.ProgressBar_Tool_VoiceConverter,
-            ConsoleFrame = self.ui.Frame_Console,
+            #ConsoleFrame = self.ui.Frame_Console,
             Method = Execute_Voice_Converting.Execute,
             ParamsFrom = [
                 self.ui.LineEdit_Tool_VoiceConverter_Config_Path_Load,
@@ -2921,7 +3109,7 @@ class MainWindow(Window_Customizing):
                 Function_ShowMessageBox
             ],
             FinishParamList = [
-                ("Tip","当前任务已执行完成！",QMessageBox.Ok)
+                (QMessageBox.Information,"Tip","当前任务已执行结束！",QMessageBox.Ok)
             ]
         )
 
@@ -2934,56 +3122,59 @@ class MainWindow(Window_Customizing):
         self.ui.Label_Setting_Language.setText(QCA.translate("Label", "语言"))
         self.ui.ComboBox_Setting_Language.addItems(['中文'])
         self.ui.ComboBox_Setting_Language.setCurrentText(
-            ItemReplacer(
-                Dict = {
-                    'Chinese': '中文'
-                },
-                Item = self.ManageConfig.GetValue(
-                    'Settings',
-                    'Language',
-                    'Chinese'
-                )
-            )
+            {
+                'Chinese': '中文'
+            }.get(Config.GetValue('Settings', 'Language', 'Chinese'))
         )
         self.ui.ComboBox_Setting_Language.currentIndexChanged.connect(
-            lambda: self.ManageConfig.EditConfig(
+            lambda: Config.EditConfig(
                 'Settings',
                 'Language',
-                ItemReplacer(
-                    Dict = {
-                        '中文': 'Chinese'
-                    },
-                    Item = self.ui.ComboBox_Setting_Language.currentText()
-                )
+                {
+                    '中文': 'Chinese'
+                }.get(self.ui.ComboBox_Setting_Language.currentText())
             )
         )
+
+        self.ui.Button_Setting_ClientRebooter.clicked.connect(ClientRebooter)
+        self.ui.Button_Setting_ClientRebooter.setText(QCA.translate("Button", "重启客户端"))
+        self.ui.Button_Setting_ClientRebooter.setCheckable(True)
+        self.ui.Button_Setting_ClientRebooter.setToolTipDuration(-1)
+        self.ui.Button_Setting_ClientRebooter.setToolTip(QCA.translate("ToolTip", "重启EVT客户端"))
+
+        Function_ExecuteMethod(
+            ExecuteButton = self.ui.Button_Setting_IntegrityChecker,
+            Method = Integrity_Checker.Execute,
+            Params = ()
+        )
+        self.ui.Button_Setting_IntegrityChecker.setText(QCA.translate("Button", "检查完整性"))
+        self.ui.Button_Setting_IntegrityChecker.setCheckable(True)
+        self.ui.Button_Setting_IntegrityChecker.setToolTipDuration(-1)
+        self.ui.Button_Setting_IntegrityChecker.setToolTip(QCA.translate("ToolTip", "检查文件完整性"))
 
         self.ui.Label_Setting_AutoUpdate.setText(QCA.translate("Label", "自动检查版本并更新"))
         self.ui.CheckBox_Setting_AutoUpdate.setText("已启用")
         self.ui.CheckBox_Setting_AutoUpdate.setCheckable(True)
         self.ui.CheckBox_Setting_AutoUpdate.setChecked(
-            ItemReplacer(
-                Dict = {
-                    'Enabled': True,
-                    'Disabled': False
-                },
-                Item = self.ManageConfig.GetValue('Settings', 'AutoUpdate', 'Enabled')
-            )
+            {
+                'Enabled': True,
+                'Disabled': False
+            }.get(Config.GetValue('Settings', 'AutoUpdate', 'Enabled'))
         )
         Function_ConfigureCheckBox(
             CheckBox = self.ui.CheckBox_Setting_AutoUpdate,
             CheckedText = "已启用",
             CheckedPermEventList = [
-                self.ManageConfig.EditConfig,
-                Updater
+                Config.EditConfig,
+                #Updater
             ],
             CheckedPermArgsList = [
                 ('Settings', 'AutoUpdate', 'Enabled'),
-                (CurrentVersion, CurrentDir, f'Easy Voice Toolkit {CurrentVersion}', CurrentDir)
+                #(CurrentVersion, IsFileCompiled, CurrentDir, f'Easy Voice Toolkit {CurrentVersion}', CurrentDir)
             ],
             UncheckedText = "未启用",
             UncheckedPermEventList = [
-                self.ManageConfig.EditConfig
+                Config.EditConfig
             ],
             UncheckedPermArgsList = [
                 ('Settings', 'AutoUpdate', 'Disabled')
@@ -2994,19 +3185,16 @@ class MainWindow(Window_Customizing):
         self.ui.CheckBox_Setting_Synchronizer.setText("已启用")
         self.ui.CheckBox_Setting_Synchronizer.setCheckable(True)
         self.ui.CheckBox_Setting_Synchronizer.setChecked(
-            ItemReplacer(
-                Dict = {
-                    'Enabled': True,
-                    'Disabled': False
-                },
-                Item = self.ManageConfig.GetValue('Tools', 'Synchronizer', 'Enabled')
-            )
+            {
+                'Enabled': True,
+                'Disabled': False
+            }.get(Config.GetValue('Tools', 'Synchronizer', 'Enabled'))
         )
         Function_ConfigureCheckBox(
             CheckBox = self.ui.CheckBox_Setting_Synchronizer,
             CheckedText = "已启用",
             CheckedPermEventList = [
-                self.ManageConfig.EditConfig,
+                Config.EditConfig,
                 Function_ParamsSynchronizer,
                 Function_ParamsSynchronizer,
                 Function_ParamsSynchronizer,
@@ -3021,7 +3209,7 @@ class MainWindow(Window_Customizing):
             ],
             UncheckedText = "未启用",
             UncheckedPermEventList = [
-                self.ManageConfig.EditConfig,
+                Config.EditConfig,
                 #Function_ParamsSynchronizer,
                 #Function_ParamsSynchronizer,
                 #Function_ParamsSynchronizer,
@@ -3038,7 +3226,7 @@ class MainWindow(Window_Customizing):
                 Function_ShowMessageBox
             ],
             UncheckedTempArgsList = [
-                (QMessageBox.Information, "提示", "该设置将于重启之后生效")
+                (QMessageBox.Information,"Tip", "该设置将于重启之后生效")
             ]
         )
 
@@ -3109,11 +3297,16 @@ class MainWindow(Window_Customizing):
         self.show()
         MainWindowSignals.Signal_MainWindowShown.emit()
 
+##############################################################################################################################
 
 if __name__ == "__main__":
+    UpdaterExecuter()
+
     App = QApplication(sys.argv)
 
     Window = MainWindow()
     Window.Main()
     
     sys.exit(App.exec())
+
+##############################################################################################################################

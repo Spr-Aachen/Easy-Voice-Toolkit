@@ -76,27 +76,14 @@ def Execute_Model_Download(
     ExtractDir = os.path.join(Model_Dir, Model_Type, Feature_Method)
     Format = 'zip'
     SHA = SHA256List_S[Model_Name] if Feature_Method == 'spectrogram' else SHA256List_M[Model_Name]
-    try:
-        shutil.unpack_archive(
-            filename = Model_Download(
-                url = URL,
-                root = DownloadDir,
-                name = Model_Name,
-                format = Format,
-                expected_sha256 = SHA
-            )[1],
-            extract_dir = ExtractDir,
-            format = Format
-        )
-    except:
-        shutil.unpack_archive(
-            filename = Model_Download(
-                url = 'https://ghproxy.com/' + URL,
-                root = DownloadDir,
-                name = Model_Name,
-                format = Format,
-                expected_sha256 = SHA
-            )[1],
-            extract_dir = ExtractDir,
-            format = Format
-        )
+    shutil.unpack_archive(
+        filename = Model_Download(
+            url = URL,
+            root = DownloadDir,
+            name = Model_Name,
+            format = Format,
+            expected_sha256 = SHA
+        )[1],
+        extract_dir = ExtractDir,
+        format = Format
+    )

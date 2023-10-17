@@ -1,10 +1,15 @@
 import os
-import configparser
+import sys
+import re
 #import time
 import shutil
+import psutil
 import subprocess
 import hashlib
 import urllib
+import platform
+import configparser
+from pathlib import Path
 from github import Github
 from tqdm import tqdm
 from typing import Tuple, Union, Optional
@@ -13,55 +18,14 @@ from threading import currentThread
 
 ##############################################################################################################################
 
-class ManageConfig:
-    '''
-    Manage config
-    '''
-    def __init__(self,
-        Config_Path: Optional[str] = None
-    ):
-        self.Config_Path = os.path.join(os.path.dirname(os.path.abspath('__file__')), 'Config.ini') if Config_Path == None else Config_Path
-
-    def ReadConfig(self):
-        ConfigParser = configparser.ConfigParser()
-        ConfigParser.read(self.Config_Path)
-        return ConfigParser
-
-    def EditConfig(self,
-        Section: str = ...,
-        Option: str = ...,
-        Value: str = ...,
-        ConfigParser: Optional[configparser.ConfigParser] = None
-    ):
-        ConfigParser = self.ReadConfig() if ConfigParser == None else ConfigParser
-        try:
-            ConfigParser.add_section(Section)
-        except:
-            pass
-        ConfigParser.set(Section, Option, Value)
-        with open(self.Config_Path, 'w') as Config:
-            ConfigParser.write(Config)
-
-    def GetValue(self,
-        Section: str = ...,
-        Option: str = ...,
-        InitValue: Optional[str] = None,
-        ConfigParser: Optional[configparser.ConfigParser] = None
-    ):
-        ConfigParser = self.ReadConfig() if ConfigParser == None else ConfigParser
-        try:
-            Value = ConfigParser.get(Section, Option)
-        except:
-            if InitValue != None:
-                self.EditConfig(Section, Option, InitValue, ConfigParser)
-                return InitValue
-            else:
-                raise Exception("Need initial value")
-        return Value
-
-#############################################################################################################
-
-def CheckUpdate(AccessToken: str, RepoOwner: str, RepoName: str, FileName: str, FileFormat: str, Version_Current: str):
+def CheckUpdate(
+    AccessToken: Optional[str] = None,
+    RepoOwner: str = ...,
+    RepoName: str = ...,
+    FileName: str = ...,
+    FileFormat: str = ...,
+    Version_Current: str = ...
+):
     '''
     '''
     try:
@@ -88,7 +52,13 @@ def CheckUpdate(AccessToken: str, RepoOwner: str, RepoName: str, FileName: str, 
     return IsUpdateNeeded, URL, SHA
 
 
-def FileDownload(URL: str, DownloadDir: str, FileName: str, FileFormat: str, SHA_Expected: Optional[str]) -> Tuple[Union[bytes, str], str]:
+def DownloadFile(
+    URL: str,
+    DownloadDir: str,
+    FileName: str,
+    FileFormat: str,
+    SHA_Expected: Optional[str]
+) -> Tuple[Union[bytes, str], str]:
     '''
     '''
     os.makedirs(DownloadDir, exist_ok = True)
@@ -125,76 +95,28 @@ def FileDownload(URL: str, DownloadDir: str, FileName: str, FileFormat: str, SHA
     return FileBytes, DownloadPath
 
 
-def Updater(
-    CurrentVersion: str = ...,
-    DownloadDir: str = ...,
-    Name: str = ...,
-    Format: str = 'zip',
-    ExtractDir: str = ...
+def CleanDirectory(
+    Directory: str,
+    WhiteList: list
 ):
     '''
     '''
-    try:
-        IsUpdateNeeded, URL, SHA = CheckUpdate(
-            AccessToken = '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',
-            RepoOwner = 'Spr-Aachen',
-            RepoName = 'Easy-Voice-Toolkit',
-            FileName = 'EVT',
-            FileFormat = 'zip',
-            Version_Current = CurrentVersion
-        )
-        
-    except:
-        print("Failed to check for update")
-
-    else:
-        if IsUpdateNeeded:
-            if os.path.exists(ExtractDir):
-                FoldersToKeep = ['__pycache__', '.git']
-                for Root, Dirs, Files in os.walk(ExtractDir, topdown = False):
-                    for File in Files:
-                        FilePath = os.path.join(Root, File)
-                        try:
-                            if not any(Folder in FilePath for Folder in FoldersToKeep):
-                                os.remove(FilePath)
-                        except:
-                            pass
-                    for Dir in Dirs:
-                        DirPath = os.path.join(Root, Dir)
-                        try:
-                            if not any(Folder in DirPath for Folder in FoldersToKeep):
-                                shutil.rmtree(DirPath)
-                        except:
-                            pass
-            print("Start updating!")
-            try:
-                shutil.unpack_archive(
-                    filename = FileDownload(
-                        URL = URL,
-                        DownloadDir = DownloadDir,
-                        FileName = Name,
-                        FileFormat = Format,
-                        SHA_Expected = SHA
-                    )[1],
-                    extract_dir = ExtractDir,
-                    format = Format
-                )
-            except:
-                shutil.unpack_archive(
-                    filename = FileDownload(
-                        URL = 'https://ghproxy.com/' + URL,
-                        DownloadDir = DownloadDir,
-                        FileName = Name,
-                        FileFormat = Format,
-                        SHA_Expected = SHA
-                    )[1],
-                    extract_dir = ExtractDir,
-                    format = Format
-                )
-            print("Successfully updated!")
-
-        else:
-            print("Already up to date!")
+    if os.path.exists(Directory):
+        for DirPath, Folders, Files in os.walk(Directory, topdown = False):
+            for File in Files:
+                FilePath = os.path.join(DirPath, File)
+                try:
+                    if not any(File in FilePath for File in WhiteList):
+                        os.remove(FilePath)
+                except:
+                    pass
+            for Folder in Folders:
+                FolderPath = os.path.join(DirPath, Folder)
+                try:
+                    if not any(Folder in FolderPath for Folder in WhiteList):
+                        shutil.rmtree(FolderPath)
+                except:
+                    pass
 
 #############################################################################################################
 
@@ -229,118 +151,162 @@ def MoveFiles(
 
 #############################################################################################################
 
-def RunCMD(
-    Args: list
-):
-    '''
-    '''
-    Input = str()
-    for Arg in Args:
-        Input += f'{Arg}\n'
-    Input = Input.encode('gbk')
-    Subprocess = subprocess.Popen(['cmd'], stdin = subprocess.PIPE, stdout = subprocess.PIPE, stderr = subprocess.STDOUT)
-    Subprocess.communicate(Input)
-
-
-def SetEnvPath(
-    Path: str,
-    Type: str
-):
-    '''
-    '''
-    if Type == 'Sys':
-        RunCMD(
-            Args = [
-                'for /f "usebackq tokens=2,*" %A in (`reg query "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" /v PATH`) do set SYSPATH=%B',
-                f'setx PATH "%SYSPATH%;{Path}" /M'
-            ]
-        )
-    if Type == 'User':
-        RunCMD(
-            Args = [
-                'for /f "usebackq tokens=2,*" %A in (`reg query HKCU\Environment /v PATH`) do set userPATH=%B',
-                f'setx PATH "%userPATH%;{Path}"'
-            ]
-        )
-    if Type == 'Temp':
-        os.environ['PATH'] += ';' + Path if not Path in os.environ['PATH'] else None
-
-#############################################################################################################
-
 def IterChecker(
-    Item,
+    Items,
     #Type: str = 'list'
 ):
     '''
     '''
     try:
-        iter(Item)
-        ItemList = Item
+        iter(Items)
+        ItemList = Items
     except:
         ItemList = []
-        ItemList.append(Item)
+        ItemList.append(Items)
 
     return ItemList
 
 
 def ItemReplacer(
     Dict: dict,
-    Item: object
+    Items: object
 ):
     '''
     Function to replace item using dictionary lookup
     '''
-    if isinstance(Item, str):
-        return Dict.get(Item)
-    else:
-        ItemList = IterChecker(Item)
+    ItemList = IterChecker(Items)
 
     ItemList_New = [Dict.get(Item, Item) if isinstance(Item, str) else Item for Item in ItemList]
 
-    if isinstance(Item, list):
+    if isinstance(Items, list):
         return ItemList_New
-    if isinstance(Item, tuple):
+    if isinstance(Items, tuple):
         return tuple(ItemList_New)
-    if isinstance(Item, (int, float, bool)):
+    if isinstance(Items, (int, float, bool)):
         return ItemList_New[0]
+    if isinstance(Items, str):
+        return str().join(ItemList_New)
 
-"""
-def ItemsReplacer(
-    Dict: dict,
-    *Items: object
+#############################################################################################################
+
+def NormPath(
+    String: str,
+    PathType: Optional[str] = None
 ):
     '''
-    Function to replace items using dictionary lookup
     '''
-    Items_New = []
+    if re.search(r':[/\\\\]', str(String)): #if f':{os.path.sep}' in str(String):
+        if platform.system() == 'Windows' or PathType == 'Win32':
+            String = Path(String).as_posix().replace(r'/', '\\')
+        if platform.system() == 'Linux' or PathType == 'Posix':
+            String = Path(String).as_posix()
+        return String
 
-    for Item in Items:
-        if isinstance(Item, str):
-            return Dict.get(Item)
-        else:
-            try:
-                iter(Item)
-                ItemList = Item
-            except:
-                ItemList = []
-                ItemList.append(Item)
+    else:
+        #print("Not a complete path")
+        return String
 
-        ItemList_New = [Dict.get(Item, Item) if isinstance(Item, str) else Item for Item in ItemList]
 
-        if isinstance(Item, list):
-            Item_New = ItemList_New
-        if isinstance(Item, tuple):
-            Item_New = tuple(ItemList_New)
-        if isinstance(Item, (int, float, bool)):
-            Item_New = ItemList_New[0]
+def RawString(
+    Text: str,
+    PathType: Optional[str] = None
+):
+    '''
+    Return as raw string representation of text
+    '''
+    RawDict = {
+        '\a': r'\a',
+        '\b': r'\b',
+        '\c': r'\c',
+        '\f': r'\f',
+        '\n': r'\n',
+        '\r': r'\r',
+        '\t': r'\t',
+        '\v': r'\v',
+        '\0': r'\0',
+        '\1': r'\1',
+        '\2': r'\2',
+        '\3': r'\3',
+        '\4': r'\4',
+        '\5': r'\5',
+        '\6': r'\6',
+        '\7': r'\7',
+        '\8': r'\8',
+        '\9': r'\9',
+        #'\'': r'\'',
+        #'\"': r'\"'
+    }
+    StringRepresentation = repr(ItemReplacer(RawDict, NormPath(Text, PathType)))[1:-1] #StringRepresentation = ItemReplacer(RawDict, NormPath(Text)).encode('unicode_escape').decode()
+    return re.sub(r'\\+', lambda arg: r'\\', StringRepresentation).replace(r'\\', '\\').replace(r'\'', '\'') #return eval("'%s'" % canonical_string)
 
-        Items_New.append(Item_New)
+#############################################################################################################
 
-    def Unpack(*args):
-        return args
+def RunCMD(
+    Args: list,
+    PathType: Optional[str] = None
+):
+    '''
+    '''
+    Input = str()
+    for Arg in Args:
+        Input += f'{RawString(Arg, PathType)}\n'
+    Input = Input.encode(encoding = 'gbk')
+    Subprocess = subprocess.Popen(['cmd'], stdin = subprocess.PIPE, env = os.environ)
+    Subprocess.communicate(Input)
 
-    return Unpack(Items_New)
-"""
+
+def SetEnvVar(
+    Variable: str,
+    Value: str,
+    Type: str = 'Temp',
+    AffectOS: bool = True
+):
+    '''
+    '''
+    #Value = RawString(Value)
+    EnvValue = os.environ.get(Variable)
+
+    if EnvValue is not None and Value not in EnvValue:
+        if Type == 'Sys':
+            if Variable == 'PATH':
+                RunCMD(
+                    Args = [
+                        'for /f "usebackq tokens=2,*" %A in (`REG QUERY "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" /v PATH`) do set SYSPATH=%B',
+                        f'setx PATH "%SYSPATH%{os.pathsep}{Value}" /M' #f'setx PATH "{Value}{os.pathsep}%SYSPATH%" /M'
+                    ]
+                )
+            else:
+                pass
+        if Type == 'User':
+            if Variable == 'PATH':
+                RunCMD(
+                    Args = [
+                        'for /f "usebackq tokens=2,*" %A in (`reg query HKCU\Environment /v PATH`) do set userPATH=%B',
+                        f'setx PATH "%userPATH%{os.pathsep}{Value}"' #f'setx PATH "{Value}{os.pathsep}%userPATH%"'
+                    ]
+                )
+            else:
+                pass
+        if Type == 'Temp' or AffectOS:
+            EnvValue = f'{EnvValue}{os.pathsep}{Value}' #EnvValue = f'{Value}{os.pathsep}{EnvValue}'
+            os.environ[Variable] = EnvValue
+
+    if EnvValue is None:
+        if Type == 'Sys':
+            RunCMD(
+                Args = [
+                    f'setx {Variable} "{Value}" /M'
+                ]
+            )
+        if Type == 'User':
+            RunCMD(
+                Args = [
+                    f'setx {Variable} "{Value}"'
+                ]
+            )
+        if Type == 'Temp' or AffectOS:
+            EnvValue = Value
+            os.environ[Variable] = EnvValue
 
 #############################################################################################################
 
@@ -409,5 +375,100 @@ def TaskAccelerating(
     ) if ShowMessages == True else print('')
 
     #Endtime = int(time.time())
+
+#############################################################################################################
+
+def TaskTerminating(
+    ProgramPath: str,
+    SelfIgnored: bool = True
+):
+    '''
+    '''
+    ProgramName = os.path.basename(ProgramPath)
+    IsFileCompiled = ProgramName.endswith('.exe')
+    for Process in psutil.process_iter():
+        if Process.pid == os.getpid() and SelfIgnored:
+            continue
+        if Process.name() == (ProgramName if IsFileCompiled else "python.exe") and ProgramPath in Process.cmdline():
+            Process.kill()
+
+
+def Booter(
+    TargetDir: str = ...,
+    RunnerPath: str = ...,
+    IsFileCompiled: bool = ...,
+    DelayTime: int = 3
+):
+    '''
+    subprocess.call([RunnerPath] if IsFileCompiled else ['python.exe', RunnerPath])
+    '''
+    BatFilePath = os.path.join(TargetDir, 'Booter.bat')
+    with open(BatFilePath, 'w') as BatFile:
+        CommandList = [
+            '@echo off',
+            f'ping 127.0.0.1 -n {DelayTime + 1} > nul',
+            f'start "Programm Running" "{RunnerPath}"' if IsFileCompiled else f'python "{RunnerPath}"',
+            'del "%~f0"'
+        ]
+        Commands = "\n".join(CommandList)
+        BatFile.write(Commands)
+    subprocess.Popen([BatFilePath], creationflags = subprocess.CREATE_NEW_CONSOLE).communicate()
+
+#############################################################################################################
+
+def CheckIfFileIsCompiled():
+    '''
+    Check whether python file is compiled
+    '''
+    IsFileCompiled = False if sys.executable.endswith('python.exe') or sys.argv[0].endswith('.py') else True
+
+    return IsFileCompiled
+
+
+class ManageConfig:
+    '''
+    Manage config
+    '''
+    def __init__(self,
+        Config_Path: Optional[str] = None
+    ):
+        self.Config_Path = NormPath(Path(__file__ if CheckIfFileIsCompiled() == False else sys.executable).absolute().parent.joinpath('Config.ini')) if Config_Path == None else Config_Path
+
+    def ReadConfig(self):
+        ConfigParser = configparser.ConfigParser()
+        ConfigParser.read(self.Config_Path)
+        return ConfigParser
+
+    def EditConfig(self,
+        Section: str = ...,
+        Option: str = ...,
+        Value: str = ...,
+        ConfigParser: Optional[configparser.ConfigParser] = None
+    ):
+        ConfigParser = self.ReadConfig() if ConfigParser == None else ConfigParser
+        try:
+            ConfigParser.add_section(Section)
+        except:
+            pass
+        ConfigParser.set(Section, Option, Value)
+        with open(self.Config_Path, 'w') as Config:
+            ConfigParser.write(Config)
+
+    def GetValue(self,
+        Section: str = ...,
+        Option: str = ...,
+        InitValue: Optional[str] = None,
+        ConfigParser: Optional[configparser.ConfigParser] = None
+    ):
+        ConfigParser = self.ReadConfig() if ConfigParser == None else ConfigParser
+        try:
+            Value = ConfigParser.get(Section, Option)
+        except:
+            if InitValue != None:
+                self.EditConfig(Section, Option, InitValue, ConfigParser)
+                return InitValue
+            else:
+                raise Exception("Need initial value")
+        return Value
 
 #############################################################################################################

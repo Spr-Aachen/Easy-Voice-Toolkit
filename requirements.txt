@@ -3,7 +3,6 @@
 
 # Tool_AudioProcessor
 librosa
-ipywidgets
 
 
 # Tool_VoiceIdentifier

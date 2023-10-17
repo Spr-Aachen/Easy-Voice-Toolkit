@@ -19,21 +19,33 @@ class CustomSignals_EnvConfigurator(QObject):
     '''
     Signal_FFmpegDetected = Signal()
     Signal_FFmpegUndetected = Signal()
-
+    Signal_FFmpegInstalled = Signal()
+    Signal_FFmpegInstallFailed = Signal()
+    '''
     Signal_GCCDetected = Signal()
     Signal_GCCUndetected = Signal()
+    Signal_GCCInstalled = Signal()
+    Signal_GCCInstallFailed = Signal()
 
     Signal_CMakeDetected = Signal()
     Signal_CMakeUndetected = Signal()
-
+    Signal_CMakeInstalled = Signal()
+    Signal_CMakeInstallFailed = Signal()
+    '''
     Signal_PythonDetected = Signal()
     Signal_PythonUndetected = Signal()
+    Signal_PythonInstalled = Signal()
+    Signal_PythonInstallFailed = Signal()
 
     Signal_PyReqsDetected = Signal()
     Signal_PyReqsUndetected = Signal()
+    Signal_PyReqsInstalled = Signal()
+    Signal_PyReqsInstallFailed = Signal()
 
     Signal_PytorchDetected = Signal()
     Signal_PytorchUndetected = Signal()
+    Signal_PytorchInstalled = Signal()
+    Signal_PytorchInstallFailed = Signal()
 
 
 EnvConfiguratorSignals = CustomSignals_EnvConfigurator()
@@ -62,17 +74,17 @@ class FFmpeg_Installer(QObject):
             File_Name = 'FFmpeg'
             File_Format = 'zip'
             Path_Download = os.path.join(Dir_Download, f"{File_Name}.{File_Format}")
-            Dir_Install = 'C:/FFmpeg'
+            Dir_Install = f"{os.getenv('SystemDrive')}/FFmpeg"
             Path_Binary = os.path.normpath(os.path.join(Dir_Install, 'bin'))
-            FileDownload('https://ghproxy.com/' + URL, Dir_Download, File_Name, File_Format, None) #subprocess.run(['powershell.exe', '-Command', f'(New-Object System.Net.WebClient).DownloadFile("{URL}", "{Path_Download}")'])
+            DownloadFile(URL, Dir_Download, File_Name, File_Format, None) #RunCMD([f'powershell.exe -Command (New-Object System.Net.WebClient).DownloadFile("{URL}", "{Path_Download}")'])
             shutil.unpack_archive(Path_Download, Dir_Install, Path_Download.rsplit('.', 1)[-1])
             MoveFiles(os.path.dirname(GetPath(Dir_Install, 'bin')), Dir_Install)
-            SetEnvPath(Path_Binary, 'User') #subprocess.run(f'setx /M PATH "%PATH%;{Path_Binary}"', shell = True)
-            os.remove(Path_Download) #subprocess.run(['powershell.exe', '-Command', f'Remove-Item -Force -Path "{Path_Download}"'])
+            SetEnvVar('PATH', Path_Binary, 'User') #RunCMD([f'setx /M PATH "%PATH%;{Path_Binary}"'])
+            os.remove(Path_Download) #RunCMD([f'powershell.exe -Command Remove-Item -Force -Path "{Path_Download}"'])
         
         if platform.system() == 'Linux':
-            subprocess.run(["sudo", "apt-get", "update"])
-            subprocess.run(["sudo", "apt-get", "install", "ffmpeg"])
+            subprocess.Popen(["sudo", "apt-get", "update"]).communicate()
+            subprocess.Popen(["sudo", "apt-get", "install", "ffmpeg"]).communicate()
 
     def Execute_FFmpeg_Installation(self):
         Result = self.Check_FFmpeg()
@@ -81,9 +93,9 @@ class FFmpeg_Installer(QObject):
             print("Installing FFmpeg. Please wait...")
             try:
                 self.Install_FFmpeg()
-                EnvConfiguratorSignals.Signal_FFmpegDetected.emit()
+                EnvConfiguratorSignals.Signal_FFmpegInstalled.emit()
             except:
-                pass
+                EnvConfiguratorSignals.Signal_FFmpegInstallFailed.emit()
         else:
             EnvConfiguratorSignals.Signal_FFmpegDetected.emit()
             print(f"FFmpeg detected. Version: {Result}")
@@ -97,7 +109,7 @@ class FFmpeg_Installer(QObject):
 
         self.finished.emit()
 
-
+"""
 class GCC_Installer(QObject):
     '''
     '''
@@ -120,17 +132,17 @@ class GCC_Installer(QObject):
             File_Name = 'MinGW'
             File_Format = 'zip'
             Path_Download = os.path.join(Dir_Download, f"{File_Name}.{File_Format}")
-            Dir_Install = 'C:/MinGW'
+            Dir_Install = f"{os.getenv('SystemDrive')}/MinGW"
             Path_Binary = os.path.normpath(os.path.join(Dir_Install, 'bin'))
-            FileDownload('https://ghproxy.com/' + URL, Dir_Download, File_Name, File_Format, None) #subprocess.run(['powershell.exe', '-Command', f'(New-Object System.Net.WebClient).DownloadFile("{URL}", "{Path_Download}")'])
+            DownloadFile(URL, Dir_Download, File_Name, File_Format, None) #RunCMD([f'powershell.exe -Command (New-Object System.Net.WebClient).DownloadFile("{URL}", "{Path_Download}")'])
             shutil.unpack_archive(Path_Download, Dir_Install, Path_Download.rsplit('.', 1)[-1])
             MoveFiles(os.path.dirname(GetPath(Dir_Install, 'bin')), Dir_Install)
-            SetEnvPath(Path_Binary, 'User') #subprocess.run(f'setx /M PATH "%PATH%;{Path_Binary}"', shell = True)
-            os.remove(Path_Download) #subprocess.run(['powershell.exe', '-Command', f'Remove-Item -Force -Path "{Path_Download}"'])
+            SetEnvVar('PATH', Path_Binary, 'User') #RunCMD([f'setx /M PATH "%PATH%;{Path_Binary}"'])
+            os.remove(Path_Download) #RunCMD([f'powershell.exe -Command Remove-Item -Force -Path "{Path_Download}"'])
         
         if platform.system() == 'Linux':
-            subprocess.run(["sudo", "apt-get", "update"])
-            subprocess.run(["sudo", "apt-get", "install", "build-essential"])
+            subprocess.Popen(["sudo", "apt-get", "update"]).communicate()
+            subprocess.Popen(["sudo", "apt-get", "install", "build-essential"]).communicate()
 
     def Execute_GCC_Installation(self):
         Result = self.Check_GCC()
@@ -139,9 +151,9 @@ class GCC_Installer(QObject):
             print("Installing GCC. Please wait...")
             try:
                 self.Install_GCC()
-                EnvConfiguratorSignals.Signal_GCCDetected.emit()
+                EnvConfiguratorSignals.Signal_GCCInstalled.emit()
             except:
-                pass
+                EnvConfiguratorSignals.Signal_GCCInstallFailed.emit()
         else:
             EnvConfiguratorSignals.Signal_GCCDetected.emit()
             print(f"GCC detected. Version: {Result}")
@@ -178,17 +190,17 @@ class CMake_Installer(QObject):
             File_Name = 'CMake'
             File_Format = 'zip'
             Path_Download = os.path.join(Dir_Download, f"{File_Name}.{File_Format}")
-            Dir_Install = 'C:/CMake'
+            Dir_Install = f"{os.getenv('SystemDrive')}/CMake"
             Path_Binary = os.path.normpath(os.path.join(Dir_Install, 'bin'))
-            FileDownload('https://ghproxy.com/' + URL, Dir_Download, File_Name, File_Format, None) #subprocess.run(['powershell.exe', '-Command', f'(New-Object System.Net.WebClient).DownloadFile("{URL}", "{Path_Download}")'])
+            DownloadFile(URL, Dir_Download, File_Name, File_Format, None) #RunCMD([f'powershell.exe -Command (New-Object System.Net.WebClient).DownloadFile("{URL}", "{Path_Download}")'])
             shutil.unpack_archive(Path_Download, Dir_Install, Path_Download.rsplit('.', 1)[-1])
             MoveFiles(os.path.dirname(GetPath(Dir_Install, 'bin')), Dir_Install)
-            SetEnvPath(Path_Binary, 'User') #subprocess.run(f'setx /M PATH "%PATH%;{Path_Binary}"', shell = True)
-            os.remove(Path_Download) #subprocess.run(['powershell.exe', '-Command', f'Remove-Item -Force -Path "{Path_Download}"'])
+            SetEnvVar('PATH', Path_Binary, 'User') #RunCMD([f'setx /M PATH "%PATH%;{Path_Binary}"'])
+            os.remove(Path_Download) #RunCMD([f'powershell.exe -Command Remove-Item -Force -Path "{Path_Download}"'])
         
         if platform.system() == 'Linux':
-            subprocess.run(["sudo", "apt-get", "update"])
-            subprocess.run(["sudo", "apt-get", "install", "build-essential"])
+            subprocess.Popen(["sudo", "apt-get", "update"]).communicate()
+            subprocess.Popen(["sudo", "apt-get", "install", "build-essential"]).communicate()
 
     def Execute_CMake_Installation(self):
         PathList = os.environ['PATH'].split(os.pathsep)
@@ -197,7 +209,7 @@ class CMake_Installer(QObject):
                 self.MinGW_Bin_Path = Path
                 break
             elif Index == len(PathList) - 1:
-                self.MinGW_Bin_Path = 'C:/MinGW/bin'
+                self.MinGW_Bin_Path = f"{os.getenv('SystemDrive')}/MinGW/bin"
         #shutil.copy2(os.path.join(self.MinGW_Bin_Path, 'mingw32-make.exe'), os.path.join(self.MinGW_Bin_Path, 'make.exe')) if not os.path.isfile(os.path.join(self.MinGW_Bin_Path, 'make.exe')) else None
 
         Result = self.Check_CMake()
@@ -206,16 +218,16 @@ class CMake_Installer(QObject):
             print("Installing CMake. Please wait...")
             try:
                 self.Install_CMake()
-                EnvConfiguratorSignals.Signal_CMakeDetected.emit()
+                EnvConfiguratorSignals.Signal_CMakeInstalled.emit()
             except:
-                pass
+                EnvConfiguratorSignals.Signal_CMakeInstallFailed.emit()
         else:
             EnvConfiguratorSignals.Signal_CMakeDetected.emit()
             print(f"CMake detected. Version: {Result}")
 
-        subprocess.run('set CMAKE_MAKE_PROGRAM={}'.format(os.path.join(self.MinGW_Bin_Path, 'mingw32-make.exe')), shell = True)
-        subprocess.run('set CC={}'.format(os.path.join(self.MinGW_Bin_Path, 'gcc.exe')), shell = True)
-        subprocess.run('set CXX={}'.format(os.path.join(self.MinGW_Bin_Path, 'g++.exe')), shell = True)
+        RunCMD(['set CMAKE_MAKE_PROGRAM={}'.format(os.path.join(self.MinGW_Bin_Path, 'mingw32-make.exe'))])
+        RunCMD(['set CC={}'.format(os.path.join(self.MinGW_Bin_Path, 'gcc.exe'))])
+        RunCMD(['set CXX={}'.format(os.path.join(self.MinGW_Bin_Path, 'g++.exe'))])
 
     def Execute(self, Params: tuple):
         TaskAccelerating(
@@ -225,7 +237,7 @@ class CMake_Installer(QObject):
         )
 
         self.finished.emit()
-
+"""
 
 class Python_Installer(QObject):
     '''
@@ -252,13 +264,13 @@ class Python_Installer(QObject):
             File_Name = 'python'
             File_Format = 'exe'
             Path_Download = os.path.join(Dir_Download, f"{File_Name}.{File_Format}")
-            FileDownload(URL, Dir_Download, File_Name, File_Format, None) #subprocess.run(['powershell.exe', '-Command', f'(New-Object System.Net.WebClient).DownloadFile("{URL}", "{Path_Download}")'])
-            subprocess.run([Path_Download, '/quiet', 'InstallAllUsers=1', 'PrependPath=1'])
-            os.remove(Path_Download) #subprocess.run(['powershell.exe', '-Command', f'Remove-Item -Force -Path "{Path_Download}"'])
+            DownloadFile(URL, Dir_Download, File_Name, File_Format, None) #RunCMD([f'powershell.exe -Command (New-Object System.Net.WebClient).DownloadFile("{URL}", "{Path_Download}")'])
+            RunCMD([f'{Path_Download} /quiet InstallAllUsers=1 PrependPath=1'])
+            os.remove(Path_Download) #RunCMD([f'powershell.exe -Command Remove-Item -Force -Path "{Path_Download}"'])
             
         if platform.system() == 'Linux':
-            subprocess.run(['sudo', 'apt-get', 'update'])
-            subprocess.run(['sudo', 'apt-get', 'install', '-y', 'python3'])
+            subprocess.Popen(['sudo', 'apt-get', 'update']).communicate()
+            subprocess.Popen(['sudo', 'apt-get', 'install', '-y', 'python3']).communicate()
 
     def Execute_Python_Installation(self, Version_Download: str):
         Result = self.Check_Python()
@@ -267,9 +279,9 @@ class Python_Installer(QObject):
             print("Installing Python. Please wait...")
             try:
                 self.Install_Python(Version_Download)
-                EnvConfiguratorSignals.Signal_PythonDetected.emit()
+                EnvConfiguratorSignals.Signal_PythonInstalled.emit()
             except:
-                pass
+                EnvConfiguratorSignals.Signal_PythonInstallFailed.emit()
         else:
             EnvConfiguratorSignals.Signal_PythonDetected.emit()
             print(f"Python detected. Version: {Result}")
@@ -297,7 +309,8 @@ class PyReqs_Installer(QObject):
     def Check_PyReq(self, Package: str):
         try:
             Version_Current = pkg_resources.get_distribution(Package).version #exec("import {0}".format(Package))
-            return Version_Current
+            Location_Current = pkg_resources.get_distribution(Package).location
+            return Version_Current#, Location_Current
         except pkg_resources.DistributionNotFound: #except ModuleNotFoundError:
             return False
 
@@ -316,7 +329,7 @@ class PyReqs_Installer(QObject):
         '''
         MirrorList = ['https://pypi.org/simple/', 'https://pypi.tuna.tsinghua.edu.cn/simple']
         for Mirror in MirrorList:
-            Result = subprocess.run(['pip3', 'install', Package, '--index-url', Mirror])
+            Result = RunCMD([f'pip3 install {Package} --index-url {Mirror}'])
             if Result.returncode == 0:
                 break
 
@@ -334,9 +347,9 @@ class PyReqs_Installer(QObject):
                     print(f"Installing {Package}. Please wait...")
                     try:
                         self.Install_PyReq(Package)
-                        EnvConfiguratorSignals.Signal_PyReqsDetected.emit()
+                        EnvConfiguratorSignals.Signal_PyReqsInstalled.emit()
                     except:
-                        pass
+                        EnvConfiguratorSignals.Signal_PyReqsInstallFailed.emit()
                 else:
                     EnvConfiguratorSignals.Signal_PyReqsDetected.emit()
                     print(f"{Package} detected. Version: {Result}")
@@ -378,7 +391,7 @@ class Pytorch_Installer(QObject):
         CudaVersion = pynvml.nvmlDeviceGetCudaComputeCapability(pynvml.nvmlDeviceGetHandleByIndex(0))[1]
         MirrorList = [f'https://download.pytorch.org/whl/cu{CudaVersion}', '']
         for Mirror in MirrorList:
-            Result = subprocess.run(['pip3', 'install', Package, '--index-url', Mirror])
+            Result = RunCMD([f'pip3 install {Package} --index-url {Mirror}'])
             if Result.returncode == 0:
                 break
 
@@ -393,9 +406,9 @@ class Pytorch_Installer(QObject):
                 print(f"Installing {Package}. Please wait...")
                 try:
                     self.Install_Pytorch(Package)
-                    EnvConfiguratorSignals.Signal_PytorchDetected.emit()
+                    EnvConfiguratorSignals.Signal_PytorchInstalled.emit()
                 except:
-                    pass
+                    EnvConfiguratorSignals.Signal_PytorchInstallFailed.emit()
             else:
                 EnvConfiguratorSignals.Signal_PytorchDetected.emit()
                 print(f"{Package} detected. Version: {Result}")

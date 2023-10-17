@@ -755,7 +755,7 @@ class Ui_MainWindow(object):
         self.Label_Demo_Icon = QLabel(self.Button_Demo)
         self.Label_Demo_Icon.setObjectName(u"Label_Demo_Icon")
         self.Label_Demo_Icon.setMinimumSize(QSize(48, 48))
-        self.Label_Demo_Icon.setMaximumSize(QSize(48, 16777215))
+        self.Label_Demo_Icon.setMaximumSize(QSize(48, 48))
         self.Label_Demo_Icon.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;\n"
 "	font-size: 15px;*/\n"
@@ -827,7 +827,7 @@ class Ui_MainWindow(object):
         self.Label_Server_Icon = QLabel(self.Button_Server)
         self.Label_Server_Icon.setObjectName(u"Label_Server_Icon")
         self.Label_Server_Icon.setMinimumSize(QSize(48, 48))
-        self.Label_Server_Icon.setMaximumSize(QSize(48, 16777215))
+        self.Label_Server_Icon.setMaximumSize(QSize(48, 48))
         self.Label_Server_Icon.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;\n"
 "	font-size: 15px;*/\n"
@@ -899,7 +899,7 @@ class Ui_MainWindow(object):
         self.Label_Repo_Icon = QLabel(self.Button_Repo)
         self.Label_Repo_Icon.setObjectName(u"Label_Repo_Icon")
         self.Label_Repo_Icon.setMinimumSize(QSize(48, 48))
-        self.Label_Repo_Icon.setMaximumSize(QSize(48, 16777215))
+        self.Label_Repo_Icon.setMaximumSize(QSize(48, 48))
         self.Label_Repo_Icon.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;\n"
 "	font-size: 15px;*/\n"
@@ -971,7 +971,7 @@ class Ui_MainWindow(object):
         self.Label_Donate_Icon = QLabel(self.Button_Donate)
         self.Label_Donate_Icon.setObjectName(u"Label_Donate_Icon")
         self.Label_Donate_Icon.setMinimumSize(QSize(48, 48))
-        self.Label_Donate_Icon.setMaximumSize(QSize(48, 16777215))
+        self.Label_Donate_Icon.setMaximumSize(QSize(48, 48))
         self.Label_Donate_Icon.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;\n"
 "	font-size: 15px;*/\n"
@@ -1204,192 +1204,6 @@ class Ui_MainWindow(object):
 
 
         self.verticalLayout_134.addWidget(self.Frame_Download_FFmpeg)
-
-        self.Frame_Download_GCC = QFrame(self.Frame_Download_Middle)
-        self.Frame_Download_GCC.setObjectName(u"Frame_Download_GCC")
-        self.Frame_Download_GCC.setMinimumSize(QSize(0, 90))
-        self.Frame_Download_GCC.setStyleSheet(u"QFrame {\n"
-"	color: rgb(255, 255, 255);\n"
-"	background-color: transparent;\n"
-"	border-width: 1px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(45, 45, 45);\n"
-"}\n"
-"QFrame:hover {\n"
-"	border-color: rgb(60, 60, 60);\n"
-"}")
-        self.gridLayout_5 = QGridLayout(self.Frame_Download_GCC)
-        self.gridLayout_5.setSpacing(12)
-        self.gridLayout_5.setObjectName(u"gridLayout_5")
-        self.gridLayout_5.setContentsMargins(21, 12, 21, 12)
-        self.Label_Download_GCC = QLabel(self.Frame_Download_GCC)
-        self.Label_Download_GCC.setObjectName(u"Label_Download_GCC")
-        self.Label_Download_GCC.setStyleSheet(u"QLabel {\n"
-"	font-size: 15px;\n"
-"	/*text-align: center;*/\n"
-"	/*color: rgb(255, 255, 255);*/\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.gridLayout_5.addWidget(self.Label_Download_GCC, 0, 0, 1, 1)
-
-        self.HorizontalSpacer_Download_GCC = QSpacerItem(969, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
-
-        self.gridLayout_5.addItem(self.HorizontalSpacer_Download_GCC, 0, 1, 1, 2)
-
-        self.ProgressBar_Download_GCC = QProgressBar(self.Frame_Download_GCC)
-        self.ProgressBar_Download_GCC.setObjectName(u"ProgressBar_Download_GCC")
-        self.ProgressBar_Download_GCC.setMaximumSize(QSize(16777215, 3))
-        self.ProgressBar_Download_GCC.setStyleSheet(u"QProgressBar {\n"
-"	text-align: center;\n"
-"	color: rgb(255, 255, 255);\n"
-"	background-color: rgba(123, 123, 123, 210);\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"\n"
-"QProgressBar:chunk {\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	background-color: qlineargradient(spread: pad, x1:0, y1:0, x2:1, y2:0, stop:0 transparent, stop:1 rgb(120, 180, 240));\n"
-"}")
-
-        self.gridLayout_5.addWidget(self.ProgressBar_Download_GCC, 1, 0, 1, 2)
-
-        self.Button_Install_GCC = QPushButton(self.Frame_Download_GCC)
-        self.Button_Install_GCC.setObjectName(u"Button_Install_GCC")
-        self.Button_Install_GCC.setMaximumSize(QSize(30, 30))
-        self.Button_Install_GCC.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	font-size: 15px;\n"
-"	color: rgb(255, 255, 255);\n"
-"	background-image: url(:/Button_Icon/Sources/RepeatArrow.png);\n"
-"	background-repeat: no-repeat;\n"
-"	background-origin: content;\n"
-"	background-position: center;\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(210, 210, 210);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	background-color: rgb(90, 90, 90);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.gridLayout_5.addWidget(self.Button_Install_GCC, 1, 2, 1, 1)
-
-
-        self.verticalLayout_134.addWidget(self.Frame_Download_GCC)
-
-        self.Frame_Download_CMake = QFrame(self.Frame_Download_Middle)
-        self.Frame_Download_CMake.setObjectName(u"Frame_Download_CMake")
-        self.Frame_Download_CMake.setMinimumSize(QSize(0, 90))
-        self.Frame_Download_CMake.setStyleSheet(u"QFrame {\n"
-"	color: rgb(255, 255, 255);\n"
-"	background-color: transparent;\n"
-"	border-width: 1px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(45, 45, 45);\n"
-"}\n"
-"QFrame:hover {\n"
-"	border-color: rgb(60, 60, 60);\n"
-"}")
-        self.gridLayout_6 = QGridLayout(self.Frame_Download_CMake)
-        self.gridLayout_6.setSpacing(12)
-        self.gridLayout_6.setObjectName(u"gridLayout_6")
-        self.gridLayout_6.setContentsMargins(21, 12, 21, 12)
-        self.Label_Download_CMake = QLabel(self.Frame_Download_CMake)
-        self.Label_Download_CMake.setObjectName(u"Label_Download_CMake")
-        self.Label_Download_CMake.setStyleSheet(u"QLabel {\n"
-"	font-size: 15px;\n"
-"	/*text-align: center;*/\n"
-"	/*color: rgb(255, 255, 255);*/\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.gridLayout_6.addWidget(self.Label_Download_CMake, 0, 0, 1, 1)
-
-        self.HorizontalSpacer_Download_CMake = QSpacerItem(969, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
-
-        self.gridLayout_6.addItem(self.HorizontalSpacer_Download_CMake, 0, 1, 1, 2)
-
-        self.ProgressBar_Download_CMake = QProgressBar(self.Frame_Download_CMake)
-        self.ProgressBar_Download_CMake.setObjectName(u"ProgressBar_Download_CMake")
-        self.ProgressBar_Download_CMake.setMaximumSize(QSize(16777215, 3))
-        self.ProgressBar_Download_CMake.setStyleSheet(u"QProgressBar {\n"
-"	text-align: center;\n"
-"	color: rgb(255, 255, 255);\n"
-"	background-color: rgba(123, 123, 123, 210);\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"\n"
-"QProgressBar:chunk {\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	background-color: qlineargradient(spread: pad, x1:0, y1:0, x2:1, y2:0, stop:0 transparent, stop:1 rgb(120, 180, 240));\n"
-"}")
-
-        self.gridLayout_6.addWidget(self.ProgressBar_Download_CMake, 1, 0, 1, 2)
-
-        self.Button_Install_CMake = QPushButton(self.Frame_Download_CMake)
-        self.Button_Install_CMake.setObjectName(u"Button_Install_CMake")
-        self.Button_Install_CMake.setMaximumSize(QSize(30, 30))
-        self.Button_Install_CMake.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	font-size: 15px;\n"
-"	color: rgb(255, 255, 255);\n"
-"	background-image: url(:/Button_Icon/Sources/RepeatArrow.png);\n"
-"	background-repeat: no-repeat;\n"
-"	background-origin: content;\n"
-"	background-position: center;\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(210, 210, 210);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	background-color: rgb(90, 90, 90);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.gridLayout_6.addWidget(self.Button_Install_CMake, 1, 2, 1, 1)
-
-
-        self.verticalLayout_134.addWidget(self.Frame_Download_CMake)
 
         self.Frame_Download_Python = QFrame(self.Frame_Download_Middle)
         self.Frame_Download_Python.setObjectName(u"Frame_Download_Python")
@@ -2288,7 +2102,6 @@ class Ui_MainWindow(object):
         self.ScrollArea_Middle_WidgetContents_Tool_AudioProcessor = QWidget()
         self.ScrollArea_Middle_WidgetContents_Tool_AudioProcessor.setObjectName(u"ScrollArea_Middle_WidgetContents_Tool_AudioProcessor")
         self.ScrollArea_Middle_WidgetContents_Tool_AudioProcessor.setGeometry(QRect(0, 0, 621, 1096))
-        self.ScrollArea_Middle_WidgetContents_Tool_AudioProcessor.setMinimumSize(QSize(0, 0))
         self.verticalLayout_149 = QVBoxLayout(self.ScrollArea_Middle_WidgetContents_Tool_AudioProcessor)
         self.verticalLayout_149.setSpacing(12)
         self.verticalLayout_149.setObjectName(u"verticalLayout_149")
@@ -3834,17 +3647,15 @@ class Ui_MainWindow(object):
 "}")
         self.ScrollArea_Middle_Tool_VoiceIdentifier.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
         self.ScrollArea_Middle_Tool_VoiceIdentifier.setWidgetResizable(True)
-        self.ScrollArea_Right_WidgetContents_Tool_VoiceIdentifier = QWidget()
-        self.ScrollArea_Right_WidgetContents_Tool_VoiceIdentifier.setObjectName(u"ScrollArea_Right_WidgetContents_Tool_VoiceIdentifier")
-        self.ScrollArea_Right_WidgetContents_Tool_VoiceIdentifier.setGeometry(QRect(0, 0, 621, 1219))
-        self.ScrollArea_Right_WidgetContents_Tool_VoiceIdentifier.setMinimumSize(QSize(0, 0))
-        self.verticalLayout_28 = QVBoxLayout(self.ScrollArea_Right_WidgetContents_Tool_VoiceIdentifier)
+        self.ScrollArea_Middle_WidgetContents_Tool_VoiceIdentifier = QWidget()
+        self.ScrollArea_Middle_WidgetContents_Tool_VoiceIdentifier.setObjectName(u"ScrollArea_Middle_WidgetContents_Tool_VoiceIdentifier")
+        self.ScrollArea_Middle_WidgetContents_Tool_VoiceIdentifier.setGeometry(QRect(0, 0, 621, 1318))
+        self.verticalLayout_28 = QVBoxLayout(self.ScrollArea_Middle_WidgetContents_Tool_VoiceIdentifier)
         self.verticalLayout_28.setSpacing(12)
         self.verticalLayout_28.setObjectName(u"verticalLayout_28")
         self.verticalLayout_28.setContentsMargins(12, 12, 12, 12)
-        self.GroupBox_EssentialParams_Tool_VoiceIdentifier = QGroupBox(self.ScrollArea_Right_WidgetContents_Tool_VoiceIdentifier)
+        self.GroupBox_EssentialParams_Tool_VoiceIdentifier = QGroupBox(self.ScrollArea_Middle_WidgetContents_Tool_VoiceIdentifier)
         self.GroupBox_EssentialParams_Tool_VoiceIdentifier.setObjectName(u"GroupBox_EssentialParams_Tool_VoiceIdentifier")
-        self.GroupBox_EssentialParams_Tool_VoiceIdentifier.setMaximumSize(QSize(16777215, 16777215))
         self.GroupBox_EssentialParams_Tool_VoiceIdentifier.setStyleSheet(u"QGroupBox {\n"
 "	font-size: 15px;\n"
 "	margin-top: 1.5ex;\n"
@@ -5161,7 +4972,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_28.addWidget(self.GroupBox_EssentialParams_Tool_VoiceIdentifier)
 
-        self.ScrollArea_Middle_Tool_VoiceIdentifier.setWidget(self.ScrollArea_Right_WidgetContents_Tool_VoiceIdentifier)
+        self.ScrollArea_Middle_Tool_VoiceIdentifier.setWidget(self.ScrollArea_Middle_WidgetContents_Tool_VoiceIdentifier)
 
         self.gridLayout_7.addWidget(self.ScrollArea_Middle_Tool_VoiceIdentifier, 0, 1, 1, 1)
 
@@ -5694,17 +5505,15 @@ class Ui_MainWindow(object):
 "}")
         self.ScrollArea_Middle_Tool_VoiceTranscriber.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
         self.ScrollArea_Middle_Tool_VoiceTranscriber.setWidgetResizable(True)
-        self.ScrollArea_Right_WidgetContents_Tool_VoiceTranscriber = QWidget()
-        self.ScrollArea_Right_WidgetContents_Tool_VoiceTranscriber.setObjectName(u"ScrollArea_Right_WidgetContents_Tool_VoiceTranscriber")
-        self.ScrollArea_Right_WidgetContents_Tool_VoiceTranscriber.setGeometry(QRect(0, 0, 621, 1171))
-        self.ScrollArea_Right_WidgetContents_Tool_VoiceTranscriber.setMinimumSize(QSize(0, 0))
-        self.verticalLayout_19 = QVBoxLayout(self.ScrollArea_Right_WidgetContents_Tool_VoiceTranscriber)
+        self.ScrollArea_Middle_WidgetContents_Tool_VoiceTranscriber = QWidget()
+        self.ScrollArea_Middle_WidgetContents_Tool_VoiceTranscriber.setObjectName(u"ScrollArea_Middle_WidgetContents_Tool_VoiceTranscriber")
+        self.ScrollArea_Middle_WidgetContents_Tool_VoiceTranscriber.setGeometry(QRect(0, 0, 621, 1171))
+        self.verticalLayout_19 = QVBoxLayout(self.ScrollArea_Middle_WidgetContents_Tool_VoiceTranscriber)
         self.verticalLayout_19.setSpacing(12)
         self.verticalLayout_19.setObjectName(u"verticalLayout_19")
         self.verticalLayout_19.setContentsMargins(12, 12, 12, 12)
-        self.GroupBox_EssentialParams_Tool_VoiceTranscriber = QGroupBox(self.ScrollArea_Right_WidgetContents_Tool_VoiceTranscriber)
+        self.GroupBox_EssentialParams_Tool_VoiceTranscriber = QGroupBox(self.ScrollArea_Middle_WidgetContents_Tool_VoiceTranscriber)
         self.GroupBox_EssentialParams_Tool_VoiceTranscriber.setObjectName(u"GroupBox_EssentialParams_Tool_VoiceTranscriber")
-        self.GroupBox_EssentialParams_Tool_VoiceTranscriber.setMaximumSize(QSize(16777215, 16777215))
         self.GroupBox_EssentialParams_Tool_VoiceTranscriber.setStyleSheet(u"QGroupBox {\n"
 "	font-size: 15px;\n"
 "	margin-top: 1.5ex;\n"
@@ -6624,7 +6433,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_19.addWidget(self.GroupBox_EssentialParams_Tool_VoiceTranscriber)
 
-        self.GroupBox_OptionalParams_Tool_VoiceTranscriber = QGroupBox(self.ScrollArea_Right_WidgetContents_Tool_VoiceTranscriber)
+        self.GroupBox_OptionalParams_Tool_VoiceTranscriber = QGroupBox(self.ScrollArea_Middle_WidgetContents_Tool_VoiceTranscriber)
         self.GroupBox_OptionalParams_Tool_VoiceTranscriber.setObjectName(u"GroupBox_OptionalParams_Tool_VoiceTranscriber")
         self.GroupBox_OptionalParams_Tool_VoiceTranscriber.setStyleSheet(u"QGroupBox {\n"
 "	font-size: 15px;\n"
@@ -6908,7 +6717,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_19.addWidget(self.GroupBox_OptionalParams_Tool_VoiceTranscriber)
 
-        self.ScrollArea_Middle_Tool_VoiceTranscriber.setWidget(self.ScrollArea_Right_WidgetContents_Tool_VoiceTranscriber)
+        self.ScrollArea_Middle_Tool_VoiceTranscriber.setWidget(self.ScrollArea_Middle_WidgetContents_Tool_VoiceTranscriber)
 
         self.gridLayout_10.addWidget(self.ScrollArea_Middle_Tool_VoiceTranscriber, 0, 1, 1, 1)
 
@@ -7441,17 +7250,15 @@ class Ui_MainWindow(object):
 "}")
         self.ScrollArea_Middle_Tool_DatasetCreator.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
         self.ScrollArea_Middle_Tool_DatasetCreator.setWidgetResizable(True)
-        self.ScrollArea_Right_WidgetContents_Tool_DatasetCreator = QWidget()
-        self.ScrollArea_Right_WidgetContents_Tool_DatasetCreator.setObjectName(u"ScrollArea_Right_WidgetContents_Tool_DatasetCreator")
-        self.ScrollArea_Right_WidgetContents_Tool_DatasetCreator.setGeometry(QRect(0, 0, 621, 1221))
-        self.ScrollArea_Right_WidgetContents_Tool_DatasetCreator.setMinimumSize(QSize(0, 0))
-        self.verticalLayout_20 = QVBoxLayout(self.ScrollArea_Right_WidgetContents_Tool_DatasetCreator)
+        self.ScrollArea_Middle_WidgetContents_Tool_DatasetCreator = QWidget()
+        self.ScrollArea_Middle_WidgetContents_Tool_DatasetCreator.setObjectName(u"ScrollArea_Middle_WidgetContents_Tool_DatasetCreator")
+        self.ScrollArea_Middle_WidgetContents_Tool_DatasetCreator.setGeometry(QRect(0, 0, 621, 1221))
+        self.verticalLayout_20 = QVBoxLayout(self.ScrollArea_Middle_WidgetContents_Tool_DatasetCreator)
         self.verticalLayout_20.setSpacing(12)
         self.verticalLayout_20.setObjectName(u"verticalLayout_20")
         self.verticalLayout_20.setContentsMargins(12, 12, 12, 12)
-        self.GroupBox_EssentialParams_Tool_DatasetCreator = QGroupBox(self.ScrollArea_Right_WidgetContents_Tool_DatasetCreator)
+        self.GroupBox_EssentialParams_Tool_DatasetCreator = QGroupBox(self.ScrollArea_Middle_WidgetContents_Tool_DatasetCreator)
         self.GroupBox_EssentialParams_Tool_DatasetCreator.setObjectName(u"GroupBox_EssentialParams_Tool_DatasetCreator")
-        self.GroupBox_EssentialParams_Tool_DatasetCreator.setMaximumSize(QSize(16777215, 16777215))
         self.GroupBox_EssentialParams_Tool_DatasetCreator.setStyleSheet(u"QGroupBox {\n"
 "	font-size: 15px;\n"
 "	margin-top: 1.5ex;\n"
@@ -8758,7 +8565,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_20.addWidget(self.GroupBox_EssentialParams_Tool_DatasetCreator)
 
-        self.ScrollArea_Middle_Tool_DatasetCreator.setWidget(self.ScrollArea_Right_WidgetContents_Tool_DatasetCreator)
+        self.ScrollArea_Middle_Tool_DatasetCreator.setWidget(self.ScrollArea_Middle_WidgetContents_Tool_DatasetCreator)
 
         self.gridLayout_11.addWidget(self.ScrollArea_Middle_Tool_DatasetCreator, 0, 1, 1, 1)
 
@@ -9291,18 +9098,15 @@ class Ui_MainWindow(object):
 "}")
         self.ScrollArea_Middle_Tool_VoiceTrainer.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
         self.ScrollArea_Middle_Tool_VoiceTrainer.setWidgetResizable(True)
-        self.ScrollArea_Right_WidgetContents_Tool_VoiceTrainer = QWidget()
-        self.ScrollArea_Right_WidgetContents_Tool_VoiceTrainer.setObjectName(u"ScrollArea_Right_WidgetContents_Tool_VoiceTrainer")
-        self.ScrollArea_Right_WidgetContents_Tool_VoiceTrainer.setGeometry(QRect(0, 0, 621, 2061))
-        self.ScrollArea_Right_WidgetContents_Tool_VoiceTrainer.setMinimumSize(QSize(0, 0))
-        self.verticalLayout_22 = QVBoxLayout(self.ScrollArea_Right_WidgetContents_Tool_VoiceTrainer)
+        self.ScrollArea_Middle_WidgetContents_Tool_VoiceTrainer = QWidget()
+        self.ScrollArea_Middle_WidgetContents_Tool_VoiceTrainer.setObjectName(u"ScrollArea_Middle_WidgetContents_Tool_VoiceTrainer")
+        self.ScrollArea_Middle_WidgetContents_Tool_VoiceTrainer.setGeometry(QRect(0, 0, 621, 2061))
+        self.verticalLayout_22 = QVBoxLayout(self.ScrollArea_Middle_WidgetContents_Tool_VoiceTrainer)
         self.verticalLayout_22.setSpacing(12)
         self.verticalLayout_22.setObjectName(u"verticalLayout_22")
         self.verticalLayout_22.setContentsMargins(12, 12, 12, 12)
-        self.GroupBox_EssentialParams_Tool_VoiceTrainer = QGroupBox(self.ScrollArea_Right_WidgetContents_Tool_VoiceTrainer)
+        self.GroupBox_EssentialParams_Tool_VoiceTrainer = QGroupBox(self.ScrollArea_Middle_WidgetContents_Tool_VoiceTrainer)
         self.GroupBox_EssentialParams_Tool_VoiceTrainer.setObjectName(u"GroupBox_EssentialParams_Tool_VoiceTrainer")
-        self.GroupBox_EssentialParams_Tool_VoiceTrainer.setMinimumSize(QSize(0, 0))
-        self.GroupBox_EssentialParams_Tool_VoiceTrainer.setMaximumSize(QSize(16777215, 16777215))
         self.GroupBox_EssentialParams_Tool_VoiceTrainer.setStyleSheet(u"QGroupBox {\n"
 "	font-size: 15px;\n"
 "	margin-top: 1.5ex;\n"
@@ -10626,9 +10430,8 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_22.addWidget(self.GroupBox_EssentialParams_Tool_VoiceTrainer)
 
-        self.GroupBox_OptionalParams_Tool_VoiceTrainer = QGroupBox(self.ScrollArea_Right_WidgetContents_Tool_VoiceTrainer)
+        self.GroupBox_OptionalParams_Tool_VoiceTrainer = QGroupBox(self.ScrollArea_Middle_WidgetContents_Tool_VoiceTrainer)
         self.GroupBox_OptionalParams_Tool_VoiceTrainer.setObjectName(u"GroupBox_OptionalParams_Tool_VoiceTrainer")
-        self.GroupBox_OptionalParams_Tool_VoiceTrainer.setMinimumSize(QSize(0, 0))
         self.GroupBox_OptionalParams_Tool_VoiceTrainer.setStyleSheet(u"QGroupBox {\n"
 "	font-size: 15px;\n"
 "	margin-top: 1.5ex;\n"
@@ -11176,7 +10979,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_22.addWidget(self.GroupBox_OptionalParams_Tool_VoiceTrainer)
 
-        self.ScrollArea_Middle_Tool_VoiceTrainer.setWidget(self.ScrollArea_Right_WidgetContents_Tool_VoiceTrainer)
+        self.ScrollArea_Middle_Tool_VoiceTrainer.setWidget(self.ScrollArea_Middle_WidgetContents_Tool_VoiceTrainer)
 
         self.gridLayout_12.addWidget(self.ScrollArea_Middle_Tool_VoiceTrainer, 0, 1, 1, 1)
 
@@ -11709,18 +11512,15 @@ class Ui_MainWindow(object):
 "}")
         self.ScrollArea_Middle_Tool_VoiceConverter.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
         self.ScrollArea_Middle_Tool_VoiceConverter.setWidgetResizable(True)
-        self.ScrollArea_Right_WidgetContents_Tool_VoiceConverter = QWidget()
-        self.ScrollArea_Right_WidgetContents_Tool_VoiceConverter.setObjectName(u"ScrollArea_Right_WidgetContents_Tool_VoiceConverter")
-        self.ScrollArea_Right_WidgetContents_Tool_VoiceConverter.setGeometry(QRect(0, 0, 621, 1320))
-        self.ScrollArea_Right_WidgetContents_Tool_VoiceConverter.setMinimumSize(QSize(0, 0))
-        self.verticalLayout_26 = QVBoxLayout(self.ScrollArea_Right_WidgetContents_Tool_VoiceConverter)
+        self.ScrollArea_Middle_WidgetContents_Tool_VoiceConverter = QWidget()
+        self.ScrollArea_Middle_WidgetContents_Tool_VoiceConverter.setObjectName(u"ScrollArea_Middle_WidgetContents_Tool_VoiceConverter")
+        self.ScrollArea_Middle_WidgetContents_Tool_VoiceConverter.setGeometry(QRect(0, 0, 621, 1318))
+        self.verticalLayout_26 = QVBoxLayout(self.ScrollArea_Middle_WidgetContents_Tool_VoiceConverter)
         self.verticalLayout_26.setSpacing(12)
         self.verticalLayout_26.setObjectName(u"verticalLayout_26")
         self.verticalLayout_26.setContentsMargins(12, 12, 12, 12)
-        self.GroupBox_EssentialParams_Tool_VoiceConverter = QGroupBox(self.ScrollArea_Right_WidgetContents_Tool_VoiceConverter)
+        self.GroupBox_EssentialParams_Tool_VoiceConverter = QGroupBox(self.ScrollArea_Middle_WidgetContents_Tool_VoiceConverter)
         self.GroupBox_EssentialParams_Tool_VoiceConverter.setObjectName(u"GroupBox_EssentialParams_Tool_VoiceConverter")
-        self.GroupBox_EssentialParams_Tool_VoiceConverter.setMinimumSize(QSize(0, 0))
-        self.GroupBox_EssentialParams_Tool_VoiceConverter.setMaximumSize(QSize(16777215, 16777215))
         self.GroupBox_EssentialParams_Tool_VoiceConverter.setStyleSheet(u"QGroupBox {\n"
 "	font-size: 15px;\n"
 "	margin-top: 1.5ex;\n"
@@ -12759,8 +12559,6 @@ class Ui_MainWindow(object):
 
         self.Frame_AdvanceSettings_Tool_VoiceConverter = QFrame(self.GroupBox_EssentialParams_Tool_VoiceConverter)
         self.Frame_AdvanceSettings_Tool_VoiceConverter.setObjectName(u"Frame_AdvanceSettings_Tool_VoiceConverter")
-        self.Frame_AdvanceSettings_Tool_VoiceConverter.setFrameShape(QFrame.StyledPanel)
-        self.Frame_AdvanceSettings_Tool_VoiceConverter.setFrameShadow(QFrame.Raised)
         self.verticalLayout_118 = QVBoxLayout(self.Frame_AdvanceSettings_Tool_VoiceConverter)
         self.verticalLayout_118.setSpacing(0)
         self.verticalLayout_118.setObjectName(u"verticalLayout_118")
@@ -13194,7 +12992,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_26.addWidget(self.GroupBox_EssentialParams_Tool_VoiceConverter)
 
-        self.ScrollArea_Middle_Tool_VoiceConverter.setWidget(self.ScrollArea_Right_WidgetContents_Tool_VoiceConverter)
+        self.ScrollArea_Middle_Tool_VoiceConverter.setWidget(self.ScrollArea_Middle_WidgetContents_Tool_VoiceConverter)
 
         self.gridLayout_13.addWidget(self.ScrollArea_Middle_Tool_VoiceConverter, 0, 1, 1, 1)
 
@@ -13572,10 +13370,10 @@ class Ui_MainWindow(object):
 
         self.Frame_Settings_Middle = QFrame(self.Page_Settings)
         self.Frame_Settings_Middle.setObjectName(u"Frame_Settings_Middle")
-        self.verticalLayout_135 = QVBoxLayout(self.Frame_Settings_Middle)
-        self.verticalLayout_135.setSpacing(0)
-        self.verticalLayout_135.setObjectName(u"verticalLayout_135")
-        self.verticalLayout_135.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_13 = QVBoxLayout(self.Frame_Settings_Middle)
+        self.verticalLayout_13.setSpacing(0)
+        self.verticalLayout_13.setObjectName(u"verticalLayout_13")
+        self.verticalLayout_13.setContentsMargins(0, 0, 0, 0)
         self.Frame_Setting_Language = QFrame(self.Frame_Settings_Middle)
         self.Frame_Setting_Language.setObjectName(u"Frame_Setting_Language")
         self.Frame_Setting_Language.setMinimumSize(QSize(0, 90))
@@ -13781,7 +13579,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_66.addWidget(self.ComboBox_Setting_Language)
 
 
-        self.verticalLayout_135.addWidget(self.Frame_Setting_Language)
+        self.verticalLayout_13.addWidget(self.Frame_Setting_Language)
 
         self.Frame_Setting_AutoUpdate = QFrame(self.Frame_Settings_Middle)
         self.Frame_Setting_AutoUpdate.setObjectName(u"Frame_Setting_AutoUpdate")
@@ -13869,7 +13667,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_65.addWidget(self.CheckBox_Setting_AutoUpdate)
 
 
-        self.verticalLayout_135.addWidget(self.Frame_Setting_AutoUpdate)
+        self.verticalLayout_13.addWidget(self.Frame_Setting_AutoUpdate)
 
         self.Frame_Setting_Synchronizer = QFrame(self.Frame_Settings_Middle)
         self.Frame_Setting_Synchronizer.setObjectName(u"Frame_Setting_Synchronizer")
@@ -13957,7 +13755,87 @@ class Ui_MainWindow(object):
         self.horizontalLayout_67.addWidget(self.CheckBox_Setting_Synchronizer)
 
 
-        self.verticalLayout_135.addWidget(self.Frame_Setting_Synchronizer)
+        self.verticalLayout_13.addWidget(self.Frame_Setting_Synchronizer)
+
+        self.Frame_Setting_Operation = QFrame(self.Frame_Settings_Middle)
+        self.Frame_Setting_Operation.setObjectName(u"Frame_Setting_Operation")
+        self.Frame_Setting_Operation.setMinimumSize(QSize(0, 90))
+        self.Frame_Setting_Operation.setStyleSheet(u"QFrame {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: transparent;\n"
+"	border-width: 1px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(45, 45, 45);\n"
+"}\n"
+"QFrame:hover {\n"
+"	border-color: rgb(60, 60, 60);\n"
+"}")
+        self.horizontalLayout_6 = QHBoxLayout(self.Frame_Setting_Operation)
+        self.horizontalLayout_6.setSpacing(42)
+        self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
+        self.horizontalLayout_6.setContentsMargins(21, 12, 21, 12)
+        self.Button_Setting_ClientRebooter = QPushButton(self.Frame_Setting_Operation)
+        self.Button_Setting_ClientRebooter.setObjectName(u"Button_Setting_ClientRebooter")
+        self.Button_Setting_ClientRebooter.setMinimumSize(QSize(123, 0))
+        self.Button_Setting_ClientRebooter.setMaximumSize(QSize(123, 16777215))
+        self.Button_Setting_ClientRebooter.setStyleSheet(u"QPushButton {\n"
+"	text-align: center;\n"
+"	font-size: 12px;\n"
+"	background-color: transparent;\n"
+"	padding: 12px;\n"
+"	border-width: 1.5px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.horizontalLayout_6.addWidget(self.Button_Setting_ClientRebooter)
+
+        self.Button_Setting_IntegrityChecker = QPushButton(self.Frame_Setting_Operation)
+        self.Button_Setting_IntegrityChecker.setObjectName(u"Button_Setting_IntegrityChecker")
+        self.Button_Setting_IntegrityChecker.setMinimumSize(QSize(123, 0))
+        self.Button_Setting_IntegrityChecker.setMaximumSize(QSize(123, 16777215))
+        self.Button_Setting_IntegrityChecker.setStyleSheet(u"QPushButton {\n"
+"	text-align: center;\n"
+"	font-size: 12px;\n"
+"	background-color: transparent;\n"
+"	padding: 12px;\n"
+"	border-width: 1.5px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.horizontalLayout_6.addWidget(self.Button_Setting_IntegrityChecker)
+
+        self.HorizontalSpacer_Setting_Operation = QSpacerItem(0, 0, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.horizontalLayout_6.addItem(self.HorizontalSpacer_Setting_Operation)
+
+
+        self.verticalLayout_13.addWidget(self.Frame_Setting_Operation)
 
 
         self.verticalLayout_109.addWidget(self.Frame_Settings_Middle)
@@ -14282,8 +14160,8 @@ class Ui_MainWindow(object):
 
         self.StackedWidget_Pages.setCurrentIndex(0)
         self.StackedWidget_Pages_Tools.setCurrentIndex(0)
-        self.StackedWidget_Tool_DatasetCreator.setCurrentIndex(1)
-        self.StackedWidget_Tool_VoiceTrainer.setCurrentIndex(1)
+        self.StackedWidget_Tool_DatasetCreator.setCurrentIndex(0)
+        self.StackedWidget_Tool_VoiceTrainer.setCurrentIndex(0)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -14302,8 +14180,6 @@ class Ui_MainWindow(object):
         self.Label_Donate_Text.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.ToolButton_Download_Title.setText(QCoreApplication.translate("MainWindow", u"Label", None))
         self.Label_Download_FFmpeg.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.Label_Download_GCC.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.Label_Download_CMake.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Download_Python.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Download_PyReqs.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Download_Pytorch.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
