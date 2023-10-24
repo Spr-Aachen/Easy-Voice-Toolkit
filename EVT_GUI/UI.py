@@ -130,7 +130,7 @@ class Ui_MainWindow(object):
         self.Frame_Menu.setMinimumSize(QSize(210, 0))
         self.Frame_Menu.setMaximumSize(QSize(210, 16777215))
         self.Frame_Menu.setStyleSheet(u"QFrame {\n"
-"	background-color: rgba(12, 12, 12, 123);\n"
+"	background-color: rgba(12, 12, 12, 12);\n"
 "	border-width: 0px;\n"
 "	border-style: solid;\n"
 "}")
@@ -153,7 +153,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}\n"
 "QToolButton:hover {\n"
-"	background-color: rgba(66, 66, 66, 198);\n"
+"	background-color: rgba(66, 66, 66, 123);\n"
 "}\n"
 "QToolButton:checked {\n"
 "	background-color: transparent;\n"
@@ -172,14 +172,14 @@ class Ui_MainWindow(object):
 "	border-width: 0px;\n"
 "	border-style: solid;\n"
 "}")
-        self.horizontalLayout_54 = QHBoxLayout(self.Button_Menu_Home)
-        self.horizontalLayout_54.setSpacing(0)
-        self.horizontalLayout_54.setObjectName(u"horizontalLayout_54")
-        self.horizontalLayout_54.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_8 = QHBoxLayout(self.Button_Menu_Home)
+        self.horizontalLayout_8.setSpacing(0)
+        self.horizontalLayout_8.setObjectName(u"horizontalLayout_8")
+        self.horizontalLayout_8.setContentsMargins(0, 0, 0, 0)
         self.Label_Menu_Home_Icon = QLabel(self.Button_Menu_Home)
         self.Label_Menu_Home_Icon.setObjectName(u"Label_Menu_Home_Icon")
         self.Label_Menu_Home_Icon.setMinimumSize(QSize(48, 48))
-        self.Label_Menu_Home_Icon.setMaximumSize(QSize(48, 16777215))
+        self.Label_Menu_Home_Icon.setMaximumSize(QSize(48, 48))
         self.Label_Menu_Home_Icon.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;\n"
 "	font-size: 15px;*/\n"
@@ -197,7 +197,7 @@ class Ui_MainWindow(object):
 "}")
         self.Label_Menu_Home_Icon.setProperty("flat", False)
 
-        self.horizontalLayout_54.addWidget(self.Label_Menu_Home_Icon)
+        self.horizontalLayout_8.addWidget(self.Label_Menu_Home_Icon)
 
         self.Label_Menu_Home_Text = QLabel(self.Button_Menu_Home)
         self.Label_Menu_Home_Text.setObjectName(u"Label_Menu_Home_Text")
@@ -212,7 +212,11 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}")
 
-        self.horizontalLayout_54.addWidget(self.Label_Menu_Home_Text)
+        self.horizontalLayout_8.addWidget(self.Label_Menu_Home_Text)
+
+        self.HorizontalSpacer_Menu_Home = QSpacerItem(92, 0, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.horizontalLayout_8.addItem(self.HorizontalSpacer_Menu_Home)
 
 
         self.verticalLayout_3.addWidget(self.Button_Menu_Home)
@@ -229,7 +233,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}\n"
 "QToolButton:hover {\n"
-"	background-color: rgba(66, 66, 66, 198);\n"
+"	background-color: rgba(66, 66, 66, 123);\n"
 "}\n"
 "QToolButton:checked {\n"
 "	background-color: transparent;\n"
@@ -248,14 +252,14 @@ class Ui_MainWindow(object):
 "	border-width: 0px;\n"
 "	border-style: solid;\n"
 "}")
-        self.horizontalLayout_53 = QHBoxLayout(self.Button_Menu_Download)
-        self.horizontalLayout_53.setSpacing(0)
-        self.horizontalLayout_53.setObjectName(u"horizontalLayout_53")
-        self.horizontalLayout_53.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_7 = QHBoxLayout(self.Button_Menu_Download)
+        self.horizontalLayout_7.setSpacing(0)
+        self.horizontalLayout_7.setObjectName(u"horizontalLayout_7")
+        self.horizontalLayout_7.setContentsMargins(0, 0, 0, 0)
         self.Label_Menu_Download_Icon = QLabel(self.Button_Menu_Download)
         self.Label_Menu_Download_Icon.setObjectName(u"Label_Menu_Download_Icon")
         self.Label_Menu_Download_Icon.setMinimumSize(QSize(48, 48))
-        self.Label_Menu_Download_Icon.setMaximumSize(QSize(48, 16777215))
+        self.Label_Menu_Download_Icon.setMaximumSize(QSize(48, 48))
         self.Label_Menu_Download_Icon.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;\n"
 "	font-size: 15px;*/\n"
@@ -272,7 +276,7 @@ class Ui_MainWindow(object):
 "	border-color: transparent;*/\n"
 "}")
 
-        self.horizontalLayout_53.addWidget(self.Label_Menu_Download_Icon)
+        self.horizontalLayout_7.addWidget(self.Label_Menu_Download_Icon)
 
         self.Label_Menu_Download_Text = QLabel(self.Button_Menu_Download)
         self.Label_Menu_Download_Text.setObjectName(u"Label_Menu_Download_Text")
@@ -287,7 +291,11 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}")
 
-        self.horizontalLayout_53.addWidget(self.Label_Menu_Download_Text)
+        self.horizontalLayout_7.addWidget(self.Label_Menu_Download_Text)
+
+        self.HorizontalSpacer_Menu_Download = QSpacerItem(92, 0, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.horizontalLayout_7.addItem(self.HorizontalSpacer_Menu_Download)
 
 
         self.verticalLayout_3.addWidget(self.Button_Menu_Download)
@@ -304,7 +312,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}\n"
 "QToolButton:hover {\n"
-"	background-color: rgba(66, 66, 66, 198);\n"
+"	background-color: rgba(66, 66, 66, 123);\n"
 "}\n"
 "QToolButton:checked {\n"
 "	background-color: transparent;\n"
@@ -323,14 +331,14 @@ class Ui_MainWindow(object):
 "	border-width: 0px;\n"
 "	border-style: solid;\n"
 "}")
-        self.horizontalLayout_68 = QHBoxLayout(self.Button_Menu_Tools)
-        self.horizontalLayout_68.setSpacing(0)
-        self.horizontalLayout_68.setObjectName(u"horizontalLayout_68")
-        self.horizontalLayout_68.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_10 = QHBoxLayout(self.Button_Menu_Tools)
+        self.horizontalLayout_10.setSpacing(0)
+        self.horizontalLayout_10.setObjectName(u"horizontalLayout_10")
+        self.horizontalLayout_10.setContentsMargins(0, 0, 0, 0)
         self.Label_Menu_Tools_Icon = QLabel(self.Button_Menu_Tools)
         self.Label_Menu_Tools_Icon.setObjectName(u"Label_Menu_Tools_Icon")
         self.Label_Menu_Tools_Icon.setMinimumSize(QSize(48, 48))
-        self.Label_Menu_Tools_Icon.setMaximumSize(QSize(48, 16777215))
+        self.Label_Menu_Tools_Icon.setMaximumSize(QSize(48, 48))
         self.Label_Menu_Tools_Icon.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;\n"
 "	font-size: 15px;*/\n"
@@ -347,7 +355,7 @@ class Ui_MainWindow(object):
 "	border-color: transparent;*/\n"
 "}")
 
-        self.horizontalLayout_68.addWidget(self.Label_Menu_Tools_Icon)
+        self.horizontalLayout_10.addWidget(self.Label_Menu_Tools_Icon)
 
         self.Label_Menu_Tools_Text = QLabel(self.Button_Menu_Tools)
         self.Label_Menu_Tools_Text.setObjectName(u"Label_Menu_Tools_Text")
@@ -362,7 +370,11 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}")
 
-        self.horizontalLayout_68.addWidget(self.Label_Menu_Tools_Text)
+        self.horizontalLayout_10.addWidget(self.Label_Menu_Tools_Text)
+
+        self.HorizontalSpacer_Menu_Tools = QSpacerItem(92, 0, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.horizontalLayout_10.addItem(self.HorizontalSpacer_Menu_Tools)
 
 
         self.verticalLayout_3.addWidget(self.Button_Menu_Tools)
@@ -383,7 +395,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}\n"
 "QToolButton:hover {\n"
-"	background-color: rgba(66, 66, 66, 198);\n"
+"	background-color: rgba(66, 66, 66, 123);\n"
 "}\n"
 "QToolButton:checked {\n"
 "	background-color: transparent;\n"
@@ -402,14 +414,14 @@ class Ui_MainWindow(object):
 "	border-width: 0px;\n"
 "	border-style: solid;\n"
 "}")
-        self.horizontalLayout_69 = QHBoxLayout(self.Button_Menu_Settings)
-        self.horizontalLayout_69.setSpacing(0)
-        self.horizontalLayout_69.setObjectName(u"horizontalLayout_69")
-        self.horizontalLayout_69.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_9 = QHBoxLayout(self.Button_Menu_Settings)
+        self.horizontalLayout_9.setSpacing(0)
+        self.horizontalLayout_9.setObjectName(u"horizontalLayout_9")
+        self.horizontalLayout_9.setContentsMargins(0, 0, 0, 0)
         self.Label_Menu_Settings_Icon = QLabel(self.Button_Menu_Settings)
         self.Label_Menu_Settings_Icon.setObjectName(u"Label_Menu_Settings_Icon")
         self.Label_Menu_Settings_Icon.setMinimumSize(QSize(48, 48))
-        self.Label_Menu_Settings_Icon.setMaximumSize(QSize(48, 16777215))
+        self.Label_Menu_Settings_Icon.setMaximumSize(QSize(48, 48))
         self.Label_Menu_Settings_Icon.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;\n"
 "	font-size: 15px;*/\n"
@@ -426,7 +438,7 @@ class Ui_MainWindow(object):
 "	border-color: transparent;*/\n"
 "}")
 
-        self.horizontalLayout_69.addWidget(self.Label_Menu_Settings_Icon)
+        self.horizontalLayout_9.addWidget(self.Label_Menu_Settings_Icon)
 
         self.Label_Menu_Settings_Text = QLabel(self.Button_Menu_Settings)
         self.Label_Menu_Settings_Text.setObjectName(u"Label_Menu_Settings_Text")
@@ -441,7 +453,11 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}")
 
-        self.horizontalLayout_69.addWidget(self.Label_Menu_Settings_Text)
+        self.horizontalLayout_9.addWidget(self.Label_Menu_Settings_Text)
+
+        self.HorizontalSpacer_Menu_Settings = QSpacerItem(92, 0, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.horizontalLayout_9.addItem(self.HorizontalSpacer_Menu_Settings)
 
 
         self.verticalLayout_3.addWidget(self.Button_Menu_Settings)
@@ -465,6 +481,11 @@ class Ui_MainWindow(object):
         self.verticalLayout_99.setContentsMargins(21, 12, 21, 12)
         self.Frame_High_Home = QFrame(self.Page_Home)
         self.Frame_High_Home.setObjectName(u"Frame_High_Home")
+        self.Frame_High_Home.setStyleSheet(u"QFrame {\n"
+"	background-color: rgba(36, 36, 36, 123);\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
         self.verticalLayout_100 = QVBoxLayout(self.Frame_High_Home)
         self.verticalLayout_100.setSpacing(21)
         self.verticalLayout_100.setObjectName(u"verticalLayout_100")
@@ -717,6 +738,11 @@ class Ui_MainWindow(object):
         self.Frame_Low_Home = QFrame(self.Page_Home)
         self.Frame_Low_Home.setObjectName(u"Frame_Low_Home")
         self.Frame_Low_Home.setMinimumSize(QSize(0, 90))
+        self.Frame_Low_Home.setStyleSheet(u"QFrame {\n"
+"	background-color: rgba(36, 36, 36, 123);\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
         self.horizontalLayout_5 = QHBoxLayout(self.Frame_Low_Home)
         self.horizontalLayout_5.setSpacing(0)
         self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
@@ -1022,7 +1048,7 @@ class Ui_MainWindow(object):
         self.Frame_Download_Top.setObjectName(u"Frame_Download_Top")
         self.Frame_Download_Top.setMinimumSize(QSize(0, 60))
         self.Frame_Download_Top.setStyleSheet(u"QFrame {\n"
-"	background-color: rgb(36, 36, 36);\n"
+"	background-color: rgba(36, 36, 36, 123);\n"
 "	border-width: 0px;\n"
 "	border-style: solid;\n"
 "}")
@@ -1108,6 +1134,11 @@ class Ui_MainWindow(object):
 
         self.Frame_Download_Middle = QFrame(self.Page_Download)
         self.Frame_Download_Middle.setObjectName(u"Frame_Download_Middle")
+        self.Frame_Download_Middle.setStyleSheet(u"QFrame {\n"
+"	background-color: rgba(36, 36, 36, 123);\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
         self.verticalLayout_134 = QVBoxLayout(self.Frame_Download_Middle)
         self.verticalLayout_134.setSpacing(0)
         self.verticalLayout_134.setObjectName(u"verticalLayout_134")
@@ -1502,7 +1533,7 @@ class Ui_MainWindow(object):
         self.Frame_Tools_Top.setObjectName(u"Frame_Tools_Top")
         self.Frame_Tools_Top.setMinimumSize(QSize(0, 60))
         self.Frame_Tools_Top.setStyleSheet(u"QFrame {\n"
-"	background-color: rgb(36, 36, 36);\n"
+"	background-color: rgba(36, 36, 36, 123);\n"
 "	border-width: 0px;\n"
 "	border-style: solid;\n"
 "}")
@@ -1881,9 +1912,10 @@ class Ui_MainWindow(object):
         self.gridLayout_8.setContentsMargins(0, 0, 0, 0)
         self.Widget_Left_Tool_AudioProcessor = QWidget(self.StackedWidget_Pages_Tool_AudioProcessor)
         self.Widget_Left_Tool_AudioProcessor.setObjectName(u"Widget_Left_Tool_AudioProcessor")
+        self.Widget_Left_Tool_AudioProcessor.setMinimumSize(QSize(150, 0))
         self.Widget_Left_Tool_AudioProcessor.setMaximumSize(QSize(210, 16777215))
         self.Widget_Left_Tool_AudioProcessor.setStyleSheet(u"QWidget {\n"
-"	background-color: rgb(36, 36, 36);\n"
+"	background-color: rgba(36, 36, 36, 123);\n"
 "	border-width: 0px;\n"
 "	border-style: solid;\n"
 "}\n"
@@ -1978,7 +2010,110 @@ class Ui_MainWindow(object):
 "QHeaderView::down-arrow {\n"
 "	position: ;\n"
 "	image: ;\n"
-"}*/")
+"}*/\n"
+"\n"
+"\n"
+"QScrollBar::vertical {\n"
+"	width: 9px;\n"
+"	background-color: rgb(45, 45, 45);\n"
+"	border-width: 1px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: transparent;\n"
+"	margin: 0px;\n"
+"}\n"
+"QScrollBar::vertical:hover {\n"
+"	background-color: rgba(33, 3"
+                        "3, 33, 99);\n"
+"}\n"
+"\n"
+"QScrollBar::add-line:vertical {\n"
+"	height: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: bottom;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QScrollBar::sub-line:vertical {\n"
+"	height: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: top;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
+"	width: 0px;\n"
+"	height: 0px;\n"
+"	background-color: transparent;\n"
+"}\n"
+"\n"
+"QScrollBar::handle:vertical {\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QScrollBar::handle:vertical:hover {\n"
+"	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QScrollBar::horizontal {\n"
+"	height: 9px;\n"
+"	background-color: rgb(45, 45, 45);\n"
+"	border-width: 1px;\n"
+"	border"
+                        "-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: transparent;\n"
+"	margin: 0px;\n"
+"}\n"
+"QScrollBar::horizontal:hover {\n"
+"	background-color: rgb(60, 60, 60);\n"
+"}\n"
+"\n"
+"QScrollBar::add-line:horizontal {\n"
+"	width: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: left;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QScrollBar::sub-line:horizontal {\n"
+"	width: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: right;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {\n"
+"	width: 0px;\n"
+"	height: 0px;\n"
+"	background-color: transparent;\n"
+"}\n"
+"\n"
+"QScrollBar::handle:horizontal {\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QScrollBar::handle:horizontal:hover {\n"
+"	backgro"
+                        "und-color: rgb(120, 120, 120);\n"
+"}")
 
         self.verticalLayout_162.addWidget(self.TreeWidget_Catalogue_Tool_AudioProcessor)
 
@@ -1989,7 +2124,7 @@ class Ui_MainWindow(object):
         self.ScrollArea_Middle_Tool_AudioProcessor.setObjectName(u"ScrollArea_Middle_Tool_AudioProcessor")
         self.ScrollArea_Middle_Tool_AudioProcessor.setMinimumSize(QSize(630, 0))
         self.ScrollArea_Middle_Tool_AudioProcessor.setStyleSheet(u"QScrollArea {\n"
-"	background-color: rgb(36, 36, 36);\n"
+"	background-color: rgba(36, 36, 36, 123);\n"
 "	border-width: 0px;\n"
 "	border-style: solid;\n"
 "}\n"
@@ -2032,8 +2167,8 @@ class Ui_MainWindow(object):
 "\n"
 "QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
 "	width: 0px;\n"
-"	height"
-                        ": 0px;\n"
+"	"
+                        "height: 0px;\n"
 "	background-color: transparent;\n"
 "}\n"
 "\n"
@@ -2076,8 +2211,8 @@ class Ui_MainWindow(object):
 "	background-color: transparent;\n"
 "	subcontrol-position: right;\n"
 "	subcontrol-origin: margin;\n"
-"	border-widt"
-                        "h: 0px;\n"
+"	borde"
+                        "r-width: 0px;\n"
 "	border-radius: 0px;\n"
 "	border-style: solid;\n"
 "}\n"
@@ -2101,11 +2236,11 @@ class Ui_MainWindow(object):
         self.ScrollArea_Middle_Tool_AudioProcessor.setWidgetResizable(True)
         self.ScrollArea_Middle_WidgetContents_Tool_AudioProcessor = QWidget()
         self.ScrollArea_Middle_WidgetContents_Tool_AudioProcessor.setObjectName(u"ScrollArea_Middle_WidgetContents_Tool_AudioProcessor")
-        self.ScrollArea_Middle_WidgetContents_Tool_AudioProcessor.setGeometry(QRect(0, 0, 621, 1096))
-        self.verticalLayout_149 = QVBoxLayout(self.ScrollArea_Middle_WidgetContents_Tool_AudioProcessor)
-        self.verticalLayout_149.setSpacing(12)
-        self.verticalLayout_149.setObjectName(u"verticalLayout_149")
-        self.verticalLayout_149.setContentsMargins(12, 12, 12, 12)
+        self.ScrollArea_Middle_WidgetContents_Tool_AudioProcessor.setGeometry(QRect(0, 0, 621, 1108))
+        self.verticalLayout_14 = QVBoxLayout(self.ScrollArea_Middle_WidgetContents_Tool_AudioProcessor)
+        self.verticalLayout_14.setSpacing(12)
+        self.verticalLayout_14.setObjectName(u"verticalLayout_14")
+        self.verticalLayout_14.setContentsMargins(12, 12, 12, 12)
         self.GroupBox_EssentialParams_Tool_AudioProcessor = QGroupBox(self.ScrollArea_Middle_WidgetContents_Tool_AudioProcessor)
         self.GroupBox_EssentialParams_Tool_AudioProcessor.setObjectName(u"GroupBox_EssentialParams_Tool_AudioProcessor")
         self.GroupBox_EssentialParams_Tool_AudioProcessor.setStyleSheet(u"QGroupBox {\n"
@@ -3134,7 +3269,11 @@ class Ui_MainWindow(object):
         self.verticalLayout_150.addWidget(self.Frame_AdvanceSettings_Tool_AudioProcessor)
 
 
-        self.verticalLayout_149.addWidget(self.GroupBox_EssentialParams_Tool_AudioProcessor)
+        self.verticalLayout_14.addWidget(self.GroupBox_EssentialParams_Tool_AudioProcessor)
+
+        self.VerticalSpacer_Tool_AudioProcessor = QSpacerItem(0, 0, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+        self.verticalLayout_14.addItem(self.VerticalSpacer_Tool_AudioProcessor)
 
         self.ScrollArea_Middle_Tool_AudioProcessor.setWidget(self.ScrollArea_Middle_WidgetContents_Tool_AudioProcessor)
 
@@ -3142,9 +3281,10 @@ class Ui_MainWindow(object):
 
         self.Widget_Right_Tool_AudioProcessor = QWidget(self.StackedWidget_Pages_Tool_AudioProcessor)
         self.Widget_Right_Tool_AudioProcessor.setObjectName(u"Widget_Right_Tool_AudioProcessor")
+        self.Widget_Right_Tool_AudioProcessor.setMinimumSize(QSize(210, 0))
         self.Widget_Right_Tool_AudioProcessor.setMaximumSize(QSize(420, 16777215))
         self.Widget_Right_Tool_AudioProcessor.setStyleSheet(u"QWidget {\n"
-"	background-color: rgb(36, 36, 36);\n"
+"	background-color: rgba(36, 36, 36, 123);\n"
 "	border-width: 0px;\n"
 "	border-style: solid;\n"
 "}\n"
@@ -3279,7 +3419,7 @@ class Ui_MainWindow(object):
 "	text-align: center;\n"
 "	font-size: 12px;\n"
 "	background-color: transparent;\n"
-"	padding: 12px;\n"
+"	padding: 9.9px;\n"
 "	border-width: 1.5px;\n"
 "	border-radius: 6px;\n"
 "	border-style: solid;\n"
@@ -3429,9 +3569,10 @@ class Ui_MainWindow(object):
         self.gridLayout_7.setContentsMargins(0, 0, 0, 0)
         self.Widget_Left_Tool_VoiceIdentifier = QWidget(self.StackedWidget_Pages_Tool_VoiceIdentifier)
         self.Widget_Left_Tool_VoiceIdentifier.setObjectName(u"Widget_Left_Tool_VoiceIdentifier")
+        self.Widget_Left_Tool_VoiceIdentifier.setMinimumSize(QSize(150, 0))
         self.Widget_Left_Tool_VoiceIdentifier.setMaximumSize(QSize(210, 16777215))
         self.Widget_Left_Tool_VoiceIdentifier.setStyleSheet(u"QWidget {\n"
-"	background-color: rgb(36, 36, 36);\n"
+"	background-color: rgba(36, 36, 36, 123);\n"
 "	border-width: 0px;\n"
 "	border-style: solid;\n"
 "}\n"
@@ -3526,7 +3667,110 @@ class Ui_MainWindow(object):
 "QHeaderView::down-arrow {\n"
 "	position: ;\n"
 "	image: ;\n"
-"}*/")
+"}*/\n"
+"\n"
+"\n"
+"QScrollBar::vertical {\n"
+"	width: 9px;\n"
+"	background-color: rgb(45, 45, 45);\n"
+"	border-width: 1px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: transparent;\n"
+"	margin: 0px;\n"
+"}\n"
+"QScrollBar::vertical:hover {\n"
+"	background-color: rgba(33, 3"
+                        "3, 33, 99);\n"
+"}\n"
+"\n"
+"QScrollBar::add-line:vertical {\n"
+"	height: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: bottom;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QScrollBar::sub-line:vertical {\n"
+"	height: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: top;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
+"	width: 0px;\n"
+"	height: 0px;\n"
+"	background-color: transparent;\n"
+"}\n"
+"\n"
+"QScrollBar::handle:vertical {\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QScrollBar::handle:vertical:hover {\n"
+"	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QScrollBar::horizontal {\n"
+"	height: 9px;\n"
+"	background-color: rgb(45, 45, 45);\n"
+"	border-width: 1px;\n"
+"	border"
+                        "-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: transparent;\n"
+"	margin: 0px;\n"
+"}\n"
+"QScrollBar::horizontal:hover {\n"
+"	background-color: rgb(60, 60, 60);\n"
+"}\n"
+"\n"
+"QScrollBar::add-line:horizontal {\n"
+"	width: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: left;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QScrollBar::sub-line:horizontal {\n"
+"	width: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: right;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {\n"
+"	width: 0px;\n"
+"	height: 0px;\n"
+"	background-color: transparent;\n"
+"}\n"
+"\n"
+"QScrollBar::handle:horizontal {\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QScrollBar::handle:horizontal:hover {\n"
+"	backgro"
+                        "und-color: rgb(120, 120, 120);\n"
+"}")
 
         self.verticalLayout_4.addWidget(self.TreeWidget_Catalogue_Tool_VoiceIdentifier)
 
@@ -3537,7 +3781,7 @@ class Ui_MainWindow(object):
         self.ScrollArea_Middle_Tool_VoiceIdentifier.setObjectName(u"ScrollArea_Middle_Tool_VoiceIdentifier")
         self.ScrollArea_Middle_Tool_VoiceIdentifier.setMinimumSize(QSize(630, 0))
         self.ScrollArea_Middle_Tool_VoiceIdentifier.setStyleSheet(u"QScrollArea {\n"
-"	background-color: rgb(36, 36, 36);\n"
+"	background-color: rgba(36, 36, 36, 123);\n"
 "	border-width: 0px;\n"
 "	border-style: solid;\n"
 "}\n"
@@ -3580,8 +3824,8 @@ class Ui_MainWindow(object):
 "\n"
 "QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
 "	width: 0px;\n"
-"	height"
-                        ": 0px;\n"
+"	"
+                        "height: 0px;\n"
 "	background-color: transparent;\n"
 "}\n"
 "\n"
@@ -3624,8 +3868,8 @@ class Ui_MainWindow(object):
 "	background-color: transparent;\n"
 "	subcontrol-position: right;\n"
 "	subcontrol-origin: margin;\n"
-"	border-widt"
-                        "h: 0px;\n"
+"	borde"
+                        "r-width: 0px;\n"
 "	border-radius: 0px;\n"
 "	border-style: solid;\n"
 "}\n"
@@ -3649,11 +3893,11 @@ class Ui_MainWindow(object):
         self.ScrollArea_Middle_Tool_VoiceIdentifier.setWidgetResizable(True)
         self.ScrollArea_Middle_WidgetContents_Tool_VoiceIdentifier = QWidget()
         self.ScrollArea_Middle_WidgetContents_Tool_VoiceIdentifier.setObjectName(u"ScrollArea_Middle_WidgetContents_Tool_VoiceIdentifier")
-        self.ScrollArea_Middle_WidgetContents_Tool_VoiceIdentifier.setGeometry(QRect(0, 0, 621, 1318))
-        self.verticalLayout_28 = QVBoxLayout(self.ScrollArea_Middle_WidgetContents_Tool_VoiceIdentifier)
-        self.verticalLayout_28.setSpacing(12)
-        self.verticalLayout_28.setObjectName(u"verticalLayout_28")
-        self.verticalLayout_28.setContentsMargins(12, 12, 12, 12)
+        self.ScrollArea_Middle_WidgetContents_Tool_VoiceIdentifier.setGeometry(QRect(0, 0, 621, 1330))
+        self.verticalLayout_15 = QVBoxLayout(self.ScrollArea_Middle_WidgetContents_Tool_VoiceIdentifier)
+        self.verticalLayout_15.setSpacing(12)
+        self.verticalLayout_15.setObjectName(u"verticalLayout_15")
+        self.verticalLayout_15.setContentsMargins(12, 12, 12, 12)
         self.GroupBox_EssentialParams_Tool_VoiceIdentifier = QGroupBox(self.ScrollArea_Middle_WidgetContents_Tool_VoiceIdentifier)
         self.GroupBox_EssentialParams_Tool_VoiceIdentifier.setObjectName(u"GroupBox_EssentialParams_Tool_VoiceIdentifier")
         self.GroupBox_EssentialParams_Tool_VoiceIdentifier.setStyleSheet(u"QGroupBox {\n"
@@ -4970,7 +5214,11 @@ class Ui_MainWindow(object):
         self.verticalLayout_33.addWidget(self.Frame_AdvanceSettings_Tool_VoiceIdentifier)
 
 
-        self.verticalLayout_28.addWidget(self.GroupBox_EssentialParams_Tool_VoiceIdentifier)
+        self.verticalLayout_15.addWidget(self.GroupBox_EssentialParams_Tool_VoiceIdentifier)
+
+        self.VerticalSpacer_Tool_VoiceIdentifier = QSpacerItem(0, 0, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+        self.verticalLayout_15.addItem(self.VerticalSpacer_Tool_VoiceIdentifier)
 
         self.ScrollArea_Middle_Tool_VoiceIdentifier.setWidget(self.ScrollArea_Middle_WidgetContents_Tool_VoiceIdentifier)
 
@@ -4978,9 +5226,10 @@ class Ui_MainWindow(object):
 
         self.Widget_Right_Tool_VoiceIdentifier = QWidget(self.StackedWidget_Pages_Tool_VoiceIdentifier)
         self.Widget_Right_Tool_VoiceIdentifier.setObjectName(u"Widget_Right_Tool_VoiceIdentifier")
+        self.Widget_Right_Tool_VoiceIdentifier.setMinimumSize(QSize(210, 0))
         self.Widget_Right_Tool_VoiceIdentifier.setMaximumSize(QSize(420, 16777215))
         self.Widget_Right_Tool_VoiceIdentifier.setStyleSheet(u"QWidget {\n"
-"	background-color: rgb(36, 36, 36);\n"
+"	background-color: rgba(36, 36, 36, 123);\n"
 "	border-width: 0px;\n"
 "	border-style: solid;\n"
 "}\n"
@@ -5115,7 +5364,7 @@ class Ui_MainWindow(object):
 "	text-align: center;\n"
 "	font-size: 12px;\n"
 "	background-color: transparent;\n"
-"	padding: 12px;\n"
+"	padding: 9.9px;\n"
 "	border-width: 1.5px;\n"
 "	border-radius: 6px;\n"
 "	border-style: solid;\n"
@@ -5141,7 +5390,7 @@ class Ui_MainWindow(object):
 "	text-align: center;\n"
 "	font-size: 12px;\n"
 "	background-color: transparent;\n"
-"	padding: 12px;\n"
+"	padding: 9.9px;\n"
 "	border-width: 1.5px;\n"
 "	border-radius: 6px;\n"
 "	border-style: solid;\n"
@@ -5287,9 +5536,10 @@ class Ui_MainWindow(object):
         self.gridLayout_10.setContentsMargins(0, 0, 0, 0)
         self.Widget_Left_Tool_VoiceTranscriber = QWidget(self.StackedWidget_Pages_Tool_VoiceTranscriber)
         self.Widget_Left_Tool_VoiceTranscriber.setObjectName(u"Widget_Left_Tool_VoiceTranscriber")
+        self.Widget_Left_Tool_VoiceTranscriber.setMinimumSize(QSize(150, 0))
         self.Widget_Left_Tool_VoiceTranscriber.setMaximumSize(QSize(210, 16777215))
         self.Widget_Left_Tool_VoiceTranscriber.setStyleSheet(u"QWidget {\n"
-"	background-color: rgb(36, 36, 36);\n"
+"	background-color: rgba(36, 36, 36, 123);\n"
 "	border-width: 0px;\n"
 "	border-style: solid;\n"
 "}\n"
@@ -5384,7 +5634,110 @@ class Ui_MainWindow(object):
 "QHeaderView::down-arrow {\n"
 "	position: ;\n"
 "	image: ;\n"
-"}*/")
+"}*/\n"
+"\n"
+"\n"
+"QScrollBar::vertical {\n"
+"	width: 9px;\n"
+"	background-color: rgb(45, 45, 45);\n"
+"	border-width: 1px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: transparent;\n"
+"	margin: 0px;\n"
+"}\n"
+"QScrollBar::vertical:hover {\n"
+"	background-color: rgba(33, 3"
+                        "3, 33, 99);\n"
+"}\n"
+"\n"
+"QScrollBar::add-line:vertical {\n"
+"	height: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: bottom;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QScrollBar::sub-line:vertical {\n"
+"	height: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: top;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
+"	width: 0px;\n"
+"	height: 0px;\n"
+"	background-color: transparent;\n"
+"}\n"
+"\n"
+"QScrollBar::handle:vertical {\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QScrollBar::handle:vertical:hover {\n"
+"	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QScrollBar::horizontal {\n"
+"	height: 9px;\n"
+"	background-color: rgb(45, 45, 45);\n"
+"	border-width: 1px;\n"
+"	border"
+                        "-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: transparent;\n"
+"	margin: 0px;\n"
+"}\n"
+"QScrollBar::horizontal:hover {\n"
+"	background-color: rgb(60, 60, 60);\n"
+"}\n"
+"\n"
+"QScrollBar::add-line:horizontal {\n"
+"	width: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: left;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QScrollBar::sub-line:horizontal {\n"
+"	width: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: right;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {\n"
+"	width: 0px;\n"
+"	height: 0px;\n"
+"	background-color: transparent;\n"
+"}\n"
+"\n"
+"QScrollBar::handle:horizontal {\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QScrollBar::handle:horizontal:hover {\n"
+"	backgro"
+                        "und-color: rgb(120, 120, 120);\n"
+"}")
 
         self.verticalLayout_8.addWidget(self.TreeWidget_Catalogue_Tool_VoiceTranscriber)
 
@@ -5395,7 +5748,7 @@ class Ui_MainWindow(object):
         self.ScrollArea_Middle_Tool_VoiceTranscriber.setObjectName(u"ScrollArea_Middle_Tool_VoiceTranscriber")
         self.ScrollArea_Middle_Tool_VoiceTranscriber.setMinimumSize(QSize(630, 0))
         self.ScrollArea_Middle_Tool_VoiceTranscriber.setStyleSheet(u"QScrollArea {\n"
-"	background-color: rgb(36, 36, 36);\n"
+"	background-color: rgba(36, 36, 36, 123);\n"
 "	border-width: 0px;\n"
 "	border-style: solid;\n"
 "}\n"
@@ -5438,8 +5791,8 @@ class Ui_MainWindow(object):
 "\n"
 "QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
 "	width: 0px;\n"
-"	height"
-                        ": 0px;\n"
+"	"
+                        "height: 0px;\n"
 "	background-color: transparent;\n"
 "}\n"
 "\n"
@@ -5482,8 +5835,8 @@ class Ui_MainWindow(object):
 "	background-color: transparent;\n"
 "	subcontrol-position: right;\n"
 "	subcontrol-origin: margin;\n"
-"	border-widt"
-                        "h: 0px;\n"
+"	borde"
+                        "r-width: 0px;\n"
 "	border-radius: 0px;\n"
 "	border-style: solid;\n"
 "}\n"
@@ -5507,11 +5860,11 @@ class Ui_MainWindow(object):
         self.ScrollArea_Middle_Tool_VoiceTranscriber.setWidgetResizable(True)
         self.ScrollArea_Middle_WidgetContents_Tool_VoiceTranscriber = QWidget()
         self.ScrollArea_Middle_WidgetContents_Tool_VoiceTranscriber.setObjectName(u"ScrollArea_Middle_WidgetContents_Tool_VoiceTranscriber")
-        self.ScrollArea_Middle_WidgetContents_Tool_VoiceTranscriber.setGeometry(QRect(0, 0, 621, 1171))
-        self.verticalLayout_19 = QVBoxLayout(self.ScrollArea_Middle_WidgetContents_Tool_VoiceTranscriber)
-        self.verticalLayout_19.setSpacing(12)
-        self.verticalLayout_19.setObjectName(u"verticalLayout_19")
-        self.verticalLayout_19.setContentsMargins(12, 12, 12, 12)
+        self.ScrollArea_Middle_WidgetContents_Tool_VoiceTranscriber.setGeometry(QRect(0, 0, 621, 1183))
+        self.verticalLayout_16 = QVBoxLayout(self.ScrollArea_Middle_WidgetContents_Tool_VoiceTranscriber)
+        self.verticalLayout_16.setSpacing(12)
+        self.verticalLayout_16.setObjectName(u"verticalLayout_16")
+        self.verticalLayout_16.setContentsMargins(12, 12, 12, 12)
         self.GroupBox_EssentialParams_Tool_VoiceTranscriber = QGroupBox(self.ScrollArea_Middle_WidgetContents_Tool_VoiceTranscriber)
         self.GroupBox_EssentialParams_Tool_VoiceTranscriber.setObjectName(u"GroupBox_EssentialParams_Tool_VoiceTranscriber")
         self.GroupBox_EssentialParams_Tool_VoiceTranscriber.setStyleSheet(u"QGroupBox {\n"
@@ -6431,7 +6784,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_32.addWidget(self.Frame_AdvanceSettings_Tool_VoiceTranscriber)
 
 
-        self.verticalLayout_19.addWidget(self.GroupBox_EssentialParams_Tool_VoiceTranscriber)
+        self.verticalLayout_16.addWidget(self.GroupBox_EssentialParams_Tool_VoiceTranscriber)
 
         self.GroupBox_OptionalParams_Tool_VoiceTranscriber = QGroupBox(self.ScrollArea_Middle_WidgetContents_Tool_VoiceTranscriber)
         self.GroupBox_OptionalParams_Tool_VoiceTranscriber.setObjectName(u"GroupBox_OptionalParams_Tool_VoiceTranscriber")
@@ -6715,7 +7068,11 @@ class Ui_MainWindow(object):
         self.verticalLayout_31.addWidget(self.Frame_BasicOptionalSettings_Tool_VoiceTranscriber)
 
 
-        self.verticalLayout_19.addWidget(self.GroupBox_OptionalParams_Tool_VoiceTranscriber)
+        self.verticalLayout_16.addWidget(self.GroupBox_OptionalParams_Tool_VoiceTranscriber)
+
+        self.VerticalSpacer_Tool_VoiceTranscriber = QSpacerItem(0, 0, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+        self.verticalLayout_16.addItem(self.VerticalSpacer_Tool_VoiceTranscriber)
 
         self.ScrollArea_Middle_Tool_VoiceTranscriber.setWidget(self.ScrollArea_Middle_WidgetContents_Tool_VoiceTranscriber)
 
@@ -6723,9 +7080,10 @@ class Ui_MainWindow(object):
 
         self.Widget_Right_Tool_VoiceTranscriber = QWidget(self.StackedWidget_Pages_Tool_VoiceTranscriber)
         self.Widget_Right_Tool_VoiceTranscriber.setObjectName(u"Widget_Right_Tool_VoiceTranscriber")
+        self.Widget_Right_Tool_VoiceTranscriber.setMinimumSize(QSize(210, 0))
         self.Widget_Right_Tool_VoiceTranscriber.setMaximumSize(QSize(420, 16777215))
         self.Widget_Right_Tool_VoiceTranscriber.setStyleSheet(u"QWidget {\n"
-"	background-color: rgb(36, 36, 36);\n"
+"	background-color: rgba(36, 36, 36, 123);\n"
 "	border-width: 0px;\n"
 "	border-style: solid;\n"
 "}\n"
@@ -6860,7 +7218,7 @@ class Ui_MainWindow(object):
 "	text-align: center;\n"
 "	font-size: 12px;\n"
 "	background-color: transparent;\n"
-"	padding: 12px;\n"
+"	padding: 9.9px;\n"
 "	border-width: 1.5px;\n"
 "	border-radius: 6px;\n"
 "	border-style: solid;\n"
@@ -6886,7 +7244,7 @@ class Ui_MainWindow(object):
 "	text-align: center;\n"
 "	font-size: 12px;\n"
 "	background-color: transparent;\n"
-"	padding: 12px;\n"
+"	padding: 9.9px;\n"
 "	border-width: 1.5px;\n"
 "	border-radius: 6px;\n"
 "	border-style: solid;\n"
@@ -7030,11 +7388,315 @@ class Ui_MainWindow(object):
         self.gridLayout_11.setSpacing(12)
         self.gridLayout_11.setObjectName(u"gridLayout_11")
         self.gridLayout_11.setContentsMargins(0, 0, 0, 0)
+        self.ProgressBar_Tool_DatasetCreator = QProgressBar(self.StackedWidget_Pages_Tool_DatasetCreator)
+        self.ProgressBar_Tool_DatasetCreator.setObjectName(u"ProgressBar_Tool_DatasetCreator")
+        self.ProgressBar_Tool_DatasetCreator.setMinimumSize(QSize(0, 30))
+        self.ProgressBar_Tool_DatasetCreator.setStyleSheet(u"QProgressBar {\n"
+"	text-align: center;\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: rgb(60, 60, 60);\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QProgressBar:chunk {\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	background-color: qlineargradient(spread: pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgb(60, 60, 60), stop:1  rgb(123, 123, 123));\n"
+"}")
+        self.ProgressBar_Tool_DatasetCreator.setValue(0)
+        self.ProgressBar_Tool_DatasetCreator.setTextVisible(False)
+        self.horizontalLayout_37 = QHBoxLayout(self.ProgressBar_Tool_DatasetCreator)
+        self.horizontalLayout_37.setSpacing(0)
+        self.horizontalLayout_37.setObjectName(u"horizontalLayout_37")
+        self.horizontalLayout_37.setContentsMargins(0, 0, 0, 0)
+        self.StackedWidget_Tool_DatasetCreator = QStackedWidget(self.ProgressBar_Tool_DatasetCreator)
+        self.StackedWidget_Tool_DatasetCreator.setObjectName(u"StackedWidget_Tool_DatasetCreator")
+        self.StackedWidget_Tool_DatasetCreator.setMaximumSize(QSize(16777215, 30))
+        self.StackedWidget_Tool_DatasetCreator.setStyleSheet(u"QWidget {\n"
+"	background-color: rgba(90, 90, 90, 45);\n"
+"}\n"
+"QWidget:hover {\n"
+"	background-color: rgba(120, 120, 120, 60);\n"
+"}")
+        self.Page_Tool_DatasetCreator_Execute = QWidget()
+        self.Page_Tool_DatasetCreator_Execute.setObjectName(u"Page_Tool_DatasetCreator_Execute")
+        self.verticalLayout_92 = QVBoxLayout(self.Page_Tool_DatasetCreator_Execute)
+        self.verticalLayout_92.setSpacing(0)
+        self.verticalLayout_92.setObjectName(u"verticalLayout_92")
+        self.verticalLayout_92.setContentsMargins(0, 0, 0, 0)
+        self.Button_Tool_DatasetCreator_Execute = QPushButton(self.Page_Tool_DatasetCreator_Execute)
+        self.Button_Tool_DatasetCreator_Execute.setObjectName(u"Button_Tool_DatasetCreator_Execute")
+        sizePolicy5.setHeightForWidth(self.Button_Tool_DatasetCreator_Execute.sizePolicy().hasHeightForWidth())
+        self.Button_Tool_DatasetCreator_Execute.setSizePolicy(sizePolicy5)
+        self.Button_Tool_DatasetCreator_Execute.setMinimumSize(QSize(0, 30))
+        self.Button_Tool_DatasetCreator_Execute.setStyleSheet(u"QPushButton {\n"
+"	text-align: center;\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"	/*background-color: rgba(90, 90, 90, 45);*/\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	color: rgba(255, 255, 255, 240);\n"
+"	/*background-color: rgba(120, 120, 120, 60);*/\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.verticalLayout_92.addWidget(self.Button_Tool_DatasetCreator_Execute)
+
+        self.StackedWidget_Tool_DatasetCreator.addWidget(self.Page_Tool_DatasetCreator_Execute)
+        self.Page_Tool_DatasetCreator_Terminate = QWidget()
+        self.Page_Tool_DatasetCreator_Terminate.setObjectName(u"Page_Tool_DatasetCreator_Terminate")
+        self.verticalLayout_93 = QVBoxLayout(self.Page_Tool_DatasetCreator_Terminate)
+        self.verticalLayout_93.setSpacing(0)
+        self.verticalLayout_93.setObjectName(u"verticalLayout_93")
+        self.verticalLayout_93.setContentsMargins(0, 0, 0, 0)
+        self.Button_Tool_DatasetCreator_Terminate = QPushButton(self.Page_Tool_DatasetCreator_Terminate)
+        self.Button_Tool_DatasetCreator_Terminate.setObjectName(u"Button_Tool_DatasetCreator_Terminate")
+        sizePolicy5.setHeightForWidth(self.Button_Tool_DatasetCreator_Terminate.sizePolicy().hasHeightForWidth())
+        self.Button_Tool_DatasetCreator_Terminate.setSizePolicy(sizePolicy5)
+        self.Button_Tool_DatasetCreator_Terminate.setMinimumSize(QSize(0, 30))
+        self.Button_Tool_DatasetCreator_Terminate.setStyleSheet(u"QPushButton {\n"
+"	text-align: center;\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"	/*background-color: rgba(90, 90, 90, 45);*/\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	color: rgba(255, 255, 255, 240);\n"
+"	/*background-color: rgba(120, 120, 120, 60);*/\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.verticalLayout_93.addWidget(self.Button_Tool_DatasetCreator_Terminate)
+
+        self.StackedWidget_Tool_DatasetCreator.addWidget(self.Page_Tool_DatasetCreator_Terminate)
+
+        self.horizontalLayout_37.addWidget(self.StackedWidget_Tool_DatasetCreator)
+
+
+        self.gridLayout_11.addWidget(self.ProgressBar_Tool_DatasetCreator, 1, 0, 1, 3)
+
+        self.Widget_Right_Tool_DatasetCreator = QWidget(self.StackedWidget_Pages_Tool_DatasetCreator)
+        self.Widget_Right_Tool_DatasetCreator.setObjectName(u"Widget_Right_Tool_DatasetCreator")
+        self.Widget_Right_Tool_DatasetCreator.setMinimumSize(QSize(210, 0))
+        self.Widget_Right_Tool_DatasetCreator.setMaximumSize(QSize(420, 16777215))
+        self.Widget_Right_Tool_DatasetCreator.setStyleSheet(u"QWidget {\n"
+"	background-color: rgba(36, 36, 36, 123);\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QWidget:hover {\n"
+"}")
+        self.gridLayout_16 = QGridLayout(self.Widget_Right_Tool_DatasetCreator)
+        self.gridLayout_16.setSpacing(12)
+        self.gridLayout_16.setObjectName(u"gridLayout_16")
+        self.gridLayout_16.setContentsMargins(12, 12, 12, 12)
+        self.TextBrowser_Params_Tool_DatasetCreator = QTextBrowser(self.Widget_Right_Tool_DatasetCreator)
+        self.TextBrowser_Params_Tool_DatasetCreator.setObjectName(u"TextBrowser_Params_Tool_DatasetCreator")
+        sizePolicy1.setHeightForWidth(self.TextBrowser_Params_Tool_DatasetCreator.sizePolicy().hasHeightForWidth())
+        self.TextBrowser_Params_Tool_DatasetCreator.setSizePolicy(sizePolicy1)
+        self.TextBrowser_Params_Tool_DatasetCreator.setStyleSheet(u"QTextBrowser {\n"
+"	background-color: rgb(33, 33, 33);\n"
+"	/*padding-top: 1.5px;*/\n"
+"	/*padding-bottom: 1.5px;*/\n"
+"	padding-left: 15px;\n"
+"	padding-right: 6px;\n"
+"	border-width: 1px;\n"
+"	border-style: solid;\n"
+"	border-color:transparent;\n"
+"}\n"
+"\n"
+"\n"
+"QScrollBar::vertical {\n"
+"	width: 9px;\n"
+"	background-color: rgb(45, 45, 45);\n"
+"	border-width: 1px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: transparent;\n"
+"	margin: 0px;\n"
+"}\n"
+"QScrollBar::vertical:hover {\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
+"}\n"
+"\n"
+"QScrollBar::add-line:vertical {\n"
+"	height: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: bottom;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QScrollBar::sub-line:vertical {\n"
+"	height: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: top;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-st"
+                        "yle: solid;\n"
+"}\n"
+"\n"
+"QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
+"	width: 0px;\n"
+"	height: 0px;\n"
+"	background-color: transparent;\n"
+"}\n"
+"\n"
+"QScrollBar::handle:vertical {\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QScrollBar::handle:vertical:hover {\n"
+"	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QScrollBar::horizontal {\n"
+"	height: 9px;\n"
+"	background-color: rgb(45, 45, 45);\n"
+"	border-width: 1px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: transparent;\n"
+"	margin: 0px;\n"
+"}\n"
+"QScrollBar::horizontal:hover {\n"
+"	background-color: rgb(60, 60, 60);\n"
+"}\n"
+"\n"
+"QScrollBar::add-line:horizontal {\n"
+"	width: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: left;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QScrollBar::sub-line:horizontal {\n"
+"	width: 0px;\n"
+""
+                        "	background-color: transparent;\n"
+"	subcontrol-position: right;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {\n"
+"	width: 0px;\n"
+"	height: 0px;\n"
+"	background-color: transparent;\n"
+"}\n"
+"\n"
+"QScrollBar::handle:horizontal {\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QScrollBar::handle:horizontal:hover {\n"
+"	background-color: rgb(120, 120, 120);\n"
+"}")
+
+        self.gridLayout_16.addWidget(self.TextBrowser_Params_Tool_DatasetCreator, 0, 0, 1, 2)
+
+        self.Button_SyncParams_Tool_DatasetCreator = QPushButton(self.Widget_Right_Tool_DatasetCreator)
+        self.Button_SyncParams_Tool_DatasetCreator.setObjectName(u"Button_SyncParams_Tool_DatasetCreator")
+        self.Button_SyncParams_Tool_DatasetCreator.setStyleSheet(u"QPushButton {\n"
+"	text-align: center;\n"
+"	font-size: 12px;\n"
+"	background-color: transparent;\n"
+"	padding: 9.9px;\n"
+"	border-width: 1.5px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_16.addWidget(self.Button_SyncParams_Tool_DatasetCreator, 1, 0, 1, 1)
+
+        self.Button_CheckOutput_Tool_DatasetCreator = QPushButton(self.Widget_Right_Tool_DatasetCreator)
+        self.Button_CheckOutput_Tool_DatasetCreator.setObjectName(u"Button_CheckOutput_Tool_DatasetCreator")
+        self.Button_CheckOutput_Tool_DatasetCreator.setStyleSheet(u"QPushButton {\n"
+"	text-align: center;\n"
+"	font-size: 12px;\n"
+"	background-color: transparent;\n"
+"	padding: 9.9px;\n"
+"	border-width: 1.5px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_16.addWidget(self.Button_CheckOutput_Tool_DatasetCreator, 1, 1, 1, 1)
+
+
+        self.gridLayout_11.addWidget(self.Widget_Right_Tool_DatasetCreator, 0, 2, 1, 1)
+
         self.Widget_Left_Tool_DatasetCreator = QWidget(self.StackedWidget_Pages_Tool_DatasetCreator)
         self.Widget_Left_Tool_DatasetCreator.setObjectName(u"Widget_Left_Tool_DatasetCreator")
+        self.Widget_Left_Tool_DatasetCreator.setMinimumSize(QSize(150, 0))
         self.Widget_Left_Tool_DatasetCreator.setMaximumSize(QSize(210, 16777215))
         self.Widget_Left_Tool_DatasetCreator.setStyleSheet(u"QWidget {\n"
-"	background-color: rgb(36, 36, 36);\n"
+"	background-color: rgba(36, 36, 36, 123);\n"
 "	border-width: 0px;\n"
 "	border-style: solid;\n"
 "}\n"
@@ -7129,7 +7791,110 @@ class Ui_MainWindow(object):
 "QHeaderView::down-arrow {\n"
 "	position: ;\n"
 "	image: ;\n"
-"}*/")
+"}*/\n"
+"\n"
+"\n"
+"QScrollBar::vertical {\n"
+"	width: 9px;\n"
+"	background-color: rgb(45, 45, 45);\n"
+"	border-width: 1px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: transparent;\n"
+"	margin: 0px;\n"
+"}\n"
+"QScrollBar::vertical:hover {\n"
+"	background-color: rgba(33, 3"
+                        "3, 33, 99);\n"
+"}\n"
+"\n"
+"QScrollBar::add-line:vertical {\n"
+"	height: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: bottom;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QScrollBar::sub-line:vertical {\n"
+"	height: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: top;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
+"	width: 0px;\n"
+"	height: 0px;\n"
+"	background-color: transparent;\n"
+"}\n"
+"\n"
+"QScrollBar::handle:vertical {\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QScrollBar::handle:vertical:hover {\n"
+"	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QScrollBar::horizontal {\n"
+"	height: 9px;\n"
+"	background-color: rgb(45, 45, 45);\n"
+"	border-width: 1px;\n"
+"	border"
+                        "-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: transparent;\n"
+"	margin: 0px;\n"
+"}\n"
+"QScrollBar::horizontal:hover {\n"
+"	background-color: rgb(60, 60, 60);\n"
+"}\n"
+"\n"
+"QScrollBar::add-line:horizontal {\n"
+"	width: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: left;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QScrollBar::sub-line:horizontal {\n"
+"	width: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: right;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {\n"
+"	width: 0px;\n"
+"	height: 0px;\n"
+"	background-color: transparent;\n"
+"}\n"
+"\n"
+"QScrollBar::handle:horizontal {\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QScrollBar::handle:horizontal:hover {\n"
+"	backgro"
+                        "und-color: rgb(120, 120, 120);\n"
+"}")
 
         self.verticalLayout_9.addWidget(self.TreeWidget_Catalogue_Tool_DatasetCreator)
 
@@ -7140,7 +7905,7 @@ class Ui_MainWindow(object):
         self.ScrollArea_Middle_Tool_DatasetCreator.setObjectName(u"ScrollArea_Middle_Tool_DatasetCreator")
         self.ScrollArea_Middle_Tool_DatasetCreator.setMinimumSize(QSize(630, 0))
         self.ScrollArea_Middle_Tool_DatasetCreator.setStyleSheet(u"QScrollArea {\n"
-"	background-color: rgb(36, 36, 36);\n"
+"	background-color: rgba(36, 36, 36, 123);\n"
 "	border-width: 0px;\n"
 "	border-style: solid;\n"
 "}\n"
@@ -7183,8 +7948,8 @@ class Ui_MainWindow(object):
 "\n"
 "QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
 "	width: 0px;\n"
-"	height"
-                        ": 0px;\n"
+"	"
+                        "height: 0px;\n"
 "	background-color: transparent;\n"
 "}\n"
 "\n"
@@ -7227,8 +7992,8 @@ class Ui_MainWindow(object):
 "	background-color: transparent;\n"
 "	subcontrol-position: right;\n"
 "	subcontrol-origin: margin;\n"
-"	border-widt"
-                        "h: 0px;\n"
+"	borde"
+                        "r-width: 0px;\n"
 "	border-radius: 0px;\n"
 "	border-style: solid;\n"
 "}\n"
@@ -7252,11 +8017,11 @@ class Ui_MainWindow(object):
         self.ScrollArea_Middle_Tool_DatasetCreator.setWidgetResizable(True)
         self.ScrollArea_Middle_WidgetContents_Tool_DatasetCreator = QWidget()
         self.ScrollArea_Middle_WidgetContents_Tool_DatasetCreator.setObjectName(u"ScrollArea_Middle_WidgetContents_Tool_DatasetCreator")
-        self.ScrollArea_Middle_WidgetContents_Tool_DatasetCreator.setGeometry(QRect(0, 0, 621, 1221))
-        self.verticalLayout_20 = QVBoxLayout(self.ScrollArea_Middle_WidgetContents_Tool_DatasetCreator)
-        self.verticalLayout_20.setSpacing(12)
-        self.verticalLayout_20.setObjectName(u"verticalLayout_20")
-        self.verticalLayout_20.setContentsMargins(12, 12, 12, 12)
+        self.ScrollArea_Middle_WidgetContents_Tool_DatasetCreator.setGeometry(QRect(0, 0, 621, 1233))
+        self.verticalLayout_17 = QVBoxLayout(self.ScrollArea_Middle_WidgetContents_Tool_DatasetCreator)
+        self.verticalLayout_17.setSpacing(12)
+        self.verticalLayout_17.setObjectName(u"verticalLayout_17")
+        self.verticalLayout_17.setContentsMargins(12, 12, 12, 12)
         self.GroupBox_EssentialParams_Tool_DatasetCreator = QGroupBox(self.ScrollArea_Middle_WidgetContents_Tool_DatasetCreator)
         self.GroupBox_EssentialParams_Tool_DatasetCreator.setObjectName(u"GroupBox_EssentialParams_Tool_DatasetCreator")
         self.GroupBox_EssentialParams_Tool_DatasetCreator.setStyleSheet(u"QGroupBox {\n"
@@ -8563,313 +9328,15 @@ class Ui_MainWindow(object):
         self.verticalLayout_111.addWidget(self.Frame_AdvanceSettings_Tool_DatasetCreator)
 
 
-        self.verticalLayout_20.addWidget(self.GroupBox_EssentialParams_Tool_DatasetCreator)
+        self.verticalLayout_17.addWidget(self.GroupBox_EssentialParams_Tool_DatasetCreator)
+
+        self.VerticalSpacer_Tool_DatasetCreator = QSpacerItem(0, 0, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+        self.verticalLayout_17.addItem(self.VerticalSpacer_Tool_DatasetCreator)
 
         self.ScrollArea_Middle_Tool_DatasetCreator.setWidget(self.ScrollArea_Middle_WidgetContents_Tool_DatasetCreator)
 
         self.gridLayout_11.addWidget(self.ScrollArea_Middle_Tool_DatasetCreator, 0, 1, 1, 1)
-
-        self.Widget_Right_Tool_DatasetCreator = QWidget(self.StackedWidget_Pages_Tool_DatasetCreator)
-        self.Widget_Right_Tool_DatasetCreator.setObjectName(u"Widget_Right_Tool_DatasetCreator")
-        self.Widget_Right_Tool_DatasetCreator.setMaximumSize(QSize(420, 16777215))
-        self.Widget_Right_Tool_DatasetCreator.setStyleSheet(u"QWidget {\n"
-"	background-color: rgb(36, 36, 36);\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QWidget:hover {\n"
-"}")
-        self.gridLayout_16 = QGridLayout(self.Widget_Right_Tool_DatasetCreator)
-        self.gridLayout_16.setSpacing(12)
-        self.gridLayout_16.setObjectName(u"gridLayout_16")
-        self.gridLayout_16.setContentsMargins(12, 12, 12, 12)
-        self.TextBrowser_Params_Tool_DatasetCreator = QTextBrowser(self.Widget_Right_Tool_DatasetCreator)
-        self.TextBrowser_Params_Tool_DatasetCreator.setObjectName(u"TextBrowser_Params_Tool_DatasetCreator")
-        sizePolicy1.setHeightForWidth(self.TextBrowser_Params_Tool_DatasetCreator.sizePolicy().hasHeightForWidth())
-        self.TextBrowser_Params_Tool_DatasetCreator.setSizePolicy(sizePolicy1)
-        self.TextBrowser_Params_Tool_DatasetCreator.setStyleSheet(u"QTextBrowser {\n"
-"	background-color: rgb(33, 33, 33);\n"
-"	/*padding-top: 1.5px;*/\n"
-"	/*padding-bottom: 1.5px;*/\n"
-"	padding-left: 15px;\n"
-"	padding-right: 6px;\n"
-"	border-width: 1px;\n"
-"	border-style: solid;\n"
-"	border-color:transparent;\n"
-"}\n"
-"\n"
-"\n"
-"QScrollBar::vertical {\n"
-"	width: 9px;\n"
-"	background-color: rgb(45, 45, 45);\n"
-"	border-width: 1px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: transparent;\n"
-"	margin: 0px;\n"
-"}\n"
-"QScrollBar::vertical:hover {\n"
-"	background-color: rgba(33, 33, 33, 99);\n"
-"}\n"
-"\n"
-"QScrollBar::add-line:vertical {\n"
-"	height: 0px;\n"
-"	background-color: transparent;\n"
-"	subcontrol-position: bottom;\n"
-"	subcontrol-origin: margin;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"\n"
-"QScrollBar::sub-line:vertical {\n"
-"	height: 0px;\n"
-"	background-color: transparent;\n"
-"	subcontrol-position: top;\n"
-"	subcontrol-origin: margin;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-st"
-                        "yle: solid;\n"
-"}\n"
-"\n"
-"QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
-"	width: 0px;\n"
-"	height: 0px;\n"
-"	background-color: transparent;\n"
-"}\n"
-"\n"
-"QScrollBar::handle:vertical {\n"
-"	background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QScrollBar::handle:vertical:hover {\n"
-"	background-color: rgb(120, 120, 120);\n"
-"}\n"
-"\n"
-"\n"
-"QScrollBar::horizontal {\n"
-"	height: 9px;\n"
-"	background-color: rgb(45, 45, 45);\n"
-"	border-width: 1px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: transparent;\n"
-"	margin: 0px;\n"
-"}\n"
-"QScrollBar::horizontal:hover {\n"
-"	background-color: rgb(60, 60, 60);\n"
-"}\n"
-"\n"
-"QScrollBar::add-line:horizontal {\n"
-"	width: 0px;\n"
-"	background-color: transparent;\n"
-"	subcontrol-position: left;\n"
-"	subcontrol-origin: margin;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"\n"
-"QScrollBar::sub-line:horizontal {\n"
-"	width: 0px;\n"
-""
-                        "	background-color: transparent;\n"
-"	subcontrol-position: right;\n"
-"	subcontrol-origin: margin;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"\n"
-"QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {\n"
-"	width: 0px;\n"
-"	height: 0px;\n"
-"	background-color: transparent;\n"
-"}\n"
-"\n"
-"QScrollBar::handle:horizontal {\n"
-"	background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QScrollBar::handle:horizontal:hover {\n"
-"	background-color: rgb(120, 120, 120);\n"
-"}")
-
-        self.gridLayout_16.addWidget(self.TextBrowser_Params_Tool_DatasetCreator, 0, 0, 1, 2)
-
-        self.Button_SyncParams_Tool_DatasetCreator = QPushButton(self.Widget_Right_Tool_DatasetCreator)
-        self.Button_SyncParams_Tool_DatasetCreator.setObjectName(u"Button_SyncParams_Tool_DatasetCreator")
-        self.Button_SyncParams_Tool_DatasetCreator.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	font-size: 12px;\n"
-"	background-color: transparent;\n"
-"	padding: 12px;\n"
-"	border-width: 1.5px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgb(120, 120, 120);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.gridLayout_16.addWidget(self.Button_SyncParams_Tool_DatasetCreator, 1, 0, 1, 1)
-
-        self.Button_CheckOutput_Tool_DatasetCreator = QPushButton(self.Widget_Right_Tool_DatasetCreator)
-        self.Button_CheckOutput_Tool_DatasetCreator.setObjectName(u"Button_CheckOutput_Tool_DatasetCreator")
-        self.Button_CheckOutput_Tool_DatasetCreator.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	font-size: 12px;\n"
-"	background-color: transparent;\n"
-"	padding: 12px;\n"
-"	border-width: 1.5px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgb(120, 120, 120);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.gridLayout_16.addWidget(self.Button_CheckOutput_Tool_DatasetCreator, 1, 1, 1, 1)
-
-
-        self.gridLayout_11.addWidget(self.Widget_Right_Tool_DatasetCreator, 0, 2, 1, 1)
-
-        self.ProgressBar_Tool_DatasetCreator = QProgressBar(self.StackedWidget_Pages_Tool_DatasetCreator)
-        self.ProgressBar_Tool_DatasetCreator.setObjectName(u"ProgressBar_Tool_DatasetCreator")
-        self.ProgressBar_Tool_DatasetCreator.setMinimumSize(QSize(0, 30))
-        self.ProgressBar_Tool_DatasetCreator.setStyleSheet(u"QProgressBar {\n"
-"	text-align: center;\n"
-"	color: rgb(255, 255, 255);\n"
-"	background-color: rgb(60, 60, 60);\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"\n"
-"QProgressBar:chunk {\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	background-color: qlineargradient(spread: pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgb(60, 60, 60), stop:1  rgb(123, 123, 123));\n"
-"}")
-        self.ProgressBar_Tool_DatasetCreator.setValue(0)
-        self.ProgressBar_Tool_DatasetCreator.setTextVisible(False)
-        self.horizontalLayout_37 = QHBoxLayout(self.ProgressBar_Tool_DatasetCreator)
-        self.horizontalLayout_37.setSpacing(0)
-        self.horizontalLayout_37.setObjectName(u"horizontalLayout_37")
-        self.horizontalLayout_37.setContentsMargins(0, 0, 0, 0)
-        self.StackedWidget_Tool_DatasetCreator = QStackedWidget(self.ProgressBar_Tool_DatasetCreator)
-        self.StackedWidget_Tool_DatasetCreator.setObjectName(u"StackedWidget_Tool_DatasetCreator")
-        self.StackedWidget_Tool_DatasetCreator.setMaximumSize(QSize(16777215, 30))
-        self.StackedWidget_Tool_DatasetCreator.setStyleSheet(u"QWidget {\n"
-"	background-color: rgba(90, 90, 90, 45);\n"
-"}\n"
-"QWidget:hover {\n"
-"	background-color: rgba(120, 120, 120, 60);\n"
-"}")
-        self.Page_Tool_DatasetCreator_Execute = QWidget()
-        self.Page_Tool_DatasetCreator_Execute.setObjectName(u"Page_Tool_DatasetCreator_Execute")
-        self.verticalLayout_92 = QVBoxLayout(self.Page_Tool_DatasetCreator_Execute)
-        self.verticalLayout_92.setSpacing(0)
-        self.verticalLayout_92.setObjectName(u"verticalLayout_92")
-        self.verticalLayout_92.setContentsMargins(0, 0, 0, 0)
-        self.Button_Tool_DatasetCreator_Execute = QPushButton(self.Page_Tool_DatasetCreator_Execute)
-        self.Button_Tool_DatasetCreator_Execute.setObjectName(u"Button_Tool_DatasetCreator_Execute")
-        sizePolicy5.setHeightForWidth(self.Button_Tool_DatasetCreator_Execute.sizePolicy().hasHeightForWidth())
-        self.Button_Tool_DatasetCreator_Execute.setSizePolicy(sizePolicy5)
-        self.Button_Tool_DatasetCreator_Execute.setMinimumSize(QSize(0, 30))
-        self.Button_Tool_DatasetCreator_Execute.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"	/*background-color: rgba(90, 90, 90, 45);*/\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	color: rgba(255, 255, 255, 240);\n"
-"	/*background-color: rgba(120, 120, 120, 60);*/\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.verticalLayout_92.addWidget(self.Button_Tool_DatasetCreator_Execute)
-
-        self.StackedWidget_Tool_DatasetCreator.addWidget(self.Page_Tool_DatasetCreator_Execute)
-        self.Page_Tool_DatasetCreator_Terminate = QWidget()
-        self.Page_Tool_DatasetCreator_Terminate.setObjectName(u"Page_Tool_DatasetCreator_Terminate")
-        self.verticalLayout_93 = QVBoxLayout(self.Page_Tool_DatasetCreator_Terminate)
-        self.verticalLayout_93.setSpacing(0)
-        self.verticalLayout_93.setObjectName(u"verticalLayout_93")
-        self.verticalLayout_93.setContentsMargins(0, 0, 0, 0)
-        self.Button_Tool_DatasetCreator_Terminate = QPushButton(self.Page_Tool_DatasetCreator_Terminate)
-        self.Button_Tool_DatasetCreator_Terminate.setObjectName(u"Button_Tool_DatasetCreator_Terminate")
-        sizePolicy5.setHeightForWidth(self.Button_Tool_DatasetCreator_Terminate.sizePolicy().hasHeightForWidth())
-        self.Button_Tool_DatasetCreator_Terminate.setSizePolicy(sizePolicy5)
-        self.Button_Tool_DatasetCreator_Terminate.setMinimumSize(QSize(0, 30))
-        self.Button_Tool_DatasetCreator_Terminate.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"	/*background-color: rgba(90, 90, 90, 45);*/\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	color: rgba(255, 255, 255, 240);\n"
-"	/*background-color: rgba(120, 120, 120, 60);*/\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.verticalLayout_93.addWidget(self.Button_Tool_DatasetCreator_Terminate)
-
-        self.StackedWidget_Tool_DatasetCreator.addWidget(self.Page_Tool_DatasetCreator_Terminate)
-
-        self.horizontalLayout_37.addWidget(self.StackedWidget_Tool_DatasetCreator)
-
-
-        self.gridLayout_11.addWidget(self.ProgressBar_Tool_DatasetCreator, 1, 0, 1, 3)
 
         self.StackedWidget_Pages_Tools.addWidget(self.StackedWidget_Pages_Tool_DatasetCreator)
         self.StackedWidget_Pages_Tool_VoiceTrainer = QWidget()
@@ -8880,9 +9347,10 @@ class Ui_MainWindow(object):
         self.gridLayout_12.setContentsMargins(0, 0, 0, 0)
         self.Widget_Left_Tool_VoiceTrainer = QWidget(self.StackedWidget_Pages_Tool_VoiceTrainer)
         self.Widget_Left_Tool_VoiceTrainer.setObjectName(u"Widget_Left_Tool_VoiceTrainer")
+        self.Widget_Left_Tool_VoiceTrainer.setMinimumSize(QSize(150, 0))
         self.Widget_Left_Tool_VoiceTrainer.setMaximumSize(QSize(210, 16777215))
         self.Widget_Left_Tool_VoiceTrainer.setStyleSheet(u"QWidget {\n"
-"	background-color: rgb(36, 36, 36);\n"
+"	background-color: rgba(36, 36, 36, 123);\n"
 "	border-width: 0px;\n"
 "	border-style: solid;\n"
 "}\n"
@@ -8977,7 +9445,110 @@ class Ui_MainWindow(object):
 "QHeaderView::down-arrow {\n"
 "	position: ;\n"
 "	image: ;\n"
-"}*/")
+"}*/\n"
+"\n"
+"\n"
+"QScrollBar::vertical {\n"
+"	width: 9px;\n"
+"	background-color: rgb(45, 45, 45);\n"
+"	border-width: 1px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: transparent;\n"
+"	margin: 0px;\n"
+"}\n"
+"QScrollBar::vertical:hover {\n"
+"	background-color: rgba(33, 3"
+                        "3, 33, 99);\n"
+"}\n"
+"\n"
+"QScrollBar::add-line:vertical {\n"
+"	height: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: bottom;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QScrollBar::sub-line:vertical {\n"
+"	height: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: top;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
+"	width: 0px;\n"
+"	height: 0px;\n"
+"	background-color: transparent;\n"
+"}\n"
+"\n"
+"QScrollBar::handle:vertical {\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QScrollBar::handle:vertical:hover {\n"
+"	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QScrollBar::horizontal {\n"
+"	height: 9px;\n"
+"	background-color: rgb(45, 45, 45);\n"
+"	border-width: 1px;\n"
+"	border"
+                        "-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: transparent;\n"
+"	margin: 0px;\n"
+"}\n"
+"QScrollBar::horizontal:hover {\n"
+"	background-color: rgb(60, 60, 60);\n"
+"}\n"
+"\n"
+"QScrollBar::add-line:horizontal {\n"
+"	width: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: left;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QScrollBar::sub-line:horizontal {\n"
+"	width: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: right;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {\n"
+"	width: 0px;\n"
+"	height: 0px;\n"
+"	background-color: transparent;\n"
+"}\n"
+"\n"
+"QScrollBar::handle:horizontal {\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QScrollBar::handle:horizontal:hover {\n"
+"	backgro"
+                        "und-color: rgb(120, 120, 120);\n"
+"}")
 
         self.verticalLayout_10.addWidget(self.TreeWidget_Catalogue_Tool_VoiceTrainer)
 
@@ -8988,7 +9559,7 @@ class Ui_MainWindow(object):
         self.ScrollArea_Middle_Tool_VoiceTrainer.setObjectName(u"ScrollArea_Middle_Tool_VoiceTrainer")
         self.ScrollArea_Middle_Tool_VoiceTrainer.setMinimumSize(QSize(630, 0))
         self.ScrollArea_Middle_Tool_VoiceTrainer.setStyleSheet(u"QScrollArea {\n"
-"	background-color: rgb(36, 36, 36);\n"
+"	background-color: rgba(36, 36, 36, 123);\n"
 "	border-width: 0px;\n"
 "	border-style: solid;\n"
 "}\n"
@@ -9031,8 +9602,8 @@ class Ui_MainWindow(object):
 "\n"
 "QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
 "	width: 0px;\n"
-"	height"
-                        ": 0px;\n"
+"	"
+                        "height: 0px;\n"
 "	background-color: transparent;\n"
 "}\n"
 "\n"
@@ -9075,8 +9646,8 @@ class Ui_MainWindow(object):
 "	background-color: transparent;\n"
 "	subcontrol-position: right;\n"
 "	subcontrol-origin: margin;\n"
-"	border-widt"
-                        "h: 0px;\n"
+"	borde"
+                        "r-width: 0px;\n"
 "	border-radius: 0px;\n"
 "	border-style: solid;\n"
 "}\n"
@@ -9100,11 +9671,11 @@ class Ui_MainWindow(object):
         self.ScrollArea_Middle_Tool_VoiceTrainer.setWidgetResizable(True)
         self.ScrollArea_Middle_WidgetContents_Tool_VoiceTrainer = QWidget()
         self.ScrollArea_Middle_WidgetContents_Tool_VoiceTrainer.setObjectName(u"ScrollArea_Middle_WidgetContents_Tool_VoiceTrainer")
-        self.ScrollArea_Middle_WidgetContents_Tool_VoiceTrainer.setGeometry(QRect(0, 0, 621, 2061))
-        self.verticalLayout_22 = QVBoxLayout(self.ScrollArea_Middle_WidgetContents_Tool_VoiceTrainer)
-        self.verticalLayout_22.setSpacing(12)
-        self.verticalLayout_22.setObjectName(u"verticalLayout_22")
-        self.verticalLayout_22.setContentsMargins(12, 12, 12, 12)
+        self.ScrollArea_Middle_WidgetContents_Tool_VoiceTrainer.setGeometry(QRect(0, 0, 621, 2073))
+        self.verticalLayout_18 = QVBoxLayout(self.ScrollArea_Middle_WidgetContents_Tool_VoiceTrainer)
+        self.verticalLayout_18.setSpacing(12)
+        self.verticalLayout_18.setObjectName(u"verticalLayout_18")
+        self.verticalLayout_18.setContentsMargins(12, 12, 12, 12)
         self.GroupBox_EssentialParams_Tool_VoiceTrainer = QGroupBox(self.ScrollArea_Middle_WidgetContents_Tool_VoiceTrainer)
         self.GroupBox_EssentialParams_Tool_VoiceTrainer.setObjectName(u"GroupBox_EssentialParams_Tool_VoiceTrainer")
         self.GroupBox_EssentialParams_Tool_VoiceTrainer.setStyleSheet(u"QGroupBox {\n"
@@ -10428,7 +10999,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_114.addWidget(self.Frame_AdvanceSettings_Tool_VoiceTrainer)
 
 
-        self.verticalLayout_22.addWidget(self.GroupBox_EssentialParams_Tool_VoiceTrainer)
+        self.verticalLayout_18.addWidget(self.GroupBox_EssentialParams_Tool_VoiceTrainer)
 
         self.GroupBox_OptionalParams_Tool_VoiceTrainer = QGroupBox(self.ScrollArea_Middle_WidgetContents_Tool_VoiceTrainer)
         self.GroupBox_OptionalParams_Tool_VoiceTrainer.setObjectName(u"GroupBox_OptionalParams_Tool_VoiceTrainer")
@@ -10977,7 +11548,11 @@ class Ui_MainWindow(object):
         self.verticalLayout_34.addWidget(self.Frame_AdvanceOptionalSettings_Tool_VoiceTrainer)
 
 
-        self.verticalLayout_22.addWidget(self.GroupBox_OptionalParams_Tool_VoiceTrainer)
+        self.verticalLayout_18.addWidget(self.GroupBox_OptionalParams_Tool_VoiceTrainer)
+
+        self.VerticalSpacer_Tool_VoiceTrainer = QSpacerItem(0, 0, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+        self.verticalLayout_18.addItem(self.VerticalSpacer_Tool_VoiceTrainer)
 
         self.ScrollArea_Middle_Tool_VoiceTrainer.setWidget(self.ScrollArea_Middle_WidgetContents_Tool_VoiceTrainer)
 
@@ -10985,9 +11560,10 @@ class Ui_MainWindow(object):
 
         self.Widget_Right_Tool_VoiceTrainer = QWidget(self.StackedWidget_Pages_Tool_VoiceTrainer)
         self.Widget_Right_Tool_VoiceTrainer.setObjectName(u"Widget_Right_Tool_VoiceTrainer")
+        self.Widget_Right_Tool_VoiceTrainer.setMinimumSize(QSize(210, 0))
         self.Widget_Right_Tool_VoiceTrainer.setMaximumSize(QSize(420, 16777215))
         self.Widget_Right_Tool_VoiceTrainer.setStyleSheet(u"QWidget {\n"
-"	background-color: rgb(36, 36, 36);\n"
+"	background-color: rgba(36, 36, 36, 123);\n"
 "	border-width: 0px;\n"
 "	border-style: solid;\n"
 "}\n"
@@ -11122,7 +11698,7 @@ class Ui_MainWindow(object):
 "	text-align: center;\n"
 "	font-size: 12px;\n"
 "	background-color: transparent;\n"
-"	padding: 12px;\n"
+"	padding: 9.9px;\n"
 "	border-width: 1.5px;\n"
 "	border-radius: 6px;\n"
 "	border-style: solid;\n"
@@ -11148,7 +11724,7 @@ class Ui_MainWindow(object):
 "	text-align: center;\n"
 "	font-size: 12px;\n"
 "	background-color: transparent;\n"
-"	padding: 12px;\n"
+"	padding: 9.9px;\n"
 "	border-width: 1.5px;\n"
 "	border-radius: 6px;\n"
 "	border-style: solid;\n"
@@ -11294,9 +11870,10 @@ class Ui_MainWindow(object):
         self.gridLayout_13.setContentsMargins(0, 0, 0, 0)
         self.Widget_Left_Tool_VoiceConverter = QWidget(self.StackedWidget_Pages_Tool_VoiceConverter)
         self.Widget_Left_Tool_VoiceConverter.setObjectName(u"Widget_Left_Tool_VoiceConverter")
+        self.Widget_Left_Tool_VoiceConverter.setMinimumSize(QSize(150, 0))
         self.Widget_Left_Tool_VoiceConverter.setMaximumSize(QSize(210, 16777215))
         self.Widget_Left_Tool_VoiceConverter.setStyleSheet(u"QWidget {\n"
-"	background-color: rgb(36, 36, 36);\n"
+"	background-color: rgba(36, 36, 36, 123);\n"
 "	border-width: 0px;\n"
 "	border-style: solid;\n"
 "}\n"
@@ -11391,7 +11968,110 @@ class Ui_MainWindow(object):
 "QHeaderView::down-arrow {\n"
 "	position: ;\n"
 "	image: ;\n"
-"}*/")
+"}*/\n"
+"\n"
+"\n"
+"QScrollBar::vertical {\n"
+"	width: 9px;\n"
+"	background-color: rgb(45, 45, 45);\n"
+"	border-width: 1px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: transparent;\n"
+"	margin: 0px;\n"
+"}\n"
+"QScrollBar::vertical:hover {\n"
+"	background-color: rgba(33, 3"
+                        "3, 33, 99);\n"
+"}\n"
+"\n"
+"QScrollBar::add-line:vertical {\n"
+"	height: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: bottom;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QScrollBar::sub-line:vertical {\n"
+"	height: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: top;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
+"	width: 0px;\n"
+"	height: 0px;\n"
+"	background-color: transparent;\n"
+"}\n"
+"\n"
+"QScrollBar::handle:vertical {\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QScrollBar::handle:vertical:hover {\n"
+"	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QScrollBar::horizontal {\n"
+"	height: 9px;\n"
+"	background-color: rgb(45, 45, 45);\n"
+"	border-width: 1px;\n"
+"	border"
+                        "-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: transparent;\n"
+"	margin: 0px;\n"
+"}\n"
+"QScrollBar::horizontal:hover {\n"
+"	background-color: rgb(60, 60, 60);\n"
+"}\n"
+"\n"
+"QScrollBar::add-line:horizontal {\n"
+"	width: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: left;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QScrollBar::sub-line:horizontal {\n"
+"	width: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: right;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {\n"
+"	width: 0px;\n"
+"	height: 0px;\n"
+"	background-color: transparent;\n"
+"}\n"
+"\n"
+"QScrollBar::handle:horizontal {\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QScrollBar::handle:horizontal:hover {\n"
+"	backgro"
+                        "und-color: rgb(120, 120, 120);\n"
+"}")
 
         self.verticalLayout_11.addWidget(self.TreeWidget_Catalogue_Tool_VoiceConverter)
 
@@ -11402,7 +12082,7 @@ class Ui_MainWindow(object):
         self.ScrollArea_Middle_Tool_VoiceConverter.setObjectName(u"ScrollArea_Middle_Tool_VoiceConverter")
         self.ScrollArea_Middle_Tool_VoiceConverter.setMinimumSize(QSize(630, 0))
         self.ScrollArea_Middle_Tool_VoiceConverter.setStyleSheet(u"QScrollArea {\n"
-"	background-color: rgb(36, 36, 36);\n"
+"	background-color: rgba(36, 36, 36, 123);\n"
 "	border-width: 0px;\n"
 "	border-style: solid;\n"
 "}\n"
@@ -11445,8 +12125,8 @@ class Ui_MainWindow(object):
 "\n"
 "QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
 "	width: 0px;\n"
-"	height"
-                        ": 0px;\n"
+"	"
+                        "height: 0px;\n"
 "	background-color: transparent;\n"
 "}\n"
 "\n"
@@ -11489,8 +12169,8 @@ class Ui_MainWindow(object):
 "	background-color: transparent;\n"
 "	subcontrol-position: right;\n"
 "	subcontrol-origin: margin;\n"
-"	border-widt"
-                        "h: 0px;\n"
+"	borde"
+                        "r-width: 0px;\n"
 "	border-radius: 0px;\n"
 "	border-style: solid;\n"
 "}\n"
@@ -11514,11 +12194,11 @@ class Ui_MainWindow(object):
         self.ScrollArea_Middle_Tool_VoiceConverter.setWidgetResizable(True)
         self.ScrollArea_Middle_WidgetContents_Tool_VoiceConverter = QWidget()
         self.ScrollArea_Middle_WidgetContents_Tool_VoiceConverter.setObjectName(u"ScrollArea_Middle_WidgetContents_Tool_VoiceConverter")
-        self.ScrollArea_Middle_WidgetContents_Tool_VoiceConverter.setGeometry(QRect(0, 0, 621, 1318))
-        self.verticalLayout_26 = QVBoxLayout(self.ScrollArea_Middle_WidgetContents_Tool_VoiceConverter)
-        self.verticalLayout_26.setSpacing(12)
-        self.verticalLayout_26.setObjectName(u"verticalLayout_26")
-        self.verticalLayout_26.setContentsMargins(12, 12, 12, 12)
+        self.ScrollArea_Middle_WidgetContents_Tool_VoiceConverter.setGeometry(QRect(0, 0, 621, 1330))
+        self.verticalLayout_19 = QVBoxLayout(self.ScrollArea_Middle_WidgetContents_Tool_VoiceConverter)
+        self.verticalLayout_19.setSpacing(12)
+        self.verticalLayout_19.setObjectName(u"verticalLayout_19")
+        self.verticalLayout_19.setContentsMargins(12, 12, 12, 12)
         self.GroupBox_EssentialParams_Tool_VoiceConverter = QGroupBox(self.ScrollArea_Middle_WidgetContents_Tool_VoiceConverter)
         self.GroupBox_EssentialParams_Tool_VoiceConverter.setObjectName(u"GroupBox_EssentialParams_Tool_VoiceConverter")
         self.GroupBox_EssentialParams_Tool_VoiceConverter.setStyleSheet(u"QGroupBox {\n"
@@ -11843,7 +12523,6 @@ class Ui_MainWindow(object):
         self.verticalLayout_98.setContentsMargins(21, 12, 21, 12)
         self.Label_Tool_VoiceConverter_Text = QLabel(self.Frame_Tool_VoiceConverter_Text)
         self.Label_Tool_VoiceConverter_Text.setObjectName(u"Label_Tool_VoiceConverter_Text")
-        self.Label_Tool_VoiceConverter_Text.setMinimumSize(QSize(0, 60))
         self.Label_Tool_VoiceConverter_Text.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	/*color: rgb(255, 255, 255);*/\n"
@@ -12990,7 +13669,11 @@ class Ui_MainWindow(object):
         self.verticalLayout_117.addWidget(self.Frame_AdvanceSettings_Tool_VoiceConverter)
 
 
-        self.verticalLayout_26.addWidget(self.GroupBox_EssentialParams_Tool_VoiceConverter)
+        self.verticalLayout_19.addWidget(self.GroupBox_EssentialParams_Tool_VoiceConverter)
+
+        self.VerticalSpacer_Tool_VoiceConverter = QSpacerItem(0, 0, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+        self.verticalLayout_19.addItem(self.VerticalSpacer_Tool_VoiceConverter)
 
         self.ScrollArea_Middle_Tool_VoiceConverter.setWidget(self.ScrollArea_Middle_WidgetContents_Tool_VoiceConverter)
 
@@ -12998,9 +13681,10 @@ class Ui_MainWindow(object):
 
         self.Widget_Right_Tool_VoiceConverter = QWidget(self.StackedWidget_Pages_Tool_VoiceConverter)
         self.Widget_Right_Tool_VoiceConverter.setObjectName(u"Widget_Right_Tool_VoiceConverter")
+        self.Widget_Right_Tool_VoiceConverter.setMinimumSize(QSize(210, 0))
         self.Widget_Right_Tool_VoiceConverter.setMaximumSize(QSize(420, 16777215))
         self.Widget_Right_Tool_VoiceConverter.setStyleSheet(u"QWidget {\n"
-"	background-color: rgb(36, 36, 36);\n"
+"	background-color: rgba(36, 36, 36, 123);\n"
 "	border-width: 0px;\n"
 "	border-style: solid;\n"
 "}\n"
@@ -13135,7 +13819,7 @@ class Ui_MainWindow(object):
 "	text-align: center;\n"
 "	font-size: 12px;\n"
 "	background-color: transparent;\n"
-"	padding: 12px;\n"
+"	padding: 9.9px;\n"
 "	border-width: 1.5px;\n"
 "	border-radius: 6px;\n"
 "	border-style: solid;\n"
@@ -13287,7 +13971,7 @@ class Ui_MainWindow(object):
         self.Frame_Settings_Top.setObjectName(u"Frame_Settings_Top")
         self.Frame_Settings_Top.setMinimumSize(QSize(0, 60))
         self.Frame_Settings_Top.setStyleSheet(u"QFrame {\n"
-"	background-color: rgb(36, 36, 36);\n"
+"	background-color: rgba(36, 36, 36, 123);\n"
 "	border-width: 0px;\n"
 "	border-style: solid;\n"
 "}")
@@ -13370,6 +14054,11 @@ class Ui_MainWindow(object):
 
         self.Frame_Settings_Middle = QFrame(self.Page_Settings)
         self.Frame_Settings_Middle.setObjectName(u"Frame_Settings_Middle")
+        self.Frame_Settings_Middle.setStyleSheet(u"QFrame {\n"
+"	background-color: rgba(36, 36, 36, 123);\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
         self.verticalLayout_13 = QVBoxLayout(self.Frame_Settings_Middle)
         self.verticalLayout_13.setSpacing(0)
         self.verticalLayout_13.setObjectName(u"verticalLayout_13")
@@ -13861,7 +14550,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_23 = QVBoxLayout(self.Frame_Console)
         self.verticalLayout_23.setSpacing(0)
         self.verticalLayout_23.setObjectName(u"verticalLayout_23")
-        self.verticalLayout_23.setContentsMargins(12, 0, 12, 0)
+        self.verticalLayout_23.setContentsMargins(21, 0, 21, 0)
         self.PlainTextEdit_Console = QPlainTextEdit(self.Frame_Console)
         self.PlainTextEdit_Console.setObjectName(u"PlainTextEdit_Console")
         self.PlainTextEdit_Console.setStyleSheet(u"QPlainTextEdit {\n"

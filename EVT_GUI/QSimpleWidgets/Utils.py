@@ -191,15 +191,20 @@ def ItemReplacer(
 
 def NormPath(
     String: str,
-    PathType: Optional[str] = None
+    PathType: Optional[str] = None,
+    TrailingSlash: Optional[bool] = None
 ):
     '''
     '''
     if re.search(r':[/\\\\]', str(String)): #if f':{os.path.sep}' in str(String):
+        if TrailingSlash is None:
+            TrailingSlash = True if str(String).endswith(('/', '\\')) else False
         if platform.system() == 'Windows' or PathType == 'Win32':
             String = Path(String).as_posix().replace(r'/', '\\')
+            String += '\\' if TrailingSlash else ''
         if platform.system() == 'Linux' or PathType == 'Posix':
             String = Path(String).as_posix()
+            String += '/' if TrailingSlash else ''
         return String
 
     else:
@@ -243,16 +248,35 @@ def RawString(
 
 def RunCMD(
     Args: list,
-    PathType: Optional[str] = None
+    PathType: Optional[str] = None,
+    DecodeResult: Optional[bool] = None
 ):
     '''
     '''
-    Input = str()
-    for Arg in Args:
-        Input += f'{RawString(Arg, PathType)}\n'
-    Input = Input.encode(encoding = 'gbk')
-    Subprocess = subprocess.Popen(['cmd'], stdin = subprocess.PIPE, env = os.environ)
-    Subprocess.communicate(Input)
+    ArgType = 'List' if isinstance(Args[0], list) else 'String'
+
+    if ArgType is 'List':
+        Output, Error = (bytes(), bytes())
+        for Arg in Args:
+            Subprocess = subprocess.Popen(Arg, stdin = subprocess.PIPE, stdout = subprocess.PIPE, stderr = subprocess.PIPE, env = os.environ, creationflags = subprocess.CREATE_NO_WINDOW)
+            Result = Subprocess.communicate()
+            Output, Error = Output + Result[0], Error + Result[1]
+        #Output, Error = Output, Error
+
+    if ArgType is 'String':
+        Input = str()
+        for Arg in Args:
+            Input += f'{RawString(Arg, PathType)}\n'
+        if platform.system() == 'Windows':
+            Input = Input.encode(encoding = 'gbk')
+            ShellArgs = ['cmd']
+        if platform.system() == 'Linux':
+            Input = Input.encode(encoding = 'utf-8')
+            ShellArgs = ['bash', '-c']
+        Subprocess = subprocess.Popen(ShellArgs, stdin = subprocess.PIPE, stdout = subprocess.PIPE, stderr = subprocess.PIPE, env = os.environ, creationflags = subprocess.CREATE_NO_WINDOW)
+        Output, Error = Subprocess.communicate(Input)
+
+    return Output.decode(errors = 'ignore') if DecodeResult and Output is not None else Output, Error.decode(errors = 'ignore') if DecodeResult and Error is not None else Error, Subprocess.returncode
 
 
 def SetEnvVar(
@@ -272,7 +296,7 @@ def SetEnvVar(
                 RunCMD(
                     Args = [
                         'for /f "usebackq tokens=2,*" %A in (`REG QUERY "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" /v PATH`) do set SYSPATH=%B',
-                        f'setx PATH "%SYSPATH%{os.pathsep}{Value}" /M' #f'setx PATH "{Value}{os.pathsep}%SYSPATH%" /M'
+                        f'setx PATH "{Value}{os.pathsep}%SYSPATH%" /M' #f'setx PATH "%SYSPATH%{os.pathsep}{Value}" /M'
                     ]
                 )
             else:
@@ -282,13 +306,13 @@ def SetEnvVar(
                 RunCMD(
                     Args = [
                         'for /f "usebackq tokens=2,*" %A in (`reg query HKCU\Environment /v PATH`) do set userPATH=%B',
-                        f'setx PATH "%userPATH%{os.pathsep}{Value}"' #f'setx PATH "{Value}{os.pathsep}%userPATH%"'
+                        f'setx PATH "{Value}{os.pathsep}%userPATH%"' #f'setx PATH "%userPATH%{os.pathsep}{Value}"'
                     ]
                 )
             else:
                 pass
         if Type == 'Temp' or AffectOS:
-            EnvValue = f'{EnvValue}{os.pathsep}{Value}' #EnvValue = f'{Value}{os.pathsep}{EnvValue}'
+            EnvValue = f'{Value}{os.pathsep}{EnvValue}' #EnvValue = f'{EnvValue}{os.pathsep}{Value}'
             os.environ[Variable] = EnvValue
 
     if EnvValue is None:
@@ -395,34 +419,57 @@ def TaskTerminating(
 
 def Booter(
     TargetDir: str = ...,
-    RunnerPath: str = ...,
+    ExecuterPath: str = ...,
     IsFileCompiled: bool = ...,
     DelayTime: int = 3
 ):
     '''
-    subprocess.call([RunnerPath] if IsFileCompiled else ['python.exe', RunnerPath])
+    subprocess.call([ExecuterPath] if IsFileCompiled else ['python.exe', ExecuterPath])
     '''
     BatFilePath = os.path.join(TargetDir, 'Booter.bat')
     with open(BatFilePath, 'w') as BatFile:
         CommandList = [
             '@echo off',
             f'ping 127.0.0.1 -n {DelayTime + 1} > nul',
-            f'start "Programm Running" "{RunnerPath}"' if IsFileCompiled else f'python "{RunnerPath}"',
+            f'start "Programm Running" "{ExecuterPath}"' if IsFileCompiled else f'python "{ExecuterPath}"',
             'del "%~f0"'
         ]
         Commands = "\n".join(CommandList)
         BatFile.write(Commands)
-    subprocess.Popen([BatFilePath], creationflags = subprocess.CREATE_NEW_CONSOLE).communicate()
+    subprocess.Popen([BatFilePath], creationflags = subprocess.CREATE_NEW_CONSOLE).communicate() #RunCMD([BatFilePath])
 
 #############################################################################################################
 
-def CheckIfFileIsCompiled():
+def GetFileInfo():
     '''
     Check whether python file is compiled
     '''
-    IsFileCompiled = False if sys.executable.endswith('python.exe') or sys.argv[0].endswith('.py') else True
+    FileName = Path(sys.argv[0]).name
 
-    return IsFileCompiled
+    if getattr(sys, 'frozen', None):
+        IsFileCompiled = True
+    else:
+        IsFileCompiled = False if FileName.endswith('.py') or sys.executable.endswith('python.exe') else True
+
+    return FileName, IsFileCompiled
+
+
+def GetBaseDir(
+    FilePath: Optional[str] = None,
+    ParentLevel: Optional[int] = None,
+    SearchMEIPASS: bool = False
+):
+    '''
+    Get the parent directory of file, or get the MEIPASS if file is compiled with pyinstaller
+    '''
+    if FilePath is not None:
+        BaseDir = NormPath(Path(str(FilePath)).absolute().parents[ParentLevel if ParentLevel is not None else 0])
+    elif SearchMEIPASS and getattr(sys, 'frozen', None):
+        BaseDir = NormPath(sys._MEIPASS)
+    else:
+        BaseDir = None
+
+    return BaseDir
 
 
 class ManageConfig:
@@ -432,7 +479,8 @@ class ManageConfig:
     def __init__(self,
         Config_Path: Optional[str] = None
     ):
-        self.Config_Path = NormPath(Path(__file__ if CheckIfFileIsCompiled() == False else sys.executable).absolute().parent.joinpath('Config.ini')) if Config_Path == None else Config_Path
+        self.Config_Path = NormPath(Path(os.getenv('SystemDrive')).joinpath('Config.ini')) if Config_Path == None else Config_Path
+        os.makedirs(Path(self.Config_Path).parent, exist_ok = True)
 
     def ReadConfig(self):
         ConfigParser = configparser.ConfigParser()

@@ -1,5 +1,5 @@
-#from .Functions import *
 from .QSimpleWidgets.Utils import *
+from .QSimpleWidgets.QFunctions import *
 from .QSimpleWidgets.ComponentsCustomizer import *
 
 ##############################################################################################################################
@@ -9,37 +9,17 @@ def Function_SetFileDialog(
     LineEdit: QLineEdit,
     Mode: str,
     FileType: Optional[str] = None,
-    #DisplayText: str = "None",
     ButtonTooltip: str = "Browse"
 ):
     '''
     Function to select/save file path (through button)
     '''
-    #LineEdit.setText(DisplayText)
-
     @Slot()
     def SetFileDialog():
-        if Mode == "SelectDir":
-            DisplayText = QFileDialog.getExistingDirectory(
-                caption = "选择文件夹",
-                dir = os.getcwd()
-            )
-        if Mode == "SelectFile":
-            DisplayText, _ = QFileDialog.getOpenFileName(
-                caption = "选择文件",
-                dir = os.getcwd(),
-                filter = FileType
-            )
-        if Mode == "SaveFile":
-            DisplayText, _ = QFileDialog.getSaveFileName(
-                caption = "保存文件",
-                dir = os.getcwd(),
-                filter = FileType
-            )
-
+        DisplayText = Function_GetFileDialog(Mode, FileType)
         LineEdit.setText(DisplayText)
         LineEdit.setStatusTip(DisplayText)
-    
+
     Button.clicked.connect(SetFileDialog)
     Button.setToolTipDuration(-1)
     Button.setToolTip(ButtonTooltip)

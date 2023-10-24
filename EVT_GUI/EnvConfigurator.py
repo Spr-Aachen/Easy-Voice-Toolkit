@@ -1,11 +1,11 @@
 import os
-import sys
+#import sys
 import platform
 import shutil
 import pynvml
-import subprocess
-import pkg_resources
-from packaging import version
+#import subprocess
+#import pkg_resources
+#from packaging import version
 from PySide6.QtCore import QObject, Signal
 
 from .QSimpleWidgets.Utils import *
@@ -62,8 +62,8 @@ class FFmpeg_Installer(QObject):
         
     def Check_FFmpeg(self):
         try:
-            Version = subprocess.check_output(['ffmpeg', '-version'])
-            return Version
+            FFmpegVersion, _, _ = RunCMD([['ffmpeg', '-version']], DecodeResult = True)
+            return FFmpegVersion
         except OSError:
             return False
 
@@ -83,8 +83,7 @@ class FFmpeg_Installer(QObject):
             os.remove(Path_Download) #RunCMD([f'powershell.exe -Command Remove-Item -Force -Path "{Path_Download}"'])
         
         if platform.system() == 'Linux':
-            subprocess.Popen(["sudo", "apt-get", "update"]).communicate()
-            subprocess.Popen(["sudo", "apt-get", "install", "ffmpeg"]).communicate()
+            RunCMD(['sudo apt-get update', 'sudo apt-get install ffmpeg'])
 
     def Execute_FFmpeg_Installation(self):
         Result = self.Check_FFmpeg()
@@ -120,8 +119,8 @@ class GCC_Installer(QObject):
         
     def Check_GCC(self):
         try:
-            Version = subprocess.check_output(['gcc', '--version'])
-            return Version
+            GCCVersion, _, _ = RunCMD([['gcc', '--version']], DecodeResult = True)
+            return GCCVersion
         except OSError:
             return False
 
@@ -141,8 +140,7 @@ class GCC_Installer(QObject):
             os.remove(Path_Download) #RunCMD([f'powershell.exe -Command Remove-Item -Force -Path "{Path_Download}"'])
         
         if platform.system() == 'Linux':
-            subprocess.Popen(["sudo", "apt-get", "update"]).communicate()
-            subprocess.Popen(["sudo", "apt-get", "install", "build-essential"]).communicate()
+            RunCMD(['sudo apt-get update', 'sudo apt-get install build-essential'])
 
     def Execute_GCC_Installation(self):
         Result = self.Check_GCC()
@@ -178,8 +176,8 @@ class CMake_Installer(QObject):
 
     def Check_CMake(self):
         try:
-            Version = subprocess.check_output(['cmake', '--version'])
-            return Version
+            CMakeVersion, _, _ = RunCMD([['cmake', '--version']], DecodeResult = True)
+            return CMakeVersion
         except OSError:
             return False
 
@@ -199,8 +197,7 @@ class CMake_Installer(QObject):
             os.remove(Path_Download) #RunCMD([f'powershell.exe -Command Remove-Item -Force -Path "{Path_Download}"'])
         
         if platform.system() == 'Linux':
-            subprocess.Popen(["sudo", "apt-get", "update"]).communicate()
-            subprocess.Popen(["sudo", "apt-get", "install", "build-essential"]).communicate()
+            RunCMD(['sudo apt-get update', 'sudo apt-get install build-essential'])
 
     def Execute_CMake_Installation(self):
         PathList = os.environ['PATH'].split(os.pathsep)
@@ -248,6 +245,7 @@ class Python_Installer(QObject):
         super().__init__()
 
     def Check_Python(self):
+        '''
         try:
             Version_Current = "%d.%d.%d" % (sys.version_info.major, sys.version_info.minor, sys.version_info.micro)
             if sys.version_info.major == 3 and sys.version_info.minor >= 8:
@@ -255,6 +253,15 @@ class Python_Installer(QObject):
             else:
                 return False
         except ImportError:
+            return False
+        '''
+        try:
+            PythonVersion, _, _ = RunCMD([['python', '--version']], DecodeResult = True)
+            if PythonVersion.split('.')[0] == 'Python 3' and int(PythonVersion.split('.')[1]) >= 8:
+                return PythonVersion
+            else:
+                return False
+        except OSError:
             return False
 
     def Install_Python(self, Version_Download: str):
@@ -269,8 +276,7 @@ class Python_Installer(QObject):
             os.remove(Path_Download) #RunCMD([f'powershell.exe -Command Remove-Item -Force -Path "{Path_Download}"'])
             
         if platform.system() == 'Linux':
-            subprocess.Popen(['sudo', 'apt-get', 'update']).communicate()
-            subprocess.Popen(['sudo', 'apt-get', 'install', '-y', 'python3']).communicate()
+            RunCMD(['sudo apt-get update', 'sudo apt-get install -y python3'])
 
     def Execute_Python_Installation(self, Version_Download: str):
         Result = self.Check_Python()
@@ -307,30 +313,38 @@ class PyReqs_Installer(QObject):
         self.EmitFlag = True
 
     def Check_PyReq(self, Package: str):
+        '''
         try:
             Version_Current = pkg_resources.get_distribution(Package).version #exec("import {0}".format(Package))
             Location_Current = pkg_resources.get_distribution(Package).location
             return Version_Current#, Location_Current
         except pkg_resources.DistributionNotFound: #except ModuleNotFoundError:
             return False
+        '''
+        try:
+            PackageInfo, _, _ = RunCMD([['pip', 'show', Package]], DecodeResult = True)
+            if 'not found' not in PackageInfo:
+                return PackageInfo
+            else:
+                return False
+        except OSError:
+            return False
 
     def Install_PyReq(self, Package: str):
-        '''
-        Ask = "This script requires {0}. Do you want to install {0}? [y/n]".format(Package)
-        Inquiry = input(Ask)
-        while Inquiry not in ("y", "n"):
-            Inquiry = input(Ask)
-        if Inquiry == "y":
-            Cmd = "pip install {0}".format(Package)
-            print(f"Execute commands: {Cmd}")
-            os.system(Cmd)
-        else:
-            exit(-1)
-        '''
         MirrorList = ['https://pypi.org/simple/', 'https://pypi.tuna.tsinghua.edu.cn/simple']
         for Mirror in MirrorList:
-            Result = RunCMD([f'pip3 install {Package} --index-url {Mirror}'])
-            if Result.returncode == 0:
+            '''
+            Ask = "This script requires {0}. Do you want to install {0}? [y/n]".format(Package)
+            Inquiry = input(Ask)
+            while Inquiry not in ("y", "n"):
+                Inquiry = input(Ask)
+            if Inquiry == "y":
+                os.system("pip3 install {0} --index-url {1}".format(Package, Mirror))
+            else:
+                exit(-1)
+            '''
+            _, _, ReturnCode = RunCMD([f'pip3 install {Package} --index-url {Mirror}'])
+            if ReturnCode == 0:
                 break
 
     def Execute_PyReqs_Installation(self, FilePath: str):
@@ -377,6 +391,7 @@ class Pytorch_Installer(QObject):
         self.EmitFlag = True
 
     def Check_Pytorch(self, Package: str):
+        '''
         try:
             Version_Current = version.parse(pkg_resources.get_distribution(Package).version) #exec("import {0}".format(Package))
             if Package == 'torch':
@@ -384,6 +399,15 @@ class Pytorch_Installer(QObject):
             else:
                 return Version_Current
         except pkg_resources.DistributionNotFound: #except ModuleNotFoundError:
+            return False
+        '''
+        try:
+            PackageInfo, _, _ = RunCMD(['pip', 'show', Package], DecodeResult = True)
+            if 'not found' not in PackageInfo:
+                return PackageInfo
+            else:
+                return False
+        except OSError:
             return False
 
     def Install_Pytorch(self, Package: str):

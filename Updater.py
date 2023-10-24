@@ -7,23 +7,27 @@ from typing import Optional
 from PySide6.QtCore import Qt, QObject, QThread, Signal
 from PySide6.QtWidgets import QApplication, QWidget, QVBoxLayout, QSizePolicy, QPushButton, QProgressBar, QLabel
 
-#from GUI.Functions import Function_ExecuteMethod
-from GUI.QSimpleWidgets.Utils import CheckUpdate, DownloadFile, CleanDirectory, NormPath, TaskAccelerating, Booter, CheckIfFileIsCompiled, ManageConfig
+from EVT_GUI.Functions import Function_AnimateProgressBar
+from EVT_GUI.QSimpleWidgets.Utils import CheckUpdate, DownloadFile, CleanDirectory, NormPath, TaskAccelerating, Booter, GetFileInfo, GetBaseDir, ManageConfig
 
 ##############################################################################################################################
 
-IsFileCompiled = CheckIfFileIsCompiled()
+_, IsFileCompiled = GetFileInfo()
 
-TargetDir = NormPath(Path(__file__ if IsFileCompiled == False else sys.executable).absolute().parent)
+
+TargetDir = GetBaseDir(__file__ if IsFileCompiled == False else sys.executable)
 #os.chdir(TargetDir)
 
-ConfigPath = NormPath(Path(TargetDir).joinpath(Path('Config.ini')))
+
+ConfigPath = NormPath(Path(TargetDir).joinpath(Path('Config', 'Config.ini')))
 Config = ManageConfig(ConfigPath)
 
+
 CurrentVersion = str(Config.GetValue('Info', 'CurrentVersion'))
+ExecuterName = str(Config.GetValue('Info', 'ExecuterName'))
 DownloadDir = TargetDir
 ExtractDir = NormPath(Path(TargetDir).joinpath(Path('Temp')))
-RunnerPath = NormPath(Path(TargetDir).joinpath(Path('Run.py' if IsFileCompiled == False else 'EVT.exe')))
+ExecuterPath = NormPath(Path(TargetDir).joinpath(Path(ExecuterName)))
 
 ##############################################################################################################################
 
@@ -43,61 +47,6 @@ class CustomSignals_Updater(QObject):
 
 UpdaterSignals = CustomSignals_Updater()
 
-##############################################################################################################################
-
-def Function_AnimateProgressBar(
-    ProgressBar: QProgressBar,
-    IsTaskAlive: bool = False
-):
-    '''
-    Function to animate progressbar
-    '''
-    ProgressBar.setTextVisible(False)
-    ProgressBar.setValue(0)
-
-    if IsTaskAlive == True:
-        ProgressBar.setRange(0, 0)
-    else:
-        ProgressBar.setValue(100)
-
-
-def Function_ExecuteMethod(
-    ExecuteButton: QPushButton,
-    ProgressBar: Optional[QProgressBar] = None,
-    Method: object = ...,
-    Params: Optional[tuple] = ()
-):
-    '''
-    Function to execute outer class methods (through button)
-    '''
-    ClassName =  str(Method.__qualname__).split('.')[0]
-    MethodName = str(Method.__qualname__).split('.')[1]
-
-    ClassInstance = globals()[ClassName]()
-    WorkerThread = QThread()
-
-    ClassInstance.moveToThread(WorkerThread)
-    ClassInstance.finished.connect(WorkerThread.quit)
-
-    def ExecuteMethod():
-        '''
-        Update the attributes for outer class methods and wait to execute with multithreading
-        '''
-        Args = Params
-
-        QFunctionsSignals = CustomSignals_Updater()
-        QFunctionsSignals.Signal_ExecuteTask.connect(getattr(ClassInstance, MethodName))
-
-        WorkerThread.started.connect(lambda: Function_AnimateProgressBar(ProgressBar = ProgressBar, IsTaskAlive = True)) if ProgressBar else None
-        WorkerThread.finished.connect(lambda: Function_AnimateProgressBar(ProgressBar = ProgressBar, IsTaskAlive = False)) if ProgressBar else None
-        WorkerThread.start()
-
-        QFunctionsSignals.Signal_ExecuteTask.emit(Args)
-
-    ExecuteButton.clicked.connect(ExecuteMethod)
-    ExecuteButton.setText("Execute 执行") if ExecuteButton.text() == "" else None
-
-##############################################################################################################################
 
 def Updater(
     CurrentVersion: str = ...,
@@ -107,7 +56,7 @@ def Updater(
     Format: str = 'zip',
     ExtractDir: str = ...,
     TargetDir: str = ...,
-    RunnerPath: str = ...
+    ExecuterPath: str = ...
 ):
     '''
     '''
@@ -167,7 +116,7 @@ def Updater(
                         ''',
                         'echo Moving new files...',
                         'move "%specific_folder%\*.*" "%folder_path%\"',
-                        f'start "Programm Running" "{RunnerPath}"',
+                        f'start "Programm Running" "{ExecuterPath}"',
                         'del "%~f0"'
                     ]
                     Commands = "\n".joinpath(CommandList)
@@ -180,7 +129,7 @@ def Updater(
                 )
                 shutil.copytree(ExtractDir, TargetDir, dirs_exist_ok = True)
                 shutil.rmtree(ExtractDir)
-                Booter(True, IsFileCompiled, TargetDir, RunnerPath)
+                Booter(True, IsFileCompiled, TargetDir, ExecuterPath)
             UpdaterSignals.Signal_Message.emit("Successfully updated!")
             UpdaterSignals.Signal_RebootAfterFinished.emit(False)
         else:
@@ -190,7 +139,6 @@ def Updater(
     finally:
         UpdaterSignals.Signal_Finished.emit()
 
-##############################################################################################################################
 
 class Execute_Update_Checking(QObject):
     '''
@@ -209,7 +157,7 @@ class Execute_Update_Checking(QObject):
             Format = 'zip',
             ExtractDir = ExtractDir,
             TargetDir = TargetDir,
-            RunnerPath = RunnerPath
+            ExecuterPath = ExecuterPath
         )
 
     def Execute(self, Params: tuple):
@@ -222,6 +170,7 @@ class Execute_Update_Checking(QObject):
         self.finished.emit()
 
 
+# Show GUI
 class Widget_Updater(QWidget):
     '''
     '''
@@ -257,11 +206,47 @@ class Widget_Updater(QWidget):
 
         UpdaterSignals.Signal_Message.connect(self.Label.setText)
         UpdaterSignals.Signal_RebootAfterFinished.connect(lambda: Config.EditConfig('Updater', 'Status', 'Executed')) #UpdaterSignals.Signal_Finished.connect(lambda: Config.EditConfig('Updater', 'Status', 'Executed'), Qt.QueuedConnection)
-        UpdaterSignals.Signal_RebootAfterFinished.connect(lambda Reboot: Booter(TargetDir, RunnerPath, IsFileCompiled) if Reboot else None)
+        UpdaterSignals.Signal_RebootAfterFinished.connect(lambda Reboot: Booter(TargetDir, ExecuterPath, IsFileCompiled) if Reboot else None)
         UpdaterSignals.Signal_Finished.connect(lambda: self.close(), Qt.QueuedConnection)
 
+    def Function_ExecuteMethod(self,
+        ExecuteButton: QPushButton,
+        ProgressBar: Optional[QProgressBar] = None,
+        Method: object = ...,
+        Params: Optional[tuple] = ()
+    ):
+        '''
+        Function to execute outer class methods (through button)
+        '''
+        ClassName =  str(Method.__qualname__).split('.')[0]
+        MethodName = str(Method.__qualname__).split('.')[1]
+
+        ClassInstance = globals()[ClassName]()
+        WorkerThread = QThread()
+
+        ClassInstance.moveToThread(WorkerThread)
+        ClassInstance.finished.connect(WorkerThread.quit)
+
+        def ExecuteMethod():
+            '''
+            Update the attributes for outer class methods and wait to execute with multithreading
+            '''
+            Args = Params
+
+            QFunctionsSignals = CustomSignals_Updater()
+            QFunctionsSignals.Signal_ExecuteTask.connect(getattr(ClassInstance, MethodName))
+
+            WorkerThread.started.connect(lambda: Function_AnimateProgressBar(ProgressBar = ProgressBar, IsTaskAlive = True)) if ProgressBar else None
+            WorkerThread.finished.connect(lambda: Function_AnimateProgressBar(ProgressBar = ProgressBar, IsTaskAlive = False)) if ProgressBar else None
+            WorkerThread.start()
+
+            QFunctionsSignals.Signal_ExecuteTask.emit(Args)
+
+        ExecuteButton.clicked.connect(ExecuteMethod)
+        ExecuteButton.setText("Execute 执行") if ExecuteButton.text() == "" else None
+
     def Main(self):
-        Function_ExecuteMethod(
+        self.Function_ExecuteMethod(
             ExecuteButton = self.ExecuteButton,
             ProgressBar = self.ProgressBar,
             Method = Execute_Update_Checking.Execute,

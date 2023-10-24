@@ -1,0 +1,2 @@
+color: rgb(210, 222, 234);
+background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 rgba(54, 54, 54, 210), stop:1 rgba(51, 51, 51, 210));

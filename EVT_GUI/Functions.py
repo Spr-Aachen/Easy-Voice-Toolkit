@@ -1,32 +1,14 @@
-import os
 import sys
 sys.path.append('..')
 import re
 from typing import Union, Optional
-from PySide6.QtCore import Qt, QObject, QThread, Signal, Slot, QPropertyAnimation, QEasingCurve, QUrl
-from PySide6.QtGui import QFont, QTextCursor, QDesktopServices
+from PySide6.QtCore import Qt, QObject, Signal, Slot
+from PySide6.QtGui import QFont
 from PySide6.QtWidgets import *
 
-from .Components import *
 from .QSimpleWidgets.Utils import *
-from .EnvConfigurator import (FFmpeg_Installer, Python_Installer, PyReqs_Installer, Pytorch_Installer)
-from Run import (Integrity_Checker, Execute_Audio_Processing, Execute_Voice_Identifying, Execute_Voice_Transcribing, Execute_Dataset_Creating, Execute_Voice_Training, Execute_Voice_Converting)
-
-##############################################################################################################################
-
-# Where to store custom signals
-class CustomSignals_QFunctions(QObject):
-    '''
-    Set up signals for custom functions
-    '''
-    # Monitor frame
-    Signal_FrameStatus = Signal(str)
-
-    # Run task
-    Signal_ExecuteTask = Signal(tuple)
-
-
-QFunctionsSignals = CustomSignals_QFunctions()
+from .QSimpleWidgets.QFunctions import *
+from .Components import *
 
 ##############################################################################################################################
 
@@ -225,142 +207,6 @@ def Function_ConfigureCheckBox(
     SetToggleEvent(UncheckedTempEventList, UncheckedTempArgsList, False, False, CheckBox)
 
 
-@Slot(str)
-def Function_AnimateStackedWidget(
-    StackedWidget: QStackedWidget,
-    TargetIndex: int = 0,
-    Duration: int = 0
-):
-    '''
-    Function to animate stackedwidget
-    '''
-    Index_Current = StackedWidget.currentIndex()
-
-    def AnimateStackedWidget(Index_Altered):
-        WidgetAnimation = QPropertyAnimation(StackedWidget, b"currentIndex")
-        WidgetAnimation.setStartValue(Index_Current)
-        WidgetAnimation.setEndValue(Index_Altered)
-        WidgetAnimation.setDuration(Duration)
-        WidgetAnimation.setEasingCurve(QEasingCurve.InOutQuart)
-        WidgetAnimation.start()
-
-    AnimateStackedWidget(TargetIndex)
-
-
-@Slot(str)
-def Function_AnimateFrame(
-    Frame: QFrame,
-    MinWidth: int = ...,
-    MaxWidth: int = ...,
-    MinHeight: int = ...,
-    MaxHeight: int = ...,
-    Duration: int = 0,
-    Mode: str = "Toggle"
-):
-    '''
-    Function to animate frame
-    '''
-    Width_Current = Frame.width()
-    Height_Current = Frame.height()
-    
-    def AnimateFrame(Type, Length_Altered):
-        if Type == "Width":
-            FrameAnimation1 = QPropertyAnimation(Frame, b"minimumWidth")
-            FrameAnimation2 = QPropertyAnimation(Frame, b"maximumWidth")
-            for FrameAnimation in [FrameAnimation1, FrameAnimation2]:
-                FrameAnimation.setStartValue(Width_Current)
-                FrameAnimation.setEndValue(Length_Altered)
-                FrameAnimation.setDuration(Duration)
-                FrameAnimation.setEasingCurve(QEasingCurve.InOutQuart)
-        if Type == "Height":
-            FrameAnimation1 = QPropertyAnimation(Frame, b"minimumHeight")
-            FrameAnimation2 = QPropertyAnimation(Frame, b"maximumHeight")
-            for FrameAnimation in [FrameAnimation1, FrameAnimation2]:
-                FrameAnimation.setStartValue(Height_Current)
-                FrameAnimation.setEndValue(Length_Altered)
-                FrameAnimation.setDuration(Duration)
-                FrameAnimation.setEasingCurve(QEasingCurve.InOutQuart)
-        FrameAnimation1.start()
-        FrameAnimation2.start()
-
-    if Mode == "Extend":
-        if MaxWidth != ...:
-            AnimateFrame("Width", MaxWidth)
-        if MaxHeight != ...:
-            AnimateFrame("Height", MaxHeight)
-        QFunctionsSignals.Signal_FrameStatus.emit(f"{Frame.objectName()}Extended")
-    if Mode == "Reduce":
-        if MinWidth != ...:
-            AnimateFrame("Width", MinWidth)
-        if MinHeight != ...:
-            AnimateFrame("Height", MinHeight)
-        QFunctionsSignals.Signal_FrameStatus.emit(f"{Frame.objectName()}Reduced")
-    if Mode == "Toggle":
-        if Width_Current == MinWidth or Height_Current == MinHeight:
-            if MaxWidth != ...:
-                AnimateFrame("Width", MaxWidth)
-            if MaxHeight != ...:
-                AnimateFrame("Height", MaxHeight)
-            QFunctionsSignals.Signal_FrameStatus.emit(f"{Frame.objectName()}Extended")
-        else:
-            if MinWidth != ...:
-                AnimateFrame("Width", MinWidth)
-            if MinHeight != ...:
-                AnimateFrame("Height", MinHeight)
-            QFunctionsSignals.Signal_FrameStatus.emit(f"{Frame.objectName()}Reduced")
-
-
-@Slot(str)
-def Function_AnimateButton(
-    Button: QToolButton,
-    Frame: Optional[QFrame] = None,
-    FrameStatus: str = ...,
-    Text: str = ...
-):
-    '''
-    Function to animate button
-    '''
-    Frame = Function_FindParentUI(
-        ChildUI = Button,
-        ParentType = QFrame
-    ) if Frame == None else Frame
-
-    if FrameStatus == f"{Frame.objectName()}Extended":
-        Button.setText(Text)
-    if FrameStatus == f"{Frame.objectName()}Reduced":
-        Button.setText("")
-
-
-def Function_PrintText(
-    Panel: QObject,
-    Frame: Optional[QFrame] = None,
-    FrameStatus: str = ...,
-    Text: str = ...,
-    ShowCursor: Optional[bool] = None
-):
-    '''
-    Function to print text on panel while its parent frame is extended
-    '''
-    if isinstance(Panel, (QLabel, QComboBox, QCheckBox, QTextBrowser)):
-        Panel.setText(Text)
-    if isinstance(Panel, (QLineEdit, QTextEdit, QPlainTextEdit)):
-        TextCursor = Panel.textCursor()
-        TextCursor.movePosition(QTextCursor.End)
-        TextCursor.insertText(Text)
-        Panel.setTextCursor(TextCursor)
-        Panel.ensureCursorVisible() if ShowCursor else None
-
-    Frame = Function_FindParentUI(
-        ChildUI = Panel,
-        ParentType = QFrame
-    ) if Frame == None else Frame
-
-    if FrameStatus == f"{Frame.objectName()}Extended":
-        Panel.setVisible(True)
-    if FrameStatus == f"{Frame.objectName()}Reduced":
-        Panel.setVisible(False)
-
-
 def Function_SetText(
     Panel: QObject,
     Title: Optional[str] = ...,
@@ -406,8 +252,20 @@ def Function_SetText(
         Panel.setHtml(Text)
 
 
+def Function_SetURL(
+    Button: QToolButton,
+    URL: str, #URL: str | list
+    ButtonTooltip: str = "Open"
+):
+    '''
+    '''
+    Button.clicked.connect(lambda: Function_OpenURL(URL))
+    Button.setToolTipDuration(-1)
+    Button.setToolTip(ButtonTooltip)
+
+
 def Function_SetFileDialog(
-    Button: QPushButton,
+    Button: QToolButton,
     LineEdit: QLineEdit,
     Mode: str,
     FileType: Optional[str] = None,
@@ -421,27 +279,10 @@ def Function_SetFileDialog(
 
     @Slot()
     def SetFileDialog():
-        if Mode == "SelectDir":
-            DisplayText = QFileDialog.getExistingDirectory(
-                caption = "选择文件夹",
-                dir = os.getcwd()
-            )
-        if Mode == "SelectFile":
-            DisplayText, _ = QFileDialog.getOpenFileName(
-                caption = "选择文件",
-                dir = os.getcwd(),
-                filter = FileType
-            )
-        if Mode == "SaveFile":
-            DisplayText, _ = QFileDialog.getSaveFileName(
-                caption = "保存文件",
-                dir = os.getcwd(),
-                filter = FileType
-            )
-
+        DisplayText = Function_GetFileDialog(Mode, FileType)
         LineEdit.setText(DisplayText)
         LineEdit.setStatusTip(DisplayText)
-    
+
     Button.clicked.connect(SetFileDialog)
     Button.setToolTipDuration(-1)
     Button.setToolTip(ButtonTooltip)
@@ -627,124 +468,5 @@ def Function_AnimateProgressBar(
     else:
         ProgressBar.setRange(MinValue, MaxValue)
         ProgressBar.setValue(MaxValue)
-
-
-def Function_ExecuteMethod(
-    ExecuteButton: QPushButton,
-    TerminateButton: Optional[QPushButton] = None,
-    ProgressBar: Optional[QProgressBar] = None,
-    ConsoleFrame: Optional[QFrame] = None,
-    Method: object = ...,
-    Params: Optional[tuple] = (),
-    ParamsFrom: Optional[list] = [],
-    EmptyAllowed: Optional[list] = [],
-    FinishEventList: Optional[list] = [],
-    FinishParamList: Optional[list] = [()]
-):
-    '''
-    Function to execute outer class methods (through button)
-    '''
-    StackedWidget = Function_FindParentUI(
-        ChildUI = ExecuteButton, #ChildUI = TerminateButton,
-        ParentType = QStackedWidget
-    ) if TerminateButton else None
-    
-    ClassName =  str(Method.__qualname__).split('.')[0]
-    MethodName = str(Method.__qualname__).split('.')[1]
-
-    ClassInstance = globals()[ClassName]()
-    WorkerThread = QThread()
-
-    ClassInstance.moveToThread(WorkerThread)
-    ClassInstance.finished.connect(WorkerThread.quit)
-    #ClassInstance.finished.connect(WorkerThread.wait)
-    def ConnectEvent():
-        for Index, FinishEvent in enumerate(FinishEventList):
-            FinishEvent(*FinishParamList[Index])
-    ClassInstance.finished.connect(ConnectEvent)
-
-    @Slot()
-    def ExecuteMethod():
-        '''
-        Update the attributes for outer class methods and wait to execute with multithreading
-        '''
-        Args = Params#if Params != () else None
-        if ParamsFrom not in ([], None):
-            Args = Function_ParamsChecker(ParamsFrom, EmptyAllowed)
-            if Args == "Abort":
-                return print("Aborted.")
-            else:
-                pass #print("Continued.\n")
-
-        QFunctionsSignals = CustomSignals_QFunctions()
-        QFunctionsSignals.Signal_ExecuteTask.connect(getattr(ClassInstance, MethodName)) #QFunctionsSignals.Signal_ExecuteTask.connect(lambda Args: getattr(ClassInstance, MethodName)(*Args))
-
-        WorkerThread.started.connect(lambda: Function_AnimateFrame(Frame = ConsoleFrame, MinHeight = 0, MaxHeight = 210, Mode = "Extend")) if ConsoleFrame else None
-        WorkerThread.started.connect(lambda: Function_AnimateProgressBar(ProgressBar = ProgressBar, IsTaskAlive = True)) if ProgressBar else None
-        WorkerThread.started.connect(lambda: Function_AnimateStackedWidget(StackedWidget = StackedWidget, TargetIndex = 1)) if TerminateButton else None
-        WorkerThread.finished.connect(lambda: Function_AnimateProgressBar(ProgressBar = ProgressBar, IsTaskAlive = False)) if ProgressBar else None
-        WorkerThread.finished.connect(lambda: Function_AnimateStackedWidget(StackedWidget = StackedWidget, TargetIndex = 0)) if TerminateButton else None
-        WorkerThread.finished.connect(lambda: Function_AnimateFrame(Frame = ConsoleFrame, MinHeight = 0, MaxHeight = 210, Mode = "Reduce")) if ConsoleFrame else None
-        #WorkerThread.finished.connect(lambda: QFunctionsSignals.Signal_ExecuteTask.disconnect(getattr(ClassInstance, MethodName)))
-        WorkerThread.start()
-
-        QFunctionsSignals.Signal_ExecuteTask.emit(Args)
-
-    ExecuteButton.clicked.connect(ExecuteMethod)#if ExecuteButton else ExecuteMethod()
-    ExecuteButton.setText("Execute 执行") if ExecuteButton != None and ExecuteButton.text() == "" else None
-
-    @Slot()
-    def TerminateMethod():
-        '''
-        Terminate the running thread
-        '''
-        if not WorkerThread.isFinished():
-            try:
-                WorkerThread.terminate()
-            except:
-                WorkerThread.quit()
-    
-        ProgressBar.setValue(0)
-
-        Function_AnimateFrame(
-            Frame = ConsoleFrame,
-            MinHeight = 0,
-            MaxHeight = 210,
-            Mode = "Reduce"
-        ) if ConsoleFrame else None
-
-    TerminateButton.clicked.connect(TerminateMethod) if TerminateButton else None
-    TerminateButton.setText("Terminate 终止") if TerminateButton != None and TerminateButton.text() == "" else None
-
-
-def Function_SetURL(
-    Button: QPushButton,
-    URL: str, #URL: str | list
-    ButtonTooltip: str = "Open"
-):
-    '''
-    Function to open web/local URL
-    '''
-    def toQURL(URL):
-        QURL = QUrl(URL)
-        if QURL.isValid():
-            QURL_Localized = QURL.toLocalFile()
-            QDesktopServices.openUrl(QURL_Localized) if QURL_Localized != "" else QDesktopServices.openUrl(QURL)
-        else:
-            print(f"Invalid URL: {URL} !")
-
-    @Slot()
-    def SetURL(URL):
-        if isinstance(URL, str):
-            toQURL(URL)
-        else:
-            URLList = IterChecker(URL)
-            for Index, URL in enumerate(URLList):
-                URL = Function_ParamsChecker(URLList)[Index] if isinstance(URL, QObject) else URL
-                toQURL(URL)
-
-    Button.clicked.connect(lambda: SetURL(URL))
-    Button.setToolTipDuration(-1)
-    Button.setToolTip(ButtonTooltip)
 
 ##############################################################################################################################

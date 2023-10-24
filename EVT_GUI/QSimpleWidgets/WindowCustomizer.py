@@ -16,9 +16,9 @@ class TitleBarBase(QFrame):
     ):
         super().__init__(parent)
 
-        self.setStyleSheet(Function_GetStyleSheet('Window'))
+        self.setStyleSheet(Function_GetStyleSheet('Bar'))
         ComponentsSignals.Signal_SetTheme.connect(
-            lambda Theme: self.setStyleSheet(Function_GetStyleSheet('Window', Theme))
+            lambda Theme: self.setStyleSheet(Function_GetStyleSheet('Bar', Theme))
         )
 
         self.setMouseTracking(True)
@@ -32,10 +32,17 @@ class CustomizeTitleBar:
         Window: Optional[QWidget] = None,
         ExistedTitleBar: Optional[QWidget] = None
     ):
-        if not ExistedTitleBar:
+        if ExistedTitleBar is None:
+            self.IsTitleBarExisted = False
             self.TitleBar = TitleBarBase()
         else:
-            self.TitleBar = self.ExistedTitleBar = ExistedTitleBar
+            self.IsTitleBarExisted = True
+            self.TitleBar = ExistedTitleBar
+            if isinstance(self.TitleBar, TitleBarBase) == False:
+                self.TitleBar.setStyleSheet(Function_GetStyleSheet('Bar'))
+                ComponentsSignals.Signal_SetTheme.connect(
+                    lambda Theme:  self.TitleBar.setStyleSheet(Function_GetStyleSheet('Bar', Theme))
+                )
 
         self.DEFAULT_TITILE_BAR_HEIGHT = 30 # 默认标题栏高度
         self.YAxis = self.DEFAULT_TITILE_BAR_HEIGHT / 5
@@ -58,7 +65,7 @@ class CustomizeTitleBar:
         TitleLabel.setStyleSheet(
             "QLabel"
             "{"
-                "background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 rgba(63, 63, 63, 210), stop:1 rgba(51, 51, 51, 210));"
+                "background-color: transparent;"
                 "color: rgba(210, 210, 210, 210);"
                 "padding: 3.3px;"
                 "border-width: 0px;"
@@ -185,7 +192,7 @@ class CustomizeTitleBar:
         return self.ResizeEvent_Parent(a0)
 
     def SetUp(self):
-        if self.TitleBar is not self.ExistedTitleBar:
+        if self.IsTitleBarExisted == False:
             self.setTitle("Title - by Spr_Aachen")
             self.TitleBar.setGeometry(0, 0, self.Window.width(), self.DEFAULT_TITILE_BAR_HEIGHT) # 将自定义的标题栏置于最顶部
             self.Window.setContentsMargins(0, self.DEFAULT_TITILE_BAR_HEIGHT, 0, 0) # 设置ui文件里main_layout上边距，以免遮挡标题栏
