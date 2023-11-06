@@ -1,5 +1,3 @@
-import sys
-sys.path.append('..')
 import re
 from typing import Union, Optional
 from PySide6.QtCore import Qt, QObject, Signal, Slot
@@ -207,54 +205,9 @@ def Function_ConfigureCheckBox(
     SetToggleEvent(UncheckedTempEventList, UncheckedTempArgsList, False, False, CheckBox)
 
 
-def Function_SetText(
-    Panel: QObject,
-    Title: Optional[str] = ...,
-    TitleAlign: str = "left",
-    TitleSize: float = 9.9,
-    TitleWeight: float = 840.,
-    TitleColor: str = "#ffffff",
-    TitleLineHeight: float = 21.,
-    Body: Optional[str] = ...,
-    BodyAlign: str = "left",
-    BodySize: float = 9.9,
-    BodyWeight: float = 420.,
-    BodyLineHeight: float = 21.,
-    BodyColor: str = "#ffffff",
-):
-    '''
-    Function to set text for panel
-    '''
-    def ToHtml(Content, Align, Size, Weight, Color, LineHeight):
-        Style = f"'text-align:{Align}; font-size:{Size}pt; font-weight:{Weight}; color:{Color}; line-height:{LineHeight}px'"
-        Content = re.sub(
-            pattern = "[\n]",
-            repl = "<br>",
-            string = Content
-        ) if Content != None else ""
-        return f"<p style={Style}>{Content}</p>"
-
-    Text = (
-        "<html>"
-            "<head>"
-                f"<title>{ToHtml(Title, TitleAlign, TitleSize, TitleWeight, TitleColor, TitleLineHeight)}</title>" # Not Working
-            "</head>"
-            "<body>"
-                f"{ToHtml(Title, TitleAlign, TitleSize, TitleWeight, TitleColor, TitleLineHeight)}"
-                f"{ToHtml(Body, BodyAlign, BodySize, BodyWeight, BodyColor, BodyLineHeight)}"
-            "</body>"
-        "</html>"
-    )
-
-    if isinstance(Panel, QLabel):
-        Panel.setText(Text)
-    if isinstance(Panel, (QTextEdit, QPlainTextEdit, QTextBrowser)):
-        Panel.setHtml(Text)
-
-
 def Function_SetURL(
     Button: QToolButton,
-    URL: str, #URL: str | list
+    URL: Union[str, list],
     ButtonTooltip: str = "Open"
 ):
     '''
@@ -300,7 +253,7 @@ def Function_ShowMessageBox(
     '''
     Function to pop up a msgbox
     '''
-    MsgBox = MessageBoxBase()
+    MsgBox = QMessageBox() #MsgBox = MessageBoxBase()
 
     MsgBox.setIcon(MessageType)
     MsgBox.setWindowTitle(WindowTitle)
@@ -308,7 +261,6 @@ def Function_ShowMessageBox(
     MsgBox.setStandardButtons(Buttons)
 
     '''
-    @Slot(QPushButton)
     @Slot(QToolButton)
     def ConnectEvent(Button: QAbstractButton):
         if Button.role() in EventRoles:
@@ -369,7 +321,7 @@ def Function_ParamsHandler(
 
 
 def Function_ParamsSynchronizer(
-    Trigger: QObject, #Trigger: QObject | list,
+    Trigger: Union[QObject, list],
     ParamsFrom: list = [],
     Times: Optional[float] = None,
     ParamsTo: list = [],

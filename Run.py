@@ -1,5 +1,6 @@
 import os
 import sys
+import time #import asyncio
 import json
 from pathlib import Path
 from PySide6 import __file__ as PySide6_File
@@ -327,6 +328,26 @@ class Execute_Dataset_Creating(QObject):
 
 
 # Tool5: VoiceTrainer
+def CheckTensorboard(LogDir): #async def CheckTensorboard(LogDir):
+    try:
+        InitialWaitTime = 0
+        MaximumWaitTime = 30
+        while GetPath(LogDir, 'events.out.tfevents') == False:
+            time.sleep(3) #await asyncio.sleep(3)
+            InitialWaitTime += 3
+            if InitialWaitTime >= MaximumWaitTime:
+                break
+        '''
+        Output = RunCMD([['tensorboard', '--logdir', LogDir]], TimeOut = 9.)
+        URL = FindURL(Output) #URL = Output[Output.find('http'):Output.find(' (', Output.find('http'))]
+        Function_OpenURL(URL)
+        '''
+        subprocess.Popen(['tensorboard', '--logdir', LogDir], env = os.environ)
+        time.sleep(9) #await asyncio.sleep(9)
+        Function_OpenURL('http://localhost:6006/')
+    except:
+        pass
+
 class Execute_Voice_Training(QObject):
     '''
     Preprocess and then start training
@@ -432,6 +453,9 @@ class CustomSignals_MainWindow(QObject):
 
     # Run task
     Signal_ExecuteTask = Signal(tuple)
+
+    # Monitor task
+    Signal_TaskStatus = Signal(str)
 
 
 MainWindowSignals = CustomSignals_MainWindow()
@@ -618,9 +642,11 @@ class MainWindow(Window_Customizing):
             MainWindowSignals = CustomSignals_MainWindow()
             MainWindowSignals.Signal_ExecuteTask.connect(getattr(ClassInstance, MethodName)) #MainWindowSignals.Signal_ExecuteTask.connect(lambda Args: getattr(ClassInstance, MethodName)(*Args))
 
+            WorkerThread.started.connect(lambda: MainWindowSignals.Signal_TaskStatus.emit('Started'))
             WorkerThread.started.connect(lambda: self.Function_AnimateFrame(Frame = ConsoleFrame, MinHeight = 0, MaxHeight = 210, Mode = "Extend")) if ConsoleFrame else None
             WorkerThread.started.connect(lambda: Function_AnimateProgressBar(ProgressBar = ProgressBar, IsTaskAlive = True)) if ProgressBar else None
             WorkerThread.started.connect(lambda: self.Function_AnimateStackedWidget(StackedWidget = StackedWidget, TargetIndex = 1)) if TerminateButton else None
+            WorkerThread.finished.connect(lambda: MainWindowSignals.Signal_TaskStatus.emit('Ended'))
             WorkerThread.finished.connect(lambda: Function_AnimateProgressBar(ProgressBar = ProgressBar, IsTaskAlive = False)) if ProgressBar else None
             WorkerThread.finished.connect(lambda: self.Function_AnimateStackedWidget(StackedWidget = StackedWidget, TargetIndex = 0)) if TerminateButton else None
             WorkerThread.finished.connect(lambda: self.Function_AnimateFrame(Frame = ConsoleFrame, MinHeight = 0, MaxHeight = 210, Mode = "Reduce")) if ConsoleFrame else None
@@ -642,17 +668,29 @@ class MainWindow(Window_Customizing):
                     WorkerThread.terminate()
                 except:
                     WorkerThread.quit()
-        
+
+            ProgramTerminator(
+                Program = 'python.exe',
+                SelfIgnored = True,
+                SearchKeyword = True
+            )
+
             ProgressBar.setValue(0)
+            #Function_AnimateProgressBar(ProgressBar = ProgressBar, IsTaskAlive = False)) if ProgressBar else None
+            #self.Function_AnimateStackedWidget(StackedWidget = StackedWidget, TargetIndex = 0) if TerminateButton else None
+            #self.Function_AnimateFrame(Frame = ConsoleFrame, MinHeight = 0, MaxHeight = 210, Mode = "Reduce") if ConsoleFrame else None
 
-            self.Function_AnimateFrame(
-                Frame = ConsoleFrame,
-                MinHeight = 0,
-                MaxHeight = 210,
-                Mode = "Reduce"
-            ) if ConsoleFrame else None
-
-        TerminateButton.clicked.connect(TerminateMethod) if TerminateButton else None
+        TerminateButton.clicked.connect(
+            lambda: Function_ShowMessageBox(
+                MessageType = QMessageBox.Question,
+                WindowTitle = "Ask",
+                Text = "当前任务仍在执行中，是否确认终止？",
+                Buttons = QMessageBox.Yes|QMessageBox.No,
+                EventButtons = [QMessageBox.Yes],
+                EventLists = [[TerminateMethod]],
+                ParamLists = [[()]]
+            )
+        ) if TerminateButton else None
         TerminateButton.setText("Terminate 终止") if TerminateButton != None and TerminateButton.text() == "" else None
 
     def Main(self):
@@ -763,7 +801,7 @@ class MainWindow(Window_Customizing):
         #self.ui.ToolButton_Home_Title.setText(QCA.translate("Label", "主页"))
 
         Function_SetText(
-            Panel = self.ui.TextBrowser_Text_Home,
+            Widget = self.ui.TextBrowser_Text_Home,
             Title = QCA.translate("TextBrowser", "介绍"),
             TitleAlign = "left",
             TitleSize = 24,
@@ -1106,6 +1144,34 @@ class MainWindow(Window_Customizing):
         ##################### Content: Tools #####################
         ##########################################################
 
+        DialogBox = MessageBox_Stacked()
+        DialogBox.setWindowTitle('Guidance（该引导仅出现一次）')
+        DialogBox.SetContent(
+            [
+                NormPath(Path(ResourceDir).joinpath('Sources/Guidance0.png')),
+                NormPath(Path(ResourceDir).joinpath('Sources/Guidance1.png')),
+                NormPath(Path(ResourceDir).joinpath('Sources/Guidance2.png')),
+                NormPath(Path(ResourceDir).joinpath('Sources/Guidance3.png')),
+                NormPath(Path(ResourceDir).joinpath('Sources/Guidance4.png')),
+            ],
+            [
+                '欢迎来到工具界面！这里集成了EVT目前支持的所有工具，来快速熟悉一下使用方法吧',
+                '顶部区域用于切换当前工具',
+                '中间区域用于设置当前工具的各项参数，从左至右依次为目录、设置、预览',
+                '底部区域用于执行当前工具',
+                '工具之间会自动继承可关联的参数选项，如果不希望这样可以到设置页面关闭该功能'
+            ]
+        )
+        #DialogBox.setStandardButtons(QMessageBox.Ok)
+        self.ui.Button_Menu_Tools.clicked.connect(
+            lambda: DialogBox.exec() if eval(Config.GetValue('Dialog', 'GuidanceShown', 'False')) is False else None,
+            type = Qt.QueuedConnection
+        )
+        self.ui.Button_Menu_Tools.clicked.connect(
+            lambda: Config.EditConfig('Dialog', 'GuidanceShown', 'True'),
+            type = Qt.QueuedConnection
+        )
+
         '''
         self.ui.Label_Tools_Title.setText(QCA.translate("Label", "工具  -   "))
 
@@ -1199,7 +1265,7 @@ class MainWindow(Window_Customizing):
         ##################### Tool_AudioProcessor #####################
         '''
         Function_SetText(
-            Panel = self.ui.TextBrowser_Intro_Tool_AudioProcessor,
+            Widget = self.ui.TextBrowser_Intro_Tool_AudioProcessor,
             Title = QCA.translate("TextBrowser", "音频转换和分割"),
             TitleAlign = "center",
             TitleSize = 18,
@@ -1258,7 +1324,7 @@ class MainWindow(Window_Customizing):
         )
 
         Function_SetText(
-            Panel = self.ui.Label_Tool_AudioProcessor_Media_Dir_Input,
+            Widget = self.ui.Label_Tool_AudioProcessor_Media_Dir_Input,
             Title = QCA.translate("Label", "媒体输入目录"),
             Body = QCA.translate("Label", "该目录中的媒体文件将会以下列设置输出为音频文件。")
         )
@@ -1275,7 +1341,7 @@ class MainWindow(Window_Customizing):
         )
 
         Function_SetText(
-            Panel = self.ui.Label_Tool_AudioProcessor_Media_Format_Output,
+            Widget = self.ui.Label_Tool_AudioProcessor_Media_Format_Output,
             Title = QCA.translate("Label", "媒体输出格式"),
             Body = QCA.translate("Label", "媒体文件将会以设置的格式输出为音频文件。")
         )
@@ -1288,7 +1354,7 @@ class MainWindow(Window_Customizing):
         )
 
         Function_SetText(
-            Panel = self.ui.Label_Tool_AudioProcessor_Media_Dir_Output,
+            Widget = self.ui.Label_Tool_AudioProcessor_Media_Dir_Output,
             Title = QCA.translate("Label", "媒体输出目录"),
             Body = QCA.translate("Label", "最后生成的音频文件将被保存到该目录中。")
         )
@@ -1332,7 +1398,7 @@ class MainWindow(Window_Customizing):
         )
 
         Function_SetText(
-            Panel = self.ui.Label_Tool_AudioProcessor_RMS_Threshold,
+            Widget = self.ui.Label_Tool_AudioProcessor_RMS_Threshold,
             Title = QCA.translate("Label", "均方根阈值 (db)"),
             Body = QCA.translate("Label", "低于该阈值的片段将被视作静音进行处理，若有降噪需求可以增加该值。")
         )
@@ -1346,7 +1412,7 @@ class MainWindow(Window_Customizing):
         )
 
         Function_SetText(
-            Panel = self.ui.Label_Tool_AudioProcessor_Hop_Size,
+            Widget = self.ui.Label_Tool_AudioProcessor_Hop_Size,
             Title = QCA.translate("Label", "跃点大小 (ms)"),
             Body = QCA.translate("Label", "每个RMS帧的长度，增加该值能够提高分割精度但会减慢进程。")
         )
@@ -1360,7 +1426,7 @@ class MainWindow(Window_Customizing):
         )
 
         Function_SetText(
-            Panel = self.ui.Label_Tool_AudioProcessor_Silent_Interval_Min,
+            Widget = self.ui.Label_Tool_AudioProcessor_Silent_Interval_Min,
             Title = QCA.translate("Label", "最小静音间隔 (ms)"),
             Body = QCA.translate("Label", "静音部分被分割成的最小长度，若音频只包含短暂中断可以减小该值。")
         )
@@ -1376,7 +1442,7 @@ class MainWindow(Window_Customizing):
         self.ui.SpinBox_Tool_AudioProcessor_Silent_Interval_Min.setToolTip(QCA.translate("ToolTip", "注意：这个值必须小于最小音频长度，大于跃点大小。"))
 
         Function_SetText(
-            Panel = self.ui.Label_Tool_AudioProcessor_Silence_Kept_Max,
+            Widget = self.ui.Label_Tool_AudioProcessor_Silence_Kept_Max,
             Title = QCA.translate("Label", "最大静音长度 (ms)"),
             Body = QCA.translate("Label", "被分割的音频周围保持静音的最大长度。")
         )
@@ -1392,7 +1458,7 @@ class MainWindow(Window_Customizing):
         self.ui.SpinBox_Tool_AudioProcessor_Silence_Kept_Max.setToolTip(QCA.translate("ToolTip", "注意：这个值无需完全对应被分割音频中的静音长度。算法将自行检索最佳的分割位置。"))
 
         Function_SetText(
-            Panel = self.ui.Label_Tool_AudioProcessor_Audio_Length_Min,
+            Widget = self.ui.Label_Tool_AudioProcessor_Audio_Length_Min,
             Title = QCA.translate("Label", "最小音频长度 (ms)"),
             Body = QCA.translate("Label", "每个被分割的音频片段所需的最小长度。")
         )
@@ -1429,7 +1495,9 @@ class MainWindow(Window_Customizing):
         )
 
         # Right
-        MonitorFile_Config_AudioProcessor = MonitorFile(Path_Config_Tool_AudioProcessor)
+        MonitorFile_Config_AudioProcessor = MonitorFile(
+            Config.GetValue('ConfigPath', 'Path_Config_Tool_AudioProcessor')
+        )
         MonitorFile_Config_AudioProcessor.start()
         MonitorFile_Config_AudioProcessor.Signal_FileContent.connect(
             lambda FileContent: self.ui.TextBrowser_Params_Tool_AudioProcessor.setText(
@@ -1472,11 +1540,16 @@ class MainWindow(Window_Customizing):
                 (QMessageBox.Question,"Ask","当前任务已执行结束，是否跳转至下一工具界面？",QMessageBox.Yes|QMessageBox.No,[QMessageBox.Yes],[[self.ui.Frame_Tools_Top.layout().itemAt(1).widget().click]],[[()]])
             ]
         )
+        MainWindowSignals.Signal_TaskStatus.connect(
+            lambda TaskStatus: self.ui.Button_Tool_AudioProcessor_Execute.setCheckable(
+                False if TaskStatus is 'Started' else True
+            )
+        )
 
         ##################### Tool_VoiceIdentifier #####################
         '''
         Function_SetText(
-            Panel = self.ui.TextBrowser_Intro_Tool_VoiceIdentifier,
+            Widget = self.ui.TextBrowser_Intro_Tool_VoiceIdentifier,
             Title = QCA.translate("TextBrowser", "语音识别和筛选"),
             TitleAlign = "center",
             TitleSize = 18,
@@ -1538,7 +1611,7 @@ class MainWindow(Window_Customizing):
         )
 
         Function_SetText(
-            Panel = self.ui.Label_Tool_VoiceIdentifier_Audio_Dir_Input,
+            Widget = self.ui.Label_Tool_VoiceIdentifier_Audio_Dir_Input,
             Title = "音频输入目录",
             Body = QCA.translate("Label", "该目录中的音频文件将会按照以下设置进行识别筛选。")
         )
@@ -1555,7 +1628,7 @@ class MainWindow(Window_Customizing):
         )
 
         Function_SetText(
-            Panel = self.ui.Label_Tool_VoiceIdentifier_StdAudioSpeaker,
+            Widget = self.ui.Label_Tool_VoiceIdentifier_StdAudioSpeaker,
             Title = "目标人物与音频",
             Body = QCA.translate("Label", "目标人物的名字及其语音文件的所在路径，音频中尽量不要混入杂音。")
         )
@@ -1569,7 +1642,7 @@ class MainWindow(Window_Customizing):
         )
 
         Function_SetText(
-            Panel = self.ui.Label_Tool_VoiceIdentifier_DecisionThreshold,
+            Widget = self.ui.Label_Tool_VoiceIdentifier_DecisionThreshold,
             Title = "判断阈值",
             Body = QCA.translate("Label", "判断是否为同一人的阈值，若参与比对的说话人声音相识度较高可以增加该值。")
         )
@@ -1583,7 +1656,7 @@ class MainWindow(Window_Customizing):
         )
 
         Function_SetText(
-            Panel = self.ui.Label_Tool_VoiceIdentifier_Audio_Dir_Output,
+            Widget = self.ui.Label_Tool_VoiceIdentifier_Audio_Dir_Output,
             Title = "音频输出目录",
             Body = QCA.translate("Label", "最后筛选出的音频文件将被复制到该目录中。")
         )
@@ -1621,7 +1694,7 @@ class MainWindow(Window_Customizing):
         )
 
         Function_SetText(
-            Panel = self.ui.Label_Tool_VoiceIdentifier_Model_Dir,
+            Widget = self.ui.Label_Tool_VoiceIdentifier_Model_Dir,
             Title = "模型存放目录",
             Body = QCA.translate("Label", "该目录将会用于存放下载的声纹识别模型，若模型已存在会直接使用。")
         )
@@ -1638,7 +1711,7 @@ class MainWindow(Window_Customizing):
         )
 
         Function_SetText(
-            Panel = self.ui.Label_Tool_VoiceIdentifier_Model_Type,
+            Widget = self.ui.Label_Tool_VoiceIdentifier_Model_Type,
             Title = "模型类型",
             Body = QCA.translate("Label", "声纹识别模型的类型。")
         )
@@ -1651,7 +1724,7 @@ class MainWindow(Window_Customizing):
         )
 
         Function_SetText(
-            Panel = self.ui.Label_Tool_VoiceIdentifier_Model_Name,
+            Widget = self.ui.Label_Tool_VoiceIdentifier_Model_Name,
             Title = "模型名字",
             Body = QCA.translate("Label", "声纹识别模型的名字，默认代表模型的大小。")
         )
@@ -1664,7 +1737,7 @@ class MainWindow(Window_Customizing):
         )
 
         Function_SetText(
-            Panel = self.ui.Label_Tool_VoiceIdentifier_Feature_Method,
+            Widget = self.ui.Label_Tool_VoiceIdentifier_Feature_Method,
             Title = "特征提取方法",
             Body = QCA.translate("Label", "音频特征的提取方法。")
         )
@@ -1677,7 +1750,7 @@ class MainWindow(Window_Customizing):
         )
 
         Function_SetText(
-            Panel = self.ui.Label_Tool_VoiceIdentifier_Duration_of_Audio,
+            Widget = self.ui.Label_Tool_VoiceIdentifier_Duration_of_Audio,
             Title = "音频长度",
             Body = QCA.translate("Label", "用于预测的音频长度。")
         )
@@ -1714,7 +1787,9 @@ class MainWindow(Window_Customizing):
         )
 
         # Right
-        MonitorFile_Config_VoiceIdentifier = MonitorFile(Path_Config_Tool_VoiceIdentifier)
+        MonitorFile_Config_VoiceIdentifier = MonitorFile(
+            Config.GetValue('ConfigPath', 'Path_Config_Tool_VoiceIdentifier')
+        )
         MonitorFile_Config_VoiceIdentifier.start()
         MonitorFile_Config_VoiceIdentifier.Signal_FileContent.connect(
             lambda FileContent: self.ui.TextBrowser_Params_Tool_VoiceIdentifier.setText(
@@ -1769,11 +1844,16 @@ class MainWindow(Window_Customizing):
                 (QMessageBox.Question,"Ask","当前任务已执行结束，是否跳转至下一工具界面？",QMessageBox.Yes|QMessageBox.No,[QMessageBox.Yes],[[self.ui.Frame_Tools_Top.layout().itemAt(2).widget().click]],[[()]])
             ]
         )
+        MainWindowSignals.Signal_TaskStatus.connect(
+            lambda TaskStatus: self.ui.Button_Tool_VoiceIdentifier_Execute.setCheckable(
+                False if TaskStatus is 'Started' else True
+            )
+        )
 
         ##################### Tool_VoiceTranscriber #####################
         '''
         Function_SetText(
-            Panel = self.ui.TextBrowser_Intro_Tool_VoiceTranscriber,
+            Widget = self.ui.TextBrowser_Intro_Tool_VoiceTranscriber,
             Title = QCA.translate("TextBrowser", "语音转文字字幕"),
             TitleAlign = "center",
             TitleSize = 18,
@@ -1834,7 +1914,7 @@ class MainWindow(Window_Customizing):
         )
 
         Function_SetText(
-            Panel = self.ui.Label_Tool_VoiceTranscriber_WAV_Dir,
+            Widget = self.ui.Label_Tool_VoiceTranscriber_WAV_Dir,
             Title = "音频目录",
             Body = QCA.translate("Label", "该目录中的wav文件的语音内容将会按照以下设置转为文字。")
         )
@@ -1851,7 +1931,7 @@ class MainWindow(Window_Customizing):
         )
 
         Function_SetText(
-            Panel = self.ui.Label_Tool_VoiceTranscriber_SRT_Dir,
+            Widget = self.ui.Label_Tool_VoiceTranscriber_SRT_Dir,
             Title = "字幕输出目录",
             Body = QCA.translate("Label", "最后生成的字幕文件将会保存到该目录中。")
         )
@@ -1889,7 +1969,7 @@ class MainWindow(Window_Customizing):
         )
 
         Function_SetText(
-            Panel = self.ui.Label_Tool_VoiceTranscriber_Model_Dir,
+            Widget = self.ui.Label_Tool_VoiceTranscriber_Model_Dir,
             Title = "模型存放目录",
             Body = QCA.translate("Label", "该目录将会用于存放下载的语音识别模型，若模型已存在会直接使用。")
         )
@@ -1906,7 +1986,7 @@ class MainWindow(Window_Customizing):
         )
 
         Function_SetText(
-            Panel = self.ui.Label_Tool_VoiceTranscriber_Model_Name,
+            Widget = self.ui.Label_Tool_VoiceTranscriber_Model_Name,
             Title = "模型名字",
             Body = QCA.translate("Label", "语音识别 (whisper) 模型的名字，默认代表模型的大小。")
         )
@@ -1919,7 +1999,7 @@ class MainWindow(Window_Customizing):
         )
 
         Function_SetText(
-            Panel = self.ui.Label_Tool_VoiceTranscriber_Verbose,
+            Widget = self.ui.Label_Tool_VoiceTranscriber_Verbose,
             Title = "启用输出日志",
             Body = QCA.translate("Label", "输出debug日志。")
         )
@@ -1952,7 +2032,7 @@ class MainWindow(Window_Customizing):
         )
 
         Function_SetText(
-            Panel = self.ui.Label_Tool_VoiceTranscriber_Condition_on_Previous_Text,
+            Widget = self.ui.Label_Tool_VoiceTranscriber_Condition_on_Previous_Text,
             Title = "前后文一致",
             Body = QCA.translate("Label", "将模型之前的输出作为下个窗口的提示，若模型陷入了失败循环则禁用此项。")
         )
@@ -1985,7 +2065,7 @@ class MainWindow(Window_Customizing):
         )
 
         Function_SetText(
-            Panel = self.ui.Label_Tool_VoiceTranscriber_fp16,
+            Widget = self.ui.Label_Tool_VoiceTranscriber_fp16,
             Title = "半精度",
             Body = QCA.translate("Label", "主要使用半精度浮点数进行计算，若GPU不可用则忽略或禁用此项。")
         )
@@ -2047,7 +2127,7 @@ class MainWindow(Window_Customizing):
         )
 
         Function_SetText(
-            Panel = self.ui.Label_Tool_VoiceTranscriber_Language,
+            Widget = self.ui.Label_Tool_VoiceTranscriber_Language,
             Title = "所用语言",
             Body = QCA.translate("Label", "音频中说话人所使用的语言，若存在多种语言则保持'None'即可。")
         )
@@ -2093,7 +2173,9 @@ class MainWindow(Window_Customizing):
         )
 
         # Right
-        MonitorFile_Config_VoiceTranscriber = MonitorFile(Path_Config_Tool_VoiceTranscriber)
+        MonitorFile_Config_VoiceTranscriber = MonitorFile(
+            Config.GetValue('ConfigPath', 'Path_Config_Tool_VoiceTranscriber')
+        )
         MonitorFile_Config_VoiceTranscriber.start()
         MonitorFile_Config_VoiceTranscriber.Signal_FileContent.connect(
             lambda FileContent: self.ui.TextBrowser_Params_Tool_VoiceTranscriber.setText(
@@ -2154,11 +2236,16 @@ class MainWindow(Window_Customizing):
                 (QMessageBox.Question,"Ask","当前任务已执行结束，是否跳转至下一工具界面？",QMessageBox.Yes|QMessageBox.No,[QMessageBox.Yes],[[self.ui.Frame_Tools_Top.layout().itemAt(3).widget().click]],[[()]])
             ]
         )
+        MainWindowSignals.Signal_TaskStatus.connect(
+            lambda TaskStatus: self.ui.Button_Tool_VoiceTranscriber_Execute.setCheckable(
+                False if TaskStatus is 'Started' else True
+            )
+        )
 
         ##################### Tool_DatasetCreator #####################
         '''
         Function_SetText(
-            Panel = self.ui.TextBrowser_Intro_Tool_DatasetCreator,
+            Widget = self.ui.TextBrowser_Intro_Tool_DatasetCreator,
             Title = QCA.translate("TextBrowser", "语音数据集制作"),
             TitleAlign = "center",
             TitleSize = 18,
@@ -2220,7 +2307,7 @@ class MainWindow(Window_Customizing):
         )
 
         Function_SetText(
-            Panel = self.ui.Label_Tool_DatasetCreator_WAV_Dir,
+            Widget = self.ui.Label_Tool_DatasetCreator_WAV_Dir,
             Title = "音频输入目录",
             Body = QCA.translate("Label", "该目录中的wav文件将会按照以下设置重采样并根据字幕时间戳进行分割。")
         )
@@ -2237,7 +2324,7 @@ class MainWindow(Window_Customizing):
         )
 
         Function_SetText(
-            Panel = self.ui.Label_Tool_DatasetCreator_SRT_Dir,
+            Widget = self.ui.Label_Tool_DatasetCreator_SRT_Dir,
             Title = "字幕输入目录",
             Body = QCA.translate("Label", "该目录中的srt文件将会按照以下设置转为适用于模型训练的csv文件。")
         )
@@ -2254,7 +2341,7 @@ class MainWindow(Window_Customizing):
         )
 
         Function_SetText(
-            Panel = self.ui.Label_Tool_DatasetCreator_AutoEncoder,
+            Widget = self.ui.Label_Tool_DatasetCreator_AutoEncoder,
             Title = "自编码器",
             Body = QCA.translate("Label", "模型训练所使用的自动编码器。")
         )
@@ -2267,7 +2354,7 @@ class MainWindow(Window_Customizing):
         )
 
         Function_SetText(
-            Panel = self.ui.Label_Tool_DatasetCreator_WAV_Dir_Split,
+            Widget = self.ui.Label_Tool_DatasetCreator_WAV_Dir_Split,
             Title = "音频输出目录",
             Body = QCA.translate("Label", "最后处理完成的音频将会保存到该目录中。")
         )
@@ -2284,7 +2371,7 @@ class MainWindow(Window_Customizing):
         )
 
         Function_SetText(
-            Panel = self.ui.Label_Tool_DatasetCreator_FileList_Path_Training,
+            Widget = self.ui.Label_Tool_DatasetCreator_FileList_Path_Training,
             Title = "训练集文本路径",
             Body = QCA.translate("Label", "最后生成的训练集txt文件将会保存到该路径。")
         )
@@ -2302,7 +2389,7 @@ class MainWindow(Window_Customizing):
         )
 
         Function_SetText(
-            Panel = self.ui.Label_Tool_DatasetCreator_FileList_Path_Validation,
+            Widget = self.ui.Label_Tool_DatasetCreator_FileList_Path_Validation,
             Title = "验证集文本路径",
             Body = QCA.translate("Label", "最后生成的验证集txt文件将会保存到该路径。")
         )
@@ -2341,7 +2428,7 @@ class MainWindow(Window_Customizing):
         )
 
         Function_SetText(
-            Panel = self.ui.Label_Tool_DatasetCreator_Sample_Rate,
+            Widget = self.ui.Label_Tool_DatasetCreator_Sample_Rate,
             Title = "采样率 (HZ)",
             Body = QCA.translate("Label", "音频将要使用的新采样率。")
         )
@@ -2355,7 +2442,7 @@ class MainWindow(Window_Customizing):
         )
 
         Function_SetText(
-            Panel = self.ui.Label_Tool_DatasetCreator_Subtype,
+            Widget = self.ui.Label_Tool_DatasetCreator_Subtype,
             Title = "采样格式",
             Body = QCA.translate("Label", "音频将要使用的新采样格式。")
         )
@@ -2368,7 +2455,7 @@ class MainWindow(Window_Customizing):
         )
 
         Function_SetText(
-            Panel = self.ui.Label_Tool_DatasetCreator_TrainRatio,
+            Widget = self.ui.Label_Tool_DatasetCreator_TrainRatio,
             Title = "训练集占比",
             Body = QCA.translate("Label", "划分给训练集的数据在数据集中所占的比例。")
         )
@@ -2405,7 +2492,9 @@ class MainWindow(Window_Customizing):
         )
 
         # Right
-        MonitorFile_Config_DatasetCreator = MonitorFile(Path_Config_Tool_DatasetCreator)
+        MonitorFile_Config_DatasetCreator = MonitorFile(
+            Config.GetValue('ConfigPath', 'Path_Config_Tool_DatasetCreator')
+        )
         MonitorFile_Config_DatasetCreator.start()
         MonitorFile_Config_DatasetCreator.Signal_FileContent.connect(
             lambda FileContent: self.ui.TextBrowser_Params_Tool_DatasetCreator.setText(
@@ -2465,11 +2554,16 @@ class MainWindow(Window_Customizing):
                 (QMessageBox.Question,"Ask","当前任务已执行结束，是否跳转至下一工具界面？",QMessageBox.Yes|QMessageBox.No,[QMessageBox.Yes],[[self.ui.Frame_Tools_Top.layout().itemAt(4).widget().click]],[[()]])
             ]
         )
+        MainWindowSignals.Signal_TaskStatus.connect(
+            lambda TaskStatus: self.ui.Button_Tool_DatasetCreator_Execute.setCheckable(
+                False if TaskStatus is 'Started' else True
+            )
+        )
 
         ##################### Tool_VoiceTrainer #####################
         '''
         Function_SetText(
-            Panel = self.ui.TextBrowser_Intro_Tool_VoiceTrainer,
+            Widget = self.ui.TextBrowser_Intro_Tool_VoiceTrainer,
             Title = QCA.translate("TextBrowser", "语音模型训练"),
             TitleAlign = "center",
             TitleSize = 18,
@@ -2532,7 +2626,7 @@ class MainWindow(Window_Customizing):
         )
         
         Function_SetText(
-            Panel = self.ui.Label_Tool_VoiceTrainer_FileList_Path_Training,
+            Widget = self.ui.Label_Tool_VoiceTrainer_FileList_Path_Training,
             Title = "训练集文本路径",
             Body = QCA.translate("Label", "用于提供训练集音频路径及其语音内容的训练集txt文件的所在路径。")
         )
@@ -2550,7 +2644,7 @@ class MainWindow(Window_Customizing):
         )
 
         Function_SetText(
-            Panel = self.ui.Label_Tool_VoiceTrainer_FileList_Path_Validation,
+            Widget = self.ui.Label_Tool_VoiceTrainer_FileList_Path_Validation,
             Title = "验证集文本路径",
             Body = QCA.translate("Label", "用于提供验证集音频路径及其语音内容的验证集txt文件的所在路径。")
         )
@@ -2568,7 +2662,7 @@ class MainWindow(Window_Customizing):
         )
 
         Function_SetText(
-            Panel = self.ui.Label_Tool_VoiceTrainer_Language,
+            Widget = self.ui.Label_Tool_VoiceTrainer_Language,
             Title = "所用语言",
             Body = QCA.translate("Label", "音频中说话人所使用的语言。")
         )
@@ -2581,7 +2675,7 @@ class MainWindow(Window_Customizing):
         )
 
         Function_SetText(
-            Panel = self.ui.Label_Tool_VoiceTrainer_Epochs,
+            Widget = self.ui.Label_Tool_VoiceTrainer_Epochs,
             Title = "迭代轮数",
             Body = QCA.translate("Label", "将全部样本完整迭代一轮的次数。")
         )
@@ -2597,7 +2691,7 @@ class MainWindow(Window_Customizing):
         self.ui.SpinBox_Tool_VoiceTrainer_Epochs.setToolTip("提示：建议为设置一万到两万以获得最佳效果")
 
         Function_SetText(
-            Panel = self.ui.Label_Tool_VoiceTrainer_Batch_Size,
+            Widget = self.ui.Label_Tool_VoiceTrainer_Batch_Size,
             Title = "批处理量",
             Body = QCA.translate("Label", "每轮迭代中单位批次的样本数量，若用户GPU性能较弱可减小该值。")
         )
@@ -2613,7 +2707,7 @@ class MainWindow(Window_Customizing):
         self.ui.SpinBox_Tool_VoiceTrainer_Batch_Size.setToolTip("注意：最好设置为2的幂次。")
 
         Function_SetText(
-            Panel = self.ui.Label_Tool_VoiceTrainer_Config_Dir_Save,
+            Widget = self.ui.Label_Tool_VoiceTrainer_Config_Dir_Save,
             Title = "配置保存目录",
             Body = QCA.translate("Label", "根据以上设置更新参数后的配置文件的保存目录。")
         )
@@ -2630,7 +2724,7 @@ class MainWindow(Window_Customizing):
         )
 
         Function_SetText(
-            Panel = self.ui.Label_Tool_VoiceTrainer_Model_Dir_Save,
+            Widget = self.ui.Label_Tool_VoiceTrainer_Model_Dir_Save,
             Title = "模型保存目录",
             Body = QCA.translate("Label", "训练得到的模型的存放目录，若目录中已存在模型则会将其视为检查点。")
         )
@@ -2658,19 +2752,19 @@ class MainWindow(Window_Customizing):
                 self.Function_AnimateFrame
             ],
             CheckedPermArgsList = [
-                (self.ui.Frame_AdvanceSettings_Tool_VoiceTrainer,...,...,0,self.ui.Frame_Tool_VoiceTrainer_Eval_Interval.height()+self.ui.Frame_Tool_VoiceTrainer_Num_Workers.height()+self.ui.Frame_Tool_VoiceTrainer_FP16_Run.height()+self.ui.Label_Tool_VoiceTrainer_Find_Unused_Parameters.height(),0,'Extend')
+                (self.ui.Frame_AdvanceSettings_Tool_VoiceTrainer,...,...,0,self.ui.Frame_Tool_VoiceTrainer_Eval_Interval.height()+self.ui.Frame_Tool_VoiceTrainer_Num_Workers.height()+self.ui.Frame_Tool_VoiceTrainer_FP16_Run.height()+self.ui.Frame_Tool_VoiceTrainer_Find_Unused_Parameters.height(),0,'Extend')
             ],
             UncheckedText = "高级设置（隐藏）",
             UncheckedPermEventList = [
                 self.Function_AnimateFrame
             ],
             UncheckedPermArgsList = [
-                (self.ui.Frame_AdvanceSettings_Tool_VoiceTrainer,...,...,0,self.ui.Frame_Tool_VoiceTrainer_Eval_Interval.height()+self.ui.Frame_Tool_VoiceTrainer_Num_Workers.height()+self.ui.Frame_Tool_VoiceTrainer_FP16_Run.height()+self.ui.Label_Tool_VoiceTrainer_Find_Unused_Parameters.height(),0,'Reduce')
+                (self.ui.Frame_AdvanceSettings_Tool_VoiceTrainer,...,...,0,self.ui.Frame_Tool_VoiceTrainer_Eval_Interval.height()+self.ui.Frame_Tool_VoiceTrainer_Num_Workers.height()+self.ui.Frame_Tool_VoiceTrainer_FP16_Run.height()+self.ui.Frame_Tool_VoiceTrainer_Find_Unused_Parameters.height(),0,'Reduce')
             ]
         )
 
         Function_SetText(
-            Panel = self.ui.Label_Tool_VoiceTrainer_Eval_Interval,
+            Widget = self.ui.Label_Tool_VoiceTrainer_Eval_Interval,
             Title = "评估间隔",
             Body = QCA.translate("Label", "每次评估并保存模型所间隔的step数。")
         )
@@ -2686,7 +2780,7 @@ class MainWindow(Window_Customizing):
         self.ui.SpinBox_Tool_VoiceTrainer_Eval_Interval.setToolTip("提示：建议设置为默认的一千以满足保存的需求")
 
         Function_SetText(
-            Panel = self.ui.Label_Tool_VoiceTrainer_Num_Workers,
+            Widget = self.ui.Label_Tool_VoiceTrainer_Num_Workers,
             Title = "进程数量",
             Body = QCA.translate("Label", "进行数据加载时可并行的进程数量，若用户CPU性能较弱可减小该值。")
         )
@@ -2702,7 +2796,7 @@ class MainWindow(Window_Customizing):
         self.ui.SpinBox_Tool_VoiceTrainer_Num_Workers.setToolTip("提示：如果配置属于低U高显的话不妨试试把数值降到2。")
 
         Function_SetText(
-            Panel = self.ui.Label_Tool_VoiceTrainer_FP16_Run,
+            Widget = self.ui.Label_Tool_VoiceTrainer_FP16_Run,
             Title = "半精度训练",
             Body = QCA.translate("Label", "通过混合了float16精度的训练方式减小显存占用以支持更大的批处理量。")
         )
@@ -2735,7 +2829,7 @@ class MainWindow(Window_Customizing):
         )
 
         Function_SetText(
-            Panel = self.ui.Label_Tool_VoiceTrainer_Find_Unused_Parameters,
+            Widget = self.ui.Label_Tool_VoiceTrainer_Find_Unused_Parameters,
             Title = "寻找未用参数",
             Body = QCA.translate("Label", "寻找没用到的参数以防止在对梯度进行平均时报错，但会带来额外的运行开销。")
         )
@@ -2797,7 +2891,7 @@ class MainWindow(Window_Customizing):
         )
 
         Function_SetText(
-            Panel = self.ui.Label_Tool_VoiceTrainer_Model_Path_Pretrained_G,
+            Widget = self.ui.Label_Tool_VoiceTrainer_Model_Path_Pretrained_G,
             Title = "预训练G_*模型路径",
             Body = QCA.translate("Label", "预训练生成器（Generator）模型的所在路径，载入优先级高于检查点。")
         )
@@ -2815,7 +2909,7 @@ class MainWindow(Window_Customizing):
         )
 
         Function_SetText(
-            Panel = self.ui.Label_Tool_VoiceTrainer_Model_Path_Pretrained_D,
+            Widget = self.ui.Label_Tool_VoiceTrainer_Model_Path_Pretrained_D,
             Title = "预训练D_*模型路径",
             Body = QCA.translate("Label", "预训练判别器（Discriminator）模型的所在路径，载入优先级高于检查点。")
         )
@@ -2854,7 +2948,7 @@ class MainWindow(Window_Customizing):
         )
 
         Function_SetText(
-            Panel = self.ui.Label_Tool_VoiceTrainer_Config_Path_Load,
+            Widget = self.ui.Label_Tool_VoiceTrainer_Config_Path_Load,
             Title = "配置加载路径",
             Body = QCA.translate("Label", "该路径对应的配置文件将会替代默认的配置文件。")
         )
@@ -2872,7 +2966,7 @@ class MainWindow(Window_Customizing):
         )
 
         Function_SetText(
-            Panel = self.ui.Label_Tool_VoiceTrainer_Speakers,
+            Widget = self.ui.Label_Tool_VoiceTrainer_Speakers,
             Title = "人物名字",
             Body = QCA.translate("Label", "若数据集非本工具箱生成且未包含人名信息，则应按序号设置并用逗号隔开。")
         )
@@ -2925,7 +3019,9 @@ class MainWindow(Window_Customizing):
         )
 
         # Right
-        MonitorFile_Config_VoiceTrainer = MonitorFile(Path_Config_Tool_VoiceTrainer)
+        MonitorFile_Config_VoiceTrainer = MonitorFile(
+            Config.GetValue('ConfigPath', 'Path_Config_Tool_VoiceTrainer')
+        )
         MonitorFile_Config_VoiceTrainer.start()
         MonitorFile_Config_VoiceTrainer.Signal_FileContent.connect(
             lambda FileContent: self.ui.TextBrowser_Params_Tool_VoiceTrainer.setText(
@@ -2997,11 +3093,27 @@ class MainWindow(Window_Customizing):
                 (QMessageBox.Question,"Ask","当前任务已执行结束，是否跳转至下一工具界面？",QMessageBox.Yes|QMessageBox.No,[QMessageBox.Yes],[[self.ui.Frame_Tools_Top.layout().itemAt(5).widget().click]],[[()]])
             ]
         )
+        MainWindowSignals.Signal_TaskStatus.connect(
+            lambda TaskStatus: self.ui.Button_Tool_VoiceTrainer_Execute.setCheckable(
+                False if TaskStatus is 'Started' else True
+            )
+        )
+        MainWindowSignals.Signal_TaskStatus.connect(
+            lambda TaskStatus: Function_ShowMessageBox(
+                MessageType = QMessageBox.Question,
+                WindowTitle = "Ask",
+                Text = "是否稍后启用tensorboard？",
+                Buttons = QMessageBox.Yes|QMessageBox.No,
+                EventButtons = [QMessageBox.Yes],
+                EventLists = [[CheckTensorboard]],
+                ParamLists = [[(Function_ParamsChecker([self.ui.LineEdit_Tool_VoiceTrainer_Model_Dir_Save]))]]
+            ) if TaskStatus is 'Started' else print('Cancelled to start tensorboard')
+        )
 
         ##################### Tool_VoiceConverter #####################
         '''
         Function_SetText(
-            Panel = self.ui.TextBrowser_Intro_Tool_VoiceConverter,
+            Widget = self.ui.TextBrowser_Intro_Tool_VoiceConverter,
             Title = QCA.translate("TextBrowser", "语音模型推理"),
             TitleAlign = "center",
             TitleSize = 18,
@@ -3061,7 +3173,7 @@ class MainWindow(Window_Customizing):
         )
 
         Function_SetText(
-            Panel = self.ui.Label_Tool_VoiceConverter_Config_Path_Load,
+            Widget = self.ui.Label_Tool_VoiceConverter_Config_Path_Load,
             Title = "配置加载路径",
             Body = QCA.translate("Label", "用于推理的配置文件的所在路径。")
         )
@@ -3084,7 +3196,7 @@ class MainWindow(Window_Customizing):
         )
 
         Function_SetText(
-            Panel = self.ui.Label_Tool_VoiceConverter_Model_Path_Load,
+            Widget = self.ui.Label_Tool_VoiceConverter_Model_Path_Load,
             Title = "G_*模型加载路径",
             Body = QCA.translate("Label", "用于推理的生成器（Generator）模型的所在路径。")
         )
@@ -3102,7 +3214,7 @@ class MainWindow(Window_Customizing):
         )
 
         Function_SetText(
-            Panel = self.ui.Label_Tool_VoiceConverter_Text,
+            Widget = self.ui.Label_Tool_VoiceConverter_Text,
             Title = "输入文字",
             Body = QCA.translate("Label", "输入的文字会作为说话人的语音内容。")
         )
@@ -3114,7 +3226,7 @@ class MainWindow(Window_Customizing):
         )
 
         Function_SetText(
-            Panel = self.ui.Label_Tool_VoiceConverter_Language,
+            Widget = self.ui.Label_Tool_VoiceConverter_Language,
             Title = "所用语言",
             Body = QCA.translate("Label", "说话人/文字所使用的语言。")
         )
@@ -3127,7 +3239,7 @@ class MainWindow(Window_Customizing):
         )
 
         Function_SetText(
-            Panel = self.ui.Label_Tool_VoiceConverter_Speaker,
+            Widget = self.ui.Label_Tool_VoiceConverter_Speaker,
             Title = "人物名字",
             Body = QCA.translate("Label", "说话人物的名字。")
         )
@@ -3156,7 +3268,7 @@ class MainWindow(Window_Customizing):
         )
 
         Function_SetText(
-            Panel = self.ui.Label_Tool_VoiceConverter_EmotionStrength,
+            Widget = self.ui.Label_Tool_VoiceConverter_EmotionStrength,
             Title = "情感强度",
             Body = QCA.translate("Label", "情感的变化程度。")
         )
@@ -3199,7 +3311,7 @@ class MainWindow(Window_Customizing):
         )
 
         Function_SetText(
-            Panel = self.ui.Label_Tool_VoiceConverter_PhonemeDuration,
+            Widget = self.ui.Label_Tool_VoiceConverter_PhonemeDuration,
             Title = "音素音长",
             Body = QCA.translate("Label", "音素的发音长度。")
         )
@@ -3242,7 +3354,7 @@ class MainWindow(Window_Customizing):
         )
 
         Function_SetText(
-            Panel = self.ui.Label_Tool_VoiceConverter_SpeechRate,
+            Widget = self.ui.Label_Tool_VoiceConverter_SpeechRate,
             Title = "整体语速",
             Body = QCA.translate("Label", "整体的说话速度。")
         )
@@ -3285,7 +3397,7 @@ class MainWindow(Window_Customizing):
         )
 
         Function_SetText(
-            Panel = self.ui.Label_Tool_VoiceConverter_Audio_Dir_Save,
+            Widget = self.ui.Label_Tool_VoiceConverter_Audio_Dir_Save,
             Title = "音频保存目录",
             Body = QCA.translate("Label", "推理得到的音频会保存到该目录。")
         )
@@ -3302,7 +3414,9 @@ class MainWindow(Window_Customizing):
         )
 
         # Right
-        MonitorFile_Config_VoiceConverter = MonitorFile(Path_Config_Tool_VoiceConverter)
+        MonitorFile_Config_VoiceConverter = MonitorFile(
+            Config.GetValue('ConfigPath', 'Path_Config_Tool_VoiceConverter')
+        )
         MonitorFile_Config_VoiceConverter.start()
         MonitorFile_Config_VoiceConverter.Signal_FileContent.connect(
             lambda FileContent: self.ui.TextBrowser_Params_Tool_VoiceConverter.setText(
@@ -3372,6 +3486,11 @@ class MainWindow(Window_Customizing):
                 (QMessageBox.Information,"Tip","当前任务已执行结束！",QMessageBox.Ok)
             ]
         )
+        MainWindowSignals.Signal_TaskStatus.connect(
+            lambda TaskStatus: self.ui.Button_Tool_VoiceConverter_Execute.setCheckable(
+                False if TaskStatus is 'Started' else True
+            )
+        )
 
         #############################################################
         ##################### Content: Settings #####################
@@ -3406,6 +3525,11 @@ class MainWindow(Window_Customizing):
             ExecuteButton = self.ui.Button_Setting_IntegrityChecker,
             Method = Integrity_Checker.Execute,
             Params = ()
+        )
+        MainWindowSignals.Signal_TaskStatus.connect(
+            lambda TaskStatus: self.ui.Button_Setting_IntegrityChecker.setCheckable(
+                False if TaskStatus is 'Started' else True
+            )
         )
         self.ui.Button_Setting_IntegrityChecker.setText(QCA.translate("Button", "检查完整性"))
         self.ui.Button_Setting_IntegrityChecker.setCheckable(True)
@@ -3536,7 +3660,12 @@ class MainWindow(Window_Customizing):
         )
         '''
         # Display ToolsStatus
-        self.ui.Label_ToolsStatus.setText("工具状态：")
+        self.ui.Label_ToolsStatus.setText("工具状态：空闲")
+        MainWindowSignals.Signal_TaskStatus.connect(
+            lambda TaskStatus: self.ui.Label_ToolsStatus.setText(
+                f"工具状态：{'忙碌' if TaskStatus is 'Started' else '空闲'}"
+            )
+        )
 
         # Display Usage
         self.MonitorUsage.Signal_UsageInfo.connect(

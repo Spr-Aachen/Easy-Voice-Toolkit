@@ -1,0 +1,15 @@
+WidgetBase {
+    background-color: transparent;
+    padding: 0px;
+    border-width: 0px;
+    border-radius: 6px;
+    border-style: solid;
+}
+
+
+QToolTip {
+    color: rgb(210, 222, 234);
+    background-color: transparent;
+	border-width: 0px;
+	border-style: solid;
+}

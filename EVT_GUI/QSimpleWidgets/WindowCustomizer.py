@@ -5,78 +5,59 @@ from PySide6.QtGui import QFont, QPainter, QPaintEvent, QResizeEvent, QMouseEven
 from PySide6.QtWidgets import *
 
 from .QFunctions import *
+from .Sources import *
+from .ComponentsCustomizer import WidgetBase, ToolButtonBase
 
 ##############################################################################################################################
 
-class TitleBarBase(QFrame):
+class TitleBarBase(WidgetBase):
     '''
     '''
-    def __init__(self,
-        parent: Optional[QWidget] = None
-    ):
-        super().__init__(parent)
+    DEFAULT_TITILE_BAR_HEIGHT = 30 # 默认标题栏高度
 
-        self.setStyleSheet(Function_GetStyleSheet('Bar'))
+    def __init__(self,
+        parent: QWidget = ...
+    ):
+        super().__init__(None)
+
         ComponentsSignals.Signal_SetTheme.connect(
             lambda Theme: self.setStyleSheet(Function_GetStyleSheet('Bar', Theme))
         )
+        ComponentsSignals.Signal_SetTheme.emit('Auto')
 
         self.setMouseTracking(True)
 
-
-class CustomizeTitleBar:
-    '''
-    自定义标题栏
-    '''
-    def __init__(self,
-        Window: Optional[QWidget] = None,
-        ExistedTitleBar: Optional[QWidget] = None
-    ):
-        if ExistedTitleBar is None:
-            self.IsTitleBarExisted = False
-            self.TitleBar = TitleBarBase()
-        else:
-            self.IsTitleBarExisted = True
-            self.TitleBar = ExistedTitleBar
-            if isinstance(self.TitleBar, TitleBarBase) == False:
-                self.TitleBar.setStyleSheet(Function_GetStyleSheet('Bar'))
-                ComponentsSignals.Signal_SetTheme.connect(
-                    lambda Theme:  self.TitleBar.setStyleSheet(Function_GetStyleSheet('Bar', Theme))
-                )
-
-        self.DEFAULT_TITILE_BAR_HEIGHT = 30 # 默认标题栏高度
         self.YAxis = self.DEFAULT_TITILE_BAR_HEIGHT / 5
         self.Width = self.DEFAULT_TITILE_BAR_HEIGHT / 2
         self.Height = self.DEFAULT_TITILE_BAR_HEIGHT / 2
 
-        self.Window = Window if isinstance(Window, QWidget) else self.TitleBar.topLevelWidget()
-        self.MouseDoubleClickEvent_Parent = self.Window.mouseDoubleClickEvent # 存储父类的双击事件
+        self.Window = parent if isinstance(parent, QMainWindow) else parent.topLevelWidget()
         self.ResizeEvent_Parent = self.Window.resizeEvent # 存储父类的窗口大小改变事件
+        self.MouseDoubleClickEvent_Parent = self.Window.mouseDoubleClickEvent # 存储父类的双击事件
 
         self.CloseButton = self.setCloseButton()
         self.MaximizeButton = self.setMaximizeButton()
         self.MinimizeButton = self.setMinimizeButton()
 
-        #self.SetUp()
-    
-    def setTitle(self, Text: str):
-        TitleLabel = QLabel(Text, self.Window)
-        TitleLabel.setGeometry(0 + 33, self.YAxis, self.Width, self.Height)
-        TitleLabel.setStyleSheet(
-            "QLabel"
-            "{"
-                "background-color: transparent;"
-                "color: rgba(210, 210, 210, 210);"
-                "padding: 3.3px;"
-                "border-width: 0px;"
-                #"border-top-left-radius: 3px;"
-                #"border-top-right-radius: 3px;"
-                "border-style: solid;"
-                #"border-color: rgb(111, 111, 111);"
-            "}"
-        )
-        #TitleLabel.setFont(QFont("Microsoft YaHei", 11.1, QFont.Normal))
-        TitleLabel.setAlignment(Qt.AlignLeft | Qt.AlignVCenter)
+    def resizeEvent(self, a0: QResizeEvent) -> None:
+        '''
+        窗口缩放事件
+        '''
+        self.resize(self.Window.width(), self.DEFAULT_TITILE_BAR_HEIGHT)
+        # 最大化最小化的时候，需要去改变按钮组位置
+        self.CloseButton.move(self.Window.width() - 33, self.YAxis)
+        self.MaximizeButton.move(self.Window.width() - 66, self.YAxis)
+        self.MinimizeButton.move(self.Window.width() - 99, self.YAxis)
+        return self.ResizeEvent_Parent(a0)
+
+    def mouseDoubleClickEvent(self, a0: QMouseEvent) -> None:
+        '''
+        鼠标双击事件
+        '''
+        # 如果双击的是鼠标左键且在标题栏范围内，则放大缩小窗口
+        if a0.button() == Qt.MouseButton.LeftButton and a0.position().y() < self.height():
+            self.setMaximizeEvent()
+        return self.MouseDoubleClickEvent_Parent(a0)
 
     def setCloseEvent(self):
         self.Window.close()
@@ -91,22 +72,13 @@ class CustomizeTitleBar:
         CloseButton = QPushButton("", self.Window)
         CloseButton.setGeometry(self.Window.width() - 33, self.YAxis, self.Width, self.Height)
         CloseButton.setStyleSheet(
-            "QPushButton"
-            "{"
-                "background: rgba(210, 123, 123, 0.6);"
-                "border-radius: 6.6px;"
+            "QPushButton {"
+            "   background-color: rgba(210, 123, 123, 123);"
+            "   border-width: 0px;"
+            "   border-radius: 6.6px;"
             "}"
-            "QPushButton:hover"
-            "{"
-                "background: rgba(210, 123, 123, 0.9);"
-            "}"
-
-            "QToolTip"
-            "{"
-                "color: rgba(255, 255, 255, 210);"
-                "background-color: transparent;"
-                "border-width: 0px;"
-                "border-style: solid;"
+            "QPushButton:hover {"
+            "   background-color: rgba(210, 123, 123, 210);"
             "}"
         )
         CloseButton.setCursor(Qt.PointingHandCursor)
@@ -119,22 +91,13 @@ class CustomizeTitleBar:
         MaximizeButton = QPushButton("", self.Window)
         MaximizeButton.setGeometry(self.Window.width() - 66, self.YAxis, self.Width, self.Height)
         MaximizeButton.setStyleSheet(
-            "QPushButton"
-            "{"
-                "background: rgba(210, 210, 123, 0.6);"
-                "border-radius: 6.6px;"
+            "QPushButton {"
+            "   background-color: rgba(210, 210, 123, 123);"
+            "   border-width: 0px;"
+            "   border-radius: 6.6px;"
             "}"
-            "QPushButton:hover"
-            "{"
-                "background: rgba(210, 210, 123, 0.9);"
-            "}"
-
-            "QToolTip"
-            "{"
-                "color: rgba(255, 255, 255, 210);"
-                "background-color: transparent;"
-                "border-width: 0px;"
-                "border-style: solid;"
+            "QPushButton:hover {"
+            "   background-color: rgba(210, 210, 123, 210);"
             "}"
         )
         MaximizeButton.setCursor(Qt.PointingHandCursor)
@@ -147,22 +110,13 @@ class CustomizeTitleBar:
         MinimizeButton = QPushButton("", self.Window)
         MinimizeButton.setGeometry(self.Window.width() - 99, self.YAxis, self.Width, self.Height)
         MinimizeButton.setStyleSheet(
-            "QPushButton"
-            "{"
-                "background: rgba(123, 210, 123, 0.6);"
-                "border-radius: 6.6px;"
+            "QPushButton {"
+            "   background-color: rgba(123, 210, 123, 123);"
+            "   border-width: 0px;"
+            "   border-radius: 6.6px;"
             "}"
-            "QPushButton:hover"
-            "{"
-                "background: rgba(123, 210, 123, 0.9);"
-            "}"
-
-            "QToolTip"
-            "{"
-                "color: rgba(255, 255, 255, 210);"
-                "background-color: transparent;"
-                "border-width: 0px;"
-                "border-style: solid;"
+            "QPushButton:hover {"
+            "   background-color: rgba(123, 210, 123, 210);"
             "}"
         )
         MinimizeButton.setCursor(Qt.PointingHandCursor)
@@ -170,34 +124,40 @@ class CustomizeTitleBar:
         MinimizeButton.setToolTipDuration(-1)
         MinimizeButton.setToolTip("Minimize 最小化")
         return MinimizeButton
+    
+    def setTitle(self, Text: str):
+        TitleLabel = QLabel(Text, self.Window)
+        TitleLabel.setGeometry(0 + 33, self.YAxis, self.Width, self.Height)
+        TitleLabel.setStyleSheet(
+            "QLabel {"
+            "   color: rgba(210, 210, 210, 210);"
+            "   background-color: transparent;"
+            "   padding: 3.3px;"
+            "   border-width: 0px;"
+            "   border-style: solid;"
+            "}"
+        )
+        #TitleLabel.setFont(QFont("Microsoft YaHei", 11.1, QFont.Normal))
+        TitleLabel.setAlignment(Qt.AlignLeft | Qt.AlignVCenter)
 
-    def mouseDoubleClickEvent(self, a0: QMouseEvent) -> None:
-        '''
-        鼠标双击事件
-        '''
-        # 如果双击的是鼠标左键且在标题栏范围内，则放大缩小窗口
-        if a0.button() == Qt.MouseButton.LeftButton and a0.position().y() < self.TitleBar.height():
-            self.setMaximizeEvent()
-        return self.MouseDoubleClickEvent_Parent(a0)
 
-    def resizeEvent(self, a0: QResizeEvent) -> None:
-        '''
-        窗口缩放事件
-        '''
-        self.TitleBar.resize(self.Window.width(), self.DEFAULT_TITILE_BAR_HEIGHT)
-        # 最大化最小化的时候，需要去改变按钮组位置
-        self.CloseButton.move(self.Window.width() - 33, self.YAxis)
-        self.MaximizeButton.move(self.Window.width() - 66, self.YAxis)
-        self.MinimizeButton.move(self.Window.width() - 99, self.YAxis)
-        return self.ResizeEvent_Parent(a0)
-
-    def SetUp(self):
-        if self.IsTitleBarExisted == False:
-            self.setTitle("Title - by Spr_Aachen")
-            self.TitleBar.setGeometry(0, 0, self.Window.width(), self.DEFAULT_TITILE_BAR_HEIGHT) # 将自定义的标题栏置于最顶部
-            self.Window.setContentsMargins(0, self.DEFAULT_TITILE_BAR_HEIGHT, 0, 0) # 设置ui文件里main_layout上边距，以免遮挡标题栏
-        self.Window.mouseDoubleClickEvent = self.mouseDoubleClickEvent # 将本类的双击事件赋值给将父类的双击事件
-        self.Window.resizeEvent = self.resizeEvent # 将本类的窗口大小改变事件赋值给将父类的窗口大小改变事件
+def TitleBarCustomizer(
+    Window: QWidget = ...,
+    ExistedTitleBar: Optional[QWidget] = None
+):
+    '''
+    自定义标题栏
+    '''
+    if ExistedTitleBar is None:
+        TitleBar = TitleBarBase(Window)
+        TitleBar.setTitle("Title - by Spr_Aachen")
+        TitleBar.setGeometry(0, 0, TitleBar.Window.width(), TitleBar.DEFAULT_TITILE_BAR_HEIGHT) # 将自定义的标题栏置于最顶部
+        TitleBar.Window.setContentsMargins(0, TitleBar.DEFAULT_TITILE_BAR_HEIGHT, 0, 0) # 设置ui文件里main_layout上边距，以免遮挡标题栏
+    else:
+        TitleBar = TitleBarBase(ExistedTitleBar)
+    TitleBar.Window.resizeEvent = TitleBar.resizeEvent # 将本类的窗口大小改变事件赋值给将父类的窗口大小改变事件
+    TitleBar.Window.mouseDoubleClickEvent = TitleBar.mouseDoubleClickEvent # 将本类的双击事件赋值给将父类的双击事件
+    #return TitleBar
 
 ##############################################################################################################################
 
@@ -238,48 +198,61 @@ class EdgePress:
 class MainWindowBase(QMainWindow):
     '''
     '''
+    edge_press = EdgePress() # 拖放标记
+
+    edge_size = 3 # 窗体边缘尺寸（出现缩放标记的范围）
+
+    min_width = 1280 # 窗体的最小宽度
+    min_height = 720 # 窗体的最小高度
+
+    move_event_height = 30 # 顶部可移动窗口高度
+
+    CentralWidgetName = 'CentralWidget'
+
     def __init__(self,
         parent: Optional[QWidget] = None,
-        SetTitleBar: bool = True
+        flags: Qt.WindowType = Qt.Window,
+        CustomizeTitleBar: bool = True
     ):
-        super().__init__(parent)
+        super().__init__(parent, flags)
 
-        self.setStyleSheet(Function_GetStyleSheet('Window'))
+        self.CentralLayout = QGridLayout()
+
+        self.CentralWidget = WidgetBase()
+        self.CentralWidget.setObjectName(self.CentralWidgetName)
+        self.CentralWidget.setLayout(self.CentralLayout)
+        self.setCentralWidget(self.CentralWidget)
+
         ComponentsSignals.Signal_SetTheme.connect(
-            lambda Theme: self.setStyleSheet(Function_GetStyleSheet('Window', Theme))
+            lambda Theme: self.setStyleSheet(Function_GetStyleSheet('Window', Theme).replace('#CentralWidget', f'#{self.CentralWidgetName}'))
         )
+        ComponentsSignals.Signal_SetTheme.emit('Auto')
 
-        self.setWindowFlags(
-            Qt.Window
-            | Qt.FramelessWindowHint
-            | Qt.WindowSystemMenuHint
-            | Qt.WindowMinimizeButtonHint
-            | Qt.WindowMaximizeButtonHint
-        ) # 设置无边框
+        self.setAttribute(Qt.WA_TranslucentBackground, True)
 
-        self.CustomizeTitleBar = CustomizeTitleBar(self)
-        self.CustomizeTitleBar.SetUp() if SetTitleBar else None
+        self.setWindowFlags(flags | Qt.FramelessWindowHint) if CustomizeTitleBar else None
+        TitleBarCustomizer(self) if CustomizeTitleBar else None
 
         self.setMouseTracking(True)
-
-        self.edge_press = EdgePress() # 拖放标记
-
-        self.edge_size = 3 # 窗体边缘尺寸（出现缩放标记的范围）
-
-        self.min_width = 1280 # 窗体的最小宽度
-        self.min_height = 720 # 窗体的最小高度
-
-        self.move_event_height = 30 # 顶部可移动窗口高度
 
     def paintEvent(self, event: QPaintEvent) -> None:
         '''
         设置边框
         '''
         painter = QPainter(self)
-        painter.setRenderHint(QPainter.RenderHint.Antialiasing) # 设置抗锯齿，不然边框会有明显锯齿
-        painter.setBrush(Qt.white) # 设置窗体颜色
-        #painter.drawRoundedRect(self.rect(), 3, 3) #画边框圆角
-        super().paintEvent(event)
+        painter.setRenderHint(QPainter.Antialiasing, True)
+        painter.setBrush(Qt.transparent)
+        painter.setPen(Qt.gray)
+        '''
+        painter.drawRect(
+            QRectF(
+                self.rect().x() + self.edge_size,
+                self.rect().y() + self.edge_size,
+                self.rect().width() - 2 * self.edge_size,
+                self.rect().height() - 2 * self.edge_size
+            )
+        )
+        '''
 
     def _get_edge_press(self):
         '''
@@ -369,7 +342,7 @@ class MainWindowBase(QMainWindow):
                 height = geo.height()
         self.setGeometry(x, y, width, height)
 
-    def mouseMoveEvent(self, event):
+    def mouseMoveEvent(self, event: QMouseEvent):
         '''
         根据鼠标按钮是否按下来检查鼠标位置与更新窗口光标
         '''
@@ -393,7 +366,7 @@ class MainWindowBase(QMainWindow):
             elif self._get_edge_press() is not Edge.NoEdge:
                 self._resize_window(event.globalPosition().toPoint() - self.pos()) # 缩放窗口
 
-    def mouseReleaseEvent(self, event) -> None:
+    def mouseReleaseEvent(self, event: QMouseEvent) -> None:
         self.edge_press.leftEdgePress = False
         self.edge_press.rightEdgePress = False
         self.edge_press.topEdgePress = False
@@ -447,7 +420,7 @@ class MainWindowBase(QMainWindow):
         not_in_edges: bool = self._get_edges(pos) == Edge.NoEdge # 是否在非缩放区域内
         return in_move_edge and not_in_edges
 
-    def mousePressEvent(self, event) -> None:
+    def mousePressEvent(self, event: QMouseEvent) -> None:
         pos = event.globalPosition().toPoint() - self.pos()
         edges = self._get_edges(pos)
         if edges == Edge.LeftEdge:
@@ -472,7 +445,7 @@ class MainWindowBase(QMainWindow):
                 self.edge_press.movePosition = event.globalPosition().toPoint() - self.pos()
                 self.setCursor(Qt.CursorShape.OpenHandCursor)
 
-    def resizeEvent(self, event):
+    def resizeEvent(self, event: QResizeEvent):
         '''
         处理窗口大小更改事件
         '''

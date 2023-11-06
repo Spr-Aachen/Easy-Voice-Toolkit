@@ -1,10 +1,8 @@
 import os
-import sys
-sys.path.append('..')
 import darkdetect
 from typing import Union, Optional
 from PySide6.QtCore import Qt, QObject, QFile, QRect, QRectF, Signal, Slot, QPropertyAnimation, QEasingCurve, QUrl
-from PySide6.QtGui import QColor, QIcon, QPainter, QDesktopServices
+from PySide6.QtGui import QColor, QRgba64, QIcon, QPainter, QDesktopServices
 from PySide6.QtWidgets import *
 
 from .Utils import *
@@ -17,7 +15,10 @@ class CustomSignals_ComponentsCustomizer(QObject):
     '''
     # Set theme
     Signal_SetTheme = Signal(str)
-
+    '''
+    # Get clicked button
+    Signal_ClickedButton = Signal(QMessageBox.StandardButton)
+    '''
 
 ComponentsSignals = CustomSignals_ComponentsCustomizer()
 
@@ -74,6 +75,27 @@ def Function_DrawIcon(
 
 ##############################################################################################################################
 
+def Function_SetRetainSizeWhenHidden(
+    Widget: QWidget,
+    RetainSize: bool = True
+):
+    sizePolicy = Widget.sizePolicy()
+    sizePolicy.setRetainSizeWhenHidden(RetainSize)
+    Widget.setSizePolicy(sizePolicy)
+
+
+def Function_SetDropShadowEffect(
+    Widget: QWidget,
+    Radius: float = 3.,
+    Color: Union[QColor, QRgba64] = Qt.gray
+):
+    DropShadowEffect = QGraphicsDropShadowEffect()
+    DropShadowEffect.setOffset(0, 0)
+    DropShadowEffect.setBlurRadius(Radius)
+    DropShadowEffect.setColor(Color)
+    Widget.setGraphicsEffect(DropShadowEffect)
+
+
 def Function_SetAnimation(
     Animation: QPropertyAnimation,
     StartValue,
@@ -87,8 +109,61 @@ def Function_SetAnimation(
     return Animation
 
 
+def Function_SetNoContents(
+    Widget: QWidget
+):
+    if isinstance(Widget, QStackedWidget):
+        while Widget.count():
+            Widget.removeWidget(Widget.widget(0))
+
+
+def Function_SetText(
+    Widget: QWidget,
+    Title: Optional[str] = None,
+    TitleAlign: str = "left",
+    TitleSize: float = 9.9,
+    TitleWeight: float = 840.,
+    TitleColor: str = "#ffffff",
+    TitleLineHeight: float = 21.,
+    Body: Optional[str] = None,
+    BodyAlign: str = "left",
+    BodySize: float = 9.9,
+    BodyWeight: float = 420.,
+    BodyLineHeight: float = 21.,
+    BodyColor: str = "#ffffff",
+):
+    '''
+    Function to set text for widget
+    '''
+    def ToHtml(Content, Align, Size, Weight, Color, LineHeight):
+        Style = f"'text-align:{Align}; font-size:{Size}pt; font-weight:{Weight}; color:{Color}; line-height:{LineHeight}px'"
+        Content = re.sub(
+            pattern = "[\n]",
+            repl = "<br>",
+            string = Content
+        ) if Content is not None else None
+        return f"<p style={Style}>{Content}</p>" if Content is not None else ''
+
+    Text = (
+        "<html>"
+            "<head>"
+                f"<title>{ToHtml(Title, TitleAlign, TitleSize, TitleWeight, TitleColor, TitleLineHeight)}</title>" # Not Working
+            "</head>"
+            "<body>"
+                f"{ToHtml(Title, TitleAlign, TitleSize, TitleWeight, TitleColor, TitleLineHeight)}"
+                f"{ToHtml(Body, BodyAlign, BodySize, BodyWeight, BodyColor, BodyLineHeight)}"
+            "</body>"
+        "</html>"
+    )
+
+    if isinstance(Widget, QLabel):
+        Widget.setText(Text)
+    if isinstance(Widget, (QTextEdit, QPlainTextEdit, QTextBrowser)):
+        Widget.setHtml(Text)
+
+
 def Function_OpenURL(
-    URL: str, #URL: str | list
+    URL: Union[str, list],
 ):
     '''
     Function to open web/local URL
@@ -109,6 +184,7 @@ def Function_OpenURL(
             #URL = Function_ParamsChecker(URLList)[Index] if isinstance(URL, QObject) else URL
             OpenURL(URL)
 
+##############################################################################################################################
 
 def Function_GetFileDialog(
     Mode: str,

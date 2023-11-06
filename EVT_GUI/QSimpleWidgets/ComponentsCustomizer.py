@@ -1,8 +1,31 @@
 from PySide6.QtCore import Qt, QObject
-from PySide6.QtGui import QColor, QIcon, QPainter
+from PySide6.QtGui import QColor, QIcon, QPainter, QPaintEvent
 from PySide6.QtWidgets import *
 
 from .QFunctions import *
+from .Sources import *
+
+##############################################################################################################################
+
+class WidgetBase(QWidget):
+    '''
+    '''
+    def __init__(self,
+        parent: Optional[QWidget] = None,
+        f: Qt.WindowType = Qt.Widget
+    ):
+        super().__init__(parent, f)
+
+        ComponentsSignals.Signal_SetTheme.connect(
+            lambda Theme: self.setStyleSheet(Function_GetStyleSheet('Widget', Theme))
+        )
+        ComponentsSignals.Signal_SetTheme.emit('Auto')
+
+    def paintEvent(self, event: QPaintEvent):
+        painter = QPainter(self)
+        painter.setRenderHint(QPainter.Antialiasing, True)
+        painter.setBrush(Qt.transparent)
+        painter.setPen(Qt.gray)
 
 ##############################################################################################################################
 
@@ -32,7 +55,7 @@ class ToolButtonBase(QToolButton):
     '''
     '''
     def __init__(self,
-        text: str,
+        text: Optional[str] = None,
         parent: Optional[QWidget] = None
     ):
         super().__init__(parent)
@@ -43,7 +66,7 @@ class ToolButtonBase(QToolButton):
         ComponentsSignals.Signal_SetTheme.emit('Auto')
 
         self.setFont('Microsoft YaHei')
-        self.setText(text)
+        self.setText(text) if text is not None else None
     """
         self.setIconSize(QSize(16, 16))
         self.setIcon(QIcon())
@@ -160,54 +183,115 @@ class DialogBase(QDialog):
     '''
     def __init__(self,
         parent: Optional[QWidget] = None,
-        #f: WindowType = ...
+        f: Qt.WindowType = Qt.Dialog
     ):
-        super().__init__(parent)
+        super().__init__(parent, f)
 
         ComponentsSignals.Signal_SetTheme.connect(
             lambda Theme: self.setStyleSheet(Function_GetStyleSheet('Dialog', Theme))
         )
         ComponentsSignals.Signal_SetTheme.emit('Auto')
 
-"""
+        Function_SetDropShadowEffect(self)
+
+
 class MessageBoxBase(DialogBase):
     '''
     '''
+    ButtonDict = {
+        QMessageBox.NoButton:        QDialogButtonBox.NoButton,
+        QMessageBox.Ok:              QDialogButtonBox.Ok,
+        QMessageBox.Cancel:          QDialogButtonBox.Cancel,
+        QMessageBox.Yes:             QDialogButtonBox.Yes,
+        QMessageBox.No:              QDialogButtonBox.No,
+        QMessageBox.Retry:           QDialogButtonBox.Retry,
+        QMessageBox.Ignore:          QDialogButtonBox.Ignore,
+        QMessageBox.Open:            QDialogButtonBox.Open,
+        QMessageBox.Close:           QDialogButtonBox.Close,
+        QMessageBox.Save:            QDialogButtonBox.Save,
+        QMessageBox.Discard:         QDialogButtonBox.Discard,
+        QMessageBox.Apply:           QDialogButtonBox.Apply,
+        QMessageBox.RestoreDefaults: QDialogButtonBox.RestoreDefaults,
+        QMessageBox.Ok | QMessageBox.Cancel:             QDialogButtonBox.Ok | QDialogButtonBox.Cancel,
+        QMessageBox.Yes | QMessageBox.No:                QDialogButtonBox.Yes | QDialogButtonBox.No,
+        QMessageBox.Retry | QMessageBox.Ignore:          QDialogButtonBox.Retry | QDialogButtonBox.Ignore,
+        QMessageBox.Open | QMessageBox.Close:            QDialogButtonBox.Open | QDialogButtonBox.Close,
+        QMessageBox.Save | QMessageBox.Discard:          QDialogButtonBox.Save | QDialogButtonBox.Discard,
+        QMessageBox.Apply | QMessageBox.RestoreDefaults: QDialogButtonBox.Apply | QDialogButtonBox.RestoreDefaults
+    }
+
     def __init__(self,
         parent: Optional[QWidget] = None
     ):  
         super().__init__(parent)
 
         self.setWindowModality(Qt.ApplicationModal)
-        self.setWindowTitle("Custom Dialog")
-        self.resize(400, 200)
+        self.setModal(True)
+        self.setMinimumSize(300, 150)
 
-        layout = QVBoxLayout(self)
+        self.Label = QLabel(str(), parent = self)
 
-        message_label = QLabel("This is a custom dialog.", self)
-        layout.addWidget(message_label)
+        self.ButtonBox = QDialogButtonBox(parent = self)
+        self.ButtonBox.accepted.connect(self.accept)
+        self.ButtonBox.rejected.connect(self.reject)
+        self.ButtonBox.setOrientation(Qt.Horizontal)
 
-        ok_button = QPushButton("OK", self)
-        ok_button.clicked.connect(self.accept)
-        cancel_button = QPushButton("Cancel", self)
-        cancel_button.clicked.connect(self.reject)
-        button_layout = QHBoxLayout()
-        button_layout.addStretch()
-        button_layout.addWidget(ok_button)
-        button_layout.addWidget(cancel_button)
-        layout.addLayout(button_layout)
-"""
-class MessageBoxBase(QMessageBox):
-    '''
-    '''
-    def __init__(self,
-        parent: Optional[QWidget] = None
-    ):
-        super().__init__(parent)
+        self.Layout = QVBoxLayout()
+        self.Layout.setAlignment(Qt.AlignCenter)
+        self.Layout.setContentsMargins(21, 12, 21, 12)
+        self.Layout.setSpacing(21)
+        self.Layout.addWidget(self.Label)
+        self.Layout.addWidget(self.ButtonBox)
+        self.setLayout(self.Layout)
 
-        ComponentsSignals.Signal_SetTheme.connect(
-            lambda Theme: self.setStyleSheet(Function_GetStyleSheet('Dialog', Theme))
+        self.setIcon(QMessageBox.Information)
+        self.setText('Text')
+        self.setStandardButtons(QMessageBox.NoButton)
+
+    def setIcon(self, arg__1):
+        if arg__1 == QMessageBox.Question:
+            self.setWindowIcon(QApplication.style().standardIcon(QStyle.SP_MessageBoxQuestion))
+        if arg__1 == QMessageBox.Information:
+            self.setWindowIcon(QApplication.style().standardIcon(QStyle.SP_MessageBoxInformation))
+        if arg__1 == QMessageBox.Warning:
+            self.setWindowIcon(QApplication.style().standardIcon(QStyle.SP_MessageBoxWarning))
+        if arg__1 == QMessageBox.Critical:
+            self.setWindowIcon(QApplication.style().standardIcon(QStyle.SP_MessageBoxCritical))
+
+    def setText(self, text: str):
+        Function_SetText(
+            Widget = self.Label,
+            Title = text,
+            TitleAlign = 'center'
         )
-        ComponentsSignals.Signal_SetTheme.emit('Auto')
+
+    def setStandardButtons(self, buttons: QMessageBox.StandardButton):
+        self.ButtonBox.setStandardButtons(self.ButtonDict.get(buttons))
+        '''
+        for PushButton in self.ButtonBox.buttons():
+            StandardButton = FindKey(self.ButtonDict, self.ButtonBox.standardButton(PushButton))
+            PushButton.clicked.connect(lambda: ComponentsSignals.Signal_ClickedButton.emit(StandardButton)) if PushButton is not None else None
+        '''
+
+    def exec(self) -> int:
+        Result = super().exec()
+        StandardButton = FindKey(self.ButtonDict, Result)
+        return StandardButton if StandardButton is not None else Result
+
+    def InsertItem(self, Item: QObject, Position: str = 'Center'):
+        if isinstance(Item, QWidget):
+            if Position is 'Top':
+                self.Layout.insertWidget(0, Item)
+            if Position is 'Center':
+                self.Layout.insertWidget(1, Item)
+            if Position is 'Bottom':
+                self.Layout.insertWidget(2, Item)
+        if isinstance(Item, QLayout):
+            if Position is 'Top':
+                self.Layout.insertLayout(0, Item)
+            if Position is 'Center':
+                self.Layout.insertLayout(1, Item)
+            if Position is 'Bottom':
+                self.Layout.insertLayout(2, Item)
 
 ##############################################################################################################################

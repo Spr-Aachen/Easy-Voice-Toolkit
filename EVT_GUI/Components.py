@@ -128,3 +128,96 @@ class TableWidget_ButtonMixed(TableWidgetBase):
             self.setHorizontalHeaderItem(Index, QTableWidgetItem(HeaderList[Index]))
 
 ##############################################################################################################################
+
+class MessageBox_Stacked(MessageBoxBase):
+    '''
+    '''
+    def __init__(self, parent: QWidget = None):
+        super().__init__(parent)
+
+        self.setMinimumSize(900, 480)
+
+        self.StackedWidget = QStackedWidget()
+
+        self.ButtonP = QPushButton()
+        self.ButtonP.clicked.connect(lambda: self.StackedWidget.setCurrentIndex(self.StackedWidget.currentIndex() - 1))
+        self.ButtonP.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
+        Function_SetRetainSizeWhenHidden(self.ButtonP)
+        self.ButtonP.setStyleSheet(
+            "QPushButton {"
+            "   background-color: transparent;"
+            "   border-image: url(:/Button_Icon/Sources/LeftArrow.png);"
+            "}"
+            "QPushButton:hover {"
+            "   background-color: rgba(210, 222, 234, 12);"
+            "}"
+        )
+        self.ButtonP.setToolTip("Prev Page")
+
+        self.ButtonN = QPushButton()
+        self.ButtonN.clicked.connect(lambda: self.StackedWidget.setCurrentIndex(self.StackedWidget.currentIndex() + 1))
+        self.ButtonN.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
+        Function_SetRetainSizeWhenHidden(self.ButtonN)
+        self.ButtonN.setStyleSheet(
+            "QPushButton {"
+            "   background-color: transparent;"
+            "   border-image: url(:/Button_Icon/Sources/RightArrow.png);"
+            "}"
+            "QPushButton:hover {"
+            "   background-color: rgba(210, 222, 234, 12);"
+            "}"
+        )
+        self.ButtonN.setToolTip("Next Page")
+
+        Layout = QHBoxLayout()
+        Layout.setAlignment(Qt.AlignCenter)
+        Layout.setContentsMargins(0, 0, 0, 0)
+        Layout.setSpacing(12)
+        Layout.addWidget(self.ButtonP)
+        Layout.addWidget(self.StackedWidget)
+        Layout.addWidget(self.ButtonN)
+        self.InsertItem(Layout)
+
+        self.SetContent(None, 'None')
+
+    def SetContent(self, Images: list, Texts: list):
+        Function_SetNoContents(self.StackedWidget)
+
+        for Index, Image in enumerate(IterChecker(Images)):
+            TextBrowser = QTextBrowser()
+            TextBrowser.setStyleSheet(
+                "QTextBrowser {"
+                f"    background-image: url({NormPath(Image, 'Posix')});"
+                "    background-size: cover;"
+                "    background-repeat: no-repeat;"
+                "    background-position: center 0px;"
+                "    padding: 0px;"
+                "    border-width: 0px;"
+                "    border-radius: 6px;"
+                "    border-style: solid;"
+                "}"
+            ) if Image is not None else None
+
+            Label = QLabel()
+            Function_SetText(Label, IterChecker(Texts)[Index], 'center', 9.9, 630)
+
+            SubLayout = QVBoxLayout()
+            SubLayout.setAlignment(Qt.AlignCenter)
+            SubLayout.setContentsMargins(0, 0, 0, 0)
+            SubLayout.setSpacing(12)
+            SubLayout.addWidget(TextBrowser)
+            SubLayout.addWidget(Label)
+
+            Widget = QWidget()
+            Widget.setLayout(SubLayout)
+            self.StackedWidget.addWidget(Widget)
+    
+        self.StackedWidget.currentChanged.connect(lambda: self.ButtonP.setVisible(False) if self.StackedWidget.currentIndex() == 0 else self.ButtonP.setVisible(True))
+        self.ButtonP.setVisible(False)
+        self.StackedWidget.currentChanged.connect(lambda: self.ButtonN.setVisible(False) if self.StackedWidget.currentIndex() == self.StackedWidget.count() - 1 else self.ButtonN.setVisible(True))
+        self.ButtonN.setVisible(True)
+
+        self.StackedWidget.currentChanged.connect(lambda: self.setText(f'{self.StackedWidget.currentIndex() + 1} / {self.StackedWidget.count()}'))
+        self.setText(f'1 / {self.StackedWidget.count()}')
+
+##############################################################################################################################

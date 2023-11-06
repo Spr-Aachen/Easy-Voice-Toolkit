@@ -15,12 +15,16 @@ class Window_Customizing(MainWindowBase):
         min_height: int = 720,
         move_event_height: int = 30
     ):
-        super().__init__(None, False)
+        super().__init__(None, CustomizeTitleBar = False)
 
         self.ui.setupUi(self)
 
-        self.CustomizeTitleBar = CustomizeTitleBar(self, self.ui.TitleBar)
-        self.CustomizeTitleBar.SetUp()
+        self.CentralWidget = self.ui.CentralWidget
+        self.CentralWidget.setObjectName(self.CentralWidgetName)
+        #self.setCentralWidget(self.CentralWidget)
+
+        self.setWindowFlag(Qt.FramelessWindowHint, True)
+        TitleBarCustomizer(self, self.ui.TitleBar)
 
         self.edge_size = edge_size # 窗体边缘尺寸（出现缩放标记的范围）
 

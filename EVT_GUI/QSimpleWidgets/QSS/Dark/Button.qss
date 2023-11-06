@@ -17,7 +17,7 @@ ToolButtonBase:hover {
 
 
 QToolTip {
-	/*color: rgba(255, 255, 255, 210);*/
+    color: rgb(210, 222, 234);
     background-color: transparent;
 	border-width: 0px;
 	border-style: solid;

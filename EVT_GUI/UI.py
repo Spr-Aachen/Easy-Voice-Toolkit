@@ -1,5 +1,5 @@
 from PySide6.QtCore import (QCoreApplication, QMetaObject, QRect, QSize, Qt)
-from PySide6.QtWidgets import (QCheckBox, QComboBox, QDoubleSpinBox, QFrame, QGroupBox, QHBoxLayout, QGridLayout, QLabel, QLineEdit, QPlainTextEdit, QProgressBar, QToolButton, QPushButton, QScrollArea, QSizePolicy, QSlider, QSpacerItem, QSpinBox, QStackedWidget, QTreeWidget, QTreeWidgetItem, QTextBrowser, QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QCheckBox, QComboBox, QDoubleSpinBox, QFrame, QGroupBox, QVBoxLayout, QHBoxLayout, QGridLayout, QLabel, QLineEdit, QPlainTextEdit, QProgressBar, QToolButton, QPushButton, QScrollArea, QSizePolicy, QSlider, QSpacerItem, QSpinBox, QStackedWidget, QTreeWidget, QTreeWidgetItem, QTextBrowser, QWidget)
 
 from .Components import TableWidget_ButtonMixed
 from .QSimpleWidgets import Sources
@@ -23,11 +23,6 @@ class Ui_MainWindow(object):
         self.TitleBar.setObjectName(u"TitleBar")
         self.TitleBar.setMinimumSize(QSize(0, 30))
         self.TitleBar.setMaximumSize(QSize(16777215, 30))
-        self.TitleBar.setStyleSheet(u"QFrame {\n"
-"	background-color: rgba(12, 12, 12, 123);\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
         self.horizontalLayout_30 = QHBoxLayout(self.TitleBar)
         self.horizontalLayout_30.setSpacing(0)
         self.horizontalLayout_30.setObjectName(u"horizontalLayout_30")
@@ -129,11 +124,6 @@ class Ui_MainWindow(object):
         self.Frame_Menu.setObjectName(u"Frame_Menu")
         self.Frame_Menu.setMinimumSize(QSize(210, 0))
         self.Frame_Menu.setMaximumSize(QSize(210, 16777215))
-        self.Frame_Menu.setStyleSheet(u"QFrame {\n"
-"	background-color: rgba(12, 12, 12, 12);\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
         self.verticalLayout_3 = QVBoxLayout(self.Frame_Menu)
         self.verticalLayout_3.setSpacing(3)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
@@ -153,7 +143,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}\n"
 "QToolButton:hover {\n"
-"	background-color: rgba(66, 66, 66, 123);\n"
+"	background-color: qlineargradient(spread: pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(66, 66, 66, 123), stop:1 transparent);\n"
 "}\n"
 "QToolButton:checked {\n"
 "	background-color: transparent;\n"
@@ -233,7 +223,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}\n"
 "QToolButton:hover {\n"
-"	background-color: rgba(66, 66, 66, 123);\n"
+"	background-color: qlineargradient(spread: pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(66, 66, 66, 123), stop:1 transparent);\n"
 "}\n"
 "QToolButton:checked {\n"
 "	background-color: transparent;\n"
@@ -312,7 +302,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}\n"
 "QToolButton:hover {\n"
-"	background-color: rgba(66, 66, 66, 123);\n"
+"	background-color: qlineargradient(spread: pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(66, 66, 66, 123), stop:1 transparent);\n"
 "}\n"
 "QToolButton:checked {\n"
 "	background-color: transparent;\n"
@@ -395,7 +385,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}\n"
 "QToolButton:hover {\n"
-"	background-color: rgba(66, 66, 66, 123);\n"
+"	background-color: qlineargradient(spread: pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(66, 66, 66, 123), stop:1 transparent);\n"
 "}\n"
 "QToolButton:checked {\n"
 "	background-color: transparent;\n"
@@ -496,7 +486,7 @@ class Ui_MainWindow(object):
         self.TextBrowser_Pic_Home.setStyleSheet(u"QTextBrowser {\n"
 "	/*text-align: center;*/\n"
 "	/*color: rgb(255, 255, 255);*/\n"
-"	background-image: url(:/TextBrowser_Image/Sources/Easy Voice Toolkit - Cover.png);\n"
+"	background-image: url(:/TextBrowser_Image/Sources/Cover.png);\n"
 "	background-size: cover;\n"
 "	background-repeat: no-repeat;\n"
 "	background-position: center 0px;\n"
@@ -534,9 +524,9 @@ class Ui_MainWindow(object):
 "}\n"
 "\n"
 "QScrollBar::sub-line:vertical {\n"
+"	height: 0px;\n"
 ""
-                        "	height: 0px;\n"
-"	background-color: transparent;\n"
+                        "	background-color: transparent;\n"
 "	subcontrol-position: top;\n"
 "	subcontrol-origin: margin;\n"
 "	border-width: 0px;\n"
@@ -578,8 +568,8 @@ class Ui_MainWindow(object):
 "	width: 0px;\n"
 "	background-color: transparent;\n"
 "	subcontrol-position: left;\n"
-""
-                        "	subcontrol-origin: margin;\n"
+"	subcontrol-or"
+                        "igin: margin;\n"
 "	border-width: 0px;\n"
 "	border-radius: 0px;\n"
 "	border-style: solid;\n"
@@ -1249,10 +1239,10 @@ class Ui_MainWindow(object):
 "QFrame:hover {\n"
 "	border-color: rgb(60, 60, 60);\n"
 "}")
-        self.gridLayout = QGridLayout(self.Frame_Download_Python)
-        self.gridLayout.setSpacing(12)
-        self.gridLayout.setObjectName(u"gridLayout")
-        self.gridLayout.setContentsMargins(21, 12, 21, 12)
+        self.gridLayout_3 = QGridLayout(self.Frame_Download_Python)
+        self.gridLayout_3.setSpacing(12)
+        self.gridLayout_3.setObjectName(u"gridLayout_3")
+        self.gridLayout_3.setContentsMargins(21, 12, 21, 12)
         self.Label_Download_Python = QLabel(self.Frame_Download_Python)
         self.Label_Download_Python.setObjectName(u"Label_Download_Python")
         self.Label_Download_Python.setStyleSheet(u"QLabel {\n"
@@ -1266,11 +1256,11 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}")
 
-        self.gridLayout.addWidget(self.Label_Download_Python, 0, 0, 1, 1)
+        self.gridLayout_3.addWidget(self.Label_Download_Python, 0, 0, 1, 1)
 
         self.HorizontalSpacer_Download_Python = QSpacerItem(969, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
-        self.gridLayout.addItem(self.HorizontalSpacer_Download_Python, 0, 1, 1, 2)
+        self.gridLayout_3.addItem(self.HorizontalSpacer_Download_Python, 0, 1, 1, 2)
 
         self.ProgressBar_Download_Python = QProgressBar(self.Frame_Download_Python)
         self.ProgressBar_Download_Python.setObjectName(u"ProgressBar_Download_Python")
@@ -1292,7 +1282,7 @@ class Ui_MainWindow(object):
 "	background-color: qlineargradient(spread: pad, x1:0, y1:0, x2:1, y2:0, stop:0 transparent, stop:1 rgb(120, 180, 240));\n"
 "}")
 
-        self.gridLayout.addWidget(self.ProgressBar_Download_Python, 1, 0, 1, 2)
+        self.gridLayout_3.addWidget(self.ProgressBar_Download_Python, 1, 0, 1, 2)
 
         self.Button_Install_Python = QPushButton(self.Frame_Download_Python)
         self.Button_Install_Python.setObjectName(u"Button_Install_Python")
@@ -1324,7 +1314,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}")
 
-        self.gridLayout.addWidget(self.Button_Install_Python, 1, 2, 1, 1)
+        self.gridLayout_3.addWidget(self.Button_Install_Python, 1, 2, 1, 1)
 
 
         self.verticalLayout_134.addWidget(self.Frame_Download_Python)
@@ -1342,10 +1332,10 @@ class Ui_MainWindow(object):
 "QFrame:hover {\n"
 "	border-color: rgb(60, 60, 60);\n"
 "}")
-        self.gridLayout_3 = QGridLayout(self.Frame_Download_PyReqs)
-        self.gridLayout_3.setSpacing(12)
-        self.gridLayout_3.setObjectName(u"gridLayout_3")
-        self.gridLayout_3.setContentsMargins(21, 12, 21, 12)
+        self.gridLayout_4 = QGridLayout(self.Frame_Download_PyReqs)
+        self.gridLayout_4.setSpacing(12)
+        self.gridLayout_4.setObjectName(u"gridLayout_4")
+        self.gridLayout_4.setContentsMargins(21, 12, 21, 12)
         self.Label_Download_PyReqs = QLabel(self.Frame_Download_PyReqs)
         self.Label_Download_PyReqs.setObjectName(u"Label_Download_PyReqs")
         self.Label_Download_PyReqs.setStyleSheet(u"QLabel {\n"
@@ -1359,11 +1349,11 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}")
 
-        self.gridLayout_3.addWidget(self.Label_Download_PyReqs, 0, 0, 1, 1)
+        self.gridLayout_4.addWidget(self.Label_Download_PyReqs, 0, 0, 1, 1)
 
         self.HorizontalSpacer_Download_PyReqs = QSpacerItem(969, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
-        self.gridLayout_3.addItem(self.HorizontalSpacer_Download_PyReqs, 0, 1, 1, 2)
+        self.gridLayout_4.addItem(self.HorizontalSpacer_Download_PyReqs, 0, 1, 1, 2)
 
         self.ProgressBar_Download_PyReqs = QProgressBar(self.Frame_Download_PyReqs)
         self.ProgressBar_Download_PyReqs.setObjectName(u"ProgressBar_Download_PyReqs")
@@ -1385,7 +1375,7 @@ class Ui_MainWindow(object):
 "	background-color: qlineargradient(spread: pad, x1:0, y1:0, x2:1, y2:0, stop:0 transparent, stop:1 rgb(120, 180, 240));\n"
 "}")
 
-        self.gridLayout_3.addWidget(self.ProgressBar_Download_PyReqs, 1, 0, 1, 2)
+        self.gridLayout_4.addWidget(self.ProgressBar_Download_PyReqs, 1, 0, 1, 2)
 
         self.Button_Install_PyReqs = QPushButton(self.Frame_Download_PyReqs)
         self.Button_Install_PyReqs.setObjectName(u"Button_Install_PyReqs")
@@ -1417,7 +1407,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}")
 
-        self.gridLayout_3.addWidget(self.Button_Install_PyReqs, 1, 2, 1, 1)
+        self.gridLayout_4.addWidget(self.Button_Install_PyReqs, 1, 2, 1, 1)
 
 
         self.verticalLayout_134.addWidget(self.Frame_Download_PyReqs)
@@ -1435,10 +1425,10 @@ class Ui_MainWindow(object):
 "QFrame:hover {\n"
 "	border-color: rgb(60, 60, 60);\n"
 "}")
-        self.gridLayout_4 = QGridLayout(self.Frame_Download_Pytorch)
-        self.gridLayout_4.setSpacing(12)
-        self.gridLayout_4.setObjectName(u"gridLayout_4")
-        self.gridLayout_4.setContentsMargins(21, 12, 21, 12)
+        self.gridLayout_5 = QGridLayout(self.Frame_Download_Pytorch)
+        self.gridLayout_5.setSpacing(12)
+        self.gridLayout_5.setObjectName(u"gridLayout_5")
+        self.gridLayout_5.setContentsMargins(21, 12, 21, 12)
         self.Label_Download_Pytorch = QLabel(self.Frame_Download_Pytorch)
         self.Label_Download_Pytorch.setObjectName(u"Label_Download_Pytorch")
         self.Label_Download_Pytorch.setStyleSheet(u"QLabel {\n"
@@ -1452,11 +1442,11 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}")
 
-        self.gridLayout_4.addWidget(self.Label_Download_Pytorch, 0, 0, 1, 1)
+        self.gridLayout_5.addWidget(self.Label_Download_Pytorch, 0, 0, 1, 1)
 
         self.HorizontalSpacer_Download_Pytorch = QSpacerItem(969, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
-        self.gridLayout_4.addItem(self.HorizontalSpacer_Download_Pytorch, 0, 1, 1, 2)
+        self.gridLayout_5.addItem(self.HorizontalSpacer_Download_Pytorch, 0, 1, 1, 2)
 
         self.ProgressBar_Download_Pytorch = QProgressBar(self.Frame_Download_Pytorch)
         self.ProgressBar_Download_Pytorch.setObjectName(u"ProgressBar_Download_Pytorch")
@@ -1478,7 +1468,7 @@ class Ui_MainWindow(object):
 "	background-color: qlineargradient(spread: pad, x1:0, y1:0, x2:1, y2:0, stop:0 transparent, stop:1 rgb(120, 180, 240));\n"
 "}")
 
-        self.gridLayout_4.addWidget(self.ProgressBar_Download_Pytorch, 1, 0, 1, 2)
+        self.gridLayout_5.addWidget(self.ProgressBar_Download_Pytorch, 1, 0, 1, 2)
 
         self.Button_Install_Pytorch = QPushButton(self.Frame_Download_Pytorch)
         self.Button_Install_Pytorch.setObjectName(u"Button_Install_Pytorch")
@@ -1510,7 +1500,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}")
 
-        self.gridLayout_4.addWidget(self.Button_Install_Pytorch, 1, 2, 1, 1)
+        self.gridLayout_5.addWidget(self.Button_Install_Pytorch, 1, 2, 1, 1)
 
 
         self.verticalLayout_134.addWidget(self.Frame_Download_Pytorch)
@@ -14682,11 +14672,6 @@ class Ui_MainWindow(object):
         self.StatusBar.setObjectName(u"StatusBar")
         self.StatusBar.setMinimumSize(QSize(0, 24))
         self.StatusBar.setMaximumSize(QSize(16777215, 24))
-        self.StatusBar.setStyleSheet(u"QFrame {\n"
-"	background-color: rgba(12, 12, 12, 123);\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
         self.horizontalLayout_52 = QHBoxLayout(self.StatusBar)
         self.horizontalLayout_52.setSpacing(0)
         self.horizontalLayout_52.setObjectName(u"horizontalLayout_52")
@@ -14857,7 +14842,6 @@ class Ui_MainWindow(object):
     # setupUi
 
     def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
         self.Label_Title.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Menu_Home_Text.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Menu_Download_Text.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
@@ -15063,3 +15047,4 @@ class Ui_MainWindow(object):
         self.Label_Usage_CPU.setText(QCoreApplication.translate("MainWindow", u"--", None))
         self.Label_Usage_GPU.setText(QCoreApplication.translate("MainWindow", u"--", None))
         self.Label_Version.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        pass

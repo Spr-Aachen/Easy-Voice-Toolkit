@@ -1,5 +1,5 @@
 QHeaderView {
-    background: transparent;
+    background-color: transparent;
 }
 
 QHeaderView::section {
@@ -141,4 +141,12 @@ QScrollBar::handle:horizontal {
 }
 QScrollBar::handle:horizontal:hover {
 	background-color: rgb(120, 120, 120);
+}
+
+
+QToolTip {
+    color: rgb(210, 222, 234);
+    background-color: transparent;
+	border-width: 0px;
+	border-style: solid;
 }

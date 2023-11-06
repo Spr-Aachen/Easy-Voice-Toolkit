@@ -8,7 +8,7 @@ from PySide6.QtCore import Qt, QObject, QThread, Signal
 from PySide6.QtWidgets import QApplication, QWidget, QVBoxLayout, QSizePolicy, QPushButton, QProgressBar, QLabel
 
 from EVT_GUI.Functions import Function_AnimateProgressBar
-from EVT_GUI.QSimpleWidgets.Utils import CheckUpdate, DownloadFile, CleanDirectory, NormPath, TaskAccelerating, Booter, GetFileInfo, GetBaseDir, ManageConfig
+from EVT_GUI.QSimpleWidgets.Utils import CheckUpdate, DownloadFile, CleanDirectory, NormPath, TaskAccelerating, ProgramBooter, GetFileInfo, GetBaseDir, ManageConfig
 
 ##############################################################################################################################
 
@@ -129,7 +129,7 @@ def Updater(
                 )
                 shutil.copytree(ExtractDir, TargetDir, dirs_exist_ok = True)
                 shutil.rmtree(ExtractDir)
-                Booter(True, IsFileCompiled, TargetDir, ExecuterPath)
+                ProgramBooter(TargetDir, ExecuterPath)
             UpdaterSignals.Signal_Message.emit("Successfully updated!")
             UpdaterSignals.Signal_RebootAfterFinished.emit(False)
         else:
@@ -206,7 +206,7 @@ class Widget_Updater(QWidget):
 
         UpdaterSignals.Signal_Message.connect(self.Label.setText)
         UpdaterSignals.Signal_RebootAfterFinished.connect(lambda: Config.EditConfig('Updater', 'Status', 'Executed')) #UpdaterSignals.Signal_Finished.connect(lambda: Config.EditConfig('Updater', 'Status', 'Executed'), Qt.QueuedConnection)
-        UpdaterSignals.Signal_RebootAfterFinished.connect(lambda Reboot: Booter(TargetDir, ExecuterPath, IsFileCompiled) if Reboot else None)
+        UpdaterSignals.Signal_RebootAfterFinished.connect(lambda Reboot: ProgramBooter(TargetDir, ExecuterPath) if Reboot else None)
         UpdaterSignals.Signal_Finished.connect(lambda: self.close(), Qt.QueuedConnection)
 
     def Function_ExecuteMethod(self,
