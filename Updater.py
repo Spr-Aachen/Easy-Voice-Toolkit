@@ -1,14 +1,12 @@
-import os
 import sys
 import shutil
-import subprocess
 from pathlib import Path
 from typing import Optional
 from PySide6.QtCore import Qt, QObject, QThread, Signal
 from PySide6.QtWidgets import QApplication, QWidget, QVBoxLayout, QSizePolicy, QPushButton, QProgressBar, QLabel
 
-from EVT_GUI.Functions import Function_AnimateProgressBar
-from EVT_GUI.QSimpleWidgets.Utils import CheckUpdate, DownloadFile, CleanDirectory, NormPath, TaskAccelerating, ProgramBooter, GetFileInfo, GetBaseDir, ManageConfig
+from EVT_GUI.Functions import Function_AnimateProgressBar, Function_SetText
+from EVT_GUI.QSimpleWidgets.Utils import CheckUpdate, DownloadFile, NormPath, RunBat, BootWithBat, GetFileInfo, GetBaseDir, ManageConfig
 
 ##############################################################################################################################
 
@@ -19,15 +17,24 @@ TargetDir = GetBaseDir(__file__ if IsFileCompiled == False else sys.executable)
 #os.chdir(TargetDir)
 
 
-ConfigPath = NormPath(Path(TargetDir).joinpath(Path('Config', 'Config.ini')))
+ConfigPath = NormPath(Path(TargetDir).joinpath('Config', 'Config.ini'))
 Config = ManageConfig(ConfigPath)
 
 
 CurrentVersion = str(Config.GetValue('Info', 'CurrentVersion'))
 ExecuterName = str(Config.GetValue('Info', 'ExecuterName'))
 DownloadDir = TargetDir
-ExtractDir = NormPath(Path(TargetDir).joinpath(Path('Temp')))
-ExecuterPath = NormPath(Path(TargetDir).joinpath(Path(ExecuterName)))
+ExtractDir = NormPath(Path(TargetDir).joinpath('Temp'))
+ExecuterPath = NormPath(Path(TargetDir).joinpath(ExecuterName))
+
+
+FoldersToKeep = [NormPath(Path(TargetDir).joinpath('Config'))]
+if Path(TargetDir).joinpath('FFmpeg').exists():
+    FoldersToKeep.append(NormPath(Path(TargetDir).joinpath('FFmpeg')))
+if Path(TargetDir).joinpath('Python').exists():
+    FoldersToKeep.append(NormPath(Path(TargetDir).joinpath('Python')))
+if Path(TargetDir).joinpath('Download').exists():
+    FoldersToKeep.append(NormPath(Path(TargetDir).joinpath('Download')))
 
 ##############################################################################################################################
 
@@ -40,28 +47,47 @@ class CustomSignals_Updater(QObject):
 
     Signal_Message = Signal(str)
 
-    Signal_RebootAfterFinished = Signal(bool)
-
-    Signal_Finished = Signal()
+    Signal_IsUpdateSucceeded = Signal(bool)
 
 
 UpdaterSignals = CustomSignals_Updater()
 
 
+def RebootIfFailed():
+    BootWithBat(
+        ProgramPath = ExecuterPath,
+        DelayTime = 0,
+        BatFilePath = Path(NormPath(TargetDir)).joinpath('Booter.bat')
+    )
+
+
+def RebootIfSucceeded():
+    RunBat(
+        CommandList = [
+            '@echo off',
+            'echo Moving files...',
+            f'xcopy /e /y "{ExtractDir}\*" "{TargetDir}\"',
+            f'rmdir /q /s "{ExtractDir}"',
+            f'start "Programm Running" "{ExecuterPath}"',
+            'del "%~f0"'
+        ],
+        BatFilePath = NormPath(Path(TargetDir).joinpath('Updater.bat'))
+    )
+
+
 def Updater(
     CurrentVersion: str = ...,
-    IsFileCompiled: bool = ...,
     DownloadDir: str = ...,
     Name: str = ...,
-    Format: str = 'zip',
     ExtractDir: str = ...,
     TargetDir: str = ...,
-    ExecuterPath: str = ...
+    #ExecuterPath: str = ...
 ):
     '''
     '''
     try:
-        IsUpdateNeeded, URL, SHA = CheckUpdate(
+        UpdaterSignals.Signal_Message.emit("正在检查更新，请稍等...\nChecking for updates, please wait...")
+        IsUpdateNeeded, DownloadURL = CheckUpdate(
             RepoOwner = 'Spr-Aachen',
             RepoName = 'Easy-Voice-Toolkit',
             FileName = 'EVT',
@@ -70,74 +96,46 @@ def Updater(
         )
 
     except:
-        UpdaterSignals.Signal_Message.emit("Failed to check for update")
-        UpdaterSignals.Signal_RebootAfterFinished.emit(True)
+        UpdaterSignals.Signal_Message.emit("更新检查失败！\nFailed to check for updates!")
+        UpdaterSignals.Signal_IsUpdateSucceeded.emit(False)
 
     else:
         if IsUpdateNeeded:
-            print("Start updating!")
-            # Download
             try:
+                # Download
+                UpdaterSignals.Signal_Message.emit("正在下载文件...\nDownloading files...")
                 FileInfo = DownloadFile(
-                    URL = URL,
+                    DownloadURL = DownloadURL,
                     DownloadDir = DownloadDir,
                     FileName = Name,
-                    FileFormat = Format,
-                    SHA_Expected = SHA
+                    FileFormat = 'zip',
+                    SHA_Expected = None
                 )
             except:
-                pass
-            UpdaterSignals.Signal_Message.emit("Downloading finished!")
-            # Unpack
-            ExtractDir = NormPath(Path(TargetDir).joinpath(Path('Temp'))) if ExtractDir == TargetDir else ExtractDir
-            shutil.unpack_archive(
-                filename = FileInfo[1],
-                extract_dir = ExtractDir,
-                format = Format
-            )
-            UpdaterSignals.Signal_Message.emit("File unpacked!")
-            # Clean and move (Finish)
-            if IsFileCompiled:
-                DelayTime: int = 3
-                BatFilePath = NormPath(Path(TargetDir).joinpath(Path('Updater.bat')))
-                with open(BatFilePath, 'w') as BatFile:
-                    CommandList = [
-                        '@echo off',
-                        f'ping 127.0.0.1 -n {DelayTime + 1} > nul',
-                        f'set "folder_path={TargetDir}"',
-                        f'set "specific_folder={ExtractDir}"',
-                        'echo Cleaning old files...',
-                        '''
-                        for /R "%folder_path%" %%F in (*) do (
-                            if /I not "%%~dpF"=="%specific_folder%\" (
-                                del "%%F" /Q
-                            )
-                        )
-                        ''',
-                        'echo Moving new files...',
-                        'move "%specific_folder%\*.*" "%folder_path%\"',
-                        f'start "Programm Running" "{ExecuterPath}"',
-                        'del "%~f0"'
-                    ]
-                    Commands = "\n".joinpath(CommandList)
-                    BatFile.write(Commands)
-                subprocess.Popen([BatFilePath], creationflags = subprocess.CREATE_NEW_CONSOLE).communicate()
+                UpdaterSignals.Signal_Message.emit("文件下载失败！\nFailed to download files!")
+                UpdaterSignals.Signal_IsUpdateSucceeded.emit(False)
             else:
+                # Unpack
+                UpdaterSignals.Signal_Message.emit("正在解压文件...\nUnpacking files...")
+                ExtractDir = NormPath(Path(TargetDir).joinpath('Temp')) if ExtractDir == TargetDir else ExtractDir
+                shutil.unpack_archive(
+                    filename = FileInfo[1],
+                    extract_dir = ExtractDir
+                )
+                # Cover old files (About to finish)
+                UpdaterSignals.Signal_Message.emit("即将重启客户端...\nRebooting client...")
+                '''
                 CleanDirectory(
                     Directory = TargetDir,
-                    WhiteList = [os.path.basename(ExtractDir), '__pycache__', '.git']
+                    WhiteList = [os.path.basename(ExtractDir), '__pycache__', '.git'].extend(FoldersToKeep)
                 )
                 shutil.copytree(ExtractDir, TargetDir, dirs_exist_ok = True)
                 shutil.rmtree(ExtractDir)
-                ProgramBooter(TargetDir, ExecuterPath)
-            UpdaterSignals.Signal_Message.emit("Successfully updated!")
-            UpdaterSignals.Signal_RebootAfterFinished.emit(False)
+                '''
+                UpdaterSignals.Signal_IsUpdateSucceeded.emit(True)
         else:
-            UpdaterSignals.Signal_Message.emit("Already up to date!")
-            UpdaterSignals.Signal_RebootAfterFinished.emit(True)
-
-    finally:
-        UpdaterSignals.Signal_Finished.emit()
+            UpdaterSignals.Signal_Message.emit("已是最新版本！\nAlready up to date!")
+            UpdaterSignals.Signal_IsUpdateSucceeded.emit(False)
 
 
 class Execute_Update_Checking(QObject):
@@ -148,23 +146,13 @@ class Execute_Update_Checking(QObject):
     def __init__(self):
         super().__init__()
 
-    def Execute_Updater(self):
+    def Execute(self):
         Updater(
             CurrentVersion = CurrentVersion,
-            IsFileCompiled = IsFileCompiled,
             DownloadDir = DownloadDir,
             Name = f"Easy Voice Toolkit {Config.GetValue('Info', 'CurrentVersion')}",
-            Format = 'zip',
             ExtractDir = ExtractDir,
-            TargetDir = TargetDir,
-            ExecuterPath = ExecuterPath
-        )
-
-    def Execute(self, Params: tuple):
-        TaskAccelerating(
-            TargetList = [self.Execute_Updater],
-            ArgsList = [Params],
-            TypeList = ['MultiThreading']
+            TargetDir = TargetDir
         )
 
         self.finished.emit()
@@ -174,40 +162,48 @@ class Execute_Update_Checking(QObject):
 class Widget_Updater(QWidget):
     '''
     '''
-    def __init__(self, parent = None):
-        super().__init__(parent)
+    def __init__(self):
+        super().__init__(
+            parent = None,
+            f = Qt.Widget | Qt.FramelessWindowHint
+        )
 
-        self.setWindowFlags(Qt.FramelessWindowHint)
-
-        self.Layout = QVBoxLayout()
-        self.setLayout(self.Layout)
-        #self.Layout.setAlignment(Qt.AlignCenter)
+        self.setMaximumSize(222, 111)
+        self.setGeometry(
+            QApplication.primaryScreen().size().width() // 2 - self.width() // 2,
+            QApplication.primaryScreen().size().height() // 2 - self.height() // 2,
+            self.width(),
+            self.height()
+        )
 
         self.Label = QLabel()
         self.Label.setVisible(True)
         self.Label.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
-        self.Label.setText('正在检查更新，请稍候')
-        #self.Label.setStyleSheet("text-align: center;")
-        self.Layout.addWidget(self.Label)
+        self.Label.clear()
 
         self.ExecuteButton = QPushButton()
         self.ExecuteButton.setVisible(False)
         self.ExecuteButton.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
-        #self.ExecuteButton.setText('执行')
         #self.ExecuteButton.setStyleSheet("text-align: center;")
-        self.Layout.addWidget(self.ExecuteButton)
 
         self.ProgressBar = QProgressBar()
         self.ProgressBar.setVisible(True)
         self.ProgressBar.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
-        #self.ProgressBar.setText('执行')
         #self.ProgressBar.setStyleSheet("text-align: center;")
-        self.Layout.addWidget(self.ProgressBar)
 
-        UpdaterSignals.Signal_Message.connect(self.Label.setText)
-        UpdaterSignals.Signal_RebootAfterFinished.connect(lambda: Config.EditConfig('Updater', 'Status', 'Executed')) #UpdaterSignals.Signal_Finished.connect(lambda: Config.EditConfig('Updater', 'Status', 'Executed'), Qt.QueuedConnection)
-        UpdaterSignals.Signal_RebootAfterFinished.connect(lambda Reboot: ProgramBooter(TargetDir, ExecuterPath) if Reboot else None)
-        UpdaterSignals.Signal_Finished.connect(lambda: self.close(), Qt.QueuedConnection)
+        self.Layout = QVBoxLayout()
+        self.Layout.setAlignment(Qt.AlignCenter)
+        self.Layout.setContentsMargins(21, 12, 21, 12)
+        self.Layout.setSpacing(21)
+        self.Layout.addWidget(self.Label)
+        self.Layout.addWidget(self.ExecuteButton)
+        self.Layout.addWidget(self.ProgressBar)
+        self.setLayout(self.Layout)
+
+        UpdaterSignals.Signal_Message.connect(lambda Message: Function_SetText(self.Label, Message, 'center', 9.9, 420, 'black'))
+        UpdaterSignals.Signal_IsUpdateSucceeded.connect(lambda: Config.EditConfig('Updater', 'Status', 'Executed'), Qt.QueuedConnection)
+        UpdaterSignals.Signal_IsUpdateSucceeded.connect(lambda Succeeded: RebootIfSucceeded() if Succeeded else RebootIfFailed(), Qt.QueuedConnection)
+        UpdaterSignals.Signal_IsUpdateSucceeded.connect(lambda: self.close(), Qt.QueuedConnection)
 
     def Function_ExecuteMethod(self,
         ExecuteButton: QPushButton,

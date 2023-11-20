@@ -4,7 +4,6 @@ Added
 
 import os
 import hashlib
-import shutil
 import urllib
 from typing import Tuple, Union
 from tqdm import tqdm
@@ -14,24 +13,24 @@ from tqdm import tqdm
 ModelList_S = {
     #'tiny' : "",
     #'base' : "",
-    'small': "https://github.com/Spr-Aachen/EVT-Resources/raw/main/Voiceprint%20Model/Ecapa-Tdnn/spectrogram/small.zip"
+    'small': "https://github.com/Spr-Aachen/EVT-Resources/raw/main/Voiceprint%20Model/Ecapa-Tdnn/spectrogram/small.pth"
 }
 SHA256List_S = {
     #'tiny' : "",
     #'base' : "",
-    'small': "3202ecab7a73f8ae97b0901bae4a3f4cb31d40502b6ecbd4ffe0a37b9c96eb7d"
+    'small': "a7c689599e616f03a339bfd11a27ae7cf7a975ac1713c5b85564a70a2e0c469f"
 }
 
 # MelSpect
 ModelList_M = {
     #'tiny' : "",
     #'base' : "",
-    'small': "https://github.com/Spr-Aachen/EVT-Resources/raw/main/Voiceprint%20Model/Ecapa-Tdnn/melspectrogram/small.zip"
+    'small': "https://github.com/Spr-Aachen/EVT-Resources/raw/main/Voiceprint%20Model/Ecapa-Tdnn/melspectrogram/small.pth"
 }
 SHA256List_M = {
     #'tiny' : "",
     #'base' : "",
-    'small': "f3bc3a4415d4b330cafee32eda53215a07d5122768519a5bd696ed656aca2c09"
+    'small': "812c2758805dc7e9d7c2a5b0cd87b342a081f4d9a20513e246a3281ccd8f9bb7"
 }
 
 
@@ -72,18 +71,13 @@ def Execute_Model_Download(
     Model_Name: str
 ):
     URL = ModelList_S[Model_Name] if Feature_Method == 'spectrogram' else ModelList_M[Model_Name]
-    DownloadDir = os.path.join(Model_Dir, "Temp", f"{Model_Type}_{Feature_Method}")
-    ExtractDir = os.path.join(Model_Dir, Model_Type, Feature_Method)
-    Format = 'zip'
+    DownloadDir = os.path.join(Model_Dir, Model_Type, Feature_Method)
+    Format = 'pth'
     SHA = SHA256List_S[Model_Name] if Feature_Method == 'spectrogram' else SHA256List_M[Model_Name]
-    shutil.unpack_archive(
-        filename = Model_Download(
-            url = URL,
-            root = DownloadDir,
-            name = Model_Name,
-            format = Format,
-            expected_sha256 = SHA
-        )[1],
-        extract_dir = ExtractDir,
-        format = Format
-    )
+    Model_Download(
+        url = URL,
+        root = DownloadDir,
+        name = Model_Name,
+        format = Format,
+        expected_sha256 = SHA
+    )[1]

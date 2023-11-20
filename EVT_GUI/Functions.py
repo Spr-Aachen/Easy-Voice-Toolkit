@@ -173,46 +173,43 @@ def Function_SetTreeView(
 
 def Function_ConfigureCheckBox(
     CheckBox: QCheckBox,
-    CheckedText: str = ...,
-    CheckedPermEventList: list = [],
-    CheckedPermArgsList: list = [()],
-    CheckedTempEventList: list = [],
-    CheckedTempArgsList: list = [()],
-    UncheckedText: str = ...,
-    UncheckedPermEventList: list = [],
-    UncheckedPermArgsList: list = [()],
-    UncheckedTempEventList: list = [],
-    UncheckedTempArgsList: list = [()]
+    CheckedText: Optional[str] = None,
+    CheckedEventList: list = [],
+    CheckedArgsList: list = [()],
+    UncheckedText: Optional[str] = None,
+    UncheckedEventList: list = [],
+    UncheckedArgsList: list = [()],
+    TakeEffect: bool = False
 ):
     '''
     Function to configure checkbox
     '''
-    CheckBox.toggled.connect(lambda: CheckBox.setText(CheckedText) if CheckBox.isChecked() else CheckBox.setText(UncheckedText))
+    if CheckedText is not None:
+        CheckedEventList.append(CheckBox.setText)
+        CheckedArgsList.append((CheckedText, ))
+    if UncheckedText is not None:
+        UncheckedEventList.append(CheckBox.setText)
+        UncheckedArgsList.append((UncheckedText, ))
 
-    def SetToggleEvent(EventList, ArgsList, IsPermanent, IsChecked, CheckBox):
-        for Index, Event in enumerate(EventList):
-            Args = ArgsList[Index]
-            if IsChecked:
-                Event(*Args) if IsPermanent and CheckBox.isChecked() else None
-                CheckBox.toggled.connect(lambda: Event(*Args) if CheckBox.isChecked() else None)
-            else:
-                Event(*Args) if IsPermanent and not CheckBox.isChecked() else None
-                CheckBox.toggled.connect(lambda: Event(*Args) if not CheckBox.isChecked() else None)
+    CheckBox.toggled.connect(
+        lambda IsChecked: RunEvent(CheckedEventList, CheckedArgsList) if IsChecked else RunEvent(UncheckedEventList, UncheckedArgsList)
+    )
 
-    SetToggleEvent(CheckedPermEventList, CheckedPermArgsList, True, True, CheckBox)
-    SetToggleEvent(CheckedTempEventList, CheckedTempArgsList, False, True, CheckBox)
-    SetToggleEvent(UncheckedPermEventList, UncheckedPermArgsList, True, False, CheckBox)
-    SetToggleEvent(UncheckedTempEventList, UncheckedTempArgsList, False, False, CheckBox)
+    RunEvent(CheckedEventList, CheckedArgsList) if TakeEffect and CheckBox.isChecked() else None
+    RunEvent(UncheckedEventList, UncheckedArgsList) if TakeEffect and not CheckBox.isChecked() else None
 
 
 def Function_SetURL(
     Button: QToolButton,
-    URL: Union[str, list],
+    URL: Union[str, QWidget, list],
     ButtonTooltip: str = "Open"
 ):
     '''
     '''
-    Button.clicked.connect(lambda: Function_OpenURL(URL))
+    for URL in IterChecker(URL):
+        Button.clicked.connect(
+            lambda: Function_OpenURL(Function_ParamsHandler(URL, None) if isinstance(URL, QWidget) else URL)
+        )
     Button.setToolTipDuration(-1)
     Button.setToolTip(ButtonTooltip)
 
@@ -222,6 +219,7 @@ def Function_SetFileDialog(
     LineEdit: QLineEdit,
     Mode: str,
     FileType: Optional[str] = None,
+    Directory: Optional[str] = None,
     #DisplayText: str = "None",
     ButtonTooltip: str = "Browse"
 ):
@@ -232,7 +230,11 @@ def Function_SetFileDialog(
 
     @Slot()
     def SetFileDialog():
-        DisplayText = Function_GetFileDialog(Mode, FileType)
+        DisplayText = Function_GetFileDialog(
+            Mode = Mode,
+            FileType = FileType,
+            Directory = os.path.expanduser('~/Documents' if platform.system() == "Windows" else '~/') if Directory is None else Directory
+        )
         LineEdit.setText(DisplayText)
         LineEdit.setStatusTip(DisplayText)
 
@@ -247,8 +249,8 @@ def Function_ShowMessageBox(
     Text: str = ...,
     Buttons: object = QMessageBox.Ok,
     EventButtons: list = [], #EventRoles: list = [],
-    EventLists: list = [[], ],
-    ParamLists: list = [[()], ]
+    EventLists: list[list] = [[], ],
+    ParamLists: list[list[tuple]] = [[()], ]
 ):
     '''
     Function to pop up a msgbox
@@ -265,9 +267,8 @@ def Function_ShowMessageBox(
     def ConnectEvent(Button: QAbstractButton):
         if Button.role() in EventRoles:
             EventList = EventLists[EventRoles.index(Button.role())]
-            Params = ParamLists[EventRoles.index(Button.role())]
-            for Index, Event in enumerate(EventList):
-                Event(*Params[Index])
+            ParamList = ParamLists[EventRoles.index(Button.role())]
+            RunEvent(EventList, ParamList)
         else:
             pass
     MsgBox.buttonClicked.connect(ConnectEvent)
@@ -276,9 +277,8 @@ def Function_ShowMessageBox(
 
     if Result in EventButtons:
         EventList = EventLists[EventButtons.index(Result)]
-        Params = ParamLists[EventButtons.index(Result)]
-        for Index, Event in enumerate(EventList):
-            Event(*Params[Index])
+        ParamList = ParamLists[EventButtons.index(Result)]
+        RunEvent(EventList, ParamList)
 
 
 def Function_ParamsHandler(

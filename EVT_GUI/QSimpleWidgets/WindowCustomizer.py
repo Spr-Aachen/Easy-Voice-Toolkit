@@ -16,7 +16,8 @@ class TitleBarBase(WidgetBase):
     DEFAULT_TITILE_BAR_HEIGHT = 30 # 默认标题栏高度
 
     def __init__(self,
-        parent: QWidget = ...
+        parent: QWidget = ...,
+        AddButtons: bool = True
     ):
         super().__init__(None)
 
@@ -35,9 +36,9 @@ class TitleBarBase(WidgetBase):
         self.ResizeEvent_Parent = self.Window.resizeEvent # 存储父类的窗口大小改变事件
         self.MouseDoubleClickEvent_Parent = self.Window.mouseDoubleClickEvent # 存储父类的双击事件
 
-        self.CloseButton = self.setCloseButton()
-        self.MaximizeButton = self.setMaximizeButton()
-        self.MinimizeButton = self.setMinimizeButton()
+        self.CloseButton = self.setCloseButton() if AddButtons else None
+        self.MaximizeButton = self.setMaximizeButton() if AddButtons else None
+        self.MinimizeButton = self.setMinimizeButton() if AddButtons else None
 
     def resizeEvent(self, a0: QResizeEvent) -> None:
         '''
@@ -45,9 +46,9 @@ class TitleBarBase(WidgetBase):
         '''
         self.resize(self.Window.width(), self.DEFAULT_TITILE_BAR_HEIGHT)
         # 最大化最小化的时候，需要去改变按钮组位置
-        self.CloseButton.move(self.Window.width() - 33, self.YAxis)
-        self.MaximizeButton.move(self.Window.width() - 66, self.YAxis)
-        self.MinimizeButton.move(self.Window.width() - 99, self.YAxis)
+        self.CloseButton.move(self.Window.width() - 33, self.YAxis) if self.CloseButton is not None else None
+        self.MaximizeButton.move(self.Window.width() - 66, self.YAxis) if self.MaximizeButton is not None else None
+        self.MinimizeButton.move(self.Window.width() - 99, self.YAxis) if self.MinimizeButton is not None else None
         return self.ResizeEvent_Parent(a0)
 
     def mouseDoubleClickEvent(self, a0: QMouseEvent) -> None:
@@ -154,7 +155,7 @@ def TitleBarCustomizer(
         TitleBar.setGeometry(0, 0, TitleBar.Window.width(), TitleBar.DEFAULT_TITILE_BAR_HEIGHT) # 将自定义的标题栏置于最顶部
         TitleBar.Window.setContentsMargins(0, TitleBar.DEFAULT_TITILE_BAR_HEIGHT, 0, 0) # 设置ui文件里main_layout上边距，以免遮挡标题栏
     else:
-        TitleBar = TitleBarBase(ExistedTitleBar)
+        TitleBar = TitleBarBase(ExistedTitleBar, False)
     TitleBar.Window.resizeEvent = TitleBar.resizeEvent # 将本类的窗口大小改变事件赋值给将父类的窗口大小改变事件
     TitleBar.Window.mouseDoubleClickEvent = TitleBar.mouseDoubleClickEvent # 将本类的双击事件赋值给将父类的双击事件
     #return TitleBar
@@ -211,7 +212,7 @@ class MainWindowBase(QMainWindow):
 
     def __init__(self,
         parent: Optional[QWidget] = None,
-        flags: Qt.WindowType = Qt.Window,
+        flags: Qt.WindowType = Qt.Window | Qt.WindowSystemMenuHint | Qt.WindowMinMaxButtonsHint,
         CustomizeTitleBar: bool = True
     ):
         super().__init__(parent, flags)

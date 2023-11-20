@@ -137,6 +137,9 @@ class MessageBox_Stacked(MessageBoxBase):
 
         self.setMinimumSize(900, 480)
 
+        self.layout().setContentsMargins(12, 12, 12, 12)
+        self.layout().setSpacing(12)
+
         self.StackedWidget = QStackedWidget()
 
         self.ButtonP = QPushButton()
@@ -146,6 +149,7 @@ class MessageBox_Stacked(MessageBoxBase):
         self.ButtonP.setStyleSheet(
             "QPushButton {"
             "   background-color: transparent;"
+            "   padding: 12px;"
             "   border-image: url(:/Button_Icon/Sources/LeftArrow.png);"
             "}"
             "QPushButton:hover {"
@@ -161,6 +165,7 @@ class MessageBox_Stacked(MessageBoxBase):
         self.ButtonN.setStyleSheet(
             "QPushButton {"
             "   background-color: transparent;"
+            "   padding: 12px;"
             "   border-image: url(:/Button_Icon/Sources/RightArrow.png);"
             "}"
             "QPushButton:hover {"
@@ -172,7 +177,7 @@ class MessageBox_Stacked(MessageBoxBase):
         Layout = QHBoxLayout()
         Layout.setAlignment(Qt.AlignCenter)
         Layout.setContentsMargins(0, 0, 0, 0)
-        Layout.setSpacing(12)
+        Layout.setSpacing(self.layout().spacing())
         Layout.addWidget(self.ButtonP)
         Layout.addWidget(self.StackedWidget)
         Layout.addWidget(self.ButtonN)
@@ -204,7 +209,7 @@ class MessageBox_Stacked(MessageBoxBase):
             SubLayout = QVBoxLayout()
             SubLayout.setAlignment(Qt.AlignCenter)
             SubLayout.setContentsMargins(0, 0, 0, 0)
-            SubLayout.setSpacing(12)
+            SubLayout.setSpacing(self.layout().spacing())
             SubLayout.addWidget(TextBrowser)
             SubLayout.addWidget(Label)
 

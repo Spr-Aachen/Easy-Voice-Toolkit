@@ -4,7 +4,7 @@ import time #import asyncio
 import json
 from pathlib import Path
 from PySide6 import __file__ as PySide6_File
-from PySide6.QtCore import Qt, QObject, Signal, Slot, QMutex, QThread, QPropertyAnimation, QParallelAnimationGroup
+from PySide6.QtCore import Qt, QObject, Signal, Slot, QThread, QPropertyAnimation, QParallelAnimationGroup
 from PySide6.QtCore import QCoreApplication as QCA
 from PySide6.QtGui import QTextCursor
 from PySide6.QtWidgets import *
@@ -86,30 +86,12 @@ def UpdaterExecuter():
 
 ##############################################################################################################################
 
-class CustomSignals_ClientFunction(QObject):
-    '''
-    Set up signals for Client functions
-    '''
-    Signal_CheckingSucceded = Signal()
-
-    Signal_CheckingFailed = Signal()
-
-
-ClientFunctionSignals = CustomSignals_ClientFunction()
-
-
-# Mutex to lock/unlock
-Mutex = QMutex()
-
-
 # ClientFunc1
 def ClientRebooter():
     '''
     Reboot EVT client
     '''
-    Mutex.lock()
     UpdaterExecuter() #os.execl(sys.executable, 'python', __file__, *sys.argv[1:]) else os.execl(sys.executable, sys.executable, *sys.argv)
-    #Mutex.unlock()
 
 
 # ClientFunc2
@@ -117,16 +99,13 @@ class Integrity_Checker(QObject):
     '''
     Check File integrity
     '''
-    finished = Signal()
+    finished = Signal(str)
 
     def __init__(self):
         super().__init__()
 
-    def ToolsImporter(self):
-        '''
-        Import Tools
-        '''
-        #os.chdir(CurrentDir)
+    @Slot(tuple)
+    def Execute(self):
         if 'Undetected' not in [
             Config.GetValue('Env', 'FFmpeg'),
             #Config.GetValue('Env', 'GCC'),
@@ -135,82 +114,59 @@ class Integrity_Checker(QObject):
             Config.GetValue('Env', 'PyReqs'),
             Config.GetValue('Env', 'Pytorch')
         ]:
-            try:
-                Mutex.lock()
-                RunCMD(
-                    Args = [
-                        f'cd {ResourceDir}',
-                        'python -c "'
-                        'from EVT_Core.Tool_AudioProcessor.Process import Audio_Processing; '
-                        'from EVT_Core.Tool_VoiceIdentifier.Identify import Voice_Identifying; '
-                        'from EVT_Core.Tool_VoiceTranscriber.Transcribe import Voice_Transcribing; '
-                        'from EVT_Core.Tool_DatasetCreator.Create import Dataset_Creating; '
-                        'from EVT_Core.Tool_VoiceTrainer.Train import Voice_Training; '
-                        'from EVT_Core.Tool_VoiceConverter.Convert import Voice_Converting"'
-                    ],
-                    PathType = 'Posix'
-                )
-            except:
-                print("Error occurred while importing tools!")
-            finally:
-                Mutex.unlock()
+            Error = RunCMD(
+                Args = [
+                    f'cd "{ResourceDir}"',
+                    'python -c "'
+                    'from EVT_Core.Tool_AudioProcessor.Process import Audio_Processing; '
+                    'from EVT_Core.Tool_VoiceIdentifier.Identify import Voice_Identifying; '
+                    'from EVT_Core.Tool_VoiceTranscriber.Transcribe import Voice_Transcribing; '
+                    'from EVT_Core.Tool_DatasetCreator.Create import Dataset_Creating; '
+                    'from EVT_Core.Tool_VoiceTrainer.Train import Voice_Training; '
+                    'from EVT_Core.Tool_VoiceConverter.Convert import Voice_Converting"'
+                ],
+                CommunicateThroughConsole = True,
+                DecodeResult = True
+            )[1]
 
-    @Slot(tuple)
-    def Execute(self):
-        TaskAccelerating(
-            TargetList = [self.ToolsImporter],
-            ArgsList = [()],
-            TypeList = ['MultiThreading']
-        )
+        else:
+            Error = 'Missing evironment dependencies!'
+
+        self.finished.emit(str(Error))
 
 ##############################################################################################################################
-
-class CustomSignals_TaskExecution(QObject):
-    '''
-    Set up signals for Client functions
-    '''
-    Signal_TaskSucceeded = Signal()
-
-    Signal_TaskFailed = Signal()
-
-
-TaskExecutionSignals = CustomSignals_TaskExecution()
-
 
 # Tool1: AudioProcessor
 class Execute_Audio_Processing(QObject):
     '''
-    Change media format to WAV and cut off the silent parts
+    Change media format to WAV (and denoise) and cut off the silent parts
     '''
-    finished = Signal()
+    started = Signal()
+    finished = Signal(str)
 
     def __init__(self):
         super().__init__()
 
     @Slot(tuple)
     def Execute(self, Params: tuple):
-        '''
-        from EVT_Core.Tool_AudioProcessor.Process import Audio_Processing
-        AudioConvertandSlice = Audio_Processing(*Params)
-        TaskAccelerating(
-            TargetList = [AudioConvertandSlice.Convert_Media, AudioConvertandSlice.Slice_Audio],
-            ArgsList = [(), ()],
-            TypeList = ['MultiThreading', 'MultiThreading']
-        )
-        '''
-        RunCMD(
+        self.started.emit()
+
+        Error = RunCMD(
             Args = [
-                f'cd {ResourceDir}',
+                f'cd "{ResourceDir}"',
                 'python -c "'
                 'from EVT_Core.Tool_AudioProcessor.Process import Audio_Processing; '
-                f"AudioConvertandSlice = Audio_Processing('{Params[0]}','{Params[1]}','{Params[2]}',{Params[3]},{Params[4]},{Params[5]},{Params[6]},{Params[7]}); "
-                'AudioConvertandSlice.Convert_Media(); '
-                'AudioConvertandSlice.Slice_Audio()"'
+                f"AudioConvertandSlice = Audio_Processing{str(Params)}; "
+                'AudioConvertandSlice.Process_Audio()"'
             ],
-            PathType = 'Posix'
-        )
+            PathType = 'Posix',
+            ShowProgress = True,
+            CommunicateThroughConsole = True,
+            DecodeResult = True
+        )[1]
+        Error = None if 'traceback' not in str(Error).lower() else Error
 
-        self.finished.emit()
+        self.finished.emit(str(Error))
 
 
 # Tool2: VoiceIdentifier
@@ -218,35 +174,33 @@ class Execute_Voice_Identifying(QObject):
     '''
     Contrast the voice and filter out the similar ones
     '''
-    finished = Signal()
+    started = Signal()
+    finished = Signal(str)
     
     def __init__(self):
         super().__init__()
 
     @Slot(tuple)
     def Execute(self, Params: tuple):
-        '''
-        from EVT_Core.Tool_VoiceIdentifier.Identify import Voice_Identifying
-        AudioContrastInference = Voice_Identifying(*Params)
-        TaskAccelerating(
-            TargetList = [AudioContrastInference.GetModel, AudioContrastInference.Inference],
-            ArgsList = [(), ()],
-            TypeList = ['MultiThreading', 'MultiThreading']
-        )
-        '''
-        RunCMD(
+        self.started.emit()
+
+        Error = RunCMD(
             Args = [
-                f'cd {ResourceDir}',
+                f'cd "{ResourceDir}"',
                 'python -c "'
                 'from EVT_Core.Tool_VoiceIdentifier.Identify import Voice_Identifying; '
-                f"AudioContrastInference = Voice_Identifying({Params[0]},'{Params[1]}','{Params[2]}','{Params[3]}','{Params[4]}','{Params[5]}','{Params[6]}',{Params[7]},{Params[8]}); "
+                f"AudioContrastInference = Voice_Identifying{str(Params)}; "
                 'AudioContrastInference.GetModel(); '
                 'AudioContrastInference.Inference()"'
             ],
-            PathType = 'Posix'
-        )
+            PathType = 'Posix',
+            ShowProgress = True,
+            CommunicateThroughConsole = True,
+            DecodeResult = True
+        )[1]
+        Error = None if 'traceback' not in str(Error).lower() else Error
 
-        self.finished.emit()
+        self.finished.emit(str(Error))
 
 
 # Tool3: VoiceTranscriber
@@ -254,13 +208,16 @@ class Execute_Voice_Transcribing(QObject):
     '''
     Transcribe WAV content to SRT
     '''
-    finished = Signal()
+    started = Signal()
+    finished = Signal(str)
 
     def __init__(self):
         super().__init__()
 
     @Slot(tuple)
     def Execute(self, Params: tuple):
+        self.started.emit()
+
         LANGUAGES = {
             "中":       "zh",
             "Chinese":  "zh",
@@ -269,27 +226,22 @@ class Execute_Voice_Transcribing(QObject):
             "日":       "ja",
             "japanese": "ja"
         }
-        '''
-        from EVT_Core.Tool_VoiceTranscriber.Transcribe import Voice_Transcribing
-        WAVtoSRT = Voice_Transcribing(*ItemReplacer(LANGUAGES, Params))
-        TaskAccelerating(
-            TargetList = [WAVtoSRT.Transcriber],
-            ArgsList = [()],
-            TypeList = ['MultiThreading']
-        )
-        '''
-        RunCMD(
+        Error = RunCMD(
             Args = [
-                f'cd {ResourceDir}',
+                f'cd "{ResourceDir}"',
                 'python -c "'
                 'from EVT_Core.Tool_VoiceTranscriber.Transcribe import Voice_Transcribing; '
-                f"WAVtoSRT = Voice_Transcribing('{Params[0]}','{Params[1]}','{Params[2]}','{Params[3]}',{Params[4]},'{Params[5]}',{f'{LANGUAGES.get(Params[6])}' if Params[6] else None},{Params[7]},{Params[8]}); "
+                f"WAVtoSRT = Voice_Transcribing{str(ItemReplacer(LANGUAGES, Params))}; "
                 'WAVtoSRT.Transcriber()"'
             ],
-            PathType = 'Posix'
-        )
+            PathType = 'Posix',
+            ShowProgress = True,
+            CommunicateThroughConsole = True,
+            DecodeResult = True
+        )[1]
+        Error = None if 'traceback' not in str(Error).lower() else Error
 
-        self.finished.emit()
+        self.finished.emit(str(Error))
 
 
 # Tool4: DatasetCreator
@@ -297,34 +249,32 @@ class Execute_Dataset_Creating(QObject):
     '''
     Convert the whisper-generated SRT to CSV and split the WAV
     '''
-    finished = Signal()
+    started = Signal()
+    finished = Signal(str)
 
     def __init__(self):
         super().__init__()
 
     @Slot(tuple)
     def Execute(self, Params: tuple):
-        '''
-        from EVT_Core.Tool_DatasetCreator.Create import Dataset_Creating
-        SRTtoCSVandSplitAudio = Dataset_Creating(*Params)
-        TaskAccelerating(
-            TargetList = [SRTtoCSVandSplitAudio.CallingFunctions],
-            ArgsList = [()],
-            TypeList = ['MultiThreading']
-        )
-        '''
-        RunCMD(
+        self.started.emit()
+
+        Error = RunCMD(
             Args = [
-                f'cd {ResourceDir}',
+                f'cd "{ResourceDir}"',
                 'python -c "'
                 'from EVT_Core.Tool_DatasetCreator.Create import Dataset_Creating; '
-                f"SRTtoCSVandSplitAudio = Dataset_Creating('{Params[0]}','{Params[1]}',{Params[2]},'{Params[3]}','{Params[4]}','{Params[5]}',{Params[6]},'{Params[7]}','{Params[8]}'); "
+                f"SRTtoCSVandSplitAudio = Dataset_Creating{str(Params)}; "
                 'SRTtoCSVandSplitAudio.CallingFunctions()"'
             ],
-            PathType = 'Posix'
-        )
+            PathType = 'Posix',
+            ShowProgress = True,
+            CommunicateThroughConsole = True,
+            DecodeResult = True
+        )[1]
+        Error = None if 'traceback' not in str(Error).lower() else Error
 
-        self.finished.emit()
+        self.finished.emit(str(Error))
 
 
 # Tool5: VoiceTrainer
@@ -352,40 +302,38 @@ class Execute_Voice_Training(QObject):
     '''
     Preprocess and then start training
     '''
-    finished = Signal()
+    started = Signal()
+    finished = Signal(str)
 
     def __init__(self):
         super().__init__()
 
     @Slot(tuple)
     def Execute(self, Params: tuple):
+        self.started.emit()
+
         LANGUAGES = {
             "中":                            "mandarin",
             "Mandarin":                      "mandarin",
             "中英日":                        "mandarin_english_japanese",
             "Mandarin & English & Japanese": "mandarin_english_japanese"
         }
-        '''
-        from EVT_Core.Tool_VoiceTrainer.Train import Voice_Training
-        PreprocessandTrain = Voice_Training(*ItemReplacer(LANGUAGES, Params))
-        TaskAccelerating(
-            TargetList = [PreprocessandTrain.Preprocessing_and_Training],
-            ArgsList = [()],
-            TypeList = ['MultiThreading']
-        )
-        '''
-        RunCMD(
+        Error = RunCMD(
             Args = [
-                f'cd {ResourceDir}',
+                f'cd "{ResourceDir}"',
                 'python -c "'
                 'from EVT_Core.Tool_VoiceTrainer.Train import Voice_Training; '
-                f"PreprocessandTrain = Voice_Training('{Params[0]}','{Params[1]}','{LANGUAGES.get(Params[2])}',{f'{Params[3]}' if Params[3] else None},'{Params[4]}',{Params[5]},{Params[6]},{Params[7]},{Params[8]},'{Params[9]}',{Params[10]},{Params[11]},{f'{Params[12]}' if Params[12] else None},{f'{Params[13]}' if Params[13] else None},'{Params[14]}'); "
+                f"PreprocessandTrain = Voice_Training{str(ItemReplacer(LANGUAGES, Params))}; "
                 'PreprocessandTrain.Preprocessing_and_Training()"'
             ],
-            PathType = 'Posix'
-        )
+            PathType = 'Posix',
+            ShowProgress = True,
+            CommunicateThroughConsole = True,
+            DecodeResult = True
+        )[1]
+        Error = None if 'traceback' not in str(Error).lower() else Error
 
-        self.finished.emit()
+        self.finished.emit(str(Error))
 
 
 # Tool6: VoiceConverter
@@ -402,13 +350,16 @@ class Execute_Voice_Converting(QObject):
     '''
     Inference model
     '''
-    finished = Signal()
+    started = Signal()
+    finished = Signal(str)
 
     def __init__(self):
         super().__init__()
 
     @Slot(tuple)
     def Execute(self, Params: tuple):
+        self.started.emit()
+
         LANGUAGES = {
             "中":       "[ZH]",
             "Chinese":  "[ZH]",
@@ -417,27 +368,22 @@ class Execute_Voice_Converting(QObject):
             "日":       "[JA]",
             "Japanese": "[JA]"
         }
-        '''
-        from EVT_Core.Tool_VoiceConverter.Convert import Voice_Converting
-        TTS = Voice_Converting(*ItemReplacer(LANGUAGES, Params))
-        TaskAccelerating(
-            TargetList = [TTS.Converting],
-            ArgsList = [()],
-            TypeList = ['MultiThreading']
-        )
-        '''
-        RunCMD(
+        Error = RunCMD(
             Args = [
-                f'cd {ResourceDir}',
+                f'cd "{ResourceDir}"',
                 'python -c "'
                 'from EVT_Core.Tool_VoiceConverter.Convert import Voice_Converting; '
-                f"TTS = Voice_Converting('{Params[0]}','{Params[1]}','{Params[2]}','{LANGUAGES.get(Params[3])}','{Params[4]}',{Params[5]},{Params[6]},{Params[7]},'{Params[8]}'); "
+                f"TTS = Voice_Converting{str(ItemReplacer(LANGUAGES, Params))}; "
                 'TTS.Converting()"'
             ],
-            PathType = 'Posix'
-        )
+            PathType = 'Posix',
+            ShowProgress = True,
+            CommunicateThroughConsole = True,
+            DecodeResult = True
+        )[1]
+        Error = None if 'traceback' not in str(Error).lower() else Error
 
-        self.finished.emit()
+        self.finished.emit(str(Error))
 
 ##############################################################################################################################
 
@@ -455,7 +401,7 @@ class CustomSignals_MainWindow(QObject):
     Signal_ExecuteTask = Signal(tuple)
 
     # Monitor task
-    Signal_TaskStatus = Signal(str)
+    Signal_TaskStatus = Signal(str, str)
 
 
 MainWindowSignals = CustomSignals_MainWindow()
@@ -592,7 +538,7 @@ class MainWindow(Window_Customizing):
         if FrameStatus == f"{Frame.objectName()}Reduced":
             Panel.setVisible(False)
 
-    def Function_ExecuteMethod(self,
+    def Function_SetMethodExecutor(self,
         ExecuteButton: QPushButton,
         TerminateButton: Optional[QPushButton] = None,
         ProgressBar: Optional[QProgressBar] = None,
@@ -601,30 +547,32 @@ class MainWindow(Window_Customizing):
         Params: Optional[tuple] = (),
         ParamsFrom: Optional[list] = [],
         EmptyAllowed: Optional[list] = [],
-        FinishEventList: Optional[list] = [],
-        FinishParamList: Optional[list] = [()]
+        #StartEventList: Optional[list] = None,
+        #StartParamList: Optional[list[tuple]] = None,
+        FinishEventList: Optional[list] = None,
+        FinishParamList: Optional[list[tuple]] = None
     ):
         '''
         Function to execute outer class methods (through button)
         '''
-        StackedWidget = Function_FindParentUI(
-            ChildUI = ExecuteButton, #ChildUI = TerminateButton,
-            ParentType = QStackedWidget
-        ) if TerminateButton else None
-        
-        ClassName =  str(Method.__qualname__).split('.')[0]
-        MethodName = str(Method.__qualname__).split('.')[1]
+        QualName = str(Method.__qualname__)
+        ClassName =  QualName.split('.')[0]
+        MethodName = QualName.split('.')[1]
 
         ClassInstance = globals()[ClassName]()
-        WorkerThread = QThread()
+        ClassInstance.started.connect(lambda: MainWindowSignals.Signal_TaskStatus.emit(QualName, 'Started')) if hasattr(ClassInstance, 'started') else None
+        #ClassInstance.started.connect(lambda: RunEvent(StartEventList, StartParamList)) if hasattr(ClassInstance, 'started') else None
+        ClassInstance.finished.connect(lambda Error: MainWindowSignals.Signal_TaskStatus.emit(QualName, 'Finished') if Error == str(None) else None) if hasattr(ClassInstance, 'finished') else None
+        ClassInstance.finished.connect(lambda Error: RunEvent(FinishEventList, FinishParamList) if Error == str(None) else None) if hasattr(ClassInstance, 'finished') else None
+        ClassInstance.finished.connect(lambda Error: MainWindowSignals.Signal_TaskStatus.emit(QualName, 'Failed') if Error != str(None) else None) if hasattr(ClassInstance, 'finished') else None
+        ClassInstance.finished.connect(lambda Error: Function_ShowMessageBox(QMessageBox.Warning, 'Failure', f'发生错误：\n{Error}') if Error != str(None) else None) if hasattr(ClassInstance, 'finished') else None
 
-        ClassInstance.moveToThread(WorkerThread)
-        ClassInstance.finished.connect(WorkerThread.quit)
-        #ClassInstance.finished.connect(WorkerThread.wait)
-        def ConnectEvent():
-            for Index, FinishEvent in enumerate(FinishEventList):
-                FinishEvent(*FinishParamList[Index])
-        ClassInstance.finished.connect(ConnectEvent)
+        if not isinstance(ClassInstance, QThread):
+            WorkerThread = QThread()
+            ClassInstance.moveToThread(WorkerThread)
+            ClassInstance.finished.connect(WorkerThread.quit) if hasattr(ClassInstance, 'finished') else None
+        else:
+            WorkerThread = ClassInstance
 
         @Slot()
         def ExecuteMethod():
@@ -642,18 +590,17 @@ class MainWindow(Window_Customizing):
             MainWindowSignals = CustomSignals_MainWindow()
             MainWindowSignals.Signal_ExecuteTask.connect(getattr(ClassInstance, MethodName)) #MainWindowSignals.Signal_ExecuteTask.connect(lambda Args: getattr(ClassInstance, MethodName)(*Args))
 
-            WorkerThread.started.connect(lambda: MainWindowSignals.Signal_TaskStatus.emit('Started'))
-            WorkerThread.started.connect(lambda: self.Function_AnimateFrame(Frame = ConsoleFrame, MinHeight = 0, MaxHeight = 210, Mode = "Extend")) if ConsoleFrame else None
-            WorkerThread.started.connect(lambda: Function_AnimateProgressBar(ProgressBar = ProgressBar, IsTaskAlive = True)) if ProgressBar else None
-            WorkerThread.started.connect(lambda: self.Function_AnimateStackedWidget(StackedWidget = StackedWidget, TargetIndex = 1)) if TerminateButton else None
-            WorkerThread.finished.connect(lambda: MainWindowSignals.Signal_TaskStatus.emit('Ended'))
-            WorkerThread.finished.connect(lambda: Function_AnimateProgressBar(ProgressBar = ProgressBar, IsTaskAlive = False)) if ProgressBar else None
-            WorkerThread.finished.connect(lambda: self.Function_AnimateStackedWidget(StackedWidget = StackedWidget, TargetIndex = 0)) if TerminateButton else None
-            WorkerThread.finished.connect(lambda: self.Function_AnimateFrame(Frame = ConsoleFrame, MinHeight = 0, MaxHeight = 210, Mode = "Reduce")) if ConsoleFrame else None
+            WorkerThread.started.connect(lambda: self.Function_AnimateFrame(ConsoleFrame, MinHeight = 0, MaxHeight = 210, Mode = "Extend")) if ConsoleFrame else None
+            WorkerThread.started.connect(lambda: Function_AnimateProgressBar(ProgressBar, IsTaskAlive = True)) if ProgressBar else None
+            WorkerThread.started.connect(lambda: self.Function_AnimateStackedWidget(Function_FindParentUI(ExecuteButton, QStackedWidget), TargetIndex = 1)) if TerminateButton else None
+            WorkerThread.finished.connect(lambda: self.Function_AnimateFrame(ConsoleFrame, MinHeight = 0, MaxHeight = 210, Mode = "Reduce")) if ConsoleFrame else None
+            WorkerThread.finished.connect(lambda: Function_AnimateProgressBar(ProgressBar, IsTaskAlive = False)) if ProgressBar else None
+            WorkerThread.finished.connect(lambda: self.Function_AnimateStackedWidget(Function_FindParentUI(ExecuteButton, QStackedWidget), TargetIndex = 0)) if TerminateButton else None
             #WorkerThread.finished.connect(lambda: MainWindowSignals.Signal_ExecuteTask.disconnect(getattr(ClassInstance, MethodName)))
-            WorkerThread.start()
 
             MainWindowSignals.Signal_ExecuteTask.emit(Args)
+
+            WorkerThread.start()
 
         ExecuteButton.clicked.connect(ExecuteMethod)#if ExecuteButton else ExecuteMethod()
         ExecuteButton.setText("Execute 执行") if ExecuteButton != None and ExecuteButton.text() == "" else None
@@ -669,16 +616,13 @@ class MainWindow(Window_Customizing):
                 except:
                     WorkerThread.quit()
 
-            ProgramTerminator(
+            ProcessTerminator(
                 Program = 'python.exe',
                 SelfIgnored = True,
                 SearchKeyword = True
             )
 
             ProgressBar.setValue(0)
-            #Function_AnimateProgressBar(ProgressBar = ProgressBar, IsTaskAlive = False)) if ProgressBar else None
-            #self.Function_AnimateStackedWidget(StackedWidget = StackedWidget, TargetIndex = 0) if TerminateButton else None
-            #self.Function_AnimateFrame(Frame = ConsoleFrame, MinHeight = 0, MaxHeight = 210, Mode = "Reduce") if ConsoleFrame else None
 
         TerminateButton.clicked.connect(
             lambda: Function_ShowMessageBox(
@@ -698,6 +642,11 @@ class MainWindow(Window_Customizing):
         Main funtion to orgnize all the subfunctions
         '''
         self.ui.Label_Title.setText("Easy Voice Toolkit - by Spr_Aachen")
+
+        # Control Window
+        self.ui.Button_Close_Window.clicked.connect(self.close)
+        self.ui.Button_Maximize_Window.clicked.connect(lambda: self.showNormal() if self.isMaximized() else self.showMaximized())
+        self.ui.Button_Minimize_Window.clicked.connect(self.showMinimized)
 
         # Toggle Menu
         self.ui.Button_Toggle_Menu.clicked.connect(
@@ -810,7 +759,7 @@ class MainWindow(Window_Customizing):
                 "一个基于Whisper、VITS等项目实现的简易语音工具箱，提供了包括语音模型训练在内的多种自动化音频工具\n"
                 "\n"
                 "工具箱目前包含以下功能：\n"
-                "音频转换和分割\n"
+                "音频基本处理\n"
                 "语音识别和筛选\n"
                 "语音转文字字幕\n"
                 "语音数据集制作\n"
@@ -857,13 +806,15 @@ class MainWindow(Window_Customizing):
         self.ui.ToolButton_Download_Title.setText(QCA.translate("Label", "下载"))
 
         self.ui.Label_Download_FFmpeg.setText("FFmpeg")
-        self.Function_ExecuteMethod(
+        self.Function_SetMethodExecutor(
             ExecuteButton = self.ui.Button_Install_FFmpeg,
             ProgressBar = self.ui.ProgressBar_Download_FFmpeg,
             Method = FFmpeg_Installer.Execute,
             Params = ()
         )
-        MainWindowSignals.Signal_MainWindowShown.connect(self.ui.Button_Install_FFmpeg.click)
+        MainWindowSignals.Signal_MainWindowShown.connect(
+            self.ui.Button_Install_FFmpeg.click if Config.GetValue('Env', 'FFmpeg', 'Undetected') == 'Undetected' else EnvConfiguratorSignals.Signal_FFmpegDetected.emit
+        )
         self.ui.Button_Install_FFmpeg.setText('')
         self.ui.Button_Install_FFmpeg.setCheckable(True)
         self.ui.Button_Install_FFmpeg.setToolTipDuration(-1)
@@ -905,13 +856,15 @@ class MainWindow(Window_Customizing):
 
         '''
         self.ui.Label_Download_GCC.setText("GCC")
-        self.Function_ExecuteMethod(
+        self.Function_SetMethodExecutor(
             ExecuteButton = self.ui.Button_Install_GCC,
             ProgressBar = self.ui.ProgressBar_Download_GCC,
             Method = GCC_Installer.Execute,
             Params = ()
         )
-        MainWindowSignals.Signal_MainWindowShown.connect(self.ui.Button_Install_GCC.click)
+        MainWindowSignals.Signal_MainWindowShown.connect(
+            self.ui.Button_Install_GCC.click if Config.GetValue('Env', 'GCC', 'Undetected') == 'Undetected' else EnvConfiguratorSignals.Signal_GCCDetected.emit
+        )
         self.ui.Button_Install_GCC.setText('')
         self.ui.Button_Install_GCC.setCheckable(True)
         self.ui.Button_Install_GCC.setToolTipDuration(-1)
@@ -952,13 +905,15 @@ class MainWindow(Window_Customizing):
         )
 
         self.ui.Label_Download_CMake.setText("CMake")
-        self.Function_ExecuteMethod(
+        self.Function_SetMethodExecutor(
             ExecuteButton = self.ui.Button_Install_CMake,
             ProgressBar = self.ui.ProgressBar_Download_CMake,
             Method = CMake_Installer.Execute,
             Params = ()
         )
-        EnvConfiguratorSignals.Signal_GCCDetected.connect(self.ui.Button_Install_CMake.click)
+        EnvConfiguratorSignals.Signal_GCCDetected.connect(
+            self.ui.Button_Install_CMake.click if Config.GetValue('Env', 'CMake', 'Undetected') == 'Undetected' else EnvConfiguratorSignals.Signal_CMakeDetected.emit
+        )
         self.ui.Button_Install_CMake.setText('')
         self.ui.Button_Install_CMake.setCheckable(True)
         self.ui.Button_Install_CMake.setToolTipDuration(-1)
@@ -1000,13 +955,15 @@ class MainWindow(Window_Customizing):
         '''
 
         self.ui.Label_Download_Python.setText("Python")
-        self.Function_ExecuteMethod(
+        self.Function_SetMethodExecutor(
             ExecuteButton = self.ui.Button_Install_Python,
             ProgressBar = self.ui.ProgressBar_Download_Python,
             Method = Python_Installer.Execute,
             Params = ('3.9', )
         )
-        MainWindowSignals.Signal_MainWindowShown.connect(self.ui.Button_Install_Python.click) #EnvConfiguratorSignals.Signal_CMakeDetected.connect(self.ui.Button_Install_Python.click)
+        MainWindowSignals.Signal_MainWindowShown.connect( #EnvConfiguratorSignals.Signal_CMakeDetected.connect(
+            self.ui.Button_Install_Python.click if Config.GetValue('Env', 'Python', 'Undetected') == 'Undetected' else EnvConfiguratorSignals.Signal_PythonDetected.emit
+        )
         self.ui.Button_Install_Python.setText('')
         self.ui.Button_Install_Python.setCheckable(True)
         self.ui.Button_Install_Python.setToolTipDuration(-1)
@@ -1047,13 +1004,15 @@ class MainWindow(Window_Customizing):
         )
 
         self.ui.Label_Download_PyReqs.setText("Python Requirements")
-        self.Function_ExecuteMethod(
+        self.Function_SetMethodExecutor(
             ExecuteButton = self.ui.Button_Install_PyReqs,
             ProgressBar = self.ui.ProgressBar_Download_PyReqs,
             Method = PyReqs_Installer.Execute,
             Params = (NormPath(Path(ResourceDir).joinpath('requirements.txt')), )
         )
-        EnvConfiguratorSignals.Signal_PythonDetected.connect(self.ui.Button_Install_PyReqs.click)
+        EnvConfiguratorSignals.Signal_PythonDetected.connect(
+            self.ui.Button_Install_PyReqs.click if Config.GetValue('Env', 'PyReqs', 'Undetected') == 'Undetected' else EnvConfiguratorSignals.Signal_PyReqsDetected.emit
+        )
         self.ui.Button_Install_PyReqs.setText('')
         self.ui.Button_Install_PyReqs.setCheckable(True)
         self.ui.Button_Install_PyReqs.setToolTipDuration(-1)
@@ -1094,13 +1053,15 @@ class MainWindow(Window_Customizing):
         )
 
         self.ui.Label_Download_Pytorch.setText("Pytorch")
-        self.Function_ExecuteMethod(
+        self.Function_SetMethodExecutor(
             ExecuteButton = self.ui.Button_Install_Pytorch,
             ProgressBar = self.ui.ProgressBar_Download_Pytorch,
             Method = Pytorch_Installer.Execute,
             Params = ()
         )
-        EnvConfiguratorSignals.Signal_PythonDetected.connect(self.ui.Button_Install_Pytorch.click)
+        EnvConfiguratorSignals.Signal_PythonDetected.connect(
+            self.ui.Button_Install_Pytorch.click if Config.GetValue('Env', 'Pytorch', 'Undetected') == 'Undetected' else EnvConfiguratorSignals.Signal_PytorchDetected.emit
+        )
         self.ui.Button_Install_Pytorch.setText('')
         self.ui.Button_Install_Pytorch.setCheckable(True)
         self.ui.Button_Install_Pytorch.setToolTipDuration(-1)
@@ -1176,7 +1137,7 @@ class MainWindow(Window_Customizing):
         self.ui.Label_Tools_Title.setText(QCA.translate("Label", "工具  -   "))
 
         self.ui.ComboBox_Tools.addItems([
-                QCA.translate("ComboBox", "音频转换和分割"),
+                QCA.translate("ComboBox", "音频基本处理"),
                 QCA.translate("ComboBox", "语音识别和筛选"),
                 QCA.translate("ComboBox", "语音转文字字幕"),
                 QCA.translate("ComboBox", "语音数据集制作"),
@@ -1184,7 +1145,7 @@ class MainWindow(Window_Customizing):
                 QCA.translate("ComboBox", "语音模型推理")
             ]
         )
-        self.ui.ComboBox_Tools.setCurrentText(QCA.translate("ComboBox", '音频转换和分割'))
+        self.ui.ComboBox_Tools.setCurrentText(QCA.translate("ComboBox", '音频基本处理'))
         self.ui.ComboBox_Tools.currentIndexChanged.connect(
             lambda Index: self.Function_AnimateStackedWidget(
                 StackedWidget = self.ui.StackedWidget_Pages_Tools,
@@ -1196,7 +1157,7 @@ class MainWindow(Window_Customizing):
         )
         '''
 
-        self.ui.ToolButton_Tools_Title_AudioProcessor.setText(QCA.translate("ComboBox", '音频转换和分割'))
+        self.ui.ToolButton_Tools_Title_AudioProcessor.setText(QCA.translate("ToolButton", '音频基本处理'))
         self.ui.ToolButton_Tools_Title_AudioProcessor.setCheckable(True)
         self.ui.ToolButton_Tools_Title_AudioProcessor.setChecked(True)
         self.ui.ToolButton_Tools_Title_AudioProcessor.setAutoExclusive(True)
@@ -1207,7 +1168,7 @@ class MainWindow(Window_Customizing):
             )
         )
 
-        self.ui.ToolButton_Tools_Title_VoiceIdentifier.setText(QCA.translate("ComboBox", "语音识别和筛选"))
+        self.ui.ToolButton_Tools_Title_VoiceIdentifier.setText(QCA.translate("ToolButton", "语音识别和筛选"))
         self.ui.ToolButton_Tools_Title_VoiceIdentifier.setCheckable(True)
         self.ui.ToolButton_Tools_Title_VoiceIdentifier.setChecked(False)
         self.ui.ToolButton_Tools_Title_VoiceIdentifier.setAutoExclusive(True)
@@ -1218,7 +1179,7 @@ class MainWindow(Window_Customizing):
             )
         )
 
-        self.ui.ToolButton_Tools_Title_VoiceTranscriber.setText(QCA.translate("ComboBox", "语音转文字字幕"))
+        self.ui.ToolButton_Tools_Title_VoiceTranscriber.setText(QCA.translate("ToolButton", "语音转文字字幕"))
         self.ui.ToolButton_Tools_Title_VoiceTranscriber.setCheckable(True)
         self.ui.ToolButton_Tools_Title_VoiceTranscriber.setChecked(False)
         self.ui.ToolButton_Tools_Title_VoiceTranscriber.setAutoExclusive(True)
@@ -1229,7 +1190,7 @@ class MainWindow(Window_Customizing):
             )
         )
 
-        self.ui.ToolButton_Tools_Title_DatasetCreator.setText(QCA.translate("ComboBox", "语音数据集制作"))
+        self.ui.ToolButton_Tools_Title_DatasetCreator.setText(QCA.translate("ToolButton", "语音数据集制作"))
         self.ui.ToolButton_Tools_Title_DatasetCreator.setCheckable(True)
         self.ui.ToolButton_Tools_Title_DatasetCreator.setChecked(False)
         self.ui.ToolButton_Tools_Title_DatasetCreator.setAutoExclusive(True)
@@ -1240,7 +1201,7 @@ class MainWindow(Window_Customizing):
             )
         )
 
-        self.ui.ToolButton_Tools_Title_VoiceTrainer.setText(QCA.translate("ComboBox", "语音模型训练"))
+        self.ui.ToolButton_Tools_Title_VoiceTrainer.setText(QCA.translate("ToolButton", "语音模型训练"))
         self.ui.ToolButton_Tools_Title_VoiceTrainer.setCheckable(True)
         self.ui.ToolButton_Tools_Title_VoiceTrainer.setChecked(False)
         self.ui.ToolButton_Tools_Title_VoiceTrainer.setAutoExclusive(True)
@@ -1251,7 +1212,7 @@ class MainWindow(Window_Customizing):
             )
         )
 
-        self.ui.ToolButton_Tools_Title_VoiceConverter.setText(QCA.translate("ComboBox", "语音模型推理"))
+        self.ui.ToolButton_Tools_Title_VoiceConverter.setText(QCA.translate("ToolButton", "语音模型推理"))
         self.ui.ToolButton_Tools_Title_VoiceConverter.setCheckable(True)
         self.ui.ToolButton_Tools_Title_VoiceConverter.setChecked(False)
         self.ui.ToolButton_Tools_Title_VoiceConverter.setAutoExclusive(True)
@@ -1266,7 +1227,7 @@ class MainWindow(Window_Customizing):
         '''
         Function_SetText(
             Widget = self.ui.TextBrowser_Intro_Tool_AudioProcessor,
-            Title = QCA.translate("TextBrowser", "音频转换和分割"),
+            Title = QCA.translate("TextBrowser", "音频基本处理"),
             TitleAlign = "center",
             TitleSize = 18,
             Body = QCA.translate("TextBrowser",
@@ -1296,7 +1257,6 @@ class MainWindow(Window_Customizing):
         # Middle
         self.ui.GroupBox_EssentialParams_Tool_AudioProcessor.setTitle(QCA.translate("GroupBox", "必要参数"))
 
-        self.ui.CheckBox_Toggle_BasicSettings_Tool_AudioProcessor.setText("基础设置（显示）")
         self.ui.CheckBox_Toggle_BasicSettings_Tool_AudioProcessor.setCheckable(True)
         self.ui.CheckBox_Toggle_BasicSettings_Tool_AudioProcessor.setChecked(
             True #eval(Config_Tool_AudioProcessor.GetValue('AudioProcessor', 'Toggle_BasicSettings', ''))
@@ -1304,23 +1264,24 @@ class MainWindow(Window_Customizing):
         Function_ConfigureCheckBox(
             CheckBox = self.ui.CheckBox_Toggle_BasicSettings_Tool_AudioProcessor,
             CheckedText = "基础设置（显示）",
-            CheckedPermEventList = [
+            CheckedEventList = [
                 self.Function_AnimateFrame,
                 #Config_Tool_AudioProcessor.EditConfig
             ],
-            CheckedPermArgsList = [
-                (self.ui.Frame_BasicSettings_Tool_AudioProcessor,...,...,0,self.ui.Frame_Tool_AudioProcessor_Media_Dir_Input.height()+self.ui.Frame_Tool_AudioProcessor_Media_Format_Output.height()+self.ui.Frame_Tool_AudioProcessor_Media_Dir_Output.height(),0,'Extend'),
+            CheckedArgsList = [
+                (self.ui.Frame_BasicSettings_Tool_AudioProcessor,...,...,0,self.ui.Frame_Tool_AudioProcessor_Media_Dir_Input.height()+self.ui.Frame_Tool_AudioProcessor_Media_Format_Output.height()+self.ui.Frame_Tool_AudioProcessor_Media_Dir_Output.height()+self.ui.Frame_Tool_AudioProcessor_Slice_Audio.height(),0,'Extend'),
                 #('AudioProcessor', 'Toggle_BasicSettings', 'True')
             ],
             UncheckedText = "基础设置（隐藏）",
-            UncheckedPermEventList = [
+            UncheckedEventList = [
                 self.Function_AnimateFrame,
                 #Config_Tool_AudioProcessor.EditConfig
             ],
-            UncheckedPermArgsList = [
-                (self.ui.Frame_BasicSettings_Tool_AudioProcessor,...,...,0,self.ui.Frame_Tool_AudioProcessor_Media_Dir_Input.height()+self.ui.Frame_Tool_AudioProcessor_Media_Format_Output.height()+self.ui.Frame_Tool_AudioProcessor_Media_Dir_Output.height(),0,'Reduce'),
+            UncheckedArgsList = [
+                (self.ui.Frame_BasicSettings_Tool_AudioProcessor,...,...,0,self.ui.Frame_Tool_AudioProcessor_Media_Dir_Input.height()+self.ui.Frame_Tool_AudioProcessor_Media_Format_Output.height()+self.ui.Frame_Tool_AudioProcessor_Media_Dir_Output.height()+self.ui.Frame_Tool_AudioProcessor_Slice_Audio.height(),0,'Reduce'),
                 #('AudioProcessor', 'Toggle_BasicSettings', 'False')
-            ]
+            ],
+            TakeEffect = True
         )
 
         Function_SetText(
@@ -1343,14 +1304,66 @@ class MainWindow(Window_Customizing):
         Function_SetText(
             Widget = self.ui.Label_Tool_AudioProcessor_Media_Format_Output,
             Title = QCA.translate("Label", "媒体输出格式"),
-            Body = QCA.translate("Label", "媒体文件将会以设置的格式输出为音频文件。")
+            Body = QCA.translate("Label", "媒体文件将会以设置的格式输出为音频文件，若维持不变则保持'None'即可。")
         )
-        self.ui.ComboBox_Tool_AudioProcessor_Media_Format_Output.addItems(['flac', 'wav', 'mp3', 'aac', 'ogg', 'm4a', 'wma', 'aiff', 'au'])
+        self.ui.ComboBox_Tool_AudioProcessor_Media_Format_Output.addItems(['flac', 'wav', 'mp3', 'aac', 'm4a', 'wma', 'aiff', 'au', 'ogg', 'None'])
         self.ui.ComboBox_Tool_AudioProcessor_Media_Format_Output.setCurrentText(
             str(Config_Tool_AudioProcessor.GetValue('AudioProcessor', 'Media_Format_Output', 'wav'))
         )
         self.ui.ComboBox_Tool_AudioProcessor_Media_Format_Output.currentTextChanged.connect(
             lambda Value: Config_Tool_AudioProcessor.EditConfig('AudioProcessor', 'Media_Format_Output', str(Value))
+        )
+
+        Function_SetText(
+            Widget = self.ui.Label_Tool_AudioProcessor_Slice_Audio,
+            Title = "启用静音切除",
+            Body = QCA.translate("Label", "音频中的静音部分将被切除。")
+        )
+        self.ui.CheckBox_Tool_AudioProcessor_Slice_Audio.setCheckable(True)
+        self.ui.CheckBox_Tool_AudioProcessor_Slice_Audio.setChecked(
+            eval(Config_Tool_AudioProcessor.GetValue('AudioProcessor', 'Slice_Audio', 'True'))
+        )
+        Function_ConfigureCheckBox(
+            CheckBox = self.ui.CheckBox_Tool_AudioProcessor_Slice_Audio,
+            CheckedText = "已启用",
+            CheckedEventList = [
+                Config_Tool_AudioProcessor.EditConfig,
+                #self.ui.Frame_Tool_AudioProcessor_RMS_Threshold.setVisible,
+                #self.ui.Frame_Tool_AudioProcessor_Hop_Size.setVisible,
+                #self.ui.Frame_Tool_AudioProcessor_Silent_Interval_Min.setVisible,
+                #self.ui.Frame_Tool_AudioProcessor_Silence_Kept_Max.setVisible,
+                #self.ui.Frame_Tool_AudioProcessor_Audio_Length_Min.setVisible,
+                #self.Function_AnimateFrame
+            ],
+            CheckedArgsList = [
+                ('AudioProcessor', 'Slice_Audio', 'True'),
+                #(True),
+                #(True),
+                #(True),
+                #(True),
+                #(True),
+                #(self.ui.Frame_AdvanceSettings_Tool_AudioProcessor,...,...,0,self.ui.Frame_Tool_AudioProcessor_RMS_Threshold.height()+self.ui.Frame_Tool_AudioProcessor_Hop_Size.height()+self.ui.Frame_Tool_AudioProcessor_Silent_Interval_Min.height()+self.ui.Frame_Tool_AudioProcessor_Silence_Kept_Max.height()+self.ui.Frame_Tool_AudioProcessor_Audio_Length_Min.height()+self.ui.Frame_Tool_AudioProcessor_Channels.height()+self.ui.Frame_Tool_AudioProcessor_SampleRate.height()+self.ui.Frame_Tool_AudioProcessor_SampleWidth.height(),0,'Extend')
+            ],
+            UncheckedText = "未启用",
+            UncheckedEventList = [
+                Config_Tool_AudioProcessor.EditConfig,
+                #self.ui.Frame_Tool_AudioProcessor_RMS_Threshold.setVisible,
+                #self.ui.Frame_Tool_AudioProcessor_Hop_Size.setVisible,
+                #self.ui.Frame_Tool_AudioProcessor_Silent_Interval_Min.setVisible,
+                #self.ui.Frame_Tool_AudioProcessor_Silence_Kept_Max.setVisible,
+                #self.ui.Frame_Tool_AudioProcessor_Audio_Length_Min.setVisible,
+                #self.Function_AnimateFrame
+            ],
+            UncheckedArgsList = [
+                ('AudioProcessor', 'Slice_Audio', 'False'),
+                #(False),
+                #(False),
+                #(False),
+                #(False),
+                #(False),
+                #(self.ui.Frame_BasicSettings_Tool_AudioProcessor,...,...,0,self.ui.Frame_Tool_AudioProcessor_Channels.height()+self.ui.Frame_Tool_AudioProcessor_SampleRate.height()+self.ui.Frame_Tool_AudioProcessor_SampleWidth.height(),0,'Reduce')
+            ],
+            TakeEffect = True
         )
 
         Function_SetText(
@@ -1370,7 +1383,6 @@ class MainWindow(Window_Customizing):
             lambda Value: Config_Tool_AudioProcessor.EditConfig('AudioProcessor', 'Media_Dir_Output', str(Value))
         )
 
-        self.ui.CheckBox_Toggle_AdvanceSettings_Tool_AudioProcessor.setText("高级设置（隐藏）")
         self.ui.CheckBox_Toggle_AdvanceSettings_Tool_AudioProcessor.setCheckable(True)
         self.ui.CheckBox_Toggle_AdvanceSettings_Tool_AudioProcessor.setChecked(
             False #eval(Config_Tool_AudioProcessor.GetValue('AudioProcessor', 'Toggle_AdvanceSettings', ''))
@@ -1378,23 +1390,24 @@ class MainWindow(Window_Customizing):
         Function_ConfigureCheckBox(
             CheckBox = self.ui.CheckBox_Toggle_AdvanceSettings_Tool_AudioProcessor,
             CheckedText = "高级设置（显示）",
-            CheckedPermEventList = [
+            CheckedEventList = [
                 self.Function_AnimateFrame,
                 #Config_Tool_AudioProcessor.EditConfig
             ],
-            CheckedPermArgsList = [
-                (self.ui.Frame_AdvanceSettings_Tool_AudioProcessor,...,...,0,self.ui.Frame_Tool_AudioProcessor_RMS_Threshold.height()+self.ui.Frame_Tool_AudioProcessor_Hop_Size.height()+self.ui.Frame_Tool_AudioProcessor_Silent_Interval_Min.height()+self.ui.Frame_Tool_AudioProcessor_Silence_Kept_Max.height()+self.ui.Frame_Tool_AudioProcessor_Audio_Length_Min.height(),0,'Extend'),
+            CheckedArgsList = [
+                (self.ui.Frame_AdvanceSettings_Tool_AudioProcessor,...,...,0,self.ui.Frame_Tool_AudioProcessor_RMS_Threshold.height()+self.ui.Frame_Tool_AudioProcessor_Hop_Size.height()+self.ui.Frame_Tool_AudioProcessor_Silent_Interval_Min.height()+self.ui.Frame_Tool_AudioProcessor_Silence_Kept_Max.height()+self.ui.Frame_Tool_AudioProcessor_Audio_Length_Min.height()+self.ui.Frame_Tool_AudioProcessor_Channels.height()+self.ui.Frame_Tool_AudioProcessor_SampleRate.height()+self.ui.Frame_Tool_AudioProcessor_SampleWidth.height(),0,'Extend'),
                 #('AudioProcessor', 'Toggle_AdvanceSettings', 'True')
             ],
             UncheckedText = "高级设置（隐藏）",
-            UncheckedPermEventList = [
+            UncheckedEventList = [
                 self.Function_AnimateFrame,
                 #Config_Tool_AudioProcessor.EditConfig
             ],
-            UncheckedPermArgsList = [
-                (self.ui.Frame_AdvanceSettings_Tool_AudioProcessor,...,...,0,self.ui.Frame_Tool_AudioProcessor_RMS_Threshold.height()+self.ui.Frame_Tool_AudioProcessor_Hop_Size.height()+self.ui.Frame_Tool_AudioProcessor_Silent_Interval_Min.height()+self.ui.Frame_Tool_AudioProcessor_Silence_Kept_Max.height()+self.ui.Frame_Tool_AudioProcessor_Audio_Length_Min.height(),0,'Reduce'),
+            UncheckedArgsList = [
+                (self.ui.Frame_AdvanceSettings_Tool_AudioProcessor,...,...,0,self.ui.Frame_Tool_AudioProcessor_RMS_Threshold.height()+self.ui.Frame_Tool_AudioProcessor_Hop_Size.height()+self.ui.Frame_Tool_AudioProcessor_Silent_Interval_Min.height()+self.ui.Frame_Tool_AudioProcessor_Silence_Kept_Max.height()+self.ui.Frame_Tool_AudioProcessor_Audio_Length_Min.height()+self.ui.Frame_Tool_AudioProcessor_Channels.height()+self.ui.Frame_Tool_AudioProcessor_SampleRate.height()+self.ui.Frame_Tool_AudioProcessor_SampleWidth.height(),0,'Reduce'),
                 #('AudioProcessor', 'Toggle_AdvanceSettings', 'False')
-            ]
+            ],
+            TakeEffect = True
         )
 
         Function_SetText(
@@ -1471,6 +1484,45 @@ class MainWindow(Window_Customizing):
             lambda Value: Config_Tool_AudioProcessor.EditConfig('AudioProcessor', 'Audio_Length_Min', str(Value))
         )
 
+        Function_SetText(
+            Widget = self.ui.Label_Tool_AudioProcessor_Channels,
+            Title = "输出声道数",
+            Body = QCA.translate("Label", "输出音频所拥有的声道数，若维持不变则保持'None'即可。")
+        )
+        self.ui.ComboBox_Tool_AudioProcessor_Channels.addItems(['1', '2', 'None'])
+        self.ui.ComboBox_Tool_AudioProcessor_Channels.setCurrentText(
+            str(Config_Tool_AudioProcessor.GetValue('AudioProcessor', 'Channels', 'None'))
+        )
+        self.ui.ComboBox_Tool_AudioProcessor_Channels.currentTextChanged.connect(
+            lambda Value: Config_Tool_AudioProcessor.EditConfig('AudioProcessor', 'Channels', str(Value))
+        )
+
+        Function_SetText(
+            Widget = self.ui.Label_Tool_AudioProcessor_SampleRate,
+            Title = "输出采样率",
+            Body = QCA.translate("Label", "输出音频所拥有的采样率，若维持不变则保持'None'即可。")
+        )
+        self.ui.ComboBox_Tool_AudioProcessor_SampleRate.addItems(['44100', '48000', '96000', '192000', 'None'])
+        self.ui.ComboBox_Tool_AudioProcessor_SampleRate.setCurrentText(
+            str(Config_Tool_AudioProcessor.GetValue('AudioProcessor', 'SampleRate', 'None'))
+        )
+        self.ui.ComboBox_Tool_AudioProcessor_SampleRate.currentTextChanged.connect(
+            lambda Value: Config_Tool_AudioProcessor.EditConfig('AudioProcessor', 'SampleRate', str(Value))
+        )
+
+        Function_SetText(
+            Widget = self.ui.Label_Tool_AudioProcessor_SampleWidth,
+            Title = "输出采样位数",
+            Body = QCA.translate("Label", "输出音频所拥有的采样位数，若维持不变则保持'None'即可。")
+        )
+        self.ui.ComboBox_Tool_AudioProcessor_SampleWidth.addItems(['8', '16', '24', '32', 'None'])
+        self.ui.ComboBox_Tool_AudioProcessor_SampleWidth.setCurrentText(
+            str(Config_Tool_AudioProcessor.GetValue('AudioProcessor', 'SampleWidth', 'None'))
+        )
+        self.ui.ComboBox_Tool_AudioProcessor_SampleWidth.currentTextChanged.connect(
+            lambda Value: Config_Tool_AudioProcessor.EditConfig('AudioProcessor', 'SampleWidth', str(Value))
+        )
+
         # Left
         Function_SetTreeWidget(
             TreeWidget = self.ui.TreeWidget_Catalogue_Tool_AudioProcessor,
@@ -1514,24 +1566,35 @@ class MainWindow(Window_Customizing):
 
         # Bottom
         self.ui.Button_Tool_AudioProcessor_Execute.setToolTipDuration(-1)
-        self.ui.Button_Tool_AudioProcessor_Execute.setToolTip(QCA.translate("ToolTip", "执行音频转换和分割"))
+        self.ui.Button_Tool_AudioProcessor_Execute.setToolTip(QCA.translate("ToolTip", "执行音频基本处理"))
         self.ui.Button_Tool_AudioProcessor_Terminate.setToolTipDuration(-1)
-        self.ui.Button_Tool_AudioProcessor_Terminate.setToolTip(QCA.translate("ToolTip", "终止音频转换和分割"))
-        self.Function_ExecuteMethod(
+        self.ui.Button_Tool_AudioProcessor_Terminate.setToolTip(QCA.translate("ToolTip", "终止音频基本处理"))
+        self.Function_SetMethodExecutor(
             ExecuteButton = self.ui.Button_Tool_AudioProcessor_Execute,
             TerminateButton = self.ui.Button_Tool_AudioProcessor_Terminate,
             ProgressBar = self.ui.ProgressBar_Tool_AudioProcessor,
-            #ConsoleFrame = self.ui.Frame_Console,
+            ConsoleFrame = self.ui.Frame_Console,
             Method = Execute_Audio_Processing.Execute,
             ParamsFrom = [
                 self.ui.LineEdit_Tool_AudioProcessor_Media_Dir_Input,
                 self.ui.LineEdit_Tool_AudioProcessor_Media_Dir_Output,
                 self.ui.ComboBox_Tool_AudioProcessor_Media_Format_Output,
+                self.ui.ComboBox_Tool_AudioProcessor_Channels,
+                self.ui.ComboBox_Tool_AudioProcessor_SampleRate,
+                self.ui.ComboBox_Tool_AudioProcessor_SampleWidth,
+                #self.ui.CheckBox_Tool_AudioProcessor_Denoise_Audio,
+                self.ui.CheckBox_Tool_AudioProcessor_Slice_Audio,
                 self.ui.DoubleSpinBox_Tool_AudioProcessor_RMS_Threshold,
                 self.ui.SpinBox_Tool_AudioProcessor_Audio_Length_Min,
                 self.ui.SpinBox_Tool_AudioProcessor_Silent_Interval_Min,
                 self.ui.SpinBox_Tool_AudioProcessor_Hop_Size,
                 self.ui.SpinBox_Tool_AudioProcessor_Silence_Kept_Max
+            ],
+            EmptyAllowed = [
+                self.ui.ComboBox_Tool_AudioProcessor_Media_Format_Output,
+                self.ui.ComboBox_Tool_AudioProcessor_Channels,
+                self.ui.ComboBox_Tool_AudioProcessor_SampleRate,
+                self.ui.ComboBox_Tool_AudioProcessor_SampleWidth
             ],
             FinishEventList = [
                 Function_ShowMessageBox
@@ -1539,11 +1602,6 @@ class MainWindow(Window_Customizing):
             FinishParamList = [
                 (QMessageBox.Question,"Ask","当前任务已执行结束，是否跳转至下一工具界面？",QMessageBox.Yes|QMessageBox.No,[QMessageBox.Yes],[[self.ui.Frame_Tools_Top.layout().itemAt(1).widget().click]],[[()]])
             ]
-        )
-        MainWindowSignals.Signal_TaskStatus.connect(
-            lambda TaskStatus: self.ui.Button_Tool_AudioProcessor_Execute.setCheckable(
-                False if TaskStatus is 'Started' else True
-            )
         )
 
         ##################### Tool_VoiceIdentifier #####################
@@ -1583,7 +1641,6 @@ class MainWindow(Window_Customizing):
         # Middle
         self.ui.GroupBox_EssentialParams_Tool_VoiceIdentifier.setTitle("必要参数")
 
-        self.ui.CheckBox_Toggle_BasicSettings_Tool_VoiceIdentifier.setText("基础设置（显示）")
         self.ui.CheckBox_Toggle_BasicSettings_Tool_VoiceIdentifier.setCheckable(True)
         self.ui.CheckBox_Toggle_BasicSettings_Tool_VoiceIdentifier.setChecked(
             True #eval(Config_Tool_VoiceIdentifier.GetValue('VoiceIdentifier', 'Toggle_BasicSettings', ''))
@@ -1591,23 +1648,24 @@ class MainWindow(Window_Customizing):
         Function_ConfigureCheckBox(
             CheckBox = self.ui.CheckBox_Toggle_BasicSettings_Tool_VoiceIdentifier,
             CheckedText = "基础设置（显示）",
-            CheckedPermEventList = [
+            CheckedEventList = [
                 self.Function_AnimateFrame,
                 #Config_Tool_VoiceIdentifier.EditConfig
             ],
-            CheckedPermArgsList = [
+            CheckedArgsList = [
                 (self.ui.Frame_BasicSettings_Tool_VoiceIdentifier,...,...,0,self.ui.Frame_Tool_VoiceIdentifier_Audio_Dir_Input.height()+self.ui.Frame_Tool_VoiceIdentifier_StdAudioSpeaker.height()+self.ui.Frame_Tool_VoiceIdentifier_DecisionThreshold.height()+self.ui.Frame_Tool_VoiceIdentifier_Audio_Dir_Output.height(),0,'Extend'),
                 #('VoiceIdentifier', 'Toggle_BasicSettings', 'True')
             ],
             UncheckedText = "基础设置（隐藏）",
-            UncheckedPermEventList = [
+            UncheckedEventList = [
                 self.Function_AnimateFrame,
                 #Config_Tool_VoiceIdentifier.EditConfig
             ],
-            UncheckedPermArgsList = [
+            UncheckedArgsList = [
                 (self.ui.Frame_BasicSettings_Tool_VoiceIdentifier,...,...,0,self.ui.Frame_Tool_VoiceIdentifier_Audio_Dir_Input.height()+self.ui.Frame_Tool_VoiceIdentifier_StdAudioSpeaker.height()+self.ui.Frame_Tool_VoiceIdentifier_DecisionThreshold.height()+self.ui.Frame_Tool_VoiceIdentifier_Audio_Dir_Output.height(),0,'Reduce'),
                 #('VoiceIdentifier', 'Toggle_BasicSettings', 'False')
-            ]
+            ],
+            TakeEffect = True
         )
 
         Function_SetText(
@@ -1672,25 +1730,25 @@ class MainWindow(Window_Customizing):
             lambda Value: Config_Tool_VoiceIdentifier.EditConfig('VoiceIdentifier', 'Audio_Dir_Output', str(Value))
         )
 
-        self.ui.CheckBox_Toggle_AdvanceSettings_Tool_VoiceIdentifier.setText("高级设置（隐藏）")
         self.ui.CheckBox_Toggle_AdvanceSettings_Tool_VoiceIdentifier.setCheckable(True)
         self.ui.CheckBox_Toggle_AdvanceSettings_Tool_VoiceIdentifier.setChecked(False)
         Function_ConfigureCheckBox(
             CheckBox = self.ui.CheckBox_Toggle_AdvanceSettings_Tool_VoiceIdentifier,
             CheckedText = "高级设置（显示）",
-            CheckedPermEventList = [
+            CheckedEventList = [
                 self.Function_AnimateFrame
             ],
-            CheckedPermArgsList = [
+            CheckedArgsList = [
                 (self.ui.Frame_AdvanceSettings_Tool_VoiceIdentifier,...,...,0,self.ui.Frame_Tool_VoiceIdentifier_Model_Dir.height()+self.ui.Frame_Tool_VoiceIdentifier_Model_Type.height()+self.ui.Frame_Tool_VoiceIdentifier_Model_Name.height()+self.ui.Frame_Tool_VoiceIdentifier_Feature_Method.height()+self.ui.Frame_Tool_VoiceIdentifier_Duration_of_Audio.height(),0,'Extend')
             ],
             UncheckedText = "高级设置（隐藏）",
-            UncheckedPermEventList = [
+            UncheckedEventList = [
                 self.Function_AnimateFrame
             ],
-            UncheckedPermArgsList = [
+            UncheckedArgsList = [
                 (self.ui.Frame_AdvanceSettings_Tool_VoiceIdentifier,...,...,0,self.ui.Frame_Tool_VoiceIdentifier_Model_Dir.height()+self.ui.Frame_Tool_VoiceIdentifier_Model_Type.height()+self.ui.Frame_Tool_VoiceIdentifier_Model_Name.height()+self.ui.Frame_Tool_VoiceIdentifier_Feature_Method.height()+self.ui.Frame_Tool_VoiceIdentifier_Duration_of_Audio.height(),0,'Reduce')
-            ]
+            ],
+            TakeEffect = True
         )
 
         Function_SetText(
@@ -1820,11 +1878,11 @@ class MainWindow(Window_Customizing):
         self.ui.Button_Tool_VoiceIdentifier_Execute.setToolTip("执行语音识别和筛选")
         self.ui.Button_Tool_VoiceIdentifier_Terminate.setToolTipDuration(-1)
         self.ui.Button_Tool_VoiceIdentifier_Terminate.setToolTip("终止语音识别和筛选")
-        self.Function_ExecuteMethod(
+        self.Function_SetMethodExecutor(
             ExecuteButton = self.ui.Button_Tool_VoiceIdentifier_Execute,
             TerminateButton = self.ui.Button_Tool_VoiceIdentifier_Terminate,
             ProgressBar = self.ui.ProgressBar_Tool_VoiceIdentifier,
-            #ConsoleFrame = self.ui.Frame_Console,
+            ConsoleFrame = self.ui.Frame_Console,
             Method = Execute_Voice_Identifying.Execute,
             ParamsFrom = [
                 self.ui.Table_Tool_VoiceIdentifier_StdAudioSpeaker,
@@ -1843,11 +1901,6 @@ class MainWindow(Window_Customizing):
             FinishParamList = [
                 (QMessageBox.Question,"Ask","当前任务已执行结束，是否跳转至下一工具界面？",QMessageBox.Yes|QMessageBox.No,[QMessageBox.Yes],[[self.ui.Frame_Tools_Top.layout().itemAt(2).widget().click]],[[()]])
             ]
-        )
-        MainWindowSignals.Signal_TaskStatus.connect(
-            lambda TaskStatus: self.ui.Button_Tool_VoiceIdentifier_Execute.setCheckable(
-                False if TaskStatus is 'Started' else True
-            )
         )
 
         ##################### Tool_VoiceTranscriber #####################
@@ -1886,7 +1939,6 @@ class MainWindow(Window_Customizing):
         # Middle
         self.ui.GroupBox_EssentialParams_Tool_VoiceTranscriber.setTitle("必要参数")
 
-        self.ui.CheckBox_Toggle_BasicSettings_Tool_VoiceTranscriber.setText("基础设置（显示）")
         self.ui.CheckBox_Toggle_BasicSettings_Tool_VoiceTranscriber.setCheckable(True)
         self.ui.CheckBox_Toggle_BasicSettings_Tool_VoiceTranscriber.setChecked(
             True #eval(Config_Tool_VoiceTranscriber.GetValue('VoiceTranscriber', 'Toggle_BasicSettings', ''))
@@ -1894,23 +1946,24 @@ class MainWindow(Window_Customizing):
         Function_ConfigureCheckBox(
             CheckBox = self.ui.CheckBox_Toggle_BasicSettings_Tool_VoiceTranscriber,
             CheckedText = "基础设置（显示）",
-            CheckedPermEventList = [
+            CheckedEventList = [
                 self.Function_AnimateFrame,
                 #Config_Tool_VoiceTranscriber.EditConfig
             ],
-            CheckedPermArgsList = [
+            CheckedArgsList = [
                 (self.ui.Frame_BasicSettings_Tool_VoiceTranscriber,...,...,0,self.ui.Frame_Tool_VoiceTranscriber_WAV_Dir.height()+self.ui.Frame_Tool_VoiceTranscriber_SRT_Dir.height(),0,'Extend'),
                 #('VoiceTranscriber', 'Toggle_BasicSettings', 'True')
             ],
             UncheckedText = "基础设置（隐藏）",
-            UncheckedPermEventList = [
+            UncheckedEventList = [
                 self.Function_AnimateFrame,
                 #Config_Tool_VoiceTranscriber.EditConfig
             ],
-            UncheckedPermArgsList = [
+            UncheckedArgsList = [
                 (self.ui.Frame_BasicSettings_Tool_VoiceTranscriber,...,...,0,self.ui.Frame_Tool_VoiceTranscriber_WAV_Dir.height()+self.ui.Frame_Tool_VoiceTranscriber_SRT_Dir.height(),0,'Reduce'),
                 #('VoiceTranscriber', 'Toggle_BasicSettings', 'False')
-            ]
+            ],
+            TakeEffect = True
         )
 
         Function_SetText(
@@ -1947,25 +2000,25 @@ class MainWindow(Window_Customizing):
             lambda Value: Config_Tool_VoiceTranscriber.EditConfig('VoiceTranscriber', 'SRT_Dir', str(Value))
         )
 
-        self.ui.CheckBox_Toggle_AdvanceSettings_Tool_VoiceTranscriber.setText("高级设置（隐藏）")
         self.ui.CheckBox_Toggle_AdvanceSettings_Tool_VoiceTranscriber.setCheckable(True)
         self.ui.CheckBox_Toggle_AdvanceSettings_Tool_VoiceTranscriber.setChecked(False)
         Function_ConfigureCheckBox(
             CheckBox = self.ui.CheckBox_Toggle_AdvanceSettings_Tool_VoiceTranscriber,
             CheckedText = "高级设置（显示）",
-            CheckedPermEventList = [
+            CheckedEventList = [
                 self.Function_AnimateFrame
             ],
-            CheckedPermArgsList = [
+            CheckedArgsList = [
                 (self.ui.Frame_AdvanceSettings_Tool_VoiceTranscriber,...,...,0,self.ui.Frame_Tool_VoiceTranscriber_Model_Dir.height()+self.ui.Frame_Tool_VoiceTranscriber_Model_Name.height()+self.ui.Frame_Tool_VoiceTranscriber_Verbose.height()+self.ui.Frame_Tool_VoiceTranscriber_Condition_on_Previous_Text.height()+self.ui.Frame_Tool_VoiceTranscriber_fp16.height(),0,'Extend')
             ],
             UncheckedText = "高级设置（隐藏）",
-            UncheckedPermEventList = [
+            UncheckedEventList = [
                 self.Function_AnimateFrame
             ],
-            UncheckedPermArgsList = [
+            UncheckedArgsList = [
                 (self.ui.Frame_AdvanceSettings_Tool_VoiceTranscriber,...,...,0,self.ui.Frame_Tool_VoiceTranscriber_Model_Dir.height()+self.ui.Frame_Tool_VoiceTranscriber_Model_Name.height()+self.ui.Frame_Tool_VoiceTranscriber_Verbose.height()+self.ui.Frame_Tool_VoiceTranscriber_Condition_on_Previous_Text.height()+self.ui.Frame_Tool_VoiceTranscriber_fp16.height(),0,'Reduce')
-            ]
+            ],
+            TakeEffect = True
         )
 
         Function_SetText(
@@ -2003,32 +2056,27 @@ class MainWindow(Window_Customizing):
             Title = "启用输出日志",
             Body = QCA.translate("Label", "输出debug日志。")
         )
-        self.ui.CheckBox_Tool_VoiceTranscriber_Verbose.setText("已启用")
         self.ui.CheckBox_Tool_VoiceTranscriber_Verbose.setCheckable(True)
         self.ui.CheckBox_Tool_VoiceTranscriber_Verbose.setChecked(
             eval(Config_Tool_VoiceTranscriber.GetValue('VoiceTranscriber', 'Verbose', 'True'))
         )
-        '''
-        self.ui.CheckBox_Tool_VoiceTranscriber_Verbose.stateChanged.connect(
-            lambda Value: Config_Tool_VoiceTranscriber.EditConfig('VoiceTranscriber', 'Verbose', str(Value))
-        )
-        '''
         Function_ConfigureCheckBox(
             CheckBox = self.ui.CheckBox_Tool_VoiceTranscriber_Verbose,
             CheckedText = "已启用",
-            CheckedPermEventList = [
+            CheckedEventList = [
                 Config_Tool_VoiceTranscriber.EditConfig
             ],
-            CheckedPermArgsList = [
+            CheckedArgsList = [
                 ('VoiceTranscriber', 'Verbose', 'True')
             ],
             UncheckedText = "未启用",
-            UncheckedPermEventList = [
+            UncheckedEventList = [
                 Config_Tool_VoiceTranscriber.EditConfig
             ],
-            UncheckedPermArgsList = [
+            UncheckedArgsList = [
                 ('VoiceTranscriber', 'Verbose', 'False')
-            ]
+            ],
+            TakeEffect = True
         )
 
         Function_SetText(
@@ -2036,32 +2084,27 @@ class MainWindow(Window_Customizing):
             Title = "前后文一致",
             Body = QCA.translate("Label", "将模型之前的输出作为下个窗口的提示，若模型陷入了失败循环则禁用此项。")
         )
-        self.ui.CheckBox_Tool_VoiceTranscriber_Condition_on_Previous_Text.setText("已启用")
         self.ui.CheckBox_Tool_VoiceTranscriber_Condition_on_Previous_Text.setCheckable(True)
         self.ui.CheckBox_Tool_VoiceTranscriber_Condition_on_Previous_Text.setChecked(
             eval(Config_Tool_VoiceTranscriber.GetValue('VoiceTranscriber', 'Condition_on_Previous_Text', 'True'))
         )
-        '''
-        self.ui.CheckBox_Tool_VoiceTranscriber_Condition_on_Previous_Text.stateChanged.connect(
-            lambda Value: Config_Tool_VoiceTranscriber.EditConfig('VoiceTranscriber', 'Condition_on_Previous_Text', str(Value))
-        )
-        '''
         Function_ConfigureCheckBox(
             CheckBox = self.ui.CheckBox_Tool_VoiceTranscriber_Condition_on_Previous_Text,
             CheckedText = "已启用",
-            CheckedPermEventList = [
+            CheckedEventList = [
                 Config_Tool_VoiceTranscriber.EditConfig
             ],
-            CheckedPermArgsList = [
+            CheckedArgsList = [
                 ('VoiceTranscriber', 'Condition_on_Previous_Text', 'True')
             ],
             UncheckedText = "未启用",
-            UncheckedPermEventList = [
+            UncheckedEventList = [
                 Config_Tool_VoiceTranscriber.EditConfig
             ],
-            UncheckedPermArgsList = [
+            UncheckedArgsList = [
                 ('VoiceTranscriber', 'Condition_on_Previous_Text', 'False')
-            ]
+            ],
+            TakeEffect = True
         )
 
         Function_SetText(
@@ -2069,37 +2112,31 @@ class MainWindow(Window_Customizing):
             Title = "半精度",
             Body = QCA.translate("Label", "主要使用半精度浮点数进行计算，若GPU不可用则忽略或禁用此项。")
         )
-        self.ui.CheckBox_Tool_VoiceTranscriber_fp16.setText("已启用")
         self.ui.CheckBox_Tool_VoiceTranscriber_fp16.setCheckable(True)
         self.ui.CheckBox_Tool_VoiceTranscriber_fp16.setChecked(
             eval(Config_Tool_VoiceTranscriber.GetValue('VoiceTranscriber', 'fp16', 'True'))
         )
-        '''
-        self.ui.CheckBox_Tool_VoiceTranscriber_fp16.stateChanged.connect(
-            lambda Value: Config_Tool_VoiceTranscriber.EditConfig('VoiceTranscriber', 'fp16', str(Value))
-        )
-        '''
         Function_ConfigureCheckBox(
             CheckBox = self.ui.CheckBox_Tool_VoiceTranscriber_fp16,
             CheckedText = "已启用",
-            CheckedPermEventList = [
+            CheckedEventList = [
                 Config_Tool_VoiceTranscriber.EditConfig
             ],
-            CheckedPermArgsList = [
+            CheckedArgsList = [
                 ('VoiceTranscriber', 'fp16', 'True')
             ],
             UncheckedText = "未启用",
-            UncheckedPermEventList = [
+            UncheckedEventList = [
                 Config_Tool_VoiceTranscriber.EditConfig
             ],
-            UncheckedPermArgsList = [
+            UncheckedArgsList = [
                 ('VoiceTranscriber', 'fp16', 'False')
-            ]
+            ],
+            TakeEffect = True
         )
 
         self.ui.GroupBox_OptionalParams_Tool_VoiceTranscriber.setTitle("可选参数")
 
-        self.ui.CheckBox_Toggle_BasicOptionalSettings_Tool_VoiceTranscriber.setText("基础设置（显示）")
         self.ui.CheckBox_Toggle_BasicOptionalSettings_Tool_VoiceTranscriber.setCheckable(True)
         self.ui.CheckBox_Toggle_BasicOptionalSettings_Tool_VoiceTranscriber.setChecked(
             True #eval(Config_Tool_VoiceTranscriber.GetValue('VoiceTranscriber', 'Toggle_BasicOptionalSettings', ''))
@@ -2107,23 +2144,24 @@ class MainWindow(Window_Customizing):
         Function_ConfigureCheckBox(
             CheckBox = self.ui.CheckBox_Toggle_BasicOptionalSettings_Tool_VoiceTranscriber,
             CheckedText = "基础设置（显示）",
-            CheckedPermEventList = [
+            CheckedEventList = [
                 self.Function_AnimateFrame,
                 #Config_Tool_VoiceTranscriber.EditConfig
             ],
-            CheckedPermArgsList = [
+            CheckedArgsList = [
                 (self.ui.Frame_BasicOptionalSettings_Tool_VoiceTranscriber,...,...,0,self.ui.Frame_Tool_VoiceTranscriber_Language.height(),0,'Extend'),
                 #('VoiceTranscriber', 'Toggle_BasicOptionalSettings', 'True')
             ],
             UncheckedText = "基础设置（隐藏）",
-            UncheckedPermEventList = [
+            UncheckedEventList = [
                 self.Function_AnimateFrame,
                 #Config_Tool_VoiceTranscriber.EditConfig
             ],
-            UncheckedPermArgsList = [
+            UncheckedArgsList = [
                 (self.ui.Frame_BasicOptionalSettings_Tool_VoiceTranscriber,...,...,0,self.ui.Frame_Tool_VoiceTranscriber_Language.height(),0,'Reduce'),
                 #('VoiceTranscriber', 'Toggle_BasicOptionalSettings', 'False')
-            ]
+            ],
+            TakeEffect = True
         )
 
         Function_SetText(
@@ -2209,11 +2247,11 @@ class MainWindow(Window_Customizing):
         self.ui.Button_Tool_VoiceTranscriber_Execute.setToolTip("执行语音转文字字幕")
         self.ui.Button_Tool_VoiceTranscriber_Terminate.setToolTipDuration(-1)
         self.ui.Button_Tool_VoiceTranscriber_Terminate.setToolTip("终止语音转文字字幕")
-        self.Function_ExecuteMethod(
+        self.Function_SetMethodExecutor(
             ExecuteButton = self.ui.Button_Tool_VoiceTranscriber_Execute,
             TerminateButton = self.ui.Button_Tool_VoiceTranscriber_Terminate,
             ProgressBar = self.ui.ProgressBar_Tool_VoiceTranscriber,
-            #ConsoleFrame = self.ui.Frame_Console,
+            ConsoleFrame = self.ui.Frame_Console,
             Method = Execute_Voice_Transcribing.Execute,
             ParamsFrom = [
                 self.ui.ComboBox_Tool_VoiceTranscriber_Model_Name,
@@ -2235,11 +2273,6 @@ class MainWindow(Window_Customizing):
             FinishParamList = [
                 (QMessageBox.Question,"Ask","当前任务已执行结束，是否跳转至下一工具界面？",QMessageBox.Yes|QMessageBox.No,[QMessageBox.Yes],[[self.ui.Frame_Tools_Top.layout().itemAt(3).widget().click]],[[()]])
             ]
-        )
-        MainWindowSignals.Signal_TaskStatus.connect(
-            lambda TaskStatus: self.ui.Button_Tool_VoiceTranscriber_Execute.setCheckable(
-                False if TaskStatus is 'Started' else True
-            )
         )
 
         ##################### Tool_DatasetCreator #####################
@@ -2279,7 +2312,6 @@ class MainWindow(Window_Customizing):
         # Middle
         self.ui.GroupBox_EssentialParams_Tool_DatasetCreator.setTitle("必要参数")
 
-        self.ui.CheckBox_Toggle_BasicSettings_Tool_DatasetCreator.setText("基础设置（显示）")
         self.ui.CheckBox_Toggle_BasicSettings_Tool_DatasetCreator.setCheckable(True)
         self.ui.CheckBox_Toggle_BasicSettings_Tool_DatasetCreator.setChecked(
             True #eval(Config_Tool_DatasetCreator.GetValue('DatasetCreator', 'Toggle_BasicSettings', ''))
@@ -2287,23 +2319,24 @@ class MainWindow(Window_Customizing):
         Function_ConfigureCheckBox(
             CheckBox = self.ui.CheckBox_Toggle_BasicSettings_Tool_DatasetCreator,
             CheckedText = "基础设置（显示）",
-            CheckedPermEventList = [
+            CheckedEventList = [
                 self.Function_AnimateFrame,
                 #Config_Tool_DatasetCreator.EditConfig
             ],
-            CheckedPermArgsList = [
+            CheckedArgsList = [
                 (self.ui.Frame_BasicSettings_Tool_DatasetCreator,...,...,0,self.ui.Frame_Tool_DatasetCreator_WAV_Dir.height()+self.ui.Frame_Tool_DatasetCreator_SRT_Dir.height()+self.ui.Frame_Tool_DatasetCreator_AutoEncoder.height()+self.ui.Frame_Tool_DatasetCreator_WAV_Dir_Split.height()+self.ui.Frame_Tool_DatasetCreator_FileList_Path_Training.height()+self.ui.Frame_Tool_DatasetCreator_FileList_Path_Validation.height(),0,'Extend'),
                 #('DatasetCreator', 'Toggle_BasicSettings', 'True')
             ],
             UncheckedText = "基础设置（隐藏）",
-            UncheckedPermEventList = [
+            UncheckedEventList = [
                 self.Function_AnimateFrame,
                 #Config_Tool_DatasetCreator.EditConfig
             ],
-            UncheckedPermArgsList = [
+            UncheckedArgsList = [
                 (self.ui.Frame_BasicSettings_Tool_DatasetCreator,...,...,0,self.ui.Frame_Tool_DatasetCreator_WAV_Dir.height()+self.ui.Frame_Tool_DatasetCreator_SRT_Dir.height()+self.ui.Frame_Tool_DatasetCreator_AutoEncoder.height()+self.ui.Frame_Tool_DatasetCreator_WAV_Dir_Split.height()+self.ui.Frame_Tool_DatasetCreator_FileList_Path_Training.height()+self.ui.Frame_Tool_DatasetCreator_FileList_Path_Validation.height(),0,'Reduce'),
                 #('DatasetCreator', 'Toggle_BasicSettings', 'False')
-            ]
+            ],
+            TakeEffect = True
         )
 
         Function_SetText(
@@ -2406,25 +2439,25 @@ class MainWindow(Window_Customizing):
             lambda Value: Config_Tool_DatasetCreator.EditConfig('DatasetCreator', 'FileList_Path_Validation', str(Value))
         )
 
-        self.ui.CheckBox_Toggle_AdvanceSettings_Tool_DatasetCreator.setText("高级设置（隐藏）")
         self.ui.CheckBox_Toggle_AdvanceSettings_Tool_DatasetCreator.setCheckable(True)
         self.ui.CheckBox_Toggle_AdvanceSettings_Tool_DatasetCreator.setChecked(False)
         Function_ConfigureCheckBox(
             CheckBox = self.ui.CheckBox_Toggle_AdvanceSettings_Tool_DatasetCreator,
             CheckedText = "高级设置（显示）",
-            CheckedPermEventList = [
+            CheckedEventList = [
                 self.Function_AnimateFrame
             ],
-            CheckedPermArgsList = [
+            CheckedArgsList = [
                 (self.ui.Frame_AdvanceSettings_Tool_DatasetCreator,...,...,0,self.ui.Frame_Tool_DatasetCreator_Sample_Rate.height()+self.ui.Frame_Tool_DatasetCreator_Subtype.height()+self.ui.Frame_Tool_DatasetCreator_TrainRatio.height(),0,'Extend')
             ],
             UncheckedText = "高级设置（隐藏）",
-            UncheckedPermEventList = [
+            UncheckedEventList = [
                 self.Function_AnimateFrame
             ],
-            UncheckedPermArgsList = [
+            UncheckedArgsList = [
                 (self.ui.Frame_AdvanceSettings_Tool_DatasetCreator,...,...,0,self.ui.Frame_Tool_DatasetCreator_Sample_Rate.height()+self.ui.Frame_Tool_DatasetCreator_Subtype.height()+self.ui.Frame_Tool_DatasetCreator_TrainRatio.height(),0,'Reduce')
-            ]
+            ],
+            TakeEffect = True
         )
 
         Function_SetText(
@@ -2530,11 +2563,11 @@ class MainWindow(Window_Customizing):
         self.ui.Button_Tool_DatasetCreator_Execute.setToolTip("执行语音数据集制作")
         self.ui.Button_Tool_DatasetCreator_Terminate.setToolTipDuration(-1)
         self.ui.Button_Tool_DatasetCreator_Terminate.setToolTip("终止语音数据集制作")
-        self.Function_ExecuteMethod(
+        self.Function_SetMethodExecutor(
             ExecuteButton = self.ui.Button_Tool_DatasetCreator_Execute,
             TerminateButton = self.ui.Button_Tool_DatasetCreator_Terminate,
             ProgressBar = self.ui.ProgressBar_Tool_DatasetCreator,
-            #ConsoleFrame = self.ui.Frame_Console,
+            ConsoleFrame = self.ui.Frame_Console,
             Method = Execute_Dataset_Creating.Execute,
             ParamsFrom = [
                 self.ui.LineEdit_Tool_DatasetCreator_SRT_Dir,
@@ -2553,11 +2586,6 @@ class MainWindow(Window_Customizing):
             FinishParamList = [
                 (QMessageBox.Question,"Ask","当前任务已执行结束，是否跳转至下一工具界面？",QMessageBox.Yes|QMessageBox.No,[QMessageBox.Yes],[[self.ui.Frame_Tools_Top.layout().itemAt(4).widget().click]],[[()]])
             ]
-        )
-        MainWindowSignals.Signal_TaskStatus.connect(
-            lambda TaskStatus: self.ui.Button_Tool_DatasetCreator_Execute.setCheckable(
-                False if TaskStatus is 'Started' else True
-            )
         )
 
         ##################### Tool_VoiceTrainer #####################
@@ -2598,7 +2626,6 @@ class MainWindow(Window_Customizing):
         # Midlle
         self.ui.GroupBox_EssentialParams_Tool_VoiceTrainer.setTitle("必要参数")
 
-        self.ui.CheckBox_Toggle_BasicSettings_Tool_VoiceTrainer.setText("基础设置（显示）")
         self.ui.CheckBox_Toggle_BasicSettings_Tool_VoiceTrainer.setCheckable(True)
         self.ui.CheckBox_Toggle_BasicSettings_Tool_VoiceTrainer.setChecked(
             True #eval(Config_Tool_VoiceTrainer.GetValue('VoiceTrainer', 'Toggle_BasicSettings', ''))
@@ -2606,23 +2633,24 @@ class MainWindow(Window_Customizing):
         Function_ConfigureCheckBox(
             CheckBox = self.ui.CheckBox_Toggle_BasicSettings_Tool_VoiceTrainer,
             CheckedText = "基础设置（显示）",
-            CheckedPermEventList = [
+            CheckedEventList = [
                 self.Function_AnimateFrame,
                 #Config_Tool_VoiceTrainer.EditConfig
             ],
-            CheckedPermArgsList = [
+            CheckedArgsList = [
                 (self.ui.Frame_BasicSettings_Tool_VoiceTrainer,...,...,0,self.ui.Frame_Tool_VoiceTrainer_FileList_Path_Training.height()+self.ui.Frame_Tool_VoiceTrainer_FileList_Path_Validation.height()+self.ui.Frame_Tool_VoiceTrainer_Language.height()+self.ui.Frame_Tool_VoiceTrainer_Epochs.height()+self.ui.Frame_Tool_VoiceTrainer_Batch_Size.height()+self.ui.Frame_Tool_VoiceTrainer_Config_Dir_Save.height()+self.ui.Frame_Tool_VoiceTrainer_Model_Dir_Save.height(),0,'Extend'),
                 #('VoiceTrainer', 'Toggle_BasicSettings', 'True')
             ],
             UncheckedText = "基础设置（隐藏）",
-            UncheckedPermEventList = [
+            UncheckedEventList = [
                 self.Function_AnimateFrame,
                 #Config_Tool_VoiceTrainer.EditConfig
             ],
-            UncheckedPermArgsList = [
+            UncheckedArgsList = [
                 (self.ui.Frame_BasicSettings_Tool_VoiceTrainer,...,...,0,self.ui.Frame_Tool_VoiceTrainer_FileList_Path_Training.height()+self.ui.Frame_Tool_VoiceTrainer_FileList_Path_Validation.height()+self.ui.Frame_Tool_VoiceTrainer_Language.height()+self.ui.Frame_Tool_VoiceTrainer_Epochs.height()+self.ui.Frame_Tool_VoiceTrainer_Batch_Size.height()+self.ui.Frame_Tool_VoiceTrainer_Config_Dir_Save.height()+self.ui.Frame_Tool_VoiceTrainer_Model_Dir_Save.height(),0,'Reduce'),
                 #('VoiceTrainer', 'Toggle_BasicSettings', 'False')
-            ]
+            ],
+            TakeEffect = True
         )
         
         Function_SetText(
@@ -2742,25 +2770,25 @@ class MainWindow(Window_Customizing):
         self.ui.Label_Tool_VoiceTrainer_Model_Dir_Save.setToolTipDuration(-1)
         self.ui.Label_Tool_VoiceTrainer_Model_Dir_Save.setToolTip("提示：当目录中存在多个模型时，编号最大的那个会被选为检查点。")
 
-        self.ui.CheckBox_Toggle_AdvanceSettings_Tool_VoiceTrainer.setText("高级设置（隐藏）")
         self.ui.CheckBox_Toggle_AdvanceSettings_Tool_VoiceTrainer.setCheckable(True)
         self.ui.CheckBox_Toggle_AdvanceSettings_Tool_VoiceTrainer.setChecked(False)
         Function_ConfigureCheckBox(
             CheckBox = self.ui.CheckBox_Toggle_AdvanceSettings_Tool_VoiceTrainer,
             CheckedText = "高级设置（显示）",
-            CheckedPermEventList = [
+            CheckedEventList = [
                 self.Function_AnimateFrame
             ],
-            CheckedPermArgsList = [
+            CheckedArgsList = [
                 (self.ui.Frame_AdvanceSettings_Tool_VoiceTrainer,...,...,0,self.ui.Frame_Tool_VoiceTrainer_Eval_Interval.height()+self.ui.Frame_Tool_VoiceTrainer_Num_Workers.height()+self.ui.Frame_Tool_VoiceTrainer_FP16_Run.height()+self.ui.Frame_Tool_VoiceTrainer_Find_Unused_Parameters.height(),0,'Extend')
             ],
             UncheckedText = "高级设置（隐藏）",
-            UncheckedPermEventList = [
+            UncheckedEventList = [
                 self.Function_AnimateFrame
             ],
-            UncheckedPermArgsList = [
+            UncheckedArgsList = [
                 (self.ui.Frame_AdvanceSettings_Tool_VoiceTrainer,...,...,0,self.ui.Frame_Tool_VoiceTrainer_Eval_Interval.height()+self.ui.Frame_Tool_VoiceTrainer_Num_Workers.height()+self.ui.Frame_Tool_VoiceTrainer_FP16_Run.height()+self.ui.Frame_Tool_VoiceTrainer_Find_Unused_Parameters.height(),0,'Reduce')
-            ]
+            ],
+            TakeEffect = True
         )
 
         Function_SetText(
@@ -2800,32 +2828,27 @@ class MainWindow(Window_Customizing):
             Title = "半精度训练",
             Body = QCA.translate("Label", "通过混合了float16精度的训练方式减小显存占用以支持更大的批处理量。")
         )
-        self.ui.CheckBox_Tool_VoiceTrainer_FP16_Run.setText("已启用")
         self.ui.CheckBox_Tool_VoiceTrainer_FP16_Run.setCheckable(True)
         self.ui.CheckBox_Tool_VoiceTrainer_FP16_Run.setChecked(
             eval(Config_Tool_VoiceTrainer.GetValue('VoiceTrainer', 'FP16_Run', 'True'))
         )
-        '''
-        self.ui.CheckBox_Tool_VoiceTrainer_FP16_Run.stateChanged.connect(
-            lambda Value: Config_Tool_VoiceTrainer.EditConfig('VoiceTrainer', 'FP16_Run', str(Value))
-        )
-        '''
         Function_ConfigureCheckBox(
             CheckBox = self.ui.CheckBox_Tool_VoiceTrainer_FP16_Run,
             CheckedText = "已启用",
-            CheckedPermEventList = [
+            CheckedEventList = [
                 Config_Tool_VoiceTrainer.EditConfig
             ],
-            CheckedPermArgsList = [
+            CheckedArgsList = [
                 ('VoiceTrainer', 'FP16_Run', 'True')
             ],
             UncheckedText = "未启用",
-            UncheckedPermEventList = [
+            UncheckedEventList = [
                 Config_Tool_VoiceTrainer.EditConfig
             ],
-            UncheckedPermArgsList = [
+            UncheckedArgsList = [
                 ('VoiceTrainer', 'FP16_Run', 'False')
-            ]
+            ],
+            TakeEffect = True
         )
 
         Function_SetText(
@@ -2833,37 +2856,31 @@ class MainWindow(Window_Customizing):
             Title = "寻找未用参数",
             Body = QCA.translate("Label", "寻找没用到的参数以防止在对梯度进行平均时报错，但会带来额外的运行开销。")
         )
-        self.ui.CheckBox_Tool_VoiceTrainer_Find_Unused_Parameters.setText("已启用")
         self.ui.CheckBox_Tool_VoiceTrainer_Find_Unused_Parameters.setCheckable(True)
         self.ui.CheckBox_Tool_VoiceTrainer_Find_Unused_Parameters.setChecked(
             eval(Config_Tool_VoiceTrainer.GetValue('VoiceTrainer', 'Find_Unused_Parameters', 'True'))
         )
-        '''
-        self.ui.CheckBox_Tool_VoiceTrainer_Find_Unused_Parameters.stateChanged.connect(
-            lambda Value: Config_Tool_VoiceConverter.EditConfig('VoiceTrainer', 'Find_Unused_Parameters', str(Value))
-        )
-        '''
         Function_ConfigureCheckBox(
             CheckBox = self.ui.CheckBox_Tool_VoiceTrainer_Find_Unused_Parameters,
             CheckedText = "已启用",
-            CheckedPermEventList = [
+            CheckedEventList = [
                 Config_Tool_VoiceTrainer.EditConfig
             ],
-            CheckedPermArgsList = [
+            CheckedArgsList = [
                 ('VoiceTrainer', 'Find_Unused_Parameters', 'True')
             ],
             UncheckedText = "未启用",
-            UncheckedPermEventList = [
+            UncheckedEventList = [
                 Config_Tool_VoiceTrainer.EditConfig
             ],
-            UncheckedPermArgsList = [
+            UncheckedArgsList = [
                 ('VoiceTrainer', 'Find_Unused_Parameters', 'False')
-            ]
+            ],
+            TakeEffect = True
         )
 
         self.ui.GroupBox_OptionalParams_Tool_VoiceTrainer.setTitle("可选参数")
 
-        self.ui.CheckBox_Toggle_BasicOptionalSettings_Tool_VoiceTrainer.setText("基础设置（显示）")
         self.ui.CheckBox_Toggle_BasicOptionalSettings_Tool_VoiceTrainer.setCheckable(True)
         self.ui.CheckBox_Toggle_BasicOptionalSettings_Tool_VoiceTrainer.setChecked(
             True #eval(Config_Tool_VoiceTrainer.GetValue('VoiceTrainer', 'Toggle_BasicOptionalSettings', ''))
@@ -2871,23 +2888,24 @@ class MainWindow(Window_Customizing):
         Function_ConfigureCheckBox(
             CheckBox = self.ui.CheckBox_Toggle_BasicOptionalSettings_Tool_VoiceTrainer,
             CheckedText = "基础设置（显示）",
-            CheckedPermEventList = [
+            CheckedEventList = [
                 self.Function_AnimateFrame,
                 #Config_Tool_VoiceTrainer.EditConfig
             ],
-            CheckedPermArgsList = [
+            CheckedArgsList = [
                 (self.ui.Frame_BasicOptionalSettings_Tool_VoiceTrainer,...,...,0,self.ui.Frame_Tool_VoiceTrainer_Model_Path_Pretrained_G.height()+self.ui.Frame_Tool_VoiceTrainer_Model_Path_Pretrained_D.height(),0,'Extend'),
                 #('VoiceTrainer', 'Toggle_BasicOptionalSettings', 'True')
             ],
             UncheckedText = "基础设置（隐藏）",
-            UncheckedPermEventList = [
+            UncheckedEventList = [
                 self.Function_AnimateFrame,
                 #Config_Tool_VoiceTrainer.EditConfig
             ],
-            UncheckedPermArgsList = [
+            UncheckedArgsList = [
                 (self.ui.Frame_BasicOptionalSettings_Tool_VoiceTrainer,...,...,0,self.ui.Frame_Tool_VoiceTrainer_Model_Path_Pretrained_G.height()+self.ui.Frame_Tool_VoiceTrainer_Model_Path_Pretrained_D.height(),0,'Reduce'),
                 #('VoiceTrainer', 'Toggle_BasicOptionalSettings', 'False')
-            ]
+            ],
+            TakeEffect = True
         )
 
         Function_SetText(
@@ -2926,25 +2944,25 @@ class MainWindow(Window_Customizing):
             lambda Value: Config_Tool_VoiceTrainer.EditConfig('VoiceTrainer', 'Model_Path_Pretrained_D', str(Value))
         )
 
-        self.ui.CheckBox_Toggle_AdvanceOptionalSettings_Tool_VoiceTrainer.setText("高级设置（隐藏）")
         self.ui.CheckBox_Toggle_AdvanceOptionalSettings_Tool_VoiceTrainer.setCheckable(True)
         self.ui.CheckBox_Toggle_AdvanceOptionalSettings_Tool_VoiceTrainer.setChecked(False)
         Function_ConfigureCheckBox(
             CheckBox = self.ui.CheckBox_Toggle_AdvanceOptionalSettings_Tool_VoiceTrainer,
             CheckedText = "高级设置（显示）",
-            CheckedPermEventList = [
+            CheckedEventList = [
                 self.Function_AnimateFrame
             ],
-            CheckedPermArgsList = [
+            CheckedArgsList = [
                 (self.ui.Frame_AdvanceOptionalSettings_Tool_VoiceTrainer,...,...,0,self.ui.Frame_Tool_VoiceTrainer_Config_Path_Load.height()+self.ui.Frame_Tool_VoiceTrainer_Speakers.height(),0,'Extend')
             ],
             UncheckedText = "高级设置（隐藏）",
-            UncheckedPermEventList = [
+            UncheckedEventList = [
                 self.Function_AnimateFrame
             ],
-            UncheckedPermArgsList = [
+            UncheckedArgsList = [
                 (self.ui.Frame_AdvanceOptionalSettings_Tool_VoiceTrainer,...,...,0,self.ui.Frame_Tool_VoiceTrainer_Config_Path_Load.height()+self.ui.Frame_Tool_VoiceTrainer_Speakers.height(),0,'Reduce')
-            ]
+            ],
+            TakeEffect = True
         )
 
         Function_SetText(
@@ -3057,11 +3075,11 @@ class MainWindow(Window_Customizing):
         self.ui.Button_Tool_VoiceTrainer_Execute.setToolTip("执行语音模型训练")
         self.ui.Button_Tool_VoiceTrainer_Terminate.setToolTipDuration(-1)
         self.ui.Button_Tool_VoiceTrainer_Terminate.setToolTip("终止语音模型训练")
-        self.Function_ExecuteMethod(
+        self.Function_SetMethodExecutor(
             ExecuteButton = self.ui.Button_Tool_VoiceTrainer_Execute,
             TerminateButton = self.ui.Button_Tool_VoiceTrainer_Terminate,
             ProgressBar = self.ui.ProgressBar_Tool_VoiceTrainer,
-            #ConsoleFrame = self.ui.Frame_Console,
+            ConsoleFrame = self.ui.Frame_Console,
             Method = Execute_Voice_Training.Execute,
             ParamsFrom = [
                 self.ui.LineEdit_Tool_VoiceTrainer_FileList_Path_Validation,
@@ -3094,12 +3112,7 @@ class MainWindow(Window_Customizing):
             ]
         )
         MainWindowSignals.Signal_TaskStatus.connect(
-            lambda TaskStatus: self.ui.Button_Tool_VoiceTrainer_Execute.setCheckable(
-                False if TaskStatus is 'Started' else True
-            )
-        )
-        MainWindowSignals.Signal_TaskStatus.connect(
-            lambda TaskStatus: Function_ShowMessageBox(
+            lambda Task, Status: Function_ShowMessageBox(
                 MessageType = QMessageBox.Question,
                 WindowTitle = "Ask",
                 Text = "是否稍后启用tensorboard？",
@@ -3107,7 +3120,7 @@ class MainWindow(Window_Customizing):
                 EventButtons = [QMessageBox.Yes],
                 EventLists = [[CheckTensorboard]],
                 ParamLists = [[(Function_ParamsChecker([self.ui.LineEdit_Tool_VoiceTrainer_Model_Dir_Save]))]]
-            ) if TaskStatus is 'Started' else print('Cancelled to start tensorboard')
+            ) if Task == 'Execute_Voice_Training.Execute' and Status == 'Started' else None
         )
 
         ##################### Tool_VoiceConverter #####################
@@ -3145,7 +3158,6 @@ class MainWindow(Window_Customizing):
         # Middle
         self.ui.GroupBox_EssentialParams_Tool_VoiceConverter.setTitle(QCA.translate("GroupBox", "必要参数"))
 
-        self.ui.CheckBox_Toggle_BasicSettings_Tool_VoiceConverter.setText("基础设置（显示）")
         self.ui.CheckBox_Toggle_BasicSettings_Tool_VoiceConverter.setCheckable(True)
         self.ui.CheckBox_Toggle_BasicSettings_Tool_VoiceConverter.setChecked(
             True #eval(Config_Tool_VoiceConverter.GetValue('VoiceConverter', 'Toggle_BasicSettings', ''))
@@ -3153,23 +3165,24 @@ class MainWindow(Window_Customizing):
         Function_ConfigureCheckBox(
             CheckBox = self.ui.CheckBox_Toggle_BasicSettings_Tool_VoiceConverter,
             CheckedText = "基础设置（显示）",
-            CheckedPermEventList = [
+            CheckedEventList = [
                 self.Function_AnimateFrame,
                 #Config_Tool_VoiceConverter.EditConfig
             ],
-            CheckedPermArgsList = [
+            CheckedArgsList = [
                 (self.ui.Frame_BasicSettings_Tool_VoiceConverter,...,...,0,self.ui.Frame_Tool_VoiceConverter_Config_Path_Load.height()+self.ui.Frame_Tool_VoiceConverter_Model_Path_Load.height()+self.ui.Frame_Tool_VoiceConverter_Text.height()+self.ui.Frame_Tool_VoiceConverter_Language.height()+self.ui.Frame_Tool_VoiceConverter_Speaker.height()+self.ui.Frame_Tool_VoiceConverter_Audio_Dir_Save.height(),0,'Extend'),
                 #('VoiceConverter', 'Toggle_BasicSettings', 'True')
             ],
             UncheckedText = "基础设置（隐藏）",
-            UncheckedPermEventList = [
+            UncheckedEventList = [
                 self.Function_AnimateFrame,
                 #Config_Tool_VoiceConverter.EditConfig
             ],
-            UncheckedPermArgsList = [
+            UncheckedArgsList = [
                 (self.ui.Frame_BasicSettings_Tool_VoiceConverter,...,...,0,self.ui.Frame_Tool_VoiceConverter_Config_Path_Load.height()+self.ui.Frame_Tool_VoiceConverter_Model_Path_Load.height()+self.ui.Frame_Tool_VoiceConverter_Text.height()+self.ui.Frame_Tool_VoiceConverter_Language.height()+self.ui.Frame_Tool_VoiceConverter_Speaker.height()+self.ui.Frame_Tool_VoiceConverter_Audio_Dir_Save.height(),0,'Reduce'),
                 #('VoiceConverter', 'Toggle_BasicSettings', 'False')
-            ]
+            ],
+            TakeEffect = True
         )
 
         Function_SetText(
@@ -3246,25 +3259,42 @@ class MainWindow(Window_Customizing):
         #self.ui.ComboBox_Tool_VoiceConverter_Speaker.addItems(Get_Speakers)
         self.ui.ComboBox_Tool_VoiceConverter_Speaker.setCurrentText('')
 
-        self.ui.CheckBox_Toggle_AdvanceSettings_Tool_VoiceConverter.setText("高级设置（隐藏）")
+        Function_SetText(
+            Widget = self.ui.Label_Tool_VoiceConverter_Audio_Dir_Save,
+            Title = "音频保存目录",
+            Body = QCA.translate("Label", "推理得到的音频会保存到该目录。")
+        )
+        Function_SetFileDialog(
+            Button = self.ui.Button_Tool_VoiceConverter_Audio_Dir_Save,
+            LineEdit = self.ui.LineEdit_Tool_VoiceConverter_Audio_Dir_Save,
+            Mode = "SelectDir"
+        )
+        self.ui.LineEdit_Tool_VoiceConverter_Audio_Dir_Save.setText(
+            str(Config_Tool_VoiceConverter.GetValue('VoiceConverter', 'Audio_Dir_Save', 'None'))
+        )
+        self.ui.LineEdit_Tool_VoiceConverter_Audio_Dir_Save.textChanged.connect(
+            lambda Value: Config_Tool_VoiceConverter.EditConfig('VoiceConverter', 'Audio_Dir_Save', str(Value))
+        )
+
         self.ui.CheckBox_Toggle_AdvanceSettings_Tool_VoiceConverter.setCheckable(True)
         self.ui.CheckBox_Toggle_AdvanceSettings_Tool_VoiceConverter.setChecked(False)
         Function_ConfigureCheckBox(
             CheckBox = self.ui.CheckBox_Toggle_AdvanceSettings_Tool_VoiceConverter,
             CheckedText = "高级设置（显示）",
-            CheckedPermEventList = [
+            CheckedEventList = [
                 self.Function_AnimateFrame
             ],
-            CheckedPermArgsList = [
+            CheckedArgsList = [
                 (self.ui.Frame_AdvanceSettings_Tool_VoiceConverter,...,...,0,self.ui.Frame_Tool_VoiceConverter_EmotionStrength.height()+self.ui.Frame_Tool_VoiceConverter_PhonemeDuration.height()+self.ui.Frame_Tool_VoiceConverter_SpeechRate.height(),0,'Extend')
             ],
             UncheckedText = "高级设置（隐藏）",
-            UncheckedPermEventList = [
+            UncheckedEventList = [
                 self.Function_AnimateFrame
             ],
-            UncheckedPermArgsList = [
+            UncheckedArgsList = [
                 (self.ui.Frame_AdvanceSettings_Tool_VoiceConverter,...,...,0,self.ui.Frame_Tool_VoiceConverter_EmotionStrength.height()+self.ui.Frame_Tool_VoiceConverter_PhonemeDuration.height()+self.ui.Frame_Tool_VoiceConverter_SpeechRate.height(),0,'Reduce')
-            ]
+            ],
+            TakeEffect = True
         )
 
         Function_SetText(
@@ -3276,7 +3306,7 @@ class MainWindow(Window_Customizing):
         self.ui.HorizontalSlider_Tool_VoiceConverter_EmotionStrength.setMaximum(100)
         self.ui.HorizontalSlider_Tool_VoiceConverter_EmotionStrength.setTickInterval(1)
         self.ui.HorizontalSlider_Tool_VoiceConverter_EmotionStrength.setValue(
-            int(Config_Tool_VoiceConverter.GetValue('VoiceConverter', 'EmotionStrength', '67'))
+            int(float(Config_Tool_VoiceConverter.GetValue('VoiceConverter', 'EmotionStrength', '67')))
         )
         self.ui.HorizontalSlider_Tool_VoiceConverter_EmotionStrength.valueChanged.connect(
             lambda Value: Config_Tool_VoiceConverter.EditConfig('VoiceConverter', 'EmotionStrength', str(Value))
@@ -3319,7 +3349,7 @@ class MainWindow(Window_Customizing):
         self.ui.HorizontalSlider_Tool_VoiceConverter_PhonemeDuration.setMaximum(10)
         self.ui.HorizontalSlider_Tool_VoiceConverter_PhonemeDuration.setTickInterval(1)
         self.ui.HorizontalSlider_Tool_VoiceConverter_PhonemeDuration.setValue(
-            int(Config_Tool_VoiceConverter.GetValue('VoiceConverter', 'PhonemeDuration', '8'))
+            int(float(Config_Tool_VoiceConverter.GetValue('VoiceConverter', 'PhonemeDuration', '8')))
         )
         self.ui.HorizontalSlider_Tool_VoiceConverter_PhonemeDuration.valueChanged.connect(
             lambda Value: Config_Tool_VoiceConverter.EditConfig('VoiceConverter', 'PhonemeDuration', str(Value))
@@ -3362,7 +3392,7 @@ class MainWindow(Window_Customizing):
         self.ui.HorizontalSlider_Tool_VoiceConverter_SpeechRate.setMaximum(20)
         self.ui.HorizontalSlider_Tool_VoiceConverter_SpeechRate.setTickInterval(1)
         self.ui.HorizontalSlider_Tool_VoiceConverter_SpeechRate.setValue(
-            int(Config_Tool_VoiceConverter.GetValue('VoiceConverter', 'SpeechRate', '10'))
+            int(float(Config_Tool_VoiceConverter.GetValue('VoiceConverter', 'SpeechRate', '10')))
         )
         self.ui.HorizontalSlider_Tool_VoiceConverter_SpeechRate.valueChanged.connect(
             lambda Value: Config_Tool_VoiceConverter.EditConfig('VoiceConverter', 'SpeechRate', str(Value))
@@ -3394,23 +3424,6 @@ class MainWindow(Window_Customizing):
             ParamsTo = [
                 self.ui.HorizontalSlider_Tool_VoiceConverter_SpeechRate
             ]
-        )
-
-        Function_SetText(
-            Widget = self.ui.Label_Tool_VoiceConverter_Audio_Dir_Save,
-            Title = "音频保存目录",
-            Body = QCA.translate("Label", "推理得到的音频会保存到该目录。")
-        )
-        Function_SetFileDialog(
-            Button = self.ui.Button_Tool_VoiceConverter_Audio_Dir_Save,
-            LineEdit = self.ui.LineEdit_Tool_VoiceConverter_Audio_Dir_Save,
-            Mode = "SelectDir"
-        )
-        self.ui.LineEdit_Tool_VoiceConverter_Audio_Dir_Save.setText(
-            str(Config_Tool_VoiceConverter.GetValue('VoiceConverter', 'Audio_Dir_Save', 'None'))
-        )
-        self.ui.LineEdit_Tool_VoiceConverter_Audio_Dir_Save.textChanged.connect(
-            lambda Value: Config_Tool_VoiceConverter.EditConfig('VoiceConverter', 'Audio_Dir_Save', str(Value))
         )
 
         # Right
@@ -3459,11 +3472,11 @@ class MainWindow(Window_Customizing):
         self.ui.Button_Tool_VoiceConverter_Execute.setToolTip("执行语音模型推理")
         self.ui.Button_Tool_VoiceConverter_Terminate.setToolTipDuration(-1)
         self.ui.Button_Tool_VoiceConverter_Terminate.setToolTip("终止语音模型推理")
-        self.Function_ExecuteMethod(
+        self.Function_SetMethodExecutor(
             ExecuteButton = self.ui.Button_Tool_VoiceConverter_Execute,
             TerminateButton = self.ui.Button_Tool_VoiceConverter_Terminate,
             ProgressBar = self.ui.ProgressBar_Tool_VoiceConverter,
-            #ConsoleFrame = self.ui.Frame_Console,
+            ConsoleFrame = self.ui.Frame_Console,
             Method = Execute_Voice_Converting.Execute,
             ParamsFrom = [
                 self.ui.LineEdit_Tool_VoiceConverter_Config_Path_Load,
@@ -3485,11 +3498,6 @@ class MainWindow(Window_Customizing):
             FinishParamList = [
                 (QMessageBox.Information,"Tip","当前任务已执行结束！",QMessageBox.Ok)
             ]
-        )
-        MainWindowSignals.Signal_TaskStatus.connect(
-            lambda TaskStatus: self.ui.Button_Tool_VoiceConverter_Execute.setCheckable(
-                False if TaskStatus is 'Started' else True
-            )
         )
 
         #############################################################
@@ -3521,14 +3529,14 @@ class MainWindow(Window_Customizing):
         self.ui.Button_Setting_ClientRebooter.setToolTipDuration(-1)
         self.ui.Button_Setting_ClientRebooter.setToolTip(QCA.translate("ToolTip", "重启EVT客户端"))
 
-        self.Function_ExecuteMethod(
+        self.Function_SetMethodExecutor(
             ExecuteButton = self.ui.Button_Setting_IntegrityChecker,
             Method = Integrity_Checker.Execute,
             Params = ()
         )
         MainWindowSignals.Signal_TaskStatus.connect(
-            lambda TaskStatus: self.ui.Button_Setting_IntegrityChecker.setCheckable(
-                False if TaskStatus is 'Started' else True
+            lambda Task, Status: self.ui.Button_Setting_IntegrityChecker.setCheckable(
+                False if Status == 'Started' else True
             )
         )
         self.ui.Button_Setting_IntegrityChecker.setText(QCA.translate("Button", "检查完整性"))
@@ -3537,7 +3545,6 @@ class MainWindow(Window_Customizing):
         self.ui.Button_Setting_IntegrityChecker.setToolTip(QCA.translate("ToolTip", "检查文件完整性"))
 
         self.ui.Label_Setting_AutoUpdate.setText(QCA.translate("Label", "自动检查版本并更新"))
-        self.ui.CheckBox_Setting_AutoUpdate.setText("已启用")
         self.ui.CheckBox_Setting_AutoUpdate.setCheckable(True)
         self.ui.CheckBox_Setting_AutoUpdate.setChecked(
             {
@@ -3548,25 +3555,25 @@ class MainWindow(Window_Customizing):
         Function_ConfigureCheckBox(
             CheckBox = self.ui.CheckBox_Setting_AutoUpdate,
             CheckedText = "已启用",
-            CheckedPermEventList = [
+            CheckedEventList = [
                 Config.EditConfig,
                 #Updater
             ],
-            CheckedPermArgsList = [
+            CheckedArgsList = [
                 ('Settings', 'AutoUpdate', 'Enabled'),
                 #(CurrentVersion, IsFileCompiled, CurrentDir, f'Easy Voice Toolkit {CurrentVersion}', CurrentDir)
             ],
             UncheckedText = "未启用",
-            UncheckedPermEventList = [
+            UncheckedEventList = [
                 Config.EditConfig
             ],
-            UncheckedPermArgsList = [
+            UncheckedArgsList = [
                 ('Settings', 'AutoUpdate', 'Disabled')
-            ]
+            ],
+            TakeEffect = True
         )
 
         self.ui.Label_Setting_Synchronizer.setText(QCA.translate("Label", "自动同步前后工具的部分参数设置"))
-        self.ui.CheckBox_Setting_Synchronizer.setText("已启用")
         self.ui.CheckBox_Setting_Synchronizer.setCheckable(True)
         self.ui.CheckBox_Setting_Synchronizer.setChecked(
             {
@@ -3577,14 +3584,14 @@ class MainWindow(Window_Customizing):
         Function_ConfigureCheckBox(
             CheckBox = self.ui.CheckBox_Setting_Synchronizer,
             CheckedText = "已启用",
-            CheckedPermEventList = [
+            CheckedEventList = [
                 Config.EditConfig,
                 Function_ParamsSynchronizer,
                 Function_ParamsSynchronizer,
                 Function_ParamsSynchronizer,
                 Function_ParamsSynchronizer
             ],
-            CheckedPermArgsList = [
+            CheckedArgsList = [
                 ('Tools', 'Synchronizer', 'Enabled'),
                 (self.ui.LineEdit_Tool_AudioProcessor_Media_Dir_Output,[self.ui.LineEdit_Tool_AudioProcessor_Media_Dir_Output],None,[self.ui.LineEdit_Tool_VoiceIdentifier_Audio_Dir_Input]),
                 (self.ui.LineEdit_Tool_VoiceIdentifier_Audio_Dir_Output,[self.ui.LineEdit_Tool_VoiceIdentifier_Audio_Dir_Output],None,[self.ui.LineEdit_Tool_VoiceTranscriber_WAV_Dir]),
@@ -3592,26 +3599,31 @@ class MainWindow(Window_Customizing):
                 ([self.ui.LineEdit_Tool_DatasetCreator_FileList_Path_Training,self.ui.LineEdit_Tool_DatasetCreator_FileList_Path_Validation],[self.ui.LineEdit_Tool_DatasetCreator_FileList_Path_Training,self.ui.LineEdit_Tool_DatasetCreator_FileList_Path_Validation],None,[self.ui.LineEdit_Tool_VoiceTrainer_FileList_Path_Training,self.ui.LineEdit_Tool_VoiceTrainer_FileList_Path_Validation]),
             ],
             UncheckedText = "未启用",
-            UncheckedPermEventList = [
+            UncheckedEventList = [
                 Config.EditConfig,
                 #Function_ParamsSynchronizer,
                 #Function_ParamsSynchronizer,
                 #Function_ParamsSynchronizer,
                 #Function_ParamsSynchronizer
             ],
-            UncheckedPermArgsList = [
+            UncheckedArgsList = [
                 ('Tools', 'Synchronizer', 'Disabled'),
                 #(self.ui.LineEdit_Tool_AudioProcessor_Media_Dir_Output,[self.ui.LineEdit_Tool_AudioProcessor_Media_Dir_Output],None,[self.ui.LineEdit_Tool_VoiceIdentifier_Audio_Dir_Input],"Disconnect"),
                 #(self.ui.LineEdit_Tool_VoiceIdentifier_Audio_Dir_Output,[self.ui.LineEdit_Tool_VoiceIdentifier_Audio_Dir_Output],None,[self.ui.LineEdit_Tool_VoiceTranscriber_WAV_Dir],"Disconnect"),
                 #([self.ui.LineEdit_Tool_VoiceTranscriber_WAV_Dir,self.ui.LineEdit_Tool_VoiceTranscriber_SRT_Dir],[self.ui.LineEdit_Tool_VoiceTranscriber_WAV_Dir,self.ui.LineEdit_Tool_VoiceTranscriber_SRT_Dir],None,[self.ui.LineEdit_Tool_DatasetCreator_WAV_Dir,self.ui.LineEdit_Tool_DatasetCreator_SRT_Dir],"Disconnect"),
-                #([self.ui.LineEdit_Tool_DatasetCreator_FileList_Path_Training,self.ui.LineEdit_Tool_DatasetCreator_FileList_Path_Validation],[self.ui.LineEdit_Tool_DatasetCreator_FileList_Path_Training,self.ui.LineEdit_Tool_DatasetCreator_FileList_Path_Validation],None,[self.ui.LineEdit_Tool_VoiceTrainer_FileList_Path_Training,self.ui.LineEdit_Tool_VoiceTrainer_FileList_Path_Validation],"Disconnect"),
+                #([self.ui.LineEdit_Tool_DatasetCreator_FileList_Path_Training,self.ui.LineEdit_Tool_DatasetCreator_FileList_Path_Validation],[self.ui.LineEdit_Tool_DatasetCreator_FileList_Path_Training,self.ui.LineEdit_Tool_DatasetCreator_FileList_Path_Validation],None,[self.ui.LineEdit_Tool_VoiceTrainer_FileList_Path_Training,self.ui.LineEdit_Tool_VoiceTrainer_FileList_Path_Validation],"Disconnect")
             ],
-            UncheckedTempEventList = [
+            TakeEffect = True
+        )
+        Function_ConfigureCheckBox(
+            CheckBox = self.ui.CheckBox_Setting_Synchronizer,
+            UncheckedEventList = [
                 Function_ShowMessageBox
             ],
-            UncheckedTempArgsList = [
+            UncheckedArgsList = [
                 (QMessageBox.Information,"Tip", "该设置将于重启之后生效")
-            ]
+            ],
+            TakeEffect = False
         )
 
         #####################################################################################################
@@ -3660,10 +3672,10 @@ class MainWindow(Window_Customizing):
         )
         '''
         # Display ToolsStatus
-        self.ui.Label_ToolsStatus.setText("工具状态：空闲")
+        self.ui.Label_ToolsStatus.clear()
         MainWindowSignals.Signal_TaskStatus.connect(
-            lambda TaskStatus: self.ui.Label_ToolsStatus.setText(
-                f"工具状态：{'忙碌' if TaskStatus is 'Started' else '空闲'}"
+            lambda Task, Status: self.ui.Label_ToolsStatus.setText(
+                f"工具状态：{'忙碌' if Status == 'Started' else '空闲'}"
             )
         )
 

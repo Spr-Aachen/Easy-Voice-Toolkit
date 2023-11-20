@@ -5,6 +5,7 @@ import time
 import shutil
 import psutil
 import signal
+import shlex
 import subprocess
 import collections
 import hashlib
@@ -124,55 +125,82 @@ def RawString(
 #############################################################################################################
 
 def RunCMD(
-    Args: list,
-    PathType: Optional[str] = None,
+    Args: Union[list[Union[list, str]], str],
+    PathType: str = 'Posix',
+    ShowProgress: bool = False,
+    CommunicateThroughConsole: bool = False,
+    CreationFlags: int = subprocess.CREATE_NO_WINDOW,
     DecodeResult: Optional[bool] = None,
     TimeOut: Optional[float] = None
 ):
     '''
     '''
-    ArgType = 'List' if isinstance(Args[0], list) else 'String'
-
     TimeLimit = time.time() + TimeOut if TimeOut is not None else None
 
-    if ArgType is 'List':
-        Output, Error = (bytes(), bytes())
-        for Arg in Args:
-            Subprocess = subprocess.Popen(Arg, stdin = subprocess.PIPE, stdout = subprocess.PIPE, stderr = subprocess.PIPE, env = os.environ, creationflags = subprocess.CREATE_NO_WINDOW)
-            if TimeLimit is not None:
-                while time.time() <= TimeLimit:
-                    Result = (Subprocess.stdout.readline(), Subprocess.stderr.readline())
-                    if ItemReplacer({b'': None}, Result) == (None, None) and Subprocess.poll() is not None:
-                        break
+    if not CommunicateThroughConsole:
+        TotalOutput, TotalError = (bytes(), bytes())
+        for Arg in IterChecker(Args):
+            Arg = shlex.split(Arg, posix = True if PathType is 'Posix' else False) if isinstance(Arg, str) else Arg
+            Subprocess = subprocess.Popen(
+                args = Arg,
+                stdin = subprocess.PIPE,
+                stdout = subprocess.PIPE,
+                stderr = subprocess.PIPE,
+                env = os.environ,
+                creationflags = CreationFlags
+            )
+            if ShowProgress:
+                Output, Error = (bytes(), bytes())
+                for Line in Subprocess.stdout:
+                    Output += Line
+                    sys.stdout.write(Line.decode(errors = 'ignore'))
+                    Subprocess.stdout.flush()
+                for Line in Subprocess.stderr:
+                    Error += Line
+                    sys.stderr.write(Line.decode(errors = 'ignore'))
+                    Subprocess.stderr.flush()
             else:
-                Result = Subprocess.communicate()
-            Result0 = Result[0] or bytes()
-            Result1 = Result[1] or bytes()
-            Output, Error = Output + Result0, Error + Result1
-        #Output, Error = Output, Error
+                Output, Error = Subprocess.communicate()
+            TotalOutput, TotalError = TotalOutput + Output, TotalError + Error
 
-    if ArgType is 'String':
-        Input = str()
-        for Arg in Args:
-            Input += f'{RawString(Arg, PathType)}\n'
+    else:
+        TotalInput = str()
+        for Arg in IterChecker(Args):
+            Arg = shlex.join(Arg) if isinstance(Arg, list) else Arg
+            TotalInput += f'{RawString(Arg, PathType)}\n'
         if platform.system() == 'Windows':
-            Input = Input.encode(encoding = 'gbk')
+            TotalInput = TotalInput.encode(encoding = 'gbk')
             ShellArgs = ['cmd']
         if platform.system() == 'Linux':
-            Input = Input.encode(encoding = 'utf-8')
+            TotalInput = TotalInput.encode(encoding = 'utf-8')
             ShellArgs = ['bash', '-c']
-        Subprocess = subprocess.Popen(ShellArgs, stdin = subprocess.PIPE, stdout = subprocess.PIPE, stderr = subprocess.PIPE, env = os.environ, creationflags = subprocess.CREATE_NO_WINDOW)
-        if TimeLimit is not None:
-            Subprocess.stdin.write(Input)
+        Subprocess = subprocess.Popen(
+            args = ShellArgs,
+            stdin = subprocess.PIPE,
+            stdout = subprocess.PIPE,
+            stderr = subprocess.PIPE,
+            env = os.environ,
+            creationflags = CreationFlags
+        )
+        if ShowProgress:
+            TotalOutput, TotalError = (bytes(), bytes())
+            Subprocess.stdin.write(TotalInput)
             Subprocess.stdin.close()
-            while time.time() <= TimeLimit:
-                Output, Error = Subprocess.stdout.readline(), Subprocess.stderr.readline()
-                if ItemReplacer({b'': None}, (Output, Error)) == (None, None) and Subprocess.poll() is not None:
-                    break
+            for Line in Subprocess.stdout:
+                TotalOutput += Line
+                sys.stdout.write(Line.decode(errors = 'ignore'))
+                Subprocess.stdout.flush()
+            for Line in Subprocess.stderr:
+                TotalError += Line
+                sys.stderr.write(Line.decode(errors = 'ignore'))
+                Subprocess.stderr.flush()
         else:
-            Output, Error = Subprocess.communicate(Input)
+            TotalOutput, TotalError = Subprocess.communicate(TotalInput)
 
-    return Output.decode(errors = 'ignore') if DecodeResult and Output is not None else Output, Error.decode(errors = 'ignore') if DecodeResult and Error is not None else Error, Subprocess.returncode
+    TotalOutput, TotalError = TotalOutput.strip(), TotalError.strip()
+    TotalOutput, TotalError = TotalOutput.decode(errors = 'ignore') if DecodeResult else TotalOutput, TotalError.decode(errors = 'ignore') if DecodeResult else TotalError
+
+    return None if TotalOutput in ('', b'') else TotalOutput, None if TotalError in ('', b'') else TotalError, Subprocess.returncode
 
 
 def SetEnvVar(
@@ -193,7 +221,8 @@ def SetEnvVar(
                     Args = [
                         'for /f "usebackq tokens=2,*" %A in (`REG QUERY "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" /v PATH`) do set SYSPATH=%B',
                         f'setx PATH "{Value}{os.pathsep}%SYSPATH%" /M' #f'setx PATH "%SYSPATH%{os.pathsep}{Value}" /M'
-                    ]
+                    ],
+                    CommunicateThroughConsole = True
                 )
             else:
                 pass
@@ -203,7 +232,8 @@ def SetEnvVar(
                     Args = [
                         'for /f "usebackq tokens=2,*" %A in (`reg query HKCU\Environment /v PATH`) do set userPATH=%B',
                         f'setx PATH "{Value}{os.pathsep}%userPATH%"' #f'setx PATH "%userPATH%{os.pathsep}{Value}"'
-                    ]
+                    ],
+                    CommunicateThroughConsole = True
                 )
             else:
                 pass
@@ -216,13 +246,15 @@ def SetEnvVar(
             RunCMD(
                 Args = [
                     f'setx {Variable} "{Value}" /M'
-                ]
+                ],
+                CommunicateThroughConsole = True
             )
         if Type == 'User':
             RunCMD(
                 Args = [
                     f'setx {Variable} "{Value}"'
-                ]
+                ],
+                CommunicateThroughConsole = True
             )
         if Type == 'Temp' or AffectOS:
             EnvValue = Value
@@ -239,6 +271,19 @@ def FindURL(
     URL = URLList[0]
 
     return URL
+
+#############################################################################################################
+
+def RunEvent(
+    EventList: Optional[list] = None,
+    ParamList: Optional[list[tuple]] = None
+):
+    '''
+    '''
+    EventList = IterChecker(EventList) if EventList is not None else []
+    ParamList = IterChecker(ParamList) if ParamList is not None else [()]
+    for Index, Event in enumerate(EventList):
+        Event(*IterChecker(ParamList[Index]))
 
 #############################################################################################################
 
@@ -308,6 +353,29 @@ def TaskAccelerating(
 
     #Endtime = int(time.time())
 
+
+def ProcessTerminator(
+    Program: str,
+    SelfIgnored: bool = True,
+    SearchKeyword: bool = False
+):
+    '''
+    '''
+    ProgramPath = NormPath(Program)
+    for Process in psutil.process_iter():
+        if Process.pid == os.getpid() and SelfIgnored:
+            continue
+        try:
+            for CMDLine in Process.cmdline():
+                if ProgramPath == CMDLine or (ProgramPath in CMDLine and SearchKeyword):
+                    ProgramName = Path(ProgramPath).name if ProgramPath.endswith('.exe') else 'python.exe'
+                    if Process.name() == ProgramName:
+                        Process.send_signal(signal.SIGTERM) #Process.kill()
+                    else:
+                        print(f'Failed to terminate {ProgramName}')
+        except:
+            pass
+
 #############################################################################################################
 
 def CleanDirectory(
@@ -368,7 +436,7 @@ def GetPath(
             else:
                 pass
 
-        return False
+    return False
 
 #############################################################################################################
 
@@ -410,49 +478,37 @@ def GetFileInfo(
 
 #############################################################################################################
 
-def ProgramTerminator(
-    Program: str,
-    SelfIgnored: bool = True,
-    SearchKeyword: bool = False
+def RunBat(
+    CommandList: list[str],
+    BatFilePath: Optional[str]
 ):
     '''
     '''
-    ProgramPath = NormPath(Program)
-    for Process in psutil.process_iter():
-        if Process.pid == os.getpid() and SelfIgnored:
-            continue
-        try:
-            for CMDLine in Process.cmdline():
-                if ProgramPath == CMDLine or (ProgramPath in CMDLine and SearchKeyword):
-                    ProgramName = Path(ProgramPath).name if ProgramPath.endswith('.exe') else 'python.exe'
-                    if Process.name() == ProgramName:
-                        Process.send_signal(signal.SIGTERM) #Process.kill()
-                    else:
-                        print(f'Failed to terminate {ProgramName}')
-        except:
-            pass
+    BatFilePath = Path.cwd().joinpath('Bat.bat') if BatFilePath is None else NormPath(BatFilePath)
+    with open(BatFilePath, 'w') as BatFile:
+        Commands = "\n".join(CommandList)
+        BatFile.write(Commands)
+    subprocess.Popen([BatFilePath], creationflags = subprocess.CREATE_NEW_CONSOLE).communicate()
 
 
-def ProgramBooter(
-    TargetDir: str = ...,
+def BootWithBat(
     ProgramPath: str = ...,
-    DelayTime: int = 3
+    DelayTime: int = 3,
+    BatFilePath: Optional[str] = None
 ):
     '''
     subprocess.call([ProgramPath] if GetFileInfo(ProgramPath)[1] else ['python.exe', ProgramPath])
     '''
     _, IsFileCompiled = GetFileInfo(ProgramPath)
-    BatFilePath = Path(NormPath(TargetDir)).joinpath('Booter.bat')
-    with open(BatFilePath, 'w') as BatFile:
+    RunBat(
         CommandList = [
             '@echo off',
             f'ping 127.0.0.1 -n {DelayTime + 1} > nul',
             f'start "Programm Running" "{ProgramPath}"' if IsFileCompiled else f'python "{ProgramPath}"',
             'del "%~f0"'
-        ]
-        Commands = "\n".join(CommandList)
-        BatFile.write(Commands)
-    subprocess.Popen([BatFilePath], creationflags = subprocess.CREATE_NEW_CONSOLE).communicate() #RunCMD([BatFilePath])
+        ],
+        BatFilePath = BatFilePath
+    )
 
 ##############################################################################################################################
 
@@ -470,28 +526,21 @@ def CheckUpdate(
         PersonalGit = Github(AccessToken)
         Repo = PersonalGit.get_repo(f"{RepoOwner}/{RepoName}")
         Version_Latest = Repo.get_tags()[0].name
-    except:
-        raise Exception("Failed to get tag")
+        LatestRelease = Repo.get_latest_release() #LatestRelease = Repo.get_release(Version_Latest)
+        for Index, Asset in enumerate(LatestRelease.assets):
+            if Asset.name == f"{FileName}.{FileFormat}":
+                IsUpdateNeeded = True if Version_Current != Version_Latest else False
+                DownloadURL = Asset.browser_download_url #DownloadURL = f"https://github.com/{RepoOwner}/{RepoName}/releases/download/{Version_Latest}/{FileName}.{FileFormat}"
+                return IsUpdateNeeded, DownloadURL
+            elif Index + 1 == len(LatestRelease.assets):
+                raise Exception(f"No file found with name {FileName}.{FileFormat} in the latest release")
 
-    IsUpdateNeeded = True if Version_Current != Version_Latest else False
-
-    URL = f"https://github.com/{RepoOwner}/{RepoName}/releases/download/{Version_Latest}/{FileName}"
-
-    SHA = "Unknown"
-
-    try:
-        CommitSHA_Latest = Repo.get_latest_release().raw_data["target_commitish"]
-        for File in Repo.get_commit(CommitSHA_Latest).raw_data["Files"]:
-            if File["filename"] == f"{FileName}.{FileFormat}":
-                SHA = File["sha"]
-    except:
-        raise Exception("Failed to get commit")
-
-    return IsUpdateNeeded, URL, SHA
+    except Exception as e:
+        print(f"Error occurred while checking for updates: \n{e}")
 
 
 def DownloadFile(
-    URL: str,
+    DownloadURL: str,
     DownloadDir: str,
     FileName: str,
     FileFormat: str,
@@ -504,7 +553,7 @@ def DownloadFile(
     DownloadPath = os.path.join(DownloadDir, FileName) + '.' + FileFormat
 
     def Download():
-        with urllib.request.urlopen(URL) as source, open(DownloadPath, "wb") as output:
+        with urllib.request.urlopen(DownloadURL) as source, open(DownloadPath, "wb") as output:
             with tqdm(total = int(source.info().get("Content-Length")), ncols = 80, unit = 'iB', unit_scale = True, unit_divisor = 1024) as loop:
                 while True:
                     buffer = source.read(8192)

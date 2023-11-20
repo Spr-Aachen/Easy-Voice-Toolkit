@@ -77,13 +77,13 @@ class Ui_MainWindow(object):
 
         self.Frame_Top = QFrame(self.TitleBar)
         self.Frame_Top.setObjectName(u"Frame_Top")
-        self.horizontalLayout_56 = QHBoxLayout(self.Frame_Top)
-        self.horizontalLayout_56.setSpacing(0)
-        self.horizontalLayout_56.setObjectName(u"horizontalLayout_56")
-        self.horizontalLayout_56.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_11 = QHBoxLayout(self.Frame_Top)
+        self.horizontalLayout_11.setSpacing(0)
+        self.horizontalLayout_11.setObjectName(u"horizontalLayout_11")
+        self.horizontalLayout_11.setContentsMargins(0, 0, 0, 0)
         self.HorizontalSpacer_Left_Top = QSpacerItem(588, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
-        self.horizontalLayout_56.addItem(self.HorizontalSpacer_Left_Top)
+        self.horizontalLayout_11.addItem(self.HorizontalSpacer_Left_Top)
 
         self.Label_Title = QLabel(self.Frame_Top)
         self.Label_Title.setObjectName(u"Label_Title")
@@ -102,11 +102,103 @@ class Ui_MainWindow(object):
         self.horizontalLayout_55.setObjectName(u"horizontalLayout_55")
         self.horizontalLayout_55.setContentsMargins(90, 0, 0, 0)
 
-        self.horizontalLayout_56.addWidget(self.Label_Title)
+        self.horizontalLayout_11.addWidget(self.Label_Title)
 
         self.HorizontalSpacer_Right_Top = QSpacerItem(587, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
-        self.horizontalLayout_56.addItem(self.HorizontalSpacer_Right_Top)
+        self.horizontalLayout_11.addItem(self.HorizontalSpacer_Right_Top)
+
+        self.Frame_Top_Control_Window = QFrame(self.Frame_Top)
+        self.Frame_Top_Control_Window.setObjectName(u"Frame_Top_Control_Window")
+        self.Frame_Top_Control_Window.setMinimumSize(QSize(144, 0))
+        self.Frame_Top_Control_Window.setMaximumSize(QSize(144, 16777215))
+        self.horizontalLayout_12 = QHBoxLayout(self.Frame_Top_Control_Window)
+        self.horizontalLayout_12.setSpacing(0)
+        self.horizontalLayout_12.setObjectName(u"horizontalLayout_12")
+        self.horizontalLayout_12.setContentsMargins(0, 0, 0, 0)
+        self.Button_Minimize_Window = QPushButton(self.Frame_Top_Control_Window)
+        self.Button_Minimize_Window.setObjectName(u"Button_Minimize_Window")
+        sizePolicy.setHeightForWidth(self.Button_Minimize_Window.sizePolicy().hasHeightForWidth())
+        self.Button_Minimize_Window.setSizePolicy(sizePolicy)
+        self.Button_Minimize_Window.setStyleSheet(u"QPushButton {\n"
+"	image: url(:/Button_Icon/Sources/Dash.png);\n"
+"	background-color: transparent;\n"
+"	padding: 6.6px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"	border-color: transparent;\n"
+"}\n"
+"QPushButton:hover {\n"
+"	background-color: rgba(123, 123, 123, 123);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.horizontalLayout_12.addWidget(self.Button_Minimize_Window)
+
+        self.Button_Maximize_Window = QPushButton(self.Frame_Top_Control_Window)
+        self.Button_Maximize_Window.setObjectName(u"Button_Maximize_Window")
+        sizePolicy.setHeightForWidth(self.Button_Maximize_Window.sizePolicy().hasHeightForWidth())
+        self.Button_Maximize_Window.setSizePolicy(sizePolicy)
+        self.Button_Maximize_Window.setStyleSheet(u"QPushButton {\n"
+"	image: url(:/Button_Icon/Sources/FullScreen.png);\n"
+"	background-color: transparent;\n"
+"	padding: 6.6px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"	border-color: transparent;\n"
+"}\n"
+"QPushButton:hover {\n"
+"	background-color: rgba(123, 123, 123, 123);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.horizontalLayout_12.addWidget(self.Button_Maximize_Window)
+
+        self.Button_Close_Window = QPushButton(self.Frame_Top_Control_Window)
+        self.Button_Close_Window.setObjectName(u"Button_Close_Window")
+        sizePolicy.setHeightForWidth(self.Button_Close_Window.sizePolicy().hasHeightForWidth())
+        self.Button_Close_Window.setSizePolicy(sizePolicy)
+        self.Button_Close_Window.setStyleSheet(u"QPushButton {\n"
+"	image: url(:/Button_Icon/Sources/X.png);\n"
+"	background-color: transparent;\n"
+"	padding: 6.6px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"	border-color: transparent;\n"
+"}\n"
+"QPushButton:hover {\n"
+"	background-color: rgba(210, 123, 123, 210);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.horizontalLayout_12.addWidget(self.Button_Close_Window)
+
+
+        self.horizontalLayout_11.addWidget(self.Frame_Top_Control_Window)
 
 
         self.horizontalLayout_30.addWidget(self.Frame_Top)
@@ -1171,14 +1263,14 @@ class Ui_MainWindow(object):
 
         self.ProgressBar_Download_FFmpeg = QProgressBar(self.Frame_Download_FFmpeg)
         self.ProgressBar_Download_FFmpeg.setObjectName(u"ProgressBar_Download_FFmpeg")
-        self.ProgressBar_Download_FFmpeg.setMaximumSize(QSize(16777215, 3))
+        self.ProgressBar_Download_FFmpeg.setMaximumSize(QSize(16777215, 6))
         self.ProgressBar_Download_FFmpeg.setStyleSheet(u"QProgressBar {\n"
 "	text-align: center;\n"
 "	color: rgb(255, 255, 255);\n"
 "	background-color: rgba(123, 123, 123, 210);\n"
 "	padding: 0px;\n"
 "	border-width: 0px;\n"
-"	border-radius: 6px;\n"
+"	border-radius: 3px;\n"
 "	border-style: solid;\n"
 "}\n"
 "\n"
@@ -1264,14 +1356,14 @@ class Ui_MainWindow(object):
 
         self.ProgressBar_Download_Python = QProgressBar(self.Frame_Download_Python)
         self.ProgressBar_Download_Python.setObjectName(u"ProgressBar_Download_Python")
-        self.ProgressBar_Download_Python.setMaximumSize(QSize(16777215, 3))
+        self.ProgressBar_Download_Python.setMaximumSize(QSize(16777215, 6))
         self.ProgressBar_Download_Python.setStyleSheet(u"QProgressBar {\n"
 "	text-align: center;\n"
 "	color: rgb(255, 255, 255);\n"
 "	background-color: rgba(123, 123, 123, 210);\n"
 "	padding: 0px;\n"
 "	border-width: 0px;\n"
-"	border-radius: 6px;\n"
+"	border-radius: 3px;\n"
 "	border-style: solid;\n"
 "}\n"
 "\n"
@@ -1357,14 +1449,14 @@ class Ui_MainWindow(object):
 
         self.ProgressBar_Download_PyReqs = QProgressBar(self.Frame_Download_PyReqs)
         self.ProgressBar_Download_PyReqs.setObjectName(u"ProgressBar_Download_PyReqs")
-        self.ProgressBar_Download_PyReqs.setMaximumSize(QSize(16777215, 3))
+        self.ProgressBar_Download_PyReqs.setMaximumSize(QSize(16777215, 6))
         self.ProgressBar_Download_PyReqs.setStyleSheet(u"QProgressBar {\n"
 "	text-align: center;\n"
 "	color: rgb(255, 255, 255);\n"
 "	background-color: rgba(123, 123, 123, 210);\n"
 "	padding: 0px;\n"
 "	border-width: 0px;\n"
-"	border-radius: 6px;\n"
+"	border-radius: 3px;\n"
 "	border-style: solid;\n"
 "}\n"
 "\n"
@@ -1450,14 +1542,14 @@ class Ui_MainWindow(object):
 
         self.ProgressBar_Download_Pytorch = QProgressBar(self.Frame_Download_Pytorch)
         self.ProgressBar_Download_Pytorch.setObjectName(u"ProgressBar_Download_Pytorch")
-        self.ProgressBar_Download_Pytorch.setMaximumSize(QSize(16777215, 3))
+        self.ProgressBar_Download_Pytorch.setMaximumSize(QSize(16777215, 6))
         self.ProgressBar_Download_Pytorch.setStyleSheet(u"QProgressBar {\n"
 "	text-align: center;\n"
 "	color: rgb(255, 255, 255);\n"
 "	background-color: rgba(123, 123, 123, 210);\n"
 "	padding: 0px;\n"
 "	border-width: 0px;\n"
-"	border-radius: 6px;\n"
+"	border-radius: 3px;\n"
 "	border-style: solid;\n"
 "}\n"
 "\n"
@@ -2226,7 +2318,7 @@ class Ui_MainWindow(object):
         self.ScrollArea_Middle_Tool_AudioProcessor.setWidgetResizable(True)
         self.ScrollArea_Middle_WidgetContents_Tool_AudioProcessor = QWidget()
         self.ScrollArea_Middle_WidgetContents_Tool_AudioProcessor.setObjectName(u"ScrollArea_Middle_WidgetContents_Tool_AudioProcessor")
-        self.ScrollArea_Middle_WidgetContents_Tool_AudioProcessor.setGeometry(QRect(0, 0, 621, 1108))
+        self.ScrollArea_Middle_WidgetContents_Tool_AudioProcessor.setGeometry(QRect(0, 0, 621, 1600))
         self.verticalLayout_14 = QVBoxLayout(self.ScrollArea_Middle_WidgetContents_Tool_AudioProcessor)
         self.verticalLayout_14.setSpacing(12)
         self.verticalLayout_14.setObjectName(u"verticalLayout_14")
@@ -2301,10 +2393,10 @@ class Ui_MainWindow(object):
 
         self.Frame_BasicSettings_Tool_AudioProcessor = QFrame(self.GroupBox_EssentialParams_Tool_AudioProcessor)
         self.Frame_BasicSettings_Tool_AudioProcessor.setObjectName(u"Frame_BasicSettings_Tool_AudioProcessor")
-        self.verticalLayout_151 = QVBoxLayout(self.Frame_BasicSettings_Tool_AudioProcessor)
-        self.verticalLayout_151.setSpacing(0)
-        self.verticalLayout_151.setObjectName(u"verticalLayout_151")
-        self.verticalLayout_151.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_20 = QVBoxLayout(self.Frame_BasicSettings_Tool_AudioProcessor)
+        self.verticalLayout_20.setSpacing(0)
+        self.verticalLayout_20.setObjectName(u"verticalLayout_20")
+        self.verticalLayout_20.setContentsMargins(0, 0, 0, 0)
         self.Frame_Tool_AudioProcessor_Media_Dir_Input = QFrame(self.Frame_BasicSettings_Tool_AudioProcessor)
         self.Frame_Tool_AudioProcessor_Media_Dir_Input.setObjectName(u"Frame_Tool_AudioProcessor_Media_Dir_Input")
         self.Frame_Tool_AudioProcessor_Media_Dir_Input.setMinimumSize(QSize(0, 123))
@@ -2422,7 +2514,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_152.addWidget(self.ChildFrame_Tool_AudioProcessor_Media_Dir_Input)
 
 
-        self.verticalLayout_151.addWidget(self.Frame_Tool_AudioProcessor_Media_Dir_Input)
+        self.verticalLayout_20.addWidget(self.Frame_Tool_AudioProcessor_Media_Dir_Input)
 
         self.Frame_Tool_AudioProcessor_Media_Format_Output = QFrame(self.Frame_BasicSettings_Tool_AudioProcessor)
         self.Frame_Tool_AudioProcessor_Media_Format_Output.setObjectName(u"Frame_Tool_AudioProcessor_Media_Format_Output")
@@ -2626,7 +2718,85 @@ class Ui_MainWindow(object):
         self.verticalLayout_153.addWidget(self.ComboBox_Tool_AudioProcessor_Media_Format_Output)
 
 
-        self.verticalLayout_151.addWidget(self.Frame_Tool_AudioProcessor_Media_Format_Output)
+        self.verticalLayout_20.addWidget(self.Frame_Tool_AudioProcessor_Media_Format_Output)
+
+        self.Frame_Tool_AudioProcessor_Slice_Audio = QFrame(self.Frame_BasicSettings_Tool_AudioProcessor)
+        self.Frame_Tool_AudioProcessor_Slice_Audio.setObjectName(u"Frame_Tool_AudioProcessor_Slice_Audio")
+        self.Frame_Tool_AudioProcessor_Slice_Audio.setMinimumSize(QSize(0, 123))
+        self.Frame_Tool_AudioProcessor_Slice_Audio.setStyleSheet(u"QFrame {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QFrame:hover {\n"
+"	background-color: rgb(33, 33, 33);\n"
+"}")
+        self.verticalLayout_120 = QVBoxLayout(self.Frame_Tool_AudioProcessor_Slice_Audio)
+        self.verticalLayout_120.setSpacing(12)
+        self.verticalLayout_120.setObjectName(u"verticalLayout_120")
+        self.verticalLayout_120.setContentsMargins(21, 12, 21, 12)
+        self.Label_Tool_AudioProcessor_Slice_Audio = QLabel(self.Frame_Tool_AudioProcessor_Slice_Audio)
+        self.Label_Tool_AudioProcessor_Slice_Audio.setObjectName(u"Label_Tool_AudioProcessor_Slice_Audio")
+        self.Label_Tool_AudioProcessor_Slice_Audio.setStyleSheet(u"QLabel {\n"
+"	/*text-align: center;*/\n"
+"	/*color: rgb(255, 255, 255);*/\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.verticalLayout_120.addWidget(self.Label_Tool_AudioProcessor_Slice_Audio)
+
+        self.CheckBox_Tool_AudioProcessor_Slice_Audio = QCheckBox(self.Frame_Tool_AudioProcessor_Slice_Audio)
+        self.CheckBox_Tool_AudioProcessor_Slice_Audio.setObjectName(u"CheckBox_Tool_AudioProcessor_Slice_Audio")
+        self.CheckBox_Tool_AudioProcessor_Slice_Audio.setStyleSheet(u"QCheckBox {\n"
+"	font-size: 12px;\n"
+"	spacing: 12.3px;\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QCheckBox:hover {\n"
+"	color: rgb(255, 255, 255);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator {\n"
+"	width: 24px;\n"
+"	height: 24px;\n"
+"    background-color: transparent;\n"
+"	padding: 1.2px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QCheckBox::indicator:hover {\n"
+"	background-color: rgba(255, 255, 255, 21);\n"
+"}\n"
+"QCheckBox::indicator:unchecked {\n"
+"	border-image: url(:/CheckBox_Icon/Sources/ToggleOff.png);\n"
+"}\n"
+"QCheckBox::indicator:checked {\n"
+"	border-image: url(:/CheckBox_Icon/Sources/ToggleOn.png);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.verticalLayout_120.addWidget(self.CheckBox_Tool_AudioProcessor_Slice_Audio)
+
+
+        self.verticalLayout_20.addWidget(self.Frame_Tool_AudioProcessor_Slice_Audio)
 
         self.Frame_Tool_AudioProcessor_Media_Dir_Output = QFrame(self.Frame_BasicSettings_Tool_AudioProcessor)
         self.Frame_Tool_AudioProcessor_Media_Dir_Output.setObjectName(u"Frame_Tool_AudioProcessor_Media_Dir_Output")
@@ -2742,7 +2912,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_154.addWidget(self.ChildFrame_Tool_AudioProcessor_Media_Dir_Output)
 
 
-        self.verticalLayout_151.addWidget(self.Frame_Tool_AudioProcessor_Media_Dir_Output)
+        self.verticalLayout_20.addWidget(self.Frame_Tool_AudioProcessor_Media_Dir_Output)
 
 
         self.verticalLayout_150.addWidget(self.Frame_BasicSettings_Tool_AudioProcessor)
@@ -2795,10 +2965,10 @@ class Ui_MainWindow(object):
 
         self.Frame_AdvanceSettings_Tool_AudioProcessor = QFrame(self.GroupBox_EssentialParams_Tool_AudioProcessor)
         self.Frame_AdvanceSettings_Tool_AudioProcessor.setObjectName(u"Frame_AdvanceSettings_Tool_AudioProcessor")
-        self.verticalLayout_155 = QVBoxLayout(self.Frame_AdvanceSettings_Tool_AudioProcessor)
-        self.verticalLayout_155.setSpacing(0)
-        self.verticalLayout_155.setObjectName(u"verticalLayout_155")
-        self.verticalLayout_155.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_21 = QVBoxLayout(self.Frame_AdvanceSettings_Tool_AudioProcessor)
+        self.verticalLayout_21.setSpacing(0)
+        self.verticalLayout_21.setObjectName(u"verticalLayout_21")
+        self.verticalLayout_21.setContentsMargins(0, 0, 0, 0)
         self.Frame_Tool_AudioProcessor_RMS_Threshold = QFrame(self.Frame_AdvanceSettings_Tool_AudioProcessor)
         self.Frame_Tool_AudioProcessor_RMS_Threshold.setObjectName(u"Frame_Tool_AudioProcessor_RMS_Threshold")
         self.Frame_Tool_AudioProcessor_RMS_Threshold.setMinimumSize(QSize(0, 123))
@@ -2889,7 +3059,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_156.addWidget(self.DoubleSpinBox_Tool_AudioProcessor_RMS_Threshold)
 
 
-        self.verticalLayout_155.addWidget(self.Frame_Tool_AudioProcessor_RMS_Threshold)
+        self.verticalLayout_21.addWidget(self.Frame_Tool_AudioProcessor_RMS_Threshold)
 
         self.Frame_Tool_AudioProcessor_Audio_Length_Min = QFrame(self.Frame_AdvanceSettings_Tool_AudioProcessor)
         self.Frame_Tool_AudioProcessor_Audio_Length_Min.setObjectName(u"Frame_Tool_AudioProcessor_Audio_Length_Min")
@@ -2980,7 +3150,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_157.addWidget(self.SpinBox_Tool_AudioProcessor_Audio_Length_Min)
 
 
-        self.verticalLayout_155.addWidget(self.Frame_Tool_AudioProcessor_Audio_Length_Min)
+        self.verticalLayout_21.addWidget(self.Frame_Tool_AudioProcessor_Audio_Length_Min)
 
         self.Frame_Tool_AudioProcessor_Silent_Interval_Min = QFrame(self.Frame_AdvanceSettings_Tool_AudioProcessor)
         self.Frame_Tool_AudioProcessor_Silent_Interval_Min.setObjectName(u"Frame_Tool_AudioProcessor_Silent_Interval_Min")
@@ -3071,7 +3241,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_158.addWidget(self.SpinBox_Tool_AudioProcessor_Silent_Interval_Min)
 
 
-        self.verticalLayout_155.addWidget(self.Frame_Tool_AudioProcessor_Silent_Interval_Min)
+        self.verticalLayout_21.addWidget(self.Frame_Tool_AudioProcessor_Silent_Interval_Min)
 
         self.Frame_Tool_AudioProcessor_Hop_Size = QFrame(self.Frame_AdvanceSettings_Tool_AudioProcessor)
         self.Frame_Tool_AudioProcessor_Hop_Size.setObjectName(u"Frame_Tool_AudioProcessor_Hop_Size")
@@ -3162,7 +3332,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_159.addWidget(self.SpinBox_Tool_AudioProcessor_Hop_Size)
 
 
-        self.verticalLayout_155.addWidget(self.Frame_Tool_AudioProcessor_Hop_Size)
+        self.verticalLayout_21.addWidget(self.Frame_Tool_AudioProcessor_Hop_Size)
 
         self.Frame_Tool_AudioProcessor_Silence_Kept_Max = QFrame(self.Frame_AdvanceSettings_Tool_AudioProcessor)
         self.Frame_Tool_AudioProcessor_Silence_Kept_Max.setObjectName(u"Frame_Tool_AudioProcessor_Silence_Kept_Max")
@@ -3253,7 +3423,619 @@ class Ui_MainWindow(object):
         self.verticalLayout_160.addWidget(self.SpinBox_Tool_AudioProcessor_Silence_Kept_Max)
 
 
-        self.verticalLayout_155.addWidget(self.Frame_Tool_AudioProcessor_Silence_Kept_Max)
+        self.verticalLayout_21.addWidget(self.Frame_Tool_AudioProcessor_Silence_Kept_Max)
+
+        self.Frame_Tool_AudioProcessor_Channels = QFrame(self.Frame_AdvanceSettings_Tool_AudioProcessor)
+        self.Frame_Tool_AudioProcessor_Channels.setObjectName(u"Frame_Tool_AudioProcessor_Channels")
+        self.Frame_Tool_AudioProcessor_Channels.setMinimumSize(QSize(0, 123))
+        self.Frame_Tool_AudioProcessor_Channels.setStyleSheet(u"QFrame {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QFrame:hover {\n"
+"	background-color: rgb(33, 33, 33);\n"
+"}")
+        self.verticalLayout_155 = QVBoxLayout(self.Frame_Tool_AudioProcessor_Channels)
+        self.verticalLayout_155.setSpacing(12)
+        self.verticalLayout_155.setObjectName(u"verticalLayout_155")
+        self.verticalLayout_155.setContentsMargins(21, 12, 21, 12)
+        self.Label_Tool_AudioProcessor_Channels = QLabel(self.Frame_Tool_AudioProcessor_Channels)
+        self.Label_Tool_AudioProcessor_Channels.setObjectName(u"Label_Tool_AudioProcessor_Channels")
+        self.Label_Tool_AudioProcessor_Channels.setStyleSheet(u"QLabel {\n"
+"	/*text-align: center;*/\n"
+"	/*color: rgb(255, 255, 255);*/\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.verticalLayout_155.addWidget(self.Label_Tool_AudioProcessor_Channels)
+
+        self.ComboBox_Tool_AudioProcessor_Channels = QComboBox(self.Frame_Tool_AudioProcessor_Channels)
+        self.ComboBox_Tool_AudioProcessor_Channels.setObjectName(u"ComboBox_Tool_AudioProcessor_Channels")
+        self.ComboBox_Tool_AudioProcessor_Channels.setStyleSheet(u"QComboBox {\n"
+"	/*font-size: 12px;*/\n"
+"	text-align: left;\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: transparent;\n"
+"	padding-top: 3px;\n"
+"	padding-left: 6px;\n"
+"	padding-bottom: 3px;\n"
+"	padding-right: 6px;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgba(201, 210, 222, 123);\n"
+"}\n"
+"QComboBox:hover {\n"
+"	border-color: rgba(201, 210, 222, 210);\n"
+"}\n"
+"\n"
+"QComboBox::drop-down {\n"
+"	/*width: 12px;\n"
+"	height: 12px;*/\n"
+"	subcontrol-origin: padding;\n"
+"	subcontrol-position: right;\n"
+"	margin-right: 6px;\n"
+"	border-width: 0px;\n"
+"}\n"
+"QComboBox::down-arrow {\n"
+"	border-image: url(:/ComboBox_Icon/Sources/DownArrow.png);\n"
+"}\n"
+"\n"
+"\n"
+"QComboBox QAbstractItemView {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: transparent;\n"
+"	padding-left: -15px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"	outline: 0px;\n"
+"}\n"
+"\n"
+"QComboBox QAbstractItemV"
+                        "iew::item {\n"
+"	/* height: 30px; */\n"
+"	background-color: transparent;\n"
+"	padding-left: 15px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QComboBox QAbstractItemView::item:selected {\n"
+"	background-color: rgba(120. 120, 120, 120)\n"
+"}\n"
+"\n"
+"\n"
+"QComboBox QAbstractScrollArea QScrollBar::vertical {\n"
+"	width: 9px;\n"
+"	background-color: rgb(45, 45, 45);\n"
+"	border-width: 1px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: transparent;\n"
+"	margin: 0px;\n"
+"}\n"
+"QComboBox QAbstractScrollArea QScrollBar::vertical:hover {\n"
+"	background-color: rgb(60, 60, 60);\n"
+"}\n"
+"\n"
+"QComboBox QAbstractScrollArea QScrollBar::add-line:vertical {\n"
+"	height: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: left;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QComboBox QAbstractScrollArea QScrollBar::sub-line:vertical {\n"
+""
+                        "	height: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: right;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QComboBox QAbstractScrollArea QScrollBar::add-page:vertical, QComboBox QAbstractScrollArea QScrollBar::sub-page:vertical {\n"
+"	width: 0px;\n"
+"	height: 0px;\n"
+"	background-color: transparent;\n"
+"}\n"
+"\n"
+"QComboBox QAbstractScrollArea QScrollBar::handle:vertical {\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QComboBox QAbstractScrollArea QScrollBar::handle:vertical:hover {\n"
+"	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QComboBox QAbstractScrollArea QScrollBar::horizontal {\n"
+"	height: 9px;\n"
+"	background-color: rgb(45, 45, 45);\n"
+"	border-width: 1px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: transparent;\n"
+"	margin: 0px;\n"
+"}\n"
+"QComboBox QAbstractScrollArea QScrollBar::horizontal:"
+                        "hover {\n"
+"	background-color: rgb(60, 60, 60);\n"
+"}\n"
+"\n"
+"QComboBox QAbstractScrollArea QScrollBar::add-line:horizontal {\n"
+"	width: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: left;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QComboBox QAbstractScrollArea QScrollBar::sub-line:horizontal {\n"
+"	width: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: right;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QComboBox QAbstractScrollArea QScrollBar::add-page:horizontal, QComboBox QAbstractScrollArea QScrollBar::sub-page:horizontal {\n"
+"	width: 0px;\n"
+"	height: 0px;\n"
+"	background-color: transparent;\n"
+"}\n"
+"\n"
+"QComboBox QAbstractScrollArea QScrollBar::handle:horizontal {\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QComboBox QAbstractScro"
+                        "llArea QScrollBar::handle:horizontal:hover {\n"
+"	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.verticalLayout_155.addWidget(self.ComboBox_Tool_AudioProcessor_Channels)
+
+
+        self.verticalLayout_21.addWidget(self.Frame_Tool_AudioProcessor_Channels)
+
+        self.Frame_Tool_AudioProcessor_SampleRate = QFrame(self.Frame_AdvanceSettings_Tool_AudioProcessor)
+        self.Frame_Tool_AudioProcessor_SampleRate.setObjectName(u"Frame_Tool_AudioProcessor_SampleRate")
+        self.Frame_Tool_AudioProcessor_SampleRate.setMinimumSize(QSize(0, 123))
+        self.Frame_Tool_AudioProcessor_SampleRate.setStyleSheet(u"QFrame {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QFrame:hover {\n"
+"	background-color: rgb(33, 33, 33);\n"
+"}")
+        self.verticalLayout_161 = QVBoxLayout(self.Frame_Tool_AudioProcessor_SampleRate)
+        self.verticalLayout_161.setSpacing(12)
+        self.verticalLayout_161.setObjectName(u"verticalLayout_161")
+        self.verticalLayout_161.setContentsMargins(21, 12, 21, 12)
+        self.Label_Tool_AudioProcessor_SampleRate = QLabel(self.Frame_Tool_AudioProcessor_SampleRate)
+        self.Label_Tool_AudioProcessor_SampleRate.setObjectName(u"Label_Tool_AudioProcessor_SampleRate")
+        self.Label_Tool_AudioProcessor_SampleRate.setStyleSheet(u"QLabel {\n"
+"	/*text-align: center;*/\n"
+"	/*color: rgb(255, 255, 255);*/\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.verticalLayout_161.addWidget(self.Label_Tool_AudioProcessor_SampleRate)
+
+        self.ComboBox_Tool_AudioProcessor_SampleRate = QComboBox(self.Frame_Tool_AudioProcessor_SampleRate)
+        self.ComboBox_Tool_AudioProcessor_SampleRate.setObjectName(u"ComboBox_Tool_AudioProcessor_SampleRate")
+        self.ComboBox_Tool_AudioProcessor_SampleRate.setStyleSheet(u"QComboBox {\n"
+"	/*font-size: 12px;*/\n"
+"	text-align: left;\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: transparent;\n"
+"	padding-top: 3px;\n"
+"	padding-left: 6px;\n"
+"	padding-bottom: 3px;\n"
+"	padding-right: 6px;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgba(201, 210, 222, 123);\n"
+"}\n"
+"QComboBox:hover {\n"
+"	border-color: rgba(201, 210, 222, 210);\n"
+"}\n"
+"\n"
+"QComboBox::drop-down {\n"
+"	/*width: 12px;\n"
+"	height: 12px;*/\n"
+"	subcontrol-origin: padding;\n"
+"	subcontrol-position: right;\n"
+"	margin-right: 6px;\n"
+"	border-width: 0px;\n"
+"}\n"
+"QComboBox::down-arrow {\n"
+"	border-image: url(:/ComboBox_Icon/Sources/DownArrow.png);\n"
+"}\n"
+"\n"
+"\n"
+"QComboBox QAbstractItemView {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: transparent;\n"
+"	padding-left: -15px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"	outline: 0px;\n"
+"}\n"
+"\n"
+"QComboBox QAbstractItemV"
+                        "iew::item {\n"
+"	/* height: 30px; */\n"
+"	background-color: transparent;\n"
+"	padding-left: 15px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QComboBox QAbstractItemView::item:selected {\n"
+"	background-color: rgba(120. 120, 120, 120)\n"
+"}\n"
+"\n"
+"\n"
+"QComboBox QAbstractScrollArea QScrollBar::vertical {\n"
+"	width: 9px;\n"
+"	background-color: rgb(45, 45, 45);\n"
+"	border-width: 1px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: transparent;\n"
+"	margin: 0px;\n"
+"}\n"
+"QComboBox QAbstractScrollArea QScrollBar::vertical:hover {\n"
+"	background-color: rgb(60, 60, 60);\n"
+"}\n"
+"\n"
+"QComboBox QAbstractScrollArea QScrollBar::add-line:vertical {\n"
+"	height: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: left;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QComboBox QAbstractScrollArea QScrollBar::sub-line:vertical {\n"
+""
+                        "	height: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: right;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QComboBox QAbstractScrollArea QScrollBar::add-page:vertical, QComboBox QAbstractScrollArea QScrollBar::sub-page:vertical {\n"
+"	width: 0px;\n"
+"	height: 0px;\n"
+"	background-color: transparent;\n"
+"}\n"
+"\n"
+"QComboBox QAbstractScrollArea QScrollBar::handle:vertical {\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QComboBox QAbstractScrollArea QScrollBar::handle:vertical:hover {\n"
+"	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QComboBox QAbstractScrollArea QScrollBar::horizontal {\n"
+"	height: 9px;\n"
+"	background-color: rgb(45, 45, 45);\n"
+"	border-width: 1px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: transparent;\n"
+"	margin: 0px;\n"
+"}\n"
+"QComboBox QAbstractScrollArea QScrollBar::horizontal:"
+                        "hover {\n"
+"	background-color: rgb(60, 60, 60);\n"
+"}\n"
+"\n"
+"QComboBox QAbstractScrollArea QScrollBar::add-line:horizontal {\n"
+"	width: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: left;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QComboBox QAbstractScrollArea QScrollBar::sub-line:horizontal {\n"
+"	width: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: right;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QComboBox QAbstractScrollArea QScrollBar::add-page:horizontal, QComboBox QAbstractScrollArea QScrollBar::sub-page:horizontal {\n"
+"	width: 0px;\n"
+"	height: 0px;\n"
+"	background-color: transparent;\n"
+"}\n"
+"\n"
+"QComboBox QAbstractScrollArea QScrollBar::handle:horizontal {\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QComboBox QAbstractScro"
+                        "llArea QScrollBar::handle:horizontal:hover {\n"
+"	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.verticalLayout_161.addWidget(self.ComboBox_Tool_AudioProcessor_SampleRate)
+
+
+        self.verticalLayout_21.addWidget(self.Frame_Tool_AudioProcessor_SampleRate)
+
+        self.Frame_Tool_AudioProcessor_SampleWidth = QFrame(self.Frame_AdvanceSettings_Tool_AudioProcessor)
+        self.Frame_Tool_AudioProcessor_SampleWidth.setObjectName(u"Frame_Tool_AudioProcessor_SampleWidth")
+        self.Frame_Tool_AudioProcessor_SampleWidth.setMinimumSize(QSize(0, 123))
+        self.Frame_Tool_AudioProcessor_SampleWidth.setStyleSheet(u"QFrame {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QFrame:hover {\n"
+"	background-color: rgb(33, 33, 33);\n"
+"}")
+        self.verticalLayout_163 = QVBoxLayout(self.Frame_Tool_AudioProcessor_SampleWidth)
+        self.verticalLayout_163.setSpacing(12)
+        self.verticalLayout_163.setObjectName(u"verticalLayout_163")
+        self.verticalLayout_163.setContentsMargins(21, 12, 21, 12)
+        self.Label_Tool_AudioProcessor_SampleWidth = QLabel(self.Frame_Tool_AudioProcessor_SampleWidth)
+        self.Label_Tool_AudioProcessor_SampleWidth.setObjectName(u"Label_Tool_AudioProcessor_SampleWidth")
+        self.Label_Tool_AudioProcessor_SampleWidth.setStyleSheet(u"QLabel {\n"
+"	/*text-align: center;*/\n"
+"	/*color: rgb(255, 255, 255);*/\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.verticalLayout_163.addWidget(self.Label_Tool_AudioProcessor_SampleWidth)
+
+        self.ComboBox_Tool_AudioProcessor_SampleWidth = QComboBox(self.Frame_Tool_AudioProcessor_SampleWidth)
+        self.ComboBox_Tool_AudioProcessor_SampleWidth.setObjectName(u"ComboBox_Tool_AudioProcessor_SampleWidth")
+        self.ComboBox_Tool_AudioProcessor_SampleWidth.setStyleSheet(u"QComboBox {\n"
+"	/*font-size: 12px;*/\n"
+"	text-align: left;\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: transparent;\n"
+"	padding-top: 3px;\n"
+"	padding-left: 6px;\n"
+"	padding-bottom: 3px;\n"
+"	padding-right: 6px;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgba(201, 210, 222, 123);\n"
+"}\n"
+"QComboBox:hover {\n"
+"	border-color: rgba(201, 210, 222, 210);\n"
+"}\n"
+"\n"
+"QComboBox::drop-down {\n"
+"	/*width: 12px;\n"
+"	height: 12px;*/\n"
+"	subcontrol-origin: padding;\n"
+"	subcontrol-position: right;\n"
+"	margin-right: 6px;\n"
+"	border-width: 0px;\n"
+"}\n"
+"QComboBox::down-arrow {\n"
+"	border-image: url(:/ComboBox_Icon/Sources/DownArrow.png);\n"
+"}\n"
+"\n"
+"\n"
+"QComboBox QAbstractItemView {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: transparent;\n"
+"	padding-left: -15px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"	outline: 0px;\n"
+"}\n"
+"\n"
+"QComboBox QAbstractItemV"
+                        "iew::item {\n"
+"	/* height: 30px; */\n"
+"	background-color: transparent;\n"
+"	padding-left: 15px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QComboBox QAbstractItemView::item:selected {\n"
+"	background-color: rgba(120. 120, 120, 120)\n"
+"}\n"
+"\n"
+"\n"
+"QComboBox QAbstractScrollArea QScrollBar::vertical {\n"
+"	width: 9px;\n"
+"	background-color: rgb(45, 45, 45);\n"
+"	border-width: 1px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: transparent;\n"
+"	margin: 0px;\n"
+"}\n"
+"QComboBox QAbstractScrollArea QScrollBar::vertical:hover {\n"
+"	background-color: rgb(60, 60, 60);\n"
+"}\n"
+"\n"
+"QComboBox QAbstractScrollArea QScrollBar::add-line:vertical {\n"
+"	height: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: left;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QComboBox QAbstractScrollArea QScrollBar::sub-line:vertical {\n"
+""
+                        "	height: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: right;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QComboBox QAbstractScrollArea QScrollBar::add-page:vertical, QComboBox QAbstractScrollArea QScrollBar::sub-page:vertical {\n"
+"	width: 0px;\n"
+"	height: 0px;\n"
+"	background-color: transparent;\n"
+"}\n"
+"\n"
+"QComboBox QAbstractScrollArea QScrollBar::handle:vertical {\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QComboBox QAbstractScrollArea QScrollBar::handle:vertical:hover {\n"
+"	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QComboBox QAbstractScrollArea QScrollBar::horizontal {\n"
+"	height: 9px;\n"
+"	background-color: rgb(45, 45, 45);\n"
+"	border-width: 1px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: transparent;\n"
+"	margin: 0px;\n"
+"}\n"
+"QComboBox QAbstractScrollArea QScrollBar::horizontal:"
+                        "hover {\n"
+"	background-color: rgb(60, 60, 60);\n"
+"}\n"
+"\n"
+"QComboBox QAbstractScrollArea QScrollBar::add-line:horizontal {\n"
+"	width: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: left;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QComboBox QAbstractScrollArea QScrollBar::sub-line:horizontal {\n"
+"	width: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: right;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QComboBox QAbstractScrollArea QScrollBar::add-page:horizontal, QComboBox QAbstractScrollArea QScrollBar::sub-page:horizontal {\n"
+"	width: 0px;\n"
+"	height: 0px;\n"
+"	background-color: transparent;\n"
+"}\n"
+"\n"
+"QComboBox QAbstractScrollArea QScrollBar::handle:horizontal {\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QComboBox QAbstractScro"
+                        "llArea QScrollBar::handle:horizontal:hover {\n"
+"	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.verticalLayout_163.addWidget(self.ComboBox_Tool_AudioProcessor_SampleWidth)
+
+
+        self.verticalLayout_21.addWidget(self.Frame_Tool_AudioProcessor_SampleWidth)
 
 
         self.verticalLayout_150.addWidget(self.Frame_AdvanceSettings_Tool_AudioProcessor)
@@ -14878,6 +15660,8 @@ class Ui_MainWindow(object):
         self.Label_Tool_AudioProcessor_Media_Dir_Input.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Button_Tool_AudioProcessor_Media_Dir_Input.setText(QCoreApplication.translate("MainWindow", u"...", None))
         self.Label_Tool_AudioProcessor_Media_Format_Output.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.Label_Tool_AudioProcessor_Slice_Audio.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.CheckBox_Tool_AudioProcessor_Slice_Audio.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
         self.Label_Tool_AudioProcessor_Media_Dir_Output.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Button_Tool_AudioProcessor_Media_Dir_Output.setText(QCoreApplication.translate("MainWindow", u"...", None))
         self.CheckBox_Toggle_AdvanceSettings_Tool_AudioProcessor.setText(QCoreApplication.translate("MainWindow", u"CheckBox2", None))
@@ -14886,6 +15670,9 @@ class Ui_MainWindow(object):
         self.Label_Tool_AudioProcessor_Silent_Interval_Min.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Tool_AudioProcessor_Hop_Size.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Tool_AudioProcessor_Silence_Kept_Max.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.Label_Tool_AudioProcessor_Channels.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.Label_Tool_AudioProcessor_SampleRate.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.Label_Tool_AudioProcessor_SampleWidth.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         ___qtreewidgetitem3 = self.TreeWidget_Catalogue_Tool_VoiceIdentifier.headerItem()
         ___qtreewidgetitem3.setText(0, QCoreApplication.translate("MainWindow", u"HeaderView", None));
 

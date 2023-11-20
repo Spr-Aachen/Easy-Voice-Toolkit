@@ -20,32 +20,32 @@ class CustomSignals_EnvConfigurator(QObject):
     Signal_FFmpegDetected = Signal()
     Signal_FFmpegUndetected = Signal()
     Signal_FFmpegInstalled = Signal()
-    Signal_FFmpegInstallFailed = Signal()
+    Signal_FFmpegInstallFailed = Signal(Exception)
     '''
     Signal_GCCDetected = Signal()
     Signal_GCCUndetected = Signal()
     Signal_GCCInstalled = Signal()
-    Signal_GCCInstallFailed = Signal()
+    Signal_GCCInstallFailed = Signal(Exception)
 
     Signal_CMakeDetected = Signal()
     Signal_CMakeUndetected = Signal()
     Signal_CMakeInstalled = Signal()
-    Signal_CMakeInstallFailed = Signal()
+    Signal_CMakeInstallFailed = Signal(Exception)
     '''
     Signal_PythonDetected = Signal()
     Signal_PythonUndetected = Signal()
     Signal_PythonInstalled = Signal()
-    Signal_PythonInstallFailed = Signal()
+    Signal_PythonInstallFailed = Signal(Exception)
 
     Signal_PyReqsDetected = Signal()
     Signal_PyReqsUndetected = Signal()
     Signal_PyReqsInstalled = Signal()
-    Signal_PyReqsInstallFailed = Signal()
+    Signal_PyReqsInstallFailed = Signal(Exception)
 
     Signal_PytorchDetected = Signal()
     Signal_PytorchUndetected = Signal()
     Signal_PytorchInstalled = Signal()
-    Signal_PytorchInstallFailed = Signal()
+    Signal_PytorchInstallFailed = Signal(Exception)
 
 
 EnvConfiguratorSignals = CustomSignals_EnvConfigurator()
@@ -55,14 +55,14 @@ EnvConfiguratorSignals = CustomSignals_EnvConfigurator()
 class FFmpeg_Installer(QObject):
     '''
     '''
-    finished = Signal()
+    finished = Signal(str)
 
     def __init__(self):
         super().__init__()
         
     def Check_FFmpeg(self):
         try:
-            FFmpegVersion, _, _ = RunCMD([['ffmpeg', '-version']], DecodeResult = True)
+            FFmpegVersion = str(RunCMD([['ffmpeg', '-version']], DecodeResult = True)[0])
             return FFmpegVersion
         except OSError:
             return False
@@ -93,33 +93,34 @@ class FFmpeg_Installer(QObject):
             try:
                 self.Install_FFmpeg()
                 EnvConfiguratorSignals.Signal_FFmpegInstalled.emit()
-            except:
-                EnvConfiguratorSignals.Signal_FFmpegInstallFailed.emit()
+            except Exception as e:
+                EnvConfiguratorSignals.Signal_FFmpegInstallFailed.emit(e)
         else:
             EnvConfiguratorSignals.Signal_FFmpegDetected.emit()
-            print(f"FFmpeg detected. Version: {Result}")
+            #print(f"FFmpeg detected. Version: {Result}")
     
     def Execute(self, Params: tuple):
         TaskAccelerating(
             TargetList = [self.Execute_FFmpeg_Installation],
             ArgsList = [Params],
-            TypeList = ['MultiThreading']
+            TypeList = ['MultiThreading'],
+            ShowMessages = False
         )
 
-        self.finished.emit()
+        self.finished.emit(str(None))
 
 """
 class GCC_Installer(QObject):
     '''
     '''
-    finished = Signal()
+    finished = Signal(str)
 
     def __init__(self):
         super().__init__()
         
     def Check_GCC(self):
         try:
-            GCCVersion, _, _ = RunCMD([['gcc', '--version']], DecodeResult = True)
+            GCCVersion = str(RunCMD([['gcc', '--version']], DecodeResult = True)[0])
             return GCCVersion
         except OSError:
             return False
@@ -150,33 +151,34 @@ class GCC_Installer(QObject):
             try:
                 self.Install_GCC()
                 EnvConfiguratorSignals.Signal_GCCInstalled.emit()
-            except:
-                EnvConfiguratorSignals.Signal_GCCInstallFailed.emit()
+            except Exception as e:
+                EnvConfiguratorSignals.Signal_GCCInstallFailed.emit(e)
         else:
             EnvConfiguratorSignals.Signal_GCCDetected.emit()
-            print(f"GCC detected. Version: {Result}")
+            #print(f"GCC detected. Version: {Result}")
     
     def Execute(self, Params: tuple):
         TaskAccelerating(
             TargetList = [self.Execute_GCC_Installation],
             ArgsList = [Params],
-            TypeList = ['MultiThreading']
+            TypeList = ['MultiThreading'],
+            ShowMessages = False
         )
 
-        self.finished.emit()
+        self.finished.emit(str(None))
 
 
 class CMake_Installer(QObject):
     '''
     '''
-    finished = Signal()
+    finished = Signal(str)
 
     def __init__(self):
         super().__init__()
 
     def Check_CMake(self):
         try:
-            CMakeVersion, _, _ = RunCMD([['cmake', '--version']], DecodeResult = True)
+            CMakeVersion = str(RunCMD([['cmake', '--version']], DecodeResult = True)[0])
             return CMakeVersion
         except OSError:
             return False
@@ -216,11 +218,11 @@ class CMake_Installer(QObject):
             try:
                 self.Install_CMake()
                 EnvConfiguratorSignals.Signal_CMakeInstalled.emit()
-            except:
-                EnvConfiguratorSignals.Signal_CMakeInstallFailed.emit()
+            except Exception as e:
+                EnvConfiguratorSignals.Signal_CMakeInstallFailed.emit(e)
         else:
             EnvConfiguratorSignals.Signal_CMakeDetected.emit()
-            print(f"CMake detected. Version: {Result}")
+            #print(f"CMake detected. Version: {Result}")
 
         RunCMD(['set CMAKE_MAKE_PROGRAM={}'.format(os.path.join(self.MinGW_Bin_Path, 'mingw32-make.exe'))])
         RunCMD(['set CC={}'.format(os.path.join(self.MinGW_Bin_Path, 'gcc.exe'))])
@@ -230,16 +232,17 @@ class CMake_Installer(QObject):
         TaskAccelerating(
             TargetList = [self.Execute_CMake_Installation],
             ArgsList = [Params],
-            TypeList = ['MultiThreading']
+            TypeList = ['MultiThreading'],
+            ShowMessages = False
         )
 
-        self.finished.emit()
+        self.finished.emit(str(None))
 """
 
 class Python_Installer(QObject):
     '''
     '''
-    finished = Signal()
+    finished = Signal(str)
 
     def __init__(self):
         super().__init__()
@@ -256,7 +259,7 @@ class Python_Installer(QObject):
             return False
         '''
         try:
-            PythonVersion, _, _ = RunCMD([['python', '--version']], DecodeResult = True)
+            PythonVersion = str(RunCMD([['python', '--version']], DecodeResult = True)[0])
             if PythonVersion.split('.')[0] == 'Python 3' and int(PythonVersion.split('.')[1]) >= 8:
                 return PythonVersion
             else:
@@ -286,26 +289,27 @@ class Python_Installer(QObject):
             try:
                 self.Install_Python(Version_Download)
                 EnvConfiguratorSignals.Signal_PythonInstalled.emit()
-            except:
-                EnvConfiguratorSignals.Signal_PythonInstallFailed.emit()
+            except Exception as e:
+                EnvConfiguratorSignals.Signal_PythonInstallFailed.emit(e)
         else:
             EnvConfiguratorSignals.Signal_PythonDetected.emit()
-            print(f"Python detected. Version: {Result}")
+            #print(f"Python detected. Version: {Result}")
     
     def Execute(self, Params: tuple):
         TaskAccelerating(
             TargetList = [self.Execute_Python_Installation],
             ArgsList = [Params],
-            TypeList = ['MultiThreading']
+            TypeList = ['MultiThreading'],
+            ShowMessages = False
         )
 
-        self.finished.emit()
+        self.finished.emit(str(None))
 
 
 class PyReqs_Installer(QObject):
     '''
     '''
-    finished = Signal()
+    finished = Signal(str)
 
     def __init__(self):
         super().__init__()
@@ -322,7 +326,7 @@ class PyReqs_Installer(QObject):
             return False
         '''
         try:
-            PackageInfo, _, _ = RunCMD([['pip', 'show', Package]], DecodeResult = True)
+            PackageInfo = str(RunCMD([['pip', 'show', Package]], DecodeResult = True)[0])
             if 'not found' not in PackageInfo:
                 return PackageInfo
             else:
@@ -348,42 +352,46 @@ class PyReqs_Installer(QObject):
                 break
 
     def Execute_PyReqs_Installation(self, FilePath: str):
+        MissingRequirementList = []
         with open(FilePath, 'r') as f:
             Requirements = f.read().splitlines() #Requirements = f.readlines()
-        for Requirement in Requirements:
+        for Index, Requirement in enumerate(Requirements):
             if not (Requirement.startswith('#') or Requirement.strip() == ''):
                 Package = Requirement.strip()
                 Result = self.Check_PyReq(Package)
                 if Result == False:
                     if self.EmitFlag == True:
                         EnvConfiguratorSignals.Signal_PyReqsUndetected.emit()
-                        self.EmitFlag == False
-                    print(f"Installing {Package}. Please wait...")
-                    try:
-                        self.Install_PyReq(Package)
-                        EnvConfiguratorSignals.Signal_PyReqsInstalled.emit()
-                    except:
-                        EnvConfiguratorSignals.Signal_PyReqsInstallFailed.emit()
+                        self.EmitFlag = False
+                    MissingRequirementList.append(Requirement)
                 else:
-                    EnvConfiguratorSignals.Signal_PyReqsDetected.emit()
-                    print(f"{Package} detected. Version: {Result}")
+                    EnvConfiguratorSignals.Signal_PyReqsDetected.emit() if Index + 1 == len(Requirements) and MissingRequirementList == [] else None
+                    #print(f"{Package} detected. Version: {Result}")
             else:
                 continue
+        for Index, MissingRequirement in enumerate(MissingRequirementList):
+            print(f"Installing {MissingRequirement}. Please wait...")
+            try:
+                self.Install_PyReq(MissingRequirement)
+                EnvConfiguratorSignals.Signal_PyReqsInstalled.emit() if Index + 1 == len(MissingRequirementList) else None
+            except Exception as e:
+                EnvConfiguratorSignals.Signal_PyReqsInstallFailed.emit(e)
     
     def Execute(self, Params: tuple):
         TaskAccelerating(
             TargetList = [self.Execute_PyReqs_Installation],
             ArgsList = [Params],
-            TypeList = ['MultiThreading']
+            TypeList = ['MultiThreading'],
+            ShowMessages = False
         )
 
-        self.finished.emit()
+        self.finished.emit(str(None))
 
 
 class Pytorch_Installer(QObject):
     '''
     '''
-    finished = Signal()
+    finished = Signal(str)
 
     def __init__(self):
         super().__init__()
@@ -402,7 +410,7 @@ class Pytorch_Installer(QObject):
             return False
         '''
         try:
-            PackageInfo, _, _ = RunCMD(['pip', 'show', Package], DecodeResult = True)
+            PackageInfo = str(RunCMD([['pip', 'show', Package]], DecodeResult = True)[0])
             if 'not found' not in PackageInfo:
                 return PackageInfo
             else:
@@ -431,19 +439,20 @@ class Pytorch_Installer(QObject):
                 try:
                     self.Install_Pytorch(Package)
                     EnvConfiguratorSignals.Signal_PytorchInstalled.emit()
-                except:
-                    EnvConfiguratorSignals.Signal_PytorchInstallFailed.emit()
+                except Exception as e:
+                    EnvConfiguratorSignals.Signal_PytorchInstallFailed.emit(e)
             else:
                 EnvConfiguratorSignals.Signal_PytorchDetected.emit()
-                print(f"{Package} detected. Version: {Result}")
+                #print(f"{Package} detected. Version: {Result}")
     
     def Execute(self, Params: tuple):
         TaskAccelerating(
             TargetList = [self.Execute_Pytorch_Installation],
             ArgsList = [Params],
-            TypeList = ['MultiThreading']
+            TypeList = ['MultiThreading'],
+            ShowMessages = False
         )
 
-        self.finished.emit()
+        self.finished.emit(str(None))
 
 ##############################################################################################################################
