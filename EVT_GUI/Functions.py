@@ -361,7 +361,7 @@ def Function_ParamsChecker(
     for UI in ParamsFrom:
         Param = Function_ParamsHandler(UI, "Get")
         if isinstance(Param, str):
-            if Param == "None" or Param == "":
+            if Param.strip() == "None" or Param.strip() == "":
                 if UI in EmptyAllowed:
                     Param = None
                 else:

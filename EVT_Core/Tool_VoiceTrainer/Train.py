@@ -3,13 +3,16 @@ Edited
 '''
 
 from typing import Optional
+from pathlib import Path
 from datetime import datetime
 import os
+import sys
 import re
 import json
 import argparse
 import platform
 import logging
+logging.basicConfig(stream = sys.stdout, encoding = 'utf-8')
 logging.getLogger('numba').setLevel(logging.WARNING)
 import torch
 from torch.nn import functional as F
@@ -21,8 +24,6 @@ from torch.nn.parallel import DistributedDataParallel as DDP
 from torch.cuda.amp import autocast, GradScaler
 torch.backends.cudnn.benchmark = True
 
-import Tool_VoiceTrainer.vits.text as text
-import Tool_VoiceTrainer.vits.Utils as utils
 from .vits.Data_Utils import (
     TextAudioSpeakerLoader,
     TextAudioSpeakerCollate,
@@ -45,6 +46,22 @@ from .vits.Losses import (
     discriminator_loss,
     feature_loss,
     kl_loss
+)
+from .vits.Utils import (
+    load_audiopaths_sid_text,
+    plot_spectrogram_to_numpy,
+    summarize,
+    plot_alignment_to_numpy,
+    save_checkpoint,
+    get_logger,
+    #check_git_hash,
+    load_checkpoint,
+    latest_checkpoint_path,
+    get_hparams
+)
+from .vits.text import (
+    _clean_text,
+    #symbols
 )
 from .vits.text.symbols import symbols
 
@@ -78,8 +95,8 @@ class Preprocessing:
         self.Set_FP16_Run = Set_FP16_Run
         self.Set_Speakers = Set_Speakers
 
-        self.Config_Path_Load = Config_Path_Load if Config_Path_Load != None else os.path.normpath(os.path.join(os.path.dirname(__file__), './configs', (self.Language + '_base.json')))
-        self.Config_Path_Edited = os.path.normpath(os.path.join(Config_Dir_Save, (self.Language + f"_{datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}.json")))
+        self.Config_Path_Load = Config_Path_Load if Config_Path_Load is not None else Path(__file__).parent.joinpath('./configs', f'{self.Language}_base.json').__str__()
+        self.Config_Path_Edited = Path(Config_Dir_Save).joinpath(f"{self.Language}_{datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}.json").__str__()
         self.Out_Extension = "cleaned"
 
     def Configurator(self):
@@ -99,7 +116,7 @@ class Preprocessing:
 
         def Write_Config_Data(Config_Path_Load, Config_Dir_Save):
             os.makedirs(Config_Dir_Save, exist_ok = True)
-            with open(Config_Path_Load, 'rb', encoding = 'utf-8') as File_Old:
+            with open(Config_Path_Load, 'rb') as File_Old:
                 Params = json.load(File_Old)
             try:
                 Params_Old = Params
@@ -107,8 +124,8 @@ class Preprocessing:
                 Params_Old["train"]["epochs"]           = self.Set_Epochs
                 Params_Old["train"]["batch_size"]       = self.Set_Batch_Size
                 Params_Old["train"]["fp16_run"]         = self.Set_FP16_Run
-                Params_Old["data"]["training_files"]    = os.path.normpath(self.FileList_Path_Training + "." + self.Out_Extension)
-                Params_Old["data"]["validation_files"]  = os.path.normpath(self.FileList_Path_Validation + "." + self.Out_Extension)
+                Params_Old["data"]["training_files"]    = Path(self.FileList_Path_Training + "." + self.Out_Extension).__str__()
+                Params_Old["data"]["validation_files"]  = Path(self.FileList_Path_Validation + "." + self.Out_Extension).__str__()
                 Params_Old["data"]["text_cleaners"]     = [(self.Language + "_cleaners").lower()]
                 Params_Old["data"]["n_speakers"]        = len(Get_Speakers(self.FileList_Path_Training, self.FileList_Path_Validation)) if self.Set_Speakers == None else len(self.Set_Speakers)
                 Params_Old["speakers"]                  = Get_Speakers(self.FileList_Path_Training, self.FileList_Path_Validation) if self.Set_Speakers == None else self.Set_Speakers
@@ -130,15 +147,15 @@ class Preprocessing:
         Parser.add_argument("--Path_Index",       type = int,                       default = 0)
         Parser.add_argument("--Text_Index",       type = int,                       default = 2)
         Parser.add_argument("--FileLists",        type = list,     nargs = "+",     default = [self.FileList_Path_Validation, self.FileList_Path_Training])
-        Parser.add_argument("--Text_Cleaners",    type = str,      nargs = "+",     default = [self.Language + "_cleaners"])
+        Parser.add_argument("--Text_Cleaners",    type = list,     nargs = "+",     default = [self.Language + "_cleaners"])
         Args = Parser.parse_args(args = [])
 
         for FileList in Args.FileLists:
             print("START:", FileList)
             
-            Path_SID_Text = utils.load_audiopaths_sid_text(FileList)
+            Path_SID_Text = load_audiopaths_sid_text(FileList)
             for i in range(len(Path_SID_Text)):
-                Path_SID_Text[i][Args.Text_Index] = text._clean_text(Path_SID_Text[i][Args.Text_Index], Args.Text_Cleaners)
+                Path_SID_Text[i][Args.Text_Index] = _clean_text(Path_SID_Text[i][Args.Text_Index], Args.Text_Cleaners)
 
             Filelist_Cleaned = FileList + "." + Args.Out_Extension
             with open(Filelist_Cleaned, 'w', encoding = 'utf-8') as f:
@@ -153,12 +170,14 @@ class Training:
         Num_Workers: int = 4,
         Find_Unused_Parameters: bool = False,
         Model_Path_Pretrained_G: Optional[str] = None,
-        Model_Path_Pretrained_D: Optional[str] = None
+        Model_Path_Pretrained_D: Optional[str] = None,
+        Transfer_Speaker_Embedding: bool = False
     ):
         self.Num_Workers = Num_Workers
         self.Find_Unused_Parameters = Find_Unused_Parameters
         self.Model_Path_Pretrained_G = Model_Path_Pretrained_G
         self.Model_Path_Pretrained_D = Model_Path_Pretrained_D
+        self.Transfer_Speaker_Emb = Transfer_Speaker_Embedding
 
         self.CheckIfContinue = True
 
@@ -202,16 +221,16 @@ class Training:
                 hps.data.mel_fmax
             )
         image_dict = {
-            "gen/mel": utils.plot_spectrogram_to_numpy(y_hat_mel[0].cpu().numpy())
+            "gen/mel": plot_spectrogram_to_numpy(y_hat_mel[0].cpu().numpy())
         }
         audio_dict = {
             "gen/audio": y_hat[0,:,:y_hat_lengths[0]]
         }
         if global_step == 0:
-            image_dict.update({"gt/mel": utils.plot_spectrogram_to_numpy(mel[0].cpu().numpy())})
+            image_dict.update({"gt/mel": plot_spectrogram_to_numpy(mel[0].cpu().numpy())})
             audio_dict.update({"gt/audio": y[0,:,:y_lengths[0]]})
 
-        utils.summarize(
+        summarize(
             writer=writer_eval,
             global_step=global_step,
             images=image_dict,
@@ -308,12 +327,12 @@ class Training:
                     scalar_dict.update({"loss/d_r/{}".format(i): v for i, v in enumerate(losses_disc_r)})
                     scalar_dict.update({"loss/d_g/{}".format(i): v for i, v in enumerate(losses_disc_g)})
                     image_dict = {
-                        "slice/mel_org": utils.plot_spectrogram_to_numpy(y_mel[0].data.cpu().numpy()),
-                        "slice/mel_gen": utils.plot_spectrogram_to_numpy(y_hat_mel[0].data.cpu().numpy()),
-                        "all/mel": utils.plot_spectrogram_to_numpy(mel[0].data.cpu().numpy()),
-                        "all/attn": utils.plot_alignment_to_numpy(attn[0,0].data.cpu().numpy())
+                        "slice/mel_org": plot_spectrogram_to_numpy(y_mel[0].data.cpu().numpy()),
+                        "slice/mel_gen": plot_spectrogram_to_numpy(y_hat_mel[0].data.cpu().numpy()),
+                        "all/mel": plot_spectrogram_to_numpy(mel[0].data.cpu().numpy()),
+                        "all/attn": plot_alignment_to_numpy(attn[0,0].data.cpu().numpy())
                     }
-                    utils.summarize(
+                    summarize(
                         writer=writer,
                         global_step=global_step,
                         images=image_dict,
@@ -321,10 +340,10 @@ class Training:
 
                 if global_step % hps.train.eval_interval == 0:
                     self.evaluate(hps, net_g, eval_loader, writer_eval)
-                    utils.save_checkpoint(net_g, optim_g, hps.train.learning_rate, epoch, os.path.normpath(os.path.join(hps.model_dir, "G_{}.pth".format(global_step))))
-                    utils.save_checkpoint(net_d, optim_d, hps.train.learning_rate, epoch, os.path.normpath(os.path.join(hps.model_dir, "D_{}.pth".format(global_step))))
-                    old_g=os.path.normpath(os.path.join(hps.model_dir, "G_{}.pth".format(global_step-2000)))
-                    old_d=os.path.normpath(os.path.join(hps.model_dir, "D_{}.pth".format(global_step-2000)))
+                    save_checkpoint(net_g, optim_g, hps.train.learning_rate, epoch, Path(hps.model_dir).joinpath("G_{}.pth".format(global_step)).__str__())
+                    save_checkpoint(net_d, optim_d, hps.train.learning_rate, epoch, Path(hps.model_dir).joinpath("D_{}.pth".format(global_step)).__str__())
+                    old_g = Path(hps.model_dir).joinpath("G_{}.pth".format(global_step-2000)).__str__()
+                    old_d = Path(hps.model_dir).joinpath("D_{}.pth".format(global_step-2000)).__str__()
                     if os.path.exists(old_g):
                         os.remove(old_g)
                     if os.path.exists(old_d):
@@ -337,11 +356,11 @@ class Training:
     def run(self, rank, n_gpus, hps):
         global global_step
         if rank == 0:
-            logger = utils.get_logger(hps.model_dir)
-            logger.info(hps)
-            #utils.check_git_hash(hps.model_dir)
+            logger = get_logger(hps.model_dir)
+            #logger.info(hps)
+            #check_git_hash(hps.model_dir)
             writer = SummaryWriter(log_dir=hps.model_dir)
-            writer_eval = SummaryWriter(log_dir=os.path.normpath(os.path.join(hps.model_dir, "eval")))
+            writer_eval = SummaryWriter(log_dir=Path(hps.model_dir).joinpath("eval").__str__())
 
         dist.init_process_group(
             backend = 'gloo' if platform.system() == 'Windows' else 'nccl', # Windows不支持NCCL backend，故使用GLOO
@@ -375,6 +394,7 @@ class Training:
                 batch_size=hps.train.batch_size, pin_memory=True,
                 drop_last=False, collate_fn=collate_fn)
 
+        # Initialize VITS models
         net_g = SynthesizerTrn(
             len(symbols),
             hps.data.filter_length // 2 + 1,
@@ -382,8 +402,10 @@ class Training:
             n_speakers=hps.data.n_speakers,
             **hps.model).cuda(rank)
         net_d = MultiPeriodDiscriminator(hps.model.use_spectral_norm).cuda(rank)
+
+        # Build optimizers for the initialized VITS models
         optim_g = torch.optim.AdamW(
-            net_g.parameters(),
+            filter(lambda net_g_params: net_g_params.requires_grad, net_g.parameters()), # Filter out params which don't require gradient
             hps.train.learning_rate,
             betas=hps.train.betas,
             eps=hps.train.eps)
@@ -392,37 +414,49 @@ class Training:
             hps.train.learning_rate,
             betas=hps.train.betas,
             eps=hps.train.eps)
+
+        # Build DDP models for the initialized VITS models
         net_g = DDP(net_g, device_ids = [rank], find_unused_parameters = self.Find_Unused_Parameters)
         net_d = DDP(net_d, device_ids = [rank], find_unused_parameters = self.Find_Unused_Parameters)
 
+        # Load state dict from checkpoint for the initialized VITS models and get the optimizer, learning rate and iteration
         try:
-            if self.CheckIfContinue == True:
-                if None not in (self.Model_Path_Pretrained_G, self.Model_Path_Pretrained_D):
-                    _, _, _, epoch_str = utils.load_checkpoint(self.Model_Path_Pretrained_G, net_g, optim_g)
-                    _, _, _, epoch_str = utils.load_checkpoint(self.Model_Path_Pretrained_D, net_d, optim_d)
-                    print("Loaded from pretrained models")
-                else:
-                    _, _, _, epoch_str = utils.load_checkpoint(utils.latest_checkpoint_path(hps.model_dir, "G_*.pth"), net_g, optim_g)
-                    _, _, _, epoch_str = utils.load_checkpoint(utils.latest_checkpoint_path(hps.model_dir, "D_*.pth"), net_d, optim_d)
-                    print("Loaded from latest checkpoint")
-                self.CheckIfContinue = False
-            else:
-                _, _, _, epoch_str = utils.load_checkpoint(utils.latest_checkpoint_path(hps.model_dir, "G_*.pth"), net_g, optim_g)
-                _, _, _, epoch_str = utils.load_checkpoint(utils.latest_checkpoint_path(hps.model_dir, "D_*.pth"), net_d, optim_d)
+            _, optim_g, lr_g, epoch_str = load_checkpoint(
+                self.Model_Path_Pretrained_G if None not in (self.Model_Path_Pretrained_G, self.Model_Path_Pretrained_D) and self.CheckIfContinue else latest_checkpoint_path(hps.model_dir, "G_*.pth"),
+                net_g,
+                optim_g,
+                self.Transfer_Speaker_Emb
+            )
+            _, optim_d, lr_d, epoch_str = load_checkpoint(
+                self.Model_Path_Pretrained_D if None not in (self.Model_Path_Pretrained_G, self.Model_Path_Pretrained_D) and self.CheckIfContinue else latest_checkpoint_path(hps.model_dir, "D_*.pth"),
+                net_d,
+                optim_d,
+                self.Transfer_Speaker_Emb
+            )
+            self.CheckIfContinue = False
+
+            # To prevent KeyError: "param 'initial_lr' is not specified in param_groups[0] when resuming an optimizer"
+            if optim_g.param_groups[0].get('initial_lr') is None:
+                optim_g.param_groups[0]['initial_lr'] = lr_g
+            if optim_d.param_groups[0].get('initial_lr') is None:
+                optim_d.param_groups[0]['initial_lr'] = lr_d
 
             global_step = (epoch_str - 1) * len(train_loader) # > 0
             print(f"Continue from step {global_step}")
 
-        except:
+        except Exception as e:
             epoch_str = 1
             global_step = 0
-            print(f"Start from step 0")
+            print(f"Error occurred: {e} Start from step 0")
 
-        scheduler_g = torch.optim.lr_scheduler.ExponentialLR(optim_g, gamma=hps.train.lr_decay, last_epoch=epoch_str-2)
-        scheduler_d = torch.optim.lr_scheduler.ExponentialLR(optim_d, gamma=hps.train.lr_decay, last_epoch=epoch_str-2)
+        # Build learning rate schedulers for optimizers
+        scheduler_g = torch.optim.lr_scheduler.ExponentialLR(optim_g, gamma = hps.train.lr_decay, last_epoch = epoch_str - 2)
+        scheduler_d = torch.optim.lr_scheduler.ExponentialLR(optim_d, gamma = hps.train.lr_decay, last_epoch = epoch_str - 2)
 
-        scaler = GradScaler(enabled=hps.train.fp16_run)
+        # Build gradient scaler
+        scaler = GradScaler(enabled = hps.train.fp16_run)
 
+        # Start training (and evaluating)
         for epoch in range(epoch_str, hps.train.epochs + 1):
             if rank==0:
                 self.train_and_evaluate(rank, epoch, hps, [net_g, net_d], [optim_g, optim_d], [scheduler_g, scheduler_d], scaler, [train_loader, eval_loader], logger, [writer, writer_eval])
@@ -471,7 +505,7 @@ class Voice_Training(Preprocessing, Training):
         os.environ['MASTER_ADDR'] = 'localhost'
         os.environ['MASTER_PORT'] = '8000'
 
-        hps = utils.get_hparams(
+        hps = get_hparams(
             Config_Path = self.Config_Path_Edited,
             Model_Dir = self.Model_Dir_Save
         )

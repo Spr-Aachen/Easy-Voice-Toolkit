@@ -2204,6 +2204,11 @@ class Ui_MainWindow(object):
 
         self.ScrollArea_Middle_Tool_AudioProcessor = QScrollArea(self.StackedWidget_Pages_Tool_AudioProcessor)
         self.ScrollArea_Middle_Tool_AudioProcessor.setObjectName(u"ScrollArea_Middle_Tool_AudioProcessor")
+        sizePolicy4 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Expanding)
+        sizePolicy4.setHorizontalStretch(0)
+        sizePolicy4.setVerticalStretch(0)
+        sizePolicy4.setHeightForWidth(self.ScrollArea_Middle_Tool_AudioProcessor.sizePolicy().hasHeightForWidth())
+        self.ScrollArea_Middle_Tool_AudioProcessor.setSizePolicy(sizePolicy4)
         self.ScrollArea_Middle_Tool_AudioProcessor.setMinimumSize(QSize(630, 0))
         self.ScrollArea_Middle_Tool_AudioProcessor.setStyleSheet(u"QScrollArea {\n"
 "	background-color: rgba(36, 36, 36, 123);\n"
@@ -2429,11 +2434,11 @@ class Ui_MainWindow(object):
 
         self.ChildFrame_Tool_AudioProcessor_Media_Dir_Input = QFrame(self.Frame_Tool_AudioProcessor_Media_Dir_Input)
         self.ChildFrame_Tool_AudioProcessor_Media_Dir_Input.setObjectName(u"ChildFrame_Tool_AudioProcessor_Media_Dir_Input")
-        sizePolicy4 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
-        sizePolicy4.setHorizontalStretch(0)
-        sizePolicy4.setVerticalStretch(0)
-        sizePolicy4.setHeightForWidth(self.ChildFrame_Tool_AudioProcessor_Media_Dir_Input.sizePolicy().hasHeightForWidth())
-        self.ChildFrame_Tool_AudioProcessor_Media_Dir_Input.setSizePolicy(sizePolicy4)
+        sizePolicy5 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
+        sizePolicy5.setHorizontalStretch(0)
+        sizePolicy5.setVerticalStretch(0)
+        sizePolicy5.setHeightForWidth(self.ChildFrame_Tool_AudioProcessor_Media_Dir_Input.sizePolicy().hasHeightForWidth())
+        self.ChildFrame_Tool_AudioProcessor_Media_Dir_Input.setSizePolicy(sizePolicy5)
         self.ChildFrame_Tool_AudioProcessor_Media_Dir_Input.setStyleSheet(u"QFrame {\n"
 "	color: rgb(255, 255, 255);\n"
 "	background-color: transparent;\n"
@@ -2830,8 +2835,8 @@ class Ui_MainWindow(object):
 
         self.ChildFrame_Tool_AudioProcessor_Media_Dir_Output = QFrame(self.Frame_Tool_AudioProcessor_Media_Dir_Output)
         self.ChildFrame_Tool_AudioProcessor_Media_Dir_Output.setObjectName(u"ChildFrame_Tool_AudioProcessor_Media_Dir_Output")
-        sizePolicy4.setHeightForWidth(self.ChildFrame_Tool_AudioProcessor_Media_Dir_Output.sizePolicy().hasHeightForWidth())
-        self.ChildFrame_Tool_AudioProcessor_Media_Dir_Output.setSizePolicy(sizePolicy4)
+        sizePolicy5.setHeightForWidth(self.ChildFrame_Tool_AudioProcessor_Media_Dir_Output.sizePolicy().hasHeightForWidth())
+        self.ChildFrame_Tool_AudioProcessor_Media_Dir_Output.setSizePolicy(sizePolicy5)
         self.ChildFrame_Tool_AudioProcessor_Media_Dir_Output.setStyleSheet(u"QFrame {\n"
 "	color: rgb(255, 255, 255);\n"
 "	background-color: transparent;\n"
@@ -4257,11 +4262,11 @@ class Ui_MainWindow(object):
         self.verticalLayout_86.setContentsMargins(0, 0, 0, 0)
         self.Button_Tool_AudioProcessor_Execute = QPushButton(self.Page_Tool_AudioProcessor_Execute)
         self.Button_Tool_AudioProcessor_Execute.setObjectName(u"Button_Tool_AudioProcessor_Execute")
-        sizePolicy5 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
-        sizePolicy5.setHorizontalStretch(0)
-        sizePolicy5.setVerticalStretch(0)
-        sizePolicy5.setHeightForWidth(self.Button_Tool_AudioProcessor_Execute.sizePolicy().hasHeightForWidth())
-        self.Button_Tool_AudioProcessor_Execute.setSizePolicy(sizePolicy5)
+        sizePolicy6 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+        sizePolicy6.setHorizontalStretch(0)
+        sizePolicy6.setVerticalStretch(0)
+        sizePolicy6.setHeightForWidth(self.Button_Tool_AudioProcessor_Execute.sizePolicy().hasHeightForWidth())
+        self.Button_Tool_AudioProcessor_Execute.setSizePolicy(sizePolicy6)
         self.Button_Tool_AudioProcessor_Execute.setMinimumSize(QSize(0, 30))
         self.Button_Tool_AudioProcessor_Execute.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
@@ -4297,8 +4302,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_87.setContentsMargins(0, 0, 0, 0)
         self.Button_Tool_AudioProcessor_Terminate = QPushButton(self.Page_Tool_AudioProcessor_Terminate)
         self.Button_Tool_AudioProcessor_Terminate.setObjectName(u"Button_Tool_AudioProcessor_Terminate")
-        sizePolicy5.setHeightForWidth(self.Button_Tool_AudioProcessor_Terminate.sizePolicy().hasHeightForWidth())
-        self.Button_Tool_AudioProcessor_Terminate.setSizePolicy(sizePolicy5)
+        sizePolicy6.setHeightForWidth(self.Button_Tool_AudioProcessor_Terminate.sizePolicy().hasHeightForWidth())
+        self.Button_Tool_AudioProcessor_Terminate.setSizePolicy(sizePolicy6)
         self.Button_Tool_AudioProcessor_Terminate.setMinimumSize(QSize(0, 30))
         self.Button_Tool_AudioProcessor_Terminate.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
@@ -4551,6 +4556,8 @@ class Ui_MainWindow(object):
 
         self.ScrollArea_Middle_Tool_VoiceIdentifier = QScrollArea(self.StackedWidget_Pages_Tool_VoiceIdentifier)
         self.ScrollArea_Middle_Tool_VoiceIdentifier.setObjectName(u"ScrollArea_Middle_Tool_VoiceIdentifier")
+        sizePolicy4.setHeightForWidth(self.ScrollArea_Middle_Tool_VoiceIdentifier.sizePolicy().hasHeightForWidth())
+        self.ScrollArea_Middle_Tool_VoiceIdentifier.setSizePolicy(sizePolicy4)
         self.ScrollArea_Middle_Tool_VoiceIdentifier.setMinimumSize(QSize(630, 0))
         self.ScrollArea_Middle_Tool_VoiceIdentifier.setStyleSheet(u"QScrollArea {\n"
 "	background-color: rgba(36, 36, 36, 123);\n"
@@ -4776,8 +4783,8 @@ class Ui_MainWindow(object):
 
         self.ChildFrame_Tool_VoiceIdentifier_Audio_Dir_Input = QFrame(self.Frame_Tool_VoiceIdentifier_Audio_Dir_Input)
         self.ChildFrame_Tool_VoiceIdentifier_Audio_Dir_Input.setObjectName(u"ChildFrame_Tool_VoiceIdentifier_Audio_Dir_Input")
-        sizePolicy4.setHeightForWidth(self.ChildFrame_Tool_VoiceIdentifier_Audio_Dir_Input.sizePolicy().hasHeightForWidth())
-        self.ChildFrame_Tool_VoiceIdentifier_Audio_Dir_Input.setSizePolicy(sizePolicy4)
+        sizePolicy5.setHeightForWidth(self.ChildFrame_Tool_VoiceIdentifier_Audio_Dir_Input.sizePolicy().hasHeightForWidth())
+        self.ChildFrame_Tool_VoiceIdentifier_Audio_Dir_Input.setSizePolicy(sizePolicy5)
         self.ChildFrame_Tool_VoiceIdentifier_Audio_Dir_Input.setStyleSheet(u"QFrame {\n"
 "	color: rgb(255, 255, 255);\n"
 "	background-color: transparent;\n"
@@ -5023,8 +5030,8 @@ class Ui_MainWindow(object):
 
         self.ChildFrame_Tool_VoiceIdentifier_Audio_Dir_Output = QFrame(self.Frame_Tool_VoiceIdentifier_Audio_Dir_Output)
         self.ChildFrame_Tool_VoiceIdentifier_Audio_Dir_Output.setObjectName(u"ChildFrame_Tool_VoiceIdentifier_Audio_Dir_Output")
-        sizePolicy4.setHeightForWidth(self.ChildFrame_Tool_VoiceIdentifier_Audio_Dir_Output.sizePolicy().hasHeightForWidth())
-        self.ChildFrame_Tool_VoiceIdentifier_Audio_Dir_Output.setSizePolicy(sizePolicy4)
+        sizePolicy5.setHeightForWidth(self.ChildFrame_Tool_VoiceIdentifier_Audio_Dir_Output.sizePolicy().hasHeightForWidth())
+        self.ChildFrame_Tool_VoiceIdentifier_Audio_Dir_Output.setSizePolicy(sizePolicy5)
         self.ChildFrame_Tool_VoiceIdentifier_Audio_Dir_Output.setStyleSheet(u"QFrame {\n"
 "	color: rgb(255, 255, 255);\n"
 "	background-color: transparent;\n"
@@ -5194,8 +5201,8 @@ class Ui_MainWindow(object):
 
         self.ChildFrame_Tool_VoiceIdentifier_Model_Dir = QFrame(self.Frame_Tool_VoiceIdentifier_Model_Dir)
         self.ChildFrame_Tool_VoiceIdentifier_Model_Dir.setObjectName(u"ChildFrame_Tool_VoiceIdentifier_Model_Dir")
-        sizePolicy4.setHeightForWidth(self.ChildFrame_Tool_VoiceIdentifier_Model_Dir.sizePolicy().hasHeightForWidth())
-        self.ChildFrame_Tool_VoiceIdentifier_Model_Dir.setSizePolicy(sizePolicy4)
+        sizePolicy5.setHeightForWidth(self.ChildFrame_Tool_VoiceIdentifier_Model_Dir.sizePolicy().hasHeightForWidth())
+        self.ChildFrame_Tool_VoiceIdentifier_Model_Dir.setSizePolicy(sizePolicy5)
         self.ChildFrame_Tool_VoiceIdentifier_Model_Dir.setStyleSheet(u"QFrame {\n"
 "	color: rgb(255, 255, 255);\n"
 "	background-color: transparent;\n"
@@ -6227,8 +6234,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_102.setContentsMargins(0, 0, 0, 0)
         self.Button_Tool_VoiceIdentifier_Execute = QPushButton(self.Page_Tool_VoiceIdentifier_Execute)
         self.Button_Tool_VoiceIdentifier_Execute.setObjectName(u"Button_Tool_VoiceIdentifier_Execute")
-        sizePolicy5.setHeightForWidth(self.Button_Tool_VoiceIdentifier_Execute.sizePolicy().hasHeightForWidth())
-        self.Button_Tool_VoiceIdentifier_Execute.setSizePolicy(sizePolicy5)
+        sizePolicy6.setHeightForWidth(self.Button_Tool_VoiceIdentifier_Execute.sizePolicy().hasHeightForWidth())
+        self.Button_Tool_VoiceIdentifier_Execute.setSizePolicy(sizePolicy6)
         self.Button_Tool_VoiceIdentifier_Execute.setMinimumSize(QSize(0, 30))
         self.Button_Tool_VoiceIdentifier_Execute.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
@@ -6264,8 +6271,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_119.setContentsMargins(0, 0, 0, 0)
         self.Button_Tool_VoiceIdentifier_Terminate = QPushButton(self.Page_Tool_VoiceIdentifier_Terminate)
         self.Button_Tool_VoiceIdentifier_Terminate.setObjectName(u"Button_Tool_VoiceIdentifier_Terminate")
-        sizePolicy5.setHeightForWidth(self.Button_Tool_VoiceIdentifier_Terminate.sizePolicy().hasHeightForWidth())
-        self.Button_Tool_VoiceIdentifier_Terminate.setSizePolicy(sizePolicy5)
+        sizePolicy6.setHeightForWidth(self.Button_Tool_VoiceIdentifier_Terminate.sizePolicy().hasHeightForWidth())
+        self.Button_Tool_VoiceIdentifier_Terminate.setSizePolicy(sizePolicy6)
         self.Button_Tool_VoiceIdentifier_Terminate.setMinimumSize(QSize(0, 30))
         self.Button_Tool_VoiceIdentifier_Terminate.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
@@ -6518,6 +6525,8 @@ class Ui_MainWindow(object):
 
         self.ScrollArea_Middle_Tool_VoiceTranscriber = QScrollArea(self.StackedWidget_Pages_Tool_VoiceTranscriber)
         self.ScrollArea_Middle_Tool_VoiceTranscriber.setObjectName(u"ScrollArea_Middle_Tool_VoiceTranscriber")
+        sizePolicy4.setHeightForWidth(self.ScrollArea_Middle_Tool_VoiceTranscriber.sizePolicy().hasHeightForWidth())
+        self.ScrollArea_Middle_Tool_VoiceTranscriber.setSizePolicy(sizePolicy4)
         self.ScrollArea_Middle_Tool_VoiceTranscriber.setMinimumSize(QSize(630, 0))
         self.ScrollArea_Middle_Tool_VoiceTranscriber.setStyleSheet(u"QScrollArea {\n"
 "	background-color: rgba(36, 36, 36, 123);\n"
@@ -6743,8 +6752,8 @@ class Ui_MainWindow(object):
 
         self.ChildFrame_Tool_VoiceTranscriber_WAV_Dir = QFrame(self.Frame_Tool_VoiceTranscriber_WAV_Dir)
         self.ChildFrame_Tool_VoiceTranscriber_WAV_Dir.setObjectName(u"ChildFrame_Tool_VoiceTranscriber_WAV_Dir")
-        sizePolicy4.setHeightForWidth(self.ChildFrame_Tool_VoiceTranscriber_WAV_Dir.sizePolicy().hasHeightForWidth())
-        self.ChildFrame_Tool_VoiceTranscriber_WAV_Dir.setSizePolicy(sizePolicy4)
+        sizePolicy5.setHeightForWidth(self.ChildFrame_Tool_VoiceTranscriber_WAV_Dir.sizePolicy().hasHeightForWidth())
+        self.ChildFrame_Tool_VoiceTranscriber_WAV_Dir.setSizePolicy(sizePolicy5)
         self.ChildFrame_Tool_VoiceTranscriber_WAV_Dir.setStyleSheet(u"QFrame {\n"
 "	color: rgb(255, 255, 255);\n"
 "	background-color: transparent;\n"
@@ -6859,8 +6868,8 @@ class Ui_MainWindow(object):
 
         self.ChildFrame_Tool_VoiceTranscriber_SRT_Dir = QFrame(self.Frame_Tool_VoiceTranscriber_SRT_Dir)
         self.ChildFrame_Tool_VoiceTranscriber_SRT_Dir.setObjectName(u"ChildFrame_Tool_VoiceTranscriber_SRT_Dir")
-        sizePolicy4.setHeightForWidth(self.ChildFrame_Tool_VoiceTranscriber_SRT_Dir.sizePolicy().hasHeightForWidth())
-        self.ChildFrame_Tool_VoiceTranscriber_SRT_Dir.setSizePolicy(sizePolicy4)
+        sizePolicy5.setHeightForWidth(self.ChildFrame_Tool_VoiceTranscriber_SRT_Dir.sizePolicy().hasHeightForWidth())
+        self.ChildFrame_Tool_VoiceTranscriber_SRT_Dir.setSizePolicy(sizePolicy5)
         self.ChildFrame_Tool_VoiceTranscriber_SRT_Dir.setStyleSheet(u"QFrame {\n"
 "	color: rgb(255, 255, 255);\n"
 "	background-color: transparent;\n"
@@ -7030,8 +7039,8 @@ class Ui_MainWindow(object):
 
         self.ChildFrame_Tool_VoiceTranscriber_Model_Dir = QFrame(self.Frame_Tool_VoiceTranscriber_Model_Dir)
         self.ChildFrame_Tool_VoiceTranscriber_Model_Dir.setObjectName(u"ChildFrame_Tool_VoiceTranscriber_Model_Dir")
-        sizePolicy4.setHeightForWidth(self.ChildFrame_Tool_VoiceTranscriber_Model_Dir.sizePolicy().hasHeightForWidth())
-        self.ChildFrame_Tool_VoiceTranscriber_Model_Dir.setSizePolicy(sizePolicy4)
+        sizePolicy5.setHeightForWidth(self.ChildFrame_Tool_VoiceTranscriber_Model_Dir.sizePolicy().hasHeightForWidth())
+        self.ChildFrame_Tool_VoiceTranscriber_Model_Dir.setSizePolicy(sizePolicy5)
         self.ChildFrame_Tool_VoiceTranscriber_Model_Dir.setStyleSheet(u"QFrame {\n"
 "	color: rgb(255, 255, 255);\n"
 "	background-color: transparent;\n"
@@ -8081,8 +8090,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_90.setContentsMargins(0, 0, 0, 0)
         self.Button_Tool_VoiceTranscriber_Execute = QPushButton(self.Page_Tool_VoiceTranscriber_Execute)
         self.Button_Tool_VoiceTranscriber_Execute.setObjectName(u"Button_Tool_VoiceTranscriber_Execute")
-        sizePolicy5.setHeightForWidth(self.Button_Tool_VoiceTranscriber_Execute.sizePolicy().hasHeightForWidth())
-        self.Button_Tool_VoiceTranscriber_Execute.setSizePolicy(sizePolicy5)
+        sizePolicy6.setHeightForWidth(self.Button_Tool_VoiceTranscriber_Execute.sizePolicy().hasHeightForWidth())
+        self.Button_Tool_VoiceTranscriber_Execute.setSizePolicy(sizePolicy6)
         self.Button_Tool_VoiceTranscriber_Execute.setMinimumSize(QSize(0, 30))
         self.Button_Tool_VoiceTranscriber_Execute.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
@@ -8118,8 +8127,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_91.setContentsMargins(0, 0, 0, 0)
         self.Button_Tool_VoiceTranscriber_Terminate = QPushButton(self.Page_Tool_VoiceTranscriber_Terminate)
         self.Button_Tool_VoiceTranscriber_Terminate.setObjectName(u"Button_Tool_VoiceTranscriber_Terminate")
-        sizePolicy5.setHeightForWidth(self.Button_Tool_VoiceTranscriber_Terminate.sizePolicy().hasHeightForWidth())
-        self.Button_Tool_VoiceTranscriber_Terminate.setSizePolicy(sizePolicy5)
+        sizePolicy6.setHeightForWidth(self.Button_Tool_VoiceTranscriber_Terminate.sizePolicy().hasHeightForWidth())
+        self.Button_Tool_VoiceTranscriber_Terminate.setSizePolicy(sizePolicy6)
         self.Button_Tool_VoiceTranscriber_Terminate.setMinimumSize(QSize(0, 30))
         self.Button_Tool_VoiceTranscriber_Terminate.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
@@ -8202,8 +8211,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_92.setContentsMargins(0, 0, 0, 0)
         self.Button_Tool_DatasetCreator_Execute = QPushButton(self.Page_Tool_DatasetCreator_Execute)
         self.Button_Tool_DatasetCreator_Execute.setObjectName(u"Button_Tool_DatasetCreator_Execute")
-        sizePolicy5.setHeightForWidth(self.Button_Tool_DatasetCreator_Execute.sizePolicy().hasHeightForWidth())
-        self.Button_Tool_DatasetCreator_Execute.setSizePolicy(sizePolicy5)
+        sizePolicy6.setHeightForWidth(self.Button_Tool_DatasetCreator_Execute.sizePolicy().hasHeightForWidth())
+        self.Button_Tool_DatasetCreator_Execute.setSizePolicy(sizePolicy6)
         self.Button_Tool_DatasetCreator_Execute.setMinimumSize(QSize(0, 30))
         self.Button_Tool_DatasetCreator_Execute.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
@@ -8239,8 +8248,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_93.setContentsMargins(0, 0, 0, 0)
         self.Button_Tool_DatasetCreator_Terminate = QPushButton(self.Page_Tool_DatasetCreator_Terminate)
         self.Button_Tool_DatasetCreator_Terminate.setObjectName(u"Button_Tool_DatasetCreator_Terminate")
-        sizePolicy5.setHeightForWidth(self.Button_Tool_DatasetCreator_Terminate.sizePolicy().hasHeightForWidth())
-        self.Button_Tool_DatasetCreator_Terminate.setSizePolicy(sizePolicy5)
+        sizePolicy6.setHeightForWidth(self.Button_Tool_DatasetCreator_Terminate.sizePolicy().hasHeightForWidth())
+        self.Button_Tool_DatasetCreator_Terminate.setSizePolicy(sizePolicy6)
         self.Button_Tool_DatasetCreator_Terminate.setMinimumSize(QSize(0, 30))
         self.Button_Tool_DatasetCreator_Terminate.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
@@ -8675,6 +8684,8 @@ class Ui_MainWindow(object):
 
         self.ScrollArea_Middle_Tool_DatasetCreator = QScrollArea(self.StackedWidget_Pages_Tool_DatasetCreator)
         self.ScrollArea_Middle_Tool_DatasetCreator.setObjectName(u"ScrollArea_Middle_Tool_DatasetCreator")
+        sizePolicy4.setHeightForWidth(self.ScrollArea_Middle_Tool_DatasetCreator.sizePolicy().hasHeightForWidth())
+        self.ScrollArea_Middle_Tool_DatasetCreator.setSizePolicy(sizePolicy4)
         self.ScrollArea_Middle_Tool_DatasetCreator.setMinimumSize(QSize(630, 0))
         self.ScrollArea_Middle_Tool_DatasetCreator.setStyleSheet(u"QScrollArea {\n"
 "	background-color: rgba(36, 36, 36, 123);\n"
@@ -8900,8 +8911,8 @@ class Ui_MainWindow(object):
 
         self.ChildFrame_Tool_DatasetCreator_WAV_Dir = QFrame(self.Frame_Tool_DatasetCreator_WAV_Dir)
         self.ChildFrame_Tool_DatasetCreator_WAV_Dir.setObjectName(u"ChildFrame_Tool_DatasetCreator_WAV_Dir")
-        sizePolicy4.setHeightForWidth(self.ChildFrame_Tool_DatasetCreator_WAV_Dir.sizePolicy().hasHeightForWidth())
-        self.ChildFrame_Tool_DatasetCreator_WAV_Dir.setSizePolicy(sizePolicy4)
+        sizePolicy5.setHeightForWidth(self.ChildFrame_Tool_DatasetCreator_WAV_Dir.sizePolicy().hasHeightForWidth())
+        self.ChildFrame_Tool_DatasetCreator_WAV_Dir.setSizePolicy(sizePolicy5)
         self.ChildFrame_Tool_DatasetCreator_WAV_Dir.setStyleSheet(u"QFrame {\n"
 "	color: rgb(255, 255, 255);\n"
 "	background-color: transparent;\n"
@@ -9016,8 +9027,8 @@ class Ui_MainWindow(object):
 
         self.ChildFrame_Tool_DatasetCreator_SRT_Dir = QFrame(self.Frame_Tool_DatasetCreator_SRT_Dir)
         self.ChildFrame_Tool_DatasetCreator_SRT_Dir.setObjectName(u"ChildFrame_Tool_DatasetCreator_SRT_Dir")
-        sizePolicy4.setHeightForWidth(self.ChildFrame_Tool_DatasetCreator_SRT_Dir.sizePolicy().hasHeightForWidth())
-        self.ChildFrame_Tool_DatasetCreator_SRT_Dir.setSizePolicy(sizePolicy4)
+        sizePolicy5.setHeightForWidth(self.ChildFrame_Tool_DatasetCreator_SRT_Dir.sizePolicy().hasHeightForWidth())
+        self.ChildFrame_Tool_DatasetCreator_SRT_Dir.setSizePolicy(sizePolicy5)
         self.ChildFrame_Tool_DatasetCreator_SRT_Dir.setStyleSheet(u"QFrame {\n"
 "	color: rgb(255, 255, 255);\n"
 "	background-color: transparent;\n"
@@ -9336,8 +9347,8 @@ class Ui_MainWindow(object):
 
         self.ChildFrame_Tool_DatasetCreator_WAV_Dir_Split = QFrame(self.Frame_Tool_DatasetCreator_WAV_Dir_Split)
         self.ChildFrame_Tool_DatasetCreator_WAV_Dir_Split.setObjectName(u"ChildFrame_Tool_DatasetCreator_WAV_Dir_Split")
-        sizePolicy4.setHeightForWidth(self.ChildFrame_Tool_DatasetCreator_WAV_Dir_Split.sizePolicy().hasHeightForWidth())
-        self.ChildFrame_Tool_DatasetCreator_WAV_Dir_Split.setSizePolicy(sizePolicy4)
+        sizePolicy5.setHeightForWidth(self.ChildFrame_Tool_DatasetCreator_WAV_Dir_Split.sizePolicy().hasHeightForWidth())
+        self.ChildFrame_Tool_DatasetCreator_WAV_Dir_Split.setSizePolicy(sizePolicy5)
         self.ChildFrame_Tool_DatasetCreator_WAV_Dir_Split.setStyleSheet(u"QFrame {\n"
 "	color: rgb(255, 255, 255);\n"
 "	background-color: transparent;\n"
@@ -9452,8 +9463,8 @@ class Ui_MainWindow(object):
 
         self.ChildFrame_Tool_DatasetCreator_FileList_Path_Training = QFrame(self.Frame_Tool_DatasetCreator_FileList_Path_Training)
         self.ChildFrame_Tool_DatasetCreator_FileList_Path_Training.setObjectName(u"ChildFrame_Tool_DatasetCreator_FileList_Path_Training")
-        sizePolicy4.setHeightForWidth(self.ChildFrame_Tool_DatasetCreator_FileList_Path_Training.sizePolicy().hasHeightForWidth())
-        self.ChildFrame_Tool_DatasetCreator_FileList_Path_Training.setSizePolicy(sizePolicy4)
+        sizePolicy5.setHeightForWidth(self.ChildFrame_Tool_DatasetCreator_FileList_Path_Training.sizePolicy().hasHeightForWidth())
+        self.ChildFrame_Tool_DatasetCreator_FileList_Path_Training.setSizePolicy(sizePolicy5)
         self.ChildFrame_Tool_DatasetCreator_FileList_Path_Training.setStyleSheet(u"QFrame {\n"
 "	color: rgb(255, 255, 255);\n"
 "	background-color: transparent;\n"
@@ -9568,8 +9579,8 @@ class Ui_MainWindow(object):
 
         self.ChildFrame_Tool_DatasetCreator_FileList_Path_Validation = QFrame(self.Frame_Tool_DatasetCreator_FileList_Path_Validation)
         self.ChildFrame_Tool_DatasetCreator_FileList_Path_Validation.setObjectName(u"ChildFrame_Tool_DatasetCreator_FileList_Path_Validation")
-        sizePolicy4.setHeightForWidth(self.ChildFrame_Tool_DatasetCreator_FileList_Path_Validation.sizePolicy().hasHeightForWidth())
-        self.ChildFrame_Tool_DatasetCreator_FileList_Path_Validation.setSizePolicy(sizePolicy4)
+        sizePolicy5.setHeightForWidth(self.ChildFrame_Tool_DatasetCreator_FileList_Path_Validation.sizePolicy().hasHeightForWidth())
+        self.ChildFrame_Tool_DatasetCreator_FileList_Path_Validation.setSizePolicy(sizePolicy5)
         self.ChildFrame_Tool_DatasetCreator_FileList_Path_Validation.setStyleSheet(u"QFrame {\n"
 "	color: rgb(255, 255, 255);\n"
 "	background-color: transparent;\n"
@@ -10329,6 +10340,8 @@ class Ui_MainWindow(object):
 
         self.ScrollArea_Middle_Tool_VoiceTrainer = QScrollArea(self.StackedWidget_Pages_Tool_VoiceTrainer)
         self.ScrollArea_Middle_Tool_VoiceTrainer.setObjectName(u"ScrollArea_Middle_Tool_VoiceTrainer")
+        sizePolicy4.setHeightForWidth(self.ScrollArea_Middle_Tool_VoiceTrainer.sizePolicy().hasHeightForWidth())
+        self.ScrollArea_Middle_Tool_VoiceTrainer.setSizePolicy(sizePolicy4)
         self.ScrollArea_Middle_Tool_VoiceTrainer.setMinimumSize(QSize(630, 0))
         self.ScrollArea_Middle_Tool_VoiceTrainer.setStyleSheet(u"QScrollArea {\n"
 "	background-color: rgba(36, 36, 36, 123);\n"
@@ -10554,8 +10567,8 @@ class Ui_MainWindow(object):
 
         self.ChildFrame_Tool_VoiceTrainer_FileList_Path_Training = QFrame(self.Frame_Tool_VoiceTrainer_FileList_Path_Training)
         self.ChildFrame_Tool_VoiceTrainer_FileList_Path_Training.setObjectName(u"ChildFrame_Tool_VoiceTrainer_FileList_Path_Training")
-        sizePolicy4.setHeightForWidth(self.ChildFrame_Tool_VoiceTrainer_FileList_Path_Training.sizePolicy().hasHeightForWidth())
-        self.ChildFrame_Tool_VoiceTrainer_FileList_Path_Training.setSizePolicy(sizePolicy4)
+        sizePolicy5.setHeightForWidth(self.ChildFrame_Tool_VoiceTrainer_FileList_Path_Training.sizePolicy().hasHeightForWidth())
+        self.ChildFrame_Tool_VoiceTrainer_FileList_Path_Training.setSizePolicy(sizePolicy5)
         self.ChildFrame_Tool_VoiceTrainer_FileList_Path_Training.setStyleSheet(u"QFrame {\n"
 "	color: rgb(255, 255, 255);\n"
 "	background-color: transparent;\n"
@@ -10670,8 +10683,8 @@ class Ui_MainWindow(object):
 
         self.ChildFrame_Tool_VoiceTrainer_FileList_Path_Validation = QFrame(self.Frame_Tool_VoiceTrainer_FileList_Path_Validation)
         self.ChildFrame_Tool_VoiceTrainer_FileList_Path_Validation.setObjectName(u"ChildFrame_Tool_VoiceTrainer_FileList_Path_Validation")
-        sizePolicy4.setHeightForWidth(self.ChildFrame_Tool_VoiceTrainer_FileList_Path_Validation.sizePolicy().hasHeightForWidth())
-        self.ChildFrame_Tool_VoiceTrainer_FileList_Path_Validation.setSizePolicy(sizePolicy4)
+        sizePolicy5.setHeightForWidth(self.ChildFrame_Tool_VoiceTrainer_FileList_Path_Validation.sizePolicy().hasHeightForWidth())
+        self.ChildFrame_Tool_VoiceTrainer_FileList_Path_Validation.setSizePolicy(sizePolicy5)
         self.ChildFrame_Tool_VoiceTrainer_FileList_Path_Validation.setStyleSheet(u"QFrame {\n"
 "	color: rgb(255, 255, 255);\n"
 "	background-color: transparent;\n"
@@ -11172,8 +11185,8 @@ class Ui_MainWindow(object):
 
         self.ChildFrame_Tool_VoiceTrainer_Config_Dir_Save = QFrame(self.Frame_Tool_VoiceTrainer_Config_Dir_Save)
         self.ChildFrame_Tool_VoiceTrainer_Config_Dir_Save.setObjectName(u"ChildFrame_Tool_VoiceTrainer_Config_Dir_Save")
-        sizePolicy4.setHeightForWidth(self.ChildFrame_Tool_VoiceTrainer_Config_Dir_Save.sizePolicy().hasHeightForWidth())
-        self.ChildFrame_Tool_VoiceTrainer_Config_Dir_Save.setSizePolicy(sizePolicy4)
+        sizePolicy5.setHeightForWidth(self.ChildFrame_Tool_VoiceTrainer_Config_Dir_Save.sizePolicy().hasHeightForWidth())
+        self.ChildFrame_Tool_VoiceTrainer_Config_Dir_Save.setSizePolicy(sizePolicy5)
         self.ChildFrame_Tool_VoiceTrainer_Config_Dir_Save.setStyleSheet(u"QFrame {\n"
 "	color: rgb(255, 255, 255);\n"
 "	background-color: transparent;\n"
@@ -11288,8 +11301,8 @@ class Ui_MainWindow(object):
 
         self.ChildFrame_Tool_VoiceTrainer_Model_Dir_Save = QFrame(self.Frame_Tool_VoiceTrainer_Model_Dir_Save)
         self.ChildFrame_Tool_VoiceTrainer_Model_Dir_Save.setObjectName(u"ChildFrame_Tool_VoiceTrainer_Model_Dir_Save")
-        sizePolicy4.setHeightForWidth(self.ChildFrame_Tool_VoiceTrainer_Model_Dir_Save.sizePolicy().hasHeightForWidth())
-        self.ChildFrame_Tool_VoiceTrainer_Model_Dir_Save.setSizePolicy(sizePolicy4)
+        sizePolicy5.setHeightForWidth(self.ChildFrame_Tool_VoiceTrainer_Model_Dir_Save.sizePolicy().hasHeightForWidth())
+        self.ChildFrame_Tool_VoiceTrainer_Model_Dir_Save.setSizePolicy(sizePolicy5)
         self.ChildFrame_Tool_VoiceTrainer_Model_Dir_Save.setStyleSheet(u"QFrame {\n"
 "	color: rgb(255, 255, 255);\n"
 "	background-color: transparent;\n"
@@ -11879,8 +11892,8 @@ class Ui_MainWindow(object):
 
         self.ChildFrame_Tool_VoiceTrainer_Model_Path_Pretrained_G = QFrame(self.Frame_Tool_VoiceTrainer_Model_Path_Pretrained_G)
         self.ChildFrame_Tool_VoiceTrainer_Model_Path_Pretrained_G.setObjectName(u"ChildFrame_Tool_VoiceTrainer_Model_Path_Pretrained_G")
-        sizePolicy4.setHeightForWidth(self.ChildFrame_Tool_VoiceTrainer_Model_Path_Pretrained_G.sizePolicy().hasHeightForWidth())
-        self.ChildFrame_Tool_VoiceTrainer_Model_Path_Pretrained_G.setSizePolicy(sizePolicy4)
+        sizePolicy5.setHeightForWidth(self.ChildFrame_Tool_VoiceTrainer_Model_Path_Pretrained_G.sizePolicy().hasHeightForWidth())
+        self.ChildFrame_Tool_VoiceTrainer_Model_Path_Pretrained_G.setSizePolicy(sizePolicy5)
         self.ChildFrame_Tool_VoiceTrainer_Model_Path_Pretrained_G.setStyleSheet(u"QFrame {\n"
 "	color: rgb(255, 255, 255);\n"
 "	background-color: transparent;\n"
@@ -11995,8 +12008,8 @@ class Ui_MainWindow(object):
 
         self.ChildFrame_Tool_VoiceTrainer_Model_Path_Pretrained_D = QFrame(self.Frame_Tool_VoiceTrainer_Model_Path_Pretrained_D)
         self.ChildFrame_Tool_VoiceTrainer_Model_Path_Pretrained_D.setObjectName(u"ChildFrame_Tool_VoiceTrainer_Model_Path_Pretrained_D")
-        sizePolicy4.setHeightForWidth(self.ChildFrame_Tool_VoiceTrainer_Model_Path_Pretrained_D.sizePolicy().hasHeightForWidth())
-        self.ChildFrame_Tool_VoiceTrainer_Model_Path_Pretrained_D.setSizePolicy(sizePolicy4)
+        sizePolicy5.setHeightForWidth(self.ChildFrame_Tool_VoiceTrainer_Model_Path_Pretrained_D.sizePolicy().hasHeightForWidth())
+        self.ChildFrame_Tool_VoiceTrainer_Model_Path_Pretrained_D.setSizePolicy(sizePolicy5)
         self.ChildFrame_Tool_VoiceTrainer_Model_Path_Pretrained_D.setStyleSheet(u"QFrame {\n"
 "	color: rgb(255, 255, 255);\n"
 "	background-color: transparent;\n"
@@ -12168,8 +12181,8 @@ class Ui_MainWindow(object):
 
         self.ChildFrame_Tool_VoiceTrainer_Config_Path_Load = QFrame(self.Frame_Tool_VoiceTrainer_Config_Path_Load)
         self.ChildFrame_Tool_VoiceTrainer_Config_Path_Load.setObjectName(u"ChildFrame_Tool_VoiceTrainer_Config_Path_Load")
-        sizePolicy4.setHeightForWidth(self.ChildFrame_Tool_VoiceTrainer_Config_Path_Load.sizePolicy().hasHeightForWidth())
-        self.ChildFrame_Tool_VoiceTrainer_Config_Path_Load.setSizePolicy(sizePolicy4)
+        sizePolicy5.setHeightForWidth(self.ChildFrame_Tool_VoiceTrainer_Config_Path_Load.sizePolicy().hasHeightForWidth())
+        self.ChildFrame_Tool_VoiceTrainer_Config_Path_Load.setSizePolicy(sizePolicy5)
         self.ChildFrame_Tool_VoiceTrainer_Config_Path_Load.setStyleSheet(u"QFrame {\n"
 "	color: rgb(255, 255, 255);\n"
 "	background-color: transparent;\n"
@@ -12341,10 +12354,10 @@ class Ui_MainWindow(object):
 "}\n"
 "QWidget:hover {\n"
 "}")
-        self.gridLayout_17 = QGridLayout(self.Widget_Right_Tool_VoiceTrainer)
-        self.gridLayout_17.setSpacing(12)
-        self.gridLayout_17.setObjectName(u"gridLayout_17")
-        self.gridLayout_17.setContentsMargins(12, 12, 12, 12)
+        self.gridLayout = QGridLayout(self.Widget_Right_Tool_VoiceTrainer)
+        self.gridLayout.setSpacing(12)
+        self.gridLayout.setObjectName(u"gridLayout")
+        self.gridLayout.setContentsMargins(12, 12, 12, 12)
         self.TextBrowser_Params_Tool_VoiceTrainer = QTextBrowser(self.Widget_Right_Tool_VoiceTrainer)
         self.TextBrowser_Params_Tool_VoiceTrainer.setObjectName(u"TextBrowser_Params_Tool_VoiceTrainer")
         sizePolicy1.setHeightForWidth(self.TextBrowser_Params_Tool_VoiceTrainer.sizePolicy().hasHeightForWidth())
@@ -12462,7 +12475,33 @@ class Ui_MainWindow(object):
 "	background-color: rgb(120, 120, 120);\n"
 "}")
 
-        self.gridLayout_17.addWidget(self.TextBrowser_Params_Tool_VoiceTrainer, 0, 0, 1, 2)
+        self.gridLayout.addWidget(self.TextBrowser_Params_Tool_VoiceTrainer, 0, 0, 1, 2)
+
+        self.Button_RunTensorboard_Tool_VoiceTrainer = QPushButton(self.Widget_Right_Tool_VoiceTrainer)
+        self.Button_RunTensorboard_Tool_VoiceTrainer.setObjectName(u"Button_RunTensorboard_Tool_VoiceTrainer")
+        self.Button_RunTensorboard_Tool_VoiceTrainer.setStyleSheet(u"QPushButton {\n"
+"	text-align: center;\n"
+"	font-size: 12px;\n"
+"	background-color: transparent;\n"
+"	padding: 9.9px;\n"
+"	border-width: 1.5px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout.addWidget(self.Button_RunTensorboard_Tool_VoiceTrainer, 1, 0, 1, 2)
 
         self.Button_SyncParams_Tool_VoiceTrainer = QPushButton(self.Widget_Right_Tool_VoiceTrainer)
         self.Button_SyncParams_Tool_VoiceTrainer.setObjectName(u"Button_SyncParams_Tool_VoiceTrainer")
@@ -12488,7 +12527,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}")
 
-        self.gridLayout_17.addWidget(self.Button_SyncParams_Tool_VoiceTrainer, 1, 0, 1, 1)
+        self.gridLayout.addWidget(self.Button_SyncParams_Tool_VoiceTrainer, 2, 0, 1, 1)
 
         self.Button_CheckOutput_Tool_VoiceTrainer = QPushButton(self.Widget_Right_Tool_VoiceTrainer)
         self.Button_CheckOutput_Tool_VoiceTrainer.setObjectName(u"Button_CheckOutput_Tool_VoiceTrainer")
@@ -12514,7 +12553,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}")
 
-        self.gridLayout_17.addWidget(self.Button_CheckOutput_Tool_VoiceTrainer, 1, 1, 1, 1)
+        self.gridLayout.addWidget(self.Button_CheckOutput_Tool_VoiceTrainer, 2, 1, 1, 1)
 
 
         self.gridLayout_12.addWidget(self.Widget_Right_Tool_VoiceTrainer, 0, 2, 1, 1)
@@ -12561,8 +12600,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_94.setContentsMargins(0, 0, 0, 0)
         self.Button_Tool_VoiceTrainer_Execute = QPushButton(self.Page_Tool_VoiceTrainer_Execute)
         self.Button_Tool_VoiceTrainer_Execute.setObjectName(u"Button_Tool_VoiceTrainer_Execute")
-        sizePolicy5.setHeightForWidth(self.Button_Tool_VoiceTrainer_Execute.sizePolicy().hasHeightForWidth())
-        self.Button_Tool_VoiceTrainer_Execute.setSizePolicy(sizePolicy5)
+        sizePolicy6.setHeightForWidth(self.Button_Tool_VoiceTrainer_Execute.sizePolicy().hasHeightForWidth())
+        self.Button_Tool_VoiceTrainer_Execute.setSizePolicy(sizePolicy6)
         self.Button_Tool_VoiceTrainer_Execute.setMinimumSize(QSize(0, 30))
         self.Button_Tool_VoiceTrainer_Execute.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
@@ -12598,8 +12637,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_95.setContentsMargins(0, 0, 0, 0)
         self.Button_Tool_VoiceTrainer_Terminate = QPushButton(self.Page_Tool_VoiceTrainer_Terminate)
         self.Button_Tool_VoiceTrainer_Terminate.setObjectName(u"Button_Tool_VoiceTrainer_Terminate")
-        sizePolicy5.setHeightForWidth(self.Button_Tool_VoiceTrainer_Terminate.sizePolicy().hasHeightForWidth())
-        self.Button_Tool_VoiceTrainer_Terminate.setSizePolicy(sizePolicy5)
+        sizePolicy6.setHeightForWidth(self.Button_Tool_VoiceTrainer_Terminate.sizePolicy().hasHeightForWidth())
+        self.Button_Tool_VoiceTrainer_Terminate.setSizePolicy(sizePolicy6)
         self.Button_Tool_VoiceTrainer_Terminate.setMinimumSize(QSize(0, 30))
         self.Button_Tool_VoiceTrainer_Terminate.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
@@ -12852,6 +12891,8 @@ class Ui_MainWindow(object):
 
         self.ScrollArea_Middle_Tool_VoiceConverter = QScrollArea(self.StackedWidget_Pages_Tool_VoiceConverter)
         self.ScrollArea_Middle_Tool_VoiceConverter.setObjectName(u"ScrollArea_Middle_Tool_VoiceConverter")
+        sizePolicy4.setHeightForWidth(self.ScrollArea_Middle_Tool_VoiceConverter.sizePolicy().hasHeightForWidth())
+        self.ScrollArea_Middle_Tool_VoiceConverter.setSizePolicy(sizePolicy4)
         self.ScrollArea_Middle_Tool_VoiceConverter.setMinimumSize(QSize(630, 0))
         self.ScrollArea_Middle_Tool_VoiceConverter.setStyleSheet(u"QScrollArea {\n"
 "	background-color: rgba(36, 36, 36, 123);\n"
@@ -13077,8 +13118,8 @@ class Ui_MainWindow(object):
 
         self.ChildFrame_Tool_VoiceConverter_Config_Path_Load = QFrame(self.Frame_Tool_VoiceConverter_Config_Path_Load)
         self.ChildFrame_Tool_VoiceConverter_Config_Path_Load.setObjectName(u"ChildFrame_Tool_VoiceConverter_Config_Path_Load")
-        sizePolicy4.setHeightForWidth(self.ChildFrame_Tool_VoiceConverter_Config_Path_Load.sizePolicy().hasHeightForWidth())
-        self.ChildFrame_Tool_VoiceConverter_Config_Path_Load.setSizePolicy(sizePolicy4)
+        sizePolicy5.setHeightForWidth(self.ChildFrame_Tool_VoiceConverter_Config_Path_Load.sizePolicy().hasHeightForWidth())
+        self.ChildFrame_Tool_VoiceConverter_Config_Path_Load.setSizePolicy(sizePolicy5)
         self.ChildFrame_Tool_VoiceConverter_Config_Path_Load.setStyleSheet(u"QFrame {\n"
 "	color: rgb(255, 255, 255);\n"
 "	background-color: transparent;\n"
@@ -13193,8 +13234,8 @@ class Ui_MainWindow(object):
 
         self.ChildFrame_Tool_VoiceConverter_Model_Path_Load = QFrame(self.Frame_Tool_VoiceConverter_Model_Path_Load)
         self.ChildFrame_Tool_VoiceConverter_Model_Path_Load.setObjectName(u"ChildFrame_Tool_VoiceConverter_Model_Path_Load")
-        sizePolicy4.setHeightForWidth(self.ChildFrame_Tool_VoiceConverter_Model_Path_Load.sizePolicy().hasHeightForWidth())
-        self.ChildFrame_Tool_VoiceConverter_Model_Path_Load.setSizePolicy(sizePolicy4)
+        sizePolicy5.setHeightForWidth(self.ChildFrame_Tool_VoiceConverter_Model_Path_Load.sizePolicy().hasHeightForWidth())
+        self.ChildFrame_Tool_VoiceConverter_Model_Path_Load.setSizePolicy(sizePolicy5)
         self.ChildFrame_Tool_VoiceConverter_Model_Path_Load.setStyleSheet(u"QFrame {\n"
 "	color: rgb(255, 255, 255);\n"
 "	background-color: transparent;\n"
@@ -13875,8 +13916,8 @@ class Ui_MainWindow(object):
 
         self.ChildFrame_Tool_VoiceConverter_Audio_Dir_Save = QFrame(self.Frame_Tool_VoiceConverter_Audio_Dir_Save)
         self.ChildFrame_Tool_VoiceConverter_Audio_Dir_Save.setObjectName(u"ChildFrame_Tool_VoiceConverter_Audio_Dir_Save")
-        sizePolicy4.setHeightForWidth(self.ChildFrame_Tool_VoiceConverter_Audio_Dir_Save.sizePolicy().hasHeightForWidth())
-        self.ChildFrame_Tool_VoiceConverter_Audio_Dir_Save.setSizePolicy(sizePolicy4)
+        sizePolicy5.setHeightForWidth(self.ChildFrame_Tool_VoiceConverter_Audio_Dir_Save.sizePolicy().hasHeightForWidth())
+        self.ChildFrame_Tool_VoiceConverter_Audio_Dir_Save.setSizePolicy(sizePolicy5)
         self.ChildFrame_Tool_VoiceConverter_Audio_Dir_Save.setStyleSheet(u"QFrame {\n"
 "	color: rgb(255, 255, 255);\n"
 "	background-color: transparent;\n"
@@ -14046,8 +14087,8 @@ class Ui_MainWindow(object):
 
         self.ChildFrame_Tool_VoiceConverter_EmotionStrength = QFrame(self.Frame_Tool_VoiceConverter_EmotionStrength)
         self.ChildFrame_Tool_VoiceConverter_EmotionStrength.setObjectName(u"ChildFrame_Tool_VoiceConverter_EmotionStrength")
-        sizePolicy4.setHeightForWidth(self.ChildFrame_Tool_VoiceConverter_EmotionStrength.sizePolicy().hasHeightForWidth())
-        self.ChildFrame_Tool_VoiceConverter_EmotionStrength.setSizePolicy(sizePolicy4)
+        sizePolicy5.setHeightForWidth(self.ChildFrame_Tool_VoiceConverter_EmotionStrength.sizePolicy().hasHeightForWidth())
+        self.ChildFrame_Tool_VoiceConverter_EmotionStrength.setSizePolicy(sizePolicy5)
         self.ChildFrame_Tool_VoiceConverter_EmotionStrength.setStyleSheet(u"QFrame {\n"
 "	color: rgb(255, 255, 255);\n"
 "	background-color: transparent;\n"
@@ -14187,8 +14228,8 @@ class Ui_MainWindow(object):
 
         self.ChildFrame_Tool_VoiceConverter_PhonemeDuration = QFrame(self.Frame_Tool_VoiceConverter_PhonemeDuration)
         self.ChildFrame_Tool_VoiceConverter_PhonemeDuration.setObjectName(u"ChildFrame_Tool_VoiceConverter_PhonemeDuration")
-        sizePolicy4.setHeightForWidth(self.ChildFrame_Tool_VoiceConverter_PhonemeDuration.sizePolicy().hasHeightForWidth())
-        self.ChildFrame_Tool_VoiceConverter_PhonemeDuration.setSizePolicy(sizePolicy4)
+        sizePolicy5.setHeightForWidth(self.ChildFrame_Tool_VoiceConverter_PhonemeDuration.sizePolicy().hasHeightForWidth())
+        self.ChildFrame_Tool_VoiceConverter_PhonemeDuration.setSizePolicy(sizePolicy5)
         self.ChildFrame_Tool_VoiceConverter_PhonemeDuration.setStyleSheet(u"QFrame {\n"
 "	color: rgb(255, 255, 255);\n"
 "	background-color: transparent;\n"
@@ -14328,8 +14369,8 @@ class Ui_MainWindow(object):
 
         self.ChildFrame_Tool_VoiceConverter_SpeechRate = QFrame(self.Frame_Tool_VoiceConverter_SpeechRate)
         self.ChildFrame_Tool_VoiceConverter_SpeechRate.setObjectName(u"ChildFrame_Tool_VoiceConverter_SpeechRate")
-        sizePolicy4.setHeightForWidth(self.ChildFrame_Tool_VoiceConverter_SpeechRate.sizePolicy().hasHeightForWidth())
-        self.ChildFrame_Tool_VoiceConverter_SpeechRate.setSizePolicy(sizePolicy4)
+        sizePolicy5.setHeightForWidth(self.ChildFrame_Tool_VoiceConverter_SpeechRate.sizePolicy().hasHeightForWidth())
+        self.ChildFrame_Tool_VoiceConverter_SpeechRate.setSizePolicy(sizePolicy5)
         self.ChildFrame_Tool_VoiceConverter_SpeechRate.setStyleSheet(u"QFrame {\n"
 "	color: rgb(255, 255, 255);\n"
 "	background-color: transparent;\n"
@@ -14656,8 +14697,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_112.setContentsMargins(0, 0, 0, 0)
         self.Button_Tool_VoiceConverter_Execute = QPushButton(self.Page_Tool_VoiceConverter_Execute)
         self.Button_Tool_VoiceConverter_Execute.setObjectName(u"Button_Tool_VoiceConverter_Execute")
-        sizePolicy5.setHeightForWidth(self.Button_Tool_VoiceConverter_Execute.sizePolicy().hasHeightForWidth())
-        self.Button_Tool_VoiceConverter_Execute.setSizePolicy(sizePolicy5)
+        sizePolicy6.setHeightForWidth(self.Button_Tool_VoiceConverter_Execute.sizePolicy().hasHeightForWidth())
+        self.Button_Tool_VoiceConverter_Execute.setSizePolicy(sizePolicy6)
         self.Button_Tool_VoiceConverter_Execute.setMinimumSize(QSize(0, 30))
         self.Button_Tool_VoiceConverter_Execute.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
@@ -14693,8 +14734,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_113.setContentsMargins(0, 0, 0, 0)
         self.Button_Tool_VoiceConverter_Terminate = QPushButton(self.Page_Tool_VoiceConverter_Terminate)
         self.Button_Tool_VoiceConverter_Terminate.setObjectName(u"Button_Tool_VoiceConverter_Terminate")
-        sizePolicy5.setHeightForWidth(self.Button_Tool_VoiceConverter_Terminate.sizePolicy().hasHeightForWidth())
-        self.Button_Tool_VoiceConverter_Terminate.setSizePolicy(sizePolicy5)
+        sizePolicy6.setHeightForWidth(self.Button_Tool_VoiceConverter_Terminate.sizePolicy().hasHeightForWidth())
+        self.Button_Tool_VoiceConverter_Terminate.setSizePolicy(sizePolicy6)
         self.Button_Tool_VoiceConverter_Terminate.setMinimumSize(QSize(0, 30))
         self.Button_Tool_VoiceConverter_Terminate.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
@@ -15080,8 +15121,8 @@ class Ui_MainWindow(object):
 
         self.CheckBox_Setting_AutoUpdate = QCheckBox(self.Frame_Setting_AutoUpdate)
         self.CheckBox_Setting_AutoUpdate.setObjectName(u"CheckBox_Setting_AutoUpdate")
-        sizePolicy4.setHeightForWidth(self.CheckBox_Setting_AutoUpdate.sizePolicy().hasHeightForWidth())
-        self.CheckBox_Setting_AutoUpdate.setSizePolicy(sizePolicy4)
+        sizePolicy5.setHeightForWidth(self.CheckBox_Setting_AutoUpdate.sizePolicy().hasHeightForWidth())
+        self.CheckBox_Setting_AutoUpdate.setSizePolicy(sizePolicy5)
         self.CheckBox_Setting_AutoUpdate.setMinimumSize(QSize(123, 0))
         self.CheckBox_Setting_AutoUpdate.setMaximumSize(QSize(123, 16777215))
         self.CheckBox_Setting_AutoUpdate.setStyleSheet(u"QCheckBox {\n"
@@ -15168,8 +15209,8 @@ class Ui_MainWindow(object):
 
         self.CheckBox_Setting_Synchronizer = QCheckBox(self.Frame_Setting_Synchronizer)
         self.CheckBox_Setting_Synchronizer.setObjectName(u"CheckBox_Setting_Synchronizer")
-        sizePolicy4.setHeightForWidth(self.CheckBox_Setting_Synchronizer.sizePolicy().hasHeightForWidth())
-        self.CheckBox_Setting_Synchronizer.setSizePolicy(sizePolicy4)
+        sizePolicy5.setHeightForWidth(self.CheckBox_Setting_Synchronizer.sizePolicy().hasHeightForWidth())
+        self.CheckBox_Setting_Synchronizer.setSizePolicy(sizePolicy5)
         self.CheckBox_Setting_Synchronizer.setMinimumSize(QSize(123, 0))
         self.CheckBox_Setting_Synchronizer.setMaximumSize(QSize(123, 16777215))
         self.CheckBox_Setting_Synchronizer.setStyleSheet(u"QCheckBox {\n"

@@ -134,6 +134,46 @@ class Integrity_Checker(QObject):
 
         self.finished.emit(str(Error))
 
+
+# ClientFunc3
+class Tensorboard_Runner(QObject):
+    '''
+    Check File integrity
+    '''
+    finished = Signal(str)
+
+    def __init__(self):
+        super().__init__()
+    
+    def RunTensorboard(self, LogDir): #async def RunTensorboard(self, LogDir):
+        try:
+            Error = None
+            InitialWaitTime = 0
+            MaximumWaitTime = 30
+            while GetPath(LogDir, 'events.out.tfevents') == False:
+                time.sleep(3) #await asyncio.sleep(3)
+                InitialWaitTime += 3
+                if InitialWaitTime >= MaximumWaitTime:
+                    break
+            '''
+            Output = RunCMD([['tensorboard', '--logdir', LogDir]], TimeOut = 9.)
+            URL = FindURL(Output) #URL = Output[Output.find('http'):Output.find(' (', Output.find('http'))]
+            Function_OpenURL(URL)
+            '''
+            subprocess.Popen(['tensorboard', '--logdir', LogDir], env = os.environ)
+            time.sleep(9) #await asyncio.sleep(9)
+            Function_OpenURL('http://localhost:6006/')
+        except Exception as e:
+            Error = e
+        finally:
+            return Error
+
+    @Slot(tuple)
+    def Execute(self, Params: tuple):
+        Error = self.RunTensorboard(*Params)
+
+        self.finished.emit(str(Error))
+
 ##############################################################################################################################
 
 # Tool1: AudioProcessor
@@ -278,26 +318,6 @@ class Execute_Dataset_Creating(QObject):
 
 
 # Tool5: VoiceTrainer
-def CheckTensorboard(LogDir): #async def CheckTensorboard(LogDir):
-    try:
-        InitialWaitTime = 0
-        MaximumWaitTime = 30
-        while GetPath(LogDir, 'events.out.tfevents') == False:
-            time.sleep(3) #await asyncio.sleep(3)
-            InitialWaitTime += 3
-            if InitialWaitTime >= MaximumWaitTime:
-                break
-        '''
-        Output = RunCMD([['tensorboard', '--logdir', LogDir]], TimeOut = 9.)
-        URL = FindURL(Output) #URL = Output[Output.find('http'):Output.find(' (', Output.find('http'))]
-        Function_OpenURL(URL)
-        '''
-        subprocess.Popen(['tensorboard', '--logdir', LogDir], env = os.environ)
-        time.sleep(9) #await asyncio.sleep(9)
-        Function_OpenURL('http://localhost:6006/')
-    except:
-        pass
-
 class Execute_Voice_Training(QObject):
     '''
     Preprocess and then start training
@@ -344,7 +364,7 @@ def Get_Speakers(Config_Path_Load):
         Speakers = Params["speakers"]
         return Speakers
     except:
-        pass
+        return str()
 
 class Execute_Voice_Converting(QObject):
     '''
@@ -2086,7 +2106,7 @@ class MainWindow(Window_Customizing):
         )
         self.ui.CheckBox_Tool_VoiceTranscriber_Condition_on_Previous_Text.setCheckable(True)
         self.ui.CheckBox_Tool_VoiceTranscriber_Condition_on_Previous_Text.setChecked(
-            eval(Config_Tool_VoiceTranscriber.GetValue('VoiceTranscriber', 'Condition_on_Previous_Text', 'True'))
+            eval(Config_Tool_VoiceTranscriber.GetValue('VoiceTranscriber', 'Condition_on_Previous_Text', 'False'))
         )
         Function_ConfigureCheckBox(
             CheckBox = self.ui.CheckBox_Tool_VoiceTranscriber_Condition_on_Previous_Text,
@@ -2109,7 +2129,7 @@ class MainWindow(Window_Customizing):
 
         Function_SetText(
             Widget = self.ui.Label_Tool_VoiceTranscriber_fp16,
-            Title = "半精度",
+            Title = "半精度计算",
             Body = QCA.translate("Label", "主要使用半精度浮点数进行计算，若GPU不可用则忽略或禁用此项。")
         )
         self.ui.CheckBox_Tool_VoiceTranscriber_fp16.setCheckable(True)
@@ -2167,7 +2187,7 @@ class MainWindow(Window_Customizing):
         Function_SetText(
             Widget = self.ui.Label_Tool_VoiceTranscriber_Language,
             Title = "所用语言",
-            Body = QCA.translate("Label", "音频中说话人所使用的语言，若存在多种语言则保持'None'即可。")
+            Body = QCA.translate("Label", "音频中说话人所使用的语言，若自动检测则保持'None'即可。")
         )
         self.ui.ComboBox_Tool_VoiceTranscriber_Language.addItems(['中', '英', '日', 'None'])
         self.ui.ComboBox_Tool_VoiceTranscriber_Language.setCurrentText(
@@ -2375,8 +2395,8 @@ class MainWindow(Window_Customizing):
 
         Function_SetText(
             Widget = self.ui.Label_Tool_DatasetCreator_AutoEncoder,
-            Title = "自编码器",
-            Body = QCA.translate("Label", "模型训练所使用的自动编码器。")
+            Title = "模型类别",
+            Body = QCA.translate("Label", "数据集适用的模型类别。")
         )
         self.ui.ComboBox_Tool_DatasetCreator_AutoEncoder.addItems(['VITS'])
         self.ui.ComboBox_Tool_DatasetCreator_AutoEncoder.setCurrentText(
@@ -2707,26 +2727,26 @@ class MainWindow(Window_Customizing):
             Title = "迭代轮数",
             Body = QCA.translate("Label", "将全部样本完整迭代一轮的次数。")
         )
-        self.ui.SpinBox_Tool_VoiceTrainer_Epochs.setRange(0, 1000000)
+        self.ui.SpinBox_Tool_VoiceTrainer_Epochs.setRange(1, 1000000)
         self.ui.SpinBox_Tool_VoiceTrainer_Epochs.setSingleStep(1)
         self.ui.SpinBox_Tool_VoiceTrainer_Epochs.setValue(
-            int(Config_Tool_VoiceTrainer.GetValue('VoiceTrainer', 'Epochs', '10000'))
+            int(Config_Tool_VoiceTrainer.GetValue('VoiceTrainer', 'Epochs', '3000'))
         )
         self.ui.SpinBox_Tool_VoiceTrainer_Epochs.valueChanged.connect(
             lambda Value: Config_Tool_VoiceTrainer.EditConfig('VoiceTrainer', 'Epochs', str(Value))
         )
         self.ui.SpinBox_Tool_VoiceTrainer_Epochs.setToolTipDuration(-1)
-        self.ui.SpinBox_Tool_VoiceTrainer_Epochs.setToolTip("提示：建议为设置一万到两万以获得最佳效果")
+        self.ui.SpinBox_Tool_VoiceTrainer_Epochs.setToolTip("提示：在没有底模（预训练模型）的情况下建议从一万轮次起步")
 
         Function_SetText(
             Widget = self.ui.Label_Tool_VoiceTrainer_Batch_Size,
             Title = "批处理量",
-            Body = QCA.translate("Label", "每轮迭代中单位批次的样本数量，若用户GPU性能较弱可减小该值。")
+            Body = QCA.translate("Label", "每轮迭代中单位批次的样本数量，需根据GPU的性能调节该值。")
         )
         self.ui.SpinBox_Tool_VoiceTrainer_Batch_Size.setRange(2, 128)
         self.ui.SpinBox_Tool_VoiceTrainer_Batch_Size.setSingleStep(2)
         self.ui.SpinBox_Tool_VoiceTrainer_Batch_Size.setValue(
-            int(Config_Tool_VoiceTrainer.GetValue('VoiceTrainer', 'Batch_Size', '16'))
+            int(Config_Tool_VoiceTrainer.GetValue('VoiceTrainer', 'Batch_Size', '4'))
         )
         self.ui.SpinBox_Tool_VoiceTrainer_Batch_Size.valueChanged.connect(
             lambda Value: Config_Tool_VoiceTrainer.EditConfig('VoiceTrainer', 'Batch_Size', str(Value))
@@ -2794,9 +2814,9 @@ class MainWindow(Window_Customizing):
         Function_SetText(
             Widget = self.ui.Label_Tool_VoiceTrainer_Eval_Interval,
             Title = "评估间隔",
-            Body = QCA.translate("Label", "每次评估并保存模型所间隔的step数。")
+            Body = QCA.translate("Label", "每次保存模型所间隔的step数。")
         )
-        self.ui.SpinBox_Tool_VoiceTrainer_Eval_Interval.setRange(0, 10000)
+        self.ui.SpinBox_Tool_VoiceTrainer_Eval_Interval.setRange(1, 10000)
         self.ui.SpinBox_Tool_VoiceTrainer_Eval_Interval.setSingleStep(1)
         self.ui.SpinBox_Tool_VoiceTrainer_Eval_Interval.setValue(
             int(Config_Tool_VoiceTrainer.GetValue('VoiceTrainer', 'Eval_Interval', '1000'))
@@ -2805,12 +2825,12 @@ class MainWindow(Window_Customizing):
             lambda Value: Config_Tool_VoiceTrainer.EditConfig('VoiceTrainer', 'Eval_Interval', str(Value))
         )
         self.ui.SpinBox_Tool_VoiceTrainer_Eval_Interval.setToolTipDuration(-1)
-        self.ui.SpinBox_Tool_VoiceTrainer_Eval_Interval.setToolTip("提示：建议设置为默认的一千以满足保存的需求")
+        self.ui.SpinBox_Tool_VoiceTrainer_Eval_Interval.setToolTip("提示：设置过小会导致磁盘占用剧增哦")
 
         Function_SetText(
             Widget = self.ui.Label_Tool_VoiceTrainer_Num_Workers,
             Title = "进程数量",
-            Body = QCA.translate("Label", "进行数据加载时可并行的进程数量，若用户CPU性能较弱可减小该值。")
+            Body = QCA.translate("Label", "进行数据加载时可并行的进程数量，需根据CPU的性能调节该值。")
         )
         self.ui.SpinBox_Tool_VoiceTrainer_Num_Workers.setRange(2, 32)
         self.ui.SpinBox_Tool_VoiceTrainer_Num_Workers.setSingleStep(2)
@@ -3047,6 +3067,15 @@ class MainWindow(Window_Customizing):
             )
         )
 
+        self.ui.Button_RunTensorboard_Tool_VoiceTrainer.setText("启动Tensorboard")
+        self.Function_SetMethodExecutor(
+            ExecuteButton = self.ui.Button_RunTensorboard_Tool_VoiceTrainer,
+            Method = Tensorboard_Runner.Execute,
+            ParamsFrom = [
+                self.ui.LineEdit_Tool_VoiceTrainer_Model_Dir_Save
+            ]
+        )
+
         self.ui.Button_SyncParams_Tool_VoiceTrainer.setText("同步参数设置")
         Function_ParamsSynchronizer(
             Trigger = self.ui.Button_SyncParams_Tool_VoiceTrainer,
@@ -3118,8 +3147,8 @@ class MainWindow(Window_Customizing):
                 Text = "是否稍后启用tensorboard？",
                 Buttons = QMessageBox.Yes|QMessageBox.No,
                 EventButtons = [QMessageBox.Yes],
-                EventLists = [[CheckTensorboard]],
-                ParamLists = [[(Function_ParamsChecker([self.ui.LineEdit_Tool_VoiceTrainer_Model_Dir_Save]))]]
+                EventLists = [[self.ui.Button_RunTensorboard_Tool_VoiceTrainer.click]],
+                ParamLists = [[()]]
             ) if Task == 'Execute_Voice_Training.Execute' and Status == 'Started' else None
         )
 
@@ -3235,7 +3264,7 @@ class MainWindow(Window_Customizing):
             str(Config_Tool_VoiceConverter.GetValue('VoiceConverter', 'Text', '请输入语句'))
         )
         self.ui.PlainTextEdit_Tool_VoiceConverter_Text.textChanged.connect(
-            lambda Value: Config_Tool_VoiceConverter.EditConfig('VoiceConverter', 'Text', str(Value))
+            lambda: Config_Tool_VoiceConverter.EditConfig('VoiceConverter', 'Text', self.ui.PlainTextEdit_Tool_VoiceConverter_Text.toPlainText())
         )
 
         Function_SetText(
@@ -3256,8 +3285,16 @@ class MainWindow(Window_Customizing):
             Title = "人物名字",
             Body = QCA.translate("Label", "说话人物的名字。")
         )
-        #self.ui.ComboBox_Tool_VoiceConverter_Speaker.addItems(Get_Speakers)
-        self.ui.ComboBox_Tool_VoiceConverter_Speaker.setCurrentText('')
+        self.ui.ComboBox_Tool_VoiceConverter_Speaker.addItems(
+            Get_Speakers(str(Config_Tool_VoiceConverter.GetValue('VoiceConverter', 'Config_Path_Load', 'None')))
+        )
+        self.ui.ComboBox_Tool_VoiceConverter_Speaker.setCurrentText(
+            str(Config_Tool_VoiceConverter.GetValue('VoiceConverter', 'Speaker', '')) if str(Config_Tool_VoiceConverter.GetValue('VoiceConverter', 'Speaker', '')) in Get_Speakers(str(Config_Tool_VoiceConverter.GetValue('VoiceConverter', 'Config_Path_Load', 'None')))
+            else (Get_Speakers(str(Config_Tool_VoiceConverter.GetValue('VoiceConverter', 'Config_Path_Load', 'None')))[0] if Get_Speakers(str(Config_Tool_VoiceConverter.GetValue('VoiceConverter', 'Config_Path_Load', 'None'))) != '' else '')
+        )
+        self.ui.ComboBox_Tool_VoiceConverter_Speaker.currentTextChanged.connect(
+            lambda Value: Config_Tool_VoiceConverter.EditConfig('VoiceConverter', 'Speaker', str(Value))
+        )
 
         Function_SetText(
             Widget = self.ui.Label_Tool_VoiceConverter_Audio_Dir_Save,
@@ -3306,10 +3343,10 @@ class MainWindow(Window_Customizing):
         self.ui.HorizontalSlider_Tool_VoiceConverter_EmotionStrength.setMaximum(100)
         self.ui.HorizontalSlider_Tool_VoiceConverter_EmotionStrength.setTickInterval(1)
         self.ui.HorizontalSlider_Tool_VoiceConverter_EmotionStrength.setValue(
-            int(float(Config_Tool_VoiceConverter.GetValue('VoiceConverter', 'EmotionStrength', '67')))
+            int(float(Config_Tool_VoiceConverter.GetValue('VoiceConverter', 'EmotionStrength', '0.67')) * 100)
         )
         self.ui.HorizontalSlider_Tool_VoiceConverter_EmotionStrength.valueChanged.connect(
-            lambda Value: Config_Tool_VoiceConverter.EditConfig('VoiceConverter', 'EmotionStrength', str(Value))
+            lambda Value: Config_Tool_VoiceConverter.EditConfig('VoiceConverter', 'EmotionStrength', str(Value * 0.01))
         )
         Function_ParamsSynchronizer(
             Trigger = self.ui.HorizontalSlider_Tool_VoiceConverter_EmotionStrength,
@@ -3349,10 +3386,10 @@ class MainWindow(Window_Customizing):
         self.ui.HorizontalSlider_Tool_VoiceConverter_PhonemeDuration.setMaximum(10)
         self.ui.HorizontalSlider_Tool_VoiceConverter_PhonemeDuration.setTickInterval(1)
         self.ui.HorizontalSlider_Tool_VoiceConverter_PhonemeDuration.setValue(
-            int(float(Config_Tool_VoiceConverter.GetValue('VoiceConverter', 'PhonemeDuration', '8')))
+            int(float(Config_Tool_VoiceConverter.GetValue('VoiceConverter', 'PhonemeDuration', '0.8')) * 10)
         )
         self.ui.HorizontalSlider_Tool_VoiceConverter_PhonemeDuration.valueChanged.connect(
-            lambda Value: Config_Tool_VoiceConverter.EditConfig('VoiceConverter', 'PhonemeDuration', str(Value))
+            lambda Value: Config_Tool_VoiceConverter.EditConfig('VoiceConverter', 'PhonemeDuration', str(Value * 0.1))
         )
         Function_ParamsSynchronizer(
             Trigger = self.ui.HorizontalSlider_Tool_VoiceConverter_PhonemeDuration,
@@ -3392,10 +3429,10 @@ class MainWindow(Window_Customizing):
         self.ui.HorizontalSlider_Tool_VoiceConverter_SpeechRate.setMaximum(20)
         self.ui.HorizontalSlider_Tool_VoiceConverter_SpeechRate.setTickInterval(1)
         self.ui.HorizontalSlider_Tool_VoiceConverter_SpeechRate.setValue(
-            int(float(Config_Tool_VoiceConverter.GetValue('VoiceConverter', 'SpeechRate', '10')))
+            int(float(Config_Tool_VoiceConverter.GetValue('VoiceConverter', 'SpeechRate', '1.')) * 10)
         )
         self.ui.HorizontalSlider_Tool_VoiceConverter_SpeechRate.valueChanged.connect(
-            lambda Value: Config_Tool_VoiceConverter.EditConfig('VoiceConverter', 'SpeechRate', str(Value))
+            lambda Value: Config_Tool_VoiceConverter.EditConfig('VoiceConverter', 'SpeechRate', str(Value * 0.1))
         )
         Function_ParamsSynchronizer(
             Trigger = self.ui.HorizontalSlider_Tool_VoiceConverter_SpeechRate,

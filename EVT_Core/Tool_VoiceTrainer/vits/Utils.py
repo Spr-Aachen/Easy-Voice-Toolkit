@@ -7,7 +7,7 @@ import glob
 import sys
 import argparse
 import logging
-logging.basicConfig(stream = sys.stdout, level = logging.DEBUG)
+logging.basicConfig(stream = sys.stdout, encoding = 'utf-8')
 logger = logging
 import json
 import subprocess
@@ -19,25 +19,30 @@ from scipy.io.wavfile import read
 MATPLOTLIB_FLAG = False
 
 
-def load_checkpoint(checkpoint_path, model, optimizer=None):
+def load_checkpoint(checkpoint_path, model, optimizer, transfer_speaker_emb: bool = False):
     assert os.path.isfile(checkpoint_path)
     checkpoint_dict = torch.load(checkpoint_path, map_location='cpu')
     iteration = checkpoint_dict['iteration']
     learning_rate = checkpoint_dict['learning_rate']
     optimizer.load_state_dict(checkpoint_dict['optimizer']) if optimizer is not None else None
-    def get_new_state(state_dict, saved_state_dict):
-        new_state_dict= {}
-        for k, v in state_dict.items():
-            try:
-                new_state_dict[k] = saved_state_dict[k]
+    def get_new_state_dict(state_dict, saved_state_dict, transfer_speaker_emb):
+        new_state_dict = {}
+        for layer_param, tensor in state_dict.items():
+            try: # Assign tensor of layer param from saved state dict to new state dict while layer param is not embedding's weight, otherwise use the current tensor
+                if layer_param == 'emb_g.weight':
+                    if transfer_speaker_emb: # Restore emb_g.weight from saved state dict if decide to transfer the speaker embedding
+                        tensor[:saved_state_dict[layer_param].shape[0], :] = saved_state_dict[layer_param]
+                    new_state_dict[layer_param] = tensor
+                else:
+                    new_state_dict[layer_param] = saved_state_dict[layer_param]
             except:
-                logger.info("%s is not in the checkpoint" % k)
-                new_state_dict[k] = v
+                logger.info("%s is not in the checkpoint" % layer_param)
+                new_state_dict[layer_param] = tensor
         return new_state_dict
     if hasattr(model, 'module'):
-        model.module.load_state_dict(get_new_state(model.module.state_dict(), checkpoint_dict['model']))
+        model.module.load_state_dict(get_new_state_dict(model.module.state_dict(), checkpoint_dict['model'], transfer_speaker_emb))
     else:
-        model.load_state_dict(get_new_state(model.state_dict(), checkpoint_dict['model']))
+        model.load_state_dict(get_new_state_dict(model.state_dict(), checkpoint_dict['model'], transfer_speaker_emb))
     logger.info(f"Loaded checkpoint '{checkpoint_path}' (iteration {iteration})")
     return model, optimizer, learning_rate, iteration
 
@@ -184,13 +189,12 @@ def get_logger(model_dir, filename="train.log"):
     logger = logging.getLogger(os.path.basename(model_dir))
     logger.setLevel(logging.DEBUG)
 
-    formatter = logging.Formatter("%(asctime)s\t%(name)s\t%(levelname)s\t%(message)s")
     if not os.path.exists(model_dir):
         os.makedirs(model_dir)
-    h = logging.FileHandler(os.path.normpath(os.path.join(model_dir, filename)))
-    h.setLevel(logging.DEBUG)
-    h.setFormatter(formatter)
-    logger.addHandler(h)
+    handler = logging.FileHandler(os.path.normpath(os.path.join(model_dir, filename)))
+    handler.setLevel(logging.DEBUG)
+    handler.setFormatter(logging.Formatter("%(asctime)s\t%(name)s\t%(levelname)s\t%(message)s"))
+    logger.addHandler(handler)
     return logger
 
 
