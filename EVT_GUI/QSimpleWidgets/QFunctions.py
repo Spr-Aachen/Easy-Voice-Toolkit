@@ -124,19 +124,21 @@ def Function_SetText(
     TitleSize: float = 9.9,
     TitleWeight: float = 840.,
     TitleColor: str = "#ffffff",
+    TitleSpacing: float = 0.6,
     TitleLineHeight: float = 21.,
     Body: Optional[str] = None,
     BodyAlign: str = "left",
     BodySize: float = 9.9,
     BodyWeight: float = 420.,
+    BodySpacing: float = 0.6,
     BodyLineHeight: float = 21.,
     BodyColor: str = "#ffffff",
 ):
     '''
     Function to set text for widget
     '''
-    def ToHtml(Content, Align, Size, Weight, Color, LineHeight):
-        Style = f"'text-align:{Align}; font-size:{Size}pt; font-weight:{Weight}; color:{Color}; line-height:{LineHeight}px'"
+    def ToHtml(Content, Align, Size, Weight, Color, LetterSpacing, LineHeight):
+        Style = f"'text-align:{Align}; font-size:{Size}pt; font-weight:{Weight}; color:{Color}; letter-spacing: {LetterSpacing}px; line-height:{LineHeight}px'"
         Content = re.sub(
             pattern = "[\n]",
             repl = "<br>",
@@ -147,11 +149,11 @@ def Function_SetText(
     Text = (
         "<html>"
             "<head>"
-                f"<title>{ToHtml(Title, TitleAlign, TitleSize, TitleWeight, TitleColor, TitleLineHeight)}</title>" # Not Working
+                f"<title>{ToHtml(Title, TitleAlign, TitleSize, TitleWeight, TitleColor, TitleSpacing, TitleLineHeight)}</title>" # Not Working
             "</head>"
             "<body>"
-                f"{ToHtml(Title, TitleAlign, TitleSize, TitleWeight, TitleColor, TitleLineHeight)}"
-                f"{ToHtml(Body, BodyAlign, BodySize, BodyWeight, BodyColor, BodyLineHeight)}"
+                f"{ToHtml(Title, TitleAlign, TitleSize, TitleWeight, TitleColor, TitleSpacing, TitleLineHeight)}"
+                f"{ToHtml(Body, BodyAlign, BodySize, BodyWeight, BodyColor, BodySpacing, BodyLineHeight)}"
             "</body>"
         "</html>"
     )
@@ -160,6 +162,18 @@ def Function_SetText(
         Widget.setText(Text)
     if isinstance(Widget, (QTextEdit, QPlainTextEdit, QTextBrowser)):
         Widget.setHtml(Text)
+
+
+def Function_GetText(
+    Widget: QWidget
+):
+    if hasattr(Widget, 'text'):
+        Text = Widget.text()
+        Text = Widget.placeholderText() if hasattr(Widget, 'placeholderText') and Text.strip() in ('', str(None)) else Text
+    if hasattr(Widget, 'toPlainText'):
+        Text = Widget.toPlainText()
+        Text = Widget.placeholderText() if hasattr(Widget, 'placeholderText') and Text.strip() in ('', str(None)) else Text
+    return Text
 
 
 def Function_OpenURL(
@@ -188,7 +202,7 @@ def Function_OpenURL(
 
 def Function_GetFileDialog(
     Mode: str,
-    FileType: Optional[str] = '任意类型 (*.*)',
+    FileType: Optional[str] = None,
     Directory: Optional[str] = None
 ):
     if Mode == 'SelectDir':
@@ -200,14 +214,14 @@ def Function_GetFileDialog(
         DisplayText, _ = QFileDialog.getOpenFileName(
             caption = "选择文件",
             dir = Directory if Directory is not None else os.getcwd(),
-            filter = FileType
-        ) if FileType is not None else print('FileType is empty')
+            filter = FileType if FileType is not None else '任意类型 (*.*)'
+        )
     if Mode == 'SaveFile':
         DisplayText, _ = QFileDialog.getSaveFileName(
             caption = "保存文件",
             dir = Directory if Directory is not None else os.getcwd(),
-            filter = FileType
-        ) if FileType is not None else print('FileType is empty')
+            filter = FileType if FileType is not None else '任意类型 (*.*)'
+        )
     return DisplayText
 
 ##############################################################################################################################

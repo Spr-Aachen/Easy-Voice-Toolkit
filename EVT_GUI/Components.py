@@ -54,7 +54,8 @@ class TableWidget_ButtonMixed(TableWidgetBase):
             self.setCellWidget(CurrentRowCount, ColumnCount, QWidget())
 
             if ColumnCount == 1 + 0:
-                LineEdit0 = LineEdit_NoBorder(Param[ColumnCount] if Param else 'None')
+                LineEdit0 = LineEdit_NoBorder()
+                LineEdit0.setPlaceholderText(Param[ColumnCount] if Param else 'None')
                 LineEdit0.textChanged.connect(
                     lambda: self.ValueChanged.emit(self.GetValue())
                 )
@@ -66,7 +67,8 @@ class TableWidget_ButtonMixed(TableWidgetBase):
                 self.horizontalHeader().setSectionResizeMode(ColumnCount, QHeaderView.ResizeToContents)
 
             if ColumnCount == 1 + 1:
-                LineEdit1 = LineEdit_NoBorder(Param[ColumnCount] if Param else 'None')
+                LineEdit1 = LineEdit_NoBorder()
+                LineEdit1.setPlaceholderText(Param[ColumnCount] if Param else 'None')
                 LineEdit1.textChanged.connect(
                     lambda: self.ValueChanged.emit(self.GetValue())
                 )
@@ -112,8 +114,8 @@ class TableWidget_ButtonMixed(TableWidgetBase):
         ValueDict = {}
         for RowCount in range(self.rowCount()):
             try:
-                Key = self.cellWidget(RowCount, 1 + 0).findChild(QLineEdit).text()
-                Value = self.cellWidget(RowCount, 1 + 1).findChild(QLineEdit).text()
+                Key = Function_GetText(self.cellWidget(RowCount, 1 + 0).findChild(QLineEdit))
+                Value = Function_GetText(self.cellWidget(RowCount, 1 + 1).findChild(QLineEdit))
                 ValueDict[Key] = Value
             except:
                 pass

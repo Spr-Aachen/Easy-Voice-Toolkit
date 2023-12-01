@@ -74,8 +74,8 @@ class Preprocessing:
     Preprocess
     '''
     def __init__(self,
-        FileList_Path_Validation: str,
         FileList_Path_Training: str,
+        FileList_Path_Validation: str,
         Language: str = 'mandarin_english_japanese',
         Config_Path_Load: Optional[str] = None,
         Config_Dir_Save: str = './',
@@ -83,19 +83,21 @@ class Preprocessing:
         Set_Epochs: int = 10000,
         Set_Batch_Size: int = 16,
         Set_FP16_Run: bool = True,
-        Set_Speakers: Optional[list] = ["SpeakerName"]
+        Set_Speakers: Optional[list] = None,
+        Keep_Original_Speakers: bool = False
     ):
-        self.FileList_Path_Validation = FileList_Path_Validation
         self.FileList_Path_Training = FileList_Path_Training
+        self.FileList_Path_Validation = FileList_Path_Validation
         self.Language = Language
+        self.Config_Path_Load = Config_Path_Load if Config_Path_Load is not None else Path(__file__).parent.joinpath('./configs', f'{self.Language}_base.json').__str__()
         self.Config_Dir_Save = Config_Dir_Save
         self.Set_Eval_Interval = Set_Eval_Interval
         self.Set_Epochs = Set_Epochs
         self.Set_Batch_Size = Set_Batch_Size
         self.Set_FP16_Run = Set_FP16_Run
         self.Set_Speakers = Set_Speakers
+        self.Keep_Original_Speakers = Keep_Original_Speakers #if Config_Path_Load is not None else False
 
-        self.Config_Path_Load = Config_Path_Load if Config_Path_Load is not None else Path(__file__).parent.joinpath('./configs', f'{self.Language}_base.json').__str__()
         self.Config_Path_Edited = Path(Config_Dir_Save).joinpath(f"{self.Language}_{datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}.json").__str__()
         self.Out_Extension = "cleaned"
 
@@ -103,6 +105,14 @@ class Preprocessing:
         '''
         Edit JSON file
         '''
+        def Add_Elements(Iterable1, Iterable2):
+            def GetDictKeys(Iterable):
+                return sorted(Iterable.keys(), key = lambda Key: Iterable[Key]) if isinstance(Iterable, dict) else Iterable
+            Iterable1, Iterable2 = GetDictKeys(Iterable1), GetDictKeys(Iterable2)
+            for Element in Iterable2:
+                Iterable1.append(Element) if Element not in Iterable1 else None
+            return Iterable1
+
         def Get_Speakers(Text_Path_Training, Text_Path_Validation):
             Speakers = []
             for Text_Path in [Text_Path_Training, Text_Path_Validation]:
@@ -116,7 +126,7 @@ class Preprocessing:
 
         def Write_Config_Data(Config_Path_Load, Config_Dir_Save):
             os.makedirs(Config_Dir_Save, exist_ok = True)
-            with open(Config_Path_Load, 'rb') as File_Old:
+            with open(file = Config_Path_Load, mode = 'rb') as File_Old:
                 Params = json.load(File_Old)
             try:
                 Params_Old = Params
@@ -127,8 +137,8 @@ class Preprocessing:
                 Params_Old["data"]["training_files"]    = Path(self.FileList_Path_Training + "." + self.Out_Extension).__str__()
                 Params_Old["data"]["validation_files"]  = Path(self.FileList_Path_Validation + "." + self.Out_Extension).__str__()
                 Params_Old["data"]["text_cleaners"]     = [(self.Language + "_cleaners").lower()]
-                Params_Old["data"]["n_speakers"]        = len(Get_Speakers(self.FileList_Path_Training, self.FileList_Path_Validation)) if self.Set_Speakers == None else len(self.Set_Speakers)
-                Params_Old["speakers"]                  = Get_Speakers(self.FileList_Path_Training, self.FileList_Path_Validation) if self.Set_Speakers == None else self.Set_Speakers
+                Params_Old["data"]["n_speakers"]        = Add_Elements(Params_Old["speakers"] if self.Keep_Original_Speakers else [], Get_Speakers(self.FileList_Path_Training, self.FileList_Path_Validation) if self.Set_Speakers is None else self.Set_Speakers).__len__()
+                Params_Old["speakers"]                  = Add_Elements(Params_Old["speakers"] if self.Keep_Original_Speakers else [], Get_Speakers(self.FileList_Path_Training, self.FileList_Path_Validation) if self.Set_Speakers is None else self.Set_Speakers)
                 Params_New = Params_Old
             except:
                 raise Exception("Please check if params exist")
@@ -142,6 +152,22 @@ class Preprocessing:
         '''
         Convert natural language text to symbols
         '''
+        def Update_SID(Config_Path, Text_Path):
+            with open(file = Config_Path, mode = 'rb') as ConfigFile:
+                NewSpeakers = json.load(ConfigFile)["speakers"]
+            with open(file = Text_Path, mode = 'r', encoding = 'utf-8') as TextFile:
+                Lines = TextFile.readlines()
+            with open(file = Text_Path, mode = 'w', encoding = 'utf-8') as TextFile:
+                for Sequence, Line in enumerate(Lines):
+                    Line_Old = Line
+                    Line_Old_Path = Line_Old.split('|', maxsplit = 1)[0]
+                    Speaker = re.split(r'[\[\]]', re.split(r'[/\\\\]', Line_Old_Path)[-1])[1]
+                    SpeakerID = NewSpeakers.index(Speaker)
+                    Line_Old_Text = Line_Old.split("|", maxsplit = 2)[2]
+                    Line_New = Line_Old_Path + f"|{SpeakerID}|" + Line_Old_Text
+                    Lines[Sequence] = Line_New
+                TextFile.writelines(Lines)
+
         Parser = argparse.ArgumentParser()
         Parser.add_argument("--Out_Extension",    type = str,                       default = self.Out_Extension)
         Parser.add_argument("--Path_Index",       type = int,                       default = 0)
@@ -152,7 +178,9 @@ class Preprocessing:
 
         for FileList in Args.FileLists:
             print("START:", FileList)
-            
+
+            Update_SID(self.Config_Path_Edited, FileList) if self.Keep_Original_Speakers else None
+
             Path_SID_Text = load_audiopaths_sid_text(FileList)
             for i in range(len(Path_SID_Text)):
                 Path_SID_Text[i][Args.Text_Index] = _clean_text(Path_SID_Text[i][Args.Text_Index], Args.Text_Cleaners)
@@ -168,18 +196,16 @@ class Training:
     '''
     def __init__(self,
         Num_Workers: int = 4,
-        Find_Unused_Parameters: bool = False,
         Model_Path_Pretrained_G: Optional[str] = None,
         Model_Path_Pretrained_D: Optional[str] = None,
-        Transfer_Speaker_Embedding: bool = False
+        Keep_Original_Speakers: bool = False
     ):
         self.Num_Workers = Num_Workers
-        self.Find_Unused_Parameters = Find_Unused_Parameters
         self.Model_Path_Pretrained_G = Model_Path_Pretrained_G
         self.Model_Path_Pretrained_D = Model_Path_Pretrained_D
-        self.Transfer_Speaker_Emb = Transfer_Speaker_Embedding
+        self.Keep_Original_Speakers = Keep_Original_Speakers
 
-        self.CheckIfContinue = True
+        self.UsePretrainedModel = False if None in (self.Model_Path_Pretrained_G, self.Model_Path_Pretrained_D) else True
 
     def evaluate(self, hps, generator, eval_loader, writer_eval):
         generator.eval()
@@ -394,7 +420,7 @@ class Training:
                 batch_size=hps.train.batch_size, pin_memory=True,
                 drop_last=False, collate_fn=collate_fn)
 
-        # Initialize VITS models
+        # Initialize VITS models and move to GPU
         net_g = SynthesizerTrn(
             len(symbols),
             hps.data.filter_length // 2 + 1,
@@ -416,24 +442,23 @@ class Training:
             eps=hps.train.eps)
 
         # Build DDP models for the initialized VITS models
-        net_g = DDP(net_g, device_ids = [rank], find_unused_parameters = self.Find_Unused_Parameters)
-        net_d = DDP(net_d, device_ids = [rank], find_unused_parameters = self.Find_Unused_Parameters)
+        net_g = DDP(net_g, device_ids = [rank], find_unused_parameters = False)
+        net_d = DDP(net_d, device_ids = [rank], find_unused_parameters = False)
 
         # Load state dict from checkpoint for the initialized VITS models and get the optimizer, learning rate and iteration
         try:
             _, optim_g, lr_g, epoch_str = load_checkpoint(
-                self.Model_Path_Pretrained_G if None not in (self.Model_Path_Pretrained_G, self.Model_Path_Pretrained_D) and self.CheckIfContinue else latest_checkpoint_path(hps.model_dir, "G_*.pth"),
+                self.Model_Path_Pretrained_G if self.UsePretrainedModel else latest_checkpoint_path(hps.model_dir, "G_*.pth"),
                 net_g,
                 optim_g,
-                self.Transfer_Speaker_Emb
+                self.Keep_Original_Speakers #if self.UsePretrainedModel else False
             )
             _, optim_d, lr_d, epoch_str = load_checkpoint(
-                self.Model_Path_Pretrained_D if None not in (self.Model_Path_Pretrained_G, self.Model_Path_Pretrained_D) and self.CheckIfContinue else latest_checkpoint_path(hps.model_dir, "D_*.pth"),
+                self.Model_Path_Pretrained_D if self.UsePretrainedModel else latest_checkpoint_path(hps.model_dir, "D_*.pth"),
                 net_d,
                 optim_d,
-                self.Transfer_Speaker_Emb
+                self.Keep_Original_Speakers #if self.UsePretrainedModel else False
             )
-            self.CheckIfContinue = False
 
             # To prevent KeyError: "param 'initial_lr' is not specified in param_groups[0] when resuming an optimizer"
             if optim_g.param_groups[0].get('initial_lr') is None:
@@ -469,11 +494,11 @@ class Training:
 class Voice_Training(Preprocessing, Training):
     '''
     1. Preprocess
-    2. Train
+    2. Train & Evaluate
     '''
     def __init__(self,
-        FileList_Path_Validation: str,
         FileList_Path_Training: str,
+        FileList_Path_Validation: str,
         Language: str = 'mandarin_english_japanese',
         Config_Path_Load: Optional[str] = None,
         Config_Dir_Save: str = './',
@@ -481,15 +506,15 @@ class Voice_Training(Preprocessing, Training):
         Set_Epochs: int = 10000,
         Set_Batch_Size: int = 16,
         Set_FP16_Run: bool = True,
-        Set_Speakers: str = ["SpeakerName"],
+        Set_Speakers: Optional[list] = None,
+        Keep_Original_Speakers: bool = False,
         Num_Workers: int = 4,
-        Find_Unused_Parameters: bool = False,
         Model_Path_Pretrained_G: Optional[str] = None,
         Model_Path_Pretrained_D: Optional[str] = None,
         Model_Dir_Save: str = './'
     ):
-        Preprocessing.__init__(self, FileList_Path_Validation, FileList_Path_Training, Language, Config_Path_Load, Config_Dir_Save, Set_Eval_Interval, Set_Epochs, Set_Batch_Size, Set_FP16_Run, Set_Speakers)
-        Training.__init__(self, Num_Workers, Find_Unused_Parameters, Model_Path_Pretrained_G, Model_Path_Pretrained_D)
+        Preprocessing.__init__(self, FileList_Path_Training, FileList_Path_Validation, Language, Config_Path_Load, Config_Dir_Save, Set_Eval_Interval, Set_Epochs, Set_Batch_Size, Set_FP16_Run, Set_Speakers, Keep_Original_Speakers)
+        Training.__init__(self, Num_Workers, Model_Path_Pretrained_G, Model_Path_Pretrained_D, Keep_Original_Speakers)
         self.Model_Dir_Save = Model_Dir_Save
 
     def Preprocessing_and_Training(self):
@@ -497,7 +522,7 @@ class Voice_Training(Preprocessing, Training):
         self.Configurator()
         self.Cleaner()
 
-        # Train
+        # Train & Evaluate
         """Assume Single Node Multi GPUs Training Only"""
         assert torch.cuda.is_available(), "CPU training is not allowed."
 

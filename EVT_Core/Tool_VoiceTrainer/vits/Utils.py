@@ -19,18 +19,18 @@ from scipy.io.wavfile import read
 MATPLOTLIB_FLAG = False
 
 
-def load_checkpoint(checkpoint_path, model, optimizer, transfer_speaker_emb: bool = False):
+def load_checkpoint(checkpoint_path, model, optimizer, keep_speaker_emb: bool = False):
     assert os.path.isfile(checkpoint_path)
     checkpoint_dict = torch.load(checkpoint_path, map_location='cpu')
     iteration = checkpoint_dict['iteration']
     learning_rate = checkpoint_dict['learning_rate']
     optimizer.load_state_dict(checkpoint_dict['optimizer']) if optimizer is not None else None
-    def get_new_state_dict(state_dict, saved_state_dict, transfer_speaker_emb):
+    def get_new_state_dict(state_dict, saved_state_dict, keep_speaker_emb):
         new_state_dict = {}
         for layer_param, tensor in state_dict.items():
             try: # Assign tensor of layer param from saved state dict to new state dict while layer param is not embedding's weight, otherwise use the current tensor
                 if layer_param == 'emb_g.weight':
-                    if transfer_speaker_emb: # Restore emb_g.weight from saved state dict if decide to transfer the speaker embedding
+                    if keep_speaker_emb: # Keep the original speaker embedding, otherwise drop it
                         tensor[:saved_state_dict[layer_param].shape[0], :] = saved_state_dict[layer_param]
                     new_state_dict[layer_param] = tensor
                 else:
@@ -40,9 +40,9 @@ def load_checkpoint(checkpoint_path, model, optimizer, transfer_speaker_emb: boo
                 new_state_dict[layer_param] = tensor
         return new_state_dict
     if hasattr(model, 'module'):
-        model.module.load_state_dict(get_new_state_dict(model.module.state_dict(), checkpoint_dict['model'], transfer_speaker_emb))
+        model.module.load_state_dict(get_new_state_dict(model.module.state_dict(), checkpoint_dict['model'], keep_speaker_emb))
     else:
-        model.load_state_dict(get_new_state_dict(model.state_dict(), checkpoint_dict['model'], transfer_speaker_emb))
+        model.load_state_dict(get_new_state_dict(model.state_dict(), checkpoint_dict['model'], keep_speaker_emb))
     logger.info(f"Loaded checkpoint '{checkpoint_path}' (iteration {iteration})")
     return model, optimizer, learning_rate, iteration
 

@@ -33,15 +33,18 @@ class LineEditBase(QLineEdit):
     '''
     '''
     def __init__(self,
-        arg__1: str,
+        text: Optional[str] = None,
         parent: Optional[QWidget] = None
     ):
-        super().__init__(arg__1, parent)
+        super().__init__(parent)
 
         ComponentsSignals.Signal_SetTheme.connect(
             lambda Theme: self.setStyleSheet(Function_GetStyleSheet('Edit', Theme))
         )
         ComponentsSignals.Signal_SetTheme.emit('Auto')
+
+        self.setFont('Microsoft YaHei')
+        self.setText(text) if text is not None else None
 
 
 class LineEdit_NoBorder(LineEditBase):

@@ -17,31 +17,37 @@ class CustomSignals_EnvConfigurator(QObject):
     '''
     Set up signals for configurator functions
     '''
+    Signal_FFmpegStatus = Signal(str)
     Signal_FFmpegDetected = Signal()
     Signal_FFmpegUndetected = Signal()
     Signal_FFmpegInstalled = Signal()
     Signal_FFmpegInstallFailed = Signal(Exception)
     '''
+    Signal_GCCStatus = Signal(str)
     Signal_GCCDetected = Signal()
     Signal_GCCUndetected = Signal()
     Signal_GCCInstalled = Signal()
     Signal_GCCInstallFailed = Signal(Exception)
 
+    Signal_CMakeStatus = Signal(str)
     Signal_CMakeDetected = Signal()
     Signal_CMakeUndetected = Signal()
     Signal_CMakeInstalled = Signal()
     Signal_CMakeInstallFailed = Signal(Exception)
     '''
+    Signal_PythonStatus = Signal(str)
     Signal_PythonDetected = Signal()
     Signal_PythonUndetected = Signal()
     Signal_PythonInstalled = Signal()
     Signal_PythonInstallFailed = Signal(Exception)
 
+    Signal_PyReqsStatus = Signal(str)
     Signal_PyReqsDetected = Signal()
     Signal_PyReqsUndetected = Signal()
     Signal_PyReqsInstalled = Signal()
     Signal_PyReqsInstallFailed = Signal(Exception)
 
+    Signal_PytorchStatus = Signal(str)
     Signal_PytorchDetected = Signal()
     Signal_PytorchUndetected = Signal()
     Signal_PytorchInstalled = Signal()
@@ -89,15 +95,17 @@ class FFmpeg_Installer(QObject):
         Result = self.Check_FFmpeg()
         if Result == False:
             EnvConfiguratorSignals.Signal_FFmpegUndetected.emit()
-            print("Installing FFmpeg. Please wait...")
+            EnvConfiguratorSignals.Signal_FFmpegStatus.emit("Installing FFmpeg. Please wait...")
             try:
                 self.Install_FFmpeg()
                 EnvConfiguratorSignals.Signal_FFmpegInstalled.emit()
+                EnvConfiguratorSignals.Signal_FFmpegStatus.emit("Successfully installed!")
             except Exception as e:
                 EnvConfiguratorSignals.Signal_FFmpegInstallFailed.emit(e)
+                EnvConfiguratorSignals.Signal_FFmpegStatus.emit("Installation failed:(")
         else:
             EnvConfiguratorSignals.Signal_FFmpegDetected.emit()
-            #print(f"FFmpeg detected. Version: {Result}")
+            EnvConfiguratorSignals.Signal_FFmpegStatus.emit(f"FFmpeg detected. Version: {Result}")
     
     def Execute(self, Params: tuple):
         TaskAccelerating(
@@ -147,15 +155,17 @@ class GCC_Installer(QObject):
         Result = self.Check_GCC()
         if Result == False:
             EnvConfiguratorSignals.Signal_GCCUndetected.emit()
-            print("Installing GCC. Please wait...")
+            EnvConfiguratorSignals.Signal_GCCStatus.emit("Installing GCC. Please wait...")
             try:
                 self.Install_GCC()
                 EnvConfiguratorSignals.Signal_GCCInstalled.emit()
+                EnvConfiguratorSignals.Signal_GCCStatus.emit("Successfully installed!")
             except Exception as e:
                 EnvConfiguratorSignals.Signal_GCCInstallFailed.emit(e)
+                EnvConfiguratorSignals.Signal_GCCStatus.emit("Installation failed:(")
         else:
             EnvConfiguratorSignals.Signal_GCCDetected.emit()
-            #print(f"GCC detected. Version: {Result}")
+            EnvConfiguratorSignals.Signal_GCCStatus.emit(f"GCC detected. Version: {Result}")
     
     def Execute(self, Params: tuple):
         TaskAccelerating(
@@ -214,15 +224,17 @@ class CMake_Installer(QObject):
         Result = self.Check_CMake()
         if Result == False:
             EnvConfiguratorSignals.Signal_CMakeUndetected.emit()
-            print("Installing CMake. Please wait...")
+            EnvConfiguratorSignals.Signal_CMakeStatus.emit("Installing CMake. Please wait...")
             try:
                 self.Install_CMake()
                 EnvConfiguratorSignals.Signal_CMakeInstalled.emit()
+                EnvConfiguratorSignals.Signal_CMakeStatus.emit("Successfully installed!")
             except Exception as e:
                 EnvConfiguratorSignals.Signal_CMakeInstallFailed.emit(e)
+                EnvConfiguratorSignals.Signal_CMakeStatus.emit("Installation failed:(")
         else:
             EnvConfiguratorSignals.Signal_CMakeDetected.emit()
-            #print(f"CMake detected. Version: {Result}")
+            EnvConfiguratorSignals.Signal_CMakeStatus.emit(f"CMake detected. Version: {Result}")
 
         RunCMD(['set CMAKE_MAKE_PROGRAM={}'.format(os.path.join(self.MinGW_Bin_Path, 'mingw32-make.exe'))])
         RunCMD(['set CC={}'.format(os.path.join(self.MinGW_Bin_Path, 'gcc.exe'))])
@@ -285,15 +297,17 @@ class Python_Installer(QObject):
         Result = self.Check_Python()
         if Result == False:
             EnvConfiguratorSignals.Signal_PythonUndetected.emit()
-            print("Installing Python. Please wait...")
+            EnvConfiguratorSignals.Signal_PythonStatus.emit("Installing Python. Please wait...")
             try:
                 self.Install_Python(Version_Download)
                 EnvConfiguratorSignals.Signal_PythonInstalled.emit()
+                EnvConfiguratorSignals.Signal_PythonStatus.emit("Successfully installed!")
             except Exception as e:
                 EnvConfiguratorSignals.Signal_PythonInstallFailed.emit(e)
+                EnvConfiguratorSignals.Signal_PythonStatus.emit("Installation failed:(")
         else:
             EnvConfiguratorSignals.Signal_PythonDetected.emit()
-            #print(f"Python detected. Version: {Result}")
+            EnvConfiguratorSignals.Signal_PythonStatus.emit(f"Python detected. Version: {Result}")
     
     def Execute(self, Params: tuple):
         TaskAccelerating(
@@ -366,16 +380,18 @@ class PyReqs_Installer(QObject):
                     MissingRequirementList.append(Requirement)
                 else:
                     EnvConfiguratorSignals.Signal_PyReqsDetected.emit() if Index + 1 == len(Requirements) and MissingRequirementList == [] else None
-                    #print(f"{Package} detected. Version: {Result}")
+                    EnvConfiguratorSignals.Signal_PyReqsStatus.emit(f"{Package} detected. Version: {Result}")
             else:
                 continue
         for Index, MissingRequirement in enumerate(MissingRequirementList):
-            print(f"Installing {MissingRequirement}. Please wait...")
+            EnvConfiguratorSignals.Signal_PyReqsStatus.emit(f"Installing {MissingRequirement}. Please wait...")
             try:
                 self.Install_PyReq(MissingRequirement)
                 EnvConfiguratorSignals.Signal_PyReqsInstalled.emit() if Index + 1 == len(MissingRequirementList) else None
+                EnvConfiguratorSignals.Signal_PyReqsStatus.emit("Successfully installed!") if Index + 1 == len(MissingRequirementList) else None
             except Exception as e:
                 EnvConfiguratorSignals.Signal_PyReqsInstallFailed.emit(e)
+                EnvConfiguratorSignals.Signal_PyReqsStatus.emit("Installation failed:(")
     
     def Execute(self, Params: tuple):
         TaskAccelerating(
@@ -435,15 +451,17 @@ class Pytorch_Installer(QObject):
                 if self.EmitFlag == True:
                     EnvConfiguratorSignals.Signal_PytorchUndetected.emit()
                     self.EmitFlag == False
-                print(f"Installing {Package}. Please wait...")
+                EnvConfiguratorSignals.Signal_PytorchStatus.emit(f"Installing {Package}. Please wait...")
                 try:
                     self.Install_Pytorch(Package)
                     EnvConfiguratorSignals.Signal_PytorchInstalled.emit()
+                    EnvConfiguratorSignals.Signal_PytorchStatus.emit("Successfully installed!")
                 except Exception as e:
                     EnvConfiguratorSignals.Signal_PytorchInstallFailed.emit(e)
+                    EnvConfiguratorSignals.Signal_PytorchStatus.emit("Installation failed:(")
             else:
                 EnvConfiguratorSignals.Signal_PytorchDetected.emit()
-                #print(f"{Package} detected. Version: {Result}")
+                EnvConfiguratorSignals.Signal_PytorchStatus.emit(f"{Package} detected. Version: {Result}")
     
     def Execute(self, Params: tuple):
         TaskAccelerating(

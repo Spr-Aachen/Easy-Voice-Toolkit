@@ -544,6 +544,85 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_3.addWidget(self.Button_Menu_Settings)
 
+        self.Button_Menu_Info = QToolButton(self.Frame_Menu)
+        self.Button_Menu_Info.setObjectName(u"Button_Menu_Info")
+        sizePolicy1.setHeightForWidth(self.Button_Menu_Info.sizePolicy().hasHeightForWidth())
+        self.Button_Menu_Info.setSizePolicy(sizePolicy1)
+        self.Button_Menu_Info.setMinimumSize(QSize(0, 48))
+        self.Button_Menu_Info.setStyleSheet(u"QToolButton {\n"
+"	/*color: rgb(255, 255, 255);*/\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QToolButton:hover {\n"
+"	background-color: qlineargradient(spread: pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(66, 66, 66, 123), stop:1 transparent);\n"
+"}\n"
+"QToolButton:checked {\n"
+"	background-color: transparent;\n"
+"	border-left-width: 3px;\n"
+"	border-left-color: rgb(120, 180, 240);\n"
+"	border-right-color: transparent;\n"
+"	border-top-color: transparent;\n"
+"	border-bottom-color: transparent;\n"
+"	/*padding-left: 0.6px;*/\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+        self.horizontalLayout_13 = QHBoxLayout(self.Button_Menu_Info)
+        self.horizontalLayout_13.setSpacing(0)
+        self.horizontalLayout_13.setObjectName(u"horizontalLayout_13")
+        self.horizontalLayout_13.setContentsMargins(0, 0, 0, 0)
+        self.Label_Menu_Info_Icon = QLabel(self.Button_Menu_Info)
+        self.Label_Menu_Info_Icon.setObjectName(u"Label_Menu_Info_Icon")
+        self.Label_Menu_Info_Icon.setMinimumSize(QSize(48, 48))
+        self.Label_Menu_Info_Icon.setMaximumSize(QSize(48, 48))
+        self.Label_Menu_Info_Icon.setStyleSheet(u"QLabel {\n"
+"	/*text-align: center;\n"
+"	font-size: 15px;*/\n"
+"	margin: 12px;\n"
+"	border-image: url(:/Button_Icon/Sources/Info.png);\n"
+"	/*background-repeat: no-repeat;\n"
+"	background-origin: content;\n"
+"	background-position: center;*/\n"
+"	background-color: transparent;\n"
+"	/*padding: 11.1px;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"	border-color: transparent;*/\n"
+"}")
+
+        self.horizontalLayout_13.addWidget(self.Label_Menu_Info_Icon)
+
+        self.Label_Menu_Info_Text = QLabel(self.Button_Menu_Info)
+        self.Label_Menu_Info_Text.setObjectName(u"Label_Menu_Info_Text")
+        self.Label_Menu_Info_Text.setStyleSheet(u"QLabel {\n"
+"	font-size: 15px;\n"
+"	text-align: center;\n"
+"	color: rgb(210, 222, 234);\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.horizontalLayout_13.addWidget(self.Label_Menu_Info_Text)
+
+        self.HorizontalSpacer_Menu_Info = QSpacerItem(92, 0, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.horizontalLayout_13.addItem(self.HorizontalSpacer_Menu_Info)
+
+
+        self.verticalLayout_3.addWidget(self.Button_Menu_Info)
+
 
         self.horizontalLayout_2.addWidget(self.Frame_Menu)
 
@@ -1227,7 +1306,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_134.setContentsMargins(0, 0, 0, 0)
         self.Frame_Download_FFmpeg = QFrame(self.Frame_Download_Middle)
         self.Frame_Download_FFmpeg.setObjectName(u"Frame_Download_FFmpeg")
-        self.Frame_Download_FFmpeg.setMinimumSize(QSize(0, 90))
+        self.Frame_Download_FFmpeg.setMinimumSize(QSize(0, 99))
+        self.Frame_Download_FFmpeg.setMaximumSize(QSize(16777215, 99))
         self.Frame_Download_FFmpeg.setStyleSheet(u"QFrame {\n"
 "	color: rgb(255, 255, 255);\n"
 "	background-color: transparent;\n"
@@ -1259,33 +1339,11 @@ class Ui_MainWindow(object):
 
         self.HorizontalSpacer_Download_FFmpeg = QSpacerItem(969, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
-        self.gridLayout_2.addItem(self.HorizontalSpacer_Download_FFmpeg, 0, 1, 1, 2)
-
-        self.ProgressBar_Download_FFmpeg = QProgressBar(self.Frame_Download_FFmpeg)
-        self.ProgressBar_Download_FFmpeg.setObjectName(u"ProgressBar_Download_FFmpeg")
-        self.ProgressBar_Download_FFmpeg.setMaximumSize(QSize(16777215, 6))
-        self.ProgressBar_Download_FFmpeg.setStyleSheet(u"QProgressBar {\n"
-"	text-align: center;\n"
-"	color: rgb(255, 255, 255);\n"
-"	background-color: rgba(123, 123, 123, 210);\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 3px;\n"
-"	border-style: solid;\n"
-"}\n"
-"\n"
-"QProgressBar:chunk {\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	background-color: qlineargradient(spread: pad, x1:0, y1:0, x2:1, y2:0, stop:0 transparent, stop:1 rgb(120, 180, 240));\n"
-"}")
-
-        self.gridLayout_2.addWidget(self.ProgressBar_Download_FFmpeg, 1, 0, 1, 2)
+        self.gridLayout_2.addItem(self.HorizontalSpacer_Download_FFmpeg, 0, 1, 1, 1)
 
         self.Button_Install_FFmpeg = QPushButton(self.Frame_Download_FFmpeg)
         self.Button_Install_FFmpeg.setObjectName(u"Button_Install_FFmpeg")
-        self.Button_Install_FFmpeg.setMaximumSize(QSize(30, 30))
+        self.Button_Install_FFmpeg.setMaximumSize(QSize(33, 33))
         self.Button_Install_FFmpeg.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
 "	font-size: 15px;\n"
@@ -1313,14 +1371,52 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}")
 
-        self.gridLayout_2.addWidget(self.Button_Install_FFmpeg, 1, 2, 1, 1)
+        self.gridLayout_2.addWidget(self.Button_Install_FFmpeg, 0, 2, 3, 1)
+
+        self.ProgressBar_Download_FFmpeg = QProgressBar(self.Frame_Download_FFmpeg)
+        self.ProgressBar_Download_FFmpeg.setObjectName(u"ProgressBar_Download_FFmpeg")
+        self.ProgressBar_Download_FFmpeg.setMaximumSize(QSize(16777215, 3))
+        self.ProgressBar_Download_FFmpeg.setStyleSheet(u"QProgressBar {\n"
+"	text-align: center;\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: rgba(123, 123, 123, 210);\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 3px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QProgressBar:chunk {\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	background-color: qlineargradient(spread: pad, x1:0, y1:0, x2:1, y2:0, stop:0 transparent, stop:1 rgb(120, 180, 240));\n"
+"}")
+
+        self.gridLayout_2.addWidget(self.ProgressBar_Download_FFmpeg, 1, 0, 1, 2)
+
+        self.Label_Download_FFmpeg_Status = QLabel(self.Frame_Download_FFmpeg)
+        self.Label_Download_FFmpeg_Status.setObjectName(u"Label_Download_FFmpeg_Status")
+        self.Label_Download_FFmpeg_Status.setStyleSheet(u"QLabel {\n"
+"	font-size: 9.9px;\n"
+"	/*text-align: center;*/\n"
+"	/*color: rgb(255, 255, 255);*/\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_2.addWidget(self.Label_Download_FFmpeg_Status, 2, 0, 1, 1)
 
 
         self.verticalLayout_134.addWidget(self.Frame_Download_FFmpeg)
 
         self.Frame_Download_Python = QFrame(self.Frame_Download_Middle)
         self.Frame_Download_Python.setObjectName(u"Frame_Download_Python")
-        self.Frame_Download_Python.setMinimumSize(QSize(0, 90))
+        self.Frame_Download_Python.setMinimumSize(QSize(0, 99))
+        self.Frame_Download_Python.setMaximumSize(QSize(16777215, 99))
         self.Frame_Download_Python.setStyleSheet(u"QFrame {\n"
 "	color: rgb(255, 255, 255);\n"
 "	background-color: transparent;\n"
@@ -1352,33 +1448,11 @@ class Ui_MainWindow(object):
 
         self.HorizontalSpacer_Download_Python = QSpacerItem(969, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
-        self.gridLayout_3.addItem(self.HorizontalSpacer_Download_Python, 0, 1, 1, 2)
-
-        self.ProgressBar_Download_Python = QProgressBar(self.Frame_Download_Python)
-        self.ProgressBar_Download_Python.setObjectName(u"ProgressBar_Download_Python")
-        self.ProgressBar_Download_Python.setMaximumSize(QSize(16777215, 6))
-        self.ProgressBar_Download_Python.setStyleSheet(u"QProgressBar {\n"
-"	text-align: center;\n"
-"	color: rgb(255, 255, 255);\n"
-"	background-color: rgba(123, 123, 123, 210);\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 3px;\n"
-"	border-style: solid;\n"
-"}\n"
-"\n"
-"QProgressBar:chunk {\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	background-color: qlineargradient(spread: pad, x1:0, y1:0, x2:1, y2:0, stop:0 transparent, stop:1 rgb(120, 180, 240));\n"
-"}")
-
-        self.gridLayout_3.addWidget(self.ProgressBar_Download_Python, 1, 0, 1, 2)
+        self.gridLayout_3.addItem(self.HorizontalSpacer_Download_Python, 0, 1, 1, 1)
 
         self.Button_Install_Python = QPushButton(self.Frame_Download_Python)
         self.Button_Install_Python.setObjectName(u"Button_Install_Python")
-        self.Button_Install_Python.setMaximumSize(QSize(30, 30))
+        self.Button_Install_Python.setMaximumSize(QSize(33, 33))
         self.Button_Install_Python.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
 "	font-size: 15px;\n"
@@ -1406,14 +1480,52 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}")
 
-        self.gridLayout_3.addWidget(self.Button_Install_Python, 1, 2, 1, 1)
+        self.gridLayout_3.addWidget(self.Button_Install_Python, 0, 2, 3, 1)
+
+        self.ProgressBar_Download_Python = QProgressBar(self.Frame_Download_Python)
+        self.ProgressBar_Download_Python.setObjectName(u"ProgressBar_Download_Python")
+        self.ProgressBar_Download_Python.setMaximumSize(QSize(16777215, 3))
+        self.ProgressBar_Download_Python.setStyleSheet(u"QProgressBar {\n"
+"	text-align: center;\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: rgba(123, 123, 123, 210);\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 3px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QProgressBar:chunk {\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	background-color: qlineargradient(spread: pad, x1:0, y1:0, x2:1, y2:0, stop:0 transparent, stop:1 rgb(120, 180, 240));\n"
+"}")
+
+        self.gridLayout_3.addWidget(self.ProgressBar_Download_Python, 1, 0, 1, 2)
+
+        self.Label_Download_Python_Status = QLabel(self.Frame_Download_Python)
+        self.Label_Download_Python_Status.setObjectName(u"Label_Download_Python_Status")
+        self.Label_Download_Python_Status.setStyleSheet(u"QLabel {\n"
+"	font-size: 9.9px;\n"
+"	/*text-align: center;*/\n"
+"	/*color: rgb(255, 255, 255);*/\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_3.addWidget(self.Label_Download_Python_Status, 2, 0, 1, 1)
 
 
         self.verticalLayout_134.addWidget(self.Frame_Download_Python)
 
         self.Frame_Download_PyReqs = QFrame(self.Frame_Download_Middle)
         self.Frame_Download_PyReqs.setObjectName(u"Frame_Download_PyReqs")
-        self.Frame_Download_PyReqs.setMinimumSize(QSize(0, 90))
+        self.Frame_Download_PyReqs.setMinimumSize(QSize(0, 99))
+        self.Frame_Download_PyReqs.setMaximumSize(QSize(16777215, 99))
         self.Frame_Download_PyReqs.setStyleSheet(u"QFrame {\n"
 "	color: rgb(255, 255, 255);\n"
 "	background-color: transparent;\n"
@@ -1445,33 +1557,11 @@ class Ui_MainWindow(object):
 
         self.HorizontalSpacer_Download_PyReqs = QSpacerItem(969, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
-        self.gridLayout_4.addItem(self.HorizontalSpacer_Download_PyReqs, 0, 1, 1, 2)
-
-        self.ProgressBar_Download_PyReqs = QProgressBar(self.Frame_Download_PyReqs)
-        self.ProgressBar_Download_PyReqs.setObjectName(u"ProgressBar_Download_PyReqs")
-        self.ProgressBar_Download_PyReqs.setMaximumSize(QSize(16777215, 6))
-        self.ProgressBar_Download_PyReqs.setStyleSheet(u"QProgressBar {\n"
-"	text-align: center;\n"
-"	color: rgb(255, 255, 255);\n"
-"	background-color: rgba(123, 123, 123, 210);\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 3px;\n"
-"	border-style: solid;\n"
-"}\n"
-"\n"
-"QProgressBar:chunk {\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	background-color: qlineargradient(spread: pad, x1:0, y1:0, x2:1, y2:0, stop:0 transparent, stop:1 rgb(120, 180, 240));\n"
-"}")
-
-        self.gridLayout_4.addWidget(self.ProgressBar_Download_PyReqs, 1, 0, 1, 2)
+        self.gridLayout_4.addItem(self.HorizontalSpacer_Download_PyReqs, 0, 1, 1, 1)
 
         self.Button_Install_PyReqs = QPushButton(self.Frame_Download_PyReqs)
         self.Button_Install_PyReqs.setObjectName(u"Button_Install_PyReqs")
-        self.Button_Install_PyReqs.setMaximumSize(QSize(30, 30))
+        self.Button_Install_PyReqs.setMaximumSize(QSize(33, 33))
         self.Button_Install_PyReqs.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
 "	font-size: 15px;\n"
@@ -1499,14 +1589,52 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}")
 
-        self.gridLayout_4.addWidget(self.Button_Install_PyReqs, 1, 2, 1, 1)
+        self.gridLayout_4.addWidget(self.Button_Install_PyReqs, 0, 2, 3, 1)
+
+        self.ProgressBar_Download_PyReqs = QProgressBar(self.Frame_Download_PyReqs)
+        self.ProgressBar_Download_PyReqs.setObjectName(u"ProgressBar_Download_PyReqs")
+        self.ProgressBar_Download_PyReqs.setMaximumSize(QSize(16777215, 3))
+        self.ProgressBar_Download_PyReqs.setStyleSheet(u"QProgressBar {\n"
+"	text-align: center;\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: rgba(123, 123, 123, 210);\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 3px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QProgressBar:chunk {\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	background-color: qlineargradient(spread: pad, x1:0, y1:0, x2:1, y2:0, stop:0 transparent, stop:1 rgb(120, 180, 240));\n"
+"}")
+
+        self.gridLayout_4.addWidget(self.ProgressBar_Download_PyReqs, 1, 0, 1, 2)
+
+        self.Label_Download_PyReqs_Status = QLabel(self.Frame_Download_PyReqs)
+        self.Label_Download_PyReqs_Status.setObjectName(u"Label_Download_PyReqs_Status")
+        self.Label_Download_PyReqs_Status.setStyleSheet(u"QLabel {\n"
+"	font-size: 9.9px;\n"
+"	/*text-align: center;*/\n"
+"	/*color: rgb(255, 255, 255);*/\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_4.addWidget(self.Label_Download_PyReqs_Status, 2, 0, 1, 1)
 
 
         self.verticalLayout_134.addWidget(self.Frame_Download_PyReqs)
 
         self.Frame_Download_Pytorch = QFrame(self.Frame_Download_Middle)
         self.Frame_Download_Pytorch.setObjectName(u"Frame_Download_Pytorch")
-        self.Frame_Download_Pytorch.setMinimumSize(QSize(0, 90))
+        self.Frame_Download_Pytorch.setMinimumSize(QSize(0, 99))
+        self.Frame_Download_Pytorch.setMaximumSize(QSize(16777215, 99))
         self.Frame_Download_Pytorch.setStyleSheet(u"QFrame {\n"
 "	color: rgb(255, 255, 255);\n"
 "	background-color: transparent;\n"
@@ -1538,33 +1666,11 @@ class Ui_MainWindow(object):
 
         self.HorizontalSpacer_Download_Pytorch = QSpacerItem(969, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
-        self.gridLayout_5.addItem(self.HorizontalSpacer_Download_Pytorch, 0, 1, 1, 2)
-
-        self.ProgressBar_Download_Pytorch = QProgressBar(self.Frame_Download_Pytorch)
-        self.ProgressBar_Download_Pytorch.setObjectName(u"ProgressBar_Download_Pytorch")
-        self.ProgressBar_Download_Pytorch.setMaximumSize(QSize(16777215, 6))
-        self.ProgressBar_Download_Pytorch.setStyleSheet(u"QProgressBar {\n"
-"	text-align: center;\n"
-"	color: rgb(255, 255, 255);\n"
-"	background-color: rgba(123, 123, 123, 210);\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 3px;\n"
-"	border-style: solid;\n"
-"}\n"
-"\n"
-"QProgressBar:chunk {\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	background-color: qlineargradient(spread: pad, x1:0, y1:0, x2:1, y2:0, stop:0 transparent, stop:1 rgb(120, 180, 240));\n"
-"}")
-
-        self.gridLayout_5.addWidget(self.ProgressBar_Download_Pytorch, 1, 0, 1, 2)
+        self.gridLayout_5.addItem(self.HorizontalSpacer_Download_Pytorch, 0, 1, 1, 1)
 
         self.Button_Install_Pytorch = QPushButton(self.Frame_Download_Pytorch)
         self.Button_Install_Pytorch.setObjectName(u"Button_Install_Pytorch")
-        self.Button_Install_Pytorch.setMaximumSize(QSize(30, 30))
+        self.Button_Install_Pytorch.setMaximumSize(QSize(33, 33))
         self.Button_Install_Pytorch.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
 "	font-size: 15px;\n"
@@ -1592,7 +1698,44 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}")
 
-        self.gridLayout_5.addWidget(self.Button_Install_Pytorch, 1, 2, 1, 1)
+        self.gridLayout_5.addWidget(self.Button_Install_Pytorch, 0, 2, 3, 1)
+
+        self.ProgressBar_Download_Pytorch = QProgressBar(self.Frame_Download_Pytorch)
+        self.ProgressBar_Download_Pytorch.setObjectName(u"ProgressBar_Download_Pytorch")
+        self.ProgressBar_Download_Pytorch.setMaximumSize(QSize(16777215, 3))
+        self.ProgressBar_Download_Pytorch.setStyleSheet(u"QProgressBar {\n"
+"	text-align: center;\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: rgba(123, 123, 123, 210);\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 3px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QProgressBar:chunk {\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	background-color: qlineargradient(spread: pad, x1:0, y1:0, x2:1, y2:0, stop:0 transparent, stop:1 rgb(120, 180, 240));\n"
+"}")
+
+        self.gridLayout_5.addWidget(self.ProgressBar_Download_Pytorch, 1, 0, 1, 2)
+
+        self.Label_Download_Pytorch_Status = QLabel(self.Frame_Download_Pytorch)
+        self.Label_Download_Pytorch_Status.setObjectName(u"Label_Download_Pytorch_Status")
+        self.Label_Download_Pytorch_Status.setStyleSheet(u"QLabel {\n"
+"	font-size: 9.9px;\n"
+"	/*text-align: center;*/\n"
+"	/*color: rgb(255, 255, 255);*/\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_5.addWidget(self.Label_Download_Pytorch_Status, 2, 0, 1, 1)
 
 
         self.verticalLayout_134.addWidget(self.Frame_Download_Pytorch)
@@ -10338,6 +10481,335 @@ class Ui_MainWindow(object):
 
         self.gridLayout_12.addWidget(self.Widget_Left_Tool_VoiceTrainer, 0, 0, 1, 1)
 
+        self.Widget_Right_Tool_VoiceTrainer = QWidget(self.StackedWidget_Pages_Tool_VoiceTrainer)
+        self.Widget_Right_Tool_VoiceTrainer.setObjectName(u"Widget_Right_Tool_VoiceTrainer")
+        self.Widget_Right_Tool_VoiceTrainer.setMinimumSize(QSize(210, 0))
+        self.Widget_Right_Tool_VoiceTrainer.setMaximumSize(QSize(420, 16777215))
+        self.Widget_Right_Tool_VoiceTrainer.setStyleSheet(u"QWidget {\n"
+"	background-color: rgba(36, 36, 36, 123);\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QWidget:hover {\n"
+"}")
+        self.gridLayout = QGridLayout(self.Widget_Right_Tool_VoiceTrainer)
+        self.gridLayout.setSpacing(12)
+        self.gridLayout.setObjectName(u"gridLayout")
+        self.gridLayout.setContentsMargins(12, 12, 12, 12)
+        self.Button_CheckOutput_Tool_VoiceTrainer = QPushButton(self.Widget_Right_Tool_VoiceTrainer)
+        self.Button_CheckOutput_Tool_VoiceTrainer.setObjectName(u"Button_CheckOutput_Tool_VoiceTrainer")
+        self.Button_CheckOutput_Tool_VoiceTrainer.setStyleSheet(u"QPushButton {\n"
+"	text-align: center;\n"
+"	font-size: 12px;\n"
+"	background-color: transparent;\n"
+"	padding: 9.9px;\n"
+"	border-width: 1.5px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout.addWidget(self.Button_CheckOutput_Tool_VoiceTrainer, 2, 1, 1, 1)
+
+        self.Button_SyncParams_Tool_VoiceTrainer = QPushButton(self.Widget_Right_Tool_VoiceTrainer)
+        self.Button_SyncParams_Tool_VoiceTrainer.setObjectName(u"Button_SyncParams_Tool_VoiceTrainer")
+        self.Button_SyncParams_Tool_VoiceTrainer.setStyleSheet(u"QPushButton {\n"
+"	text-align: center;\n"
+"	font-size: 12px;\n"
+"	background-color: transparent;\n"
+"	padding: 9.9px;\n"
+"	border-width: 1.5px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout.addWidget(self.Button_SyncParams_Tool_VoiceTrainer, 2, 0, 1, 1)
+
+        self.Button_RunTensorboard_Tool_VoiceTrainer = QPushButton(self.Widget_Right_Tool_VoiceTrainer)
+        self.Button_RunTensorboard_Tool_VoiceTrainer.setObjectName(u"Button_RunTensorboard_Tool_VoiceTrainer")
+        self.Button_RunTensorboard_Tool_VoiceTrainer.setStyleSheet(u"QPushButton {\n"
+"	text-align: center;\n"
+"	font-size: 12px;\n"
+"	background-color: transparent;\n"
+"	padding: 9.9px;\n"
+"	border-width: 1.5px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout.addWidget(self.Button_RunTensorboard_Tool_VoiceTrainer, 1, 0, 1, 2)
+
+        self.TextBrowser_Params_Tool_VoiceTrainer = QTextBrowser(self.Widget_Right_Tool_VoiceTrainer)
+        self.TextBrowser_Params_Tool_VoiceTrainer.setObjectName(u"TextBrowser_Params_Tool_VoiceTrainer")
+        sizePolicy1.setHeightForWidth(self.TextBrowser_Params_Tool_VoiceTrainer.sizePolicy().hasHeightForWidth())
+        self.TextBrowser_Params_Tool_VoiceTrainer.setSizePolicy(sizePolicy1)
+        self.TextBrowser_Params_Tool_VoiceTrainer.setStyleSheet(u"QTextBrowser {\n"
+"	background-color: rgb(33, 33, 33);\n"
+"	/*padding-top: 1.5px;*/\n"
+"	/*padding-bottom: 1.5px;*/\n"
+"	padding-left: 15px;\n"
+"	padding-right: 6px;\n"
+"	border-width: 1px;\n"
+"	border-style: solid;\n"
+"	border-color:transparent;\n"
+"}\n"
+"\n"
+"\n"
+"QScrollBar::vertical {\n"
+"	width: 9px;\n"
+"	background-color: rgb(45, 45, 45);\n"
+"	border-width: 1px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: transparent;\n"
+"	margin: 0px;\n"
+"}\n"
+"QScrollBar::vertical:hover {\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
+"}\n"
+"\n"
+"QScrollBar::add-line:vertical {\n"
+"	height: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: bottom;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QScrollBar::sub-line:vertical {\n"
+"	height: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: top;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-st"
+                        "yle: solid;\n"
+"}\n"
+"\n"
+"QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
+"	width: 0px;\n"
+"	height: 0px;\n"
+"	background-color: transparent;\n"
+"}\n"
+"\n"
+"QScrollBar::handle:vertical {\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QScrollBar::handle:vertical:hover {\n"
+"	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QScrollBar::horizontal {\n"
+"	height: 9px;\n"
+"	background-color: rgb(45, 45, 45);\n"
+"	border-width: 1px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: transparent;\n"
+"	margin: 0px;\n"
+"}\n"
+"QScrollBar::horizontal:hover {\n"
+"	background-color: rgb(60, 60, 60);\n"
+"}\n"
+"\n"
+"QScrollBar::add-line:horizontal {\n"
+"	width: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: left;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QScrollBar::sub-line:horizontal {\n"
+"	width: 0px;\n"
+""
+                        "	background-color: transparent;\n"
+"	subcontrol-position: right;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {\n"
+"	width: 0px;\n"
+"	height: 0px;\n"
+"	background-color: transparent;\n"
+"}\n"
+"\n"
+"QScrollBar::handle:horizontal {\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QScrollBar::handle:horizontal:hover {\n"
+"	background-color: rgb(120, 120, 120);\n"
+"}")
+
+        self.gridLayout.addWidget(self.TextBrowser_Params_Tool_VoiceTrainer, 0, 0, 1, 2)
+
+
+        self.gridLayout_12.addWidget(self.Widget_Right_Tool_VoiceTrainer, 0, 2, 1, 1)
+
+        self.ProgressBar_Tool_VoiceTrainer = QProgressBar(self.StackedWidget_Pages_Tool_VoiceTrainer)
+        self.ProgressBar_Tool_VoiceTrainer.setObjectName(u"ProgressBar_Tool_VoiceTrainer")
+        self.ProgressBar_Tool_VoiceTrainer.setMinimumSize(QSize(0, 30))
+        self.ProgressBar_Tool_VoiceTrainer.setStyleSheet(u"QProgressBar {\n"
+"	text-align: center;\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: rgb(60, 60, 60);\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QProgressBar:chunk {\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	background-color: qlineargradient(spread: pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgb(60, 60, 60), stop:1  rgb(123, 123, 123));\n"
+"}")
+        self.ProgressBar_Tool_VoiceTrainer.setValue(0)
+        self.ProgressBar_Tool_VoiceTrainer.setTextVisible(False)
+        self.horizontalLayout_39 = QHBoxLayout(self.ProgressBar_Tool_VoiceTrainer)
+        self.horizontalLayout_39.setSpacing(0)
+        self.horizontalLayout_39.setObjectName(u"horizontalLayout_39")
+        self.horizontalLayout_39.setContentsMargins(0, 0, 0, 0)
+        self.StackedWidget_Tool_VoiceTrainer = QStackedWidget(self.ProgressBar_Tool_VoiceTrainer)
+        self.StackedWidget_Tool_VoiceTrainer.setObjectName(u"StackedWidget_Tool_VoiceTrainer")
+        self.StackedWidget_Tool_VoiceTrainer.setMaximumSize(QSize(16777215, 30))
+        self.StackedWidget_Tool_VoiceTrainer.setStyleSheet(u"QWidget {\n"
+"	background-color: rgba(90, 90, 90, 45);\n"
+"}\n"
+"QWidget:hover {\n"
+"	background-color: rgba(120, 120, 120, 60);\n"
+"}")
+        self.Page_Tool_VoiceTrainer_Execute = QWidget()
+        self.Page_Tool_VoiceTrainer_Execute.setObjectName(u"Page_Tool_VoiceTrainer_Execute")
+        self.verticalLayout_94 = QVBoxLayout(self.Page_Tool_VoiceTrainer_Execute)
+        self.verticalLayout_94.setSpacing(0)
+        self.verticalLayout_94.setObjectName(u"verticalLayout_94")
+        self.verticalLayout_94.setContentsMargins(0, 0, 0, 0)
+        self.Button_Tool_VoiceTrainer_Execute = QPushButton(self.Page_Tool_VoiceTrainer_Execute)
+        self.Button_Tool_VoiceTrainer_Execute.setObjectName(u"Button_Tool_VoiceTrainer_Execute")
+        sizePolicy6.setHeightForWidth(self.Button_Tool_VoiceTrainer_Execute.sizePolicy().hasHeightForWidth())
+        self.Button_Tool_VoiceTrainer_Execute.setSizePolicy(sizePolicy6)
+        self.Button_Tool_VoiceTrainer_Execute.setMinimumSize(QSize(0, 30))
+        self.Button_Tool_VoiceTrainer_Execute.setStyleSheet(u"QPushButton {\n"
+"	text-align: center;\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"	/*background-color: rgba(90, 90, 90, 45);*/\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	color: rgba(255, 255, 255, 240);\n"
+"	/*background-color: rgba(120, 120, 120, 60);*/\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.verticalLayout_94.addWidget(self.Button_Tool_VoiceTrainer_Execute)
+
+        self.StackedWidget_Tool_VoiceTrainer.addWidget(self.Page_Tool_VoiceTrainer_Execute)
+        self.Page_Tool_VoiceTrainer_Terminate = QWidget()
+        self.Page_Tool_VoiceTrainer_Terminate.setObjectName(u"Page_Tool_VoiceTrainer_Terminate")
+        self.verticalLayout_95 = QVBoxLayout(self.Page_Tool_VoiceTrainer_Terminate)
+        self.verticalLayout_95.setSpacing(0)
+        self.verticalLayout_95.setObjectName(u"verticalLayout_95")
+        self.verticalLayout_95.setContentsMargins(0, 0, 0, 0)
+        self.Button_Tool_VoiceTrainer_Terminate = QPushButton(self.Page_Tool_VoiceTrainer_Terminate)
+        self.Button_Tool_VoiceTrainer_Terminate.setObjectName(u"Button_Tool_VoiceTrainer_Terminate")
+        sizePolicy6.setHeightForWidth(self.Button_Tool_VoiceTrainer_Terminate.sizePolicy().hasHeightForWidth())
+        self.Button_Tool_VoiceTrainer_Terminate.setSizePolicy(sizePolicy6)
+        self.Button_Tool_VoiceTrainer_Terminate.setMinimumSize(QSize(0, 30))
+        self.Button_Tool_VoiceTrainer_Terminate.setStyleSheet(u"QPushButton {\n"
+"	text-align: center;\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"	/*background-color: rgba(90, 90, 90, 45);*/\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	color: rgba(255, 255, 255, 240);\n"
+"	/*background-color: rgba(120, 120, 120, 60);*/\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.verticalLayout_95.addWidget(self.Button_Tool_VoiceTrainer_Terminate)
+
+        self.StackedWidget_Tool_VoiceTrainer.addWidget(self.Page_Tool_VoiceTrainer_Terminate)
+
+        self.horizontalLayout_39.addWidget(self.StackedWidget_Tool_VoiceTrainer)
+
+
+        self.gridLayout_12.addWidget(self.ProgressBar_Tool_VoiceTrainer, 1, 0, 1, 3)
+
         self.ScrollArea_Middle_Tool_VoiceTrainer = QScrollArea(self.StackedWidget_Pages_Tool_VoiceTrainer)
         self.ScrollArea_Middle_Tool_VoiceTrainer.setObjectName(u"ScrollArea_Middle_Tool_VoiceTrainer")
         sizePolicy4.setHeightForWidth(self.ScrollArea_Middle_Tool_VoiceTrainer.sizePolicy().hasHeightForWidth())
@@ -10456,7 +10928,7 @@ class Ui_MainWindow(object):
         self.ScrollArea_Middle_Tool_VoiceTrainer.setWidgetResizable(True)
         self.ScrollArea_Middle_WidgetContents_Tool_VoiceTrainer = QWidget()
         self.ScrollArea_Middle_WidgetContents_Tool_VoiceTrainer.setObjectName(u"ScrollArea_Middle_WidgetContents_Tool_VoiceTrainer")
-        self.ScrollArea_Middle_WidgetContents_Tool_VoiceTrainer.setGeometry(QRect(0, 0, 621, 2073))
+        self.ScrollArea_Middle_WidgetContents_Tool_VoiceTrainer.setGeometry(QRect(0, -1554, 621, 2073))
         self.verticalLayout_18 = QVBoxLayout(self.ScrollArea_Middle_WidgetContents_Tool_VoiceTrainer)
         self.verticalLayout_18.setSpacing(12)
         self.verticalLayout_18.setObjectName(u"verticalLayout_18")
@@ -11702,84 +12174,6 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_115.addWidget(self.Frame_Tool_VoiceTrainer_FP16_Run)
 
-        self.Frame_Tool_VoiceTrainer_Find_Unused_Parameters = QFrame(self.Frame_AdvanceSettings_Tool_VoiceTrainer)
-        self.Frame_Tool_VoiceTrainer_Find_Unused_Parameters.setObjectName(u"Frame_Tool_VoiceTrainer_Find_Unused_Parameters")
-        self.Frame_Tool_VoiceTrainer_Find_Unused_Parameters.setMinimumSize(QSize(0, 123))
-        self.Frame_Tool_VoiceTrainer_Find_Unused_Parameters.setStyleSheet(u"QFrame {\n"
-"	color: rgb(255, 255, 255);\n"
-"	background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QFrame:hover {\n"
-"	background-color: rgb(33, 33, 33);\n"
-"}")
-        self.verticalLayout_110 = QVBoxLayout(self.Frame_Tool_VoiceTrainer_Find_Unused_Parameters)
-        self.verticalLayout_110.setSpacing(12)
-        self.verticalLayout_110.setObjectName(u"verticalLayout_110")
-        self.verticalLayout_110.setContentsMargins(21, 12, 21, 12)
-        self.Label_Tool_VoiceTrainer_Find_Unused_Parameters = QLabel(self.Frame_Tool_VoiceTrainer_Find_Unused_Parameters)
-        self.Label_Tool_VoiceTrainer_Find_Unused_Parameters.setObjectName(u"Label_Tool_VoiceTrainer_Find_Unused_Parameters")
-        self.Label_Tool_VoiceTrainer_Find_Unused_Parameters.setStyleSheet(u"QLabel {\n"
-"	/*text-align: center;*/\n"
-"	/*color: rgb(255, 255, 255);*/\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.verticalLayout_110.addWidget(self.Label_Tool_VoiceTrainer_Find_Unused_Parameters)
-
-        self.CheckBox_Tool_VoiceTrainer_Find_Unused_Parameters = QCheckBox(self.Frame_Tool_VoiceTrainer_Find_Unused_Parameters)
-        self.CheckBox_Tool_VoiceTrainer_Find_Unused_Parameters.setObjectName(u"CheckBox_Tool_VoiceTrainer_Find_Unused_Parameters")
-        self.CheckBox_Tool_VoiceTrainer_Find_Unused_Parameters.setStyleSheet(u"QCheckBox {\n"
-"	font-size: 12px;\n"
-"	spacing: 12.3px;\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QCheckBox:hover {\n"
-"	color: rgb(255, 255, 255);\n"
-"}\n"
-"\n"
-"QCheckBox::indicator {\n"
-"	width: 24px;\n"
-"	height: 24px;\n"
-"    background-color: transparent;\n"
-"	padding: 1.2px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QCheckBox::indicator:hover {\n"
-"	background-color: rgba(255, 255, 255, 21);\n"
-"}\n"
-"QCheckBox::indicator:unchecked {\n"
-"	border-image: url(:/CheckBox_Icon/Sources/ToggleOff.png);\n"
-"}\n"
-"QCheckBox::indicator:checked {\n"
-"	border-image: url(:/CheckBox_Icon/Sources/ToggleOn.png);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.verticalLayout_110.addWidget(self.CheckBox_Tool_VoiceTrainer_Find_Unused_Parameters)
-
-
-        self.verticalLayout_115.addWidget(self.Frame_Tool_VoiceTrainer_Find_Unused_Parameters)
-
 
         self.verticalLayout_114.addWidget(self.Frame_AdvanceSettings_Tool_VoiceTrainer)
 
@@ -11856,10 +12250,10 @@ class Ui_MainWindow(object):
 
         self.Frame_BasicOptionalSettings_Tool_VoiceTrainer = QFrame(self.GroupBox_OptionalParams_Tool_VoiceTrainer)
         self.Frame_BasicOptionalSettings_Tool_VoiceTrainer.setObjectName(u"Frame_BasicOptionalSettings_Tool_VoiceTrainer")
-        self.verticalLayout_132 = QVBoxLayout(self.Frame_BasicOptionalSettings_Tool_VoiceTrainer)
-        self.verticalLayout_132.setSpacing(0)
-        self.verticalLayout_132.setObjectName(u"verticalLayout_132")
-        self.verticalLayout_132.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_27 = QVBoxLayout(self.Frame_BasicOptionalSettings_Tool_VoiceTrainer)
+        self.verticalLayout_27.setSpacing(0)
+        self.verticalLayout_27.setObjectName(u"verticalLayout_27")
+        self.verticalLayout_27.setContentsMargins(0, 0, 0, 0)
         self.Frame_Tool_VoiceTrainer_Model_Path_Pretrained_G = QFrame(self.Frame_BasicOptionalSettings_Tool_VoiceTrainer)
         self.Frame_Tool_VoiceTrainer_Model_Path_Pretrained_G.setObjectName(u"Frame_Tool_VoiceTrainer_Model_Path_Pretrained_G")
         self.Frame_Tool_VoiceTrainer_Model_Path_Pretrained_G.setMinimumSize(QSize(0, 123))
@@ -11974,7 +12368,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_84.addWidget(self.ChildFrame_Tool_VoiceTrainer_Model_Path_Pretrained_G)
 
 
-        self.verticalLayout_132.addWidget(self.Frame_Tool_VoiceTrainer_Model_Path_Pretrained_G)
+        self.verticalLayout_27.addWidget(self.Frame_Tool_VoiceTrainer_Model_Path_Pretrained_G)
 
         self.Frame_Tool_VoiceTrainer_Model_Path_Pretrained_D = QFrame(self.Frame_BasicOptionalSettings_Tool_VoiceTrainer)
         self.Frame_Tool_VoiceTrainer_Model_Path_Pretrained_D.setObjectName(u"Frame_Tool_VoiceTrainer_Model_Path_Pretrained_D")
@@ -12090,66 +12484,9 @@ class Ui_MainWindow(object):
         self.verticalLayout_85.addWidget(self.ChildFrame_Tool_VoiceTrainer_Model_Path_Pretrained_D)
 
 
-        self.verticalLayout_132.addWidget(self.Frame_Tool_VoiceTrainer_Model_Path_Pretrained_D)
+        self.verticalLayout_27.addWidget(self.Frame_Tool_VoiceTrainer_Model_Path_Pretrained_D)
 
-
-        self.verticalLayout_34.addWidget(self.Frame_BasicOptionalSettings_Tool_VoiceTrainer)
-
-        self.CheckBox_Toggle_AdvanceOptionalSettings_Tool_VoiceTrainer = QCheckBox(self.GroupBox_OptionalParams_Tool_VoiceTrainer)
-        self.CheckBox_Toggle_AdvanceOptionalSettings_Tool_VoiceTrainer.setObjectName(u"CheckBox_Toggle_AdvanceOptionalSettings_Tool_VoiceTrainer")
-        self.CheckBox_Toggle_AdvanceOptionalSettings_Tool_VoiceTrainer.setStyleSheet(u"QCheckBox {\n"
-"	font-size: 12px;\n"
-"	font-weight: 630;\n"
-"	spacing: 12px;\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"	background-color: transparent;\n"
-"	padding-top: 9px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QCheckBox:hover {\n"
-"	color: rgb(255, 255, 255);\n"
-"}\n"
-"\n"
-"QCheckBox::indicator {\n"
-"	width: 12px;\n"
-"	height: 12px;\n"
-"    background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QCheckBox::indicator:hover {\n"
-"	background-color: transparent;\n"
-"}\n"
-"QCheckBox::indicator:unchecked {\n"
-"	border-image: url(:/CheckBox_Icon/Sources/RightCaret.png);\n"
-"}\n"
-"QCheckBox::indicator:checked {\n"
-"	border-image: url(:/CheckBox_Icon/Sources/DownCaret.png);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.verticalLayout_34.addWidget(self.CheckBox_Toggle_AdvanceOptionalSettings_Tool_VoiceTrainer)
-
-        self.Frame_AdvanceOptionalSettings_Tool_VoiceTrainer = QFrame(self.GroupBox_OptionalParams_Tool_VoiceTrainer)
-        self.Frame_AdvanceOptionalSettings_Tool_VoiceTrainer.setObjectName(u"Frame_AdvanceOptionalSettings_Tool_VoiceTrainer")
-        self.Frame_AdvanceOptionalSettings_Tool_VoiceTrainer.setFrameShape(QFrame.StyledPanel)
-        self.Frame_AdvanceOptionalSettings_Tool_VoiceTrainer.setFrameShadow(QFrame.Raised)
-        self.verticalLayout_116 = QVBoxLayout(self.Frame_AdvanceOptionalSettings_Tool_VoiceTrainer)
-        self.verticalLayout_116.setSpacing(0)
-        self.verticalLayout_116.setObjectName(u"verticalLayout_116")
-        self.verticalLayout_116.setContentsMargins(0, 0, 0, 0)
-        self.Frame_Tool_VoiceTrainer_Config_Path_Load = QFrame(self.Frame_AdvanceOptionalSettings_Tool_VoiceTrainer)
+        self.Frame_Tool_VoiceTrainer_Config_Path_Load = QFrame(self.Frame_BasicOptionalSettings_Tool_VoiceTrainer)
         self.Frame_Tool_VoiceTrainer_Config_Path_Load.setObjectName(u"Frame_Tool_VoiceTrainer_Config_Path_Load")
         self.Frame_Tool_VoiceTrainer_Config_Path_Load.setMinimumSize(QSize(0, 123))
         self.Frame_Tool_VoiceTrainer_Config_Path_Load.setStyleSheet(u"QFrame {\n"
@@ -12263,8 +12600,143 @@ class Ui_MainWindow(object):
         self.verticalLayout_83.addWidget(self.ChildFrame_Tool_VoiceTrainer_Config_Path_Load)
 
 
-        self.verticalLayout_116.addWidget(self.Frame_Tool_VoiceTrainer_Config_Path_Load)
+        self.verticalLayout_27.addWidget(self.Frame_Tool_VoiceTrainer_Config_Path_Load)
 
+        self.Frame_Tool_VoiceTrainer_Keep_Original_Speakers = QFrame(self.Frame_BasicOptionalSettings_Tool_VoiceTrainer)
+        self.Frame_Tool_VoiceTrainer_Keep_Original_Speakers.setObjectName(u"Frame_Tool_VoiceTrainer_Keep_Original_Speakers")
+        self.Frame_Tool_VoiceTrainer_Keep_Original_Speakers.setMinimumSize(QSize(0, 123))
+        self.Frame_Tool_VoiceTrainer_Keep_Original_Speakers.setStyleSheet(u"QFrame {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QFrame:hover {\n"
+"	background-color: rgb(33, 33, 33);\n"
+"}")
+        self.verticalLayout_26 = QVBoxLayout(self.Frame_Tool_VoiceTrainer_Keep_Original_Speakers)
+        self.verticalLayout_26.setSpacing(12)
+        self.verticalLayout_26.setObjectName(u"verticalLayout_26")
+        self.verticalLayout_26.setContentsMargins(21, 12, 21, 12)
+        self.Label_Tool_VoiceTrainer_Keep_Original_Speakers = QLabel(self.Frame_Tool_VoiceTrainer_Keep_Original_Speakers)
+        self.Label_Tool_VoiceTrainer_Keep_Original_Speakers.setObjectName(u"Label_Tool_VoiceTrainer_Keep_Original_Speakers")
+        self.Label_Tool_VoiceTrainer_Keep_Original_Speakers.setStyleSheet(u"QLabel {\n"
+"	/*text-align: center;*/\n"
+"	/*color: rgb(255, 255, 255);*/\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.verticalLayout_26.addWidget(self.Label_Tool_VoiceTrainer_Keep_Original_Speakers)
+
+        self.CheckBox_Tool_VoiceTrainer_Keep_Original_Speakers = QCheckBox(self.Frame_Tool_VoiceTrainer_Keep_Original_Speakers)
+        self.CheckBox_Tool_VoiceTrainer_Keep_Original_Speakers.setObjectName(u"CheckBox_Tool_VoiceTrainer_Keep_Original_Speakers")
+        self.CheckBox_Tool_VoiceTrainer_Keep_Original_Speakers.setStyleSheet(u"QCheckBox {\n"
+"	font-size: 12px;\n"
+"	spacing: 12.3px;\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QCheckBox:hover {\n"
+"	color: rgb(255, 255, 255);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator {\n"
+"	width: 24px;\n"
+"	height: 24px;\n"
+"    background-color: transparent;\n"
+"	padding: 1.2px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QCheckBox::indicator:hover {\n"
+"	background-color: rgba(255, 255, 255, 21);\n"
+"}\n"
+"QCheckBox::indicator:unchecked {\n"
+"	border-image: url(:/CheckBox_Icon/Sources/ToggleOff.png);\n"
+"}\n"
+"QCheckBox::indicator:checked {\n"
+"	border-image: url(:/CheckBox_Icon/Sources/ToggleOn.png);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.verticalLayout_26.addWidget(self.CheckBox_Tool_VoiceTrainer_Keep_Original_Speakers)
+
+
+        self.verticalLayout_27.addWidget(self.Frame_Tool_VoiceTrainer_Keep_Original_Speakers)
+
+
+        self.verticalLayout_34.addWidget(self.Frame_BasicOptionalSettings_Tool_VoiceTrainer)
+
+        self.CheckBox_Toggle_AdvanceOptionalSettings_Tool_VoiceTrainer = QCheckBox(self.GroupBox_OptionalParams_Tool_VoiceTrainer)
+        self.CheckBox_Toggle_AdvanceOptionalSettings_Tool_VoiceTrainer.setObjectName(u"CheckBox_Toggle_AdvanceOptionalSettings_Tool_VoiceTrainer")
+        self.CheckBox_Toggle_AdvanceOptionalSettings_Tool_VoiceTrainer.setStyleSheet(u"QCheckBox {\n"
+"	font-size: 12px;\n"
+"	font-weight: 630;\n"
+"	spacing: 12px;\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"	background-color: transparent;\n"
+"	padding-top: 9px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QCheckBox:hover {\n"
+"	color: rgb(255, 255, 255);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator {\n"
+"	width: 12px;\n"
+"	height: 12px;\n"
+"    background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QCheckBox::indicator:hover {\n"
+"	background-color: transparent;\n"
+"}\n"
+"QCheckBox::indicator:unchecked {\n"
+"	border-image: url(:/CheckBox_Icon/Sources/RightCaret.png);\n"
+"}\n"
+"QCheckBox::indicator:checked {\n"
+"	border-image: url(:/CheckBox_Icon/Sources/DownCaret.png);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.verticalLayout_34.addWidget(self.CheckBox_Toggle_AdvanceOptionalSettings_Tool_VoiceTrainer)
+
+        self.Frame_AdvanceOptionalSettings_Tool_VoiceTrainer = QFrame(self.GroupBox_OptionalParams_Tool_VoiceTrainer)
+        self.Frame_AdvanceOptionalSettings_Tool_VoiceTrainer.setObjectName(u"Frame_AdvanceOptionalSettings_Tool_VoiceTrainer")
+        self.Frame_AdvanceOptionalSettings_Tool_VoiceTrainer.setFrameShape(QFrame.StyledPanel)
+        self.Frame_AdvanceOptionalSettings_Tool_VoiceTrainer.setFrameShadow(QFrame.Raised)
+        self.verticalLayout_28 = QVBoxLayout(self.Frame_AdvanceOptionalSettings_Tool_VoiceTrainer)
+        self.verticalLayout_28.setSpacing(0)
+        self.verticalLayout_28.setObjectName(u"verticalLayout_28")
+        self.verticalLayout_28.setContentsMargins(0, 0, 0, 0)
         self.Frame_Tool_VoiceTrainer_Speakers = QFrame(self.Frame_AdvanceOptionalSettings_Tool_VoiceTrainer)
         self.Frame_Tool_VoiceTrainer_Speakers.setObjectName(u"Frame_Tool_VoiceTrainer_Speakers")
         self.Frame_Tool_VoiceTrainer_Speakers.setMinimumSize(QSize(0, 123))
@@ -12277,10 +12749,10 @@ class Ui_MainWindow(object):
 "QFrame:hover {\n"
 "	background-color: rgb(33, 33, 33);\n"
 "}")
-        self.verticalLayout_79 = QVBoxLayout(self.Frame_Tool_VoiceTrainer_Speakers)
-        self.verticalLayout_79.setSpacing(12)
-        self.verticalLayout_79.setObjectName(u"verticalLayout_79")
-        self.verticalLayout_79.setContentsMargins(21, 12, 21, 12)
+        self.verticalLayout_88 = QVBoxLayout(self.Frame_Tool_VoiceTrainer_Speakers)
+        self.verticalLayout_88.setSpacing(12)
+        self.verticalLayout_88.setObjectName(u"verticalLayout_88")
+        self.verticalLayout_88.setContentsMargins(21, 12, 21, 12)
         self.Label_Tool_VoiceTrainer_Speakers = QLabel(self.Frame_Tool_VoiceTrainer_Speakers)
         self.Label_Tool_VoiceTrainer_Speakers.setObjectName(u"Label_Tool_VoiceTrainer_Speakers")
         self.Label_Tool_VoiceTrainer_Speakers.setStyleSheet(u"QLabel {\n"
@@ -12293,9 +12765,26 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}")
 
-        self.verticalLayout_79.addWidget(self.Label_Tool_VoiceTrainer_Speakers)
+        self.verticalLayout_88.addWidget(self.Label_Tool_VoiceTrainer_Speakers)
 
-        self.LineEdit_Tool_VoiceTrainer_Speakers = QLineEdit(self.Frame_Tool_VoiceTrainer_Speakers)
+        self.ChildFrame_Tool_VoiceTrainer_Speakers = QFrame(self.Frame_Tool_VoiceTrainer_Speakers)
+        self.ChildFrame_Tool_VoiceTrainer_Speakers.setObjectName(u"ChildFrame_Tool_VoiceTrainer_Speakers")
+        sizePolicy5.setHeightForWidth(self.ChildFrame_Tool_VoiceTrainer_Speakers.sizePolicy().hasHeightForWidth())
+        self.ChildFrame_Tool_VoiceTrainer_Speakers.setSizePolicy(sizePolicy5)
+        self.ChildFrame_Tool_VoiceTrainer_Speakers.setStyleSheet(u"QFrame {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QFrame:hover {\n"
+"	background-color: transparent;\n"
+"}")
+        self.horizontalLayout_32 = QHBoxLayout(self.ChildFrame_Tool_VoiceTrainer_Speakers)
+        self.horizontalLayout_32.setSpacing(12)
+        self.horizontalLayout_32.setObjectName(u"horizontalLayout_32")
+        self.horizontalLayout_32.setContentsMargins(0, 0, 0, 0)
+        self.LineEdit_Tool_VoiceTrainer_Speakers = QLineEdit(self.ChildFrame_Tool_VoiceTrainer_Speakers)
         self.LineEdit_Tool_VoiceTrainer_Speakers.setObjectName(u"LineEdit_Tool_VoiceTrainer_Speakers")
         self.LineEdit_Tool_VoiceTrainer_Speakers.setStyleSheet(u"QLineEdit {\n"
 "	/*font-size: 12px;*/\n"
@@ -12324,10 +12813,13 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}")
 
-        self.verticalLayout_79.addWidget(self.LineEdit_Tool_VoiceTrainer_Speakers)
+        self.horizontalLayout_32.addWidget(self.LineEdit_Tool_VoiceTrainer_Speakers)
 
 
-        self.verticalLayout_116.addWidget(self.Frame_Tool_VoiceTrainer_Speakers)
+        self.verticalLayout_88.addWidget(self.ChildFrame_Tool_VoiceTrainer_Speakers)
+
+
+        self.verticalLayout_28.addWidget(self.Frame_Tool_VoiceTrainer_Speakers)
 
 
         self.verticalLayout_34.addWidget(self.Frame_AdvanceOptionalSettings_Tool_VoiceTrainer)
@@ -12342,335 +12834,6 @@ class Ui_MainWindow(object):
         self.ScrollArea_Middle_Tool_VoiceTrainer.setWidget(self.ScrollArea_Middle_WidgetContents_Tool_VoiceTrainer)
 
         self.gridLayout_12.addWidget(self.ScrollArea_Middle_Tool_VoiceTrainer, 0, 1, 1, 1)
-
-        self.Widget_Right_Tool_VoiceTrainer = QWidget(self.StackedWidget_Pages_Tool_VoiceTrainer)
-        self.Widget_Right_Tool_VoiceTrainer.setObjectName(u"Widget_Right_Tool_VoiceTrainer")
-        self.Widget_Right_Tool_VoiceTrainer.setMinimumSize(QSize(210, 0))
-        self.Widget_Right_Tool_VoiceTrainer.setMaximumSize(QSize(420, 16777215))
-        self.Widget_Right_Tool_VoiceTrainer.setStyleSheet(u"QWidget {\n"
-"	background-color: rgba(36, 36, 36, 123);\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QWidget:hover {\n"
-"}")
-        self.gridLayout = QGridLayout(self.Widget_Right_Tool_VoiceTrainer)
-        self.gridLayout.setSpacing(12)
-        self.gridLayout.setObjectName(u"gridLayout")
-        self.gridLayout.setContentsMargins(12, 12, 12, 12)
-        self.TextBrowser_Params_Tool_VoiceTrainer = QTextBrowser(self.Widget_Right_Tool_VoiceTrainer)
-        self.TextBrowser_Params_Tool_VoiceTrainer.setObjectName(u"TextBrowser_Params_Tool_VoiceTrainer")
-        sizePolicy1.setHeightForWidth(self.TextBrowser_Params_Tool_VoiceTrainer.sizePolicy().hasHeightForWidth())
-        self.TextBrowser_Params_Tool_VoiceTrainer.setSizePolicy(sizePolicy1)
-        self.TextBrowser_Params_Tool_VoiceTrainer.setStyleSheet(u"QTextBrowser {\n"
-"	background-color: rgb(33, 33, 33);\n"
-"	/*padding-top: 1.5px;*/\n"
-"	/*padding-bottom: 1.5px;*/\n"
-"	padding-left: 15px;\n"
-"	padding-right: 6px;\n"
-"	border-width: 1px;\n"
-"	border-style: solid;\n"
-"	border-color:transparent;\n"
-"}\n"
-"\n"
-"\n"
-"QScrollBar::vertical {\n"
-"	width: 9px;\n"
-"	background-color: rgb(45, 45, 45);\n"
-"	border-width: 1px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: transparent;\n"
-"	margin: 0px;\n"
-"}\n"
-"QScrollBar::vertical:hover {\n"
-"	background-color: rgba(33, 33, 33, 99);\n"
-"}\n"
-"\n"
-"QScrollBar::add-line:vertical {\n"
-"	height: 0px;\n"
-"	background-color: transparent;\n"
-"	subcontrol-position: bottom;\n"
-"	subcontrol-origin: margin;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"\n"
-"QScrollBar::sub-line:vertical {\n"
-"	height: 0px;\n"
-"	background-color: transparent;\n"
-"	subcontrol-position: top;\n"
-"	subcontrol-origin: margin;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-st"
-                        "yle: solid;\n"
-"}\n"
-"\n"
-"QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
-"	width: 0px;\n"
-"	height: 0px;\n"
-"	background-color: transparent;\n"
-"}\n"
-"\n"
-"QScrollBar::handle:vertical {\n"
-"	background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QScrollBar::handle:vertical:hover {\n"
-"	background-color: rgb(120, 120, 120);\n"
-"}\n"
-"\n"
-"\n"
-"QScrollBar::horizontal {\n"
-"	height: 9px;\n"
-"	background-color: rgb(45, 45, 45);\n"
-"	border-width: 1px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: transparent;\n"
-"	margin: 0px;\n"
-"}\n"
-"QScrollBar::horizontal:hover {\n"
-"	background-color: rgb(60, 60, 60);\n"
-"}\n"
-"\n"
-"QScrollBar::add-line:horizontal {\n"
-"	width: 0px;\n"
-"	background-color: transparent;\n"
-"	subcontrol-position: left;\n"
-"	subcontrol-origin: margin;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"\n"
-"QScrollBar::sub-line:horizontal {\n"
-"	width: 0px;\n"
-""
-                        "	background-color: transparent;\n"
-"	subcontrol-position: right;\n"
-"	subcontrol-origin: margin;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"\n"
-"QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {\n"
-"	width: 0px;\n"
-"	height: 0px;\n"
-"	background-color: transparent;\n"
-"}\n"
-"\n"
-"QScrollBar::handle:horizontal {\n"
-"	background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QScrollBar::handle:horizontal:hover {\n"
-"	background-color: rgb(120, 120, 120);\n"
-"}")
-
-        self.gridLayout.addWidget(self.TextBrowser_Params_Tool_VoiceTrainer, 0, 0, 1, 2)
-
-        self.Button_RunTensorboard_Tool_VoiceTrainer = QPushButton(self.Widget_Right_Tool_VoiceTrainer)
-        self.Button_RunTensorboard_Tool_VoiceTrainer.setObjectName(u"Button_RunTensorboard_Tool_VoiceTrainer")
-        self.Button_RunTensorboard_Tool_VoiceTrainer.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	font-size: 12px;\n"
-"	background-color: transparent;\n"
-"	padding: 9.9px;\n"
-"	border-width: 1.5px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgb(120, 120, 120);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.gridLayout.addWidget(self.Button_RunTensorboard_Tool_VoiceTrainer, 1, 0, 1, 2)
-
-        self.Button_SyncParams_Tool_VoiceTrainer = QPushButton(self.Widget_Right_Tool_VoiceTrainer)
-        self.Button_SyncParams_Tool_VoiceTrainer.setObjectName(u"Button_SyncParams_Tool_VoiceTrainer")
-        self.Button_SyncParams_Tool_VoiceTrainer.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	font-size: 12px;\n"
-"	background-color: transparent;\n"
-"	padding: 9.9px;\n"
-"	border-width: 1.5px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgb(120, 120, 120);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.gridLayout.addWidget(self.Button_SyncParams_Tool_VoiceTrainer, 2, 0, 1, 1)
-
-        self.Button_CheckOutput_Tool_VoiceTrainer = QPushButton(self.Widget_Right_Tool_VoiceTrainer)
-        self.Button_CheckOutput_Tool_VoiceTrainer.setObjectName(u"Button_CheckOutput_Tool_VoiceTrainer")
-        self.Button_CheckOutput_Tool_VoiceTrainer.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	font-size: 12px;\n"
-"	background-color: transparent;\n"
-"	padding: 9.9px;\n"
-"	border-width: 1.5px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgb(120, 120, 120);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.gridLayout.addWidget(self.Button_CheckOutput_Tool_VoiceTrainer, 2, 1, 1, 1)
-
-
-        self.gridLayout_12.addWidget(self.Widget_Right_Tool_VoiceTrainer, 0, 2, 1, 1)
-
-        self.ProgressBar_Tool_VoiceTrainer = QProgressBar(self.StackedWidget_Pages_Tool_VoiceTrainer)
-        self.ProgressBar_Tool_VoiceTrainer.setObjectName(u"ProgressBar_Tool_VoiceTrainer")
-        self.ProgressBar_Tool_VoiceTrainer.setMinimumSize(QSize(0, 30))
-        self.ProgressBar_Tool_VoiceTrainer.setStyleSheet(u"QProgressBar {\n"
-"	text-align: center;\n"
-"	color: rgb(255, 255, 255);\n"
-"	background-color: rgb(60, 60, 60);\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"\n"
-"QProgressBar:chunk {\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	background-color: qlineargradient(spread: pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgb(60, 60, 60), stop:1  rgb(123, 123, 123));\n"
-"}")
-        self.ProgressBar_Tool_VoiceTrainer.setValue(0)
-        self.ProgressBar_Tool_VoiceTrainer.setTextVisible(False)
-        self.horizontalLayout_39 = QHBoxLayout(self.ProgressBar_Tool_VoiceTrainer)
-        self.horizontalLayout_39.setSpacing(0)
-        self.horizontalLayout_39.setObjectName(u"horizontalLayout_39")
-        self.horizontalLayout_39.setContentsMargins(0, 0, 0, 0)
-        self.StackedWidget_Tool_VoiceTrainer = QStackedWidget(self.ProgressBar_Tool_VoiceTrainer)
-        self.StackedWidget_Tool_VoiceTrainer.setObjectName(u"StackedWidget_Tool_VoiceTrainer")
-        self.StackedWidget_Tool_VoiceTrainer.setMaximumSize(QSize(16777215, 30))
-        self.StackedWidget_Tool_VoiceTrainer.setStyleSheet(u"QWidget {\n"
-"	background-color: rgba(90, 90, 90, 45);\n"
-"}\n"
-"QWidget:hover {\n"
-"	background-color: rgba(120, 120, 120, 60);\n"
-"}")
-        self.Page_Tool_VoiceTrainer_Execute = QWidget()
-        self.Page_Tool_VoiceTrainer_Execute.setObjectName(u"Page_Tool_VoiceTrainer_Execute")
-        self.verticalLayout_94 = QVBoxLayout(self.Page_Tool_VoiceTrainer_Execute)
-        self.verticalLayout_94.setSpacing(0)
-        self.verticalLayout_94.setObjectName(u"verticalLayout_94")
-        self.verticalLayout_94.setContentsMargins(0, 0, 0, 0)
-        self.Button_Tool_VoiceTrainer_Execute = QPushButton(self.Page_Tool_VoiceTrainer_Execute)
-        self.Button_Tool_VoiceTrainer_Execute.setObjectName(u"Button_Tool_VoiceTrainer_Execute")
-        sizePolicy6.setHeightForWidth(self.Button_Tool_VoiceTrainer_Execute.sizePolicy().hasHeightForWidth())
-        self.Button_Tool_VoiceTrainer_Execute.setSizePolicy(sizePolicy6)
-        self.Button_Tool_VoiceTrainer_Execute.setMinimumSize(QSize(0, 30))
-        self.Button_Tool_VoiceTrainer_Execute.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"	/*background-color: rgba(90, 90, 90, 45);*/\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	color: rgba(255, 255, 255, 240);\n"
-"	/*background-color: rgba(120, 120, 120, 60);*/\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.verticalLayout_94.addWidget(self.Button_Tool_VoiceTrainer_Execute)
-
-        self.StackedWidget_Tool_VoiceTrainer.addWidget(self.Page_Tool_VoiceTrainer_Execute)
-        self.Page_Tool_VoiceTrainer_Terminate = QWidget()
-        self.Page_Tool_VoiceTrainer_Terminate.setObjectName(u"Page_Tool_VoiceTrainer_Terminate")
-        self.verticalLayout_95 = QVBoxLayout(self.Page_Tool_VoiceTrainer_Terminate)
-        self.verticalLayout_95.setSpacing(0)
-        self.verticalLayout_95.setObjectName(u"verticalLayout_95")
-        self.verticalLayout_95.setContentsMargins(0, 0, 0, 0)
-        self.Button_Tool_VoiceTrainer_Terminate = QPushButton(self.Page_Tool_VoiceTrainer_Terminate)
-        self.Button_Tool_VoiceTrainer_Terminate.setObjectName(u"Button_Tool_VoiceTrainer_Terminate")
-        sizePolicy6.setHeightForWidth(self.Button_Tool_VoiceTrainer_Terminate.sizePolicy().hasHeightForWidth())
-        self.Button_Tool_VoiceTrainer_Terminate.setSizePolicy(sizePolicy6)
-        self.Button_Tool_VoiceTrainer_Terminate.setMinimumSize(QSize(0, 30))
-        self.Button_Tool_VoiceTrainer_Terminate.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"	/*background-color: rgba(90, 90, 90, 45);*/\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	color: rgba(255, 255, 255, 240);\n"
-"	/*background-color: rgba(120, 120, 120, 60);*/\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.verticalLayout_95.addWidget(self.Button_Tool_VoiceTrainer_Terminate)
-
-        self.StackedWidget_Tool_VoiceTrainer.addWidget(self.Page_Tool_VoiceTrainer_Terminate)
-
-        self.horizontalLayout_39.addWidget(self.StackedWidget_Tool_VoiceTrainer)
-
-
-        self.gridLayout_12.addWidget(self.ProgressBar_Tool_VoiceTrainer, 1, 0, 1, 3)
 
         self.StackedWidget_Pages_Tools.addWidget(self.StackedWidget_Pages_Tool_VoiceTrainer)
         self.StackedWidget_Pages_Tool_VoiceConverter = QWidget()
@@ -13350,6 +13513,8 @@ class Ui_MainWindow(object):
 
         self.PlainTextEdit_Tool_VoiceConverter_Text = QPlainTextEdit(self.Frame_Tool_VoiceConverter_Text)
         self.PlainTextEdit_Tool_VoiceConverter_Text.setObjectName(u"PlainTextEdit_Tool_VoiceConverter_Text")
+        sizePolicy6.setHeightForWidth(self.PlainTextEdit_Tool_VoiceConverter_Text.sizePolicy().hasHeightForWidth())
+        self.PlainTextEdit_Tool_VoiceConverter_Text.setSizePolicy(sizePolicy6)
         self.PlainTextEdit_Tool_VoiceConverter_Text.setStyleSheet(u"QPlainTextEdit {\n"
 "	/*font-size: 12px;*/\n"
 "	text-align: left;\n"
@@ -15347,6 +15512,231 @@ class Ui_MainWindow(object):
         self.verticalLayout_109.addItem(self.VerticalSpacer_Settings)
 
         self.StackedWidget_Pages.addWidget(self.Page_Settings)
+        self.Page_Info = QWidget()
+        self.Page_Info.setObjectName(u"Page_Info")
+        self.verticalLayout_25 = QVBoxLayout(self.Page_Info)
+        self.verticalLayout_25.setSpacing(21)
+        self.verticalLayout_25.setObjectName(u"verticalLayout_25")
+        self.verticalLayout_25.setContentsMargins(21, 12, 21, 12)
+        self.Frame_Info_Top = QFrame(self.Page_Info)
+        self.Frame_Info_Top.setObjectName(u"Frame_Info_Top")
+        self.Frame_Info_Top.setMinimumSize(QSize(0, 60))
+        self.Frame_Info_Top.setStyleSheet(u"QFrame {\n"
+"	background-color: rgba(36, 36, 36, 123);\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+        self.horizontalLayout_29 = QHBoxLayout(self.Frame_Info_Top)
+        self.horizontalLayout_29.setSpacing(0)
+        self.horizontalLayout_29.setObjectName(u"horizontalLayout_29")
+        self.horizontalLayout_29.setContentsMargins(0, 0, 0, 0)
+        self.ToolButton_Info_Title = QToolButton(self.Frame_Info_Top)
+        self.ToolButton_Info_Title.setObjectName(u"ToolButton_Info_Title")
+        sizePolicy1.setHeightForWidth(self.ToolButton_Info_Title.sizePolicy().hasHeightForWidth())
+        self.ToolButton_Info_Title.setSizePolicy(sizePolicy1)
+        self.ToolButton_Info_Title.setStyleSheet(u"QToolButton {\n"
+"	font-size: 24px;\n"
+"	/*text-align: center;*/\n"
+"	color: rgba(201, 210, 222, 210);\n"
+"	padding-left: 12px;\n"
+"	padding-right: 12px;\n"
+"	background-color: transparent;\n"
+"	border-top-width: 0px;\n"
+"	border-right-width: 0px;\n"
+"	border-bottom-width: 3px;\n"
+"	border-left-width: 0px;\n"
+"	border-style: solid;\n"
+"	border-bottom-color: rgba(123, 123, 123, 123);\n"
+"}/*\n"
+"QToolButton:hover {\n"
+"	color: rgba(210, 222, 234, 234);\n"
+"	background-color: transparent;\n"
+"	border-top-width: 0px;\n"
+"	border-right-width: 0px;\n"
+"	border-bottom-width: 3px;\n"
+"	border-left-width: 0px;\n"
+"	border-style: solid;\n"
+"	border-bottom-color: rgba(120, 180, 240, 123);\n"
+"}\n"
+"QToolButton:checked {\n"
+"	color: rgba(210, 222, 234, 255);\n"
+"	background-color: transparent;\n"
+"	border-top-width: 0px;\n"
+"	border-right-width: 0px;\n"
+"	border-bottom-width: 3px;\n"
+"	border-left-width: 0px;\n"
+"	border-style: solid;\n"
+"	border-bottom-color: rgba(120, 180, 240, 210);\n"
+"}*/\n"
+"\n"
+"QToolTip {\n"
+"	co"
+                        "lor: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.horizontalLayout_29.addWidget(self.ToolButton_Info_Title)
+
+        self.Frame_Info_Title_Spacer = QLabel(self.Frame_Info_Top)
+        self.Frame_Info_Title_Spacer.setObjectName(u"Frame_Info_Title_Spacer")
+        sizePolicy3.setHeightForWidth(self.Frame_Info_Title_Spacer.sizePolicy().hasHeightForWidth())
+        self.Frame_Info_Title_Spacer.setSizePolicy(sizePolicy3)
+        self.Frame_Info_Title_Spacer.setStyleSheet(u"QLabel {\n"
+"	font-size: 24px;\n"
+"	/*text-align: center;\n"
+"	color: rgb(255, 255, 255);\n"
+"	padding-left: 12px;\n"
+"	padding-right: 12px;*/\n"
+"	background-color: transparent;\n"
+"	border-top-width: 0px;\n"
+"	border-right-width: 0px;\n"
+"	border-bottom-width: 3px;\n"
+"	border-left-width: 0px;\n"
+"	border-style: solid;\n"
+"	border-bottom-color: rgba(123, 123, 123, 123);\n"
+"}")
+
+        self.horizontalLayout_29.addWidget(self.Frame_Info_Title_Spacer)
+
+
+        self.verticalLayout_25.addWidget(self.Frame_Info_Top)
+
+        self.Frame_Info_Middle = QFrame(self.Page_Info)
+        self.Frame_Info_Middle.setObjectName(u"Frame_Info_Middle")
+        self.Frame_Info_Middle.setStyleSheet(u"QFrame {\n"
+"	background-color: rgba(36, 36, 36, 123);\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+        self.verticalLayout_22 = QVBoxLayout(self.Frame_Info_Middle)
+        self.verticalLayout_22.setSpacing(21)
+        self.verticalLayout_22.setObjectName(u"verticalLayout_22")
+        self.verticalLayout_22.setContentsMargins(12, 0, 12, 0)
+        self.TextBrowser_Text_Info = QTextBrowser(self.Frame_Info_Middle)
+        self.TextBrowser_Text_Info.setObjectName(u"TextBrowser_Text_Info")
+        self.TextBrowser_Text_Info.setStyleSheet(u"QTextBrowser {\n"
+"	/*text-align: center;*/\n"
+"	/*color: rgb(255, 255, 255);*/\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"	border-radius: 6px;\n"
+"}\n"
+"QTextBrowser:hover {\n"
+"	background-color: transparent;\n"
+"}\n"
+"\n"
+"\n"
+"QScrollBar::vertical {\n"
+"	width: 9px;\n"
+"	background-color: rgb(45, 45, 45);\n"
+"	border-width: 1px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: transparent;\n"
+"	margin: 0px;\n"
+"}\n"
+"QScrollBar::vertical:hover {\n"
+"	background-color: rgb(60, 60, 60);\n"
+"}\n"
+"\n"
+"QScrollBar::add-line:vertical {\n"
+"	height: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: bottom;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QScrollBar::sub-line:vertical {\n"
+"	height: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: top;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-ra"
+                        "dius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
+"	width: 0px;\n"
+"	height: 0px;\n"
+"	background-color: transparent;\n"
+"}\n"
+"\n"
+"QScrollBar::handle:vertical {\n"
+"	background-color: rgb(90, 90, 90);\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QScrollBar::handle:vertical:hover {\n"
+"	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QScrollBar::horizontal {\n"
+"	height: 9px;\n"
+"	background-color: rgb(45, 45, 45);\n"
+"	border-width: 1px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: transparent;\n"
+"	margin: 0px;\n"
+"}\n"
+"QScrollBar::horizontal:hover {\n"
+"	background-color: rgb(60, 60, 60);\n"
+"}\n"
+"\n"
+"QScrollBar::add-line:horizontal {\n"
+"	width: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: left;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QScrollBar::sub-line:hori"
+                        "zontal {\n"
+"	width: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: right;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {\n"
+"	width: 0px;\n"
+"	height: 0px;\n"
+"	background-color: transparent;\n"
+"}\n"
+"\n"
+"QScrollBar::handle:horizontal {\n"
+"	background-color: rgb(90, 90, 90);\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QScrollBar::handle:horizontal:hover {\n"
+"	background-color: rgb(120, 120, 120);\n"
+"}")
+
+        self.verticalLayout_22.addWidget(self.TextBrowser_Text_Info)
+
+
+        self.verticalLayout_25.addWidget(self.Frame_Info_Middle)
+
+        self.StackedWidget_Pages.addWidget(self.Page_Info)
 
         self.verticalLayout_5.addWidget(self.StackedWidget_Pages)
 
@@ -15670,15 +16060,20 @@ class Ui_MainWindow(object):
         self.Label_Menu_Download_Text.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Menu_Tools_Text.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Menu_Settings_Text.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.Label_Menu_Info_Text.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Demo_Text.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Server_Text.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Repo_Text.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Donate_Text.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.ToolButton_Download_Title.setText(QCoreApplication.translate("MainWindow", u"Label", None))
         self.Label_Download_FFmpeg.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.Label_Download_FFmpeg_Status.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Download_Python.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.Label_Download_Python_Status.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Download_PyReqs.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.Label_Download_PyReqs_Status.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Download_Pytorch.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.Label_Download_Pytorch_Status.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.ToolButton_Tools_Title_AudioProcessor.setText(QCoreApplication.translate("MainWindow", u"Label", None))
         self.ToolButton_Tools_Title_VoiceIdentifier.setText(QCoreApplication.translate("MainWindow", u"Label", None))
         self.ToolButton_Tools_Title_VoiceTranscriber.setText(QCoreApplication.translate("MainWindow", u"Label", None))
@@ -15827,17 +16222,17 @@ class Ui_MainWindow(object):
         self.Label_Tool_VoiceTrainer_Num_Workers.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Tool_VoiceTrainer_FP16_Run.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.CheckBox_Tool_VoiceTrainer_FP16_Run.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
-        self.Label_Tool_VoiceTrainer_Find_Unused_Parameters.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.CheckBox_Tool_VoiceTrainer_Find_Unused_Parameters.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
         self.GroupBox_OptionalParams_Tool_VoiceTrainer.setTitle(QCoreApplication.translate("MainWindow", u"GroupBox2", None))
         self.CheckBox_Toggle_BasicOptionalSettings_Tool_VoiceTrainer.setText(QCoreApplication.translate("MainWindow", u"CheckBox1", None))
         self.Label_Tool_VoiceTrainer_Model_Path_Pretrained_G.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Button_Tool_VoiceTrainer_Model_Path_Pretrained_G.setText(QCoreApplication.translate("MainWindow", u"...", None))
         self.Label_Tool_VoiceTrainer_Model_Path_Pretrained_D.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Button_Tool_VoiceTrainer_Model_Path_Pretrained_D.setText(QCoreApplication.translate("MainWindow", u"...", None))
-        self.CheckBox_Toggle_AdvanceOptionalSettings_Tool_VoiceTrainer.setText(QCoreApplication.translate("MainWindow", u"CheckBox2", None))
         self.Label_Tool_VoiceTrainer_Config_Path_Load.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Button_Tool_VoiceTrainer_Config_Path_Load.setText(QCoreApplication.translate("MainWindow", u"...", None))
+        self.Label_Tool_VoiceTrainer_Keep_Original_Speakers.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.CheckBox_Tool_VoiceTrainer_Keep_Original_Speakers.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
+        self.CheckBox_Toggle_AdvanceOptionalSettings_Tool_VoiceTrainer.setText(QCoreApplication.translate("MainWindow", u"CheckBox2", None))
         self.Label_Tool_VoiceTrainer_Speakers.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         ___qtreewidgetitem15 = self.TreeWidget_Catalogue_Tool_VoiceConverter.headerItem()
         ___qtreewidgetitem15.setText(0, QCoreApplication.translate("MainWindow", u"HeaderView", None));
@@ -15871,6 +16266,7 @@ class Ui_MainWindow(object):
         self.CheckBox_Setting_AutoUpdate.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
         self.Label_Setting_Synchronizer.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.CheckBox_Setting_Synchronizer.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
+        self.ToolButton_Info_Title.setText(QCoreApplication.translate("MainWindow", u"Label", None))
         self.Label_ToolsStatus.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Usage_CPU.setText(QCoreApplication.translate("MainWindow", u"--", None))
         self.Label_Usage_GPU.setText(QCoreApplication.translate("MainWindow", u"--", None))

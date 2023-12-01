@@ -661,14 +661,21 @@ class MainWindow(Window_Customizing):
         '''
         Main funtion to orgnize all the subfunctions
         '''
+        self.setWindowIcon(QIcon(NormPath(Path(ResourceDir).joinpath('Icon.ico'))))
+
+        #############################################################
+        ########################## TitleBar #########################
+        #############################################################
+
+        # Title
         self.ui.Label_Title.setText("Easy Voice Toolkit - by Spr_Aachen")
 
-        # Control Window
+        # Window controling buttons
         self.ui.Button_Close_Window.clicked.connect(self.close)
         self.ui.Button_Maximize_Window.clicked.connect(lambda: self.showNormal() if self.isMaximized() else self.showMaximized())
         self.ui.Button_Minimize_Window.clicked.connect(self.showMinimized)
 
-        # Toggle Menu
+        # Menu toggling button
         self.ui.Button_Toggle_Menu.clicked.connect(
             lambda: self.Function_AnimateFrame(
                 Frame = self.ui.Frame_Menu,
@@ -682,7 +689,10 @@ class MainWindow(Window_Customizing):
         self.ui.Button_Toggle_Menu.setToolTipDuration(-1)
         self.ui.Button_Toggle_Menu.setToolTip(QCA.translate("ToolTip", "点击以展开/折叠菜单"))
 
-        # Print Titles & Choose Pages
+        #############################################################
+        ############################ Menu ###########################
+        #############################################################
+
         MainWindowSignals.Signal_FrameStatus.connect(
             lambda FrameStatus: self.Function_PrintText(
                 Panel = self.ui.Label_Menu_Home_Text,
@@ -763,6 +773,26 @@ class MainWindow(Window_Customizing):
         self.ui.Button_Menu_Settings.setToolTipDuration(-1)
         self.ui.Button_Menu_Settings.setToolTip(QCA.translate("ToolTip", "设置"))
 
+        MainWindowSignals.Signal_FrameStatus.connect(
+            lambda FrameStatus: self.Function_PrintText(
+                Panel = self.ui.Label_Menu_Info_Text,
+                Frame = self.ui.Frame_Menu,
+                FrameStatus = FrameStatus,
+                Text = QCA.translate("Label", "关于")
+            )
+        )
+        self.ui.Button_Menu_Info.clicked.connect(
+            lambda: self.Function_AnimateStackedWidget(
+                StackedWidget = self.ui.StackedWidget_Pages,
+                TargetIndex = 4
+            )
+        )
+        self.ui.Button_Menu_Info.setCheckable(True)
+        self.ui.Button_Menu_Info.setChecked(False)
+        self.ui.Button_Menu_Info.setAutoExclusive(True)
+        self.ui.Button_Menu_Info.setToolTipDuration(-1)
+        self.ui.Button_Menu_Info.setToolTip(QCA.translate("ToolTip", "关于"))
+
         #########################################################
         ##################### Content: Home #####################
         #########################################################
@@ -791,7 +821,8 @@ class MainWindow(Window_Customizing):
             ),
             BodyAlign = "left",
             BodySize = 12,
-            BodyWeight = 420
+            BodyWeight = 420,
+            BodyLineHeight = 27
         )
 
         self.ui.Label_Demo_Text.setText(QCA.translate("Button", "视频演示"))
@@ -823,7 +854,7 @@ class MainWindow(Window_Customizing):
         ##################### Content: Download #####################
         #############################################################
 
-        self.ui.ToolButton_Download_Title.setText(QCA.translate("Label", "下载"))
+        self.ui.ToolButton_Download_Title.setText(QCA.translate("Label", "环境依赖"))
 
         self.ui.Label_Download_FFmpeg.setText("FFmpeg")
         self.Function_SetMethodExecutor(
@@ -833,7 +864,7 @@ class MainWindow(Window_Customizing):
             Params = ()
         )
         MainWindowSignals.Signal_MainWindowShown.connect(
-            self.ui.Button_Install_FFmpeg.click if Config.GetValue('Env', 'FFmpeg', 'Undetected') == 'Undetected' else EnvConfiguratorSignals.Signal_FFmpegDetected.emit
+            self.ui.Button_Install_FFmpeg.click #if Config.GetValue('Env', 'FFmpeg', 'Undetected') == 'Undetected' else EnvConfiguratorSignals.Signal_FFmpegDetected.emit
         )
         self.ui.Button_Install_FFmpeg.setText('')
         self.ui.Button_Install_FFmpeg.setCheckable(True)
@@ -873,6 +904,9 @@ class MainWindow(Window_Customizing):
             lambda: self.ui.ProgressBar_Download_FFmpeg.setValue(100),
             type = Qt.QueuedConnection
         )
+        EnvConfiguratorSignals.Signal_FFmpegStatus.connect(
+            lambda Status: self.ui.Label_Download_FFmpeg_Status.setText(Status)
+        )
 
         '''
         self.ui.Label_Download_GCC.setText("GCC")
@@ -883,7 +917,7 @@ class MainWindow(Window_Customizing):
             Params = ()
         )
         MainWindowSignals.Signal_MainWindowShown.connect(
-            self.ui.Button_Install_GCC.click if Config.GetValue('Env', 'GCC', 'Undetected') == 'Undetected' else EnvConfiguratorSignals.Signal_GCCDetected.emit
+            self.ui.Button_Install_GCC.click #if Config.GetValue('Env', 'GCC', 'Undetected') == 'Undetected' else EnvConfiguratorSignals.Signal_GCCDetected.emit
         )
         self.ui.Button_Install_GCC.setText('')
         self.ui.Button_Install_GCC.setCheckable(True)
@@ -923,6 +957,9 @@ class MainWindow(Window_Customizing):
             lambda: self.ui.ProgressBar_Download_GCC.setValue(100),
             type = Qt.QueuedConnection
         )
+        EnvConfiguratorSignals.Signal_GCCStatus.connect(
+            lambda Status: self.ui.Label_Download_GCC_Status.setText(Status)
+        )
 
         self.ui.Label_Download_CMake.setText("CMake")
         self.Function_SetMethodExecutor(
@@ -932,7 +969,7 @@ class MainWindow(Window_Customizing):
             Params = ()
         )
         EnvConfiguratorSignals.Signal_GCCDetected.connect(
-            self.ui.Button_Install_CMake.click if Config.GetValue('Env', 'CMake', 'Undetected') == 'Undetected' else EnvConfiguratorSignals.Signal_CMakeDetected.emit
+            self.ui.Button_Install_CMake.click #if Config.GetValue('Env', 'CMake', 'Undetected') == 'Undetected' else EnvConfiguratorSignals.Signal_CMakeDetected.emit
         )
         self.ui.Button_Install_CMake.setText('')
         self.ui.Button_Install_CMake.setCheckable(True)
@@ -972,6 +1009,9 @@ class MainWindow(Window_Customizing):
             lambda: self.ui.ProgressBar_Download_CMake.setValue(100),
             type = Qt.QueuedConnection
         )
+        EnvConfiguratorSignals.Signal_CMakeStatus.connect(
+            lambda Status: self.ui.Label_Download_CMake_Status.setText(Status)
+        )
         '''
 
         self.ui.Label_Download_Python.setText("Python")
@@ -982,7 +1022,7 @@ class MainWindow(Window_Customizing):
             Params = ('3.9', )
         )
         MainWindowSignals.Signal_MainWindowShown.connect( #EnvConfiguratorSignals.Signal_CMakeDetected.connect(
-            self.ui.Button_Install_Python.click if Config.GetValue('Env', 'Python', 'Undetected') == 'Undetected' else EnvConfiguratorSignals.Signal_PythonDetected.emit
+            self.ui.Button_Install_Python.click #if Config.GetValue('Env', 'Python', 'Undetected') == 'Undetected' else EnvConfiguratorSignals.Signal_PythonDetected.emit
         )
         self.ui.Button_Install_Python.setText('')
         self.ui.Button_Install_Python.setCheckable(True)
@@ -1022,6 +1062,9 @@ class MainWindow(Window_Customizing):
             lambda: self.ui.ProgressBar_Download_Python.setValue(100),
             type = Qt.QueuedConnection
         )
+        EnvConfiguratorSignals.Signal_PythonStatus.connect(
+            lambda Status: self.ui.Label_Download_Python_Status.setText(Status)
+        )
 
         self.ui.Label_Download_PyReqs.setText("Python Requirements")
         self.Function_SetMethodExecutor(
@@ -1031,7 +1074,7 @@ class MainWindow(Window_Customizing):
             Params = (NormPath(Path(ResourceDir).joinpath('requirements.txt')), )
         )
         EnvConfiguratorSignals.Signal_PythonDetected.connect(
-            self.ui.Button_Install_PyReqs.click if Config.GetValue('Env', 'PyReqs', 'Undetected') == 'Undetected' else EnvConfiguratorSignals.Signal_PyReqsDetected.emit
+            self.ui.Button_Install_PyReqs.click #if Config.GetValue('Env', 'PyReqs', 'Undetected') == 'Undetected' else EnvConfiguratorSignals.Signal_PyReqsDetected.emit
         )
         self.ui.Button_Install_PyReqs.setText('')
         self.ui.Button_Install_PyReqs.setCheckable(True)
@@ -1071,6 +1114,9 @@ class MainWindow(Window_Customizing):
             lambda: self.ui.ProgressBar_Download_PyReqs.setValue(100),
             type = Qt.QueuedConnection
         )
+        EnvConfiguratorSignals.Signal_PyReqsStatus.connect(
+            lambda Status: self.ui.Label_Download_PyReqs_Status.setText(Status)
+        )
 
         self.ui.Label_Download_Pytorch.setText("Pytorch")
         self.Function_SetMethodExecutor(
@@ -1080,7 +1126,7 @@ class MainWindow(Window_Customizing):
             Params = ()
         )
         EnvConfiguratorSignals.Signal_PythonDetected.connect(
-            self.ui.Button_Install_Pytorch.click if Config.GetValue('Env', 'Pytorch', 'Undetected') == 'Undetected' else EnvConfiguratorSignals.Signal_PytorchDetected.emit
+            self.ui.Button_Install_Pytorch.click #if Config.GetValue('Env', 'Pytorch', 'Undetected') == 'Undetected' else EnvConfiguratorSignals.Signal_PytorchDetected.emit
         )
         self.ui.Button_Install_Pytorch.setText('')
         self.ui.Button_Install_Pytorch.setCheckable(True)
@@ -1119,6 +1165,9 @@ class MainWindow(Window_Customizing):
         EnvConfiguratorSignals.Signal_PytorchDetected.connect(
             lambda: self.ui.ProgressBar_Download_Pytorch.setValue(100),
             type = Qt.QueuedConnection
+        )
+        EnvConfiguratorSignals.Signal_PytorchStatus.connect(
+            lambda Status: self.ui.Label_Download_Pytorch_Status.setText(Status)
         )
 
         ##########################################################
@@ -1314,7 +1363,7 @@ class MainWindow(Window_Customizing):
             LineEdit = self.ui.LineEdit_Tool_AudioProcessor_Media_Dir_Input,
             Mode = "SelectDir"
         )
-        self.ui.LineEdit_Tool_AudioProcessor_Media_Dir_Input.setText(
+        self.ui.LineEdit_Tool_AudioProcessor_Media_Dir_Input.setPlaceholderText(
             str(Config_Tool_AudioProcessor.GetValue('AudioProcessor', 'Media_Dir_Input', 'None'))
         )
         self.ui.LineEdit_Tool_AudioProcessor_Media_Dir_Input.textChanged.connect(
@@ -1396,7 +1445,7 @@ class MainWindow(Window_Customizing):
             LineEdit = self.ui.LineEdit_Tool_AudioProcessor_Media_Dir_Output,
             Mode = "SelectDir"
         )
-        self.ui.LineEdit_Tool_AudioProcessor_Media_Dir_Output.setText(
+        self.ui.LineEdit_Tool_AudioProcessor_Media_Dir_Output.setPlaceholderText(
             str(Config_Tool_AudioProcessor.GetValue('AudioProcessor', 'Media_Dir_Output', 'None'))
         )
         self.ui.LineEdit_Tool_AudioProcessor_Media_Dir_Output.textChanged.connect(
@@ -1698,7 +1747,7 @@ class MainWindow(Window_Customizing):
             LineEdit = self.ui.LineEdit_Tool_VoiceIdentifier_Audio_Dir_Input,
             Mode = "SelectDir"
         )
-        self.ui.LineEdit_Tool_VoiceIdentifier_Audio_Dir_Input.setText(
+        self.ui.LineEdit_Tool_VoiceIdentifier_Audio_Dir_Input.setPlaceholderText(
             str(Config_Tool_VoiceIdentifier.GetValue('VoiceIdentifier', 'Audio_Dir_Input', 'None'))
         )
         self.ui.LineEdit_Tool_VoiceIdentifier_Audio_Dir_Input.textChanged.connect(
@@ -1712,7 +1761,7 @@ class MainWindow(Window_Customizing):
         )
         self.ui.Table_Tool_VoiceIdentifier_StdAudioSpeaker.SetHorizontalHeaders(['人物姓名', '音频路径', '增删'])
         self.ui.Table_Tool_VoiceIdentifier_StdAudioSpeaker.SetValue(
-            eval(Config_Tool_VoiceIdentifier.GetValue('VoiceIdentifier', 'StdAudioSpeaker', '{"": ""}')),
+            eval(Config_Tool_VoiceIdentifier.GetValue('VoiceIdentifier', 'StdAudioSpeaker', '{"None": "None"}')),
             FileType = "音频类型 (*.mp3 *.aac *.wav *.flac)"
         )
         self.ui.Table_Tool_VoiceIdentifier_StdAudioSpeaker.ValueChanged.connect(
@@ -1743,7 +1792,7 @@ class MainWindow(Window_Customizing):
             LineEdit = self.ui.LineEdit_Tool_VoiceIdentifier_Audio_Dir_Output,
             Mode = "SelectDir"
         )
-        self.ui.LineEdit_Tool_VoiceIdentifier_Audio_Dir_Output.setText(
+        self.ui.LineEdit_Tool_VoiceIdentifier_Audio_Dir_Output.setPlaceholderText(
             str(Config_Tool_VoiceIdentifier.GetValue('VoiceIdentifier', 'Audio_Dir_Output', 'None'))
         )
         self.ui.LineEdit_Tool_VoiceIdentifier_Audio_Dir_Output.textChanged.connect(
@@ -1996,7 +2045,7 @@ class MainWindow(Window_Customizing):
             LineEdit = self.ui.LineEdit_Tool_VoiceTranscriber_WAV_Dir,
             Mode = "SelectDir"
         )
-        self.ui.LineEdit_Tool_VoiceTranscriber_WAV_Dir.setText(
+        self.ui.LineEdit_Tool_VoiceTranscriber_WAV_Dir.setPlaceholderText(
             str(Config_Tool_VoiceTranscriber.GetValue('VoiceTranscriber', 'WAV_Dir', 'None'))
         )
         self.ui.LineEdit_Tool_VoiceTranscriber_WAV_Dir.textChanged.connect(
@@ -2013,7 +2062,7 @@ class MainWindow(Window_Customizing):
             LineEdit = self.ui.LineEdit_Tool_VoiceTranscriber_SRT_Dir,
             Mode = "SelectDir"
         )
-        self.ui.LineEdit_Tool_VoiceTranscriber_SRT_Dir.setText(
+        self.ui.LineEdit_Tool_VoiceTranscriber_SRT_Dir.setPlaceholderText(
             str(Config_Tool_VoiceTranscriber.GetValue('VoiceTranscriber', 'SRT_Dir', 'None'))
         )
         self.ui.LineEdit_Tool_VoiceTranscriber_SRT_Dir.textChanged.connect(
@@ -2369,7 +2418,7 @@ class MainWindow(Window_Customizing):
             LineEdit = self.ui.LineEdit_Tool_DatasetCreator_WAV_Dir,
             Mode = "SelectDir"
         )
-        self.ui.LineEdit_Tool_DatasetCreator_WAV_Dir.setText(
+        self.ui.LineEdit_Tool_DatasetCreator_WAV_Dir.setPlaceholderText(
             str(Config_Tool_DatasetCreator.GetValue('DatasetCreator', 'WAV_Dir', 'None'))
         )
         self.ui.LineEdit_Tool_DatasetCreator_WAV_Dir.textChanged.connect(
@@ -2386,7 +2435,7 @@ class MainWindow(Window_Customizing):
             LineEdit = self.ui.LineEdit_Tool_DatasetCreator_SRT_Dir,
             Mode = "SelectDir"
         )
-        self.ui.LineEdit_Tool_DatasetCreator_SRT_Dir.setText(
+        self.ui.LineEdit_Tool_DatasetCreator_SRT_Dir.setPlaceholderText(
             str(Config_Tool_DatasetCreator.GetValue('DatasetCreator', 'SRT_Dir', 'None'))
         )
         self.ui.LineEdit_Tool_DatasetCreator_SRT_Dir.textChanged.connect(
@@ -2416,7 +2465,7 @@ class MainWindow(Window_Customizing):
             LineEdit = self.ui.LineEdit_Tool_DatasetCreator_WAV_Dir_Split,
             Mode = "SelectDir"
         )
-        self.ui.LineEdit_Tool_DatasetCreator_WAV_Dir_Split.setText(
+        self.ui.LineEdit_Tool_DatasetCreator_WAV_Dir_Split.setPlaceholderText(
             str(Config_Tool_DatasetCreator.GetValue('DatasetCreator', 'WAV_Dir_Split', 'None'))
         )
         self.ui.LineEdit_Tool_DatasetCreator_WAV_Dir_Split.textChanged.connect(
@@ -2434,7 +2483,7 @@ class MainWindow(Window_Customizing):
             Mode = "SaveFile",
             FileType = "txt类型 (*.txt)"
         )
-        self.ui.LineEdit_Tool_DatasetCreator_FileList_Path_Training.setText(
+        self.ui.LineEdit_Tool_DatasetCreator_FileList_Path_Training.setPlaceholderText(
             str(Config_Tool_DatasetCreator.GetValue('DatasetCreator', 'FileList_Path_Training', 'None'))
         )
         self.ui.LineEdit_Tool_DatasetCreator_FileList_Path_Training.textChanged.connect(
@@ -2452,7 +2501,7 @@ class MainWindow(Window_Customizing):
             Mode = "SaveFile",
             FileType = "txt类型 (*.txt)"
         )
-        self.ui.LineEdit_Tool_DatasetCreator_FileList_Path_Validation.setText(
+        self.ui.LineEdit_Tool_DatasetCreator_FileList_Path_Validation.setPlaceholderText(
             str(Config_Tool_DatasetCreator.GetValue('DatasetCreator', 'FileList_Path_Validation', 'None'))
         )
         self.ui.LineEdit_Tool_DatasetCreator_FileList_Path_Validation.textChanged.connect(
@@ -2684,7 +2733,7 @@ class MainWindow(Window_Customizing):
             Mode = "SelectFile",
             FileType = "txt类型 (*.txt)"
         )
-        self.ui.LineEdit_Tool_VoiceTrainer_FileList_Path_Training.setText(
+        self.ui.LineEdit_Tool_VoiceTrainer_FileList_Path_Training.setPlaceholderText(
             str(Config_Tool_VoiceTrainer.GetValue('VoiceTrainer', 'FileList_Path_Training', 'None'))
         )
         self.ui.LineEdit_Tool_VoiceTrainer_FileList_Path_Training.textChanged.connect(
@@ -2702,7 +2751,7 @@ class MainWindow(Window_Customizing):
             Mode = "SelectFile",
             FileType = "txt类型 (*.txt)"
         )
-        self.ui.LineEdit_Tool_VoiceTrainer_FileList_Path_Validation.setText(
+        self.ui.LineEdit_Tool_VoiceTrainer_FileList_Path_Validation.setPlaceholderText(
             str(Config_Tool_VoiceTrainer.GetValue('VoiceTrainer', 'FileList_Path_Validation', 'None'))
         )
         self.ui.LineEdit_Tool_VoiceTrainer_FileList_Path_Validation.textChanged.connect(
@@ -2736,7 +2785,7 @@ class MainWindow(Window_Customizing):
             lambda Value: Config_Tool_VoiceTrainer.EditConfig('VoiceTrainer', 'Epochs', str(Value))
         )
         self.ui.SpinBox_Tool_VoiceTrainer_Epochs.setToolTipDuration(-1)
-        self.ui.SpinBox_Tool_VoiceTrainer_Epochs.setToolTip("提示：在没有底模（预训练模型）的情况下建议从一万轮次起步")
+        self.ui.SpinBox_Tool_VoiceTrainer_Epochs.setToolTip("提示：在没有预训练模型的情况下建议从一万轮次起步")
 
         Function_SetText(
             Widget = self.ui.Label_Tool_VoiceTrainer_Batch_Size,
@@ -2764,7 +2813,7 @@ class MainWindow(Window_Customizing):
             LineEdit = self.ui.LineEdit_Tool_VoiceTrainer_Config_Dir_Save,
             Mode = "SelectDir"
         )
-        self.ui.LineEdit_Tool_VoiceTrainer_Config_Dir_Save.setText(
+        self.ui.LineEdit_Tool_VoiceTrainer_Config_Dir_Save.setPlaceholderText(
             str(Config_Tool_VoiceTrainer.GetValue('VoiceTrainer', 'Config_Dir_Save', 'None'))
         )
         self.ui.LineEdit_Tool_VoiceTrainer_Config_Dir_Save.textChanged.connect(
@@ -2781,7 +2830,7 @@ class MainWindow(Window_Customizing):
             LineEdit = self.ui.LineEdit_Tool_VoiceTrainer_Model_Dir_Save,
             Mode = "SelectDir"
         )
-        self.ui.LineEdit_Tool_VoiceTrainer_Model_Dir_Save.setText(
+        self.ui.LineEdit_Tool_VoiceTrainer_Model_Dir_Save.setPlaceholderText(
             str(Config_Tool_VoiceTrainer.GetValue('VoiceTrainer', 'Model_Dir_Save', 'None'))
         )
         self.ui.LineEdit_Tool_VoiceTrainer_Model_Dir_Save.textChanged.connect(
@@ -2799,14 +2848,14 @@ class MainWindow(Window_Customizing):
                 self.Function_AnimateFrame
             ],
             CheckedArgsList = [
-                (self.ui.Frame_AdvanceSettings_Tool_VoiceTrainer,...,...,0,self.ui.Frame_Tool_VoiceTrainer_Eval_Interval.height()+self.ui.Frame_Tool_VoiceTrainer_Num_Workers.height()+self.ui.Frame_Tool_VoiceTrainer_FP16_Run.height()+self.ui.Frame_Tool_VoiceTrainer_Find_Unused_Parameters.height(),0,'Extend')
+                (self.ui.Frame_AdvanceSettings_Tool_VoiceTrainer,...,...,0,self.ui.Frame_Tool_VoiceTrainer_Eval_Interval.height()+self.ui.Frame_Tool_VoiceTrainer_Num_Workers.height()+self.ui.Frame_Tool_VoiceTrainer_FP16_Run.height(),0,'Extend')
             ],
             UncheckedText = "高级设置（隐藏）",
             UncheckedEventList = [
                 self.Function_AnimateFrame
             ],
             UncheckedArgsList = [
-                (self.ui.Frame_AdvanceSettings_Tool_VoiceTrainer,...,...,0,self.ui.Frame_Tool_VoiceTrainer_Eval_Interval.height()+self.ui.Frame_Tool_VoiceTrainer_Num_Workers.height()+self.ui.Frame_Tool_VoiceTrainer_FP16_Run.height()+self.ui.Frame_Tool_VoiceTrainer_Find_Unused_Parameters.height(),0,'Reduce')
+                (self.ui.Frame_AdvanceSettings_Tool_VoiceTrainer,...,...,0,self.ui.Frame_Tool_VoiceTrainer_Eval_Interval.height()+self.ui.Frame_Tool_VoiceTrainer_Num_Workers.height()+self.ui.Frame_Tool_VoiceTrainer_FP16_Run.height(),0,'Reduce')
             ],
             TakeEffect = True
         )
@@ -2871,34 +2920,6 @@ class MainWindow(Window_Customizing):
             TakeEffect = True
         )
 
-        Function_SetText(
-            Widget = self.ui.Label_Tool_VoiceTrainer_Find_Unused_Parameters,
-            Title = "寻找未用参数",
-            Body = QCA.translate("Label", "寻找没用到的参数以防止在对梯度进行平均时报错，但会带来额外的运行开销。")
-        )
-        self.ui.CheckBox_Tool_VoiceTrainer_Find_Unused_Parameters.setCheckable(True)
-        self.ui.CheckBox_Tool_VoiceTrainer_Find_Unused_Parameters.setChecked(
-            eval(Config_Tool_VoiceTrainer.GetValue('VoiceTrainer', 'Find_Unused_Parameters', 'True'))
-        )
-        Function_ConfigureCheckBox(
-            CheckBox = self.ui.CheckBox_Tool_VoiceTrainer_Find_Unused_Parameters,
-            CheckedText = "已启用",
-            CheckedEventList = [
-                Config_Tool_VoiceTrainer.EditConfig
-            ],
-            CheckedArgsList = [
-                ('VoiceTrainer', 'Find_Unused_Parameters', 'True')
-            ],
-            UncheckedText = "未启用",
-            UncheckedEventList = [
-                Config_Tool_VoiceTrainer.EditConfig
-            ],
-            UncheckedArgsList = [
-                ('VoiceTrainer', 'Find_Unused_Parameters', 'False')
-            ],
-            TakeEffect = True
-        )
-
         self.ui.GroupBox_OptionalParams_Tool_VoiceTrainer.setTitle("可选参数")
 
         self.ui.CheckBox_Toggle_BasicOptionalSettings_Tool_VoiceTrainer.setCheckable(True)
@@ -2913,7 +2934,7 @@ class MainWindow(Window_Customizing):
                 #Config_Tool_VoiceTrainer.EditConfig
             ],
             CheckedArgsList = [
-                (self.ui.Frame_BasicOptionalSettings_Tool_VoiceTrainer,...,...,0,self.ui.Frame_Tool_VoiceTrainer_Model_Path_Pretrained_G.height()+self.ui.Frame_Tool_VoiceTrainer_Model_Path_Pretrained_D.height(),0,'Extend'),
+                (self.ui.Frame_BasicOptionalSettings_Tool_VoiceTrainer,...,...,0,self.ui.Frame_Tool_VoiceTrainer_Model_Path_Pretrained_G.height()+self.ui.Frame_Tool_VoiceTrainer_Model_Path_Pretrained_D.height()+self.ui.Frame_Tool_VoiceTrainer_Config_Path_Load.height()+self.ui.Frame_Tool_VoiceTrainer_Keep_Original_Speakers.height(),0,'Extend'),
                 #('VoiceTrainer', 'Toggle_BasicOptionalSettings', 'True')
             ],
             UncheckedText = "基础设置（隐藏）",
@@ -2922,7 +2943,7 @@ class MainWindow(Window_Customizing):
                 #Config_Tool_VoiceTrainer.EditConfig
             ],
             UncheckedArgsList = [
-                (self.ui.Frame_BasicOptionalSettings_Tool_VoiceTrainer,...,...,0,self.ui.Frame_Tool_VoiceTrainer_Model_Path_Pretrained_G.height()+self.ui.Frame_Tool_VoiceTrainer_Model_Path_Pretrained_D.height(),0,'Reduce'),
+                (self.ui.Frame_BasicOptionalSettings_Tool_VoiceTrainer,...,...,0,self.ui.Frame_Tool_VoiceTrainer_Model_Path_Pretrained_G.height()+self.ui.Frame_Tool_VoiceTrainer_Model_Path_Pretrained_D.height()+self.ui.Frame_Tool_VoiceTrainer_Config_Path_Load.height()+self.ui.Frame_Tool_VoiceTrainer_Keep_Original_Speakers.height(),0,'Reduce'),
                 #('VoiceTrainer', 'Toggle_BasicOptionalSettings', 'False')
             ],
             TakeEffect = True
@@ -2939,7 +2960,7 @@ class MainWindow(Window_Customizing):
             Mode = "SelectFile",
             FileType = "pth类型 (*.pth)"
         )
-        self.ui.LineEdit_Tool_VoiceTrainer_Model_Path_Pretrained_G.setText(
+        self.ui.LineEdit_Tool_VoiceTrainer_Model_Path_Pretrained_G.setPlaceholderText(
             str(Config_Tool_VoiceTrainer.GetValue('VoiceTrainer', 'Model_Path_Pretrained_G', 'None'))
         )
         self.ui.LineEdit_Tool_VoiceTrainer_Model_Path_Pretrained_G.textChanged.connect(
@@ -2957,11 +2978,57 @@ class MainWindow(Window_Customizing):
             Mode = "SelectFile",
             FileType = "pth类型 (*.pth)"
         )
-        self.ui.LineEdit_Tool_VoiceTrainer_Model_Path_Pretrained_D.setText(
+        self.ui.LineEdit_Tool_VoiceTrainer_Model_Path_Pretrained_D.setPlaceholderText(
             str(Config_Tool_VoiceTrainer.GetValue('VoiceTrainer', 'Model_Path_Pretrained_D', 'None'))
         )
         self.ui.LineEdit_Tool_VoiceTrainer_Model_Path_Pretrained_D.textChanged.connect(
             lambda Value: Config_Tool_VoiceTrainer.EditConfig('VoiceTrainer', 'Model_Path_Pretrained_D', str(Value))
+        )
+
+        Function_SetText(
+            Widget = self.ui.Label_Tool_VoiceTrainer_Config_Path_Load,
+            Title = "配置路径",
+            Body = QCA.translate("Label", "配置文件的所在路径，载入优先级高于默认配置文件。")
+        )
+        Function_SetFileDialog(
+            Button = self.ui.Button_Tool_VoiceTrainer_Config_Path_Load,
+            LineEdit = self.ui.LineEdit_Tool_VoiceTrainer_Config_Path_Load,
+            Mode = "SelectFile",
+            FileType = "json类型 (*.json)"
+        )
+        self.ui.LineEdit_Tool_VoiceTrainer_Config_Path_Load.setPlaceholderText(
+            str(Config_Tool_VoiceTrainer.GetValue('VoiceTrainer', 'Config_Path_Load', 'None'))
+        )
+        self.ui.LineEdit_Tool_VoiceTrainer_Config_Path_Load.textChanged.connect(
+            lambda Value: Config_Tool_VoiceTrainer.EditConfig('VoiceTrainer', 'Config_Path_Load', str(Value))
+        )
+
+        Function_SetText(
+            Widget = self.ui.Label_Tool_VoiceTrainer_Keep_Original_Speakers,
+            Title = "保留原说话人",
+            Body = QCA.translate("Label", "保留底模中原有的说话人，需要设置相应配置加载路径才能生效。")
+        )
+        self.ui.CheckBox_Tool_VoiceTrainer_Keep_Original_Speakers.setCheckable(True)
+        self.ui.CheckBox_Tool_VoiceTrainer_Keep_Original_Speakers.setChecked(
+            eval(Config_Tool_VoiceTrainer.GetValue('VoiceTrainer', 'Keep_Original_Speakers', 'False'))
+        )
+        Function_ConfigureCheckBox(
+            CheckBox = self.ui.CheckBox_Tool_VoiceTrainer_Keep_Original_Speakers,
+            CheckedText = "已启用",
+            CheckedEventList = [
+                Config_Tool_VoiceTrainer.EditConfig
+            ],
+            CheckedArgsList = [
+                ('VoiceTrainer', 'Keep_Original_Speakers', 'True')
+            ],
+            UncheckedText = "未启用",
+            UncheckedEventList = [
+                Config_Tool_VoiceTrainer.EditConfig
+            ],
+            UncheckedArgsList = [
+                ('VoiceTrainer', 'Keep_Original_Speakers', 'False')
+            ],
+            TakeEffect = True
         )
 
         self.ui.CheckBox_Toggle_AdvanceOptionalSettings_Tool_VoiceTrainer.setCheckable(True)
@@ -2973,34 +3040,16 @@ class MainWindow(Window_Customizing):
                 self.Function_AnimateFrame
             ],
             CheckedArgsList = [
-                (self.ui.Frame_AdvanceOptionalSettings_Tool_VoiceTrainer,...,...,0,self.ui.Frame_Tool_VoiceTrainer_Config_Path_Load.height()+self.ui.Frame_Tool_VoiceTrainer_Speakers.height(),0,'Extend')
+                (self.ui.Frame_AdvanceOptionalSettings_Tool_VoiceTrainer,...,...,0,self.ui.Frame_Tool_VoiceTrainer_Speakers.height(),0,'Extend')
             ],
             UncheckedText = "高级设置（隐藏）",
             UncheckedEventList = [
                 self.Function_AnimateFrame
             ],
             UncheckedArgsList = [
-                (self.ui.Frame_AdvanceOptionalSettings_Tool_VoiceTrainer,...,...,0,self.ui.Frame_Tool_VoiceTrainer_Config_Path_Load.height()+self.ui.Frame_Tool_VoiceTrainer_Speakers.height(),0,'Reduce')
+                (self.ui.Frame_AdvanceOptionalSettings_Tool_VoiceTrainer,...,...,0,self.ui.Frame_Tool_VoiceTrainer_Speakers.height(),0,'Reduce')
             ],
             TakeEffect = True
-        )
-
-        Function_SetText(
-            Widget = self.ui.Label_Tool_VoiceTrainer_Config_Path_Load,
-            Title = "配置加载路径",
-            Body = QCA.translate("Label", "该路径对应的配置文件将会替代默认的配置文件。")
-        )
-        Function_SetFileDialog(
-            Button = self.ui.Button_Tool_VoiceTrainer_Config_Path_Load,
-            LineEdit = self.ui.LineEdit_Tool_VoiceTrainer_Config_Path_Load,
-            Mode = "SelectFile",
-            FileType = "json类型 (*.json)"
-        )
-        self.ui.LineEdit_Tool_VoiceTrainer_Config_Path_Load.setText(
-            str(Config_Tool_VoiceTrainer.GetValue('VoiceTrainer', 'Config_Path_Load', 'None'))
-        )
-        self.ui.LineEdit_Tool_VoiceTrainer_Config_Path_Load.textChanged.connect(
-            lambda Value: Config_Tool_VoiceTrainer.EditConfig('VoiceTrainer', 'Config_Path_Load', str(Value))
         )
 
         Function_SetText(
@@ -3009,8 +3058,8 @@ class MainWindow(Window_Customizing):
             Body = QCA.translate("Label", "若数据集非本工具箱生成且未包含人名信息，则应按序号设置并用逗号隔开。")
         )
         self.ui.LineEdit_Tool_VoiceTrainer_Speakers.setReadOnly(False)
-        self.ui.LineEdit_Tool_VoiceTrainer_Speakers.setText(
-            str(Config_Tool_VoiceTrainer.GetValue('VoiceTrainer', 'Speakers', ''))
+        self.ui.LineEdit_Tool_VoiceTrainer_Speakers.setPlaceholderText(
+            '' #str(Config_Tool_VoiceTrainer.GetValue('VoiceTrainer', 'Speakers', ''))
         )
         self.ui.LineEdit_Tool_VoiceTrainer_Speakers.textChanged.connect(
             lambda Value: Config_Tool_VoiceTrainer.EditConfig('VoiceTrainer', 'Speakers', str(Value))
@@ -3111,8 +3160,8 @@ class MainWindow(Window_Customizing):
             ConsoleFrame = self.ui.Frame_Console,
             Method = Execute_Voice_Training.Execute,
             ParamsFrom = [
-                self.ui.LineEdit_Tool_VoiceTrainer_FileList_Path_Validation,
                 self.ui.LineEdit_Tool_VoiceTrainer_FileList_Path_Training,
+                self.ui.LineEdit_Tool_VoiceTrainer_FileList_Path_Validation,
                 self.ui.ComboBox_Tool_VoiceTrainer_Language,
                 self.ui.LineEdit_Tool_VoiceTrainer_Config_Path_Load,
                 self.ui.LineEdit_Tool_VoiceTrainer_Config_Dir_Save,
@@ -3121,8 +3170,8 @@ class MainWindow(Window_Customizing):
                 self.ui.SpinBox_Tool_VoiceTrainer_Batch_Size,
                 self.ui.CheckBox_Tool_VoiceTrainer_FP16_Run,
                 self.ui.LineEdit_Tool_VoiceTrainer_Speakers,
+                self.ui.CheckBox_Tool_VoiceTrainer_Keep_Original_Speakers,
                 self.ui.SpinBox_Tool_VoiceTrainer_Num_Workers,
-                self.ui.CheckBox_Tool_VoiceTrainer_Find_Unused_Parameters,
                 self.ui.LineEdit_Tool_VoiceTrainer_Model_Path_Pretrained_G,
                 self.ui.LineEdit_Tool_VoiceTrainer_Model_Path_Pretrained_D,
                 self.ui.LineEdit_Tool_VoiceTrainer_Model_Dir_Save
@@ -3225,16 +3274,21 @@ class MainWindow(Window_Customizing):
             Mode = "SelectFile",
             FileType = "json类型 (*.json)"
         )
-        self.ui.LineEdit_Tool_VoiceConverter_Config_Path_Load.setText(
+        self.ui.LineEdit_Tool_VoiceConverter_Config_Path_Load.setPlaceholderText(
             str(Config_Tool_VoiceConverter.GetValue('VoiceConverter', 'Config_Path_Load', 'None'))
         )
         self.ui.LineEdit_Tool_VoiceConverter_Config_Path_Load.textChanged.connect(
             lambda Value: Config_Tool_VoiceConverter.EditConfig('VoiceConverter', 'Config_Path_Load', str(Value))
         )
         self.ui.LineEdit_Tool_VoiceConverter_Config_Path_Load.textChanged.connect(
+            lambda: self.ui.ComboBox_Tool_VoiceConverter_Speaker.clear(),
+            type = Qt.QueuedConnection
+        )
+        self.ui.LineEdit_Tool_VoiceConverter_Config_Path_Load.textChanged.connect(
             lambda Path: self.ui.ComboBox_Tool_VoiceConverter_Speaker.addItems(
                 Get_Speakers(Path)
-            )
+            ),
+            type = Qt.QueuedConnection
         )
 
         Function_SetText(
@@ -3248,7 +3302,7 @@ class MainWindow(Window_Customizing):
             Mode = "SelectFile",
             FileType = "pth类型 (*.pth)"
         )
-        self.ui.LineEdit_Tool_VoiceConverter_Model_Path_Load.setText(
+        self.ui.LineEdit_Tool_VoiceConverter_Model_Path_Load.setPlaceholderText(
             str(Config_Tool_VoiceConverter.GetValue('VoiceConverter', 'Model_Path_Load', 'None'))
         )
         self.ui.LineEdit_Tool_VoiceConverter_Model_Path_Load.textChanged.connect(
@@ -3260,7 +3314,7 @@ class MainWindow(Window_Customizing):
             Title = "输入文字",
             Body = QCA.translate("Label", "输入的文字会作为说话人的语音内容。")
         )
-        self.ui.PlainTextEdit_Tool_VoiceConverter_Text.setPlainText(
+        self.ui.PlainTextEdit_Tool_VoiceConverter_Text.setPlaceholderText(
             str(Config_Tool_VoiceConverter.GetValue('VoiceConverter', 'Text', '请输入语句'))
         )
         self.ui.PlainTextEdit_Tool_VoiceConverter_Text.textChanged.connect(
@@ -3306,7 +3360,7 @@ class MainWindow(Window_Customizing):
             LineEdit = self.ui.LineEdit_Tool_VoiceConverter_Audio_Dir_Save,
             Mode = "SelectDir"
         )
-        self.ui.LineEdit_Tool_VoiceConverter_Audio_Dir_Save.setText(
+        self.ui.LineEdit_Tool_VoiceConverter_Audio_Dir_Save.setPlaceholderText(
             str(Config_Tool_VoiceConverter.GetValue('VoiceConverter', 'Audio_Dir_Save', 'None'))
         )
         self.ui.LineEdit_Tool_VoiceConverter_Audio_Dir_Save.textChanged.connect(
@@ -3541,7 +3595,7 @@ class MainWindow(Window_Customizing):
         ##################### Content: Settings #####################
         #############################################################
 
-        self.ui.ToolButton_Settings_Title.setText(QCA.translate("Label", "设置"))
+        self.ui.ToolButton_Settings_Title.setText(QCA.translate("Label", "系统选项"))
 
         self.ui.Label_Setting_Language.setText(QCA.translate("Label", "语言"))
         self.ui.ComboBox_Setting_Language.addItems(['中文'])
@@ -3663,9 +3717,38 @@ class MainWindow(Window_Customizing):
             TakeEffect = False
         )
 
-        #####################################################################################################
-        # StatusBar
-        #####################################################################################################
+        #############################################################
+        ####################### Content: Info #######################
+        #############################################################
+
+        self.ui.ToolButton_Info_Title.setText(QCA.translate("Label", "用户须知"))
+
+        Function_SetText(
+            Widget = self.ui.TextBrowser_Text_Info,
+            Title = QCA.translate("TextBrowser", "声明"),
+            TitleAlign = "left",
+            TitleSize = 24,
+            TitleWeight = 840,
+            Body = QCA.translate("TextBrowser",
+                "请自行解决数据集的授权问题。对于使用未经授权的数据集进行训练所导致的任何问题，您将承担全部责任，并且该仓库及其维护者不承担任何后果！\n"
+                "\n"
+                "您还需要服从以下条例：\n"
+                "0. 本项目仅用于学术交流目的，旨在促进沟通和学习。不适用于生产环境。\n"
+                "1. 基于 Easy Voice Toolkit 发布的任何视频必须在描述中明确指出它们用于变声，并指定声音或音频的输入源，例如使用他人发布的视频或音频，并将分离出的人声作为转换的输入源，必须提供清晰的原始视频链接。如果您使用自己的声音或其他商业语音合成软件生成的声音作为转换的输入源，也必须在描述中说明。\n"
+                "2. 您将对输入源引起的任何侵权问题负全部责任。当使用其他商业语音合成软件作为输入源时，请确保遵守该软件的使用条款。请注意，许多语音合成引擎在其使用条款中明确声明不能用于输入源转换。\n"
+                "3. 继续使用本项目被视为同意本仓库README中所述的相关条款。本仓库README有义务进行劝导，但不承担可能出现的任何后续问题的责任。\n"
+                "4. 如果您分发此仓库的代码或将由此项目生成的任何结果公开发布（包括但不限于视频分享平台），请注明原始作者和代码来源（即此仓库）。\n"
+                "5. 如果您将此项目用于任何其他计划，请提前与本仓库的作者联系并告知。\n"
+            ),
+            BodyAlign = "left",
+            BodySize = 12,
+            BodyWeight = 420,
+            BodyLineHeight = 27
+        )
+
+        #############################################################
+        ######################### StatusBar #########################
+        #############################################################
 
         # Toggle Console
         self.ui.Button_Toggle_Console.setCheckable(True)

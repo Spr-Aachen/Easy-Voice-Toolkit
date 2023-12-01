@@ -290,10 +290,8 @@ def Function_ParamsHandler(
     Function to get/set the param of UI
     '''
     if Mode == "Get":
-        if isinstance(UI, QLineEdit):
-            return UI.text()
-        if isinstance(UI, QPlainTextEdit):
-            return UI.toPlainText()
+        if isinstance(UI, (QLineEdit, QPlainTextEdit)):
+            return Function_GetText(UI)
         if isinstance(UI, QComboBox):
             return UI.currentText()
         if isinstance(UI, (QSlider, QSpinBox, QDoubleSpinBox)):
