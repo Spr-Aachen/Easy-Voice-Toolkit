@@ -21,17 +21,17 @@ from threading import currentThread
 
 #############################################################################################################
 
-def IterChecker(
+def ToIterable(
     Items,
-    #Type: str = 'list'
+    StrictToText: bool = True
 ):
     '''
+    Function to make item iterable
     '''
     if isinstance(Items, collections.Iterable) or hasattr(Items, '__iter__'):
-        ItemList = Items
+        ItemList = [Items] if StrictToText and isinstance(Items, (str, bytes)) else Items
     else:
-        ItemList = []
-        ItemList.append(Items)
+        ItemList = [Items]
 
     return ItemList
 
@@ -43,7 +43,7 @@ def ItemReplacer(
     '''
     Function to replace item using dictionary lookup
     '''
-    ItemList = IterChecker(Items)
+    ItemList = ToIterable(Items)
 
     ItemList_New = [Dict.get(Item, Item) if isinstance(Item, str) else Item for Item in ItemList]
 
@@ -130,6 +130,7 @@ def RunCMD(
     ShowProgress: bool = False,
     CommunicateThroughConsole: bool = False,
     CreationFlags: int = subprocess.CREATE_NO_WINDOW,
+    #InterceptError: Optional[bool] = None,
     DecodeResult: Optional[bool] = None,
     TimeOut: Optional[float] = None
 ):
@@ -139,7 +140,7 @@ def RunCMD(
 
     if not CommunicateThroughConsole:
         TotalOutput, TotalError = (bytes(), bytes())
-        for Arg in IterChecker(Args):
+        for Arg in ToIterable(Args, StrictToText = False):
             Arg = shlex.split(Arg, posix = True if PathType is 'Posix' else False) if isinstance(Arg, str) else Arg
             Subprocess = subprocess.Popen(
                 args = Arg,
@@ -159,13 +160,14 @@ def RunCMD(
                     Error += Line
                     sys.stderr.write(Line.decode(errors = 'ignore'))
                     Subprocess.stderr.flush()
+                    #Subprocess.terminate() if InterceptError and 'error' in Line.decode(errors = 'ignore').lower() else None
             else:
-                Output, Error = Subprocess.communicate()
+                Output, Error = Subprocess.communicate(timeout = TimeOut)
             TotalOutput, TotalError = TotalOutput + Output, TotalError + Error
 
     else:
         TotalInput = str()
-        for Arg in IterChecker(Args):
+        for Arg in ToIterable(Args):
             Arg = shlex.join(Arg) if isinstance(Arg, list) else Arg
             TotalInput += f'{RawString(Arg, PathType)}\n'
         if platform.system() == 'Windows':
@@ -194,8 +196,9 @@ def RunCMD(
                 TotalError += Line
                 sys.stderr.write(Line.decode(errors = 'ignore'))
                 Subprocess.stderr.flush()
+                #Subprocess.terminate() if InterceptError and 'error' in Line.decode(errors = 'ignore').lower() else None
         else:
-            TotalOutput, TotalError = Subprocess.communicate(TotalInput)
+            TotalOutput, TotalError = Subprocess.communicate(TotalInput, timeout = TimeOut)
 
     TotalOutput, TotalError = TotalOutput.strip(), TotalError.strip()
     TotalOutput, TotalError = TotalOutput.decode(errors = 'ignore') if DecodeResult else TotalOutput, TotalError.decode(errors = 'ignore') if DecodeResult else TotalError
@@ -262,6 +265,50 @@ def SetEnvVar(
 
 #############################################################################################################
 
+def SetRichText(
+    Title: Optional[str] = None,
+    TitleAlign: str = "left",
+    TitleSize: float = 9.9,
+    TitleWeight: float = 840.,
+    TitleColor: str = "#ffffff",
+    TitleSpacing: float = 0.6,
+    TitleLineHeight: float = 21.,
+    Body: Optional[str] = None,
+    BodyAlign: str = "left",
+    BodySize: float = 9.9,
+    BodyWeight: float = 420.,
+    BodySpacing: float = 0.6,
+    BodyLineHeight: float = 21.,
+    BodyColor: str = "#ffffff",
+):
+    '''
+    Function to set text for widget
+    '''
+    def ToHtml(Content, Align, Size, Weight, Color, LetterSpacing, LineHeight):
+        Style = f"'text-align:{Align}; font-size:{Size}pt; font-weight:{Weight}; color:{Color}; letter-spacing: {LetterSpacing}px; line-height:{LineHeight}px'"
+        Content = re.sub(
+            pattern = "[\n]",
+            repl = "<br>",
+            string = Content
+        ) if Content is not None else None
+        return f"<p style={Style}>{Content}</p>" if Content is not None else ''
+
+    RichText = (
+        "<html>"
+            "<head>"
+                f"<title>{ToHtml(Title, TitleAlign, TitleSize, TitleWeight, TitleColor, TitleSpacing, TitleLineHeight)}</title>" # Not working with QWidgets
+            "</head>"
+            "<body>"
+                f"{ToHtml(Title, TitleAlign, TitleSize, TitleWeight, TitleColor, TitleSpacing, TitleLineHeight)}"
+                f"{ToHtml(Body, BodyAlign, BodySize, BodyWeight, BodyColor, BodySpacing, BodyLineHeight)}"
+            "</body>"
+        "</html>"
+    )
+
+    return RichText
+
+#############################################################################################################
+
 def FindURL(
     String: str
 ):
@@ -280,10 +327,10 @@ def RunEvent(
 ):
     '''
     '''
-    EventList = IterChecker(EventList) if EventList is not None else []
-    ParamList = IterChecker(ParamList) if ParamList is not None else [()]
+    EventList = ToIterable(EventList) if EventList is not None else []
+    ParamList = ToIterable(ParamList) if ParamList is not None else [()]
     for Index, Event in enumerate(EventList):
-        Event(*IterChecker(ParamList[Index]))
+        Event(*ToIterable(ParamList[Index]))
 
 #############################################################################################################
 

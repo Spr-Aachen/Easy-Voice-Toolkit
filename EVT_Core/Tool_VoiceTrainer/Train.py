@@ -14,6 +14,7 @@ import platform
 import logging
 logging.basicConfig(stream = sys.stdout, encoding = 'utf-8')
 logging.getLogger('numba').setLevel(logging.WARNING)
+import torchaudio
 import torch
 from torch.nn import functional as F
 from torch.utils.data import DataLoader
@@ -23,6 +24,7 @@ import torch.distributed as dist
 from torch.nn.parallel import DistributedDataParallel as DDP
 from torch.cuda.amp import autocast, GradScaler
 torch.backends.cudnn.benchmark = True
+from concurrent.futures import ThreadPoolExecutor
 
 from .vits.Data_Utils import (
     TextAudioSpeakerLoader,
@@ -76,7 +78,6 @@ class Preprocessing:
     def __init__(self,
         FileList_Path_Training: str,
         FileList_Path_Validation: str,
-        Language: str = 'mandarin_english_japanese',
         Config_Path_Load: Optional[str] = None,
         Config_Dir_Save: str = './',
         Set_Eval_Interval: int = 1000,
@@ -88,7 +89,23 @@ class Preprocessing:
     ):
         self.FileList_Path_Training = FileList_Path_Training
         self.FileList_Path_Validation = FileList_Path_Validation
-        self.Language = Language
+        def Get_Languages(Text_Path_Training, Text_Path_Validation):
+            Languages = []
+            for Text_Path in [Text_Path_Training, Text_Path_Validation]:
+                with open(file = Text_Path, mode = 'r', encoding = 'utf-8') as File:
+                    Lines = File.readlines()
+                for _, Line in enumerate(Lines):
+                    Line_Text = Line.split('|', maxsplit = 2)[2]
+                    Language = re.split(r'[\[\]]', Line_Text)[1]
+                    Languages.append(Language) if Language not in Languages else None
+            if set(Languages).issubset({'ZH', 'EN', 'JA'}):
+                if set(Languages) == {'ZH'}:
+                    return "mandarin"
+                else:
+                    return "mandarin_english_japanese"
+            else:
+                raise Exception('Unsupported language!')
+        self.Language = Get_Languages(self.FileList_Path_Training, self.FileList_Path_Validation)
         self.Config_Path_Load = Config_Path_Load if Config_Path_Load is not None else Path(__file__).parent.joinpath('./configs', f'{self.Language}_base.json').__str__()
         self.Config_Dir_Save = Config_Dir_Save
         self.Set_Eval_Interval = Set_Eval_Interval
@@ -119,7 +136,7 @@ class Preprocessing:
                 with open(file = Text_Path, mode = 'r', encoding = 'utf-8') as File:
                     Lines = File.readlines()
                 for _, Line in enumerate(Lines):
-                    Line_Path = Line.split('|')[0]
+                    Line_Path = Line.split('|', maxsplit = 1)[0]
                     Speaker = re.split(r'[\[\]]', re.split(r'[/\\\\]', Line_Path)[-1])[1]
                     Speakers.append(Speaker) if Speaker not in Speakers else None
             return Speakers
@@ -157,15 +174,15 @@ class Preprocessing:
                 NewSpeakers = json.load(ConfigFile)["speakers"]
             with open(file = Text_Path, mode = 'r', encoding = 'utf-8') as TextFile:
                 Lines = TextFile.readlines()
+            for Index, Line in enumerate(Lines):
+                Line_Old = Line
+                Line_Old_Path = Line_Old.split('|', maxsplit = 1)[0]
+                Speaker = re.split(r'[\[\]]', re.split(r'[/\\\\]', Line_Old_Path)[-1])[1]
+                SpeakerID = NewSpeakers.index(Speaker)
+                Line_Old_Text = Line_Old.split("|", maxsplit = 2)[2]
+                Line_New = Line_Old_Path + f"|{SpeakerID}|" + Line_Old_Text
+                Lines[Index] = Line_New
             with open(file = Text_Path, mode = 'w', encoding = 'utf-8') as TextFile:
-                for Sequence, Line in enumerate(Lines):
-                    Line_Old = Line
-                    Line_Old_Path = Line_Old.split('|', maxsplit = 1)[0]
-                    Speaker = re.split(r'[\[\]]', re.split(r'[/\\\\]', Line_Old_Path)[-1])[1]
-                    SpeakerID = NewSpeakers.index(Speaker)
-                    Line_Old_Text = Line_Old.split("|", maxsplit = 2)[2]
-                    Line_New = Line_Old_Path + f"|{SpeakerID}|" + Line_Old_Text
-                    Lines[Sequence] = Line_New
                 TextFile.writelines(Lines)
 
         Parser = argparse.ArgumentParser()
@@ -188,6 +205,34 @@ class Preprocessing:
             Filelist_Cleaned = FileList + "." + Args.Out_Extension
             with open(Filelist_Cleaned, 'w', encoding = 'utf-8') as f:
                 f.writelines(["|".join(x) + "\n" for x in Path_SID_Text])
+
+    def Resampler(self):
+        '''
+        Resample dataset audio to fit the sampling rate setting in config
+        '''
+        def Get_Resample_List(Config_Path, Text_Path):
+            ResampleList = []
+            with open(file = Config_Path, mode = 'rb') as ConfigFile:
+                SampleRate_New = json.load(ConfigFile)['data']['sampling_rate']
+            with open(file = Text_Path, mode = 'r', encoding = 'utf-8') as TextFile:
+                Lines = TextFile.readlines()
+            for Line in Lines:
+                Line_Path = Line.split('|', maxsplit = 1)[0]
+                ResampleList.append((Line_Path, SampleRate_New))
+            return ResampleList
+
+        def Resample(Audio_Path, SampleRate_New):
+            AudioData_Old, SampleRate_Old = torchaudio.load(uri = Audio_Path)
+            AudioData_New = torchaudio.transforms.Resample(orig_freq = SampleRate_Old, new_freq = SampleRate_New)(AudioData_Old)
+            torchaudio.save(uri = Audio_Path, src = AudioData_New, sample_rate = SampleRate_New)
+
+        for FileList in (self.FileList_Path_Validation, self.FileList_Path_Training):
+            print("Resampling audio according to", FileList)
+            with ThreadPoolExecutor(max_workers = os.cpu_count()) as Executor:
+                Executor.map(
+                    Resample,
+                    *zip(*Get_Resample_List(self.Config_Path_Edited, FileList))
+                )
 
 
 class Training:
@@ -499,7 +544,6 @@ class Voice_Training(Preprocessing, Training):
     def __init__(self,
         FileList_Path_Training: str,
         FileList_Path_Validation: str,
-        Language: str = 'mandarin_english_japanese',
         Config_Path_Load: Optional[str] = None,
         Config_Dir_Save: str = './',
         Set_Eval_Interval: int = 1000,
@@ -513,7 +557,7 @@ class Voice_Training(Preprocessing, Training):
         Model_Path_Pretrained_D: Optional[str] = None,
         Model_Dir_Save: str = './'
     ):
-        Preprocessing.__init__(self, FileList_Path_Training, FileList_Path_Validation, Language, Config_Path_Load, Config_Dir_Save, Set_Eval_Interval, Set_Epochs, Set_Batch_Size, Set_FP16_Run, Set_Speakers, Keep_Original_Speakers)
+        Preprocessing.__init__(self, FileList_Path_Training, FileList_Path_Validation, Config_Path_Load, Config_Dir_Save, Set_Eval_Interval, Set_Epochs, Set_Batch_Size, Set_FP16_Run, Set_Speakers, Keep_Original_Speakers)
         Training.__init__(self, Num_Workers, Model_Path_Pretrained_G, Model_Path_Pretrained_D, Keep_Original_Speakers)
         self.Model_Dir_Save = Model_Dir_Save
 
@@ -521,6 +565,7 @@ class Voice_Training(Preprocessing, Training):
         # Preprocess
         self.Configurator()
         self.Cleaner()
+        self.Resampler()
 
         # Train & Evaluate
         """Assume Single Node Multi GPUs Training Only"""

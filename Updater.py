@@ -7,7 +7,7 @@ from PySide6.QtCore import Qt, QObject, QThread, Signal
 from PySide6.QtWidgets import QApplication, QWidget, QVBoxLayout, QSizePolicy, QPushButton, QProgressBar, QLabel
 
 from EVT_GUI.Functions import Function_AnimateProgressBar, Function_SetText#, Function_ShowMessageBox
-from EVT_GUI.QSimpleWidgets.Utils import CheckUpdate, DownloadFile, NormPath, RunBat, BootWithBat, GetFileInfo, GetBaseDir, ManageConfig
+from EVT_GUI.QSimpleWidgets.Utils import CheckUpdate, DownloadFile, NormPath, SetRichText, RunBat, BootWithBat, GetFileInfo, GetBaseDir, ManageConfig
 
 ##############################################################################################################################
 
@@ -210,7 +210,7 @@ class Widget_Updater(QWidget):
         self.Layout.addWidget(self.SkipButton)
         self.setLayout(self.Layout)
 
-        UpdaterSignals.Signal_Message.connect(lambda Message: Function_SetText(self.Label, Message, 'center', 9, 420, 'black', 0.3, 12))
+        UpdaterSignals.Signal_Message.connect(lambda Message: Function_SetText(self.Label, SetRichText(Message, 'center', 9, 420, 'black', 0.3, 12)))
         UpdaterSignals.Signal_IsUpdateSucceeded.connect(lambda: Config.EditConfig('Updater', 'Status', 'Executed'), Qt.QueuedConnection)
         UpdaterSignals.Signal_IsUpdateSucceeded.connect(lambda Succeeded: RebootIfSucceeded() if Succeeded else RebootIfFailed(), Qt.QueuedConnection)
         UpdaterSignals.Signal_IsUpdateSucceeded.connect(lambda: self.close(), Qt.QueuedConnection)

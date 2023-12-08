@@ -55,7 +55,7 @@ class TableWidget_ButtonMixed(TableWidgetBase):
 
             if ColumnCount == 1 + 0:
                 LineEdit0 = LineEdit_NoBorder()
-                LineEdit0.setPlaceholderText(Param[ColumnCount] if Param else 'None')
+                Function_SetText(LineEdit0, Param[ColumnCount] if Param else '', SetPlaceholderText = True)
                 LineEdit0.textChanged.connect(
                     lambda: self.ValueChanged.emit(self.GetValue())
                 )
@@ -68,7 +68,7 @@ class TableWidget_ButtonMixed(TableWidgetBase):
 
             if ColumnCount == 1 + 1:
                 LineEdit1 = LineEdit_NoBorder()
-                LineEdit1.setPlaceholderText(Param[ColumnCount] if Param else 'None')
+                Function_SetText(LineEdit1, Param[ColumnCount] if Param else '', SetPlaceholderText = True)
                 LineEdit1.textChanged.connect(
                     lambda: self.ValueChanged.emit(self.GetValue())
                 )
@@ -102,7 +102,7 @@ class TableWidget_ButtonMixed(TableWidgetBase):
                 self.horizontalHeader().setSectionResizeMode(ColumnCount, QHeaderView.ResizeToContents)
 
     def SetValue(self, Params: dict = {'': ''}, FileType: Optional[str] = None):
-        ParamDict = Params #ParamDict = IterChecker(Params)
+        ParamDict = Params #ParamDict = ToIterable(Params)
         for Key, Value in ParamDict.items():
             Param = tuple(('',) + (Key, Value))
             Index = next((i for i, key in enumerate(ParamDict) if key == Key), None)
@@ -122,7 +122,7 @@ class TableWidget_ButtonMixed(TableWidgetBase):
         return ValueDict
 
     def SetHorizontalHeaders(self, Headers: list = ['', '', '']):
-        HeaderList = IterChecker(Headers)
+        HeaderList = ToIterable(Headers)
         HeaderList.insert(0, '')
         for Index, Header in enumerate(HeaderList, 1):
             if Index == 1 + self.ColumnCount:
@@ -190,7 +190,7 @@ class MessageBox_Stacked(MessageBoxBase):
     def SetContent(self, Images: list, Texts: list):
         Function_SetNoContents(self.StackedWidget)
 
-        for Index, Image in enumerate(IterChecker(Images)):
+        for Index, Image in enumerate(ToIterable(Images)):
             TextBrowser = QTextBrowser()
             TextBrowser.setStyleSheet(
                 "QTextBrowser {"
@@ -206,7 +206,7 @@ class MessageBox_Stacked(MessageBoxBase):
             ) if Image is not None else None
 
             Label = QLabel()
-            Function_SetText(Label, IterChecker(Texts)[Index], 'center', 9.9, 630)
+            Function_SetText(Label, SetRichText(ToIterable(Texts)[Index], 'center', 9.9, 630))
 
             SubLayout = QVBoxLayout()
             SubLayout.setAlignment(Qt.AlignCenter)

@@ -2,31 +2,31 @@
 Added
 '''
 
-import os
-from typing import Optional
+import numpy
+import librosa
 from pydub import AudioSegment
+from typing import Optional
 
 
 def Converter(
-    Media_Name_Input: str,
-    Media_Dir_Output: str,
-    Media_Format_New: str = 'wav',
-    Channels: Optional[int] = None, # choices = [1, 2, None]
-    SampleRate: Optional[int] = None, # choices = [44100, 48000, 96000, 192000, None]
-    SampleWidth: Optional[int] = None # choices = [8, 16, 24, 32, None]
+    Path: str,
+    SR: Optional[float] = 22050.,
+    Mono: bool = True
 ):
-    try:
-        Media_Name_Output = os.path.splitext(os.path.basename(Media_Name_Input))[0] + '.' + Media_Format_New
-        Media_Path_Output = os.path.join(Media_Dir_Output, Media_Name_Output)
-        AudioFile = AudioSegment.from_file(Media_Name_Input)
-        AudioFile.set_channels(Channels) if Channels else None
-        AudioFile.set_frame_rate(SampleRate) if SampleRate else None
-        AudioFile.set_sample_width(SampleWidth) if SampleWidth else None
-        AudioFile.export(
-            out_f = Media_Path_Output,
-            format = Media_Format_New
-        )
-    except:
-        print(f"Convertion of file {Media_Name_Input} failed!")
-    else:
-        return Media_Name_Output, Media_Path_Output
+    '''
+    Load an media file like using librosa.load()
+    '''
+    AudioFile = AudioSegment.from_file(Path)
+
+    AudioFile.set_channels(1) if Mono and AudioFile.channels > 1 else None
+
+    SamplesArray = [Channel.get_array_of_samples() for Channel in AudioFile.split_to_mono()]
+    SamplesArray_ND = numpy.array(SamplesArray) if AudioFile.channels > 1 else numpy.array(*SamplesArray)
+
+    AudioData = SamplesArray_ND.astype(numpy.float32) / numpy.iinfo(SamplesArray[0].typecode).max # Normalization (Librosa defaults to float32, soundfile defaults to float64)
+    SampleRate = float(AudioFile.frame_rate)
+
+    AudioData = librosa.core.resample(AudioData, orig_sr = SampleRate, target_sr = float(SR), res_type = 'soxr_vhq') if SR is not None else AudioData
+    SampleRate = float(SR) if SR is not None else SampleRate
+
+    return AudioData, SampleRate

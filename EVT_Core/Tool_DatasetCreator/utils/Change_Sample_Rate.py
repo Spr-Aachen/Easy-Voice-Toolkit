@@ -6,35 +6,62 @@ import os
 import time
 import librosa
 import soundfile
+from concurrent.futures import ThreadPoolExecutor
 
 
-def pre_process_audio(
+SubtypeDict = {
+    '8':          'PCM_8',
+    '16':         'PCM_16',
+    '24':         'PCM_24',
+    '32':         'PCM_32',
+    '32 (Float)': 'FLOAT'
+}
+
+
+def PreprocessAudio(
+    Audio_Path_Input,
+    Audio_Path_Output,
+    SampleRate,
+    SampleWidth,
+    ToMono
+):
+    try:
+        AudioData, SampleRate = librosa.load(Audio_Path_Input, sr = SampleRate, mono = True if ToMono else False)
+        soundfile.write(
+            file = Audio_Path_Output,
+            data = AudioData.T if len(AudioData.shape) > 1 else AudioData,
+            samplerate = int(SampleRate),
+            subtype = str(SubtypeDict.get(SampleWidth)) if SampleWidth is not None else None
+        )
+
+    except Exception as e:
+        print(e)
+        next
+
+
+def preprocess_audio(
     Audio_Dir_Input,
-    Sample_Rate,
-    Subtype,
+    SampleRate,
+    SampleWidth,
+    ToMono,
     Audio_Dir_Output
 ):
     Start_Sub = time.time()
 
     print('Downsampling wav files and changing bit pro sample...')
 
-    s = 0
-
+    ParamsList = []
     for File_Name in os.listdir(Audio_Dir_Input):
         if File_Name.endswith('.wav'):
-            try:
-                nameSolo_1 = File_Name.rsplit('.', 1)[0]
-                '''
-                y, s = librosa.load(Audio_Dir_Input + File_Name, sr=16000) # Downsample 44.1kHz to 8kHz
-                librosa.output.write_wav(path_audio_processed + nameSolo_1 + '.wav', y, s)
-                '''
-                data, samplerate = librosa.load(os.path.join(Audio_Dir_Input, File_Name), sr = Sample_Rate) # Downsample 44.1kHz to 22050HZ (default). Or use none to preserve the native sampling rate of the file
-                soundfile.write(os.path.join(Audio_Dir_Output, (nameSolo_1 + '.wav')), data, samplerate, subtype = Subtype)
-                s = s + 1
-                print('File ', s , ' completed:', nameSolo_1)
+            Audio_Path_Input = os.path.join(Audio_Dir_Input, File_Name)
+            Audio_Path_Output = os.path.join(Audio_Dir_Output, (File_Name.rsplit('.', 1)[0] + '.wav'))
+            ParamsList.append((Audio_Path_Input, Audio_Path_Output, SampleRate, SampleWidth, ToMono))
 
-            except EOFError as error:
-                next
+    with ThreadPoolExecutor(max_workers = os.cpu_count()) as Executor:
+        Executor.map(
+            PreprocessAudio,
+            *zip(*ParamsList)
+        )
 
     print('Downsampling and bit pro sample changing complete')
     print('---------------------------------------------------------------------')

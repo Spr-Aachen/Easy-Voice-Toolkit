@@ -205,11 +205,11 @@ def Function_SetURL(
     ButtonTooltip: str = "Open"
 ):
     '''
+    Function to open URL (through button)
     '''
-    for URL in IterChecker(URL):
-        Button.clicked.connect(
-            lambda: Function_OpenURL(Function_ParamsHandler(URL, None) if isinstance(URL, QWidget) else URL)
-        )
+    Button.clicked.connect(
+        lambda: Function_OpenURL([(Function_ParamsHandler(URL, None) if isinstance(URL, QWidget) else URL) for URL in ToIterable(URL)])
+    )
     Button.setToolTipDuration(-1)
     Button.setToolTip(ButtonTooltip)
 
@@ -336,7 +336,7 @@ def Function_ParamsSynchronizer(
             Param_Get = Param_Get * Times if isinstance(Param_Get, (int, float, complex)) else Param_Get
             Function_ParamsHandler(UI_Set, Param_Get, "Set")
     
-    TriggerList = IterChecker(Trigger)
+    TriggerList = ToIterable(Trigger)
 
     for Trigger in TriggerList:
         if isinstance(Trigger, (QPushButton, QToolButton)):

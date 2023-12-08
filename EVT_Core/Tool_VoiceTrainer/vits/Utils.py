@@ -134,11 +134,6 @@ def plot_alignment_to_numpy(alignment, info=None):
     return data
 
 
-def load_wav_to_torch(full_path):
-    sampling_rate, data = read(full_path)
-    return torch.FloatTensor(data.astype(np.float32)), sampling_rate
-
-
 def load_audiopaths_sid_text(filename, split = "|"):
     with open(filename, 'r', encoding = 'utf-8') as f:
         audiopaths_sid_text = [line.strip().split(split) for line in f]

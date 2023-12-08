@@ -332,18 +332,12 @@ class Execute_Voice_Training(QObject):
     def Execute(self, Params: tuple):
         self.started.emit()
 
-        LANGUAGES = {
-            "中":                            "mandarin",
-            "Mandarin":                      "mandarin",
-            "中英日":                        "mandarin_english_japanese",
-            "Mandarin & English & Japanese": "mandarin_english_japanese"
-        }
         Error = RunCMD(
             Args = [
                 f'cd "{ResourceDir}"',
                 'python -c "'
                 'from EVT_Core.Tool_VoiceTrainer.Train import Voice_Training; '
-                f"PreprocessandTrain = Voice_Training{str(ItemReplacer(LANGUAGES, Params))}; "
+                f"PreprocessandTrain = Voice_Training{str(Params)}; "
                 'PreprocessandTrain.Preprocessing_and_Training()"'
             ],
             PathType = 'Posix',
@@ -351,7 +345,13 @@ class Execute_Voice_Training(QObject):
             CommunicateThroughConsole = True,
             DecodeResult = True
         )[1]
-        Error = None if 'traceback' not in str(Error).lower() else Error
+        if 'traceback' not in str(Error).lower():
+            if "is not a directory" in str(Error).lower():
+                Error = "请确保模型/配置保存路径中没有中文等特殊字符"
+            if "specify the reduction dim" in str(Error).lower():
+                Error = "请检查显存是否足够或者 batch size（批处理量）设置是否过高"
+        else:
+            Error = None 
 
         self.finished.emit(str(Error))
 
@@ -801,28 +801,30 @@ class MainWindow(Window_Customizing):
 
         Function_SetText(
             Widget = self.ui.TextBrowser_Text_Home,
-            Title = QCA.translate("TextBrowser", "介绍"),
-            TitleAlign = "left",
-            TitleSize = 24,
-            TitleWeight = 840,
-            Body = QCA.translate("TextBrowser",
-                "一个基于Whisper、VITS等项目实现的简易语音工具箱，提供了包括语音模型训练在内的多种自动化音频工具\n"
-                "\n"
-                "工具箱目前包含以下功能：\n"
-                "音频基本处理\n"
-                "语音识别和筛选\n"
-                "语音转文字字幕\n"
-                "语音数据集制作\n"
-                "语音模型训练\n"
-                "语音模型推理\n"
-                "\n"
-                "这些功能彼此之间相互独立，但又能无缝衔接地形成一套完整的工作流\n"
-                "用户可以根据自己的需求有选择性地使用，亦或者依次通过这些工具将未经处理的语音文件逐步变为理想的语音模型\n"
-            ),
-            BodyAlign = "left",
-            BodySize = 12,
-            BodyWeight = 420,
-            BodyLineHeight = 27
+            Text = SetRichText(
+                Title = QCA.translate("TextBrowser", "介绍"),
+                TitleAlign = "left",
+                TitleSize = 24,
+                TitleWeight = 840,
+                Body = QCA.translate("TextBrowser",
+                    "一个基于Whisper、VITS等项目实现的简易语音工具箱，提供了包括语音模型训练在内的多种自动化音频工具\n"
+                    "\n"
+                    "工具箱目前包含以下功能：\n"
+                    "音频基本处理\n"
+                    "语音识别和筛选\n"
+                    "语音转文字字幕\n"
+                    "语音数据集制作\n"
+                    "语音模型训练\n"
+                    "语音模型推理\n"
+                    "\n"
+                    "这些功能彼此之间相互独立，但又能无缝衔接地形成一套完整的工作流\n"
+                    "用户可以根据自己的需求有选择性地使用，亦或者依次通过这些工具将未经处理的语音文件逐步变为理想的语音模型\n"
+                ),
+                BodyAlign = "left",
+                BodySize = 12,
+                BodyWeight = 420,
+                BodyLineHeight = 27
+            )
         )
 
         self.ui.Label_Demo_Text.setText(QCA.translate("Button", "视频演示"))
@@ -1296,20 +1298,22 @@ class MainWindow(Window_Customizing):
         '''
         Function_SetText(
             Widget = self.ui.TextBrowser_Intro_Tool_AudioProcessor,
-            Title = QCA.translate("TextBrowser", "音频基本处理"),
-            TitleAlign = "center",
-            TitleSize = 18,
-            Body = QCA.translate("TextBrowser",
-                "\n"
-                "[介绍]\n"
-                "该工具会将媒体文件批量转换为音频文件，然后自动切除音频的静音部分\n"
-                "\n"
-                "[用法]\n"
-                "1. 设置位于页面右侧的参数\n"
-                "2. 点击位于页面底部的“执行”按钮\n"
-                "\n"
-                "[提示]\n"
-                "1. 您可以通过点击“打开输出目录”按钮以查看当前工具在执行完毕后输出的文件\n"
+            Text = SetRichText(
+                Title = QCA.translate("TextBrowser", "音频基本处理"),
+                TitleAlign = "center",
+                TitleSize = 18,
+                Body = QCA.translate("TextBrowser",
+                    "\n"
+                    "[介绍]\n"
+                    "该工具会将媒体文件批量转换为音频文件，然后自动切除音频的静音部分\n"
+                    "\n"
+                    "[用法]\n"
+                    "1. 设置位于页面右侧的参数\n"
+                    "2. 点击位于页面底部的“执行”按钮\n"
+                    "\n"
+                    "[提示]\n"
+                    "1. 您可以通过点击“打开输出目录”按钮以查看当前工具在执行完毕后输出的文件\n"
+                )
             )
         )
         '''
@@ -1355,16 +1359,20 @@ class MainWindow(Window_Customizing):
 
         Function_SetText(
             Widget = self.ui.Label_Tool_AudioProcessor_Media_Dir_Input,
-            Title = QCA.translate("Label", "媒体输入目录"),
-            Body = QCA.translate("Label", "该目录中的媒体文件将会以下列设置输出为音频文件。")
+            Text = SetRichText(
+                Title = QCA.translate("Label", "媒体输入目录"),
+                Body = QCA.translate("Label", "该目录中的媒体文件将会以下列设置输出为音频文件。")
+            )
         )
         Function_SetFileDialog(
             Button = self.ui.Button_Tool_AudioProcessor_Media_Dir_Input,
             LineEdit = self.ui.LineEdit_Tool_AudioProcessor_Media_Dir_Input,
             Mode = "SelectDir"
         )
-        self.ui.LineEdit_Tool_AudioProcessor_Media_Dir_Input.setPlaceholderText(
-            str(Config_Tool_AudioProcessor.GetValue('AudioProcessor', 'Media_Dir_Input', 'None'))
+        Function_SetText(
+            Widget = self.ui.LineEdit_Tool_AudioProcessor_Media_Dir_Input,
+            Text = str(Config_Tool_AudioProcessor.GetValue('AudioProcessor', 'Media_Dir_Input', '')),
+            SetPlaceholderText = True
         )
         self.ui.LineEdit_Tool_AudioProcessor_Media_Dir_Input.textChanged.connect(
             lambda Value: Config_Tool_AudioProcessor.EditConfig('AudioProcessor', 'Media_Dir_Input', str(Value))
@@ -1372,8 +1380,10 @@ class MainWindow(Window_Customizing):
 
         Function_SetText(
             Widget = self.ui.Label_Tool_AudioProcessor_Media_Format_Output,
-            Title = QCA.translate("Label", "媒体输出格式"),
-            Body = QCA.translate("Label", "媒体文件将会以设置的格式输出为音频文件，若维持不变则保持'None'即可。")
+            Text = SetRichText(
+                Title = QCA.translate("Label", "媒体输出格式"),
+                Body = QCA.translate("Label", "媒体文件将会以设置的格式输出为音频文件，若维持不变则保持'None'即可。")
+            )
         )
         self.ui.ComboBox_Tool_AudioProcessor_Media_Format_Output.addItems(['flac', 'wav', 'mp3', 'aac', 'm4a', 'wma', 'aiff', 'au', 'ogg', 'None'])
         self.ui.ComboBox_Tool_AudioProcessor_Media_Format_Output.setCurrentText(
@@ -1385,8 +1395,10 @@ class MainWindow(Window_Customizing):
 
         Function_SetText(
             Widget = self.ui.Label_Tool_AudioProcessor_Slice_Audio,
-            Title = "启用静音切除",
-            Body = QCA.translate("Label", "音频中的静音部分将被切除。")
+            Text = SetRichText(
+                Title = "启用静音切除",
+                Body = QCA.translate("Label", "音频中的静音部分将被切除。")
+            )
         )
         self.ui.CheckBox_Tool_AudioProcessor_Slice_Audio.setCheckable(True)
         self.ui.CheckBox_Tool_AudioProcessor_Slice_Audio.setChecked(
@@ -1411,7 +1423,7 @@ class MainWindow(Window_Customizing):
                 #(True),
                 #(True),
                 #(True),
-                #(self.ui.Frame_AdvanceSettings_Tool_AudioProcessor,...,...,0,self.ui.Frame_Tool_AudioProcessor_RMS_Threshold.height()+self.ui.Frame_Tool_AudioProcessor_Hop_Size.height()+self.ui.Frame_Tool_AudioProcessor_Silent_Interval_Min.height()+self.ui.Frame_Tool_AudioProcessor_Silence_Kept_Max.height()+self.ui.Frame_Tool_AudioProcessor_Audio_Length_Min.height()+self.ui.Frame_Tool_AudioProcessor_Channels.height()+self.ui.Frame_Tool_AudioProcessor_SampleRate.height()+self.ui.Frame_Tool_AudioProcessor_SampleWidth.height(),0,'Extend')
+                #(self.ui.Frame_AdvanceSettings_Tool_AudioProcessor,...,...,0,self.ui.Frame_Tool_AudioProcessor_RMS_Threshold.height()+self.ui.Frame_Tool_AudioProcessor_Hop_Size.height()+self.ui.Frame_Tool_AudioProcessor_Silent_Interval_Min.height()+self.ui.Frame_Tool_AudioProcessor_Silence_Kept_Max.height()+self.ui.Frame_Tool_AudioProcessor_Audio_Length_Min.height()+self.ui.Frame_Tool_AudioProcessor_SampleRate.height()+self.ui.Frame_Tool_AudioProcessor_SampleWidth.height()+self.ui.Frame_Tool_AudioProcessor_ToMono.height(),0,'Extend')
             ],
             UncheckedText = "未启用",
             UncheckedEventList = [
@@ -1430,27 +1442,40 @@ class MainWindow(Window_Customizing):
                 #(False),
                 #(False),
                 #(False),
-                #(self.ui.Frame_BasicSettings_Tool_AudioProcessor,...,...,0,self.ui.Frame_Tool_AudioProcessor_Channels.height()+self.ui.Frame_Tool_AudioProcessor_SampleRate.height()+self.ui.Frame_Tool_AudioProcessor_SampleWidth.height(),0,'Reduce')
+                #(self.ui.Frame_BasicSettings_Tool_AudioProcessor,...,...,0,self.ui.Frame_Tool_AudioProcessor_SampleRate.height()+self.ui.Frame_Tool_AudioProcessor_SampleWidth.height()+self.ui.Frame_Tool_AudioProcessor_ToMono.height(),0,'Reduce')
             ],
             TakeEffect = True
         )
 
         Function_SetText(
             Widget = self.ui.Label_Tool_AudioProcessor_Media_Dir_Output,
-            Title = QCA.translate("Label", "媒体输出目录"),
-            Body = QCA.translate("Label", "最后生成的音频文件将被保存到该目录中。")
+            Text = SetRichText(
+                Title = QCA.translate("Label", "媒体输出目录"),
+                Body = QCA.translate("Label", "最后生成的音频文件将被保存到该目录中。")
+            )
         )
         Function_SetFileDialog(
             Button = self.ui.Button_Tool_AudioProcessor_Media_Dir_Output,
             LineEdit = self.ui.LineEdit_Tool_AudioProcessor_Media_Dir_Output,
             Mode = "SelectDir"
         )
-        self.ui.LineEdit_Tool_AudioProcessor_Media_Dir_Output.setPlaceholderText(
-            str(Config_Tool_AudioProcessor.GetValue('AudioProcessor', 'Media_Dir_Output', 'None'))
+        Function_SetText(
+            Widget = self.ui.LineEdit_Tool_AudioProcessor_Media_Dir_Output,
+            Text = str(Config_Tool_AudioProcessor.GetValue('AudioProcessor', 'Media_Dir_Output', '')),
+            SetPlaceholderText = True
         )
         self.ui.LineEdit_Tool_AudioProcessor_Media_Dir_Output.textChanged.connect(
             lambda Value: Config_Tool_AudioProcessor.EditConfig('AudioProcessor', 'Media_Dir_Output', str(Value))
         )
+        '''
+        self.ui.LineEdit_Tool_AudioProcessor_Media_Dir_Output.textChanged.connect(
+            lambda Value: Function_ShowMessageBox(
+                MessageType = QMessageBox.Warning,
+                WindowTitle = "Warning",
+                Text = "输出路径与输入路径相同"
+            ) if Value == self.ui.LineEdit_Tool_AudioProcessor_Media_Dir_Input.text() else None
+        )
+        '''
 
         self.ui.CheckBox_Toggle_AdvanceSettings_Tool_AudioProcessor.setCheckable(True)
         self.ui.CheckBox_Toggle_AdvanceSettings_Tool_AudioProcessor.setChecked(
@@ -1464,7 +1489,7 @@ class MainWindow(Window_Customizing):
                 #Config_Tool_AudioProcessor.EditConfig
             ],
             CheckedArgsList = [
-                (self.ui.Frame_AdvanceSettings_Tool_AudioProcessor,...,...,0,self.ui.Frame_Tool_AudioProcessor_RMS_Threshold.height()+self.ui.Frame_Tool_AudioProcessor_Hop_Size.height()+self.ui.Frame_Tool_AudioProcessor_Silent_Interval_Min.height()+self.ui.Frame_Tool_AudioProcessor_Silence_Kept_Max.height()+self.ui.Frame_Tool_AudioProcessor_Audio_Length_Min.height()+self.ui.Frame_Tool_AudioProcessor_Channels.height()+self.ui.Frame_Tool_AudioProcessor_SampleRate.height()+self.ui.Frame_Tool_AudioProcessor_SampleWidth.height(),0,'Extend'),
+                (self.ui.Frame_AdvanceSettings_Tool_AudioProcessor,...,...,0,self.ui.Frame_Tool_AudioProcessor_RMS_Threshold.height()+self.ui.Frame_Tool_AudioProcessor_Hop_Size.height()+self.ui.Frame_Tool_AudioProcessor_Silent_Interval_Min.height()+self.ui.Frame_Tool_AudioProcessor_Silence_Kept_Max.height()+self.ui.Frame_Tool_AudioProcessor_Audio_Length_Min.height()+self.ui.Frame_Tool_AudioProcessor_SampleRate.height()+self.ui.Frame_Tool_AudioProcessor_SampleWidth.height()+self.ui.Frame_Tool_AudioProcessor_ToMono.height(),0,'Extend'),
                 #('AudioProcessor', 'Toggle_AdvanceSettings', 'True')
             ],
             UncheckedText = "高级设置（隐藏）",
@@ -1473,7 +1498,7 @@ class MainWindow(Window_Customizing):
                 #Config_Tool_AudioProcessor.EditConfig
             ],
             UncheckedArgsList = [
-                (self.ui.Frame_AdvanceSettings_Tool_AudioProcessor,...,...,0,self.ui.Frame_Tool_AudioProcessor_RMS_Threshold.height()+self.ui.Frame_Tool_AudioProcessor_Hop_Size.height()+self.ui.Frame_Tool_AudioProcessor_Silent_Interval_Min.height()+self.ui.Frame_Tool_AudioProcessor_Silence_Kept_Max.height()+self.ui.Frame_Tool_AudioProcessor_Audio_Length_Min.height()+self.ui.Frame_Tool_AudioProcessor_Channels.height()+self.ui.Frame_Tool_AudioProcessor_SampleRate.height()+self.ui.Frame_Tool_AudioProcessor_SampleWidth.height(),0,'Reduce'),
+                (self.ui.Frame_AdvanceSettings_Tool_AudioProcessor,...,...,0,self.ui.Frame_Tool_AudioProcessor_RMS_Threshold.height()+self.ui.Frame_Tool_AudioProcessor_Hop_Size.height()+self.ui.Frame_Tool_AudioProcessor_Silent_Interval_Min.height()+self.ui.Frame_Tool_AudioProcessor_Silence_Kept_Max.height()+self.ui.Frame_Tool_AudioProcessor_Audio_Length_Min.height()+self.ui.Frame_Tool_AudioProcessor_SampleRate.height()+self.ui.Frame_Tool_AudioProcessor_SampleWidth.height()+self.ui.Frame_Tool_AudioProcessor_ToMono.height(),0,'Reduce'),
                 #('AudioProcessor', 'Toggle_AdvanceSettings', 'False')
             ],
             TakeEffect = True
@@ -1481,8 +1506,10 @@ class MainWindow(Window_Customizing):
 
         Function_SetText(
             Widget = self.ui.Label_Tool_AudioProcessor_RMS_Threshold,
-            Title = QCA.translate("Label", "均方根阈值 (db)"),
-            Body = QCA.translate("Label", "低于该阈值的片段将被视作静音进行处理，若有降噪需求可以增加该值。")
+            Text = SetRichText(
+                Title = QCA.translate("Label", "均方根阈值 (db)"),
+                Body = QCA.translate("Label", "低于该阈值的片段将被视作静音进行处理，若有降噪需求可以增加该值。")
+            )
         )
         self.ui.DoubleSpinBox_Tool_AudioProcessor_RMS_Threshold.setRange(-100, 0)
         #self.ui.DoubleSpinBox_Tool_AudioProcessor_RMS_Threshold.setSingleStep(0.01)
@@ -1495,8 +1522,10 @@ class MainWindow(Window_Customizing):
 
         Function_SetText(
             Widget = self.ui.Label_Tool_AudioProcessor_Hop_Size,
-            Title = QCA.translate("Label", "跃点大小 (ms)"),
-            Body = QCA.translate("Label", "每个RMS帧的长度，增加该值能够提高分割精度但会减慢进程。")
+            Text = SetRichText(
+                Title = QCA.translate("Label", "跃点大小 (ms)"),
+                Body = QCA.translate("Label", "每个RMS帧的长度，增加该值能够提高分割精度但会减慢进程。")
+            )
         )
         self.ui.SpinBox_Tool_AudioProcessor_Hop_Size.setRange(0, 100)
         self.ui.SpinBox_Tool_AudioProcessor_Hop_Size.setSingleStep(1)
@@ -1509,8 +1538,10 @@ class MainWindow(Window_Customizing):
 
         Function_SetText(
             Widget = self.ui.Label_Tool_AudioProcessor_Silent_Interval_Min,
-            Title = QCA.translate("Label", "最小静音间隔 (ms)"),
-            Body = QCA.translate("Label", "静音部分被分割成的最小长度，若音频只包含短暂中断可以减小该值。")
+            Text = SetRichText(
+                Title = QCA.translate("Label", "最小静音间隔 (ms)"),
+                Body = QCA.translate("Label", "静音部分被分割成的最小长度，若音频只包含短暂中断可以减小该值。")
+            )
         )
         self.ui.SpinBox_Tool_AudioProcessor_Silent_Interval_Min.setRange(0, 3000)
         self.ui.SpinBox_Tool_AudioProcessor_Silent_Interval_Min.setSingleStep(1)
@@ -1525,8 +1556,10 @@ class MainWindow(Window_Customizing):
 
         Function_SetText(
             Widget = self.ui.Label_Tool_AudioProcessor_Silence_Kept_Max,
-            Title = QCA.translate("Label", "最大静音长度 (ms)"),
-            Body = QCA.translate("Label", "被分割的音频周围保持静音的最大长度。")
+            Text = SetRichText(
+                Title = QCA.translate("Label", "最大静音长度 (ms)"),
+                Body = QCA.translate("Label", "被分割的音频周围保持静音的最大长度。")
+            )
         )
         self.ui.SpinBox_Tool_AudioProcessor_Silence_Kept_Max.setRange(0, 10000)
         self.ui.SpinBox_Tool_AudioProcessor_Silence_Kept_Max.setSingleStep(1)
@@ -1541,8 +1574,10 @@ class MainWindow(Window_Customizing):
 
         Function_SetText(
             Widget = self.ui.Label_Tool_AudioProcessor_Audio_Length_Min,
-            Title = QCA.translate("Label", "最小音频长度 (ms)"),
-            Body = QCA.translate("Label", "每个被分割的音频片段所需的最小长度。")
+            Text = SetRichText(
+                Title = QCA.translate("Label", "最小音频长度 (ms)"),
+                Body = QCA.translate("Label", "每个被分割的音频片段所需的最小长度。")
+            )
         )
         self.ui.SpinBox_Tool_AudioProcessor_Audio_Length_Min.setRange(300, 30000)
         self.ui.SpinBox_Tool_AudioProcessor_Audio_Length_Min.setSingleStep(1)
@@ -1554,24 +1589,43 @@ class MainWindow(Window_Customizing):
         )
 
         Function_SetText(
-            Widget = self.ui.Label_Tool_AudioProcessor_Channels,
-            Title = "输出声道数",
-            Body = QCA.translate("Label", "输出音频所拥有的声道数，若维持不变则保持'None'即可。")
+            Widget = self.ui.Label_Tool_AudioProcessor_ToMono,
+            Text = SetRichText(
+                Title = "合并声道",
+                Body = QCA.translate("Label", "将输出音频的声道合并为单声道。")
+            )
         )
-        self.ui.ComboBox_Tool_AudioProcessor_Channels.addItems(['1', '2', 'None'])
-        self.ui.ComboBox_Tool_AudioProcessor_Channels.setCurrentText(
-            str(Config_Tool_AudioProcessor.GetValue('AudioProcessor', 'Channels', 'None'))
+        self.ui.CheckBox_Tool_AudioProcessor_ToMono.setCheckable(True)
+        self.ui.CheckBox_Tool_AudioProcessor_ToMono.setChecked(
+            eval(Config_Tool_AudioProcessor.GetValue('AudioProcessor', 'ToMono', 'False'))
         )
-        self.ui.ComboBox_Tool_AudioProcessor_Channels.currentTextChanged.connect(
-            lambda Value: Config_Tool_AudioProcessor.EditConfig('AudioProcessor', 'Channels', str(Value))
+        Function_ConfigureCheckBox(
+            CheckBox = self.ui.CheckBox_Tool_AudioProcessor_ToMono,
+            CheckedText = "已启用",
+            CheckedEventList = [
+                Config_Tool_AudioProcessor.EditConfig
+            ],
+            CheckedArgsList = [
+                ('AudioProcessor', 'ToMono', 'True')
+            ],
+            UncheckedText = "未启用",
+            UncheckedEventList = [
+                Config_Tool_AudioProcessor.EditConfig
+            ],
+            UncheckedArgsList = [
+                ('AudioProcessor', 'ToMono', 'False')
+            ],
+            TakeEffect = True
         )
 
         Function_SetText(
             Widget = self.ui.Label_Tool_AudioProcessor_SampleRate,
-            Title = "输出采样率",
-            Body = QCA.translate("Label", "输出音频所拥有的采样率，若维持不变则保持'None'即可。")
+            Text = SetRichText(
+                Title = "输出采样率",
+                Body = QCA.translate("Label", "输出音频所拥有的采样率，若维持不变则保持'None'即可。")
+            )
         )
-        self.ui.ComboBox_Tool_AudioProcessor_SampleRate.addItems(['44100', '48000', '96000', '192000', 'None'])
+        self.ui.ComboBox_Tool_AudioProcessor_SampleRate.addItems(['22050', '44100', '48000', '96000', '192000', 'None'])
         self.ui.ComboBox_Tool_AudioProcessor_SampleRate.setCurrentText(
             str(Config_Tool_AudioProcessor.GetValue('AudioProcessor', 'SampleRate', 'None'))
         )
@@ -1581,10 +1635,12 @@ class MainWindow(Window_Customizing):
 
         Function_SetText(
             Widget = self.ui.Label_Tool_AudioProcessor_SampleWidth,
-            Title = "输出采样位数",
-            Body = QCA.translate("Label", "输出音频所拥有的采样位数，若维持不变则保持'None'即可。")
+            Text = SetRichText(
+                Title = "输出采样位数",
+                Body = QCA.translate("Label", "输出音频所拥有的采样位数，若维持不变则保持'None'即可。")
+            )
         )
-        self.ui.ComboBox_Tool_AudioProcessor_SampleWidth.addItems(['8', '16', '24', '32', 'None'])
+        self.ui.ComboBox_Tool_AudioProcessor_SampleWidth.addItems(['8', '16', '24', '32', '32 (Float)', 'None'])
         self.ui.ComboBox_Tool_AudioProcessor_SampleWidth.setCurrentText(
             str(Config_Tool_AudioProcessor.GetValue('AudioProcessor', 'SampleWidth', 'None'))
         )
@@ -1648,9 +1704,9 @@ class MainWindow(Window_Customizing):
                 self.ui.LineEdit_Tool_AudioProcessor_Media_Dir_Input,
                 self.ui.LineEdit_Tool_AudioProcessor_Media_Dir_Output,
                 self.ui.ComboBox_Tool_AudioProcessor_Media_Format_Output,
-                self.ui.ComboBox_Tool_AudioProcessor_Channels,
                 self.ui.ComboBox_Tool_AudioProcessor_SampleRate,
                 self.ui.ComboBox_Tool_AudioProcessor_SampleWidth,
+                self.ui.CheckBox_Tool_AudioProcessor_ToMono,
                 #self.ui.CheckBox_Tool_AudioProcessor_Denoise_Audio,
                 self.ui.CheckBox_Tool_AudioProcessor_Slice_Audio,
                 self.ui.DoubleSpinBox_Tool_AudioProcessor_RMS_Threshold,
@@ -1661,7 +1717,6 @@ class MainWindow(Window_Customizing):
             ],
             EmptyAllowed = [
                 self.ui.ComboBox_Tool_AudioProcessor_Media_Format_Output,
-                self.ui.ComboBox_Tool_AudioProcessor_Channels,
                 self.ui.ComboBox_Tool_AudioProcessor_SampleRate,
                 self.ui.ComboBox_Tool_AudioProcessor_SampleWidth
             ],
@@ -1677,23 +1732,25 @@ class MainWindow(Window_Customizing):
         '''
         Function_SetText(
             Widget = self.ui.TextBrowser_Intro_Tool_VoiceIdentifier,
-            Title = QCA.translate("TextBrowser", "语音识别和筛选"),
-            TitleAlign = "center",
-            TitleSize = 18,
-            Body = QCA.translate("TextBrowser",
-                "\n"
-                "[介绍]\n"
-                "该工具会在不同说话人的音频中批量筛选出属于同一说话人的音频。用户需要提供一段包含目标说话人的语音作为期望值\n"
-                "\n"
-                "[用法]\n"
-                "1. 设置位于页面右侧的参数\n"
-                "2. 点击位于页面底部的“执行”按钮\n"
-                "3. 若还有筛选其它人物的需要，可在更改“标准音频路径”和“人物名字”参数后重新执行\n"
-                "\n"
-                "[提示]\n"
-                "1. 您可以通过开启“自动同步...”选项以保持前后工具的部分参数设置一致，或者点击“同步...”按钮以快速设置当前工具的下列参数：\n"
-                "   Audio Dir Input\n"
-                "2. 您可以通过点击“打开输出目录”按钮以查看当前工具在执行完毕后输出的文件\n"
+            Text = SetRichText(
+                Title = QCA.translate("TextBrowser", "语音识别和筛选"),
+                TitleAlign = "center",
+                TitleSize = 18,
+                Body = QCA.translate("TextBrowser",
+                    "\n"
+                    "[介绍]\n"
+                    "该工具会在不同说话人的音频中批量筛选出属于同一说话人的音频。用户需要提供一段包含目标说话人的语音作为期望值\n"
+                    "\n"
+                    "[用法]\n"
+                    "1. 设置位于页面右侧的参数\n"
+                    "2. 点击位于页面底部的“执行”按钮\n"
+                    "3. 若还有筛选其它人物的需要，可在更改“标准音频路径”和“人物名字”参数后重新执行\n"
+                    "\n"
+                    "[提示]\n"
+                    "1. 您可以通过开启“自动同步...”选项以保持前后工具的部分参数设置一致，或者点击“同步...”按钮以快速设置当前工具的下列参数：\n"
+                    "   Audio Dir Input\n"
+                    "2. 您可以通过点击“打开输出目录”按钮以查看当前工具在执行完毕后输出的文件\n"
+                )
             )
         )
         '''
@@ -1739,16 +1796,20 @@ class MainWindow(Window_Customizing):
 
         Function_SetText(
             Widget = self.ui.Label_Tool_VoiceIdentifier_Audio_Dir_Input,
-            Title = "音频输入目录",
-            Body = QCA.translate("Label", "该目录中的音频文件将会按照以下设置进行识别筛选。")
+            Text = SetRichText(
+                Title = "音频输入目录",
+                Body = QCA.translate("Label", "该目录中的音频文件将会按照以下设置进行识别筛选。")
+            )
         )
         Function_SetFileDialog(
             Button = self.ui.Button_Tool_VoiceIdentifier_Audio_Dir_Input,
             LineEdit = self.ui.LineEdit_Tool_VoiceIdentifier_Audio_Dir_Input,
             Mode = "SelectDir"
         )
-        self.ui.LineEdit_Tool_VoiceIdentifier_Audio_Dir_Input.setPlaceholderText(
-            str(Config_Tool_VoiceIdentifier.GetValue('VoiceIdentifier', 'Audio_Dir_Input', 'None'))
+        Function_SetText(
+            Widget = self.ui.LineEdit_Tool_VoiceIdentifier_Audio_Dir_Input,
+            Text = str(Config_Tool_VoiceIdentifier.GetValue('VoiceIdentifier', 'Audio_Dir_Input', '')),
+            SetPlaceholderText = True
         )
         self.ui.LineEdit_Tool_VoiceIdentifier_Audio_Dir_Input.textChanged.connect(
             lambda Value: Config_Tool_VoiceIdentifier.EditConfig('VoiceIdentifier', 'Audio_Dir_Input', str(Value))
@@ -1756,12 +1817,14 @@ class MainWindow(Window_Customizing):
 
         Function_SetText(
             Widget = self.ui.Label_Tool_VoiceIdentifier_StdAudioSpeaker,
-            Title = "目标人物与音频",
-            Body = QCA.translate("Label", "目标人物的名字及其语音文件的所在路径，音频中尽量不要混入杂音。")
+            Text = SetRichText(
+                Title = "目标人物与音频",
+                Body = QCA.translate("Label", "目标人物的名字及其语音文件的所在路径，音频中尽量不要混入杂音。")
+            )
         )
         self.ui.Table_Tool_VoiceIdentifier_StdAudioSpeaker.SetHorizontalHeaders(['人物姓名', '音频路径', '增删'])
         self.ui.Table_Tool_VoiceIdentifier_StdAudioSpeaker.SetValue(
-            eval(Config_Tool_VoiceIdentifier.GetValue('VoiceIdentifier', 'StdAudioSpeaker', '{"None": "None"}')),
+            eval(Config_Tool_VoiceIdentifier.GetValue('VoiceIdentifier', 'StdAudioSpeaker', '{"": ""}')),
             FileType = "音频类型 (*.mp3 *.aac *.wav *.flac)"
         )
         self.ui.Table_Tool_VoiceIdentifier_StdAudioSpeaker.ValueChanged.connect(
@@ -1770,8 +1833,10 @@ class MainWindow(Window_Customizing):
 
         Function_SetText(
             Widget = self.ui.Label_Tool_VoiceIdentifier_DecisionThreshold,
-            Title = "判断阈值",
-            Body = QCA.translate("Label", "判断是否为同一人的阈值，若参与比对的说话人声音相识度较高可以增加该值。")
+            Text = SetRichText(
+                Title = "判断阈值",
+                Body = QCA.translate("Label", "判断是否为同一人的阈值，若参与比对的说话人声音相识度较高可以增加该值。")
+            )
         )
         self.ui.DoubleSpinBox_Tool_VoiceIdentifier_DecisionThreshold.setRange(0.5, 1)
         self.ui.DoubleSpinBox_Tool_VoiceIdentifier_DecisionThreshold.setSingleStep(0.01)
@@ -1784,16 +1849,20 @@ class MainWindow(Window_Customizing):
 
         Function_SetText(
             Widget = self.ui.Label_Tool_VoiceIdentifier_Audio_Dir_Output,
-            Title = "音频输出目录",
-            Body = QCA.translate("Label", "最后筛选出的音频文件将被复制到该目录中。")
+            Text = SetRichText(
+                Title = "音频输出目录",
+                Body = QCA.translate("Label", "最后筛选出的音频文件将被复制到该目录中。")
+            )
         )
         Function_SetFileDialog(
             Button = self.ui.Button_Tool_VoiceIdentifier_Audio_Dir_Output,
             LineEdit = self.ui.LineEdit_Tool_VoiceIdentifier_Audio_Dir_Output,
             Mode = "SelectDir"
         )
-        self.ui.LineEdit_Tool_VoiceIdentifier_Audio_Dir_Output.setPlaceholderText(
-            str(Config_Tool_VoiceIdentifier.GetValue('VoiceIdentifier', 'Audio_Dir_Output', 'None'))
+        Function_SetText(
+            Widget = self.ui.LineEdit_Tool_VoiceIdentifier_Audio_Dir_Output,
+            Text = str(Config_Tool_VoiceIdentifier.GetValue('VoiceIdentifier', 'Audio_Dir_Output', '')),
+            SetPlaceholderText = True
         )
         self.ui.LineEdit_Tool_VoiceIdentifier_Audio_Dir_Output.textChanged.connect(
             lambda Value: Config_Tool_VoiceIdentifier.EditConfig('VoiceIdentifier', 'Audio_Dir_Output', str(Value))
@@ -1822,8 +1891,10 @@ class MainWindow(Window_Customizing):
 
         Function_SetText(
             Widget = self.ui.Label_Tool_VoiceIdentifier_Model_Dir,
-            Title = "模型存放目录",
-            Body = QCA.translate("Label", "该目录将会用于存放下载的声纹识别模型，若模型已存在会直接使用。")
+            Text = SetRichText(
+                Title = "模型存放目录",
+                Body = QCA.translate("Label", "该目录将会用于存放下载的声纹识别模型，若模型已存在会直接使用。")
+            )
         )
         Function_SetFileDialog(
             Button = self.ui.Button_Tool_VoiceIdentifier_Model_Dir,
@@ -1839,8 +1910,10 @@ class MainWindow(Window_Customizing):
 
         Function_SetText(
             Widget = self.ui.Label_Tool_VoiceIdentifier_Model_Type,
-            Title = "模型类型",
-            Body = QCA.translate("Label", "声纹识别模型的类型。")
+            Text = SetRichText(
+                Title = "模型类型",
+                Body = QCA.translate("Label", "声纹识别模型的类型。")
+            )
         )
         self.ui.ComboBox_Tool_VoiceIdentifier_Model_Type.addItems(['Ecapa-Tdnn'])
         self.ui.ComboBox_Tool_VoiceIdentifier_Model_Type.setCurrentText(
@@ -1852,8 +1925,10 @@ class MainWindow(Window_Customizing):
 
         Function_SetText(
             Widget = self.ui.Label_Tool_VoiceIdentifier_Model_Name,
-            Title = "模型名字",
-            Body = QCA.translate("Label", "声纹识别模型的名字，默认代表模型的大小。")
+            Text = SetRichText(
+                Title = "模型名字",
+                Body = QCA.translate("Label", "声纹识别模型的名字，默认代表模型的大小。")
+            )
         )
         self.ui.ComboBox_Tool_VoiceIdentifier_Model_Name.addItems(['small'])
         self.ui.ComboBox_Tool_VoiceIdentifier_Model_Name.setCurrentText(
@@ -1865,8 +1940,10 @@ class MainWindow(Window_Customizing):
 
         Function_SetText(
             Widget = self.ui.Label_Tool_VoiceIdentifier_Feature_Method,
-            Title = "特征提取方法",
-            Body = QCA.translate("Label", "音频特征的提取方法。")
+            Text = SetRichText(
+                Title = "特征提取方法",
+                Body = QCA.translate("Label", "音频特征的提取方法。")
+            )
         )
         self.ui.ComboBox_Tool_VoiceIdentifier_Feature_Method.addItems(['spectrogram', 'melspectrogram'])
         self.ui.ComboBox_Tool_VoiceIdentifier_Feature_Method.setCurrentText(
@@ -1878,8 +1955,10 @@ class MainWindow(Window_Customizing):
 
         Function_SetText(
             Widget = self.ui.Label_Tool_VoiceIdentifier_Duration_of_Audio,
-            Title = "音频长度",
-            Body = QCA.translate("Label", "用于预测的音频长度。")
+            Text = SetRichText(
+                Title = "音频长度",
+                Body = QCA.translate("Label", "用于预测的音频长度。")
+            )
         )
         self.ui.DoubleSpinBox_Tool_VoiceIdentifier_Duration_of_Audio.setRange(0, 30)
         #self.ui.DoubleSpinBox_Tool_VoiceIdentifier_Duration_of_Audio.setSingleStep(0.01)
@@ -1924,7 +2003,7 @@ class MainWindow(Window_Customizing):
             )
         )
 
-        self.ui.Button_SyncParams_Tool_VoiceIdentifier.setText(QCA.translate("Button", "同步参数设置"))
+        self.ui.Button_SyncParams_Tool_VoiceIdentifier.setText(QCA.translate("Button", "关联参数设置"))
         Function_ParamsSynchronizer(
             Trigger = self.ui.Button_SyncParams_Tool_VoiceIdentifier,
             ParamsFrom = [
@@ -1976,22 +2055,24 @@ class MainWindow(Window_Customizing):
         '''
         Function_SetText(
             Widget = self.ui.TextBrowser_Intro_Tool_VoiceTranscriber,
-            Title = QCA.translate("TextBrowser", "语音转文字字幕"),
-            TitleAlign = "center",
-            TitleSize = 18,
-            Body = QCA.translate("TextBrowser",
-                "\n"
-                "[介绍]\n"
-                "该工具会将语音文件的内容批量转换为带时间戳的文本并以字幕文件的形式保存\n"
-                "\n"
-                "[用法]\n"
-                "1. 设置位于页面右侧的参数\n"
-                "2. 点击位于页面底部的“执行”按钮\n"
-                "\n"
-                "[提示]\n"
-                "1. 您可以通过开启“自动同步...”选项以保持前后工具的部分参数设置一致，或者点击“同步...”按钮以快速设置当前工具的下列参数：\n"
-                "   WAV Dir\n"
-                "2. 您可以通过点击“打开输出目录”按钮以查看当前工具在执行完毕后输出的文件\n"
+            Text = SetRichText(
+                Title = QCA.translate("TextBrowser", "语音转文字字幕"),
+                TitleAlign = "center",
+                TitleSize = 18,
+                Body = QCA.translate("TextBrowser",
+                    "\n"
+                    "[介绍]\n"
+                    "该工具会将语音文件的内容批量转换为带时间戳的文本并以字幕文件的形式保存\n"
+                    "\n"
+                    "[用法]\n"
+                    "1. 设置位于页面右侧的参数\n"
+                    "2. 点击位于页面底部的“执行”按钮\n"
+                    "\n"
+                    "[提示]\n"
+                    "1. 您可以通过开启“自动同步...”选项以保持前后工具的部分参数设置一致，或者点击“同步...”按钮以快速设置当前工具的下列参数：\n"
+                    "   WAV Dir\n"
+                    "2. 您可以通过点击“打开输出目录”按钮以查看当前工具在执行完毕后输出的文件\n"
+                )
             )
         )
         '''
@@ -2037,16 +2118,20 @@ class MainWindow(Window_Customizing):
 
         Function_SetText(
             Widget = self.ui.Label_Tool_VoiceTranscriber_WAV_Dir,
-            Title = "音频目录",
-            Body = QCA.translate("Label", "该目录中的wav文件的语音内容将会按照以下设置转为文字。")
+            Text = SetRichText(
+                Title = "音频目录",
+                Body = QCA.translate("Label", "该目录中的wav文件的语音内容将会按照以下设置转为文字。")
+            )
         )
         Function_SetFileDialog(
             Button = self.ui.Button_Tool_VoiceTranscriber_WAV_Dir,
             LineEdit = self.ui.LineEdit_Tool_VoiceTranscriber_WAV_Dir,
             Mode = "SelectDir"
         )
-        self.ui.LineEdit_Tool_VoiceTranscriber_WAV_Dir.setPlaceholderText(
-            str(Config_Tool_VoiceTranscriber.GetValue('VoiceTranscriber', 'WAV_Dir', 'None'))
+        Function_SetText(
+            Widget = self.ui.LineEdit_Tool_VoiceTranscriber_WAV_Dir,
+            Text = str(Config_Tool_VoiceTranscriber.GetValue('VoiceTranscriber', 'WAV_Dir', '')),
+            SetPlaceholderText = True
         )
         self.ui.LineEdit_Tool_VoiceTranscriber_WAV_Dir.textChanged.connect(
             lambda Value: Config_Tool_VoiceTranscriber.EditConfig('VoiceTranscriber', 'WAV_Dir', str(Value))
@@ -2054,16 +2139,20 @@ class MainWindow(Window_Customizing):
 
         Function_SetText(
             Widget = self.ui.Label_Tool_VoiceTranscriber_SRT_Dir,
-            Title = "字幕输出目录",
-            Body = QCA.translate("Label", "最后生成的字幕文件将会保存到该目录中。")
+            Text = SetRichText(
+                Title = "字幕输出目录",
+                Body = QCA.translate("Label", "最后生成的字幕文件将会保存到该目录中。")
+            )
         )
         Function_SetFileDialog(
             Button = self.ui.Button_Tool_VoiceTranscriber_SRT_Dir,
             LineEdit = self.ui.LineEdit_Tool_VoiceTranscriber_SRT_Dir,
             Mode = "SelectDir"
         )
-        self.ui.LineEdit_Tool_VoiceTranscriber_SRT_Dir.setPlaceholderText(
-            str(Config_Tool_VoiceTranscriber.GetValue('VoiceTranscriber', 'SRT_Dir', 'None'))
+        Function_SetText(
+            Widget = self.ui.LineEdit_Tool_VoiceTranscriber_SRT_Dir,
+            Text = str(Config_Tool_VoiceTranscriber.GetValue('VoiceTranscriber', 'SRT_Dir', '')),
+            SetPlaceholderText = True
         )
         self.ui.LineEdit_Tool_VoiceTranscriber_SRT_Dir.textChanged.connect(
             lambda Value: Config_Tool_VoiceTranscriber.EditConfig('VoiceTranscriber', 'SRT_Dir', str(Value))
@@ -2092,8 +2181,10 @@ class MainWindow(Window_Customizing):
 
         Function_SetText(
             Widget = self.ui.Label_Tool_VoiceTranscriber_Model_Dir,
-            Title = "模型存放目录",
-            Body = QCA.translate("Label", "该目录将会用于存放下载的语音识别模型，若模型已存在会直接使用。")
+            Text = SetRichText(
+                Title = "模型存放目录",
+                Body = QCA.translate("Label", "该目录将会用于存放下载的语音识别模型，若模型已存在会直接使用。")
+            )
         )
         Function_SetFileDialog(
             Button = self.ui.Button_Tool_VoiceTranscriber_Model_Dir,
@@ -2109,8 +2200,10 @@ class MainWindow(Window_Customizing):
 
         Function_SetText(
             Widget = self.ui.Label_Tool_VoiceTranscriber_Model_Name,
-            Title = "模型名字",
-            Body = QCA.translate("Label", "语音识别 (whisper) 模型的名字，默认代表模型的大小。")
+            Text = SetRichText(
+                Title = "模型名字",
+                Body = QCA.translate("Label", "语音识别 (whisper) 模型的名字，默认代表模型的大小。")
+            )
         )
         self.ui.ComboBox_Tool_VoiceTranscriber_Model_Name.addItems(['tiny', 'base', 'small', 'medium', 'large'])
         self.ui.ComboBox_Tool_VoiceTranscriber_Model_Name.setCurrentText(
@@ -2122,8 +2215,10 @@ class MainWindow(Window_Customizing):
 
         Function_SetText(
             Widget = self.ui.Label_Tool_VoiceTranscriber_Verbose,
-            Title = "启用输出日志",
-            Body = QCA.translate("Label", "输出debug日志。")
+            Text = SetRichText(
+                Title = "启用输出日志",
+                Body = QCA.translate("Label", "输出debug日志。")
+            )
         )
         self.ui.CheckBox_Tool_VoiceTranscriber_Verbose.setCheckable(True)
         self.ui.CheckBox_Tool_VoiceTranscriber_Verbose.setChecked(
@@ -2150,8 +2245,10 @@ class MainWindow(Window_Customizing):
 
         Function_SetText(
             Widget = self.ui.Label_Tool_VoiceTranscriber_Condition_on_Previous_Text,
-            Title = "前后文一致",
-            Body = QCA.translate("Label", "将模型之前的输出作为下个窗口的提示，若模型陷入了失败循环则禁用此项。")
+            Text = SetRichText(
+                Title = "前后文一致",
+                Body = QCA.translate("Label", "将模型之前的输出作为下个窗口的提示，若模型陷入了失败循环则禁用此项。")
+            )
         )
         self.ui.CheckBox_Tool_VoiceTranscriber_Condition_on_Previous_Text.setCheckable(True)
         self.ui.CheckBox_Tool_VoiceTranscriber_Condition_on_Previous_Text.setChecked(
@@ -2178,8 +2275,10 @@ class MainWindow(Window_Customizing):
 
         Function_SetText(
             Widget = self.ui.Label_Tool_VoiceTranscriber_fp16,
-            Title = "半精度计算",
-            Body = QCA.translate("Label", "主要使用半精度浮点数进行计算，若GPU不可用则忽略或禁用此项。")
+            Text = SetRichText(
+                Title = "半精度计算",
+                Body = QCA.translate("Label", "主要使用半精度浮点数进行计算，若GPU不可用则忽略或禁用此项。")
+            )
         )
         self.ui.CheckBox_Tool_VoiceTranscriber_fp16.setCheckable(True)
         self.ui.CheckBox_Tool_VoiceTranscriber_fp16.setChecked(
@@ -2235,8 +2334,10 @@ class MainWindow(Window_Customizing):
 
         Function_SetText(
             Widget = self.ui.Label_Tool_VoiceTranscriber_Language,
-            Title = "所用语言",
-            Body = QCA.translate("Label", "音频中说话人所使用的语言，若自动检测则保持'None'即可。")
+            Text = SetRichText(
+                Title = "所用语言",
+                Body = QCA.translate("Label", "音频中说话人所使用的语言，若自动检测则保持'None'即可。")
+            )
         )
         self.ui.ComboBox_Tool_VoiceTranscriber_Language.addItems(['中', '英', '日', 'None'])
         self.ui.ComboBox_Tool_VoiceTranscriber_Language.setCurrentText(
@@ -2290,7 +2391,7 @@ class MainWindow(Window_Customizing):
             )
         )
 
-        self.ui.Button_SyncParams_Tool_VoiceTranscriber.setText("同步参数设置")
+        self.ui.Button_SyncParams_Tool_VoiceTranscriber.setText("关联参数设置")
         Function_ParamsSynchronizer(
             Trigger = self.ui.Button_SyncParams_Tool_VoiceTranscriber,
             ParamsFrom = [
@@ -2304,10 +2405,7 @@ class MainWindow(Window_Customizing):
         self.ui.Button_CheckOutput_Tool_VoiceTranscriber.setText(QCA.translate("Button", "打开输出目录"))
         Function_SetURL(
             Button = self.ui.Button_CheckOutput_Tool_VoiceTranscriber,
-            URL = [
-                self.ui.LineEdit_Tool_VoiceTranscriber_SRT_Dir,
-                self.ui.LineEdit_Tool_VoiceTranscriber_WAV_Dir
-            ],
+            URL = self.ui.LineEdit_Tool_VoiceTranscriber_SRT_Dir,
             ButtonTooltip = "Click to open"
         )
 
@@ -2348,23 +2446,25 @@ class MainWindow(Window_Customizing):
         '''
         Function_SetText(
             Widget = self.ui.TextBrowser_Intro_Tool_DatasetCreator,
-            Title = QCA.translate("TextBrowser", "语音数据集制作"),
-            TitleAlign = "center",
-            TitleSize = 18,
-            Body = QCA.translate("TextBrowser",
-                "\n"
-                "[介绍]\n"
-                "该工具会生成适用于语音模型训练的数据集。用户需要提供语音文件与对应的字幕文件\n"
-                "\n"
-                "[用法]\n"
-                "1. 设置页面右侧的参数\n"
-                "2. 点击位于页面底部的“执行”按钮\n"
-                "\n"
-                "[提示]\n"
-                "1. 您可以通过开启“自动同步...”选项以保持前后工具的部分参数设置一致，或者点击“同步...”按钮以快速设置当前工具的下列参数：\n"
-                "   WAV Dir\n"
-                "   SRT Dir\n"
-                "2. 您可以通过点击“打开输出文件”按钮以查看当前工具在执行完毕后输出的文件\n"
+            Text = SetRichText(
+                Title = QCA.translate("TextBrowser", "语音数据集制作"),
+                TitleAlign = "center",
+                TitleSize = 18,
+                Body = QCA.translate("TextBrowser",
+                    "\n"
+                    "[介绍]\n"
+                    "该工具会生成适用于语音模型训练的数据集。用户需要提供语音文件与对应的字幕文件\n"
+                    "\n"
+                    "[用法]\n"
+                    "1. 设置页面右侧的参数\n"
+                    "2. 点击位于页面底部的“执行”按钮\n"
+                    "\n"
+                    "[提示]\n"
+                    "1. 您可以通过开启“自动同步...”选项以保持前后工具的部分参数设置一致，或者点击“同步...”按钮以快速设置当前工具的下列参数：\n"
+                    "   WAV Dir\n"
+                    "   SRT Dir\n"
+                    "2. 您可以通过点击“打开输出文件”按钮以查看当前工具在执行完毕后输出的文件\n"
+                )
             )
         )
         '''
@@ -2393,7 +2493,7 @@ class MainWindow(Window_Customizing):
                 #Config_Tool_DatasetCreator.EditConfig
             ],
             CheckedArgsList = [
-                (self.ui.Frame_BasicSettings_Tool_DatasetCreator,...,...,0,self.ui.Frame_Tool_DatasetCreator_WAV_Dir.height()+self.ui.Frame_Tool_DatasetCreator_SRT_Dir.height()+self.ui.Frame_Tool_DatasetCreator_AutoEncoder.height()+self.ui.Frame_Tool_DatasetCreator_WAV_Dir_Split.height()+self.ui.Frame_Tool_DatasetCreator_FileList_Path_Training.height()+self.ui.Frame_Tool_DatasetCreator_FileList_Path_Validation.height(),0,'Extend'),
+                (self.ui.Frame_BasicSettings_Tool_DatasetCreator,...,...,0,self.ui.Frame_Tool_DatasetCreator_WAV_Dir.height()+self.ui.Frame_Tool_DatasetCreator_SRT_Dir.height()+self.ui.Frame_Tool_DatasetCreator_ModelType.height()+self.ui.Frame_Tool_DatasetCreator_WAV_Dir_Split.height()+self.ui.Frame_Tool_DatasetCreator_FileList_Path_Training.height()+self.ui.Frame_Tool_DatasetCreator_FileList_Path_Validation.height(),0,'Extend'),
                 #('DatasetCreator', 'Toggle_BasicSettings', 'True')
             ],
             UncheckedText = "基础设置（隐藏）",
@@ -2402,7 +2502,7 @@ class MainWindow(Window_Customizing):
                 #Config_Tool_DatasetCreator.EditConfig
             ],
             UncheckedArgsList = [
-                (self.ui.Frame_BasicSettings_Tool_DatasetCreator,...,...,0,self.ui.Frame_Tool_DatasetCreator_WAV_Dir.height()+self.ui.Frame_Tool_DatasetCreator_SRT_Dir.height()+self.ui.Frame_Tool_DatasetCreator_AutoEncoder.height()+self.ui.Frame_Tool_DatasetCreator_WAV_Dir_Split.height()+self.ui.Frame_Tool_DatasetCreator_FileList_Path_Training.height()+self.ui.Frame_Tool_DatasetCreator_FileList_Path_Validation.height(),0,'Reduce'),
+                (self.ui.Frame_BasicSettings_Tool_DatasetCreator,...,...,0,self.ui.Frame_Tool_DatasetCreator_WAV_Dir.height()+self.ui.Frame_Tool_DatasetCreator_SRT_Dir.height()+self.ui.Frame_Tool_DatasetCreator_ModelType.height()+self.ui.Frame_Tool_DatasetCreator_WAV_Dir_Split.height()+self.ui.Frame_Tool_DatasetCreator_FileList_Path_Training.height()+self.ui.Frame_Tool_DatasetCreator_FileList_Path_Validation.height(),0,'Reduce'),
                 #('DatasetCreator', 'Toggle_BasicSettings', 'False')
             ],
             TakeEffect = True
@@ -2410,16 +2510,20 @@ class MainWindow(Window_Customizing):
 
         Function_SetText(
             Widget = self.ui.Label_Tool_DatasetCreator_WAV_Dir,
-            Title = "音频输入目录",
-            Body = QCA.translate("Label", "该目录中的wav文件将会按照以下设置重采样并根据字幕时间戳进行分割。")
+            Text = SetRichText(
+                Title = "音频输入目录",
+                Body = QCA.translate("Label", "该目录中的wav文件将会按照以下设置重采样并根据字幕时间戳进行分割。")
+            )
         )
         Function_SetFileDialog(
             Button = self.ui.Button_Tool_DatasetCreator_WAV_Dir,
             LineEdit = self.ui.LineEdit_Tool_DatasetCreator_WAV_Dir,
             Mode = "SelectDir"
         )
-        self.ui.LineEdit_Tool_DatasetCreator_WAV_Dir.setPlaceholderText(
-            str(Config_Tool_DatasetCreator.GetValue('DatasetCreator', 'WAV_Dir', 'None'))
+        Function_SetText(
+            Widget = self.ui.LineEdit_Tool_DatasetCreator_WAV_Dir,
+            Text = str(Config_Tool_DatasetCreator.GetValue('DatasetCreator', 'WAV_Dir', '')),
+            SetPlaceholderText = True
         )
         self.ui.LineEdit_Tool_DatasetCreator_WAV_Dir.textChanged.connect(
             lambda Value: Config_Tool_DatasetCreator.EditConfig('DatasetCreator', 'WAV_Dir', str(Value))
@@ -2427,46 +2531,56 @@ class MainWindow(Window_Customizing):
 
         Function_SetText(
             Widget = self.ui.Label_Tool_DatasetCreator_SRT_Dir,
-            Title = "字幕输入目录",
-            Body = QCA.translate("Label", "该目录中的srt文件将会按照以下设置转为适用于模型训练的csv文件。")
+            Text = SetRichText(
+                Title = "字幕输入目录",
+                Body = QCA.translate("Label", "该目录中的srt文件将会按照以下设置转为适用于模型训练的csv文件。")
+            )
         )
         Function_SetFileDialog(
             Button = self.ui.Button_Tool_DatasetCreator_SRT_Dir,
             LineEdit = self.ui.LineEdit_Tool_DatasetCreator_SRT_Dir,
             Mode = "SelectDir"
         )
-        self.ui.LineEdit_Tool_DatasetCreator_SRT_Dir.setPlaceholderText(
-            str(Config_Tool_DatasetCreator.GetValue('DatasetCreator', 'SRT_Dir', 'None'))
+        Function_SetText(
+            Widget = self.ui.LineEdit_Tool_DatasetCreator_SRT_Dir,
+            Text = str(Config_Tool_DatasetCreator.GetValue('DatasetCreator', 'SRT_Dir', '')),
+            SetPlaceholderText = True
         )
         self.ui.LineEdit_Tool_DatasetCreator_SRT_Dir.textChanged.connect(
             lambda Value: Config_Tool_DatasetCreator.EditConfig('DatasetCreator', 'SRT_Dir', str(Value))
         )
 
         Function_SetText(
-            Widget = self.ui.Label_Tool_DatasetCreator_AutoEncoder,
-            Title = "模型类别",
-            Body = QCA.translate("Label", "数据集适用的模型类别。")
+            Widget = self.ui.Label_Tool_DatasetCreator_ModelType,
+            Text = SetRichText(
+                Title = "模型类别",
+                Body = QCA.translate("Label", "数据集适用的模型类别。")
+            )
         )
-        self.ui.ComboBox_Tool_DatasetCreator_AutoEncoder.addItems(['VITS'])
-        self.ui.ComboBox_Tool_DatasetCreator_AutoEncoder.setCurrentText(
-            str(Config_Tool_DatasetCreator.GetValue('DatasetCreator', 'AutoEncoder', 'VITS'))
+        self.ui.ComboBox_Tool_DatasetCreator_ModelType.addItems(['VITS'])
+        self.ui.ComboBox_Tool_DatasetCreator_ModelType.setCurrentText(
+            str(Config_Tool_DatasetCreator.GetValue('DatasetCreator', 'ModelType', 'VITS'))
         )
-        self.ui.ComboBox_Tool_DatasetCreator_AutoEncoder.currentTextChanged.connect(
-            lambda Value: Config_Tool_DatasetCreator.EditConfig('DatasetCreator', 'AutoEncoder', str(Value))
+        self.ui.ComboBox_Tool_DatasetCreator_ModelType.currentTextChanged.connect(
+            lambda Value: Config_Tool_DatasetCreator.EditConfig('DatasetCreator', 'ModelType', str(Value))
         )
 
         Function_SetText(
             Widget = self.ui.Label_Tool_DatasetCreator_WAV_Dir_Split,
-            Title = "音频输出目录",
-            Body = QCA.translate("Label", "最后处理完成的音频将会保存到该目录中。")
+            Text = SetRichText(
+                Title = "音频输出目录",
+                Body = QCA.translate("Label", "最后处理完成的音频将会保存到该目录中。")
+            )
         )
         Function_SetFileDialog(
             Button = self.ui.Button_Tool_DatasetCreator_WAV_Dir_Split,
             LineEdit = self.ui.LineEdit_Tool_DatasetCreator_WAV_Dir_Split,
             Mode = "SelectDir"
         )
-        self.ui.LineEdit_Tool_DatasetCreator_WAV_Dir_Split.setPlaceholderText(
-            str(Config_Tool_DatasetCreator.GetValue('DatasetCreator', 'WAV_Dir_Split', 'None'))
+        Function_SetText(
+            Widget = self.ui.LineEdit_Tool_DatasetCreator_WAV_Dir_Split,
+            Text = str(Config_Tool_DatasetCreator.GetValue('DatasetCreator', 'WAV_Dir_Split', '')),
+            SetPlaceholderText = True
         )
         self.ui.LineEdit_Tool_DatasetCreator_WAV_Dir_Split.textChanged.connect(
             lambda Value: Config_Tool_DatasetCreator.EditConfig('DatasetCreator', 'WAV_Dir_Split', str(Value))
@@ -2474,8 +2588,10 @@ class MainWindow(Window_Customizing):
 
         Function_SetText(
             Widget = self.ui.Label_Tool_DatasetCreator_FileList_Path_Training,
-            Title = "训练集文本路径",
-            Body = QCA.translate("Label", "最后生成的训练集txt文件将会保存到该路径。")
+            Text = SetRichText(
+                Title = "训练集文本路径",
+                Body = QCA.translate("Label", "最后生成的训练集txt文件将会保存到该路径。")
+            )
         )
         Function_SetFileDialog(
             Button = self.ui.Button_Tool_DatasetCreator_FileList_Path_Training,
@@ -2483,8 +2599,10 @@ class MainWindow(Window_Customizing):
             Mode = "SaveFile",
             FileType = "txt类型 (*.txt)"
         )
-        self.ui.LineEdit_Tool_DatasetCreator_FileList_Path_Training.setPlaceholderText(
-            str(Config_Tool_DatasetCreator.GetValue('DatasetCreator', 'FileList_Path_Training', 'None'))
+        Function_SetText(
+            Widget = self.ui.LineEdit_Tool_DatasetCreator_FileList_Path_Training,
+            Text = str(Config_Tool_DatasetCreator.GetValue('DatasetCreator', 'FileList_Path_Training', '')),
+            SetPlaceholderText = True
         )
         self.ui.LineEdit_Tool_DatasetCreator_FileList_Path_Training.textChanged.connect(
             lambda Value: Config_Tool_DatasetCreator.EditConfig('DatasetCreator', 'FileList_Path_Training', str(Value))
@@ -2492,8 +2610,10 @@ class MainWindow(Window_Customizing):
 
         Function_SetText(
             Widget = self.ui.Label_Tool_DatasetCreator_FileList_Path_Validation,
-            Title = "验证集文本路径",
-            Body = QCA.translate("Label", "最后生成的验证集txt文件将会保存到该路径。")
+            Text = SetRichText(
+                Title = "验证集文本路径",
+                Body = QCA.translate("Label", "最后生成的验证集txt文件将会保存到该路径。")
+            )
         )
         Function_SetFileDialog(
             Button = self.ui.Button_Tool_DatasetCreator_FileList_Path_Validation,
@@ -2501,8 +2621,10 @@ class MainWindow(Window_Customizing):
             Mode = "SaveFile",
             FileType = "txt类型 (*.txt)"
         )
-        self.ui.LineEdit_Tool_DatasetCreator_FileList_Path_Validation.setPlaceholderText(
-            str(Config_Tool_DatasetCreator.GetValue('DatasetCreator', 'FileList_Path_Validation', 'None'))
+        Function_SetText(
+            Widget = self.ui.LineEdit_Tool_DatasetCreator_FileList_Path_Validation,
+            Text = str(Config_Tool_DatasetCreator.GetValue('DatasetCreator', 'FileList_Path_Validation', '')),
+            SetPlaceholderText = True
         )
         self.ui.LineEdit_Tool_DatasetCreator_FileList_Path_Validation.textChanged.connect(
             lambda Value: Config_Tool_DatasetCreator.EditConfig('DatasetCreator', 'FileList_Path_Validation', str(Value))
@@ -2517,49 +2639,84 @@ class MainWindow(Window_Customizing):
                 self.Function_AnimateFrame
             ],
             CheckedArgsList = [
-                (self.ui.Frame_AdvanceSettings_Tool_DatasetCreator,...,...,0,self.ui.Frame_Tool_DatasetCreator_Sample_Rate.height()+self.ui.Frame_Tool_DatasetCreator_Subtype.height()+self.ui.Frame_Tool_DatasetCreator_TrainRatio.height(),0,'Extend')
+                (self.ui.Frame_AdvanceSettings_Tool_DatasetCreator,...,...,0,self.ui.Frame_Tool_DatasetCreator_SampleRate.height()+self.ui.Frame_Tool_DatasetCreator_SampleWidth.height()+self.ui.Frame_Tool_DatasetCreator_ToMono.height()+self.ui.Frame_Tool_DatasetCreator_TrainRatio.height(),0,'Extend')
             ],
             UncheckedText = "高级设置（隐藏）",
             UncheckedEventList = [
                 self.Function_AnimateFrame
             ],
             UncheckedArgsList = [
-                (self.ui.Frame_AdvanceSettings_Tool_DatasetCreator,...,...,0,self.ui.Frame_Tool_DatasetCreator_Sample_Rate.height()+self.ui.Frame_Tool_DatasetCreator_Subtype.height()+self.ui.Frame_Tool_DatasetCreator_TrainRatio.height(),0,'Reduce')
+                (self.ui.Frame_AdvanceSettings_Tool_DatasetCreator,...,...,0,self.ui.Frame_Tool_DatasetCreator_SampleRate.height()+self.ui.Frame_Tool_DatasetCreator_SampleWidth.height()+self.ui.Frame_Tool_DatasetCreator_ToMono.height()+self.ui.Frame_Tool_DatasetCreator_TrainRatio.height(),0,'Reduce')
             ],
             TakeEffect = True
         )
 
         Function_SetText(
-            Widget = self.ui.Label_Tool_DatasetCreator_Sample_Rate,
-            Title = "采样率 (HZ)",
-            Body = QCA.translate("Label", "音频将要使用的新采样率。")
+            Widget = self.ui.Label_Tool_DatasetCreator_SampleRate,
+            Text = SetRichText(
+                Title = "采样率 (HZ)",
+                Body = QCA.translate("Label", "数据集所要求的音频采样率，若维持不变则保持'None'即可。")
+            )
         )
-        self.ui.SpinBox_Tool_DatasetCreator_Sample_Rate.setRange(16000, 96000)
-        self.ui.SpinBox_Tool_DatasetCreator_Sample_Rate.setSingleStep(1)
-        self.ui.SpinBox_Tool_DatasetCreator_Sample_Rate.setValue(
-            int(Config_Tool_DatasetCreator.GetValue('DatasetCreato', 'Sample_Rate', '22050'))
+        self.ui.ComboBox_Tool_DatasetCreator_SampleRate.addItems(['22050', '44100', '48000', '96000', '192000', 'None'])
+        self.ui.ComboBox_Tool_DatasetCreator_SampleRate.setCurrentText(
+            str(Config_Tool_DatasetCreator.GetValue('DatasetCreator', 'SampleRate', '22050'))
         )
-        self.ui.SpinBox_Tool_DatasetCreator_Sample_Rate.valueChanged.connect(
-            lambda Value: Config_Tool_DatasetCreator.EditConfig('DatasetCreato', 'Sample_Rate', str(Value))
+        self.ui.ComboBox_Tool_DatasetCreator_SampleRate.currentTextChanged.connect(
+            lambda Value: Config_Tool_DatasetCreator.EditConfig('DatasetCreator', 'SampleRate', str(Value))
         )
 
         Function_SetText(
-            Widget = self.ui.Label_Tool_DatasetCreator_Subtype,
-            Title = "采样格式",
-            Body = QCA.translate("Label", "音频将要使用的新采样格式。")
+            Widget = self.ui.Label_Tool_DatasetCreator_SampleWidth,
+            Text = SetRichText(
+                Title = "采样位数",
+                Body = QCA.translate("Label", "数据集所要求的音频采样位数，若维持不变则保持'None'即可。")
+            )
         )
-        self.ui.ComboBox_Tool_DatasetCreator_Subtype.addItems(['PCM_16'])
-        self.ui.ComboBox_Tool_DatasetCreator_Subtype.setCurrentText(
-            str(Config_Tool_DatasetCreator.GetValue('DatasetCreator', 'Subtype', 'PCM_16'))
+        self.ui.ComboBox_Tool_DatasetCreator_SampleWidth.addItems(['8', '16', '24', '32', '32 (Float)', 'None'])
+        self.ui.ComboBox_Tool_DatasetCreator_SampleWidth.setCurrentText(
+            str(Config_Tool_DatasetCreator.GetValue('DatasetCreator', 'SampleWidth', '16'))
         )
-        self.ui.ComboBox_Tool_DatasetCreator_Subtype.currentTextChanged.connect(
-            lambda Value: Config_Tool_DatasetCreator.EditConfig('DatasetCreator', 'Subtype', str(Value))
+        self.ui.ComboBox_Tool_DatasetCreator_SampleWidth.currentTextChanged.connect(
+            lambda Value: Config_Tool_DatasetCreator.EditConfig('DatasetCreator', 'SampleWidth', str(Value))
+        )
+
+        Function_SetText(
+            Widget = self.ui.Label_Tool_DatasetCreator_ToMono,
+            Text = SetRichText(
+                Title = "合并声道",
+                Body = QCA.translate("Label", "将数据集音频的声道合并为单声道。")
+            )
+        )
+        self.ui.CheckBox_Tool_DatasetCreator_ToMono.setCheckable(True)
+        self.ui.CheckBox_Tool_DatasetCreator_ToMono.setChecked(
+            eval(Config_Tool_DatasetCreator.GetValue('DatasetCreator', 'ToMono', 'True'))
+        )
+        Function_ConfigureCheckBox(
+            CheckBox = self.ui.CheckBox_Tool_DatasetCreator_ToMono,
+            CheckedText = "已启用",
+            CheckedEventList = [
+                Config_Tool_DatasetCreator.EditConfig
+            ],
+            CheckedArgsList = [
+                ('DatasetCreator', 'ToMono', 'True')
+            ],
+            UncheckedText = "未启用",
+            UncheckedEventList = [
+                Config_Tool_DatasetCreator.EditConfig
+            ],
+            UncheckedArgsList = [
+                ('DatasetCreator', 'ToMono', 'False')
+            ],
+            TakeEffect = True
         )
 
         Function_SetText(
             Widget = self.ui.Label_Tool_DatasetCreator_TrainRatio,
-            Title = "训练集占比",
-            Body = QCA.translate("Label", "划分给训练集的数据在数据集中所占的比例。")
+            Text = SetRichText(
+                Title = "训练集占比",
+                Body = QCA.translate("Label", "划分给训练集的数据在数据集中所占的比例。")
+            )
         )
         self.ui.DoubleSpinBox_Tool_DatasetCreator_TrainRatio.setRange(0.5, 0.9)
         self.ui.DoubleSpinBox_Tool_DatasetCreator_TrainRatio.setSingleStep(0.1)
@@ -2570,11 +2727,62 @@ class MainWindow(Window_Customizing):
             lambda Value: Config_Tool_DatasetCreator.EditConfig('DatasetCreator', 'TrainRatio', str(Value))
         )
 
+        self.ui.GroupBox_OptionalParams_Tool_DatasetCreator.setTitle("可选参数")
+
+        self.ui.CheckBox_Toggle_BasicOptionalSettings_Tool_DatasetCreator.setCheckable(True)
+        self.ui.CheckBox_Toggle_BasicOptionalSettings_Tool_DatasetCreator.setChecked(
+            True #eval(Config_Tool_DatasetCreator.GetValue('DatasetCreator', 'Toggle_BasicOptionalSettings', ''))
+        )
+        Function_ConfigureCheckBox(
+            CheckBox = self.ui.CheckBox_Toggle_BasicOptionalSettings_Tool_DatasetCreator,
+            CheckedText = "基础设置（显示）",
+            CheckedEventList = [
+                self.Function_AnimateFrame,
+                #Config_Tool_DatasetCreator.EditConfig
+            ],
+            CheckedArgsList = [
+                (self.ui.Frame_BasicOptionalSettings_Tool_DatasetCreator,...,...,0,self.ui.Frame_Tool_DatasetCreator_AuxiliaryData_Path.height(),0,'Extend'),
+                #('DatasetCreator', 'Toggle_BasicOptionalSettings', 'True')
+            ],
+            UncheckedText = "基础设置（隐藏）",
+            UncheckedEventList = [
+                self.Function_AnimateFrame,
+                #Config_Tool_DatasetCreator.EditConfig
+            ],
+            UncheckedArgsList = [
+                (self.ui.Frame_BasicOptionalSettings_Tool_DatasetCreator,...,...,0,self.ui.Frame_Tool_DatasetCreator_AuxiliaryData_Path.height(),0,'Reduce'),
+                #('DatasetCreator', 'Toggle_BasicOptionalSettings', 'False')
+            ],
+            TakeEffect = True
+        )
+
+        Function_SetText(
+            Widget = self.ui.Label_Tool_DatasetCreator_AuxiliaryData_Path,
+            Text = SetRichText(
+                Title = "辅助数据文本路径",
+                Body = QCA.translate("Label", "辅助数据集的文本的所在路径。")
+            )
+        )
+        Function_SetFileDialog(
+            Button = self.ui.Button_Tool_DatasetCreator_AuxiliaryData_Path,
+            LineEdit = self.ui.LineEdit_Tool_DatasetCreator_AuxiliaryData_Path,
+            Mode = "SelectFile",
+            FileType = "文本类型 (*.csv *.txt)"
+        )
+        Function_SetText(
+            Widget = self.ui.LineEdit_Tool_DatasetCreator_AuxiliaryData_Path,
+            Text = str(Config_Tool_DatasetCreator.GetValue('DatasetCreator', 'AuxiliaryData_Path', NormPath(Path(CurrentDir).joinpath('AuxiliaryData', 'AuxiliaryData.txt')) if Path(CurrentDir).joinpath('AuxiliaryData', 'AuxiliaryData.txt').exists() else '')),
+            SetPlaceholderText = True
+        )
+        self.ui.LineEdit_Tool_DatasetCreator_AuxiliaryData_Path.textChanged.connect(
+            lambda Value: Config_Tool_DatasetCreator.EditConfig('DatasetCreator', 'AuxiliaryData_Path', str(Value))
+        )
+
         # Left
         Function_SetTreeWidget(
             TreeWidget = self.ui.TreeWidget_Catalogue_Tool_DatasetCreator,
-            RootItemTexts = [self.ui.GroupBox_EssentialParams_Tool_DatasetCreator.title()],
-            ChildItemTexts = [(self.ui.CheckBox_Toggle_BasicSettings_Tool_DatasetCreator.text(),self.ui.CheckBox_Toggle_AdvanceSettings_Tool_DatasetCreator.text())],
+            RootItemTexts = [self.ui.GroupBox_EssentialParams_Tool_DatasetCreator.title(),self.ui.GroupBox_OptionalParams_Tool_DatasetCreator.title()],
+            ChildItemTexts = [(self.ui.CheckBox_Toggle_BasicSettings_Tool_DatasetCreator.text(),self.ui.CheckBox_Toggle_AdvanceSettings_Tool_DatasetCreator.text()),(self.ui.CheckBox_Toggle_BasicOptionalSettings_Tool_DatasetCreator.text(),)],
             AddVertically = True
         )
         Function_ScrollToWidget(
@@ -2592,6 +2800,16 @@ class MainWindow(Window_Customizing):
             TargetWidget = self.ui.Frame_AdvanceSettings_Tool_DatasetCreator,
             ScrollArea = self.ui.ScrollArea_Middle_Tool_DatasetCreator
         )
+        Function_ScrollToWidget(
+            Trigger = self.ui.TreeWidget_Catalogue_Tool_DatasetCreator.topLevelItem(1),
+            TargetWidget = self.ui.GroupBox_OptionalParams_Tool_DatasetCreator,
+            ScrollArea = self.ui.ScrollArea_Middle_Tool_DatasetCreator
+        )
+        Function_ScrollToWidget(
+            Trigger = self.ui.TreeWidget_Catalogue_Tool_DatasetCreator.topLevelItem(1).child(0),
+            TargetWidget = self.ui.Frame_BasicOptionalSettings_Tool_DatasetCreator,
+            ScrollArea = self.ui.ScrollArea_Middle_Tool_DatasetCreator
+        )
 
         # Right
         MonitorFile_Config_DatasetCreator = MonitorFile(
@@ -2604,7 +2822,7 @@ class MainWindow(Window_Customizing):
             )
         )
 
-        self.ui.Button_SyncParams_Tool_DatasetCreator.setText("同步参数设置")
+        self.ui.Button_SyncParams_Tool_DatasetCreator.setText("关联参数设置")
         Function_ParamsSynchronizer(
             Trigger = self.ui.Button_SyncParams_Tool_DatasetCreator,
             ParamsFrom = [
@@ -2641,13 +2859,20 @@ class MainWindow(Window_Customizing):
             ParamsFrom = [
                 self.ui.LineEdit_Tool_DatasetCreator_SRT_Dir,
                 self.ui.LineEdit_Tool_DatasetCreator_WAV_Dir,
-                self.ui.SpinBox_Tool_DatasetCreator_Sample_Rate,
-                self.ui.ComboBox_Tool_DatasetCreator_Subtype,
+                self.ui.ComboBox_Tool_DatasetCreator_SampleRate,
+                self.ui.ComboBox_Tool_DatasetCreator_SampleWidth,
+                self.ui.CheckBox_Tool_DatasetCreator_ToMono,
                 self.ui.LineEdit_Tool_DatasetCreator_WAV_Dir_Split,
-                self.ui.ComboBox_Tool_DatasetCreator_AutoEncoder,
+                self.ui.LineEdit_Tool_DatasetCreator_AuxiliaryData_Path,
                 self.ui.DoubleSpinBox_Tool_DatasetCreator_TrainRatio,
+                self.ui.ComboBox_Tool_DatasetCreator_ModelType,
                 self.ui.LineEdit_Tool_DatasetCreator_FileList_Path_Training,
                 self.ui.LineEdit_Tool_DatasetCreator_FileList_Path_Validation
+            ],
+            EmptyAllowed = [
+                self.ui.ComboBox_Tool_DatasetCreator_SampleRate,
+                self.ui.ComboBox_Tool_DatasetCreator_SampleWidth,
+                self.ui.LineEdit_Tool_DatasetCreator_AuxiliaryData_Path
             ],
             FinishEventList = [
                 Function_ShowMessageBox
@@ -2661,24 +2886,26 @@ class MainWindow(Window_Customizing):
         '''
         Function_SetText(
             Widget = self.ui.TextBrowser_Intro_Tool_VoiceTrainer,
-            Title = QCA.translate("TextBrowser", "语音模型训练"),
-            TitleAlign = "center",
-            TitleSize = 18,
-            Body = QCA.translate("TextBrowser",
-                "\n"
-                "[介绍]\n"
-                "该工具会训练出适用于语音合成的模型文件。用户需要提供语音数据集\n"
-                "\n"
-                "[用法]\n"
-                "1. 设置页面右侧的参数\n"
-                "2. 点击位于页面底部的“执行”按钮\n"
-                "3. 执行过程中若要查看迭代轮数，请见系统的命令行窗口\n"
-                "\n"
-                "[提示]\n"
-                "1. 您可以通过开启“自动同步...”选项以保持前后工具的部分参数设置一致，或者点击“同步...”按钮以快速设置当前工具的下列参数：\n"
-                "   FileList Path Training\n"
-                "   FileList Path Validation\n"
-                "2. 您可以通过点击“打开输出目录”按钮以查看当前工具在执行完毕后输出的文件\n"
+            Text = SetRichText(
+                Title = QCA.translate("TextBrowser", "语音模型训练"),
+                TitleAlign = "center",
+                TitleSize = 18,
+                Body = QCA.translate("TextBrowser",
+                    "\n"
+                    "[介绍]\n"
+                    "该工具会训练出适用于语音合成的模型文件。用户需要提供语音数据集\n"
+                    "\n"
+                    "[用法]\n"
+                    "1. 设置页面右侧的参数\n"
+                    "2. 点击位于页面底部的“执行”按钮\n"
+                    "3. 执行过程中若要查看迭代轮数，请见系统的命令行窗口\n"
+                    "\n"
+                    "[提示]\n"
+                    "1. 您可以通过开启“自动同步...”选项以保持前后工具的部分参数设置一致，或者点击“同步...”按钮以快速设置当前工具的下列参数：\n"
+                    "   FileList Path Training\n"
+                    "   FileList Path Validation\n"
+                    "2. 您可以通过点击“打开输出目录”按钮以查看当前工具在执行完毕后输出的文件\n"
+                )
             )
         )
         '''
@@ -2707,7 +2934,7 @@ class MainWindow(Window_Customizing):
                 #Config_Tool_VoiceTrainer.EditConfig
             ],
             CheckedArgsList = [
-                (self.ui.Frame_BasicSettings_Tool_VoiceTrainer,...,...,0,self.ui.Frame_Tool_VoiceTrainer_FileList_Path_Training.height()+self.ui.Frame_Tool_VoiceTrainer_FileList_Path_Validation.height()+self.ui.Frame_Tool_VoiceTrainer_Language.height()+self.ui.Frame_Tool_VoiceTrainer_Epochs.height()+self.ui.Frame_Tool_VoiceTrainer_Batch_Size.height()+self.ui.Frame_Tool_VoiceTrainer_Config_Dir_Save.height()+self.ui.Frame_Tool_VoiceTrainer_Model_Dir_Save.height(),0,'Extend'),
+                (self.ui.Frame_BasicSettings_Tool_VoiceTrainer,...,...,0,self.ui.Frame_Tool_VoiceTrainer_FileList_Path_Training.height()+self.ui.Frame_Tool_VoiceTrainer_FileList_Path_Validation.height()+self.ui.Frame_Tool_VoiceTrainer_Epochs.height()+self.ui.Frame_Tool_VoiceTrainer_Batch_Size.height()+self.ui.Frame_Tool_VoiceTrainer_Config_Dir_Save.height()+self.ui.Frame_Tool_VoiceTrainer_Model_Dir_Save.height(),0,'Extend'),
                 #('VoiceTrainer', 'Toggle_BasicSettings', 'True')
             ],
             UncheckedText = "基础设置（隐藏）",
@@ -2716,7 +2943,7 @@ class MainWindow(Window_Customizing):
                 #Config_Tool_VoiceTrainer.EditConfig
             ],
             UncheckedArgsList = [
-                (self.ui.Frame_BasicSettings_Tool_VoiceTrainer,...,...,0,self.ui.Frame_Tool_VoiceTrainer_FileList_Path_Training.height()+self.ui.Frame_Tool_VoiceTrainer_FileList_Path_Validation.height()+self.ui.Frame_Tool_VoiceTrainer_Language.height()+self.ui.Frame_Tool_VoiceTrainer_Epochs.height()+self.ui.Frame_Tool_VoiceTrainer_Batch_Size.height()+self.ui.Frame_Tool_VoiceTrainer_Config_Dir_Save.height()+self.ui.Frame_Tool_VoiceTrainer_Model_Dir_Save.height(),0,'Reduce'),
+                (self.ui.Frame_BasicSettings_Tool_VoiceTrainer,...,...,0,self.ui.Frame_Tool_VoiceTrainer_FileList_Path_Training.height()+self.ui.Frame_Tool_VoiceTrainer_FileList_Path_Validation.height()+self.ui.Frame_Tool_VoiceTrainer_Epochs.height()+self.ui.Frame_Tool_VoiceTrainer_Batch_Size.height()+self.ui.Frame_Tool_VoiceTrainer_Config_Dir_Save.height()+self.ui.Frame_Tool_VoiceTrainer_Model_Dir_Save.height(),0,'Reduce'),
                 #('VoiceTrainer', 'Toggle_BasicSettings', 'False')
             ],
             TakeEffect = True
@@ -2724,8 +2951,10 @@ class MainWindow(Window_Customizing):
         
         Function_SetText(
             Widget = self.ui.Label_Tool_VoiceTrainer_FileList_Path_Training,
-            Title = "训练集文本路径",
-            Body = QCA.translate("Label", "用于提供训练集音频路径及其语音内容的训练集txt文件的所在路径。")
+            Text = SetRichText(
+                Title = "训练集文本路径",
+                Body = QCA.translate("Label", "用于提供训练集音频路径及其语音内容的训练集txt文件的所在路径。")
+            )
         )
         Function_SetFileDialog(
             Button = self.ui.Button_Tool_VoiceTrainer_FileList_Path_Training,
@@ -2733,8 +2962,10 @@ class MainWindow(Window_Customizing):
             Mode = "SelectFile",
             FileType = "txt类型 (*.txt)"
         )
-        self.ui.LineEdit_Tool_VoiceTrainer_FileList_Path_Training.setPlaceholderText(
-            str(Config_Tool_VoiceTrainer.GetValue('VoiceTrainer', 'FileList_Path_Training', 'None'))
+        Function_SetText(
+            Widget = self.ui.LineEdit_Tool_VoiceTrainer_FileList_Path_Training,
+            Text = str(Config_Tool_VoiceTrainer.GetValue('VoiceTrainer', 'FileList_Path_Training', '')),
+            SetPlaceholderText = True
         )
         self.ui.LineEdit_Tool_VoiceTrainer_FileList_Path_Training.textChanged.connect(
             lambda Value: Config_Tool_VoiceTrainer.EditConfig('VoiceTrainer', 'FileList_Path_Training', str(Value))
@@ -2742,8 +2973,10 @@ class MainWindow(Window_Customizing):
 
         Function_SetText(
             Widget = self.ui.Label_Tool_VoiceTrainer_FileList_Path_Validation,
-            Title = "验证集文本路径",
-            Body = QCA.translate("Label", "用于提供验证集音频路径及其语音内容的验证集txt文件的所在路径。")
+            Text = SetRichText(
+                Title = "验证集文本路径",
+                Body = QCA.translate("Label", "用于提供验证集音频路径及其语音内容的验证集txt文件的所在路径。")
+            )
         )
         Function_SetFileDialog(
             Button = self.ui.Button_Tool_VoiceTrainer_FileList_Path_Validation,
@@ -2751,49 +2984,42 @@ class MainWindow(Window_Customizing):
             Mode = "SelectFile",
             FileType = "txt类型 (*.txt)"
         )
-        self.ui.LineEdit_Tool_VoiceTrainer_FileList_Path_Validation.setPlaceholderText(
-            str(Config_Tool_VoiceTrainer.GetValue('VoiceTrainer', 'FileList_Path_Validation', 'None'))
+        Function_SetText(
+            Widget = self.ui.LineEdit_Tool_VoiceTrainer_FileList_Path_Validation,
+            Text = str(Config_Tool_VoiceTrainer.GetValue('VoiceTrainer', 'FileList_Path_Validation', '')),
+            SetPlaceholderText = True
         )
         self.ui.LineEdit_Tool_VoiceTrainer_FileList_Path_Validation.textChanged.connect(
             lambda Value: Config_Tool_VoiceTrainer.EditConfig('VoiceTrainer', 'FileList_Path_Validation', str(Value))
         )
 
         Function_SetText(
-            Widget = self.ui.Label_Tool_VoiceTrainer_Language,
-            Title = "所用语言",
-            Body = QCA.translate("Label", "音频中说话人所使用的语言。")
-        )
-        self.ui.ComboBox_Tool_VoiceTrainer_Language.addItems(['中', '中英日'])
-        self.ui.ComboBox_Tool_VoiceTrainer_Language.setCurrentText(
-            str(Config_Tool_VoiceTrainer.GetValue('VoiceTrainer', 'Language', '中英日'))
-        )
-        self.ui.ComboBox_Tool_VoiceTrainer_Language.currentTextChanged.connect(
-            lambda Value: Config_Tool_VoiceTrainer.EditConfig('VoiceTrainer', 'Language', str(Value))
-        )
-
-        Function_SetText(
             Widget = self.ui.Label_Tool_VoiceTrainer_Epochs,
-            Title = "迭代轮数",
-            Body = QCA.translate("Label", "将全部样本完整迭代一轮的次数。")
+            Text = SetRichText(
+                Title = "迭代轮数",
+                Body = QCA.translate("Label", "将全部样本完整迭代一轮的次数。")
+            )
         )
-        self.ui.SpinBox_Tool_VoiceTrainer_Epochs.setRange(1, 1000000)
+        self.ui.SpinBox_Tool_VoiceTrainer_Epochs.setRange(30, 300000)
         self.ui.SpinBox_Tool_VoiceTrainer_Epochs.setSingleStep(1)
         self.ui.SpinBox_Tool_VoiceTrainer_Epochs.setValue(
-            int(Config_Tool_VoiceTrainer.GetValue('VoiceTrainer', 'Epochs', '3000'))
+            int(Config_Tool_VoiceTrainer.GetValue('VoiceTrainer', 'Epochs', '100'))
         )
         self.ui.SpinBox_Tool_VoiceTrainer_Epochs.valueChanged.connect(
             lambda Value: Config_Tool_VoiceTrainer.EditConfig('VoiceTrainer', 'Epochs', str(Value))
         )
         self.ui.SpinBox_Tool_VoiceTrainer_Epochs.setToolTipDuration(-1)
-        self.ui.SpinBox_Tool_VoiceTrainer_Epochs.setToolTip("提示：在没有预训练模型的情况下建议从一万轮次起步")
+        self.ui.SpinBox_Tool_VoiceTrainer_Epochs.setToolTip("提示：在均没有预训练模型与辅助数据的情况下建议从一万轮次起步")
 
         Function_SetText(
             Widget = self.ui.Label_Tool_VoiceTrainer_Batch_Size,
-            Title = "批处理量",
-            Body = QCA.translate("Label", "每轮迭代中单位批次的样本数量，需根据GPU的性能调节该值。")
+            Text = SetRichText(
+                Title = "批处理量",
+                Body = QCA.translate("Label", "每轮迭代中单位批次的样本数量，需根据GPU的性能调节该值。")
+            )
         )
         self.ui.SpinBox_Tool_VoiceTrainer_Batch_Size.setRange(2, 128)
-        self.ui.SpinBox_Tool_VoiceTrainer_Batch_Size.setSingleStep(2)
+        self.ui.SpinBox_Tool_VoiceTrainer_Batch_Size.setSingleStep(1)
         self.ui.SpinBox_Tool_VoiceTrainer_Batch_Size.setValue(
             int(Config_Tool_VoiceTrainer.GetValue('VoiceTrainer', 'Batch_Size', '4'))
         )
@@ -2801,20 +3027,24 @@ class MainWindow(Window_Customizing):
             lambda Value: Config_Tool_VoiceTrainer.EditConfig('VoiceTrainer', 'Batch_Size', str(Value))
         )
         self.ui.SpinBox_Tool_VoiceTrainer_Batch_Size.setToolTipDuration(-1)
-        self.ui.SpinBox_Tool_VoiceTrainer_Batch_Size.setToolTip("注意：最好设置为2的幂次。")
+        self.ui.SpinBox_Tool_VoiceTrainer_Batch_Size.setToolTip("建议：4~6G: 2; 8~10G: 4; 12~14G: 8; ...")
 
         Function_SetText(
             Widget = self.ui.Label_Tool_VoiceTrainer_Config_Dir_Save,
-            Title = "配置保存目录",
-            Body = QCA.translate("Label", "根据以上设置更新参数后的配置文件的保存目录。")
+            Text = SetRichText(
+                Title = "配置保存目录",
+                Body = QCA.translate("Label", "根据以上设置更新参数后的配置文件的保存目录。")
+            )
         )
         Function_SetFileDialog(
             Button = self.ui.Button_Tool_VoiceTrainer_Config_Dir_Save,
             LineEdit = self.ui.LineEdit_Tool_VoiceTrainer_Config_Dir_Save,
             Mode = "SelectDir"
         )
-        self.ui.LineEdit_Tool_VoiceTrainer_Config_Dir_Save.setPlaceholderText(
-            str(Config_Tool_VoiceTrainer.GetValue('VoiceTrainer', 'Config_Dir_Save', 'None'))
+        Function_SetText(
+            Widget = self.ui.LineEdit_Tool_VoiceTrainer_Config_Dir_Save,
+            Text = str(Config_Tool_VoiceTrainer.GetValue('VoiceTrainer', 'Config_Dir_Save', '')),
+            SetPlaceholderText = True
         )
         self.ui.LineEdit_Tool_VoiceTrainer_Config_Dir_Save.textChanged.connect(
             lambda Value: Config_Tool_VoiceTrainer.EditConfig('VoiceTrainer', 'Config_Dir_Save', str(Value))
@@ -2822,16 +3052,20 @@ class MainWindow(Window_Customizing):
 
         Function_SetText(
             Widget = self.ui.Label_Tool_VoiceTrainer_Model_Dir_Save,
-            Title = "模型保存目录",
-            Body = QCA.translate("Label", "训练得到的模型的存放目录，若目录中已存在模型则会将其视为检查点。")
+            Text = SetRichText(
+                Title = "模型保存目录",
+                Body = QCA.translate("Label", "训练得到的模型的存放目录，若目录中已存在模型则会将其视为检查点。")
+            )
         )
         Function_SetFileDialog(
             Button = self.ui.Button_Tool_VoiceTrainer_Model_Dir_Save,
             LineEdit = self.ui.LineEdit_Tool_VoiceTrainer_Model_Dir_Save,
             Mode = "SelectDir"
         )
-        self.ui.LineEdit_Tool_VoiceTrainer_Model_Dir_Save.setPlaceholderText(
-            str(Config_Tool_VoiceTrainer.GetValue('VoiceTrainer', 'Model_Dir_Save', 'None'))
+        Function_SetText(
+            Widget = self.ui.LineEdit_Tool_VoiceTrainer_Model_Dir_Save,
+            Text = str(Config_Tool_VoiceTrainer.GetValue('VoiceTrainer', 'Model_Dir_Save', '')),
+            SetPlaceholderText = True
         )
         self.ui.LineEdit_Tool_VoiceTrainer_Model_Dir_Save.textChanged.connect(
             lambda Value: Config_Tool_VoiceTrainer.EditConfig('VoiceTrainer', 'Model_Dir_Save', str(Value))
@@ -2862,10 +3096,12 @@ class MainWindow(Window_Customizing):
 
         Function_SetText(
             Widget = self.ui.Label_Tool_VoiceTrainer_Eval_Interval,
-            Title = "评估间隔",
-            Body = QCA.translate("Label", "每次保存模型所间隔的step数。")
+            Text = SetRichText(
+                Title = "评估间隔",
+                Body = QCA.translate("Label", "每次保存模型所间隔的步数。PS: 步数 ≈ 迭代轮次 * 训练样本数 / 批处理量")
+            )
         )
-        self.ui.SpinBox_Tool_VoiceTrainer_Eval_Interval.setRange(1, 10000)
+        self.ui.SpinBox_Tool_VoiceTrainer_Eval_Interval.setRange(300, 3000000)
         self.ui.SpinBox_Tool_VoiceTrainer_Eval_Interval.setSingleStep(1)
         self.ui.SpinBox_Tool_VoiceTrainer_Eval_Interval.setValue(
             int(Config_Tool_VoiceTrainer.GetValue('VoiceTrainer', 'Eval_Interval', '1000'))
@@ -2874,12 +3110,14 @@ class MainWindow(Window_Customizing):
             lambda Value: Config_Tool_VoiceTrainer.EditConfig('VoiceTrainer', 'Eval_Interval', str(Value))
         )
         self.ui.SpinBox_Tool_VoiceTrainer_Eval_Interval.setToolTipDuration(-1)
-        self.ui.SpinBox_Tool_VoiceTrainer_Eval_Interval.setToolTip("提示：设置过小会导致磁盘占用剧增哦")
+        self.ui.SpinBox_Tool_VoiceTrainer_Eval_Interval.setToolTip("提示：设置过小可能导致磁盘占用激增哦")
 
         Function_SetText(
             Widget = self.ui.Label_Tool_VoiceTrainer_Num_Workers,
-            Title = "进程数量",
-            Body = QCA.translate("Label", "进行数据加载时可并行的进程数量，需根据CPU的性能调节该值。")
+            Text = SetRichText(
+                Title = "进程数量",
+                Body = QCA.translate("Label", "进行数据加载时可并行的进程数量，需根据CPU的性能调节该值。")
+            )
         )
         self.ui.SpinBox_Tool_VoiceTrainer_Num_Workers.setRange(2, 32)
         self.ui.SpinBox_Tool_VoiceTrainer_Num_Workers.setSingleStep(2)
@@ -2894,8 +3132,10 @@ class MainWindow(Window_Customizing):
 
         Function_SetText(
             Widget = self.ui.Label_Tool_VoiceTrainer_FP16_Run,
-            Title = "半精度训练",
-            Body = QCA.translate("Label", "通过混合了float16精度的训练方式减小显存占用以支持更大的批处理量。")
+            Text = SetRichText(
+                Title = "半精度训练",
+                Body = QCA.translate("Label", "通过混合了float16精度的训练方式减小显存占用以支持更大的批处理量。")
+            )
         )
         self.ui.CheckBox_Tool_VoiceTrainer_FP16_Run.setCheckable(True)
         self.ui.CheckBox_Tool_VoiceTrainer_FP16_Run.setChecked(
@@ -2951,8 +3191,10 @@ class MainWindow(Window_Customizing):
 
         Function_SetText(
             Widget = self.ui.Label_Tool_VoiceTrainer_Model_Path_Pretrained_G,
-            Title = "预训练G_*模型路径",
-            Body = QCA.translate("Label", "预训练生成器（Generator）模型的所在路径，载入优先级高于检查点。")
+            Text = SetRichText(
+                Title = "预训练G_*模型路径",
+                Body = QCA.translate("Label", "预训练生成器（Generator）模型的所在路径，载入优先级高于检查点。")
+            )
         )
         Function_SetFileDialog(
             Button = self.ui.Button_Tool_VoiceTrainer_Model_Path_Pretrained_G,
@@ -2960,8 +3202,10 @@ class MainWindow(Window_Customizing):
             Mode = "SelectFile",
             FileType = "pth类型 (*.pth)"
         )
-        self.ui.LineEdit_Tool_VoiceTrainer_Model_Path_Pretrained_G.setPlaceholderText(
-            str(Config_Tool_VoiceTrainer.GetValue('VoiceTrainer', 'Model_Path_Pretrained_G', 'None'))
+        Function_SetText(
+            Widget = self.ui.LineEdit_Tool_VoiceTrainer_Model_Path_Pretrained_G,
+            Text = str(Config_Tool_VoiceTrainer.GetValue('VoiceTrainer', 'Model_Path_Pretrained_G', '')),
+            SetPlaceholderText = True
         )
         self.ui.LineEdit_Tool_VoiceTrainer_Model_Path_Pretrained_G.textChanged.connect(
             lambda Value: Config_Tool_VoiceTrainer.EditConfig('VoiceTrainer', 'Model_Path_Pretrained_G', str(Value))
@@ -2969,8 +3213,10 @@ class MainWindow(Window_Customizing):
 
         Function_SetText(
             Widget = self.ui.Label_Tool_VoiceTrainer_Model_Path_Pretrained_D,
-            Title = "预训练D_*模型路径",
-            Body = QCA.translate("Label", "预训练判别器（Discriminator）模型的所在路径，载入优先级高于检查点。")
+            Text = SetRichText(
+                Title = "预训练D_*模型路径",
+                Body = QCA.translate("Label", "预训练判别器（Discriminator）模型的所在路径，载入优先级高于检查点。")
+            )
         )
         Function_SetFileDialog(
             Button = self.ui.Button_Tool_VoiceTrainer_Model_Path_Pretrained_D,
@@ -2978,8 +3224,10 @@ class MainWindow(Window_Customizing):
             Mode = "SelectFile",
             FileType = "pth类型 (*.pth)"
         )
-        self.ui.LineEdit_Tool_VoiceTrainer_Model_Path_Pretrained_D.setPlaceholderText(
-            str(Config_Tool_VoiceTrainer.GetValue('VoiceTrainer', 'Model_Path_Pretrained_D', 'None'))
+        Function_SetText(
+            Widget = self.ui.LineEdit_Tool_VoiceTrainer_Model_Path_Pretrained_D,
+            Text = str(Config_Tool_VoiceTrainer.GetValue('VoiceTrainer', 'Model_Path_Pretrained_D', '')),
+            SetPlaceholderText = True
         )
         self.ui.LineEdit_Tool_VoiceTrainer_Model_Path_Pretrained_D.textChanged.connect(
             lambda Value: Config_Tool_VoiceTrainer.EditConfig('VoiceTrainer', 'Model_Path_Pretrained_D', str(Value))
@@ -2987,8 +3235,10 @@ class MainWindow(Window_Customizing):
 
         Function_SetText(
             Widget = self.ui.Label_Tool_VoiceTrainer_Config_Path_Load,
-            Title = "配置路径",
-            Body = QCA.translate("Label", "配置文件的所在路径，载入优先级高于默认配置文件。")
+            Text = SetRichText(
+                Title = "配置路径",
+                Body = QCA.translate("Label", "用于加载人物等信息的配置文件的所在路径，载入优先级高于默认配置文件。")
+            )
         )
         Function_SetFileDialog(
             Button = self.ui.Button_Tool_VoiceTrainer_Config_Path_Load,
@@ -2996,8 +3246,11 @@ class MainWindow(Window_Customizing):
             Mode = "SelectFile",
             FileType = "json类型 (*.json)"
         )
-        self.ui.LineEdit_Tool_VoiceTrainer_Config_Path_Load.setPlaceholderText(
-            str(Config_Tool_VoiceTrainer.GetValue('VoiceTrainer', 'Config_Path_Load', 'None'))
+        Function_SetText(
+            Widget = self.ui.LineEdit_Tool_VoiceTrainer_Config_Path_Load,
+            Text = str(Config_Tool_VoiceTrainer.GetValue('VoiceTrainer', 'Config_Path_Load', '')),
+            SetPlaceholderText = True,
+            PlaceholderText = '保持空值将使用不含人物信息的默认配置'
         )
         self.ui.LineEdit_Tool_VoiceTrainer_Config_Path_Load.textChanged.connect(
             lambda Value: Config_Tool_VoiceTrainer.EditConfig('VoiceTrainer', 'Config_Path_Load', str(Value))
@@ -3005,8 +3258,10 @@ class MainWindow(Window_Customizing):
 
         Function_SetText(
             Widget = self.ui.Label_Tool_VoiceTrainer_Keep_Original_Speakers,
-            Title = "保留原说话人",
-            Body = QCA.translate("Label", "保留底模中原有的说话人，需要设置相应配置加载路径才能生效。")
+            Text = SetRichText(
+                Title = "保留原说话人",
+                Body = QCA.translate("Label", "保留底模中原有的说话人，需要设置相应的配置路径才能生效。")
+            )
         )
         self.ui.CheckBox_Tool_VoiceTrainer_Keep_Original_Speakers.setCheckable(True)
         self.ui.CheckBox_Tool_VoiceTrainer_Keep_Original_Speakers.setChecked(
@@ -3054,12 +3309,16 @@ class MainWindow(Window_Customizing):
 
         Function_SetText(
             Widget = self.ui.Label_Tool_VoiceTrainer_Speakers,
-            Title = "人物名字",
-            Body = QCA.translate("Label", "若数据集非本工具箱生成且未包含人名信息，则应按序号设置并用逗号隔开。")
+            Text = SetRichText(
+                Title = "人物名字",
+                Body = QCA.translate("Label", "若数据集使用的是人物编号而非人物名字，则在此处按编号填写名字并用逗号隔开。")
+            )
         )
         self.ui.LineEdit_Tool_VoiceTrainer_Speakers.setReadOnly(False)
-        self.ui.LineEdit_Tool_VoiceTrainer_Speakers.setPlaceholderText(
-            '' #str(Config_Tool_VoiceTrainer.GetValue('VoiceTrainer', 'Speakers', ''))
+        Function_SetText(
+            Widget = self.ui.LineEdit_Tool_VoiceTrainer_Speakers,
+            Text = str(Config_Tool_VoiceTrainer.GetValue('VoiceTrainer', 'Speakers', '')),
+            SetPlaceholderText = True
         )
         self.ui.LineEdit_Tool_VoiceTrainer_Speakers.textChanged.connect(
             lambda Value: Config_Tool_VoiceTrainer.EditConfig('VoiceTrainer', 'Speakers', str(Value))
@@ -3125,7 +3384,7 @@ class MainWindow(Window_Customizing):
             ]
         )
 
-        self.ui.Button_SyncParams_Tool_VoiceTrainer.setText("同步参数设置")
+        self.ui.Button_SyncParams_Tool_VoiceTrainer.setText("关联参数设置")
         Function_ParamsSynchronizer(
             Trigger = self.ui.Button_SyncParams_Tool_VoiceTrainer,
             ParamsFrom = [
@@ -3162,7 +3421,6 @@ class MainWindow(Window_Customizing):
             ParamsFrom = [
                 self.ui.LineEdit_Tool_VoiceTrainer_FileList_Path_Training,
                 self.ui.LineEdit_Tool_VoiceTrainer_FileList_Path_Validation,
-                self.ui.ComboBox_Tool_VoiceTrainer_Language,
                 self.ui.LineEdit_Tool_VoiceTrainer_Config_Path_Load,
                 self.ui.LineEdit_Tool_VoiceTrainer_Config_Dir_Save,
                 self.ui.SpinBox_Tool_VoiceTrainer_Eval_Interval,
@@ -3205,21 +3463,23 @@ class MainWindow(Window_Customizing):
         '''
         Function_SetText(
             Widget = self.ui.TextBrowser_Intro_Tool_VoiceConverter,
-            Title = QCA.translate("TextBrowser", "语音模型推理"),
-            TitleAlign = "center",
-            TitleSize = 18,
-            Body = QCA.translate("TextBrowser",
-                "\n"
-                "[介绍]\n"
-                "该工具会将文字转为语音并生成音频文件。用户需要提供相应的模型和配置文件\n"
-                "\n"
-                "[用法]\n"
-                "1. 设置页面右侧的参数\n"
-                "2. 点击位于页面底部的“执行”按钮\n"
-                "3. 执行过程中若要查看推理情况，请见系统的命令行窗口\n"
-                "\n"
-                "[提示]\n"
-                "1. 您可以通过点击“打开输出目录”按钮以查看当前工具在执行完毕后输出的文件\n"
+            Text = SetRichText(
+                Title = QCA.translate("TextBrowser", "语音模型推理"),
+                TitleAlign = "center",
+                TitleSize = 18,
+                Body = QCA.translate("TextBrowser",
+                    "\n"
+                    "[介绍]\n"
+                    "该工具会将文字转为语音并生成音频文件。用户需要提供相应的模型和配置文件\n"
+                    "\n"
+                    "[用法]\n"
+                    "1. 设置页面右侧的参数\n"
+                    "2. 点击位于页面底部的“执行”按钮\n"
+                    "3. 执行过程中若要查看推理情况，请见系统的命令行窗口\n"
+                    "\n"
+                    "[提示]\n"
+                    "1. 您可以通过点击“打开输出目录”按钮以查看当前工具在执行完毕后输出的文件\n"
+                )
             )
         )
         '''
@@ -3265,8 +3525,10 @@ class MainWindow(Window_Customizing):
 
         Function_SetText(
             Widget = self.ui.Label_Tool_VoiceConverter_Config_Path_Load,
-            Title = "配置加载路径",
-            Body = QCA.translate("Label", "用于推理的配置文件的所在路径。")
+            Text = SetRichText(
+                Title = "配置加载路径",
+                Body = QCA.translate("Label", "用于推理的配置文件的所在路径。")
+            )
         )
         Function_SetFileDialog(
             Button = self.ui.Button_Tool_VoiceConverter_Config_Path_Load,
@@ -3274,8 +3536,10 @@ class MainWindow(Window_Customizing):
             Mode = "SelectFile",
             FileType = "json类型 (*.json)"
         )
-        self.ui.LineEdit_Tool_VoiceConverter_Config_Path_Load.setPlaceholderText(
-            str(Config_Tool_VoiceConverter.GetValue('VoiceConverter', 'Config_Path_Load', 'None'))
+        Function_SetText(
+            Widget = self.ui.LineEdit_Tool_VoiceConverter_Config_Path_Load,
+            Text = str(Config_Tool_VoiceConverter.GetValue('VoiceConverter', 'Config_Path_Load', '')),
+            SetPlaceholderText = True
         )
         self.ui.LineEdit_Tool_VoiceConverter_Config_Path_Load.textChanged.connect(
             lambda Value: Config_Tool_VoiceConverter.EditConfig('VoiceConverter', 'Config_Path_Load', str(Value))
@@ -3293,8 +3557,10 @@ class MainWindow(Window_Customizing):
 
         Function_SetText(
             Widget = self.ui.Label_Tool_VoiceConverter_Model_Path_Load,
-            Title = "G_*模型加载路径",
-            Body = QCA.translate("Label", "用于推理的生成器（Generator）模型的所在路径。")
+            Text = SetRichText(
+                Title = "G_*模型加载路径",
+                Body = QCA.translate("Label", "用于推理的生成器（Generator）模型的所在路径。")
+            )
         )
         Function_SetFileDialog(
             Button = self.ui.Button_Tool_VoiceConverter_Model_Path_Load,
@@ -3302,8 +3568,10 @@ class MainWindow(Window_Customizing):
             Mode = "SelectFile",
             FileType = "pth类型 (*.pth)"
         )
-        self.ui.LineEdit_Tool_VoiceConverter_Model_Path_Load.setPlaceholderText(
-            str(Config_Tool_VoiceConverter.GetValue('VoiceConverter', 'Model_Path_Load', 'None'))
+        Function_SetText(
+            Widget = self.ui.LineEdit_Tool_VoiceConverter_Model_Path_Load,
+            Text = str(Config_Tool_VoiceConverter.GetValue('VoiceConverter', 'Model_Path_Load', '')),
+            SetPlaceholderText = True
         )
         self.ui.LineEdit_Tool_VoiceConverter_Model_Path_Load.textChanged.connect(
             lambda Value: Config_Tool_VoiceConverter.EditConfig('VoiceConverter', 'Model_Path_Load', str(Value))
@@ -3311,11 +3579,16 @@ class MainWindow(Window_Customizing):
 
         Function_SetText(
             Widget = self.ui.Label_Tool_VoiceConverter_Text,
-            Title = "输入文字",
-            Body = QCA.translate("Label", "输入的文字会作为说话人的语音内容。")
+            Text = SetRichText(
+                Title = "输入文字",
+                Body = QCA.translate("Label", "输入的文字会作为说话人的语音内容。")
+            )
         )
-        self.ui.PlainTextEdit_Tool_VoiceConverter_Text.setPlaceholderText(
-            str(Config_Tool_VoiceConverter.GetValue('VoiceConverter', 'Text', '请输入语句'))
+        Function_SetText(
+            Widget = self.ui.PlainTextEdit_Tool_VoiceConverter_Text,
+            Text = str(Config_Tool_VoiceConverter.GetValue('VoiceConverter', 'Text', '')),
+            SetPlaceholderText = True,
+            PlaceholderText = '请输入语句'
         )
         self.ui.PlainTextEdit_Tool_VoiceConverter_Text.textChanged.connect(
             lambda: Config_Tool_VoiceConverter.EditConfig('VoiceConverter', 'Text', self.ui.PlainTextEdit_Tool_VoiceConverter_Text.toPlainText())
@@ -3323,8 +3596,10 @@ class MainWindow(Window_Customizing):
 
         Function_SetText(
             Widget = self.ui.Label_Tool_VoiceConverter_Language,
-            Title = "所用语言",
-            Body = QCA.translate("Label", "说话人/文字所使用的语言。")
+            Text = SetRichText(
+                Title = "所用语言",
+                Body = QCA.translate("Label", "说话人/文字所使用的语言。")
+            )
         )
         self.ui.ComboBox_Tool_VoiceConverter_Language.addItems(['中', '英', '日'])
         self.ui.ComboBox_Tool_VoiceConverter_Language.setCurrentText(
@@ -3336,8 +3611,10 @@ class MainWindow(Window_Customizing):
 
         Function_SetText(
             Widget = self.ui.Label_Tool_VoiceConverter_Speaker,
-            Title = "人物名字",
-            Body = QCA.translate("Label", "说话人物的名字。")
+            Text = SetRichText(
+                Title = "人物名字",
+                Body = QCA.translate("Label", "说话人物的名字。")
+            )
         )
         self.ui.ComboBox_Tool_VoiceConverter_Speaker.addItems(
             Get_Speakers(str(Config_Tool_VoiceConverter.GetValue('VoiceConverter', 'Config_Path_Load', 'None')))
@@ -3352,16 +3629,20 @@ class MainWindow(Window_Customizing):
 
         Function_SetText(
             Widget = self.ui.Label_Tool_VoiceConverter_Audio_Dir_Save,
-            Title = "音频保存目录",
-            Body = QCA.translate("Label", "推理得到的音频会保存到该目录。")
+            Text = SetRichText(
+                Title = "音频保存目录",
+                Body = QCA.translate("Label", "推理得到的音频会保存到该目录。")
+            )
         )
         Function_SetFileDialog(
             Button = self.ui.Button_Tool_VoiceConverter_Audio_Dir_Save,
             LineEdit = self.ui.LineEdit_Tool_VoiceConverter_Audio_Dir_Save,
             Mode = "SelectDir"
         )
-        self.ui.LineEdit_Tool_VoiceConverter_Audio_Dir_Save.setPlaceholderText(
-            str(Config_Tool_VoiceConverter.GetValue('VoiceConverter', 'Audio_Dir_Save', 'None'))
+        Function_SetText(
+            Widget = self.ui.LineEdit_Tool_VoiceConverter_Audio_Dir_Save,
+            Text = str(Config_Tool_VoiceConverter.GetValue('VoiceConverter', 'Audio_Dir_Save', '')),
+            SetPlaceholderText = True
         )
         self.ui.LineEdit_Tool_VoiceConverter_Audio_Dir_Save.textChanged.connect(
             lambda Value: Config_Tool_VoiceConverter.EditConfig('VoiceConverter', 'Audio_Dir_Save', str(Value))
@@ -3390,8 +3671,10 @@ class MainWindow(Window_Customizing):
 
         Function_SetText(
             Widget = self.ui.Label_Tool_VoiceConverter_EmotionStrength,
-            Title = "情感强度",
-            Body = QCA.translate("Label", "情感的变化程度。")
+            Text = SetRichText(
+                Title = "情感强度",
+                Body = QCA.translate("Label", "情感的变化程度。")
+            )
         )
         self.ui.HorizontalSlider_Tool_VoiceConverter_EmotionStrength.setMinimum(0)
         self.ui.HorizontalSlider_Tool_VoiceConverter_EmotionStrength.setMaximum(100)
@@ -3433,8 +3716,10 @@ class MainWindow(Window_Customizing):
 
         Function_SetText(
             Widget = self.ui.Label_Tool_VoiceConverter_PhonemeDuration,
-            Title = "音素音长",
-            Body = QCA.translate("Label", "音素的发音长度。")
+            Text = SetRichText(
+                Title = "音素音长",
+                Body = QCA.translate("Label", "音素的发音长度。")
+            )
         )
         self.ui.HorizontalSlider_Tool_VoiceConverter_PhonemeDuration.setMinimum(0)
         self.ui.HorizontalSlider_Tool_VoiceConverter_PhonemeDuration.setMaximum(10)
@@ -3476,8 +3761,10 @@ class MainWindow(Window_Customizing):
 
         Function_SetText(
             Widget = self.ui.Label_Tool_VoiceConverter_SpeechRate,
-            Title = "整体语速",
-            Body = QCA.translate("Label", "整体的说话速度。")
+            Text = SetRichText(
+                Title = "整体语速",
+                Body = QCA.translate("Label", "整体的说话速度。")
+            )
         )
         self.ui.HorizontalSlider_Tool_VoiceConverter_SpeechRate.setMinimum(0)
         self.ui.HorizontalSlider_Tool_VoiceConverter_SpeechRate.setMaximum(20)
@@ -3664,7 +3951,7 @@ class MainWindow(Window_Customizing):
             TakeEffect = True
         )
 
-        self.ui.Label_Setting_Synchronizer.setText(QCA.translate("Label", "自动同步前后工具的部分参数设置"))
+        self.ui.Label_Setting_Synchronizer.setText(QCA.translate("Label", "自动关联前后工具的部分参数设置"))
         self.ui.CheckBox_Setting_Synchronizer.setCheckable(True)
         self.ui.CheckBox_Setting_Synchronizer.setChecked(
             {
@@ -3725,25 +4012,27 @@ class MainWindow(Window_Customizing):
 
         Function_SetText(
             Widget = self.ui.TextBrowser_Text_Info,
-            Title = QCA.translate("TextBrowser", "声明"),
-            TitleAlign = "left",
-            TitleSize = 24,
-            TitleWeight = 840,
-            Body = QCA.translate("TextBrowser",
-                "请自行解决数据集的授权问题。对于使用未经授权的数据集进行训练所导致的任何问题，您将承担全部责任，并且该仓库及其维护者不承担任何后果！\n"
-                "\n"
-                "您还需要服从以下条例：\n"
-                "0. 本项目仅用于学术交流目的，旨在促进沟通和学习。不适用于生产环境。\n"
-                "1. 基于 Easy Voice Toolkit 发布的任何视频必须在描述中明确指出它们用于变声，并指定声音或音频的输入源，例如使用他人发布的视频或音频，并将分离出的人声作为转换的输入源，必须提供清晰的原始视频链接。如果您使用自己的声音或其他商业语音合成软件生成的声音作为转换的输入源，也必须在描述中说明。\n"
-                "2. 您将对输入源引起的任何侵权问题负全部责任。当使用其他商业语音合成软件作为输入源时，请确保遵守该软件的使用条款。请注意，许多语音合成引擎在其使用条款中明确声明不能用于输入源转换。\n"
-                "3. 继续使用本项目被视为同意本仓库README中所述的相关条款。本仓库README有义务进行劝导，但不承担可能出现的任何后续问题的责任。\n"
-                "4. 如果您分发此仓库的代码或将由此项目生成的任何结果公开发布（包括但不限于视频分享平台），请注明原始作者和代码来源（即此仓库）。\n"
-                "5. 如果您将此项目用于任何其他计划，请提前与本仓库的作者联系并告知。\n"
-            ),
-            BodyAlign = "left",
-            BodySize = 12,
-            BodyWeight = 420,
-            BodyLineHeight = 27
+            Text = SetRichText(
+                Title = QCA.translate("TextBrowser", "声明"),
+                TitleAlign = "left",
+                TitleSize = 24,
+                TitleWeight = 840,
+                Body = QCA.translate("TextBrowser",
+                    "请自行解决数据集的授权问题。对于使用未经授权的数据集进行训练所导致的任何问题，您将承担全部责任，并且该仓库及其维护者不承担任何后果！\n"
+                    "\n"
+                    "您还需要服从以下条例：\n"
+                    "0. 本项目仅用于学术交流目的，旨在促进沟通和学习。不适用于生产环境。\n"
+                    "1. 基于 Easy Voice Toolkit 发布的任何视频必须在描述中明确指出它们用于变声，并指定声音或音频的输入源，例如使用他人发布的视频或音频，并将分离出的人声作为转换的输入源，必须提供清晰的原始视频链接。如果您使用自己的声音或其他商业语音合成软件生成的声音作为转换的输入源，也必须在描述中说明。\n"
+                    "2. 您将对输入源引起的任何侵权问题负全部责任。当使用其他商业语音合成软件作为输入源时，请确保遵守该软件的使用条款。请注意，许多语音合成引擎在其使用条款中明确声明不能用于输入源转换。\n"
+                    "3. 继续使用本项目被视为同意本仓库README中所述的相关条款。本仓库的 README 有义务进行劝导，但不承担可能出现的任何后续问题的责任。\n"
+                    "4. 如果您分发此仓库的代码或将由此项目生成的任何结果公开发布（包括但不限于视频分享平台），请注明原始作者和代码来源（即此仓库）。\n"
+                    "5. 如果您将此项目用于任何其他计划，请提前与本仓库的作者联系并告知。\n"
+                ),
+                BodyAlign = "left",
+                BodySize = 12,
+                BodyWeight = 420,
+                BodyLineHeight = 27
+            )
         )
 
         #############################################################
@@ -3796,7 +4085,14 @@ class MainWindow(Window_Customizing):
         MainWindowSignals.Signal_TaskStatus.connect(
             lambda Task, Status: self.ui.Label_ToolsStatus.setText(
                 f"工具状态：{'忙碌' if Status == 'Started' else '空闲'}"
-            )
+            ) if Task in [
+                'Execute_Audio_Processing.Execute',
+                'Execute_Voice_Identifying.Execute',
+                'Execute_Voice_Transcribing.Execute',
+                'Execute_Dataset_Creating.Execute',
+                'Execute_Voice_Training.Execute',
+                'Execute_Voice_Converting.Execute'
+            ] else None
         )
 
         # Display Usage

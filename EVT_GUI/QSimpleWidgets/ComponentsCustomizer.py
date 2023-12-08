@@ -264,8 +264,10 @@ class MessageBoxBase(DialogBase):
     def setText(self, text: str):
         Function_SetText(
             Widget = self.Label,
-            Title = text,
-            TitleAlign = 'center'
+            Text = SetRichText(
+                Title = text,
+                TitleAlign = 'center'
+            )
         )
 
     def setStandardButtons(self, buttons: QMessageBox.StandardButton):

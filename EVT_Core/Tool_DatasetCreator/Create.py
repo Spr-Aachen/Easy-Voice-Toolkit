@@ -7,11 +7,12 @@ Edited
 
 #import time, datetime
 import os, sys, shutil
+from typing import Union, Optional
 from glob import glob
 
 from .utils.Creating_Directories import create_directories
 from .utils.Convert_SRT_to_CSV import change_encoding, convert_srt_to_csv
-from .utils.Change_Sample_Rate import pre_process_audio
+from .utils.Change_Sample_Rate import preprocess_audio
 from .utils.Split_Audio import split_files
 from .utils.Create_DS_CSV import create_DS_csv
 from .utils.Merge_CSV import merge_csv
@@ -32,23 +33,27 @@ class Dataset_Creating:
     def __init__(self,
         SRT_Dir: str,
         WAV_Dir: str,
-        WAV_SampleRate: int = 22050,
-        WAV_Subtype: str = 'PCM_16',
+        WAV_SampleRate: Optional[Union[int, str]] = 22050,
+        WAV_SampleWidth: Optional[Union[int, str]] = '32 (Float)',
+        WAV_ToMono: bool = False,
         WAV_Dir_Split: str = './WAV_Files_Split',
         #WAV_Time_Limitation: float = 10.00,
-        AutoEncoder: str = 'VITS',
+        AuxiliaryData_Path: str = './AuxiliaryData/AuxiliaryData.txt',
         TrainRatio: float = 0.7,
+        ModelType: str = 'VITS',
         FileList_Path_Training: str = './FileLists/Train_FileList.txt',
         FileList_Path_Validation: str = './FileLists/Val_FileList.txt'
     ):
         self.SRT_Dir = SRT_Dir
         self.WAV_Dir = WAV_Dir
-        self.WAV_SampleRate = WAV_SampleRate
-        self.WAV_Subtype = WAV_Subtype
+        self.WAV_SampleRate = eval(WAV_SampleRate) if WAV_SampleRate is not None else None
+        self.WAV_SampleWidth = str(WAV_SampleWidth) if WAV_SampleWidth is not None else None
+        self.WAV_ToMono = WAV_ToMono
         self.WAV_Dir_Split = WAV_Dir_Split
         #self.WAV_Time_Limitation = WAV_Time_Limitation
-        self.AutoEncoder = AutoEncoder
+        self.AuxiliaryData_Path = AuxiliaryData_Path
         self.TrainRatio = TrainRatio
+        self.ModelType = ModelType
         self.FileList_Path_Training = FileList_Path_Training
         self.FileList_Path_Validation = FileList_Path_Validation
 
@@ -111,7 +116,7 @@ class Dataset_Creating:
         print('---------------------------------------------------------------------')
 
         # Pre-process audio for folder in which wav files are stored
-        pre_process_audio(self.WAV_Dir, self.WAV_SampleRate, self.WAV_Subtype, WAV_Dir_Prepared)
+        preprocess_audio(self.WAV_Dir, self.WAV_SampleRate, self.WAV_SampleWidth, self.WAV_ToMono, WAV_Dir_Prepared)
         print('Pre-processing of audio files is complete.')
         print('---------------------------------------------------------------------')
 
@@ -144,7 +149,7 @@ class Dataset_Creating:
         print('---------------------------------------------------------------------')
 
         # Write transcript to text-file for model training
-        Transcript_Writer(CSV_Path_Final_Cleaned, self.AutoEncoder, self.TrainRatio, self.FileList_Path_Training, self.FileList_Path_Validation)
+        Transcript_Writer(CSV_Path_Final_Cleaned, self.AuxiliaryData_Path, self.TrainRatio, self.ModelType, self.FileList_Path_Training, self.FileList_Path_Validation)
         print('Transcript written.')
         print('---------------------------------------------------------------------')
 

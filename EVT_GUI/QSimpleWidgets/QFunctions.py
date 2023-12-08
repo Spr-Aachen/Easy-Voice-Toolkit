@@ -1,6 +1,7 @@
 import os
 import darkdetect
 from typing import Union, Optional
+#from urllib.parse import quote
 from PySide6.QtCore import Qt, QObject, QFile, QRect, QRectF, Signal, Slot, QPropertyAnimation, QEasingCurve, QUrl
 from PySide6.QtGui import QColor, QRgba64, QIcon, QPainter, QDesktopServices
 from PySide6.QtWidgets import *
@@ -119,60 +120,34 @@ def Function_SetNoContents(
 
 def Function_SetText(
     Widget: QWidget,
-    Title: Optional[str] = None,
-    TitleAlign: str = "left",
-    TitleSize: float = 9.9,
-    TitleWeight: float = 840.,
-    TitleColor: str = "#ffffff",
-    TitleSpacing: float = 0.6,
-    TitleLineHeight: float = 21.,
-    Body: Optional[str] = None,
-    BodyAlign: str = "left",
-    BodySize: float = 9.9,
-    BodyWeight: float = 420.,
-    BodySpacing: float = 0.6,
-    BodyLineHeight: float = 21.,
-    BodyColor: str = "#ffffff",
+    Text: str,
+    SetHtml: bool = True,
+    SetPlaceholderText: bool = False,
+    PlaceholderText: Optional[str] = None
 ):
-    '''
-    Function to set text for widget
-    '''
-    def ToHtml(Content, Align, Size, Weight, Color, LetterSpacing, LineHeight):
-        Style = f"'text-align:{Align}; font-size:{Size}pt; font-weight:{Weight}; color:{Color}; letter-spacing: {LetterSpacing}px; line-height:{LineHeight}px'"
-        Content = re.sub(
-            pattern = "[\n]",
-            repl = "<br>",
-            string = Content
-        ) if Content is not None else None
-        return f"<p style={Style}>{Content}</p>" if Content is not None else ''
-
-    Text = (
-        "<html>"
-            "<head>"
-                f"<title>{ToHtml(Title, TitleAlign, TitleSize, TitleWeight, TitleColor, TitleSpacing, TitleLineHeight)}</title>" # Not Working
-            "</head>"
-            "<body>"
-                f"{ToHtml(Title, TitleAlign, TitleSize, TitleWeight, TitleColor, TitleSpacing, TitleLineHeight)}"
-                f"{ToHtml(Body, BodyAlign, BodySize, BodyWeight, BodyColor, BodySpacing, BodyLineHeight)}"
-            "</body>"
-        "</html>"
-    )
-
-    if isinstance(Widget, QLabel):
+    if hasattr(Widget, 'setText'):
         Widget.setText(Text)
-    if isinstance(Widget, (QTextEdit, QPlainTextEdit, QTextBrowser)):
+    if hasattr(Widget, 'setPlainText'):
+        Widget.setPlainText(Text)
+    if hasattr(Widget, 'setHtml') and SetHtml:
         Widget.setHtml(Text)
+    if hasattr(Widget, 'setPlaceholderText') and SetPlaceholderText:
+        Widget.setPlaceholderText(str(PlaceholderText) if Text.strip() in ('', str(None)) else Text)
 
 
 def Function_GetText(
-    Widget: QWidget
+    Widget: QWidget,
+    GetHtml: bool = False,
+    GetPlaceholderText: bool = False
 ):
     if hasattr(Widget, 'text'):
         Text = Widget.text()
-        Text = Widget.placeholderText() if hasattr(Widget, 'placeholderText') and Text.strip() in ('', str(None)) else Text
     if hasattr(Widget, 'toPlainText'):
         Text = Widget.toPlainText()
-        Text = Widget.placeholderText() if hasattr(Widget, 'placeholderText') and Text.strip() in ('', str(None)) else Text
+    if hasattr(Widget, 'toHtml') and GetHtml:
+        Text = Widget.toHtml()
+    if hasattr(Widget, 'placeholderText') and GetPlaceholderText:
+        Text = Widget.placeholderText() if Text.strip() in ('', str(None)) else Text
     return Text
 
 
@@ -183,17 +158,18 @@ def Function_OpenURL(
     Function to open web/local URL
     '''
     def OpenURL(URL):
+        #URL = quote(URL, encoding = 'ansi')
         QURL = QUrl(URL)
         if QURL.isValid():
-            QURL_Localized = QURL.toLocalFile()
-            QDesktopServices.openUrl(QURL_Localized) if QURL_Localized != "" else QDesktopServices.openUrl(QURL)
+            IsSucceeded = QDesktopServices.openUrl(QURL)
+            RunCMD([f'start "{URL}"']) if not IsSucceeded else None
         else:
             print(f"Invalid URL: {URL} !")
 
     if isinstance(URL, str):
         OpenURL(URL)
     else:
-        URLList = IterChecker(URL)
+        URLList = ToIterable(URL)
         for Index, URL in enumerate(URLList):
             #URL = Function_ParamsChecker(URLList)[Index] if isinstance(URL, QObject) else URL
             OpenURL(URL)

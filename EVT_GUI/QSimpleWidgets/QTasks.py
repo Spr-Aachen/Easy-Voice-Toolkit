@@ -60,25 +60,6 @@ class MonitorUsage(QThread):
         super().__init__()
 
         pynvml.nvmlInit()
-    '''
-        Timer = QTimer(self)
-        Timer.timeout.connect(self.MonitorUsage)
-        Timer.start(1000)
-
-    def MonitorUsage(self):
-        Usage_CPU_Percent = psutil.cpu_percent(interval = 1.)
-        Usage_CPU = f"{Usage_CPU_Percent}%"
-
-        #Usage_RAM_Percent = psutil.virtual_memory().percent
-        #Usage_RAM = f"{Usage_RAM_Percent}%"
-
-        Usage_GPU_Percent = 0
-        for Index in range(pynvml.nvmlDeviceGetCount()):
-            Usage_GPU_Percent += pynvml.nvmlDeviceGetUtilizationRates(pynvml.nvmlDeviceGetHandleByIndex(Index)).gpu
-        Usage_GPU = f"{Usage_GPU_Percent}%"
-
-        self.Signal_UsageInfo.emit(Usage_CPU, Usage_GPU)
-    '''
 
     def run(self):
         while True:
@@ -91,8 +72,8 @@ class MonitorUsage(QThread):
             Usage_GPU_Percent = 0
             for Index in range(pynvml.nvmlDeviceGetCount()):
                 Usage_GPU_Percent_Single = pynvml.nvmlDeviceGetUtilizationRates(pynvml.nvmlDeviceGetHandleByIndex(Index)).gpu
-                Usage_GPU_Percent = Usage_GPU_Percent_Single if Usage_GPU_Percent < Usage_GPU_Percent_Single else Usage_GPU_Percent
-            Usage_GPU = f"{Usage_GPU_Percent}%"
+                Usage_GPU_Percent += Usage_GPU_Percent_Single #Usage_GPU_Percent = Usage_GPU_Percent_Single if Usage_GPU_Percent < Usage_GPU_Percent_Single else Usage_GPU_Percent
+            Usage_GPU = f"{Usage_GPU_Percent / pynvml.nvmlDeviceGetCount()}%" #Usage_GPU = f"{Usage_GPU_Percent}%"
 
             self.Signal_UsageInfo.emit(Usage_CPU, Usage_GPU)
 
