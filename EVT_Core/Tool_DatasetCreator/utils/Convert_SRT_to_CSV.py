@@ -1,8 +1,3 @@
-'''
-Edited
-'''
-# Start time, end-time and subtitle are extracted from the SRT_Path-files and stored in a csv. In preparation for audio-splitting, a column id is generated from the filename with the addition of a unique number.
-
 import pandas as pd
 import os
 import io
@@ -10,8 +5,10 @@ import re
 import numpy as np
 
 
-# First change encoding from utf-8 to utf-8-sig to keep Umlaute (e.g. ä, ö, ü)
 def change_encoding(SRT_Path):
+    '''
+    Change encoding from utf-8 to utf-8-sig to keep Umlaute (e.g. ä, ö, ü)
+    '''
     with io.open(SRT_Path, 'r', encoding = 'utf-8') as f:
         text = f.read()
     # process Unicode text
@@ -23,6 +20,9 @@ def convert_srt_to_csv(
     SRT_Path,
     CSV_Dir
 ):
+    '''
+    Extract start time, end-time and subtitle from the SRT_Path-files and store in a csv. In preparation for audio-splitting, a column id is generated from the filename with the addition of a unique number.
+    '''
     #with open(SRT_Path, 'r', encoding  = 'locale') as h: # Use the current locale encoding
     with open(SRT_Path, 'r', encoding = 'utf-8-sig') as h:
         Sub = h.readlines()   #returns list of all lines

@@ -1,6 +1,6 @@
 import re
 from typing import Union, Optional
-from PySide6.QtCore import Qt, QObject, Signal, Slot
+from PySide6.QtCore import Qt, QObject, Signal, Slot, QSize, QParallelAnimationGroup
 from PySide6.QtGui import QFont
 from PySide6.QtWidgets import *
 
@@ -396,6 +396,89 @@ def Function_ParamsChecker(
     Args = tuple(Params)#if Params != [] else None
 
     return Args
+
+
+def Function_AnimateStackedWidget(
+    Parent: QWidget,
+    StackedWidget: QStackedWidget,
+    TargetIndex: int = 0,
+    Duration: int = 210
+):
+    '''
+    Function to animate stackedwidget
+    '''
+    OriginalWidget = StackedWidget.currentWidget()
+    OriginalGeometry = OriginalWidget.geometry()
+    AlteredGeometry = QRect(OriginalGeometry.left() + OriginalGeometry.width(), OriginalGeometry.top(), OriginalGeometry.width(), OriginalGeometry.height())
+
+    WidgetAnimation = QPropertyAnimation(OriginalWidget, b"geometry", Parent)
+
+    WidgetAnimation = Function_SetAnimation(WidgetAnimation, OriginalGeometry, AlteredGeometry, Duration)
+    WidgetAnimation.finished.connect(
+        lambda: StackedWidget.setCurrentIndex(TargetIndex),
+        type = Qt.QueuedConnection
+    )
+    WidgetAnimation.finished.connect(
+        lambda: OriginalWidget.setGeometry(OriginalGeometry),
+        type = Qt.QueuedConnection
+    )
+    WidgetAnimation.start() if StackedWidget.currentIndex() != TargetIndex else None
+
+
+def Function_AnimateWidgetSize(
+    Parent: QWidget,
+    Frame: QWidget,
+    TargetWidth: Optional[int] = None,
+    TargetHeight: Optional[int] = None,
+    Duration: int = 210
+):
+    '''
+    Function to animate widget size
+    '''
+    CurrentWidth = Frame.geometry().width() if Frame.size() == QSize(100, 30) else Frame.width()
+    CurrentHeight = Frame.geometry().height() if Frame.size() == QSize(100, 30) else Frame.height()
+
+    FrameAnimationMinWidth = QPropertyAnimation(Frame, b"minimumWidth", Parent)
+    FrameAnimationMaxWidth = QPropertyAnimation(Frame, b"maximumWidth", Parent)
+    FrameAnimationMinHeight = QPropertyAnimation(Frame, b"minimumHeight", Parent)
+    FrameAnimationMaxHeight = QPropertyAnimation(Frame, b"maximumHeight", Parent)
+
+    AnimationGroup = QParallelAnimationGroup(Parent)
+
+    AnimationGroup.addAnimation(Function_SetAnimation(FrameAnimationMinWidth, CurrentWidth, TargetWidth, Duration)) if TargetWidth is not None else None
+    AnimationGroup.addAnimation(Function_SetAnimation(FrameAnimationMaxWidth, CurrentWidth, TargetWidth, Duration)) if TargetWidth is not None else None
+    AnimationGroup.addAnimation(Function_SetAnimation(FrameAnimationMinHeight, CurrentHeight, TargetHeight, Duration)) if TargetHeight is not None else None
+    AnimationGroup.addAnimation(Function_SetAnimation(FrameAnimationMaxHeight, CurrentHeight, TargetHeight, Duration)) if TargetHeight is not None else None
+    AnimationGroup.start()
+
+
+def Function_AnimateFrame(
+    Parent: QWidget,
+    Frame: QWidget,
+    MinWidth: Optional[int] = None,
+    MaxWidth: Optional[int] = None,
+    MinHeight: Optional[int] = None,
+    MaxHeight: Optional[int] = None,
+    Duration: int = 210,
+    Mode: str = "Toggle"
+):
+    '''
+    Function to animate frame
+    '''
+    def ExtendFrame():
+        Function_AnimateWidgetSize(Parent, Frame, MaxWidth, None, Duration) if MaxWidth not in (None, Frame.width()) else None
+        Function_AnimateWidgetSize(Parent, Frame, None, MaxHeight, Duration) if MaxHeight not in (None, Frame.height()) else None
+
+    def ReduceFrame():
+        Function_AnimateWidgetSize(Parent, Frame, MinWidth, None, Duration) if MinWidth not in (None, Frame.width()) else None
+        Function_AnimateWidgetSize(Parent, Frame, None, MinHeight, Duration) if MinHeight not in (None, Frame.height()) else None
+
+    if Mode == "Extend":
+        ExtendFrame()
+    if Mode == "Reduce":
+        ReduceFrame()
+    if Mode == "Toggle":
+        ExtendFrame() if Frame.width() == MinWidth or Frame.height() == MinHeight else ReduceFrame()
 
 
 def Function_AnimateProgressBar(

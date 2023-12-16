@@ -1,7 +1,3 @@
-'''
-Added
-'''
-
 import os
 import hashlib
 import urllib

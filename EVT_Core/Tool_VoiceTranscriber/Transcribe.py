@@ -1,7 +1,3 @@
-'''
-Added
-'''
-
 import hashlib
 import io
 import os
@@ -136,7 +132,7 @@ class Voice_Transcribing:
         Verbose: str2bool = True,
         Task: str = 'transcribe',
         Language: Optional[str] = None,
-        Condition_on_Previous_Text: str2bool = True,
+        Condition_on_Previous_Text: str2bool = False,
         fp16: str2bool = True,
     ):
         self.Model_Name = Model_Name # name of the Whisper model to use    choices = available_models()

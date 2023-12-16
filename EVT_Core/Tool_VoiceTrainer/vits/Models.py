@@ -1,4 +1,3 @@
-#import copy # Not needed in python3
 import math
 import torch
 from torch import nn
@@ -151,9 +150,11 @@ class TextEncoder(nn.Module):
         self.kernel_size = kernel_size
         self.p_dropout = p_dropout
 
+        # Word Embedding
         self.emb = nn.Embedding(n_vocab, hidden_channels)
         nn.init.normal_(self.emb.weight, 0.0, hidden_channels**-0.5)
 
+        # Transformer Encoder
         self.encoder = Attentions.Encoder(
             hidden_channels,
             filter_channels,
@@ -161,7 +162,7 @@ class TextEncoder(nn.Module):
             n_layers,
             kernel_size,
             p_dropout)
-        self.proj= nn.Conv1d(hidden_channels, out_channels * 2, 1)
+        self.proj = nn.Conv1d(hidden_channels, out_channels * 2, 1) # Pointwise MLP
 
     def forward(self, x, x_lengths):
         x = self.emb(x) * math.sqrt(self.hidden_channels) # [b, t, h]
@@ -232,7 +233,7 @@ class PosteriorEncoder(nn.Module):
         self.enc = Modules.WN(hidden_channels, kernel_size, dilation_rate, n_layers, gin_channels=gin_channels)
         self.proj = nn.Conv1d(hidden_channels, out_channels * 2, 1)
 
-    def forward(self, x, x_lengths, g=None):
+    def forward(self, x, x_lengths, g=None): # x: LinearSpectrum; g: GlobalCondition
         x_mask = torch.unsqueeze(Commons.sequence_mask(x_lengths, x.size(2)), 1).to(x.dtype)
         x = self.pre(x) * x_mask
         x = self.enc(x, x_mask, g=g)

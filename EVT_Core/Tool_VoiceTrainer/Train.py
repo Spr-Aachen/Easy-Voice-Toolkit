@@ -1,7 +1,3 @@
-'''
-Edited
-'''
-
 from typing import Optional
 from pathlib import Path
 from datetime import datetime
@@ -9,7 +5,6 @@ import os
 import sys
 import re
 import json
-import argparse
 import platform
 import logging
 logging.basicConfig(stream = sys.stdout, encoding = 'utf-8')
@@ -56,6 +51,7 @@ from .vits.Utils import (
     plot_alignment_to_numpy,
     save_checkpoint,
     get_logger,
+    #add_elements,
     #check_git_hash,
     load_checkpoint,
     latest_checkpoint_path,
@@ -78,17 +74,34 @@ class Preprocessing:
     def __init__(self,
         FileList_Path_Training: str,
         FileList_Path_Validation: str,
-        Config_Path_Load: Optional[str] = None,
         Config_Dir_Save: str = './',
         Set_Eval_Interval: int = 1000,
         Set_Epochs: int = 10000,
         Set_Batch_Size: int = 16,
         Set_FP16_Run: bool = True,
         Set_Speakers: Optional[list] = None,
-        Keep_Original_Speakers: bool = False
+        #Keep_Original_Speakers: bool = False,
+        #Config_Path_Load: Optional[str] = None
     ):
         self.FileList_Path_Training = FileList_Path_Training
         self.FileList_Path_Validation = FileList_Path_Validation
+        self.Config_Dir_Save = Config_Dir_Save
+        self.Set_Eval_Interval = Set_Eval_Interval
+        self.Set_Epochs = Set_Epochs
+        self.Set_Batch_Size = Set_Batch_Size
+        self.Set_FP16_Run = Set_FP16_Run
+        self.Set_Speakers = Set_Speakers
+        #self.Keep_Original_Speakers = Keep_Original_Speakers
+        #self.Config_Path_Load = Config_Path_Load if Keep_Original_Speakers else None
+
+        os.makedirs(self.Config_Dir_Save, exist_ok = True)
+        self.Config_Path_Edited = Path(Config_Dir_Save).joinpath(f"{datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}.json").__str__()
+        self.Out_Extension = "cleaned"
+
+    def Configurator(self):
+        '''
+        Edit JSON file
+        '''
         def Get_Languages(Text_Path_Training, Text_Path_Validation):
             Languages = []
             for Text_Path in [Text_Path_Training, Text_Path_Validation]:
@@ -105,32 +118,8 @@ class Preprocessing:
                     return "mandarin_english_japanese"
             else:
                 raise Exception('Unsupported language!')
-        self.Language = Get_Languages(self.FileList_Path_Training, self.FileList_Path_Validation)
-        self.Config_Path_Load = Config_Path_Load if Config_Path_Load is not None else Path(__file__).parent.joinpath('./configs', f'{self.Language}_base.json').__str__()
-        self.Config_Dir_Save = Config_Dir_Save
-        self.Set_Eval_Interval = Set_Eval_Interval
-        self.Set_Epochs = Set_Epochs
-        self.Set_Batch_Size = Set_Batch_Size
-        self.Set_FP16_Run = Set_FP16_Run
-        self.Set_Speakers = Set_Speakers
-        self.Keep_Original_Speakers = Keep_Original_Speakers #if Config_Path_Load is not None else False
 
-        self.Config_Path_Edited = Path(Config_Dir_Save).joinpath(f"{self.Language}_{datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}.json").__str__()
-        self.Out_Extension = "cleaned"
-
-    def Configurator(self):
-        '''
-        Edit JSON file
-        '''
-        def Add_Elements(Iterable1, Iterable2):
-            def GetDictKeys(Iterable):
-                return sorted(Iterable.keys(), key = lambda Key: Iterable[Key]) if isinstance(Iterable, dict) else Iterable
-            Iterable1, Iterable2 = GetDictKeys(Iterable1), GetDictKeys(Iterable2)
-            for Element in Iterable2:
-                Iterable1.append(Element) if Element not in Iterable1 else None
-            return Iterable1
-
-        def Get_Speakers(Text_Path_Training, Text_Path_Validation):
+        def Get_NewSpeakers(Text_Path_Training, Text_Path_Validation):
             Speakers = []
             for Text_Path in [Text_Path_Training, Text_Path_Validation]:
                 with open(file = Text_Path, mode = 'r', encoding = 'utf-8') as File:
@@ -140,30 +129,38 @@ class Preprocessing:
                     Speaker = re.split(r'[\[\]]', re.split(r'[/\\\\]', Line_Path)[-1])[1]
                     Speakers.append(Speaker) if Speaker not in Speakers else None
             return Speakers
+        '''
+        def Get_OldSpeakers(Config_Path_Load):
+            if Config_Path_Load is not None and Path(Config_Path_Load).exists():
+                with open(file = Config_Path_Load, mode = 'rb') as ConfigFile_Extra:
+                    OldSpeakers = json.load(ConfigFile_Extra)["speakers"]
+            else:
+                OldSpeakers = []
+            return OldSpeakers
+        '''
+        Language = Get_Languages(self.FileList_Path_Training, self.FileList_Path_Validation)
+        NewSpeakers = Get_NewSpeakers(self.FileList_Path_Training, self.FileList_Path_Validation) if self.Set_Speakers is None else self.Set_Speakers
+        #OldSpeakers = Get_OldSpeakers(self.Config_Path_Load) if self.Keep_Original_Speakers else []
 
-        def Write_Config_Data(Config_Path_Load, Config_Dir_Save):
-            os.makedirs(Config_Dir_Save, exist_ok = True)
-            with open(file = Config_Path_Load, mode = 'rb') as File_Old:
-                Params = json.load(File_Old)
-            try:
-                Params_Old = Params
-                Params_Old["train"]["eval_interval"]    = self.Set_Eval_Interval
-                Params_Old["train"]["epochs"]           = self.Set_Epochs
-                Params_Old["train"]["batch_size"]       = self.Set_Batch_Size
-                Params_Old["train"]["fp16_run"]         = self.Set_FP16_Run
-                Params_Old["data"]["training_files"]    = Path(self.FileList_Path_Training + "." + self.Out_Extension).__str__()
-                Params_Old["data"]["validation_files"]  = Path(self.FileList_Path_Validation + "." + self.Out_Extension).__str__()
-                Params_Old["data"]["text_cleaners"]     = [(self.Language + "_cleaners").lower()]
-                Params_Old["data"]["n_speakers"]        = Add_Elements(Params_Old["speakers"] if self.Keep_Original_Speakers else [], Get_Speakers(self.FileList_Path_Training, self.FileList_Path_Validation) if self.Set_Speakers is None else self.Set_Speakers).__len__()
-                Params_Old["speakers"]                  = Add_Elements(Params_Old["speakers"] if self.Keep_Original_Speakers else [], Get_Speakers(self.FileList_Path_Training, self.FileList_Path_Validation) if self.Set_Speakers is None else self.Set_Speakers)
-                Params_New = Params_Old
-            except:
-                raise Exception("Please check if params exist")
-            with open(self.Config_Path_Edited, 'w', encoding = 'utf-8') as File_New:
-                json.dump(Params_New, File_New, indent = 4)
-            print(f"Config created in {Config_Dir_Save}")
-
-        Write_Config_Data(self.Config_Path_Load, self.Config_Dir_Save)
+        with open(file = Path(__file__).parent.joinpath('./configs', f'{Language}_base.json').__str__(), mode = 'rb') as ConfigFile_Default:
+            Params = json.load(ConfigFile_Default)
+        try:
+            Params_Old = Params
+            Params_Old["train"]["eval_interval"]   = self.Set_Eval_Interval
+            Params_Old["train"]["epochs"]          = self.Set_Epochs
+            Params_Old["train"]["batch_size"]      = self.Set_Batch_Size
+            Params_Old["train"]["fp16_run"]        = self.Set_FP16_Run
+            Params_Old["data"]["training_files"]   = Path(self.FileList_Path_Training + "." + self.Out_Extension).__str__()
+            Params_Old["data"]["validation_files"] = Path(self.FileList_Path_Validation + "." + self.Out_Extension).__str__()
+            Params_Old["data"]["text_cleaners"]    = [(Language + "_cleaners").lower()]
+            Params_Old["data"]["n_speakers"]       = NewSpeakers.__len__() #Params_Old["data"]["n_speakers"]       = add_elements(OldSpeakers, NewSpeakers).__len__()
+            Params_Old["speakers"]                 = NewSpeakers           #Params_Old["speakers"]                 = add_elements(OldSpeakers, NewSpeakers)
+            Params_New = Params_Old
+        except:
+            raise Exception("Please check if params exist")
+        with open(self.Config_Path_Edited, 'w', encoding = 'utf-8') as File_New:
+            json.dump(Params_New, File_New, indent = 4)
+        print(f"Config created in {self.Config_Dir_Save}")
 
     def Cleaner(self):
         '''
@@ -185,24 +182,18 @@ class Preprocessing:
             with open(file = Text_Path, mode = 'w', encoding = 'utf-8') as TextFile:
                 TextFile.writelines(Lines)
 
-        Parser = argparse.ArgumentParser()
-        Parser.add_argument("--Out_Extension",    type = str,                       default = self.Out_Extension)
-        Parser.add_argument("--Path_Index",       type = int,                       default = 0)
-        Parser.add_argument("--Text_Index",       type = int,                       default = 2)
-        Parser.add_argument("--FileLists",        type = list,     nargs = "+",     default = [self.FileList_Path_Validation, self.FileList_Path_Training])
-        Parser.add_argument("--Text_Cleaners",    type = list,     nargs = "+",     default = [self.Language + "_cleaners"])
-        Args = Parser.parse_args(args = [])
+        def Get_Cleaners(Config_Path):
+            with open(file = Config_Path, mode = 'rb') as ConfigFile:
+                NewCleaners = json.load(ConfigFile)["data"]["text_cleaners"]
+            return NewCleaners
 
-        for FileList in Args.FileLists:
+        for FileList in [self.FileList_Path_Validation, self.FileList_Path_Training]:
             print("START:", FileList)
-
             Update_SID(self.Config_Path_Edited, FileList) if self.Keep_Original_Speakers else None
-
             Path_SID_Text = load_audiopaths_sid_text(FileList)
             for i in range(len(Path_SID_Text)):
-                Path_SID_Text[i][Args.Text_Index] = _clean_text(Path_SID_Text[i][Args.Text_Index], Args.Text_Cleaners)
-
-            Filelist_Cleaned = FileList + "." + Args.Out_Extension
+                Path_SID_Text[i][2] = _clean_text(Path_SID_Text[i][2], Get_Cleaners(self.Config_Path_Edited))
+            Filelist_Cleaned = FileList + "." + self.Out_Extension
             with open(Filelist_Cleaned, 'w', encoding = 'utf-8') as f:
                 f.writelines(["|".join(x) + "\n" for x in Path_SID_Text])
 
@@ -496,13 +487,13 @@ class Training:
                 self.Model_Path_Pretrained_G if self.UsePretrainedModel else latest_checkpoint_path(hps.model_dir, "G_*.pth"),
                 net_g,
                 optim_g,
-                self.Keep_Original_Speakers #if self.UsePretrainedModel else False
+                self.Keep_Original_Speakers if self.UsePretrainedModel else True
             )
             _, optim_d, lr_d, epoch_str = load_checkpoint(
                 self.Model_Path_Pretrained_D if self.UsePretrainedModel else latest_checkpoint_path(hps.model_dir, "D_*.pth"),
                 net_d,
                 optim_d,
-                self.Keep_Original_Speakers #if self.UsePretrainedModel else False
+                self.Keep_Original_Speakers if self.UsePretrainedModel else True
             )
 
             # To prevent KeyError: "param 'initial_lr' is not specified in param_groups[0] when resuming an optimizer"
@@ -544,7 +535,6 @@ class Voice_Training(Preprocessing, Training):
     def __init__(self,
         FileList_Path_Training: str,
         FileList_Path_Validation: str,
-        Config_Path_Load: Optional[str] = None,
         Config_Dir_Save: str = './',
         Set_Eval_Interval: int = 1000,
         Set_Epochs: int = 10000,
@@ -552,12 +542,13 @@ class Voice_Training(Preprocessing, Training):
         Set_FP16_Run: bool = True,
         Set_Speakers: Optional[list] = None,
         Keep_Original_Speakers: bool = False,
+        #Config_Path_Load: Optional[str] = None,
         Num_Workers: int = 4,
         Model_Path_Pretrained_G: Optional[str] = None,
         Model_Path_Pretrained_D: Optional[str] = None,
         Model_Dir_Save: str = './'
     ):
-        Preprocessing.__init__(self, FileList_Path_Training, FileList_Path_Validation, Config_Path_Load, Config_Dir_Save, Set_Eval_Interval, Set_Epochs, Set_Batch_Size, Set_FP16_Run, Set_Speakers, Keep_Original_Speakers)
+        Preprocessing.__init__(self, FileList_Path_Training, FileList_Path_Validation, Config_Dir_Save, Set_Eval_Interval, Set_Epochs, Set_Batch_Size, Set_FP16_Run, Set_Speakers)
         Training.__init__(self, Num_Workers, Model_Path_Pretrained_G, Model_Path_Pretrained_D, Keep_Original_Speakers)
         self.Model_Dir_Save = Model_Dir_Save
 

@@ -1,17 +1,15 @@
-'''
-Edited
-'''
-
 import os
 
 
-# Create csv directory
 def create_directories(
     wav_dir_prepared,
     wav_dir_split,
     csv_dir_merged,
     csv_dir_final
 ):
+    '''
+    Create csv directory
+    '''
     if not os.path.exists(wav_dir_prepared):
         try:
             os.makedirs(wav_dir_prepared, exist_ok = True)

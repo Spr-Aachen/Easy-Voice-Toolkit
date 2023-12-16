@@ -1,7 +1,9 @@
 import os
+import re
 #import IPython.display as ipd
 import torch
 #from torch.utils.data import DataLoader
+from pathlib import Path
 from scipy.io.wavfile import write
 from datetime import datetime
 
@@ -11,6 +13,20 @@ from .vits.Utils import get_hparams_from_file, load_checkpoint
 from .vits.Models import SynthesizerTrn
 from .vits.text import text_to_sequence
 from .vits.text.symbols import symbols
+
+
+def Get_Config_Path(ConfigPath):
+    if Path(ConfigPath).is_dir():
+        ConfigPaths = [File for File in os.listdir(ConfigPath) if Path(File).suffix == '.json']
+        ConfigPath = sorted(ConfigPaths, key = lambda ConfigPath: re.sub(r'[A-Za-z]+', '', Path(ConfigPath).name))[-1]
+    return ConfigPath
+
+
+def Get_Model_Path(ModelPath):
+    if Path(ModelPath).is_dir():
+        ModelPaths = [File for File in os.listdir(ModelPath) if Path(File).suffix == '.pth' and 'G_' in File]
+        ModelPath = sorted(ModelPaths, key = lambda ModelPath: re.sub(r'G_[A-Za-z]+', '', Path(ModelPath).name))[-1]
+    return ModelPath
 
 
 class Voice_Converting:
@@ -28,8 +44,8 @@ class Voice_Converting:
         SpeechRate: float = 1.,
         Audio_Dir_Save: str = ...
     ):
-        self.Config_Path_Load = Config_Path_Load
-        self.Model_Path_Load = Model_Path_Load
+        self.Config_Path_Load = Get_Config_Path(Config_Path_Load)
+        self.Model_Path_Load = Get_Model_Path(Model_Path_Load)
         self.Text = Text
         self.Language = Language
         self.Speaker = Speaker

@@ -1,7 +1,3 @@
-'''
-Edited
-'''
-
 import torch
 from librosa.filters import mel as librosa_mel_fn
 

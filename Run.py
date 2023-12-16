@@ -4,9 +4,8 @@ import time #import asyncio
 import json
 from pathlib import Path
 from PySide6 import __file__ as PySide6_File
-from PySide6.QtCore import Qt, QObject, Signal, Slot, QThread, QPropertyAnimation, QParallelAnimationGroup
+from PySide6.QtCore import Qt, QObject, Signal, Slot, QThread
 from PySide6.QtCore import QCoreApplication as QCA
-from PySide6.QtGui import QTextCursor
 from PySide6.QtWidgets import *
 
 from EVT_GUI.QSimpleWidgets.Utils import *
@@ -414,9 +413,6 @@ class CustomSignals_MainWindow(QObject):
     '''
     Signal_MainWindowShown = Signal()
 
-    # Monitor frame
-    Signal_FrameStatus = Signal(str)
-
     # Run task
     Signal_ExecuteTask = Signal(tuple)
 
@@ -442,121 +438,6 @@ class MainWindow(Window_Customizing):
 
         self.MonitorUsage = MonitorUsage()
         self.MonitorUsage.start()
-
-    def Function_AnimateStackedWidget(self,
-        StackedWidget: QStackedWidget,
-        TargetIndex: int = 0,
-        Duration: int = 0
-    ):
-        '''
-        Function to animate stackedwidget
-        '''
-        Widget_Original = StackedWidget.currentWidget()
-        Geometry_Original = Widget_Original.geometry()
-
-        self.WidgetAnimation = QPropertyAnimation(Widget_Original, b"geometry")
-
-        def AnimateStackedWidget(Index_Altered):
-            self.WidgetAnimation = Function_SetAnimation(self.WidgetAnimation, Geometry_Original, Geometry_Original.setY(0), Duration)
-            self.WidgetAnimation.finished.connect(
-                lambda: StackedWidget.setCurrentIndex(Index_Altered),
-                type = Qt.QueuedConnection
-            )
-            self.WidgetAnimation.finished.connect(
-                lambda: Widget_Original.setGeometry(Geometry_Original),
-                type = Qt.QueuedConnection
-            )
-            self.WidgetAnimation.start()
-
-        AnimateStackedWidget(TargetIndex)
-
-    def Function_AnimateFrame(self,
-        Frame: QWidget,
-        MinWidth: int = ...,
-        MaxWidth: int = ...,
-        MinHeight: int = ...,
-        MaxHeight: int = ...,
-        Duration: int = 210,
-        Mode: str = "Toggle"
-    ):
-        '''
-        Function to animate frame
-        '''
-        Width_Current = Frame.width()
-        Height_Current = Frame.height()
-
-        self.FrameAnimationMinWidth = QPropertyAnimation(Frame, b"minimumWidth")
-        self.FrameAnimationMaxWidth = QPropertyAnimation(Frame, b"maximumWidth")
-        self.FrameAnimationMinHeight = QPropertyAnimation(Frame, b"minimumHeight")
-        self.FrameAnimationMaxHeight = QPropertyAnimation(Frame, b"maximumHeight")
-
-        self.AnimationGroup = QParallelAnimationGroup()
-
-        def AnimateFrameWidth(Width_Altered):
-            self.AnimationGroup.addAnimation(Function_SetAnimation(self.FrameAnimationMinWidth, Width_Current, Width_Altered, Duration))
-            self.AnimationGroup.addAnimation(Function_SetAnimation(self.FrameAnimationMaxWidth, Width_Current, Width_Altered, Duration))
-            self.AnimationGroup.start()
-
-        def AnimateFrameHeight(Height_Altered):
-            self.AnimationGroup.addAnimation(Function_SetAnimation(self.FrameAnimationMinHeight, Height_Current, Height_Altered, Duration))
-            self.AnimationGroup.addAnimation(Function_SetAnimation(self.FrameAnimationMaxHeight, Height_Current, Height_Altered, Duration))
-            self.AnimationGroup.start()
-
-        if Mode == "Extend":
-            if MaxWidth != ...:
-                AnimateFrameWidth(MaxWidth)
-            if MaxHeight != ...:
-                AnimateFrameHeight(MaxHeight)
-            MainWindowSignals.Signal_FrameStatus.emit(f"{Frame.objectName()}Extended")
-        if Mode == "Reduce":
-            if MinWidth != ...:
-                AnimateFrameWidth(MinWidth)
-            if MinHeight != ...:
-                AnimateFrameHeight(MinHeight)
-            MainWindowSignals.Signal_FrameStatus.emit(f"{Frame.objectName()}Reduced")
-        if Mode == "Toggle":
-            if Width_Current == MinWidth or Height_Current == MinHeight:
-                if MaxWidth != ...:
-                    AnimateFrameWidth(MaxWidth)
-                if MaxHeight != ...:
-                    AnimateFrameHeight(MaxHeight)
-                MainWindowSignals.Signal_FrameStatus.emit(f"{Frame.objectName()}Extended")
-            else:
-                if MinWidth != ...:
-                    AnimateFrameWidth(MinWidth)
-                if MinHeight != ...:
-                    AnimateFrameHeight(MinHeight)
-                MainWindowSignals.Signal_FrameStatus.emit(f"{Frame.objectName()}Reduced")
-
-    @Slot(str)
-    def Function_PrintText(self,
-        Panel: QObject,
-        Frame: Optional[QFrame] = None,
-        FrameStatus: str = ...,
-        Text: str = ...,
-        ShowCursor: Optional[bool] = None
-    ):
-        '''
-        Function to print text on panel while its parent frame is extended
-        '''
-        if isinstance(Panel, (QLabel, QComboBox, QCheckBox, QTextBrowser)):
-            Panel.setText(Text)
-        if isinstance(Panel, (QLineEdit, QTextEdit, QPlainTextEdit)):
-            TextCursor = Panel.textCursor()
-            TextCursor.movePosition(QTextCursor.End)
-            TextCursor.insertText(Text)
-            Panel.setTextCursor(TextCursor)
-            Panel.ensureCursorVisible() if ShowCursor else None
-
-        Frame = Function_FindParentUI(
-            ChildUI = Panel,
-            ParentType = QFrame
-        ) if Frame == None else Frame
-
-        if FrameStatus == f"{Frame.objectName()}Extended":
-            Panel.setVisible(True)
-        if FrameStatus == f"{Frame.objectName()}Reduced":
-            Panel.setVisible(False)
 
     def Function_SetMethodExecutor(self,
         ExecuteButton: QPushButton,
@@ -610,12 +491,12 @@ class MainWindow(Window_Customizing):
             MainWindowSignals = CustomSignals_MainWindow()
             MainWindowSignals.Signal_ExecuteTask.connect(getattr(ClassInstance, MethodName)) #MainWindowSignals.Signal_ExecuteTask.connect(lambda Args: getattr(ClassInstance, MethodName)(*Args))
 
-            WorkerThread.started.connect(lambda: self.Function_AnimateFrame(ConsoleFrame, MinHeight = 0, MaxHeight = 210, Mode = "Extend")) if ConsoleFrame else None
+            WorkerThread.started.connect(lambda: Function_AnimateFrame(self, ConsoleFrame, MinHeight = 0, MaxHeight = 210, Mode = "Extend")) if ConsoleFrame else None
             WorkerThread.started.connect(lambda: Function_AnimateProgressBar(ProgressBar, IsTaskAlive = True)) if ProgressBar else None
-            WorkerThread.started.connect(lambda: self.Function_AnimateStackedWidget(Function_FindParentUI(ExecuteButton, QStackedWidget), TargetIndex = 1)) if TerminateButton else None
-            WorkerThread.finished.connect(lambda: self.Function_AnimateFrame(ConsoleFrame, MinHeight = 0, MaxHeight = 210, Mode = "Reduce")) if ConsoleFrame else None
+            WorkerThread.started.connect(lambda: Function_AnimateStackedWidget(self, Function_FindParentUI(ExecuteButton, QStackedWidget), TargetIndex = 1)) if TerminateButton else None
+            WorkerThread.finished.connect(lambda: Function_AnimateFrame(self, ConsoleFrame, MinHeight = 0, MaxHeight = 210, Mode = "Reduce")) if ConsoleFrame else None
             WorkerThread.finished.connect(lambda: Function_AnimateProgressBar(ProgressBar, IsTaskAlive = False)) if ProgressBar else None
-            WorkerThread.finished.connect(lambda: self.Function_AnimateStackedWidget(Function_FindParentUI(ExecuteButton, QStackedWidget), TargetIndex = 0)) if TerminateButton else None
+            WorkerThread.finished.connect(lambda: Function_AnimateStackedWidget(self, Function_FindParentUI(ExecuteButton, QStackedWidget), TargetIndex = 0)) if TerminateButton else None
             #WorkerThread.finished.connect(lambda: MainWindowSignals.Signal_ExecuteTask.disconnect(getattr(ClassInstance, MethodName)))
 
             MainWindowSignals.Signal_ExecuteTask.emit(Args)
@@ -677,7 +558,8 @@ class MainWindow(Window_Customizing):
 
         # Menu toggling button
         self.ui.Button_Toggle_Menu.clicked.connect(
-            lambda: self.Function_AnimateFrame(
+            lambda: Function_AnimateFrame(
+                Parent = self,
                 Frame = self.ui.Frame_Menu,
                 MinWidth = 48,
                 MaxWidth = 210
@@ -693,16 +575,10 @@ class MainWindow(Window_Customizing):
         ############################ Menu ###########################
         #############################################################
 
-        MainWindowSignals.Signal_FrameStatus.connect(
-            lambda FrameStatus: self.Function_PrintText(
-                Panel = self.ui.Label_Menu_Home_Text,
-                Frame = self.ui.Frame_Menu,
-                FrameStatus = FrameStatus,
-                Text = QCA.translate("Label", "主页")
-            )
-        )
+        self.ui.Label_Menu_Home_Text.setText(QCA.translate("Label", "主页"))
         self.ui.Button_Menu_Home.clicked.connect(
-            lambda: self.Function_AnimateStackedWidget(
+            lambda: Function_AnimateStackedWidget(
+                Parent = self,
                 StackedWidget = self.ui.StackedWidget_Pages,
                 TargetIndex = 0
             )
@@ -713,16 +589,10 @@ class MainWindow(Window_Customizing):
         self.ui.Button_Menu_Home.setToolTipDuration(-1)
         self.ui.Button_Menu_Home.setToolTip(QCA.translate("ToolTip", "主页"))
 
-        MainWindowSignals.Signal_FrameStatus.connect(
-            lambda FrameStatus: self.Function_PrintText(
-                Panel = self.ui.Label_Menu_Download_Text,
-                Frame = self.ui.Frame_Menu,
-                FrameStatus = FrameStatus,
-                Text = QCA.translate("Label", "下载")
-            )
-        )
+        self.ui.Label_Menu_Download_Text.setText(QCA.translate("Label", "下载"))
         self.ui.Button_Menu_Download.clicked.connect(
-            lambda: self.Function_AnimateStackedWidget(
+            lambda: Function_AnimateStackedWidget(
+                Parent = self,
                 StackedWidget = self.ui.StackedWidget_Pages,
                 TargetIndex = 1
             )
@@ -733,16 +603,10 @@ class MainWindow(Window_Customizing):
         self.ui.Button_Menu_Download.setToolTipDuration(-1)
         self.ui.Button_Menu_Download.setToolTip(QCA.translate("ToolTip", "下载"))
 
-        MainWindowSignals.Signal_FrameStatus.connect(
-            lambda FrameStatus: self.Function_PrintText(
-                Panel = self.ui.Label_Menu_Tools_Text,
-                Frame = self.ui.Frame_Menu,
-                FrameStatus = FrameStatus,
-                Text = QCA.translate("Label", "工具")
-            )
-        )
+        self.ui.Label_Menu_Tools_Text.setText(QCA.translate("Label", "工具"))
         self.ui.Button_Menu_Tools.clicked.connect(
-            lambda: self.Function_AnimateStackedWidget(
+            lambda: Function_AnimateStackedWidget(
+                Parent = self,
                 StackedWidget = self.ui.StackedWidget_Pages,
                 TargetIndex = 2
             )
@@ -753,16 +617,10 @@ class MainWindow(Window_Customizing):
         self.ui.Button_Menu_Tools.setToolTipDuration(-1)
         self.ui.Button_Menu_Tools.setToolTip(QCA.translate("ToolTip", "工具"))
 
-        MainWindowSignals.Signal_FrameStatus.connect(
-            lambda FrameStatus: self.Function_PrintText(
-                Panel = self.ui.Label_Menu_Settings_Text,
-                Frame = self.ui.Frame_Menu,
-                FrameStatus = FrameStatus,
-                Text = QCA.translate("Label", "设置")
-            )
-        )
+        self.ui.Label_Menu_Settings_Text.setText(QCA.translate("Label", "设置"))
         self.ui.Button_Menu_Settings.clicked.connect(
-            lambda: self.Function_AnimateStackedWidget(
+            lambda: Function_AnimateStackedWidget(
+                Parent = self,
                 StackedWidget = self.ui.StackedWidget_Pages,
                 TargetIndex = 3
             )
@@ -773,16 +631,10 @@ class MainWindow(Window_Customizing):
         self.ui.Button_Menu_Settings.setToolTipDuration(-1)
         self.ui.Button_Menu_Settings.setToolTip(QCA.translate("ToolTip", "设置"))
 
-        MainWindowSignals.Signal_FrameStatus.connect(
-            lambda FrameStatus: self.Function_PrintText(
-                Panel = self.ui.Label_Menu_Info_Text,
-                Frame = self.ui.Frame_Menu,
-                FrameStatus = FrameStatus,
-                Text = QCA.translate("Label", "关于")
-            )
-        )
+        self.ui.Label_Menu_Info_Text.setText(QCA.translate("Label", "关于"))
         self.ui.Button_Menu_Info.clicked.connect(
-            lambda: self.Function_AnimateStackedWidget(
+            lambda: Function_AnimateStackedWidget(
+                Parent = self,
                 StackedWidget = self.ui.StackedWidget_Pages,
                 TargetIndex = 4
             )
@@ -880,12 +732,8 @@ class MainWindow(Window_Customizing):
                 WindowTitle = "Tip",
                 Text = "未检测到FFmpeg，已开始下载",
                 EventButtons = [QMessageBox.Ok],
-                EventLists = [
-                    [self.ui.Button_Menu_Download.click]
-                ],
-                ParamLists = [
-                    [()]
-                ]
+                EventLists = [[self.ui.Button_Menu_Download.click]],
+                ParamLists = [[()]]
             )
         )
         EnvConfiguratorSignals.Signal_FFmpegInstalled.connect(#self.ui.Button_Install_FFmpeg.click)
@@ -893,6 +741,7 @@ class MainWindow(Window_Customizing):
         )
         EnvConfiguratorSignals.Signal_FFmpegInstallFailed.connect(
             lambda: Function_ShowMessageBox(
+                MessageType = QMessageBox.Warning,
                 WindowTitle = "Warning",
                 Text = "安装FFmpeg出错",
                 EventButtons = [QMessageBox.Ok]
@@ -933,12 +782,8 @@ class MainWindow(Window_Customizing):
                 WindowTitle = "Tip",
                 Text = "未检测到GCC，已开始下载",
                 EventButtons = [QMessageBox.Ok],
-                EventLists = [
-                    [self.ui.Button_Menu_Download.click]
-                ],
-                ParamLists = [
-                    [()]
-                ]
+                EventLists = [[self.ui.Button_Menu_Download.click]],
+                ParamLists = [[()]]
             )
         )
         EnvConfiguratorSignals.Signal_GCCInstalled.connect(#self.ui.Button_Install_GCC.click)
@@ -946,6 +791,7 @@ class MainWindow(Window_Customizing):
         )
         EnvConfiguratorSignals.Signal_GCCInstallFailed.connect(
             lambda: Function_ShowMessageBox(
+                MessageType = QMessageBox.Warning,
                 WindowTitle = "Warning",
                 Text = "安装GCC出错",
                 EventButtons = [QMessageBox.Ok]
@@ -985,12 +831,8 @@ class MainWindow(Window_Customizing):
                 WindowTitle = "Tip",
                 Text = "未检测到CMake，已开始下载",
                 EventButtons = [QMessageBox.Ok],
-                EventLists = [
-                    [self.ui.Button_Menu_Download.click]
-                ],
-                ParamLists = [
-                    [()]
-                ]
+                EventLists = [[self.ui.Button_Menu_Download.click]],
+                ParamLists = [[()]]
             )
         )
         EnvConfiguratorSignals.Signal_CMakeInstalled.connect(#self.ui.Button_Install_CMake.click)
@@ -998,6 +840,7 @@ class MainWindow(Window_Customizing):
         )
         EnvConfiguratorSignals.Signal_CMakeInstallFailed.connect(
             lambda: Function_ShowMessageBox(
+                MessageType = QMessageBox.Warning,
                 WindowTitle = "Warning",
                 Text = "安装CMake出错",
                 EventButtons = [QMessageBox.Ok]
@@ -1038,12 +881,8 @@ class MainWindow(Window_Customizing):
                 WindowTitle = "Tip",
                 Text = "未检测到Python，已开始下载",
                 EventButtons = [QMessageBox.Ok],
-                EventLists = [
-                    [self.ui.Button_Menu_Download.click]
-                ],
-                ParamLists = [
-                    [()]
-                ]
+                EventLists = [[self.ui.Button_Menu_Download.click]],
+                ParamLists = [[()]]
             )
         )
         EnvConfiguratorSignals.Signal_PythonInstalled.connect(#self.ui.Button_Install_Python.click)
@@ -1051,6 +890,7 @@ class MainWindow(Window_Customizing):
         )
         EnvConfiguratorSignals.Signal_PythonInstallFailed.connect(
             lambda: Function_ShowMessageBox(
+                MessageType = QMessageBox.Warning,
                 WindowTitle = "Warning",
                 Text = "安装Python出错",
                 EventButtons = [QMessageBox.Ok]
@@ -1090,12 +930,8 @@ class MainWindow(Window_Customizing):
                 WindowTitle = "Tip",
                 Text = "未检测到Python依赖库，已开始下载",
                 EventButtons = [QMessageBox.Ok],
-                EventLists = [
-                    [self.ui.Button_Menu_Download.click]
-                ],
-                ParamLists = [
-                    [()]
-                ]
+                EventLists = [[self.ui.Button_Menu_Download.click]],
+                ParamLists = [[()]]
             )
         )
         EnvConfiguratorSignals.Signal_PyReqsInstalled.connect(#self.ui.Button_Install_PyReqs.click)
@@ -1103,6 +939,7 @@ class MainWindow(Window_Customizing):
         )
         EnvConfiguratorSignals.Signal_PythonInstallFailed.connect(
             lambda: Function_ShowMessageBox(
+                MessageType = QMessageBox.Warning,
                 WindowTitle = "Warning",
                 Text = "安装Python依赖库出错",
                 EventButtons = [QMessageBox.Ok]
@@ -1142,12 +979,8 @@ class MainWindow(Window_Customizing):
                 WindowTitle = "Tip",
                 Text = "未检测到Pytorch，已开始下载",
                 EventButtons = [QMessageBox.Ok],
-                EventLists = [
-                    [self.ui.Button_Menu_Download.click]
-                ],
-                ParamLists = [
-                    [()]
-                ]
+                EventLists = [[self.ui.Button_Menu_Download.click]],
+                ParamLists = [[()]]
             )
         )
         EnvConfiguratorSignals.Signal_PytorchInstalled.connect(#self.ui.Button_Install_Pytorch.click)
@@ -1155,6 +988,7 @@ class MainWindow(Window_Customizing):
         )
         EnvConfiguratorSignals.Signal_PytorchInstallFailed.connect(
             lambda: Function_ShowMessageBox(
+                MessageType = QMessageBox.Warning,
                 WindowTitle = "Warning",
                 Text = "安装Pytorch出错",
                 EventButtons = [QMessageBox.Ok]
@@ -1204,36 +1038,13 @@ class MainWindow(Window_Customizing):
             type = Qt.QueuedConnection
         )
 
-        '''
-        self.ui.Label_Tools_Title.setText(QCA.translate("Label", "工具  -   "))
-
-        self.ui.ComboBox_Tools.addItems([
-                QCA.translate("ComboBox", "音频基本处理"),
-                QCA.translate("ComboBox", "语音识别和筛选"),
-                QCA.translate("ComboBox", "语音转文字字幕"),
-                QCA.translate("ComboBox", "语音数据集制作"),
-                QCA.translate("ComboBox", "语音模型训练"),
-                QCA.translate("ComboBox", "语音模型推理")
-            ]
-        )
-        self.ui.ComboBox_Tools.setCurrentText(QCA.translate("ComboBox", '音频基本处理'))
-        self.ui.ComboBox_Tools.currentIndexChanged.connect(
-            lambda Index: self.Function_AnimateStackedWidget(
-                StackedWidget = self.ui.StackedWidget_Pages_Tools,
-                TargetIndex = Index
-            )
-        )
-        self.ui.ComboBox_Tools.currentIndexChanged.connect(
-            lambda Index: self.ui.SpinBox_Tools.setValue(Index + 1)
-        )
-        '''
-
         self.ui.ToolButton_Tools_Title_AudioProcessor.setText(QCA.translate("ToolButton", '音频基本处理'))
         self.ui.ToolButton_Tools_Title_AudioProcessor.setCheckable(True)
         self.ui.ToolButton_Tools_Title_AudioProcessor.setChecked(True)
         self.ui.ToolButton_Tools_Title_AudioProcessor.setAutoExclusive(True)
         self.ui.ToolButton_Tools_Title_AudioProcessor.clicked.connect(
-            lambda: self.Function_AnimateStackedWidget(
+            lambda: Function_AnimateStackedWidget(
+                Parent = self,
                 StackedWidget = self.ui.StackedWidget_Pages_Tools,
                 TargetIndex = 0
             )
@@ -1244,7 +1055,8 @@ class MainWindow(Window_Customizing):
         self.ui.ToolButton_Tools_Title_VoiceIdentifier.setChecked(False)
         self.ui.ToolButton_Tools_Title_VoiceIdentifier.setAutoExclusive(True)
         self.ui.ToolButton_Tools_Title_VoiceIdentifier.clicked.connect(
-            lambda: self.Function_AnimateStackedWidget(
+            lambda: Function_AnimateStackedWidget(
+                Parent = self,
                 StackedWidget = self.ui.StackedWidget_Pages_Tools,
                 TargetIndex = 1
             )
@@ -1255,7 +1067,8 @@ class MainWindow(Window_Customizing):
         self.ui.ToolButton_Tools_Title_VoiceTranscriber.setChecked(False)
         self.ui.ToolButton_Tools_Title_VoiceTranscriber.setAutoExclusive(True)
         self.ui.ToolButton_Tools_Title_VoiceTranscriber.clicked.connect(
-            lambda: self.Function_AnimateStackedWidget(
+            lambda: Function_AnimateStackedWidget(
+                Parent = self,
                 StackedWidget = self.ui.StackedWidget_Pages_Tools,
                 TargetIndex = 2
             )
@@ -1266,7 +1079,8 @@ class MainWindow(Window_Customizing):
         self.ui.ToolButton_Tools_Title_DatasetCreator.setChecked(False)
         self.ui.ToolButton_Tools_Title_DatasetCreator.setAutoExclusive(True)
         self.ui.ToolButton_Tools_Title_DatasetCreator.clicked.connect(
-            lambda: self.Function_AnimateStackedWidget(
+            lambda: Function_AnimateStackedWidget(
+                Parent = self,
                 StackedWidget = self.ui.StackedWidget_Pages_Tools,
                 TargetIndex = 3
             )
@@ -1277,7 +1091,8 @@ class MainWindow(Window_Customizing):
         self.ui.ToolButton_Tools_Title_VoiceTrainer.setChecked(False)
         self.ui.ToolButton_Tools_Title_VoiceTrainer.setAutoExclusive(True)
         self.ui.ToolButton_Tools_Title_VoiceTrainer.clicked.connect(
-            lambda: self.Function_AnimateStackedWidget(
+            lambda: Function_AnimateStackedWidget(
+                Parent = self,
                 StackedWidget = self.ui.StackedWidget_Pages_Tools,
                 TargetIndex = 4
             )
@@ -1288,7 +1103,8 @@ class MainWindow(Window_Customizing):
         self.ui.ToolButton_Tools_Title_VoiceConverter.setChecked(False)
         self.ui.ToolButton_Tools_Title_VoiceConverter.setAutoExclusive(True)
         self.ui.ToolButton_Tools_Title_VoiceConverter.clicked.connect(
-            lambda: self.Function_AnimateStackedWidget(
+            lambda: Function_AnimateStackedWidget(
+                Parent = self,
                 StackedWidget = self.ui.StackedWidget_Pages_Tools,
                 TargetIndex = 5
             )
@@ -1336,22 +1152,34 @@ class MainWindow(Window_Customizing):
         )
         Function_ConfigureCheckBox(
             CheckBox = self.ui.CheckBox_Toggle_BasicSettings_Tool_AudioProcessor,
-            CheckedText = "基础设置（显示）",
+            CheckedText = "基础设置",
             CheckedEventList = [
-                self.Function_AnimateFrame,
+                Function_AnimateFrame,
                 #Config_Tool_AudioProcessor.EditConfig
             ],
             CheckedArgsList = [
-                (self.ui.Frame_BasicSettings_Tool_AudioProcessor,...,...,0,self.ui.Frame_Tool_AudioProcessor_Media_Dir_Input.height()+self.ui.Frame_Tool_AudioProcessor_Media_Format_Output.height()+self.ui.Frame_Tool_AudioProcessor_Media_Dir_Output.height()+self.ui.Frame_Tool_AudioProcessor_Slice_Audio.height(),0,'Extend'),
+                (
+                    self, self.ui.Frame_BasicSettings_Tool_AudioProcessor,
+                    None, None,
+                    0, self.ui.Frame_BasicSettings_Tool_AudioProcessor.sizeHint().height(),
+                    210,
+                    'Extend'
+                ),
                 #('AudioProcessor', 'Toggle_BasicSettings', 'True')
             ],
-            UncheckedText = "基础设置（隐藏）",
+            UncheckedText = "基础设置",
             UncheckedEventList = [
-                self.Function_AnimateFrame,
+                Function_AnimateFrame,
                 #Config_Tool_AudioProcessor.EditConfig
             ],
             UncheckedArgsList = [
-                (self.ui.Frame_BasicSettings_Tool_AudioProcessor,...,...,0,self.ui.Frame_Tool_AudioProcessor_Media_Dir_Input.height()+self.ui.Frame_Tool_AudioProcessor_Media_Format_Output.height()+self.ui.Frame_Tool_AudioProcessor_Media_Dir_Output.height()+self.ui.Frame_Tool_AudioProcessor_Slice_Audio.height(),0,'Reduce'),
+                (
+                    self, self.ui.Frame_BasicSettings_Tool_AudioProcessor,
+                    None, None,
+                    0, self.ui.Frame_BasicSettings_Tool_AudioProcessor.sizeHint().height(),
+                    210,
+                    'Reduce'
+                ),
                 #('AudioProcessor', 'Toggle_BasicSettings', 'False')
             ],
             TakeEffect = True
@@ -1404,45 +1232,37 @@ class MainWindow(Window_Customizing):
         self.ui.CheckBox_Tool_AudioProcessor_Slice_Audio.setChecked(
             eval(Config_Tool_AudioProcessor.GetValue('AudioProcessor', 'Slice_Audio', 'True'))
         )
+        def TempFunction_HideWidgets(SetVisible):
+            for Frame in (self.ui.Frame_Tool_AudioProcessor_RMS_Threshold,self.ui.Frame_Tool_AudioProcessor_Hop_Size,self.ui.Frame_Tool_AudioProcessor_Silent_Interval_Min,self.ui.Frame_Tool_AudioProcessor_Silence_Kept_Max,self.ui.Frame_Tool_AudioProcessor_Audio_Length_Min):
+                Frame.setVisible(SetVisible)
+            if self.ui.CheckBox_Toggle_AdvanceSettings_Tool_AudioProcessor.isChecked():
+                Function_AnimateFrame(
+                    Parent = self,
+                    Frame = self.ui.Frame_AdvanceSettings_Tool_AudioProcessor,
+                    MinHeight = self.ui.Frame_Tool_AudioProcessor_SampleRate.height()+self.ui.Frame_Tool_AudioProcessor_SampleWidth.height()+self.ui.Frame_Tool_AudioProcessor_ToMono.height(),
+                    MaxHeight = self.ui.Frame_AdvanceSettings_Tool_AudioProcessor.sizeHint().height() if SetVisible else (self.ui.Frame_Tool_AudioProcessor_SampleRate.height()+self.ui.Frame_Tool_AudioProcessor_SampleWidth.height()+self.ui.Frame_Tool_AudioProcessor_ToMono.height()),
+                    Duration = 210,
+                    Mode = 'Extend' if SetVisible else 'Reduce'
+                )
         Function_ConfigureCheckBox(
             CheckBox = self.ui.CheckBox_Tool_AudioProcessor_Slice_Audio,
             CheckedText = "已启用",
             CheckedEventList = [
                 Config_Tool_AudioProcessor.EditConfig,
-                #self.ui.Frame_Tool_AudioProcessor_RMS_Threshold.setVisible,
-                #self.ui.Frame_Tool_AudioProcessor_Hop_Size.setVisible,
-                #self.ui.Frame_Tool_AudioProcessor_Silent_Interval_Min.setVisible,
-                #self.ui.Frame_Tool_AudioProcessor_Silence_Kept_Max.setVisible,
-                #self.ui.Frame_Tool_AudioProcessor_Audio_Length_Min.setVisible,
-                #self.Function_AnimateFrame
+                TempFunction_HideWidgets
             ],
             CheckedArgsList = [
                 ('AudioProcessor', 'Slice_Audio', 'True'),
-                #(True),
-                #(True),
-                #(True),
-                #(True),
-                #(True),
-                #(self.ui.Frame_AdvanceSettings_Tool_AudioProcessor,...,...,0,self.ui.Frame_Tool_AudioProcessor_RMS_Threshold.height()+self.ui.Frame_Tool_AudioProcessor_Hop_Size.height()+self.ui.Frame_Tool_AudioProcessor_Silent_Interval_Min.height()+self.ui.Frame_Tool_AudioProcessor_Silence_Kept_Max.height()+self.ui.Frame_Tool_AudioProcessor_Audio_Length_Min.height()+self.ui.Frame_Tool_AudioProcessor_SampleRate.height()+self.ui.Frame_Tool_AudioProcessor_SampleWidth.height()+self.ui.Frame_Tool_AudioProcessor_ToMono.height(),0,'Extend')
+                (True)
             ],
             UncheckedText = "未启用",
             UncheckedEventList = [
                 Config_Tool_AudioProcessor.EditConfig,
-                #self.ui.Frame_Tool_AudioProcessor_RMS_Threshold.setVisible,
-                #self.ui.Frame_Tool_AudioProcessor_Hop_Size.setVisible,
-                #self.ui.Frame_Tool_AudioProcessor_Silent_Interval_Min.setVisible,
-                #self.ui.Frame_Tool_AudioProcessor_Silence_Kept_Max.setVisible,
-                #self.ui.Frame_Tool_AudioProcessor_Audio_Length_Min.setVisible,
-                #self.Function_AnimateFrame
+                TempFunction_HideWidgets
             ],
             UncheckedArgsList = [
                 ('AudioProcessor', 'Slice_Audio', 'False'),
-                #(False),
-                #(False),
-                #(False),
-                #(False),
-                #(False),
-                #(self.ui.Frame_BasicSettings_Tool_AudioProcessor,...,...,0,self.ui.Frame_Tool_AudioProcessor_SampleRate.height()+self.ui.Frame_Tool_AudioProcessor_SampleWidth.height()+self.ui.Frame_Tool_AudioProcessor_ToMono.height(),0,'Reduce')
+                (False)
             ],
             TakeEffect = True
         )
@@ -1481,24 +1301,34 @@ class MainWindow(Window_Customizing):
         self.ui.CheckBox_Toggle_AdvanceSettings_Tool_AudioProcessor.setChecked(
             False #eval(Config_Tool_AudioProcessor.GetValue('AudioProcessor', 'Toggle_AdvanceSettings', ''))
         )
+        def TempFunction_ExtendVisibleWidgets(Visualize):
+            AlteredMaxHeight = self.ui.Frame_Tool_AudioProcessor_SampleRate.height()+self.ui.Frame_Tool_AudioProcessor_SampleWidth.height()+self.ui.Frame_Tool_AudioProcessor_ToMono.height()
+            Function_AnimateFrame(
+                Parent = self,
+                Frame = self.ui.Frame_AdvanceSettings_Tool_AudioProcessor,
+                MinHeight = 0,
+                MaxHeight = self.ui.Frame_AdvanceSettings_Tool_AudioProcessor.sizeHint().height() if self.ui.CheckBox_Tool_AudioProcessor_Slice_Audio.isChecked() else AlteredMaxHeight,
+                Duration = 210,
+                Mode = 'Extend' if Visualize else 'Reduce'
+            )
         Function_ConfigureCheckBox(
             CheckBox = self.ui.CheckBox_Toggle_AdvanceSettings_Tool_AudioProcessor,
-            CheckedText = "高级设置（显示）",
+            CheckedText = "高级设置",
             CheckedEventList = [
-                self.Function_AnimateFrame,
+                TempFunction_ExtendVisibleWidgets,
                 #Config_Tool_AudioProcessor.EditConfig
             ],
             CheckedArgsList = [
-                (self.ui.Frame_AdvanceSettings_Tool_AudioProcessor,...,...,0,self.ui.Frame_Tool_AudioProcessor_RMS_Threshold.height()+self.ui.Frame_Tool_AudioProcessor_Hop_Size.height()+self.ui.Frame_Tool_AudioProcessor_Silent_Interval_Min.height()+self.ui.Frame_Tool_AudioProcessor_Silence_Kept_Max.height()+self.ui.Frame_Tool_AudioProcessor_Audio_Length_Min.height()+self.ui.Frame_Tool_AudioProcessor_SampleRate.height()+self.ui.Frame_Tool_AudioProcessor_SampleWidth.height()+self.ui.Frame_Tool_AudioProcessor_ToMono.height(),0,'Extend'),
+                (True),
                 #('AudioProcessor', 'Toggle_AdvanceSettings', 'True')
             ],
-            UncheckedText = "高级设置（隐藏）",
+            UncheckedText = "高级设置",
             UncheckedEventList = [
-                self.Function_AnimateFrame,
+                TempFunction_ExtendVisibleWidgets,
                 #Config_Tool_AudioProcessor.EditConfig
             ],
             UncheckedArgsList = [
-                (self.ui.Frame_AdvanceSettings_Tool_AudioProcessor,...,...,0,self.ui.Frame_Tool_AudioProcessor_RMS_Threshold.height()+self.ui.Frame_Tool_AudioProcessor_Hop_Size.height()+self.ui.Frame_Tool_AudioProcessor_Silent_Interval_Min.height()+self.ui.Frame_Tool_AudioProcessor_Silence_Kept_Max.height()+self.ui.Frame_Tool_AudioProcessor_Audio_Length_Min.height()+self.ui.Frame_Tool_AudioProcessor_SampleRate.height()+self.ui.Frame_Tool_AudioProcessor_SampleWidth.height()+self.ui.Frame_Tool_AudioProcessor_ToMono.height(),0,'Reduce'),
+                (False),
                 #('AudioProcessor', 'Toggle_AdvanceSettings', 'False')
             ],
             TakeEffect = True
@@ -1724,7 +1554,12 @@ class MainWindow(Window_Customizing):
                 Function_ShowMessageBox
             ],
             FinishParamList = [
-                (QMessageBox.Question,"Ask","当前任务已执行结束，是否跳转至下一工具界面？",QMessageBox.Yes|QMessageBox.No,[QMessageBox.Yes],[[self.ui.Frame_Tools_Top.layout().itemAt(1).widget().click]],[[()]])
+                (
+                    QMessageBox.Question, "Ask",
+                    "当前任务已执行结束，是否跳转至下一工具界面？",
+                    QMessageBox.Yes|QMessageBox.No, [QMessageBox.Yes],
+                    [[self.ui.Frame_Tools_Top.layout().itemAt(1).widget().click]], [[()]]
+                )
             ]
         )
 
@@ -1773,22 +1608,34 @@ class MainWindow(Window_Customizing):
         )
         Function_ConfigureCheckBox(
             CheckBox = self.ui.CheckBox_Toggle_BasicSettings_Tool_VoiceIdentifier,
-            CheckedText = "基础设置（显示）",
+            CheckedText = "基础设置",
             CheckedEventList = [
-                self.Function_AnimateFrame,
+                Function_AnimateFrame,
                 #Config_Tool_VoiceIdentifier.EditConfig
             ],
             CheckedArgsList = [
-                (self.ui.Frame_BasicSettings_Tool_VoiceIdentifier,...,...,0,self.ui.Frame_Tool_VoiceIdentifier_Audio_Dir_Input.height()+self.ui.Frame_Tool_VoiceIdentifier_StdAudioSpeaker.height()+self.ui.Frame_Tool_VoiceIdentifier_DecisionThreshold.height()+self.ui.Frame_Tool_VoiceIdentifier_Audio_Dir_Output.height(),0,'Extend'),
+                (
+                    self, self.ui.Frame_BasicSettings_Tool_VoiceIdentifier,
+                    None, None,
+                    0, self.ui.Frame_BasicSettings_Tool_VoiceIdentifier.sizeHint().height(),
+                    210,
+                    'Extend'
+                ),
                 #('VoiceIdentifier', 'Toggle_BasicSettings', 'True')
             ],
-            UncheckedText = "基础设置（隐藏）",
+            UncheckedText = "基础设置",
             UncheckedEventList = [
-                self.Function_AnimateFrame,
+                Function_AnimateFrame,
                 #Config_Tool_VoiceIdentifier.EditConfig
             ],
             UncheckedArgsList = [
-                (self.ui.Frame_BasicSettings_Tool_VoiceIdentifier,...,...,0,self.ui.Frame_Tool_VoiceIdentifier_Audio_Dir_Input.height()+self.ui.Frame_Tool_VoiceIdentifier_StdAudioSpeaker.height()+self.ui.Frame_Tool_VoiceIdentifier_DecisionThreshold.height()+self.ui.Frame_Tool_VoiceIdentifier_Audio_Dir_Output.height(),0,'Reduce'),
+                (
+                    self, self.ui.Frame_BasicSettings_Tool_VoiceIdentifier,
+                    None, None,
+                    0, self.ui.Frame_BasicSettings_Tool_VoiceIdentifier.sizeHint().height(),
+                    210,
+                    'Reduce'
+                ),
                 #('VoiceIdentifier', 'Toggle_BasicSettings', 'False')
             ],
             TakeEffect = True
@@ -1872,19 +1719,31 @@ class MainWindow(Window_Customizing):
         self.ui.CheckBox_Toggle_AdvanceSettings_Tool_VoiceIdentifier.setChecked(False)
         Function_ConfigureCheckBox(
             CheckBox = self.ui.CheckBox_Toggle_AdvanceSettings_Tool_VoiceIdentifier,
-            CheckedText = "高级设置（显示）",
+            CheckedText = "高级设置",
             CheckedEventList = [
-                self.Function_AnimateFrame
+                Function_AnimateFrame
             ],
             CheckedArgsList = [
-                (self.ui.Frame_AdvanceSettings_Tool_VoiceIdentifier,...,...,0,self.ui.Frame_Tool_VoiceIdentifier_Model_Dir.height()+self.ui.Frame_Tool_VoiceIdentifier_Model_Type.height()+self.ui.Frame_Tool_VoiceIdentifier_Model_Name.height()+self.ui.Frame_Tool_VoiceIdentifier_Feature_Method.height()+self.ui.Frame_Tool_VoiceIdentifier_Duration_of_Audio.height(),0,'Extend')
+                (
+                    self, self.ui.Frame_AdvanceSettings_Tool_VoiceIdentifier,
+                    None, None,
+                    0, self.ui.Frame_AdvanceSettings_Tool_VoiceIdentifier.sizeHint().height(),
+                    210,
+                    'Extend'
+                )
             ],
-            UncheckedText = "高级设置（隐藏）",
+            UncheckedText = "高级设置",
             UncheckedEventList = [
-                self.Function_AnimateFrame
+                Function_AnimateFrame
             ],
             UncheckedArgsList = [
-                (self.ui.Frame_AdvanceSettings_Tool_VoiceIdentifier,...,...,0,self.ui.Frame_Tool_VoiceIdentifier_Model_Dir.height()+self.ui.Frame_Tool_VoiceIdentifier_Model_Type.height()+self.ui.Frame_Tool_VoiceIdentifier_Model_Name.height()+self.ui.Frame_Tool_VoiceIdentifier_Feature_Method.height()+self.ui.Frame_Tool_VoiceIdentifier_Duration_of_Audio.height(),0,'Reduce')
+                (
+                    self, self.ui.Frame_AdvanceSettings_Tool_VoiceIdentifier,
+                    None, None,
+                    0, self.ui.Frame_AdvanceSettings_Tool_VoiceIdentifier.sizeHint().height(),
+                    210,
+                    'Reduce'
+                )
             ],
             TakeEffect = True
         )
@@ -2047,7 +1906,12 @@ class MainWindow(Window_Customizing):
                 Function_ShowMessageBox
             ],
             FinishParamList = [
-                (QMessageBox.Question,"Ask","当前任务已执行结束，是否跳转至下一工具界面？",QMessageBox.Yes|QMessageBox.No,[QMessageBox.Yes],[[self.ui.Frame_Tools_Top.layout().itemAt(2).widget().click]],[[()]])
+                (
+                    QMessageBox.Question, "Ask",
+                    "当前任务已执行结束，是否跳转至下一工具界面？",
+                    QMessageBox.Yes|QMessageBox.No, [QMessageBox.Yes],
+                    [[self.ui.Frame_Tools_Top.layout().itemAt(2).widget().click]], [[()]]
+                )
             ]
         )
 
@@ -2095,22 +1959,34 @@ class MainWindow(Window_Customizing):
         )
         Function_ConfigureCheckBox(
             CheckBox = self.ui.CheckBox_Toggle_BasicSettings_Tool_VoiceTranscriber,
-            CheckedText = "基础设置（显示）",
+            CheckedText = "基础设置",
             CheckedEventList = [
-                self.Function_AnimateFrame,
+                Function_AnimateFrame,
                 #Config_Tool_VoiceTranscriber.EditConfig
             ],
             CheckedArgsList = [
-                (self.ui.Frame_BasicSettings_Tool_VoiceTranscriber,...,...,0,self.ui.Frame_Tool_VoiceTranscriber_WAV_Dir.height()+self.ui.Frame_Tool_VoiceTranscriber_SRT_Dir.height(),0,'Extend'),
+                (
+                    self, self.ui.Frame_BasicSettings_Tool_VoiceTranscriber,
+                    None, None,
+                    0, self.ui.Frame_BasicSettings_Tool_VoiceTranscriber.sizeHint().height(),
+                    210,
+                    'Extend'
+                ),
                 #('VoiceTranscriber', 'Toggle_BasicSettings', 'True')
             ],
-            UncheckedText = "基础设置（隐藏）",
+            UncheckedText = "基础设置",
             UncheckedEventList = [
-                self.Function_AnimateFrame,
+                Function_AnimateFrame,
                 #Config_Tool_VoiceTranscriber.EditConfig
             ],
             UncheckedArgsList = [
-                (self.ui.Frame_BasicSettings_Tool_VoiceTranscriber,...,...,0,self.ui.Frame_Tool_VoiceTranscriber_WAV_Dir.height()+self.ui.Frame_Tool_VoiceTranscriber_SRT_Dir.height(),0,'Reduce'),
+                (
+                    self, self.ui.Frame_BasicSettings_Tool_VoiceTranscriber,
+                    None, None,
+                    0, self.ui.Frame_BasicSettings_Tool_VoiceTranscriber.sizeHint().height(),
+                    210,
+                    'Reduce'
+                ),
                 #('VoiceTranscriber', 'Toggle_BasicSettings', 'False')
             ],
             TakeEffect = True
@@ -2162,19 +2038,31 @@ class MainWindow(Window_Customizing):
         self.ui.CheckBox_Toggle_AdvanceSettings_Tool_VoiceTranscriber.setChecked(False)
         Function_ConfigureCheckBox(
             CheckBox = self.ui.CheckBox_Toggle_AdvanceSettings_Tool_VoiceTranscriber,
-            CheckedText = "高级设置（显示）",
+            CheckedText = "高级设置",
             CheckedEventList = [
-                self.Function_AnimateFrame
+                Function_AnimateFrame
             ],
             CheckedArgsList = [
-                (self.ui.Frame_AdvanceSettings_Tool_VoiceTranscriber,...,...,0,self.ui.Frame_Tool_VoiceTranscriber_Model_Dir.height()+self.ui.Frame_Tool_VoiceTranscriber_Model_Name.height()+self.ui.Frame_Tool_VoiceTranscriber_Verbose.height()+self.ui.Frame_Tool_VoiceTranscriber_Condition_on_Previous_Text.height()+self.ui.Frame_Tool_VoiceTranscriber_fp16.height(),0,'Extend')
+                (
+                    self, self.ui.Frame_AdvanceSettings_Tool_VoiceTranscriber,
+                    None, None,
+                    0, self.ui.Frame_AdvanceSettings_Tool_VoiceTranscriber.sizeHint().height(),
+                    210,
+                    'Extend'
+                )
             ],
-            UncheckedText = "高级设置（隐藏）",
+            UncheckedText = "高级设置",
             UncheckedEventList = [
-                self.Function_AnimateFrame
+                Function_AnimateFrame
             ],
             UncheckedArgsList = [
-                (self.ui.Frame_AdvanceSettings_Tool_VoiceTranscriber,...,...,0,self.ui.Frame_Tool_VoiceTranscriber_Model_Dir.height()+self.ui.Frame_Tool_VoiceTranscriber_Model_Name.height()+self.ui.Frame_Tool_VoiceTranscriber_Verbose.height()+self.ui.Frame_Tool_VoiceTranscriber_Condition_on_Previous_Text.height()+self.ui.Frame_Tool_VoiceTranscriber_fp16.height(),0,'Reduce')
+                (
+                    self, self.ui.Frame_AdvanceSettings_Tool_VoiceTranscriber,
+                    None, None,
+                    0, self.ui.Frame_AdvanceSettings_Tool_VoiceTranscriber.sizeHint().height(),
+                    210,
+                    'Reduce'
+                )
             ],
             TakeEffect = True
         )
@@ -2311,22 +2199,34 @@ class MainWindow(Window_Customizing):
         )
         Function_ConfigureCheckBox(
             CheckBox = self.ui.CheckBox_Toggle_BasicOptionalSettings_Tool_VoiceTranscriber,
-            CheckedText = "基础设置（显示）",
+            CheckedText = "基础设置",
             CheckedEventList = [
-                self.Function_AnimateFrame,
+                Function_AnimateFrame,
                 #Config_Tool_VoiceTranscriber.EditConfig
             ],
             CheckedArgsList = [
-                (self.ui.Frame_BasicOptionalSettings_Tool_VoiceTranscriber,...,...,0,self.ui.Frame_Tool_VoiceTranscriber_Language.height(),0,'Extend'),
+                (
+                    self, self.ui.Frame_BasicOptionalSettings_Tool_VoiceTranscriber,
+                    None, None,
+                    0, self.ui.Frame_BasicOptionalSettings_Tool_VoiceTranscriber.sizeHint().height(),
+                    210,
+                    'Extend'
+                ),
                 #('VoiceTranscriber', 'Toggle_BasicOptionalSettings', 'True')
             ],
-            UncheckedText = "基础设置（隐藏）",
+            UncheckedText = "基础设置",
             UncheckedEventList = [
-                self.Function_AnimateFrame,
+                Function_AnimateFrame,
                 #Config_Tool_VoiceTranscriber.EditConfig
             ],
             UncheckedArgsList = [
-                (self.ui.Frame_BasicOptionalSettings_Tool_VoiceTranscriber,...,...,0,self.ui.Frame_Tool_VoiceTranscriber_Language.height(),0,'Reduce'),
+                (
+                    self, self.ui.Frame_BasicOptionalSettings_Tool_VoiceTranscriber,
+                    None, None,
+                    0, self.ui.Frame_BasicOptionalSettings_Tool_VoiceTranscriber.sizeHint().height(),
+                    210,
+                    'Reduce'
+                ),
                 #('VoiceTranscriber', 'Toggle_BasicOptionalSettings', 'False')
             ],
             TakeEffect = True
@@ -2438,7 +2338,12 @@ class MainWindow(Window_Customizing):
                 Function_ShowMessageBox
             ],
             FinishParamList = [
-                (QMessageBox.Question,"Ask","当前任务已执行结束，是否跳转至下一工具界面？",QMessageBox.Yes|QMessageBox.No,[QMessageBox.Yes],[[self.ui.Frame_Tools_Top.layout().itemAt(3).widget().click]],[[()]])
+                (
+                    QMessageBox.Question, "Ask",
+                    "当前任务已执行结束，是否跳转至下一工具界面？",
+                    QMessageBox.Yes|QMessageBox.No, [QMessageBox.Yes],
+                    [[self.ui.Frame_Tools_Top.layout().itemAt(3).widget().click]], [[()]]
+                )
             ]
         )
 
@@ -2487,22 +2392,34 @@ class MainWindow(Window_Customizing):
         )
         Function_ConfigureCheckBox(
             CheckBox = self.ui.CheckBox_Toggle_BasicSettings_Tool_DatasetCreator,
-            CheckedText = "基础设置（显示）",
+            CheckedText = "基础设置",
             CheckedEventList = [
-                self.Function_AnimateFrame,
+                Function_AnimateFrame,
                 #Config_Tool_DatasetCreator.EditConfig
             ],
             CheckedArgsList = [
-                (self.ui.Frame_BasicSettings_Tool_DatasetCreator,...,...,0,self.ui.Frame_Tool_DatasetCreator_WAV_Dir.height()+self.ui.Frame_Tool_DatasetCreator_SRT_Dir.height()+self.ui.Frame_Tool_DatasetCreator_ModelType.height()+self.ui.Frame_Tool_DatasetCreator_WAV_Dir_Split.height()+self.ui.Frame_Tool_DatasetCreator_FileList_Path_Training.height()+self.ui.Frame_Tool_DatasetCreator_FileList_Path_Validation.height(),0,'Extend'),
+                (
+                    self, self.ui.Frame_BasicSettings_Tool_DatasetCreator,
+                    None, None,
+                    0, self.ui.Frame_BasicSettings_Tool_DatasetCreator.sizeHint().height(),
+                    210,
+                    'Extend'
+                ),
                 #('DatasetCreator', 'Toggle_BasicSettings', 'True')
             ],
-            UncheckedText = "基础设置（隐藏）",
+            UncheckedText = "基础设置",
             UncheckedEventList = [
-                self.Function_AnimateFrame,
+                Function_AnimateFrame,
                 #Config_Tool_DatasetCreator.EditConfig
             ],
             UncheckedArgsList = [
-                (self.ui.Frame_BasicSettings_Tool_DatasetCreator,...,...,0,self.ui.Frame_Tool_DatasetCreator_WAV_Dir.height()+self.ui.Frame_Tool_DatasetCreator_SRT_Dir.height()+self.ui.Frame_Tool_DatasetCreator_ModelType.height()+self.ui.Frame_Tool_DatasetCreator_WAV_Dir_Split.height()+self.ui.Frame_Tool_DatasetCreator_FileList_Path_Training.height()+self.ui.Frame_Tool_DatasetCreator_FileList_Path_Validation.height(),0,'Reduce'),
+                (
+                    self, self.ui.Frame_BasicSettings_Tool_DatasetCreator,
+                    None, None,
+                    0, self.ui.Frame_BasicSettings_Tool_DatasetCreator.sizeHint().height(),
+                    210,
+                    'Reduce'
+                ),
                 #('DatasetCreator', 'Toggle_BasicSettings', 'False')
             ],
             TakeEffect = True
@@ -2634,19 +2551,31 @@ class MainWindow(Window_Customizing):
         self.ui.CheckBox_Toggle_AdvanceSettings_Tool_DatasetCreator.setChecked(False)
         Function_ConfigureCheckBox(
             CheckBox = self.ui.CheckBox_Toggle_AdvanceSettings_Tool_DatasetCreator,
-            CheckedText = "高级设置（显示）",
+            CheckedText = "高级设置",
             CheckedEventList = [
-                self.Function_AnimateFrame
+                Function_AnimateFrame
             ],
             CheckedArgsList = [
-                (self.ui.Frame_AdvanceSettings_Tool_DatasetCreator,...,...,0,self.ui.Frame_Tool_DatasetCreator_SampleRate.height()+self.ui.Frame_Tool_DatasetCreator_SampleWidth.height()+self.ui.Frame_Tool_DatasetCreator_ToMono.height()+self.ui.Frame_Tool_DatasetCreator_TrainRatio.height(),0,'Extend')
+                (
+                    self, self.ui.Frame_AdvanceSettings_Tool_DatasetCreator,
+                    None, None,
+                    0, self.ui.Frame_AdvanceSettings_Tool_DatasetCreator.sizeHint().height(),
+                    210,
+                    'Extend'
+                )
             ],
-            UncheckedText = "高级设置（隐藏）",
+            UncheckedText = "高级设置",
             UncheckedEventList = [
-                self.Function_AnimateFrame
+                Function_AnimateFrame
             ],
             UncheckedArgsList = [
-                (self.ui.Frame_AdvanceSettings_Tool_DatasetCreator,...,...,0,self.ui.Frame_Tool_DatasetCreator_SampleRate.height()+self.ui.Frame_Tool_DatasetCreator_SampleWidth.height()+self.ui.Frame_Tool_DatasetCreator_ToMono.height()+self.ui.Frame_Tool_DatasetCreator_TrainRatio.height(),0,'Reduce')
+                (
+                    self, self.ui.Frame_AdvanceSettings_Tool_DatasetCreator,
+                    None, None,
+                    0, self.ui.Frame_AdvanceSettings_Tool_DatasetCreator.sizeHint().height(),
+                    210,
+                    'Reduce'
+                )
             ],
             TakeEffect = True
         )
@@ -2735,22 +2664,34 @@ class MainWindow(Window_Customizing):
         )
         Function_ConfigureCheckBox(
             CheckBox = self.ui.CheckBox_Toggle_BasicOptionalSettings_Tool_DatasetCreator,
-            CheckedText = "基础设置（显示）",
+            CheckedText = "基础设置",
             CheckedEventList = [
-                self.Function_AnimateFrame,
+                Function_AnimateFrame,
                 #Config_Tool_DatasetCreator.EditConfig
             ],
             CheckedArgsList = [
-                (self.ui.Frame_BasicOptionalSettings_Tool_DatasetCreator,...,...,0,self.ui.Frame_Tool_DatasetCreator_AuxiliaryData_Path.height(),0,'Extend'),
+                (
+                    self, self.ui.Frame_BasicOptionalSettings_Tool_DatasetCreator,
+                    None, None,
+                    0, self.ui.Frame_BasicOptionalSettings_Tool_DatasetCreator.sizeHint().height(),
+                    210,
+                    'Extend'
+                ),
                 #('DatasetCreator', 'Toggle_BasicOptionalSettings', 'True')
             ],
-            UncheckedText = "基础设置（隐藏）",
+            UncheckedText = "基础设置",
             UncheckedEventList = [
-                self.Function_AnimateFrame,
+                Function_AnimateFrame,
                 #Config_Tool_DatasetCreator.EditConfig
             ],
             UncheckedArgsList = [
-                (self.ui.Frame_BasicOptionalSettings_Tool_DatasetCreator,...,...,0,self.ui.Frame_Tool_DatasetCreator_AuxiliaryData_Path.height(),0,'Reduce'),
+                (
+                    self, self.ui.Frame_BasicOptionalSettings_Tool_DatasetCreator,
+                    None, None,
+                    0, self.ui.Frame_BasicOptionalSettings_Tool_DatasetCreator.sizeHint().height(),
+                    210,
+                    'Reduce'
+                ),
                 #('DatasetCreator', 'Toggle_BasicOptionalSettings', 'False')
             ],
             TakeEffect = True
@@ -2878,7 +2819,12 @@ class MainWindow(Window_Customizing):
                 Function_ShowMessageBox
             ],
             FinishParamList = [
-                (QMessageBox.Question,"Ask","当前任务已执行结束，是否跳转至下一工具界面？",QMessageBox.Yes|QMessageBox.No,[QMessageBox.Yes],[[self.ui.Frame_Tools_Top.layout().itemAt(4).widget().click]],[[()]])
+                (
+                    QMessageBox.Question, "Ask",
+                    "当前任务已执行结束，是否跳转至下一工具界面？",
+                    QMessageBox.Yes|QMessageBox.No, [QMessageBox.Yes],
+                    [[self.ui.Frame_Tools_Top.layout().itemAt(4).widget().click]], [[()]]
+                )
             ]
         )
 
@@ -2928,22 +2874,34 @@ class MainWindow(Window_Customizing):
         )
         Function_ConfigureCheckBox(
             CheckBox = self.ui.CheckBox_Toggle_BasicSettings_Tool_VoiceTrainer,
-            CheckedText = "基础设置（显示）",
+            CheckedText = "基础设置",
             CheckedEventList = [
-                self.Function_AnimateFrame,
+                Function_AnimateFrame,
                 #Config_Tool_VoiceTrainer.EditConfig
             ],
             CheckedArgsList = [
-                (self.ui.Frame_BasicSettings_Tool_VoiceTrainer,...,...,0,self.ui.Frame_Tool_VoiceTrainer_FileList_Path_Training.height()+self.ui.Frame_Tool_VoiceTrainer_FileList_Path_Validation.height()+self.ui.Frame_Tool_VoiceTrainer_Epochs.height()+self.ui.Frame_Tool_VoiceTrainer_Batch_Size.height()+self.ui.Frame_Tool_VoiceTrainer_Config_Dir_Save.height()+self.ui.Frame_Tool_VoiceTrainer_Model_Dir_Save.height(),0,'Extend'),
+                (
+                    self, self.ui.Frame_BasicSettings_Tool_VoiceTrainer,
+                    None, None,
+                    0, self.ui.Frame_BasicSettings_Tool_VoiceTrainer.sizeHint().height(),
+                    210,
+                    'Extend'
+                ),
                 #('VoiceTrainer', 'Toggle_BasicSettings', 'True')
             ],
-            UncheckedText = "基础设置（隐藏）",
+            UncheckedText = "基础设置",
             UncheckedEventList = [
-                self.Function_AnimateFrame,
+                Function_AnimateFrame,
                 #Config_Tool_VoiceTrainer.EditConfig
             ],
             UncheckedArgsList = [
-                (self.ui.Frame_BasicSettings_Tool_VoiceTrainer,...,...,0,self.ui.Frame_Tool_VoiceTrainer_FileList_Path_Training.height()+self.ui.Frame_Tool_VoiceTrainer_FileList_Path_Validation.height()+self.ui.Frame_Tool_VoiceTrainer_Epochs.height()+self.ui.Frame_Tool_VoiceTrainer_Batch_Size.height()+self.ui.Frame_Tool_VoiceTrainer_Config_Dir_Save.height()+self.ui.Frame_Tool_VoiceTrainer_Model_Dir_Save.height(),0,'Reduce'),
+                (
+                    self, self.ui.Frame_BasicSettings_Tool_VoiceTrainer,
+                    None, None,
+                    0, self.ui.Frame_BasicSettings_Tool_VoiceTrainer.sizeHint().height(),
+                    210,
+                    'Reduce'
+                ),
                 #('VoiceTrainer', 'Toggle_BasicSettings', 'False')
             ],
             TakeEffect = True
@@ -3077,19 +3035,31 @@ class MainWindow(Window_Customizing):
         self.ui.CheckBox_Toggle_AdvanceSettings_Tool_VoiceTrainer.setChecked(False)
         Function_ConfigureCheckBox(
             CheckBox = self.ui.CheckBox_Toggle_AdvanceSettings_Tool_VoiceTrainer,
-            CheckedText = "高级设置（显示）",
+            CheckedText = "高级设置",
             CheckedEventList = [
-                self.Function_AnimateFrame
+                Function_AnimateFrame
             ],
             CheckedArgsList = [
-                (self.ui.Frame_AdvanceSettings_Tool_VoiceTrainer,...,...,0,self.ui.Frame_Tool_VoiceTrainer_Eval_Interval.height()+self.ui.Frame_Tool_VoiceTrainer_Num_Workers.height()+self.ui.Frame_Tool_VoiceTrainer_FP16_Run.height(),0,'Extend')
+                (
+                    self, self.ui.Frame_AdvanceSettings_Tool_VoiceTrainer,
+                    None, None,
+                    0, self.ui.Frame_AdvanceSettings_Tool_VoiceTrainer.sizeHint().height(),
+                    210,
+                    'Extend'
+                )
             ],
-            UncheckedText = "高级设置（隐藏）",
+            UncheckedText = "高级设置",
             UncheckedEventList = [
-                self.Function_AnimateFrame
+                Function_AnimateFrame
             ],
             UncheckedArgsList = [
-                (self.ui.Frame_AdvanceSettings_Tool_VoiceTrainer,...,...,0,self.ui.Frame_Tool_VoiceTrainer_Eval_Interval.height()+self.ui.Frame_Tool_VoiceTrainer_Num_Workers.height()+self.ui.Frame_Tool_VoiceTrainer_FP16_Run.height(),0,'Reduce')
+                (
+                    self, self.ui.Frame_AdvanceSettings_Tool_VoiceTrainer,
+                    None, None,
+                    0, self.ui.Frame_AdvanceSettings_Tool_VoiceTrainer.sizeHint().height(),
+                    210,
+                    'Reduce'
+                )
             ],
             TakeEffect = True
         )
@@ -3168,22 +3138,34 @@ class MainWindow(Window_Customizing):
         )
         Function_ConfigureCheckBox(
             CheckBox = self.ui.CheckBox_Toggle_BasicOptionalSettings_Tool_VoiceTrainer,
-            CheckedText = "基础设置（显示）",
+            CheckedText = "基础设置",
             CheckedEventList = [
-                self.Function_AnimateFrame,
+                Function_AnimateFrame,
                 #Config_Tool_VoiceTrainer.EditConfig
             ],
             CheckedArgsList = [
-                (self.ui.Frame_BasicOptionalSettings_Tool_VoiceTrainer,...,...,0,self.ui.Frame_Tool_VoiceTrainer_Model_Path_Pretrained_G.height()+self.ui.Frame_Tool_VoiceTrainer_Model_Path_Pretrained_D.height()+self.ui.Frame_Tool_VoiceTrainer_Config_Path_Load.height()+self.ui.Frame_Tool_VoiceTrainer_Keep_Original_Speakers.height(),0,'Extend'),
+                (
+                    self, self.ui.Frame_BasicOptionalSettings_Tool_VoiceTrainer,
+                    None, None,
+                    0, self.ui.Frame_BasicOptionalSettings_Tool_VoiceTrainer.sizeHint().height(),
+                    210,
+                    'Extend'
+                ),
                 #('VoiceTrainer', 'Toggle_BasicOptionalSettings', 'True')
             ],
-            UncheckedText = "基础设置（隐藏）",
+            UncheckedText = "基础设置",
             UncheckedEventList = [
-                self.Function_AnimateFrame,
+                Function_AnimateFrame,
                 #Config_Tool_VoiceTrainer.EditConfig
             ],
             UncheckedArgsList = [
-                (self.ui.Frame_BasicOptionalSettings_Tool_VoiceTrainer,...,...,0,self.ui.Frame_Tool_VoiceTrainer_Model_Path_Pretrained_G.height()+self.ui.Frame_Tool_VoiceTrainer_Model_Path_Pretrained_D.height()+self.ui.Frame_Tool_VoiceTrainer_Config_Path_Load.height()+self.ui.Frame_Tool_VoiceTrainer_Keep_Original_Speakers.height(),0,'Reduce'),
+                (
+                    self, self.ui.Frame_BasicOptionalSettings_Tool_VoiceTrainer,
+                    None, None,
+                    0, self.ui.Frame_BasicOptionalSettings_Tool_VoiceTrainer.sizeHint().height(),
+                    210,
+                    'Reduce'
+                ),
                 #('VoiceTrainer', 'Toggle_BasicOptionalSettings', 'False')
             ],
             TakeEffect = True
@@ -3234,33 +3216,10 @@ class MainWindow(Window_Customizing):
         )
 
         Function_SetText(
-            Widget = self.ui.Label_Tool_VoiceTrainer_Config_Path_Load,
-            Text = SetRichText(
-                Title = "配置路径",
-                Body = QCA.translate("Label", "用于加载人物等信息的配置文件的所在路径，载入优先级高于默认配置文件。")
-            )
-        )
-        Function_SetFileDialog(
-            Button = self.ui.Button_Tool_VoiceTrainer_Config_Path_Load,
-            LineEdit = self.ui.LineEdit_Tool_VoiceTrainer_Config_Path_Load,
-            Mode = "SelectFile",
-            FileType = "json类型 (*.json)"
-        )
-        Function_SetText(
-            Widget = self.ui.LineEdit_Tool_VoiceTrainer_Config_Path_Load,
-            Text = str(Config_Tool_VoiceTrainer.GetValue('VoiceTrainer', 'Config_Path_Load', '')),
-            SetPlaceholderText = True,
-            PlaceholderText = '保持空值将使用不含人物信息的默认配置'
-        )
-        self.ui.LineEdit_Tool_VoiceTrainer_Config_Path_Load.textChanged.connect(
-            lambda Value: Config_Tool_VoiceTrainer.EditConfig('VoiceTrainer', 'Config_Path_Load', str(Value))
-        )
-
-        Function_SetText(
             Widget = self.ui.Label_Tool_VoiceTrainer_Keep_Original_Speakers,
             Text = SetRichText(
-                Title = "保留原说话人",
-                Body = QCA.translate("Label", "保留底模中原有的说话人，需要设置相应的配置路径才能生效。")
+                Title = "保留原说话人（实验性）",
+                Body = QCA.translate("Label", "保留预训练模型中原有的说话人。")
             )
         )
         self.ui.CheckBox_Tool_VoiceTrainer_Keep_Original_Speakers.setCheckable(True)
@@ -3285,24 +3244,52 @@ class MainWindow(Window_Customizing):
             ],
             TakeEffect = True
         )
+        Function_ConfigureCheckBox(
+            CheckBox = self.ui.CheckBox_Tool_VoiceTrainer_Keep_Original_Speakers,
+            CheckedEventList = [
+                Function_ShowMessageBox
+            ],
+            CheckedArgsList = [
+                (
+                    QMessageBox.Warning, "Tip",
+                    "开启该实验性功能需要注意以下几点：\n"
+                    "1. 为防止老角色的音色在训练过程中被逐渐遗忘，请保证每个原角色至少有一两条音频参与训练。\n"
+                    "2. 为防止老角色的顺序被重组（导致音色混乱），请保证在'配置路径'选项中设置的配置文件包含了底模的角色信息。\n"
+                    "3. 相对的，需要适当增加迭代轮数以保证训练效果且每轮迭代所的花费时间也会增加。"
+                )
+            ],
+            TakeEffect = False
+        )
 
         self.ui.CheckBox_Toggle_AdvanceOptionalSettings_Tool_VoiceTrainer.setCheckable(True)
         self.ui.CheckBox_Toggle_AdvanceOptionalSettings_Tool_VoiceTrainer.setChecked(False)
         Function_ConfigureCheckBox(
             CheckBox = self.ui.CheckBox_Toggle_AdvanceOptionalSettings_Tool_VoiceTrainer,
-            CheckedText = "高级设置（显示）",
+            CheckedText = "高级设置",
             CheckedEventList = [
-                self.Function_AnimateFrame
+                Function_AnimateFrame
             ],
             CheckedArgsList = [
-                (self.ui.Frame_AdvanceOptionalSettings_Tool_VoiceTrainer,...,...,0,self.ui.Frame_Tool_VoiceTrainer_Speakers.height(),0,'Extend')
+                (
+                    self, self.ui.Frame_AdvanceOptionalSettings_Tool_VoiceTrainer,
+                    None, None,
+                    0, self.ui.Frame_AdvanceOptionalSettings_Tool_VoiceTrainer.sizeHint().height(),
+                    210,
+                    'Extend'
+                )
             ],
-            UncheckedText = "高级设置（隐藏）",
+            UncheckedText = "高级设置",
             UncheckedEventList = [
-                self.Function_AnimateFrame
+                Function_AnimateFrame
             ],
             UncheckedArgsList = [
-                (self.ui.Frame_AdvanceOptionalSettings_Tool_VoiceTrainer,...,...,0,self.ui.Frame_Tool_VoiceTrainer_Speakers.height(),0,'Reduce')
+                (
+                    self, self.ui.Frame_AdvanceOptionalSettings_Tool_VoiceTrainer,
+                    None, None,
+                    0, self.ui.Frame_AdvanceOptionalSettings_Tool_VoiceTrainer.sizeHint().height(),
+                    210,
+                    'Reduce'
+                )
             ],
             TakeEffect = True
         )
@@ -3421,7 +3408,6 @@ class MainWindow(Window_Customizing):
             ParamsFrom = [
                 self.ui.LineEdit_Tool_VoiceTrainer_FileList_Path_Training,
                 self.ui.LineEdit_Tool_VoiceTrainer_FileList_Path_Validation,
-                self.ui.LineEdit_Tool_VoiceTrainer_Config_Path_Load,
                 self.ui.LineEdit_Tool_VoiceTrainer_Config_Dir_Save,
                 self.ui.SpinBox_Tool_VoiceTrainer_Eval_Interval,
                 self.ui.SpinBox_Tool_VoiceTrainer_Epochs,
@@ -3435,7 +3421,6 @@ class MainWindow(Window_Customizing):
                 self.ui.LineEdit_Tool_VoiceTrainer_Model_Dir_Save
             ],
             EmptyAllowed = [
-                self.ui.LineEdit_Tool_VoiceTrainer_Config_Path_Load,
                 self.ui.LineEdit_Tool_VoiceTrainer_Model_Path_Pretrained_G,
                 self.ui.LineEdit_Tool_VoiceTrainer_Model_Path_Pretrained_D,
                 self.ui.LineEdit_Tool_VoiceTrainer_Speakers
@@ -3444,7 +3429,12 @@ class MainWindow(Window_Customizing):
                 Function_ShowMessageBox
             ],
             FinishParamList = [
-                (QMessageBox.Question,"Ask","当前任务已执行结束，是否跳转至下一工具界面？",QMessageBox.Yes|QMessageBox.No,[QMessageBox.Yes],[[self.ui.Frame_Tools_Top.layout().itemAt(5).widget().click]],[[()]])
+                (
+                    QMessageBox.Question, "Ask",
+                    "当前任务已执行结束，是否跳转至下一工具界面？",
+                    QMessageBox.Yes|QMessageBox.No, [QMessageBox.Yes],
+                    [[self.ui.Frame_Tools_Top.layout().itemAt(5).widget().click]], [[()]]
+                )
             ]
         )
         MainWindowSignals.Signal_TaskStatus.connect(
@@ -3502,22 +3492,34 @@ class MainWindow(Window_Customizing):
         )
         Function_ConfigureCheckBox(
             CheckBox = self.ui.CheckBox_Toggle_BasicSettings_Tool_VoiceConverter,
-            CheckedText = "基础设置（显示）",
+            CheckedText = "基础设置",
             CheckedEventList = [
-                self.Function_AnimateFrame,
+                Function_AnimateFrame,
                 #Config_Tool_VoiceConverter.EditConfig
             ],
             CheckedArgsList = [
-                (self.ui.Frame_BasicSettings_Tool_VoiceConverter,...,...,0,self.ui.Frame_Tool_VoiceConverter_Config_Path_Load.height()+self.ui.Frame_Tool_VoiceConverter_Model_Path_Load.height()+self.ui.Frame_Tool_VoiceConverter_Text.height()+self.ui.Frame_Tool_VoiceConverter_Language.height()+self.ui.Frame_Tool_VoiceConverter_Speaker.height()+self.ui.Frame_Tool_VoiceConverter_Audio_Dir_Save.height(),0,'Extend'),
+                (
+                    self, self.ui.Frame_BasicSettings_Tool_VoiceConverter,
+                    None, None,
+                    0, self.ui.Frame_BasicSettings_Tool_VoiceConverter.sizeHint().height(),
+                    210,
+                    'Extend'
+                ),
                 #('VoiceConverter', 'Toggle_BasicSettings', 'True')
             ],
-            UncheckedText = "基础设置（隐藏）",
+            UncheckedText = "基础设置",
             UncheckedEventList = [
-                self.Function_AnimateFrame,
+                Function_AnimateFrame,
                 #Config_Tool_VoiceConverter.EditConfig
             ],
             UncheckedArgsList = [
-                (self.ui.Frame_BasicSettings_Tool_VoiceConverter,...,...,0,self.ui.Frame_Tool_VoiceConverter_Config_Path_Load.height()+self.ui.Frame_Tool_VoiceConverter_Model_Path_Load.height()+self.ui.Frame_Tool_VoiceConverter_Text.height()+self.ui.Frame_Tool_VoiceConverter_Language.height()+self.ui.Frame_Tool_VoiceConverter_Speaker.height()+self.ui.Frame_Tool_VoiceConverter_Audio_Dir_Save.height(),0,'Reduce'),
+                (
+                    self, self.ui.Frame_BasicSettings_Tool_VoiceConverter,
+                    None, None,
+                    0, self.ui.Frame_BasicSettings_Tool_VoiceConverter.sizeHint().height(),
+                    210,
+                    'Reduce'
+                ),
                 #('VoiceConverter', 'Toggle_BasicSettings', 'False')
             ],
             TakeEffect = True
@@ -3652,19 +3654,31 @@ class MainWindow(Window_Customizing):
         self.ui.CheckBox_Toggle_AdvanceSettings_Tool_VoiceConverter.setChecked(False)
         Function_ConfigureCheckBox(
             CheckBox = self.ui.CheckBox_Toggle_AdvanceSettings_Tool_VoiceConverter,
-            CheckedText = "高级设置（显示）",
+            CheckedText = "高级设置",
             CheckedEventList = [
-                self.Function_AnimateFrame
+                Function_AnimateFrame
             ],
             CheckedArgsList = [
-                (self.ui.Frame_AdvanceSettings_Tool_VoiceConverter,...,...,0,self.ui.Frame_Tool_VoiceConverter_EmotionStrength.height()+self.ui.Frame_Tool_VoiceConverter_PhonemeDuration.height()+self.ui.Frame_Tool_VoiceConverter_SpeechRate.height(),0,'Extend')
+                (
+                    self, self.ui.Frame_AdvanceSettings_Tool_VoiceConverter,
+                    None, None,
+                    0, self.ui.Frame_AdvanceSettings_Tool_VoiceConverter.sizeHint().height(),
+                    210,
+                    'Extend'
+                )
             ],
-            UncheckedText = "高级设置（隐藏）",
+            UncheckedText = "高级设置",
             UncheckedEventList = [
-                self.Function_AnimateFrame
+                Function_AnimateFrame
             ],
             UncheckedArgsList = [
-                (self.ui.Frame_AdvanceSettings_Tool_VoiceConverter,...,...,0,self.ui.Frame_Tool_VoiceConverter_EmotionStrength.height()+self.ui.Frame_Tool_VoiceConverter_PhonemeDuration.height()+self.ui.Frame_Tool_VoiceConverter_SpeechRate.height(),0,'Reduce')
+                (
+                    self, self.ui.Frame_AdvanceSettings_Tool_VoiceConverter,
+                    None, None,
+                    0, self.ui.Frame_AdvanceSettings_Tool_VoiceConverter.sizeHint().height(),
+                    210,
+                    'Reduce'
+                )
             ],
             TakeEffect = True
         )
@@ -3874,7 +3888,11 @@ class MainWindow(Window_Customizing):
                 Function_ShowMessageBox
             ],
             FinishParamList = [
-                (QMessageBox.Information,"Tip","当前任务已执行结束！",QMessageBox.Ok)
+                (
+                    QMessageBox.Information, "Tip",
+                    "当前任务已执行结束！",
+                    QMessageBox.Ok
+                )
             ]
         )
 
@@ -3999,7 +4017,10 @@ class MainWindow(Window_Customizing):
                 Function_ShowMessageBox
             ],
             UncheckedArgsList = [
-                (QMessageBox.Information,"Tip", "该设置将于重启之后生效")
+                (
+                    QMessageBox.Information, "Tip",
+                    "该设置将于重启之后生效"
+                )
             ],
             TakeEffect = False
         )
@@ -4024,7 +4045,7 @@ class MainWindow(Window_Customizing):
                     "0. 本项目仅用于学术交流目的，旨在促进沟通和学习。不适用于生产环境。\n"
                     "1. 基于 Easy Voice Toolkit 发布的任何视频必须在描述中明确指出它们用于变声，并指定声音或音频的输入源，例如使用他人发布的视频或音频，并将分离出的人声作为转换的输入源，必须提供清晰的原始视频链接。如果您使用自己的声音或其他商业语音合成软件生成的声音作为转换的输入源，也必须在描述中说明。\n"
                     "2. 您将对输入源引起的任何侵权问题负全部责任。当使用其他商业语音合成软件作为输入源时，请确保遵守该软件的使用条款。请注意，许多语音合成引擎在其使用条款中明确声明不能用于输入源转换。\n"
-                    "3. 继续使用本项目被视为同意本仓库README中所述的相关条款。本仓库的 README 有义务进行劝导，但不承担可能出现的任何后续问题的责任。\n"
+                    "3. 继续使用本项目被视为同意本仓库 README 中所述的相关条款。本仓库的 README 有义务进行劝导，但不承担可能出现的任何后续问题的责任。\n"
                     "4. 如果您分发此仓库的代码或将由此项目生成的任何结果公开发布（包括但不限于视频分享平台），请注明原始作者和代码来源（即此仓库）。\n"
                     "5. 如果您将此项目用于任何其他计划，请提前与本仓库的作者联系并告知。\n"
                 ),
@@ -4046,7 +4067,8 @@ class MainWindow(Window_Customizing):
         self.ui.Button_Toggle_Console.setToolTipDuration(-1)
         self.ui.Button_Toggle_Console.setToolTip("Click to toggle console")
         self.ui.Button_Toggle_Console.clicked.connect(
-            lambda: self.Function_AnimateFrame(
+            lambda: Function_AnimateFrame(
+                Parent = self,
                 Frame = self.ui.Frame_Console,
                 MinHeight = 0,
                 MaxHeight = 210
@@ -4054,15 +4076,9 @@ class MainWindow(Window_Customizing):
         )
 
         # Print ConsoleInfo
-        #MainWindowSignals.Signal_FrameStatus.connect(lambda FrameStatus: 
         self.ConsoleInfo.Signal_ConsoleInfo.connect(
-            lambda Info: self.Function_PrintText(
-                Panel = self.ui.PlainTextEdit_Console,
-                FrameStatus = "Extended", #FrameStatus = FrameStatus,
-                Text = Info
-            )
+            lambda Info: self.ui.PlainTextEdit_Console.setPlainText(Info)
         )
-        #)
 
         '''
         # Display ToolIndex
@@ -4071,7 +4087,8 @@ class MainWindow(Window_Customizing):
         self.ui.SpinBox_Tools.setMaximum(6)
         self.ui.SpinBox_Tools.setValue(1)
         self.ui.SpinBox_Tools.valueChanged.connect(
-            lambda Index: self.Function_AnimateStackedWidget(
+            lambda Index: Function_AnimateStackedWidget(
+                Parent = self,
                 StackedWidget = self.ui.StackedWidget_Pages_Tools,
                 TargetIndex = Index - 1
             )

@@ -1,10 +1,3 @@
-'''
-Edited
-'''
-#This script will change the encoding of the srt file, and then extract the information as well
-#as store it in a csv file. According to the info in this csv file, the audio is splitted
-#the splitted audio and transcripts are then merged and cleaned.
-
 #import time, datetime
 import os, sys, shutil
 from typing import Union, Optional
@@ -56,37 +49,6 @@ class Dataset_Creating:
         self.ModelType = ModelType
         self.FileList_Path_Training = FileList_Path_Training
         self.FileList_Path_Validation = FileList_Path_Validation
-
-    '''
-    def FolderCreator(self):
-        # Check if SRT files directory exists and contains srt files
-        if os.path.exists(self.SRT_Dir):
-            print('Folder %s exists.. continuing processing..' %self.SRT_Dir)
-        else:
-            print('Trying to create folder for SRT files')
-            try:
-                os.mkdir(self.SRT_Dir)
-            except OSError:
-                print('Creation of directory %s failed' %self.SRT_Dir)
-            else:
-                print('Successfully created the directory %s' %self.SRT_Dir)
-            print('--> Please add srt files to folder %s' %self.SRT_Dir)
-            sys.exit()
-
-        # Check if WAV files directory exists and contains wmv or wav files
-        if os.path.exists(self.WAV_Dir):
-            print('Folder %s exists.. continuing processing..' %self.WAV_Dir)
-        else:
-            print('Trying to create folder for WAV files')
-            try:
-                os.mkdir(self.WAV_Dir)
-            except OSError:
-                print('Creation of directory %s failed' %self.WAV_Dir)
-            else:
-                print('Successfully created the directory %s' %self.WAV_Dir)
-            print('--> Please add wav or wmv files to folder %s' %self.WAV_Dir)
-            sys.exit()
-    '''
 
     def CallingFunctions(self):
         SRT_Counter = len(glob(os.path.join(self.SRT_Dir, '*.srt')))

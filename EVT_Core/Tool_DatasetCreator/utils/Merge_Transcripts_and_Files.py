@@ -1,8 +1,3 @@
-'''
-Edited
-'''
-# Matches the transcripts to the available audio files.
-
 import os
 import re
 import pandas as pd
@@ -25,6 +20,9 @@ def merge_transcripts_and_wav_files(
     CSV_Name_Final,
     #Time_Limitation
 ):
+    '''
+    Matches the transcripts to the available audio files.
+    '''
     DF_Final = pd.DataFrame()
 
     CSV_Path_Transcript = os.path.join(CSV_Dir_Merged, 'Full_Transcript.csv')

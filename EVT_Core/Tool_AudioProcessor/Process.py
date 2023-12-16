@@ -5,14 +5,14 @@ from typing import Union, Optional
 from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor
 
-from .utils.Convert_Media import Converter
+from .utils.Load_Media import Loader
 from .utils.Denoise_Audio import Denoiser
 from .utils.Slice_Audio import Slicer
 
 
 class Audio_Processing:
     '''
-    0. Convert the audio
+    0. Load the audio
     1. Denoise the audio
     2. Slice off the silent parts
     '''
@@ -77,7 +77,7 @@ class Audio_Processing:
         Media_Name_Input: str
     ):
         '''
-        Converter: Load audio from media files which supported by ffmpeg
+        Loader: Load audio from media files which supported by ffmpeg.
         Denoiser: WIP
         Slicer: Once the valid (sound) part reached min length since last slice and a silent part longer than min interval are detected, the audio will be sliced apart from the frame(s) with the lowest RMS value within the silent area.
         Long silence parts may be deleted.
@@ -91,7 +91,7 @@ class Audio_Processing:
         Media_Name_Output = os.path.splitext(os.path.basename(Media_Name_Input))[0] + '.' + self.Media_Format_Output
         Media_Path_Output = os.path.join(self.Media_Dir_Output, Media_Name_Output)
         Audio_Name_Input, Audio_Path_Input = Media_Name_Output, Media_Path_Output
-        AudioData, SampleRate = Converter(Path = Media_Name_Input, SR = self.SampleRate, Mono = self.ToMono)
+        AudioData, SampleRate = Loader(Path = Media_Name_Input, SR = self.SampleRate, Mono = self.ToMono)
 
         WriteParamsList = [(Audio_Path_Input, AudioData.T if len(AudioData.shape) > 1 else AudioData, int(SampleRate))] # .T: Swap axes if the audio is stereo
 

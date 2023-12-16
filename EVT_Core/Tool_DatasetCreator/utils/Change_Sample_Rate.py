@@ -1,21 +1,8 @@
-'''
-Edited
-'''
-
 import os
 import time
 import librosa
 import soundfile
 from concurrent.futures import ThreadPoolExecutor
-
-
-SubtypeDict = {
-    '8':          'PCM_8',
-    '16':         'PCM_16',
-    '24':         'PCM_24',
-    '32':         'PCM_32',
-    '32 (Float)': 'FLOAT'
-}
 
 
 def PreprocessAudio(
@@ -25,6 +12,13 @@ def PreprocessAudio(
     SampleWidth,
     ToMono
 ):
+    SubtypeDict = {
+        '8':          'PCM_8',
+        '16':         'PCM_16',
+        '24':         'PCM_24',
+        '32':         'PCM_32',
+        '32 (Float)': 'FLOAT'
+    }
     try:
         AudioData, SampleRate = librosa.load(Audio_Path_Input, sr = SampleRate, mono = True if ToMono else False)
         soundfile.write(
@@ -71,8 +65,3 @@ def preprocess_audio(
     End_Sub = time.time()
 
     print('The script took ', End_Sub - Start_Sub, ' seconds to run')
-
-
-#Source:
-#https://stackoverflow.com/questions/30619740/python-downsampling-wav-audio-file
-#https://stackoverflow.com/questions/44812553/how-to-convert-a-24-bit-wav-file-to-16-or-32-bit-files-in-python3

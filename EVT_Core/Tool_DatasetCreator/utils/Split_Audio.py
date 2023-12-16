@@ -1,8 +1,3 @@
-'''
-Edited
-'''
-# Slice audio files based on start and end times in csv files
-
 import os
 import pandas as pd
 from glob import glob
@@ -39,6 +34,9 @@ def split_files(
     Dir_Input,
     Dir_Output
 ):
+    '''
+    Slice audio files based on start and end times in csv files
+    '''
     ParamsList = []
     for Item in glob(os.path.join(Dir_Input, '*.csv')):
         if os.path.exists(Item.replace('.csv', '.wav')):

@@ -1,14 +1,10 @@
-'''
-Added
-'''
-
 import numpy
 import librosa
 from pydub import AudioSegment
 from typing import Optional
 
 
-def Converter(
+def Loader(
     Path: str,
     SR: Optional[float] = 22050.,
     Mono: bool = True

@@ -1,8 +1,4 @@
 '''
-Edited
-'''
-
-'''
 Defines the set of symbols used in text input to the model.
 '''
 

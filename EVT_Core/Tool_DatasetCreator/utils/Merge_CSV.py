@@ -1,8 +1,3 @@
-'''
-Edited
-'''
-# Joins all seperate csv-files
-
 import os
 import pandas as pd
 from glob import glob
@@ -23,6 +18,9 @@ def merge_csv(
     CSV_Dir,
     CSV_Dir_Merged
 ):
+    '''
+    Joins all seperate csv-files
+    '''
     print('Merging csv-files with transcriptions')
     CSV_Combined = pd.DataFrame()
     for Entry in glob(os.path.join(CSV_Dir, '*.csv')):

@@ -1,19 +1,15 @@
-'''
-Edited
-'''
-
 import os
 import glob
 import sys
-import argparse
 import logging
 logging.basicConfig(stream = sys.stdout, encoding = 'utf-8')
 logger = logging
 import json
 import subprocess
+import matplotlib
+import matplotlib.pylab as plt
 import numpy as np
 import torch
-from scipy.io.wavfile import read
 
 
 MATPLOTLIB_FLAG = False
@@ -82,13 +78,10 @@ def latest_checkpoint_path(dir_path, regex="G_*.pth"):
 def plot_spectrogram_to_numpy(spectrogram):
     global MATPLOTLIB_FLAG
     if not MATPLOTLIB_FLAG:
-        import matplotlib
         matplotlib.use("Agg")
         MATPLOTLIB_FLAG = True
         mpl_logger = logging.getLogger('matplotlib')
         mpl_logger.setLevel(logging.WARNING)
-    import matplotlib.pylab as plt
-    import numpy as np
 
     fig, ax = plt.subplots(figsize=(10,2))
     im = ax.imshow(spectrogram, aspect="auto", origin="lower",
@@ -108,13 +101,10 @@ def plot_spectrogram_to_numpy(spectrogram):
 def plot_alignment_to_numpy(alignment, info=None):
     global MATPLOTLIB_FLAG
     if not MATPLOTLIB_FLAG:
-        import matplotlib
         matplotlib.use("Agg")
         MATPLOTLIB_FLAG = True
         mpl_logger = logging.getLogger('matplotlib')
         mpl_logger.setLevel(logging.WARNING)
-    import matplotlib.pylab as plt
-    import numpy as np
 
     fig, ax = plt.subplots(figsize=(6, 4))
     im = ax.imshow(alignment.transpose(), aspect='auto', origin='lower',
@@ -144,22 +134,31 @@ def get_hparams(
     Config_Path: str,
     Model_Dir: str
 ):
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--ConfigPath',   '-c',   type = str,   default = Config_Path,  help = 'JSON file path for configuration')
-    parser.add_argument('--ModelDir',     '-m',   type = str,   default = Model_Dir,    help = 'Folder path to store your model')
-    args = parser.parse_args(args = [])
+    if not os.path.exists(Model_Dir):
+        os.makedirs(Model_Dir)
 
-    if not os.path.exists(args.ModelDir):
-        os.makedirs(args.ModelDir)
-
-    config_path = args.ConfigPath
-    with open(config_path, 'r', encoding = 'utf-8') as f:
+    with open(Config_Path, 'r', encoding = 'utf-8') as f:
         data = f.read()
     config = json.loads(data)
 
     hparams = HParams(**config)
-    hparams.model_dir = args.ModelDir
+    hparams.model_dir = Model_Dir
     return hparams
+
+
+def add_elements(
+    Iterable1,
+    Iterable2
+):
+    '''
+    Add unique elements form Iterable2 to Iterable1
+    '''
+    def GetDictKeys(Iterable):
+        return sorted(Iterable.keys(), key = lambda Key: Iterable[Key]) if isinstance(Iterable, dict) else Iterable
+    Iterable1, Iterable2 = GetDictKeys(Iterable1), GetDictKeys(Iterable2)
+    for Element in Iterable2:
+        Iterable1.append(Element) if Element not in Iterable1 else None
+    return Iterable1
 
 
 def check_git_hash(model_dir):

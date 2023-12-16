@@ -1,18 +1,10 @@
-'''
-Edited
-'''
-
-import argparse
-import functools
 import torch
 import os
 import numpy as np
 import shutil
-from typing import Optional
 
 from .modules.ECAPA_TDNN import EcapaTdnn, SpeakerIdetification
 from .data_utils.Reader import load_audio, CustomDataset
-from .utils.Utility import add_arguments, print_arguments
 from .utils.Downloader import Execute_Model_Download
 
 
@@ -44,29 +36,24 @@ class Voice_Identifying:
         self.DecisionThreshold = DecisionThreshold
         self.Duration_of_Audio = Duration_of_Audio
 
-        self.TypeList = ['Ecapa-Tdnn']
-        self.NameList = ['small']
-        self.MethodList = ['spectrogram', 'melspectrogram']
+        #self.TypeList = ['Ecapa-Tdnn']
+        #self.NameList = ['small']
+        #self.MethodList = ['spectrogram', 'melspectrogram']
         self.Model_Path = os.path.join(self.Model_Dir, self.Model_Type, self.Feature_Method, self.Model_Name) + '.pth'
 
     def GetModel(self):
-        Parser = argparse.ArgumentParser(description = __doc__)
-        Add_Arg = functools.partial(add_arguments, argparser = Parser)
-        Add_Arg('Resume',           str,      self.Model_Dir,            '模型文件夹路径')
-        Add_Arg('Model_Type',       str,      self.Model_Type,           '选择模型的类型',             choices = self.TypeList)
-        Add_Arg('Model_Name',       str,      self.Model_Name,           '模型文件的名字',             choices = self.NameList)
-        Add_Arg('Feature_Method',   str,      self.Feature_Method,       '音频特征提取方法',           choices = self.MethodList)
-        Args = Parser.parse_args(args = [])
-
+        '''
+        Function to load model
+        '''
         # Download Model
         Execute_Model_Download(self.Model_Dir, self.Model_Type, self.Feature_Method, self.Model_Name)
 
         # 获取模型
-        DataSet = CustomDataset(data_list_path = None, feature_method = Args.Feature_Method)
-        if Args.Model_Type == 'Ecapa-Tdnn':
+        DataSet = CustomDataset(data_list_path = None, feature_method = self.Feature_Method)
+        if self.Model_Type == 'Ecapa-Tdnn':
             self.Model = SpeakerIdetification(backbone = EcapaTdnn(input_size = DataSet.input_size))
         else:
-            raise Exception(f'{Args.Model_Type} 模型不存在！')
+            raise Exception(f'{self.Model_Type} 模型不存在！')
 
         # 指定使用设备
         self.Device = torch.device("cuda")
@@ -89,24 +76,12 @@ class Voice_Identifying:
         '''
         Function to infer 
         '''
-        Parser = argparse.ArgumentParser(description = __doc__)
-        Add_Arg = functools.partial(add_arguments, argparser = Parser)
-        Add_Arg('StdAudioSpeaker',  dict,     self.StdAudioSpeaker,      '目标人物与音频')
-        #Add_Arg('Audio_Path_Chk',   str,      self.Audio_Path_Chk,       '比对音频的路径')
-        Add_Arg('Audio_Dir_Chk',    str,      self.Audio_Dir_Input,      '比对音频的目录')
-        Add_Arg('NewDir',           str,      self.Audio_Dir_Output,     '移动音频的目录')
-        Add_Arg('Feature_Method',   str,      self.Feature_Method,       '音频特征提取方法',           choices = self.MethodList)
-        Add_Arg('Threshold',        float,    self.DecisionThreshold,    '判断是否为同一个人的阈值')
-        Add_Arg('Audio_Duration',   float,    self.Duration_of_Audio,    '预测的音频长度，单位秒')
-        Args = Parser.parse_args(args = [])
-        
-        #print_arguments(Args)
-
-        os.makedirs(Args.NewDir, exist_ok = True)
+        # Create Dir
+        os.makedirs(self.Audio_Dir_Output, exist_ok = True)
 
         # 预测音频
         def infer(Audio_Path):
-            data = load_audio(Audio_Path, mode = 'infer', feature_method = Args.Feature_Method, chunk_duration = Args.Audio_Duration)
+            data = load_audio(Audio_Path, mode = 'infer', feature_method = self.Feature_Method, chunk_duration = self.Duration_of_Audio)
             data = data[np.newaxis, :]
             data = torch.tensor(data, dtype = torch.float32, device = self.Device)
             # 执行预测
@@ -114,19 +89,19 @@ class Voice_Identifying:
             return Feature.data.cpu().numpy()
 
         # 两两比对
-        for Speaker, Audio_Path_Std in Args.StdAudioSpeaker.items():
+        for Speaker, Audio_Path_Std in self.StdAudioSpeaker.items():
             if os.path.exists(Audio_Path_Std):
                 Feature1 = infer(Audio_Path_Std)[0]
-            for File_Name in os.listdir(Args.Audio_Dir_Chk):
-                Audio_Path_Chk = os.path.join(Args.Audio_Dir_Chk, File_Name)
+            for File_Name in os.listdir(self.Audio_Dir_Input):
+                Audio_Path_Chk = os.path.join(self.Audio_Dir_Input, File_Name)
                 Feature2 = infer(Audio_Path_Chk)[0]
                 # 对角余弦值
                 Dist = np.dot(Feature1, Feature2) / (np.linalg.norm(Feature1) * np.linalg.norm(Feature2))
-                if Dist > Args.Threshold:
+                if Dist > self.DecisionThreshold:
                     print(f"{Audio_Path_Std} 和 {Audio_Path_Chk} 为同一个人，相似度为：{Dist}")
                     shutil.copy(
                         src = Audio_Path_Chk,
-                        dst = os.path.join(Args.NewDir, f"[{Speaker}]{File_Name}") if Speaker != None else Args.NewDir
+                        dst = os.path.join(self.Audio_Dir_Output, f"[{Speaker}]{File_Name}") if Speaker != None else self.Audio_Dir_Output
                     ) # 复制音频至新目录并实现选择性重命名：“[说话人物的名字]原文件名”
                 else:
                     print(f"{Audio_Path_Std} 和 {Audio_Path_Chk} 不是同一个人，相似度为：{Dist}")

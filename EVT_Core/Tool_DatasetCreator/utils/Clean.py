@@ -1,8 +1,3 @@
-'''
-Edited
-'''
-# Unwanted characters are removed. After cleaning the transcripts, the text is extracted and saved in a txt file which can be used for training the language model.
-
 import os
 import pandas as pd
 #from unidecode import unidecode
@@ -18,7 +13,9 @@ def Read_CSV(CSV_Path):
 
 
 def clean_unwanted_characters(CSV_Dir_Final, CSV_Name_Final):
-
+    '''
+    Remove unwanted characters. After cleaning the transcripts, the text is extracted and saved in a txt file which can be used for training the language model.
+    '''
     DF_DS_Final = Read_CSV(os.path.join(CSV_Dir_Final, CSV_Name_Final))
 
     # some srt files contain font codes which are removed hereby
