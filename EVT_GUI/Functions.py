@@ -402,14 +402,14 @@ def Function_AnimateStackedWidget(
     Parent: QWidget,
     StackedWidget: QStackedWidget,
     TargetIndex: int = 0,
-    Duration: int = 210
+    Duration: int = 99
 ):
     '''
     Function to animate stackedwidget
     '''
     OriginalWidget = StackedWidget.currentWidget()
     OriginalGeometry = OriginalWidget.geometry()
-    AlteredGeometry = QRect(OriginalGeometry.left() + OriginalGeometry.width(), OriginalGeometry.top(), OriginalGeometry.width(), OriginalGeometry.height())
+    AlteredGeometry = QRect(OriginalGeometry.left(), OriginalGeometry.top() + OriginalGeometry.height() / 66, OriginalGeometry.width(), OriginalGeometry.height())
 
     WidgetAnimation = QPropertyAnimation(OriginalWidget, b"geometry", Parent)
 

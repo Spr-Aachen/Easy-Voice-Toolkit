@@ -3,6 +3,7 @@ import sys
 import time #import asyncio
 import json
 from pathlib import Path
+from datetime import datetime
 from PySide6 import __file__ as PySide6_File
 from PySide6.QtCore import Qt, QObject, Signal, Slot, QThread
 from PySide6.QtCore import QCoreApplication as QCA
@@ -85,97 +86,110 @@ def UpdaterExecuter():
 
 ##############################################################################################################################
 
-# ClientFunc1
-def ClientRebooter():
+# Where to store custom signals
+class CustomSignals_Tasks(QObject):
     '''
-    Reboot EVT client
+    Set up signals for tasks
     '''
-    UpdaterExecuter() #os.execl(sys.executable, 'python', __file__, *sys.argv[1:]) else os.execl(sys.executable, sys.executable, *sys.argv)
+    Signal_AudioProcessed = Signal()
+
+    Signal_VoiceIdentified = Signal()
+
+    Signal_VoiceTranscribed = Signal()
+
+    Signal_DatasetCreated = Signal()
+
+    Signal_VoiceTrained = Signal()
+
+    Signal_VoiceConverted = Signal()
 
 
-# ClientFunc2
-class Integrity_Checker(QObject):
+TasksSignals = CustomSignals_Tasks()
+
+
+# QuickStart
+class Execute_OneClickConversion(QObject):
     '''
-    Check File integrity
+    Train&Infer voice with one click
     '''
+    started = Signal()
     finished = Signal(str)
 
     def __init__(self):
         super().__init__()
 
     @Slot(tuple)
-    def Execute(self):
-        if 'Undetected' not in [
-            Config.GetValue('Env', 'FFmpeg'),
-            #Config.GetValue('Env', 'GCC'),
-            #Config.GetValue('Env', 'CMake'),
-            Config.GetValue('Env', 'Python'),
-            Config.GetValue('Env', 'PyReqs'),
-            Config.GetValue('Env', 'Pytorch')
-        ]:
+    def Execute(self, Params: tuple):
+        self.started.emit()
+
+        def RunCommand(self, FuncName: str):
             Error = RunCMD(
                 Args = [
                     f'cd "{ResourceDir}"',
                     'python -c "'
-                    'from EVT_Core.Tool_AudioProcessor.Process import Audio_Processing; '
-                    'from EVT_Core.Tool_VoiceIdentifier.Identify import Voice_Identifying; '
-                    'from EVT_Core.Tool_VoiceTranscriber.Transcribe import Voice_Transcribing; '
-                    'from EVT_Core.Tool_DatasetCreator.Create import Dataset_Creating; '
-                    'from EVT_Core.Tool_VoiceTrainer.Train import Voice_Training; '
-                    'from EVT_Core.Tool_VoiceConverter.Convert import Voice_Converting"'
+                    'from EVT_Core.OneClick import AudioToAudio; '
+                    f"Audio2Audio = AudioToAudio{str(Params)}; "
+                    f'Audio2Audio.{FuncName}()"'
                 ],
+                PathType = 'Posix',
+                ShowProgress = True,
                 CommunicateThroughConsole = True,
                 DecodeResult = True
             )[1]
+            return None if 'traceback' not in str(Error).lower() else Error
 
+        print("Start processing audio")
+        Error = RunCommand('ProcessAudio')
+        if Error:
+            self.finished.emit(str(Error))
+            return
         else:
-            Error = 'Missing evironment dependencies!'
+            TasksSignals.Signal_AudioProcessed.emit()
+
+        print("Start identifying voice")
+        Error = RunCommand('IdentifyVoice')
+        if Error:
+            self.finished.emit(str(Error))
+            return
+        else:
+            TasksSignals.Signal_VoiceIdentified.emit()
+
+        print("Start transcribing")
+        Error = RunCommand('TranscribeVoice')
+        if Error:
+            self.finished.emit(str(Error))
+            return
+        else:
+            TasksSignals.Signal_VoiceTranscribed.emit()
+
+        print("Start creating dataset")
+        Error = RunCommand('CreateDataset')
+        if Error:
+            self.finished.emit(str(Error))
+            return
+        else:
+            TasksSignals.Signal_DatasetCreated.emit()
+
+        print("Start training voice")
+        Error = RunCommand('TrainVoice')
+        if Error:
+            self.finished.emit(str(Error))
+            return
+        else:
+            TasksSignals.Signal_VoiceTrained.emit()
+
+        print("Start converting voice")
+        Error = RunCommand('ConvertVoice')
+        if Error:
+            self.finished.emit(str(Error))
+            return
+        else:
+            TasksSignals.Signal_VoiceConverted.emit()
 
         self.finished.emit(str(Error))
 
 
-# ClientFunc3
-class Tensorboard_Runner(QObject):
-    '''
-    Check File integrity
-    '''
-    finished = Signal(str)
-
-    def __init__(self):
-        super().__init__()
-    
-    def RunTensorboard(self, LogDir): #async def RunTensorboard(self, LogDir):
-        try:
-            Error = None
-            InitialWaitTime = 0
-            MaximumWaitTime = 30
-            while GetPath(LogDir, 'events.out.tfevents') == False:
-                time.sleep(3) #await asyncio.sleep(3)
-                InitialWaitTime += 3
-                if InitialWaitTime >= MaximumWaitTime:
-                    break
-            '''
-            Output = RunCMD([['tensorboard', '--logdir', LogDir]], TimeOut = 9.)
-            URL = FindURL(Output) #URL = Output[Output.find('http'):Output.find(' (', Output.find('http'))]
-            Function_OpenURL(URL)
-            '''
-            subprocess.Popen(['tensorboard', '--logdir', LogDir], env = os.environ)
-            time.sleep(9) #await asyncio.sleep(9)
-            Function_OpenURL('http://localhost:6006/')
-        except Exception as e:
-            Error = e
-        finally:
-            return Error
-
-    @Slot(tuple)
-    def Execute(self, Params: tuple):
-        Error = self.RunTensorboard(*Params)
-
-        self.finished.emit(str(Error))
-
-##############################################################################################################################
-
-# Tool1: AudioProcessor
+# Tools: AudioProcessor
 class Execute_Audio_Processing(QObject):
     '''
     Change media format to WAV (and denoise) and cut off the silent parts
@@ -208,7 +222,7 @@ class Execute_Audio_Processing(QObject):
         self.finished.emit(str(Error))
 
 
-# Tool2: VoiceIdentifier
+# Tools: VoiceIdentifier
 class Execute_Voice_Identifying(QObject):
     '''
     Contrast the voice and filter out the similar ones
@@ -242,7 +256,7 @@ class Execute_Voice_Identifying(QObject):
         self.finished.emit(str(Error))
 
 
-# Tool3: VoiceTranscriber
+# Tools: VoiceTranscriber
 class Execute_Voice_Transcribing(QObject):
     '''
     Transcribe WAV content to SRT
@@ -283,7 +297,7 @@ class Execute_Voice_Transcribing(QObject):
         self.finished.emit(str(Error))
 
 
-# Tool4: DatasetCreator
+# Tools: DatasetCreator
 class Execute_Dataset_Creating(QObject):
     '''
     Convert the whisper-generated SRT to CSV and split the WAV
@@ -316,7 +330,7 @@ class Execute_Dataset_Creating(QObject):
         self.finished.emit(str(Error))
 
 
-# Tool5: VoiceTrainer
+# Tools: VoiceTrainer
 class Execute_Voice_Training(QObject):
     '''
     Preprocess and then start training
@@ -355,7 +369,7 @@ class Execute_Voice_Training(QObject):
         self.finished.emit(str(Error))
 
 
-# Tool6: VoiceConverter
+# Tools: VoiceConverter
 def Get_Speakers(Config_Path_Load):
     try:
         with open(Config_Path_Load, 'r', encoding = 'utf-8') as File:
@@ -404,6 +418,95 @@ class Execute_Voice_Converting(QObject):
 
         self.finished.emit(str(Error))
 
+
+# ClientFunc: ClientRebooter
+def ClientRebooter():
+    '''
+    Reboot EVT client
+    '''
+    UpdaterExecuter() #os.execl(sys.executable, 'python', __file__, *sys.argv[1:]) else os.execl(sys.executable, sys.executable, *sys.argv)
+
+
+# ClientFunc: IntegrityChecker
+class Integrity_Checker(QObject):
+    '''
+    Check File integrity
+    '''
+    finished = Signal(str)
+
+    def __init__(self):
+        super().__init__()
+
+    @Slot(tuple)
+    def Execute(self):
+        if 'Undetected' not in [
+            Config.GetValue('Env', 'FFmpeg'),
+            #Config.GetValue('Env', 'GCC'),
+            #Config.GetValue('Env', 'CMake'),
+            Config.GetValue('Env', 'Python'),
+            Config.GetValue('Env', 'PyReqs'),
+            Config.GetValue('Env', 'Pytorch')
+        ]:
+            Error = RunCMD(
+                Args = [
+                    f'cd "{ResourceDir}"',
+                    'python -c "'
+                    'from EVT_Core.Tool_AudioProcessor.Process import Audio_Processing; '
+                    'from EVT_Core.Tool_VoiceIdentifier.Identify import Voice_Identifying; '
+                    'from EVT_Core.Tool_VoiceTranscriber.Transcribe import Voice_Transcribing; '
+                    'from EVT_Core.Tool_DatasetCreator.Create import Dataset_Creating; '
+                    'from EVT_Core.Tool_VoiceTrainer.Train import Voice_Training; '
+                    'from EVT_Core.Tool_VoiceConverter.Convert import Voice_Converting"'
+                ],
+                CommunicateThroughConsole = True,
+                DecodeResult = True
+            )[1]
+
+        else:
+            Error = 'Missing evironment dependencies!'
+
+        self.finished.emit(str(Error))
+
+
+# ClientFunc: TensorboardRunner
+class Tensorboard_Runner(QObject):
+    '''
+    Check File integrity
+    '''
+    finished = Signal(str)
+
+    def __init__(self):
+        super().__init__()
+    
+    def RunTensorboard(self, LogDir): #async def RunTensorboard(self, LogDir):
+        try:
+            Error = None
+            InitialWaitTime = 0
+            MaximumWaitTime = 30
+            while GetPath(LogDir, 'events.out.tfevents') == False:
+                time.sleep(3) #await asyncio.sleep(3)
+                InitialWaitTime += 3
+                if InitialWaitTime >= MaximumWaitTime:
+                    break
+            '''
+            Output = RunCMD([['tensorboard', '--logdir', LogDir]], TimeOut = 9.)
+            URL = FindURL(Output) #URL = Output[Output.find('http'):Output.find(' (', Output.find('http'))]
+            Function_OpenURL(URL)
+            '''
+            subprocess.Popen(['tensorboard', '--logdir', LogDir], env = os.environ)
+            time.sleep(9) #await asyncio.sleep(9)
+            Function_OpenURL('http://localhost:6006/')
+        except Exception as e:
+            Error = e
+        finally:
+            return Error
+
+    @Slot(tuple)
+    def Execute(self, Params: tuple):
+        Error = self.RunTensorboard(*Params)
+
+        self.finished.emit(str(Error))
+
 ##############################################################################################################################
 
 # Where to store custom signals
@@ -430,8 +533,8 @@ class MainWindow(Window_Customizing):
     '''
     ui = Window_Customizing.ui
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, parent = None):
+        super().__init__(parent)
 
         self.ConsoleInfo = ConsolOutputHandler()
         self.ConsoleInfo.start()
@@ -601,55 +704,79 @@ class MainWindow(Window_Customizing):
         self.ui.Button_Menu_Download.setChecked(False)
         self.ui.Button_Menu_Download.setAutoExclusive(True)
         self.ui.Button_Menu_Download.setToolTipDuration(-1)
-        self.ui.Button_Menu_Download.setToolTip(QCA.translate("ToolTip", "下载"))
+        self.ui.Button_Menu_Download.setToolTip(QCA.translate("ToolTip", "文件下载和安装"))
 
-        self.ui.Label_Menu_Tools_Text.setText(QCA.translate("Label", "工具"))
-        self.ui.Button_Menu_Tools.clicked.connect(
+        self.ui.Label_Menu_QuickStart_Text.setText(QCA.translate("Label", "开始"))
+        self.ui.Button_Menu_QuickStart.clicked.connect(
             lambda: Function_AnimateStackedWidget(
                 Parent = self,
                 StackedWidget = self.ui.StackedWidget_Pages,
                 TargetIndex = 2
             )
         )
-        self.ui.Button_Menu_Tools.setCheckable(True)
-        self.ui.Button_Menu_Tools.setChecked(False)
-        self.ui.Button_Menu_Tools.setAutoExclusive(True)
-        self.ui.Button_Menu_Tools.setToolTipDuration(-1)
-        self.ui.Button_Menu_Tools.setToolTip(QCA.translate("ToolTip", "工具"))
+        self.ui.Button_Menu_QuickStart.setCheckable(True)
+        self.ui.Button_Menu_QuickStart.setChecked(False)
+        self.ui.Button_Menu_QuickStart.setAutoExclusive(True)
+        self.ui.Button_Menu_QuickStart.setToolTipDuration(-1)
+        self.ui.Button_Menu_QuickStart.setToolTip(QCA.translate("ToolTip", "快速上手"))
 
-        self.ui.Label_Menu_Settings_Text.setText(QCA.translate("Label", "设置"))
-        self.ui.Button_Menu_Settings.clicked.connect(
+        self.ui.Label_Menu_Tools_Text.setText(QCA.translate("Label", "工具"))
+        self.ui.Button_Menu_Tools.clicked.connect(
             lambda: Function_AnimateStackedWidget(
                 Parent = self,
                 StackedWidget = self.ui.StackedWidget_Pages,
                 TargetIndex = 3
             )
         )
-        self.ui.Button_Menu_Settings.setCheckable(True)
-        self.ui.Button_Menu_Settings.setChecked(False)
-        self.ui.Button_Menu_Settings.setAutoExclusive(True)
-        self.ui.Button_Menu_Settings.setToolTipDuration(-1)
-        self.ui.Button_Menu_Settings.setToolTip(QCA.translate("ToolTip", "设置"))
+        self.ui.Button_Menu_Tools.setCheckable(True)
+        self.ui.Button_Menu_Tools.setChecked(False)
+        self.ui.Button_Menu_Tools.setAutoExclusive(True)
+        self.ui.Button_Menu_Tools.setToolTipDuration(-1)
+        self.ui.Button_Menu_Tools.setToolTip(QCA.translate("ToolTip", "音频工具"))
 
-        self.ui.Label_Menu_Info_Text.setText(QCA.translate("Label", "关于"))
-        self.ui.Button_Menu_Info.clicked.connect(
+        self.ui.Label_Menu_Settings_Text.setText(QCA.translate("Label", "设置"))
+        self.ui.Button_Menu_Settings.clicked.connect(
             lambda: Function_AnimateStackedWidget(
                 Parent = self,
                 StackedWidget = self.ui.StackedWidget_Pages,
                 TargetIndex = 4
             )
         )
+        self.ui.Button_Menu_Settings.setCheckable(True)
+        self.ui.Button_Menu_Settings.setChecked(False)
+        self.ui.Button_Menu_Settings.setAutoExclusive(True)
+        self.ui.Button_Menu_Settings.setToolTipDuration(-1)
+        self.ui.Button_Menu_Settings.setToolTip(QCA.translate("ToolTip", "客户端设置"))
+
+        self.ui.Label_Menu_Info_Text.setText(QCA.translate("Label", "关于"))
+        self.ui.Button_Menu_Info.clicked.connect(
+            lambda: Function_AnimateStackedWidget(
+                Parent = self,
+                StackedWidget = self.ui.StackedWidget_Pages,
+                TargetIndex = 5
+            )
+        )
         self.ui.Button_Menu_Info.setCheckable(True)
         self.ui.Button_Menu_Info.setChecked(False)
         self.ui.Button_Menu_Info.setAutoExclusive(True)
         self.ui.Button_Menu_Info.setToolTipDuration(-1)
-        self.ui.Button_Menu_Info.setToolTip(QCA.translate("ToolTip", "关于"))
+        self.ui.Button_Menu_Info.setToolTip(QCA.translate("ToolTip", "关于本软件"))
 
         #########################################################
         ##################### Content: Home #####################
         #########################################################
 
         #self.ui.ToolButton_Home_Title.setText(QCA.translate("Label", "主页"))
+
+        self.ui.TextBrowser_Pic_Home.setStyleSheet(
+            self.ui.TextBrowser_Pic_Home.styleSheet() +
+            "QTextBrowser {"
+            f"    background-image: url({NormPath(Path(ResourceDir).joinpath('Sources/Cover.png'), 'Posix')});"
+            "    background-size: cover;"
+            "    background-repeat: no-repeat;"
+            "    background-position: center 0px;"
+            "}"
+        )
 
         Function_SetText(
             Widget = self.ui.TextBrowser_Text_Home,
@@ -1006,6 +1133,73 @@ class MainWindow(Window_Customizing):
             lambda Status: self.ui.Label_Download_Pytorch_Status.setText(Status)
         )
 
+        #############################################################
+        #################### Content: QuickStart ####################
+        #############################################################
+
+        self.ui.ToolButton_QuickStart_OneClickConversion_Title.setText(QCA.translate("Label", "一键语音合成"))
+
+        # p1
+        self.ui.LineEdit_QuickStart_OneClickConversion_Media_Dir_Input
+
+        # p2
+        self.ui.Table_QuickStart_OneClickConversion_StdAudioSpeaker
+
+        # p3
+        self.ui.CheckBox_QuickStart_OneClickConversion_Add_AuxiliaryData
+        self.ui.LineEdit_QuickStart_OneClickConversion_AuxiliaryData_Path
+
+        # p4
+        self.ui.SpinBox_QuickStart_OneClickConversion_Epochs
+        self.ui.SpinBox_QuickStart_OneClickConversion_Batch_Size
+        self.ui.LineEdit_QuickStart_OneClickConversion_Model_Path_Pretrained_G
+        self.ui.LineEdit_QuickStart_OneClickConversion_Model_Path_Pretrained_D
+
+        # p5
+        self.ui.PlainTextEdit_QuickStart_OneClickConversion_Text
+        self.ui.ComboBox_QuickStart_OneClickConversion_Language
+        self.ui.ComboBox_QuickStart_OneClickConversion_Speaker
+
+        # Execute
+        self.ui.Button_QuickStart_OneClickConversion_Execute.setToolTipDuration(-1)
+        self.ui.Button_QuickStart_OneClickConversion_Execute.setToolTip("执行一键语音合成")
+        self.ui.Button_QuickStart_OneClickConversion_Terminate.setToolTipDuration(-1)
+        self.ui.Button_QuickStart_OneClickConversion_Terminate.setToolTip("终止一键语音合成")
+        self.Function_SetMethodExecutor(
+            ExecuteButton = self.ui.Button_QuickStart_OneClickConversion_Execute,
+            TerminateButton = self.ui.Button_QuickStart_OneClickConversion_Terminate,
+            ProgressBar = self.ui.ProgressBar_QuickStart_OneClickConversion,
+            ConsoleFrame = self.ui.Frame_Console,
+            Method = Execute_OneClickConversion.Execute,
+            ParamsFrom = [
+                NormPath(Path(CurrentDir).joinpath(datetime.now().strftime('%Y-%m-%d_%H-%M-%S'))), #self.ui.StorageDir
+                self.ui.LineEdit_QuickStart_OneClickConversion_Media_Dir_Input,
+                self.ui.Table_QuickStart_OneClickConversion_StdAudioSpeaker,
+                NormPath(Path(CurrentDir).joinpath('Download')),
+                self.ui.CheckBox_QuickStart_OneClickConversion_Add_AuxiliaryData,
+                self.ui.LineEdit_QuickStart_OneClickConversion_AuxiliaryData_Path,
+                self.ui.SpinBox_QuickStart_OneClickConversion_Epochs,
+                self.ui.SpinBox_QuickStart_OneClickConversion_Batch_Size,
+                self.ui.LineEdit_QuickStart_OneClickConversion_Model_Path_Pretrained_G,
+                self.ui.LineEdit_QuickStart_OneClickConversion_Model_Path_Pretrained_D,
+                self.ui.PlainTextEdit_QuickStart_OneClickConversion_Text,
+                self.ui.ComboBox_QuickStart_OneClickConversion_Language,
+                self.ui.ComboBox_QuickStart_OneClickConversion_Speaker
+            ],
+            EmptyAllowed = [
+            ],
+            FinishEventList = [
+                Function_ShowMessageBox
+            ],
+            FinishParamList = [
+                (
+                    QMessageBox.Information, "Tip",
+                    "当前任务已执行结束！",
+                    QMessageBox.Ok
+                )
+            ]
+        )
+
         ##########################################################
         ##################### Content: Tools #####################
         ##########################################################
@@ -1220,6 +1414,38 @@ class MainWindow(Window_Customizing):
         self.ui.ComboBox_Tool_AudioProcessor_Media_Format_Output.currentTextChanged.connect(
             lambda Value: Config_Tool_AudioProcessor.EditConfig('AudioProcessor', 'Media_Format_Output', str(Value))
         )
+
+        '''
+        Function_SetText(
+            Widget = self.ui.Label_Tool_AudioProcessor_Denoise_Audio,
+            Text = SetRichText(
+                Title = "启用杂音去除",
+                Body = QCA.translate("Label", "音频中的非人声部分将被弱化。")
+            )
+        )
+        self.ui.CheckBox_Tool_AudioProcessor_Denoise_Audio.setCheckable(True)
+        self.ui.CheckBox_Tool_AudioProcessor_Denoise_Audio.setChecked(
+            eval(Config_Tool_AudioProcessor.GetValue('AudioProcessor', 'Denoise_Audio', 'True'))
+        )
+        Function_ConfigureCheckBox(
+            CheckBox = self.ui.CheckBox_Tool_AudioProcessor_Denoise_Audio,
+            CheckedText = "已启用",
+            CheckedEventList = [
+                Config_Tool_AudioProcessor.EditConfig
+            ],
+            CheckedArgsList = [
+                ('AudioProcessor', 'Denoise_Audio', 'True')
+            ],
+            UncheckedText = "未启用",
+            UncheckedEventList = [
+                Config_Tool_AudioProcessor.EditConfig
+            ],
+            UncheckedArgsList = [
+                ('AudioProcessor', 'Denoise_Audio', 'False')
+            ],
+            TakeEffect = True
+        )
+        '''
 
         Function_SetText(
             Widget = self.ui.Label_Tool_AudioProcessor_Slice_Audio,
@@ -2698,6 +2924,36 @@ class MainWindow(Window_Customizing):
         )
 
         Function_SetText(
+            Widget = self.ui.Label_Tool_DatasetCreator_Add_AuxiliaryData,
+            Text = SetRichText(
+                Title = "添加辅助数据",
+                Body = QCA.translate("Label", "添加用以辅助训练的数据集，若当前语音数据的质量/数量较低则建议启用。")
+            )
+        )
+        self.ui.CheckBox_Tool_DatasetCreator_Add_AuxiliaryData.setCheckable(True)
+        self.ui.CheckBox_Tool_DatasetCreator_Add_AuxiliaryData.setChecked(
+            eval(Config_Tool_DatasetCreator.GetValue('DatasetCreator', 'Add_AuxiliaryData', 'False'))
+        )
+        Function_ConfigureCheckBox(
+            CheckBox = self.ui.CheckBox_Tool_DatasetCreator_Add_AuxiliaryData,
+            CheckedText = "已启用",
+            CheckedEventList = [
+                Config_Tool_DatasetCreator.EditConfig
+            ],
+            CheckedArgsList = [
+                ('DatasetCreator', 'Add_AuxiliaryData', 'True')
+            ],
+            UncheckedText = "未启用",
+            UncheckedEventList = [
+                Config_Tool_DatasetCreator.EditConfig
+            ],
+            UncheckedArgsList = [
+                ('DatasetCreator', 'Add_AuxiliaryData', 'False')
+            ],
+            TakeEffect = True
+        )
+
+        Function_SetText(
             Widget = self.ui.Label_Tool_DatasetCreator_AuxiliaryData_Path,
             Text = SetRichText(
                 Title = "辅助数据文本路径",
@@ -2804,6 +3060,7 @@ class MainWindow(Window_Customizing):
                 self.ui.ComboBox_Tool_DatasetCreator_SampleWidth,
                 self.ui.CheckBox_Tool_DatasetCreator_ToMono,
                 self.ui.LineEdit_Tool_DatasetCreator_WAV_Dir_Split,
+                self.ui.CheckBox_Tool_DatasetCreator_Add_AuxiliaryData,
                 self.ui.LineEdit_Tool_DatasetCreator_AuxiliaryData_Path,
                 self.ui.DoubleSpinBox_Tool_DatasetCreator_TrainRatio,
                 self.ui.ComboBox_Tool_DatasetCreator_ModelType,

@@ -4,6 +4,7 @@ from PySide6.QtWidgets import *
 
 from .QFunctions import *
 from .Sources import *
+from .WindowCustomizer import DialogBase
 
 ##############################################################################################################################
 
@@ -180,23 +181,6 @@ class TableWidgetBase(QTableWidget):
             self.IsIndexShown = False
 
 ##############################################################################################################################
-
-class DialogBase(QDialog):
-    '''
-    '''
-    def __init__(self,
-        parent: Optional[QWidget] = None,
-        f: Qt.WindowType = Qt.Dialog
-    ):
-        super().__init__(parent, f)
-
-        ComponentsSignals.Signal_SetTheme.connect(
-            lambda Theme: self.setStyleSheet(Function_GetStyleSheet('Dialog', Theme))
-        )
-        ComponentsSignals.Signal_SetTheme.emit('Auto')
-
-        Function_SetDropShadowEffect(self)
-
 
 class MessageBoxBase(DialogBase):
     '''

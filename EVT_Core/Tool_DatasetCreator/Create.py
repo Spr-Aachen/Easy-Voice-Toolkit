@@ -31,6 +31,7 @@ class Dataset_Creating:
         WAV_ToMono: bool = False,
         WAV_Dir_Split: str = './WAV_Files_Split',
         #WAV_Time_Limitation: float = 10.00,
+        Add_AuxiliaryData: bool = False,
         AuxiliaryData_Path: str = './AuxiliaryData/AuxiliaryData.txt',
         TrainRatio: float = 0.7,
         ModelType: str = 'VITS',
@@ -44,7 +45,7 @@ class Dataset_Creating:
         self.WAV_ToMono = WAV_ToMono
         self.WAV_Dir_Split = WAV_Dir_Split
         #self.WAV_Time_Limitation = WAV_Time_Limitation
-        self.AuxiliaryData_Path = AuxiliaryData_Path
+        self.AuxiliaryData_Path = AuxiliaryData_Path if Add_AuxiliaryData else None
         self.TrainRatio = TrainRatio
         self.ModelType = ModelType
         self.FileList_Path_Training = FileList_Path_Training

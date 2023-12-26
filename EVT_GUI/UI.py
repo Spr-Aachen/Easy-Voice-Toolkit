@@ -650,17 +650,12 @@ class Ui_MainWindow(object):
         self.TextBrowser_Pic_Home.setStyleSheet(u"QTextBrowser {\n"
 "	/*text-align: center;*/\n"
 "	/*color: rgb(255, 255, 255);*/\n"
-"	background-image: url(:/TextBrowser_Image/Sources/Cover.png);\n"
-"	background-size: cover;\n"
-"	background-repeat: no-repeat;\n"
-"	background-position: center 0px;\n"
 "	padding: 0px;\n"
 "	border-width: 0px;\n"
 "	border-radius: 6px;\n"
 "	border-style: solid;\n"
 "}\n"
 "QTextBrowser:hover {\n"
-"	background-color: transparent;\n"
 "}\n"
 "\n"
 "\n"
@@ -689,8 +684,7 @@ class Ui_MainWindow(object):
 "\n"
 "QScrollBar::sub-line:vertical {\n"
 "	height: 0px;\n"
-""
-                        "	background-color: transparent;\n"
+"	background-color: transparent;\n"
 "	subcontrol-position: top;\n"
 "	subcontrol-origin: margin;\n"
 "	border-width: 0px;\n"
@@ -698,7 +692,8 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}\n"
 "\n"
-"QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
+"QScrollBar::add-page"
+                        ":vertical, QScrollBar::sub-page:vertical {\n"
 "	width: 0px;\n"
 "	height: 0px;\n"
 "	background-color: transparent;\n"
@@ -732,8 +727,7 @@ class Ui_MainWindow(object):
 "	width: 0px;\n"
 "	background-color: transparent;\n"
 "	subcontrol-position: left;\n"
-"	subcontrol-or"
-                        "igin: margin;\n"
+"	subcontrol-origin: margin;\n"
 "	border-width: 0px;\n"
 "	border-radius: 0px;\n"
 "	border-style: solid;\n"
@@ -742,7 +736,8 @@ class Ui_MainWindow(object):
 "QScrollBar::sub-line:horizontal {\n"
 "	width: 0px;\n"
 "	background-color: transparent;\n"
-"	subcontrol-position: right;\n"
+"	subcontro"
+                        "l-position: right;\n"
 "	subcontrol-origin: margin;\n"
 "	border-width: 0px;\n"
 "	border-radius: 0px;\n"
@@ -8810,7 +8805,7 @@ class Ui_MainWindow(object):
         self.ScrollArea_Middle_Tool_DatasetCreator.setWidgetResizable(True)
         self.ScrollArea_Middle_WidgetContents_Tool_DatasetCreator = QWidget()
         self.ScrollArea_Middle_WidgetContents_Tool_DatasetCreator.setObjectName(u"ScrollArea_Middle_WidgetContents_Tool_DatasetCreator")
-        self.ScrollArea_Middle_WidgetContents_Tool_DatasetCreator.setGeometry(QRect(0, 0, 621, 1554))
+        self.ScrollArea_Middle_WidgetContents_Tool_DatasetCreator.setGeometry(QRect(0, 0, 621, 1677))
         self.verticalLayout_36 = QVBoxLayout(self.ScrollArea_Middle_WidgetContents_Tool_DatasetCreator)
         self.verticalLayout_36.setSpacing(12)
         self.verticalLayout_36.setObjectName(u"verticalLayout_36")
@@ -10388,6 +10383,84 @@ class Ui_MainWindow(object):
         self.verticalLayout_17.setSpacing(0)
         self.verticalLayout_17.setObjectName(u"verticalLayout_17")
         self.verticalLayout_17.setContentsMargins(0, 0, 0, 0)
+        self.Frame_Tool_DatasetCreator_Add_AuxiliaryData = QFrame(self.Frame_BasicOptionalSettings_Tool_DatasetCreator)
+        self.Frame_Tool_DatasetCreator_Add_AuxiliaryData.setObjectName(u"Frame_Tool_DatasetCreator_Add_AuxiliaryData")
+        self.Frame_Tool_DatasetCreator_Add_AuxiliaryData.setMinimumSize(QSize(0, 123))
+        self.Frame_Tool_DatasetCreator_Add_AuxiliaryData.setStyleSheet(u"QFrame {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QFrame:hover {\n"
+"	background-color: rgb(33, 33, 33);\n"
+"}")
+        self.verticalLayout_124 = QVBoxLayout(self.Frame_Tool_DatasetCreator_Add_AuxiliaryData)
+        self.verticalLayout_124.setSpacing(12)
+        self.verticalLayout_124.setObjectName(u"verticalLayout_124")
+        self.verticalLayout_124.setContentsMargins(21, 12, 21, 12)
+        self.Label_Tool_DatasetCreator_Add_AuxiliaryData = QLabel(self.Frame_Tool_DatasetCreator_Add_AuxiliaryData)
+        self.Label_Tool_DatasetCreator_Add_AuxiliaryData.setObjectName(u"Label_Tool_DatasetCreator_Add_AuxiliaryData")
+        self.Label_Tool_DatasetCreator_Add_AuxiliaryData.setStyleSheet(u"QLabel {\n"
+"	/*text-align: center;*/\n"
+"	/*color: rgb(255, 255, 255);*/\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.verticalLayout_124.addWidget(self.Label_Tool_DatasetCreator_Add_AuxiliaryData)
+
+        self.CheckBox_Tool_DatasetCreator_Add_AuxiliaryData = QCheckBox(self.Frame_Tool_DatasetCreator_Add_AuxiliaryData)
+        self.CheckBox_Tool_DatasetCreator_Add_AuxiliaryData.setObjectName(u"CheckBox_Tool_DatasetCreator_Add_AuxiliaryData")
+        self.CheckBox_Tool_DatasetCreator_Add_AuxiliaryData.setStyleSheet(u"QCheckBox {\n"
+"	font-size: 12px;\n"
+"	spacing: 12.3px;\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QCheckBox:hover {\n"
+"	color: rgb(255, 255, 255);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator {\n"
+"	width: 24px;\n"
+"	height: 24px;\n"
+"    background-color: transparent;\n"
+"	padding: 1.2px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QCheckBox::indicator:hover {\n"
+"	background-color: rgba(255, 255, 255, 21);\n"
+"}\n"
+"QCheckBox::indicator:unchecked {\n"
+"	border-image: url(:/CheckBox_Icon/Sources/ToggleOff.png);\n"
+"}\n"
+"QCheckBox::indicator:checked {\n"
+"	border-image: url(:/CheckBox_Icon/Sources/ToggleOn.png);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.verticalLayout_124.addWidget(self.CheckBox_Tool_DatasetCreator_Add_AuxiliaryData)
+
+
+        self.verticalLayout_17.addWidget(self.Frame_Tool_DatasetCreator_Add_AuxiliaryData)
+
         self.Frame_Tool_DatasetCreator_AuxiliaryData_Path = QFrame(self.Frame_BasicOptionalSettings_Tool_DatasetCreator)
         self.Frame_Tool_DatasetCreator_AuxiliaryData_Path.setObjectName(u"Frame_Tool_DatasetCreator_AuxiliaryData_Path")
         self.Frame_Tool_DatasetCreator_AuxiliaryData_Path.setMinimumSize(QSize(0, 123))
@@ -16248,6 +16321,8 @@ class Ui_MainWindow(object):
         self.Label_Tool_DatasetCreator_TrainRatio.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.GroupBox_OptionalParams_Tool_DatasetCreator.setTitle(QCoreApplication.translate("MainWindow", u"GroupBox2", None))
         self.CheckBox_Toggle_BasicOptionalSettings_Tool_DatasetCreator.setText(QCoreApplication.translate("MainWindow", u"CheckBox1", None))
+        self.Label_Tool_DatasetCreator_Add_AuxiliaryData.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.CheckBox_Tool_DatasetCreator_Add_AuxiliaryData.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
         self.Label_Tool_DatasetCreator_AuxiliaryData_Path.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Button_Tool_DatasetCreator_AuxiliaryData_Path.setText(QCoreApplication.translate("MainWindow", u"...", None))
         ___qtreewidgetitem12 = self.TreeWidget_Catalogue_Tool_VoiceTrainer.headerItem()

@@ -56,7 +56,6 @@ class CustomSignals_EnvConfigurator(QObject):
 
 EnvConfiguratorSignals = CustomSignals_EnvConfigurator()
 
-##############################################################################################################################
 
 class FFmpeg_Installer(QObject):
     '''
