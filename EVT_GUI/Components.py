@@ -135,9 +135,7 @@ class MessageBox_Stacked(MessageBoxBase):
     '''
     '''
     def __init__(self, parent: QWidget = None):
-        super().__init__(parent)
-
-        self.resize(900, 480)
+        super().__init__(parent, min_width = 900, min_height = 480)
 
         self.layout().setContentsMargins(12, 12, 12, 12)
         self.layout().setSpacing(12)

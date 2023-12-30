@@ -208,13 +208,14 @@ class MessageBoxBase(DialogBase):
     }
 
     def __init__(self,
-        parent: Optional[QWidget] = None
+        parent: Optional[QWidget] = None,
+        min_width = 630,
+        min_height = 420
     ):  
-        super().__init__(parent)
+        super().__init__(parent, Qt.Dialog, min_width, min_height)
 
         self.setWindowModality(Qt.ApplicationModal)
         self.setModal(True)
-        self.setMinimumSize(300, 150)
 
         self.Label = QLabel(str(), parent = self)
 

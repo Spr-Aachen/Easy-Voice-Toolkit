@@ -9,7 +9,6 @@ def Transcript_Writer(
         CSV_Path,
         AuxiliaryData_Path,
         TrainRatio,
-        ModelType,
         Text_Path_Training,
         Text_Path_Validation
     ):
@@ -60,7 +59,7 @@ def Transcript_Writer(
     Lines_Train = Lines[:TrainSize]
     Lines_Val = Lines[TrainSize:]
 
-    if ModelType == 'VITS':
+    if len(Lines_Train) > len(Lines_Val) > 0:
         print("Writing VITS DataSet paths...")
         def WriteDataLines(Text_Path, Lines):
             Speakers = []
@@ -80,4 +79,4 @@ def Transcript_Writer(
         WriteDataLines(Text_Path_Validation, Lines_Val)
 
     else:
-        raise Exception(f"{ModelType} is not supported!")
+        raise Exception(f"Lack of data!")

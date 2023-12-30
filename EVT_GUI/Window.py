@@ -10,7 +10,7 @@ class Window_Customizing(MainWindowBase):
     ui = Ui_MainWindow()
 
     def __init__(self, parent):
-        super().__init__(parent)
+        super().__init__(parent, min_width = 1280, min_height = 720)
 
         self.ui.setupUi(self)
 

@@ -535,7 +535,6 @@ class Voice_Training(Preprocessing, Training):
     def __init__(self,
         FileList_Path_Training: str,
         FileList_Path_Validation: str,
-        Config_Dir_Save: str = './',
         Set_Eval_Interval: int = 1000,
         Set_Epochs: int = 10000,
         Set_Batch_Size: int = 16,
@@ -544,13 +543,14 @@ class Voice_Training(Preprocessing, Training):
         Keep_Original_Speakers: bool = False,
         #Config_Path_Load: Optional[str] = None,
         Num_Workers: int = 4,
+        Use_PretrainedModels: bool = True,
         Model_Path_Pretrained_G: Optional[str] = None,
         Model_Path_Pretrained_D: Optional[str] = None,
-        Model_Dir_Save: str = './'
+        Dir_Output: str = './'
     ):
-        Preprocessing.__init__(self, FileList_Path_Training, FileList_Path_Validation, Config_Dir_Save, Set_Eval_Interval, Set_Epochs, Set_Batch_Size, Set_FP16_Run, Set_Speakers)
-        Training.__init__(self, Num_Workers, Model_Path_Pretrained_G, Model_Path_Pretrained_D, Keep_Original_Speakers)
-        self.Model_Dir_Save = Model_Dir_Save
+        Preprocessing.__init__(self, FileList_Path_Training, FileList_Path_Validation, Dir_Output, Set_Eval_Interval, Set_Epochs, Set_Batch_Size, Set_FP16_Run, Set_Speakers)
+        Training.__init__(self, Num_Workers, Model_Path_Pretrained_G if Use_PretrainedModels else None, Model_Path_Pretrained_D if Use_PretrainedModels else None, Keep_Original_Speakers)
+        self.Model_Dir_Save = Dir_Output
 
     def Preprocessing_and_Training(self):
         # Preprocess

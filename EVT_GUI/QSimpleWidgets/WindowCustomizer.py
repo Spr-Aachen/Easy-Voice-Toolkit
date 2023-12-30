@@ -193,35 +193,18 @@ class NCCALCSIZE_PARAMS(Structure):
     ]
 
 
-class MainWindowBase(QMainWindow):
+class WindowBase:
     '''
     '''
     edge_size = 3 # 窗体边缘尺寸（出现缩放标记的范围）
 
-    min_width = 1280 # 窗体的最小宽度
-    min_height = 720 # 窗体的最小高度
-
     def __init__(self,
-        parent: Optional[QWidget] = None,
-        flags: Qt.WindowType = Qt.Window | Qt.WindowSystemMenuHint | Qt.WindowMinMaxButtonsHint,
+        min_width = 630, # 窗体的最小宽度
+        min_height = 420, # 窗体的最小高度
     ):
-        super().__init__(parent, flags)
-
-        self.resize(self.min_width, self.min_height)
-
-        self.setFrameless()
+        self.resize(min_width, min_height)
 
         self.TitleBar = TitleBarBase(self)
-
-        self.CentralLayout = QGridLayout()
-        self.CentralWidget = QWidget(self)
-        self.CentralWidget.setObjectName('CentralWidget')
-        self.CentralWidget.setLayout(self.CentralLayout)
-        self.setCentralWidget(self.CentralWidget)
-        ComponentsSignals.Signal_SetTheme.connect(
-            lambda Theme: self.setStyleSheet(Function_GetStyleSheet('Window', Theme))
-        )
-        ComponentsSignals.Signal_SetTheme.emit('Auto')
 
     def _check_ifdraggable(self, pos) -> bool:
         return 0 < pos.x() < self.width()# and 0 < pos.y() < self.TitleBar.height()
@@ -281,7 +264,10 @@ class MainWindowBase(QMainWindow):
                                 if MissingBorderPixels > 0:
                                     MissingBorderSize[Index] = MissingBorderPixels
                                 else:
-                                    MissingBorderSize[Index] = round(6 * Window.devicePixelRatio())
+                                    def IsCompositionEnabled():
+                                        Result = windll.dwmapi.DwmIsCompositionEnabled(byref(c_int(0)))
+                                        return bool(Result.value)
+                                    MissingBorderSize[Index] = round((6 if IsCompositionEnabled() else 3) * Window.devicePixelRatio())
                             return MissingBorderSize
                 MissingHBorderPixels, MissingVBorderPixels = GetMissingBorderPixels(Message.hWnd)
                 '''
@@ -315,7 +301,7 @@ class MainWindowBase(QMainWindow):
                 return True, win32con.HTRIGHT
             elif bottom:
                 return True, win32con.HTBOTTOM
-        return super().nativeEvent(eventType, message)
+        return QWidget.nativeEvent(self, eventType, message)
 
     def setFrameless(self, SetStrechable: bool = True, SetDropShadowEffect: bool = True) -> None:
         self.setWindowFlags(self.windowFlags() | Qt.FramelessWindowHint)
@@ -343,6 +329,31 @@ class MainWindowBase(QMainWindow):
             self.TitleBar.setParent(self) if self.TitleBar.parent() is None else None
             self.TitleBar.raise_() if self.TitleBar.isHidden() else None
 
+
+class MainWindowBase(WindowBase, QMainWindow):
+    '''
+    '''
+    def __init__(self,
+        parent: Optional[QWidget] = None,
+        flags: Qt.WindowType = Qt.Window | Qt.WindowSystemMenuHint | Qt.WindowMinMaxButtonsHint,
+        min_width: int = 1280,
+        min_height: int = 720
+    ):
+        QMainWindow.__init__(self, parent, flags)
+        WindowBase.__init__(self, min_width, min_height)
+
+        self.setFrameless()
+
+        self.CentralLayout = QGridLayout()
+        self.CentralWidget = QWidget(self)
+        self.CentralWidget.setObjectName('CentralWidget')
+        self.CentralWidget.setLayout(self.CentralLayout)
+        self.setCentralWidget(self.CentralWidget)
+        ComponentsSignals.Signal_SetTheme.connect(
+            lambda Theme: self.setStyleSheet(Function_GetStyleSheet('Window', Theme))
+        )
+        ComponentsSignals.Signal_SetTheme.emit('Auto')
+
     def setCentralWidget(self, CentralWidget: Optional[QWidget]) -> None:
         try:
             super().takeCentralWidget(self.CentralWidget)
@@ -360,29 +371,28 @@ class MainWindowBase(QMainWindow):
             self.CentralWidget.raise_() if self.CentralWidget.isHidden() else None
 
 
-class DialogBase(QDialog):
+class DialogBase(WindowBase, QDialog):
     '''
     '''
     def __init__(self,
         parent: Optional[QWidget] = None,
-        f: Qt.WindowType = Qt.Dialog
+        f: Qt.WindowType = Qt.Dialog,
+        min_width: int = 630,
+        min_height: int = 420
     ):
-        super().__init__(parent, f)
+        QDialog.__init__(self, parent, f)
+        WindowBase.__init__(self, min_width, min_height)
 
-        self.setWindowFlags(self.windowFlags() | Qt.FramelessWindowHint)
+        self.setFrameless(SetStrechable = False)
 
         ComponentsSignals.Signal_SetTheme.connect(
             lambda Theme: self.setStyleSheet(Function_GetStyleSheet('Dialog', Theme))
         )
         ComponentsSignals.Signal_SetTheme.emit('Auto')
 
-        self.TitleBar = TitleBarBase(self)
         self.TitleBar.MinimizeButton.hide()
         self.TitleBar.MinimizeButton.deleteLater()
         self.TitleBar.MaximizeButton.hide()
         self.TitleBar.MaximizeButton.deleteLater()
-
-    def resizeEvent(self, event: QResizeEvent):
-        self.resize(self.width(), self.TitleBar.height())
 
 ##############################################################################################################################

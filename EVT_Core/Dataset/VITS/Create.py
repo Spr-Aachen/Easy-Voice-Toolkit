@@ -34,7 +34,6 @@ class Dataset_Creating:
         Add_AuxiliaryData: bool = False,
         AuxiliaryData_Path: str = './AuxiliaryData/AuxiliaryData.txt',
         TrainRatio: float = 0.7,
-        ModelType: str = 'VITS',
         FileList_Path_Training: str = './FileLists/Train_FileList.txt',
         FileList_Path_Validation: str = './FileLists/Val_FileList.txt'
     ):
@@ -47,7 +46,6 @@ class Dataset_Creating:
         #self.WAV_Time_Limitation = WAV_Time_Limitation
         self.AuxiliaryData_Path = AuxiliaryData_Path if Add_AuxiliaryData else None
         self.TrainRatio = TrainRatio
-        self.ModelType = ModelType
         self.FileList_Path_Training = FileList_Path_Training
         self.FileList_Path_Validation = FileList_Path_Validation
 
@@ -112,7 +110,7 @@ class Dataset_Creating:
         print('---------------------------------------------------------------------')
 
         # Write transcript to text-file for model training
-        Transcript_Writer(CSV_Path_Final_Cleaned, self.AuxiliaryData_Path, self.TrainRatio, self.ModelType, self.FileList_Path_Training, self.FileList_Path_Validation)
+        Transcript_Writer(CSV_Path_Final_Cleaned, self.AuxiliaryData_Path, self.TrainRatio, self.FileList_Path_Training, self.FileList_Path_Validation)
         print('Transcript written.')
         print('---------------------------------------------------------------------')
 

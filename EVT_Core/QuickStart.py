@@ -1,11 +1,11 @@
 import os
 
-from Tool_AudioProcessor.Process import Audio_Processing
-from Tool_VoiceIdentifier.Identify import Voice_Identifying
-from Tool_VoiceTranscriber.Transcribe import Voice_Transcribing
-from Tool_DatasetCreator.Create import Dataset_Creating
-from Tool_VoiceTrainer.Train import Voice_Training
-from Tool_VoiceConverter.Convert import Voice_Converting
+from Process.Process import Audio_Processing
+from ASR.VPR.Identify import Voice_Identifying
+from STT.Whisper.Transcribe import Voice_Transcribing
+from Dataset.VITS.Create import Dataset_Creating
+from Train.VITS.Train import Voice_Training
+from TTS.VITS.Convert import Voice_Converting
 
 
 class AudioToAudio:
