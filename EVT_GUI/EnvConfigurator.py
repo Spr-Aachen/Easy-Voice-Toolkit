@@ -83,7 +83,7 @@ class FFmpeg_Installer(QObject):
             Path_Binary = os.path.normpath(os.path.join(Dir_Install, 'bin'))
             DownloadFile(URL, Dir_Download, File_Name, File_Format, None) #RunCMD([f'powershell.exe -Command (New-Object System.Net.WebClient).DownloadFile("{URL}", "{Path_Download}")'])
             shutil.unpack_archive(Path_Download, Dir_Install, Path_Download.rsplit('.', 1)[-1])
-            MoveFiles(os.path.dirname(GetPath(Dir_Install, 'bin')), Dir_Install)
+            MoveFiles(os.path.dirname(GetPaths(Dir_Install, 'bin')[0]), Dir_Install)
             SetEnvVar('PATH', Path_Binary, 'User') #RunCMD([f'setx /M PATH "%PATH%;{Path_Binary}"'])
             os.remove(Path_Download) #RunCMD([f'powershell.exe -Command Remove-Item -Force -Path "{Path_Download}"'])
         
@@ -143,7 +143,7 @@ class GCC_Installer(QObject):
             Path_Binary = os.path.normpath(os.path.join(Dir_Install, 'bin'))
             DownloadFile(URL, Dir_Download, File_Name, File_Format, None) #RunCMD([f'powershell.exe -Command (New-Object System.Net.WebClient).DownloadFile("{URL}", "{Path_Download}")'])
             shutil.unpack_archive(Path_Download, Dir_Install, Path_Download.rsplit('.', 1)[-1])
-            MoveFiles(os.path.dirname(GetPath(Dir_Install, 'bin')), Dir_Install)
+            MoveFiles(os.path.dirname(GetPaths(Dir_Install, 'bin')[0]), Dir_Install)
             SetEnvVar('PATH', Path_Binary, 'User') #RunCMD([f'setx /M PATH "%PATH%;{Path_Binary}"'])
             os.remove(Path_Download) #RunCMD([f'powershell.exe -Command Remove-Item -Force -Path "{Path_Download}"'])
         
@@ -203,7 +203,7 @@ class CMake_Installer(QObject):
             Path_Binary = os.path.normpath(os.path.join(Dir_Install, 'bin'))
             DownloadFile(URL, Dir_Download, File_Name, File_Format, None) #RunCMD([f'powershell.exe -Command (New-Object System.Net.WebClient).DownloadFile("{URL}", "{Path_Download}")'])
             shutil.unpack_archive(Path_Download, Dir_Install, Path_Download.rsplit('.', 1)[-1])
-            MoveFiles(os.path.dirname(GetPath(Dir_Install, 'bin')), Dir_Install)
+            MoveFiles(os.path.dirname(GetPaths(Dir_Install, 'bin')[0]), Dir_Install)
             SetEnvVar('PATH', Path_Binary, 'User') #RunCMD([f'setx /M PATH "%PATH%;{Path_Binary}"'])
             os.remove(Path_Download) #RunCMD([f'powershell.exe -Command Remove-Item -Force -Path "{Path_Download}"'])
         

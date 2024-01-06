@@ -5,28 +5,13 @@ from typing import Tuple, Union
 from tqdm import tqdm
 
 
-# Spect
-ModelList_S = {
-    #'tiny' : "",
-    #'base' : "",
-    'small': "https://github.com/Spr-Aachen/EVT-Resources/raw/main/Voiceprint%20Model/Ecapa-Tdnn/spectrogram/small.pth"
+ModelList = {
+    'Ecapa-Tdnn_spectrogram':    "https://github.com/Spr-Aachen/EVT-Resources/raw/main/Voiceprint%20Model/Ecapa-Tdnn_spectrogram.pth",
+    'Ecapa-Tdnn_melspectrogram': "https://github.com/Spr-Aachen/EVT-Resources/raw/main/Voiceprint%20Model/Ecapa-Tdnn_melspectrogram.pth",
 }
-SHA256List_S = {
-    #'tiny' : "",
-    #'base' : "",
-    'small': "a7c689599e616f03a339bfd11a27ae7cf7a975ac1713c5b85564a70a2e0c469f"
-}
-
-# MelSpect
-ModelList_M = {
-    #'tiny' : "",
-    #'base' : "",
-    'small': "https://github.com/Spr-Aachen/EVT-Resources/raw/main/Voiceprint%20Model/Ecapa-Tdnn/melspectrogram/small.pth"
-}
-SHA256List_M = {
-    #'tiny' : "",
-    #'base' : "",
-    'small': "812c2758805dc7e9d7c2a5b0cd87b342a081f4d9a20513e246a3281ccd8f9bb7"
+SHA256List = {
+    'Ecapa-Tdnn_spectrogram':    "a7c689599e616f03a339bfd11a27ae7cf7a975ac1713c5b85564a70a2e0c469f",
+    'Ecapa-Tdnn_melspectrogram': "812c2758805dc7e9d7c2a5b0cd87b342a081f4d9a20513e246a3281ccd8f9bb7",
 }
 
 
@@ -62,14 +47,12 @@ def Model_Download(url: str, root: str, name: str, format: str, expected_sha256:
 
 def Execute_Model_Download(
     Model_Dir: str,
-    Model_Type: str,
-    Feature_Method: str,
     Model_Name: str
 ):
-    URL = ModelList_S[Model_Name] if Feature_Method == 'spectrogram' else ModelList_M[Model_Name]
-    DownloadDir = os.path.join(Model_Dir, Model_Type, Feature_Method)
+    URL = ModelList[Model_Name]
+    DownloadDir = Model_Dir
     Format = 'pth'
-    SHA = SHA256List_S[Model_Name] if Feature_Method == 'spectrogram' else SHA256List_M[Model_Name]
+    SHA = SHA256List[Model_Name]
     Model_Download(
         url = URL,
         root = DownloadDir,

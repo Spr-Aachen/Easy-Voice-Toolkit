@@ -268,24 +268,24 @@ def SetEnvVar(
 def SetRichText(
     Title: Optional[str] = None,
     TitleAlign: str = "left",
-    TitleSize: float = 9.9,
-    TitleWeight: float = 840.,
+    TitleSize: float = 12.3,
+    TitleWeight: float = 630.,
     TitleColor: str = "#ffffff",
-    TitleSpacing: float = 0.6,
-    TitleLineHeight: float = 21.,
+    TitleSpacing: float = 0.9,
+    TitleLineHeight: float = 24.6,
     Body: Optional[str] = None,
     BodyAlign: str = "left",
     BodySize: float = 9.9,
     BodyWeight: float = 420.,
     BodySpacing: float = 0.6,
-    BodyLineHeight: float = 21.,
+    BodyLineHeight: float = 22.2,
     BodyColor: str = "#ffffff",
 ):
     '''
     Function to set text for widget
     '''
     def ToHtml(Content, Align, Size, Weight, Color, LetterSpacing, LineHeight):
-        Style = f"'text-align:{Align}; font-size:{Size}pt; font-weight:{Weight}; color:{Color}; letter-spacing: {LetterSpacing}px; line-height:{LineHeight}px'"
+        Style = f"'text-align:{Align}; font-size:{Size}pt; font-weight:{Weight}; color:{Color}; letter-spacing: {LetterSpacing}px; line-height: {LineHeight}px'"
         Content = re.sub(
             pattern = "[\n]",
             repl = "<br>",
@@ -464,26 +464,28 @@ def MoveFiles(
                 shutil.move(os.path.join(DirPath, FileName), Dst)
 
 
-def GetPath(
+def GetPaths(
     Dir: str,
     Name: str,
     SearchKeyword: bool = True
 ):
     '''
     '''
+    Result = []
+
     for DirPath, FolderNames, FileNames in os.walk(Dir):
         for FolderName in FolderNames:
             if Name == FolderName or (Name in FolderName and SearchKeyword is True):
-                return os.path.join(DirPath, FolderName)
+                Result.append(os.path.join(DirPath, FolderName))
             else:
                 pass
         for FileName in FileNames:
             if Name == FileName or (Name in FileName and SearchKeyword is True):
-                return os.path.join(DirPath, FileName)
+                Result.append(os.path.join(DirPath, FileName))
             else:
                 pass
 
-    return False
+    return Result if len(Result) > 0 else None
 
 #############################################################################################################
 

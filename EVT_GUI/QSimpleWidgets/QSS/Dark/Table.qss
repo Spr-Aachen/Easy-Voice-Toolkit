@@ -4,10 +4,8 @@ QHeaderView {
 
 QHeaderView::section {
 	text-align: left;
-	/*color: rgb(0, 0, 0);*/
 	background-color: transparent;
     border-width: 1.2px;
-	/*border-radius: 6px;*/
 	border-style: solid;
 	border-color: rgba(201, 210, 222, 123);
 }
@@ -15,7 +13,6 @@ QHeaderView::section {
 
 QTableView {
 	text-align: left;
-	/*color: rgb(0, 0, 0);*/
 	background-color: transparent;
     alternate-background-color: transparent;
     selection-background-color: transparent;
@@ -24,7 +21,6 @@ QTableView {
 	border-radius: 6px;
 	border-style: solid;
 	border-color: rgba(201, 210, 222, 123);
-
 }
 
 QTableView::item {
@@ -32,7 +28,6 @@ QTableView::item {
     border-right-width: 0px;
 	border-bottom-width: 1.2px;
     border-left-width: 0px;
-	/*border-radius: 6px;*/
 	border-style: solid;
 	border-color: rgba(201, 210, 222, 123);
 }

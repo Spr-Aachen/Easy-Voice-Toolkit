@@ -23,7 +23,7 @@ class TitleBarBase(QWidget):
 
         ComponentsSignals.Signal_SetTheme.connect(
             lambda Theme: self.setStyleSheet(Function_GetStyleSheet('Bar', Theme))
-        )
+        ) if self.isVisible() else None
         ComponentsSignals.Signal_SetTheme.emit('Auto')
 
         self.Window = parent if isinstance(parent, (QMainWindow, QDialog)) else parent.window()
@@ -284,7 +284,7 @@ class WindowBase:
             right  = QCursor.pos().x() - self.x() > self.width() - self.edge_size
             bottom = QCursor.pos().y() - self.y() > self.height() - self.edge_size
             if True not in (left, top, right, bottom):
-                return print('Edge size not properly setted !')
+                pass
             elif left and top:
                 return True, win32con.HTTOPLEFT
             elif left and bottom:
@@ -306,10 +306,11 @@ class WindowBase:
     def setFrameless(self, SetStrechable: bool = True, SetDropShadowEffect: bool = True) -> None:
         self.setWindowFlags(self.windowFlags() | Qt.FramelessWindowHint)
         hWnd = self.winId()
-        if SetStrechable:
-            Index = win32con.GWL_STYLE
-            Value = win32gui.GetWindowLong(hWnd, Index)
-            win32gui.SetWindowLong(hWnd, Index, Value | win32con.WS_THICKFRAME & ~win32con.WS_CAPTION)
+        Index = win32con.GWL_STYLE
+        Value = win32gui.GetWindowLong(hWnd, Index)
+        win32gui.SetWindowLong(hWnd, Index, Value | win32con.WS_THICKFRAME & ~win32con.WS_CAPTION)
+        if not SetStrechable:
+            self.edge_size = 0
         if SetDropShadowEffect:
             ExtendFrameIntoClientArea = WinDLL("dwmapi").DwmExtendFrameIntoClientArea
             ExtendFrameIntoClientArea.argtypes = [c_int, PMARGINS]
@@ -394,5 +395,8 @@ class DialogBase(WindowBase, QDialog):
         self.TitleBar.MinimizeButton.deleteLater()
         self.TitleBar.MaximizeButton.hide()
         self.TitleBar.MaximizeButton.deleteLater()
+
+    def mouseDoubleClickEvent(self, event: QMouseEvent) -> None:
+        return
 
 ##############################################################################################################################

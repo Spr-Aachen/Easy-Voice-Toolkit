@@ -7,6 +7,7 @@ import torch
 import numpy as np
 from tqdm import tqdm
 from typing import List, Optional, Union
+from pathlib import Path
 
 from .whisper.Transcribe import transcribe
 from .whisper.Utils import optional_int, optional_float, str2bool, get_writer
@@ -125,8 +126,7 @@ class Voice_Transcribing:
     Transcribe WAV files to text and save as SRT files
     '''
     def __init__(self,
-        Model_Name: str = 'small',
-        Model_Dir: str = './Models',
+        Model_Path: str = './Models/.pt',
         WAV_Dir: str = './WAV_Files',
         SRT_Dir: str = './SRT_Files',
         Verbose: str2bool = True,
@@ -135,8 +135,8 @@ class Voice_Transcribing:
         Condition_on_Previous_Text: str2bool = False,
         fp16: str2bool = True,
     ):
-        self.Model_Name = Model_Name # name of the Whisper model to use    choices = available_models()
-        self.Model_Dir = Model_Dir # the path to save model files; uses ~/.cache/whisper by default
+        self.Model_Name = Path(Model_Path).stem.__str__() # name of the Whisper model to use    choices = available_models()
+        self.Model_Dir = Path(Model_Path).parent.__str__() # the path to save model files; uses ~/.cache/whisper by default
         self.Device: str = "cuda" if torch.cuda.is_available() else "cpu" # device to use for PyTorch inference
         self.WAV_Dir = WAV_Dir # the path to save wav files
         self.SRT_Dir = SRT_Dir # help = "directory to save the outputs

@@ -1,8 +1,36 @@
 from .QSimpleWidgets.Utils import *
 from .QSimpleWidgets.QFunctions import *
+from .QSimpleWidgets.Sources import *
 from .QSimpleWidgets.ComponentsCustomizer import *
 
 ##############################################################################################################################
+
+def Function_ShowMessageBox(
+    MessageType: object = QMessageBox.Information,
+    WindowTitle: str = ...,
+    Text: str = ...,
+    Buttons: object = QMessageBox.Ok,
+    EventButtons: list = [],
+    EventLists: list[list] = [[], ],
+    ParamLists: list[list[tuple]] = [[()], ]
+):
+    '''
+    Function to pop up a msgbox
+    '''
+    MsgBox = QMessageBox()
+
+    MsgBox.setIcon(MessageType)
+    MsgBox.setWindowTitle(WindowTitle)
+    MsgBox.setText(Text)
+    MsgBox.setStandardButtons(Buttons)
+
+    Result = MsgBox.exec()
+
+    if Result in EventButtons:
+        EventList = EventLists[EventButtons.index(Result)]
+        ParamList = ParamLists[EventButtons.index(Result)]
+        RunEvent(EventList, ParamList)
+
 
 def Function_SetFileDialog(
     Button: QPushButton,
@@ -26,7 +54,108 @@ def Function_SetFileDialog(
 
 ##############################################################################################################################
 
-class TableWidget_ButtonMixed(TableWidgetBase):
+class Table_ViewModels(TableBase):
+    '''
+    '''
+    Download = Signal(tuple)
+
+    def __init__(self, parent: QWidget = None):
+        super().__init__(parent)
+
+        self.setRowCount(0)
+        self.setColumnCount(4)
+        self.SetIndexHeaderVisible(False)
+
+        self.Clipboard = QApplication.clipboard()
+
+    def setStyleSheet(self, StyleSheet: str):
+        super().setStyleSheet(StyleSheet + "QTableView{border-radius:0px;}")
+
+    def AddRow(self, Param: tuple):
+        RowHeight = 36
+        LabelStyle = '''
+        QLabel {
+            background-color: transparent;
+            padding: 6px;
+            border-width: 1px;
+            border-style: solid;
+            border-color: rgba(201, 210, 222, 123);
+        }
+        '''
+        ButtonStyle = '''
+        QPushButton {
+            background-color: transparent;
+            padding: 6px;
+            border-width: 1px;
+            border-style: solid;
+            border-color: rgba(201, 210, 222, 123);
+        }
+        '''
+        def SetColumnLayout(ColumnLayout):
+            ColumnLayout.setContentsMargins(0, 0, 0, 0)
+            ColumnLayout.setSpacing(0)
+
+        Label0 = QLabel()
+        Label0.setStyleSheet(LabelStyle)
+        Function_SetText(Label0, Param[0])
+        Column0Layout = QHBoxLayout()
+        SetColumnLayout(Column0Layout)
+        Column0Layout.addWidget(Label0)
+
+        Label1 = QLabel()
+        Label1.setStyleSheet(LabelStyle)
+        Function_SetText(Label1, Param[1])
+        Column1Layout = QHBoxLayout()
+        SetColumnLayout(Column1Layout)
+        Column1Layout.addWidget(Label1)
+
+        Label2 = QLabel()
+        Label2.setStyleSheet(LabelStyle)
+        Function_SetText(Label2, Param[2])
+        Column2Layout = QHBoxLayout()
+        SetColumnLayout(Column2Layout)
+        Column2Layout.addWidget(Label2)
+
+        StackedWidget = QStackedWidget()
+        StackedWidget.setContentsMargins(0, 0, 0, 0)
+        OpenButton = QPushButton()
+        OpenButton.setStyleSheet(ButtonStyle + "QPushButton {image: url(:/Button_Icon/Sources/OpenedFolder.png);}")
+        OpenButton.clicked.connect(lambda: Function_OpenURL(Param[3] if isinstance(Param[3], str) else Param[3][1]))
+        DownloadButton = QPushButton()
+        DownloadButton.setStyleSheet(ButtonStyle + "QPushButton {image: url(:/Button_Icon/Sources/Download.png);}")
+        DownloadButton.clicked.connect(lambda: self.Download.emit(Param[3]) if isinstance(Param[3], tuple) else None)
+        DownloadButton.clicked.connect(lambda: StackedWidget.setCurrentWidget(OpenButton))
+        StackedWidget.addWidget(OpenButton)
+        StackedWidget.addWidget(DownloadButton)
+        StackedWidget.setCurrentWidget(OpenButton) if isinstance(Param[3], str) else StackedWidget.setCurrentWidget(DownloadButton)
+        CopyButton = QPushButton()
+        CopyButton.setStyleSheet(ButtonStyle + "QPushButton {image: url(:/Button_Icon/Sources/Clipboard.png);}")
+        CopyButton.clicked.connect(lambda: self.Clipboard.setText(Param[3][0]) if isinstance(Param[3], tuple) else None)
+        CopyButton.clicked.connect(lambda: Function_ShowMessageBox(WindowTitle = "Tip", Text = "已复制链接到剪切板"))
+        Function_SetRetainSizeWhenHidden(CopyButton)
+        CopyButton.hide() if StackedWidget.currentWidget() == OpenButton else None
+        StackedWidget.currentChanged.connect(lambda: CopyButton.hide() if StackedWidget.currentWidget() == OpenButton else None)
+        Column3Layout = QHBoxLayout()
+        SetColumnLayout(Column3Layout)
+        Column3Layout.addWidget(StackedWidget)
+        Column3Layout.addWidget(CopyButton)
+
+        super().AddRow(
+            [Column0Layout, Column1Layout, Column2Layout, Column3Layout],
+            [QHeaderView.Stretch, QHeaderView.Stretch, QHeaderView.Stretch, QHeaderView.Fixed],
+            [None, None, None, 2 * RowHeight],
+            RowHeight
+        )
+
+    def SetValue(self, Params: list = [['', '', '', 'url'], ]):
+        self.ClearRows()
+        for Index, Param in enumerate(Params):
+            if Index == 1 + self.columnCount():
+                return print("Maximum params reached")
+            self.AddRow(Param)
+
+
+class Table_EditAudioSpeaker(TableBase):
     '''
     '''
     ValueChanged = Signal(dict)
@@ -34,79 +163,92 @@ class TableWidget_ButtonMixed(TableWidgetBase):
     def __init__(self, parent: QWidget = None):
         super().__init__(parent)
 
-        self.ColumnCount = 3
-        self.setColumnCount(self.ColumnCount + 1)
         self.setRowCount(0)
+        self.setColumnCount(3)
+        self.SetIndexHeaderVisible(True)
 
-        self.model().dataChanged.connect( #self.itemChanged.connect(
+        self.model().dataChanged.connect(
             lambda: self.ValueChanged.emit(self.GetValue())
         )
 
-    def DelRow(self):
-        self.removeRow(self.currentRow()) if self.rowCount() > 1 else None
-
     def AddRow(self, Param: Optional[tuple] = None, FileType: Optional[str] = None):
-        CurrentColumnCount = self.columnCount()
-        CurrentRowCount = self.rowCount()
+        RowHeight = 24
+        LineEditStyle = '''
+        QLineEdit {
+            background-color: transparent;
+            padding: 6px;
+            border-width: 1px;
+            border-style: solid;
+            border-color: rgba(201, 210, 222, 123);
+        }
+        '''
+        ButtonStyle = '''
+        QPushButton {
+            background-color: transparent;
+            padding: 6px;
+            border-width: 1px;
+            border-style: solid;
+            border-color: rgba(201, 210, 222, 123);
+        }
+        '''
+        def SetColumnLayout(ColumnLayout):
+            ColumnLayout.setContentsMargins(0, 0, 0, 0)
+            ColumnLayout.setSpacing(0)
 
-        self.insertRow(CurrentRowCount)
-        for ColumnCount in range(1, 1 + self.ColumnCount):
-            self.setCellWidget(CurrentRowCount, ColumnCount, QWidget())
+        LineEdit0 = QLineEdit()
+        LineEdit0.setStyleSheet(LineEditStyle)
+        Function_SetText(LineEdit0, Param[0] if Param else '', SetPlaceholderText = True)
+        LineEdit0.textChanged.connect(
+            lambda: self.ValueChanged.emit(self.GetValue())
+        )
+        Column0Layout = QHBoxLayout()
+        SetColumnLayout(Column0Layout)
+        Column0Layout.addWidget(LineEdit0)
 
-            if ColumnCount == 1 + 0:
-                LineEdit0 = LineEdit_NoBorder()
-                Function_SetText(LineEdit0, Param[ColumnCount] if Param else '', SetPlaceholderText = True)
-                LineEdit0.textChanged.connect(
-                    lambda: self.ValueChanged.emit(self.GetValue())
-                )
-                Column0Layout = QGridLayout()
-                Column0Layout.setContentsMargins(3, 3, 3, 3)
-                #Column0Layout.setSpacing(3)
-                Column0Layout.addWidget(LineEdit0)
-                self.cellWidget(CurrentRowCount, ColumnCount).setLayout(Column0Layout)
-                self.horizontalHeader().setSectionResizeMode(ColumnCount, QHeaderView.ResizeToContents)
+        LineEdit1 = QLineEdit()
+        LineEdit1.setStyleSheet(LineEditStyle)
+        Function_SetText(LineEdit1, Param[1] if Param else '', SetPlaceholderText = True)
+        LineEdit1.textChanged.connect(
+            lambda: self.ValueChanged.emit(self.GetValue())
+        )
+        Button = QPushButton()
+        Button.setStyleSheet(ButtonStyle)
+        Button.setText("...")
+        Function_SetFileDialog(Button, LineEdit1, "SelectFile", FileType)
+        Column1Layout = QHBoxLayout()
+        SetColumnLayout(Column1Layout)
+        Column1Layout.addWidget(LineEdit1)
+        Column1Layout.addWidget(Button)
 
-            if ColumnCount == 1 + 1:
-                LineEdit1 = LineEdit_NoBorder()
-                Function_SetText(LineEdit1, Param[ColumnCount] if Param else '', SetPlaceholderText = True)
-                LineEdit1.textChanged.connect(
-                    lambda: self.ValueChanged.emit(self.GetValue())
-                )
-                Button = ToolButtonBase("...")
-                Function_SetFileDialog(Button, LineEdit1, "SelectFile", FileType)
-                Column1Layout = QHBoxLayout()
-                Column1Layout.setContentsMargins(3, 3, 3, 3)
-                Column1Layout.setSpacing(3)
-                Column1Layout.addWidget(LineEdit1)
-                Column1Layout.addWidget(Button)
-                self.cellWidget(CurrentRowCount, ColumnCount).setLayout(Column1Layout)
-                self.horizontalHeader().setSectionResizeMode(ColumnCount, QHeaderView.Stretch)
+        AddButton = QPushButton()
+        AddButton.setStyleSheet(ButtonStyle)
+        AddButton.setText("+")
+        AddButton.clicked.connect(lambda: self.SelectOuterRow(AddButton), Qt.QueuedConnection)
+        AddButton.clicked.connect(self.AddRow, Qt.QueuedConnection)
+        DelButton = QPushButton()
+        DelButton.setStyleSheet(ButtonStyle)
+        DelButton.setText("-")
+        DelButton.clicked.connect(lambda: self.SelectOuterRow(DelButton), Qt.QueuedConnection)
+        DelButton.clicked.connect(self.DelRow, Qt.QueuedConnection)
+        Column2Layout = QHBoxLayout()
+        SetColumnLayout(Column2Layout)
+        Column2Layout.addWidget(AddButton)
+        Column2Layout.addWidget(DelButton)
 
-            if ColumnCount == 1 + 2:
-                def SelectButtonRow(Button):
-                    CellWidget = Button.parent()
-                    ModelIndex = self.indexAt(CellWidget.pos())
-                    self.selectRow(ModelIndex.row()) #if index.isValid() else None
-                AddButton = ToolButtonBase("+")
-                AddButton.clicked.connect(lambda: SelectButtonRow(AddButton), Qt.QueuedConnection)
-                AddButton.clicked.connect(self.AddRow, Qt.QueuedConnection)
-                DelButton = ToolButtonBase("-")
-                DelButton.clicked.connect(lambda: SelectButtonRow(DelButton), Qt.QueuedConnection)
-                DelButton.clicked.connect(self.DelRow, Qt.QueuedConnection)
-                Column2Layout = QHBoxLayout()
-                Column2Layout.setContentsMargins(3, 3, 3, 3)
-                Column2Layout.setSpacing(3)
-                Column2Layout.addWidget(AddButton)
-                Column2Layout.addWidget(DelButton)
-                self.cellWidget(CurrentRowCount, ColumnCount).setLayout(Column2Layout)
-                self.horizontalHeader().setSectionResizeMode(ColumnCount, QHeaderView.ResizeToContents)
+        super().AddRow(
+            [Column0Layout, Column1Layout, Column2Layout],
+            [QHeaderView.ResizeToContents, QHeaderView.Stretch, QHeaderView.Fixed],
+            [None, None, 2 * RowHeight],
+            RowHeight
+        )
 
     def SetValue(self, Params: dict = {'': ''}, FileType: Optional[str] = None):
-        ParamDict = Params #ParamDict = ToIterable(Params)
+        self.ClearRows()
+        ParamDict = ToIterable(Params)
         for Key, Value in ParamDict.items():
-            Param = tuple(('',) + (Key, Value))
+            Param = (Key, Value)
             Index = next((i for i, key in enumerate(ParamDict) if key == Key), None)
-            if Index == 1 + self.ColumnCount:
+            if Index == 1 + self.columnCount() - 1:
                 return print("Maximum params reached")
             self.AddRow(Param, FileType)
 
@@ -114,115 +256,11 @@ class TableWidget_ButtonMixed(TableWidgetBase):
         ValueDict = {}
         for RowCount in range(self.rowCount()):
             try:
-                Key = Function_GetText(self.cellWidget(RowCount, 1 + 0).findChild(QLineEdit))
-                Value = Function_GetText(self.cellWidget(RowCount, 1 + 1).findChild(QLineEdit))
+                Key = Function_GetText(self.cellWidget(RowCount, 0).findChild(QLineEdit))
+                Value = Function_GetText(self.cellWidget(RowCount, 1).findChild(QLineEdit))
                 ValueDict[Key] = Value
             except:
                 pass
         return ValueDict
-
-    def SetHorizontalHeaders(self, Headers: list = ['', '', '']):
-        HeaderList = ToIterable(Headers)
-        HeaderList.insert(0, '')
-        for Index, Header in enumerate(HeaderList, 1):
-            if Index == 1 + self.ColumnCount:
-                return print("Maximum headers reached")
-            self.setHorizontalHeaderItem(Index, QTableWidgetItem(HeaderList[Index]))
-
-##############################################################################################################################
-
-class MessageBox_Stacked(MessageBoxBase):
-    '''
-    '''
-    def __init__(self, parent: QWidget = None):
-        super().__init__(parent, min_width = 900, min_height = 480)
-
-        self.layout().setContentsMargins(12, 12, 12, 12)
-        self.layout().setSpacing(12)
-
-        self.StackedWidget = QStackedWidget()
-
-        self.ButtonP = QPushButton()
-        self.ButtonP.clicked.connect(lambda: self.StackedWidget.setCurrentIndex(self.StackedWidget.currentIndex() - 1))
-        self.ButtonP.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
-        Function_SetRetainSizeWhenHidden(self.ButtonP)
-        self.ButtonP.setStyleSheet(
-            "QPushButton {"
-            "   background-color: transparent;"
-            "   padding: 12px;"
-            "   border-image: url(:/Button_Icon/Sources/LeftArrow.png);"
-            "}"
-            "QPushButton:hover {"
-            "   background-color: rgba(210, 222, 234, 12);"
-            "}"
-        )
-        self.ButtonP.setToolTip("Prev Page")
-
-        self.ButtonN = QPushButton()
-        self.ButtonN.clicked.connect(lambda: self.StackedWidget.setCurrentIndex(self.StackedWidget.currentIndex() + 1))
-        self.ButtonN.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
-        Function_SetRetainSizeWhenHidden(self.ButtonN)
-        self.ButtonN.setStyleSheet(
-            "QPushButton {"
-            "   background-color: transparent;"
-            "   padding: 12px;"
-            "   border-image: url(:/Button_Icon/Sources/RightArrow.png);"
-            "}"
-            "QPushButton:hover {"
-            "   background-color: rgba(210, 222, 234, 12);"
-            "}"
-        )
-        self.ButtonN.setToolTip("Next Page")
-
-        Layout = QHBoxLayout()
-        Layout.setAlignment(Qt.AlignCenter)
-        Layout.setContentsMargins(0, 0, 0, 0)
-        Layout.setSpacing(self.layout().spacing())
-        Layout.addWidget(self.ButtonP)
-        Layout.addWidget(self.StackedWidget)
-        Layout.addWidget(self.ButtonN)
-        self.InsertItem(Layout)
-
-        self.SetContent(None, 'None')
-
-    def SetContent(self, Images: list, Texts: list):
-        Function_SetNoContents(self.StackedWidget)
-
-        for Index, Image in enumerate(ToIterable(Images)):
-            TextBrowser = QTextBrowser()
-            TextBrowser.setStyleSheet(
-                "QTextBrowser {"
-                f"    background-image: url({NormPath(Image, 'Posix')});"
-                "    background-size: cover;"
-                "    background-repeat: no-repeat;"
-                "    background-position: center 0px;"
-                "    padding: 0px;"
-                "    border-width: 0px;"
-                "    border-radius: 6px;"
-                "    border-style: solid;"
-                "}"
-            ) if Image is not None else None
-
-            Label = QLabel()
-            Function_SetText(Label, SetRichText(ToIterable(Texts)[Index], 'center', 9.9, 630))
-
-            SubLayout = QVBoxLayout()
-            SubLayout.setAlignment(Qt.AlignCenter)
-            SubLayout.setContentsMargins(0, 0, 0, 0)
-            SubLayout.setSpacing(self.layout().spacing())
-            SubLayout.addWidget(TextBrowser)
-            SubLayout.addWidget(Label)
-
-            Widget = QWidget()
-            Widget.setLayout(SubLayout)
-            self.StackedWidget.addWidget(Widget)
-    
-        self.StackedWidget.currentChanged.connect(lambda: self.ButtonP.setVisible(False) if self.StackedWidget.currentIndex() == 0 else self.ButtonP.setVisible(True))
-        self.ButtonP.setVisible(False)
-        self.StackedWidget.currentChanged.connect(lambda: self.ButtonN.setVisible(False) if self.StackedWidget.currentIndex() == self.StackedWidget.count() - 1 else self.ButtonN.setVisible(True))
-        self.ButtonN.setVisible(True)
-
-        self.StackedWidget.currentChanged.connect(lambda: self.setText(f'{self.StackedWidget.currentIndex() + 1} / {self.StackedWidget.count()}'))
-        self.setText(f'1 / {self.StackedWidget.count()}')
 
 ##############################################################################################################################
