@@ -79,7 +79,6 @@ class Preprocessing:
         Set_Epochs: int = 10000,
         Set_Batch_Size: int = 16,
         Set_FP16_Run: bool = True,
-        Set_Speakers: Optional[list] = None,
         #Keep_Original_Speakers: bool = False,
         #Config_Path_Load: Optional[str] = None
     ):
@@ -90,7 +89,6 @@ class Preprocessing:
         self.Set_Epochs = Set_Epochs
         self.Set_Batch_Size = Set_Batch_Size
         self.Set_FP16_Run = Set_FP16_Run
-        self.Set_Speakers = Set_Speakers
         #self.Keep_Original_Speakers = Keep_Original_Speakers
         #self.Config_Path_Load = Config_Path_Load if Keep_Original_Speakers else None
 
@@ -125,8 +123,7 @@ class Preprocessing:
                 with open(file = Text_Path, mode = 'r', encoding = 'utf-8') as File:
                     Lines = File.readlines()
                 for _, Line in enumerate(Lines):
-                    Line_Path = Line.split('|', maxsplit = 1)[0]
-                    Speaker = re.split(r'[\[\]]', re.split(r'[/\\\\]', Line_Path)[-1])[1]
+                    Speaker = Line.split('|', maxsplit = 2)[1]
                     Speakers.append(Speaker) if Speaker not in Speakers else None
             return Speakers
         '''
@@ -139,7 +136,7 @@ class Preprocessing:
             return OldSpeakers
         '''
         Language = Get_Languages(self.FileList_Path_Training, self.FileList_Path_Validation)
-        NewSpeakers = Get_NewSpeakers(self.FileList_Path_Training, self.FileList_Path_Validation) if self.Set_Speakers is None else self.Set_Speakers
+        NewSpeakers = Get_NewSpeakers(self.FileList_Path_Training, self.FileList_Path_Validation)
         #OldSpeakers = Get_OldSpeakers(self.Config_Path_Load) if self.Keep_Original_Speakers else []
 
         with open(file = Path(__file__).parent.joinpath('./configs', f'{Language}_base.json').__str__(), mode = 'rb') as ConfigFile_Default:
@@ -174,7 +171,7 @@ class Preprocessing:
             for Index, Line in enumerate(Lines):
                 Line_Old = Line
                 Line_Old_Path = Line_Old.split('|', maxsplit = 1)[0]
-                Speaker = re.split(r'[\[\]]', re.split(r'[/\\\\]', Line_Old_Path)[-1])[1]
+                Speaker = Line_Old.split("|", maxsplit = 2)[1]
                 SpeakerID = NewSpeakers.index(Speaker)
                 Line_Old_Text = Line_Old.split("|", maxsplit = 2)[2]
                 Line_New = Line_Old_Path + f"|{SpeakerID}|" + Line_Old_Text
@@ -539,7 +536,6 @@ class Voice_Training(Preprocessing, Training):
         Set_Epochs: int = 10000,
         Set_Batch_Size: int = 16,
         Set_FP16_Run: bool = True,
-        Set_Speakers: Optional[list] = None,
         Keep_Original_Speakers: bool = False,
         #Config_Path_Load: Optional[str] = None,
         Num_Workers: int = 4,
@@ -548,7 +544,7 @@ class Voice_Training(Preprocessing, Training):
         Model_Path_Pretrained_D: Optional[str] = None,
         Dir_Output: str = './'
     ):
-        Preprocessing.__init__(self, FileList_Path_Training, FileList_Path_Validation, Dir_Output, Set_Eval_Interval, Set_Epochs, Set_Batch_Size, Set_FP16_Run, Set_Speakers)
+        Preprocessing.__init__(self, FileList_Path_Training, FileList_Path_Validation, Dir_Output, Set_Eval_Interval, Set_Epochs, Set_Batch_Size, Set_FP16_Run)
         Training.__init__(self, Num_Workers, Model_Path_Pretrained_G if Use_PretrainedModels else None, Model_Path_Pretrained_D if Use_PretrainedModels else None, Keep_Original_Speakers)
         self.Model_Dir_Save = Dir_Output
 

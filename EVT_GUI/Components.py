@@ -69,7 +69,14 @@ class Table_ViewModels(TableBase):
         self.Clipboard = QApplication.clipboard()
 
     def setStyleSheet(self, StyleSheet: str):
-        super().setStyleSheet(StyleSheet + "QTableView{border-radius:0px;}")
+        super().setStyleSheet(StyleSheet +  '''
+            QHeaderView::section, QTableView, QTableView::item {
+                gridline-color:rgba(201, 210, 222, 123);
+                border-radius:0px;
+                border-color:rgba(201, 210, 222, 123);
+            }
+        '''
+        )
 
     def AddRow(self, Param: tuple):
         RowHeight = 36

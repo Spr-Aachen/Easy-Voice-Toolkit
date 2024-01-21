@@ -2,7 +2,7 @@ import os
 import darkdetect
 from typing import Union, Optional
 #from urllib.parse import quote
-from PySide6.QtCore import Qt, QObject, QFile, QRect, QRectF, Signal, Slot, QPropertyAnimation, QEasingCurve, QUrl
+from PySide6.QtCore import Qt, QObject, QFile, QRect, QRectF, QSize, Signal, Slot, QPropertyAnimation, QParallelAnimationGroup, QEasingCurve, QUrl
 from PySide6.QtGui import QColor, QRgba64, QIcon, QPainter, QDesktopServices
 from PySide6.QtWidgets import *
 
@@ -108,6 +108,45 @@ def Function_SetAnimation(
     Animation.setDuration(Duration)
     Animation.setEasingCurve(QEasingCurve.InOutQuart)
     return Animation
+
+
+def Function_SetWidgetPosAnimation(
+    Widget: QWidget,
+    Duration: int = 99
+):
+    OriginalGeometry = Widget.geometry()
+    AlteredGeometry = QRect(OriginalGeometry.left(), OriginalGeometry.top() + OriginalGeometry.height() / Duration, OriginalGeometry.width(), OriginalGeometry.height())
+
+    WidgetAnimation = QPropertyAnimation(Widget, b"geometry", Widget)
+
+    return Function_SetAnimation(WidgetAnimation, OriginalGeometry, AlteredGeometry, Duration)
+
+
+def Function_SetWidgetSizeAnimation(
+    Frame: QWidget,
+    TargetWidth: Optional[int] = None,
+    TargetHeight: Optional[int] = None,
+    Duration: int = 210
+):
+    '''
+    Function to animate widget size
+    '''
+    CurrentWidth = Frame.geometry().width() if Frame.size() == QSize(100, 30) else Frame.width()
+    CurrentHeight = Frame.geometry().height() if Frame.size() == QSize(100, 30) else Frame.height()
+
+    FrameAnimationMinWidth = QPropertyAnimation(Frame, b"minimumWidth", Frame)
+    FrameAnimationMaxWidth = QPropertyAnimation(Frame, b"maximumWidth", Frame)
+    FrameAnimationMinHeight = QPropertyAnimation(Frame, b"minimumHeight", Frame)
+    FrameAnimationMaxHeight = QPropertyAnimation(Frame, b"maximumHeight", Frame)
+
+    AnimationGroup = QParallelAnimationGroup(Frame)
+
+    AnimationGroup.addAnimation(Function_SetAnimation(FrameAnimationMinWidth, CurrentWidth, TargetWidth, Duration)) if TargetWidth is not None else None
+    AnimationGroup.addAnimation(Function_SetAnimation(FrameAnimationMaxWidth, CurrentWidth, TargetWidth, Duration)) if TargetWidth is not None else None
+    AnimationGroup.addAnimation(Function_SetAnimation(FrameAnimationMinHeight, CurrentHeight, TargetHeight, Duration)) if TargetHeight is not None else None
+    AnimationGroup.addAnimation(Function_SetAnimation(FrameAnimationMaxHeight, CurrentHeight, TargetHeight, Duration)) if TargetHeight is not None else None
+
+    return AnimationGroup
 
 
 def Function_SetNoContents(

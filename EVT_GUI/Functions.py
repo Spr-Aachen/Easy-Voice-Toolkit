@@ -1,6 +1,6 @@
 import re
 from typing import Union, Optional
-from PySide6.QtCore import Qt, QObject, Signal, Slot, QSize, QParallelAnimationGroup
+from PySide6.QtCore import Qt, QObject, Signal, Slot
 from PySide6.QtGui import QFont
 from PySide6.QtWidgets import *
 
@@ -39,7 +39,7 @@ def Function_InsertUI(
     Function to insert UI
     '''
     InsertUI = InsertType(UIParam)
-    if isinstance(InsertUI, (QPushButton, QToolButton)):
+    if isinstance(InsertUI, (QAbstractButton)):
         InsertUI.setMinimumHeight(24)
         InsertUI.setStyleSheet(
             f"{InsertType.__name__}"
@@ -103,21 +103,22 @@ def Function_ScrollToWidget(
     '''
     def ScrollToWidget():
         if TargetWidget is not None:
-            TargetRect = TargetWidget.geometry()
+            TargetRect = TargetWidget.mapToGlobal(QPoint(0, 0))
         else:
             try:
-                TargetRect = ScrollArea.widget().layout().itemAt(Trigger.property("Index")).geometry()
+                TargetRect = ScrollArea.widget().layout().itemAt(Trigger.property("Index")).mapToGlobal(QPoint(0, 0))
             except:
                 raise Exception("Please set property 'Index' for Trigger widget!")
+        TargetYPos = TargetRect.y() - ScrollArea.widget().mapToGlobal(QPoint(0, 0)).y()
 
-        ScrollArea.verticalScrollBar().setValue(TargetRect.top())
+        ScrollArea.verticalScrollBar().setValue(TargetYPos)
 
     if isinstance(Trigger, QTreeWidgetItem):
         def TreeWidgetEvent(Item, Column):
             ScrollToWidget() if Item == Trigger else None
         Trigger.treeWidget().itemClicked.connect(TreeWidgetEvent)
 
-    if isinstance(Trigger, (QPushButton, QToolButton)):
+    if isinstance(Trigger, QAbstractButton):
         Trigger.clicked.connect(ScrollToWidget)
 
 
@@ -135,13 +136,13 @@ def Function_SetTreeWidget(
 
     RootItems = []
 
-    for Index, RootItemText in enumerate(RootItemTexts):
+    for Index, RootItemText in enumerate(ToIterable(RootItemTexts)):
         RootItem = QTreeWidgetItem(TreeWidget)
         RootItem.setText(0 if AddVertically else Index, RootItemText)
         RootItemTextFont = QFont()
         RootItemTextFont.setPixelSize(15)
         RootItem.setFont(0 if AddVertically else Index, RootItemTextFont)
-        for ChildItemText in ChildItemTexts[Index]:
+        for ChildItemText in ToIterable(ChildItemTexts[Index]):
             ChildItem = QTreeWidgetItem(RootItem)
             ChildItem.setText(0 if AddVertically else Index, ChildItemText)
             ChildItemTextFont = QFont()
@@ -200,7 +201,7 @@ def Function_ConfigureCheckBox(
 
 
 def Function_SetURL(
-    Button: QToolButton,
+    Button: QAbstractButton,
     URL: Union[str, QWidget, list],
     ButtonTooltip: str = "Open"
 ):
@@ -215,7 +216,7 @@ def Function_SetURL(
 
 
 def Function_SetFileDialog(
-    Button: QToolButton,
+    Button: QAbstractButton,
     LineEdit: QLineEdit,
     Mode: str,
     FileType: Optional[str] = None,
@@ -263,7 +264,7 @@ def Function_ShowMessageBox(
     MsgBox.setStandardButtons(Buttons)
 
     '''
-    @Slot(QToolButton)
+    @Slot(QAbstractButton)
     def ConnectEvent(Button: QAbstractButton):
         if Button.role() in EventRoles:
             EventList = EventLists[EventRoles.index(Button.role())]
@@ -299,7 +300,7 @@ def Function_ParamsHandler(
         if isinstance(UI, (QCheckBox, QRadioButton)):
             return UI.isChecked()
 
-        if isinstance(UI, TableWidget_ButtonMixed):
+        if isinstance(UI, Table_EditAudioSpeaker):
             return UI.GetValue()
 
     if Mode == "Set":
@@ -314,7 +315,7 @@ def Function_ParamsHandler(
         if isinstance(UI, (QCheckBox, QRadioButton)):
             UI.setChecked(Param)
 
-        if isinstance(UI, TableWidget_ButtonMixed):
+        if isinstance(UI, Table_EditAudioSpeaker):
             UI.SetValue(Param)
 
 
@@ -339,7 +340,7 @@ def Function_ParamsSynchronizer(
     TriggerList = ToIterable(Trigger)
 
     for Trigger in TriggerList:
-        if isinstance(Trigger, (QPushButton, QToolButton)):
+        if isinstance(Trigger, (QAbstractButton)):
             Trigger.clicked.connect(ParamsSynchronizer) if Connection == "Connect" else Trigger.clicked.disconnect(ParamsSynchronizer)
         if isinstance(Trigger, (QSlider, QSpinBox, QDoubleSpinBox)):
             Trigger.valueChanged.connect(ParamsSynchronizer) if Connection == "Connect" else Trigger.valueChanged.disconnect(ParamsSynchronizer)
@@ -399,7 +400,6 @@ def Function_ParamsChecker(
 
 
 def Function_AnimateStackedWidget(
-    Parent: QWidget,
     StackedWidget: QStackedWidget,
     TargetIndex: int = 0,
     Duration: int = 99
@@ -409,11 +409,8 @@ def Function_AnimateStackedWidget(
     '''
     OriginalWidget = StackedWidget.currentWidget()
     OriginalGeometry = OriginalWidget.geometry()
-    AlteredGeometry = QRect(OriginalGeometry.left(), OriginalGeometry.top() + OriginalGeometry.height() / 66, OriginalGeometry.width(), OriginalGeometry.height())
 
-    WidgetAnimation = QPropertyAnimation(OriginalWidget, b"geometry", Parent)
-
-    WidgetAnimation = Function_SetAnimation(WidgetAnimation, OriginalGeometry, AlteredGeometry, Duration)
+    WidgetAnimation = Function_SetWidgetPosAnimation(OriginalWidget, Duration)
     WidgetAnimation.finished.connect(
         lambda: StackedWidget.setCurrentIndex(TargetIndex),
         type = Qt.QueuedConnection
@@ -425,35 +422,7 @@ def Function_AnimateStackedWidget(
     WidgetAnimation.start() if StackedWidget.currentIndex() != TargetIndex else None
 
 
-def Function_AnimateWidgetSize(
-    Parent: QWidget,
-    Frame: QWidget,
-    TargetWidth: Optional[int] = None,
-    TargetHeight: Optional[int] = None,
-    Duration: int = 210
-):
-    '''
-    Function to animate widget size
-    '''
-    CurrentWidth = Frame.geometry().width() if Frame.size() == QSize(100, 30) else Frame.width()
-    CurrentHeight = Frame.geometry().height() if Frame.size() == QSize(100, 30) else Frame.height()
-
-    FrameAnimationMinWidth = QPropertyAnimation(Frame, b"minimumWidth", Parent)
-    FrameAnimationMaxWidth = QPropertyAnimation(Frame, b"maximumWidth", Parent)
-    FrameAnimationMinHeight = QPropertyAnimation(Frame, b"minimumHeight", Parent)
-    FrameAnimationMaxHeight = QPropertyAnimation(Frame, b"maximumHeight", Parent)
-
-    AnimationGroup = QParallelAnimationGroup(Parent)
-
-    AnimationGroup.addAnimation(Function_SetAnimation(FrameAnimationMinWidth, CurrentWidth, TargetWidth, Duration)) if TargetWidth is not None else None
-    AnimationGroup.addAnimation(Function_SetAnimation(FrameAnimationMaxWidth, CurrentWidth, TargetWidth, Duration)) if TargetWidth is not None else None
-    AnimationGroup.addAnimation(Function_SetAnimation(FrameAnimationMinHeight, CurrentHeight, TargetHeight, Duration)) if TargetHeight is not None else None
-    AnimationGroup.addAnimation(Function_SetAnimation(FrameAnimationMaxHeight, CurrentHeight, TargetHeight, Duration)) if TargetHeight is not None else None
-    AnimationGroup.start()
-
-
 def Function_AnimateFrame(
-    Parent: QWidget,
     Frame: QWidget,
     MinWidth: Optional[int] = None,
     MaxWidth: Optional[int] = None,
@@ -466,12 +435,12 @@ def Function_AnimateFrame(
     Function to animate frame
     '''
     def ExtendFrame():
-        Function_AnimateWidgetSize(Parent, Frame, MaxWidth, None, Duration) if MaxWidth not in (None, Frame.width()) else None
-        Function_AnimateWidgetSize(Parent, Frame, None, MaxHeight, Duration) if MaxHeight not in (None, Frame.height()) else None
+        Function_SetWidgetSizeAnimation(Frame, MaxWidth, None, Duration).start() if MaxWidth not in (None, Frame.width()) else None
+        Function_SetWidgetSizeAnimation(Frame, None, MaxHeight, Duration).start() if MaxHeight not in (None, Frame.height()) else None
 
     def ReduceFrame():
-        Function_AnimateWidgetSize(Parent, Frame, MinWidth, None, Duration) if MinWidth not in (None, Frame.width()) else None
-        Function_AnimateWidgetSize(Parent, Frame, None, MinHeight, Duration) if MinHeight not in (None, Frame.height()) else None
+        Function_SetWidgetSizeAnimation(Frame, MinWidth, None, Duration).start() if MinWidth not in (None, Frame.width()) else None
+        Function_SetWidgetSizeAnimation(Frame, None, MinHeight, Duration).start() if MinHeight not in (None, Frame.height()) else None
 
     if Mode == "Extend":
         ExtendFrame()

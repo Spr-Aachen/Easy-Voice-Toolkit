@@ -2,6 +2,7 @@
 import os, sys, shutil
 from typing import Union, Optional
 from glob import glob
+from pathlib import Path
 
 from .utils.Creating_Directories import create_directories
 from .utils.Convert_SRT_to_CSV import change_encoding, convert_srt_to_csv
@@ -25,7 +26,7 @@ class Dataset_Creating:
     '''
     def __init__(self,
         SRT_Dir: str,
-        WAV_Dir: str,
+        AudioSpeakersData_Path: str,
         WAV_SampleRate: Optional[Union[int, str]] = 22050,
         WAV_SampleWidth: Optional[Union[int, str]] = '32 (Float)',
         WAV_ToMono: bool = False,
@@ -38,11 +39,28 @@ class Dataset_Creating:
         FileList_Path_Validation: str = './FileLists/Val_FileList.txt'
     ):
         self.SRT_Dir = SRT_Dir
-        self.WAV_Dir = WAV_Dir
+        def Get_WAV_Paths_Input():
+            with open(file = AudioSpeakersData_Path, mode = 'r', encoding = 'utf-8') as AudioSpeakersData:
+                AudioSpeakerLines = AudioSpeakersData.readlines()
+            WAV_Paths_Input = []
+            for AudioSpeakerLine in AudioSpeakerLines:
+                Audio = AudioSpeakerLine.split('|')[0]
+                WAV_Paths_Input.append(Audio)
+            return WAV_Paths_Input
+        self.WAV_Paths_Input = Get_WAV_Paths_Input()
         self.WAV_SampleRate = eval(WAV_SampleRate) if WAV_SampleRate is not None else None
         self.WAV_SampleWidth = str(WAV_SampleWidth) if WAV_SampleWidth is not None else None
         self.WAV_ToMono = WAV_ToMono
         self.WAV_Dir_Split = WAV_Dir_Split
+        def Get_AudioSpeakers():
+            with open(file = AudioSpeakersData_Path, mode = 'r', encoding = 'utf-8') as AudioSpeakersData:
+                AudioSpeakerLines = AudioSpeakersData.readlines()
+            AudioSpeakers = {}
+            for AudioSpeakerLine in AudioSpeakerLines:
+                Audio, Speaker = AudioSpeakerLine.split('|')[0], AudioSpeakerLine.split('|')[1]
+                AudioSpeakers[os.path.join(WAV_Dir_Split, Path(Audio).name)] = Speaker
+            return AudioSpeakers
+        self.AudioSpeakers = Get_AudioSpeakers()
         #self.WAV_Time_Limitation = WAV_Time_Limitation
         self.AuxiliaryData_Path = AuxiliaryData_Path if Add_AuxiliaryData else None
         self.TrainRatio = TrainRatio
@@ -110,7 +128,7 @@ class Dataset_Creating:
         print('---------------------------------------------------------------------')
 
         # Write transcript to text-file for model training
-        Transcript_Writer(CSV_Path_Final_Cleaned, self.AuxiliaryData_Path, self.TrainRatio, self.FileList_Path_Training, self.FileList_Path_Validation)
+        Transcript_Writer(self.AudioSpeakers, CSV_Path_Final_Cleaned, self.AuxiliaryData_Path, self.TrainRatio, self.FileList_Path_Training, self.FileList_Path_Validation)
         print('Transcript written.')
         print('---------------------------------------------------------------------')
 

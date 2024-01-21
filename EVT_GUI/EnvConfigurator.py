@@ -17,6 +17,12 @@ class CustomSignals_EnvConfigurator(QObject):
     '''
     Set up signals for configurator functions
     '''
+    Signal_Aria2Status = Signal(str)
+    Signal_Aria2Detected = Signal()
+    Signal_Aria2Undetected = Signal()
+    Signal_Aria2Installed = Signal()
+    Signal_Aria2InstallFailed = Signal(Exception)
+
     Signal_FFmpegStatus = Signal(str)
     Signal_FFmpegDetected = Signal()
     Signal_FFmpegUndetected = Signal()
@@ -57,6 +63,65 @@ class CustomSignals_EnvConfigurator(QObject):
 EnvConfiguratorSignals = CustomSignals_EnvConfigurator()
 
 
+class Aria2_Installer(QObject):
+    '''
+    '''
+    finished = Signal(str)
+
+    def __init__(self):
+        super().__init__()
+
+    def Check_Aria2(self):
+        try:
+            Aria2Version = str(RunCMD([['aria2c', '-v']], DecodeResult = True)[0])
+            return Aria2Version
+        except OSError:
+            return False
+
+    def Install_Aria2(self):
+        if platform.system() == 'Windows':
+            URL = "https://github.com/aria2/aria2/releases/download/release-1.37.0/aria2-1.37.0-win-64bit-build1.zip"
+            Dir_Download = './'
+            File_Name = 'Aria2'
+            File_Format = 'zip'
+            Path_Download = os.path.join(Dir_Download, f"{File_Name}.{File_Format}")
+            Dir_Install = f"{os.getenv('SystemDrive')}/Aria2"
+            DownloadFile(URL, Dir_Download, File_Name, File_Format, None)
+            shutil.unpack_archive(Path_Download, Dir_Install, Path_Download.rsplit('.', 1)[-1])
+            MoveFiles(os.path.dirname(GetPaths(Dir_Install, 'aria2c.exe')[0]), Dir_Install)
+            SetEnvVar('PATH', Dir_Install, 'User')
+            os.remove(Path_Download)
+
+        if platform.system() == 'Linux':
+            RunCMD(['sudo apt-get update', 'sudo apt-get install aria2'])
+
+    def Execute_Aria2_Installation(self):
+        Result = self.Check_Aria2()
+        if Result == False:
+            EnvConfiguratorSignals.Signal_Aria2Undetected.emit()
+            EnvConfiguratorSignals.Signal_Aria2Status.emit("Installing Aria2. Please wait...")
+            try:
+                self.Install_Aria2()
+                EnvConfiguratorSignals.Signal_Aria2Installed.emit()
+                EnvConfiguratorSignals.Signal_Aria2Status.emit("Successfully installed!")
+            except Exception as e:
+                EnvConfiguratorSignals.Signal_Aria2InstallFailed.emit(e)
+                EnvConfiguratorSignals.Signal_Aria2Status.emit("Installation failed:(")
+        else:
+            EnvConfiguratorSignals.Signal_Aria2Detected.emit()
+            EnvConfiguratorSignals.Signal_Aria2Status.emit(f"Aria2 detected. Version: {Result}")
+
+    def Execute(self, Params: tuple):
+        TaskAccelerating(
+            TargetList = [self.Execute_Aria2_Installation],
+            ArgsList = [Params],
+            TypeList = ['MultiThreading'],
+            ShowMessages = False
+        )
+
+        self.finished.emit(str(None))
+
+
 class FFmpeg_Installer(QObject):
     '''
     '''
@@ -64,7 +129,7 @@ class FFmpeg_Installer(QObject):
 
     def __init__(self):
         super().__init__()
-        
+
     def Check_FFmpeg(self):
         try:
             FFmpegVersion = str(RunCMD([['ffmpeg', '-version']], DecodeResult = True)[0])
@@ -81,12 +146,12 @@ class FFmpeg_Installer(QObject):
             Path_Download = os.path.join(Dir_Download, f"{File_Name}.{File_Format}")
             Dir_Install = f"{os.getenv('SystemDrive')}/FFmpeg"
             Path_Binary = os.path.normpath(os.path.join(Dir_Install, 'bin'))
-            DownloadFile(URL, Dir_Download, File_Name, File_Format, None) #RunCMD([f'powershell.exe -Command (New-Object System.Net.WebClient).DownloadFile("{URL}", "{Path_Download}")'])
+            DownloadFile(URL, Dir_Download, File_Name, File_Format, None)
             shutil.unpack_archive(Path_Download, Dir_Install, Path_Download.rsplit('.', 1)[-1])
             MoveFiles(os.path.dirname(GetPaths(Dir_Install, 'bin')[0]), Dir_Install)
-            SetEnvVar('PATH', Path_Binary, 'User') #RunCMD([f'setx /M PATH "%PATH%;{Path_Binary}"'])
-            os.remove(Path_Download) #RunCMD([f'powershell.exe -Command Remove-Item -Force -Path "{Path_Download}"'])
-        
+            SetEnvVar('PATH', Path_Binary, 'User')
+            os.remove(Path_Download)
+
         if platform.system() == 'Linux':
             RunCMD(['sudo apt-get update', 'sudo apt-get install ffmpeg'])
 
@@ -105,7 +170,7 @@ class FFmpeg_Installer(QObject):
         else:
             EnvConfiguratorSignals.Signal_FFmpegDetected.emit()
             EnvConfiguratorSignals.Signal_FFmpegStatus.emit(f"FFmpeg detected. Version: {Result}")
-    
+
     def Execute(self, Params: tuple):
         TaskAccelerating(
             TargetList = [self.Execute_FFmpeg_Installation],
@@ -124,7 +189,7 @@ class GCC_Installer(QObject):
 
     def __init__(self):
         super().__init__()
-        
+
     def Check_GCC(self):
         try:
             GCCVersion = str(RunCMD([['gcc', '--version']], DecodeResult = True)[0])
@@ -141,12 +206,12 @@ class GCC_Installer(QObject):
             Path_Download = os.path.join(Dir_Download, f"{File_Name}.{File_Format}")
             Dir_Install = f"{os.getenv('SystemDrive')}/MinGW"
             Path_Binary = os.path.normpath(os.path.join(Dir_Install, 'bin'))
-            DownloadFile(URL, Dir_Download, File_Name, File_Format, None) #RunCMD([f'powershell.exe -Command (New-Object System.Net.WebClient).DownloadFile("{URL}", "{Path_Download}")'])
+            DownloadFile(URL, Dir_Download, File_Name, File_Format, None)
             shutil.unpack_archive(Path_Download, Dir_Install, Path_Download.rsplit('.', 1)[-1])
             MoveFiles(os.path.dirname(GetPaths(Dir_Install, 'bin')[0]), Dir_Install)
-            SetEnvVar('PATH', Path_Binary, 'User') #RunCMD([f'setx /M PATH "%PATH%;{Path_Binary}"'])
-            os.remove(Path_Download) #RunCMD([f'powershell.exe -Command Remove-Item -Force -Path "{Path_Download}"'])
-        
+            SetEnvVar('PATH', Path_Binary, 'User')
+            os.remove(Path_Download)
+
         if platform.system() == 'Linux':
             RunCMD(['sudo apt-get update', 'sudo apt-get install build-essential'])
 
@@ -165,7 +230,7 @@ class GCC_Installer(QObject):
         else:
             EnvConfiguratorSignals.Signal_GCCDetected.emit()
             EnvConfiguratorSignals.Signal_GCCStatus.emit(f"GCC detected. Version: {Result}")
-    
+
     def Execute(self, Params: tuple):
         TaskAccelerating(
             TargetList = [self.Execute_GCC_Installation],
@@ -201,12 +266,12 @@ class CMake_Installer(QObject):
             Path_Download = os.path.join(Dir_Download, f"{File_Name}.{File_Format}")
             Dir_Install = f"{os.getenv('SystemDrive')}/CMake"
             Path_Binary = os.path.normpath(os.path.join(Dir_Install, 'bin'))
-            DownloadFile(URL, Dir_Download, File_Name, File_Format, None) #RunCMD([f'powershell.exe -Command (New-Object System.Net.WebClient).DownloadFile("{URL}", "{Path_Download}")'])
+            DownloadFile(URL, Dir_Download, File_Name, File_Format, None)
             shutil.unpack_archive(Path_Download, Dir_Install, Path_Download.rsplit('.', 1)[-1])
             MoveFiles(os.path.dirname(GetPaths(Dir_Install, 'bin')[0]), Dir_Install)
-            SetEnvVar('PATH', Path_Binary, 'User') #RunCMD([f'setx /M PATH "%PATH%;{Path_Binary}"'])
-            os.remove(Path_Download) #RunCMD([f'powershell.exe -Command Remove-Item -Force -Path "{Path_Download}"'])
-        
+            SetEnvVar('PATH', Path_Binary, 'User')
+            os.remove(Path_Download)
+
         if platform.system() == 'Linux':
             RunCMD(['sudo apt-get update', 'sudo apt-get install build-essential'])
 
@@ -285,10 +350,10 @@ class Python_Installer(QObject):
             File_Name = 'python'
             File_Format = 'exe'
             Path_Download = os.path.join(Dir_Download, f"{File_Name}.{File_Format}")
-            DownloadFile(URL, Dir_Download, File_Name, File_Format, None) #RunCMD([f'powershell.exe -Command (New-Object System.Net.WebClient).DownloadFile("{URL}", "{Path_Download}")'])
+            DownloadFile(URL, Dir_Download, File_Name, File_Format, None)
             RunCMD([f'{Path_Download} /quiet InstallAllUsers=1 PrependPath=1'])
-            os.remove(Path_Download) #RunCMD([f'powershell.exe -Command Remove-Item -Force -Path "{Path_Download}"'])
-            
+            os.remove(Path_Download)
+
         if platform.system() == 'Linux':
             RunCMD(['sudo apt-get update', 'sudo apt-get install -y python3'])
 
@@ -307,7 +372,7 @@ class Python_Installer(QObject):
         else:
             EnvConfiguratorSignals.Signal_PythonDetected.emit()
             EnvConfiguratorSignals.Signal_PythonStatus.emit(f"Python detected. Version: {Result}")
-    
+
     def Execute(self, Params: tuple):
         TaskAccelerating(
             TargetList = [self.Execute_Python_Installation],
@@ -391,7 +456,7 @@ class PyReqs_Installer(QObject):
             except Exception as e:
                 EnvConfiguratorSignals.Signal_PyReqsInstallFailed.emit(e)
                 EnvConfiguratorSignals.Signal_PyReqsStatus.emit("Installation failed:(")
-    
+
     def Execute(self, Params: tuple):
         TaskAccelerating(
             TargetList = [self.Execute_PyReqs_Installation],
@@ -461,7 +526,7 @@ class Pytorch_Installer(QObject):
             else:
                 EnvConfiguratorSignals.Signal_PytorchDetected.emit()
                 EnvConfiguratorSignals.Signal_PytorchStatus.emit(f"{Package} detected. Version: {Result}")
-    
+
     def Execute(self, Params: tuple):
         TaskAccelerating(
             TargetList = [self.Execute_Pytorch_Installation],

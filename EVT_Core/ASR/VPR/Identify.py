@@ -17,7 +17,7 @@ class Voice_Identifying:
     def __init__(self,
         StdAudioSpeaker: dict,
         Audio_Dir_Input: str,
-        Audio_Dir_Output: str = './Recgonized',
+        AudioSpeakersData_Path: str = './AudioSpeakerData.txt',
         Model_Path: str = './Models/.pth',
         Model_Type: str = 'Ecapa-Tdnn',
         Feature_Method: str = 'melspectrogram',
@@ -26,7 +26,7 @@ class Voice_Identifying:
     ):
         self.StdAudioSpeaker = StdAudioSpeaker
         self.Audio_Dir_Input = Audio_Dir_Input
-        self.Audio_Dir_Output = Audio_Dir_Output
+        self.AudioSpeakersData_Path = AudioSpeakersData_Path
         self.Model_Path = Model_Path
         self.Model_Dir = Path(Model_Path).parent.__str__()
         self.Model_Name = Path(Model_Path).stem.__str__()
@@ -71,9 +71,6 @@ class Voice_Identifying:
         '''
         Function to infer 
         '''
-        # Create Dir
-        os.makedirs(self.Audio_Dir_Output, exist_ok = True)
-
         # 预测音频
         def infer(Audio_Path):
             data = load_audio(Audio_Path, mode = 'infer', feature_method = self.Feature_Method, chunk_duration = self.Duration_of_Audio)
@@ -84,6 +81,7 @@ class Voice_Identifying:
             return Feature.data.cpu().numpy()
 
         # 两两比对
+        AudioSpeakersSim = {}
         for Speaker, Audio_Path_Std in self.StdAudioSpeaker.items():
             if os.path.exists(Audio_Path_Std):
                 Feature1 = infer(Audio_Path_Std)[0]
@@ -94,9 +92,17 @@ class Voice_Identifying:
                 Dist = np.dot(Feature1, Feature2) / (np.linalg.norm(Feature1) * np.linalg.norm(Feature2))
                 if Dist > self.DecisionThreshold:
                     print(f"{Audio_Path_Std} 和 {Audio_Path_Chk} 为同一个人，相似度为：{Dist}")
+                    '''
                     shutil.copy(
                         src = Audio_Path_Chk,
                         dst = os.path.join(self.Audio_Dir_Output, f"[{Speaker}]{File_Name}") if Speaker != None else self.Audio_Dir_Output
                     ) # 复制音频至新目录并实现选择性重命名：“[说话人物的名字]原文件名”
+                    '''
                 else:
                     print(f"{Audio_Path_Std} 和 {Audio_Path_Chk} 不是同一个人，相似度为：{Dist}")
+                if Audio_Path_Chk in AudioSpeakersSim.keys():
+                    if float(Dist) <= float(AudioSpeakersSim[Audio_Path_Chk].split('|')[-1]):
+                        continue
+                AudioSpeakersSim[Audio_Path_Chk] = f"{Speaker}|{Dist}"
+        with open(self.AudioSpeakersData_Path, mode = 'w', encoding = 'utf-8') as AudioSpeakersData:
+            AudioSpeakersData.writelines([f"{Audio}|{SpeakerSim}\n" for Audio, SpeakerSim in AudioSpeakersSim.items()])

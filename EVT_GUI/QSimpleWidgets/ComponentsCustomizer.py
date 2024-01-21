@@ -7,48 +7,7 @@ from .Sources import *
 
 ##############################################################################################################################
 """
-class WidgetBase(QWidget):
-    '''
-    '''
-    def __init__(self,
-        parent: Optional[QWidget] = None,
-        f: Qt.WindowType = Qt.Widget
-    ):
-        super().__init__(parent, f)
-
-        ComponentsSignals.Signal_SetTheme.connect(
-            lambda Theme: self.setStyleSheet(Function_GetStyleSheet('Widget', Theme))
-        )
-        ComponentsSignals.Signal_SetTheme.emit('Auto')
-
-##############################################################################################################################
-
-class LineEditBase(QLineEdit):
-    '''
-    '''
-    def __init__(self,
-        text: Optional[str] = None,
-        parent: Optional[QWidget] = None
-    ):
-        super().__init__(parent)
-
-        ComponentsSignals.Signal_SetTheme.connect(
-            lambda Theme: self.setStyleSheet(Function_GetStyleSheet('Edit', Theme))
-        )
-        ComponentsSignals.Signal_SetTheme.emit('Auto')
-
-        self.setFont('Microsoft YaHei')
-        self.setText(text) if text is not None else None
-
-
-class LineEdit_NoBorder(LineEditBase):
-    '''
-    Check its stylesheet in qss file
-    '''
-
-##############################################################################################################################
-
-class ToolButtonBase(QToolButton):
+class ButtonBase(QAbstractButton):
     '''
     '''
     def __init__(self,
@@ -66,7 +25,7 @@ class ToolButtonBase(QToolButton):
         self.setText(text) if text is not None else None
 
 
-class ToolButton_UnderLined(ToolButtonBase):
+class Button_UnderLined(ButtonBase):
     '''
     Check its stylesheet in qss file
     '''

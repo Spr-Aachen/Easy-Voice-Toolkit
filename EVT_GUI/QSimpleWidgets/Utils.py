@@ -602,15 +602,23 @@ def DownloadFile(
     DownloadPath = os.path.join(DownloadDir, FileName) + '.' + FileFormat
 
     def Download():
-        with urllib.request.urlopen(DownloadURL) as source, open(DownloadPath, "wb") as output:
-            with tqdm(total = int(source.info().get("Content-Length")), ncols = 80, unit = 'iB', unit_scale = True, unit_divisor = 1024) as loop:
-                while True:
-                    buffer = source.read(8192)
-                    if not buffer:
-                        break
-                    output.write(buffer)
-                    loop.update(len(buffer))
-        return open(DownloadPath, "rb").read()
+        try:
+            RunCMD(
+                Args = [
+                    f'aria2c {DownloadURL} --dir={str(Path(DownloadPath).parent)} --out={str(Path(DownloadPath).name)} -x6 -s6'
+                ]
+            )
+        except:
+            with urllib.request.urlopen(DownloadURL) as source, open(DownloadPath, "wb") as output:
+                with tqdm(total = int(source.info().get("Content-Length")), ncols = 80, unit = 'iB', unit_scale = True, unit_divisor = 1024) as loop:
+                    while True:
+                        buffer = source.read(8192)
+                        if not buffer:
+                            break
+                        output.write(buffer)
+                        loop.update(len(buffer))
+        finally:
+            return open(DownloadPath, "rb").read()
 
     if os.path.exists(DownloadPath):
         if os.path.isfile(DownloadPath) == False:

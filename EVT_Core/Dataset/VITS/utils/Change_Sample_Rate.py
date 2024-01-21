@@ -2,6 +2,7 @@ import os
 import time
 import librosa
 import soundfile
+from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor
 
 
@@ -34,7 +35,7 @@ def PreprocessAudio(
 
 
 def preprocess_audio(
-    Audio_Dir_Input,
+    Audio_Paths_Input,
     SampleRate,
     SampleWidth,
     ToMono,
@@ -45,10 +46,10 @@ def preprocess_audio(
     print('Downsampling wav files and changing bit pro sample...')
 
     ParamsList = []
-    for File_Name in os.listdir(Audio_Dir_Input):
-        if File_Name.endswith('.wav'):
-            Audio_Path_Input = os.path.join(Audio_Dir_Input, File_Name)
-            Audio_Path_Output = os.path.join(Audio_Dir_Output, (File_Name.rsplit('.', 1)[0] + '.wav'))
+    for Audio_Path_Input in Audio_Paths_Input:
+        if Audio_Path_Input.endswith('.wav'):
+            Audio_Name = Path(Audio_Path_Input).name
+            Audio_Path_Output = os.path.join(Audio_Dir_Output, Audio_Name)
             ParamsList.append((Audio_Path_Input, Audio_Path_Output, SampleRate, SampleWidth, ToMono))
 
     with ThreadPoolExecutor(max_workers = os.cpu_count()) as Executor:
