@@ -423,6 +423,23 @@ def ProcessTerminator(
         except:
             pass
 
+
+def OccupationTerminator(
+    File: str,
+    SearchKeyword: bool = False
+):
+    '''
+    '''
+    FilePath = NormPath(File)
+    for Process in psutil.process_iter():
+        try:
+            PopenFiles = Process.open_files()
+            for PopenFile in PopenFiles:
+                if FilePath == PopenFile or (FilePath in PopenFile and SearchKeyword):
+                    Process.send_signal(signal.SIGTERM) #Process.kill()
+        except:
+            pass
+
 #############################################################################################################
 
 def CleanDirectory(

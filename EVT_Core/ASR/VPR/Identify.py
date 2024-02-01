@@ -35,6 +35,8 @@ class Voice_Identifying:
         self.DecisionThreshold = DecisionThreshold
         self.Duration_of_Audio = Duration_of_Audio
 
+        os.makedirs(os.path.dirname(self.AudioSpeakersData_Path), exist_ok = True)
+
     def GetModel(self):
         '''
         Function to load model
@@ -86,23 +88,17 @@ class Voice_Identifying:
             if os.path.exists(Audio_Path_Std):
                 Feature1 = infer(Audio_Path_Std)[0]
             for File_Name in os.listdir(self.Audio_Dir_Input):
-                Audio_Path_Chk = os.path.join(self.Audio_Dir_Input, File_Name)
+                Audio_Path_Chk = Path(self.Audio_Dir_Input).joinpath(File_Name).__str__()
                 Feature2 = infer(Audio_Path_Chk)[0]
                 # 对角余弦值
                 Dist = np.dot(Feature1, Feature2) / (np.linalg.norm(Feature1) * np.linalg.norm(Feature2))
                 if Dist > self.DecisionThreshold:
                     print(f"{Audio_Path_Std} 和 {Audio_Path_Chk} 为同一个人，相似度为：{Dist}")
-                    '''
-                    shutil.copy(
-                        src = Audio_Path_Chk,
-                        dst = os.path.join(self.Audio_Dir_Output, f"[{Speaker}]{File_Name}") if Speaker != None else self.Audio_Dir_Output
-                    ) # 复制音频至新目录并实现选择性重命名：“[说话人物的名字]原文件名”
-                    '''
                 else:
                     print(f"{Audio_Path_Std} 和 {Audio_Path_Chk} 不是同一个人，相似度为：{Dist}")
                 if Audio_Path_Chk in AudioSpeakersSim.keys():
                     if float(Dist) <= float(AudioSpeakersSim[Audio_Path_Chk].split('|')[-1]):
                         continue
-                AudioSpeakersSim[Audio_Path_Chk] = f"{Speaker}|{Dist}"
+                AudioSpeakersSim[Audio_Path_Chk] = f"{Speaker if Dist > self.DecisionThreshold else ''}|{Dist}"
         with open(self.AudioSpeakersData_Path, mode = 'w', encoding = 'utf-8') as AudioSpeakersData:
             AudioSpeakersData.writelines([f"{Audio}|{SpeakerSim}\n" for Audio, SpeakerSim in AudioSpeakersSim.items()])

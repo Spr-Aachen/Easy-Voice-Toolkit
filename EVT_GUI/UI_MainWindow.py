@@ -1,5 +1,5 @@
 from PySide6.QtCore import (QCoreApplication, QMetaObject, QRect, QSize, Qt)
-from PySide6.QtWidgets import (QCheckBox, QComboBox, QDoubleSpinBox, QFrame, QGroupBox, QVBoxLayout, QHBoxLayout, QGridLayout, QLabel, QLineEdit, QPlainTextEdit, QProgressBar, QToolButton, QPushButton, QScrollArea, QSizePolicy, QSlider, QSpacerItem, QSpinBox, QStackedWidget, QTreeWidget, QTreeWidgetItem, QTextBrowser, QWidget, QTabWidget)
+from PySide6.QtWidgets import *
 
 from .Components import Table_ViewModels, Table_EditAudioSpeaker
 from .QSimpleWidgets import Sources
@@ -3202,7 +3202,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}\n"
 "QFrame:hover {\n"
-"	background-color: rgb(33, 33, 33);\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
 "}")
         self.gridLayout_12 = QGridLayout(self.Frame_Process_MediaDirInput)
         self.gridLayout_12.setSpacing(12)
@@ -3364,7 +3364,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}\n"
 "QFrame:hover {\n"
-"	background-color: rgb(33, 33, 33);\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
 "}")
         self.gridLayout_13 = QGridLayout(self.Frame_Process_SliceAudio)
         self.gridLayout_13.setSpacing(12)
@@ -3531,7 +3531,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}\n"
 "QFrame:hover {\n"
-"	background-color: rgb(33, 33, 33);\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
 "}")
         self.gridLayout_17 = QGridLayout(self.Frame_Process_RMSThreshold)
         self.gridLayout_17.setSpacing(12)
@@ -3657,7 +3657,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}\n"
 "QFrame:hover {\n"
-"	background-color: rgb(33, 33, 33);\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
 "}")
         self.gridLayout_23 = QGridLayout(self.Frame_Process_AudioLengthMin)
         self.gridLayout_23.setSpacing(12)
@@ -3782,7 +3782,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}\n"
 "QFrame:hover {\n"
-"	background-color: rgb(33, 33, 33);\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
 "}")
         self.gridLayout_24 = QGridLayout(self.Frame_Process_SilentIntervalMin)
         self.gridLayout_24.setSpacing(12)
@@ -3907,7 +3907,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}\n"
 "QFrame:hover {\n"
-"	background-color: rgb(33, 33, 33);\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
 "}")
         self.gridLayout_25 = QGridLayout(self.Frame_Process_HopSize)
         self.gridLayout_25.setSpacing(12)
@@ -4032,7 +4032,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}\n"
 "QFrame:hover {\n"
-"	background-color: rgb(33, 33, 33);\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
 "}")
         self.gridLayout_26 = QGridLayout(self.Frame_Process_SilenceKeptMax)
         self.gridLayout_26.setSpacing(12)
@@ -4191,7 +4191,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}\n"
 "QFrame:hover {\n"
-"	background-color: rgb(33, 33, 33);\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
 "}")
         self.gridLayout_27 = QGridLayout(self.Frame_Process_MediaFormatOutput)
         self.gridLayout_27.setSpacing(12)
@@ -4250,7 +4250,6 @@ class Ui_MainWindow(object):
         self.ComboBox_Process_MediaFormatOutput.setStyleSheet(u"QComboBox {\n"
 "	/*font-size: 12px;*/\n"
 "	text-align: left;\n"
-"	color: rgb(255, 255, 255);\n"
 "	background-color: transparent;\n"
 "	padding-top: 3px;\n"
 "	padding-left: 6px;\n"
@@ -4271,36 +4270,41 @@ class Ui_MainWindow(object):
 "	subcontrol-origin: padding;\n"
 "	subcontrol-position: right;\n"
 "	margin-right: 6px;\n"
-"	border-width: 0px;\n"
+"	border: none;\n"
 "}\n"
+"\n"
 "QComboBox::down-arrow {\n"
 "	border-image: url(:/ComboBox_Icon/Sources/DownArrow.png);\n"
+"}\n"
+"QComboBox::down-arrow:on {\n"
+"	border-image: url(:/ComboBox_Icon/Sources/UpArrow.png);\n"
 "}\n"
 "\n"
 "\n"
 "QComboBox QAbstractItemView {\n"
-"	color: rgb(255, 255, 255);\n"
+"	outline: none;\n"
 "	background-color: transparent;\n"
-"	padding-left: -15px;\n"
-"	border-width: 0px;\n"
+"	border-width: 1.2px;\n"
 "	border-radius: 6px;\n"
 "	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"	outline: 0px;\n"
+"	border-color: rgba(201, 210, 222, 123);\n"
 "}\n"
 "\n"
-"QComboBox QAbstractItemV"
-                        "iew::item {\n"
+"QCom"
+                        "boBox QAbstractItemView::item {\n"
 "	/* height: 30px; */\n"
 "	background-color: transparent;\n"
-"	padding-left: 15px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
+"	padding-top: 3px;\n"
+"	padding-left: 6px;\n"
+"	padding-bottom: 3px;\n"
+"	padding-right: 6px;\n"
+"	border: none;\n"
+"}\n"
+"QComboBox QAbstractItemView::item:hover {\n"
+"	background-color: rgba(120, 120, 120, 120);\n"
 "}\n"
 "QComboBox QAbstractItemView::item:selected {\n"
-"	background-color: rgba(120. 120, 120, 120)\n"
+"	background-color: rgba(120, 120, 120, 120);\n"
 "}\n"
 "\n"
 "\n"
@@ -4324,12 +4328,12 @@ class Ui_MainWindow(object):
 "	subcontrol-origin: margin;\n"
 "	border-width: 0px;\n"
 "	border-radius: 0px;\n"
-"	border-style: solid;\n"
+""
+                        "	border-style: solid;\n"
 "}\n"
 "\n"
 "QComboBox QAbstractScrollArea QScrollBar::sub-line:vertical {\n"
-""
-                        "	height: 0px;\n"
+"	height: 0px;\n"
 "	background-color: transparent;\n"
 "	subcontrol-position: right;\n"
 "	subcontrol-origin: margin;\n"
@@ -4361,11 +4365,11 @@ class Ui_MainWindow(object):
 "	border-width: 1px;\n"
 "	border-radius: 6px;\n"
 "	border-style: solid;\n"
-"	border-color: transparent;\n"
+"	borde"
+                        "r-color: transparent;\n"
 "	margin: 0px;\n"
 "}\n"
-"QComboBox QAbstractScrollArea QScrollBar::horizontal:"
-                        "hover {\n"
+"QComboBox QAbstractScrollArea QScrollBar::horizontal:hover {\n"
 "	background-color: rgb(60, 60, 60);\n"
 "}\n"
 "\n"
@@ -4397,12 +4401,12 @@ class Ui_MainWindow(object):
 "\n"
 "QComboBox QAbstractScrollArea QScrollBar::handle:horizontal {\n"
 "	background-color: transparent;\n"
-"	border-width: 0px;\n"
+"	"
+                        "border-width: 0px;\n"
 "	border-radius: 0px;\n"
 "	border-style: solid;\n"
 "}\n"
-"QComboBox QAbstractScro"
-                        "llArea QScrollBar::handle:horizontal:hover {\n"
+"QComboBox QAbstractScrollArea QScrollBar::handle:horizontal:hover {\n"
 "	background-color: rgb(120, 120, 120);\n"
 "}\n"
 "\n"
@@ -4429,7 +4433,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}\n"
 "QFrame:hover {\n"
-"	background-color: rgb(33, 33, 33);\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
 "}")
         self.gridLayout_28 = QGridLayout(self.Frame_Process_MediaDirOutput)
         self.gridLayout_28.setSpacing(12)
@@ -4609,7 +4613,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}\n"
 "QFrame:hover {\n"
-"	background-color: rgb(33, 33, 33);\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
 "}")
         self.gridLayout_29 = QGridLayout(self.Frame_Process_SampleRate)
         self.gridLayout_29.setSpacing(12)
@@ -4668,7 +4672,6 @@ class Ui_MainWindow(object):
         self.ComboBox_Process_SampleRate.setStyleSheet(u"QComboBox {\n"
 "	/*font-size: 12px;*/\n"
 "	text-align: left;\n"
-"	color: rgb(255, 255, 255);\n"
 "	background-color: transparent;\n"
 "	padding-top: 3px;\n"
 "	padding-left: 6px;\n"
@@ -4689,36 +4692,41 @@ class Ui_MainWindow(object):
 "	subcontrol-origin: padding;\n"
 "	subcontrol-position: right;\n"
 "	margin-right: 6px;\n"
-"	border-width: 0px;\n"
+"	border: none;\n"
 "}\n"
+"\n"
 "QComboBox::down-arrow {\n"
 "	border-image: url(:/ComboBox_Icon/Sources/DownArrow.png);\n"
+"}\n"
+"QComboBox::down-arrow:on {\n"
+"	border-image: url(:/ComboBox_Icon/Sources/UpArrow.png);\n"
 "}\n"
 "\n"
 "\n"
 "QComboBox QAbstractItemView {\n"
-"	color: rgb(255, 255, 255);\n"
+"	outline: none;\n"
 "	background-color: transparent;\n"
-"	padding-left: -15px;\n"
-"	border-width: 0px;\n"
+"	border-width: 1.2px;\n"
 "	border-radius: 6px;\n"
 "	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"	outline: 0px;\n"
+"	border-color: rgba(201, 210, 222, 123);\n"
 "}\n"
 "\n"
-"QComboBox QAbstractItemV"
-                        "iew::item {\n"
+"QCom"
+                        "boBox QAbstractItemView::item {\n"
 "	/* height: 30px; */\n"
 "	background-color: transparent;\n"
-"	padding-left: 15px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
+"	padding-top: 3px;\n"
+"	padding-left: 6px;\n"
+"	padding-bottom: 3px;\n"
+"	padding-right: 6px;\n"
+"	border: none;\n"
+"}\n"
+"QComboBox QAbstractItemView::item:hover {\n"
+"	background-color: rgba(120, 120, 120, 120);\n"
 "}\n"
 "QComboBox QAbstractItemView::item:selected {\n"
-"	background-color: rgba(120. 120, 120, 120)\n"
+"	background-color: rgba(120, 120, 120, 120);\n"
 "}\n"
 "\n"
 "\n"
@@ -4742,12 +4750,12 @@ class Ui_MainWindow(object):
 "	subcontrol-origin: margin;\n"
 "	border-width: 0px;\n"
 "	border-radius: 0px;\n"
-"	border-style: solid;\n"
+""
+                        "	border-style: solid;\n"
 "}\n"
 "\n"
 "QComboBox QAbstractScrollArea QScrollBar::sub-line:vertical {\n"
-""
-                        "	height: 0px;\n"
+"	height: 0px;\n"
 "	background-color: transparent;\n"
 "	subcontrol-position: right;\n"
 "	subcontrol-origin: margin;\n"
@@ -4779,11 +4787,11 @@ class Ui_MainWindow(object):
 "	border-width: 1px;\n"
 "	border-radius: 6px;\n"
 "	border-style: solid;\n"
-"	border-color: transparent;\n"
+"	borde"
+                        "r-color: transparent;\n"
 "	margin: 0px;\n"
 "}\n"
-"QComboBox QAbstractScrollArea QScrollBar::horizontal:"
-                        "hover {\n"
+"QComboBox QAbstractScrollArea QScrollBar::horizontal:hover {\n"
 "	background-color: rgb(60, 60, 60);\n"
 "}\n"
 "\n"
@@ -4815,12 +4823,12 @@ class Ui_MainWindow(object):
 "\n"
 "QComboBox QAbstractScrollArea QScrollBar::handle:horizontal {\n"
 "	background-color: transparent;\n"
-"	border-width: 0px;\n"
+"	"
+                        "border-width: 0px;\n"
 "	border-radius: 0px;\n"
 "	border-style: solid;\n"
 "}\n"
-"QComboBox QAbstractScro"
-                        "llArea QScrollBar::handle:horizontal:hover {\n"
+"QComboBox QAbstractScrollArea QScrollBar::handle:horizontal:hover {\n"
 "	background-color: rgb(120, 120, 120);\n"
 "}\n"
 "\n"
@@ -4847,7 +4855,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}\n"
 "QFrame:hover {\n"
-"	background-color: rgb(33, 33, 33);\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
 "}")
         self.gridLayout_30 = QGridLayout(self.Frame_Process_SampleWidth)
         self.gridLayout_30.setSpacing(12)
@@ -4906,7 +4914,6 @@ class Ui_MainWindow(object):
         self.ComboBox_Process_SampleWidth.setStyleSheet(u"QComboBox {\n"
 "	/*font-size: 12px;*/\n"
 "	text-align: left;\n"
-"	color: rgb(255, 255, 255);\n"
 "	background-color: transparent;\n"
 "	padding-top: 3px;\n"
 "	padding-left: 6px;\n"
@@ -4927,36 +4934,41 @@ class Ui_MainWindow(object):
 "	subcontrol-origin: padding;\n"
 "	subcontrol-position: right;\n"
 "	margin-right: 6px;\n"
-"	border-width: 0px;\n"
+"	border: none;\n"
 "}\n"
+"\n"
 "QComboBox::down-arrow {\n"
 "	border-image: url(:/ComboBox_Icon/Sources/DownArrow.png);\n"
+"}\n"
+"QComboBox::down-arrow:on {\n"
+"	border-image: url(:/ComboBox_Icon/Sources/UpArrow.png);\n"
 "}\n"
 "\n"
 "\n"
 "QComboBox QAbstractItemView {\n"
-"	color: rgb(255, 255, 255);\n"
+"	outline: none;\n"
 "	background-color: transparent;\n"
-"	padding-left: -15px;\n"
-"	border-width: 0px;\n"
+"	border-width: 1.2px;\n"
 "	border-radius: 6px;\n"
 "	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"	outline: 0px;\n"
+"	border-color: rgba(201, 210, 222, 123);\n"
 "}\n"
 "\n"
-"QComboBox QAbstractItemV"
-                        "iew::item {\n"
+"QCom"
+                        "boBox QAbstractItemView::item {\n"
 "	/* height: 30px; */\n"
 "	background-color: transparent;\n"
-"	padding-left: 15px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
+"	padding-top: 3px;\n"
+"	padding-left: 6px;\n"
+"	padding-bottom: 3px;\n"
+"	padding-right: 6px;\n"
+"	border: none;\n"
+"}\n"
+"QComboBox QAbstractItemView::item:hover {\n"
+"	background-color: rgba(120, 120, 120, 120);\n"
 "}\n"
 "QComboBox QAbstractItemView::item:selected {\n"
-"	background-color: rgba(120. 120, 120, 120)\n"
+"	background-color: rgba(120, 120, 120, 120);\n"
 "}\n"
 "\n"
 "\n"
@@ -4980,12 +4992,12 @@ class Ui_MainWindow(object):
 "	subcontrol-origin: margin;\n"
 "	border-width: 0px;\n"
 "	border-radius: 0px;\n"
-"	border-style: solid;\n"
+""
+                        "	border-style: solid;\n"
 "}\n"
 "\n"
 "QComboBox QAbstractScrollArea QScrollBar::sub-line:vertical {\n"
-""
-                        "	height: 0px;\n"
+"	height: 0px;\n"
 "	background-color: transparent;\n"
 "	subcontrol-position: right;\n"
 "	subcontrol-origin: margin;\n"
@@ -5017,11 +5029,11 @@ class Ui_MainWindow(object):
 "	border-width: 1px;\n"
 "	border-radius: 6px;\n"
 "	border-style: solid;\n"
-"	border-color: transparent;\n"
+"	borde"
+                        "r-color: transparent;\n"
 "	margin: 0px;\n"
 "}\n"
-"QComboBox QAbstractScrollArea QScrollBar::horizontal:"
-                        "hover {\n"
+"QComboBox QAbstractScrollArea QScrollBar::horizontal:hover {\n"
 "	background-color: rgb(60, 60, 60);\n"
 "}\n"
 "\n"
@@ -5053,12 +5065,12 @@ class Ui_MainWindow(object):
 "\n"
 "QComboBox QAbstractScrollArea QScrollBar::handle:horizontal {\n"
 "	background-color: transparent;\n"
-"	border-width: 0px;\n"
+"	"
+                        "border-width: 0px;\n"
 "	border-radius: 0px;\n"
 "	border-style: solid;\n"
 "}\n"
-"QComboBox QAbstractScro"
-                        "llArea QScrollBar::handle:horizontal:hover {\n"
+"QComboBox QAbstractScrollArea QScrollBar::handle:horizontal:hover {\n"
 "	background-color: rgb(120, 120, 120);\n"
 "}\n"
 "\n"
@@ -5085,7 +5097,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}\n"
 "QFrame:hover {\n"
-"	background-color: rgb(33, 33, 33);\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
 "}")
         self.gridLayout_31 = QGridLayout(self.Frame_Process_ToMono)
         self.gridLayout_31.setSpacing(12)
@@ -5221,7 +5233,7 @@ class Ui_MainWindow(object):
         sizePolicy1.setHeightForWidth(self.TextBrowser_Params_Process.sizePolicy().hasHeightForWidth())
         self.TextBrowser_Params_Process.setSizePolicy(sizePolicy1)
         self.TextBrowser_Params_Process.setStyleSheet(u"QTextBrowser {\n"
-"	background-color: rgb(33, 33, 33);\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
 "	/*padding-top: 1.5px;*/\n"
 "	/*padding-bottom: 1.5px;*/\n"
 "	padding-left: 15px;\n"
@@ -5262,8 +5274,8 @@ class Ui_MainWindow(object):
 "	subcontrol-origin: margin;\n"
 "	border-width: 0px;\n"
 "	border-radius: 0px;\n"
-"	border-st"
-                        "yle: solid;\n"
+"	bord"
+                        "er-style: solid;\n"
 "}\n"
 "\n"
 "QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
@@ -5307,9 +5319,9 @@ class Ui_MainWindow(object):
 "}\n"
 "\n"
 "QScrollBar::sub-line:horizontal {\n"
-"	width: 0px;\n"
-""
-                        "	background-color: transparent;\n"
+"	width: 0px"
+                        ";\n"
+"	background-color: transparent;\n"
 "	subcontrol-position: right;\n"
 "	subcontrol-origin: margin;\n"
 "	border-width: 0px;\n"
@@ -6000,7 +6012,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}\n"
 "QFrame:hover {\n"
-"	background-color: rgb(33, 33, 33);\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
 "}")
         self.gridLayout_32 = QGridLayout(self.Frame_ASR_VPR_AudioDirInput)
         self.gridLayout_32.setSpacing(12)
@@ -6125,7 +6137,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}\n"
 "QFrame:hover {\n"
-"	background-color: rgb(33, 33, 33);\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
 "}")
         self.verticalLayout_12 = QVBoxLayout(self.Frame_ASR_VPR_StdAudioSpeaker)
         self.verticalLayout_12.setSpacing(12)
@@ -6199,7 +6211,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}\n"
 "QFrame:hover {\n"
-"	background-color: rgb(33, 33, 33);\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
 "}")
         self.gridLayout_33 = QGridLayout(self.Frame_ASR_VPR_DecisionThreshold)
         self.gridLayout_33.setSpacing(12)
@@ -6380,7 +6392,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}\n"
 "QFrame:hover {\n"
-"	background-color: rgb(33, 33, 33);\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
 "}")
         self.gridLayout_34 = QGridLayout(self.Frame_ASR_VPR_ModelPath)
         self.gridLayout_34.setSpacing(12)
@@ -6505,7 +6517,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}\n"
 "QFrame:hover {\n"
-"	background-color: rgb(33, 33, 33);\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
 "}")
         self.gridLayout_35 = QGridLayout(self.Frame_ASR_VPR_ModelType)
         self.gridLayout_35.setSpacing(12)
@@ -6564,7 +6576,6 @@ class Ui_MainWindow(object):
         self.ComboBox_ASR_VPR_ModelType.setStyleSheet(u"QComboBox {\n"
 "	/*font-size: 12px;*/\n"
 "	text-align: left;\n"
-"	color: rgb(255, 255, 255);\n"
 "	background-color: transparent;\n"
 "	padding-top: 3px;\n"
 "	padding-left: 6px;\n"
@@ -6585,36 +6596,41 @@ class Ui_MainWindow(object):
 "	subcontrol-origin: padding;\n"
 "	subcontrol-position: right;\n"
 "	margin-right: 6px;\n"
-"	border-width: 0px;\n"
+"	border: none;\n"
 "}\n"
+"\n"
 "QComboBox::down-arrow {\n"
 "	border-image: url(:/ComboBox_Icon/Sources/DownArrow.png);\n"
+"}\n"
+"QComboBox::down-arrow:on {\n"
+"	border-image: url(:/ComboBox_Icon/Sources/UpArrow.png);\n"
 "}\n"
 "\n"
 "\n"
 "QComboBox QAbstractItemView {\n"
-"	color: rgb(255, 255, 255);\n"
+"	outline: none;\n"
 "	background-color: transparent;\n"
-"	padding-left: -15px;\n"
-"	border-width: 0px;\n"
+"	border-width: 1.2px;\n"
 "	border-radius: 6px;\n"
 "	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"	outline: 0px;\n"
+"	border-color: rgba(201, 210, 222, 123);\n"
 "}\n"
 "\n"
-"QComboBox QAbstractItemV"
-                        "iew::item {\n"
+"QCom"
+                        "boBox QAbstractItemView::item {\n"
 "	/* height: 30px; */\n"
 "	background-color: transparent;\n"
-"	padding-left: 15px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
+"	padding-top: 3px;\n"
+"	padding-left: 6px;\n"
+"	padding-bottom: 3px;\n"
+"	padding-right: 6px;\n"
+"	border: none;\n"
+"}\n"
+"QComboBox QAbstractItemView::item:hover {\n"
+"	background-color: rgba(120, 120, 120, 120);\n"
 "}\n"
 "QComboBox QAbstractItemView::item:selected {\n"
-"	background-color: rgba(120. 120, 120, 120)\n"
+"	background-color: rgba(120, 120, 120, 120);\n"
 "}\n"
 "\n"
 "\n"
@@ -6638,12 +6654,12 @@ class Ui_MainWindow(object):
 "	subcontrol-origin: margin;\n"
 "	border-width: 0px;\n"
 "	border-radius: 0px;\n"
-"	border-style: solid;\n"
+""
+                        "	border-style: solid;\n"
 "}\n"
 "\n"
 "QComboBox QAbstractScrollArea QScrollBar::sub-line:vertical {\n"
-""
-                        "	height: 0px;\n"
+"	height: 0px;\n"
 "	background-color: transparent;\n"
 "	subcontrol-position: right;\n"
 "	subcontrol-origin: margin;\n"
@@ -6675,11 +6691,11 @@ class Ui_MainWindow(object):
 "	border-width: 1px;\n"
 "	border-radius: 6px;\n"
 "	border-style: solid;\n"
-"	border-color: transparent;\n"
+"	borde"
+                        "r-color: transparent;\n"
 "	margin: 0px;\n"
 "}\n"
-"QComboBox QAbstractScrollArea QScrollBar::horizontal:"
-                        "hover {\n"
+"QComboBox QAbstractScrollArea QScrollBar::horizontal:hover {\n"
 "	background-color: rgb(60, 60, 60);\n"
 "}\n"
 "\n"
@@ -6711,12 +6727,12 @@ class Ui_MainWindow(object):
 "\n"
 "QComboBox QAbstractScrollArea QScrollBar::handle:horizontal {\n"
 "	background-color: transparent;\n"
-"	border-width: 0px;\n"
+"	"
+                        "border-width: 0px;\n"
 "	border-radius: 0px;\n"
 "	border-style: solid;\n"
 "}\n"
-"QComboBox QAbstractScro"
-                        "llArea QScrollBar::handle:horizontal:hover {\n"
+"QComboBox QAbstractScrollArea QScrollBar::handle:horizontal:hover {\n"
 "	background-color: rgb(120, 120, 120);\n"
 "}\n"
 "\n"
@@ -6743,7 +6759,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}\n"
 "QFrame:hover {\n"
-"	background-color: rgb(33, 33, 33);\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
 "}")
         self.gridLayout_36 = QGridLayout(self.Frame_ASR_VPR_FeatureMethod)
         self.gridLayout_36.setSpacing(12)
@@ -6802,7 +6818,6 @@ class Ui_MainWindow(object):
         self.ComboBox_ASR_VPR_FeatureMethod.setStyleSheet(u"QComboBox {\n"
 "	/*font-size: 12px;*/\n"
 "	text-align: left;\n"
-"	color: rgb(255, 255, 255);\n"
 "	background-color: transparent;\n"
 "	padding-top: 3px;\n"
 "	padding-left: 6px;\n"
@@ -6823,36 +6838,41 @@ class Ui_MainWindow(object):
 "	subcontrol-origin: padding;\n"
 "	subcontrol-position: right;\n"
 "	margin-right: 6px;\n"
-"	border-width: 0px;\n"
+"	border: none;\n"
 "}\n"
+"\n"
 "QComboBox::down-arrow {\n"
 "	border-image: url(:/ComboBox_Icon/Sources/DownArrow.png);\n"
+"}\n"
+"QComboBox::down-arrow:on {\n"
+"	border-image: url(:/ComboBox_Icon/Sources/UpArrow.png);\n"
 "}\n"
 "\n"
 "\n"
 "QComboBox QAbstractItemView {\n"
-"	color: rgb(255, 255, 255);\n"
+"	outline: none;\n"
 "	background-color: transparent;\n"
-"	padding-left: -15px;\n"
-"	border-width: 0px;\n"
+"	border-width: 1.2px;\n"
 "	border-radius: 6px;\n"
 "	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"	outline: 0px;\n"
+"	border-color: rgba(201, 210, 222, 123);\n"
 "}\n"
 "\n"
-"QComboBox QAbstractItemV"
-                        "iew::item {\n"
+"QCom"
+                        "boBox QAbstractItemView::item {\n"
 "	/* height: 30px; */\n"
 "	background-color: transparent;\n"
-"	padding-left: 15px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
+"	padding-top: 3px;\n"
+"	padding-left: 6px;\n"
+"	padding-bottom: 3px;\n"
+"	padding-right: 6px;\n"
+"	border: none;\n"
+"}\n"
+"QComboBox QAbstractItemView::item:hover {\n"
+"	background-color: rgba(120, 120, 120, 120);\n"
 "}\n"
 "QComboBox QAbstractItemView::item:selected {\n"
-"	background-color: rgba(120. 120, 120, 120)\n"
+"	background-color: rgba(120, 120, 120, 120);\n"
 "}\n"
 "\n"
 "\n"
@@ -6876,12 +6896,12 @@ class Ui_MainWindow(object):
 "	subcontrol-origin: margin;\n"
 "	border-width: 0px;\n"
 "	border-radius: 0px;\n"
-"	border-style: solid;\n"
+""
+                        "	border-style: solid;\n"
 "}\n"
 "\n"
 "QComboBox QAbstractScrollArea QScrollBar::sub-line:vertical {\n"
-""
-                        "	height: 0px;\n"
+"	height: 0px;\n"
 "	background-color: transparent;\n"
 "	subcontrol-position: right;\n"
 "	subcontrol-origin: margin;\n"
@@ -6913,11 +6933,11 @@ class Ui_MainWindow(object):
 "	border-width: 1px;\n"
 "	border-radius: 6px;\n"
 "	border-style: solid;\n"
-"	border-color: transparent;\n"
+"	borde"
+                        "r-color: transparent;\n"
 "	margin: 0px;\n"
 "}\n"
-"QComboBox QAbstractScrollArea QScrollBar::horizontal:"
-                        "hover {\n"
+"QComboBox QAbstractScrollArea QScrollBar::horizontal:hover {\n"
 "	background-color: rgb(60, 60, 60);\n"
 "}\n"
 "\n"
@@ -6949,12 +6969,12 @@ class Ui_MainWindow(object):
 "\n"
 "QComboBox QAbstractScrollArea QScrollBar::handle:horizontal {\n"
 "	background-color: transparent;\n"
-"	border-width: 0px;\n"
+"	"
+                        "border-width: 0px;\n"
 "	border-radius: 0px;\n"
 "	border-style: solid;\n"
 "}\n"
-"QComboBox QAbstractScro"
-                        "llArea QScrollBar::handle:horizontal:hover {\n"
+"QComboBox QAbstractScrollArea QScrollBar::handle:horizontal:hover {\n"
 "	background-color: rgb(120, 120, 120);\n"
 "}\n"
 "\n"
@@ -6981,7 +7001,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}\n"
 "QFrame:hover {\n"
-"	background-color: rgb(33, 33, 33);\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
 "}")
         self.gridLayout_37 = QGridLayout(self.Frame_ASR_VPR_DurationOfAudio)
         self.gridLayout_37.setSpacing(12)
@@ -7141,7 +7161,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}\n"
 "QFrame:hover {\n"
-"	background-color: rgb(33, 33, 33);\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
 "}")
         self.gridLayout_38 = QGridLayout(self.Frame_ASR_VPR_AudioSpeakersDataPath)
         self.gridLayout_38.setSpacing(12)
@@ -7286,7 +7306,7 @@ class Ui_MainWindow(object):
         sizePolicy1.setHeightForWidth(self.TextBrowser_Params_ASR_VPR.sizePolicy().hasHeightForWidth())
         self.TextBrowser_Params_ASR_VPR.setSizePolicy(sizePolicy1)
         self.TextBrowser_Params_ASR_VPR.setStyleSheet(u"QTextBrowser {\n"
-"	background-color: rgb(33, 33, 33);\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
 "	/*padding-top: 1.5px;*/\n"
 "	/*padding-bottom: 1.5px;*/\n"
 "	padding-left: 15px;\n"
@@ -7327,8 +7347,8 @@ class Ui_MainWindow(object):
 "	subcontrol-origin: margin;\n"
 "	border-width: 0px;\n"
 "	border-radius: 0px;\n"
-"	border-st"
-                        "yle: solid;\n"
+"	bord"
+                        "er-style: solid;\n"
 "}\n"
 "\n"
 "QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
@@ -7372,9 +7392,9 @@ class Ui_MainWindow(object):
 "}\n"
 "\n"
 "QScrollBar::sub-line:horizontal {\n"
-"	width: 0px;\n"
-""
-                        "	background-color: transparent;\n"
+"	width: 0px"
+                        ";\n"
+"	background-color: transparent;\n"
 "	subcontrol-position: right;\n"
 "	subcontrol-origin: margin;\n"
 "	border-width: 0px;\n"
@@ -8077,27 +8097,27 @@ class Ui_MainWindow(object):
         self.verticalLayout_129.setSpacing(0)
         self.verticalLayout_129.setObjectName(u"verticalLayout_129")
         self.verticalLayout_129.setContentsMargins(0, 0, 0, 0)
-        self.Frame_STT_Whisper_WAVDir = QFrame(self.Frame_STT_Whisper_InputParams_BasicSettings)
-        self.Frame_STT_Whisper_WAVDir.setObjectName(u"Frame_STT_Whisper_WAVDir")
-        self.Frame_STT_Whisper_WAVDir.setMinimumSize(QSize(0, 105))
-        self.Frame_STT_Whisper_WAVDir.setStyleSheet(u"QFrame {\n"
+        self.Frame_STT_Whisper_AudioDir = QFrame(self.Frame_STT_Whisper_InputParams_BasicSettings)
+        self.Frame_STT_Whisper_AudioDir.setObjectName(u"Frame_STT_Whisper_AudioDir")
+        self.Frame_STT_Whisper_AudioDir.setMinimumSize(QSize(0, 105))
+        self.Frame_STT_Whisper_AudioDir.setStyleSheet(u"QFrame {\n"
 "	color: rgb(255, 255, 255);\n"
 "	background-color: transparent;\n"
 "	border-width: 0px;\n"
 "	border-style: solid;\n"
 "}\n"
 "QFrame:hover {\n"
-"	background-color: rgb(33, 33, 33);\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
 "}")
-        self.gridLayout_39 = QGridLayout(self.Frame_STT_Whisper_WAVDir)
+        self.gridLayout_39 = QGridLayout(self.Frame_STT_Whisper_AudioDir)
         self.gridLayout_39.setSpacing(12)
         self.gridLayout_39.setObjectName(u"gridLayout_39")
         self.gridLayout_39.setContentsMargins(21, 12, 21, 12)
-        self.Label_STT_Whisper_WAVDir = QLabel(self.Frame_STT_Whisper_WAVDir)
-        self.Label_STT_Whisper_WAVDir.setObjectName(u"Label_STT_Whisper_WAVDir")
-        sizePolicy6.setHeightForWidth(self.Label_STT_Whisper_WAVDir.sizePolicy().hasHeightForWidth())
-        self.Label_STT_Whisper_WAVDir.setSizePolicy(sizePolicy6)
-        self.Label_STT_Whisper_WAVDir.setStyleSheet(u"QLabel {\n"
+        self.Label_STT_Whisper_AudioDir = QLabel(self.Frame_STT_Whisper_AudioDir)
+        self.Label_STT_Whisper_AudioDir.setObjectName(u"Label_STT_Whisper_AudioDir")
+        sizePolicy6.setHeightForWidth(self.Label_STT_Whisper_AudioDir.sizePolicy().hasHeightForWidth())
+        self.Label_STT_Whisper_AudioDir.setSizePolicy(sizePolicy6)
+        self.Label_STT_Whisper_AudioDir.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	/*color: rgb(255, 255, 255);*/\n"
 "	background-color: transparent;\n"
@@ -8107,17 +8127,17 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}")
 
-        self.gridLayout_39.addWidget(self.Label_STT_Whisper_WAVDir, 0, 0, 1, 1)
+        self.gridLayout_39.addWidget(self.Label_STT_Whisper_AudioDir, 0, 0, 1, 1)
 
-        self.HorizontalSpacer_STT_Whisper_WAVDir = QSpacerItem(445, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.HorizontalSpacer_STT_Whisper_AudioDir = QSpacerItem(445, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
-        self.gridLayout_39.addItem(self.HorizontalSpacer_STT_Whisper_WAVDir, 0, 1, 1, 1)
+        self.gridLayout_39.addItem(self.HorizontalSpacer_STT_Whisper_AudioDir, 0, 1, 1, 1)
 
-        self.Button_STT_Whisper_WAVDir_Undo = QPushButton(self.Frame_STT_Whisper_WAVDir)
-        self.Button_STT_Whisper_WAVDir_Undo.setObjectName(u"Button_STT_Whisper_WAVDir_Undo")
-        self.Button_STT_Whisper_WAVDir_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_STT_Whisper_WAVDir_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_STT_Whisper_WAVDir_Undo.setStyleSheet(u"QPushButton {\n"
+        self.Button_STT_Whisper_AudioDir_Undo = QPushButton(self.Frame_STT_Whisper_AudioDir)
+        self.Button_STT_Whisper_AudioDir_Undo.setObjectName(u"Button_STT_Whisper_AudioDir_Undo")
+        self.Button_STT_Whisper_AudioDir_Undo.setMinimumSize(QSize(27, 27))
+        self.Button_STT_Whisper_AudioDir_Undo.setMaximumSize(QSize(27, 27))
+        self.Button_STT_Whisper_AudioDir_Undo.setStyleSheet(u"QPushButton {\n"
 "	image: url(:/Button_Icon/Sources/Undo.png);\n"
 "	background-color: transparent;\n"
 "	padding: 4.5px;\n"
@@ -8138,12 +8158,12 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}")
 
-        self.gridLayout_39.addWidget(self.Button_STT_Whisper_WAVDir_Undo, 0, 2, 1, 1)
+        self.gridLayout_39.addWidget(self.Button_STT_Whisper_AudioDir_Undo, 0, 2, 1, 1)
 
-        self.LineEdit_STT_Whisper_WAVDir = QLineEdit(self.Frame_STT_Whisper_WAVDir)
-        self.LineEdit_STT_Whisper_WAVDir.setObjectName(u"LineEdit_STT_Whisper_WAVDir")
-        self.LineEdit_STT_Whisper_WAVDir.setMinimumSize(QSize(0, 27))
-        self.LineEdit_STT_Whisper_WAVDir.setStyleSheet(u"QLineEdit {\n"
+        self.LineEdit_STT_Whisper_AudioDir = QLineEdit(self.Frame_STT_Whisper_AudioDir)
+        self.LineEdit_STT_Whisper_AudioDir.setObjectName(u"LineEdit_STT_Whisper_AudioDir")
+        self.LineEdit_STT_Whisper_AudioDir.setMinimumSize(QSize(0, 27))
+        self.LineEdit_STT_Whisper_AudioDir.setStyleSheet(u"QLineEdit {\n"
 "	/*font-size: 12px;*/\n"
 "	text-align: left;\n"
 "	color: rgb(255, 255, 255);\n"
@@ -8170,13 +8190,13 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}")
 
-        self.gridLayout_39.addWidget(self.LineEdit_STT_Whisper_WAVDir, 1, 0, 1, 2)
+        self.gridLayout_39.addWidget(self.LineEdit_STT_Whisper_AudioDir, 1, 0, 1, 2)
 
-        self.Button_STT_Whisper_WAVDir = QPushButton(self.Frame_STT_Whisper_WAVDir)
-        self.Button_STT_Whisper_WAVDir.setObjectName(u"Button_STT_Whisper_WAVDir")
-        self.Button_STT_Whisper_WAVDir.setMinimumSize(QSize(27, 27))
-        self.Button_STT_Whisper_WAVDir.setMaximumSize(QSize(27, 27))
-        self.Button_STT_Whisper_WAVDir.setStyleSheet(u"QPushButton {\n"
+        self.Button_STT_Whisper_AudioDir = QPushButton(self.Frame_STT_Whisper_AudioDir)
+        self.Button_STT_Whisper_AudioDir.setObjectName(u"Button_STT_Whisper_AudioDir")
+        self.Button_STT_Whisper_AudioDir.setMinimumSize(QSize(27, 27))
+        self.Button_STT_Whisper_AudioDir.setMaximumSize(QSize(27, 27))
+        self.Button_STT_Whisper_AudioDir.setStyleSheet(u"QPushButton {\n"
 "	image: url(:/Button_Icon/Sources/OpenedFolder.png);\n"
 "	background-color: transparent;\n"
 "	padding: 4.5px;\n"
@@ -8197,10 +8217,10 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}")
 
-        self.gridLayout_39.addWidget(self.Button_STT_Whisper_WAVDir, 1, 2, 1, 1)
+        self.gridLayout_39.addWidget(self.Button_STT_Whisper_AudioDir, 1, 2, 1, 1)
 
 
-        self.verticalLayout_129.addWidget(self.Frame_STT_Whisper_WAVDir)
+        self.verticalLayout_129.addWidget(self.Frame_STT_Whisper_AudioDir)
 
 
         self.verticalLayout_32.addWidget(self.Frame_STT_Whisper_InputParams_BasicSettings)
@@ -8236,27 +8256,27 @@ class Ui_MainWindow(object):
         self.verticalLayout_37.setSpacing(0)
         self.verticalLayout_37.setObjectName(u"verticalLayout_37")
         self.verticalLayout_37.setContentsMargins(0, 0, 0, 0)
-        self.Frame_STT_Whisper_ConditionOnPreviousText = QFrame(self.Frame_STT_Whisper_WhisperParams_BasicSettings)
-        self.Frame_STT_Whisper_ConditionOnPreviousText.setObjectName(u"Frame_STT_Whisper_ConditionOnPreviousText")
-        self.Frame_STT_Whisper_ConditionOnPreviousText.setMinimumSize(QSize(0, 105))
-        self.Frame_STT_Whisper_ConditionOnPreviousText.setStyleSheet(u"QFrame {\n"
+        self.Frame_STT_Whisper_AddLanguageInfo = QFrame(self.Frame_STT_Whisper_WhisperParams_BasicSettings)
+        self.Frame_STT_Whisper_AddLanguageInfo.setObjectName(u"Frame_STT_Whisper_AddLanguageInfo")
+        self.Frame_STT_Whisper_AddLanguageInfo.setMinimumSize(QSize(0, 105))
+        self.Frame_STT_Whisper_AddLanguageInfo.setStyleSheet(u"QFrame {\n"
 "	color: rgb(255, 255, 255);\n"
 "	background-color: transparent;\n"
 "	border-width: 0px;\n"
 "	border-style: solid;\n"
 "}\n"
 "QFrame:hover {\n"
-"	background-color: rgb(33, 33, 33);\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
 "}")
-        self.gridLayout_43 = QGridLayout(self.Frame_STT_Whisper_ConditionOnPreviousText)
-        self.gridLayout_43.setSpacing(12)
-        self.gridLayout_43.setObjectName(u"gridLayout_43")
-        self.gridLayout_43.setContentsMargins(21, 12, 21, 12)
-        self.Label_STT_Whisper_ConditionOnPreviousText = QLabel(self.Frame_STT_Whisper_ConditionOnPreviousText)
-        self.Label_STT_Whisper_ConditionOnPreviousText.setObjectName(u"Label_STT_Whisper_ConditionOnPreviousText")
-        sizePolicy6.setHeightForWidth(self.Label_STT_Whisper_ConditionOnPreviousText.sizePolicy().hasHeightForWidth())
-        self.Label_STT_Whisper_ConditionOnPreviousText.setSizePolicy(sizePolicy6)
-        self.Label_STT_Whisper_ConditionOnPreviousText.setStyleSheet(u"QLabel {\n"
+        self.gridLayout_40 = QGridLayout(self.Frame_STT_Whisper_AddLanguageInfo)
+        self.gridLayout_40.setSpacing(12)
+        self.gridLayout_40.setObjectName(u"gridLayout_40")
+        self.gridLayout_40.setContentsMargins(21, 12, 21, 12)
+        self.Label_STT_Whisper_AddLanguageInfo = QLabel(self.Frame_STT_Whisper_AddLanguageInfo)
+        self.Label_STT_Whisper_AddLanguageInfo.setObjectName(u"Label_STT_Whisper_AddLanguageInfo")
+        sizePolicy6.setHeightForWidth(self.Label_STT_Whisper_AddLanguageInfo.sizePolicy().hasHeightForWidth())
+        self.Label_STT_Whisper_AddLanguageInfo.setSizePolicy(sizePolicy6)
+        self.Label_STT_Whisper_AddLanguageInfo.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	/*color: rgb(255, 255, 255);*/\n"
 "	background-color: transparent;\n"
@@ -8266,17 +8286,17 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}")
 
-        self.gridLayout_43.addWidget(self.Label_STT_Whisper_ConditionOnPreviousText, 0, 0, 1, 1)
+        self.gridLayout_40.addWidget(self.Label_STT_Whisper_AddLanguageInfo, 0, 0, 1, 1)
 
-        self.HorizontalSpacer_STT_Whisper_ConditionOnPreviousText = QSpacerItem(445, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.HorizontalSpacer_STT_Whisper_AddLanguageInfo = QSpacerItem(445, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
-        self.gridLayout_43.addItem(self.HorizontalSpacer_STT_Whisper_ConditionOnPreviousText, 0, 1, 1, 1)
+        self.gridLayout_40.addItem(self.HorizontalSpacer_STT_Whisper_AddLanguageInfo, 0, 1, 1, 1)
 
-        self.Button_STT_Whisper_ConditionOnPreviousText_Undo = QPushButton(self.Frame_STT_Whisper_ConditionOnPreviousText)
-        self.Button_STT_Whisper_ConditionOnPreviousText_Undo.setObjectName(u"Button_STT_Whisper_ConditionOnPreviousText_Undo")
-        self.Button_STT_Whisper_ConditionOnPreviousText_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_STT_Whisper_ConditionOnPreviousText_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_STT_Whisper_ConditionOnPreviousText_Undo.setStyleSheet(u"QPushButton {\n"
+        self.Button_STT_Whisper_AddLanguageInfo_Undo = QPushButton(self.Frame_STT_Whisper_AddLanguageInfo)
+        self.Button_STT_Whisper_AddLanguageInfo_Undo.setObjectName(u"Button_STT_Whisper_AddLanguageInfo_Undo")
+        self.Button_STT_Whisper_AddLanguageInfo_Undo.setMinimumSize(QSize(27, 27))
+        self.Button_STT_Whisper_AddLanguageInfo_Undo.setMaximumSize(QSize(27, 27))
+        self.Button_STT_Whisper_AddLanguageInfo_Undo.setStyleSheet(u"QPushButton {\n"
 "	image: url(:/Button_Icon/Sources/Undo.png);\n"
 "	background-color: transparent;\n"
 "	padding: 4.5px;\n"
@@ -8297,12 +8317,12 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}")
 
-        self.gridLayout_43.addWidget(self.Button_STT_Whisper_ConditionOnPreviousText_Undo, 0, 2, 1, 1)
+        self.gridLayout_40.addWidget(self.Button_STT_Whisper_AddLanguageInfo_Undo, 0, 2, 1, 1)
 
-        self.CheckBox_STT_Whisper_ConditionOnPreviousText = QCheckBox(self.Frame_STT_Whisper_ConditionOnPreviousText)
-        self.CheckBox_STT_Whisper_ConditionOnPreviousText.setObjectName(u"CheckBox_STT_Whisper_ConditionOnPreviousText")
-        self.CheckBox_STT_Whisper_ConditionOnPreviousText.setMinimumSize(QSize(0, 27))
-        self.CheckBox_STT_Whisper_ConditionOnPreviousText.setStyleSheet(u"QCheckBox {\n"
+        self.CheckBox_STT_Whisper_AddLanguageInfo = QCheckBox(self.Frame_STT_Whisper_AddLanguageInfo)
+        self.CheckBox_STT_Whisper_AddLanguageInfo.setObjectName(u"CheckBox_STT_Whisper_AddLanguageInfo")
+        self.CheckBox_STT_Whisper_AddLanguageInfo.setMinimumSize(QSize(0, 27))
+        self.CheckBox_STT_Whisper_AddLanguageInfo.setStyleSheet(u"QCheckBox {\n"
 "	font-size: 12px;\n"
 "	spacing: 12.3px;\n"
 "	color: rgba(255, 255, 255, 210);\n"
@@ -8343,10 +8363,10 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}")
 
-        self.gridLayout_43.addWidget(self.CheckBox_STT_Whisper_ConditionOnPreviousText, 1, 0, 1, 3)
+        self.gridLayout_40.addWidget(self.CheckBox_STT_Whisper_AddLanguageInfo, 1, 0, 1, 3)
 
 
-        self.verticalLayout_37.addWidget(self.Frame_STT_Whisper_ConditionOnPreviousText)
+        self.verticalLayout_37.addWidget(self.Frame_STT_Whisper_AddLanguageInfo)
 
 
         self.verticalLayout_49.addWidget(self.Frame_STT_Whisper_WhisperParams_BasicSettings)
@@ -8413,7 +8433,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}\n"
 "QFrame:hover {\n"
-"	background-color: rgb(33, 33, 33);\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
 "}")
         self.gridLayout_41 = QGridLayout(self.Frame_STT_Whisper_ModelPath)
         self.gridLayout_41.setSpacing(12)
@@ -8528,244 +8548,6 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_15.addWidget(self.Frame_STT_Whisper_ModelPath)
 
-        self.Frame_STT_Whisper_Language = QFrame(self.Frame_STT_Whisper_WhisperParams_AdvanceSettings)
-        self.Frame_STT_Whisper_Language.setObjectName(u"Frame_STT_Whisper_Language")
-        self.Frame_STT_Whisper_Language.setMinimumSize(QSize(0, 105))
-        self.Frame_STT_Whisper_Language.setStyleSheet(u"QFrame {\n"
-"	color: rgb(255, 255, 255);\n"
-"	background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QFrame:hover {\n"
-"	background-color: rgb(33, 33, 33);\n"
-"}")
-        self.gridLayout_40 = QGridLayout(self.Frame_STT_Whisper_Language)
-        self.gridLayout_40.setSpacing(12)
-        self.gridLayout_40.setObjectName(u"gridLayout_40")
-        self.gridLayout_40.setContentsMargins(21, 12, 21, 12)
-        self.Label_STT_Whisper_Language = QLabel(self.Frame_STT_Whisper_Language)
-        self.Label_STT_Whisper_Language.setObjectName(u"Label_STT_Whisper_Language")
-        sizePolicy6.setHeightForWidth(self.Label_STT_Whisper_Language.sizePolicy().hasHeightForWidth())
-        self.Label_STT_Whisper_Language.setSizePolicy(sizePolicy6)
-        self.Label_STT_Whisper_Language.setStyleSheet(u"QLabel {\n"
-"	/*text-align: center;*/\n"
-"	/*color: rgb(255, 255, 255);*/\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.gridLayout_40.addWidget(self.Label_STT_Whisper_Language, 0, 0, 1, 1)
-
-        self.HorizontalSpacer_STT_Whisper_Language = QSpacerItem(445, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
-
-        self.gridLayout_40.addItem(self.HorizontalSpacer_STT_Whisper_Language, 0, 1, 1, 1)
-
-        self.Button_STT_Whisper_Language_Undo = QPushButton(self.Frame_STT_Whisper_Language)
-        self.Button_STT_Whisper_Language_Undo.setObjectName(u"Button_STT_Whisper_Language_Undo")
-        self.Button_STT_Whisper_Language_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_STT_Whisper_Language_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_STT_Whisper_Language_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgba(201, 210, 222, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(201, 210, 222, 210);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.gridLayout_40.addWidget(self.Button_STT_Whisper_Language_Undo, 0, 2, 1, 1)
-
-        self.ComboBox_STT_Whisper_Language = QComboBox(self.Frame_STT_Whisper_Language)
-        self.ComboBox_STT_Whisper_Language.setObjectName(u"ComboBox_STT_Whisper_Language")
-        self.ComboBox_STT_Whisper_Language.setMinimumSize(QSize(0, 27))
-        self.ComboBox_STT_Whisper_Language.setStyleSheet(u"QComboBox {\n"
-"	/*font-size: 12px;*/\n"
-"	text-align: left;\n"
-"	color: rgb(255, 255, 255);\n"
-"	background-color: transparent;\n"
-"	padding-top: 3px;\n"
-"	padding-left: 6px;\n"
-"	padding-bottom: 3px;\n"
-"	padding-right: 6px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgba(201, 210, 222, 123);\n"
-"}\n"
-"QComboBox:hover {\n"
-"	border-color: rgba(201, 210, 222, 210);\n"
-"}\n"
-"\n"
-"QComboBox::drop-down {\n"
-"	/*width: 12px;\n"
-"	height: 12px;*/\n"
-"	subcontrol-origin: padding;\n"
-"	subcontrol-position: right;\n"
-"	margin-right: 6px;\n"
-"	border-width: 0px;\n"
-"}\n"
-"QComboBox::down-arrow {\n"
-"	border-image: url(:/ComboBox_Icon/Sources/DownArrow.png);\n"
-"}\n"
-"\n"
-"\n"
-"QComboBox QAbstractItemView {\n"
-"	color: rgb(255, 255, 255);\n"
-"	background-color: transparent;\n"
-"	padding-left: -15px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"	outline: 0px;\n"
-"}\n"
-"\n"
-"QComboBox QAbstractItemV"
-                        "iew::item {\n"
-"	/* height: 30px; */\n"
-"	background-color: transparent;\n"
-"	padding-left: 15px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QComboBox QAbstractItemView::item:selected {\n"
-"	background-color: rgba(120. 120, 120, 120)\n"
-"}\n"
-"\n"
-"\n"
-"QComboBox QAbstractScrollArea QScrollBar::vertical {\n"
-"	width: 9px;\n"
-"	background-color: rgb(45, 45, 45);\n"
-"	border-width: 1px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: transparent;\n"
-"	margin: 0px;\n"
-"}\n"
-"QComboBox QAbstractScrollArea QScrollBar::vertical:hover {\n"
-"	background-color: rgb(60, 60, 60);\n"
-"}\n"
-"\n"
-"QComboBox QAbstractScrollArea QScrollBar::add-line:vertical {\n"
-"	height: 0px;\n"
-"	background-color: transparent;\n"
-"	subcontrol-position: left;\n"
-"	subcontrol-origin: margin;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"\n"
-"QComboBox QAbstractScrollArea QScrollBar::sub-line:vertical {\n"
-""
-                        "	height: 0px;\n"
-"	background-color: transparent;\n"
-"	subcontrol-position: right;\n"
-"	subcontrol-origin: margin;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"\n"
-"QComboBox QAbstractScrollArea QScrollBar::add-page:vertical, QComboBox QAbstractScrollArea QScrollBar::sub-page:vertical {\n"
-"	width: 0px;\n"
-"	height: 0px;\n"
-"	background-color: transparent;\n"
-"}\n"
-"\n"
-"QComboBox QAbstractScrollArea QScrollBar::handle:vertical {\n"
-"	background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QComboBox QAbstractScrollArea QScrollBar::handle:vertical:hover {\n"
-"	background-color: rgb(120, 120, 120);\n"
-"}\n"
-"\n"
-"\n"
-"QComboBox QAbstractScrollArea QScrollBar::horizontal {\n"
-"	height: 9px;\n"
-"	background-color: rgb(45, 45, 45);\n"
-"	border-width: 1px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: transparent;\n"
-"	margin: 0px;\n"
-"}\n"
-"QComboBox QAbstractScrollArea QScrollBar::horizontal:"
-                        "hover {\n"
-"	background-color: rgb(60, 60, 60);\n"
-"}\n"
-"\n"
-"QComboBox QAbstractScrollArea QScrollBar::add-line:horizontal {\n"
-"	width: 0px;\n"
-"	background-color: transparent;\n"
-"	subcontrol-position: left;\n"
-"	subcontrol-origin: margin;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"\n"
-"QComboBox QAbstractScrollArea QScrollBar::sub-line:horizontal {\n"
-"	width: 0px;\n"
-"	background-color: transparent;\n"
-"	subcontrol-position: right;\n"
-"	subcontrol-origin: margin;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"\n"
-"QComboBox QAbstractScrollArea QScrollBar::add-page:horizontal, QComboBox QAbstractScrollArea QScrollBar::sub-page:horizontal {\n"
-"	width: 0px;\n"
-"	height: 0px;\n"
-"	background-color: transparent;\n"
-"}\n"
-"\n"
-"QComboBox QAbstractScrollArea QScrollBar::handle:horizontal {\n"
-"	background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QComboBox QAbstractScro"
-                        "llArea QScrollBar::handle:horizontal:hover {\n"
-"	background-color: rgb(120, 120, 120);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.gridLayout_40.addWidget(self.ComboBox_STT_Whisper_Language, 1, 0, 1, 3)
-
-
-        self.verticalLayout_15.addWidget(self.Frame_STT_Whisper_Language)
-
         self.Frame_STT_Whisper_fp16 = QFrame(self.Frame_STT_Whisper_WhisperParams_AdvanceSettings)
         self.Frame_STT_Whisper_fp16.setObjectName(u"Frame_STT_Whisper_fp16")
         self.Frame_STT_Whisper_fp16.setMinimumSize(QSize(0, 105))
@@ -8776,7 +8558,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}\n"
 "QFrame:hover {\n"
-"	background-color: rgb(33, 33, 33);\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
 "}")
         self.gridLayout_44 = QGridLayout(self.Frame_STT_Whisper_fp16)
         self.gridLayout_44.setSpacing(12)
@@ -8878,6 +8660,118 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_15.addWidget(self.Frame_STT_Whisper_fp16)
 
+        self.Frame_STT_Whisper_ConditionOnPreviousText = QFrame(self.Frame_STT_Whisper_WhisperParams_AdvanceSettings)
+        self.Frame_STT_Whisper_ConditionOnPreviousText.setObjectName(u"Frame_STT_Whisper_ConditionOnPreviousText")
+        self.Frame_STT_Whisper_ConditionOnPreviousText.setMinimumSize(QSize(0, 105))
+        self.Frame_STT_Whisper_ConditionOnPreviousText.setStyleSheet(u"QFrame {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QFrame:hover {\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
+"}")
+        self.gridLayout_43 = QGridLayout(self.Frame_STT_Whisper_ConditionOnPreviousText)
+        self.gridLayout_43.setSpacing(12)
+        self.gridLayout_43.setObjectName(u"gridLayout_43")
+        self.gridLayout_43.setContentsMargins(21, 12, 21, 12)
+        self.CheckBox_STT_Whisper_ConditionOnPreviousText = QCheckBox(self.Frame_STT_Whisper_ConditionOnPreviousText)
+        self.CheckBox_STT_Whisper_ConditionOnPreviousText.setObjectName(u"CheckBox_STT_Whisper_ConditionOnPreviousText")
+        self.CheckBox_STT_Whisper_ConditionOnPreviousText.setMinimumSize(QSize(0, 27))
+        self.CheckBox_STT_Whisper_ConditionOnPreviousText.setStyleSheet(u"QCheckBox {\n"
+"	font-size: 12px;\n"
+"	spacing: 12.3px;\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QCheckBox:hover {\n"
+"	color: rgb(255, 255, 255);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator {\n"
+"	width: 24px;\n"
+"	height: 24px;\n"
+"    background-color: transparent;\n"
+"	padding: 1.2px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QCheckBox::indicator:hover {\n"
+"	background-color: rgba(255, 255, 255, 21);\n"
+"}\n"
+"QCheckBox::indicator:unchecked {\n"
+"	border-image: url(:/CheckBox_Icon/Sources/ToggleOff.png);\n"
+"}\n"
+"QCheckBox::indicator:checked {\n"
+"	border-image: url(:/CheckBox_Icon/Sources/ToggleOn.png);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_43.addWidget(self.CheckBox_STT_Whisper_ConditionOnPreviousText, 1, 0, 1, 3)
+
+        self.HorizontalSpacer_STT_Whisper_ConditionOnPreviousText = QSpacerItem(445, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.gridLayout_43.addItem(self.HorizontalSpacer_STT_Whisper_ConditionOnPreviousText, 0, 1, 1, 1)
+
+        self.Button_STT_Whisper_ConditionOnPreviousText_Undo = QPushButton(self.Frame_STT_Whisper_ConditionOnPreviousText)
+        self.Button_STT_Whisper_ConditionOnPreviousText_Undo.setObjectName(u"Button_STT_Whisper_ConditionOnPreviousText_Undo")
+        self.Button_STT_Whisper_ConditionOnPreviousText_Undo.setMinimumSize(QSize(27, 27))
+        self.Button_STT_Whisper_ConditionOnPreviousText_Undo.setMaximumSize(QSize(27, 27))
+        self.Button_STT_Whisper_ConditionOnPreviousText_Undo.setStyleSheet(u"QPushButton {\n"
+"	image: url(:/Button_Icon/Sources/Undo.png);\n"
+"	background-color: transparent;\n"
+"	padding: 4.5px;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgba(201, 210, 222, 123);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgba(201, 210, 222, 210);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_43.addWidget(self.Button_STT_Whisper_ConditionOnPreviousText_Undo, 0, 2, 1, 1)
+
+        self.Label_STT_Whisper_ConditionOnPreviousText = QLabel(self.Frame_STT_Whisper_ConditionOnPreviousText)
+        self.Label_STT_Whisper_ConditionOnPreviousText.setObjectName(u"Label_STT_Whisper_ConditionOnPreviousText")
+        sizePolicy6.setHeightForWidth(self.Label_STT_Whisper_ConditionOnPreviousText.sizePolicy().hasHeightForWidth())
+        self.Label_STT_Whisper_ConditionOnPreviousText.setSizePolicy(sizePolicy6)
+        self.Label_STT_Whisper_ConditionOnPreviousText.setStyleSheet(u"QLabel {\n"
+"	/*text-align: center;*/\n"
+"	/*color: rgb(255, 255, 255);*/\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_43.addWidget(self.Label_STT_Whisper_ConditionOnPreviousText, 0, 0, 1, 1)
+
+
+        self.verticalLayout_15.addWidget(self.Frame_STT_Whisper_ConditionOnPreviousText)
+
         self.Frame_STT_Whisper_Verbose = QFrame(self.Frame_STT_Whisper_WhisperParams_AdvanceSettings)
         self.Frame_STT_Whisper_Verbose.setObjectName(u"Frame_STT_Whisper_Verbose")
         self.Frame_STT_Whisper_Verbose.setMinimumSize(QSize(0, 105))
@@ -8888,7 +8782,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}\n"
 "QFrame:hover {\n"
-"	background-color: rgb(33, 33, 33);\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
 "}")
         self.gridLayout_42 = QGridLayout(self.Frame_STT_Whisper_Verbose)
         self.gridLayout_42.setSpacing(12)
@@ -8913,33 +8807,6 @@ class Ui_MainWindow(object):
         self.HorizontalSpacer_STT_Whisper_Verbose = QSpacerItem(445, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
         self.gridLayout_42.addItem(self.HorizontalSpacer_STT_Whisper_Verbose, 0, 1, 1, 1)
-
-        self.Button_STT_Whisper_Verbose_Undo = QPushButton(self.Frame_STT_Whisper_Verbose)
-        self.Button_STT_Whisper_Verbose_Undo.setObjectName(u"Button_STT_Whisper_Verbose_Undo")
-        self.Button_STT_Whisper_Verbose_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_STT_Whisper_Verbose_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_STT_Whisper_Verbose_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgba(201, 210, 222, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(201, 210, 222, 210);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.gridLayout_42.addWidget(self.Button_STT_Whisper_Verbose_Undo, 0, 2, 1, 1)
 
         self.CheckBox_STT_Whisper_Verbose = QCheckBox(self.Frame_STT_Whisper_Verbose)
         self.CheckBox_STT_Whisper_Verbose.setObjectName(u"CheckBox_STT_Whisper_Verbose")
@@ -8986,6 +8853,33 @@ class Ui_MainWindow(object):
 "}")
 
         self.gridLayout_42.addWidget(self.CheckBox_STT_Whisper_Verbose, 1, 0, 1, 3)
+
+        self.Button_STT_Whisper_Verbose_Undo = QPushButton(self.Frame_STT_Whisper_Verbose)
+        self.Button_STT_Whisper_Verbose_Undo.setObjectName(u"Button_STT_Whisper_Verbose_Undo")
+        self.Button_STT_Whisper_Verbose_Undo.setMinimumSize(QSize(27, 27))
+        self.Button_STT_Whisper_Verbose_Undo.setMaximumSize(QSize(27, 27))
+        self.Button_STT_Whisper_Verbose_Undo.setStyleSheet(u"QPushButton {\n"
+"	image: url(:/Button_Icon/Sources/Undo.png);\n"
+"	background-color: transparent;\n"
+"	padding: 4.5px;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgba(201, 210, 222, 123);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgba(201, 210, 222, 210);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_42.addWidget(self.Button_STT_Whisper_Verbose_Undo, 0, 2, 1, 1)
 
 
         self.verticalLayout_15.addWidget(self.Frame_STT_Whisper_Verbose)
@@ -9034,7 +8928,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}\n"
 "QFrame:hover {\n"
-"	background-color: rgb(33, 33, 33);\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
 "}")
         self.gridLayout_45 = QGridLayout(self.Frame_STT_Whisper_SRTDir)
         self.gridLayout_45.setSpacing(12)
@@ -9183,7 +9077,7 @@ class Ui_MainWindow(object):
         sizePolicy1.setHeightForWidth(self.TextBrowser_Params_STT_Whisper.sizePolicy().hasHeightForWidth())
         self.TextBrowser_Params_STT_Whisper.setSizePolicy(sizePolicy1)
         self.TextBrowser_Params_STT_Whisper.setStyleSheet(u"QTextBrowser {\n"
-"	background-color: rgb(33, 33, 33);\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
 "	/*padding-top: 1.5px;*/\n"
 "	/*padding-bottom: 1.5px;*/\n"
 "	padding-left: 15px;\n"
@@ -9224,8 +9118,8 @@ class Ui_MainWindow(object):
 "	subcontrol-origin: margin;\n"
 "	border-width: 0px;\n"
 "	border-radius: 0px;\n"
-"	border-st"
-                        "yle: solid;\n"
+"	bord"
+                        "er-style: solid;\n"
 "}\n"
 "\n"
 "QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
@@ -9269,9 +9163,9 @@ class Ui_MainWindow(object):
 "}\n"
 "\n"
 "QScrollBar::sub-line:horizontal {\n"
-"	width: 0px;\n"
-""
-                        "	background-color: transparent;\n"
+"	width: 0px"
+                        ";\n"
+"	background-color: transparent;\n"
 "	subcontrol-position: right;\n"
 "	subcontrol-origin: margin;\n"
 "	border-width: 0px;\n"
@@ -9984,7 +9878,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}\n"
 "QFrame:hover {\n"
-"	background-color: rgb(33, 33, 33);\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
 "}")
         self.gridLayout_46 = QGridLayout(self.Frame_DAT_VITS_AudioSpeakersDataPath)
         self.gridLayout_46.setSpacing(12)
@@ -10109,7 +10003,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}\n"
 "QFrame:hover {\n"
-"	background-color: rgb(33, 33, 33);\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
 "}")
         self.gridLayout_47 = QGridLayout(self.Frame_DAT_VITS_SRTDir)
         self.gridLayout_47.setSpacing(12)
@@ -10268,7 +10162,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}\n"
 "QFrame:hover {\n"
-"	background-color: rgb(33, 33, 33);\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
 "}")
         self.gridLayout_48 = QGridLayout(self.Frame_DAT_VITS_AddAuxiliaryData)
         self.gridLayout_48.setSpacing(12)
@@ -10437,7 +10331,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}\n"
 "QFrame:hover {\n"
-"	background-color: rgb(33, 33, 33);\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
 "}")
         self.gridLayout_49 = QGridLayout(self.Frame_DAT_VITS_TrainRatio)
         self.gridLayout_49.setSpacing(12)
@@ -10563,7 +10457,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}\n"
 "QFrame:hover {\n"
-"	background-color: rgb(33, 33, 33);\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
 "}")
         self.gridLayout_50 = QGridLayout(self.Frame_DAT_VITS_SampleRate)
         self.gridLayout_50.setSpacing(12)
@@ -10622,7 +10516,6 @@ class Ui_MainWindow(object):
         self.ComboBox_DAT_VITS_SampleRate.setStyleSheet(u"QComboBox {\n"
 "	/*font-size: 12px;*/\n"
 "	text-align: left;\n"
-"	color: rgb(255, 255, 255);\n"
 "	background-color: transparent;\n"
 "	padding-top: 3px;\n"
 "	padding-left: 6px;\n"
@@ -10643,36 +10536,41 @@ class Ui_MainWindow(object):
 "	subcontrol-origin: padding;\n"
 "	subcontrol-position: right;\n"
 "	margin-right: 6px;\n"
-"	border-width: 0px;\n"
+"	border: none;\n"
 "}\n"
+"\n"
 "QComboBox::down-arrow {\n"
 "	border-image: url(:/ComboBox_Icon/Sources/DownArrow.png);\n"
+"}\n"
+"QComboBox::down-arrow:on {\n"
+"	border-image: url(:/ComboBox_Icon/Sources/UpArrow.png);\n"
 "}\n"
 "\n"
 "\n"
 "QComboBox QAbstractItemView {\n"
-"	color: rgb(255, 255, 255);\n"
+"	outline: none;\n"
 "	background-color: transparent;\n"
-"	padding-left: -15px;\n"
-"	border-width: 0px;\n"
+"	border-width: 1.2px;\n"
 "	border-radius: 6px;\n"
 "	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"	outline: 0px;\n"
+"	border-color: rgba(201, 210, 222, 123);\n"
 "}\n"
 "\n"
-"QComboBox QAbstractItemV"
-                        "iew::item {\n"
+"QCom"
+                        "boBox QAbstractItemView::item {\n"
 "	/* height: 30px; */\n"
 "	background-color: transparent;\n"
-"	padding-left: 15px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
+"	padding-top: 3px;\n"
+"	padding-left: 6px;\n"
+"	padding-bottom: 3px;\n"
+"	padding-right: 6px;\n"
+"	border: none;\n"
+"}\n"
+"QComboBox QAbstractItemView::item:hover {\n"
+"	background-color: rgba(120, 120, 120, 120);\n"
 "}\n"
 "QComboBox QAbstractItemView::item:selected {\n"
-"	background-color: rgba(120. 120, 120, 120)\n"
+"	background-color: rgba(120, 120, 120, 120);\n"
 "}\n"
 "\n"
 "\n"
@@ -10696,12 +10594,12 @@ class Ui_MainWindow(object):
 "	subcontrol-origin: margin;\n"
 "	border-width: 0px;\n"
 "	border-radius: 0px;\n"
-"	border-style: solid;\n"
+""
+                        "	border-style: solid;\n"
 "}\n"
 "\n"
 "QComboBox QAbstractScrollArea QScrollBar::sub-line:vertical {\n"
-""
-                        "	height: 0px;\n"
+"	height: 0px;\n"
 "	background-color: transparent;\n"
 "	subcontrol-position: right;\n"
 "	subcontrol-origin: margin;\n"
@@ -10733,11 +10631,11 @@ class Ui_MainWindow(object):
 "	border-width: 1px;\n"
 "	border-radius: 6px;\n"
 "	border-style: solid;\n"
-"	border-color: transparent;\n"
+"	borde"
+                        "r-color: transparent;\n"
 "	margin: 0px;\n"
 "}\n"
-"QComboBox QAbstractScrollArea QScrollBar::horizontal:"
-                        "hover {\n"
+"QComboBox QAbstractScrollArea QScrollBar::horizontal:hover {\n"
 "	background-color: rgb(60, 60, 60);\n"
 "}\n"
 "\n"
@@ -10769,12 +10667,12 @@ class Ui_MainWindow(object):
 "\n"
 "QComboBox QAbstractScrollArea QScrollBar::handle:horizontal {\n"
 "	background-color: transparent;\n"
-"	border-width: 0px;\n"
+"	"
+                        "border-width: 0px;\n"
 "	border-radius: 0px;\n"
 "	border-style: solid;\n"
 "}\n"
-"QComboBox QAbstractScro"
-                        "llArea QScrollBar::handle:horizontal:hover {\n"
+"QComboBox QAbstractScrollArea QScrollBar::handle:horizontal:hover {\n"
 "	background-color: rgb(120, 120, 120);\n"
 "}\n"
 "\n"
@@ -10801,7 +10699,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}\n"
 "QFrame:hover {\n"
-"	background-color: rgb(33, 33, 33);\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
 "}")
         self.gridLayout_51 = QGridLayout(self.Frame_DAT_VITS_SampleWidth)
         self.gridLayout_51.setSpacing(12)
@@ -10860,7 +10758,6 @@ class Ui_MainWindow(object):
         self.ComboBox_DAT_VITS_SampleWidth.setStyleSheet(u"QComboBox {\n"
 "	/*font-size: 12px;*/\n"
 "	text-align: left;\n"
-"	color: rgb(255, 255, 255);\n"
 "	background-color: transparent;\n"
 "	padding-top: 3px;\n"
 "	padding-left: 6px;\n"
@@ -10881,36 +10778,41 @@ class Ui_MainWindow(object):
 "	subcontrol-origin: padding;\n"
 "	subcontrol-position: right;\n"
 "	margin-right: 6px;\n"
-"	border-width: 0px;\n"
+"	border: none;\n"
 "}\n"
+"\n"
 "QComboBox::down-arrow {\n"
 "	border-image: url(:/ComboBox_Icon/Sources/DownArrow.png);\n"
+"}\n"
+"QComboBox::down-arrow:on {\n"
+"	border-image: url(:/ComboBox_Icon/Sources/UpArrow.png);\n"
 "}\n"
 "\n"
 "\n"
 "QComboBox QAbstractItemView {\n"
-"	color: rgb(255, 255, 255);\n"
+"	outline: none;\n"
 "	background-color: transparent;\n"
-"	padding-left: -15px;\n"
-"	border-width: 0px;\n"
+"	border-width: 1.2px;\n"
 "	border-radius: 6px;\n"
 "	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"	outline: 0px;\n"
+"	border-color: rgba(201, 210, 222, 123);\n"
 "}\n"
 "\n"
-"QComboBox QAbstractItemV"
-                        "iew::item {\n"
+"QCom"
+                        "boBox QAbstractItemView::item {\n"
 "	/* height: 30px; */\n"
 "	background-color: transparent;\n"
-"	padding-left: 15px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
+"	padding-top: 3px;\n"
+"	padding-left: 6px;\n"
+"	padding-bottom: 3px;\n"
+"	padding-right: 6px;\n"
+"	border: none;\n"
+"}\n"
+"QComboBox QAbstractItemView::item:hover {\n"
+"	background-color: rgba(120, 120, 120, 120);\n"
 "}\n"
 "QComboBox QAbstractItemView::item:selected {\n"
-"	background-color: rgba(120. 120, 120, 120)\n"
+"	background-color: rgba(120, 120, 120, 120);\n"
 "}\n"
 "\n"
 "\n"
@@ -10934,12 +10836,12 @@ class Ui_MainWindow(object):
 "	subcontrol-origin: margin;\n"
 "	border-width: 0px;\n"
 "	border-radius: 0px;\n"
-"	border-style: solid;\n"
+""
+                        "	border-style: solid;\n"
 "}\n"
 "\n"
 "QComboBox QAbstractScrollArea QScrollBar::sub-line:vertical {\n"
-""
-                        "	height: 0px;\n"
+"	height: 0px;\n"
 "	background-color: transparent;\n"
 "	subcontrol-position: right;\n"
 "	subcontrol-origin: margin;\n"
@@ -10971,11 +10873,11 @@ class Ui_MainWindow(object):
 "	border-width: 1px;\n"
 "	border-radius: 6px;\n"
 "	border-style: solid;\n"
-"	border-color: transparent;\n"
+"	borde"
+                        "r-color: transparent;\n"
 "	margin: 0px;\n"
 "}\n"
-"QComboBox QAbstractScrollArea QScrollBar::horizontal:"
-                        "hover {\n"
+"QComboBox QAbstractScrollArea QScrollBar::horizontal:hover {\n"
 "	background-color: rgb(60, 60, 60);\n"
 "}\n"
 "\n"
@@ -11007,12 +10909,12 @@ class Ui_MainWindow(object):
 "\n"
 "QComboBox QAbstractScrollArea QScrollBar::handle:horizontal {\n"
 "	background-color: transparent;\n"
-"	border-width: 0px;\n"
+"	"
+                        "border-width: 0px;\n"
 "	border-radius: 0px;\n"
 "	border-style: solid;\n"
 "}\n"
-"QComboBox QAbstractScro"
-                        "llArea QScrollBar::handle:horizontal:hover {\n"
+"QComboBox QAbstractScrollArea QScrollBar::handle:horizontal:hover {\n"
 "	background-color: rgb(120, 120, 120);\n"
 "}\n"
 "\n"
@@ -11039,7 +10941,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}\n"
 "QFrame:hover {\n"
-"	background-color: rgb(33, 33, 33);\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
 "}")
         self.gridLayout_52 = QGridLayout(self.Frame_DAT_VITS_ToMono)
         self.gridLayout_52.setSpacing(12)
@@ -11151,7 +11053,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}\n"
 "QFrame:hover {\n"
-"	background-color: rgb(33, 33, 33);\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
 "}")
         self.gridLayout_53 = QGridLayout(self.Frame_DAT_VITS_AuxiliaryDataPath)
         self.gridLayout_53.setSpacing(12)
@@ -11310,7 +11212,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}\n"
 "QFrame:hover {\n"
-"	background-color: rgb(33, 33, 33);\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
 "}")
         self.gridLayout_54 = QGridLayout(self.Frame_DAT_VITS_WAVDirSplit)
         self.gridLayout_54.setSpacing(12)
@@ -11435,7 +11337,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}\n"
 "QFrame:hover {\n"
-"	background-color: rgb(33, 33, 33);\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
 "}")
         self.gridLayout_55 = QGridLayout(self.Frame_DAT_VITS_FileListPathTraining)
         self.gridLayout_55.setSpacing(12)
@@ -11560,7 +11462,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}\n"
 "QFrame:hover {\n"
-"	background-color: rgb(33, 33, 33);\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
 "}")
         self.gridLayout_56 = QGridLayout(self.Frame_DAT_VITS_FileListPathValidation)
         self.gridLayout_56.setSpacing(12)
@@ -11709,7 +11611,7 @@ class Ui_MainWindow(object):
         sizePolicy1.setHeightForWidth(self.TextBrowser_Params_DAT_VITS.sizePolicy().hasHeightForWidth())
         self.TextBrowser_Params_DAT_VITS.setSizePolicy(sizePolicy1)
         self.TextBrowser_Params_DAT_VITS.setStyleSheet(u"QTextBrowser {\n"
-"	background-color: rgb(33, 33, 33);\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
 "	/*padding-top: 1.5px;*/\n"
 "	/*padding-bottom: 1.5px;*/\n"
 "	padding-left: 15px;\n"
@@ -11750,8 +11652,8 @@ class Ui_MainWindow(object):
 "	subcontrol-origin: margin;\n"
 "	border-width: 0px;\n"
 "	border-radius: 0px;\n"
-"	border-st"
-                        "yle: solid;\n"
+"	bord"
+                        "er-style: solid;\n"
 "}\n"
 "\n"
 "QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
@@ -11795,9 +11697,9 @@ class Ui_MainWindow(object):
 "}\n"
 "\n"
 "QScrollBar::sub-line:horizontal {\n"
-"	width: 0px;\n"
-""
-                        "	background-color: transparent;\n"
+"	width: 0px"
+                        ";\n"
+"	background-color: transparent;\n"
 "	subcontrol-position: right;\n"
 "	subcontrol-origin: margin;\n"
 "	border-width: 0px;\n"
@@ -12237,7 +12139,7 @@ class Ui_MainWindow(object):
         sizePolicy1.setHeightForWidth(self.TextBrowser_Params_Train_VITS.sizePolicy().hasHeightForWidth())
         self.TextBrowser_Params_Train_VITS.setSizePolicy(sizePolicy1)
         self.TextBrowser_Params_Train_VITS.setStyleSheet(u"QTextBrowser {\n"
-"	background-color: rgb(33, 33, 33);\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
 "	/*padding-top: 1.5px;*/\n"
 "	/*padding-bottom: 1.5px;*/\n"
 "	padding-left: 15px;\n"
@@ -12278,8 +12180,8 @@ class Ui_MainWindow(object):
 "	subcontrol-origin: margin;\n"
 "	border-width: 0px;\n"
 "	border-radius: 0px;\n"
-"	border-st"
-                        "yle: solid;\n"
+"	bord"
+                        "er-style: solid;\n"
 "}\n"
 "\n"
 "QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
@@ -12323,9 +12225,9 @@ class Ui_MainWindow(object):
 "}\n"
 "\n"
 "QScrollBar::sub-line:horizontal {\n"
-"	width: 0px;\n"
-""
-                        "	background-color: transparent;\n"
+"	width: 0px"
+                        ";\n"
+"	background-color: transparent;\n"
 "	subcontrol-position: right;\n"
 "	subcontrol-origin: margin;\n"
 "	border-width: 0px;\n"
@@ -12839,7 +12741,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}\n"
 "QFrame:hover {\n"
-"	background-color: rgb(33, 33, 33);\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
 "}")
         self.gridLayout_57 = QGridLayout(self.Frame_Train_VITS_FileListPathTraining)
         self.gridLayout_57.setSpacing(12)
@@ -12964,7 +12866,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}\n"
 "QFrame:hover {\n"
-"	background-color: rgb(33, 33, 33);\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
 "}")
         self.gridLayout_58 = QGridLayout(self.Frame_Train_VITS_FileListPathValidation)
         self.gridLayout_58.setSpacing(12)
@@ -13123,7 +13025,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}\n"
 "QFrame:hover {\n"
-"	background-color: rgb(33, 33, 33);\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
 "}")
         self.gridLayout_59 = QGridLayout(self.Frame_Train_VITS_Epochs)
         self.gridLayout_59.setSpacing(12)
@@ -13248,7 +13150,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}\n"
 "QFrame:hover {\n"
-"	background-color: rgb(33, 33, 33);\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
 "}")
         self.gridLayout_60 = QGridLayout(self.Frame_Train_VITS_BatchSize)
         self.gridLayout_60.setSpacing(12)
@@ -13373,7 +13275,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}\n"
 "QFrame:hover {\n"
-"	background-color: rgb(33, 33, 33);\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
 "}")
         self.gridLayout_61 = QGridLayout(self.Frame_Train_VITS_UsePretrainedModels)
         self.gridLayout_61.setSpacing(12)
@@ -13542,7 +13444,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}\n"
 "QFrame:hover {\n"
-"	background-color: rgb(33, 33, 33);\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
 "}")
         self.gridLayout_63 = QGridLayout(self.Frame_Train_VITS_NumWorkers)
         self.gridLayout_63.setSpacing(12)
@@ -13667,7 +13569,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}\n"
 "QFrame:hover {\n"
-"	background-color: rgb(33, 33, 33);\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
 "}")
         self.gridLayout_64 = QGridLayout(self.Frame_Train_VITS_FP16Run)
         self.gridLayout_64.setSpacing(12)
@@ -13779,7 +13681,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}\n"
 "QFrame:hover {\n"
-"	background-color: rgb(33, 33, 33);\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
 "}")
         self.gridLayout_65 = QGridLayout(self.Frame_Train_VITS_ModelPathPretrainedG)
         self.gridLayout_65.setSpacing(12)
@@ -13904,7 +13806,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}\n"
 "QFrame:hover {\n"
-"	background-color: rgb(33, 33, 33);\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
 "}")
         self.gridLayout_66 = QGridLayout(self.Frame_Train_VITS_ModelPathPretrainedD)
         self.gridLayout_66.setSpacing(12)
@@ -14029,7 +13931,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}\n"
 "QFrame:hover {\n"
-"	background-color: rgb(33, 33, 33);\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
 "}")
         self.gridLayout_67 = QGridLayout(self.Frame_Train_VITS_KeepOriginalSpeakers)
         self.gridLayout_67.setSpacing(12)
@@ -14175,7 +14077,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}\n"
 "QFrame:hover {\n"
-"	background-color: rgb(33, 33, 33);\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
 "}")
         self.gridLayout_62 = QGridLayout(self.Frame_Train_VITS_EvalInterval)
         self.gridLayout_62.setSpacing(12)
@@ -14300,7 +14202,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}\n"
 "QFrame:hover {\n"
-"	background-color: rgb(33, 33, 33);\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
 "}")
         self.gridLayout_68 = QGridLayout(self.Frame_Train_VITS_OutputDir)
         self.gridLayout_68.setSpacing(12)
@@ -14947,7 +14849,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}\n"
 "QFrame:hover {\n"
-"	background-color: rgb(33, 33, 33);\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
 "}")
         self.gridLayout_69 = QGridLayout(self.Frame_TTS_VITS_ConfigPathLoad)
         self.gridLayout_69.setSpacing(12)
@@ -15072,7 +14974,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}\n"
 "QFrame:hover {\n"
-"	background-color: rgb(33, 33, 33);\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
 "}")
         self.gridLayout_70 = QGridLayout(self.Frame_TTS_VITS_ModelPathLoad)
         self.gridLayout_70.setSpacing(12)
@@ -15231,7 +15133,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}\n"
 "QFrame:hover {\n"
-"	background-color: rgb(33, 33, 33);\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
 "}")
         self.verticalLayout_98 = QVBoxLayout(self.Frame_TTS_VITS_Text)
         self.verticalLayout_98.setSpacing(12)
@@ -15393,7 +15295,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}\n"
 "QFrame:hover {\n"
-"	background-color: rgb(33, 33, 33);\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
 "}")
         self.verticalLayout_97 = QVBoxLayout(self.Frame_TTS_VITS_Language)
         self.verticalLayout_97.setSpacing(12)
@@ -15421,7 +15323,6 @@ class Ui_MainWindow(object):
         self.ComboBox_TTS_VITS_Language.setStyleSheet(u"QComboBox {\n"
 "	/*font-size: 12px;*/\n"
 "	text-align: left;\n"
-"	color: rgb(255, 255, 255);\n"
 "	background-color: transparent;\n"
 "	padding-top: 3px;\n"
 "	padding-left: 6px;\n"
@@ -15442,36 +15343,41 @@ class Ui_MainWindow(object):
 "	subcontrol-origin: padding;\n"
 "	subcontrol-position: right;\n"
 "	margin-right: 6px;\n"
-"	border-width: 0px;\n"
+"	border: none;\n"
 "}\n"
+"\n"
 "QComboBox::down-arrow {\n"
 "	border-image: url(:/ComboBox_Icon/Sources/DownArrow.png);\n"
+"}\n"
+"QComboBox::down-arrow:on {\n"
+"	border-image: url(:/ComboBox_Icon/Sources/UpArrow.png);\n"
 "}\n"
 "\n"
 "\n"
 "QComboBox QAbstractItemView {\n"
-"	color: rgb(255, 255, 255);\n"
+"	outline: none;\n"
 "	background-color: transparent;\n"
-"	padding-left: -15px;\n"
-"	border-width: 0px;\n"
+"	border-width: 1.2px;\n"
 "	border-radius: 6px;\n"
 "	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"	outline: 0px;\n"
+"	border-color: rgba(201, 210, 222, 123);\n"
 "}\n"
 "\n"
-"QComboBox QAbstractItemV"
-                        "iew::item {\n"
+"QCom"
+                        "boBox QAbstractItemView::item {\n"
 "	/* height: 30px; */\n"
 "	background-color: transparent;\n"
-"	padding-left: 15px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
+"	padding-top: 3px;\n"
+"	padding-left: 6px;\n"
+"	padding-bottom: 3px;\n"
+"	padding-right: 6px;\n"
+"	border: none;\n"
+"}\n"
+"QComboBox QAbstractItemView::item:hover {\n"
+"	background-color: rgba(120, 120, 120, 120);\n"
 "}\n"
 "QComboBox QAbstractItemView::item:selected {\n"
-"	background-color: rgba(120. 120, 120, 120)\n"
+"	background-color: rgba(120, 120, 120, 120);\n"
 "}\n"
 "\n"
 "\n"
@@ -15495,12 +15401,12 @@ class Ui_MainWindow(object):
 "	subcontrol-origin: margin;\n"
 "	border-width: 0px;\n"
 "	border-radius: 0px;\n"
-"	border-style: solid;\n"
+""
+                        "	border-style: solid;\n"
 "}\n"
 "\n"
 "QComboBox QAbstractScrollArea QScrollBar::sub-line:vertical {\n"
-""
-                        "	height: 0px;\n"
+"	height: 0px;\n"
 "	background-color: transparent;\n"
 "	subcontrol-position: right;\n"
 "	subcontrol-origin: margin;\n"
@@ -15532,11 +15438,11 @@ class Ui_MainWindow(object):
 "	border-width: 1px;\n"
 "	border-radius: 6px;\n"
 "	border-style: solid;\n"
-"	border-color: transparent;\n"
+"	borde"
+                        "r-color: transparent;\n"
 "	margin: 0px;\n"
 "}\n"
-"QComboBox QAbstractScrollArea QScrollBar::horizontal:"
-                        "hover {\n"
+"QComboBox QAbstractScrollArea QScrollBar::horizontal:hover {\n"
 "	background-color: rgb(60, 60, 60);\n"
 "}\n"
 "\n"
@@ -15568,12 +15474,12 @@ class Ui_MainWindow(object):
 "\n"
 "QComboBox QAbstractScrollArea QScrollBar::handle:horizontal {\n"
 "	background-color: transparent;\n"
-"	border-width: 0px;\n"
+"	"
+                        "border-width: 0px;\n"
 "	border-radius: 0px;\n"
 "	border-style: solid;\n"
 "}\n"
-"QComboBox QAbstractScro"
-                        "llArea QScrollBar::handle:horizontal:hover {\n"
+"QComboBox QAbstractScrollArea QScrollBar::handle:horizontal:hover {\n"
 "	background-color: rgb(120, 120, 120);\n"
 "}\n"
 "\n"
@@ -15600,7 +15506,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}\n"
 "QFrame:hover {\n"
-"	background-color: rgb(33, 33, 33);\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
 "}")
         self.verticalLayout_104 = QVBoxLayout(self.Frame_TTS_VITS_Speaker)
         self.verticalLayout_104.setSpacing(12)
@@ -15628,7 +15534,6 @@ class Ui_MainWindow(object):
         self.ComboBox_TTS_VITS_Speaker.setStyleSheet(u"QComboBox {\n"
 "	/*font-size: 12px;*/\n"
 "	text-align: left;\n"
-"	color: rgb(255, 255, 255);\n"
 "	background-color: transparent;\n"
 "	padding-top: 3px;\n"
 "	padding-left: 6px;\n"
@@ -15649,36 +15554,41 @@ class Ui_MainWindow(object):
 "	subcontrol-origin: padding;\n"
 "	subcontrol-position: right;\n"
 "	margin-right: 6px;\n"
-"	border-width: 0px;\n"
+"	border: none;\n"
 "}\n"
+"\n"
 "QComboBox::down-arrow {\n"
 "	border-image: url(:/ComboBox_Icon/Sources/DownArrow.png);\n"
+"}\n"
+"QComboBox::down-arrow:on {\n"
+"	border-image: url(:/ComboBox_Icon/Sources/UpArrow.png);\n"
 "}\n"
 "\n"
 "\n"
 "QComboBox QAbstractItemView {\n"
-"	color: rgb(255, 255, 255);\n"
+"	outline: none;\n"
 "	background-color: transparent;\n"
-"	padding-left: -15px;\n"
-"	border-width: 0px;\n"
+"	border-width: 1.2px;\n"
 "	border-radius: 6px;\n"
 "	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"	outline: 0px;\n"
+"	border-color: rgba(201, 210, 222, 123);\n"
 "}\n"
 "\n"
-"QComboBox QAbstractItemV"
-                        "iew::item {\n"
+"QCom"
+                        "boBox QAbstractItemView::item {\n"
 "	/* height: 30px; */\n"
 "	background-color: transparent;\n"
-"	padding-left: 15px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
+"	padding-top: 3px;\n"
+"	padding-left: 6px;\n"
+"	padding-bottom: 3px;\n"
+"	padding-right: 6px;\n"
+"	border: none;\n"
+"}\n"
+"QComboBox QAbstractItemView::item:hover {\n"
+"	background-color: rgba(120, 120, 120, 120);\n"
 "}\n"
 "QComboBox QAbstractItemView::item:selected {\n"
-"	background-color: rgba(120. 120, 120, 120)\n"
+"	background-color: rgba(120, 120, 120, 120);\n"
 "}\n"
 "\n"
 "\n"
@@ -15702,12 +15612,12 @@ class Ui_MainWindow(object):
 "	subcontrol-origin: margin;\n"
 "	border-width: 0px;\n"
 "	border-radius: 0px;\n"
-"	border-style: solid;\n"
+""
+                        "	border-style: solid;\n"
 "}\n"
 "\n"
 "QComboBox QAbstractScrollArea QScrollBar::sub-line:vertical {\n"
-""
-                        "	height: 0px;\n"
+"	height: 0px;\n"
 "	background-color: transparent;\n"
 "	subcontrol-position: right;\n"
 "	subcontrol-origin: margin;\n"
@@ -15739,11 +15649,11 @@ class Ui_MainWindow(object):
 "	border-width: 1px;\n"
 "	border-radius: 6px;\n"
 "	border-style: solid;\n"
-"	border-color: transparent;\n"
+"	borde"
+                        "r-color: transparent;\n"
 "	margin: 0px;\n"
 "}\n"
-"QComboBox QAbstractScrollArea QScrollBar::horizontal:"
-                        "hover {\n"
+"QComboBox QAbstractScrollArea QScrollBar::horizontal:hover {\n"
 "	background-color: rgb(60, 60, 60);\n"
 "}\n"
 "\n"
@@ -15775,12 +15685,12 @@ class Ui_MainWindow(object):
 "\n"
 "QComboBox QAbstractScrollArea QScrollBar::handle:horizontal {\n"
 "	background-color: transparent;\n"
-"	border-width: 0px;\n"
+"	"
+                        "border-width: 0px;\n"
 "	border-radius: 0px;\n"
 "	border-style: solid;\n"
 "}\n"
-"QComboBox QAbstractScro"
-                        "llArea QScrollBar::handle:horizontal:hover {\n"
+"QComboBox QAbstractScrollArea QScrollBar::handle:horizontal:hover {\n"
 "	background-color: rgb(120, 120, 120);\n"
 "}\n"
 "\n"
@@ -15862,7 +15772,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}\n"
 "QFrame:hover {\n"
-"	background-color: rgb(33, 33, 33);\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
 "}")
         self.gridLayout_71 = QGridLayout(self.Frame_TTS_VITS_EmotionStrength)
         self.gridLayout_71.setSpacing(12)
@@ -16038,7 +15948,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}\n"
 "QFrame:hover {\n"
-"	background-color: rgb(33, 33, 33);\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
 "}")
         self.gridLayout_72 = QGridLayout(self.Frame_TTS_VITS_PhonemeDuration)
         self.gridLayout_72.setSpacing(12)
@@ -16214,7 +16124,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}\n"
 "QFrame:hover {\n"
-"	background-color: rgb(33, 33, 33);\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
 "}")
         self.gridLayout_73 = QGridLayout(self.Frame_TTS_VITS_SpeechRate)
         self.gridLayout_73.setSpacing(12)
@@ -16414,27 +16324,27 @@ class Ui_MainWindow(object):
         self.verticalLayout_158.setSpacing(0)
         self.verticalLayout_158.setObjectName(u"verticalLayout_158")
         self.verticalLayout_158.setContentsMargins(0, 0, 0, 0)
-        self.Frame_TTS_VITS_AudioDirSave = QFrame(self.Frame_TTS_VITS_OutputParams_BasicSettings)
-        self.Frame_TTS_VITS_AudioDirSave.setObjectName(u"Frame_TTS_VITS_AudioDirSave")
-        self.Frame_TTS_VITS_AudioDirSave.setMinimumSize(QSize(0, 105))
-        self.Frame_TTS_VITS_AudioDirSave.setStyleSheet(u"QFrame {\n"
+        self.Frame_TTS_VITS_AudioPathSave = QFrame(self.Frame_TTS_VITS_OutputParams_BasicSettings)
+        self.Frame_TTS_VITS_AudioPathSave.setObjectName(u"Frame_TTS_VITS_AudioPathSave")
+        self.Frame_TTS_VITS_AudioPathSave.setMinimumSize(QSize(0, 105))
+        self.Frame_TTS_VITS_AudioPathSave.setStyleSheet(u"QFrame {\n"
 "	color: rgb(255, 255, 255);\n"
 "	background-color: transparent;\n"
 "	border-width: 0px;\n"
 "	border-style: solid;\n"
 "}\n"
 "QFrame:hover {\n"
-"	background-color: rgb(33, 33, 33);\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
 "}")
-        self.gridLayout_74 = QGridLayout(self.Frame_TTS_VITS_AudioDirSave)
+        self.gridLayout_74 = QGridLayout(self.Frame_TTS_VITS_AudioPathSave)
         self.gridLayout_74.setSpacing(12)
         self.gridLayout_74.setObjectName(u"gridLayout_74")
         self.gridLayout_74.setContentsMargins(21, 12, 21, 12)
-        self.Label_TTS_VITS_AudioDirSave = QLabel(self.Frame_TTS_VITS_AudioDirSave)
-        self.Label_TTS_VITS_AudioDirSave.setObjectName(u"Label_TTS_VITS_AudioDirSave")
-        sizePolicy6.setHeightForWidth(self.Label_TTS_VITS_AudioDirSave.sizePolicy().hasHeightForWidth())
-        self.Label_TTS_VITS_AudioDirSave.setSizePolicy(sizePolicy6)
-        self.Label_TTS_VITS_AudioDirSave.setStyleSheet(u"QLabel {\n"
+        self.Label_TTS_VITS_AudioPathSave = QLabel(self.Frame_TTS_VITS_AudioPathSave)
+        self.Label_TTS_VITS_AudioPathSave.setObjectName(u"Label_TTS_VITS_AudioPathSave")
+        sizePolicy6.setHeightForWidth(self.Label_TTS_VITS_AudioPathSave.sizePolicy().hasHeightForWidth())
+        self.Label_TTS_VITS_AudioPathSave.setSizePolicy(sizePolicy6)
+        self.Label_TTS_VITS_AudioPathSave.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	/*color: rgb(255, 255, 255);*/\n"
 "	background-color: transparent;\n"
@@ -16444,17 +16354,17 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}")
 
-        self.gridLayout_74.addWidget(self.Label_TTS_VITS_AudioDirSave, 0, 0, 1, 1)
+        self.gridLayout_74.addWidget(self.Label_TTS_VITS_AudioPathSave, 0, 0, 1, 1)
 
-        self.HorizontalSpacer_TTS_VITS_AudioDirSave = QSpacerItem(445, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.HorizontalSpacer_TTS_VITS_AudioPathSave = QSpacerItem(445, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
-        self.gridLayout_74.addItem(self.HorizontalSpacer_TTS_VITS_AudioDirSave, 0, 1, 1, 1)
+        self.gridLayout_74.addItem(self.HorizontalSpacer_TTS_VITS_AudioPathSave, 0, 1, 1, 1)
 
-        self.Button_TTS_VITS_AudioDirSave_Undo = QPushButton(self.Frame_TTS_VITS_AudioDirSave)
-        self.Button_TTS_VITS_AudioDirSave_Undo.setObjectName(u"Button_TTS_VITS_AudioDirSave_Undo")
-        self.Button_TTS_VITS_AudioDirSave_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_TTS_VITS_AudioDirSave_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_TTS_VITS_AudioDirSave_Undo.setStyleSheet(u"QPushButton {\n"
+        self.Button_TTS_VITS_AudioPathSave_Undo = QPushButton(self.Frame_TTS_VITS_AudioPathSave)
+        self.Button_TTS_VITS_AudioPathSave_Undo.setObjectName(u"Button_TTS_VITS_AudioPathSave_Undo")
+        self.Button_TTS_VITS_AudioPathSave_Undo.setMinimumSize(QSize(27, 27))
+        self.Button_TTS_VITS_AudioPathSave_Undo.setMaximumSize(QSize(27, 27))
+        self.Button_TTS_VITS_AudioPathSave_Undo.setStyleSheet(u"QPushButton {\n"
 "	image: url(:/Button_Icon/Sources/Undo.png);\n"
 "	background-color: transparent;\n"
 "	padding: 4.5px;\n"
@@ -16475,12 +16385,12 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}")
 
-        self.gridLayout_74.addWidget(self.Button_TTS_VITS_AudioDirSave_Undo, 0, 2, 1, 1)
+        self.gridLayout_74.addWidget(self.Button_TTS_VITS_AudioPathSave_Undo, 0, 2, 1, 1)
 
-        self.LineEdit_TTS_VITS_AudioDirSave = QLineEdit(self.Frame_TTS_VITS_AudioDirSave)
-        self.LineEdit_TTS_VITS_AudioDirSave.setObjectName(u"LineEdit_TTS_VITS_AudioDirSave")
-        self.LineEdit_TTS_VITS_AudioDirSave.setMinimumSize(QSize(0, 27))
-        self.LineEdit_TTS_VITS_AudioDirSave.setStyleSheet(u"QLineEdit {\n"
+        self.LineEdit_TTS_VITS_AudioPathSave = QLineEdit(self.Frame_TTS_VITS_AudioPathSave)
+        self.LineEdit_TTS_VITS_AudioPathSave.setObjectName(u"LineEdit_TTS_VITS_AudioPathSave")
+        self.LineEdit_TTS_VITS_AudioPathSave.setMinimumSize(QSize(0, 27))
+        self.LineEdit_TTS_VITS_AudioPathSave.setStyleSheet(u"QLineEdit {\n"
 "	/*font-size: 12px;*/\n"
 "	text-align: left;\n"
 "	color: rgb(255, 255, 255);\n"
@@ -16507,13 +16417,13 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}")
 
-        self.gridLayout_74.addWidget(self.LineEdit_TTS_VITS_AudioDirSave, 1, 0, 1, 2)
+        self.gridLayout_74.addWidget(self.LineEdit_TTS_VITS_AudioPathSave, 1, 0, 1, 2)
 
-        self.Button_TTS_VITS_AudioDirSave = QPushButton(self.Frame_TTS_VITS_AudioDirSave)
-        self.Button_TTS_VITS_AudioDirSave.setObjectName(u"Button_TTS_VITS_AudioDirSave")
-        self.Button_TTS_VITS_AudioDirSave.setMinimumSize(QSize(27, 27))
-        self.Button_TTS_VITS_AudioDirSave.setMaximumSize(QSize(27, 27))
-        self.Button_TTS_VITS_AudioDirSave.setStyleSheet(u"QPushButton {\n"
+        self.Button_TTS_VITS_AudioPathSave = QPushButton(self.Frame_TTS_VITS_AudioPathSave)
+        self.Button_TTS_VITS_AudioPathSave.setObjectName(u"Button_TTS_VITS_AudioPathSave")
+        self.Button_TTS_VITS_AudioPathSave.setMinimumSize(QSize(27, 27))
+        self.Button_TTS_VITS_AudioPathSave.setMaximumSize(QSize(27, 27))
+        self.Button_TTS_VITS_AudioPathSave.setStyleSheet(u"QPushButton {\n"
 "	image: url(:/Button_Icon/Sources/OpenedFolder.png);\n"
 "	background-color: transparent;\n"
 "	padding: 4.5px;\n"
@@ -16534,10 +16444,10 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}")
 
-        self.gridLayout_74.addWidget(self.Button_TTS_VITS_AudioDirSave, 1, 2, 1, 1)
+        self.gridLayout_74.addWidget(self.Button_TTS_VITS_AudioPathSave, 1, 2, 1, 1)
 
 
-        self.verticalLayout_158.addWidget(self.Frame_TTS_VITS_AudioDirSave)
+        self.verticalLayout_158.addWidget(self.Frame_TTS_VITS_AudioPathSave)
 
 
         self.verticalLayout_156.addWidget(self.Frame_TTS_VITS_OutputParams_BasicSettings)
@@ -16573,7 +16483,7 @@ class Ui_MainWindow(object):
         sizePolicy1.setHeightForWidth(self.TextBrowser_Params_TTS_VITS.sizePolicy().hasHeightForWidth())
         self.TextBrowser_Params_TTS_VITS.setSizePolicy(sizePolicy1)
         self.TextBrowser_Params_TTS_VITS.setStyleSheet(u"QTextBrowser {\n"
-"	background-color: rgb(33, 33, 33);\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
 "	/*padding-top: 1.5px;*/\n"
 "	/*padding-bottom: 1.5px;*/\n"
 "	padding-left: 15px;\n"
@@ -16614,8 +16524,8 @@ class Ui_MainWindow(object):
 "	subcontrol-origin: margin;\n"
 "	border-width: 0px;\n"
 "	border-radius: 0px;\n"
-"	border-st"
-                        "yle: solid;\n"
+"	bord"
+                        "er-style: solid;\n"
 "}\n"
 "\n"
 "QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
@@ -16659,9 +16569,9 @@ class Ui_MainWindow(object):
 "}\n"
 "\n"
 "QScrollBar::sub-line:horizontal {\n"
-"	width: 0px;\n"
-""
-                        "	background-color: transparent;\n"
+"	width: 0px"
+                        ";\n"
+"	background-color: transparent;\n"
 "	subcontrol-position: right;\n"
 "	subcontrol-origin: margin;\n"
 "	border-width: 0px;\n"
@@ -16978,54 +16888,63 @@ class Ui_MainWindow(object):
         self.ComboBox_Setting_Language.setMinimumSize(QSize(123, 0))
         self.ComboBox_Setting_Language.setMaximumSize(QSize(123, 16777215))
         self.ComboBox_Setting_Language.setStyleSheet(u"QComboBox {\n"
-"	font-size: 15px;\n"
+"	/*font-size: 12px;*/\n"
 "	text-align: left;\n"
-"	color: rgb(255, 255, 255);\n"
-"	background-color: rgb(90, 90, 90);\n"
-"	padding: 1.5px;\n"
-"	border-width: 1px;\n"
+"	background-color: transparent;\n"
+"	padding-top: 3px;\n"
+"	padding-left: 6px;\n"
+"	padding-bottom: 3px;\n"
+"	padding-right: 6px;\n"
+"	border-width: 1.2px;\n"
 "	border-radius: 6px;\n"
 "	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
+"	border-color: rgba(201, 210, 222, 123);\n"
 "}\n"
 "QComboBox:hover {\n"
-"	background-color: rgb(120, 120, 120);\n"
+"	border-color: rgba(201, 210, 222, 210);\n"
 "}\n"
 "\n"
 "QComboBox::drop-down {\n"
+"	/*width: 12px;\n"
+"	height: 12px;*/\n"
 "	subcontrol-origin: padding;\n"
 "	subcontrol-position: right;\n"
-"	margin-right: 3px;\n"
-"	border-width: 0px;\n"
+"	margin-right: 6px;\n"
+"	border: none;\n"
 "}\n"
+"\n"
 "QComboBox::down-arrow {\n"
 "	border-image: url(:/ComboBox_Icon/Sources/DownArrow.png);\n"
+"}\n"
+"QComboBox::down-arrow:on {\n"
+"	border-image: url(:/ComboBox_Icon/Sources/UpArrow.png);\n"
 "}\n"
 "\n"
 "\n"
 "QComboBox QAbstractItemView {\n"
-"	color: rgb(255, 255, 255);\n"
-"	background-color: rgb(90, 90, 90);\n"
-"	padding: -1.5px;\n"
-"	border-width: 0px;\n"
+"	outline: none;\n"
+"	background-color: transparent;\n"
+"	border-width: 1.2px;\n"
 "	border-radius: 6px;\n"
 "	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"	outline: 0px;\n"
+"	border-color: rgba(201, 210, 222, 123);\n"
 "}\n"
 "\n"
-"QComboBox QAbstractItemView::item {\n"
+"QCom"
+                        "boBox QAbstractItemView::item {\n"
 "	/* height: 30px; */\n"
-"	background-color: rgb(90, 90, 90);\n"
-"	padding: 1.5px;\n"
-"	border-width: 0px;\n"
-"	bord"
-                        "er-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
+"	background-color: transparent;\n"
+"	padding-top: 3px;\n"
+"	padding-left: 6px;\n"
+"	padding-bottom: 3px;\n"
+"	padding-right: 6px;\n"
+"	border: none;\n"
+"}\n"
+"QComboBox QAbstractItemView::item:hover {\n"
+"	background-color: rgba(120, 120, 120, 120);\n"
 "}\n"
 "QComboBox QAbstractItemView::item:selected {\n"
-"	background-color: darkgrey;\n"
+"	background-color: rgba(120, 120, 120, 120);\n"
 "}\n"
 "\n"
 "\n"
@@ -17049,7 +16968,8 @@ class Ui_MainWindow(object):
 "	subcontrol-origin: margin;\n"
 "	border-width: 0px;\n"
 "	border-radius: 0px;\n"
-"	border-style: solid;\n"
+""
+                        "	border-style: solid;\n"
 "}\n"
 "\n"
 "QComboBox QAbstractScrollArea QScrollBar::sub-line:vertical {\n"
@@ -17058,8 +16978,7 @@ class Ui_MainWindow(object):
 "	subcontrol-position: right;\n"
 "	subcontrol-origin: margin;\n"
 "	border-width: 0px;\n"
-"	"
-                        "border-radius: 0px;\n"
+"	border-radius: 0px;\n"
 "	border-style: solid;\n"
 "}\n"
 "\n"
@@ -17086,7 +17005,8 @@ class Ui_MainWindow(object):
 "	border-width: 1px;\n"
 "	border-radius: 6px;\n"
 "	border-style: solid;\n"
-"	border-color: transparent;\n"
+"	borde"
+                        "r-color: transparent;\n"
 "	margin: 0px;\n"
 "}\n"
 "QComboBox QAbstractScrollArea QScrollBar::horizontal:hover {\n"
@@ -17095,8 +17015,7 @@ class Ui_MainWindow(object):
 "\n"
 "QComboBox QAbstractScrollArea QScrollBar::add-line:horizontal {\n"
 "	width: 0px;\n"
-""
-                        "	background-color: transparent;\n"
+"	background-color: transparent;\n"
 "	subcontrol-position: left;\n"
 "	subcontrol-origin: margin;\n"
 "	border-width: 0px;\n"
@@ -17122,7 +17041,8 @@ class Ui_MainWindow(object):
 "\n"
 "QComboBox QAbstractScrollArea QScrollBar::handle:horizontal {\n"
 "	background-color: transparent;\n"
-"	border-width: 0px;\n"
+"	"
+                        "border-width: 0px;\n"
 "	border-radius: 0px;\n"
 "	border-style: solid;\n"
 "}\n"
@@ -17132,8 +17052,7 @@ class Ui_MainWindow(object):
 "\n"
 "\n"
 "QToolTip {\n"
-"	color: rgba(255, 255, 25"
-                        "5, 210);\n"
+"	color: rgba(255, 255, 255, 210);\n"
 "    background-color: transparent;\n"
 "	border-width: 0px;\n"
 "	border-style: solid;\n"
@@ -18058,15 +17977,16 @@ class Ui_MainWindow(object):
         self.TreeWidget_Catalogue_STT_Whisper.setSortingEnabled(__sortingEnabled2)
 
         self.GroupBox_STT_Whisper_InputParams.setTitle(QCoreApplication.translate("MainWindow", u"GroupBox1", None))
-        self.Label_STT_Whisper_WAVDir.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.Label_STT_Whisper_AudioDir.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.GroupBox_STT_Whisper_WhisperParams.setTitle(QCoreApplication.translate("MainWindow", u"GroupBox2", None))
-        self.Label_STT_Whisper_ConditionOnPreviousText.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.CheckBox_STT_Whisper_ConditionOnPreviousText.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
+        self.Label_STT_Whisper_AddLanguageInfo.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.CheckBox_STT_Whisper_AddLanguageInfo.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
         self.CheckBox_STT_Whisper_WhisperParams_Toggle_AdvanceSettings.setText(QCoreApplication.translate("MainWindow", u"CheckBox2", None))
         self.Label_STT_Whisper_ModelPath.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.Label_STT_Whisper_Language.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_STT_Whisper_fp16.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.CheckBox_STT_Whisper_fp16.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
+        self.CheckBox_STT_Whisper_ConditionOnPreviousText.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
+        self.Label_STT_Whisper_ConditionOnPreviousText.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_STT_Whisper_Verbose.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.CheckBox_STT_Whisper_Verbose.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
         self.GroupBox_STT_Whisper_OutputParams.setTitle(QCoreApplication.translate("MainWindow", u"GroupBox3", None))
@@ -18155,7 +18075,7 @@ class Ui_MainWindow(object):
         self.Label_TTS_VITS_PhonemeDuration.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_TTS_VITS_SpeechRate.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.GroupBox_TTS_VITS_OutputParams.setTitle(QCoreApplication.translate("MainWindow", u"GroupBox3", None))
-        self.Label_TTS_VITS_AudioDirSave.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.Label_TTS_VITS_AudioPathSave.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.ToolButton_Settings_Title.setText(QCoreApplication.translate("MainWindow", u"Label", None))
         self.Label_Setting_Language.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Setting_AutoUpdate.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))

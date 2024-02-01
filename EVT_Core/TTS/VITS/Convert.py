@@ -42,7 +42,7 @@ class Voice_Converting:
         EmotionStrength: float = .667,
         PhonemeDuration: float = 0.8,
         SpeechRate: float = 1.,
-        Audio_Dir_Save: str = ...
+        Audio_Path_Save: str = ...
     ):
         self.Config_Path_Load = Get_Config_Path(Config_Path_Load)
         self.Model_Path_Load = Get_Model_Path(Model_Path_Load)
@@ -52,7 +52,7 @@ class Voice_Converting:
         self.EmotionStrength = EmotionStrength
         self.PhonemeDuration = PhonemeDuration
         self.SpeechRate = SpeechRate
-        self.Audio_Dir_Save = Audio_Dir_Save
+        self.Audio_Path_Save = Audio_Path_Save
 
     def Converting(self):
         hps = get_hparams_from_file(self.Config_Path_Load)
@@ -78,9 +78,10 @@ class Voice_Converting:
         with torch.no_grad():
             x_tst = stn_tst.cuda().unsqueeze(0)
             x_tst_lengths = torch.LongTensor([stn_tst.size(0)]).cuda()
-            sid = torch.LongTensor([hps.speakers.index(self.Speaker)]).cuda() if self.Speaker is not None else 0
+            speakers = list(hps.speakers.keys()) if hasattr(hps.speakers, 'keys') else hps.speakers
+            sid = torch.LongTensor([speakers.index(self.Speaker)]).cuda() if self.Speaker is not None else 0
             audio = net_g.infer(x_tst, x_tst_lengths, sid=sid, noise_scale=self.EmotionStrength, noise_scale_w=self.PhonemeDuration, length_scale=self.SpeechRate)[0][0,0].data.cpu().float().numpy()
-            write(os.path.normpath(f"{self.Audio_Dir_Save}/{datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}.wav"), hps.data.sampling_rate, audio) #ipd.display(ipd.Audio(audio, rate=hps.data.sampling_rate, normalize=False))
+            write(os.path.normpath(self.Audio_Path_Save), hps.data.sampling_rate, audio) #ipd.display(ipd.Audio(audio, rate=hps.data.sampling_rate, normalize=False))
 
 
 ''' # Voice Conversion 

@@ -1,6 +1,7 @@
 from PySide6.QtGui import *
 from PySide6.QtCore import *
 from PySide6.QtWidgets import *
+from PySide6.QtMultimedia import QMediaPlayer, QAudioOutput
 
 from .QFunctions import *
 from .Sources import *
@@ -175,5 +176,144 @@ class TableBase(QTableView):
     def ClearRows(self):
         while self.rowCount() > 0:
             self.removeRow(0)
+
+##############################################################################################################################
+
+class FileDialogLineEdit(QWidget):
+    '''
+    '''
+    WidgetStyle = '''
+    QWidget {
+        background-color: transparent;
+        padding: 0px;
+        border-width: 1.2px;
+        border-radius: 3px;
+        border-style: solid;
+        border-color: rgba(201, 210, 222, 123);
+    }
+    QWidget:hover {
+        border-color: rgba(201, 210, 222, 210);
+    }
+    '''
+    LineEditStyle = '''
+    QLineEdit {
+        background-color: transparent;
+        padding-top: 3px;
+        padding-left: 6px;
+        padding-bottom: 3px;
+        padding-right: 6px;
+        border-width: 0px;
+        border-style: solid;
+    }
+    '''
+    ButtonStyle = '''
+    QPushButton {
+        background-color: transparent;
+        border-width: 0px;
+        border-style: solid;
+    }
+    QPushButton:hover {
+        background-color: rgba(201, 210, 222, 33);
+    }
+    '''
+
+    def __init__(self, parent: QWidget = None):
+        super().__init__(parent)
+
+        self.setStyleSheet(self.WidgetStyle)
+
+        self.LineEdit = QLineEdit()
+        self.LineEdit.textChanged.connect(lambda Text: self.LineEdit.setStatusTip(Text))
+        self.LineEdit.setStyleSheet(self.LineEditStyle)
+
+        self.Button = QPushButton()
+        self.Button.setStyleSheet(self.ButtonStyle + "QPushButton {image: url(:/Button_Icon/Sources/OpenedFolder.png);}")
+
+        HBoxLayout = QHBoxLayout(self)
+        HBoxLayout.setSpacing(0)
+        HBoxLayout.setContentsMargins(0, 0, 0, 0)
+        HBoxLayout.addWidget(self.LineEdit)
+        HBoxLayout.addWidget(self.Button, alignment = Qt.AlignRight)
+
+    def text(self):
+        return self.LineEdit.text()
+
+    def setText(self, arg__1: str) -> None:
+        return self.LineEdit.setText(arg__1)
+
+    def SetFileDialog(self, Mode: str, FileType: Optional[str] = None, Directory: Optional[str] = None, ButtonTooltip: str = "Browse"):
+        self.Button.clicked.connect(
+            lambda: self.LineEdit.setText(
+                Function_GetFileDialog(
+                    Mode = Mode,
+                    FileType = FileType,
+                    Directory = os.path.expanduser('~/Documents' if platform.system() == "Windows" else '~/') if Directory is None else Directory
+                )
+            )
+        )
+        self.Button.setToolTip(ButtonTooltip)
+
+##############################################################################################################################
+
+class MediaPlayerWidget(QWidget):
+    '''
+    '''
+    ButtonStyle = '''
+    QPushButton {
+        background-color: transparent;
+        border-width: 0px;
+        border-radius: 12px;
+        border-style: solid;
+    }
+    QPushButton:hover {
+        background-color: rgba(201, 210, 222, 33);
+    }
+    '''
+
+    def __init__(self, parent: QWidget = None):
+        super().__init__(parent)
+
+        self.StackedWidget = QStackedWidget()
+        self.StackedWidget.setMaximumSize(36, 36)
+        self.StackedWidget.setContentsMargins(0, 0, 0, 0)
+        self.PlayButton = QPushButton()
+        self.PlayButton.setStyleSheet(self.ButtonStyle + "QPushButton {border-image: url(:/Button_Icon/Sources/Play.png);}")
+        self.PauseButton = QPushButton()
+        self.PauseButton.setStyleSheet(self.ButtonStyle + "QPushButton {border-image: url(:/Button_Icon/Sources/Pause.png);}")
+        self.PauseButton.clicked.connect(lambda: self.StackedWidget.setCurrentWidget(self.PlayButton))
+        self.PlayButton.clicked.connect(lambda: self.StackedWidget.setCurrentWidget(self.PauseButton))
+        self.StackedWidget.addWidget(self.PlayButton)
+        self.StackedWidget.addWidget(self.PauseButton)
+        self.StackedWidget.setCurrentWidget(self.PlayButton)
+
+        self.Slider = QSlider()
+        self.Slider.setOrientation(Qt.Horizontal)
+
+        HBoxLayout = QHBoxLayout(self)
+        HBoxLayout.setSpacing(12)
+        HBoxLayout.setContentsMargins(21, 12, 21, 12)
+        HBoxLayout.addWidget(self.StackedWidget, stretch = 1)
+        HBoxLayout.addWidget(self.Slider, stretch = 5)
+
+        AudioOutput = QAudioOutput(self)
+        self.MediaPlayer = QMediaPlayer()
+        self.MediaPlayer.setAudioOutput(AudioOutput)
+        #self.MediaPlayer.mediaStatusChanged.connect(lambda Status: self.MediaPlayer.stop() if Status == QMediaPlayer.EndOfMedia else None)
+
+    def SetMediaPlayer(self, MediaPath: str):
+        self.MediaPlayer.setSource(QUrl.fromLocalFile(MediaPath))
+
+        self.PlayButton.clicked.connect(self.MediaPlayer.play)
+        self.PauseButton.clicked.connect(self.MediaPlayer.pause)
+        self.MediaPlayer.mediaStatusChanged.connect(lambda status: self.StackedWidget.setCurrentWidget(self.PlayButton) if status == QMediaPlayer.EndOfMedia else None)
+
+        self.Slider.setRange(0, 100)
+        self.Slider.sliderMoved.connect(lambda: self.MediaPlayer.setPosition(int(self.Slider.value() / 100 * self.MediaPlayer.duration())))
+        self.MediaPlayer.positionChanged.connect(lambda Position: self.Slider.setValue(int(Position / self.MediaPlayer.duration() * 100)))
+
+    def ReleaseMediaPlayer(self):
+        self.MediaPlayer.stop()
+        self.MediaPlayer.setSource('')
+        #self.MediaPlayer.deleteLater()
 
 ##############################################################################################################################

@@ -23,16 +23,14 @@ def convert_srt_to_csv(
     '''
     Extract start time, end-time and subtitle from the SRT_Path-files and store in a csv. In preparation for audio-splitting, a column id is generated from the filename with the addition of a unique number.
     '''
-    #with open(SRT_Path, 'r', encoding  = 'locale') as h: # Use the current locale encoding
     with open(SRT_Path, 'r', encoding = 'utf-8-sig') as h:
         Sub = h.readlines()   #returns list of all lines
 
     Re_Pattern = r'[0-9]{2}:[0-9]{2}:[0-9]{2},[0-9]{3} --> [0-9]{2}:[0-9]{2}:[0-9]{2},[0-9]{3}'
-    Regex = re.compile(Re_Pattern)
     # Get start times
-    Times = list(filter(Regex.search, Sub))
-    Start_Times = [time.split(' ')[0] for time in Times]  #returns a list
-    End_Times = [time.split('--> ')[1] for time in Times] #returns a list
+    Times = list(filter(re.compile(Re_Pattern).search, Sub))
+    Start_Times = [time.split('-->')[0].strip() for time in Times]
+    End_Times = [time.split('-->')[1].strip() for time in Times]
 
     # Get lines
     Lines = [[]]
@@ -50,8 +48,7 @@ def convert_srt_to_csv(
 
     DF_Text['start_times'] = Start_Times
     DF_Text['end_times'] = End_Times
-    DF_Text['transcript'] = [" ".join(i).replace('\n', '') for i in Lines]
-    DF_Text['end_times'] = DF_Text['end_times'].replace(r'\n', '', regex = True)
+    DF_Text['transcript'] = [" ".join(i).strip() for i in Lines]
 
     DF_Text['id'] = np.arange(len(DF_Text))
     ID_Extension = os.path.basename(SRT_Path).replace('.srt', '_')

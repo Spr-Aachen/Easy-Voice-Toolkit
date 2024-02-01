@@ -66,21 +66,21 @@ class ResultWriter:
     def __init__(self, output_dir: str):
         self.output_dir = output_dir
 
-    def __call__(self, result: dict, audio_path: str):
+    def __call__(self, result: dict, audio_path: str, add_languageinfo: bool):
         audio_basename = os.path.basename(audio_path).rsplit('.', 1)[0]   #audio_basename = os.path.basename(audio_path)
         output_path = os.path.join(self.output_dir, audio_basename + "." + self.extension)
 
         with open(output_path, 'w', encoding = 'utf-8') as f:
-            self.write_result(result, file = f)
+            self.write_result(result, file = f, add_languageinfo = add_languageinfo)
 
-    def write_result(self, result: dict, file: TextIO):
+    def write_result(self, result: dict, file: TextIO, add_languageinfo: bool):
         raise NotImplementedError
 
 
 class WriteSRT(ResultWriter):
     extension: str = "srt"
 
-    def write_result(self, result: dict, file: TextIO):
+    def write_result(self, result: dict, file: TextIO, add_languageinfo: bool):
         for i, segment in enumerate(result["segments"], start=1):
             # get language
             LANGUAGES = {
@@ -94,13 +94,13 @@ class WriteSRT(ResultWriter):
                 f"{i}\n"
                 f"{format_timestamp(segment['start'], always_include_hours=True, decimal_marker=',')} --> "
                 f"{format_timestamp(segment['end'], always_include_hours=True, decimal_marker=',')}\n"
-                f"[{language}]{segment['text'].strip().replace('-->', '->')}[{language}]\n",
+                f"{f'[{language}]'if add_languageinfo else ''}{segment['text'].strip().replace('-->', '->')}{f'[{language}]'if add_languageinfo else ''}\n",
                 file=file,
                 flush=True,
             )
 
 
-def get_writer(output_format: str, output_dir: str) -> Callable[[dict, TextIO], None]:
+def get_writer(output_format: str, output_dir: str) -> Callable[[dict, TextIO, bool], None]:
     writers = {"srt": WriteSRT}
     '''
     if output_format == "all":

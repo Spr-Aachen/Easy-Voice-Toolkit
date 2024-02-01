@@ -3,13 +3,16 @@ from PySide6.QtCore import Qt, QObject
 
 from .QSimpleWidgets.WindowCustomizer import *
 from .UI_MainWindow import Ui_MainWindow
+from .UI_ChildWindow_ASR import Ui_ChildWindow_ASR
+from .UI_ChildWindow_STT import Ui_ChildWindow_STT
+from .UI_ChildWindow_TTS import Ui_ChildWindow_TTS
 
 ##############################################################################################################################
 
-class Window_Customizing(MainWindowBase):
+class Window_MainWindow(MainWindowBase):
     ui = Ui_MainWindow()
 
-    def __init__(self, parent):
+    def __init__(self, parent = None):
         super().__init__(parent, min_width = 1280, min_height = 720)
 
         self.ui.setupUi(self)
@@ -19,6 +22,61 @@ class Window_Customizing(MainWindowBase):
         self.setCentralWidget(self.ui.CentralWidget)
         ComponentsSignals.Signal_SetTheme.connect(
             lambda Theme: self.setStyleSheet(Function_GetStyleSheet('Window', Theme).replace('#CentralWidget', f'#{self.CentralWidget.objectName()}'))
+        )
+        ComponentsSignals.Signal_SetTheme.emit('Auto')
+
+##############################################################################################################################
+
+class Window_ChildWindow_ASR(ChildWindowBase):
+    ui = Ui_ChildWindow_ASR()
+
+    def __init__(self, parent = None):
+        super().__init__(parent, min_width = 630, min_height = 420)
+
+        self.setWindowModality(Qt.ApplicationModal)
+
+        self.ui.setupUi(self)
+
+        self.setTitleBar(self.ui.TitleBar)
+
+        ComponentsSignals.Signal_SetTheme.connect(
+            lambda Theme: self.setStyleSheet(Function_GetStyleSheet('Window', Theme).replace('#CentralWidget', f'#{self.objectName()}'))
+        )
+        ComponentsSignals.Signal_SetTheme.emit('Auto')
+
+
+class Window_ChildWindow_STT(ChildWindowBase):
+    ui = Ui_ChildWindow_STT()
+
+    def __init__(self, parent = None):
+        super().__init__(parent, min_width = 630, min_height = 420)
+
+        self.setWindowModality(Qt.ApplicationModal)
+
+        self.ui.setupUi(self)
+
+        self.setTitleBar(self.ui.TitleBar)
+
+        ComponentsSignals.Signal_SetTheme.connect(
+            lambda Theme: self.setStyleSheet(Function_GetStyleSheet('Window', Theme).replace('#CentralWidget', f'#{self.objectName()}'))
+        )
+        ComponentsSignals.Signal_SetTheme.emit('Auto')
+
+
+class Window_ChildWindow_TTS(ChildWindowBase):
+    ui = Ui_ChildWindow_TTS()
+
+    def __init__(self, parent = None):
+        super().__init__(parent, min_width = 450, min_height = 300)
+
+        self.setWindowModality(Qt.ApplicationModal)
+
+        self.ui.setupUi(self)
+
+        self.setTitleBar(self.ui.TitleBar)
+
+        ComponentsSignals.Signal_SetTheme.connect(
+            lambda Theme: self.setStyleSheet(Function_GetStyleSheet('Window', Theme).replace('#CentralWidget', f'#{self.objectName()}'))
         )
         ComponentsSignals.Signal_SetTheme.emit('Auto')
 

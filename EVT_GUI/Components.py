@@ -1,3 +1,7 @@
+from typing import Optional
+from PySide6.QtCore import Qt
+from PySide6.QtWidgets import QWidget
+
 from .QSimpleWidgets.Utils import *
 from .QSimpleWidgets.QFunctions import *
 from .QSimpleWidgets.Sources import *
@@ -156,9 +160,7 @@ class Table_ViewModels(TableBase):
 
     def SetValue(self, Params: list = [['', '', '', 'url'], ]):
         self.ClearRows()
-        for Index, Param in enumerate(Params):
-            if Index == 1 + self.columnCount():
-                return print("Maximum params reached")
+        for Param in Params:
             self.AddRow(Param)
 
 
@@ -173,13 +175,14 @@ class Table_EditAudioSpeaker(TableBase):
         self.setRowCount(0)
         self.setColumnCount(3)
         self.SetIndexHeaderVisible(True)
+        self.verticalHeader().setSectionResizeMode(QHeaderView.Fixed)
 
         self.model().dataChanged.connect(
             lambda: self.ValueChanged.emit(self.GetValue())
         )
 
     def AddRow(self, Param: Optional[tuple] = None, FileType: Optional[str] = None):
-        RowHeight = 24
+        RowHeight = 30
         LineEditStyle = '''
         QLineEdit {
             background-color: transparent;
@@ -249,14 +252,12 @@ class Table_EditAudioSpeaker(TableBase):
             RowHeight
         )
 
-    def SetValue(self, Params: dict = {'': ''}, FileType: Optional[str] = None):
+    def SetValue(self, Params: dict = {'%Speaker%': '%Path%'}, FileType: Optional[str] = None):
         self.ClearRows()
         ParamDict = ToIterable(Params)
         for Key, Value in ParamDict.items():
             Param = (Key, Value)
-            Index = next((i for i, key in enumerate(ParamDict) if key == Key), None)
-            if Index == 1 + self.columnCount() - 1:
-                return print("Maximum params reached")
+            #Index = next((i for i, key in enumerate(ParamDict) if key == Key), None)
             self.AddRow(Param, FileType)
 
     def GetValue(self):
@@ -264,6 +265,232 @@ class Table_EditAudioSpeaker(TableBase):
         for RowCount in range(self.rowCount()):
             try:
                 Key = Function_GetText(self.cellWidget(RowCount, 0).findChild(QLineEdit))
+                Value = Function_GetText(self.cellWidget(RowCount, 1).findChild(QLineEdit))
+                ValueDict[Key] = Value
+            except:
+                pass
+        return ValueDict
+
+
+class Table_ASRResult(TableBase):
+    '''
+    '''
+    def __init__(self, parent: QWidget = None):
+        super().__init__(parent)
+
+        self.setRowCount(0)
+        self.setColumnCount(4)
+        self.SetIndexHeaderVisible(True)
+        self.verticalHeader().setSectionResizeMode(QHeaderView.Fixed)
+
+    def setStyleSheet(self, StyleSheet: str):
+        super().setStyleSheet(StyleSheet +  '''
+        QHeaderView::section, QTableView, QTableView::item {
+            gridline-color:rgba(201, 210, 222, 123);
+            border-radius:0px;
+            border-color:rgba(201, 210, 222, 123);
+        }
+        '''
+        )
+
+    def AddRow(self, Param: tuple, ComboItems: list):
+        RowHeight = 30
+        LabelStyle = '''
+        QLabel {
+            background-color: transparent;
+            padding: 6px;
+            border-width: 1px;
+            border-style: solid;
+            border-color: rgba(201, 210, 222, 123);
+        }
+        '''
+        ComboBoxStyle = '''
+        QComboBox {
+            background-color: transparent;
+            padding-top: 3px;
+            padding-left: 6px;
+            padding-bottom: 3px;
+            padding-right: 6px;
+            border-width: 1px;
+            border-style: solid;
+            border-color: rgba(201, 210, 222, 123);
+        }
+        QComboBox::drop-down {
+            subcontrol-origin: padding;
+            subcontrol-position: right;
+            margin-right: 6px;
+            border: none;
+        }
+        QComboBox::down-arrow {
+            border-image: url(:/ComboBox_Icon/Sources/DownArrow.png);
+        }
+        QComboBox::down-arrow:on {
+            border-image: url(:/ComboBox_Icon/Sources/UpArrow.png);
+        }
+        QComboBox QAbstractItemView {
+            outline: none;
+            background-color: transparent;
+            border: none;
+        }
+        QComboBox QAbstractItemView::item {
+            background-color: transparent;
+            padding-top: 3px;
+            padding-left: 6px;
+            padding-bottom: 3px;
+            padding-right: 6px;
+            border: none;
+        }
+        QComboBox QAbstractItemView::item:hover {
+            background-color: rgba(120, 120, 120, 120);
+        }
+        QComboBox QAbstractItemView::item:selected {
+            background-color: rgba(120, 120, 120, 120);
+        }
+        '''
+        def SetColumnLayout(ColumnLayout):
+            ColumnLayout.setContentsMargins(0, 0, 0, 0)
+            ColumnLayout.setSpacing(0)
+
+        Label0 = QLabel()
+        Label0.setStyleSheet(LabelStyle)
+        Function_SetText(Label0, Param[0])
+        Column0Layout = QHBoxLayout()
+        SetColumnLayout(Column0Layout)
+        Column0Layout.addWidget(Label0)
+
+        ComboBox = QComboBox()
+        ComboBox.setStyleSheet(ComboBoxStyle)
+        ComboBox.addItems(ComboItems)
+        ComboBox.setCurrentText(Param[1])
+        Column1Layout = QHBoxLayout()
+        SetColumnLayout(Column1Layout)
+        Column1Layout.addWidget(ComboBox)
+
+        Label2 = QLabel()
+        Label2.setStyleSheet(LabelStyle)
+        Function_SetText(Label2, Param[2])
+        Column2Layout = QHBoxLayout()
+        SetColumnLayout(Column2Layout)
+        Column2Layout.addWidget(Label2)
+
+        PlayerWidget = MediaPlayerWidget()
+        PlayerWidget.SetMediaPlayer(Param[0])
+        PlayerWidget.layout().setContentsMargins(3, 3, 3, 3)
+        PlayerWidget.Slider.hide()
+        Column3Layout = QHBoxLayout()
+        SetColumnLayout(Column3Layout)
+        Column3Layout.addWidget(PlayerWidget)
+
+        super().AddRow(
+            [Column0Layout, Column1Layout, Column2Layout, Column3Layout],
+            [QHeaderView.Stretch, QHeaderView.Stretch, QHeaderView.Stretch, QHeaderView.Fixed],
+            [None, None, None, RowHeight],
+            RowHeight
+        )
+
+    def SetValue(self, Params: list = [['%Path%', '%Namex%', '%Sim%'], ], ComboItems: list = ['%Name1%', ]):
+        self.ClearRows()
+        for Param in Params:
+            self.AddRow(Param, ComboItems)
+
+    def GetValue(self):
+        ValueDict = {}
+        for RowCount in range(self.rowCount()):
+            try:
+                Key = Function_GetText(self.cellWidget(RowCount, 0).findChild(QLabel))
+                Value = self.cellWidget(RowCount, 1).findChild(QComboBox).currentText()
+                ValueDict[Key] = Value
+            except:
+                pass
+        return ValueDict
+
+
+class Table_STTResult(TableBase):
+    '''
+    '''
+    def __init__(self, parent: QWidget = None):
+        super().__init__(parent)
+
+        self.setRowCount(0)
+        self.setColumnCount(3)
+        self.SetIndexHeaderVisible(True)
+        self.verticalHeader().setSectionResizeMode(QHeaderView.Fixed)
+
+    def setStyleSheet(self, StyleSheet: str):
+        super().setStyleSheet(StyleSheet +  '''
+        QHeaderView::section, QTableView, QTableView::item {
+            gridline-color:rgba(201, 210, 222, 123);
+            border-radius:0px;
+            border-color:rgba(201, 210, 222, 123);
+        }
+        '''
+        )
+
+    def AddRow(self, Param: tuple):
+        RowHeight = 30
+        LabelStyle = '''
+        QLabel {
+            background-color: transparent;
+            padding: 6px;
+            border-width: 1px;
+            border-style: solid;
+            border-color: rgba(201, 210, 222, 123);
+        }
+        '''
+        LineEditStyle = '''
+        QLineEdit {
+            background-color: transparent;
+            padding: 6px;
+            border-width: 1px;
+            border-style: solid;
+            border-color: rgba(201, 210, 222, 123);
+        }
+        '''
+        def SetColumnLayout(ColumnLayout):
+            ColumnLayout.setContentsMargins(0, 0, 0, 0)
+            ColumnLayout.setSpacing(0)
+
+        Label0 = QLabel()
+        Label0.setStyleSheet(LabelStyle)
+        Function_SetText(Label0, Param[0])
+        Column0Layout = QHBoxLayout()
+        SetColumnLayout(Column0Layout)
+        Column0Layout.addWidget(Label0)
+
+        LineEdit = QLineEdit()
+        LineEdit.setStyleSheet(LineEditStyle)
+        Function_SetText(LineEdit, Param[1], SetPlaceholderText = True)
+        Column1Layout = QHBoxLayout()
+        SetColumnLayout(Column1Layout)
+        Column1Layout.addWidget(LineEdit)
+
+        PlayerWidget = MediaPlayerWidget()
+        PlayerWidget.SetMediaPlayer(Param[0])
+        PlayerWidget.layout().setContentsMargins(3, 3, 3, 3)
+        PlayerWidget.Slider.hide()
+        Column2Layout = QHBoxLayout()
+        SetColumnLayout(Column2Layout)
+        Column2Layout.addWidget(PlayerWidget)
+
+        super().AddRow(
+            [Column0Layout, Column1Layout, Column2Layout],
+            [QHeaderView.Stretch, QHeaderView.Stretch, QHeaderView.Fixed],
+            [None, None, RowHeight],
+            RowHeight
+        )
+
+    def SetValue(self, Params: dict = {'%Path%': '%Transcription%'}):
+        self.ClearRows()
+        ParamDict = ToIterable(Params)
+        for Key, Value in ParamDict.items():
+            Param = (Key, Value)
+            self.AddRow(Param)
+
+    def GetValue(self):
+        ValueDict = {}
+        for RowCount in range(self.rowCount()):
+            try:
+                Key = Function_GetText(self.cellWidget(RowCount, 0).findChild(QLabel))
                 Value = Function_GetText(self.cellWidget(RowCount, 1).findChild(QLineEdit))
                 ValueDict[Key] = Value
             except:

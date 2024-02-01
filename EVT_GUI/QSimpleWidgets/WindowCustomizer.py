@@ -372,6 +372,21 @@ class MainWindowBase(WindowBase, QMainWindow):
             self.CentralWidget.raise_() if self.CentralWidget.isHidden() else None
 
 
+class ChildWindowBase(WindowBase, QWidget):
+    '''
+    '''
+    def __init__(self,
+        parent: Optional[QWidget] = None,
+        f: Qt.WindowType = Qt.Widget,
+        min_width: int = 630,
+        min_height: int = 420
+    ):
+        QWidget.__init__(self, parent, f)
+        WindowBase.__init__(self, min_width, min_height)
+
+        self.setFrameless()
+
+
 class DialogBase(WindowBase, QDialog):
     '''
     '''

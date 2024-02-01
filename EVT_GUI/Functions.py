@@ -39,7 +39,7 @@ def Function_InsertUI(
     Function to insert UI
     '''
     InsertUI = InsertType(UIParam)
-    if isinstance(InsertUI, (QAbstractButton)):
+    if isinstance(InsertUI, QAbstractButton):
         InsertUI.setMinimumHeight(24)
         InsertUI.setStyleSheet(
             f"{InsertType.__name__}"
@@ -295,7 +295,7 @@ def Function_ParamsHandler(
             return Function_GetText(UI)
         if isinstance(UI, QComboBox):
             return UI.currentText()
-        if isinstance(UI, (QSlider, QSpinBox, QDoubleSpinBox)):
+        if isinstance(UI, (QSlider, QAbstractSpinBox)):
             return UI.value()
         if isinstance(UI, (QCheckBox, QRadioButton)):
             return UI.isChecked()
@@ -310,7 +310,7 @@ def Function_ParamsHandler(
             UI.setPlainText(Param)
         if isinstance(UI, QComboBox):
             UI.setCurrentText(Param)
-        if isinstance(UI, (QSlider, QSpinBox, QDoubleSpinBox)):
+        if isinstance(UI, (QSlider, QAbstractSpinBox)):
             UI.setValue(Param)
         if isinstance(UI, (QCheckBox, QRadioButton)):
             UI.setChecked(Param)
@@ -340,9 +340,11 @@ def Function_ParamsSynchronizer(
     TriggerList = ToIterable(Trigger)
 
     for Trigger in TriggerList:
-        if isinstance(Trigger, (QAbstractButton)):
+        if isinstance(Trigger, QAbstractButton):
             Trigger.clicked.connect(ParamsSynchronizer) if Connection == "Connect" else Trigger.clicked.disconnect(ParamsSynchronizer)
-        if isinstance(Trigger, (QSlider, QSpinBox, QDoubleSpinBox)):
+        if isinstance(Trigger, QAbstractSlider):
+            Trigger.sliderMoved.connect(ParamsSynchronizer) if Connection == "Connect" else Trigger.sliderMoved.disconnect(ParamsSynchronizer)
+        if isinstance(Trigger, QAbstractSpinBox):
             Trigger.valueChanged.connect(ParamsSynchronizer) if Connection == "Connect" else Trigger.valueChanged.disconnect(ParamsSynchronizer)
         if isinstance(Trigger, QLineEdit):
             Trigger.textChanged.connect(ParamsSynchronizer) if Connection == "Connect" else Trigger.textChanged.disconnect(ParamsSynchronizer)
@@ -361,7 +363,7 @@ def Function_ParamsChecker(
         Param = Function_ParamsHandler(UI, "Get")
         if isinstance(Param, str):
             if Param.strip() == "None" or Param.strip() == "":
-                if UI in EmptyAllowed:
+                if UI in ToIterable(EmptyAllowed):
                     Param = None
                 else:
                     Function_ShowMessageBox(
@@ -378,8 +380,8 @@ def Function_ParamsChecker(
                         maxsplit = 0
                     )
         if isinstance(Param, dict):
-            if "None" in Param or "None" in Param.values() or "" in Param or "" in Param.values():
-                if UI in EmptyAllowed:
+            if "None" in list(Param.keys()&Param.values()) or "" in list(Param.keys()&Param.values()):
+                if UI in ToIterable(EmptyAllowed):
                     Param = None
                 else:
                     Function_ShowMessageBox(

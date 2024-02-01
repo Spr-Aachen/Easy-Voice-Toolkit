@@ -127,22 +127,22 @@ class Voice_Transcribing:
     '''
     def __init__(self,
         Model_Path: str = './Models/.pt',
-        WAV_Dir: str = './WAV_Files',
+        Audio_Dir: str = './WAV_Files',
         SRT_Dir: str = './SRT_Files',
         Verbose: str2bool = True,
-        Task: str = 'transcribe',
-        Language: Optional[str] = None,
+        Add_LanguageInfo: bool = True,
         Condition_on_Previous_Text: str2bool = False,
         fp16: str2bool = True,
     ):
         self.Model_Name = Path(Model_Path).stem.__str__() # name of the Whisper model to use    choices = available_models()
         self.Model_Dir = Path(Model_Path).parent.__str__() # the path to save model files; uses ~/.cache/whisper by default
         self.Device: str = "cuda" if torch.cuda.is_available() else "cpu" # device to use for PyTorch inference
-        self.WAV_Dir = WAV_Dir # the path to save wav files
+        self.Audio_Dir = Audio_Dir # the path to save audio files
         self.SRT_Dir = SRT_Dir # help = "directory to save the outputs
         self.Verbose = Verbose # whether to print out the progress and debug messages
-        self.Task = Task # whether to perform X->X speech recognition ('transcribe') or X->English translation ('translate')    choices = ["transcribe", "translate"]
-        self.Language = Language # language spoken in the audio, specify None to perform language detection    choices = sorted(LANGUAGES.keys()) + sorted([k.title() for k in TO_LANGUAGE_CODE.keys()])  
+        self.Task = 'transcribe' # whether to perform X->X speech recognition ('transcribe') or X->English translation ('translate')
+        self.Language = None # language spoken in the audio, specify None to perform language detection
+        self.Add_LanguageInfo = Add_LanguageInfo # add language info to the transcription
         self.Temperature: float = 0 # temperature to use for sampling
         self.Best_of: optional_int = 5 # number of candidates when sampling with non-zero temperature
         self.Beam_Size: optional_int = 5 # number of beams in beam search, only applicable when temperature is zero
@@ -159,7 +159,7 @@ class Voice_Transcribing:
         self.Threads: optional_int = 0 # number of threads used by torch for CPU inference; supercedes MKL_NUM_THREADS/OMP_NUM_THREADS
     
     def Transcriber(self):
-        os.makedirs(self.WAV_Dir, exist_ok = True)
+        os.makedirs(self.Audio_Dir, exist_ok = True)
         os.makedirs(self.SRT_Dir, exist_ok = True)
 
         if self.Model_Name.endswith(".en") and self.Language not in {"en", "English"}:
@@ -181,14 +181,15 @@ class Voice_Transcribing:
             download_root = self.Model_Dir
         )
 
-        # Filter out the WAV files and get their paths
+        # Filter out the audio files and get their paths
         PathList = []
-        for Dir_Name, SubFolder_Names, File_Names in os.walk(self.WAV_Dir):
+        for Dir_Name, SubFolder_Names, File_Names in os.walk(self.Audio_Dir):
             for i in range(len(File_Names)):
                 File_Name = File_Names[i]
-                if File_Name.endswith('.wav'):
-                    File_Path = self.WAV_Dir + "/" + File_Name.split('.')[0] + ".wav"
-                    PathList.append(File_Path)
+                for extension in ['.flac', '.wav', '.mp3', '.aac', '.m4a', '.wma', '.aiff', '.au', '.ogg']:
+                    if File_Name.endswith(extension):
+                        File_Path = self.Audio_Dir + "/" + File_Name.split('.')[0] + extension
+                        PathList.append(File_Path)
 
         Writer = get_writer("srt", self.SRT_Dir)
 
@@ -204,9 +205,11 @@ class Voice_Transcribing:
                         logprob_threshold = self.Logprob_Threshold,
                         no_speech_threshold = self.No_Speech_Threshold,
                         condition_on_previous_text = self.Condition_on_Previous_Text,
-                        initial_prompt = self.Initial_Prompt
+                        initial_prompt = self.Initial_Prompt,
+                        #decode_options = {"language": self.Language}
                     ),
-                    Audio_Path
+                    Audio_Path,
+                    self.Add_LanguageInfo
                 )
             except: # To avoid encountering the ValueError (https://github.com/openai/whisper/discussions/1068)
                 Writer(
@@ -219,7 +222,9 @@ class Voice_Transcribing:
                         logprob_threshold = self.Logprob_Threshold,
                         no_speech_threshold = self.No_Speech_Threshold,
                         condition_on_previous_text = self.Condition_on_Previous_Text,
-                        initial_prompt = self.Initial_Prompt
+                        initial_prompt = self.Initial_Prompt,
+                        #decode_options = {"language": self.Language}
                     ),
-                    Audio_Path
+                    Audio_Path,
+                    self.Add_LanguageInfo
                 )
