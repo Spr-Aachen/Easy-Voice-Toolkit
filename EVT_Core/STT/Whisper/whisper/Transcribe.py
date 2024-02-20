@@ -151,7 +151,10 @@ def transcribe(
             }
         )
         if verbose:
-            print(make_safe(f"[{format_timestamp(start)} --> {format_timestamp(end)}] {text}"))
+            try:
+                print(make_safe(f"[{format_timestamp(start)} --> {format_timestamp(end)}] {text}"))
+            except:
+                pass
 
     # show the progress bar when verbose is False (otherwise the transcribed text will be printed)
     num_frames = mel.shape[-1]

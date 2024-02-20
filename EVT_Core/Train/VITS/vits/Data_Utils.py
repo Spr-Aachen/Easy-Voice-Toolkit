@@ -61,7 +61,7 @@ class TextAudioSpeakerLoader(torch.utils.data.Dataset):
         return (text, spec, wav, sid)
 
     def get_audio(self, filename):
-        audio_norm, _ = torchaudio.load(uri = filename)
+        audio_norm, _ = torchaudio.load(filename)
         spec = spectrogram_torch(
             audio_norm,
             self.filter_length,

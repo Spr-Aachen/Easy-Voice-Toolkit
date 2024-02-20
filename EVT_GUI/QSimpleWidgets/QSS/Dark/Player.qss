@@ -1,0 +1,44 @@
+MediaPlayerBase QPushButton {
+    background-color: transparent;
+    border-width: 0px;
+    border-radius: 12px;
+    border-style: solid;
+}
+MediaPlayerBase QPushButton:hover {
+    background-color: rgba(201, 210, 222, 33);
+}
+
+
+MediaPlayerBase QSlider::groove:horizontal {
+	height: 1.2px;
+	background-color: rgba(201, 210, 222, 123);
+	border-width: 0px;
+	border-radius: 6px;
+	border-style: solid;
+}
+MediaPlayerBase QSlider::groove:horizontal:hover {
+	background-color: rgba(201, 210, 222, 210);
+}
+
+MediaPlayerBase QSlider::handle:horizontal {
+	width: 12px;
+	height: 12px;
+	background-color: rgba(201, 210, 222, 210);
+	margin-top: -6px;
+	margin-bottom: -6px;
+	border-width: 1.2px;
+	border-radius: 6px;
+	border-style: solid;
+	border-color: transparent
+}
+MediaPlayerBase QSlider::handle:horizontal:hover {
+	background-color: rgba(210, 222, 234, 234);
+}
+
+
+QToolTip {
+    color: rgb(210, 222, 234);
+    background-color: transparent;
+	border-width: 0px;
+	border-style: solid;
+}

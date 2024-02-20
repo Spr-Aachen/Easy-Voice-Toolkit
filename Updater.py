@@ -4,6 +4,7 @@ import shutil
 from pathlib import Path
 from typing import Optional
 from PySide6.QtCore import Qt, QObject, QThread, Signal
+from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import QApplication, QWidget, QVBoxLayout, QSizePolicy, QPushButton, QProgressBar, QLabel
 
 from EVT_GUI.Functions import Function_AnimateProgressBar, Function_SetText#, Function_ShowMessageBox
@@ -16,6 +17,8 @@ _, IsFileCompiled = GetFileInfo()
 
 TargetDir = GetBaseDir(__file__ if IsFileCompiled == False else sys.executable)
 #os.chdir(TargetDir)
+
+ResourceDir = TargetDir if GetBaseDir(SearchMEIPASS = True) is None else GetBaseDir(SearchMEIPASS = True)
 
 
 ConfigPath = NormPath(Path(TargetDir).joinpath('Config', 'Config.ini'))
@@ -67,8 +70,7 @@ def RebootIfSucceeded():
         CommandList = [
             '@echo off',
             'echo Moving files...',
-            f'xcopy /e /y "{ExtractDir}\*" "{TargetDir}\"',
-            f'rmdir /q /s "{ExtractDir}"',
+            f'robocopy "{ExtractDir}" "{TargetDir}" /E /MOVE /R:3 /W:1 /NP',
             f'start "Programm Running" "{ExecuterPath}"',
             'del "%~f0"'
         ],
@@ -179,6 +181,8 @@ class Widget_Updater(QWidget):
             self.height()
         )
 
+        self.setWindowIcon(QIcon(NormPath(Path(ResourceDir).joinpath('Icon.ico'))))
+
         self.Label = QLabel()
         self.Label.setVisible(True)
         self.Label.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
@@ -200,7 +204,7 @@ class Widget_Updater(QWidget):
         self.SkipButton.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
         self.SkipButton.setStyleSheet("text-align: center;")
 
-        self.Layout = QVBoxLayout()
+        self.Layout = QVBoxLayout(self)
         self.Layout.setAlignment(Qt.AlignCenter)
         self.Layout.setContentsMargins(21, 12, 21, 12)
         self.Layout.setSpacing(12)
@@ -208,12 +212,20 @@ class Widget_Updater(QWidget):
         self.Layout.addWidget(self.ExecuteButton)
         self.Layout.addWidget(self.ProgressBar)
         self.Layout.addWidget(self.SkipButton)
-        self.setLayout(self.Layout)
 
-        UpdaterSignals.Signal_Message.connect(lambda Message: Function_SetText(self.Label, SetRichText(Message, 'center', 9, 420, 'black', 0.3, 12)))
-        UpdaterSignals.Signal_IsUpdateSucceeded.connect(lambda: Config.EditConfig('Updater', 'Status', 'Executed'), Qt.QueuedConnection)
-        UpdaterSignals.Signal_IsUpdateSucceeded.connect(lambda Succeeded: RebootIfSucceeded() if Succeeded else RebootIfFailed(), Qt.QueuedConnection)
-        UpdaterSignals.Signal_IsUpdateSucceeded.connect(lambda: self.close(), Qt.QueuedConnection)
+        UpdaterSignals.Signal_Message.connect(
+            lambda Message: Function_SetText(
+                self.Label,
+                SetRichText(Message, 'center', 9, 420, 'black', 0.3, 12)
+            )
+        )
+        UpdaterSignals.Signal_IsUpdateSucceeded.connect(
+            lambda Succeeded: (
+                Config.EditConfig('Updater', 'Status', 'Executed'),
+                self.close(),
+                RebootIfSucceeded() if Succeeded else RebootIfFailed()
+            )
+        )
 
     def Function_ExecuteMethod(self,
         ExecuteButton: QPushButton,

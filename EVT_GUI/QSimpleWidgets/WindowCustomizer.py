@@ -21,11 +21,6 @@ class TitleBarBase(QWidget):
     ):
         super().__init__(parent)
 
-        ComponentsSignals.Signal_SetTheme.connect(
-            lambda Theme: self.setStyleSheet(Function_GetStyleSheet('Bar', Theme))
-        ) if self.isVisible() else None
-        ComponentsSignals.Signal_SetTheme.emit('Auto')
-
         self.Window = parent if isinstance(parent, (QMainWindow, QDialog)) else parent.window()
         self.Window.installEventFilter(self)
 
@@ -47,6 +42,9 @@ class TitleBarBase(QWidget):
         self.HBoxLayout.addWidget(self.MinimizeButton, stretch = 0, alignment = Qt.AlignRight)
         self.HBoxLayout.addWidget(self.MaximizeButton, stretch = 0, alignment = Qt.AlignRight)
         self.HBoxLayout.addWidget(self.CloseButton, stretch = 0, alignment = Qt.AlignRight)
+
+        ComponentsSignals.Signal_SetTheme.connect(self.InitDefaultStyleSheet) if self.isVisible() else None
+        self.InitDefaultStyleSheet('Auto')
 
     '''
     def mouseDoubleClickEvent(self, event: QMouseEvent) -> None:
@@ -131,6 +129,12 @@ class TitleBarBase(QWidget):
         )
         #TitleLabel.setFont(QFont("Microsoft YaHei", 11.1, QFont.Normal))
         TitleLabel.setAlignment(Qt.AlignLeft | Qt.AlignVCenter)
+
+    def InitDefaultStyleSheet(self, Theme: str) -> None:
+        super().setStyleSheet(Function_GetStyleSheet('Bar', Theme))
+
+    def ClearDefaultStyleSheet(self) -> None:
+        ComponentsSignals.Signal_SetTheme.disconnect(self.InitDefaultStyleSheet)
 
 ##############################################################################################################################
 
@@ -350,19 +354,15 @@ class MainWindowBase(WindowBase, QMainWindow):
         self.CentralWidget.setObjectName('CentralWidget')
         self.CentralWidget.setLayout(self.CentralLayout)
         self.setCentralWidget(self.CentralWidget)
-        ComponentsSignals.Signal_SetTheme.connect(
-            lambda Theme: self.setStyleSheet(Function_GetStyleSheet('Window', Theme))
-        )
-        ComponentsSignals.Signal_SetTheme.emit('Auto')
+        ComponentsSignals.Signal_SetTheme.connect(self.InitDefaultStyleSheet)
+        self.InitDefaultStyleSheet('Auto')
 
     def setCentralWidget(self, CentralWidget: Optional[QWidget]) -> None:
         try:
             super().takeCentralWidget(self.CentralWidget)
             self.CentralWidget.deleteLater()
             self.CentralWidget.hide()
-            ComponentsSignals.Signal_SetTheme.disconnect(
-                lambda Theme: self.setStyleSheet(Function_GetStyleSheet('Window', Theme))
-            )
+            self.ClearDefaultStyleSheet()
         except:
             pass
         if CentralWidget is not None:
@@ -370,6 +370,12 @@ class MainWindowBase(WindowBase, QMainWindow):
             super().setCentralWidget(self.CentralWidget)
             self.CentralWidget.setParent(self) if self.CentralWidget.parent() is None else None
             self.CentralWidget.raise_() if self.CentralWidget.isHidden() else None
+
+    def InitDefaultStyleSheet(self, Theme: str) -> None:
+        super().setStyleSheet(Function_GetStyleSheet('Window', Theme).replace('#CentralWidget', f'#{self.CentralWidget.objectName()}'))
+
+    def ClearDefaultStyleSheet(self) -> None:
+        ComponentsSignals.Signal_SetTheme.disconnect(self.InitDefaultStyleSheet)
 
 
 class ChildWindowBase(WindowBase, QWidget):
@@ -401,10 +407,8 @@ class DialogBase(WindowBase, QDialog):
 
         self.setFrameless(SetStrechable = False)
 
-        ComponentsSignals.Signal_SetTheme.connect(
-            lambda Theme: self.setStyleSheet(Function_GetStyleSheet('Dialog', Theme))
-        )
-        ComponentsSignals.Signal_SetTheme.emit('Auto')
+        ComponentsSignals.Signal_SetTheme.connect(self.InitDefaultStyleSheet)
+        self.InitDefaultStyleSheet('Auto')
 
         self.TitleBar.MinimizeButton.hide()
         self.TitleBar.MinimizeButton.deleteLater()
@@ -413,5 +417,11 @@ class DialogBase(WindowBase, QDialog):
 
     def mouseDoubleClickEvent(self, event: QMouseEvent) -> None:
         return
+
+    def InitDefaultStyleSheet(self, Theme: str) -> None:
+        super().setStyleSheet(Function_GetStyleSheet('Dialog', Theme))
+
+    def ClearDefaultStyleSheet(self) -> None:
+        ComponentsSignals.Signal_SetTheme.disconnect(self.InitDefaultStyleSheet)
 
 ##############################################################################################################################

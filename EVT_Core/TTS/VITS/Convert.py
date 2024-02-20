@@ -54,6 +54,8 @@ class Voice_Converting:
         self.SpeechRate = SpeechRate
         self.Audio_Path_Save = Audio_Path_Save
 
+        os.makedirs(Path(Audio_Path_Save).parent.__str__(), exist_ok = True)
+
     def Converting(self):
         hps = get_hparams_from_file(self.Config_Path_Load)
 

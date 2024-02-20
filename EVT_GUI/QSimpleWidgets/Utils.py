@@ -1,7 +1,8 @@
 import os
 import sys
 import re
-import time
+import unicodedata
+import io
 import shutil
 import psutil
 import signal
@@ -23,13 +24,13 @@ from threading import currentThread
 
 def ToIterable(
     Items,
-    StrictToText: bool = True
+    IgnoreStr: bool = True
 ):
     '''
     Function to make item iterable
     '''
     if isinstance(Items, collections.Iterable) or hasattr(Items, '__iter__'):
-        ItemList = [Items] if StrictToText and isinstance(Items, (str, bytes)) else Items
+        ItemList = [Items] if isinstance(Items, (str, bytes)) and IgnoreStr else Items
     else:
         ItemList = [Items]
 
@@ -43,9 +44,9 @@ def ItemReplacer(
     '''
     Function to replace item using dictionary lookup
     '''
-    ItemList = ToIterable(Items)
+    ItemList = ToIterable(Items, IgnoreStr = False)
 
-    ItemList_New = [Dict.get(Item, Item) if isinstance(Item, str) else Item for Item in ItemList]
+    ItemList_New = [Dict.get(Item, Item) for Item in ItemList]
 
     if isinstance(Items, list):
         return ItemList_New
@@ -68,113 +69,110 @@ def FindKey(
 #############################################################################################################
 
 def NormPath(
-    String: str,
+    String: Union[str, Path],
     PathType: Optional[str] = None,
     TrailingSlash: Optional[bool] = None
 ):
     '''
     '''
-    if re.search(r':[/\\\\]', str(String)): #if f':{os.path.sep}' in str(String):
+    try:
+        if str(String).strip() == '':
+            raise
+        PathString = Path(String)#.resolve()
+
+    except:
+        return None
+
+    else: #if re.search(r':[/\\\\]', str(String)) or re.search(r'\./', str(String)):
         if TrailingSlash is None:
             TrailingSlash = True if str(String).endswith(('/', '\\')) else False
         if platform.system() == 'Windows' or PathType == 'Win32':
-            String = Path(String).as_posix().replace(r'/', '\\')
+            String = PathString.as_posix().replace(r'/', '\\')
             String += '\\' if TrailingSlash else ''
         if platform.system() == 'Linux' or PathType == 'Posix':
-            String = Path(String).as_posix()
+            String = PathString.as_posix()
             String += '/' if TrailingSlash else ''
         return String
 
-    else:
-        #print("Not a complete path")
-        return String
-
+#############################################################################################################
 
 def RawString(
-    Text: str,
-    PathType: Optional[str] = None
+    Text: str
 ):
     '''
     Return as raw string representation of text
     '''
-    RawDict = {
-        '\a': r'\a',
-        '\b': r'\b',
-        '\c': r'\c',
-        '\f': r'\f',
-        '\n': r'\n',
-        '\r': r'\r',
-        '\t': r'\t',
-        '\v': r'\v',
-        '\0': r'\0',
-        '\1': r'\1',
-        '\2': r'\2',
-        '\3': r'\3',
-        '\4': r'\4',
-        '\5': r'\5',
-        '\6': r'\6',
-        '\7': r'\7',
-        '\8': r'\8',
-        '\9': r'\9',
-        #'\'': r'\'',
-        #'\"': r'\"'
+    RawMap = {
+        7: r'\a',
+        8: r'\b',
+        9: r'\t',
+        10: r'\n',
+        11: r'\v',
+        12: r'\f',
+        13: r'\r'
     }
-    StringRepresentation = repr(ItemReplacer(RawDict, NormPath(Text, PathType)))[1:-1] #StringRepresentation = ItemReplacer(RawDict, NormPath(Text)).encode('unicode_escape').decode()
+    Text = r''.join([RawMap.get(ord(Char), Char) for Char in Text])
+    '''
+    StringRepresentation = repr(Text)[1:-1] #StringRepresentation = Text.encode('unicode_escape').decode()
     return re.sub(r'\\+', lambda arg: r'\\', StringRepresentation).replace(r'\\', '\\').replace(r'\'', '\'') #return eval("'%s'" % canonical_string)
+    '''
+    return unicodedata.normalize('NFKC', Text)
 
-#############################################################################################################
 
 def RunCMD(
     Args: Union[list[Union[list, str]], str],
-    PathType: str = 'Posix',
     ShowProgress: bool = False,
     CommunicateThroughConsole: bool = False,
-    CreationFlags: int = subprocess.CREATE_NO_WINDOW,
-    #InterceptError: Optional[bool] = None,
     DecodeResult: Optional[bool] = None,
-    TimeOut: Optional[float] = None
+    LogPath: Optional[str] = None
 ):
     '''
     '''
-    TimeLimit = time.time() + TimeOut if TimeOut is not None else None
+    Encoding = 'gbk' if platform.system() == 'Windows' else 'utf-8'
 
     if not CommunicateThroughConsole:
         TotalOutput, TotalError = (bytes(), bytes())
-        for Arg in ToIterable(Args, StrictToText = False):
-            Arg = shlex.split(Arg, posix = True if PathType is 'Posix' else False) if isinstance(Arg, str) else Arg
+        for Arg in ToIterable(Args):
+            Arg = shlex.split(Arg) if isinstance(Arg, str) else Arg
             Subprocess = subprocess.Popen(
                 args = Arg,
                 stdin = subprocess.PIPE,
                 stdout = subprocess.PIPE,
                 stderr = subprocess.PIPE,
                 env = os.environ,
-                creationflags = CreationFlags
+                creationflags = subprocess.CREATE_NO_WINDOW
             )
             if ShowProgress:
                 Output, Error = (bytes(), bytes())
-                for Line in Subprocess.stdout:
-                    Output += Line
-                    sys.stdout.write(Line.decode(errors = 'ignore'))
+                for Line in io.TextIOWrapper(Subprocess.stdout, encoding = Encoding, errors = 'replace'):
+                    Output += Line.encode(Encoding, errors = 'replace')
+                    sys.stdout.write(Line) if sys.stdout is not None else None
+                    if LogPath is not None:
+                        with open(LogPath, mode = 'a', encoding = 'utf-8') as Log:
+                            Log.write(Line)
                     Subprocess.stdout.flush()
-                for Line in Subprocess.stderr:
-                    Error += Line
-                    sys.stderr.write(Line.decode(errors = 'ignore'))
+                    if Subprocess.poll() is not None:
+                        break
+                for Line in io.TextIOWrapper(Subprocess.stderr, encoding = Encoding, errors = 'replace'):
+                    Error += Line.encode(Encoding, errors = 'replace')
+                    sys.stderr.write(Line) if sys.stderr is not None else None
+                    if LogPath is not None:
+                        with open(LogPath, mode = 'a', encoding = 'utf-8') as Log:
+                            Log.write(Line)
                     Subprocess.stderr.flush()
-                    #Subprocess.terminate() if InterceptError and 'error' in Line.decode(errors = 'ignore').lower() else None
             else:
-                Output, Error = Subprocess.communicate(timeout = TimeOut)
+                Output, Error = Subprocess.communicate()
             TotalOutput, TotalError = TotalOutput + Output, TotalError + Error
 
     else:
         TotalInput = str()
         for Arg in ToIterable(Args):
             Arg = shlex.join(Arg) if isinstance(Arg, list) else Arg
-            TotalInput += f'{RawString(Arg, PathType)}\n'
+            TotalInput += f'{RawString(Arg)}\n'
+        TotalInput = TotalInput.encode(Encoding, errors = 'replace')
         if platform.system() == 'Windows':
-            TotalInput = TotalInput.encode(encoding = 'gbk')
             ShellArgs = ['cmd']
         if platform.system() == 'Linux':
-            TotalInput = TotalInput.encode(encoding = 'utf-8')
             ShellArgs = ['bash', '-c']
         Subprocess = subprocess.Popen(
             args = ShellArgs,
@@ -182,26 +180,33 @@ def RunCMD(
             stdout = subprocess.PIPE,
             stderr = subprocess.PIPE,
             env = os.environ,
-            creationflags = CreationFlags
+            creationflags = subprocess.CREATE_NO_WINDOW
         )
         if ShowProgress:
             TotalOutput, TotalError = (bytes(), bytes())
             Subprocess.stdin.write(TotalInput)
             Subprocess.stdin.close()
-            for Line in Subprocess.stdout:
-                TotalOutput += Line
-                sys.stdout.write(Line.decode(errors = 'ignore'))
+            for Line in io.TextIOWrapper(Subprocess.stdout, encoding = Encoding, errors = 'replace'):
+                TotalOutput += Line.encode(Encoding, errors = 'replace')
+                sys.stdout.write(Line) if sys.stdout is not None else None
+                if LogPath is not None:
+                    with open(LogPath, mode = 'a', encoding = 'utf-8') as Log:
+                        Log.write(Line)
                 Subprocess.stdout.flush()
-            for Line in Subprocess.stderr:
-                TotalError += Line
-                sys.stderr.write(Line.decode(errors = 'ignore'))
+                if Subprocess.poll() is not None:
+                    break
+            for Line in io.TextIOWrapper(Subprocess.stderr, encoding = Encoding, errors = 'replace'):
+                TotalError += Line.encode(Encoding, errors = 'replace')
+                sys.stderr.write(Line) if sys.stderr is not None else None
+                if LogPath is not None:
+                    with open(LogPath, mode = 'a', encoding = 'utf-8') as Log:
+                        Log.write(Line)
                 Subprocess.stderr.flush()
-                #Subprocess.terminate() if InterceptError and 'error' in Line.decode(errors = 'ignore').lower() else None
         else:
-            TotalOutput, TotalError = Subprocess.communicate(TotalInput, timeout = TimeOut)
+            TotalOutput, TotalError = Subprocess.communicate(TotalInput)
 
     TotalOutput, TotalError = TotalOutput.strip(), TotalError.strip()
-    TotalOutput, TotalError = TotalOutput.decode(errors = 'ignore') if DecodeResult else TotalOutput, TotalError.decode(errors = 'ignore') if DecodeResult else TotalError
+    TotalOutput, TotalError = TotalOutput.decode(Encoding, errors = 'ignore') if DecodeResult else TotalOutput, TotalError.decode(Encoding, errors = 'ignore') if DecodeResult else TotalError
 
     return None if TotalOutput in ('', b'') else TotalOutput, None if TotalError in ('', b'') else TotalError, Subprocess.returncode
 
@@ -270,12 +275,12 @@ def SetRichText(
     TitleAlign: str = "left",
     TitleSize: float = 12.3,
     TitleWeight: float = 630.,
-    TitleColor: str = "#ffffff",
     TitleSpacing: float = 0.9,
     TitleLineHeight: float = 24.6,
+    TitleColor: str = "#ffffff",
     Body: Optional[str] = None,
     BodyAlign: str = "left",
-    BodySize: float = 9.9,
+    BodySize: float = 9.3,
     BodyWeight: float = 420.,
     BodySpacing: float = 0.6,
     BodyLineHeight: float = 22.2,
@@ -321,16 +326,17 @@ def FindURL(
 
 #############################################################################################################
 
-def RunEvent(
-    EventList: Optional[list] = None,
-    ParamList: Optional[list[tuple]] = None
+def RunEvents(
+    Events: Union[list, dict]
 ):
     '''
     '''
-    EventList = ToIterable(EventList) if EventList is not None else []
-    ParamList = ToIterable(ParamList) if ParamList is not None else [()]
-    for Index, Event in enumerate(EventList):
-        Event(*ToIterable(ParamList[Index]))
+    if isinstance(Events, list):
+        for Event in Events:
+            Event() if Event is not None else None
+    if isinstance(Events, dict):
+        for Event, Param in Events.items():
+            Event(*ToIterable(Param if Param is not None else ())) if Event is not None else None
 
 #############################################################################################################
 
@@ -408,18 +414,16 @@ def ProcessTerminator(
 ):
     '''
     '''
-    ProgramPath = NormPath(Program)
+    ProgramPath = NormPath(Program) if NormPath(Program) is not None else Program
     for Process in psutil.process_iter():
-        if Process.pid == os.getpid() and SelfIgnored:
-            continue
         try:
-            for CMDLine in Process.cmdline():
-                if ProgramPath == CMDLine or (ProgramPath in CMDLine and SearchKeyword):
-                    ProgramName = Path(ProgramPath).name if ProgramPath.endswith('.exe') else 'python.exe'
-                    if Process.name() == ProgramName:
-                        Process.send_signal(signal.SIGTERM) #Process.kill()
-                    else:
-                        print(f'Failed to terminate {ProgramName}')
+            ProcessList = [Process] + Process.children()
+            for Process in ProcessList:
+                if Process.pid == os.getpid() and SelfIgnored:
+                    continue
+                ProcessPath = Process.exe()
+                if ProgramPath == ProcessPath or (ProgramPath.lower() in ProcessPath.lower() and SearchKeyword):
+                    Process.send_signal(signal.SIGTERM) #Process.kill()
         except:
             pass
 
@@ -430,12 +434,13 @@ def OccupationTerminator(
 ):
     '''
     '''
-    FilePath = NormPath(File)
+    FilePath = NormPath(File) if NormPath(File) is not None else File
     for Process in psutil.process_iter():
         try:
             PopenFiles = Process.open_files()
             for PopenFile in PopenFiles:
-                if FilePath == PopenFile or (FilePath in PopenFile and SearchKeyword):
+                PopenFilePath = PopenFile.path
+                if FilePath == PopenFilePath or (FilePath.lower() in PopenFilePath.lower() and SearchKeyword):
                     Process.send_signal(signal.SIGTERM) #Process.kill()
         except:
             pass
@@ -610,19 +615,25 @@ def DownloadFile(
     DownloadDir: str,
     FileName: str,
     FileFormat: str,
-    SHA_Expected: Optional[str]
+    SHA_Expected: Optional[str],
+    CreateNewConsole: bool = False
 ) -> Tuple[Union[bytes, str], str]:
     '''
     '''
     os.makedirs(DownloadDir, exist_ok = True)
 
-    DownloadPath = os.path.join(DownloadDir, FileName) + '.' + FileFormat
+    DownloadName = FileName + (FileFormat if '.' in FileFormat else f'.{FileFormat}')
+    DownloadPath = NormPath(Path(DownloadDir).joinpath(DownloadName).absolute())
 
     def Download():
         try:
             RunCMD(
                 Args = [
-                    f'aria2c {DownloadURL} --dir={str(Path(DownloadPath).parent)} --out={str(Path(DownloadPath).name)} -x6 -s6'
+                    'aria2c',
+                    f'''
+                    {('cmd.exe /c start ' if platform.system() == 'Windows' else 'x-terminal-emulator -e ') if CreateNewConsole else ''}
+                    aria2c "{DownloadURL}" --dir="{Path(DownloadPath).parent.as_posix()}" --out="{Path(DownloadPath).name}" -x6 -s6 --file-allocation=none --force-save=false
+                    '''
                 ]
             )
         except:
@@ -635,7 +646,7 @@ def DownloadFile(
                         output.write(buffer)
                         loop.update(len(buffer))
         finally:
-            return open(DownloadPath, "rb").read()
+            return open(DownloadPath, "rb").read() if Path(DownloadPath).exists() else None
 
     if os.path.exists(DownloadPath):
         if os.path.isfile(DownloadPath) == False:
@@ -649,9 +660,13 @@ def DownloadFile(
                 SHA_Current = hashlib.sha256(FileBytes).hexdigest()
             FileBytes = Download() if SHA_Current != SHA_Expected else FileBytes #Download() if SHA_Current != SHA_Expected else None
         else:
+            os.remove(DownloadPath)
             FileBytes = Download()
     else:
         FileBytes = Download()
+
+    if FileBytes is None:
+        raise Exception('Download Failed!')
 
     return FileBytes, DownloadPath
 

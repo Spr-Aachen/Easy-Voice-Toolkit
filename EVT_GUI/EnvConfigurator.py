@@ -345,7 +345,7 @@ class Python_Installer(QObject):
 
     def Install_Python(self, Version_Download: str):
         if platform.system() == 'Windows':
-            URL = "https://www.python.org/ftp/python/{0}/python-{0}-amd64.exe".format(Version_Download)
+            URL = "https://www.python.org/ftp/python/{0}/python-{0}.exe".format(Version_Download)
             Dir_Download = './'
             File_Name = 'python'
             File_Format = 'exe'
@@ -405,7 +405,7 @@ class PyReqs_Installer(QObject):
         '''
         try:
             PackageInfo = str(RunCMD([['pip', 'show', Package]], DecodeResult = True)[0])
-            if 'not found' not in PackageInfo:
+            if PackageInfo != 'None':
                 return PackageInfo
             else:
                 return False
@@ -413,7 +413,7 @@ class PyReqs_Installer(QObject):
             return False
 
     def Install_PyReq(self, Package: str):
-        MirrorList = ['https://pypi.org/simple/', 'https://pypi.tuna.tsinghua.edu.cn/simple']
+        MirrorList = ['https://pypi.org/simple', 'https://pypi.tuna.tsinghua.edu.cn/simple']
         for Mirror in MirrorList:
             '''
             Ask = "This script requires {0}. Do you want to install {0}? [y/n]".format(Package)
@@ -491,7 +491,7 @@ class Pytorch_Installer(QObject):
         '''
         try:
             PackageInfo = str(RunCMD([['pip', 'show', Package]], DecodeResult = True)[0])
-            if 'not found' not in PackageInfo:
+            if PackageInfo != 'None':
                 return PackageInfo
             else:
                 return False

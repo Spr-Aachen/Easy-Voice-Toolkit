@@ -16,7 +16,7 @@ def Transcript_Writer(
     '''
     CSV to TXT
     '''
-    CSV_Path_DataSet = os.path.join(os.path.dirname(CSV_Path), "Dataset.csv")
+    CSV_Path_DataSet = Path(CSV_Path).parent.joinpath("Dataset.csv").__str__()
     pd.read_csv(CSV_Path)[['wav_filename', 'transcript']].to_csv(
         path_or_buf = CSV_Path_DataSet,
         header = None,
@@ -34,6 +34,15 @@ def Transcript_Writer(
         Language = re.split(r'[\[\]]', Line_Text)[1]
         Languages.append(Language) if Language not in Languages else None
 
+    for Index, Line in enumerate(Lines):
+        Line_Path = Line.split('|', maxsplit = 1)[0]
+        Line_Path = Path(Line_Path).as_posix()
+        Audio = Path(Line_Path.rsplit('_', maxsplit = 1)[0] + Path(Line_Path).suffix).as_posix()
+        Speaker = AudioSpeakers[Audio]
+        Line_Text = Line.split('|', maxsplit = 1)[1]
+        Line = f"{Line_Path}|{Speaker}|{Line_Text}"
+        Lines[Index] = Line
+
     if AuxiliaryData_Path is not None:
         print("Writing AuxiliaryData paths...")
         with open(file = AuxiliaryData_Path, mode = 'r', encoding = 'utf-8') as AuxiliaryData:
@@ -41,16 +50,19 @@ def Transcript_Writer(
         AuxiliaryDataLines_New = []
         for Line_Old in AuxiliaryDataLines_Old:
             Line_Old_Path = Line_Old.split('|', maxsplit = 1)[0]
-            Line_New_Path = Path(AuxiliaryData_Path).parent.joinpath(Line_Old_Path).__str__()
+            Line_New_Path = Path(AuxiliaryData_Path).parent.joinpath(Line_Old_Path).as_posix()
             '''
             if not Path(Line_New_Path).exists():
                 raise Exception('Please check if the relative paths inside AuxiliaryData.txt are correct!')
             '''
-            Line_Old_Text = Line_Old.split("|", maxsplit = 1)[1]
+            Speaker = Line_Old.split("|", maxsplit = 2)[1]
+            Line_Old_Text = Line_Old.split("|", maxsplit = 2)[2]
             Language = re.split(r'[\[\]]', Line_Old_Text)[1]
+            '''
             if Language not in Languages:
                 continue
-            Line_New = Line_New_Path + "|" + Line_Old_Text
+            '''
+            Line_New = f"{Line_New_Path}|{Speaker}|{Line_Old_Text}"
             AuxiliaryDataLines_New.append(Line_New)
         ReplicateTimes = len(AuxiliaryDataLines_New) // len(Lines) if len(AuxiliaryDataLines_New) > len(Lines) else 1
         Lines = Lines * ReplicateTimes + AuxiliaryDataLines_New
@@ -61,16 +73,9 @@ def Transcript_Writer(
     Lines_Val = Lines[TrainSize:]
 
     if len(Lines_Train) > len(Lines_Val) > 0:
-        print("Writing VITS DataSet paths...")
+        print("Writing VITS dataset paths...")
         def WriteDataLines(Text_Path, Lines):
             os.makedirs(os.path.dirname(Text_Path), exist_ok = True)
-            for Index, Line in enumerate(Lines):
-                Line_Old = Line
-                Line_Old_Path = Path(Line_Old.split('|', maxsplit = 1)[0]).as_posix()
-                Speaker = AudioSpeakers[Line_Old_Path]
-                Line_Old_Text = Line_Old.split("|", maxsplit = 1)[1]
-                Line_New = Line_Old_Path + f"|{Speaker}|" + Line_Old_Text
-                Lines[Index] = Line.replace(Line_Old, Line_New)
             with open(file = Text_Path, mode = 'w', encoding = 'utf-8') as File_New:
                 File_New.writelines(Lines)
         WriteDataLines(Text_Path_Training, Lines_Train)

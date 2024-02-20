@@ -14,9 +14,7 @@ def Function_ShowMessageBox(
     WindowTitle: str = ...,
     Text: str = ...,
     Buttons: object = QMessageBox.Ok,
-    EventButtons: list = [],
-    EventLists: list[list] = [[], ],
-    ParamLists: list[list[tuple]] = [[()], ]
+    ButtonEvents: dict = {}
 ):
     '''
     Function to pop up a msgbox
@@ -30,31 +28,7 @@ def Function_ShowMessageBox(
 
     Result = MsgBox.exec()
 
-    if Result in EventButtons:
-        EventList = EventLists[EventButtons.index(Result)]
-        ParamList = ParamLists[EventButtons.index(Result)]
-        RunEvent(EventList, ParamList)
-
-
-def Function_SetFileDialog(
-    Button: QPushButton,
-    LineEdit: QLineEdit,
-    Mode: str,
-    FileType: Optional[str] = None,
-    ButtonTooltip: str = "Browse"
-):
-    '''
-    Function to select/save file path (through button)
-    '''
-    @Slot()
-    def SetFileDialog():
-        DisplayText = Function_GetFileDialog(Mode, FileType)
-        LineEdit.setText(DisplayText)
-        LineEdit.setStatusTip(DisplayText)
-
-    Button.clicked.connect(SetFileDialog)
-    Button.setToolTipDuration(-1)
-    Button.setToolTip(ButtonTooltip)
+    ButtonEvents[Result]() if Result in list(ButtonEvents.keys()) else None
 
 ##############################################################################################################################
 
@@ -183,15 +157,6 @@ class Table_EditAudioSpeaker(TableBase):
 
     def AddRow(self, Param: Optional[tuple] = None, FileType: Optional[str] = None):
         RowHeight = 30
-        LineEditStyle = '''
-        QLineEdit {
-            background-color: transparent;
-            padding: 6px;
-            border-width: 1px;
-            border-style: solid;
-            border-color: rgba(201, 210, 222, 123);
-        }
-        '''
         ButtonStyle = '''
         QPushButton {
             background-color: transparent;
@@ -205,8 +170,10 @@ class Table_EditAudioSpeaker(TableBase):
             ColumnLayout.setContentsMargins(0, 0, 0, 0)
             ColumnLayout.setSpacing(0)
 
-        LineEdit0 = QLineEdit()
-        LineEdit0.setStyleSheet(LineEditStyle)
+        LineEdit0 = LineEditBase()
+        LineEdit0.ClearDefaultStyleSheet()
+        LineEdit0.setStyleSheet(LineEdit0.styleSheet() + 'LineEditBase {border-radius: 0px;}')
+        LineEdit0.RemoveFileDialogButton()
         Function_SetText(LineEdit0, Param[0] if Param else '', SetPlaceholderText = True)
         LineEdit0.textChanged.connect(
             lambda: self.ValueChanged.emit(self.GetValue())
@@ -215,20 +182,17 @@ class Table_EditAudioSpeaker(TableBase):
         SetColumnLayout(Column0Layout)
         Column0Layout.addWidget(LineEdit0)
 
-        LineEdit1 = QLineEdit()
-        LineEdit1.setStyleSheet(LineEditStyle)
+        LineEdit1 = LineEditBase()
+        LineEdit1.ClearDefaultStyleSheet()
+        LineEdit1.setStyleSheet(LineEdit1.styleSheet() + 'LineEditBase {border-radius: 0px;}')
+        LineEdit1.SetFileDialog("SelectFile", FileType)
         Function_SetText(LineEdit1, Param[1] if Param else '', SetPlaceholderText = True)
         LineEdit1.textChanged.connect(
             lambda: self.ValueChanged.emit(self.GetValue())
         )
-        Button = QPushButton()
-        Button.setStyleSheet(ButtonStyle)
-        Button.setText("...")
-        Function_SetFileDialog(Button, LineEdit1, "SelectFile", FileType)
         Column1Layout = QHBoxLayout()
         SetColumnLayout(Column1Layout)
         Column1Layout.addWidget(LineEdit1)
-        Column1Layout.addWidget(Button)
 
         AddButton = QPushButton()
         AddButton.setStyleSheet(ButtonStyle)
@@ -279,7 +243,7 @@ class Table_ASRResult(TableBase):
         super().__init__(parent)
 
         self.setRowCount(0)
-        self.setColumnCount(4)
+        self.setColumnCount(5)
         self.SetIndexHeaderVisible(True)
         self.verticalHeader().setSectionResizeMode(QHeaderView.Fixed)
 
@@ -347,6 +311,15 @@ class Table_ASRResult(TableBase):
             background-color: rgba(120, 120, 120, 120);
         }
         '''
+        ButtonStyle = '''
+        QPushButton {
+            background-color: transparent;
+            padding: 6px;
+            border-width: 1px;
+            border-style: solid;
+            border-color: rgba(201, 210, 222, 123);
+        }
+        '''
         def SetColumnLayout(ColumnLayout):
             ColumnLayout.setContentsMargins(0, 0, 0, 0)
             ColumnLayout.setSpacing(0)
@@ -373,18 +346,38 @@ class Table_ASRResult(TableBase):
         SetColumnLayout(Column2Layout)
         Column2Layout.addWidget(Label2)
 
-        PlayerWidget = MediaPlayerWidget()
+        PlayerWidget = MediaPlayerBase()
         PlayerWidget.SetMediaPlayer(Param[0])
-        PlayerWidget.layout().setContentsMargins(3, 3, 3, 3)
+        PlayerWidget.layout().setContentsMargins(6, 6, 6, 6)
         PlayerWidget.Slider.hide()
         Column3Layout = QHBoxLayout()
         SetColumnLayout(Column3Layout)
         Column3Layout.addWidget(PlayerWidget)
 
+        DelButton = QPushButton()
+        DelButton.setStyleSheet(ButtonStyle)
+        DelButton.setText("删除")
+        DelButton.clicked.connect(
+            lambda: Function_ShowMessageBox(
+                QMessageBox.Question, "Ask",
+                "确认删除该行？",
+                QMessageBox.Yes|QMessageBox.No,
+                {
+                    QMessageBox.Yes: lambda: (
+                        self.SelectOuterRow(DelButton),
+                        self.DelRow()
+                    )
+                }
+            )
+        )
+        Column4Layout = QHBoxLayout()
+        SetColumnLayout(Column4Layout)
+        Column4Layout.addWidget(DelButton)
+
         super().AddRow(
-            [Column0Layout, Column1Layout, Column2Layout, Column3Layout],
-            [QHeaderView.Stretch, QHeaderView.Stretch, QHeaderView.Stretch, QHeaderView.Fixed],
-            [None, None, None, RowHeight],
+            [Column0Layout, Column1Layout, Column2Layout, Column3Layout, Column4Layout],
+            [QHeaderView.Stretch, QHeaderView.Stretch, QHeaderView.Stretch, QHeaderView.Fixed, QHeaderView.Fixed],
+            [None, None, None, RowHeight, 1.5 * RowHeight],
             RowHeight
         )
 
@@ -437,15 +430,6 @@ class Table_STTResult(TableBase):
             border-color: rgba(201, 210, 222, 123);
         }
         '''
-        LineEditStyle = '''
-        QLineEdit {
-            background-color: transparent;
-            padding: 6px;
-            border-width: 1px;
-            border-style: solid;
-            border-color: rgba(201, 210, 222, 123);
-        }
-        '''
         def SetColumnLayout(ColumnLayout):
             ColumnLayout.setContentsMargins(0, 0, 0, 0)
             ColumnLayout.setSpacing(0)
@@ -457,16 +441,19 @@ class Table_STTResult(TableBase):
         SetColumnLayout(Column0Layout)
         Column0Layout.addWidget(Label0)
 
-        LineEdit = QLineEdit()
-        LineEdit.setStyleSheet(LineEditStyle)
+        LineEdit = LineEditBase()
+        LineEdit.ClearDefaultStyleSheet()
+        LineEdit.setStyleSheet(LineEdit.styleSheet() + 'LineEditBase {border-radius: 0px;}')
+        LineEdit.RemoveFileDialogButton()
         Function_SetText(LineEdit, Param[1], SetPlaceholderText = True)
         Column1Layout = QHBoxLayout()
         SetColumnLayout(Column1Layout)
         Column1Layout.addWidget(LineEdit)
 
-        PlayerWidget = MediaPlayerWidget()
+        PlayerWidget = MediaPlayerBase()
+        PlayerWidget.setStyleSheet(PlayerWidget.styleSheet() + 'border-radius: 0px;')
         PlayerWidget.SetMediaPlayer(Param[0])
-        PlayerWidget.layout().setContentsMargins(3, 3, 3, 3)
+        PlayerWidget.layout().setContentsMargins(6, 6, 6, 6)
         PlayerWidget.Slider.hide()
         Column2Layout = QHBoxLayout()
         SetColumnLayout(Column2Layout)

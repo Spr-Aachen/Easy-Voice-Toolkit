@@ -1,7 +1,7 @@
 from PySide6.QtCore import (QCoreApplication, QMetaObject, QSize)
 from PySide6.QtWidgets import *
 
-from .Components import MediaPlayerWidget
+from .Components import MediaPlayerBase
 from .QSimpleWidgets import Sources
 
 
@@ -123,7 +123,7 @@ class Ui_ChildWindow_TTS(object):
 
         self.gridLayout.addWidget(self.Label_Text, 1, 0, 1, 2)
 
-        self.Widget = MediaPlayerWidget(self.CentralWidget)
+        self.Widget = MediaPlayerBase(self.CentralWidget)
         self.Widget.setObjectName(u"Widget")
 
         self.gridLayout.addWidget(self.Widget, 2, 0, 1, 1)

@@ -103,7 +103,6 @@ class Audio_Processing:
             WriteParamsList.append((Audio_Path_Output, AudioData.T if len(AudioData.shape) > 1 else AudioData, int(SampleRate)))
 
         if self.Slice_Audio:
-            WriteParamsList.clear()
             slicer = Slicer(
                 Sampling_Rate = SampleRate,
                 RMS_Threshold = self.RMS_Threshold,
@@ -114,6 +113,7 @@ class Audio_Processing:
             )
             chunks, IsSlicingNeeded = slicer.slice(AudioData)
             if IsSlicingNeeded == True:
+                WriteParamsList.clear()
                 for i, chunk in enumerate(chunks):
                     Audio_Name_Output = Audio_Name_Input.rsplit('.', 1)[0] + f'_Sliced_{i}' + '.' + self.Media_Format_Output
                     Audio_Path_Output = os.path.normpath(os.path.join(self.Media_Dir_Output, Audio_Name_Output))

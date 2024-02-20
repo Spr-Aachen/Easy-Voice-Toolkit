@@ -51,7 +51,7 @@ from .vits.Utils import (
     plot_alignment_to_numpy,
     save_checkpoint,
     get_logger,
-    #add_elements,
+    add_elements,
     #check_git_hash,
     load_checkpoint,
     latest_checkpoint_path,
@@ -79,8 +79,8 @@ class Preprocessing:
         Set_Epochs: int = 10000,
         Set_Batch_Size: int = 16,
         Set_FP16_Run: bool = True,
-        #Keep_Original_Speakers: bool = False,
-        #Config_Path_Load: Optional[str] = None
+        Keep_Original_Speakers: bool = False,
+        Config_Path_Load: Optional[str] = None
     ):
         self.FileList_Path_Training = FileList_Path_Training
         self.FileList_Path_Validation = FileList_Path_Validation
@@ -89,11 +89,13 @@ class Preprocessing:
         self.Set_Epochs = Set_Epochs
         self.Set_Batch_Size = Set_Batch_Size
         self.Set_FP16_Run = Set_FP16_Run
-        #self.Keep_Original_Speakers = Keep_Original_Speakers
-        #self.Config_Path_Load = Config_Path_Load if Keep_Original_Speakers else None
+        self.Keep_Original_Speakers = Keep_Original_Speakers
+        self.Config_Path_Load = Config_Path_Load if Keep_Original_Speakers else None
 
         os.makedirs(self.Config_Dir_Save, exist_ok = True)
         self.Config_Path_Edited = Path(Config_Dir_Save).joinpath(f"{datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}.json").__str__()
+        self.FileList_Path_Training_Updated = Path(self.Config_Path_Edited).parent.joinpath(Path(self.FileList_Path_Training).name).__str__()
+        self.FileList_Path_Validation_Updated = Path(self.Config_Path_Edited).parent.joinpath(Path(self.FileList_Path_Validation).name).__str__()
         self.Out_Extension = "cleaned"
 
     def Configurator(self):
@@ -126,7 +128,7 @@ class Preprocessing:
                     Speaker = Line.split('|', maxsplit = 2)[1]
                     Speakers.append(Speaker) if Speaker not in Speakers else None
             return Speakers
-        '''
+
         def Get_OldSpeakers(Config_Path_Load):
             if Config_Path_Load is not None and Path(Config_Path_Load).exists():
                 with open(file = Config_Path_Load, mode = 'rb') as ConfigFile_Extra:
@@ -134,10 +136,10 @@ class Preprocessing:
             else:
                 OldSpeakers = []
             return OldSpeakers
-        '''
+
         Language = Get_Languages(self.FileList_Path_Training, self.FileList_Path_Validation)
         NewSpeakers = Get_NewSpeakers(self.FileList_Path_Training, self.FileList_Path_Validation)
-        #OldSpeakers = Get_OldSpeakers(self.Config_Path_Load) if self.Keep_Original_Speakers else []
+        OldSpeakers = Get_OldSpeakers(self.Config_Path_Load) if self.Keep_Original_Speakers else []
 
         with open(file = Path(__file__).parent.joinpath('./configs', f'{Language}_base.json').__str__(), mode = 'rb') as ConfigFile_Default:
             Params = json.load(ConfigFile_Default)
@@ -147,11 +149,11 @@ class Preprocessing:
             Params_Old["train"]["epochs"]          = self.Set_Epochs
             Params_Old["train"]["batch_size"]      = self.Set_Batch_Size
             Params_Old["train"]["fp16_run"]        = self.Set_FP16_Run
-            Params_Old["data"]["training_files"]   = Path(self.FileList_Path_Training + "." + self.Out_Extension).__str__()
-            Params_Old["data"]["validation_files"] = Path(self.FileList_Path_Validation + "." + self.Out_Extension).__str__()
+            Params_Old["data"]["training_files"]   = f'{self.FileList_Path_Training_Updated}.{self.Out_Extension}'
+            Params_Old["data"]["validation_files"] = f'{self.FileList_Path_Validation_Updated}.{self.Out_Extension}'
             Params_Old["data"]["text_cleaners"]    = [(Language + "_cleaners").lower()]
-            Params_Old["data"]["n_speakers"]       = NewSpeakers.__len__() #Params_Old["data"]["n_speakers"]       = add_elements(OldSpeakers, NewSpeakers).__len__()
-            Params_Old["speakers"]                 = NewSpeakers           #Params_Old["speakers"]                 = add_elements(OldSpeakers, NewSpeakers)
+            Params_Old["data"]["n_speakers"]       = add_elements(OldSpeakers, NewSpeakers).__len__()
+            Params_Old["speakers"]                 = add_elements(OldSpeakers, NewSpeakers)
             Params_New = Params_Old
         except:
             raise Exception("Please check if params exist")
@@ -163,20 +165,19 @@ class Preprocessing:
         '''
         Convert natural language text to symbols
         '''
-        def Update_SID(Config_Path, Text_Path):
+        def Update_SID(Config_Path, Text_Path, Save_Path):
             with open(file = Config_Path, mode = 'rb') as ConfigFile:
                 NewSpeakers = json.load(ConfigFile)["speakers"]
             with open(file = Text_Path, mode = 'r', encoding = 'utf-8') as TextFile:
                 Lines = TextFile.readlines()
             for Index, Line in enumerate(Lines):
-                Line_Old = Line
-                Line_Old_Path = Line_Old.split('|', maxsplit = 1)[0]
-                Speaker = Line_Old.split("|", maxsplit = 2)[1]
+                Line_Path = Line.split('|', maxsplit = 1)[0]
+                Speaker = Line.split('|', maxsplit = 2)[1]
                 SpeakerID = NewSpeakers.index(Speaker)
-                Line_Old_Text = Line_Old.split("|", maxsplit = 2)[2]
-                Line_New = Line_Old_Path + f"|{SpeakerID}|" + Line_Old_Text
-                Lines[Index] = Line_New
-            with open(file = Text_Path, mode = 'w', encoding = 'utf-8') as TextFile:
+                Line_Text = Line.split('|', maxsplit = 2)[2]
+                Line = f"{Line_Path}|{SpeakerID}|{Line_Text}"
+                Lines[Index] = Line
+            with open(file = Save_Path, mode = 'w', encoding = 'utf-8') as TextFile:
                 TextFile.writelines(Lines)
 
         def Get_Cleaners(Config_Path):
@@ -184,13 +185,14 @@ class Preprocessing:
                 NewCleaners = json.load(ConfigFile)["data"]["text_cleaners"]
             return NewCleaners
 
-        for FileList in [self.FileList_Path_Validation, self.FileList_Path_Training]:
+        for Index, FileList in enumerate([self.FileList_Path_Training, self.FileList_Path_Validation]):
             print("START:", FileList)
-            Update_SID(self.Config_Path_Edited, FileList) if self.Keep_Original_Speakers else None
-            Path_SID_Text = load_audiopaths_sid_text(FileList)
+            FileList_Updated = [self.FileList_Path_Training_Updated, self.FileList_Path_Validation_Updated][Index]
+            Update_SID(self.Config_Path_Edited, FileList, FileList_Updated)
+            Path_SID_Text = load_audiopaths_sid_text(FileList_Updated)
             for i in range(len(Path_SID_Text)):
                 Path_SID_Text[i][2] = _clean_text(Path_SID_Text[i][2], Get_Cleaners(self.Config_Path_Edited))
-            Filelist_Cleaned = FileList + "." + self.Out_Extension
+            Filelist_Cleaned = FileList_Updated + "." + self.Out_Extension
             with open(Filelist_Cleaned, 'w', encoding = 'utf-8') as f:
                 f.writelines(["|".join(x) + "\n" for x in Path_SID_Text])
 
@@ -210,9 +212,9 @@ class Preprocessing:
             return ResampleList
 
         def Resample(Audio_Path, SampleRate_New):
-            AudioData_Old, SampleRate_Old = torchaudio.load(uri = Audio_Path)
+            AudioData_Old, SampleRate_Old = torchaudio.load(Audio_Path)
             AudioData_New = torchaudio.transforms.Resample(orig_freq = SampleRate_Old, new_freq = SampleRate_New)(AudioData_Old)
-            torchaudio.save(uri = Audio_Path, src = AudioData_New, sample_rate = SampleRate_New)
+            torchaudio.save(Audio_Path, src = AudioData_New, sample_rate = SampleRate_New)
 
         for FileList in (self.FileList_Path_Validation, self.FileList_Path_Training):
             print("Resampling audio according to", FileList)
@@ -505,7 +507,7 @@ class Training:
         except Exception as e:
             epoch_str = 1
             global_step = 0
-            print(f"Error occurred: {e} Start from step 0")
+            print(f"Got Exception: {e}. Start from step 0")
 
         # Build learning rate schedulers for optimizers
         scheduler_g = torch.optim.lr_scheduler.ExponentialLR(optim_g, gamma = hps.train.lr_decay, last_epoch = epoch_str - 2)
@@ -537,14 +539,14 @@ class Voice_Training(Preprocessing, Training):
         Set_Batch_Size: int = 16,
         Set_FP16_Run: bool = True,
         Keep_Original_Speakers: bool = False,
-        #Config_Path_Load: Optional[str] = None,
+        Config_Path_Load: Optional[str] = None,
         Num_Workers: int = 4,
         Use_PretrainedModels: bool = True,
         Model_Path_Pretrained_G: Optional[str] = None,
         Model_Path_Pretrained_D: Optional[str] = None,
         Dir_Output: str = './'
     ):
-        Preprocessing.__init__(self, FileList_Path_Training, FileList_Path_Validation, Dir_Output, Set_Eval_Interval, Set_Epochs, Set_Batch_Size, Set_FP16_Run)
+        Preprocessing.__init__(self, FileList_Path_Training, FileList_Path_Validation, Dir_Output, Set_Eval_Interval, Set_Epochs, Set_Batch_Size, Set_FP16_Run, Keep_Original_Speakers, Config_Path_Load)
         Training.__init__(self, Num_Workers, Model_Path_Pretrained_G if Use_PretrainedModels else None, Model_Path_Pretrained_D if Use_PretrainedModels else None, Keep_Original_Speakers)
         self.Model_Dir_Save = Dir_Output
 

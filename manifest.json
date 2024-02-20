@@ -7,8 +7,8 @@
                 "VPR"
             ],
             "name": "Ecapa-Tdnn_spectrogram",
-            "size": "NAN",
-            "date": "",
+            "size": "35.0MB",
+            "date": "2022-08-11 08:03:36",
             "SHA": "a7c689599e616f03a339bfd11a27ae7cf7a975ac1713c5b85564a70a2e0c469f",
             "downloadurl": "https://github.com/Spr-Aachen/EVT-Resources/raw/main/Voiceprint%20Model/Ecapa-Tdnn_spectrogram.pth",
             "link": ""
@@ -19,8 +19,8 @@
                 "VPR"
             ],
             "name": "Ecapa-Tdnn_melspectrogram",
-            "size": "NAN",
-            "date": "",
+            "size": "33.8MB",
+            "date": "2022-08-09 22:21:25",
             "SHA": "812c2758805dc7e9d7c2a5b0cd87b342a081f4d9a20513e246a3281ccd8f9bb7",
             "downloadurl": "https://github.com/Spr-Aachen/EVT-Resources/raw/main/Voiceprint%20Model/Ecapa-Tdnn_melspectrogram.pth",
             "link": ""
@@ -31,8 +31,8 @@
                 "Whisper"
             ],
             "name": "base",
-            "size": "NAN",
-            "date": "",
+            "size": "138.5MB",
+            "date": "2024-02-03 15:54:08.871705",
             "SHA": "ed3a0b6b1c0edf879ad9b11b1af5a0e6ab5db9205f891f668f8b0e6c6326e34e",
             "downloadurl": "https://openaipublic.azureedge.net/main/whisper/models/ed3a0b6b1c0edf879ad9b11b1af5a0e6ab5db9205f891f668f8b0e6c6326e34e/base.pt",
             "link": ""
@@ -43,8 +43,8 @@
                 "Whisper"
             ],
             "name": "small",
-            "size": "NAN",
-            "date": "",
+            "size": "461.2MB",
+            "date": "2023-06-09 14:38:54.527018",
             "SHA": "9ecf779972d90ba49c06d968637d720dd632c55bbf19d441fb42bf17a411e794",
             "downloadurl": "https://openaipublic.azureedge.net/main/whisper/models/9ecf779972d90ba49c06d968637d720dd632c55bbf19d441fb42bf17a411e794/small.pt",
             "link": ""
@@ -55,22 +55,10 @@
                 "Whisper"
             ],
             "name": "medium",
-            "size": "NAN",
-            "date": "",
+            "size": "1457.2MB",
+            "date": "2024-02-03 16:19:31.529325",
             "SHA": "345ae4da62f9b3d59415adc60127b97c714f32e89e936602e85993674d08dcb1",
             "downloadurl": "https://openaipublic.azureedge.net/main/whisper/models/345ae4da62f9b3d59415adc60127b97c714f32e89e936602e85993674d08dcb1/medium.pt",
-            "link": ""
-        },
-        {
-            "tags": [
-                "STT",
-                "Whisper"
-            ],
-            "name": "large",
-            "size": "NAN",
-            "date": "",
-            "SHA": "81f7c96c852ee8fc832187b0132e569d6c3065a3252ed18e56effd0b6a73e524",
-            "downloadurl": "https://openaipublic.azureedge.net/main/whisper/models/81f7c96c852ee8fc832187b0132e569d6c3065a3252ed18e56effd0b6a73e524/large-v2.pt",
             "link": ""
         },
         {
@@ -78,10 +66,22 @@
                 "TTS",
                 "VITS"
             ],
+            "name": "standard_Config",
+            "size": "0.0MB",
+            "date": "2024-02-14 22:52:48.806780",
+            "SHA": "88a11f5b31e6781e1097172bb180a87cdfe6afbdf263ba3afc70da939960fdd9",
+            "downloadurl": "",
+            "link": "https://github.com/Plachtaa/VITS-fast-fine-tuning/issues/532"
+        },
+        {
+            "tags": [
+                "TTS",
+                "VITS"
+            ],
             "name": "standard_G",
-            "size": "NAN",
-            "date": "",
-            "SHA": "NAN",
+            "size": "151.6MB",
+            "date": "2023-12-02 09:53:24",
+            "SHA": "49a106ff1208ec42fcc1098651348bccbbefeb34b9b1d5a0f976f46623f6d9ca",
             "downloadurl": "",
             "link": "https://github.com/Plachtaa/VITS-fast-fine-tuning/issues/532"
         },
@@ -91,9 +91,9 @@
                 "VITS"
             ],
             "name": "standard_D",
-            "size": "NAN",
-            "date": "",
-            "SHA": "NAN",
+            "size": "178.4MB",
+            "date": "2023-12-02 09:53:26",
+            "SHA": "48841b5d8127883100cbd5221b47288f85af5dc56cbcd7e090c977ec6119bf67",
             "downloadurl": "",
             "link": "https://github.com/Plachtaa/VITS-fast-fine-tuning/issues/532"
         }

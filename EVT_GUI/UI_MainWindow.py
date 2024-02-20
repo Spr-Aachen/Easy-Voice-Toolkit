@@ -1,7 +1,7 @@
 from PySide6.QtCore import (QCoreApplication, QMetaObject, QRect, QSize, Qt)
 from PySide6.QtWidgets import *
 
-from .Components import Table_ViewModels, Table_EditAudioSpeaker
+from .Components import LineEditBase, Table_ViewModels, Table_EditAudioSpeaker
 from .QSimpleWidgets import Sources
 
 
@@ -2831,7 +2831,6 @@ class Ui_MainWindow(object):
         self.Widget_Left_Process = QWidget(self.Subpage_Process)
         self.Widget_Left_Process.setObjectName(u"Widget_Left_Process")
         self.Widget_Left_Process.setMinimumSize(QSize(150, 0))
-        self.Widget_Left_Process.setMaximumSize(QSize(210, 16777215))
         self.Widget_Left_Process.setStyleSheet(u"QWidget {\n"
 "	background-color: rgba(36, 36, 36, 123);\n"
 "	border-width: 0px;\n"
@@ -2847,190 +2846,82 @@ class Ui_MainWindow(object):
         __qtreewidgetitem = QTreeWidgetItem(self.TreeWidget_Catalogue_Process)
         QTreeWidgetItem(__qtreewidgetitem)
         self.TreeWidget_Catalogue_Process.setObjectName(u"TreeWidget_Catalogue_Process")
-        self.TreeWidget_Catalogue_Process.setStyleSheet(u"QTreeWidget {\n"
+        self.TreeWidget_Catalogue_Process.setStyleSheet(u"QTreeView {\n"
 "	/*font-size: 12px;\n"
 "	text-align: center;*/\n"
-"	margin: 0px;\n"
 "	background-color: transparent;\n"
 "	border-width: 0px;\n"
 "	border-radius: 0px;\n"
 "	border-style: solid;\n"
 "}\n"
 "\n"
-"QTreeWidget::item {\n"
+"QTreeView::item {\n"
 "	background-color: transparent;\n"
-"	padding: 1.2px;\n"
+"	padding: 2.4px;\n"
+"}\n"
+"QTreeView::item:hover {\n"
+"    background-color: rgba(66, 66, 66, 198);\n"
+"}\n"
+"QTreeView::item:selected {\n"
+"    background-color: ;\n"
 "}\n"
 "\n"
-"QTreeWidget::branch {\n"
+"QTreeView::branch {\n"
 "    background-color: transparent;\n"
 "	border-width: 0px;\n"
 "	border-radius: 0px;\n"
 "	border-style: solid;\n"
 "}\n"
-"QTreeWidget::branch:open:has-children:has-siblings,\n"
-"QTreeWidget::branch:open:has-children:!has-siblings {\n"
+"QTreeView::branch:open:has-children {\n"
 "    image: ;\n"
 "}\n"
-"QTreeWidget::branch:closed:has-children:has-siblings,\n"
-"QTreeWidget::branch:closed:has-children:!has-siblings {\n"
+"QTreeView::branch:closed:has-children {\n"
 "    image: ;\n"
 "}\n"
-"QTreeWidget::branch:!has-children:has-siblings:adjoins-item,\n"
-"QTreeWidget::branch:!has-children:!has-siblings:adjoins-item {\n"
-"    image: ;\n"
-"}\n"
-"\n"
-"\n"
-"QTreeView {\n"
-"}\n"
-"\n"
-"QTreeView::item{\n"
-"}\n"
-"QTreeView::item:hover {\n"
-"    background-color: rgba(66, 66, 66, 198);\n"
-"}\n"
-""
-                        "QTreeView::item:selected:active{\n"
-"    background-color: ;\n"
-"}\n"
-"QTreeView::item:selected:!active {\n"
+"QTreeWidget::branch:adjoins-item {\n"
 "    background-color: ;\n"
 "}\n"
 "\n"
-"/*\n"
-"QHeaderView {\n"
-"	font-size: 15px;\n"
-"	text-align: center;\n"
-"	margin: 0px;\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QHeaderView:hover {\n"
-"    background-color: rgba(66, 66, 66, 198);\n"
-"}\n"
 "\n"
-"QHeaderView::section {\n"
-"	background-color: transparent;\n"
-"}\n"
-"QHeaderView::section:checked {\n"
-"	background-color: ;\n"
-"}\n"
-"\n"
-"QHeaderView::up-arrow {\n"
-"	position: ;\n"
-"	image: ;\n"
-"}\n"
-"\n"
-"QHeaderView::down-arrow {\n"
-"	position: ;\n"
-"	image: ;\n"
-"}*/\n"
-"\n"
-"\n"
-"QScrollBar::vertical {\n"
-"	width: 9px;\n"
-"	background-color: rgb(45, 45, 45);\n"
-"	border-width: 1px;\n"
+"QScrollBar {\n"
+"	background-color: rgba(45, 45, 45, 135);\n"
+"	border-width: 1.2px;\n"
 "	border-radius: 6px;\n"
 "	border-style: solid;\n"
 "	border-color: transparent;\n"
 "	margin: 0px;\n"
 "}\n"
-"QScrollBar::vertical:hover {\n"
-"	background-color: rgba(33, 3"
-                        "3, 33, 99);\n"
+"QScrollBar:hover {\n"
+"	background-color: r"
+                        "gba(33, 33, 33, 99);\n"
 "}\n"
-"\n"
-"QScrollBar::add-line:vertical {\n"
-"	height: 0px;\n"
-"	background-color: transparent;\n"
-"	subcontrol-position: bottom;\n"
-"	subcontrol-origin: margin;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"\n"
-"QScrollBar::sub-line:vertical {\n"
-"	height: 0px;\n"
-"	background-color: transparent;\n"
-"	subcontrol-position: top;\n"
-"	subcontrol-origin: margin;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"\n"
-"QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
-"	width: 0px;\n"
-"	height: 0px;\n"
-"	background-color: transparent;\n"
-"}\n"
-"\n"
-"QScrollBar::handle:vertical {\n"
-"	background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QScrollBar::handle:vertical:hover {\n"
-"	background-color: rgb(120, 120, 120);\n"
-"}\n"
-"\n"
 "\n"
 "QScrollBar::horizontal {\n"
 "	height: 9px;\n"
-"	background-color: rgb(45, 45, 45);\n"
-"	border-width: 1px;\n"
-"	border"
-                        "-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: transparent;\n"
-"	margin: 0px;\n"
 "}\n"
-"QScrollBar::horizontal:hover {\n"
-"	background-color: rgb(60, 60, 60);\n"
+"QScrollBar::vertical {\n"
+"	width: 9px;\n"
 "}\n"
 "\n"
-"QScrollBar::add-line:horizontal {\n"
-"	width: 0px;\n"
-"	background-color: transparent;\n"
-"	subcontrol-position: left;\n"
-"	subcontrol-origin: margin;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"\n"
-"QScrollBar::sub-line:horizontal {\n"
-"	width: 0px;\n"
-"	background-color: transparent;\n"
-"	subcontrol-position: right;\n"
-"	subcontrol-origin: margin;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"\n"
-"QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {\n"
-"	width: 0px;\n"
-"	height: 0px;\n"
-"	background-color: transparent;\n"
-"}\n"
-"\n"
-"QScrollBar::handle:horizontal {\n"
+"QScrollBar::sub-line, QScrollBar::add-line {\n"
 "	background-color: transparent;\n"
 "	border-width: 0px;\n"
 "	border-radius: 0px;\n"
 "	border-style: solid;\n"
 "}\n"
-"QScrollBar::handle:horizontal:hover {\n"
-"	backgro"
-                        "und-color: rgb(120, 120, 120);\n"
+"\n"
+"QScrollBar::sub-page, QScrollBar::add-page {\n"
+"	background-color: transparent;\n"
+"}\n"
+"\n"
+"QScrollBar::handle {\n"
+"	background-color: rgba(90, 90, 90, 90);\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QScrollBar::handle:hover {\n"
+"	background-color: rgba(120, 120, 120, 120);\n"
 "}")
 
         self.verticalLayout_162.addWidget(self.TreeWidget_Catalogue_Process)
@@ -3040,12 +2931,7 @@ class Ui_MainWindow(object):
 
         self.ScrollArea_Middle_Process = QScrollArea(self.Subpage_Process)
         self.ScrollArea_Middle_Process.setObjectName(u"ScrollArea_Middle_Process")
-        sizePolicy5 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Expanding)
-        sizePolicy5.setHorizontalStretch(0)
-        sizePolicy5.setVerticalStretch(0)
-        sizePolicy5.setHeightForWidth(self.ScrollArea_Middle_Process.sizePolicy().hasHeightForWidth())
-        self.ScrollArea_Middle_Process.setSizePolicy(sizePolicy5)
-        self.ScrollArea_Middle_Process.setMinimumSize(QSize(630, 0))
+        self.ScrollArea_Middle_Process.setMinimumSize(QSize(600, 0))
         self.ScrollArea_Middle_Process.setStyleSheet(u"QScrollArea {\n"
 "	background-color: rgba(36, 36, 36, 123);\n"
 "	border-width: 0px;\n"
@@ -3159,7 +3045,7 @@ class Ui_MainWindow(object):
         self.ScrollArea_Middle_Process.setWidgetResizable(True)
         self.ScrollArea_Middle_WidgetContents_Process = QWidget()
         self.ScrollArea_Middle_WidgetContents_Process.setObjectName(u"ScrollArea_Middle_WidgetContents_Process")
-        self.ScrollArea_Middle_WidgetContents_Process.setGeometry(QRect(0, 0, 621, 1484))
+        self.ScrollArea_Middle_WidgetContents_Process.setGeometry(QRect(0, 0, 591, 1484))
         self.verticalLayout_14 = QVBoxLayout(self.ScrollArea_Middle_WidgetContents_Process)
         self.verticalLayout_14.setSpacing(12)
         self.verticalLayout_14.setObjectName(u"verticalLayout_14")
@@ -3210,11 +3096,11 @@ class Ui_MainWindow(object):
         self.gridLayout_12.setContentsMargins(21, 12, 21, 12)
         self.Label_Process_MediaDirInput = QLabel(self.Frame_Process_MediaDirInput)
         self.Label_Process_MediaDirInput.setObjectName(u"Label_Process_MediaDirInput")
-        sizePolicy6 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
-        sizePolicy6.setHorizontalStretch(0)
-        sizePolicy6.setVerticalStretch(0)
-        sizePolicy6.setHeightForWidth(self.Label_Process_MediaDirInput.sizePolicy().hasHeightForWidth())
-        self.Label_Process_MediaDirInput.setSizePolicy(sizePolicy6)
+        sizePolicy5 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
+        sizePolicy5.setHorizontalStretch(0)
+        sizePolicy5.setVerticalStretch(0)
+        sizePolicy5.setHeightForWidth(self.Label_Process_MediaDirInput.sizePolicy().hasHeightForWidth())
+        self.Label_Process_MediaDirInput.setSizePolicy(sizePolicy5)
         self.Label_Process_MediaDirInput.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	/*color: rgb(255, 255, 255);*/\n"
@@ -3258,64 +3144,11 @@ class Ui_MainWindow(object):
 
         self.gridLayout_12.addWidget(self.Button_Process_MediaDirInput_Undo, 0, 2, 1, 1)
 
-        self.LineEdit_Process_MediaDirInput = QLineEdit(self.Frame_Process_MediaDirInput)
+        self.LineEdit_Process_MediaDirInput = LineEditBase(self.Frame_Process_MediaDirInput)
         self.LineEdit_Process_MediaDirInput.setObjectName(u"LineEdit_Process_MediaDirInput")
         self.LineEdit_Process_MediaDirInput.setMinimumSize(QSize(0, 27))
-        self.LineEdit_Process_MediaDirInput.setStyleSheet(u"QLineEdit {\n"
-"	/*font-size: 12px;*/\n"
-"	text-align: left;\n"
-"	color: rgb(255, 255, 255);\n"
-"	selection-background-color: darkgrey;\n"
-"	background-color: transparent;\n"
-"	padding-top: 3px;\n"
-"	padding-left: 6px;\n"
-"	padding-bottom: 3px;\n"
-"	padding-right: 6px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgba(201, 210, 222, 123);\n"
-"}\n"
-"QLineEdit:hover {\n"
-"	border-color: rgba(201, 210, 222, 210);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
 
-        self.gridLayout_12.addWidget(self.LineEdit_Process_MediaDirInput, 1, 0, 1, 2)
-
-        self.Button_Process_MediaDirInput = QPushButton(self.Frame_Process_MediaDirInput)
-        self.Button_Process_MediaDirInput.setObjectName(u"Button_Process_MediaDirInput")
-        self.Button_Process_MediaDirInput.setMinimumSize(QSize(27, 27))
-        self.Button_Process_MediaDirInput.setMaximumSize(QSize(27, 27))
-        self.Button_Process_MediaDirInput.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/OpenedFolder.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgba(201, 210, 222, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(201, 210, 222, 210);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.gridLayout_12.addWidget(self.Button_Process_MediaDirInput, 1, 2, 1, 1)
+        self.gridLayout_12.addWidget(self.LineEdit_Process_MediaDirInput, 1, 0, 1, 3)
 
 
         self.verticalLayout_20.addWidget(self.Frame_Process_MediaDirInput)
@@ -3372,8 +3205,8 @@ class Ui_MainWindow(object):
         self.gridLayout_13.setContentsMargins(21, 12, 21, 12)
         self.Label_Process_SliceAudio = QLabel(self.Frame_Process_SliceAudio)
         self.Label_Process_SliceAudio.setObjectName(u"Label_Process_SliceAudio")
-        sizePolicy6.setHeightForWidth(self.Label_Process_SliceAudio.sizePolicy().hasHeightForWidth())
-        self.Label_Process_SliceAudio.setSizePolicy(sizePolicy6)
+        sizePolicy5.setHeightForWidth(self.Label_Process_SliceAudio.sizePolicy().hasHeightForWidth())
+        self.Label_Process_SliceAudio.setSizePolicy(sizePolicy5)
         self.Label_Process_SliceAudio.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	/*color: rgb(255, 255, 255);*/\n"
@@ -3539,8 +3372,8 @@ class Ui_MainWindow(object):
         self.gridLayout_17.setContentsMargins(21, 12, 21, 12)
         self.Label_Process_RMSThreshold = QLabel(self.Frame_Process_RMSThreshold)
         self.Label_Process_RMSThreshold.setObjectName(u"Label_Process_RMSThreshold")
-        sizePolicy6.setHeightForWidth(self.Label_Process_RMSThreshold.sizePolicy().hasHeightForWidth())
-        self.Label_Process_RMSThreshold.setSizePolicy(sizePolicy6)
+        sizePolicy5.setHeightForWidth(self.Label_Process_RMSThreshold.sizePolicy().hasHeightForWidth())
+        self.Label_Process_RMSThreshold.setSizePolicy(sizePolicy5)
         self.Label_Process_RMSThreshold.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	/*color: rgb(255, 255, 255);*/\n"
@@ -3665,8 +3498,8 @@ class Ui_MainWindow(object):
         self.gridLayout_23.setContentsMargins(21, 12, 21, 12)
         self.Label_Process_AudioLengthMin = QLabel(self.Frame_Process_AudioLengthMin)
         self.Label_Process_AudioLengthMin.setObjectName(u"Label_Process_AudioLengthMin")
-        sizePolicy6.setHeightForWidth(self.Label_Process_AudioLengthMin.sizePolicy().hasHeightForWidth())
-        self.Label_Process_AudioLengthMin.setSizePolicy(sizePolicy6)
+        sizePolicy5.setHeightForWidth(self.Label_Process_AudioLengthMin.sizePolicy().hasHeightForWidth())
+        self.Label_Process_AudioLengthMin.setSizePolicy(sizePolicy5)
         self.Label_Process_AudioLengthMin.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	/*color: rgb(255, 255, 255);*/\n"
@@ -3790,8 +3623,8 @@ class Ui_MainWindow(object):
         self.gridLayout_24.setContentsMargins(21, 12, 21, 12)
         self.Label_Process_SilentIntervalMin = QLabel(self.Frame_Process_SilentIntervalMin)
         self.Label_Process_SilentIntervalMin.setObjectName(u"Label_Process_SilentIntervalMin")
-        sizePolicy6.setHeightForWidth(self.Label_Process_SilentIntervalMin.sizePolicy().hasHeightForWidth())
-        self.Label_Process_SilentIntervalMin.setSizePolicy(sizePolicy6)
+        sizePolicy5.setHeightForWidth(self.Label_Process_SilentIntervalMin.sizePolicy().hasHeightForWidth())
+        self.Label_Process_SilentIntervalMin.setSizePolicy(sizePolicy5)
         self.Label_Process_SilentIntervalMin.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	/*color: rgb(255, 255, 255);*/\n"
@@ -3915,8 +3748,8 @@ class Ui_MainWindow(object):
         self.gridLayout_25.setContentsMargins(21, 12, 21, 12)
         self.Label_Process_HopSize = QLabel(self.Frame_Process_HopSize)
         self.Label_Process_HopSize.setObjectName(u"Label_Process_HopSize")
-        sizePolicy6.setHeightForWidth(self.Label_Process_HopSize.sizePolicy().hasHeightForWidth())
-        self.Label_Process_HopSize.setSizePolicy(sizePolicy6)
+        sizePolicy5.setHeightForWidth(self.Label_Process_HopSize.sizePolicy().hasHeightForWidth())
+        self.Label_Process_HopSize.setSizePolicy(sizePolicy5)
         self.Label_Process_HopSize.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	/*color: rgb(255, 255, 255);*/\n"
@@ -4040,8 +3873,8 @@ class Ui_MainWindow(object):
         self.gridLayout_26.setContentsMargins(21, 12, 21, 12)
         self.Label_Process_SilenceKeptMax = QLabel(self.Frame_Process_SilenceKeptMax)
         self.Label_Process_SilenceKeptMax.setObjectName(u"Label_Process_SilenceKeptMax")
-        sizePolicy6.setHeightForWidth(self.Label_Process_SilenceKeptMax.sizePolicy().hasHeightForWidth())
-        self.Label_Process_SilenceKeptMax.setSizePolicy(sizePolicy6)
+        sizePolicy5.setHeightForWidth(self.Label_Process_SilenceKeptMax.sizePolicy().hasHeightForWidth())
+        self.Label_Process_SilenceKeptMax.setSizePolicy(sizePolicy5)
         self.Label_Process_SilenceKeptMax.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	/*color: rgb(255, 255, 255);*/\n"
@@ -4199,8 +4032,8 @@ class Ui_MainWindow(object):
         self.gridLayout_27.setContentsMargins(21, 12, 21, 12)
         self.Label_Process_MediaFormatOutput = QLabel(self.Frame_Process_MediaFormatOutput)
         self.Label_Process_MediaFormatOutput.setObjectName(u"Label_Process_MediaFormatOutput")
-        sizePolicy6.setHeightForWidth(self.Label_Process_MediaFormatOutput.sizePolicy().hasHeightForWidth())
-        self.Label_Process_MediaFormatOutput.setSizePolicy(sizePolicy6)
+        sizePolicy5.setHeightForWidth(self.Label_Process_MediaFormatOutput.sizePolicy().hasHeightForWidth())
+        self.Label_Process_MediaFormatOutput.setSizePolicy(sizePolicy5)
         self.Label_Process_MediaFormatOutput.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	/*color: rgb(255, 255, 255);*/\n"
@@ -4441,8 +4274,8 @@ class Ui_MainWindow(object):
         self.gridLayout_28.setContentsMargins(21, 12, 21, 12)
         self.Label_Process_MediaDirOutput = QLabel(self.Frame_Process_MediaDirOutput)
         self.Label_Process_MediaDirOutput.setObjectName(u"Label_Process_MediaDirOutput")
-        sizePolicy6.setHeightForWidth(self.Label_Process_MediaDirOutput.sizePolicy().hasHeightForWidth())
-        self.Label_Process_MediaDirOutput.setSizePolicy(sizePolicy6)
+        sizePolicy5.setHeightForWidth(self.Label_Process_MediaDirOutput.sizePolicy().hasHeightForWidth())
+        self.Label_Process_MediaDirOutput.setSizePolicy(sizePolicy5)
         self.Label_Process_MediaDirOutput.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	/*color: rgb(255, 255, 255);*/\n"
@@ -4486,64 +4319,11 @@ class Ui_MainWindow(object):
 
         self.gridLayout_28.addWidget(self.Button_Process_MediaDirOutput_Undo, 0, 2, 1, 1)
 
-        self.LineEdit_Process_MediaDirOutput = QLineEdit(self.Frame_Process_MediaDirOutput)
+        self.LineEdit_Process_MediaDirOutput = LineEditBase(self.Frame_Process_MediaDirOutput)
         self.LineEdit_Process_MediaDirOutput.setObjectName(u"LineEdit_Process_MediaDirOutput")
         self.LineEdit_Process_MediaDirOutput.setMinimumSize(QSize(0, 27))
-        self.LineEdit_Process_MediaDirOutput.setStyleSheet(u"QLineEdit {\n"
-"	/*font-size: 12px;*/\n"
-"	text-align: left;\n"
-"	color: rgb(255, 255, 255);\n"
-"	selection-background-color: darkgrey;\n"
-"	background-color: transparent;\n"
-"	padding-top: 3px;\n"
-"	padding-left: 6px;\n"
-"	padding-bottom: 3px;\n"
-"	padding-right: 6px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgba(201, 210, 222, 123);\n"
-"}\n"
-"QLineEdit:hover {\n"
-"	border-color: rgba(201, 210, 222, 210);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
 
-        self.gridLayout_28.addWidget(self.LineEdit_Process_MediaDirOutput, 1, 0, 1, 2)
-
-        self.Button_Process_MediaDirOutput = QPushButton(self.Frame_Process_MediaDirOutput)
-        self.Button_Process_MediaDirOutput.setObjectName(u"Button_Process_MediaDirOutput")
-        self.Button_Process_MediaDirOutput.setMinimumSize(QSize(27, 27))
-        self.Button_Process_MediaDirOutput.setMaximumSize(QSize(27, 27))
-        self.Button_Process_MediaDirOutput.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/OpenedFolder.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgba(201, 210, 222, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(201, 210, 222, 210);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.gridLayout_28.addWidget(self.Button_Process_MediaDirOutput, 1, 2, 1, 1)
+        self.gridLayout_28.addWidget(self.LineEdit_Process_MediaDirOutput, 1, 0, 1, 3)
 
 
         self.verticalLayout_61.addWidget(self.Frame_Process_MediaDirOutput)
@@ -4621,8 +4401,8 @@ class Ui_MainWindow(object):
         self.gridLayout_29.setContentsMargins(21, 12, 21, 12)
         self.Label_Process_SampleRate = QLabel(self.Frame_Process_SampleRate)
         self.Label_Process_SampleRate.setObjectName(u"Label_Process_SampleRate")
-        sizePolicy6.setHeightForWidth(self.Label_Process_SampleRate.sizePolicy().hasHeightForWidth())
-        self.Label_Process_SampleRate.setSizePolicy(sizePolicy6)
+        sizePolicy5.setHeightForWidth(self.Label_Process_SampleRate.sizePolicy().hasHeightForWidth())
+        self.Label_Process_SampleRate.setSizePolicy(sizePolicy5)
         self.Label_Process_SampleRate.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	/*color: rgb(255, 255, 255);*/\n"
@@ -4863,8 +4643,8 @@ class Ui_MainWindow(object):
         self.gridLayout_30.setContentsMargins(21, 12, 21, 12)
         self.Label_Process_SampleWidth = QLabel(self.Frame_Process_SampleWidth)
         self.Label_Process_SampleWidth.setObjectName(u"Label_Process_SampleWidth")
-        sizePolicy6.setHeightForWidth(self.Label_Process_SampleWidth.sizePolicy().hasHeightForWidth())
-        self.Label_Process_SampleWidth.setSizePolicy(sizePolicy6)
+        sizePolicy5.setHeightForWidth(self.Label_Process_SampleWidth.sizePolicy().hasHeightForWidth())
+        self.Label_Process_SampleWidth.setSizePolicy(sizePolicy5)
         self.Label_Process_SampleWidth.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	/*color: rgb(255, 255, 255);*/\n"
@@ -5105,8 +4885,8 @@ class Ui_MainWindow(object):
         self.gridLayout_31.setContentsMargins(21, 12, 21, 12)
         self.Label_Process_ToMono = QLabel(self.Frame_Process_ToMono)
         self.Label_Process_ToMono.setObjectName(u"Label_Process_ToMono")
-        sizePolicy6.setHeightForWidth(self.Label_Process_ToMono.sizePolicy().hasHeightForWidth())
-        self.Label_Process_ToMono.setSizePolicy(sizePolicy6)
+        sizePolicy5.setHeightForWidth(self.Label_Process_ToMono.sizePolicy().hasHeightForWidth())
+        self.Label_Process_ToMono.setSizePolicy(sizePolicy5)
         self.Label_Process_ToMono.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	/*color: rgb(255, 255, 255);*/\n"
@@ -5215,8 +4995,6 @@ class Ui_MainWindow(object):
 
         self.Widget_Right_Process = QWidget(self.Subpage_Process)
         self.Widget_Right_Process.setObjectName(u"Widget_Right_Process")
-        self.Widget_Right_Process.setMinimumSize(QSize(210, 0))
-        self.Widget_Right_Process.setMaximumSize(QSize(420, 16777215))
         self.Widget_Right_Process.setStyleSheet(u"QWidget {\n"
 "	background-color: rgba(36, 36, 36, 123);\n"
 "	border-width: 0px;\n"
@@ -5419,11 +5197,11 @@ class Ui_MainWindow(object):
         self.verticalLayout_86.setContentsMargins(0, 0, 0, 0)
         self.Button_Process_Execute = QPushButton(self.Page_Process_Execute)
         self.Button_Process_Execute.setObjectName(u"Button_Process_Execute")
-        sizePolicy7 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
-        sizePolicy7.setHorizontalStretch(0)
-        sizePolicy7.setVerticalStretch(0)
-        sizePolicy7.setHeightForWidth(self.Button_Process_Execute.sizePolicy().hasHeightForWidth())
-        self.Button_Process_Execute.setSizePolicy(sizePolicy7)
+        sizePolicy6 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+        sizePolicy6.setHorizontalStretch(0)
+        sizePolicy6.setVerticalStretch(0)
+        sizePolicy6.setHeightForWidth(self.Button_Process_Execute.sizePolicy().hasHeightForWidth())
+        self.Button_Process_Execute.setSizePolicy(sizePolicy6)
         self.Button_Process_Execute.setMinimumSize(QSize(0, 30))
         self.Button_Process_Execute.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
@@ -5459,8 +5237,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_87.setContentsMargins(0, 0, 0, 0)
         self.Button_Process_Terminate = QPushButton(self.Page_Process_Terminate)
         self.Button_Process_Terminate.setObjectName(u"Button_Process_Terminate")
-        sizePolicy7.setHeightForWidth(self.Button_Process_Terminate.sizePolicy().hasHeightForWidth())
-        self.Button_Process_Terminate.setSizePolicy(sizePolicy7)
+        sizePolicy6.setHeightForWidth(self.Button_Process_Terminate.sizePolicy().hasHeightForWidth())
+        self.Button_Process_Terminate.setSizePolicy(sizePolicy6)
         self.Button_Process_Terminate.setMinimumSize(QSize(0, 30))
         self.Button_Process_Terminate.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
@@ -5494,6 +5272,9 @@ class Ui_MainWindow(object):
 
         self.gridLayout_6.addWidget(self.ProgressBar_Process, 1, 0, 1, 3)
 
+        self.gridLayout_6.setColumnStretch(0, 3)
+        self.gridLayout_6.setColumnStretch(1, 10)
+        self.gridLayout_6.setColumnStretch(2, 7)
         self.StackedWidget_Pages_Process.addWidget(self.Subpage_Process)
 
         self.verticalLayout_40.addWidget(self.StackedWidget_Pages_Process)
@@ -5644,7 +5425,6 @@ class Ui_MainWindow(object):
         self.Widget_Left_ASR_VPR = QWidget(self.Subpage_ASR_VPR)
         self.Widget_Left_ASR_VPR.setObjectName(u"Widget_Left_ASR_VPR")
         self.Widget_Left_ASR_VPR.setMinimumSize(QSize(150, 0))
-        self.Widget_Left_ASR_VPR.setMaximumSize(QSize(210, 16777215))
         self.Widget_Left_ASR_VPR.setStyleSheet(u"QWidget {\n"
 "	background-color: rgba(36, 36, 36, 123);\n"
 "	border-width: 0px;\n"
@@ -5660,190 +5440,82 @@ class Ui_MainWindow(object):
         __qtreewidgetitem1 = QTreeWidgetItem(self.TreeWidget_Catalogue_ASR_VPR)
         QTreeWidgetItem(__qtreewidgetitem1)
         self.TreeWidget_Catalogue_ASR_VPR.setObjectName(u"TreeWidget_Catalogue_ASR_VPR")
-        self.TreeWidget_Catalogue_ASR_VPR.setStyleSheet(u"QTreeWidget {\n"
+        self.TreeWidget_Catalogue_ASR_VPR.setStyleSheet(u"QTreeView {\n"
 "	/*font-size: 12px;\n"
 "	text-align: center;*/\n"
-"	margin: 0px;\n"
 "	background-color: transparent;\n"
 "	border-width: 0px;\n"
 "	border-radius: 0px;\n"
 "	border-style: solid;\n"
 "}\n"
 "\n"
-"QTreeWidget::item {\n"
+"QTreeView::item {\n"
 "	background-color: transparent;\n"
-"	padding: 1.2px;\n"
+"	padding: 2.4px;\n"
+"}\n"
+"QTreeView::item:hover {\n"
+"    background-color: rgba(66, 66, 66, 198);\n"
+"}\n"
+"QTreeView::item:selected {\n"
+"    background-color: ;\n"
 "}\n"
 "\n"
-"QTreeWidget::branch {\n"
+"QTreeView::branch {\n"
 "    background-color: transparent;\n"
 "	border-width: 0px;\n"
 "	border-radius: 0px;\n"
 "	border-style: solid;\n"
 "}\n"
-"QTreeWidget::branch:open:has-children:has-siblings,\n"
-"QTreeWidget::branch:open:has-children:!has-siblings {\n"
+"QTreeView::branch:open:has-children {\n"
 "    image: ;\n"
 "}\n"
-"QTreeWidget::branch:closed:has-children:has-siblings,\n"
-"QTreeWidget::branch:closed:has-children:!has-siblings {\n"
+"QTreeView::branch:closed:has-children {\n"
 "    image: ;\n"
 "}\n"
-"QTreeWidget::branch:!has-children:has-siblings:adjoins-item,\n"
-"QTreeWidget::branch:!has-children:!has-siblings:adjoins-item {\n"
-"    image: ;\n"
-"}\n"
-"\n"
-"\n"
-"QTreeView {\n"
-"}\n"
-"\n"
-"QTreeView::item{\n"
-"}\n"
-"QTreeView::item:hover {\n"
-"    background-color: rgba(66, 66, 66, 198);\n"
-"}\n"
-""
-                        "QTreeView::item:selected:active{\n"
-"    background-color: ;\n"
-"}\n"
-"QTreeView::item:selected:!active {\n"
+"QTreeWidget::branch:adjoins-item {\n"
 "    background-color: ;\n"
 "}\n"
 "\n"
-"/*\n"
-"QHeaderView {\n"
-"	font-size: 15px;\n"
-"	text-align: center;\n"
-"	margin: 0px;\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QHeaderView:hover {\n"
-"    background-color: rgba(66, 66, 66, 198);\n"
-"}\n"
 "\n"
-"QHeaderView::section {\n"
-"	background-color: transparent;\n"
-"}\n"
-"QHeaderView::section:checked {\n"
-"	background-color: ;\n"
-"}\n"
-"\n"
-"QHeaderView::up-arrow {\n"
-"	position: ;\n"
-"	image: ;\n"
-"}\n"
-"\n"
-"QHeaderView::down-arrow {\n"
-"	position: ;\n"
-"	image: ;\n"
-"}*/\n"
-"\n"
-"\n"
-"QScrollBar::vertical {\n"
-"	width: 9px;\n"
-"	background-color: rgb(45, 45, 45);\n"
-"	border-width: 1px;\n"
+"QScrollBar {\n"
+"	background-color: rgba(45, 45, 45, 135);\n"
+"	border-width: 1.2px;\n"
 "	border-radius: 6px;\n"
 "	border-style: solid;\n"
 "	border-color: transparent;\n"
 "	margin: 0px;\n"
 "}\n"
-"QScrollBar::vertical:hover {\n"
-"	background-color: rgba(33, 3"
-                        "3, 33, 99);\n"
+"QScrollBar:hover {\n"
+"	background-color: r"
+                        "gba(33, 33, 33, 99);\n"
 "}\n"
-"\n"
-"QScrollBar::add-line:vertical {\n"
-"	height: 0px;\n"
-"	background-color: transparent;\n"
-"	subcontrol-position: bottom;\n"
-"	subcontrol-origin: margin;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"\n"
-"QScrollBar::sub-line:vertical {\n"
-"	height: 0px;\n"
-"	background-color: transparent;\n"
-"	subcontrol-position: top;\n"
-"	subcontrol-origin: margin;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"\n"
-"QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
-"	width: 0px;\n"
-"	height: 0px;\n"
-"	background-color: transparent;\n"
-"}\n"
-"\n"
-"QScrollBar::handle:vertical {\n"
-"	background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QScrollBar::handle:vertical:hover {\n"
-"	background-color: rgb(120, 120, 120);\n"
-"}\n"
-"\n"
 "\n"
 "QScrollBar::horizontal {\n"
 "	height: 9px;\n"
-"	background-color: rgb(45, 45, 45);\n"
-"	border-width: 1px;\n"
-"	border"
-                        "-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: transparent;\n"
-"	margin: 0px;\n"
 "}\n"
-"QScrollBar::horizontal:hover {\n"
-"	background-color: rgb(60, 60, 60);\n"
+"QScrollBar::vertical {\n"
+"	width: 9px;\n"
 "}\n"
 "\n"
-"QScrollBar::add-line:horizontal {\n"
-"	width: 0px;\n"
-"	background-color: transparent;\n"
-"	subcontrol-position: left;\n"
-"	subcontrol-origin: margin;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"\n"
-"QScrollBar::sub-line:horizontal {\n"
-"	width: 0px;\n"
-"	background-color: transparent;\n"
-"	subcontrol-position: right;\n"
-"	subcontrol-origin: margin;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"\n"
-"QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {\n"
-"	width: 0px;\n"
-"	height: 0px;\n"
-"	background-color: transparent;\n"
-"}\n"
-"\n"
-"QScrollBar::handle:horizontal {\n"
+"QScrollBar::sub-line, QScrollBar::add-line {\n"
 "	background-color: transparent;\n"
 "	border-width: 0px;\n"
 "	border-radius: 0px;\n"
 "	border-style: solid;\n"
 "}\n"
-"QScrollBar::handle:horizontal:hover {\n"
-"	backgro"
-                        "und-color: rgb(120, 120, 120);\n"
+"\n"
+"QScrollBar::sub-page, QScrollBar::add-page {\n"
+"	background-color: transparent;\n"
+"}\n"
+"\n"
+"QScrollBar::handle {\n"
+"	background-color: rgba(90, 90, 90, 90);\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QScrollBar::handle:hover {\n"
+"	background-color: rgba(120, 120, 120, 120);\n"
 "}")
 
         self.verticalLayout_4.addWidget(self.TreeWidget_Catalogue_ASR_VPR)
@@ -5853,9 +5525,7 @@ class Ui_MainWindow(object):
 
         self.ScrollArea_Middle_ASR_VPR = QScrollArea(self.Subpage_ASR_VPR)
         self.ScrollArea_Middle_ASR_VPR.setObjectName(u"ScrollArea_Middle_ASR_VPR")
-        sizePolicy5.setHeightForWidth(self.ScrollArea_Middle_ASR_VPR.sizePolicy().hasHeightForWidth())
-        self.ScrollArea_Middle_ASR_VPR.setSizePolicy(sizePolicy5)
-        self.ScrollArea_Middle_ASR_VPR.setMinimumSize(QSize(630, 0))
+        self.ScrollArea_Middle_ASR_VPR.setMinimumSize(QSize(600, 0))
         self.ScrollArea_Middle_ASR_VPR.setStyleSheet(u"QScrollArea {\n"
 "	background-color: rgba(36, 36, 36, 123);\n"
 "	border-width: 0px;\n"
@@ -5969,7 +5639,7 @@ class Ui_MainWindow(object):
         self.ScrollArea_Middle_ASR_VPR.setWidgetResizable(True)
         self.ScrollArea_Middle_WidgetContents_ASR_VPR = QWidget()
         self.ScrollArea_Middle_WidgetContents_ASR_VPR.setObjectName(u"ScrollArea_Middle_WidgetContents_ASR_VPR")
-        self.ScrollArea_Middle_WidgetContents_ASR_VPR.setGeometry(QRect(0, 0, 621, 1144))
+        self.ScrollArea_Middle_WidgetContents_ASR_VPR.setGeometry(QRect(0, 0, 591, 1144))
         self.verticalLayout_7 = QVBoxLayout(self.ScrollArea_Middle_WidgetContents_ASR_VPR)
         self.verticalLayout_7.setSpacing(12)
         self.verticalLayout_7.setObjectName(u"verticalLayout_7")
@@ -6020,8 +5690,8 @@ class Ui_MainWindow(object):
         self.gridLayout_32.setContentsMargins(21, 12, 21, 12)
         self.Label_ASR_VPR_AudioDirInput = QLabel(self.Frame_ASR_VPR_AudioDirInput)
         self.Label_ASR_VPR_AudioDirInput.setObjectName(u"Label_ASR_VPR_AudioDirInput")
-        sizePolicy6.setHeightForWidth(self.Label_ASR_VPR_AudioDirInput.sizePolicy().hasHeightForWidth())
-        self.Label_ASR_VPR_AudioDirInput.setSizePolicy(sizePolicy6)
+        sizePolicy5.setHeightForWidth(self.Label_ASR_VPR_AudioDirInput.sizePolicy().hasHeightForWidth())
+        self.Label_ASR_VPR_AudioDirInput.setSizePolicy(sizePolicy5)
         self.Label_ASR_VPR_AudioDirInput.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	/*color: rgb(255, 255, 255);*/\n"
@@ -6065,64 +5735,11 @@ class Ui_MainWindow(object):
 
         self.gridLayout_32.addWidget(self.Button_ASR_VPR_AudioDirInput_Undo, 0, 2, 1, 1)
 
-        self.LineEdit_ASR_VPR_AudioDirInput = QLineEdit(self.Frame_ASR_VPR_AudioDirInput)
+        self.LineEdit_ASR_VPR_AudioDirInput = LineEditBase(self.Frame_ASR_VPR_AudioDirInput)
         self.LineEdit_ASR_VPR_AudioDirInput.setObjectName(u"LineEdit_ASR_VPR_AudioDirInput")
         self.LineEdit_ASR_VPR_AudioDirInput.setMinimumSize(QSize(0, 27))
-        self.LineEdit_ASR_VPR_AudioDirInput.setStyleSheet(u"QLineEdit {\n"
-"	/*font-size: 12px;*/\n"
-"	text-align: left;\n"
-"	color: rgb(255, 255, 255);\n"
-"	selection-background-color: darkgrey;\n"
-"	background-color: transparent;\n"
-"	padding-top: 3px;\n"
-"	padding-left: 6px;\n"
-"	padding-bottom: 3px;\n"
-"	padding-right: 6px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgba(201, 210, 222, 123);\n"
-"}\n"
-"QLineEdit:hover {\n"
-"	border-color: rgba(201, 210, 222, 210);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
 
-        self.gridLayout_32.addWidget(self.LineEdit_ASR_VPR_AudioDirInput, 1, 0, 1, 2)
-
-        self.Button_ASR_VPR_AudioDirInput = QPushButton(self.Frame_ASR_VPR_AudioDirInput)
-        self.Button_ASR_VPR_AudioDirInput.setObjectName(u"Button_ASR_VPR_AudioDirInput")
-        self.Button_ASR_VPR_AudioDirInput.setMinimumSize(QSize(27, 27))
-        self.Button_ASR_VPR_AudioDirInput.setMaximumSize(QSize(27, 27))
-        self.Button_ASR_VPR_AudioDirInput.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/OpenedFolder.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgba(201, 210, 222, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(201, 210, 222, 210);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.gridLayout_32.addWidget(self.Button_ASR_VPR_AudioDirInput, 1, 2, 1, 1)
+        self.gridLayout_32.addWidget(self.LineEdit_ASR_VPR_AudioDirInput, 1, 0, 1, 3)
 
 
         self.verticalLayout_137.addWidget(self.Frame_ASR_VPR_AudioDirInput)
@@ -6145,8 +5762,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_12.setContentsMargins(21, 12, 21, 12)
         self.Label_ASR_VPR_StdAudioSpeaker = QLabel(self.Frame_ASR_VPR_StdAudioSpeaker)
         self.Label_ASR_VPR_StdAudioSpeaker.setObjectName(u"Label_ASR_VPR_StdAudioSpeaker")
-        sizePolicy6.setHeightForWidth(self.Label_ASR_VPR_StdAudioSpeaker.sizePolicy().hasHeightForWidth())
-        self.Label_ASR_VPR_StdAudioSpeaker.setSizePolicy(sizePolicy6)
+        sizePolicy5.setHeightForWidth(self.Label_ASR_VPR_StdAudioSpeaker.sizePolicy().hasHeightForWidth())
+        self.Label_ASR_VPR_StdAudioSpeaker.setSizePolicy(sizePolicy5)
         self.Label_ASR_VPR_StdAudioSpeaker.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	/*color: rgb(255, 255, 255);*/\n"
@@ -6197,10 +5814,10 @@ class Ui_MainWindow(object):
         self.verticalLayout_47.setContentsMargins(0, 12, 0, 12)
         self.Frame_ASR_VPR_VPRParams_BasicSettings = QFrame(self.GroupBox_ASR_VPR_VPRParams)
         self.Frame_ASR_VPR_VPRParams_BasicSettings.setObjectName(u"Frame_ASR_VPR_VPRParams_BasicSettings")
-        self.verticalLayout_138 = QVBoxLayout(self.Frame_ASR_VPR_VPRParams_BasicSettings)
-        self.verticalLayout_138.setSpacing(0)
-        self.verticalLayout_138.setObjectName(u"verticalLayout_138")
-        self.verticalLayout_138.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_45 = QVBoxLayout(self.Frame_ASR_VPR_VPRParams_BasicSettings)
+        self.verticalLayout_45.setSpacing(0)
+        self.verticalLayout_45.setObjectName(u"verticalLayout_45")
+        self.verticalLayout_45.setContentsMargins(0, 0, 0, 0)
         self.Frame_ASR_VPR_DecisionThreshold = QFrame(self.Frame_ASR_VPR_VPRParams_BasicSettings)
         self.Frame_ASR_VPR_DecisionThreshold.setObjectName(u"Frame_ASR_VPR_DecisionThreshold")
         self.Frame_ASR_VPR_DecisionThreshold.setMinimumSize(QSize(0, 105))
@@ -6219,8 +5836,8 @@ class Ui_MainWindow(object):
         self.gridLayout_33.setContentsMargins(21, 12, 21, 12)
         self.Label_ASR_VPR_DecisionThreshold = QLabel(self.Frame_ASR_VPR_DecisionThreshold)
         self.Label_ASR_VPR_DecisionThreshold.setObjectName(u"Label_ASR_VPR_DecisionThreshold")
-        sizePolicy6.setHeightForWidth(self.Label_ASR_VPR_DecisionThreshold.sizePolicy().hasHeightForWidth())
-        self.Label_ASR_VPR_DecisionThreshold.setSizePolicy(sizePolicy6)
+        sizePolicy5.setHeightForWidth(self.Label_ASR_VPR_DecisionThreshold.sizePolicy().hasHeightForWidth())
+        self.Label_ASR_VPR_DecisionThreshold.setSizePolicy(sizePolicy5)
         self.Label_ASR_VPR_DecisionThreshold.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	/*color: rgb(255, 255, 255);*/\n"
@@ -6232,37 +5849,6 @@ class Ui_MainWindow(object):
 "}")
 
         self.gridLayout_33.addWidget(self.Label_ASR_VPR_DecisionThreshold, 0, 0, 1, 1)
-
-        self.HorizontalSpacer_ASR_VPR_DecisionThreshold = QSpacerItem(445, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
-
-        self.gridLayout_33.addItem(self.HorizontalSpacer_ASR_VPR_DecisionThreshold, 0, 1, 1, 1)
-
-        self.Button_ASR_VPR_DecisionThreshold_Undo = QPushButton(self.Frame_ASR_VPR_DecisionThreshold)
-        self.Button_ASR_VPR_DecisionThreshold_Undo.setObjectName(u"Button_ASR_VPR_DecisionThreshold_Undo")
-        self.Button_ASR_VPR_DecisionThreshold_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_ASR_VPR_DecisionThreshold_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_ASR_VPR_DecisionThreshold_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgba(201, 210, 222, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(201, 210, 222, 210);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.gridLayout_33.addWidget(self.Button_ASR_VPR_DecisionThreshold_Undo, 0, 2, 1, 1)
 
         self.DoubleSpinBox_ASR_VPR_DecisionThreshold = QDoubleSpinBox(self.Frame_ASR_VPR_DecisionThreshold)
         self.DoubleSpinBox_ASR_VPR_DecisionThreshold.setObjectName(u"DoubleSpinBox_ASR_VPR_DecisionThreshold")
@@ -6324,8 +5910,111 @@ class Ui_MainWindow(object):
 
         self.gridLayout_33.addWidget(self.DoubleSpinBox_ASR_VPR_DecisionThreshold, 1, 0, 1, 3)
 
+        self.Button_ASR_VPR_DecisionThreshold_Undo = QPushButton(self.Frame_ASR_VPR_DecisionThreshold)
+        self.Button_ASR_VPR_DecisionThreshold_Undo.setObjectName(u"Button_ASR_VPR_DecisionThreshold_Undo")
+        self.Button_ASR_VPR_DecisionThreshold_Undo.setMinimumSize(QSize(27, 27))
+        self.Button_ASR_VPR_DecisionThreshold_Undo.setMaximumSize(QSize(27, 27))
+        self.Button_ASR_VPR_DecisionThreshold_Undo.setStyleSheet(u"QPushButton {\n"
+"	image: url(:/Button_Icon/Sources/Undo.png);\n"
+"	background-color: transparent;\n"
+"	padding: 4.5px;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgba(201, 210, 222, 123);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgba(201, 210, 222, 210);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
 
-        self.verticalLayout_138.addWidget(self.Frame_ASR_VPR_DecisionThreshold)
+        self.gridLayout_33.addWidget(self.Button_ASR_VPR_DecisionThreshold_Undo, 0, 2, 1, 1)
+
+        self.HorizontalSpacer_ASR_VPR_DecisionThreshold = QSpacerItem(445, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.gridLayout_33.addItem(self.HorizontalSpacer_ASR_VPR_DecisionThreshold, 0, 1, 1, 1)
+
+
+        self.verticalLayout_45.addWidget(self.Frame_ASR_VPR_DecisionThreshold)
+
+        self.Frame_ASR_VPR_ModelPath = QFrame(self.Frame_ASR_VPR_VPRParams_BasicSettings)
+        self.Frame_ASR_VPR_ModelPath.setObjectName(u"Frame_ASR_VPR_ModelPath")
+        self.Frame_ASR_VPR_ModelPath.setMinimumSize(QSize(0, 105))
+        self.Frame_ASR_VPR_ModelPath.setStyleSheet(u"QFrame {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QFrame:hover {\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
+"}")
+        self.gridLayout_34 = QGridLayout(self.Frame_ASR_VPR_ModelPath)
+        self.gridLayout_34.setSpacing(12)
+        self.gridLayout_34.setObjectName(u"gridLayout_34")
+        self.gridLayout_34.setContentsMargins(21, 12, 21, 12)
+        self.Label_ASR_VPR_ModelPath = QLabel(self.Frame_ASR_VPR_ModelPath)
+        self.Label_ASR_VPR_ModelPath.setObjectName(u"Label_ASR_VPR_ModelPath")
+        sizePolicy5.setHeightForWidth(self.Label_ASR_VPR_ModelPath.sizePolicy().hasHeightForWidth())
+        self.Label_ASR_VPR_ModelPath.setSizePolicy(sizePolicy5)
+        self.Label_ASR_VPR_ModelPath.setStyleSheet(u"QLabel {\n"
+"	/*text-align: center;*/\n"
+"	/*color: rgb(255, 255, 255);*/\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_34.addWidget(self.Label_ASR_VPR_ModelPath, 0, 0, 1, 1)
+
+        self.HorizontalSpacer_ASR_VPR_ModelPath = QSpacerItem(445, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.gridLayout_34.addItem(self.HorizontalSpacer_ASR_VPR_ModelPath, 0, 1, 1, 1)
+
+        self.Button_ASR_VPR_ModelPath_Undo = QPushButton(self.Frame_ASR_VPR_ModelPath)
+        self.Button_ASR_VPR_ModelPath_Undo.setObjectName(u"Button_ASR_VPR_ModelPath_Undo")
+        self.Button_ASR_VPR_ModelPath_Undo.setMinimumSize(QSize(27, 27))
+        self.Button_ASR_VPR_ModelPath_Undo.setMaximumSize(QSize(27, 27))
+        self.Button_ASR_VPR_ModelPath_Undo.setStyleSheet(u"QPushButton {\n"
+"	image: url(:/Button_Icon/Sources/Undo.png);\n"
+"	background-color: transparent;\n"
+"	padding: 4.5px;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgba(201, 210, 222, 123);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgba(201, 210, 222, 210);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_34.addWidget(self.Button_ASR_VPR_ModelPath_Undo, 0, 2, 1, 1)
+
+        self.LineEdit_ASR_VPR_ModelPath = LineEditBase(self.Frame_ASR_VPR_ModelPath)
+        self.LineEdit_ASR_VPR_ModelPath.setObjectName(u"LineEdit_ASR_VPR_ModelPath")
+        self.LineEdit_ASR_VPR_ModelPath.setMinimumSize(QSize(0, 27))
+
+        self.gridLayout_34.addWidget(self.LineEdit_ASR_VPR_ModelPath, 1, 0, 1, 3)
+
+
+        self.verticalLayout_45.addWidget(self.Frame_ASR_VPR_ModelPath)
 
 
         self.verticalLayout_47.addWidget(self.Frame_ASR_VPR_VPRParams_BasicSettings)
@@ -6382,131 +6071,6 @@ class Ui_MainWindow(object):
         self.verticalLayout_21.setSpacing(0)
         self.verticalLayout_21.setObjectName(u"verticalLayout_21")
         self.verticalLayout_21.setContentsMargins(0, 0, 0, 0)
-        self.Frame_ASR_VPR_ModelPath = QFrame(self.Frame_ASR_VPR_VPRParams_AdvanceSettings)
-        self.Frame_ASR_VPR_ModelPath.setObjectName(u"Frame_ASR_VPR_ModelPath")
-        self.Frame_ASR_VPR_ModelPath.setMinimumSize(QSize(0, 105))
-        self.Frame_ASR_VPR_ModelPath.setStyleSheet(u"QFrame {\n"
-"	color: rgb(255, 255, 255);\n"
-"	background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QFrame:hover {\n"
-"	background-color: rgba(33, 33, 33, 99);\n"
-"}")
-        self.gridLayout_34 = QGridLayout(self.Frame_ASR_VPR_ModelPath)
-        self.gridLayout_34.setSpacing(12)
-        self.gridLayout_34.setObjectName(u"gridLayout_34")
-        self.gridLayout_34.setContentsMargins(21, 12, 21, 12)
-        self.Label_ASR_VPR_ModelPath = QLabel(self.Frame_ASR_VPR_ModelPath)
-        self.Label_ASR_VPR_ModelPath.setObjectName(u"Label_ASR_VPR_ModelPath")
-        sizePolicy6.setHeightForWidth(self.Label_ASR_VPR_ModelPath.sizePolicy().hasHeightForWidth())
-        self.Label_ASR_VPR_ModelPath.setSizePolicy(sizePolicy6)
-        self.Label_ASR_VPR_ModelPath.setStyleSheet(u"QLabel {\n"
-"	/*text-align: center;*/\n"
-"	/*color: rgb(255, 255, 255);*/\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.gridLayout_34.addWidget(self.Label_ASR_VPR_ModelPath, 0, 0, 1, 1)
-
-        self.HorizontalSpacer_ASR_VPR_ModelPath = QSpacerItem(445, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
-
-        self.gridLayout_34.addItem(self.HorizontalSpacer_ASR_VPR_ModelPath, 0, 1, 1, 1)
-
-        self.Button_ASR_VPR_ModelPath_Undo = QPushButton(self.Frame_ASR_VPR_ModelPath)
-        self.Button_ASR_VPR_ModelPath_Undo.setObjectName(u"Button_ASR_VPR_ModelPath_Undo")
-        self.Button_ASR_VPR_ModelPath_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_ASR_VPR_ModelPath_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_ASR_VPR_ModelPath_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgba(201, 210, 222, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(201, 210, 222, 210);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.gridLayout_34.addWidget(self.Button_ASR_VPR_ModelPath_Undo, 0, 2, 1, 1)
-
-        self.LineEdit_ASR_VPR_ModelPath = QLineEdit(self.Frame_ASR_VPR_ModelPath)
-        self.LineEdit_ASR_VPR_ModelPath.setObjectName(u"LineEdit_ASR_VPR_ModelPath")
-        self.LineEdit_ASR_VPR_ModelPath.setMinimumSize(QSize(0, 27))
-        self.LineEdit_ASR_VPR_ModelPath.setStyleSheet(u"QLineEdit {\n"
-"	/*font-size: 12px;*/\n"
-"	text-align: left;\n"
-"	color: rgb(255, 255, 255);\n"
-"	selection-background-color: darkgrey;\n"
-"	background-color: transparent;\n"
-"	padding-top: 3px;\n"
-"	padding-left: 6px;\n"
-"	padding-bottom: 3px;\n"
-"	padding-right: 6px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgba(201, 210, 222, 123);\n"
-"}\n"
-"QLineEdit:hover {\n"
-"	border-color: rgba(201, 210, 222, 210);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.gridLayout_34.addWidget(self.LineEdit_ASR_VPR_ModelPath, 1, 0, 1, 2)
-
-        self.Button_ASR_VPR_ModelPath = QPushButton(self.Frame_ASR_VPR_ModelPath)
-        self.Button_ASR_VPR_ModelPath.setObjectName(u"Button_ASR_VPR_ModelPath")
-        self.Button_ASR_VPR_ModelPath.setMinimumSize(QSize(27, 27))
-        self.Button_ASR_VPR_ModelPath.setMaximumSize(QSize(27, 27))
-        self.Button_ASR_VPR_ModelPath.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/OpenedFolder.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgba(201, 210, 222, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(201, 210, 222, 210);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.gridLayout_34.addWidget(self.Button_ASR_VPR_ModelPath, 1, 2, 1, 1)
-
-
-        self.verticalLayout_21.addWidget(self.Frame_ASR_VPR_ModelPath)
-
         self.Frame_ASR_VPR_ModelType = QFrame(self.Frame_ASR_VPR_VPRParams_AdvanceSettings)
         self.Frame_ASR_VPR_ModelType.setObjectName(u"Frame_ASR_VPR_ModelType")
         self.Frame_ASR_VPR_ModelType.setMinimumSize(QSize(0, 105))
@@ -6525,8 +6089,8 @@ class Ui_MainWindow(object):
         self.gridLayout_35.setContentsMargins(21, 12, 21, 12)
         self.Label_ASR_VPR_ModelType = QLabel(self.Frame_ASR_VPR_ModelType)
         self.Label_ASR_VPR_ModelType.setObjectName(u"Label_ASR_VPR_ModelType")
-        sizePolicy6.setHeightForWidth(self.Label_ASR_VPR_ModelType.sizePolicy().hasHeightForWidth())
-        self.Label_ASR_VPR_ModelType.setSizePolicy(sizePolicy6)
+        sizePolicy5.setHeightForWidth(self.Label_ASR_VPR_ModelType.sizePolicy().hasHeightForWidth())
+        self.Label_ASR_VPR_ModelType.setSizePolicy(sizePolicy5)
         self.Label_ASR_VPR_ModelType.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	/*color: rgb(255, 255, 255);*/\n"
@@ -6767,8 +6331,8 @@ class Ui_MainWindow(object):
         self.gridLayout_36.setContentsMargins(21, 12, 21, 12)
         self.Label_ASR_VPR_FeatureMethod = QLabel(self.Frame_ASR_VPR_FeatureMethod)
         self.Label_ASR_VPR_FeatureMethod.setObjectName(u"Label_ASR_VPR_FeatureMethod")
-        sizePolicy6.setHeightForWidth(self.Label_ASR_VPR_FeatureMethod.sizePolicy().hasHeightForWidth())
-        self.Label_ASR_VPR_FeatureMethod.setSizePolicy(sizePolicy6)
+        sizePolicy5.setHeightForWidth(self.Label_ASR_VPR_FeatureMethod.sizePolicy().hasHeightForWidth())
+        self.Label_ASR_VPR_FeatureMethod.setSizePolicy(sizePolicy5)
         self.Label_ASR_VPR_FeatureMethod.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	/*color: rgb(255, 255, 255);*/\n"
@@ -7009,8 +6573,8 @@ class Ui_MainWindow(object):
         self.gridLayout_37.setContentsMargins(21, 12, 21, 12)
         self.Label_ASR_VPR_DurationOfAudio = QLabel(self.Frame_ASR_VPR_DurationOfAudio)
         self.Label_ASR_VPR_DurationOfAudio.setObjectName(u"Label_ASR_VPR_DurationOfAudio")
-        sizePolicy6.setHeightForWidth(self.Label_ASR_VPR_DurationOfAudio.sizePolicy().hasHeightForWidth())
-        self.Label_ASR_VPR_DurationOfAudio.setSizePolicy(sizePolicy6)
+        sizePolicy5.setHeightForWidth(self.Label_ASR_VPR_DurationOfAudio.sizePolicy().hasHeightForWidth())
+        self.Label_ASR_VPR_DurationOfAudio.setSizePolicy(sizePolicy5)
         self.Label_ASR_VPR_DurationOfAudio.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	/*color: rgb(255, 255, 255);*/\n"
@@ -7169,8 +6733,8 @@ class Ui_MainWindow(object):
         self.gridLayout_38.setContentsMargins(21, 12, 21, 12)
         self.Label_ASR_VPR_AudioSpeakersDataPath = QLabel(self.Frame_ASR_VPR_AudioSpeakersDataPath)
         self.Label_ASR_VPR_AudioSpeakersDataPath.setObjectName(u"Label_ASR_VPR_AudioSpeakersDataPath")
-        sizePolicy6.setHeightForWidth(self.Label_ASR_VPR_AudioSpeakersDataPath.sizePolicy().hasHeightForWidth())
-        self.Label_ASR_VPR_AudioSpeakersDataPath.setSizePolicy(sizePolicy6)
+        sizePolicy5.setHeightForWidth(self.Label_ASR_VPR_AudioSpeakersDataPath.sizePolicy().hasHeightForWidth())
+        self.Label_ASR_VPR_AudioSpeakersDataPath.setSizePolicy(sizePolicy5)
         self.Label_ASR_VPR_AudioSpeakersDataPath.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	/*color: rgb(255, 255, 255);*/\n"
@@ -7214,64 +6778,11 @@ class Ui_MainWindow(object):
 
         self.gridLayout_38.addWidget(self.Button_ASR_VPR_AudioSpeakersDataPath_Undo, 0, 2, 1, 1)
 
-        self.LineEdit_ASR_VPR_AudioSpeakersDataPath = QLineEdit(self.Frame_ASR_VPR_AudioSpeakersDataPath)
+        self.LineEdit_ASR_VPR_AudioSpeakersDataPath = LineEditBase(self.Frame_ASR_VPR_AudioSpeakersDataPath)
         self.LineEdit_ASR_VPR_AudioSpeakersDataPath.setObjectName(u"LineEdit_ASR_VPR_AudioSpeakersDataPath")
         self.LineEdit_ASR_VPR_AudioSpeakersDataPath.setMinimumSize(QSize(0, 27))
-        self.LineEdit_ASR_VPR_AudioSpeakersDataPath.setStyleSheet(u"QLineEdit {\n"
-"	/*font-size: 12px;*/\n"
-"	text-align: left;\n"
-"	color: rgb(255, 255, 255);\n"
-"	selection-background-color: darkgrey;\n"
-"	background-color: transparent;\n"
-"	padding-top: 3px;\n"
-"	padding-left: 6px;\n"
-"	padding-bottom: 3px;\n"
-"	padding-right: 6px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgba(201, 210, 222, 123);\n"
-"}\n"
-"QLineEdit:hover {\n"
-"	border-color: rgba(201, 210, 222, 210);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
 
-        self.gridLayout_38.addWidget(self.LineEdit_ASR_VPR_AudioSpeakersDataPath, 1, 0, 1, 2)
-
-        self.Button_ASR_VPR_AudioSpeakersDataPath = QPushButton(self.Frame_ASR_VPR_AudioSpeakersDataPath)
-        self.Button_ASR_VPR_AudioSpeakersDataPath.setObjectName(u"Button_ASR_VPR_AudioSpeakersDataPath")
-        self.Button_ASR_VPR_AudioSpeakersDataPath.setMinimumSize(QSize(27, 27))
-        self.Button_ASR_VPR_AudioSpeakersDataPath.setMaximumSize(QSize(27, 27))
-        self.Button_ASR_VPR_AudioSpeakersDataPath.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/OpenedFolder.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgba(201, 210, 222, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(201, 210, 222, 210);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.gridLayout_38.addWidget(self.Button_ASR_VPR_AudioSpeakersDataPath, 1, 2, 1, 1)
+        self.gridLayout_38.addWidget(self.LineEdit_ASR_VPR_AudioSpeakersDataPath, 1, 0, 1, 3)
 
 
         self.verticalLayout_139.addWidget(self.Frame_ASR_VPR_AudioSpeakersDataPath)
@@ -7288,8 +6799,6 @@ class Ui_MainWindow(object):
 
         self.Widget_Right_ASR_VPR = QWidget(self.Subpage_ASR_VPR)
         self.Widget_Right_ASR_VPR.setObjectName(u"Widget_Right_ASR_VPR")
-        self.Widget_Right_ASR_VPR.setMinimumSize(QSize(210, 0))
-        self.Widget_Right_ASR_VPR.setMaximumSize(QSize(420, 16777215))
         self.Widget_Right_ASR_VPR.setStyleSheet(u"QWidget {\n"
 "	background-color: rgba(36, 36, 36, 123);\n"
 "	border-width: 0px;\n"
@@ -7420,32 +6929,6 @@ class Ui_MainWindow(object):
 
         self.gridLayout_14.addWidget(self.TextBrowser_Params_ASR_VPR, 0, 0, 1, 2)
 
-        self.Button_SyncParams_ASR_VPR = QPushButton(self.Widget_Right_ASR_VPR)
-        self.Button_SyncParams_ASR_VPR.setObjectName(u"Button_SyncParams_ASR_VPR")
-        self.Button_SyncParams_ASR_VPR.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	font-size: 12px;\n"
-"	background-color: transparent;\n"
-"	padding: 9.9px;\n"
-"	border-width: 1.5px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgb(120, 120, 120);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.gridLayout_14.addWidget(self.Button_SyncParams_ASR_VPR, 1, 0, 1, 1)
-
         self.Button_CheckOutput_ASR_VPR = QPushButton(self.Widget_Right_ASR_VPR)
         self.Button_CheckOutput_ASR_VPR.setObjectName(u"Button_CheckOutput_ASR_VPR")
         self.Button_CheckOutput_ASR_VPR.setStyleSheet(u"QPushButton {\n"
@@ -7470,7 +6953,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}")
 
-        self.gridLayout_14.addWidget(self.Button_CheckOutput_ASR_VPR, 1, 1, 1, 1)
+        self.gridLayout_14.addWidget(self.Button_CheckOutput_ASR_VPR, 1, 0, 1, 2)
 
 
         self.gridLayout_21.addWidget(self.Widget_Right_ASR_VPR, 0, 2, 1, 1)
@@ -7517,8 +7000,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_102.setContentsMargins(0, 0, 0, 0)
         self.Button_ASR_VPR_Execute = QPushButton(self.Page_ASR_VPR_Execute)
         self.Button_ASR_VPR_Execute.setObjectName(u"Button_ASR_VPR_Execute")
-        sizePolicy7.setHeightForWidth(self.Button_ASR_VPR_Execute.sizePolicy().hasHeightForWidth())
-        self.Button_ASR_VPR_Execute.setSizePolicy(sizePolicy7)
+        sizePolicy6.setHeightForWidth(self.Button_ASR_VPR_Execute.sizePolicy().hasHeightForWidth())
+        self.Button_ASR_VPR_Execute.setSizePolicy(sizePolicy6)
         self.Button_ASR_VPR_Execute.setMinimumSize(QSize(0, 30))
         self.Button_ASR_VPR_Execute.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
@@ -7554,8 +7037,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_119.setContentsMargins(0, 0, 0, 0)
         self.Button_ASR_VPR_Terminate = QPushButton(self.Page_ASR_VPR_Terminate)
         self.Button_ASR_VPR_Terminate.setObjectName(u"Button_ASR_VPR_Terminate")
-        sizePolicy7.setHeightForWidth(self.Button_ASR_VPR_Terminate.sizePolicy().hasHeightForWidth())
-        self.Button_ASR_VPR_Terminate.setSizePolicy(sizePolicy7)
+        sizePolicy6.setHeightForWidth(self.Button_ASR_VPR_Terminate.sizePolicy().hasHeightForWidth())
+        self.Button_ASR_VPR_Terminate.setSizePolicy(sizePolicy6)
         self.Button_ASR_VPR_Terminate.setMinimumSize(QSize(0, 30))
         self.Button_ASR_VPR_Terminate.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
@@ -7589,6 +7072,9 @@ class Ui_MainWindow(object):
 
         self.gridLayout_21.addWidget(self.ProgressBar_ASR_VPR, 1, 0, 1, 3)
 
+        self.gridLayout_21.setColumnStretch(0, 3)
+        self.gridLayout_21.setColumnStretch(1, 10)
+        self.gridLayout_21.setColumnStretch(2, 7)
         self.StackedWidget_Pages_ASR.addWidget(self.Subpage_ASR_VPR)
 
         self.verticalLayout_44.addWidget(self.StackedWidget_Pages_ASR)
@@ -7739,7 +7225,6 @@ class Ui_MainWindow(object):
         self.Widget_Left_STT_Whisper = QWidget(self.Subpage_STT_Whisper)
         self.Widget_Left_STT_Whisper.setObjectName(u"Widget_Left_STT_Whisper")
         self.Widget_Left_STT_Whisper.setMinimumSize(QSize(150, 0))
-        self.Widget_Left_STT_Whisper.setMaximumSize(QSize(210, 16777215))
         self.Widget_Left_STT_Whisper.setStyleSheet(u"QWidget {\n"
 "	background-color: rgba(36, 36, 36, 123);\n"
 "	border-width: 0px;\n"
@@ -7755,190 +7240,82 @@ class Ui_MainWindow(object):
         __qtreewidgetitem2 = QTreeWidgetItem(self.TreeWidget_Catalogue_STT_Whisper)
         QTreeWidgetItem(__qtreewidgetitem2)
         self.TreeWidget_Catalogue_STT_Whisper.setObjectName(u"TreeWidget_Catalogue_STT_Whisper")
-        self.TreeWidget_Catalogue_STT_Whisper.setStyleSheet(u"QTreeWidget {\n"
+        self.TreeWidget_Catalogue_STT_Whisper.setStyleSheet(u"QTreeView {\n"
 "	/*font-size: 12px;\n"
 "	text-align: center;*/\n"
-"	margin: 0px;\n"
 "	background-color: transparent;\n"
 "	border-width: 0px;\n"
 "	border-radius: 0px;\n"
 "	border-style: solid;\n"
 "}\n"
 "\n"
-"QTreeWidget::item {\n"
+"QTreeView::item {\n"
 "	background-color: transparent;\n"
-"	padding: 1.2px;\n"
+"	padding: 2.4px;\n"
+"}\n"
+"QTreeView::item:hover {\n"
+"    background-color: rgba(66, 66, 66, 198);\n"
+"}\n"
+"QTreeView::item:selected {\n"
+"    background-color: ;\n"
 "}\n"
 "\n"
-"QTreeWidget::branch {\n"
+"QTreeView::branch {\n"
 "    background-color: transparent;\n"
 "	border-width: 0px;\n"
 "	border-radius: 0px;\n"
 "	border-style: solid;\n"
 "}\n"
-"QTreeWidget::branch:open:has-children:has-siblings,\n"
-"QTreeWidget::branch:open:has-children:!has-siblings {\n"
+"QTreeView::branch:open:has-children {\n"
 "    image: ;\n"
 "}\n"
-"QTreeWidget::branch:closed:has-children:has-siblings,\n"
-"QTreeWidget::branch:closed:has-children:!has-siblings {\n"
+"QTreeView::branch:closed:has-children {\n"
 "    image: ;\n"
 "}\n"
-"QTreeWidget::branch:!has-children:has-siblings:adjoins-item,\n"
-"QTreeWidget::branch:!has-children:!has-siblings:adjoins-item {\n"
-"    image: ;\n"
-"}\n"
-"\n"
-"\n"
-"QTreeView {\n"
-"}\n"
-"\n"
-"QTreeView::item{\n"
-"}\n"
-"QTreeView::item:hover {\n"
-"    background-color: rgba(66, 66, 66, 198);\n"
-"}\n"
-""
-                        "QTreeView::item:selected:active{\n"
-"    background-color: ;\n"
-"}\n"
-"QTreeView::item:selected:!active {\n"
+"QTreeWidget::branch:adjoins-item {\n"
 "    background-color: ;\n"
 "}\n"
 "\n"
-"/*\n"
-"QHeaderView {\n"
-"	font-size: 15px;\n"
-"	text-align: center;\n"
-"	margin: 0px;\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QHeaderView:hover {\n"
-"    background-color: rgba(66, 66, 66, 198);\n"
-"}\n"
 "\n"
-"QHeaderView::section {\n"
-"	background-color: transparent;\n"
-"}\n"
-"QHeaderView::section:checked {\n"
-"	background-color: ;\n"
-"}\n"
-"\n"
-"QHeaderView::up-arrow {\n"
-"	position: ;\n"
-"	image: ;\n"
-"}\n"
-"\n"
-"QHeaderView::down-arrow {\n"
-"	position: ;\n"
-"	image: ;\n"
-"}*/\n"
-"\n"
-"\n"
-"QScrollBar::vertical {\n"
-"	width: 9px;\n"
-"	background-color: rgb(45, 45, 45);\n"
-"	border-width: 1px;\n"
+"QScrollBar {\n"
+"	background-color: rgba(45, 45, 45, 135);\n"
+"	border-width: 1.2px;\n"
 "	border-radius: 6px;\n"
 "	border-style: solid;\n"
 "	border-color: transparent;\n"
 "	margin: 0px;\n"
 "}\n"
-"QScrollBar::vertical:hover {\n"
-"	background-color: rgba(33, 3"
-                        "3, 33, 99);\n"
+"QScrollBar:hover {\n"
+"	background-color: r"
+                        "gba(33, 33, 33, 99);\n"
 "}\n"
-"\n"
-"QScrollBar::add-line:vertical {\n"
-"	height: 0px;\n"
-"	background-color: transparent;\n"
-"	subcontrol-position: bottom;\n"
-"	subcontrol-origin: margin;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"\n"
-"QScrollBar::sub-line:vertical {\n"
-"	height: 0px;\n"
-"	background-color: transparent;\n"
-"	subcontrol-position: top;\n"
-"	subcontrol-origin: margin;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"\n"
-"QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
-"	width: 0px;\n"
-"	height: 0px;\n"
-"	background-color: transparent;\n"
-"}\n"
-"\n"
-"QScrollBar::handle:vertical {\n"
-"	background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QScrollBar::handle:vertical:hover {\n"
-"	background-color: rgb(120, 120, 120);\n"
-"}\n"
-"\n"
 "\n"
 "QScrollBar::horizontal {\n"
 "	height: 9px;\n"
-"	background-color: rgb(45, 45, 45);\n"
-"	border-width: 1px;\n"
-"	border"
-                        "-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: transparent;\n"
-"	margin: 0px;\n"
 "}\n"
-"QScrollBar::horizontal:hover {\n"
-"	background-color: rgb(60, 60, 60);\n"
+"QScrollBar::vertical {\n"
+"	width: 9px;\n"
 "}\n"
 "\n"
-"QScrollBar::add-line:horizontal {\n"
-"	width: 0px;\n"
-"	background-color: transparent;\n"
-"	subcontrol-position: left;\n"
-"	subcontrol-origin: margin;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"\n"
-"QScrollBar::sub-line:horizontal {\n"
-"	width: 0px;\n"
-"	background-color: transparent;\n"
-"	subcontrol-position: right;\n"
-"	subcontrol-origin: margin;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"\n"
-"QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {\n"
-"	width: 0px;\n"
-"	height: 0px;\n"
-"	background-color: transparent;\n"
-"}\n"
-"\n"
-"QScrollBar::handle:horizontal {\n"
+"QScrollBar::sub-line, QScrollBar::add-line {\n"
 "	background-color: transparent;\n"
 "	border-width: 0px;\n"
 "	border-radius: 0px;\n"
 "	border-style: solid;\n"
 "}\n"
-"QScrollBar::handle:horizontal:hover {\n"
-"	backgro"
-                        "und-color: rgb(120, 120, 120);\n"
+"\n"
+"QScrollBar::sub-page, QScrollBar::add-page {\n"
+"	background-color: transparent;\n"
+"}\n"
+"\n"
+"QScrollBar::handle {\n"
+"	background-color: rgba(90, 90, 90, 90);\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QScrollBar::handle:hover {\n"
+"	background-color: rgba(120, 120, 120, 120);\n"
 "}")
 
         self.verticalLayout_8.addWidget(self.TreeWidget_Catalogue_STT_Whisper)
@@ -7948,9 +7325,7 @@ class Ui_MainWindow(object):
 
         self.ScrollArea_Middle_STT_Whisper = QScrollArea(self.Subpage_STT_Whisper)
         self.ScrollArea_Middle_STT_Whisper.setObjectName(u"ScrollArea_Middle_STT_Whisper")
-        sizePolicy5.setHeightForWidth(self.ScrollArea_Middle_STT_Whisper.sizePolicy().hasHeightForWidth())
-        self.ScrollArea_Middle_STT_Whisper.setSizePolicy(sizePolicy5)
-        self.ScrollArea_Middle_STT_Whisper.setMinimumSize(QSize(630, 0))
+        self.ScrollArea_Middle_STT_Whisper.setMinimumSize(QSize(600, 0))
         self.ScrollArea_Middle_STT_Whisper.setStyleSheet(u"QScrollArea {\n"
 "	background-color: rgba(36, 36, 36, 123);\n"
 "	border-width: 0px;\n"
@@ -8064,7 +7439,7 @@ class Ui_MainWindow(object):
         self.ScrollArea_Middle_STT_Whisper.setWidgetResizable(True)
         self.ScrollArea_Middle_WidgetContents_STT_Whisper = QWidget()
         self.ScrollArea_Middle_WidgetContents_STT_Whisper.setObjectName(u"ScrollArea_Middle_WidgetContents_STT_Whisper")
-        self.ScrollArea_Middle_WidgetContents_STT_Whisper.setGeometry(QRect(0, 0, 621, 934))
+        self.ScrollArea_Middle_WidgetContents_STT_Whisper.setGeometry(QRect(0, 0, 591, 934))
         self.verticalLayout_16 = QVBoxLayout(self.ScrollArea_Middle_WidgetContents_STT_Whisper)
         self.verticalLayout_16.setSpacing(12)
         self.verticalLayout_16.setObjectName(u"verticalLayout_16")
@@ -8115,8 +7490,8 @@ class Ui_MainWindow(object):
         self.gridLayout_39.setContentsMargins(21, 12, 21, 12)
         self.Label_STT_Whisper_AudioDir = QLabel(self.Frame_STT_Whisper_AudioDir)
         self.Label_STT_Whisper_AudioDir.setObjectName(u"Label_STT_Whisper_AudioDir")
-        sizePolicy6.setHeightForWidth(self.Label_STT_Whisper_AudioDir.sizePolicy().hasHeightForWidth())
-        self.Label_STT_Whisper_AudioDir.setSizePolicy(sizePolicy6)
+        sizePolicy5.setHeightForWidth(self.Label_STT_Whisper_AudioDir.sizePolicy().hasHeightForWidth())
+        self.Label_STT_Whisper_AudioDir.setSizePolicy(sizePolicy5)
         self.Label_STT_Whisper_AudioDir.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	/*color: rgb(255, 255, 255);*/\n"
@@ -8160,64 +7535,11 @@ class Ui_MainWindow(object):
 
         self.gridLayout_39.addWidget(self.Button_STT_Whisper_AudioDir_Undo, 0, 2, 1, 1)
 
-        self.LineEdit_STT_Whisper_AudioDir = QLineEdit(self.Frame_STT_Whisper_AudioDir)
+        self.LineEdit_STT_Whisper_AudioDir = LineEditBase(self.Frame_STT_Whisper_AudioDir)
         self.LineEdit_STT_Whisper_AudioDir.setObjectName(u"LineEdit_STT_Whisper_AudioDir")
         self.LineEdit_STT_Whisper_AudioDir.setMinimumSize(QSize(0, 27))
-        self.LineEdit_STT_Whisper_AudioDir.setStyleSheet(u"QLineEdit {\n"
-"	/*font-size: 12px;*/\n"
-"	text-align: left;\n"
-"	color: rgb(255, 255, 255);\n"
-"	selection-background-color: darkgrey;\n"
-"	background-color: transparent;\n"
-"	padding-top: 3px;\n"
-"	padding-left: 6px;\n"
-"	padding-bottom: 3px;\n"
-"	padding-right: 6px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgba(201, 210, 222, 123);\n"
-"}\n"
-"QLineEdit:hover {\n"
-"	border-color: rgba(201, 210, 222, 210);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
 
-        self.gridLayout_39.addWidget(self.LineEdit_STT_Whisper_AudioDir, 1, 0, 1, 2)
-
-        self.Button_STT_Whisper_AudioDir = QPushButton(self.Frame_STT_Whisper_AudioDir)
-        self.Button_STT_Whisper_AudioDir.setObjectName(u"Button_STT_Whisper_AudioDir")
-        self.Button_STT_Whisper_AudioDir.setMinimumSize(QSize(27, 27))
-        self.Button_STT_Whisper_AudioDir.setMaximumSize(QSize(27, 27))
-        self.Button_STT_Whisper_AudioDir.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/OpenedFolder.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgba(201, 210, 222, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(201, 210, 222, 210);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.gridLayout_39.addWidget(self.Button_STT_Whisper_AudioDir, 1, 2, 1, 1)
+        self.gridLayout_39.addWidget(self.LineEdit_STT_Whisper_AudioDir, 1, 0, 1, 3)
 
 
         self.verticalLayout_129.addWidget(self.Frame_STT_Whisper_AudioDir)
@@ -8274,8 +7596,8 @@ class Ui_MainWindow(object):
         self.gridLayout_40.setContentsMargins(21, 12, 21, 12)
         self.Label_STT_Whisper_AddLanguageInfo = QLabel(self.Frame_STT_Whisper_AddLanguageInfo)
         self.Label_STT_Whisper_AddLanguageInfo.setObjectName(u"Label_STT_Whisper_AddLanguageInfo")
-        sizePolicy6.setHeightForWidth(self.Label_STT_Whisper_AddLanguageInfo.sizePolicy().hasHeightForWidth())
-        self.Label_STT_Whisper_AddLanguageInfo.setSizePolicy(sizePolicy6)
+        sizePolicy5.setHeightForWidth(self.Label_STT_Whisper_AddLanguageInfo.sizePolicy().hasHeightForWidth())
+        self.Label_STT_Whisper_AddLanguageInfo.setSizePolicy(sizePolicy5)
         self.Label_STT_Whisper_AddLanguageInfo.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	/*color: rgb(255, 255, 255);*/\n"
@@ -8368,6 +7690,78 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_37.addWidget(self.Frame_STT_Whisper_AddLanguageInfo)
 
+        self.Frame_STT_Whisper_ModelPath = QFrame(self.Frame_STT_Whisper_WhisperParams_BasicSettings)
+        self.Frame_STT_Whisper_ModelPath.setObjectName(u"Frame_STT_Whisper_ModelPath")
+        self.Frame_STT_Whisper_ModelPath.setMinimumSize(QSize(0, 105))
+        self.Frame_STT_Whisper_ModelPath.setStyleSheet(u"QFrame {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QFrame:hover {\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
+"}")
+        self.gridLayout_41 = QGridLayout(self.Frame_STT_Whisper_ModelPath)
+        self.gridLayout_41.setSpacing(12)
+        self.gridLayout_41.setObjectName(u"gridLayout_41")
+        self.gridLayout_41.setContentsMargins(21, 12, 21, 12)
+        self.Label_STT_Whisper_ModelPath = QLabel(self.Frame_STT_Whisper_ModelPath)
+        self.Label_STT_Whisper_ModelPath.setObjectName(u"Label_STT_Whisper_ModelPath")
+        sizePolicy5.setHeightForWidth(self.Label_STT_Whisper_ModelPath.sizePolicy().hasHeightForWidth())
+        self.Label_STT_Whisper_ModelPath.setSizePolicy(sizePolicy5)
+        self.Label_STT_Whisper_ModelPath.setStyleSheet(u"QLabel {\n"
+"	/*text-align: center;*/\n"
+"	/*color: rgb(255, 255, 255);*/\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_41.addWidget(self.Label_STT_Whisper_ModelPath, 0, 0, 1, 1)
+
+        self.HorizontalSpacer_STT_Whisper_ModelPath = QSpacerItem(445, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.gridLayout_41.addItem(self.HorizontalSpacer_STT_Whisper_ModelPath, 0, 1, 1, 1)
+
+        self.Button_STT_Whisper_ModelPath_Undo = QPushButton(self.Frame_STT_Whisper_ModelPath)
+        self.Button_STT_Whisper_ModelPath_Undo.setObjectName(u"Button_STT_Whisper_ModelPath_Undo")
+        self.Button_STT_Whisper_ModelPath_Undo.setMinimumSize(QSize(27, 27))
+        self.Button_STT_Whisper_ModelPath_Undo.setMaximumSize(QSize(27, 27))
+        self.Button_STT_Whisper_ModelPath_Undo.setStyleSheet(u"QPushButton {\n"
+"	image: url(:/Button_Icon/Sources/Undo.png);\n"
+"	background-color: transparent;\n"
+"	padding: 4.5px;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgba(201, 210, 222, 123);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgba(201, 210, 222, 210);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_41.addWidget(self.Button_STT_Whisper_ModelPath_Undo, 0, 2, 1, 1)
+
+        self.LineEdit_STT_Whisper_ModelPath = LineEditBase(self.Frame_STT_Whisper_ModelPath)
+        self.LineEdit_STT_Whisper_ModelPath.setObjectName(u"LineEdit_STT_Whisper_ModelPath")
+        self.LineEdit_STT_Whisper_ModelPath.setMinimumSize(QSize(0, 27))
+
+        self.gridLayout_41.addWidget(self.LineEdit_STT_Whisper_ModelPath, 1, 0, 1, 3)
+
+
+        self.verticalLayout_37.addWidget(self.Frame_STT_Whisper_ModelPath)
+
 
         self.verticalLayout_49.addWidget(self.Frame_STT_Whisper_WhisperParams_BasicSettings)
 
@@ -8423,131 +7817,6 @@ class Ui_MainWindow(object):
         self.verticalLayout_15.setSpacing(0)
         self.verticalLayout_15.setObjectName(u"verticalLayout_15")
         self.verticalLayout_15.setContentsMargins(0, 0, 0, 0)
-        self.Frame_STT_Whisper_ModelPath = QFrame(self.Frame_STT_Whisper_WhisperParams_AdvanceSettings)
-        self.Frame_STT_Whisper_ModelPath.setObjectName(u"Frame_STT_Whisper_ModelPath")
-        self.Frame_STT_Whisper_ModelPath.setMinimumSize(QSize(0, 105))
-        self.Frame_STT_Whisper_ModelPath.setStyleSheet(u"QFrame {\n"
-"	color: rgb(255, 255, 255);\n"
-"	background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QFrame:hover {\n"
-"	background-color: rgba(33, 33, 33, 99);\n"
-"}")
-        self.gridLayout_41 = QGridLayout(self.Frame_STT_Whisper_ModelPath)
-        self.gridLayout_41.setSpacing(12)
-        self.gridLayout_41.setObjectName(u"gridLayout_41")
-        self.gridLayout_41.setContentsMargins(21, 12, 21, 12)
-        self.Label_STT_Whisper_ModelPath = QLabel(self.Frame_STT_Whisper_ModelPath)
-        self.Label_STT_Whisper_ModelPath.setObjectName(u"Label_STT_Whisper_ModelPath")
-        sizePolicy6.setHeightForWidth(self.Label_STT_Whisper_ModelPath.sizePolicy().hasHeightForWidth())
-        self.Label_STT_Whisper_ModelPath.setSizePolicy(sizePolicy6)
-        self.Label_STT_Whisper_ModelPath.setStyleSheet(u"QLabel {\n"
-"	/*text-align: center;*/\n"
-"	/*color: rgb(255, 255, 255);*/\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.gridLayout_41.addWidget(self.Label_STT_Whisper_ModelPath, 0, 0, 1, 1)
-
-        self.HorizontalSpacer_STT_Whisper_ModelPath = QSpacerItem(445, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
-
-        self.gridLayout_41.addItem(self.HorizontalSpacer_STT_Whisper_ModelPath, 0, 1, 1, 1)
-
-        self.Button_STT_Whisper_ModelPath_Undo = QPushButton(self.Frame_STT_Whisper_ModelPath)
-        self.Button_STT_Whisper_ModelPath_Undo.setObjectName(u"Button_STT_Whisper_ModelPath_Undo")
-        self.Button_STT_Whisper_ModelPath_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_STT_Whisper_ModelPath_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_STT_Whisper_ModelPath_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgba(201, 210, 222, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(201, 210, 222, 210);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.gridLayout_41.addWidget(self.Button_STT_Whisper_ModelPath_Undo, 0, 2, 1, 1)
-
-        self.LineEdit_STT_Whisper_ModelPath = QLineEdit(self.Frame_STT_Whisper_ModelPath)
-        self.LineEdit_STT_Whisper_ModelPath.setObjectName(u"LineEdit_STT_Whisper_ModelPath")
-        self.LineEdit_STT_Whisper_ModelPath.setMinimumSize(QSize(0, 27))
-        self.LineEdit_STT_Whisper_ModelPath.setStyleSheet(u"QLineEdit {\n"
-"	/*font-size: 12px;*/\n"
-"	text-align: left;\n"
-"	color: rgb(255, 255, 255);\n"
-"	selection-background-color: darkgrey;\n"
-"	background-color: transparent;\n"
-"	padding-top: 3px;\n"
-"	padding-left: 6px;\n"
-"	padding-bottom: 3px;\n"
-"	padding-right: 6px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgba(201, 210, 222, 123);\n"
-"}\n"
-"QLineEdit:hover {\n"
-"	border-color: rgba(201, 210, 222, 210);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.gridLayout_41.addWidget(self.LineEdit_STT_Whisper_ModelPath, 1, 0, 1, 2)
-
-        self.Button_STT_Whisper_ModelPath = QPushButton(self.Frame_STT_Whisper_ModelPath)
-        self.Button_STT_Whisper_ModelPath.setObjectName(u"Button_STT_Whisper_ModelPath")
-        self.Button_STT_Whisper_ModelPath.setMinimumSize(QSize(27, 27))
-        self.Button_STT_Whisper_ModelPath.setMaximumSize(QSize(27, 27))
-        self.Button_STT_Whisper_ModelPath.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/OpenedFolder.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgba(201, 210, 222, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(201, 210, 222, 210);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.gridLayout_41.addWidget(self.Button_STT_Whisper_ModelPath, 1, 2, 1, 1)
-
-
-        self.verticalLayout_15.addWidget(self.Frame_STT_Whisper_ModelPath)
-
         self.Frame_STT_Whisper_fp16 = QFrame(self.Frame_STT_Whisper_WhisperParams_AdvanceSettings)
         self.Frame_STT_Whisper_fp16.setObjectName(u"Frame_STT_Whisper_fp16")
         self.Frame_STT_Whisper_fp16.setMinimumSize(QSize(0, 105))
@@ -8566,8 +7835,8 @@ class Ui_MainWindow(object):
         self.gridLayout_44.setContentsMargins(21, 12, 21, 12)
         self.Label_STT_Whisper_fp16 = QLabel(self.Frame_STT_Whisper_fp16)
         self.Label_STT_Whisper_fp16.setObjectName(u"Label_STT_Whisper_fp16")
-        sizePolicy6.setHeightForWidth(self.Label_STT_Whisper_fp16.sizePolicy().hasHeightForWidth())
-        self.Label_STT_Whisper_fp16.setSizePolicy(sizePolicy6)
+        sizePolicy5.setHeightForWidth(self.Label_STT_Whisper_fp16.sizePolicy().hasHeightForWidth())
+        self.Label_STT_Whisper_fp16.setSizePolicy(sizePolicy5)
         self.Label_STT_Whisper_fp16.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	/*color: rgb(255, 255, 255);*/\n"
@@ -8755,8 +8024,8 @@ class Ui_MainWindow(object):
 
         self.Label_STT_Whisper_ConditionOnPreviousText = QLabel(self.Frame_STT_Whisper_ConditionOnPreviousText)
         self.Label_STT_Whisper_ConditionOnPreviousText.setObjectName(u"Label_STT_Whisper_ConditionOnPreviousText")
-        sizePolicy6.setHeightForWidth(self.Label_STT_Whisper_ConditionOnPreviousText.sizePolicy().hasHeightForWidth())
-        self.Label_STT_Whisper_ConditionOnPreviousText.setSizePolicy(sizePolicy6)
+        sizePolicy5.setHeightForWidth(self.Label_STT_Whisper_ConditionOnPreviousText.sizePolicy().hasHeightForWidth())
+        self.Label_STT_Whisper_ConditionOnPreviousText.setSizePolicy(sizePolicy5)
         self.Label_STT_Whisper_ConditionOnPreviousText.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	/*color: rgb(255, 255, 255);*/\n"
@@ -8790,8 +8059,8 @@ class Ui_MainWindow(object):
         self.gridLayout_42.setContentsMargins(21, 12, 21, 12)
         self.Label_STT_Whisper_Verbose = QLabel(self.Frame_STT_Whisper_Verbose)
         self.Label_STT_Whisper_Verbose.setObjectName(u"Label_STT_Whisper_Verbose")
-        sizePolicy6.setHeightForWidth(self.Label_STT_Whisper_Verbose.sizePolicy().hasHeightForWidth())
-        self.Label_STT_Whisper_Verbose.setSizePolicy(sizePolicy6)
+        sizePolicy5.setHeightForWidth(self.Label_STT_Whisper_Verbose.sizePolicy().hasHeightForWidth())
+        self.Label_STT_Whisper_Verbose.setSizePolicy(sizePolicy5)
         self.Label_STT_Whisper_Verbose.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	/*color: rgb(255, 255, 255);*/\n"
@@ -8936,8 +8205,8 @@ class Ui_MainWindow(object):
         self.gridLayout_45.setContentsMargins(21, 12, 21, 12)
         self.Label_STT_Whisper_SRTDir = QLabel(self.Frame_STT_Whisper_SRTDir)
         self.Label_STT_Whisper_SRTDir.setObjectName(u"Label_STT_Whisper_SRTDir")
-        sizePolicy6.setHeightForWidth(self.Label_STT_Whisper_SRTDir.sizePolicy().hasHeightForWidth())
-        self.Label_STT_Whisper_SRTDir.setSizePolicy(sizePolicy6)
+        sizePolicy5.setHeightForWidth(self.Label_STT_Whisper_SRTDir.sizePolicy().hasHeightForWidth())
+        self.Label_STT_Whisper_SRTDir.setSizePolicy(sizePolicy5)
         self.Label_STT_Whisper_SRTDir.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	/*color: rgb(255, 255, 255);*/\n"
@@ -8981,64 +8250,11 @@ class Ui_MainWindow(object):
 
         self.gridLayout_45.addWidget(self.Button_STT_Whisper_SRTDir_Undo, 0, 2, 1, 1)
 
-        self.LineEdit_STT_Whisper_SRTDir = QLineEdit(self.Frame_STT_Whisper_SRTDir)
+        self.LineEdit_STT_Whisper_SRTDir = LineEditBase(self.Frame_STT_Whisper_SRTDir)
         self.LineEdit_STT_Whisper_SRTDir.setObjectName(u"LineEdit_STT_Whisper_SRTDir")
         self.LineEdit_STT_Whisper_SRTDir.setMinimumSize(QSize(0, 27))
-        self.LineEdit_STT_Whisper_SRTDir.setStyleSheet(u"QLineEdit {\n"
-"	/*font-size: 12px;*/\n"
-"	text-align: left;\n"
-"	color: rgb(255, 255, 255);\n"
-"	selection-background-color: darkgrey;\n"
-"	background-color: transparent;\n"
-"	padding-top: 3px;\n"
-"	padding-left: 6px;\n"
-"	padding-bottom: 3px;\n"
-"	padding-right: 6px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgba(201, 210, 222, 123);\n"
-"}\n"
-"QLineEdit:hover {\n"
-"	border-color: rgba(201, 210, 222, 210);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
 
-        self.gridLayout_45.addWidget(self.LineEdit_STT_Whisper_SRTDir, 1, 0, 1, 2)
-
-        self.Button_STT_Whisper_SRTDir = QPushButton(self.Frame_STT_Whisper_SRTDir)
-        self.Button_STT_Whisper_SRTDir.setObjectName(u"Button_STT_Whisper_SRTDir")
-        self.Button_STT_Whisper_SRTDir.setMinimumSize(QSize(27, 27))
-        self.Button_STT_Whisper_SRTDir.setMaximumSize(QSize(27, 27))
-        self.Button_STT_Whisper_SRTDir.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/OpenedFolder.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgba(201, 210, 222, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(201, 210, 222, 210);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.gridLayout_45.addWidget(self.Button_STT_Whisper_SRTDir, 1, 2, 1, 1)
+        self.gridLayout_45.addWidget(self.LineEdit_STT_Whisper_SRTDir, 1, 0, 1, 3)
 
 
         self.verticalLayout_135.addWidget(self.Frame_STT_Whisper_SRTDir)
@@ -9059,8 +8275,6 @@ class Ui_MainWindow(object):
 
         self.Widget_Right_STT_Whisper = QWidget(self.Subpage_STT_Whisper)
         self.Widget_Right_STT_Whisper.setObjectName(u"Widget_Right_STT_Whisper")
-        self.Widget_Right_STT_Whisper.setMinimumSize(QSize(210, 0))
-        self.Widget_Right_STT_Whisper.setMaximumSize(QSize(420, 16777215))
         self.Widget_Right_STT_Whisper.setStyleSheet(u"QWidget {\n"
 "	background-color: rgba(36, 36, 36, 123);\n"
 "	border-width: 0px;\n"
@@ -9191,32 +8405,6 @@ class Ui_MainWindow(object):
 
         self.gridLayout_15.addWidget(self.TextBrowser_Params_STT_Whisper, 0, 0, 1, 2)
 
-        self.Button_SyncParams_STT_Whisper = QPushButton(self.Widget_Right_STT_Whisper)
-        self.Button_SyncParams_STT_Whisper.setObjectName(u"Button_SyncParams_STT_Whisper")
-        self.Button_SyncParams_STT_Whisper.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	font-size: 12px;\n"
-"	background-color: transparent;\n"
-"	padding: 9.9px;\n"
-"	border-width: 1.5px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgb(120, 120, 120);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.gridLayout_15.addWidget(self.Button_SyncParams_STT_Whisper, 1, 0, 1, 1)
-
         self.Button_CheckOutput_STT_Whisper = QPushButton(self.Widget_Right_STT_Whisper)
         self.Button_CheckOutput_STT_Whisper.setObjectName(u"Button_CheckOutput_STT_Whisper")
         self.Button_CheckOutput_STT_Whisper.setStyleSheet(u"QPushButton {\n"
@@ -9241,7 +8429,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}")
 
-        self.gridLayout_15.addWidget(self.Button_CheckOutput_STT_Whisper, 1, 1, 1, 1)
+        self.gridLayout_15.addWidget(self.Button_CheckOutput_STT_Whisper, 1, 0, 1, 2)
 
 
         self.gridLayout_19.addWidget(self.Widget_Right_STT_Whisper, 0, 2, 1, 1)
@@ -9288,8 +8476,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_90.setContentsMargins(0, 0, 0, 0)
         self.Button_STT_Whisper_Execute = QPushButton(self.Page_STT_Whisper_Execute)
         self.Button_STT_Whisper_Execute.setObjectName(u"Button_STT_Whisper_Execute")
-        sizePolicy7.setHeightForWidth(self.Button_STT_Whisper_Execute.sizePolicy().hasHeightForWidth())
-        self.Button_STT_Whisper_Execute.setSizePolicy(sizePolicy7)
+        sizePolicy6.setHeightForWidth(self.Button_STT_Whisper_Execute.sizePolicy().hasHeightForWidth())
+        self.Button_STT_Whisper_Execute.setSizePolicy(sizePolicy6)
         self.Button_STT_Whisper_Execute.setMinimumSize(QSize(0, 30))
         self.Button_STT_Whisper_Execute.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
@@ -9325,8 +8513,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_91.setContentsMargins(0, 0, 0, 0)
         self.Button_STT_Whisper_Terminate = QPushButton(self.Page_STT_Whisper_Terminate)
         self.Button_STT_Whisper_Terminate.setObjectName(u"Button_STT_Whisper_Terminate")
-        sizePolicy7.setHeightForWidth(self.Button_STT_Whisper_Terminate.sizePolicy().hasHeightForWidth())
-        self.Button_STT_Whisper_Terminate.setSizePolicy(sizePolicy7)
+        sizePolicy6.setHeightForWidth(self.Button_STT_Whisper_Terminate.sizePolicy().hasHeightForWidth())
+        self.Button_STT_Whisper_Terminate.setSizePolicy(sizePolicy6)
         self.Button_STT_Whisper_Terminate.setMinimumSize(QSize(0, 30))
         self.Button_STT_Whisper_Terminate.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
@@ -9360,6 +8548,9 @@ class Ui_MainWindow(object):
 
         self.gridLayout_19.addWidget(self.ProgressBar_STT_Whisper, 1, 0, 1, 3)
 
+        self.gridLayout_19.setColumnStretch(0, 3)
+        self.gridLayout_19.setColumnStretch(1, 10)
+        self.gridLayout_19.setColumnStretch(2, 7)
         self.StackedWidget_Pages_STT.addWidget(self.Subpage_STT_Whisper)
 
         self.verticalLayout_41.addWidget(self.StackedWidget_Pages_STT)
@@ -9510,7 +8701,6 @@ class Ui_MainWindow(object):
         self.Widget_Left_DAT_VITS = QWidget(self.Subpage_DAT_VITS)
         self.Widget_Left_DAT_VITS.setObjectName(u"Widget_Left_DAT_VITS")
         self.Widget_Left_DAT_VITS.setMinimumSize(QSize(150, 0))
-        self.Widget_Left_DAT_VITS.setMaximumSize(QSize(210, 16777215))
         self.Widget_Left_DAT_VITS.setStyleSheet(u"QWidget {\n"
 "	background-color: rgba(36, 36, 36, 123);\n"
 "	border-width: 0px;\n"
@@ -9526,190 +8716,82 @@ class Ui_MainWindow(object):
         __qtreewidgetitem3 = QTreeWidgetItem(self.TreeWidget_Catalogue_DAT_VITS)
         QTreeWidgetItem(__qtreewidgetitem3)
         self.TreeWidget_Catalogue_DAT_VITS.setObjectName(u"TreeWidget_Catalogue_DAT_VITS")
-        self.TreeWidget_Catalogue_DAT_VITS.setStyleSheet(u"QTreeWidget {\n"
+        self.TreeWidget_Catalogue_DAT_VITS.setStyleSheet(u"QTreeView {\n"
 "	/*font-size: 12px;\n"
 "	text-align: center;*/\n"
-"	margin: 0px;\n"
 "	background-color: transparent;\n"
 "	border-width: 0px;\n"
 "	border-radius: 0px;\n"
 "	border-style: solid;\n"
 "}\n"
 "\n"
-"QTreeWidget::item {\n"
+"QTreeView::item {\n"
 "	background-color: transparent;\n"
-"	padding: 1.2px;\n"
+"	padding: 2.4px;\n"
+"}\n"
+"QTreeView::item:hover {\n"
+"    background-color: rgba(66, 66, 66, 198);\n"
+"}\n"
+"QTreeView::item:selected {\n"
+"    background-color: ;\n"
 "}\n"
 "\n"
-"QTreeWidget::branch {\n"
+"QTreeView::branch {\n"
 "    background-color: transparent;\n"
 "	border-width: 0px;\n"
 "	border-radius: 0px;\n"
 "	border-style: solid;\n"
 "}\n"
-"QTreeWidget::branch:open:has-children:has-siblings,\n"
-"QTreeWidget::branch:open:has-children:!has-siblings {\n"
+"QTreeView::branch:open:has-children {\n"
 "    image: ;\n"
 "}\n"
-"QTreeWidget::branch:closed:has-children:has-siblings,\n"
-"QTreeWidget::branch:closed:has-children:!has-siblings {\n"
+"QTreeView::branch:closed:has-children {\n"
 "    image: ;\n"
 "}\n"
-"QTreeWidget::branch:!has-children:has-siblings:adjoins-item,\n"
-"QTreeWidget::branch:!has-children:!has-siblings:adjoins-item {\n"
-"    image: ;\n"
-"}\n"
-"\n"
-"\n"
-"QTreeView {\n"
-"}\n"
-"\n"
-"QTreeView::item{\n"
-"}\n"
-"QTreeView::item:hover {\n"
-"    background-color: rgba(66, 66, 66, 198);\n"
-"}\n"
-""
-                        "QTreeView::item:selected:active{\n"
-"    background-color: ;\n"
-"}\n"
-"QTreeView::item:selected:!active {\n"
+"QTreeWidget::branch:adjoins-item {\n"
 "    background-color: ;\n"
 "}\n"
 "\n"
-"/*\n"
-"QHeaderView {\n"
-"	font-size: 15px;\n"
-"	text-align: center;\n"
-"	margin: 0px;\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QHeaderView:hover {\n"
-"    background-color: rgba(66, 66, 66, 198);\n"
-"}\n"
 "\n"
-"QHeaderView::section {\n"
-"	background-color: transparent;\n"
-"}\n"
-"QHeaderView::section:checked {\n"
-"	background-color: ;\n"
-"}\n"
-"\n"
-"QHeaderView::up-arrow {\n"
-"	position: ;\n"
-"	image: ;\n"
-"}\n"
-"\n"
-"QHeaderView::down-arrow {\n"
-"	position: ;\n"
-"	image: ;\n"
-"}*/\n"
-"\n"
-"\n"
-"QScrollBar::vertical {\n"
-"	width: 9px;\n"
-"	background-color: rgb(45, 45, 45);\n"
-"	border-width: 1px;\n"
+"QScrollBar {\n"
+"	background-color: rgba(45, 45, 45, 135);\n"
+"	border-width: 1.2px;\n"
 "	border-radius: 6px;\n"
 "	border-style: solid;\n"
 "	border-color: transparent;\n"
 "	margin: 0px;\n"
 "}\n"
-"QScrollBar::vertical:hover {\n"
-"	background-color: rgba(33, 3"
-                        "3, 33, 99);\n"
+"QScrollBar:hover {\n"
+"	background-color: r"
+                        "gba(33, 33, 33, 99);\n"
 "}\n"
-"\n"
-"QScrollBar::add-line:vertical {\n"
-"	height: 0px;\n"
-"	background-color: transparent;\n"
-"	subcontrol-position: bottom;\n"
-"	subcontrol-origin: margin;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"\n"
-"QScrollBar::sub-line:vertical {\n"
-"	height: 0px;\n"
-"	background-color: transparent;\n"
-"	subcontrol-position: top;\n"
-"	subcontrol-origin: margin;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"\n"
-"QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
-"	width: 0px;\n"
-"	height: 0px;\n"
-"	background-color: transparent;\n"
-"}\n"
-"\n"
-"QScrollBar::handle:vertical {\n"
-"	background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QScrollBar::handle:vertical:hover {\n"
-"	background-color: rgb(120, 120, 120);\n"
-"}\n"
-"\n"
 "\n"
 "QScrollBar::horizontal {\n"
 "	height: 9px;\n"
-"	background-color: rgb(45, 45, 45);\n"
-"	border-width: 1px;\n"
-"	border"
-                        "-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: transparent;\n"
-"	margin: 0px;\n"
 "}\n"
-"QScrollBar::horizontal:hover {\n"
-"	background-color: rgb(60, 60, 60);\n"
+"QScrollBar::vertical {\n"
+"	width: 9px;\n"
 "}\n"
 "\n"
-"QScrollBar::add-line:horizontal {\n"
-"	width: 0px;\n"
-"	background-color: transparent;\n"
-"	subcontrol-position: left;\n"
-"	subcontrol-origin: margin;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"\n"
-"QScrollBar::sub-line:horizontal {\n"
-"	width: 0px;\n"
-"	background-color: transparent;\n"
-"	subcontrol-position: right;\n"
-"	subcontrol-origin: margin;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"\n"
-"QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {\n"
-"	width: 0px;\n"
-"	height: 0px;\n"
-"	background-color: transparent;\n"
-"}\n"
-"\n"
-"QScrollBar::handle:horizontal {\n"
+"QScrollBar::sub-line, QScrollBar::add-line {\n"
 "	background-color: transparent;\n"
 "	border-width: 0px;\n"
 "	border-radius: 0px;\n"
 "	border-style: solid;\n"
 "}\n"
-"QScrollBar::handle:horizontal:hover {\n"
-"	backgro"
-                        "und-color: rgb(120, 120, 120);\n"
+"\n"
+"QScrollBar::sub-page, QScrollBar::add-page {\n"
+"	background-color: transparent;\n"
+"}\n"
+"\n"
+"QScrollBar::handle {\n"
+"	background-color: rgba(90, 90, 90, 90);\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QScrollBar::handle:hover {\n"
+"	background-color: rgba(120, 120, 120, 120);\n"
 "}")
 
         self.verticalLayout_9.addWidget(self.TreeWidget_Catalogue_DAT_VITS)
@@ -9719,9 +8801,7 @@ class Ui_MainWindow(object):
 
         self.ScrollArea_Middle_DAT_VITS = QScrollArea(self.Subpage_DAT_VITS)
         self.ScrollArea_Middle_DAT_VITS.setObjectName(u"ScrollArea_Middle_DAT_VITS")
-        sizePolicy5.setHeightForWidth(self.ScrollArea_Middle_DAT_VITS.sizePolicy().hasHeightForWidth())
-        self.ScrollArea_Middle_DAT_VITS.setSizePolicy(sizePolicy5)
-        self.ScrollArea_Middle_DAT_VITS.setMinimumSize(QSize(630, 0))
+        self.ScrollArea_Middle_DAT_VITS.setMinimumSize(QSize(600, 0))
         self.ScrollArea_Middle_DAT_VITS.setStyleSheet(u"QScrollArea {\n"
 "	background-color: rgba(36, 36, 36, 123);\n"
 "	border-width: 0px;\n"
@@ -9835,7 +8915,7 @@ class Ui_MainWindow(object):
         self.ScrollArea_Middle_DAT_VITS.setWidgetResizable(True)
         self.ScrollArea_Middle_WidgetContents_DAT_VITS = QWidget()
         self.ScrollArea_Middle_WidgetContents_DAT_VITS.setObjectName(u"ScrollArea_Middle_WidgetContents_DAT_VITS")
-        self.ScrollArea_Middle_WidgetContents_DAT_VITS.setGeometry(QRect(0, 0, 621, 1356))
+        self.ScrollArea_Middle_WidgetContents_DAT_VITS.setGeometry(QRect(0, 0, 591, 1356))
         self.verticalLayout_36 = QVBoxLayout(self.ScrollArea_Middle_WidgetContents_DAT_VITS)
         self.verticalLayout_36.setSpacing(12)
         self.verticalLayout_36.setObjectName(u"verticalLayout_36")
@@ -9886,8 +8966,8 @@ class Ui_MainWindow(object):
         self.gridLayout_46.setContentsMargins(21, 12, 21, 12)
         self.Label_DAT_VITS_AudioSpeakersDataPath = QLabel(self.Frame_DAT_VITS_AudioSpeakersDataPath)
         self.Label_DAT_VITS_AudioSpeakersDataPath.setObjectName(u"Label_DAT_VITS_AudioSpeakersDataPath")
-        sizePolicy6.setHeightForWidth(self.Label_DAT_VITS_AudioSpeakersDataPath.sizePolicy().hasHeightForWidth())
-        self.Label_DAT_VITS_AudioSpeakersDataPath.setSizePolicy(sizePolicy6)
+        sizePolicy5.setHeightForWidth(self.Label_DAT_VITS_AudioSpeakersDataPath.sizePolicy().hasHeightForWidth())
+        self.Label_DAT_VITS_AudioSpeakersDataPath.setSizePolicy(sizePolicy5)
         self.Label_DAT_VITS_AudioSpeakersDataPath.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	/*color: rgb(255, 255, 255);*/\n"
@@ -9931,64 +9011,11 @@ class Ui_MainWindow(object):
 
         self.gridLayout_46.addWidget(self.Button_DAT_VITS_AudioSpeakersDataPath_Undo, 0, 2, 1, 1)
 
-        self.LineEdit_DAT_VITS_AudioSpeakersDataPath = QLineEdit(self.Frame_DAT_VITS_AudioSpeakersDataPath)
+        self.LineEdit_DAT_VITS_AudioSpeakersDataPath = LineEditBase(self.Frame_DAT_VITS_AudioSpeakersDataPath)
         self.LineEdit_DAT_VITS_AudioSpeakersDataPath.setObjectName(u"LineEdit_DAT_VITS_AudioSpeakersDataPath")
         self.LineEdit_DAT_VITS_AudioSpeakersDataPath.setMinimumSize(QSize(0, 27))
-        self.LineEdit_DAT_VITS_AudioSpeakersDataPath.setStyleSheet(u"QLineEdit {\n"
-"	/*font-size: 12px;*/\n"
-"	text-align: left;\n"
-"	color: rgb(255, 255, 255);\n"
-"	selection-background-color: darkgrey;\n"
-"	background-color: transparent;\n"
-"	padding-top: 3px;\n"
-"	padding-left: 6px;\n"
-"	padding-bottom: 3px;\n"
-"	padding-right: 6px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgba(201, 210, 222, 123);\n"
-"}\n"
-"QLineEdit:hover {\n"
-"	border-color: rgba(201, 210, 222, 210);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
 
-        self.gridLayout_46.addWidget(self.LineEdit_DAT_VITS_AudioSpeakersDataPath, 1, 0, 1, 2)
-
-        self.Button_DAT_VITS_AudioSpeakersDataPath = QPushButton(self.Frame_DAT_VITS_AudioSpeakersDataPath)
-        self.Button_DAT_VITS_AudioSpeakersDataPath.setObjectName(u"Button_DAT_VITS_AudioSpeakersDataPath")
-        self.Button_DAT_VITS_AudioSpeakersDataPath.setMinimumSize(QSize(27, 27))
-        self.Button_DAT_VITS_AudioSpeakersDataPath.setMaximumSize(QSize(27, 27))
-        self.Button_DAT_VITS_AudioSpeakersDataPath.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/OpenedFolder.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgba(201, 210, 222, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(201, 210, 222, 210);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.gridLayout_46.addWidget(self.Button_DAT_VITS_AudioSpeakersDataPath, 1, 2, 1, 1)
+        self.gridLayout_46.addWidget(self.LineEdit_DAT_VITS_AudioSpeakersDataPath, 1, 0, 1, 3)
 
 
         self.verticalLayout_29.addWidget(self.Frame_DAT_VITS_AudioSpeakersDataPath)
@@ -10011,8 +9038,8 @@ class Ui_MainWindow(object):
         self.gridLayout_47.setContentsMargins(21, 12, 21, 12)
         self.Label_DAT_VITS_SRTDir = QLabel(self.Frame_DAT_VITS_SRTDir)
         self.Label_DAT_VITS_SRTDir.setObjectName(u"Label_DAT_VITS_SRTDir")
-        sizePolicy6.setHeightForWidth(self.Label_DAT_VITS_SRTDir.sizePolicy().hasHeightForWidth())
-        self.Label_DAT_VITS_SRTDir.setSizePolicy(sizePolicy6)
+        sizePolicy5.setHeightForWidth(self.Label_DAT_VITS_SRTDir.sizePolicy().hasHeightForWidth())
+        self.Label_DAT_VITS_SRTDir.setSizePolicy(sizePolicy5)
         self.Label_DAT_VITS_SRTDir.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	/*color: rgb(255, 255, 255);*/\n"
@@ -10056,64 +9083,11 @@ class Ui_MainWindow(object):
 
         self.gridLayout_47.addWidget(self.Button_DAT_VITS_SRTDir_Undo, 0, 2, 1, 1)
 
-        self.LineEdit_DAT_VITS_SRTDir = QLineEdit(self.Frame_DAT_VITS_SRTDir)
+        self.LineEdit_DAT_VITS_SRTDir = LineEditBase(self.Frame_DAT_VITS_SRTDir)
         self.LineEdit_DAT_VITS_SRTDir.setObjectName(u"LineEdit_DAT_VITS_SRTDir")
         self.LineEdit_DAT_VITS_SRTDir.setMinimumSize(QSize(0, 27))
-        self.LineEdit_DAT_VITS_SRTDir.setStyleSheet(u"QLineEdit {\n"
-"	/*font-size: 12px;*/\n"
-"	text-align: left;\n"
-"	color: rgb(255, 255, 255);\n"
-"	selection-background-color: darkgrey;\n"
-"	background-color: transparent;\n"
-"	padding-top: 3px;\n"
-"	padding-left: 6px;\n"
-"	padding-bottom: 3px;\n"
-"	padding-right: 6px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgba(201, 210, 222, 123);\n"
-"}\n"
-"QLineEdit:hover {\n"
-"	border-color: rgba(201, 210, 222, 210);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
 
-        self.gridLayout_47.addWidget(self.LineEdit_DAT_VITS_SRTDir, 1, 0, 1, 2)
-
-        self.Button_DAT_VITS_SRTDir = QPushButton(self.Frame_DAT_VITS_SRTDir)
-        self.Button_DAT_VITS_SRTDir.setObjectName(u"Button_DAT_VITS_SRTDir")
-        self.Button_DAT_VITS_SRTDir.setMinimumSize(QSize(27, 27))
-        self.Button_DAT_VITS_SRTDir.setMaximumSize(QSize(27, 27))
-        self.Button_DAT_VITS_SRTDir.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/OpenedFolder.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgba(201, 210, 222, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(201, 210, 222, 210);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.gridLayout_47.addWidget(self.Button_DAT_VITS_SRTDir, 1, 2, 1, 1)
+        self.gridLayout_47.addWidget(self.LineEdit_DAT_VITS_SRTDir, 1, 0, 1, 3)
 
 
         self.verticalLayout_29.addWidget(self.Frame_DAT_VITS_SRTDir)
@@ -10170,8 +9144,8 @@ class Ui_MainWindow(object):
         self.gridLayout_48.setContentsMargins(21, 12, 21, 12)
         self.Label_DAT_VITS_AddAuxiliaryData = QLabel(self.Frame_DAT_VITS_AddAuxiliaryData)
         self.Label_DAT_VITS_AddAuxiliaryData.setObjectName(u"Label_DAT_VITS_AddAuxiliaryData")
-        sizePolicy6.setHeightForWidth(self.Label_DAT_VITS_AddAuxiliaryData.sizePolicy().hasHeightForWidth())
-        self.Label_DAT_VITS_AddAuxiliaryData.setSizePolicy(sizePolicy6)
+        sizePolicy5.setHeightForWidth(self.Label_DAT_VITS_AddAuxiliaryData.sizePolicy().hasHeightForWidth())
+        self.Label_DAT_VITS_AddAuxiliaryData.setSizePolicy(sizePolicy5)
         self.Label_DAT_VITS_AddAuxiliaryData.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	/*color: rgb(255, 255, 255);*/\n"
@@ -10264,6 +9238,78 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_30.addWidget(self.Frame_DAT_VITS_AddAuxiliaryData)
 
+        self.Frame_DAT_VITS_AuxiliaryDataPath = QFrame(self.Frame_DAT_VITS_VITSParams_BasicSettings)
+        self.Frame_DAT_VITS_AuxiliaryDataPath.setObjectName(u"Frame_DAT_VITS_AuxiliaryDataPath")
+        self.Frame_DAT_VITS_AuxiliaryDataPath.setMinimumSize(QSize(0, 105))
+        self.Frame_DAT_VITS_AuxiliaryDataPath.setStyleSheet(u"QFrame {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QFrame:hover {\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
+"}")
+        self.gridLayout_53 = QGridLayout(self.Frame_DAT_VITS_AuxiliaryDataPath)
+        self.gridLayout_53.setSpacing(12)
+        self.gridLayout_53.setObjectName(u"gridLayout_53")
+        self.gridLayout_53.setContentsMargins(21, 12, 21, 12)
+        self.Label_DAT_VITS_AuxiliaryDataPath = QLabel(self.Frame_DAT_VITS_AuxiliaryDataPath)
+        self.Label_DAT_VITS_AuxiliaryDataPath.setObjectName(u"Label_DAT_VITS_AuxiliaryDataPath")
+        sizePolicy5.setHeightForWidth(self.Label_DAT_VITS_AuxiliaryDataPath.sizePolicy().hasHeightForWidth())
+        self.Label_DAT_VITS_AuxiliaryDataPath.setSizePolicy(sizePolicy5)
+        self.Label_DAT_VITS_AuxiliaryDataPath.setStyleSheet(u"QLabel {\n"
+"	/*text-align: center;*/\n"
+"	/*color: rgb(255, 255, 255);*/\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_53.addWidget(self.Label_DAT_VITS_AuxiliaryDataPath, 0, 0, 1, 1)
+
+        self.HorizontalSpacer_DAT_VITS_AuxiliaryDataPath = QSpacerItem(443, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.gridLayout_53.addItem(self.HorizontalSpacer_DAT_VITS_AuxiliaryDataPath, 0, 1, 1, 1)
+
+        self.Button_DAT_VITS_AuxiliaryDataPath_Undo = QPushButton(self.Frame_DAT_VITS_AuxiliaryDataPath)
+        self.Button_DAT_VITS_AuxiliaryDataPath_Undo.setObjectName(u"Button_DAT_VITS_AuxiliaryDataPath_Undo")
+        self.Button_DAT_VITS_AuxiliaryDataPath_Undo.setMinimumSize(QSize(27, 27))
+        self.Button_DAT_VITS_AuxiliaryDataPath_Undo.setMaximumSize(QSize(27, 27))
+        self.Button_DAT_VITS_AuxiliaryDataPath_Undo.setStyleSheet(u"QPushButton {\n"
+"	image: url(:/Button_Icon/Sources/Undo.png);\n"
+"	background-color: transparent;\n"
+"	padding: 4.5px;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgba(201, 210, 222, 123);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgba(201, 210, 222, 210);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_53.addWidget(self.Button_DAT_VITS_AuxiliaryDataPath_Undo, 0, 2, 1, 1)
+
+        self.LineEdit_DAT_VITS_AuxiliaryDataPath = LineEditBase(self.Frame_DAT_VITS_AuxiliaryDataPath)
+        self.LineEdit_DAT_VITS_AuxiliaryDataPath.setObjectName(u"LineEdit_DAT_VITS_AuxiliaryDataPath")
+        self.LineEdit_DAT_VITS_AuxiliaryDataPath.setMinimumSize(QSize(0, 27))
+
+        self.gridLayout_53.addWidget(self.LineEdit_DAT_VITS_AuxiliaryDataPath, 1, 0, 1, 3)
+
+
+        self.verticalLayout_30.addWidget(self.Frame_DAT_VITS_AuxiliaryDataPath)
+
 
         self.verticalLayout_115.addWidget(self.Frame_DAT_VITS_VITSParams_BasicSettings)
 
@@ -10339,8 +9385,8 @@ class Ui_MainWindow(object):
         self.gridLayout_49.setContentsMargins(21, 12, 21, 12)
         self.Label_DAT_VITS_TrainRatio = QLabel(self.Frame_DAT_VITS_TrainRatio)
         self.Label_DAT_VITS_TrainRatio.setObjectName(u"Label_DAT_VITS_TrainRatio")
-        sizePolicy6.setHeightForWidth(self.Label_DAT_VITS_TrainRatio.sizePolicy().hasHeightForWidth())
-        self.Label_DAT_VITS_TrainRatio.setSizePolicy(sizePolicy6)
+        sizePolicy5.setHeightForWidth(self.Label_DAT_VITS_TrainRatio.sizePolicy().hasHeightForWidth())
+        self.Label_DAT_VITS_TrainRatio.setSizePolicy(sizePolicy5)
         self.Label_DAT_VITS_TrainRatio.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	/*color: rgb(255, 255, 255);*/\n"
@@ -10465,8 +9511,8 @@ class Ui_MainWindow(object):
         self.gridLayout_50.setContentsMargins(21, 12, 21, 12)
         self.Label_DAT_VITS_SampleRate = QLabel(self.Frame_DAT_VITS_SampleRate)
         self.Label_DAT_VITS_SampleRate.setObjectName(u"Label_DAT_VITS_SampleRate")
-        sizePolicy6.setHeightForWidth(self.Label_DAT_VITS_SampleRate.sizePolicy().hasHeightForWidth())
-        self.Label_DAT_VITS_SampleRate.setSizePolicy(sizePolicy6)
+        sizePolicy5.setHeightForWidth(self.Label_DAT_VITS_SampleRate.sizePolicy().hasHeightForWidth())
+        self.Label_DAT_VITS_SampleRate.setSizePolicy(sizePolicy5)
         self.Label_DAT_VITS_SampleRate.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	/*color: rgb(255, 255, 255);*/\n"
@@ -10707,8 +9753,8 @@ class Ui_MainWindow(object):
         self.gridLayout_51.setContentsMargins(21, 12, 21, 12)
         self.Label_DAT_VITS_SampleWidth = QLabel(self.Frame_DAT_VITS_SampleWidth)
         self.Label_DAT_VITS_SampleWidth.setObjectName(u"Label_DAT_VITS_SampleWidth")
-        sizePolicy6.setHeightForWidth(self.Label_DAT_VITS_SampleWidth.sizePolicy().hasHeightForWidth())
-        self.Label_DAT_VITS_SampleWidth.setSizePolicy(sizePolicy6)
+        sizePolicy5.setHeightForWidth(self.Label_DAT_VITS_SampleWidth.sizePolicy().hasHeightForWidth())
+        self.Label_DAT_VITS_SampleWidth.setSizePolicy(sizePolicy5)
         self.Label_DAT_VITS_SampleWidth.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	/*color: rgb(255, 255, 255);*/\n"
@@ -10949,8 +9995,8 @@ class Ui_MainWindow(object):
         self.gridLayout_52.setContentsMargins(21, 12, 21, 12)
         self.Label_DAT_VITS_ToMono = QLabel(self.Frame_DAT_VITS_ToMono)
         self.Label_DAT_VITS_ToMono.setObjectName(u"Label_DAT_VITS_ToMono")
-        sizePolicy6.setHeightForWidth(self.Label_DAT_VITS_ToMono.sizePolicy().hasHeightForWidth())
-        self.Label_DAT_VITS_ToMono.setSizePolicy(sizePolicy6)
+        sizePolicy5.setHeightForWidth(self.Label_DAT_VITS_ToMono.sizePolicy().hasHeightForWidth())
+        self.Label_DAT_VITS_ToMono.setSizePolicy(sizePolicy5)
         self.Label_DAT_VITS_ToMono.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	/*color: rgb(255, 255, 255);*/\n"
@@ -11043,131 +10089,6 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_53.addWidget(self.Frame_DAT_VITS_ToMono)
 
-        self.Frame_DAT_VITS_AuxiliaryDataPath = QFrame(self.Frame_DAT_VITS_VITSParams_AdvanceSettings)
-        self.Frame_DAT_VITS_AuxiliaryDataPath.setObjectName(u"Frame_DAT_VITS_AuxiliaryDataPath")
-        self.Frame_DAT_VITS_AuxiliaryDataPath.setMinimumSize(QSize(0, 105))
-        self.Frame_DAT_VITS_AuxiliaryDataPath.setStyleSheet(u"QFrame {\n"
-"	color: rgb(255, 255, 255);\n"
-"	background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QFrame:hover {\n"
-"	background-color: rgba(33, 33, 33, 99);\n"
-"}")
-        self.gridLayout_53 = QGridLayout(self.Frame_DAT_VITS_AuxiliaryDataPath)
-        self.gridLayout_53.setSpacing(12)
-        self.gridLayout_53.setObjectName(u"gridLayout_53")
-        self.gridLayout_53.setContentsMargins(21, 12, 21, 12)
-        self.Label_DAT_VITS_AuxiliaryDataPath = QLabel(self.Frame_DAT_VITS_AuxiliaryDataPath)
-        self.Label_DAT_VITS_AuxiliaryDataPath.setObjectName(u"Label_DAT_VITS_AuxiliaryDataPath")
-        sizePolicy6.setHeightForWidth(self.Label_DAT_VITS_AuxiliaryDataPath.sizePolicy().hasHeightForWidth())
-        self.Label_DAT_VITS_AuxiliaryDataPath.setSizePolicy(sizePolicy6)
-        self.Label_DAT_VITS_AuxiliaryDataPath.setStyleSheet(u"QLabel {\n"
-"	/*text-align: center;*/\n"
-"	/*color: rgb(255, 255, 255);*/\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.gridLayout_53.addWidget(self.Label_DAT_VITS_AuxiliaryDataPath, 0, 0, 1, 1)
-
-        self.HorizontalSpacer_DAT_VITS_AuxiliaryDataPath = QSpacerItem(443, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
-
-        self.gridLayout_53.addItem(self.HorizontalSpacer_DAT_VITS_AuxiliaryDataPath, 0, 1, 1, 1)
-
-        self.Button_DAT_VITS_AuxiliaryDataPath_Undo = QPushButton(self.Frame_DAT_VITS_AuxiliaryDataPath)
-        self.Button_DAT_VITS_AuxiliaryDataPath_Undo.setObjectName(u"Button_DAT_VITS_AuxiliaryDataPath_Undo")
-        self.Button_DAT_VITS_AuxiliaryDataPath_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_DAT_VITS_AuxiliaryDataPath_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_DAT_VITS_AuxiliaryDataPath_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgba(201, 210, 222, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(201, 210, 222, 210);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.gridLayout_53.addWidget(self.Button_DAT_VITS_AuxiliaryDataPath_Undo, 0, 2, 1, 1)
-
-        self.LineEdit_DAT_VITS_AuxiliaryDataPath = QLineEdit(self.Frame_DAT_VITS_AuxiliaryDataPath)
-        self.LineEdit_DAT_VITS_AuxiliaryDataPath.setObjectName(u"LineEdit_DAT_VITS_AuxiliaryDataPath")
-        self.LineEdit_DAT_VITS_AuxiliaryDataPath.setMinimumSize(QSize(0, 27))
-        self.LineEdit_DAT_VITS_AuxiliaryDataPath.setStyleSheet(u"QLineEdit {\n"
-"	/*font-size: 12px;*/\n"
-"	text-align: left;\n"
-"	color: rgb(255, 255, 255);\n"
-"	selection-background-color: darkgrey;\n"
-"	background-color: transparent;\n"
-"	padding-top: 3px;\n"
-"	padding-left: 6px;\n"
-"	padding-bottom: 3px;\n"
-"	padding-right: 6px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgba(201, 210, 222, 123);\n"
-"}\n"
-"QLineEdit:hover {\n"
-"	border-color: rgba(201, 210, 222, 210);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.gridLayout_53.addWidget(self.LineEdit_DAT_VITS_AuxiliaryDataPath, 1, 0, 1, 2)
-
-        self.Button_DAT_VITS_AuxiliaryDataPath = QPushButton(self.Frame_DAT_VITS_AuxiliaryDataPath)
-        self.Button_DAT_VITS_AuxiliaryDataPath.setObjectName(u"Button_DAT_VITS_AuxiliaryDataPath")
-        self.Button_DAT_VITS_AuxiliaryDataPath.setMinimumSize(QSize(27, 27))
-        self.Button_DAT_VITS_AuxiliaryDataPath.setMaximumSize(QSize(27, 27))
-        self.Button_DAT_VITS_AuxiliaryDataPath.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/OpenedFolder.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgba(201, 210, 222, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(201, 210, 222, 210);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.gridLayout_53.addWidget(self.Button_DAT_VITS_AuxiliaryDataPath, 1, 2, 1, 1)
-
-
-        self.verticalLayout_53.addWidget(self.Frame_DAT_VITS_AuxiliaryDataPath)
-
 
         self.verticalLayout_115.addWidget(self.Frame_DAT_VITS_VITSParams_AdvanceSettings)
 
@@ -11220,8 +10141,8 @@ class Ui_MainWindow(object):
         self.gridLayout_54.setContentsMargins(21, 12, 21, 12)
         self.Label_DAT_VITS_WAVDirSplit = QLabel(self.Frame_DAT_VITS_WAVDirSplit)
         self.Label_DAT_VITS_WAVDirSplit.setObjectName(u"Label_DAT_VITS_WAVDirSplit")
-        sizePolicy6.setHeightForWidth(self.Label_DAT_VITS_WAVDirSplit.sizePolicy().hasHeightForWidth())
-        self.Label_DAT_VITS_WAVDirSplit.setSizePolicy(sizePolicy6)
+        sizePolicy5.setHeightForWidth(self.Label_DAT_VITS_WAVDirSplit.sizePolicy().hasHeightForWidth())
+        self.Label_DAT_VITS_WAVDirSplit.setSizePolicy(sizePolicy5)
         self.Label_DAT_VITS_WAVDirSplit.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	/*color: rgb(255, 255, 255);*/\n"
@@ -11265,64 +10186,11 @@ class Ui_MainWindow(object):
 
         self.gridLayout_54.addWidget(self.Button_DAT_VITS_WAVDirSplit_Undo, 0, 2, 1, 1)
 
-        self.LineEdit_DAT_VITS_WAVDirSplit = QLineEdit(self.Frame_DAT_VITS_WAVDirSplit)
+        self.LineEdit_DAT_VITS_WAVDirSplit = LineEditBase(self.Frame_DAT_VITS_WAVDirSplit)
         self.LineEdit_DAT_VITS_WAVDirSplit.setObjectName(u"LineEdit_DAT_VITS_WAVDirSplit")
         self.LineEdit_DAT_VITS_WAVDirSplit.setMinimumSize(QSize(0, 27))
-        self.LineEdit_DAT_VITS_WAVDirSplit.setStyleSheet(u"QLineEdit {\n"
-"	/*font-size: 12px;*/\n"
-"	text-align: left;\n"
-"	color: rgb(255, 255, 255);\n"
-"	selection-background-color: darkgrey;\n"
-"	background-color: transparent;\n"
-"	padding-top: 3px;\n"
-"	padding-left: 6px;\n"
-"	padding-bottom: 3px;\n"
-"	padding-right: 6px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgba(201, 210, 222, 123);\n"
-"}\n"
-"QLineEdit:hover {\n"
-"	border-color: rgba(201, 210, 222, 210);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
 
-        self.gridLayout_54.addWidget(self.LineEdit_DAT_VITS_WAVDirSplit, 1, 0, 1, 2)
-
-        self.Button_DAT_VITS_WAVDirSplit = QPushButton(self.Frame_DAT_VITS_WAVDirSplit)
-        self.Button_DAT_VITS_WAVDirSplit.setObjectName(u"Button_DAT_VITS_WAVDirSplit")
-        self.Button_DAT_VITS_WAVDirSplit.setMinimumSize(QSize(27, 27))
-        self.Button_DAT_VITS_WAVDirSplit.setMaximumSize(QSize(27, 27))
-        self.Button_DAT_VITS_WAVDirSplit.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/OpenedFolder.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgba(201, 210, 222, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(201, 210, 222, 210);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.gridLayout_54.addWidget(self.Button_DAT_VITS_WAVDirSplit, 1, 2, 1, 1)
+        self.gridLayout_54.addWidget(self.LineEdit_DAT_VITS_WAVDirSplit, 1, 0, 1, 3)
 
 
         self.verticalLayout_31.addWidget(self.Frame_DAT_VITS_WAVDirSplit)
@@ -11345,8 +10213,8 @@ class Ui_MainWindow(object):
         self.gridLayout_55.setContentsMargins(21, 12, 21, 12)
         self.Label_DAT_VITS_FileListPathTraining = QLabel(self.Frame_DAT_VITS_FileListPathTraining)
         self.Label_DAT_VITS_FileListPathTraining.setObjectName(u"Label_DAT_VITS_FileListPathTraining")
-        sizePolicy6.setHeightForWidth(self.Label_DAT_VITS_FileListPathTraining.sizePolicy().hasHeightForWidth())
-        self.Label_DAT_VITS_FileListPathTraining.setSizePolicy(sizePolicy6)
+        sizePolicy5.setHeightForWidth(self.Label_DAT_VITS_FileListPathTraining.sizePolicy().hasHeightForWidth())
+        self.Label_DAT_VITS_FileListPathTraining.setSizePolicy(sizePolicy5)
         self.Label_DAT_VITS_FileListPathTraining.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	/*color: rgb(255, 255, 255);*/\n"
@@ -11390,64 +10258,11 @@ class Ui_MainWindow(object):
 
         self.gridLayout_55.addWidget(self.Button_DAT_VITS_FileListPathTraining_Undo, 0, 2, 1, 1)
 
-        self.LineEdit_DAT_VITS_FileListPathTraining = QLineEdit(self.Frame_DAT_VITS_FileListPathTraining)
+        self.LineEdit_DAT_VITS_FileListPathTraining = LineEditBase(self.Frame_DAT_VITS_FileListPathTraining)
         self.LineEdit_DAT_VITS_FileListPathTraining.setObjectName(u"LineEdit_DAT_VITS_FileListPathTraining")
         self.LineEdit_DAT_VITS_FileListPathTraining.setMinimumSize(QSize(0, 27))
-        self.LineEdit_DAT_VITS_FileListPathTraining.setStyleSheet(u"QLineEdit {\n"
-"	/*font-size: 12px;*/\n"
-"	text-align: left;\n"
-"	color: rgb(255, 255, 255);\n"
-"	selection-background-color: darkgrey;\n"
-"	background-color: transparent;\n"
-"	padding-top: 3px;\n"
-"	padding-left: 6px;\n"
-"	padding-bottom: 3px;\n"
-"	padding-right: 6px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgba(201, 210, 222, 123);\n"
-"}\n"
-"QLineEdit:hover {\n"
-"	border-color: rgba(201, 210, 222, 210);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
 
-        self.gridLayout_55.addWidget(self.LineEdit_DAT_VITS_FileListPathTraining, 1, 0, 1, 2)
-
-        self.Button_DAT_VITS_FileListPathTraining = QPushButton(self.Frame_DAT_VITS_FileListPathTraining)
-        self.Button_DAT_VITS_FileListPathTraining.setObjectName(u"Button_DAT_VITS_FileListPathTraining")
-        self.Button_DAT_VITS_FileListPathTraining.setMinimumSize(QSize(27, 27))
-        self.Button_DAT_VITS_FileListPathTraining.setMaximumSize(QSize(27, 27))
-        self.Button_DAT_VITS_FileListPathTraining.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/OpenedFolder.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgba(201, 210, 222, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(201, 210, 222, 210);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.gridLayout_55.addWidget(self.Button_DAT_VITS_FileListPathTraining, 1, 2, 1, 1)
+        self.gridLayout_55.addWidget(self.LineEdit_DAT_VITS_FileListPathTraining, 1, 0, 1, 3)
 
 
         self.verticalLayout_31.addWidget(self.Frame_DAT_VITS_FileListPathTraining)
@@ -11470,8 +10285,8 @@ class Ui_MainWindow(object):
         self.gridLayout_56.setContentsMargins(21, 12, 21, 12)
         self.Label_DAT_VITS_FileListPathValidation = QLabel(self.Frame_DAT_VITS_FileListPathValidation)
         self.Label_DAT_VITS_FileListPathValidation.setObjectName(u"Label_DAT_VITS_FileListPathValidation")
-        sizePolicy6.setHeightForWidth(self.Label_DAT_VITS_FileListPathValidation.sizePolicy().hasHeightForWidth())
-        self.Label_DAT_VITS_FileListPathValidation.setSizePolicy(sizePolicy6)
+        sizePolicy5.setHeightForWidth(self.Label_DAT_VITS_FileListPathValidation.sizePolicy().hasHeightForWidth())
+        self.Label_DAT_VITS_FileListPathValidation.setSizePolicy(sizePolicy5)
         self.Label_DAT_VITS_FileListPathValidation.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	/*color: rgb(255, 255, 255);*/\n"
@@ -11515,64 +10330,11 @@ class Ui_MainWindow(object):
 
         self.gridLayout_56.addWidget(self.Button_DAT_VITS_FileListPathValidation_Undo, 0, 2, 1, 1)
 
-        self.LineEdit_DAT_VITS_FileListPathValidation = QLineEdit(self.Frame_DAT_VITS_FileListPathValidation)
+        self.LineEdit_DAT_VITS_FileListPathValidation = LineEditBase(self.Frame_DAT_VITS_FileListPathValidation)
         self.LineEdit_DAT_VITS_FileListPathValidation.setObjectName(u"LineEdit_DAT_VITS_FileListPathValidation")
         self.LineEdit_DAT_VITS_FileListPathValidation.setMinimumSize(QSize(0, 27))
-        self.LineEdit_DAT_VITS_FileListPathValidation.setStyleSheet(u"QLineEdit {\n"
-"	/*font-size: 12px;*/\n"
-"	text-align: left;\n"
-"	color: rgb(255, 255, 255);\n"
-"	selection-background-color: darkgrey;\n"
-"	background-color: transparent;\n"
-"	padding-top: 3px;\n"
-"	padding-left: 6px;\n"
-"	padding-bottom: 3px;\n"
-"	padding-right: 6px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgba(201, 210, 222, 123);\n"
-"}\n"
-"QLineEdit:hover {\n"
-"	border-color: rgba(201, 210, 222, 210);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
 
-        self.gridLayout_56.addWidget(self.LineEdit_DAT_VITS_FileListPathValidation, 1, 0, 1, 2)
-
-        self.Button_DAT_VITS_FileListPathValidation = QPushButton(self.Frame_DAT_VITS_FileListPathValidation)
-        self.Button_DAT_VITS_FileListPathValidation.setObjectName(u"Button_DAT_VITS_FileListPathValidation")
-        self.Button_DAT_VITS_FileListPathValidation.setMinimumSize(QSize(27, 27))
-        self.Button_DAT_VITS_FileListPathValidation.setMaximumSize(QSize(27, 27))
-        self.Button_DAT_VITS_FileListPathValidation.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/OpenedFolder.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgba(201, 210, 222, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(201, 210, 222, 210);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.gridLayout_56.addWidget(self.Button_DAT_VITS_FileListPathValidation, 1, 2, 1, 1)
+        self.gridLayout_56.addWidget(self.LineEdit_DAT_VITS_FileListPathValidation, 1, 0, 1, 3)
 
 
         self.verticalLayout_31.addWidget(self.Frame_DAT_VITS_FileListPathValidation)
@@ -11593,8 +10355,6 @@ class Ui_MainWindow(object):
 
         self.Widget_Right_DAT_VITS = QWidget(self.Subpage_DAT_VITS)
         self.Widget_Right_DAT_VITS.setObjectName(u"Widget_Right_DAT_VITS")
-        self.Widget_Right_DAT_VITS.setMinimumSize(QSize(210, 0))
-        self.Widget_Right_DAT_VITS.setMaximumSize(QSize(420, 16777215))
         self.Widget_Right_DAT_VITS.setStyleSheet(u"QWidget {\n"
 "	background-color: rgba(36, 36, 36, 123);\n"
 "	border-width: 0px;\n"
@@ -11725,32 +10485,6 @@ class Ui_MainWindow(object):
 
         self.gridLayout_16.addWidget(self.TextBrowser_Params_DAT_VITS, 0, 0, 1, 2)
 
-        self.Button_SyncParams_DAT_VITS = QPushButton(self.Widget_Right_DAT_VITS)
-        self.Button_SyncParams_DAT_VITS.setObjectName(u"Button_SyncParams_DAT_VITS")
-        self.Button_SyncParams_DAT_VITS.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	font-size: 12px;\n"
-"	background-color: transparent;\n"
-"	padding: 9.9px;\n"
-"	border-width: 1.5px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgb(120, 120, 120);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.gridLayout_16.addWidget(self.Button_SyncParams_DAT_VITS, 1, 0, 1, 1)
-
         self.Button_CheckOutput_DAT_VITS = QPushButton(self.Widget_Right_DAT_VITS)
         self.Button_CheckOutput_DAT_VITS.setObjectName(u"Button_CheckOutput_DAT_VITS")
         self.Button_CheckOutput_DAT_VITS.setStyleSheet(u"QPushButton {\n"
@@ -11775,7 +10509,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}")
 
-        self.gridLayout_16.addWidget(self.Button_CheckOutput_DAT_VITS, 1, 1, 1, 1)
+        self.gridLayout_16.addWidget(self.Button_CheckOutput_DAT_VITS, 1, 0, 1, 2)
 
 
         self.gridLayout_8.addWidget(self.Widget_Right_DAT_VITS, 0, 2, 1, 1)
@@ -11822,8 +10556,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_92.setContentsMargins(0, 0, 0, 0)
         self.Button_DAT_VITS_Execute = QPushButton(self.Page_DAT_VITS_Execute)
         self.Button_DAT_VITS_Execute.setObjectName(u"Button_DAT_VITS_Execute")
-        sizePolicy7.setHeightForWidth(self.Button_DAT_VITS_Execute.sizePolicy().hasHeightForWidth())
-        self.Button_DAT_VITS_Execute.setSizePolicy(sizePolicy7)
+        sizePolicy6.setHeightForWidth(self.Button_DAT_VITS_Execute.sizePolicy().hasHeightForWidth())
+        self.Button_DAT_VITS_Execute.setSizePolicy(sizePolicy6)
         self.Button_DAT_VITS_Execute.setMinimumSize(QSize(0, 30))
         self.Button_DAT_VITS_Execute.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
@@ -11859,8 +10593,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_93.setContentsMargins(0, 0, 0, 0)
         self.Button_DAT_VITS_Terminate = QPushButton(self.Page_DAT_VITS_Terminate)
         self.Button_DAT_VITS_Terminate.setObjectName(u"Button_DAT_VITS_Terminate")
-        sizePolicy7.setHeightForWidth(self.Button_DAT_VITS_Terminate.sizePolicy().hasHeightForWidth())
-        self.Button_DAT_VITS_Terminate.setSizePolicy(sizePolicy7)
+        sizePolicy6.setHeightForWidth(self.Button_DAT_VITS_Terminate.sizePolicy().hasHeightForWidth())
+        self.Button_DAT_VITS_Terminate.setSizePolicy(sizePolicy6)
         self.Button_DAT_VITS_Terminate.setMinimumSize(QSize(0, 30))
         self.Button_DAT_VITS_Terminate.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
@@ -11894,6 +10628,9 @@ class Ui_MainWindow(object):
 
         self.gridLayout_8.addWidget(self.ProgressBar_DAT_VITS, 1, 0, 1, 3)
 
+        self.gridLayout_8.setColumnStretch(0, 3)
+        self.gridLayout_8.setColumnStretch(1, 10)
+        self.gridLayout_8.setColumnStretch(2, 7)
         self.StackedWidget_Pages_Dataset.addWidget(self.Subpage_DAT_VITS)
 
         self.verticalLayout_39.addWidget(self.StackedWidget_Pages_Dataset)
@@ -12043,8 +10780,6 @@ class Ui_MainWindow(object):
         self.gridLayout_22.setContentsMargins(0, 0, 0, 0)
         self.Widget_Right_Train_VITS = QWidget(self.Subpage_Train_VITS)
         self.Widget_Right_Train_VITS.setObjectName(u"Widget_Right_Train_VITS")
-        self.Widget_Right_Train_VITS.setMinimumSize(QSize(210, 0))
-        self.Widget_Right_Train_VITS.setMaximumSize(QSize(420, 16777215))
         self.Widget_Right_Train_VITS.setStyleSheet(u"QWidget {\n"
 "	background-color: rgba(36, 36, 36, 123);\n"
 "	border-width: 0px;\n"
@@ -12056,58 +10791,6 @@ class Ui_MainWindow(object):
         self.gridLayout.setSpacing(12)
         self.gridLayout.setObjectName(u"gridLayout")
         self.gridLayout.setContentsMargins(12, 12, 12, 12)
-        self.Button_CheckOutput_Train_VITS = QPushButton(self.Widget_Right_Train_VITS)
-        self.Button_CheckOutput_Train_VITS.setObjectName(u"Button_CheckOutput_Train_VITS")
-        self.Button_CheckOutput_Train_VITS.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	font-size: 12px;\n"
-"	background-color: transparent;\n"
-"	padding: 9.9px;\n"
-"	border-width: 1.5px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgb(120, 120, 120);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.gridLayout.addWidget(self.Button_CheckOutput_Train_VITS, 2, 1, 1, 1)
-
-        self.Button_SyncParams_Train_VITS = QPushButton(self.Widget_Right_Train_VITS)
-        self.Button_SyncParams_Train_VITS.setObjectName(u"Button_SyncParams_Train_VITS")
-        self.Button_SyncParams_Train_VITS.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	font-size: 12px;\n"
-"	background-color: transparent;\n"
-"	padding: 9.9px;\n"
-"	border-width: 1.5px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgb(120, 120, 120);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.gridLayout.addWidget(self.Button_SyncParams_Train_VITS, 2, 0, 1, 1)
-
         self.Button_RunTensorboard_Train_VITS = QPushButton(self.Widget_Right_Train_VITS)
         self.Button_RunTensorboard_Train_VITS.setObjectName(u"Button_RunTensorboard_Train_VITS")
         self.Button_RunTensorboard_Train_VITS.setStyleSheet(u"QPushButton {\n"
@@ -12253,13 +10936,38 @@ class Ui_MainWindow(object):
 
         self.gridLayout.addWidget(self.TextBrowser_Params_Train_VITS, 0, 0, 1, 2)
 
+        self.Button_CheckOutput_Train_VITS = QPushButton(self.Widget_Right_Train_VITS)
+        self.Button_CheckOutput_Train_VITS.setObjectName(u"Button_CheckOutput_Train_VITS")
+        self.Button_CheckOutput_Train_VITS.setStyleSheet(u"QPushButton {\n"
+"	text-align: center;\n"
+"	font-size: 12px;\n"
+"	background-color: transparent;\n"
+"	padding: 9.9px;\n"
+"	border-width: 1.5px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout.addWidget(self.Button_CheckOutput_Train_VITS, 2, 0, 1, 2)
+
 
         self.gridLayout_22.addWidget(self.Widget_Right_Train_VITS, 0, 2, 1, 1)
 
         self.Widget_Left_Train_VITS = QWidget(self.Subpage_Train_VITS)
         self.Widget_Left_Train_VITS.setObjectName(u"Widget_Left_Train_VITS")
         self.Widget_Left_Train_VITS.setMinimumSize(QSize(150, 0))
-        self.Widget_Left_Train_VITS.setMaximumSize(QSize(210, 16777215))
         self.Widget_Left_Train_VITS.setStyleSheet(u"QWidget {\n"
 "	background-color: rgba(36, 36, 36, 123);\n"
 "	border-width: 0px;\n"
@@ -12275,190 +10983,82 @@ class Ui_MainWindow(object):
         __qtreewidgetitem4 = QTreeWidgetItem(self.TreeWidget_Catalogue_Train_VITS)
         QTreeWidgetItem(__qtreewidgetitem4)
         self.TreeWidget_Catalogue_Train_VITS.setObjectName(u"TreeWidget_Catalogue_Train_VITS")
-        self.TreeWidget_Catalogue_Train_VITS.setStyleSheet(u"QTreeWidget {\n"
+        self.TreeWidget_Catalogue_Train_VITS.setStyleSheet(u"QTreeView {\n"
 "	/*font-size: 12px;\n"
 "	text-align: center;*/\n"
-"	margin: 0px;\n"
 "	background-color: transparent;\n"
 "	border-width: 0px;\n"
 "	border-radius: 0px;\n"
 "	border-style: solid;\n"
 "}\n"
 "\n"
-"QTreeWidget::item {\n"
+"QTreeView::item {\n"
 "	background-color: transparent;\n"
-"	padding: 1.2px;\n"
+"	padding: 2.4px;\n"
+"}\n"
+"QTreeView::item:hover {\n"
+"    background-color: rgba(66, 66, 66, 198);\n"
+"}\n"
+"QTreeView::item:selected {\n"
+"    background-color: ;\n"
 "}\n"
 "\n"
-"QTreeWidget::branch {\n"
+"QTreeView::branch {\n"
 "    background-color: transparent;\n"
 "	border-width: 0px;\n"
 "	border-radius: 0px;\n"
 "	border-style: solid;\n"
 "}\n"
-"QTreeWidget::branch:open:has-children:has-siblings,\n"
-"QTreeWidget::branch:open:has-children:!has-siblings {\n"
+"QTreeView::branch:open:has-children {\n"
 "    image: ;\n"
 "}\n"
-"QTreeWidget::branch:closed:has-children:has-siblings,\n"
-"QTreeWidget::branch:closed:has-children:!has-siblings {\n"
+"QTreeView::branch:closed:has-children {\n"
 "    image: ;\n"
 "}\n"
-"QTreeWidget::branch:!has-children:has-siblings:adjoins-item,\n"
-"QTreeWidget::branch:!has-children:!has-siblings:adjoins-item {\n"
-"    image: ;\n"
-"}\n"
-"\n"
-"\n"
-"QTreeView {\n"
-"}\n"
-"\n"
-"QTreeView::item{\n"
-"}\n"
-"QTreeView::item:hover {\n"
-"    background-color: rgba(66, 66, 66, 198);\n"
-"}\n"
-""
-                        "QTreeView::item:selected:active{\n"
-"    background-color: ;\n"
-"}\n"
-"QTreeView::item:selected:!active {\n"
+"QTreeWidget::branch:adjoins-item {\n"
 "    background-color: ;\n"
 "}\n"
 "\n"
-"/*\n"
-"QHeaderView {\n"
-"	font-size: 15px;\n"
-"	text-align: center;\n"
-"	margin: 0px;\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QHeaderView:hover {\n"
-"    background-color: rgba(66, 66, 66, 198);\n"
-"}\n"
 "\n"
-"QHeaderView::section {\n"
-"	background-color: transparent;\n"
-"}\n"
-"QHeaderView::section:checked {\n"
-"	background-color: ;\n"
-"}\n"
-"\n"
-"QHeaderView::up-arrow {\n"
-"	position: ;\n"
-"	image: ;\n"
-"}\n"
-"\n"
-"QHeaderView::down-arrow {\n"
-"	position: ;\n"
-"	image: ;\n"
-"}*/\n"
-"\n"
-"\n"
-"QScrollBar::vertical {\n"
-"	width: 9px;\n"
-"	background-color: rgb(45, 45, 45);\n"
-"	border-width: 1px;\n"
+"QScrollBar {\n"
+"	background-color: rgba(45, 45, 45, 135);\n"
+"	border-width: 1.2px;\n"
 "	border-radius: 6px;\n"
 "	border-style: solid;\n"
 "	border-color: transparent;\n"
 "	margin: 0px;\n"
 "}\n"
-"QScrollBar::vertical:hover {\n"
-"	background-color: rgba(33, 3"
-                        "3, 33, 99);\n"
+"QScrollBar:hover {\n"
+"	background-color: r"
+                        "gba(33, 33, 33, 99);\n"
 "}\n"
-"\n"
-"QScrollBar::add-line:vertical {\n"
-"	height: 0px;\n"
-"	background-color: transparent;\n"
-"	subcontrol-position: bottom;\n"
-"	subcontrol-origin: margin;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"\n"
-"QScrollBar::sub-line:vertical {\n"
-"	height: 0px;\n"
-"	background-color: transparent;\n"
-"	subcontrol-position: top;\n"
-"	subcontrol-origin: margin;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"\n"
-"QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
-"	width: 0px;\n"
-"	height: 0px;\n"
-"	background-color: transparent;\n"
-"}\n"
-"\n"
-"QScrollBar::handle:vertical {\n"
-"	background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QScrollBar::handle:vertical:hover {\n"
-"	background-color: rgb(120, 120, 120);\n"
-"}\n"
-"\n"
 "\n"
 "QScrollBar::horizontal {\n"
 "	height: 9px;\n"
-"	background-color: rgb(45, 45, 45);\n"
-"	border-width: 1px;\n"
-"	border"
-                        "-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: transparent;\n"
-"	margin: 0px;\n"
 "}\n"
-"QScrollBar::horizontal:hover {\n"
-"	background-color: rgb(60, 60, 60);\n"
+"QScrollBar::vertical {\n"
+"	width: 9px;\n"
 "}\n"
 "\n"
-"QScrollBar::add-line:horizontal {\n"
-"	width: 0px;\n"
-"	background-color: transparent;\n"
-"	subcontrol-position: left;\n"
-"	subcontrol-origin: margin;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"\n"
-"QScrollBar::sub-line:horizontal {\n"
-"	width: 0px;\n"
-"	background-color: transparent;\n"
-"	subcontrol-position: right;\n"
-"	subcontrol-origin: margin;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"\n"
-"QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {\n"
-"	width: 0px;\n"
-"	height: 0px;\n"
-"	background-color: transparent;\n"
-"}\n"
-"\n"
-"QScrollBar::handle:horizontal {\n"
+"QScrollBar::sub-line, QScrollBar::add-line {\n"
 "	background-color: transparent;\n"
 "	border-width: 0px;\n"
 "	border-radius: 0px;\n"
 "	border-style: solid;\n"
 "}\n"
-"QScrollBar::handle:horizontal:hover {\n"
-"	backgro"
-                        "und-color: rgb(120, 120, 120);\n"
+"\n"
+"QScrollBar::sub-page, QScrollBar::add-page {\n"
+"	background-color: transparent;\n"
+"}\n"
+"\n"
+"QScrollBar::handle {\n"
+"	background-color: rgba(90, 90, 90, 90);\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QScrollBar::handle:hover {\n"
+"	background-color: rgba(120, 120, 120, 120);\n"
 "}")
 
         self.verticalLayout_10.addWidget(self.TreeWidget_Catalogue_Train_VITS)
@@ -12508,8 +11108,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_94.setContentsMargins(0, 0, 0, 0)
         self.Button_Train_VITS_Execute = QPushButton(self.Page_Train_VITS_Execute)
         self.Button_Train_VITS_Execute.setObjectName(u"Button_Train_VITS_Execute")
-        sizePolicy7.setHeightForWidth(self.Button_Train_VITS_Execute.sizePolicy().hasHeightForWidth())
-        self.Button_Train_VITS_Execute.setSizePolicy(sizePolicy7)
+        sizePolicy6.setHeightForWidth(self.Button_Train_VITS_Execute.sizePolicy().hasHeightForWidth())
+        self.Button_Train_VITS_Execute.setSizePolicy(sizePolicy6)
         self.Button_Train_VITS_Execute.setMinimumSize(QSize(0, 30))
         self.Button_Train_VITS_Execute.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
@@ -12545,8 +11145,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_95.setContentsMargins(0, 0, 0, 0)
         self.Button_Train_VITS_Terminate = QPushButton(self.Page_Train_VITS_Terminate)
         self.Button_Train_VITS_Terminate.setObjectName(u"Button_Train_VITS_Terminate")
-        sizePolicy7.setHeightForWidth(self.Button_Train_VITS_Terminate.sizePolicy().hasHeightForWidth())
-        self.Button_Train_VITS_Terminate.setSizePolicy(sizePolicy7)
+        sizePolicy6.setHeightForWidth(self.Button_Train_VITS_Terminate.sizePolicy().hasHeightForWidth())
+        self.Button_Train_VITS_Terminate.setSizePolicy(sizePolicy6)
         self.Button_Train_VITS_Terminate.setMinimumSize(QSize(0, 30))
         self.Button_Train_VITS_Terminate.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
@@ -12582,9 +11182,7 @@ class Ui_MainWindow(object):
 
         self.ScrollArea_Middle_Train_VITS = QScrollArea(self.Subpage_Train_VITS)
         self.ScrollArea_Middle_Train_VITS.setObjectName(u"ScrollArea_Middle_Train_VITS")
-        sizePolicy5.setHeightForWidth(self.ScrollArea_Middle_Train_VITS.sizePolicy().hasHeightForWidth())
-        self.ScrollArea_Middle_Train_VITS.setSizePolicy(sizePolicy5)
-        self.ScrollArea_Middle_Train_VITS.setMinimumSize(QSize(630, 0))
+        self.ScrollArea_Middle_Train_VITS.setMinimumSize(QSize(600, 0))
         self.ScrollArea_Middle_Train_VITS.setStyleSheet(u"QScrollArea {\n"
 "	background-color: rgba(36, 36, 36, 123);\n"
 "	border-width: 0px;\n"
@@ -12698,7 +11296,7 @@ class Ui_MainWindow(object):
         self.ScrollArea_Middle_Train_VITS.setWidgetResizable(True)
         self.ScrollArea_Middle_WidgetContents_Train_VITS = QWidget()
         self.ScrollArea_Middle_WidgetContents_Train_VITS.setObjectName(u"ScrollArea_Middle_WidgetContents_Train_VITS")
-        self.ScrollArea_Middle_WidgetContents_Train_VITS.setGeometry(QRect(0, 0, 621, 1461))
+        self.ScrollArea_Middle_WidgetContents_Train_VITS.setGeometry(QRect(0, 0, 591, 1461))
         self.verticalLayout_28 = QVBoxLayout(self.ScrollArea_Middle_WidgetContents_Train_VITS)
         self.verticalLayout_28.setSpacing(12)
         self.verticalLayout_28.setObjectName(u"verticalLayout_28")
@@ -12749,8 +11347,8 @@ class Ui_MainWindow(object):
         self.gridLayout_57.setContentsMargins(21, 12, 21, 12)
         self.Label_Train_VITS_FileListPathTraining = QLabel(self.Frame_Train_VITS_FileListPathTraining)
         self.Label_Train_VITS_FileListPathTraining.setObjectName(u"Label_Train_VITS_FileListPathTraining")
-        sizePolicy6.setHeightForWidth(self.Label_Train_VITS_FileListPathTraining.sizePolicy().hasHeightForWidth())
-        self.Label_Train_VITS_FileListPathTraining.setSizePolicy(sizePolicy6)
+        sizePolicy5.setHeightForWidth(self.Label_Train_VITS_FileListPathTraining.sizePolicy().hasHeightForWidth())
+        self.Label_Train_VITS_FileListPathTraining.setSizePolicy(sizePolicy5)
         self.Label_Train_VITS_FileListPathTraining.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	/*color: rgb(255, 255, 255);*/\n"
@@ -12794,64 +11392,11 @@ class Ui_MainWindow(object):
 
         self.gridLayout_57.addWidget(self.Button_Train_VITS_FileListPathTraining_Undo, 0, 2, 1, 1)
 
-        self.LineEdit_Train_VITS_FileListPathTraining = QLineEdit(self.Frame_Train_VITS_FileListPathTraining)
+        self.LineEdit_Train_VITS_FileListPathTraining = LineEditBase(self.Frame_Train_VITS_FileListPathTraining)
         self.LineEdit_Train_VITS_FileListPathTraining.setObjectName(u"LineEdit_Train_VITS_FileListPathTraining")
         self.LineEdit_Train_VITS_FileListPathTraining.setMinimumSize(QSize(0, 27))
-        self.LineEdit_Train_VITS_FileListPathTraining.setStyleSheet(u"QLineEdit {\n"
-"	/*font-size: 12px;*/\n"
-"	text-align: left;\n"
-"	color: rgb(255, 255, 255);\n"
-"	selection-background-color: darkgrey;\n"
-"	background-color: transparent;\n"
-"	padding-top: 3px;\n"
-"	padding-left: 6px;\n"
-"	padding-bottom: 3px;\n"
-"	padding-right: 6px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgba(201, 210, 222, 123);\n"
-"}\n"
-"QLineEdit:hover {\n"
-"	border-color: rgba(201, 210, 222, 210);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
 
-        self.gridLayout_57.addWidget(self.LineEdit_Train_VITS_FileListPathTraining, 1, 0, 1, 2)
-
-        self.Button_Train_VITS_FileListPathTraining = QPushButton(self.Frame_Train_VITS_FileListPathTraining)
-        self.Button_Train_VITS_FileListPathTraining.setObjectName(u"Button_Train_VITS_FileListPathTraining")
-        self.Button_Train_VITS_FileListPathTraining.setMinimumSize(QSize(27, 27))
-        self.Button_Train_VITS_FileListPathTraining.setMaximumSize(QSize(27, 27))
-        self.Button_Train_VITS_FileListPathTraining.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/OpenedFolder.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgba(201, 210, 222, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(201, 210, 222, 210);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.gridLayout_57.addWidget(self.Button_Train_VITS_FileListPathTraining, 1, 2, 1, 1)
+        self.gridLayout_57.addWidget(self.LineEdit_Train_VITS_FileListPathTraining, 1, 0, 1, 3)
 
 
         self.verticalLayout_18.addWidget(self.Frame_Train_VITS_FileListPathTraining)
@@ -12874,8 +11419,8 @@ class Ui_MainWindow(object):
         self.gridLayout_58.setContentsMargins(21, 12, 21, 12)
         self.Label_Train_VITS_FileListPathValidation = QLabel(self.Frame_Train_VITS_FileListPathValidation)
         self.Label_Train_VITS_FileListPathValidation.setObjectName(u"Label_Train_VITS_FileListPathValidation")
-        sizePolicy6.setHeightForWidth(self.Label_Train_VITS_FileListPathValidation.sizePolicy().hasHeightForWidth())
-        self.Label_Train_VITS_FileListPathValidation.setSizePolicy(sizePolicy6)
+        sizePolicy5.setHeightForWidth(self.Label_Train_VITS_FileListPathValidation.sizePolicy().hasHeightForWidth())
+        self.Label_Train_VITS_FileListPathValidation.setSizePolicy(sizePolicy5)
         self.Label_Train_VITS_FileListPathValidation.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	/*color: rgb(255, 255, 255);*/\n"
@@ -12919,64 +11464,11 @@ class Ui_MainWindow(object):
 
         self.gridLayout_58.addWidget(self.Button_Train_VITS_FileListPathValidation_Undo, 0, 2, 1, 1)
 
-        self.LineEdit_Train_VITS_FileListPathValidation = QLineEdit(self.Frame_Train_VITS_FileListPathValidation)
+        self.LineEdit_Train_VITS_FileListPathValidation = LineEditBase(self.Frame_Train_VITS_FileListPathValidation)
         self.LineEdit_Train_VITS_FileListPathValidation.setObjectName(u"LineEdit_Train_VITS_FileListPathValidation")
         self.LineEdit_Train_VITS_FileListPathValidation.setMinimumSize(QSize(0, 27))
-        self.LineEdit_Train_VITS_FileListPathValidation.setStyleSheet(u"QLineEdit {\n"
-"	/*font-size: 12px;*/\n"
-"	text-align: left;\n"
-"	color: rgb(255, 255, 255);\n"
-"	selection-background-color: darkgrey;\n"
-"	background-color: transparent;\n"
-"	padding-top: 3px;\n"
-"	padding-left: 6px;\n"
-"	padding-bottom: 3px;\n"
-"	padding-right: 6px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgba(201, 210, 222, 123);\n"
-"}\n"
-"QLineEdit:hover {\n"
-"	border-color: rgba(201, 210, 222, 210);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
 
-        self.gridLayout_58.addWidget(self.LineEdit_Train_VITS_FileListPathValidation, 1, 0, 1, 2)
-
-        self.Button_Train_VITS_FileListPathValidation = QPushButton(self.Frame_Train_VITS_FileListPathValidation)
-        self.Button_Train_VITS_FileListPathValidation.setObjectName(u"Button_Train_VITS_FileListPathValidation")
-        self.Button_Train_VITS_FileListPathValidation.setMinimumSize(QSize(27, 27))
-        self.Button_Train_VITS_FileListPathValidation.setMaximumSize(QSize(27, 27))
-        self.Button_Train_VITS_FileListPathValidation.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/OpenedFolder.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgba(201, 210, 222, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(201, 210, 222, 210);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.gridLayout_58.addWidget(self.Button_Train_VITS_FileListPathValidation, 1, 2, 1, 1)
+        self.gridLayout_58.addWidget(self.LineEdit_Train_VITS_FileListPathValidation, 1, 0, 1, 3)
 
 
         self.verticalLayout_18.addWidget(self.Frame_Train_VITS_FileListPathValidation)
@@ -13033,8 +11525,8 @@ class Ui_MainWindow(object):
         self.gridLayout_59.setContentsMargins(21, 12, 21, 12)
         self.Label_Train_VITS_Epochs = QLabel(self.Frame_Train_VITS_Epochs)
         self.Label_Train_VITS_Epochs.setObjectName(u"Label_Train_VITS_Epochs")
-        sizePolicy6.setHeightForWidth(self.Label_Train_VITS_Epochs.sizePolicy().hasHeightForWidth())
-        self.Label_Train_VITS_Epochs.setSizePolicy(sizePolicy6)
+        sizePolicy5.setHeightForWidth(self.Label_Train_VITS_Epochs.sizePolicy().hasHeightForWidth())
+        self.Label_Train_VITS_Epochs.setSizePolicy(sizePolicy5)
         self.Label_Train_VITS_Epochs.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	/*color: rgb(255, 255, 255);*/\n"
@@ -13158,8 +11650,8 @@ class Ui_MainWindow(object):
         self.gridLayout_60.setContentsMargins(21, 12, 21, 12)
         self.Label_Train_VITS_BatchSize = QLabel(self.Frame_Train_VITS_BatchSize)
         self.Label_Train_VITS_BatchSize.setObjectName(u"Label_Train_VITS_BatchSize")
-        sizePolicy6.setHeightForWidth(self.Label_Train_VITS_BatchSize.sizePolicy().hasHeightForWidth())
-        self.Label_Train_VITS_BatchSize.setSizePolicy(sizePolicy6)
+        sizePolicy5.setHeightForWidth(self.Label_Train_VITS_BatchSize.sizePolicy().hasHeightForWidth())
+        self.Label_Train_VITS_BatchSize.setSizePolicy(sizePolicy5)
         self.Label_Train_VITS_BatchSize.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	/*color: rgb(255, 255, 255);*/\n"
@@ -13283,8 +11775,8 @@ class Ui_MainWindow(object):
         self.gridLayout_61.setContentsMargins(21, 12, 21, 12)
         self.Label_Train_VITS_UsePretrainedModels = QLabel(self.Frame_Train_VITS_UsePretrainedModels)
         self.Label_Train_VITS_UsePretrainedModels.setObjectName(u"Label_Train_VITS_UsePretrainedModels")
-        sizePolicy6.setHeightForWidth(self.Label_Train_VITS_UsePretrainedModels.sizePolicy().hasHeightForWidth())
-        self.Label_Train_VITS_UsePretrainedModels.setSizePolicy(sizePolicy6)
+        sizePolicy5.setHeightForWidth(self.Label_Train_VITS_UsePretrainedModels.sizePolicy().hasHeightForWidth())
+        self.Label_Train_VITS_UsePretrainedModels.setSizePolicy(sizePolicy5)
         self.Label_Train_VITS_UsePretrainedModels.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	/*color: rgb(255, 255, 255);*/\n"
@@ -13377,6 +11869,262 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_17.addWidget(self.Frame_Train_VITS_UsePretrainedModels)
 
+        self.Frame_Train_VITS_ModelPathPretrainedG = QFrame(self.Frame_Train_VITS_VITSParams_BasicSettings)
+        self.Frame_Train_VITS_ModelPathPretrainedG.setObjectName(u"Frame_Train_VITS_ModelPathPretrainedG")
+        self.Frame_Train_VITS_ModelPathPretrainedG.setMinimumSize(QSize(0, 105))
+        self.Frame_Train_VITS_ModelPathPretrainedG.setStyleSheet(u"QFrame {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QFrame:hover {\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
+"}")
+        self.gridLayout_65 = QGridLayout(self.Frame_Train_VITS_ModelPathPretrainedG)
+        self.gridLayout_65.setSpacing(12)
+        self.gridLayout_65.setObjectName(u"gridLayout_65")
+        self.gridLayout_65.setContentsMargins(21, 12, 21, 12)
+        self.Label_Train_VITS_ModelPathPretrainedG = QLabel(self.Frame_Train_VITS_ModelPathPretrainedG)
+        self.Label_Train_VITS_ModelPathPretrainedG.setObjectName(u"Label_Train_VITS_ModelPathPretrainedG")
+        sizePolicy5.setHeightForWidth(self.Label_Train_VITS_ModelPathPretrainedG.sizePolicy().hasHeightForWidth())
+        self.Label_Train_VITS_ModelPathPretrainedG.setSizePolicy(sizePolicy5)
+        self.Label_Train_VITS_ModelPathPretrainedG.setStyleSheet(u"QLabel {\n"
+"	/*text-align: center;*/\n"
+"	/*color: rgb(255, 255, 255);*/\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_65.addWidget(self.Label_Train_VITS_ModelPathPretrainedG, 0, 0, 1, 1)
+
+        self.HorizontalSpacer_Train_VITS_ModelPathPretrainedG = QSpacerItem(443, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.gridLayout_65.addItem(self.HorizontalSpacer_Train_VITS_ModelPathPretrainedG, 0, 1, 1, 1)
+
+        self.Button_Train_VITS_ModelPathPretrainedG_Undo = QPushButton(self.Frame_Train_VITS_ModelPathPretrainedG)
+        self.Button_Train_VITS_ModelPathPretrainedG_Undo.setObjectName(u"Button_Train_VITS_ModelPathPretrainedG_Undo")
+        self.Button_Train_VITS_ModelPathPretrainedG_Undo.setMinimumSize(QSize(27, 27))
+        self.Button_Train_VITS_ModelPathPretrainedG_Undo.setMaximumSize(QSize(27, 27))
+        self.Button_Train_VITS_ModelPathPretrainedG_Undo.setStyleSheet(u"QPushButton {\n"
+"	image: url(:/Button_Icon/Sources/Undo.png);\n"
+"	background-color: transparent;\n"
+"	padding: 4.5px;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgba(201, 210, 222, 123);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgba(201, 210, 222, 210);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_65.addWidget(self.Button_Train_VITS_ModelPathPretrainedG_Undo, 0, 2, 1, 1)
+
+        self.LineEdit_Train_VITS_ModelPathPretrainedG = LineEditBase(self.Frame_Train_VITS_ModelPathPretrainedG)
+        self.LineEdit_Train_VITS_ModelPathPretrainedG.setObjectName(u"LineEdit_Train_VITS_ModelPathPretrainedG")
+        self.LineEdit_Train_VITS_ModelPathPretrainedG.setMinimumSize(QSize(0, 27))
+
+        self.gridLayout_65.addWidget(self.LineEdit_Train_VITS_ModelPathPretrainedG, 1, 0, 1, 3)
+
+
+        self.verticalLayout_17.addWidget(self.Frame_Train_VITS_ModelPathPretrainedG)
+
+        self.Frame_Train_VITS_ModelPathPretrainedD = QFrame(self.Frame_Train_VITS_VITSParams_BasicSettings)
+        self.Frame_Train_VITS_ModelPathPretrainedD.setObjectName(u"Frame_Train_VITS_ModelPathPretrainedD")
+        self.Frame_Train_VITS_ModelPathPretrainedD.setMinimumSize(QSize(0, 105))
+        self.Frame_Train_VITS_ModelPathPretrainedD.setStyleSheet(u"QFrame {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QFrame:hover {\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
+"}")
+        self.gridLayout_66 = QGridLayout(self.Frame_Train_VITS_ModelPathPretrainedD)
+        self.gridLayout_66.setSpacing(12)
+        self.gridLayout_66.setObjectName(u"gridLayout_66")
+        self.gridLayout_66.setContentsMargins(21, 12, 21, 12)
+        self.Label_Train_VITS_ModelPathPretrainedD = QLabel(self.Frame_Train_VITS_ModelPathPretrainedD)
+        self.Label_Train_VITS_ModelPathPretrainedD.setObjectName(u"Label_Train_VITS_ModelPathPretrainedD")
+        sizePolicy5.setHeightForWidth(self.Label_Train_VITS_ModelPathPretrainedD.sizePolicy().hasHeightForWidth())
+        self.Label_Train_VITS_ModelPathPretrainedD.setSizePolicy(sizePolicy5)
+        self.Label_Train_VITS_ModelPathPretrainedD.setStyleSheet(u"QLabel {\n"
+"	/*text-align: center;*/\n"
+"	/*color: rgb(255, 255, 255);*/\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_66.addWidget(self.Label_Train_VITS_ModelPathPretrainedD, 0, 0, 1, 1)
+
+        self.HorizontalSpacer_Train_VITS_ModelPathPretrainedD = QSpacerItem(443, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.gridLayout_66.addItem(self.HorizontalSpacer_Train_VITS_ModelPathPretrainedD, 0, 1, 1, 1)
+
+        self.Button_Train_VITS_ModelPathPretrainedD_Undo = QPushButton(self.Frame_Train_VITS_ModelPathPretrainedD)
+        self.Button_Train_VITS_ModelPathPretrainedD_Undo.setObjectName(u"Button_Train_VITS_ModelPathPretrainedD_Undo")
+        self.Button_Train_VITS_ModelPathPretrainedD_Undo.setMinimumSize(QSize(27, 27))
+        self.Button_Train_VITS_ModelPathPretrainedD_Undo.setMaximumSize(QSize(27, 27))
+        self.Button_Train_VITS_ModelPathPretrainedD_Undo.setStyleSheet(u"QPushButton {\n"
+"	image: url(:/Button_Icon/Sources/Undo.png);\n"
+"	background-color: transparent;\n"
+"	padding: 4.5px;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgba(201, 210, 222, 123);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgba(201, 210, 222, 210);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_66.addWidget(self.Button_Train_VITS_ModelPathPretrainedD_Undo, 0, 2, 1, 1)
+
+        self.LineEdit_Train_VITS_ModelPathPretrainedD = LineEditBase(self.Frame_Train_VITS_ModelPathPretrainedD)
+        self.LineEdit_Train_VITS_ModelPathPretrainedD.setObjectName(u"LineEdit_Train_VITS_ModelPathPretrainedD")
+        self.LineEdit_Train_VITS_ModelPathPretrainedD.setMinimumSize(QSize(0, 27))
+
+        self.gridLayout_66.addWidget(self.LineEdit_Train_VITS_ModelPathPretrainedD, 1, 0, 1, 3)
+
+
+        self.verticalLayout_17.addWidget(self.Frame_Train_VITS_ModelPathPretrainedD)
+
+        self.Frame_Train_VITS_KeepOriginalSpeakers = QFrame(self.Frame_Train_VITS_VITSParams_BasicSettings)
+        self.Frame_Train_VITS_KeepOriginalSpeakers.setObjectName(u"Frame_Train_VITS_KeepOriginalSpeakers")
+        self.Frame_Train_VITS_KeepOriginalSpeakers.setMinimumSize(QSize(0, 105))
+        self.Frame_Train_VITS_KeepOriginalSpeakers.setStyleSheet(u"QFrame {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QFrame:hover {\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
+"}")
+        self.gridLayout_67 = QGridLayout(self.Frame_Train_VITS_KeepOriginalSpeakers)
+        self.gridLayout_67.setSpacing(12)
+        self.gridLayout_67.setObjectName(u"gridLayout_67")
+        self.gridLayout_67.setContentsMargins(21, 12, 21, 12)
+        self.Label_Train_VITS_KeepOriginalSpeakers = QLabel(self.Frame_Train_VITS_KeepOriginalSpeakers)
+        self.Label_Train_VITS_KeepOriginalSpeakers.setObjectName(u"Label_Train_VITS_KeepOriginalSpeakers")
+        sizePolicy5.setHeightForWidth(self.Label_Train_VITS_KeepOriginalSpeakers.sizePolicy().hasHeightForWidth())
+        self.Label_Train_VITS_KeepOriginalSpeakers.setSizePolicy(sizePolicy5)
+        self.Label_Train_VITS_KeepOriginalSpeakers.setStyleSheet(u"QLabel {\n"
+"	/*text-align: center;*/\n"
+"	/*color: rgb(255, 255, 255);*/\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_67.addWidget(self.Label_Train_VITS_KeepOriginalSpeakers, 0, 0, 1, 1)
+
+        self.HorizontalSpacer_Train_VITS_KeepOriginalSpeakers = QSpacerItem(443, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.gridLayout_67.addItem(self.HorizontalSpacer_Train_VITS_KeepOriginalSpeakers, 0, 1, 1, 1)
+
+        self.Button_Train_VITS_KeepOriginalSpeakers_Undo = QPushButton(self.Frame_Train_VITS_KeepOriginalSpeakers)
+        self.Button_Train_VITS_KeepOriginalSpeakers_Undo.setObjectName(u"Button_Train_VITS_KeepOriginalSpeakers_Undo")
+        self.Button_Train_VITS_KeepOriginalSpeakers_Undo.setMinimumSize(QSize(27, 27))
+        self.Button_Train_VITS_KeepOriginalSpeakers_Undo.setMaximumSize(QSize(27, 27))
+        self.Button_Train_VITS_KeepOriginalSpeakers_Undo.setStyleSheet(u"QPushButton {\n"
+"	image: url(:/Button_Icon/Sources/Undo.png);\n"
+"	background-color: transparent;\n"
+"	padding: 4.5px;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgba(201, 210, 222, 123);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgba(201, 210, 222, 210);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_67.addWidget(self.Button_Train_VITS_KeepOriginalSpeakers_Undo, 0, 2, 1, 1)
+
+        self.CheckBox_Train_VITS_KeepOriginalSpeakers = QCheckBox(self.Frame_Train_VITS_KeepOriginalSpeakers)
+        self.CheckBox_Train_VITS_KeepOriginalSpeakers.setObjectName(u"CheckBox_Train_VITS_KeepOriginalSpeakers")
+        self.CheckBox_Train_VITS_KeepOriginalSpeakers.setMinimumSize(QSize(0, 27))
+        self.CheckBox_Train_VITS_KeepOriginalSpeakers.setStyleSheet(u"QCheckBox {\n"
+"	font-size: 12px;\n"
+"	spacing: 12.3px;\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QCheckBox:hover {\n"
+"	color: rgb(255, 255, 255);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator {\n"
+"	width: 24px;\n"
+"	height: 24px;\n"
+"    background-color: transparent;\n"
+"	padding: 1.2px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QCheckBox::indicator:hover {\n"
+"	background-color: rgba(255, 255, 255, 21);\n"
+"}\n"
+"QCheckBox::indicator:unchecked {\n"
+"	border-image: url(:/CheckBox_Icon/Sources/ToggleOff.png);\n"
+"}\n"
+"QCheckBox::indicator:checked {\n"
+"	border-image: url(:/CheckBox_Icon/Sources/ToggleOn.png);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_67.addWidget(self.CheckBox_Train_VITS_KeepOriginalSpeakers, 1, 0, 1, 3)
+
+
+        self.verticalLayout_17.addWidget(self.Frame_Train_VITS_KeepOriginalSpeakers)
+
 
         self.verticalLayout_114.addWidget(self.Frame_Train_VITS_VITSParams_BasicSettings)
 
@@ -13452,8 +12200,8 @@ class Ui_MainWindow(object):
         self.gridLayout_63.setContentsMargins(21, 12, 21, 12)
         self.Label_Train_VITS_NumWorkers = QLabel(self.Frame_Train_VITS_NumWorkers)
         self.Label_Train_VITS_NumWorkers.setObjectName(u"Label_Train_VITS_NumWorkers")
-        sizePolicy6.setHeightForWidth(self.Label_Train_VITS_NumWorkers.sizePolicy().hasHeightForWidth())
-        self.Label_Train_VITS_NumWorkers.setSizePolicy(sizePolicy6)
+        sizePolicy5.setHeightForWidth(self.Label_Train_VITS_NumWorkers.sizePolicy().hasHeightForWidth())
+        self.Label_Train_VITS_NumWorkers.setSizePolicy(sizePolicy5)
         self.Label_Train_VITS_NumWorkers.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	/*color: rgb(255, 255, 255);*/\n"
@@ -13577,8 +12325,8 @@ class Ui_MainWindow(object):
         self.gridLayout_64.setContentsMargins(21, 12, 21, 12)
         self.Label_Train_VITS_FP16Run = QLabel(self.Frame_Train_VITS_FP16Run)
         self.Label_Train_VITS_FP16Run.setObjectName(u"Label_Train_VITS_FP16Run")
-        sizePolicy6.setHeightForWidth(self.Label_Train_VITS_FP16Run.sizePolicy().hasHeightForWidth())
-        self.Label_Train_VITS_FP16Run.setSizePolicy(sizePolicy6)
+        sizePolicy5.setHeightForWidth(self.Label_Train_VITS_FP16Run.sizePolicy().hasHeightForWidth())
+        self.Label_Train_VITS_FP16Run.setSizePolicy(sizePolicy5)
         self.Label_Train_VITS_FP16Run.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	/*color: rgb(255, 255, 255);*/\n"
@@ -13671,368 +12419,6 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_35.addWidget(self.Frame_Train_VITS_FP16Run)
 
-        self.Frame_Train_VITS_ModelPathPretrainedG = QFrame(self.Frame_Train_VITS_VITSParams_AdvanceSettings)
-        self.Frame_Train_VITS_ModelPathPretrainedG.setObjectName(u"Frame_Train_VITS_ModelPathPretrainedG")
-        self.Frame_Train_VITS_ModelPathPretrainedG.setMinimumSize(QSize(0, 105))
-        self.Frame_Train_VITS_ModelPathPretrainedG.setStyleSheet(u"QFrame {\n"
-"	color: rgb(255, 255, 255);\n"
-"	background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QFrame:hover {\n"
-"	background-color: rgba(33, 33, 33, 99);\n"
-"}")
-        self.gridLayout_65 = QGridLayout(self.Frame_Train_VITS_ModelPathPretrainedG)
-        self.gridLayout_65.setSpacing(12)
-        self.gridLayout_65.setObjectName(u"gridLayout_65")
-        self.gridLayout_65.setContentsMargins(21, 12, 21, 12)
-        self.Label_Train_VITS_ModelPathPretrainedG = QLabel(self.Frame_Train_VITS_ModelPathPretrainedG)
-        self.Label_Train_VITS_ModelPathPretrainedG.setObjectName(u"Label_Train_VITS_ModelPathPretrainedG")
-        sizePolicy6.setHeightForWidth(self.Label_Train_VITS_ModelPathPretrainedG.sizePolicy().hasHeightForWidth())
-        self.Label_Train_VITS_ModelPathPretrainedG.setSizePolicy(sizePolicy6)
-        self.Label_Train_VITS_ModelPathPretrainedG.setStyleSheet(u"QLabel {\n"
-"	/*text-align: center;*/\n"
-"	/*color: rgb(255, 255, 255);*/\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.gridLayout_65.addWidget(self.Label_Train_VITS_ModelPathPretrainedG, 0, 0, 1, 1)
-
-        self.HorizontalSpacer_Train_VITS_ModelPathPretrainedG = QSpacerItem(443, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
-
-        self.gridLayout_65.addItem(self.HorizontalSpacer_Train_VITS_ModelPathPretrainedG, 0, 1, 1, 1)
-
-        self.Button_Train_VITS_ModelPathPretrainedG_Undo = QPushButton(self.Frame_Train_VITS_ModelPathPretrainedG)
-        self.Button_Train_VITS_ModelPathPretrainedG_Undo.setObjectName(u"Button_Train_VITS_ModelPathPretrainedG_Undo")
-        self.Button_Train_VITS_ModelPathPretrainedG_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_Train_VITS_ModelPathPretrainedG_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_Train_VITS_ModelPathPretrainedG_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgba(201, 210, 222, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(201, 210, 222, 210);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.gridLayout_65.addWidget(self.Button_Train_VITS_ModelPathPretrainedG_Undo, 0, 2, 1, 1)
-
-        self.LineEdit_Train_VITS_ModelPathPretrainedG = QLineEdit(self.Frame_Train_VITS_ModelPathPretrainedG)
-        self.LineEdit_Train_VITS_ModelPathPretrainedG.setObjectName(u"LineEdit_Train_VITS_ModelPathPretrainedG")
-        self.LineEdit_Train_VITS_ModelPathPretrainedG.setMinimumSize(QSize(0, 27))
-        self.LineEdit_Train_VITS_ModelPathPretrainedG.setStyleSheet(u"QLineEdit {\n"
-"	/*font-size: 12px;*/\n"
-"	text-align: left;\n"
-"	color: rgb(255, 255, 255);\n"
-"	selection-background-color: darkgrey;\n"
-"	background-color: transparent;\n"
-"	padding-top: 3px;\n"
-"	padding-left: 6px;\n"
-"	padding-bottom: 3px;\n"
-"	padding-right: 6px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgba(201, 210, 222, 123);\n"
-"}\n"
-"QLineEdit:hover {\n"
-"	border-color: rgba(201, 210, 222, 210);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.gridLayout_65.addWidget(self.LineEdit_Train_VITS_ModelPathPretrainedG, 1, 0, 1, 2)
-
-        self.Button_Train_VITS_ModelPathPretrainedG = QPushButton(self.Frame_Train_VITS_ModelPathPretrainedG)
-        self.Button_Train_VITS_ModelPathPretrainedG.setObjectName(u"Button_Train_VITS_ModelPathPretrainedG")
-        self.Button_Train_VITS_ModelPathPretrainedG.setMinimumSize(QSize(27, 27))
-        self.Button_Train_VITS_ModelPathPretrainedG.setMaximumSize(QSize(27, 27))
-        self.Button_Train_VITS_ModelPathPretrainedG.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/OpenedFolder.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgba(201, 210, 222, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(201, 210, 222, 210);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.gridLayout_65.addWidget(self.Button_Train_VITS_ModelPathPretrainedG, 1, 2, 1, 1)
-
-
-        self.verticalLayout_35.addWidget(self.Frame_Train_VITS_ModelPathPretrainedG)
-
-        self.Frame_Train_VITS_ModelPathPretrainedD = QFrame(self.Frame_Train_VITS_VITSParams_AdvanceSettings)
-        self.Frame_Train_VITS_ModelPathPretrainedD.setObjectName(u"Frame_Train_VITS_ModelPathPretrainedD")
-        self.Frame_Train_VITS_ModelPathPretrainedD.setMinimumSize(QSize(0, 105))
-        self.Frame_Train_VITS_ModelPathPretrainedD.setStyleSheet(u"QFrame {\n"
-"	color: rgb(255, 255, 255);\n"
-"	background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QFrame:hover {\n"
-"	background-color: rgba(33, 33, 33, 99);\n"
-"}")
-        self.gridLayout_66 = QGridLayout(self.Frame_Train_VITS_ModelPathPretrainedD)
-        self.gridLayout_66.setSpacing(12)
-        self.gridLayout_66.setObjectName(u"gridLayout_66")
-        self.gridLayout_66.setContentsMargins(21, 12, 21, 12)
-        self.Label_Train_VITS_ModelPathPretrainedD = QLabel(self.Frame_Train_VITS_ModelPathPretrainedD)
-        self.Label_Train_VITS_ModelPathPretrainedD.setObjectName(u"Label_Train_VITS_ModelPathPretrainedD")
-        sizePolicy6.setHeightForWidth(self.Label_Train_VITS_ModelPathPretrainedD.sizePolicy().hasHeightForWidth())
-        self.Label_Train_VITS_ModelPathPretrainedD.setSizePolicy(sizePolicy6)
-        self.Label_Train_VITS_ModelPathPretrainedD.setStyleSheet(u"QLabel {\n"
-"	/*text-align: center;*/\n"
-"	/*color: rgb(255, 255, 255);*/\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.gridLayout_66.addWidget(self.Label_Train_VITS_ModelPathPretrainedD, 0, 0, 1, 1)
-
-        self.HorizontalSpacer_Train_VITS_ModelPathPretrainedD = QSpacerItem(443, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
-
-        self.gridLayout_66.addItem(self.HorizontalSpacer_Train_VITS_ModelPathPretrainedD, 0, 1, 1, 1)
-
-        self.Button_Train_VITS_ModelPathPretrainedD_Undo = QPushButton(self.Frame_Train_VITS_ModelPathPretrainedD)
-        self.Button_Train_VITS_ModelPathPretrainedD_Undo.setObjectName(u"Button_Train_VITS_ModelPathPretrainedD_Undo")
-        self.Button_Train_VITS_ModelPathPretrainedD_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_Train_VITS_ModelPathPretrainedD_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_Train_VITS_ModelPathPretrainedD_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgba(201, 210, 222, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(201, 210, 222, 210);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.gridLayout_66.addWidget(self.Button_Train_VITS_ModelPathPretrainedD_Undo, 0, 2, 1, 1)
-
-        self.LineEdit_Train_VITS_ModelPathPretrainedD = QLineEdit(self.Frame_Train_VITS_ModelPathPretrainedD)
-        self.LineEdit_Train_VITS_ModelPathPretrainedD.setObjectName(u"LineEdit_Train_VITS_ModelPathPretrainedD")
-        self.LineEdit_Train_VITS_ModelPathPretrainedD.setMinimumSize(QSize(0, 27))
-        self.LineEdit_Train_VITS_ModelPathPretrainedD.setStyleSheet(u"QLineEdit {\n"
-"	/*font-size: 12px;*/\n"
-"	text-align: left;\n"
-"	color: rgb(255, 255, 255);\n"
-"	selection-background-color: darkgrey;\n"
-"	background-color: transparent;\n"
-"	padding-top: 3px;\n"
-"	padding-left: 6px;\n"
-"	padding-bottom: 3px;\n"
-"	padding-right: 6px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgba(201, 210, 222, 123);\n"
-"}\n"
-"QLineEdit:hover {\n"
-"	border-color: rgba(201, 210, 222, 210);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.gridLayout_66.addWidget(self.LineEdit_Train_VITS_ModelPathPretrainedD, 1, 0, 1, 2)
-
-        self.Button_Train_VITS_ModelPathPretrainedD = QPushButton(self.Frame_Train_VITS_ModelPathPretrainedD)
-        self.Button_Train_VITS_ModelPathPretrainedD.setObjectName(u"Button_Train_VITS_ModelPathPretrainedD")
-        self.Button_Train_VITS_ModelPathPretrainedD.setMinimumSize(QSize(27, 27))
-        self.Button_Train_VITS_ModelPathPretrainedD.setMaximumSize(QSize(27, 27))
-        self.Button_Train_VITS_ModelPathPretrainedD.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/OpenedFolder.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgba(201, 210, 222, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(201, 210, 222, 210);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.gridLayout_66.addWidget(self.Button_Train_VITS_ModelPathPretrainedD, 1, 2, 1, 1)
-
-
-        self.verticalLayout_35.addWidget(self.Frame_Train_VITS_ModelPathPretrainedD)
-
-        self.Frame_Train_VITS_KeepOriginalSpeakers = QFrame(self.Frame_Train_VITS_VITSParams_AdvanceSettings)
-        self.Frame_Train_VITS_KeepOriginalSpeakers.setObjectName(u"Frame_Train_VITS_KeepOriginalSpeakers")
-        self.Frame_Train_VITS_KeepOriginalSpeakers.setMinimumSize(QSize(0, 105))
-        self.Frame_Train_VITS_KeepOriginalSpeakers.setStyleSheet(u"QFrame {\n"
-"	color: rgb(255, 255, 255);\n"
-"	background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QFrame:hover {\n"
-"	background-color: rgba(33, 33, 33, 99);\n"
-"}")
-        self.gridLayout_67 = QGridLayout(self.Frame_Train_VITS_KeepOriginalSpeakers)
-        self.gridLayout_67.setSpacing(12)
-        self.gridLayout_67.setObjectName(u"gridLayout_67")
-        self.gridLayout_67.setContentsMargins(21, 12, 21, 12)
-        self.Label_Train_VITS_KeepOriginalSpeakers = QLabel(self.Frame_Train_VITS_KeepOriginalSpeakers)
-        self.Label_Train_VITS_KeepOriginalSpeakers.setObjectName(u"Label_Train_VITS_KeepOriginalSpeakers")
-        sizePolicy6.setHeightForWidth(self.Label_Train_VITS_KeepOriginalSpeakers.sizePolicy().hasHeightForWidth())
-        self.Label_Train_VITS_KeepOriginalSpeakers.setSizePolicy(sizePolicy6)
-        self.Label_Train_VITS_KeepOriginalSpeakers.setStyleSheet(u"QLabel {\n"
-"	/*text-align: center;*/\n"
-"	/*color: rgb(255, 255, 255);*/\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.gridLayout_67.addWidget(self.Label_Train_VITS_KeepOriginalSpeakers, 0, 0, 1, 1)
-
-        self.HorizontalSpacer_Train_VITS_KeepOriginalSpeakers = QSpacerItem(443, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
-
-        self.gridLayout_67.addItem(self.HorizontalSpacer_Train_VITS_KeepOriginalSpeakers, 0, 1, 1, 1)
-
-        self.Button_Train_VITS_KeepOriginalSpeakers_Undo = QPushButton(self.Frame_Train_VITS_KeepOriginalSpeakers)
-        self.Button_Train_VITS_KeepOriginalSpeakers_Undo.setObjectName(u"Button_Train_VITS_KeepOriginalSpeakers_Undo")
-        self.Button_Train_VITS_KeepOriginalSpeakers_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_Train_VITS_KeepOriginalSpeakers_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_Train_VITS_KeepOriginalSpeakers_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgba(201, 210, 222, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(201, 210, 222, 210);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.gridLayout_67.addWidget(self.Button_Train_VITS_KeepOriginalSpeakers_Undo, 0, 2, 1, 1)
-
-        self.CheckBox_Train_VITS_KeepOriginalSpeakers = QCheckBox(self.Frame_Train_VITS_KeepOriginalSpeakers)
-        self.CheckBox_Train_VITS_KeepOriginalSpeakers.setObjectName(u"CheckBox_Train_VITS_KeepOriginalSpeakers")
-        self.CheckBox_Train_VITS_KeepOriginalSpeakers.setMinimumSize(QSize(0, 27))
-        self.CheckBox_Train_VITS_KeepOriginalSpeakers.setStyleSheet(u"QCheckBox {\n"
-"	font-size: 12px;\n"
-"	spacing: 12.3px;\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QCheckBox:hover {\n"
-"	color: rgb(255, 255, 255);\n"
-"}\n"
-"\n"
-"QCheckBox::indicator {\n"
-"	width: 24px;\n"
-"	height: 24px;\n"
-"    background-color: transparent;\n"
-"	padding: 1.2px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QCheckBox::indicator:hover {\n"
-"	background-color: rgba(255, 255, 255, 21);\n"
-"}\n"
-"QCheckBox::indicator:unchecked {\n"
-"	border-image: url(:/CheckBox_Icon/Sources/ToggleOff.png);\n"
-"}\n"
-"QCheckBox::indicator:checked {\n"
-"	border-image: url(:/CheckBox_Icon/Sources/ToggleOn.png);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.gridLayout_67.addWidget(self.CheckBox_Train_VITS_KeepOriginalSpeakers, 1, 0, 1, 3)
-
-
-        self.verticalLayout_35.addWidget(self.Frame_Train_VITS_KeepOriginalSpeakers)
-
 
         self.verticalLayout_114.addWidget(self.Frame_Train_VITS_VITSParams_AdvanceSettings)
 
@@ -14085,8 +12471,8 @@ class Ui_MainWindow(object):
         self.gridLayout_62.setContentsMargins(21, 12, 21, 12)
         self.Label_Train_VITS_EvalInterval = QLabel(self.Frame_Train_VITS_EvalInterval)
         self.Label_Train_VITS_EvalInterval.setObjectName(u"Label_Train_VITS_EvalInterval")
-        sizePolicy6.setHeightForWidth(self.Label_Train_VITS_EvalInterval.sizePolicy().hasHeightForWidth())
-        self.Label_Train_VITS_EvalInterval.setSizePolicy(sizePolicy6)
+        sizePolicy5.setHeightForWidth(self.Label_Train_VITS_EvalInterval.sizePolicy().hasHeightForWidth())
+        self.Label_Train_VITS_EvalInterval.setSizePolicy(sizePolicy5)
         self.Label_Train_VITS_EvalInterval.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	/*color: rgb(255, 255, 255);*/\n"
@@ -14210,8 +12596,8 @@ class Ui_MainWindow(object):
         self.gridLayout_68.setContentsMargins(21, 12, 21, 12)
         self.Label_Train_VITS_OutputDir = QLabel(self.Frame_Train_VITS_OutputDir)
         self.Label_Train_VITS_OutputDir.setObjectName(u"Label_Train_VITS_OutputDir")
-        sizePolicy6.setHeightForWidth(self.Label_Train_VITS_OutputDir.sizePolicy().hasHeightForWidth())
-        self.Label_Train_VITS_OutputDir.setSizePolicy(sizePolicy6)
+        sizePolicy5.setHeightForWidth(self.Label_Train_VITS_OutputDir.sizePolicy().hasHeightForWidth())
+        self.Label_Train_VITS_OutputDir.setSizePolicy(sizePolicy5)
         self.Label_Train_VITS_OutputDir.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	/*color: rgb(255, 255, 255);*/\n"
@@ -14255,64 +12641,11 @@ class Ui_MainWindow(object):
 
         self.gridLayout_68.addWidget(self.Button_Train_VITS_OutputDir_Undo, 0, 2, 1, 1)
 
-        self.LineEdit_Train_VITS_OutputDir = QLineEdit(self.Frame_Train_VITS_OutputDir)
+        self.LineEdit_Train_VITS_OutputDir = LineEditBase(self.Frame_Train_VITS_OutputDir)
         self.LineEdit_Train_VITS_OutputDir.setObjectName(u"LineEdit_Train_VITS_OutputDir")
         self.LineEdit_Train_VITS_OutputDir.setMinimumSize(QSize(0, 27))
-        self.LineEdit_Train_VITS_OutputDir.setStyleSheet(u"QLineEdit {\n"
-"	/*font-size: 12px;*/\n"
-"	text-align: left;\n"
-"	color: rgb(255, 255, 255);\n"
-"	selection-background-color: darkgrey;\n"
-"	background-color: transparent;\n"
-"	padding-top: 3px;\n"
-"	padding-left: 6px;\n"
-"	padding-bottom: 3px;\n"
-"	padding-right: 6px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgba(201, 210, 222, 123);\n"
-"}\n"
-"QLineEdit:hover {\n"
-"	border-color: rgba(201, 210, 222, 210);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
 
-        self.gridLayout_68.addWidget(self.LineEdit_Train_VITS_OutputDir, 1, 0, 1, 2)
-
-        self.Button_Train_VITS_OutputDir = QPushButton(self.Frame_Train_VITS_OutputDir)
-        self.Button_Train_VITS_OutputDir.setObjectName(u"Button_Train_VITS_OutputDir")
-        self.Button_Train_VITS_OutputDir.setMinimumSize(QSize(27, 27))
-        self.Button_Train_VITS_OutputDir.setMaximumSize(QSize(27, 27))
-        self.Button_Train_VITS_OutputDir.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/OpenedFolder.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgba(201, 210, 222, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(201, 210, 222, 210);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.gridLayout_68.addWidget(self.Button_Train_VITS_OutputDir, 1, 2, 1, 1)
+        self.gridLayout_68.addWidget(self.LineEdit_Train_VITS_OutputDir, 1, 0, 1, 3)
 
 
         self.verticalLayout_26.addWidget(self.Frame_Train_VITS_OutputDir)
@@ -14331,6 +12664,9 @@ class Ui_MainWindow(object):
 
         self.gridLayout_22.addWidget(self.ScrollArea_Middle_Train_VITS, 0, 1, 1, 1)
 
+        self.gridLayout_22.setColumnStretch(0, 3)
+        self.gridLayout_22.setColumnStretch(1, 10)
+        self.gridLayout_22.setColumnStretch(2, 7)
         self.StackedWidget_Pages_Train.addWidget(self.Subpage_Train_VITS)
 
         self.verticalLayout_43.addWidget(self.StackedWidget_Pages_Train)
@@ -14481,7 +12817,6 @@ class Ui_MainWindow(object):
         self.Widget_Left_TTS_VITS = QWidget(self.Subpage_TTS_VITS)
         self.Widget_Left_TTS_VITS.setObjectName(u"Widget_Left_TTS_VITS")
         self.Widget_Left_TTS_VITS.setMinimumSize(QSize(150, 0))
-        self.Widget_Left_TTS_VITS.setMaximumSize(QSize(210, 16777215))
         self.Widget_Left_TTS_VITS.setStyleSheet(u"QWidget {\n"
 "	background-color: rgba(36, 36, 36, 123);\n"
 "	border-width: 0px;\n"
@@ -14497,190 +12832,82 @@ class Ui_MainWindow(object):
         __qtreewidgetitem5 = QTreeWidgetItem(self.TreeWidget_Catalogue_TTS_VITS)
         QTreeWidgetItem(__qtreewidgetitem5)
         self.TreeWidget_Catalogue_TTS_VITS.setObjectName(u"TreeWidget_Catalogue_TTS_VITS")
-        self.TreeWidget_Catalogue_TTS_VITS.setStyleSheet(u"QTreeWidget {\n"
+        self.TreeWidget_Catalogue_TTS_VITS.setStyleSheet(u"QTreeView {\n"
 "	/*font-size: 12px;\n"
 "	text-align: center;*/\n"
-"	margin: 0px;\n"
 "	background-color: transparent;\n"
 "	border-width: 0px;\n"
 "	border-radius: 0px;\n"
 "	border-style: solid;\n"
 "}\n"
 "\n"
-"QTreeWidget::item {\n"
+"QTreeView::item {\n"
 "	background-color: transparent;\n"
-"	padding: 1.2px;\n"
+"	padding: 2.4px;\n"
+"}\n"
+"QTreeView::item:hover {\n"
+"    background-color: rgba(66, 66, 66, 198);\n"
+"}\n"
+"QTreeView::item:selected {\n"
+"    background-color: ;\n"
 "}\n"
 "\n"
-"QTreeWidget::branch {\n"
+"QTreeView::branch {\n"
 "    background-color: transparent;\n"
 "	border-width: 0px;\n"
 "	border-radius: 0px;\n"
 "	border-style: solid;\n"
 "}\n"
-"QTreeWidget::branch:open:has-children:has-siblings,\n"
-"QTreeWidget::branch:open:has-children:!has-siblings {\n"
+"QTreeView::branch:open:has-children {\n"
 "    image: ;\n"
 "}\n"
-"QTreeWidget::branch:closed:has-children:has-siblings,\n"
-"QTreeWidget::branch:closed:has-children:!has-siblings {\n"
+"QTreeView::branch:closed:has-children {\n"
 "    image: ;\n"
 "}\n"
-"QTreeWidget::branch:!has-children:has-siblings:adjoins-item,\n"
-"QTreeWidget::branch:!has-children:!has-siblings:adjoins-item {\n"
-"    image: ;\n"
-"}\n"
-"\n"
-"\n"
-"QTreeView {\n"
-"}\n"
-"\n"
-"QTreeView::item{\n"
-"}\n"
-"QTreeView::item:hover {\n"
-"    background-color: rgba(66, 66, 66, 198);\n"
-"}\n"
-""
-                        "QTreeView::item:selected:active{\n"
-"    background-color: ;\n"
-"}\n"
-"QTreeView::item:selected:!active {\n"
+"QTreeWidget::branch:adjoins-item {\n"
 "    background-color: ;\n"
 "}\n"
 "\n"
-"/*\n"
-"QHeaderView {\n"
-"	font-size: 15px;\n"
-"	text-align: center;\n"
-"	margin: 0px;\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QHeaderView:hover {\n"
-"    background-color: rgba(66, 66, 66, 198);\n"
-"}\n"
 "\n"
-"QHeaderView::section {\n"
-"	background-color: transparent;\n"
-"}\n"
-"QHeaderView::section:checked {\n"
-"	background-color: ;\n"
-"}\n"
-"\n"
-"QHeaderView::up-arrow {\n"
-"	position: ;\n"
-"	image: ;\n"
-"}\n"
-"\n"
-"QHeaderView::down-arrow {\n"
-"	position: ;\n"
-"	image: ;\n"
-"}*/\n"
-"\n"
-"\n"
-"QScrollBar::vertical {\n"
-"	width: 9px;\n"
-"	background-color: rgb(45, 45, 45);\n"
-"	border-width: 1px;\n"
+"QScrollBar {\n"
+"	background-color: rgba(45, 45, 45, 135);\n"
+"	border-width: 1.2px;\n"
 "	border-radius: 6px;\n"
 "	border-style: solid;\n"
 "	border-color: transparent;\n"
 "	margin: 0px;\n"
 "}\n"
-"QScrollBar::vertical:hover {\n"
-"	background-color: rgba(33, 3"
-                        "3, 33, 99);\n"
+"QScrollBar:hover {\n"
+"	background-color: r"
+                        "gba(33, 33, 33, 99);\n"
 "}\n"
-"\n"
-"QScrollBar::add-line:vertical {\n"
-"	height: 0px;\n"
-"	background-color: transparent;\n"
-"	subcontrol-position: bottom;\n"
-"	subcontrol-origin: margin;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"\n"
-"QScrollBar::sub-line:vertical {\n"
-"	height: 0px;\n"
-"	background-color: transparent;\n"
-"	subcontrol-position: top;\n"
-"	subcontrol-origin: margin;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"\n"
-"QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
-"	width: 0px;\n"
-"	height: 0px;\n"
-"	background-color: transparent;\n"
-"}\n"
-"\n"
-"QScrollBar::handle:vertical {\n"
-"	background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QScrollBar::handle:vertical:hover {\n"
-"	background-color: rgb(120, 120, 120);\n"
-"}\n"
-"\n"
 "\n"
 "QScrollBar::horizontal {\n"
 "	height: 9px;\n"
-"	background-color: rgb(45, 45, 45);\n"
-"	border-width: 1px;\n"
-"	border"
-                        "-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: transparent;\n"
-"	margin: 0px;\n"
 "}\n"
-"QScrollBar::horizontal:hover {\n"
-"	background-color: rgb(60, 60, 60);\n"
+"QScrollBar::vertical {\n"
+"	width: 9px;\n"
 "}\n"
 "\n"
-"QScrollBar::add-line:horizontal {\n"
-"	width: 0px;\n"
-"	background-color: transparent;\n"
-"	subcontrol-position: left;\n"
-"	subcontrol-origin: margin;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"\n"
-"QScrollBar::sub-line:horizontal {\n"
-"	width: 0px;\n"
-"	background-color: transparent;\n"
-"	subcontrol-position: right;\n"
-"	subcontrol-origin: margin;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"\n"
-"QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {\n"
-"	width: 0px;\n"
-"	height: 0px;\n"
-"	background-color: transparent;\n"
-"}\n"
-"\n"
-"QScrollBar::handle:horizontal {\n"
+"QScrollBar::sub-line, QScrollBar::add-line {\n"
 "	background-color: transparent;\n"
 "	border-width: 0px;\n"
 "	border-radius: 0px;\n"
 "	border-style: solid;\n"
 "}\n"
-"QScrollBar::handle:horizontal:hover {\n"
-"	backgro"
-                        "und-color: rgb(120, 120, 120);\n"
+"\n"
+"QScrollBar::sub-page, QScrollBar::add-page {\n"
+"	background-color: transparent;\n"
+"}\n"
+"\n"
+"QScrollBar::handle {\n"
+"	background-color: rgba(90, 90, 90, 90);\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QScrollBar::handle:hover {\n"
+"	background-color: rgba(120, 120, 120, 120);\n"
 "}")
 
         self.verticalLayout_11.addWidget(self.TreeWidget_Catalogue_TTS_VITS)
@@ -14690,9 +12917,7 @@ class Ui_MainWindow(object):
 
         self.ScrollArea_Middle_TTS_VITS = QScrollArea(self.Subpage_TTS_VITS)
         self.ScrollArea_Middle_TTS_VITS.setObjectName(u"ScrollArea_Middle_TTS_VITS")
-        sizePolicy5.setHeightForWidth(self.ScrollArea_Middle_TTS_VITS.sizePolicy().hasHeightForWidth())
-        self.ScrollArea_Middle_TTS_VITS.setSizePolicy(sizePolicy5)
-        self.ScrollArea_Middle_TTS_VITS.setMinimumSize(QSize(630, 0))
+        self.ScrollArea_Middle_TTS_VITS.setMinimumSize(QSize(600, 0))
         self.ScrollArea_Middle_TTS_VITS.setStyleSheet(u"QScrollArea {\n"
 "	background-color: rgba(36, 36, 36, 123);\n"
 "	border-width: 0px;\n"
@@ -14806,7 +13031,7 @@ class Ui_MainWindow(object):
         self.ScrollArea_Middle_TTS_VITS.setWidgetResizable(True)
         self.ScrollArea_Middle_WidgetContents_TTS_VITS = QWidget()
         self.ScrollArea_Middle_WidgetContents_TTS_VITS.setObjectName(u"ScrollArea_Middle_WidgetContents_TTS_VITS")
-        self.ScrollArea_Middle_WidgetContents_TTS_VITS.setGeometry(QRect(0, 0, 621, 1261))
+        self.ScrollArea_Middle_WidgetContents_TTS_VITS.setGeometry(QRect(0, 0, 591, 1261))
         self.verticalLayout_19 = QVBoxLayout(self.ScrollArea_Middle_WidgetContents_TTS_VITS)
         self.verticalLayout_19.setSpacing(12)
         self.verticalLayout_19.setObjectName(u"verticalLayout_19")
@@ -14857,8 +13082,8 @@ class Ui_MainWindow(object):
         self.gridLayout_69.setContentsMargins(21, 12, 21, 12)
         self.Label_TTS_VITS_ConfigPathLoad = QLabel(self.Frame_TTS_VITS_ConfigPathLoad)
         self.Label_TTS_VITS_ConfigPathLoad.setObjectName(u"Label_TTS_VITS_ConfigPathLoad")
-        sizePolicy6.setHeightForWidth(self.Label_TTS_VITS_ConfigPathLoad.sizePolicy().hasHeightForWidth())
-        self.Label_TTS_VITS_ConfigPathLoad.setSizePolicy(sizePolicy6)
+        sizePolicy5.setHeightForWidth(self.Label_TTS_VITS_ConfigPathLoad.sizePolicy().hasHeightForWidth())
+        self.Label_TTS_VITS_ConfigPathLoad.setSizePolicy(sizePolicy5)
         self.Label_TTS_VITS_ConfigPathLoad.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	/*color: rgb(255, 255, 255);*/\n"
@@ -14902,64 +13127,11 @@ class Ui_MainWindow(object):
 
         self.gridLayout_69.addWidget(self.Button_TTS_VITS_ConfigPathLoad_Undo, 0, 2, 1, 1)
 
-        self.LineEdit_TTS_VITS_ConfigPathLoad = QLineEdit(self.Frame_TTS_VITS_ConfigPathLoad)
+        self.LineEdit_TTS_VITS_ConfigPathLoad = LineEditBase(self.Frame_TTS_VITS_ConfigPathLoad)
         self.LineEdit_TTS_VITS_ConfigPathLoad.setObjectName(u"LineEdit_TTS_VITS_ConfigPathLoad")
         self.LineEdit_TTS_VITS_ConfigPathLoad.setMinimumSize(QSize(0, 27))
-        self.LineEdit_TTS_VITS_ConfigPathLoad.setStyleSheet(u"QLineEdit {\n"
-"	/*font-size: 12px;*/\n"
-"	text-align: left;\n"
-"	color: rgb(255, 255, 255);\n"
-"	selection-background-color: darkgrey;\n"
-"	background-color: transparent;\n"
-"	padding-top: 3px;\n"
-"	padding-left: 6px;\n"
-"	padding-bottom: 3px;\n"
-"	padding-right: 6px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgba(201, 210, 222, 123);\n"
-"}\n"
-"QLineEdit:hover {\n"
-"	border-color: rgba(201, 210, 222, 210);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
 
-        self.gridLayout_69.addWidget(self.LineEdit_TTS_VITS_ConfigPathLoad, 1, 0, 1, 2)
-
-        self.Button_TTS_VITS_ConfigPathLoad = QPushButton(self.Frame_TTS_VITS_ConfigPathLoad)
-        self.Button_TTS_VITS_ConfigPathLoad.setObjectName(u"Button_TTS_VITS_ConfigPathLoad")
-        self.Button_TTS_VITS_ConfigPathLoad.setMinimumSize(QSize(27, 27))
-        self.Button_TTS_VITS_ConfigPathLoad.setMaximumSize(QSize(27, 27))
-        self.Button_TTS_VITS_ConfigPathLoad.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/OpenedFolder.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgba(201, 210, 222, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(201, 210, 222, 210);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.gridLayout_69.addWidget(self.Button_TTS_VITS_ConfigPathLoad, 1, 2, 1, 1)
+        self.gridLayout_69.addWidget(self.LineEdit_TTS_VITS_ConfigPathLoad, 1, 0, 1, 3)
 
 
         self.verticalLayout_132.addWidget(self.Frame_TTS_VITS_ConfigPathLoad)
@@ -14982,8 +13154,8 @@ class Ui_MainWindow(object):
         self.gridLayout_70.setContentsMargins(21, 12, 21, 12)
         self.Label_TTS_VITS_ModelPathLoad = QLabel(self.Frame_TTS_VITS_ModelPathLoad)
         self.Label_TTS_VITS_ModelPathLoad.setObjectName(u"Label_TTS_VITS_ModelPathLoad")
-        sizePolicy6.setHeightForWidth(self.Label_TTS_VITS_ModelPathLoad.sizePolicy().hasHeightForWidth())
-        self.Label_TTS_VITS_ModelPathLoad.setSizePolicy(sizePolicy6)
+        sizePolicy5.setHeightForWidth(self.Label_TTS_VITS_ModelPathLoad.sizePolicy().hasHeightForWidth())
+        self.Label_TTS_VITS_ModelPathLoad.setSizePolicy(sizePolicy5)
         self.Label_TTS_VITS_ModelPathLoad.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	/*color: rgb(255, 255, 255);*/\n"
@@ -15027,64 +13199,11 @@ class Ui_MainWindow(object):
 
         self.gridLayout_70.addWidget(self.Button_TTS_VITS_ModelPathLoad_Undo, 0, 2, 1, 1)
 
-        self.LineEdit_TTS_VITS_ModelPathLoad = QLineEdit(self.Frame_TTS_VITS_ModelPathLoad)
+        self.LineEdit_TTS_VITS_ModelPathLoad = LineEditBase(self.Frame_TTS_VITS_ModelPathLoad)
         self.LineEdit_TTS_VITS_ModelPathLoad.setObjectName(u"LineEdit_TTS_VITS_ModelPathLoad")
         self.LineEdit_TTS_VITS_ModelPathLoad.setMinimumSize(QSize(0, 27))
-        self.LineEdit_TTS_VITS_ModelPathLoad.setStyleSheet(u"QLineEdit {\n"
-"	/*font-size: 12px;*/\n"
-"	text-align: left;\n"
-"	color: rgb(255, 255, 255);\n"
-"	selection-background-color: darkgrey;\n"
-"	background-color: transparent;\n"
-"	padding-top: 3px;\n"
-"	padding-left: 6px;\n"
-"	padding-bottom: 3px;\n"
-"	padding-right: 6px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgba(201, 210, 222, 123);\n"
-"}\n"
-"QLineEdit:hover {\n"
-"	border-color: rgba(201, 210, 222, 210);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
 
-        self.gridLayout_70.addWidget(self.LineEdit_TTS_VITS_ModelPathLoad, 1, 0, 1, 2)
-
-        self.Button_TTS_VITS_ModelPathLoad = QPushButton(self.Frame_TTS_VITS_ModelPathLoad)
-        self.Button_TTS_VITS_ModelPathLoad.setObjectName(u"Button_TTS_VITS_ModelPathLoad")
-        self.Button_TTS_VITS_ModelPathLoad.setMinimumSize(QSize(27, 27))
-        self.Button_TTS_VITS_ModelPathLoad.setMaximumSize(QSize(27, 27))
-        self.Button_TTS_VITS_ModelPathLoad.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/OpenedFolder.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgba(201, 210, 222, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(201, 210, 222, 210);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.gridLayout_70.addWidget(self.Button_TTS_VITS_ModelPathLoad, 1, 2, 1, 1)
+        self.gridLayout_70.addWidget(self.LineEdit_TTS_VITS_ModelPathLoad, 1, 0, 1, 3)
 
 
         self.verticalLayout_132.addWidget(self.Frame_TTS_VITS_ModelPathLoad)
@@ -15141,8 +13260,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_98.setContentsMargins(21, 12, 21, 12)
         self.Label_TTS_VITS_Text = QLabel(self.Frame_TTS_VITS_Text)
         self.Label_TTS_VITS_Text.setObjectName(u"Label_TTS_VITS_Text")
-        sizePolicy6.setHeightForWidth(self.Label_TTS_VITS_Text.sizePolicy().hasHeightForWidth())
-        self.Label_TTS_VITS_Text.setSizePolicy(sizePolicy6)
+        sizePolicy5.setHeightForWidth(self.Label_TTS_VITS_Text.sizePolicy().hasHeightForWidth())
+        self.Label_TTS_VITS_Text.setSizePolicy(sizePolicy5)
         self.Label_TTS_VITS_Text.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	/*color: rgb(255, 255, 255);*/\n"
@@ -15157,8 +13276,8 @@ class Ui_MainWindow(object):
 
         self.PlainTextEdit_TTS_VITS_Text = QPlainTextEdit(self.Frame_TTS_VITS_Text)
         self.PlainTextEdit_TTS_VITS_Text.setObjectName(u"PlainTextEdit_TTS_VITS_Text")
-        sizePolicy7.setHeightForWidth(self.PlainTextEdit_TTS_VITS_Text.sizePolicy().hasHeightForWidth())
-        self.PlainTextEdit_TTS_VITS_Text.setSizePolicy(sizePolicy7)
+        sizePolicy6.setHeightForWidth(self.PlainTextEdit_TTS_VITS_Text.sizePolicy().hasHeightForWidth())
+        self.PlainTextEdit_TTS_VITS_Text.setSizePolicy(sizePolicy6)
         self.PlainTextEdit_TTS_VITS_Text.setStyleSheet(u"QPlainTextEdit {\n"
 "	/*font-size: 12px;*/\n"
 "	text-align: left;\n"
@@ -15303,8 +13422,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_97.setContentsMargins(21, 12, 21, 12)
         self.Label_TTS_VITS_Language = QLabel(self.Frame_TTS_VITS_Language)
         self.Label_TTS_VITS_Language.setObjectName(u"Label_TTS_VITS_Language")
-        sizePolicy6.setHeightForWidth(self.Label_TTS_VITS_Language.sizePolicy().hasHeightForWidth())
-        self.Label_TTS_VITS_Language.setSizePolicy(sizePolicy6)
+        sizePolicy5.setHeightForWidth(self.Label_TTS_VITS_Language.sizePolicy().hasHeightForWidth())
+        self.Label_TTS_VITS_Language.setSizePolicy(sizePolicy5)
         self.Label_TTS_VITS_Language.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	/*color: rgb(255, 255, 255);*/\n"
@@ -15514,8 +13633,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_104.setContentsMargins(21, 12, 21, 12)
         self.Label_TTS_VITS_Speaker = QLabel(self.Frame_TTS_VITS_Speaker)
         self.Label_TTS_VITS_Speaker.setObjectName(u"Label_TTS_VITS_Speaker")
-        sizePolicy6.setHeightForWidth(self.Label_TTS_VITS_Speaker.sizePolicy().hasHeightForWidth())
-        self.Label_TTS_VITS_Speaker.setSizePolicy(sizePolicy6)
+        sizePolicy5.setHeightForWidth(self.Label_TTS_VITS_Speaker.sizePolicy().hasHeightForWidth())
+        self.Label_TTS_VITS_Speaker.setSizePolicy(sizePolicy5)
         self.Label_TTS_VITS_Speaker.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	/*color: rgb(255, 255, 255);*/\n"
@@ -15780,8 +13899,8 @@ class Ui_MainWindow(object):
         self.gridLayout_71.setContentsMargins(21, 12, 21, 12)
         self.Label_TTS_VITS_EmotionStrength = QLabel(self.Frame_TTS_VITS_EmotionStrength)
         self.Label_TTS_VITS_EmotionStrength.setObjectName(u"Label_TTS_VITS_EmotionStrength")
-        sizePolicy6.setHeightForWidth(self.Label_TTS_VITS_EmotionStrength.sizePolicy().hasHeightForWidth())
-        self.Label_TTS_VITS_EmotionStrength.setSizePolicy(sizePolicy6)
+        sizePolicy5.setHeightForWidth(self.Label_TTS_VITS_EmotionStrength.sizePolicy().hasHeightForWidth())
+        self.Label_TTS_VITS_EmotionStrength.setSizePolicy(sizePolicy5)
         self.Label_TTS_VITS_EmotionStrength.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	/*color: rgb(255, 255, 255);*/\n"
@@ -15827,8 +13946,8 @@ class Ui_MainWindow(object):
 
         self.ChildFrame_TTS_VITS_EmotionStrength = QFrame(self.Frame_TTS_VITS_EmotionStrength)
         self.ChildFrame_TTS_VITS_EmotionStrength.setObjectName(u"ChildFrame_TTS_VITS_EmotionStrength")
-        sizePolicy6.setHeightForWidth(self.ChildFrame_TTS_VITS_EmotionStrength.sizePolicy().hasHeightForWidth())
-        self.ChildFrame_TTS_VITS_EmotionStrength.setSizePolicy(sizePolicy6)
+        sizePolicy5.setHeightForWidth(self.ChildFrame_TTS_VITS_EmotionStrength.sizePolicy().hasHeightForWidth())
+        self.ChildFrame_TTS_VITS_EmotionStrength.setSizePolicy(sizePolicy5)
         self.ChildFrame_TTS_VITS_EmotionStrength.setStyleSheet(u"QFrame {\n"
 "	color: rgb(255, 255, 255);\n"
 "	background-color: transparent;\n"
@@ -15956,8 +14075,8 @@ class Ui_MainWindow(object):
         self.gridLayout_72.setContentsMargins(21, 12, 21, 12)
         self.Label_TTS_VITS_PhonemeDuration = QLabel(self.Frame_TTS_VITS_PhonemeDuration)
         self.Label_TTS_VITS_PhonemeDuration.setObjectName(u"Label_TTS_VITS_PhonemeDuration")
-        sizePolicy6.setHeightForWidth(self.Label_TTS_VITS_PhonemeDuration.sizePolicy().hasHeightForWidth())
-        self.Label_TTS_VITS_PhonemeDuration.setSizePolicy(sizePolicy6)
+        sizePolicy5.setHeightForWidth(self.Label_TTS_VITS_PhonemeDuration.sizePolicy().hasHeightForWidth())
+        self.Label_TTS_VITS_PhonemeDuration.setSizePolicy(sizePolicy5)
         self.Label_TTS_VITS_PhonemeDuration.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	/*color: rgb(255, 255, 255);*/\n"
@@ -16003,8 +14122,8 @@ class Ui_MainWindow(object):
 
         self.ChildFrame_TTS_VITS_PhonemeDuration = QFrame(self.Frame_TTS_VITS_PhonemeDuration)
         self.ChildFrame_TTS_VITS_PhonemeDuration.setObjectName(u"ChildFrame_TTS_VITS_PhonemeDuration")
-        sizePolicy6.setHeightForWidth(self.ChildFrame_TTS_VITS_PhonemeDuration.sizePolicy().hasHeightForWidth())
-        self.ChildFrame_TTS_VITS_PhonemeDuration.setSizePolicy(sizePolicy6)
+        sizePolicy5.setHeightForWidth(self.ChildFrame_TTS_VITS_PhonemeDuration.sizePolicy().hasHeightForWidth())
+        self.ChildFrame_TTS_VITS_PhonemeDuration.setSizePolicy(sizePolicy5)
         self.ChildFrame_TTS_VITS_PhonemeDuration.setStyleSheet(u"QFrame {\n"
 "	color: rgb(255, 255, 255);\n"
 "	background-color: transparent;\n"
@@ -16132,8 +14251,8 @@ class Ui_MainWindow(object):
         self.gridLayout_73.setContentsMargins(21, 12, 21, 12)
         self.Label_TTS_VITS_SpeechRate = QLabel(self.Frame_TTS_VITS_SpeechRate)
         self.Label_TTS_VITS_SpeechRate.setObjectName(u"Label_TTS_VITS_SpeechRate")
-        sizePolicy6.setHeightForWidth(self.Label_TTS_VITS_SpeechRate.sizePolicy().hasHeightForWidth())
-        self.Label_TTS_VITS_SpeechRate.setSizePolicy(sizePolicy6)
+        sizePolicy5.setHeightForWidth(self.Label_TTS_VITS_SpeechRate.sizePolicy().hasHeightForWidth())
+        self.Label_TTS_VITS_SpeechRate.setSizePolicy(sizePolicy5)
         self.Label_TTS_VITS_SpeechRate.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	/*color: rgb(255, 255, 255);*/\n"
@@ -16179,8 +14298,8 @@ class Ui_MainWindow(object):
 
         self.ChildFrame_TTS_VITS_SpeechRate = QFrame(self.Frame_TTS_VITS_SpeechRate)
         self.ChildFrame_TTS_VITS_SpeechRate.setObjectName(u"ChildFrame_TTS_VITS_SpeechRate")
-        sizePolicy6.setHeightForWidth(self.ChildFrame_TTS_VITS_SpeechRate.sizePolicy().hasHeightForWidth())
-        self.ChildFrame_TTS_VITS_SpeechRate.setSizePolicy(sizePolicy6)
+        sizePolicy5.setHeightForWidth(self.ChildFrame_TTS_VITS_SpeechRate.sizePolicy().hasHeightForWidth())
+        self.ChildFrame_TTS_VITS_SpeechRate.setSizePolicy(sizePolicy5)
         self.ChildFrame_TTS_VITS_SpeechRate.setStyleSheet(u"QFrame {\n"
 "	color: rgb(255, 255, 255);\n"
 "	background-color: transparent;\n"
@@ -16342,8 +14461,8 @@ class Ui_MainWindow(object):
         self.gridLayout_74.setContentsMargins(21, 12, 21, 12)
         self.Label_TTS_VITS_AudioPathSave = QLabel(self.Frame_TTS_VITS_AudioPathSave)
         self.Label_TTS_VITS_AudioPathSave.setObjectName(u"Label_TTS_VITS_AudioPathSave")
-        sizePolicy6.setHeightForWidth(self.Label_TTS_VITS_AudioPathSave.sizePolicy().hasHeightForWidth())
-        self.Label_TTS_VITS_AudioPathSave.setSizePolicy(sizePolicy6)
+        sizePolicy5.setHeightForWidth(self.Label_TTS_VITS_AudioPathSave.sizePolicy().hasHeightForWidth())
+        self.Label_TTS_VITS_AudioPathSave.setSizePolicy(sizePolicy5)
         self.Label_TTS_VITS_AudioPathSave.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	/*color: rgb(255, 255, 255);*/\n"
@@ -16387,64 +14506,11 @@ class Ui_MainWindow(object):
 
         self.gridLayout_74.addWidget(self.Button_TTS_VITS_AudioPathSave_Undo, 0, 2, 1, 1)
 
-        self.LineEdit_TTS_VITS_AudioPathSave = QLineEdit(self.Frame_TTS_VITS_AudioPathSave)
+        self.LineEdit_TTS_VITS_AudioPathSave = LineEditBase(self.Frame_TTS_VITS_AudioPathSave)
         self.LineEdit_TTS_VITS_AudioPathSave.setObjectName(u"LineEdit_TTS_VITS_AudioPathSave")
         self.LineEdit_TTS_VITS_AudioPathSave.setMinimumSize(QSize(0, 27))
-        self.LineEdit_TTS_VITS_AudioPathSave.setStyleSheet(u"QLineEdit {\n"
-"	/*font-size: 12px;*/\n"
-"	text-align: left;\n"
-"	color: rgb(255, 255, 255);\n"
-"	selection-background-color: darkgrey;\n"
-"	background-color: transparent;\n"
-"	padding-top: 3px;\n"
-"	padding-left: 6px;\n"
-"	padding-bottom: 3px;\n"
-"	padding-right: 6px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgba(201, 210, 222, 123);\n"
-"}\n"
-"QLineEdit:hover {\n"
-"	border-color: rgba(201, 210, 222, 210);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
 
-        self.gridLayout_74.addWidget(self.LineEdit_TTS_VITS_AudioPathSave, 1, 0, 1, 2)
-
-        self.Button_TTS_VITS_AudioPathSave = QPushButton(self.Frame_TTS_VITS_AudioPathSave)
-        self.Button_TTS_VITS_AudioPathSave.setObjectName(u"Button_TTS_VITS_AudioPathSave")
-        self.Button_TTS_VITS_AudioPathSave.setMinimumSize(QSize(27, 27))
-        self.Button_TTS_VITS_AudioPathSave.setMaximumSize(QSize(27, 27))
-        self.Button_TTS_VITS_AudioPathSave.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/OpenedFolder.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgba(201, 210, 222, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(201, 210, 222, 210);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.gridLayout_74.addWidget(self.Button_TTS_VITS_AudioPathSave, 1, 2, 1, 1)
+        self.gridLayout_74.addWidget(self.LineEdit_TTS_VITS_AudioPathSave, 1, 0, 1, 3)
 
 
         self.verticalLayout_158.addWidget(self.Frame_TTS_VITS_AudioPathSave)
@@ -16465,8 +14531,6 @@ class Ui_MainWindow(object):
 
         self.Widget_Right_TTS_VITS = QWidget(self.Subpage_TTS_VITS)
         self.Widget_Right_TTS_VITS.setObjectName(u"Widget_Right_TTS_VITS")
-        self.Widget_Right_TTS_VITS.setMinimumSize(QSize(210, 0))
-        self.Widget_Right_TTS_VITS.setMaximumSize(QSize(420, 16777215))
         self.Widget_Right_TTS_VITS.setStyleSheet(u"QWidget {\n"
 "	background-color: rgba(36, 36, 36, 123);\n"
 "	border-width: 0px;\n"
@@ -16668,8 +14732,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_112.setContentsMargins(0, 0, 0, 0)
         self.Button_TTS_VITS_Execute = QPushButton(self.Page_TTS_VITS_Execute)
         self.Button_TTS_VITS_Execute.setObjectName(u"Button_TTS_VITS_Execute")
-        sizePolicy7.setHeightForWidth(self.Button_TTS_VITS_Execute.sizePolicy().hasHeightForWidth())
-        self.Button_TTS_VITS_Execute.setSizePolicy(sizePolicy7)
+        sizePolicy6.setHeightForWidth(self.Button_TTS_VITS_Execute.sizePolicy().hasHeightForWidth())
+        self.Button_TTS_VITS_Execute.setSizePolicy(sizePolicy6)
         self.Button_TTS_VITS_Execute.setMinimumSize(QSize(0, 30))
         self.Button_TTS_VITS_Execute.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
@@ -16705,8 +14769,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_113.setContentsMargins(0, 0, 0, 0)
         self.Button_TTS_VITS_Terminate = QPushButton(self.Page_TTS_VITS_Terminate)
         self.Button_TTS_VITS_Terminate.setObjectName(u"Button_TTS_VITS_Terminate")
-        sizePolicy7.setHeightForWidth(self.Button_TTS_VITS_Terminate.sizePolicy().hasHeightForWidth())
-        self.Button_TTS_VITS_Terminate.setSizePolicy(sizePolicy7)
+        sizePolicy6.setHeightForWidth(self.Button_TTS_VITS_Terminate.sizePolicy().hasHeightForWidth())
+        self.Button_TTS_VITS_Terminate.setSizePolicy(sizePolicy6)
         self.Button_TTS_VITS_Terminate.setMinimumSize(QSize(0, 30))
         self.Button_TTS_VITS_Terminate.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
@@ -16740,6 +14804,9 @@ class Ui_MainWindow(object):
 
         self.gridLayout_20.addWidget(self.ProgressBar_TTS_VITS, 1, 0, 1, 3)
 
+        self.gridLayout_20.setColumnStretch(0, 3)
+        self.gridLayout_20.setColumnStretch(1, 10)
+        self.gridLayout_20.setColumnStretch(2, 7)
         self.StackedWidget_Pages_TTS.addWidget(self.Subpage_TTS_VITS)
 
         self.verticalLayout_42.addWidget(self.StackedWidget_Pages_TTS)
@@ -17101,8 +15168,8 @@ class Ui_MainWindow(object):
 
         self.CheckBox_Setting_AutoUpdate = QCheckBox(self.Frame_Setting_AutoUpdate)
         self.CheckBox_Setting_AutoUpdate.setObjectName(u"CheckBox_Setting_AutoUpdate")
-        sizePolicy6.setHeightForWidth(self.CheckBox_Setting_AutoUpdate.sizePolicy().hasHeightForWidth())
-        self.CheckBox_Setting_AutoUpdate.setSizePolicy(sizePolicy6)
+        sizePolicy5.setHeightForWidth(self.CheckBox_Setting_AutoUpdate.sizePolicy().hasHeightForWidth())
+        self.CheckBox_Setting_AutoUpdate.setSizePolicy(sizePolicy5)
         self.CheckBox_Setting_AutoUpdate.setMinimumSize(QSize(123, 0))
         self.CheckBox_Setting_AutoUpdate.setMaximumSize(QSize(123, 16777215))
         self.CheckBox_Setting_AutoUpdate.setStyleSheet(u"QCheckBox {\n"
@@ -17189,8 +15256,8 @@ class Ui_MainWindow(object):
 
         self.CheckBox_Setting_Synchronizer = QCheckBox(self.Frame_Setting_Synchronizer)
         self.CheckBox_Setting_Synchronizer.setObjectName(u"CheckBox_Setting_Synchronizer")
-        sizePolicy6.setHeightForWidth(self.CheckBox_Setting_Synchronizer.sizePolicy().hasHeightForWidth())
-        self.CheckBox_Setting_Synchronizer.setSizePolicy(sizePolicy6)
+        sizePolicy5.setHeightForWidth(self.CheckBox_Setting_Synchronizer.sizePolicy().hasHeightForWidth())
+        self.CheckBox_Setting_Synchronizer.setSizePolicy(sizePolicy5)
         self.CheckBox_Setting_Synchronizer.setMinimumSize(QSize(123, 0))
         self.CheckBox_Setting_Synchronizer.setMaximumSize(QSize(123, 16777215))
         self.CheckBox_Setting_Synchronizer.setStyleSheet(u"QCheckBox {\n"
@@ -17560,7 +15627,7 @@ class Ui_MainWindow(object):
         self.Frame_Console.setMaximumSize(QSize(16777215, 0))
         self.Frame_Console.setStyleSheet(u"QFrame {\n"
 "	background-color: rgba(33, 33, 33, 99);\n"
-"	border-width: 1px;\n"
+"	border-width: 1.2px;\n"
 "	border-radius: 0px;\n"
 "	border-style: solid;\n"
 "	border-color: rgb(45, 45, 45);\n"
@@ -17568,19 +15635,132 @@ class Ui_MainWindow(object):
         self.verticalLayout_23 = QVBoxLayout(self.Frame_Console)
         self.verticalLayout_23.setSpacing(0)
         self.verticalLayout_23.setObjectName(u"verticalLayout_23")
-        self.verticalLayout_23.setContentsMargins(21, 0, 21, 0)
-        self.PlainTextEdit_Console = QPlainTextEdit(self.Frame_Console)
-        self.PlainTextEdit_Console.setObjectName(u"PlainTextEdit_Console")
-        self.PlainTextEdit_Console.setStyleSheet(u"QPlainTextEdit {\n"
-"	text-align: center;\n"
-"	color: rgb(255, 255, 255);\n"
+        self.verticalLayout_23.setContentsMargins(0, 0, 0, 0)
+        self.Frame_Console_Top = QFrame(self.Frame_Console)
+        self.Frame_Console_Top.setObjectName(u"Frame_Console_Top")
+        self.Frame_Console_Top.setMinimumSize(QSize(0, 24))
+        self.Frame_Console_Top.setMaximumSize(QSize(16777215, 24))
+        self.Frame_Console_Top.setStyleSheet(u"QFrame {\n"
 "	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+        self.horizontalLayout_14 = QHBoxLayout(self.Frame_Console_Top)
+        self.horizontalLayout_14.setSpacing(21)
+        self.horizontalLayout_14.setObjectName(u"horizontalLayout_14")
+        self.horizontalLayout_14.setContentsMargins(21, 0, 21, 0)
+        self.Button_Console_Title = QPushButton(self.Frame_Console_Top)
+        self.Button_Console_Title.setObjectName(u"Button_Console_Title")
+        self.Button_Console_Title.setStyleSheet(u"QPushButton {\n"
+"	background-color: transparent;\n"
+"	padding: 4.5px;\n"
 "	border-width: 0px;\n"
 "	border-radius: 0px;\n"
 "	border-style: solid;\n"
+"	border-color: transparent;\n"
 "}\n"
-"QPlainTextEdit:hover {\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.horizontalLayout_14.addWidget(self.Button_Console_Title)
+
+        self.horizontalSpacer = QSpacerItem(826, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.horizontalLayout_14.addItem(self.horizontalSpacer)
+
+        self.Button_Console_Copy = QPushButton(self.Frame_Console_Top)
+        self.Button_Console_Copy.setObjectName(u"Button_Console_Copy")
+        self.Button_Console_Copy.setMaximumSize(QSize(24, 24))
+        self.Button_Console_Copy.setStyleSheet(u"QPushButton {\n"
+"	image: url(:/Button_Icon/Sources/Clipboard.png);\n"
 "	background-color: transparent;\n"
+"	padding: 4.5px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"	border-color: transparent;\n"
+"}\n"
+"QPushButton:hover {\n"
+"	background-color: rgba(123, 123, 123, 123);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.horizontalLayout_14.addWidget(self.Button_Console_Copy)
+
+        self.Button_Console_Clear = QPushButton(self.Frame_Console_Top)
+        self.Button_Console_Clear.setObjectName(u"Button_Console_Clear")
+        self.Button_Console_Clear.setMaximumSize(QSize(24, 24))
+        self.Button_Console_Clear.setStyleSheet(u"QPushButton {\n"
+"	image: url(:/Button_Icon/Sources/TrashCan.png);\n"
+"	background-color: transparent;\n"
+"	padding: 4.5px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"	border-color: transparent;\n"
+"}\n"
+"QPushButton:hover {\n"
+"	background-color: rgba(123, 123, 123, 123);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.horizontalLayout_14.addWidget(self.Button_Console_Clear)
+
+        self.Button_Console_Fold = QPushButton(self.Frame_Console_Top)
+        self.Button_Console_Fold.setObjectName(u"Button_Console_Fold")
+        self.Button_Console_Fold.setMaximumSize(QSize(24, 24))
+        self.Button_Console_Fold.setStyleSheet(u"QPushButton {\n"
+"	image: url(:/ComboBox_Icon/Sources/DownArrow.png);\n"
+"	background-color: transparent;\n"
+"	padding: 4.5px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"	border-color: transparent;\n"
+"}\n"
+"QPushButton:hover {\n"
+"	background-color: rgba(123, 123, 123, 123);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.horizontalLayout_14.addWidget(self.Button_Console_Fold)
+
+
+        self.verticalLayout_23.addWidget(self.Frame_Console_Top)
+
+        self.ScrollArea_Console = QScrollArea(self.Frame_Console)
+        self.ScrollArea_Console.setObjectName(u"ScrollArea_Console")
+        self.ScrollArea_Console.setStyleSheet(u"QScrollArea QWidget {\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
 "}\n"
 "\n"
 "\n"
@@ -17614,14 +15794,14 @@ class Ui_MainWindow(object):
 "	subcontrol-origin: margin;\n"
 "	border-width: 0px;\n"
 "	border-radius: 0px;\n"
-"	border-"
-                        "style: solid;\n"
+"	border-style: solid;\n"
 "}\n"
 "\n"
 "QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
 "	width: 0px;\n"
 "	height: 0px;\n"
-"	background-color: transparent;\n"
+"	background-col"
+                        "or: transparent;\n"
 "}\n"
 "\n"
 "QScrollBar::handle:vertical {\n"
@@ -17660,12 +15840,12 @@ class Ui_MainWindow(object):
 "\n"
 "QScrollBar::sub-line:horizontal {\n"
 "	width: 0px;\n"
-""
-                        "	background-color: transparent;\n"
+"	background-color: transparent;\n"
 "	subcontrol-position: right;\n"
 "	subcontrol-origin: margin;\n"
 "	border-width: 0px;\n"
-"	border-radius: 0px;\n"
+"	border-radius: 0p"
+                        "x;\n"
 "	border-style: solid;\n"
 "}\n"
 "\n"
@@ -17684,8 +15864,29 @@ class Ui_MainWindow(object):
 "QScrollBar::handle:horizontal:hover {\n"
 "	background-color: rgb(120, 120, 120);\n"
 "}")
+        self.ScrollArea_Console.setWidgetResizable(True)
+        self.ScrollAreaWidgetContents_Console = QWidget()
+        self.ScrollAreaWidgetContents_Console.setObjectName(u"ScrollAreaWidgetContents_Console")
+        self.ScrollAreaWidgetContents_Console.setGeometry(QRect(0, 0, 1057, 35))
+        self.verticalLayout_50 = QVBoxLayout(self.ScrollAreaWidgetContents_Console)
+        self.verticalLayout_50.setSpacing(21)
+        self.verticalLayout_50.setObjectName(u"verticalLayout_50")
+        self.verticalLayout_50.setContentsMargins(21, 0, 21, 0)
+        self.PlainTextEdit_Console = QPlainTextEdit(self.ScrollAreaWidgetContents_Console)
+        self.PlainTextEdit_Console.setObjectName(u"PlainTextEdit_Console")
+        self.PlainTextEdit_Console.setStyleSheet(u"QPlainTextEdit {\n"
+"	background-color: transparent;\n"
+"	padding: 1.5px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
 
-        self.verticalLayout_23.addWidget(self.PlainTextEdit_Console)
+        self.verticalLayout_50.addWidget(self.PlainTextEdit_Console)
+
+        self.ScrollArea_Console.setWidget(self.ScrollAreaWidgetContents_Console)
+
+        self.verticalLayout_23.addWidget(self.ScrollArea_Console)
 
 
         self.verticalLayout_5.addWidget(self.Frame_Console)
@@ -17957,8 +16158,8 @@ class Ui_MainWindow(object):
         self.Label_ASR_VPR_StdAudioSpeaker.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.GroupBox_ASR_VPR_VPRParams.setTitle(QCoreApplication.translate("MainWindow", u"GroupBox2", None))
         self.Label_ASR_VPR_DecisionThreshold.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.CheckBox_ASR_VPR_VPRParams_Toggle_AdvanceSettings.setText(QCoreApplication.translate("MainWindow", u"CheckBox2", None))
         self.Label_ASR_VPR_ModelPath.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.CheckBox_ASR_VPR_VPRParams_Toggle_AdvanceSettings.setText(QCoreApplication.translate("MainWindow", u"CheckBox2", None))
         self.Label_ASR_VPR_ModelType.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_ASR_VPR_FeatureMethod.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_ASR_VPR_DurationOfAudio.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
@@ -17981,8 +16182,8 @@ class Ui_MainWindow(object):
         self.GroupBox_STT_Whisper_WhisperParams.setTitle(QCoreApplication.translate("MainWindow", u"GroupBox2", None))
         self.Label_STT_Whisper_AddLanguageInfo.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.CheckBox_STT_Whisper_AddLanguageInfo.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
-        self.CheckBox_STT_Whisper_WhisperParams_Toggle_AdvanceSettings.setText(QCoreApplication.translate("MainWindow", u"CheckBox2", None))
         self.Label_STT_Whisper_ModelPath.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.CheckBox_STT_Whisper_WhisperParams_Toggle_AdvanceSettings.setText(QCoreApplication.translate("MainWindow", u"CheckBox2", None))
         self.Label_STT_Whisper_fp16.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.CheckBox_STT_Whisper_fp16.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
         self.CheckBox_STT_Whisper_ConditionOnPreviousText.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
@@ -18009,13 +16210,13 @@ class Ui_MainWindow(object):
         self.GroupBox_DAT_VITS_VITSParams.setTitle(QCoreApplication.translate("MainWindow", u"GroupBox2", None))
         self.Label_DAT_VITS_AddAuxiliaryData.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.CheckBox_DAT_VITS_AddAuxiliaryData.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
+        self.Label_DAT_VITS_AuxiliaryDataPath.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.CheckBox_DAT_VITS_VITSParams_Toggle_AdvanceSettings.setText(QCoreApplication.translate("MainWindow", u"CheckBox2", None))
         self.Label_DAT_VITS_TrainRatio.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_DAT_VITS_SampleRate.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_DAT_VITS_SampleWidth.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_DAT_VITS_ToMono.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.CheckBox_DAT_VITS_ToMono.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
-        self.Label_DAT_VITS_AuxiliaryDataPath.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.GroupBox_DAT_VITS_OutputParams.setTitle(QCoreApplication.translate("MainWindow", u"GroupBox3", None))
         self.Label_DAT_VITS_WAVDirSplit.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_DAT_VITS_FileListPathTraining.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
@@ -18040,14 +16241,14 @@ class Ui_MainWindow(object):
         self.Label_Train_VITS_BatchSize.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Train_VITS_UsePretrainedModels.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.CheckBox_Train_VITS_UsePretrainedModels.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
-        self.CheckBox_Train_VITS_VITSParams_Toggle_AdvanceSettings.setText(QCoreApplication.translate("MainWindow", u"CheckBox2", None))
-        self.Label_Train_VITS_NumWorkers.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.Label_Train_VITS_FP16Run.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.CheckBox_Train_VITS_FP16Run.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
         self.Label_Train_VITS_ModelPathPretrainedG.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Train_VITS_ModelPathPretrainedD.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Train_VITS_KeepOriginalSpeakers.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.CheckBox_Train_VITS_KeepOriginalSpeakers.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
+        self.CheckBox_Train_VITS_VITSParams_Toggle_AdvanceSettings.setText(QCoreApplication.translate("MainWindow", u"CheckBox2", None))
+        self.Label_Train_VITS_NumWorkers.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.Label_Train_VITS_FP16Run.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.CheckBox_Train_VITS_FP16Run.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
         self.GroupBox_Train_VITS_OutputParams.setTitle(QCoreApplication.translate("MainWindow", u"GroupBox3", None))
         self.Label_Train_VITS_EvalInterval.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Train_VITS_OutputDir.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
@@ -18083,6 +16284,7 @@ class Ui_MainWindow(object):
         self.Label_Setting_Synchronizer.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.CheckBox_Setting_Synchronizer.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
         self.ToolButton_Info_Title.setText(QCoreApplication.translate("MainWindow", u"Label", None))
+        self.Button_Console_Title.setText(QCoreApplication.translate("MainWindow", u"Label", None))
         self.Label_ToolsStatus.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Usage_CPU.setText(QCoreApplication.translate("MainWindow", u"--", None))
         self.Label_Usage_GPU.setText(QCoreApplication.translate("MainWindow", u"--", None))

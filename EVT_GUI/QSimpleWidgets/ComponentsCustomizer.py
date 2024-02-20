@@ -17,13 +17,17 @@ class ButtonBase(QAbstractButton):
     ):
         super().__init__(parent)
 
-        ComponentsSignals.Signal_SetTheme.connect(
-            lambda Theme: self.setStyleSheet(Function_GetStyleSheet('Button', Theme))
-        )
-        ComponentsSignals.Signal_SetTheme.emit('Auto')
-
         self.setFont('Microsoft YaHei')
         self.setText(text) if text is not None else None
+
+        ComponentsSignals.Signal_SetTheme.connect(self.InitDefaultStyleSheet)
+        self.InitDefaultStyleSheet('Auto')
+
+    def InitDefaultStyleSheet(self, Theme: str) -> None:
+        super().setStyleSheet(Function_GetStyleSheet('Button', Theme))
+
+    def ClearDefaultStyleSheet(self) -> None:
+        ComponentsSignals.Signal_SetTheme.disconnect(self.InitDefaultStyleSheet)
 
 
 class Button_UnderLined(ButtonBase):
@@ -45,11 +49,6 @@ class TableBase(QTableView):
 
         self.StandardItemModel = QStandardItemModel(self)
         super().setModel(self.StandardItemModel)
-
-        ComponentsSignals.Signal_SetTheme.connect(
-            lambda Theme: self.setStyleSheet(Function_GetStyleSheet('Table', Theme))
-        )
-        ComponentsSignals.Signal_SetTheme.emit('Auto')
 
         super().setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
         super().verticalHeader().setStretchLastSection(False)
@@ -73,6 +72,9 @@ class TableBase(QTableView):
 
         self.IsIndexShown = False
         self.SetIndexHeaderVisible(True)
+
+        ComponentsSignals.Signal_SetTheme.connect(self.InitDefaultStyleSheet)
+        self.InitDefaultStyleSheet('Auto')
 
     def model(self) -> QStandardItemModel:
         return self.StandardItemModel
@@ -177,57 +179,27 @@ class TableBase(QTableView):
         while self.rowCount() > 0:
             self.removeRow(0)
 
+    def InitDefaultStyleSheet(self, Theme: str) -> None:
+        super().setStyleSheet(Function_GetStyleSheet('Table', Theme))
+
+    def ClearDefaultStyleSheet(self) -> None:
+        ComponentsSignals.Signal_SetTheme.disconnect(self.InitDefaultStyleSheet)
+
 ##############################################################################################################################
 
-class FileDialogLineEdit(QWidget):
+class LineEditBase(QFrame):
     '''
     '''
-    WidgetStyle = '''
-    QWidget {
-        background-color: transparent;
-        padding: 0px;
-        border-width: 1.2px;
-        border-radius: 3px;
-        border-style: solid;
-        border-color: rgba(201, 210, 222, 123);
-    }
-    QWidget:hover {
-        border-color: rgba(201, 210, 222, 210);
-    }
-    '''
-    LineEditStyle = '''
-    QLineEdit {
-        background-color: transparent;
-        padding-top: 3px;
-        padding-left: 6px;
-        padding-bottom: 3px;
-        padding-right: 6px;
-        border-width: 0px;
-        border-style: solid;
-    }
-    '''
-    ButtonStyle = '''
-    QPushButton {
-        background-color: transparent;
-        border-width: 0px;
-        border-style: solid;
-    }
-    QPushButton:hover {
-        background-color: rgba(201, 210, 222, 33);
-    }
-    '''
+    textChanged = Signal(str)
 
     def __init__(self, parent: QWidget = None):
         super().__init__(parent)
 
-        self.setStyleSheet(self.WidgetStyle)
-
         self.LineEdit = QLineEdit()
-        self.LineEdit.textChanged.connect(lambda Text: self.LineEdit.setStatusTip(Text))
-        self.LineEdit.setStyleSheet(self.LineEditStyle)
+        self.LineEdit.textChanged.connect(self.LineEdit.setStatusTip)
+        self.LineEdit.textChanged.connect(self.textChanged.emit)
 
         self.Button = QPushButton()
-        self.Button.setStyleSheet(self.ButtonStyle + "QPushButton {image: url(:/Button_Icon/Sources/OpenedFolder.png);}")
 
         HBoxLayout = QHBoxLayout(self)
         HBoxLayout.setSpacing(0)
@@ -235,11 +207,23 @@ class FileDialogLineEdit(QWidget):
         HBoxLayout.addWidget(self.LineEdit)
         HBoxLayout.addWidget(self.Button, alignment = Qt.AlignRight)
 
-    def text(self):
+        ComponentsSignals.Signal_SetTheme.connect(self.InitDefaultStyleSheet)
+        self.InitDefaultStyleSheet('Auto')
+
+    def clear(self) -> None:
+        self.LineEdit.clear()
+
+    def text(self) -> str:
         return self.LineEdit.text()
 
     def setText(self, arg__1: str) -> None:
         return self.LineEdit.setText(arg__1)
+
+    def placeholderText(self) -> str:
+        return self.LineEdit.placeholderText()
+
+    def setPlaceholderText(self, arg__1: str) -> None:
+        self.LineEdit.setPlaceholderText(arg__1)
 
     def SetFileDialog(self, Mode: str, FileType: Optional[str] = None, Directory: Optional[str] = None, ButtonTooltip: str = "Browse"):
         self.Button.clicked.connect(
@@ -253,23 +237,21 @@ class FileDialogLineEdit(QWidget):
         )
         self.Button.setToolTip(ButtonTooltip)
 
+    def RemoveFileDialogButton(self):
+        self.Button.deleteLater()
+        self.Button.hide()
+
+    def InitDefaultStyleSheet(self, Theme: str) -> None:
+        super().setStyleSheet(Function_GetStyleSheet('Edit', Theme))
+
+    def ClearDefaultStyleSheet(self) -> None:
+        ComponentsSignals.Signal_SetTheme.disconnect(self.InitDefaultStyleSheet)
+
 ##############################################################################################################################
 
-class MediaPlayerWidget(QWidget):
+class MediaPlayerBase(QWidget):
     '''
     '''
-    ButtonStyle = '''
-    QPushButton {
-        background-color: transparent;
-        border-width: 0px;
-        border-radius: 12px;
-        border-style: solid;
-    }
-    QPushButton:hover {
-        background-color: rgba(201, 210, 222, 33);
-    }
-    '''
-
     def __init__(self, parent: QWidget = None):
         super().__init__(parent)
 
@@ -277,9 +259,9 @@ class MediaPlayerWidget(QWidget):
         self.StackedWidget.setMaximumSize(36, 36)
         self.StackedWidget.setContentsMargins(0, 0, 0, 0)
         self.PlayButton = QPushButton()
-        self.PlayButton.setStyleSheet(self.ButtonStyle + "QPushButton {border-image: url(:/Button_Icon/Sources/Play.png);}")
+        self.PlayButton.setStyleSheet(self.styleSheet() + "QPushButton {border-image: url(:/Button_Icon/Sources/Play.png);}")
         self.PauseButton = QPushButton()
-        self.PauseButton.setStyleSheet(self.ButtonStyle + "QPushButton {border-image: url(:/Button_Icon/Sources/Pause.png);}")
+        self.PauseButton.setStyleSheet(self.styleSheet() + "QPushButton {border-image: url(:/Button_Icon/Sources/Pause.png);}")
         self.PauseButton.clicked.connect(lambda: self.StackedWidget.setCurrentWidget(self.PlayButton))
         self.PlayButton.clicked.connect(lambda: self.StackedWidget.setCurrentWidget(self.PauseButton))
         self.StackedWidget.addWidget(self.PlayButton)
@@ -300,6 +282,9 @@ class MediaPlayerWidget(QWidget):
         self.MediaPlayer.setAudioOutput(AudioOutput)
         #self.MediaPlayer.mediaStatusChanged.connect(lambda Status: self.MediaPlayer.stop() if Status == QMediaPlayer.EndOfMedia else None)
 
+        ComponentsSignals.Signal_SetTheme.connect(self.InitDefaultStyleSheet)
+        self.InitDefaultStyleSheet('Auto')
+
     def SetMediaPlayer(self, MediaPath: str):
         self.MediaPlayer.setSource(QUrl.fromLocalFile(MediaPath))
 
@@ -315,5 +300,11 @@ class MediaPlayerWidget(QWidget):
         self.MediaPlayer.stop()
         self.MediaPlayer.setSource('')
         #self.MediaPlayer.deleteLater()
+
+    def InitDefaultStyleSheet(self, Theme: str) -> None:
+        super().setStyleSheet(Function_GetStyleSheet('Player', Theme))
+
+    def ClearDefaultStyleSheet(self) -> None:
+        ComponentsSignals.Signal_SetTheme.disconnect(self.InitDefaultStyleSheet)
 
 ##############################################################################################################################

@@ -1,7 +1,7 @@
 from PySide6.QtCore import (QCoreApplication, QMetaObject, QSize)
 from PySide6.QtWidgets import *
 
-from .Components import Table_ASRResult, FileDialogLineEdit
+from .Components import Table_ASRResult, LineEditBase
 from .QSimpleWidgets import Sources
 
 
@@ -147,7 +147,7 @@ class Ui_ChildWindow_ASR(object):
 
         self.gridLayout.addWidget(self.Table, 2, 0, 1, 4)
 
-        self.LineEdit = FileDialogLineEdit(self.CentralWidget)
+        self.LineEdit = LineEditBase(self.CentralWidget)
         self.LineEdit.setObjectName(u"LineEdit")
         sizePolicy.setHeightForWidth(self.LineEdit.sizePolicy().hasHeightForWidth())
         self.LineEdit.setSizePolicy(sizePolicy)

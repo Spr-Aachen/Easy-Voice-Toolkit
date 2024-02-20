@@ -175,29 +175,25 @@ def Function_SetTreeView(
 def Function_ConfigureCheckBox(
     CheckBox: QCheckBox,
     CheckedText: Optional[str] = None,
-    CheckedEventList: list = [],
-    CheckedArgsList: list = [()],
+    CheckedEvents: list = [],
     UncheckedText: Optional[str] = None,
-    UncheckedEventList: list = [],
-    UncheckedArgsList: list = [()],
+    UncheckedEvents: list = [],
     TakeEffect: bool = False
 ):
     '''
     Function to configure checkbox
     '''
     if CheckedText is not None:
-        CheckedEventList.append(CheckBox.setText)
-        CheckedArgsList.append((CheckedText, ))
+        CheckedEvents.append(lambda: CheckBox.setText(CheckedText))
     if UncheckedText is not None:
-        UncheckedEventList.append(CheckBox.setText)
-        UncheckedArgsList.append((UncheckedText, ))
+        UncheckedEvents.append(lambda: CheckBox.setText(UncheckedText))
 
     CheckBox.toggled.connect(
-        lambda IsChecked: RunEvent(CheckedEventList, CheckedArgsList) if IsChecked else RunEvent(UncheckedEventList, UncheckedArgsList)
+        lambda IsChecked: RunEvents(CheckedEvents if IsChecked else UncheckedEvents)
     )
 
-    RunEvent(CheckedEventList, CheckedArgsList) if TakeEffect and CheckBox.isChecked() else None
-    RunEvent(UncheckedEventList, UncheckedArgsList) if TakeEffect and not CheckBox.isChecked() else None
+    RunEvents(CheckedEvents) if TakeEffect and CheckBox.isChecked() else None
+    RunEvents(UncheckedEvents) if TakeEffect and not CheckBox.isChecked() else None
 
 
 def Function_SetURL(
@@ -249,9 +245,7 @@ def Function_ShowMessageBox(
     WindowTitle: str = ...,
     Text: str = ...,
     Buttons: object = QMessageBox.Ok,
-    EventButtons: list = [], #EventRoles: list = [],
-    EventLists: list[list] = [[], ],
-    ParamLists: list[list[tuple]] = [[()], ]
+    ButtonEvents: dict = {}
 ):
     '''
     Function to pop up a msgbox
@@ -263,23 +257,9 @@ def Function_ShowMessageBox(
     MsgBox.setText(Text)
     MsgBox.setStandardButtons(Buttons)
 
-    '''
-    @Slot(QAbstractButton)
-    def ConnectEvent(Button: QAbstractButton):
-        if Button.role() in EventRoles:
-            EventList = EventLists[EventRoles.index(Button.role())]
-            ParamList = ParamLists[EventRoles.index(Button.role())]
-            RunEvent(EventList, ParamList)
-        else:
-            pass
-    MsgBox.buttonClicked.connect(ConnectEvent)
-    '''
     Result = MsgBox.exec()
 
-    if Result in EventButtons:
-        EventList = EventLists[EventButtons.index(Result)]
-        ParamList = ParamLists[EventButtons.index(Result)]
-        RunEvent(EventList, ParamList)
+    ButtonEvents[Result]() if Result in list(ButtonEvents.keys()) else None
 
 
 def Function_ParamsHandler(
@@ -291,7 +271,7 @@ def Function_ParamsHandler(
     Function to get/set the param of UI
     '''
     if Mode == "Get":
-        if isinstance(UI, (QLineEdit, QPlainTextEdit)):
+        if isinstance(UI, (QLineEdit, LineEditBase, QPlainTextEdit)):
             return Function_GetText(UI)
         if isinstance(UI, QComboBox):
             return UI.currentText()
@@ -304,7 +284,7 @@ def Function_ParamsHandler(
             return UI.GetValue()
 
     if Mode == "Set":
-        if isinstance(UI, QLineEdit):
+        if isinstance(UI, (QLineEdit, LineEditBase)):
             UI.setText(Param)
         if isinstance(UI, QPlainTextEdit):
             UI.setPlainText(Param)
@@ -321,18 +301,16 @@ def Function_ParamsHandler(
 
 def Function_ParamsSynchronizer(
     Trigger: Union[QObject, list],
-    ParamsFrom: list = [],
+    FromTo: dict = {},
     Times: Optional[float] = None,
-    ParamsTo: list = [],
     Connection: str = "Connect"
 ):
     '''
-    Function to synchronize params
+    Function to synchronize params (ParamsFrom.value * Times = ParamsTo.value)
     '''
     @Slot()
     def ParamsSynchronizer():
-        for Index, UI_Get in enumerate(ParamsFrom):
-            UI_Set = ParamsTo[Index]
+        for UI_Get, UI_Set in FromTo.items():
             Param_Get = Function_ParamsHandler(UI_Get, "Get")
             Param_Get = Param_Get * Times if isinstance(Param_Get, (int, float, complex)) else Param_Get
             Function_ParamsHandler(UI_Set, Param_Get, "Set")
@@ -346,7 +324,7 @@ def Function_ParamsSynchronizer(
             Trigger.sliderMoved.connect(ParamsSynchronizer) if Connection == "Connect" else Trigger.sliderMoved.disconnect(ParamsSynchronizer)
         if isinstance(Trigger, QAbstractSpinBox):
             Trigger.valueChanged.connect(ParamsSynchronizer) if Connection == "Connect" else Trigger.valueChanged.disconnect(ParamsSynchronizer)
-        if isinstance(Trigger, QLineEdit):
+        if isinstance(Trigger, (QLineEdit, LineEditBase)):
             Trigger.textChanged.connect(ParamsSynchronizer) if Connection == "Connect" else Trigger.textChanged.disconnect(ParamsSynchronizer)
 
 

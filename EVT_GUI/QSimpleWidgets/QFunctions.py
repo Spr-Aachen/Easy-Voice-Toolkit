@@ -1,7 +1,6 @@
 import os
 import darkdetect
 from typing import Union, Optional
-#from urllib.parse import quote
 from PySide6.QtCore import Qt, QObject, QFile, QRect, QRectF, QSize, Signal, Slot, QPropertyAnimation, QParallelAnimationGroup, QEasingCurve, QUrl
 from PySide6.QtGui import QColor, QRgba64, QIcon, QPainter, QDesktopServices
 from PySide6.QtWidgets import *
@@ -190,36 +189,12 @@ def Function_GetText(
     return Text
 
 
-def Function_OpenURL(
-    URL: Union[str, list],
-):
-    '''
-    Function to open web/local URL
-    '''
-    def OpenURL(URL):
-        #URL = quote(URL, encoding = 'ansi')
-        QURL = QUrl(URL)
-        if QURL.isValid():
-            IsSucceeded = QDesktopServices.openUrl(QURL)
-            RunCMD([f'start "{URL}"']) if not IsSucceeded else None
-        else:
-            print(f"Invalid URL: {URL} !")
-
-    if isinstance(URL, str):
-        OpenURL(URL)
-    else:
-        URLList = ToIterable(URL)
-        for Index, URL in enumerate(URLList):
-            #URL = Function_ParamsChecker(URLList)[Index] if isinstance(URL, QObject) else URL
-            OpenURL(URL)
-
-##############################################################################################################################
-
 def Function_GetFileDialog(
     Mode: str,
     FileType: Optional[str] = None,
     Directory: Optional[str] = None
 ):
+    os.makedirs(Directory, exist_ok = True) if Directory is not None and Path(Directory).exists() == False else None
     if Mode == 'SelectDir':
         DisplayText = QFileDialog.getExistingDirectory(
             caption = "选择文件夹",
@@ -238,5 +213,28 @@ def Function_GetFileDialog(
             filter = FileType if FileType is not None else '任意类型 (*.*)'
         )
     return DisplayText
+
+
+def Function_OpenURL(
+    URL: Union[str, list],
+):
+    '''
+    Function to open web/local URL
+    '''
+    def OpenURL(URL):
+        QURL = QUrl().fromLocalFile(NormPath(URL))
+        if QURL.isValid():
+            IsSucceeded = QDesktopServices.openUrl(QURL)
+            RunCMD([f'start {URL}']) if not IsSucceeded else None
+        else:
+            print(f"Invalid URL: {URL} !")
+
+    if isinstance(URL, str):
+        OpenURL(URL)
+    else:
+        URLList = ToIterable(URL)
+        for Index, URL in enumerate(URLList):
+            #URL = Function_ParamsChecker(URLList)[Index] if isinstance(URL, QObject) else URL
+            OpenURL(URL)
 
 ##############################################################################################################################

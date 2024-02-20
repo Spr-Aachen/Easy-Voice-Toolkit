@@ -1,25 +1,35 @@
 LineEditBase {
-	/*font-size: 12px;*/
-	text-align: left;
-	color: rgb(255, 255, 255);
-	selection-background-color: darkgrey;
+    background-color: transparent;
+    padding: 0px;
+    border-width: 1.2px;
+    border-radius: 6px;
+    border-style: solid;
+    border-color: rgba(201, 210, 222, 123);
+}
+LineEditBase:hover {
+    border-color: rgba(201, 210, 222, 210);
+}
+
+
+LineEditBase QLineEdit {
 	background-color: transparent;
 	padding-top: 3px;
 	padding-left: 6px;
 	padding-bottom: 3px;
 	padding-right: 6px;
-	border-width: 1.2px;
-	border-radius: 6px;
+	border-width: 0px;
 	border-style: solid;
-	border-color: rgba(201, 210, 222, 123);
-}
-LineEditBase:hover {
-	border-color: rgba(201, 210, 222, 210);
 }
 
 
-LineEdit_NoBorder {
-	border: none;
+LineEditBase QPushButton {
+	image: url(:/Button_Icon/Sources/OpenedFolder.png);
+	background-color: transparent;
+	border-width: 0px;
+	border-style: solid;
+}
+LineEditBase QPushButton:hover {
+	background-color: rgba(201, 210, 222, 33);
 }
 
 

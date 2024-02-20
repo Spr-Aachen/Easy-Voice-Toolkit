@@ -57,8 +57,9 @@ class Dataset_Creating:
                 AudioSpeakerLines = AudioSpeakersData.readlines()
             AudioSpeakers = {}
             for AudioSpeakerLine in AudioSpeakerLines:
-                Audio, Speaker = AudioSpeakerLine.split('|')[0], AudioSpeakerLine.split('|')[1]
-                AudioSpeakers[os.path.join(WAV_Dir_Split, Path(Audio).name)] = Speaker
+                Audio = Path(WAV_Dir_Split).joinpath(Path(AudioSpeakerLine.split('|')[0]).name).as_posix()
+                Speaker = AudioSpeakerLine.split('|')[1].strip()
+                AudioSpeakers[Audio] = Speaker
             return AudioSpeakers
         self.AudioSpeakers = Get_AudioSpeakers()
         #self.WAV_Time_Limitation = WAV_Time_Limitation
@@ -95,7 +96,7 @@ class Dataset_Creating:
         print('---------------------------------------------------------------------')
 
         # Pre-process audio for folder in which wav files are stored
-        preprocess_audio(self.WAV_Dir, self.WAV_SampleRate, self.WAV_SampleWidth, self.WAV_ToMono, WAV_Dir_Prepared)
+        preprocess_audio(self.WAV_Paths_Input, self.WAV_SampleRate, self.WAV_SampleWidth, self.WAV_ToMono, WAV_Dir_Prepared)
         print('Pre-processing of audio files is complete.')
         print('---------------------------------------------------------------------')
 
