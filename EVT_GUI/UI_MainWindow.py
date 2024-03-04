@@ -37,7 +37,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
         self.Button_Toggle_Menu = QPushButton(self.Frame_Top_Toggle_Menu)
         self.Button_Toggle_Menu.setObjectName(u"Button_Toggle_Menu")
-        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        sizePolicy = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.Button_Toggle_Menu.sizePolicy().hasHeightForWidth())
@@ -81,7 +81,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_11.setSpacing(0)
         self.horizontalLayout_11.setObjectName(u"horizontalLayout_11")
         self.horizontalLayout_11.setContentsMargins(0, 0, 0, 0)
-        self.HorizontalSpacer_Left_Top = QSpacerItem(588, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.HorizontalSpacer_Left_Top = QSpacerItem(588, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.horizontalLayout_11.addItem(self.HorizontalSpacer_Left_Top)
 
@@ -104,7 +104,7 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_11.addWidget(self.Label_Title)
 
-        self.HorizontalSpacer_Right_Top = QSpacerItem(587, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.HorizontalSpacer_Right_Top = QSpacerItem(587, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.horizontalLayout_11.addItem(self.HorizontalSpacer_Right_Top)
 
@@ -222,7 +222,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_3.setContentsMargins(0, 3, 0, 3)
         self.Button_Menu_Home = QToolButton(self.Frame_Menu)
         self.Button_Menu_Home.setObjectName(u"Button_Menu_Home")
-        sizePolicy1 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
+        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
         sizePolicy1.setHorizontalStretch(0)
         sizePolicy1.setVerticalStretch(0)
         sizePolicy1.setHeightForWidth(self.Button_Menu_Home.sizePolicy().hasHeightForWidth())
@@ -283,7 +283,7 @@ class Ui_MainWindow(object):
 
         self.Label_Menu_Home_Text = QLabel(self.Button_Menu_Home)
         self.Label_Menu_Home_Text.setObjectName(u"Label_Menu_Home_Text")
-        sizePolicy2 = QSizePolicy(QSizePolicy.Ignored, QSizePolicy.Preferred)
+        sizePolicy2 = QSizePolicy(QSizePolicy.Policy.Ignored, QSizePolicy.Policy.Preferred)
         sizePolicy2.setHorizontalStretch(0)
         sizePolicy2.setVerticalStretch(0)
         sizePolicy2.setHeightForWidth(self.Label_Menu_Home_Text.sizePolicy().hasHeightForWidth())
@@ -920,7 +920,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_3.addWidget(self.Button_Menu_TTS)
 
-        self.VerticalSpacer_Menu = QSpacerItem(20, 522, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        self.VerticalSpacer_Menu = QSpacerItem(20, 522, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.verticalLayout_3.addItem(self.VerticalSpacer_Menu)
 
@@ -1360,7 +1360,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_5.setContentsMargins(12, 0, 12, 0)
         self.Button_Demo = QToolButton(self.Frame_Low_Home)
         self.Button_Demo.setObjectName(u"Button_Demo")
-        sizePolicy3 = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy3 = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
         sizePolicy3.setHorizontalStretch(0)
         sizePolicy3.setVerticalStretch(0)
         sizePolicy3.setHeightForWidth(self.Button_Demo.sizePolicy().hasHeightForWidth())
@@ -1391,13 +1391,11 @@ class Ui_MainWindow(object):
         self.horizontalLayout_70.setContentsMargins(21, 12, 21, 12)
         self.Label_Demo_Icon = QLabel(self.Button_Demo)
         self.Label_Demo_Icon.setObjectName(u"Label_Demo_Icon")
-        self.Label_Demo_Icon.setMinimumSize(QSize(48, 48))
-        self.Label_Demo_Icon.setMaximumSize(QSize(48, 48))
         self.Label_Demo_Icon.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;\n"
 "	font-size: 15px;*/\n"
 "	margin: 12px;\n"
-"	border-image: url(:/Button_Icon/Sources/Play.png);\n"
+"	image: url(:/Button_Icon/Sources/Play.png);\n"
 "	/*background-repeat: no-repeat;\n"
 "	background-origin: content;\n"
 "	background-position: center;*/\n"
@@ -1426,10 +1424,12 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_70.addWidget(self.Label_Demo_Text)
 
+        self.horizontalLayout_70.setStretch(0, 2)
+        self.horizontalLayout_70.setStretch(1, 3)
 
         self.horizontalLayout_5.addWidget(self.Button_Demo)
 
-        self.HorizontalSpacer_Low_Home_1 = QSpacerItem(107, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.HorizontalSpacer_Low_Home_1 = QSpacerItem(107, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.horizontalLayout_5.addItem(self.HorizontalSpacer_Low_Home_1)
 
@@ -1463,13 +1463,11 @@ class Ui_MainWindow(object):
         self.horizontalLayout_71.setContentsMargins(21, 12, 21, 12)
         self.Label_Server_Icon = QLabel(self.Button_Server)
         self.Label_Server_Icon.setObjectName(u"Label_Server_Icon")
-        self.Label_Server_Icon.setMinimumSize(QSize(48, 48))
-        self.Label_Server_Icon.setMaximumSize(QSize(48, 48))
         self.Label_Server_Icon.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;\n"
 "	font-size: 15px;*/\n"
 "	margin: 12px;\n"
-"	border-image: url(:/Button_Icon/Sources/Server.png);\n"
+"	image: url(:/Button_Icon/Sources/Server.png);\n"
 "	/*background-repeat: no-repeat;\n"
 "	background-origin: content;\n"
 "	background-position: center;*/\n"
@@ -1498,10 +1496,12 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_71.addWidget(self.Label_Server_Text)
 
+        self.horizontalLayout_71.setStretch(0, 2)
+        self.horizontalLayout_71.setStretch(1, 3)
 
         self.horizontalLayout_5.addWidget(self.Button_Server)
 
-        self.HorizontalSpacer_Low_Home_2 = QSpacerItem(106, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.HorizontalSpacer_Low_Home_2 = QSpacerItem(106, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.horizontalLayout_5.addItem(self.HorizontalSpacer_Low_Home_2)
 
@@ -1535,13 +1535,11 @@ class Ui_MainWindow(object):
         self.horizontalLayout_76.setContentsMargins(21, 12, 21, 12)
         self.Label_Repo_Icon = QLabel(self.Button_Repo)
         self.Label_Repo_Icon.setObjectName(u"Label_Repo_Icon")
-        self.Label_Repo_Icon.setMinimumSize(QSize(48, 48))
-        self.Label_Repo_Icon.setMaximumSize(QSize(48, 48))
         self.Label_Repo_Icon.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;\n"
 "	font-size: 15px;*/\n"
 "	margin: 12px;\n"
-"	border-image: url(:/Button_Icon/Sources/GitHub.png);\n"
+"	image: url(:/Button_Icon/Sources/GitHub.png);\n"
 "	/*background-repeat: no-repeat;\n"
 "	background-origin: content;\n"
 "	background-position: center;*/\n"
@@ -1570,10 +1568,12 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_76.addWidget(self.Label_Repo_Text)
 
+        self.horizontalLayout_76.setStretch(0, 2)
+        self.horizontalLayout_76.setStretch(1, 3)
 
         self.horizontalLayout_5.addWidget(self.Button_Repo)
 
-        self.HorizontalSpacer_Low_Home_3 = QSpacerItem(107, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.HorizontalSpacer_Low_Home_3 = QSpacerItem(107, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.horizontalLayout_5.addItem(self.HorizontalSpacer_Low_Home_3)
 
@@ -1607,13 +1607,11 @@ class Ui_MainWindow(object):
         self.horizontalLayout_79.setContentsMargins(21, 12, 21, 12)
         self.Label_Donate_Icon = QLabel(self.Button_Donate)
         self.Label_Donate_Icon.setObjectName(u"Label_Donate_Icon")
-        self.Label_Donate_Icon.setMinimumSize(QSize(48, 48))
-        self.Label_Donate_Icon.setMaximumSize(QSize(48, 48))
         self.Label_Donate_Icon.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;\n"
 "	font-size: 15px;*/\n"
 "	margin: 12px;\n"
-"	border-image: url(:/Button_Icon/Sources/Heart.png);\n"
+"	image: url(:/Button_Icon/Sources/Heart.png);\n"
 "	/*background-repeat: no-repeat;\n"
 "	background-origin: content;\n"
 "	background-position: center;*/\n"
@@ -1642,9 +1640,15 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_79.addWidget(self.Label_Donate_Text)
 
+        self.horizontalLayout_79.setStretch(0, 2)
+        self.horizontalLayout_79.setStretch(1, 3)
 
         self.horizontalLayout_5.addWidget(self.Button_Donate)
 
+        self.horizontalLayout_5.setStretch(0, 3)
+        self.horizontalLayout_5.setStretch(2, 3)
+        self.horizontalLayout_5.setStretch(4, 3)
+        self.horizontalLayout_5.setStretch(6, 3)
 
         self.verticalLayout_99.addWidget(self.Frame_Low_Home)
 
@@ -1718,7 +1722,7 @@ class Ui_MainWindow(object):
 
         self.Frame_Env_Install_Title_Spacer = QLabel(self.Frame_Env_Install_Top)
         self.Frame_Env_Install_Title_Spacer.setObjectName(u"Frame_Env_Install_Title_Spacer")
-        sizePolicy4 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
+        sizePolicy4 = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Preferred)
         sizePolicy4.setHorizontalStretch(0)
         sizePolicy4.setVerticalStretch(0)
         sizePolicy4.setHeightForWidth(self.Frame_Env_Install_Title_Spacer.sizePolicy().hasHeightForWidth())
@@ -1787,7 +1791,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout_75.addWidget(self.Label_Env_Install_Aria2, 0, 0, 1, 1)
 
-        self.HorizontalSpacer_Env_Install_Aria2 = QSpacerItem(969, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.HorizontalSpacer_Env_Install_Aria2 = QSpacerItem(969, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.gridLayout_75.addItem(self.HorizontalSpacer_Env_Install_Aria2, 0, 1, 1, 1)
 
@@ -1893,7 +1897,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout_2.addWidget(self.Label_Env_Install_FFmpeg, 0, 0, 1, 1)
 
-        self.HorizontalSpacer_Env_Install_FFmpeg = QSpacerItem(969, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.HorizontalSpacer_Env_Install_FFmpeg = QSpacerItem(969, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.gridLayout_2.addItem(self.HorizontalSpacer_Env_Install_FFmpeg, 0, 1, 1, 1)
 
@@ -1999,7 +2003,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout_3.addWidget(self.Label_Env_Install_Python, 0, 0, 1, 1)
 
-        self.HorizontalSpacer_Env_Install_Python = QSpacerItem(969, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.HorizontalSpacer_Env_Install_Python = QSpacerItem(969, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.gridLayout_3.addItem(self.HorizontalSpacer_Env_Install_Python, 0, 1, 1, 1)
 
@@ -2105,7 +2109,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout_4.addWidget(self.Label_Env_Install_PyReqs, 0, 0, 1, 1)
 
-        self.HorizontalSpacer_Env_Install_PyReqs = QSpacerItem(969, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.HorizontalSpacer_Env_Install_PyReqs = QSpacerItem(969, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.gridLayout_4.addItem(self.HorizontalSpacer_Env_Install_PyReqs, 0, 1, 1, 1)
 
@@ -2211,7 +2215,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout_5.addWidget(self.Label_Env_Install_Pytorch, 0, 0, 1, 1)
 
-        self.HorizontalSpacer_Env_Install_Pytorch = QSpacerItem(969, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.HorizontalSpacer_Env_Install_Pytorch = QSpacerItem(969, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.gridLayout_5.addItem(self.HorizontalSpacer_Env_Install_Pytorch, 0, 1, 1, 1)
 
@@ -2287,7 +2291,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_81.addWidget(self.Frame_Env_Install_Middle)
 
-        self.VerticalSpacer_Download = QSpacerItem(17, 198, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        self.VerticalSpacer_Download = QSpacerItem(17, 198, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.verticalLayout_81.addItem(self.VerticalSpacer_Download)
 
@@ -3096,7 +3100,7 @@ class Ui_MainWindow(object):
         self.gridLayout_12.setContentsMargins(21, 12, 21, 12)
         self.Label_Process_MediaDirInput = QLabel(self.Frame_Process_MediaDirInput)
         self.Label_Process_MediaDirInput.setObjectName(u"Label_Process_MediaDirInput")
-        sizePolicy5 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
+        sizePolicy5 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
         sizePolicy5.setHorizontalStretch(0)
         sizePolicy5.setVerticalStretch(0)
         sizePolicy5.setHeightForWidth(self.Label_Process_MediaDirInput.sizePolicy().hasHeightForWidth())
@@ -3113,7 +3117,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout_12.addWidget(self.Label_Process_MediaDirInput, 0, 0, 1, 1)
 
-        self.HorizontalSpacer_Process_MediaDirInput = QSpacerItem(445, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.HorizontalSpacer_Process_MediaDirInput = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.gridLayout_12.addItem(self.HorizontalSpacer_Process_MediaDirInput, 0, 1, 1, 1)
 
@@ -3219,7 +3223,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout_13.addWidget(self.Label_Process_SliceAudio, 0, 0, 1, 1)
 
-        self.HorizontalSpacer_Process_SliceAudio = QSpacerItem(445, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.HorizontalSpacer_Process_SliceAudio = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.gridLayout_13.addItem(self.HorizontalSpacer_Process_SliceAudio, 0, 1, 1, 1)
 
@@ -3386,7 +3390,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout_17.addWidget(self.Label_Process_RMSThreshold, 0, 0, 1, 1)
 
-        self.HorizontalSpacer_Process_RMSThreshold = QSpacerItem(445, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.HorizontalSpacer_Process_RMSThreshold = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.gridLayout_17.addItem(self.HorizontalSpacer_Process_RMSThreshold, 0, 1, 1, 1)
 
@@ -3512,7 +3516,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout_23.addWidget(self.Label_Process_AudioLengthMin, 0, 0, 1, 1)
 
-        self.HorizontalSpacer_Process_AudioLengthMin = QSpacerItem(445, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.HorizontalSpacer_Process_AudioLengthMin = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.gridLayout_23.addItem(self.HorizontalSpacer_Process_AudioLengthMin, 0, 1, 1, 1)
 
@@ -3637,7 +3641,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout_24.addWidget(self.Label_Process_SilentIntervalMin, 0, 0, 1, 1)
 
-        self.HorizontalSpacer_Process_SilentIntervalMin = QSpacerItem(445, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.HorizontalSpacer_Process_SilentIntervalMin = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.gridLayout_24.addItem(self.HorizontalSpacer_Process_SilentIntervalMin, 0, 1, 1, 1)
 
@@ -3762,7 +3766,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout_25.addWidget(self.Label_Process_HopSize, 0, 0, 1, 1)
 
-        self.HorizontalSpacer_Process_HopSize = QSpacerItem(445, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.HorizontalSpacer_Process_HopSize = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.gridLayout_25.addItem(self.HorizontalSpacer_Process_HopSize, 0, 1, 1, 1)
 
@@ -3887,7 +3891,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout_26.addWidget(self.Label_Process_SilenceKeptMax, 0, 0, 1, 1)
 
-        self.HorizontalSpacer_Process_SilenceKeptMax = QSpacerItem(445, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.HorizontalSpacer_Process_SilenceKeptMax = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.gridLayout_26.addItem(self.HorizontalSpacer_Process_SilenceKeptMax, 0, 1, 1, 1)
 
@@ -4046,7 +4050,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout_27.addWidget(self.Label_Process_MediaFormatOutput, 0, 0, 1, 1)
 
-        self.HorizontalSpacer_Process_MediaFormatOutput = QSpacerItem(445, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.HorizontalSpacer_Process_MediaFormatOutput = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.gridLayout_27.addItem(self.HorizontalSpacer_Process_MediaFormatOutput, 0, 1, 1, 1)
 
@@ -4288,7 +4292,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout_28.addWidget(self.Label_Process_MediaDirOutput, 0, 0, 1, 1)
 
-        self.HorizontalSpacer_Process_MediaDirOutput = QSpacerItem(445, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.HorizontalSpacer_Process_MediaDirOutput = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.gridLayout_28.addItem(self.HorizontalSpacer_Process_MediaDirOutput, 0, 1, 1, 1)
 
@@ -4415,7 +4419,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout_29.addWidget(self.Label_Process_SampleRate, 0, 0, 1, 1)
 
-        self.HorizontalSpacer_Process_SampleRate = QSpacerItem(445, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.HorizontalSpacer_Process_SampleRate = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.gridLayout_29.addItem(self.HorizontalSpacer_Process_SampleRate, 0, 1, 1, 1)
 
@@ -4657,7 +4661,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout_30.addWidget(self.Label_Process_SampleWidth, 0, 0, 1, 1)
 
-        self.HorizontalSpacer_Process_SampleWidth = QSpacerItem(445, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.HorizontalSpacer_Process_SampleWidth = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.gridLayout_30.addItem(self.HorizontalSpacer_Process_SampleWidth, 0, 1, 1, 1)
 
@@ -4899,7 +4903,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout_31.addWidget(self.Label_Process_ToMono, 0, 0, 1, 1)
 
-        self.HorizontalSpacer_Process_ToMono = QSpacerItem(445, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.HorizontalSpacer_Process_ToMono = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.gridLayout_31.addItem(self.HorizontalSpacer_Process_ToMono, 0, 1, 1, 1)
 
@@ -4985,7 +4989,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_14.addWidget(self.GroupBox_Process_OutputParams)
 
-        self.VerticalSpacer_Process = QSpacerItem(0, 0, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        self.VerticalSpacer_Process = QSpacerItem(0, 0, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.verticalLayout_14.addItem(self.VerticalSpacer_Process)
 
@@ -5197,11 +5201,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_86.setContentsMargins(0, 0, 0, 0)
         self.Button_Process_Execute = QPushButton(self.Page_Process_Execute)
         self.Button_Process_Execute.setObjectName(u"Button_Process_Execute")
-        sizePolicy6 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
-        sizePolicy6.setHorizontalStretch(0)
-        sizePolicy6.setVerticalStretch(0)
-        sizePolicy6.setHeightForWidth(self.Button_Process_Execute.sizePolicy().hasHeightForWidth())
-        self.Button_Process_Execute.setSizePolicy(sizePolicy6)
+        sizePolicy3.setHeightForWidth(self.Button_Process_Execute.sizePolicy().hasHeightForWidth())
+        self.Button_Process_Execute.setSizePolicy(sizePolicy3)
         self.Button_Process_Execute.setMinimumSize(QSize(0, 30))
         self.Button_Process_Execute.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
@@ -5237,8 +5238,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_87.setContentsMargins(0, 0, 0, 0)
         self.Button_Process_Terminate = QPushButton(self.Page_Process_Terminate)
         self.Button_Process_Terminate.setObjectName(u"Button_Process_Terminate")
-        sizePolicy6.setHeightForWidth(self.Button_Process_Terminate.sizePolicy().hasHeightForWidth())
-        self.Button_Process_Terminate.setSizePolicy(sizePolicy6)
+        sizePolicy3.setHeightForWidth(self.Button_Process_Terminate.sizePolicy().hasHeightForWidth())
+        self.Button_Process_Terminate.setSizePolicy(sizePolicy3)
         self.Button_Process_Terminate.setMinimumSize(QSize(0, 30))
         self.Button_Process_Terminate.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
@@ -5704,7 +5705,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout_32.addWidget(self.Label_ASR_VPR_AudioDirInput, 0, 0, 1, 1)
 
-        self.HorizontalSpacer_ASR_VPR_AudioDirInput = QSpacerItem(445, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.HorizontalSpacer_ASR_VPR_AudioDirInput = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.gridLayout_32.addItem(self.HorizontalSpacer_ASR_VPR_AudioDirInput, 0, 1, 1, 1)
 
@@ -5937,7 +5938,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout_33.addWidget(self.Button_ASR_VPR_DecisionThreshold_Undo, 0, 2, 1, 1)
 
-        self.HorizontalSpacer_ASR_VPR_DecisionThreshold = QSpacerItem(445, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.HorizontalSpacer_ASR_VPR_DecisionThreshold = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.gridLayout_33.addItem(self.HorizontalSpacer_ASR_VPR_DecisionThreshold, 0, 1, 1, 1)
 
@@ -5976,7 +5977,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout_34.addWidget(self.Label_ASR_VPR_ModelPath, 0, 0, 1, 1)
 
-        self.HorizontalSpacer_ASR_VPR_ModelPath = QSpacerItem(445, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.HorizontalSpacer_ASR_VPR_ModelPath = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.gridLayout_34.addItem(self.HorizontalSpacer_ASR_VPR_ModelPath, 0, 1, 1, 1)
 
@@ -6103,7 +6104,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout_35.addWidget(self.Label_ASR_VPR_ModelType, 0, 0, 1, 1)
 
-        self.HorizontalSpacer_ASR_VPR_ModelType = QSpacerItem(445, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.HorizontalSpacer_ASR_VPR_ModelType = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.gridLayout_35.addItem(self.HorizontalSpacer_ASR_VPR_ModelType, 0, 1, 1, 1)
 
@@ -6345,7 +6346,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout_36.addWidget(self.Label_ASR_VPR_FeatureMethod, 0, 0, 1, 1)
 
-        self.HorizontalSpacer_ASR_VPR_FeatureMethod = QSpacerItem(445, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.HorizontalSpacer_ASR_VPR_FeatureMethod = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.gridLayout_36.addItem(self.HorizontalSpacer_ASR_VPR_FeatureMethod, 0, 1, 1, 1)
 
@@ -6587,7 +6588,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout_37.addWidget(self.Label_ASR_VPR_DurationOfAudio, 0, 0, 1, 1)
 
-        self.HorizontalSpacer_ASR_VPR_DurationOfAudio = QSpacerItem(445, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.HorizontalSpacer_ASR_VPR_DurationOfAudio = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.gridLayout_37.addItem(self.HorizontalSpacer_ASR_VPR_DurationOfAudio, 0, 1, 1, 1)
 
@@ -6747,7 +6748,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout_38.addWidget(self.Label_ASR_VPR_AudioSpeakersDataPath, 0, 0, 1, 1)
 
-        self.HorizontalSpacer_ASR_VPR_AudioSpeakersDataPath = QSpacerItem(445, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.HorizontalSpacer_ASR_VPR_AudioSpeakersDataPath = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.gridLayout_38.addItem(self.HorizontalSpacer_ASR_VPR_AudioSpeakersDataPath, 0, 1, 1, 1)
 
@@ -7000,8 +7001,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_102.setContentsMargins(0, 0, 0, 0)
         self.Button_ASR_VPR_Execute = QPushButton(self.Page_ASR_VPR_Execute)
         self.Button_ASR_VPR_Execute.setObjectName(u"Button_ASR_VPR_Execute")
-        sizePolicy6.setHeightForWidth(self.Button_ASR_VPR_Execute.sizePolicy().hasHeightForWidth())
-        self.Button_ASR_VPR_Execute.setSizePolicy(sizePolicy6)
+        sizePolicy3.setHeightForWidth(self.Button_ASR_VPR_Execute.sizePolicy().hasHeightForWidth())
+        self.Button_ASR_VPR_Execute.setSizePolicy(sizePolicy3)
         self.Button_ASR_VPR_Execute.setMinimumSize(QSize(0, 30))
         self.Button_ASR_VPR_Execute.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
@@ -7037,8 +7038,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_119.setContentsMargins(0, 0, 0, 0)
         self.Button_ASR_VPR_Terminate = QPushButton(self.Page_ASR_VPR_Terminate)
         self.Button_ASR_VPR_Terminate.setObjectName(u"Button_ASR_VPR_Terminate")
-        sizePolicy6.setHeightForWidth(self.Button_ASR_VPR_Terminate.sizePolicy().hasHeightForWidth())
-        self.Button_ASR_VPR_Terminate.setSizePolicy(sizePolicy6)
+        sizePolicy3.setHeightForWidth(self.Button_ASR_VPR_Terminate.sizePolicy().hasHeightForWidth())
+        self.Button_ASR_VPR_Terminate.setSizePolicy(sizePolicy3)
         self.Button_ASR_VPR_Terminate.setMinimumSize(QSize(0, 30))
         self.Button_ASR_VPR_Terminate.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
@@ -7504,7 +7505,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout_39.addWidget(self.Label_STT_Whisper_AudioDir, 0, 0, 1, 1)
 
-        self.HorizontalSpacer_STT_Whisper_AudioDir = QSpacerItem(445, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.HorizontalSpacer_STT_Whisper_AudioDir = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.gridLayout_39.addItem(self.HorizontalSpacer_STT_Whisper_AudioDir, 0, 1, 1, 1)
 
@@ -7610,7 +7611,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout_40.addWidget(self.Label_STT_Whisper_AddLanguageInfo, 0, 0, 1, 1)
 
-        self.HorizontalSpacer_STT_Whisper_AddLanguageInfo = QSpacerItem(445, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.HorizontalSpacer_STT_Whisper_AddLanguageInfo = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.gridLayout_40.addItem(self.HorizontalSpacer_STT_Whisper_AddLanguageInfo, 0, 1, 1, 1)
 
@@ -7722,7 +7723,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout_41.addWidget(self.Label_STT_Whisper_ModelPath, 0, 0, 1, 1)
 
-        self.HorizontalSpacer_STT_Whisper_ModelPath = QSpacerItem(445, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.HorizontalSpacer_STT_Whisper_ModelPath = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.gridLayout_41.addItem(self.HorizontalSpacer_STT_Whisper_ModelPath, 0, 1, 1, 1)
 
@@ -7849,7 +7850,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout_44.addWidget(self.Label_STT_Whisper_fp16, 0, 0, 1, 1)
 
-        self.HorizontalSpacer_STT_Whisper_fp16 = QSpacerItem(445, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.HorizontalSpacer_STT_Whisper_fp16 = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.gridLayout_44.addItem(self.HorizontalSpacer_STT_Whisper_fp16, 0, 1, 1, 1)
 
@@ -7991,7 +7992,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout_43.addWidget(self.CheckBox_STT_Whisper_ConditionOnPreviousText, 1, 0, 1, 3)
 
-        self.HorizontalSpacer_STT_Whisper_ConditionOnPreviousText = QSpacerItem(445, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.HorizontalSpacer_STT_Whisper_ConditionOnPreviousText = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.gridLayout_43.addItem(self.HorizontalSpacer_STT_Whisper_ConditionOnPreviousText, 0, 1, 1, 1)
 
@@ -8073,7 +8074,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout_42.addWidget(self.Label_STT_Whisper_Verbose, 0, 0, 1, 1)
 
-        self.HorizontalSpacer_STT_Whisper_Verbose = QSpacerItem(445, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.HorizontalSpacer_STT_Whisper_Verbose = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.gridLayout_42.addItem(self.HorizontalSpacer_STT_Whisper_Verbose, 0, 1, 1, 1)
 
@@ -8219,7 +8220,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout_45.addWidget(self.Label_STT_Whisper_SRTDir, 0, 0, 1, 1)
 
-        self.HorizontalSpacer_STT_Whisper_SRTDir = QSpacerItem(481, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.HorizontalSpacer_STT_Whisper_SRTDir = QSpacerItem(481, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.gridLayout_45.addItem(self.HorizontalSpacer_STT_Whisper_SRTDir, 0, 1, 1, 1)
 
@@ -8265,7 +8266,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_16.addWidget(self.GroupBox_STT_Whisper_OutputParams)
 
-        self.VerticalSpacer_STT_Whisper = QSpacerItem(0, 0, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        self.VerticalSpacer_STT_Whisper = QSpacerItem(0, 0, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.verticalLayout_16.addItem(self.VerticalSpacer_STT_Whisper)
 
@@ -8476,8 +8477,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_90.setContentsMargins(0, 0, 0, 0)
         self.Button_STT_Whisper_Execute = QPushButton(self.Page_STT_Whisper_Execute)
         self.Button_STT_Whisper_Execute.setObjectName(u"Button_STT_Whisper_Execute")
-        sizePolicy6.setHeightForWidth(self.Button_STT_Whisper_Execute.sizePolicy().hasHeightForWidth())
-        self.Button_STT_Whisper_Execute.setSizePolicy(sizePolicy6)
+        sizePolicy3.setHeightForWidth(self.Button_STT_Whisper_Execute.sizePolicy().hasHeightForWidth())
+        self.Button_STT_Whisper_Execute.setSizePolicy(sizePolicy3)
         self.Button_STT_Whisper_Execute.setMinimumSize(QSize(0, 30))
         self.Button_STT_Whisper_Execute.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
@@ -8513,8 +8514,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_91.setContentsMargins(0, 0, 0, 0)
         self.Button_STT_Whisper_Terminate = QPushButton(self.Page_STT_Whisper_Terminate)
         self.Button_STT_Whisper_Terminate.setObjectName(u"Button_STT_Whisper_Terminate")
-        sizePolicy6.setHeightForWidth(self.Button_STT_Whisper_Terminate.sizePolicy().hasHeightForWidth())
-        self.Button_STT_Whisper_Terminate.setSizePolicy(sizePolicy6)
+        sizePolicy3.setHeightForWidth(self.Button_STT_Whisper_Terminate.sizePolicy().hasHeightForWidth())
+        self.Button_STT_Whisper_Terminate.setSizePolicy(sizePolicy3)
         self.Button_STT_Whisper_Terminate.setMinimumSize(QSize(0, 30))
         self.Button_STT_Whisper_Terminate.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
@@ -8915,7 +8916,7 @@ class Ui_MainWindow(object):
         self.ScrollArea_Middle_DAT_VITS.setWidgetResizable(True)
         self.ScrollArea_Middle_WidgetContents_DAT_VITS = QWidget()
         self.ScrollArea_Middle_WidgetContents_DAT_VITS.setObjectName(u"ScrollArea_Middle_WidgetContents_DAT_VITS")
-        self.ScrollArea_Middle_WidgetContents_DAT_VITS.setGeometry(QRect(0, 0, 591, 1356))
+        self.ScrollArea_Middle_WidgetContents_DAT_VITS.setGeometry(QRect(0, 0, 591, 1566))
         self.verticalLayout_36 = QVBoxLayout(self.ScrollArea_Middle_WidgetContents_DAT_VITS)
         self.verticalLayout_36.setSpacing(12)
         self.verticalLayout_36.setObjectName(u"verticalLayout_36")
@@ -8980,7 +8981,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout_46.addWidget(self.Label_DAT_VITS_AudioSpeakersDataPath, 0, 0, 1, 1)
 
-        self.HorizontalSpacer_DAT_VITS_InputParams = QSpacerItem(445, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.HorizontalSpacer_DAT_VITS_InputParams = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.gridLayout_46.addItem(self.HorizontalSpacer_DAT_VITS_InputParams, 0, 1, 1, 1)
 
@@ -9052,7 +9053,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout_47.addWidget(self.Label_DAT_VITS_SRTDir, 0, 0, 1, 1)
 
-        self.HorizontalSpacer_DAT_VITS_SRTDir = QSpacerItem(445, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.HorizontalSpacer_DAT_VITS_SRTDir = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.gridLayout_47.addItem(self.HorizontalSpacer_DAT_VITS_SRTDir, 0, 1, 1, 1)
 
@@ -9126,6 +9127,78 @@ class Ui_MainWindow(object):
         self.verticalLayout_30.setSpacing(0)
         self.verticalLayout_30.setObjectName(u"verticalLayout_30")
         self.verticalLayout_30.setContentsMargins(0, 0, 0, 0)
+        self.Frame_DAT_VITS_DataFormat = QFrame(self.Frame_DAT_VITS_VITSParams_BasicSettings)
+        self.Frame_DAT_VITS_DataFormat.setObjectName(u"Frame_DAT_VITS_DataFormat")
+        self.Frame_DAT_VITS_DataFormat.setMinimumSize(QSize(0, 105))
+        self.Frame_DAT_VITS_DataFormat.setStyleSheet(u"QFrame {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QFrame:hover {\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
+"}")
+        self.gridLayout_76 = QGridLayout(self.Frame_DAT_VITS_DataFormat)
+        self.gridLayout_76.setSpacing(12)
+        self.gridLayout_76.setObjectName(u"gridLayout_76")
+        self.gridLayout_76.setContentsMargins(21, 12, 21, 12)
+        self.Label_DAT_VITS_DataFormat = QLabel(self.Frame_DAT_VITS_DataFormat)
+        self.Label_DAT_VITS_DataFormat.setObjectName(u"Label_DAT_VITS_DataFormat")
+        sizePolicy5.setHeightForWidth(self.Label_DAT_VITS_DataFormat.sizePolicy().hasHeightForWidth())
+        self.Label_DAT_VITS_DataFormat.setSizePolicy(sizePolicy5)
+        self.Label_DAT_VITS_DataFormat.setStyleSheet(u"QLabel {\n"
+"	/*text-align: center;*/\n"
+"	/*color: rgb(255, 255, 255);*/\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_76.addWidget(self.Label_DAT_VITS_DataFormat, 0, 0, 1, 1)
+
+        self.HorizontalSpacer_DAT_VITS_DataFormat = QSpacerItem(443, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.gridLayout_76.addItem(self.HorizontalSpacer_DAT_VITS_DataFormat, 0, 1, 1, 1)
+
+        self.Button_DAT_VITS_DataFormat_Undo = QPushButton(self.Frame_DAT_VITS_DataFormat)
+        self.Button_DAT_VITS_DataFormat_Undo.setObjectName(u"Button_DAT_VITS_DataFormat_Undo")
+        self.Button_DAT_VITS_DataFormat_Undo.setMinimumSize(QSize(27, 27))
+        self.Button_DAT_VITS_DataFormat_Undo.setMaximumSize(QSize(27, 27))
+        self.Button_DAT_VITS_DataFormat_Undo.setStyleSheet(u"QPushButton {\n"
+"	image: url(:/Button_Icon/Sources/Undo.png);\n"
+"	background-color: transparent;\n"
+"	padding: 4.5px;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgba(201, 210, 222, 123);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgba(201, 210, 222, 210);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_76.addWidget(self.Button_DAT_VITS_DataFormat_Undo, 0, 2, 1, 1)
+
+        self.LineEdit_DAT_VITS_DataFormat = LineEditBase(self.Frame_DAT_VITS_DataFormat)
+        self.LineEdit_DAT_VITS_DataFormat.setObjectName(u"LineEdit_DAT_VITS_DataFormat")
+        self.LineEdit_DAT_VITS_DataFormat.setMinimumSize(QSize(0, 27))
+
+        self.gridLayout_76.addWidget(self.LineEdit_DAT_VITS_DataFormat, 1, 0, 1, 3)
+
+
+        self.verticalLayout_30.addWidget(self.Frame_DAT_VITS_DataFormat)
+
         self.Frame_DAT_VITS_AddAuxiliaryData = QFrame(self.Frame_DAT_VITS_VITSParams_BasicSettings)
         self.Frame_DAT_VITS_AddAuxiliaryData.setObjectName(u"Frame_DAT_VITS_AddAuxiliaryData")
         self.Frame_DAT_VITS_AddAuxiliaryData.setMinimumSize(QSize(0, 105))
@@ -9158,7 +9231,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout_48.addWidget(self.Label_DAT_VITS_AddAuxiliaryData, 0, 0, 1, 1)
 
-        self.HorizontalSpacer_DAT_VITS_AddAuxiliaryData = QSpacerItem(445, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.HorizontalSpacer_DAT_VITS_AddAuxiliaryData = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.gridLayout_48.addItem(self.HorizontalSpacer_DAT_VITS_AddAuxiliaryData, 0, 1, 1, 1)
 
@@ -9270,7 +9343,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout_53.addWidget(self.Label_DAT_VITS_AuxiliaryDataPath, 0, 0, 1, 1)
 
-        self.HorizontalSpacer_DAT_VITS_AuxiliaryDataPath = QSpacerItem(443, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.HorizontalSpacer_DAT_VITS_AuxiliaryDataPath = QSpacerItem(443, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.gridLayout_53.addItem(self.HorizontalSpacer_DAT_VITS_AuxiliaryDataPath, 0, 1, 1, 1)
 
@@ -9399,7 +9472,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout_49.addWidget(self.Label_DAT_VITS_TrainRatio, 0, 0, 1, 1)
 
-        self.HorizontalSpacer_DAT_VITS_TrainRatio = QSpacerItem(443, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.HorizontalSpacer_DAT_VITS_TrainRatio = QSpacerItem(443, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.gridLayout_49.addItem(self.HorizontalSpacer_DAT_VITS_TrainRatio, 0, 1, 1, 1)
 
@@ -9525,7 +9598,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout_50.addWidget(self.Label_DAT_VITS_SampleRate, 0, 0, 1, 1)
 
-        self.HorizontalSpacer_DAT_VITS_SampleRate = QSpacerItem(443, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.HorizontalSpacer_DAT_VITS_SampleRate = QSpacerItem(443, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.gridLayout_50.addItem(self.HorizontalSpacer_DAT_VITS_SampleRate, 0, 1, 1, 1)
 
@@ -9767,7 +9840,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout_51.addWidget(self.Label_DAT_VITS_SampleWidth, 0, 0, 1, 1)
 
-        self.HorizontalSpacer_DAT_VITS_SampleWidth = QSpacerItem(443, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.HorizontalSpacer_DAT_VITS_SampleWidth = QSpacerItem(443, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.gridLayout_51.addItem(self.HorizontalSpacer_DAT_VITS_SampleWidth, 0, 1, 1, 1)
 
@@ -10009,7 +10082,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout_52.addWidget(self.Label_DAT_VITS_ToMono, 0, 0, 1, 1)
 
-        self.HorizontalSpacer_DAT_VITS_ToMono = QSpacerItem(443, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.HorizontalSpacer_DAT_VITS_ToMono = QSpacerItem(443, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.gridLayout_52.addItem(self.HorizontalSpacer_DAT_VITS_ToMono, 0, 1, 1, 1)
 
@@ -10123,6 +10196,118 @@ class Ui_MainWindow(object):
         self.verticalLayout_31.setSpacing(0)
         self.verticalLayout_31.setObjectName(u"verticalLayout_31")
         self.verticalLayout_31.setContentsMargins(0, 0, 0, 0)
+        self.Frame_DAT_VITS_ToStandaloneForm = QFrame(self.Frame_DAT_VITS_OutputParams_BasicSettings)
+        self.Frame_DAT_VITS_ToStandaloneForm.setObjectName(u"Frame_DAT_VITS_ToStandaloneForm")
+        self.Frame_DAT_VITS_ToStandaloneForm.setMinimumSize(QSize(0, 105))
+        self.Frame_DAT_VITS_ToStandaloneForm.setStyleSheet(u"QFrame {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QFrame:hover {\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
+"}")
+        self.gridLayout_78 = QGridLayout(self.Frame_DAT_VITS_ToStandaloneForm)
+        self.gridLayout_78.setSpacing(12)
+        self.gridLayout_78.setObjectName(u"gridLayout_78")
+        self.gridLayout_78.setContentsMargins(21, 12, 21, 12)
+        self.Label_DAT_VITS_ToStandaloneForm = QLabel(self.Frame_DAT_VITS_ToStandaloneForm)
+        self.Label_DAT_VITS_ToStandaloneForm.setObjectName(u"Label_DAT_VITS_ToStandaloneForm")
+        sizePolicy5.setHeightForWidth(self.Label_DAT_VITS_ToStandaloneForm.sizePolicy().hasHeightForWidth())
+        self.Label_DAT_VITS_ToStandaloneForm.setSizePolicy(sizePolicy5)
+        self.Label_DAT_VITS_ToStandaloneForm.setStyleSheet(u"QLabel {\n"
+"	/*text-align: center;*/\n"
+"	/*color: rgb(255, 255, 255);*/\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_78.addWidget(self.Label_DAT_VITS_ToStandaloneForm, 0, 0, 1, 1)
+
+        self.HorizontalSpacer_DAT_VITS_ToStandaloneForm = QSpacerItem(443, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.gridLayout_78.addItem(self.HorizontalSpacer_DAT_VITS_ToStandaloneForm, 0, 1, 1, 1)
+
+        self.Button_DAT_VITS_ToStandaloneForm_Undo = QPushButton(self.Frame_DAT_VITS_ToStandaloneForm)
+        self.Button_DAT_VITS_ToStandaloneForm_Undo.setObjectName(u"Button_DAT_VITS_ToStandaloneForm_Undo")
+        self.Button_DAT_VITS_ToStandaloneForm_Undo.setMinimumSize(QSize(27, 27))
+        self.Button_DAT_VITS_ToStandaloneForm_Undo.setMaximumSize(QSize(27, 27))
+        self.Button_DAT_VITS_ToStandaloneForm_Undo.setStyleSheet(u"QPushButton {\n"
+"	image: url(:/Button_Icon/Sources/Undo.png);\n"
+"	background-color: transparent;\n"
+"	padding: 4.5px;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgba(201, 210, 222, 123);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgba(201, 210, 222, 210);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_78.addWidget(self.Button_DAT_VITS_ToStandaloneForm_Undo, 0, 2, 1, 1)
+
+        self.CheckBox_DAT_VITS_ToStandaloneForm = QCheckBox(self.Frame_DAT_VITS_ToStandaloneForm)
+        self.CheckBox_DAT_VITS_ToStandaloneForm.setObjectName(u"CheckBox_DAT_VITS_ToStandaloneForm")
+        self.CheckBox_DAT_VITS_ToStandaloneForm.setMinimumSize(QSize(0, 27))
+        self.CheckBox_DAT_VITS_ToStandaloneForm.setStyleSheet(u"QCheckBox {\n"
+"	font-size: 12px;\n"
+"	spacing: 12.3px;\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QCheckBox:hover {\n"
+"	color: rgb(255, 255, 255);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator {\n"
+"	width: 24px;\n"
+"	height: 24px;\n"
+"    background-color: transparent;\n"
+"	padding: 1.2px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QCheckBox::indicator:hover {\n"
+"	background-color: rgba(255, 255, 255, 21);\n"
+"}\n"
+"QCheckBox::indicator:unchecked {\n"
+"	border-image: url(:/CheckBox_Icon/Sources/ToggleOff.png);\n"
+"}\n"
+"QCheckBox::indicator:checked {\n"
+"	border-image: url(:/CheckBox_Icon/Sources/ToggleOn.png);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_78.addWidget(self.CheckBox_DAT_VITS_ToStandaloneForm, 1, 0, 1, 3)
+
+
+        self.verticalLayout_31.addWidget(self.Frame_DAT_VITS_ToStandaloneForm)
+
         self.Frame_DAT_VITS_WAVDirSplit = QFrame(self.Frame_DAT_VITS_OutputParams_BasicSettings)
         self.Frame_DAT_VITS_WAVDirSplit.setObjectName(u"Frame_DAT_VITS_WAVDirSplit")
         self.Frame_DAT_VITS_WAVDirSplit.setMinimumSize(QSize(0, 105))
@@ -10155,7 +10340,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout_54.addWidget(self.Label_DAT_VITS_WAVDirSplit, 0, 0, 1, 1)
 
-        self.HorizontalSpacer_DAT_VITS_WAVDirSplit = QSpacerItem(445, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.HorizontalSpacer_DAT_VITS_WAVDirSplit = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.gridLayout_54.addItem(self.HorizontalSpacer_DAT_VITS_WAVDirSplit, 0, 1, 1, 1)
 
@@ -10211,26 +10396,6 @@ class Ui_MainWindow(object):
         self.gridLayout_55.setSpacing(12)
         self.gridLayout_55.setObjectName(u"gridLayout_55")
         self.gridLayout_55.setContentsMargins(21, 12, 21, 12)
-        self.Label_DAT_VITS_FileListPathTraining = QLabel(self.Frame_DAT_VITS_FileListPathTraining)
-        self.Label_DAT_VITS_FileListPathTraining.setObjectName(u"Label_DAT_VITS_FileListPathTraining")
-        sizePolicy5.setHeightForWidth(self.Label_DAT_VITS_FileListPathTraining.sizePolicy().hasHeightForWidth())
-        self.Label_DAT_VITS_FileListPathTraining.setSizePolicy(sizePolicy5)
-        self.Label_DAT_VITS_FileListPathTraining.setStyleSheet(u"QLabel {\n"
-"	/*text-align: center;*/\n"
-"	/*color: rgb(255, 255, 255);*/\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.gridLayout_55.addWidget(self.Label_DAT_VITS_FileListPathTraining, 0, 0, 1, 1)
-
-        self.HorizontalSpacer_DAT_VITS_FileListPathTraining = QSpacerItem(445, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
-
-        self.gridLayout_55.addItem(self.HorizontalSpacer_DAT_VITS_FileListPathTraining, 0, 1, 1, 1)
-
         self.Button_DAT_VITS_FileListPathTraining_Undo = QPushButton(self.Frame_DAT_VITS_FileListPathTraining)
         self.Button_DAT_VITS_FileListPathTraining_Undo.setObjectName(u"Button_DAT_VITS_FileListPathTraining_Undo")
         self.Button_DAT_VITS_FileListPathTraining_Undo.setMinimumSize(QSize(27, 27))
@@ -10258,11 +10423,31 @@ class Ui_MainWindow(object):
 
         self.gridLayout_55.addWidget(self.Button_DAT_VITS_FileListPathTraining_Undo, 0, 2, 1, 1)
 
+        self.Label_DAT_VITS_FileListPathTraining = QLabel(self.Frame_DAT_VITS_FileListPathTraining)
+        self.Label_DAT_VITS_FileListPathTraining.setObjectName(u"Label_DAT_VITS_FileListPathTraining")
+        sizePolicy5.setHeightForWidth(self.Label_DAT_VITS_FileListPathTraining.sizePolicy().hasHeightForWidth())
+        self.Label_DAT_VITS_FileListPathTraining.setSizePolicy(sizePolicy5)
+        self.Label_DAT_VITS_FileListPathTraining.setStyleSheet(u"QLabel {\n"
+"	/*text-align: center;*/\n"
+"	/*color: rgb(255, 255, 255);*/\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_55.addWidget(self.Label_DAT_VITS_FileListPathTraining, 0, 0, 1, 1)
+
         self.LineEdit_DAT_VITS_FileListPathTraining = LineEditBase(self.Frame_DAT_VITS_FileListPathTraining)
         self.LineEdit_DAT_VITS_FileListPathTraining.setObjectName(u"LineEdit_DAT_VITS_FileListPathTraining")
         self.LineEdit_DAT_VITS_FileListPathTraining.setMinimumSize(QSize(0, 27))
 
         self.gridLayout_55.addWidget(self.LineEdit_DAT_VITS_FileListPathTraining, 1, 0, 1, 3)
+
+        self.HorizontalSpacer_DAT_VITS_FileListPathTraining = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.gridLayout_55.addItem(self.HorizontalSpacer_DAT_VITS_FileListPathTraining, 0, 1, 1, 1)
 
 
         self.verticalLayout_31.addWidget(self.Frame_DAT_VITS_FileListPathTraining)
@@ -10299,7 +10484,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout_56.addWidget(self.Label_DAT_VITS_FileListPathValidation, 0, 0, 1, 1)
 
-        self.HorizontalSpacer_DAT_VITS_FileListPathValidation = QSpacerItem(445, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.HorizontalSpacer_DAT_VITS_FileListPathValidation = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.gridLayout_56.addItem(self.HorizontalSpacer_DAT_VITS_FileListPathValidation, 0, 1, 1, 1)
 
@@ -10345,7 +10530,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_36.addWidget(self.GroupBox_DAT_VITS_OutputParams)
 
-        self.VerticalSpacer_DAT_VITS = QSpacerItem(0, 0, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        self.VerticalSpacer_DAT_VITS = QSpacerItem(0, 0, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.verticalLayout_36.addItem(self.VerticalSpacer_DAT_VITS)
 
@@ -10556,8 +10741,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_92.setContentsMargins(0, 0, 0, 0)
         self.Button_DAT_VITS_Execute = QPushButton(self.Page_DAT_VITS_Execute)
         self.Button_DAT_VITS_Execute.setObjectName(u"Button_DAT_VITS_Execute")
-        sizePolicy6.setHeightForWidth(self.Button_DAT_VITS_Execute.sizePolicy().hasHeightForWidth())
-        self.Button_DAT_VITS_Execute.setSizePolicy(sizePolicy6)
+        sizePolicy3.setHeightForWidth(self.Button_DAT_VITS_Execute.sizePolicy().hasHeightForWidth())
+        self.Button_DAT_VITS_Execute.setSizePolicy(sizePolicy3)
         self.Button_DAT_VITS_Execute.setMinimumSize(QSize(0, 30))
         self.Button_DAT_VITS_Execute.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
@@ -10593,8 +10778,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_93.setContentsMargins(0, 0, 0, 0)
         self.Button_DAT_VITS_Terminate = QPushButton(self.Page_DAT_VITS_Terminate)
         self.Button_DAT_VITS_Terminate.setObjectName(u"Button_DAT_VITS_Terminate")
-        sizePolicy6.setHeightForWidth(self.Button_DAT_VITS_Terminate.sizePolicy().hasHeightForWidth())
-        self.Button_DAT_VITS_Terminate.setSizePolicy(sizePolicy6)
+        sizePolicy3.setHeightForWidth(self.Button_DAT_VITS_Terminate.sizePolicy().hasHeightForWidth())
+        self.Button_DAT_VITS_Terminate.setSizePolicy(sizePolicy3)
         self.Button_DAT_VITS_Terminate.setMinimumSize(QSize(0, 30))
         self.Button_DAT_VITS_Terminate.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
@@ -11108,8 +11293,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_94.setContentsMargins(0, 0, 0, 0)
         self.Button_Train_VITS_Execute = QPushButton(self.Page_Train_VITS_Execute)
         self.Button_Train_VITS_Execute.setObjectName(u"Button_Train_VITS_Execute")
-        sizePolicy6.setHeightForWidth(self.Button_Train_VITS_Execute.sizePolicy().hasHeightForWidth())
-        self.Button_Train_VITS_Execute.setSizePolicy(sizePolicy6)
+        sizePolicy3.setHeightForWidth(self.Button_Train_VITS_Execute.sizePolicy().hasHeightForWidth())
+        self.Button_Train_VITS_Execute.setSizePolicy(sizePolicy3)
         self.Button_Train_VITS_Execute.setMinimumSize(QSize(0, 30))
         self.Button_Train_VITS_Execute.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
@@ -11145,8 +11330,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_95.setContentsMargins(0, 0, 0, 0)
         self.Button_Train_VITS_Terminate = QPushButton(self.Page_Train_VITS_Terminate)
         self.Button_Train_VITS_Terminate.setObjectName(u"Button_Train_VITS_Terminate")
-        sizePolicy6.setHeightForWidth(self.Button_Train_VITS_Terminate.sizePolicy().hasHeightForWidth())
-        self.Button_Train_VITS_Terminate.setSizePolicy(sizePolicy6)
+        sizePolicy3.setHeightForWidth(self.Button_Train_VITS_Terminate.sizePolicy().hasHeightForWidth())
+        self.Button_Train_VITS_Terminate.setSizePolicy(sizePolicy3)
         self.Button_Train_VITS_Terminate.setMinimumSize(QSize(0, 30))
         self.Button_Train_VITS_Terminate.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
@@ -11296,7 +11481,7 @@ class Ui_MainWindow(object):
         self.ScrollArea_Middle_Train_VITS.setWidgetResizable(True)
         self.ScrollArea_Middle_WidgetContents_Train_VITS = QWidget()
         self.ScrollArea_Middle_WidgetContents_Train_VITS.setObjectName(u"ScrollArea_Middle_WidgetContents_Train_VITS")
-        self.ScrollArea_Middle_WidgetContents_Train_VITS.setGeometry(QRect(0, 0, 591, 1461))
+        self.ScrollArea_Middle_WidgetContents_Train_VITS.setGeometry(QRect(0, 0, 591, 1566))
         self.verticalLayout_28 = QVBoxLayout(self.ScrollArea_Middle_WidgetContents_Train_VITS)
         self.verticalLayout_28.setSpacing(12)
         self.verticalLayout_28.setObjectName(u"verticalLayout_28")
@@ -11361,7 +11546,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout_57.addWidget(self.Label_Train_VITS_FileListPathTraining, 0, 0, 1, 1)
 
-        self.HorizontalSpacer_Train_VITS_FileListPathTraining = QSpacerItem(445, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.HorizontalSpacer_Train_VITS_FileListPathTraining = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.gridLayout_57.addItem(self.HorizontalSpacer_Train_VITS_FileListPathTraining, 0, 1, 1, 1)
 
@@ -11433,7 +11618,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout_58.addWidget(self.Label_Train_VITS_FileListPathValidation, 0, 0, 1, 1)
 
-        self.HorizontalSpacer_Train_VITS_FileListPathValidation = QSpacerItem(445, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.HorizontalSpacer_Train_VITS_FileListPathValidation = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.gridLayout_58.addItem(self.HorizontalSpacer_Train_VITS_FileListPathValidation, 0, 1, 1, 1)
 
@@ -11539,7 +11724,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout_59.addWidget(self.Label_Train_VITS_Epochs, 0, 0, 1, 1)
 
-        self.HorizontalSpacer_Train_VITS_Epochs = QSpacerItem(445, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.HorizontalSpacer_Train_VITS_Epochs = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.gridLayout_59.addItem(self.HorizontalSpacer_Train_VITS_Epochs, 0, 1, 1, 1)
 
@@ -11664,7 +11849,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout_60.addWidget(self.Label_Train_VITS_BatchSize, 0, 0, 1, 1)
 
-        self.HorizontalSpacer_Train_VITS_BatchSize = QSpacerItem(445, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.HorizontalSpacer_Train_VITS_BatchSize = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.gridLayout_60.addItem(self.HorizontalSpacer_Train_VITS_BatchSize, 0, 1, 1, 1)
 
@@ -11789,7 +11974,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout_61.addWidget(self.Label_Train_VITS_UsePretrainedModels, 0, 0, 1, 1)
 
-        self.HorizontalSpacer_Train_VITS_UsePretrainedModels = QSpacerItem(445, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.HorizontalSpacer_Train_VITS_UsePretrainedModels = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.gridLayout_61.addItem(self.HorizontalSpacer_Train_VITS_UsePretrainedModels, 0, 1, 1, 1)
 
@@ -11901,7 +12086,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout_65.addWidget(self.Label_Train_VITS_ModelPathPretrainedG, 0, 0, 1, 1)
 
-        self.HorizontalSpacer_Train_VITS_ModelPathPretrainedG = QSpacerItem(443, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.HorizontalSpacer_Train_VITS_ModelPathPretrainedG = QSpacerItem(443, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.gridLayout_65.addItem(self.HorizontalSpacer_Train_VITS_ModelPathPretrainedG, 0, 1, 1, 1)
 
@@ -11973,7 +12158,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout_66.addWidget(self.Label_Train_VITS_ModelPathPretrainedD, 0, 0, 1, 1)
 
-        self.HorizontalSpacer_Train_VITS_ModelPathPretrainedD = QSpacerItem(443, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.HorizontalSpacer_Train_VITS_ModelPathPretrainedD = QSpacerItem(443, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.gridLayout_66.addItem(self.HorizontalSpacer_Train_VITS_ModelPathPretrainedD, 0, 1, 1, 1)
 
@@ -12045,7 +12230,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout_67.addWidget(self.Label_Train_VITS_KeepOriginalSpeakers, 0, 0, 1, 1)
 
-        self.HorizontalSpacer_Train_VITS_KeepOriginalSpeakers = QSpacerItem(443, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.HorizontalSpacer_Train_VITS_KeepOriginalSpeakers = QSpacerItem(443, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.gridLayout_67.addItem(self.HorizontalSpacer_Train_VITS_KeepOriginalSpeakers, 0, 1, 1, 1)
 
@@ -12124,6 +12309,78 @@ class Ui_MainWindow(object):
 
 
         self.verticalLayout_17.addWidget(self.Frame_Train_VITS_KeepOriginalSpeakers)
+
+        self.Frame_Train_VITS_ConfigPathLoad = QFrame(self.Frame_Train_VITS_VITSParams_BasicSettings)
+        self.Frame_Train_VITS_ConfigPathLoad.setObjectName(u"Frame_Train_VITS_ConfigPathLoad")
+        self.Frame_Train_VITS_ConfigPathLoad.setMinimumSize(QSize(0, 105))
+        self.Frame_Train_VITS_ConfigPathLoad.setStyleSheet(u"QFrame {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QFrame:hover {\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
+"}")
+        self.gridLayout_77 = QGridLayout(self.Frame_Train_VITS_ConfigPathLoad)
+        self.gridLayout_77.setSpacing(12)
+        self.gridLayout_77.setObjectName(u"gridLayout_77")
+        self.gridLayout_77.setContentsMargins(21, 12, 21, 12)
+        self.Label_Train_VITS_ConfigPathLoad = QLabel(self.Frame_Train_VITS_ConfigPathLoad)
+        self.Label_Train_VITS_ConfigPathLoad.setObjectName(u"Label_Train_VITS_ConfigPathLoad")
+        sizePolicy5.setHeightForWidth(self.Label_Train_VITS_ConfigPathLoad.sizePolicy().hasHeightForWidth())
+        self.Label_Train_VITS_ConfigPathLoad.setSizePolicy(sizePolicy5)
+        self.Label_Train_VITS_ConfigPathLoad.setStyleSheet(u"QLabel {\n"
+"	/*text-align: center;*/\n"
+"	/*color: rgb(255, 255, 255);*/\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_77.addWidget(self.Label_Train_VITS_ConfigPathLoad, 0, 0, 1, 1)
+
+        self.HorizontalSpacer_Train_VITS_ConfigPathLoad = QSpacerItem(443, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.gridLayout_77.addItem(self.HorizontalSpacer_Train_VITS_ConfigPathLoad, 0, 1, 1, 1)
+
+        self.Button_Train_VITS_ConfigPathLoad_Undo = QPushButton(self.Frame_Train_VITS_ConfigPathLoad)
+        self.Button_Train_VITS_ConfigPathLoad_Undo.setObjectName(u"Button_Train_VITS_ConfigPathLoad_Undo")
+        self.Button_Train_VITS_ConfigPathLoad_Undo.setMinimumSize(QSize(27, 27))
+        self.Button_Train_VITS_ConfigPathLoad_Undo.setMaximumSize(QSize(27, 27))
+        self.Button_Train_VITS_ConfigPathLoad_Undo.setStyleSheet(u"QPushButton {\n"
+"	image: url(:/Button_Icon/Sources/Undo.png);\n"
+"	background-color: transparent;\n"
+"	padding: 4.5px;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgba(201, 210, 222, 123);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgba(201, 210, 222, 210);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_77.addWidget(self.Button_Train_VITS_ConfigPathLoad_Undo, 0, 2, 1, 1)
+
+        self.LineEdit_Train_VITS_ConfigPathLoad = LineEditBase(self.Frame_Train_VITS_ConfigPathLoad)
+        self.LineEdit_Train_VITS_ConfigPathLoad.setObjectName(u"LineEdit_Train_VITS_ConfigPathLoad")
+        self.LineEdit_Train_VITS_ConfigPathLoad.setMinimumSize(QSize(0, 27))
+
+        self.gridLayout_77.addWidget(self.LineEdit_Train_VITS_ConfigPathLoad, 1, 0, 1, 3)
+
+
+        self.verticalLayout_17.addWidget(self.Frame_Train_VITS_ConfigPathLoad)
 
 
         self.verticalLayout_114.addWidget(self.Frame_Train_VITS_VITSParams_BasicSettings)
@@ -12214,7 +12471,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout_63.addWidget(self.Label_Train_VITS_NumWorkers, 0, 0, 1, 1)
 
-        self.HorizontalSpacer_Train_VITS_NumWorkers = QSpacerItem(443, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.HorizontalSpacer_Train_VITS_NumWorkers = QSpacerItem(443, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.gridLayout_63.addItem(self.HorizontalSpacer_Train_VITS_NumWorkers, 0, 1, 1, 1)
 
@@ -12339,7 +12596,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout_64.addWidget(self.Label_Train_VITS_FP16Run, 0, 0, 1, 1)
 
-        self.HorizontalSpacer_Train_VITS_FP16Run = QSpacerItem(443, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.HorizontalSpacer_Train_VITS_FP16Run = QSpacerItem(443, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.gridLayout_64.addItem(self.HorizontalSpacer_Train_VITS_FP16Run, 0, 1, 1, 1)
 
@@ -12485,7 +12742,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout_62.addWidget(self.Label_Train_VITS_EvalInterval, 0, 0, 1, 1)
 
-        self.HorizontalSpacer_Train_VITS_EvalInterval = QSpacerItem(443, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.HorizontalSpacer_Train_VITS_EvalInterval = QSpacerItem(443, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.gridLayout_62.addItem(self.HorizontalSpacer_Train_VITS_EvalInterval, 0, 1, 1, 1)
 
@@ -12610,7 +12867,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout_68.addWidget(self.Label_Train_VITS_OutputDir, 0, 0, 1, 1)
 
-        self.HorizontalSpacer_Train_VITS_OutputDir = QSpacerItem(445, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.HorizontalSpacer_Train_VITS_OutputDir = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.gridLayout_68.addItem(self.HorizontalSpacer_Train_VITS_OutputDir, 0, 1, 1, 1)
 
@@ -12656,7 +12913,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_28.addWidget(self.GroupBox_Train_VITS_OutputParams)
 
-        self.VerticalSpacer_Train_VITS = QSpacerItem(0, 0, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        self.VerticalSpacer_Train_VITS = QSpacerItem(0, 0, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.verticalLayout_28.addItem(self.VerticalSpacer_Train_VITS)
 
@@ -13096,7 +13353,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout_69.addWidget(self.Label_TTS_VITS_ConfigPathLoad, 0, 0, 1, 1)
 
-        self.HorizontalSpacer_TTS_VITS_ConfigPathLoad = QSpacerItem(445, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.HorizontalSpacer_TTS_VITS_ConfigPathLoad = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.gridLayout_69.addItem(self.HorizontalSpacer_TTS_VITS_ConfigPathLoad, 0, 1, 1, 1)
 
@@ -13168,7 +13425,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout_70.addWidget(self.Label_TTS_VITS_ModelPathLoad, 0, 0, 1, 1)
 
-        self.HorizontalSpacer_TTS_VITS_ModelPathLoad = QSpacerItem(445, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.HorizontalSpacer_TTS_VITS_ModelPathLoad = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.gridLayout_70.addItem(self.HorizontalSpacer_TTS_VITS_ModelPathLoad, 0, 1, 1, 1)
 
@@ -13276,8 +13533,8 @@ class Ui_MainWindow(object):
 
         self.PlainTextEdit_TTS_VITS_Text = QPlainTextEdit(self.Frame_TTS_VITS_Text)
         self.PlainTextEdit_TTS_VITS_Text.setObjectName(u"PlainTextEdit_TTS_VITS_Text")
-        sizePolicy6.setHeightForWidth(self.PlainTextEdit_TTS_VITS_Text.sizePolicy().hasHeightForWidth())
-        self.PlainTextEdit_TTS_VITS_Text.setSizePolicy(sizePolicy6)
+        sizePolicy3.setHeightForWidth(self.PlainTextEdit_TTS_VITS_Text.sizePolicy().hasHeightForWidth())
+        self.PlainTextEdit_TTS_VITS_Text.setSizePolicy(sizePolicy3)
         self.PlainTextEdit_TTS_VITS_Text.setStyleSheet(u"QPlainTextEdit {\n"
 "	/*font-size: 12px;*/\n"
 "	text-align: left;\n"
@@ -13416,10 +13673,10 @@ class Ui_MainWindow(object):
 "QFrame:hover {\n"
 "	background-color: rgba(33, 33, 33, 99);\n"
 "}")
-        self.verticalLayout_97 = QVBoxLayout(self.Frame_TTS_VITS_Language)
-        self.verticalLayout_97.setSpacing(12)
-        self.verticalLayout_97.setObjectName(u"verticalLayout_97")
-        self.verticalLayout_97.setContentsMargins(21, 12, 21, 12)
+        self.gridLayout_79 = QGridLayout(self.Frame_TTS_VITS_Language)
+        self.gridLayout_79.setSpacing(12)
+        self.gridLayout_79.setObjectName(u"gridLayout_79")
+        self.gridLayout_79.setContentsMargins(21, 12, 21, 12)
         self.Label_TTS_VITS_Language = QLabel(self.Frame_TTS_VITS_Language)
         self.Label_TTS_VITS_Language.setObjectName(u"Label_TTS_VITS_Language")
         sizePolicy5.setHeightForWidth(self.Label_TTS_VITS_Language.sizePolicy().hasHeightForWidth())
@@ -13434,7 +13691,38 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}")
 
-        self.verticalLayout_97.addWidget(self.Label_TTS_VITS_Language)
+        self.gridLayout_79.addWidget(self.Label_TTS_VITS_Language, 0, 0, 1, 1)
+
+        self.HorizontalSpacer_TTS_VITS_Language = QSpacerItem(415, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.gridLayout_79.addItem(self.HorizontalSpacer_TTS_VITS_Language, 0, 1, 1, 1)
+
+        self.Button_TTS_VITS_Language_Undo = QPushButton(self.Frame_TTS_VITS_Language)
+        self.Button_TTS_VITS_Language_Undo.setObjectName(u"Button_TTS_VITS_Language_Undo")
+        self.Button_TTS_VITS_Language_Undo.setMinimumSize(QSize(27, 27))
+        self.Button_TTS_VITS_Language_Undo.setMaximumSize(QSize(27, 27))
+        self.Button_TTS_VITS_Language_Undo.setStyleSheet(u"QPushButton {\n"
+"	image: url(:/Button_Icon/Sources/Undo.png);\n"
+"	background-color: transparent;\n"
+"	padding: 4.5px;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgba(201, 210, 222, 123);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgba(201, 210, 222, 210);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_79.addWidget(self.Button_TTS_VITS_Language_Undo, 0, 2, 1, 1)
 
         self.ComboBox_TTS_VITS_Language = QComboBox(self.Frame_TTS_VITS_Language)
         self.ComboBox_TTS_VITS_Language.setObjectName(u"ComboBox_TTS_VITS_Language")
@@ -13610,7 +13898,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}")
 
-        self.verticalLayout_97.addWidget(self.ComboBox_TTS_VITS_Language)
+        self.gridLayout_79.addWidget(self.ComboBox_TTS_VITS_Language, 1, 0, 1, 3)
 
 
         self.verticalLayout_131.addWidget(self.Frame_TTS_VITS_Language)
@@ -13913,7 +14201,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout_71.addWidget(self.Label_TTS_VITS_EmotionStrength, 0, 0, 1, 1)
 
-        self.HorizontalSpacer_TTS_VITS_EmotionStrength = QSpacerItem(445, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.HorizontalSpacer_TTS_VITS_EmotionStrength = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.gridLayout_71.addItem(self.HorizontalSpacer_TTS_VITS_EmotionStrength, 0, 1, 1, 1)
 
@@ -14089,7 +14377,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout_72.addWidget(self.Label_TTS_VITS_PhonemeDuration, 0, 0, 1, 1)
 
-        self.HorizontalSpacer_TTS_VITS_PhonemeDuration = QSpacerItem(445, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.HorizontalSpacer_TTS_VITS_PhonemeDuration = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.gridLayout_72.addItem(self.HorizontalSpacer_TTS_VITS_PhonemeDuration, 0, 1, 1, 1)
 
@@ -14265,7 +14553,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout_73.addWidget(self.Label_TTS_VITS_SpeechRate, 0, 0, 1, 1)
 
-        self.HorizontalSpacer_TTS_VITS_SpeechRate = QSpacerItem(445, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.HorizontalSpacer_TTS_VITS_SpeechRate = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.gridLayout_73.addItem(self.HorizontalSpacer_TTS_VITS_SpeechRate, 0, 1, 1, 1)
 
@@ -14475,7 +14763,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout_74.addWidget(self.Label_TTS_VITS_AudioPathSave, 0, 0, 1, 1)
 
-        self.HorizontalSpacer_TTS_VITS_AudioPathSave = QSpacerItem(445, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.HorizontalSpacer_TTS_VITS_AudioPathSave = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.gridLayout_74.addItem(self.HorizontalSpacer_TTS_VITS_AudioPathSave, 0, 1, 1, 1)
 
@@ -14521,7 +14809,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_19.addWidget(self.GroupBox_TTS_VITS_OutputParams)
 
-        self.VerticalSpacer_TTS_VITS = QSpacerItem(0, 0, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        self.VerticalSpacer_TTS_VITS = QSpacerItem(0, 0, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.verticalLayout_19.addItem(self.VerticalSpacer_TTS_VITS)
 
@@ -14732,8 +15020,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_112.setContentsMargins(0, 0, 0, 0)
         self.Button_TTS_VITS_Execute = QPushButton(self.Page_TTS_VITS_Execute)
         self.Button_TTS_VITS_Execute.setObjectName(u"Button_TTS_VITS_Execute")
-        sizePolicy6.setHeightForWidth(self.Button_TTS_VITS_Execute.sizePolicy().hasHeightForWidth())
-        self.Button_TTS_VITS_Execute.setSizePolicy(sizePolicy6)
+        sizePolicy3.setHeightForWidth(self.Button_TTS_VITS_Execute.sizePolicy().hasHeightForWidth())
+        self.Button_TTS_VITS_Execute.setSizePolicy(sizePolicy3)
         self.Button_TTS_VITS_Execute.setMinimumSize(QSize(0, 30))
         self.Button_TTS_VITS_Execute.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
@@ -14769,8 +15057,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_113.setContentsMargins(0, 0, 0, 0)
         self.Button_TTS_VITS_Terminate = QPushButton(self.Page_TTS_VITS_Terminate)
         self.Button_TTS_VITS_Terminate.setObjectName(u"Button_TTS_VITS_Terminate")
-        sizePolicy6.setHeightForWidth(self.Button_TTS_VITS_Terminate.sizePolicy().hasHeightForWidth())
-        self.Button_TTS_VITS_Terminate.setSizePolicy(sizePolicy6)
+        sizePolicy3.setHeightForWidth(self.Button_TTS_VITS_Terminate.sizePolicy().hasHeightForWidth())
+        self.Button_TTS_VITS_Terminate.setSizePolicy(sizePolicy3)
         self.Button_TTS_VITS_Terminate.setMinimumSize(QSize(0, 30))
         self.Button_TTS_VITS_Terminate.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
@@ -14946,7 +15234,7 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_66.addWidget(self.Label_Setting_Language)
 
-        self.HorizontalSpacer_Setting_Language = QSpacerItem(969, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.HorizontalSpacer_Setting_Language = QSpacerItem(969, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.horizontalLayout_66.addItem(self.HorizontalSpacer_Setting_Language)
 
@@ -15162,7 +15450,7 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_65.addWidget(self.Label_Setting_AutoUpdate)
 
-        self.HorizontalSpacer_Setting_AutoUpdate = QSpacerItem(0, 0, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.HorizontalSpacer_Setting_AutoUpdate = QSpacerItem(0, 0, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.horizontalLayout_65.addItem(self.HorizontalSpacer_Setting_AutoUpdate)
 
@@ -15250,7 +15538,7 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_67.addWidget(self.Label_Setting_Synchronizer)
 
-        self.HorizontalSpacer_Setting_Synchronizer = QSpacerItem(0, 0, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.HorizontalSpacer_Setting_Synchronizer = QSpacerItem(0, 0, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.horizontalLayout_67.addItem(self.HorizontalSpacer_Setting_Synchronizer)
 
@@ -15379,7 +15667,7 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_6.addWidget(self.Button_Setting_IntegrityChecker)
 
-        self.HorizontalSpacer_Setting_Operation = QSpacerItem(0, 0, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.HorizontalSpacer_Setting_Operation = QSpacerItem(0, 0, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.horizontalLayout_6.addItem(self.HorizontalSpacer_Setting_Operation)
 
@@ -15389,7 +15677,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_109.addWidget(self.Frame_Settings_Middle)
 
-        self.VerticalSpacer_Settings = QSpacerItem(20, 378, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        self.VerticalSpacer_Settings = QSpacerItem(20, 378, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.verticalLayout_109.addItem(self.VerticalSpacer_Settings)
 
@@ -15670,7 +15958,7 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_14.addWidget(self.Button_Console_Title)
 
-        self.horizontalSpacer = QSpacerItem(826, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.horizontalSpacer = QSpacerItem(826, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.horizontalLayout_14.addItem(self.horizontalSpacer)
 
@@ -15975,7 +16263,7 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout.addWidget(self.Label_ToolsStatus)
 
-        self.HorizontalSpacer_Bottom_Left = QSpacerItem(182, 18, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.HorizontalSpacer_Bottom_Left = QSpacerItem(182, 18, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.horizontalLayout.addItem(self.HorizontalSpacer_Bottom_Left)
 
@@ -16208,6 +16496,7 @@ class Ui_MainWindow(object):
         self.Label_DAT_VITS_AudioSpeakersDataPath.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_DAT_VITS_SRTDir.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.GroupBox_DAT_VITS_VITSParams.setTitle(QCoreApplication.translate("MainWindow", u"GroupBox2", None))
+        self.Label_DAT_VITS_DataFormat.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_DAT_VITS_AddAuxiliaryData.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.CheckBox_DAT_VITS_AddAuxiliaryData.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
         self.Label_DAT_VITS_AuxiliaryDataPath.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
@@ -16218,6 +16507,8 @@ class Ui_MainWindow(object):
         self.Label_DAT_VITS_ToMono.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.CheckBox_DAT_VITS_ToMono.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
         self.GroupBox_DAT_VITS_OutputParams.setTitle(QCoreApplication.translate("MainWindow", u"GroupBox3", None))
+        self.Label_DAT_VITS_ToStandaloneForm.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.CheckBox_DAT_VITS_ToStandaloneForm.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
         self.Label_DAT_VITS_WAVDirSplit.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_DAT_VITS_FileListPathTraining.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_DAT_VITS_FileListPathValidation.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
@@ -16245,6 +16536,7 @@ class Ui_MainWindow(object):
         self.Label_Train_VITS_ModelPathPretrainedD.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Train_VITS_KeepOriginalSpeakers.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.CheckBox_Train_VITS_KeepOriginalSpeakers.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
+        self.Label_Train_VITS_ConfigPathLoad.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.CheckBox_Train_VITS_VITSParams_Toggle_AdvanceSettings.setText(QCoreApplication.translate("MainWindow", u"CheckBox2", None))
         self.Label_Train_VITS_NumWorkers.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Train_VITS_FP16Run.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))

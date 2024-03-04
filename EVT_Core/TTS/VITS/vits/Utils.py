@@ -33,8 +33,7 @@ def load_checkpoint(checkpoint_path, model, optimizer=None):
         model.module.load_state_dict(new_state_dict)
     else:
         model.load_state_dict(new_state_dict)
-    logger.info("Loaded checkpoint '{}' (iteration {})" .format(
-        checkpoint_path, iteration))
+    logger.info(f"Loaded checkpoint '{checkpoint_path}' (iteration {iteration})")
     return model, optimizer, learning_rate, iteration
 
 

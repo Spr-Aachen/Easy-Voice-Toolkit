@@ -94,7 +94,7 @@ class WriteSRT(ResultWriter):
                 f"{i}\n"
                 f"{format_timestamp(segment['start'], always_include_hours=True, decimal_marker=',')} --> "
                 f"{format_timestamp(segment['end'], always_include_hours=True, decimal_marker=',')}\n"
-                f"{f'[{language}]'if add_languageinfo else ''}{segment['text'].strip().replace('-->', '->')}{f'[{language}]'if add_languageinfo else ''}\n",
+                f"{f'[{language}]'if add_languageinfo else ''}{segment['text'].strip().replace('-->', '->')}\n",
                 file=file,
                 flush=True,
             )

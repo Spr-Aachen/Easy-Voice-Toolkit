@@ -62,14 +62,10 @@ class Audio_Processing:
         Directory: str,
         Extensions: list
     ):
-        os.chdir(Directory)
+        PatternList = []
 
         for Extension in Extensions:
-            PatternList = glob.glob(Extension)
-            if PatternList == []:
-                pass
-            else:
-                break
+            PatternList.extend(glob.glob(Path(Directory).joinpath(Extension).as_posix()))
 
         return PatternList
 

@@ -69,6 +69,9 @@ def RebootIfSucceeded():
     RunBat(
         CommandList = [
             '@echo off',
+            'echo Ready to move files and reboot',
+            #f'taskkill /pid {os.getpid()} /f /t',
+            'timeout /t 2 /nobreak',
             'echo Moving files...',
             f'robocopy "{ExtractDir}" "{TargetDir}" /E /MOVE /R:3 /W:1 /NP',
             f'start "Programm Running" "{ExecuterPath}"',
@@ -222,8 +225,9 @@ class Widget_Updater(QWidget):
         UpdaterSignals.Signal_IsUpdateSucceeded.connect(
             lambda Succeeded: (
                 Config.EditConfig('Updater', 'Status', 'Executed'),
-                self.close(),
-                RebootIfSucceeded() if Succeeded else RebootIfFailed()
+                RebootIfSucceeded() if Succeeded else RebootIfFailed(),
+                QApplication.exit(),
+                os._exit(0)
             )
         )
 

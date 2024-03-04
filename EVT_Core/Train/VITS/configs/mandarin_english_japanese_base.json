@@ -8,7 +8,7 @@
     "betas": [0.8, 0.99],
     "eps": 1e-9,
     "batch_size": 8,
-    "fp16_run": true,
+    "fp16_run": false,
     "lr_decay": 0.999875,
     "segment_size": 8192,
     "init_lr_ratio": 1,
@@ -17,6 +17,7 @@
     "c_kl": 1.0
   },
   "data": {
+    "use_mel_posterior_encoder": true,
     "training_files": "filelists/list_train.txt.cleaned",
     "validation_files": "filelists/list_val.txt.cleaned",
     "text_cleaners": ["mandarin_english_japanese_cleaners"],
@@ -33,6 +34,12 @@
     "cleaned_text": true
   },
   "model": {
+    "use_mel_posterior_encoder": true,
+    "use_transformer_flows": true,
+    "transformer_flow_type": "pre_conv",
+    "use_spk_conditioned_encoder": false,
+    "use_noise_scaled_mas": true,
+    "use_duration_discriminator": true,
     "inter_channels": 192,
     "hidden_channels": 192,
     "filter_channels": 768,
@@ -48,6 +55,7 @@
     "upsample_kernel_sizes": [16,16,4,4],
     "n_layers_q": 3,
     "use_spectral_norm": false,
+    "use_sdp": false,
     "gin_channels": 256
   },
   "speakers": [],

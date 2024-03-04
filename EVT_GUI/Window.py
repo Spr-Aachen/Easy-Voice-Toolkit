@@ -284,6 +284,47 @@ class MessageBox_Stacked(MessageBoxBase):
         self.setText(f'1 / {self.StackedWidget.count()}')
 
 
+class MessageBox_Buttons(MessageBoxBase):
+    '''
+    '''
+    def __init__(self, parent: QWidget = None):
+        super().__init__(parent, min_width = 240, min_height = 120)
+
+        self.layout().setContentsMargins(6, 12, 6, 12)
+        self.layout().setSpacing(6)
+
+        self.TitleBar.CloseButton.hide()
+
+        ButtonStyle = '''
+        QPushButton {
+            background-color: transparent;
+            padding: 6px;
+            border-width: 1px;
+            border-style: solid;
+            border-color: rgb(90, 90, 90);
+        }
+        QPushButton:hover {
+            border-color: rgb(120, 120, 120);
+        }
+        '''
+
+        self.Button1 = QPushButton()
+        #self.Button1.setFixedHeight(33)
+        self.Button1.setStyleSheet(ButtonStyle)
+
+        self.Button2 = QPushButton()
+        #self.Button2.setFixedHeight(33)
+        self.Button2.setStyleSheet(ButtonStyle)
+
+        Layout = QGridLayout()
+        Layout.setAlignment(Qt.AlignCenter)
+        Layout.setContentsMargins(21, 12, 21, 12)
+        Layout.setSpacing(21)
+        Layout.addWidget(self.Button1, 1, 0, 1, 2)
+        Layout.addWidget(self.Button2, 2, 0, 1, 2)
+        self.InsertItem(Layout, Position = 'Bottom')
+
+
 class MessageBox_LineEdit(MessageBoxBase):
     '''
     '''
@@ -313,7 +354,7 @@ class MessageBox_LineEdit(MessageBoxBase):
         self.LineEdit = LineEditBase()
         self.LineEdit.setFixedHeight(27)
         self.LineEdit.ClearDefaultStyleSheet()
-        self.LineEdit.setStyleSheet(self.LineEdit.styleSheet() + 'LineEditBase {border-width: 0px 0px 1px 0px;}')
+        self.LineEdit.setStyleSheet(self.LineEdit.styleSheet() + 'LineEditBase {border-width: 0px 0px 1px 0px; border-radius: 0px;}')
 
         self.Button_Confirm = QPushButton()
         #self.Button_Confirm.setFixedHeight(33)

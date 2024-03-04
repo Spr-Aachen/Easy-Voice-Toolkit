@@ -4,7 +4,7 @@ import torch
 import torchaudio
 
 from .Commons import intersperse
-from .Mel_Processing import spectrogram_torch
+from .Mel_Processing import spectrogram_torch, mel_spectrogram_torch
 from .Utils import load_audiopaths_sid_text
 from .text import text_to_sequence, cleaned_text_to_sequence
 
@@ -16,6 +16,7 @@ class TextAudioSpeakerLoader(torch.utils.data.Dataset):
         3) computes spectrograms from audio files.
     """
     def __init__(self, filelist, hparams):
+        self.hparams = hparams
         self.audiopaths_sid_text = load_audiopaths_sid_text(filelist)
         self.text_cleaners = hparams.text_cleaners
         self.max_wav_value = hparams.max_wav_value
@@ -25,11 +26,15 @@ class TextAudioSpeakerLoader(torch.utils.data.Dataset):
         self.win_length     = hparams.win_length
         self.sampling_rate  = hparams.sampling_rate
 
+        self.use_mel_spec_posterior = getattr(hparams, "use_mel_posterior_encoder", False)
+        if self.use_mel_spec_posterior:
+            self.n_mel_channels = getattr(hparams, "n_mel_channels", 80)
         self.cleaned_text = getattr(hparams, "cleaned_text", False)
 
         self.add_blank = hparams.add_blank
         self.min_text_len = getattr(hparams, "min_text_len", 1)
         self.max_text_len = getattr(hparams, "max_text_len", 190)
+        self.min_audio_len = getattr(hparams, "min_audio_len", 8192)
 
         random.seed(1234)
         random.shuffle(self.audiopaths_sid_text)
@@ -48,7 +53,10 @@ class TextAudioSpeakerLoader(torch.utils.data.Dataset):
         for audiopath, sid, text in self.audiopaths_sid_text:
             if self.min_text_len <= len(text) and len(text) <= self.max_text_len:
                 audiopaths_sid_text_new.append([audiopath, sid, text])
-                lengths.append(os.path.getsize(audiopath) // (2 * self.hop_length))
+                length = os.path.getsize(audiopath) // (2 * self.hop_length)
+                if length < self.min_audio_len // self.hop_length:
+                    continue
+                lengths.append(length)
         self.audiopaths_sid_text = audiopaths_sid_text_new
         self.lengths = lengths
 
@@ -62,14 +70,27 @@ class TextAudioSpeakerLoader(torch.utils.data.Dataset):
 
     def get_audio(self, filename):
         audio_norm, _ = torchaudio.load(filename)
-        spec = spectrogram_torch(
-            audio_norm,
-            self.filter_length,
-            self.sampling_rate,
-            self.hop_length,
-            self.win_length,
-            center = False
-        ).squeeze(0)
+        if self.use_mel_spec_posterior:
+            spec = mel_spectrogram_torch(
+                audio_norm,
+                self.filter_length,
+                self.n_mel_channels,
+                self.sampling_rate,
+                self.hop_length,
+                self.win_length,
+                self.hparams.mel_fmin,
+                self.hparams.mel_fmax,
+                center = False
+            ).squeeze(0)
+        else:
+            spec = spectrogram_torch(
+                audio_norm,
+                self.filter_length,
+                self.sampling_rate,
+                self.hop_length,
+                self.win_length,
+                center = False
+            ).squeeze(0)
         return spec, audio_norm
 
     def get_text(self, text):
@@ -93,9 +114,9 @@ class TextAudioSpeakerLoader(torch.utils.data.Dataset):
         return len(self.audiopaths_sid_text)
 
 
-class TextAudioSpeakerCollate():
-    """ Zero-pads model inputs and targets
-    """
+class TextAudioSpeakerCollate:
+    """Zero-pads model inputs and targets"""
+
     def __init__(self, return_ids=False):
         self.return_ids = return_ids
 
@@ -107,8 +128,8 @@ class TextAudioSpeakerCollate():
         """
         # Right zero-pad all one-hot text sequences to max input length
         _, ids_sorted_decreasing = torch.sort(
-            torch.LongTensor([x[1].size(1) for x in batch]),
-            dim=0, descending=True)
+            torch.LongTensor([x[1].size(1) for x in batch]), dim=0, descending=True
+        )
 
         max_text_len = max([len(x[0]) for x in batch])
         max_spec_len = max([x[1].size(1) for x in batch])

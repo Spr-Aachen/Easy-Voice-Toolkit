@@ -351,12 +351,14 @@ def Function_ParamsChecker(
                     )
                     return "Abort"
             else:
+                '''
                 if "，" in Param or "," in Param:
                     Param = re.split(
                         pattern = '[，,]',
                         string = Param,
                         maxsplit = 0
                     )
+                '''
         if isinstance(Param, dict):
             if "None" in list(Param.keys()&Param.values()) or "" in list(Param.keys()&Param.values()):
                 if UI in ToIterable(EmptyAllowed):

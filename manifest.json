@@ -66,36 +66,36 @@
                 "TTS",
                 "VITS"
             ],
-            "name": "standard_Config",
-            "size": "0.0MB",
-            "date": "2024-02-14 22:52:48.806780",
-            "SHA": "88a11f5b31e6781e1097172bb180a87cdfe6afbdf263ba3afc70da939960fdd9",
+            "name": "standard_Config（暂无）",
+            "size": "",
+            "date": "",
+            "SHA": "",
             "downloadurl": "",
-            "link": "https://github.com/Plachtaa/VITS-fast-fine-tuning/issues/532"
+            "link": ""
         },
         {
             "tags": [
                 "TTS",
                 "VITS"
             ],
-            "name": "standard_G",
-            "size": "151.6MB",
-            "date": "2023-12-02 09:53:24",
-            "SHA": "49a106ff1208ec42fcc1098651348bccbbefeb34b9b1d5a0f976f46623f6d9ca",
+            "name": "standard_G（暂无）",
+            "size": "",
+            "date": "",
+            "SHA": "",
             "downloadurl": "",
-            "link": "https://github.com/Plachtaa/VITS-fast-fine-tuning/issues/532"
+            "link": ""
         },
         {
             "tags": [
                 "TTS",
                 "VITS"
             ],
-            "name": "standard_D",
-            "size": "178.4MB",
-            "date": "2023-12-02 09:53:26",
-            "SHA": "48841b5d8127883100cbd5221b47288f85af5dc56cbcd7e090c977ec6119bf67",
+            "name": "standard_D（暂无）",
+            "size": "",
+            "date": "",
+            "SHA": "",
             "downloadurl": "",
-            "link": "https://github.com/Plachtaa/VITS-fast-fine-tuning/issues/532"
+            "link": ""
         }
     ]
 }

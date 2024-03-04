@@ -2,14 +2,18 @@ import os
 import pandas as pd
 import random
 import re
+import shutil
 from pathlib import Path
 
 
 def Transcript_Writer(
     AudioSpeakers,
+    DataFormat,
     CSV_Path,
     AuxiliaryData_Path,
     TrainRatio,
+    ToStandaloneForm,
+    Audio_Dir,
     Text_Path_Training,
     Text_Path_Validation
 ):
@@ -26,60 +30,84 @@ def Transcript_Writer(
     )
     #shutil.copy(CSV_Path_DataSet, CSV_Save_Path) if CSV_Save_Path is not None else None
     with open(file = CSV_Path_DataSet, mode = 'r', encoding = 'utf-8') as File_Old:
-        Lines = File_Old.readlines()
+        DataLines = File_Old.readlines()
 
-    Languages = []
-    for Line in Lines:
-        Line_Text = Line.split('|', maxsplit = 1)[1]
-        Language = re.split(r'[\[\]]', Line_Text)[1]
-        Languages.append(Language) if Language not in Languages else None
+    LangList = []
+    for Line in DataLines:
+        Line_LanguageText = Line.split('|', maxsplit = 1)[1]
+        Line_Lang = re.split(r'[\[\]]', Line_LanguageText)[1]
+        LangList.append(Line_Lang) if Line_Lang not in LangList else None
 
-    for Index, Line in enumerate(Lines):
-        Line_Path = Line.split('|', maxsplit = 1)[0]
-        Line_Path = Path(Line_Path).as_posix()
-        Audio = Path(Line_Path.rsplit('_', maxsplit = 1)[0] + Path(Line_Path).suffix).as_posix()
-        Speaker = AudioSpeakers[Audio]
-        Line_Text = Line.split('|', maxsplit = 1)[1]
-        Line = f"{Line_Path}|{Speaker}|{Line_Text}"
-        Lines[Index] = Line
+    def UpdateDataLines(DataLines, Text_Path):
+        for Index, Line in enumerate(DataLines):
+            Line_Path = Line.split('|', maxsplit = 1)[0]
+            Audio = Path(Line_Path.rsplit('_', maxsplit = 1)[0] + Path(Line_Path).suffix).as_posix()
+            Line_Name = AudioSpeakers[Audio]
+            Line_LanguageText = Line.split('|', maxsplit = 1)[1]
+            Line_Lang = re.split(r'[\[\]]', Line_LanguageText)[1].strip()
+            Line_Text = re.split(r'[\[\]]', Line_LanguageText)[2].strip()
+            if ToStandaloneForm:
+                if Path(Line_Path).parent.as_posix() != Path(Audio_Dir).as_posix():
+                    Line_Path_Dst = Path(Audio_Dir).joinpath(Path(Line_Path).name)
+                    shutil.copy(Line_Path, Audio_Dir) if not Path(Line_Path_Dst).exists() else None
+                    Line_Path = Line_Path_Dst
+                Line_Path = f"./{Path(Line_Path).relative_to(Path(Text_Path).parent).as_posix()}"
+            Line = DataFormat.replace('PATH', Line_Path).replace('NAME', Line_Name).replace('LANG', Line_Lang).replace('TEXT', Line_Text) + '\n'
+            DataLines[Index] = Line
+        return DataLines
 
-    if AuxiliaryData_Path is not None:
+    def UpdateAuxiliaryDataLines(AuxiliaryDataLines, Text_Path):
         print("Writing AuxiliaryData paths...")
-        with open(file = AuxiliaryData_Path, mode = 'r', encoding = 'utf-8') as AuxiliaryData:
-            AuxiliaryDataLines_Old = AuxiliaryData.readlines()
         AuxiliaryDataLines_New = []
-        for Line_Old in AuxiliaryDataLines_Old:
-            Line_Old_Path = Line_Old.split('|', maxsplit = 1)[0]
-            Line_New_Path = Path(AuxiliaryData_Path).parent.joinpath(Line_Old_Path).as_posix()
-            '''
-            if not Path(Line_New_Path).exists():
-                raise Exception('Please check if the relative paths inside AuxiliaryData.txt are correct!')
-            '''
-            Speaker = Line_Old.split("|", maxsplit = 2)[1]
-            Line_Old_Text = Line_Old.split("|", maxsplit = 2)[2]
-            Language = re.split(r'[\[\]]', Line_Old_Text)[1]
-            '''
-            if Language not in Languages:
+        for AuxiliaryDataLine in AuxiliaryDataLines:
+            Line_Path = AuxiliaryDataLine.split('|', maxsplit = 1)[0]
+            Line_Path = Path(AuxiliaryData_Path).parent.joinpath(Line_Path).as_posix()
+            Line_Name = AuxiliaryDataLine.split("|", maxsplit = 2)[1]
+            Line_LanguageText = AuxiliaryDataLine.split("|", maxsplit = 2)[2]
+            Line_Lang = re.split(r'[\[\]]', Line_LanguageText)[1].strip()
+            if Line_Lang not in LangList:
                 continue
-            '''
-            Line_New = f"{Line_New_Path}|{Speaker}|{Line_Old_Text}"
-            AuxiliaryDataLines_New.append(Line_New)
-        ReplicateTimes = len(AuxiliaryDataLines_New) // len(Lines) if len(AuxiliaryDataLines_New) > len(Lines) else 1
-        Lines = Lines * ReplicateTimes + AuxiliaryDataLines_New
+            Line_Text = re.split(r'[\[\]]', Line_LanguageText)[2].strip()
+            if ToStandaloneForm:
+                if Path(Line_Path).parent.as_posix() != Path(Audio_Dir).as_posix():
+                    Line_Path_Dst = Path(Audio_Dir).joinpath(Path(Line_Path).name)
+                    shutil.copy(Line_Path, Audio_Dir) if not Path(Line_Path_Dst).exists() else None
+                    Line_Path = Line_Path_Dst
+                Line_Path = f"./{Path(Line_Path).relative_to(Path(Text_Path).parent).as_posix()}"
+            AuxiliaryDataLine = DataFormat.replace('PATH', Line_Path).replace('NAME', Line_Name).replace('LANG', Line_Lang).replace('TEXT', Line_Text) + '\n'
+            AuxiliaryDataLines_New.append(AuxiliaryDataLine)
+        return AuxiliaryDataLines_New
 
-    random.shuffle(Lines)
-    TrainSize = int(len(Lines) * TrainRatio)
-    Lines_Train = Lines[:TrainSize]
-    Lines_Val = Lines[TrainSize:]
+    random.shuffle(DataLines)
+    TrainSize = int(len(DataLines) * TrainRatio)
+    DataLines_Train = DataLines[:TrainSize]
+    DataLines_Val = DataLines[TrainSize:]
+    DataLines_Train = UpdateDataLines(DataLines_Train, Text_Path_Training)
+    DataLines_Val = UpdateDataLines(DataLines_Val, Text_Path_Validation)
+    if AuxiliaryData_Path is not None:
+        with open(file = AuxiliaryData_Path, mode = 'r', encoding = 'utf-8') as AuxiliaryData:
+            AuxiliaryDataLines = AuxiliaryData.readlines()
+        random.shuffle(AuxiliaryDataLines)
+        TrainSize = int(len(AuxiliaryDataLines) * TrainRatio)
+        AuxiliaryDataLines_Train = AuxiliaryDataLines[:TrainSize]
+        AuxiliaryDataLines_Val = AuxiliaryDataLines[TrainSize:]
+        AuxiliaryDataLines_Train = UpdateAuxiliaryDataLines(AuxiliaryDataLines_Train, Text_Path_Training)
+        AuxiliaryDataLines_Val = UpdateAuxiliaryDataLines(AuxiliaryDataLines_Val, Text_Path_Validation)
+        ReplicateTimes = len(AuxiliaryDataLines_Train) // len(DataLines_Train) if len(AuxiliaryDataLines_Train) > len(DataLines_Train) else 1
+        DataLines_Train = DataLines_Train * ReplicateTimes + AuxiliaryDataLines_Train
+        DataLines_Val = DataLines_Val * ReplicateTimes + AuxiliaryDataLines_Val
 
-    if len(Lines_Train) > len(Lines_Val) > 0:
+    random.shuffle(DataLines_Train)
+    random.shuffle(DataLines_Val)
+
+    if len(DataLines_Train) > len(DataLines_Val) > 0:
         print("Writing VITS dataset paths...")
         def WriteDataLines(Text_Path, Lines):
             os.makedirs(os.path.dirname(Text_Path), exist_ok = True)
             with open(file = Text_Path, mode = 'w', encoding = 'utf-8') as File_New:
                 File_New.writelines(Lines)
-        WriteDataLines(Text_Path_Training, Lines_Train)
-        WriteDataLines(Text_Path_Validation, Lines_Val)
+        WriteDataLines(Text_Path_Training, DataLines_Train)
+        WriteDataLines(Text_Path_Validation, DataLines_Val)
 
     else:
         raise Exception(f"Lack of data!")

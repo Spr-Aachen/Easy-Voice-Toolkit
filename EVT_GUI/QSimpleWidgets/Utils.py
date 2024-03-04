@@ -136,7 +136,6 @@ def RunCMD(
             Arg = shlex.split(Arg) if isinstance(Arg, str) else Arg
             Subprocess = subprocess.Popen(
                 args = Arg,
-                stdin = subprocess.PIPE,
                 stdout = subprocess.PIPE,
                 stderr = subprocess.PIPE,
                 env = os.environ,
@@ -159,7 +158,6 @@ def RunCMD(
                     if LogPath is not None:
                         with open(LogPath, mode = 'a', encoding = 'utf-8') as Log:
                             Log.write(Line)
-                    Subprocess.stderr.flush()
             else:
                 Output, Error = Subprocess.communicate()
             TotalOutput, TotalError = TotalOutput + Output, TotalError + Error
@@ -178,7 +176,7 @@ def RunCMD(
             args = ShellArgs,
             stdin = subprocess.PIPE,
             stdout = subprocess.PIPE,
-            stderr = subprocess.PIPE,
+            stderr = subprocess.STDOUT,
             env = os.environ,
             creationflags = subprocess.CREATE_NO_WINDOW
         )
@@ -195,13 +193,8 @@ def RunCMD(
                 Subprocess.stdout.flush()
                 if Subprocess.poll() is not None:
                     break
-            for Line in io.TextIOWrapper(Subprocess.stderr, encoding = Encoding, errors = 'replace'):
-                TotalError += Line.encode(Encoding, errors = 'replace')
-                sys.stderr.write(Line) if sys.stderr is not None else None
-                if LogPath is not None:
-                    with open(LogPath, mode = 'a', encoding = 'utf-8') as Log:
-                        Log.write(Line)
-                Subprocess.stderr.flush()
+            if Subprocess.wait() != 0:
+                TotalError = b"Error occurred, please check the logs for full command output."
         else:
             TotalOutput, TotalError = Subprocess.communicate(TotalInput)
 
@@ -417,7 +410,7 @@ def ProcessTerminator(
     ProgramPath = NormPath(Program) if NormPath(Program) is not None else Program
     for Process in psutil.process_iter():
         try:
-            ProcessList = [Process] + Process.children()
+            ProcessList =  Process.children(recursive = True) + [Process]
             for Process in ProcessList:
                 if Process.pid == os.getpid() and SelfIgnored:
                     continue
@@ -559,7 +552,7 @@ def RunBat(
     with open(BatFilePath, 'w') as BatFile:
         Commands = "\n".join(CommandList)
         BatFile.write(Commands)
-    subprocess.Popen([BatFilePath], creationflags = subprocess.CREATE_NEW_CONSOLE).communicate()
+    subprocess.Popen([BatFilePath], creationflags = subprocess.CREATE_NEW_CONSOLE)
 
 
 def BootWithBat(

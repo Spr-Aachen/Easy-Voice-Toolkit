@@ -1,6 +1,7 @@
 import hashlib
 import io
 import os
+import glob
 import urllib
 import warnings
 import torch
@@ -183,12 +184,11 @@ class Voice_Transcribing:
 
         # Filter out the audio files and get their paths
         PathList = []
-        for Dir_Name, SubFolder_Names, File_Names in os.walk(self.Audio_Dir):
-            for i in range(len(File_Names)):
-                File_Name = File_Names[i]
+        for Dir_Path, Folder_Names, File_Names in os.walk(self.Audio_Dir):
+            for Index, File_Name in enumerate(File_Names):
                 for extension in ['.flac', '.wav', '.mp3', '.aac', '.m4a', '.wma', '.aiff', '.au', '.ogg']:
                     if File_Name.endswith(extension):
-                        File_Path = self.Audio_Dir + "/" + File_Name.split('.')[0] + extension
+                        File_Path = Path(Dir_Path).joinpath(File_Name).as_posix()
                         PathList.append(File_Path)
 
         Writer = get_writer("srt", self.SRT_Dir)

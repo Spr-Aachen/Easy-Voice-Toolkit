@@ -9,6 +9,7 @@ import subprocess
 import matplotlib
 import matplotlib.pylab as plt
 import numpy as np
+from scipy.io.wavfile import read
 import torch
 
 
@@ -44,16 +45,20 @@ def load_checkpoint(checkpoint_path, model, optimizer, keep_speaker_emb: bool = 
 
 
 def save_checkpoint(model, optimizer, learning_rate, iteration, checkpoint_path):
-    logger.info("Saving model and optimizer state at iteration {} to {}".format(
-        iteration, checkpoint_path))
+    logger.info(f"Saving model and optimizer state at iteration {iteration} to {checkpoint_path}")
     if hasattr(model, 'module'):
         state_dict = model.module.state_dict()
     else:
         state_dict = model.state_dict()
-    torch.save({'model': state_dict,
-                            'iteration': iteration,
-                            'optimizer': optimizer.state_dict(),
-                            'learning_rate': learning_rate}, checkpoint_path)
+    torch.save(
+        {
+            'model': state_dict,
+            'iteration': iteration,
+            'optimizer': optimizer.state_dict(),
+            'learning_rate': learning_rate
+        },
+        checkpoint_path
+    )
 
 
 def summarize(writer, global_step, scalars={}, histograms={}, images={}, audios={}, audio_sampling_rate=22050):
@@ -75,6 +80,21 @@ def latest_checkpoint_path(dir_path, regex="G_*.pth"):
     return x
 
 
+def remove_old_checkpoints(cp_dir, prefixes=['G_*.pth', 'D_*.pth', 'DUR_*.pth']):
+    def scan_checkpoint(dir_path, regex):
+        f_list = glob.glob(os.path.join(dir_path, regex))
+        f_list.sort(key=lambda f: int("".join(filter(str.isdigit, f))))
+        if len(f_list) == 0:
+            return None
+        return f_list
+    for prefix in prefixes:
+        sorted_ckpts = scan_checkpoint(cp_dir, prefix)
+        if sorted_ckpts and len(sorted_ckpts) > 3:
+            for ckpt_path in sorted_ckpts[:-3]:
+                os.remove(ckpt_path)
+                print("removed {}".format(ckpt_path))
+
+
 def plot_spectrogram_to_numpy(spectrogram):
     global MATPLOTLIB_FLAG
     if not MATPLOTLIB_FLAG:
@@ -84,8 +104,7 @@ def plot_spectrogram_to_numpy(spectrogram):
         mpl_logger.setLevel(logging.WARNING)
 
     fig, ax = plt.subplots(figsize=(10,2))
-    im = ax.imshow(spectrogram, aspect="auto", origin="lower",
-                                    interpolation='none')
+    im = ax.imshow(spectrogram, aspect="auto", origin="lower", interpolation='none')
     plt.colorbar(im, ax=ax)
     plt.xlabel("Frames")
     plt.ylabel("Channels")
@@ -107,8 +126,7 @@ def plot_alignment_to_numpy(alignment, info=None):
         mpl_logger.setLevel(logging.WARNING)
 
     fig, ax = plt.subplots(figsize=(6, 4))
-    im = ax.imshow(alignment.transpose(), aspect='auto', origin='lower',
-                                    interpolation='none')
+    im = ax.imshow(alignment.transpose(), aspect='auto', origin='lower', interpolation='none')
     fig.colorbar(im, ax=ax)
     xlabel = 'Decoder timestep'
     if info is not None:

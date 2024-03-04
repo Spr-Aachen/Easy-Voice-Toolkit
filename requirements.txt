@@ -22,6 +22,7 @@ protobuf
 tensorboard
 inflect
 unidecode
+langdetect
 eng_to_ipa
 pypinyin
 jieba

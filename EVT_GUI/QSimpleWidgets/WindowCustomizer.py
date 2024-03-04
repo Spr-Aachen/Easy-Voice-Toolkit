@@ -3,7 +3,7 @@ import win32con
 from ctypes import Structure, c_int, POINTER, WinDLL, byref
 from ctypes.wintypes import UINT, HWND, RECT, MSG, LPRECT
 from PySide6.QtCore import Qt, QPoint, QEvent
-from PySide6.QtGui import QGuiApplication, QCursor, QMouseEvent, QResizeEvent
+from PySide6.QtGui import QGuiApplication, QCursor, QMouseEvent, QCloseEvent, QResizeEvent
 from PySide6.QtWidgets import *
 
 from .QFunctions import *
@@ -200,6 +200,8 @@ class NCCALCSIZE_PARAMS(Structure):
 class WindowBase:
     '''
     '''
+    closed = Signal()
+
     edge_size = 3 # 窗体边缘尺寸（出现缩放标记的范围）
 
     def __init__(self,
@@ -216,13 +218,13 @@ class WindowBase:
     def _move_window(self, pos) -> None:
         self.windowHandle().startSystemMove()
         QApplication.instance().postEvent(
-            receiver = self.windowHandle(),
-            event = QMouseEvent(
-                type = QEvent.MouseButtonRelease,
-                localPos = QPoint(-1, -1),
-                button = Qt.LeftButton,
-                buttons = Qt.NoButton,
-                modifiers = Qt.NoModifier
+            self.windowHandle(),
+            QMouseEvent(
+                QEvent.MouseButtonRelease,
+                QPoint(-1, -1),
+                Qt.LeftButton,
+                Qt.NoButton,
+                Qt.NoModifier
             )
         )
 
@@ -249,6 +251,10 @@ class WindowBase:
     def mouseDoubleClickEvent(self, event: QMouseEvent) -> None:
         if self._check_ifdraggable(event.position()) == True and event.buttons() == Qt.MouseButton.LeftButton:
             self.showNormal() if self.isMaximized() else self.showMaximized() #self.setWindowState(Qt.WindowState.WindowMaximized)
+
+    def closeEvent(self, event: QCloseEvent):
+        self.closed.emit()
+        event.accept()
 
     def resizeEvent(self, event: QResizeEvent):
         self.setCursor(Qt.CursorShape.ArrowCursor)

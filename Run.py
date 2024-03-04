@@ -1,6 +1,6 @@
 import os
 import sys
-import time #import asyncio
+import time
 import json
 from pathlib import Path
 from glob import glob
@@ -100,7 +100,8 @@ def UpdaterExecuter():
         if Config.GetValue('Updater', 'Status', 'Checking') != 'Executed':
             subprocess.Popen(['python.exe', NormPath(Path(CurrentDir).joinpath('Updater.py'))] if IsFileCompiled == False else [NormPath(Path(CurrentDir).joinpath('Updater.exe'))], env = os.environ)
             #Config.EditConfig('Updater', 'Status', 'Executed')
-            sys.exit()
+            QApplication.exit()
+            os._exit(0) if IsFileCompiled == True else None
         else:
             Config.EditConfig('Updater', 'Status', 'Unexecuted')
 
@@ -121,7 +122,7 @@ class Execute_Audio_Processing(QObject):
     def Execute(self, Params: tuple):
         self.started.emit()
 
-        Error = RunCMD(
+        Output, Error = RunCMD(
             Args = [
                 f'cd "{ResourceDir}"',
                 'python -c "'
@@ -133,8 +134,13 @@ class Execute_Audio_Processing(QObject):
             CommunicateThroughConsole = True,
             DecodeResult = True,
             LogPath = LogPath
-        )[1]
-        Error = None if 'traceback' not in str(Error).lower() else Error
+        )[:2]
+        if 'error' in str(Error).lower():
+            pass
+        elif 'traceback' in str(Output).lower():
+            Error = "出错了，详情请见终端输出信息"
+        else:
+            Error = None
 
         self.finished.emit(str(Error))
 
@@ -154,7 +160,7 @@ class Execute_Voice_Identifying(QObject):
     def Execute(self, Params: tuple):
         self.started.emit()
 
-        Error = RunCMD(
+        Output, Error = RunCMD(
             Args = [
                 f'cd "{ResourceDir}"',
                 'python -c "'
@@ -167,8 +173,13 @@ class Execute_Voice_Identifying(QObject):
             CommunicateThroughConsole = True,
             DecodeResult = True,
             LogPath = LogPath
-        )[1]
-        Error = None if 'traceback' not in str(Error).lower() else Error
+        )[:2]
+        if 'error' in str(Error).lower():
+            pass
+        elif 'traceback' in str(Output).lower():
+            Error = "出错了，详情请见终端输出信息"
+        else:
+            Error = None
 
         self.finished.emit(str(Error))
 
@@ -196,7 +207,7 @@ class Execute_Voice_Transcribing(QObject):
             "日":       "ja",
             "japanese": "ja"
         }
-        Error = RunCMD(
+        Output, Error = RunCMD(
             Args = [
                 f'cd "{ResourceDir}"',
                 'python -c "'
@@ -208,8 +219,13 @@ class Execute_Voice_Transcribing(QObject):
             CommunicateThroughConsole = True,
             DecodeResult = True,
             LogPath = LogPath
-        )[1]
-        Error = None if 'traceback' not in str(Error).lower() else Error
+        )[:2]
+        if 'error' in str(Error).lower():
+            pass
+        elif 'traceback' in str(Output).lower():
+            Error = "出错了，详情请见终端输出信息"
+        else:
+            Error = None
 
         self.finished.emit(str(Error))
 
@@ -229,7 +245,7 @@ class Execute_Dataset_Creating(QObject):
     def Execute(self, Params: tuple):
         self.started.emit()
 
-        Error = RunCMD(
+        Output, Error = RunCMD(
             Args = [
                 f'cd "{ResourceDir}"',
                 'python -c "'
@@ -241,8 +257,13 @@ class Execute_Dataset_Creating(QObject):
             CommunicateThroughConsole = True,
             DecodeResult = True,
             LogPath = LogPath
-        )[1]
-        Error = None if 'traceback' not in str(Error).lower() else Error
+        )[:2]
+        if 'error' in str(Error).lower():
+            pass
+        elif 'traceback' in str(Output).lower():
+            Error = "出错了，详情请见终端输出信息"
+        else:
+            Error = None
 
         self.finished.emit(str(Error))
 
@@ -262,7 +283,7 @@ class Execute_Voice_Training(QObject):
     def Execute(self, Params: tuple):
         self.started.emit()
 
-        Error = RunCMD(
+        Output, Error = RunCMD(
             Args = [
                 f'cd "{ResourceDir}"',
                 'python -c "'
@@ -274,12 +295,14 @@ class Execute_Voice_Training(QObject):
             CommunicateThroughConsole = True,
             DecodeResult = True,
             LogPath = LogPath
-        )[1]
-        if 'traceback' not in str(Error).lower():
+        )[:2]
+        if 'error' in str(Error).lower():
             if "is not a directory" in str(Error).lower():
                 Error = "请确保日志保存路径中没有中文等特殊字符"
             if "specify the reduction dim" in str(Error).lower():
                 Error = "请检查显存是否足够或者 batch size（批处理量）设置是否过高"
+        elif 'traceback' in str(Output).lower():
+            Error = "出错了，详情请见终端输出信息"
         else:
             Error = None
 
@@ -311,14 +334,14 @@ class Execute_Voice_Converting(QObject):
         self.started.emit()
 
         LANGUAGES = {
-            "中":       "[ZH]",
-            "Chinese":  "[ZH]",
-            "英":       "[EN]",
-            "English":  "[EN]",
-            "日":       "[JA]",
-            "Japanese": "[JA]"
+            "中":       "ZH",
+            "Chinese":  "ZH",
+            "英":       "EN",
+            "English":  "EN",
+            "日":       "JA",
+            "Japanese": "JA"
         }
-        Error = RunCMD(
+        Output, Error = RunCMD(
             Args = [
                 f'cd "{ResourceDir}"',
                 'python -c "'
@@ -330,8 +353,15 @@ class Execute_Voice_Converting(QObject):
             CommunicateThroughConsole = True,
             DecodeResult = True,
             LogPath = LogPath
-        )[1]
-        Error = None if 'traceback' not in str(Error).lower() else Error
+        )[:2]
+        if 'error' in str(Error).lower():
+            pass
+        elif 'traceback' in str(Output).lower():
+            Error = "出错了，详情请见终端输出信息"
+        else:
+            Error = None
+
+        self.finished.emit(str(Error))
 
         self.finished.emit(str(Error))
 
@@ -387,6 +417,7 @@ class Model_View(QObject):
         ModelPaths_Local = []
         for ModelsFormat in ModelsFormats:
             ModelPaths_Local_Sep = GetPaths(ModelsDir, ModelsFormat)
+            ModelPaths_Local_Sep = [ModelPath_Local_Sep for ModelPath_Local_Sep in ModelPaths_Local_Sep if ModelPath_Local_Sep.endswith(ModelsFormat)]
             ModelPaths_Local.extend(ModelPaths_Local_Sep) if ModelPaths_Local_Sep is not None else None
         ModelPaths_Local = list(set(ModelPaths_Local))
         def GetModelInfo_Local(ModelPath):
@@ -423,7 +454,7 @@ class Model_View(QObject):
         ModelViewSignals.Signal_TTS_VITS.emit(
             self.GetModelsInfo(
                 NormPath(Path(ModelsDir).joinpath('TTS', 'VITS')),
-                ['pt', 'json']
+                ['pth', 'json']
             )
         )
         self.finished.emit(str(None))
@@ -467,13 +498,16 @@ def ASRResult_Get(AudioSpeakersData_Path: str):
 
 # ClientFunc: SaveASRResult
 def ASRResult_Save(AudioSpeakers: dict, AudioSpeakersData_Path: str, MoveAudio: bool, MoveToDst: str):
-    os.makedirs(MoveToDst, exist_ok = True) if MoveAudio and Path(MoveToDst).exists() == False else None
     with open(AudioSpeakersData_Path, mode = 'w', encoding = 'utf-8') as AudioSpeakersData:
         Lines = []
         for Audio, Speaker in AudioSpeakers.items():
-            if Speaker.strip() != '':
-                Lines.append(f"{NormPath(Path(MoveToDst).joinpath(Path(Audio).name)) if MoveAudio else Audio}|{Speaker}\n")
-                shutil.copy(Audio, MoveToDst) if MoveAudio else None
+            Speaker = Speaker.strip()
+            if Speaker != '':
+                MoveToDst_Sub = NormPath(Path(MoveToDst).joinpath(Speaker))
+                os.makedirs(MoveToDst_Sub, exist_ok = True) if MoveAudio and Path(MoveToDst_Sub).exists() == False else None
+                Audio_Dst = NormPath(Path(MoveToDst_Sub).joinpath(Path(Audio).name).as_posix())
+                shutil.copy(Audio, MoveToDst_Sub) if MoveAudio and not Path(Audio_Dst).exists() else None
+                Lines.append(f"{Audio_Dst if MoveAudio else Audio}|{Speaker}\n")
         AudioSpeakersData.writelines(Lines)
 
 
@@ -481,7 +515,7 @@ def ASRResult_Save(AudioSpeakers: dict, AudioSpeakersData_Path: str, MoveAudio: 
 def STTResult_Get(SRTDir: str, AudioDir: str):
     STTResult = {}
     for SRTFile in glob(NormPath(Path(SRTDir).joinpath('*.srt'))):
-        AudioFiles = glob(NormPath(Path(AudioDir).joinpath(f'{Path(SRTFile).stem}.*')))
+        AudioFiles = glob(NormPath(Path(AudioDir).joinpath('**', f'{Path(SRTFile).stem}.*')), recursive = True)
         if len(AudioFiles) == 0:
             continue
         with open(SRTFile, mode = 'r', encoding = 'utf-8') as SRT:
@@ -558,13 +592,13 @@ class Tensorboard_Runner(QObject):
     def __init__(self):
         super().__init__()
 
-    def RunTensorboard(self, LogDir): #async def RunTensorboard(self, LogDir):
+    def RunTensorboard(self, LogDir):
         try:
             Error = None
             InitialWaitTime = 0
             MaximumWaitTime = 30
             while GetPaths(LogDir, 'events.out.tfevents') == None:
-                time.sleep(3) #await asyncio.sleep(3)
+                time.sleep(3)
                 InitialWaitTime += 3
                 if InitialWaitTime >= MaximumWaitTime:
                     break
@@ -573,7 +607,7 @@ class Tensorboard_Runner(QObject):
             URL = FindURL(Output) #URL = Output[Output.find('http'):Output.find(' (', Output.find('http'))]
             Function_OpenURL(URL)
             '''
-            subprocess.Popen(['tensorboard', '--logdir', LogDir], env = os.environ)
+            subprocess.Popen(['python', '-m', 'tensorboard.main', '--logdir', LogDir], env = os.environ)
             time.sleep(9) #await asyncio.sleep(9)
             Function_OpenURL('http://localhost:6006/')
         except Exception as e:
@@ -622,10 +656,11 @@ class MainWindow(Window_MainWindow):
     def SetChildWidgetsVisibility(self,
             Container: QWidget,
             DefaultHeight: int,
-            ChildWidgets: list[QWidget],
+            ChildWidgets: list[Optional[QWidget]],
             SetVisible: bool,
             AdjustContainer: bool = True
         ):
+        ChildWidgets = [ChildWidget for ChildWidget in ChildWidgets if ChildWidget is not None]
         MinHeight = DefaultHeight - sum([ChildWidget.height() for ChildWidget in ChildWidgets])
         MaxHeight = DefaultHeight
         for ChildWidget in ChildWidgets:
@@ -760,6 +795,17 @@ class MainWindow(Window_MainWindow):
         self.ui.Label_Title.setText("Easy Voice Toolkit - by Spr_Aachen")
 
         # Window controling buttons
+        self.closed.connect(
+            lambda: (
+                ProcessTerminator(
+                    Program = 'python.exe',
+                    SelfIgnored = False,
+                    SearchKeyword = True
+                ),
+                QApplication.exit(),
+                #os._exit(0)
+            )
+        )
         self.ui.Button_Close_Window.clicked.connect(self.close)
         self.ui.Button_Maximize_Window.clicked.connect(lambda: self.showNormal() if self.isMaximized() else self.showMaximized())
         self.ui.Button_Minimize_Window.clicked.connect(self.showMinimized)
@@ -977,8 +1023,8 @@ class MainWindow(Window_MainWindow):
         self.ui.Label_Donate_Text.setText(QCA.translate("Button", "赞助作者"))
         Function_SetURL(
             Button = self.ui.Button_Donate,
-            URL = "https://",
-            ButtonTooltip = "Click to buy him a coffee"
+            URL = "https://ko-fi.com/spr_aachen",
+            ButtonTooltip = "Click to buy author a coffee"
         )
 
         #############################################################
@@ -2021,7 +2067,7 @@ class MainWindow(Window_MainWindow):
         Function_SetText(
             Widget = self.ui.Label_ASR_VPR_AudioSpeakersDataPath,
             Text = SetRichText(
-                Body = QCA.translate("Label", "语音识别结果保存路径\n用于保存最后识别得到的音频文件与对应说话人的信息文件的路径。")
+                Body = QCA.translate("Label", "语音识别结果保存路径\n用于保存最后识别得到的记录音频文件与对应说话人的文件的路径。")
             )
         )
         ASR_VPR_AudioSpeakersDataPath_Default = Path(CurrentDir).joinpath('语音识别结果', '声纹识别', f'{date.today()}.txt').as_posix()
@@ -2053,7 +2099,7 @@ class MainWindow(Window_MainWindow):
                 QMessageBox.Yes|QMessageBox.No,
                 {
                     QMessageBox.Yes: lambda: (
-                        ChildWindow_ASR.close(),
+                        ChildWindow_ASR.hide(),
                         Function_ShowMessageBox(
                             QMessageBox.Question,"Ask",
                             "当前任务已执行结束，是否跳转至「语音转录」工具界面？",
@@ -2118,7 +2164,7 @@ class MainWindow(Window_MainWindow):
                             ChildWindow_ASR.ui.CheckBox.isChecked(),
                             ChildWindow_ASR.ui.LineEdit.text()
                         ),
-                        ChildWindow_ASR.close(),
+                        ChildWindow_ASR.hide(),
                         Function_ShowMessageBox(
                             QMessageBox.Question,"Ask",
                             "当前任务已执行结束，是否跳转至「语音转录」工具界面？",
@@ -2474,6 +2520,79 @@ class MainWindow(Window_MainWindow):
             lambda: self.ui.LineEdit_STT_Whisper_SRTDir.setText(STT_Whisper_SRTDir_Default)
         )
 
+        # ChildWindow
+        ChildWindow_STT = Window_ChildWindow_STT()
+
+        ChildWindow_STT.ui.Button_Close.clicked.connect(
+            lambda: Function_ShowMessageBox(
+                QMessageBox.Question, "Ask",
+                "确认放弃编辑？",
+                QMessageBox.Yes|QMessageBox.No,
+                {
+                    QMessageBox.Yes: lambda: (
+                        ChildWindow_STT.hide(),
+                        Function_ShowMessageBox(
+                            QMessageBox.Question,"Ask",
+                            "当前任务已执行结束，是否跳转至「数据集制作」工具界面？",
+                            QMessageBox.Yes|QMessageBox.No,
+                            {QMessageBox.Yes: lambda: self.ui.Button_Menu_Dataset.click()}
+                        )
+                    )
+                }
+            )
+        )
+        ChildWindow_STT.ui.Button_Maximize.clicked.connect(lambda: ChildWindow_STT.showNormal() if ChildWindow_STT.isMaximized() else ChildWindow_STT.showMaximized())
+
+        Function_SetText(
+            Widget = ChildWindow_STT.ui.Label_Title,
+            Text = SetRichText(
+                Title = QCA.translate("Label", "语音转录结果")
+            )
+        )
+        Function_SetText(
+            Widget = ChildWindow_STT.ui.Label_Text,
+            Text = SetRichText(
+                Body = QCA.translate("Label", "这里记录了每个语音文件与其对应的字幕文本（包含了时间戳）\n你可以对这些文本进行更改，若启用了语言信息标注则小心不要误删")
+            )
+        )
+
+        ChildWindow_STT.ui.Table.SetHorizontalHeaders(['音频路径', '音频内容', '播放'])
+        MainWindowSignals.Signal_TaskStatus.connect(
+            lambda Task, Status: ChildWindow_STT.ui.Table.SetValue(
+                STTResult_Get(self.ui.LineEdit_STT_Whisper_SRTDir.text(), self.ui.LineEdit_STT_Whisper_AudioDir.text())
+            ) if Task == 'Execute_Voice_Transcribing.Execute' and Status == 'Finished' else None
+        )
+
+        ChildWindow_STT.ui.Button_Cancel.setText('取消')
+        ChildWindow_STT.ui.Button_Cancel.clicked.connect(ChildWindow_STT.ui.Button_Close.click)
+        ChildWindow_STT.ui.Button_Confirm.setText('确认')
+        ChildWindow_STT.ui.Button_Confirm.clicked.connect(
+            lambda: Function_ShowMessageBox(
+                QMessageBox.Question, "Ask",
+                "确认应用编辑？",
+                QMessageBox.Yes|QMessageBox.No,
+                {
+                    QMessageBox.Yes: lambda: (
+                        STTResult_Save(
+                            ChildWindow_STT.ui.Table.GetValue(),
+                            self.ui.LineEdit_STT_Whisper_SRTDir.text()
+                        ),
+                        ChildWindow_STT.hide(),
+                        Function_ShowMessageBox(
+                            QMessageBox.Question,"Ask",
+                            "当前任务已执行结束，是否跳转至「数据集制作」工具界面？",
+                            QMessageBox.Yes|QMessageBox.No,
+                            {QMessageBox.Yes: lambda: self.ui.Button_Menu_Dataset.click()}
+                        )
+                    )
+                }
+            )
+        )
+
+        MainWindowSignals.Signal_TaskStatus.connect(
+            lambda Task, Status: ChildWindow_STT.show() if Task == 'Execute_Voice_Transcribing.Execute' and Status == 'Finished' else None
+        )
+
         # Left
         Function_SetTreeWidget(
             TreeWidget = self.ui.TreeWidget_Catalogue_STT_Whisper,
@@ -2561,79 +2680,6 @@ class MainWindow(Window_MainWindow):
             ]
         )
 
-        # ChildWindow
-        ChildWindow_STT = Window_ChildWindow_STT()
-
-        ChildWindow_STT.ui.Button_Close.clicked.connect(
-            lambda: Function_ShowMessageBox(
-                QMessageBox.Question, "Ask",
-                "确认放弃编辑？",
-                QMessageBox.Yes|QMessageBox.No,
-                {
-                    QMessageBox.Yes: lambda: (
-                        ChildWindow_STT.close(),
-                        Function_ShowMessageBox(
-                            QMessageBox.Question,"Ask",
-                            "当前任务已执行结束，是否跳转至「数据集制作」工具界面？",
-                            QMessageBox.Yes|QMessageBox.No,
-                            {QMessageBox.Yes: lambda: self.ui.Button_Menu_Dataset.click()}
-                        )
-                    )
-                }
-            )
-        )
-        ChildWindow_STT.ui.Button_Maximize.clicked.connect(lambda: ChildWindow_STT.showNormal() if ChildWindow_STT.isMaximized() else ChildWindow_STT.showMaximized())
-
-        Function_SetText(
-            Widget = ChildWindow_STT.ui.Label_Title,
-            Text = SetRichText(
-                Title = QCA.translate("Label", "语音转录结果")
-            )
-        )
-        Function_SetText(
-            Widget = ChildWindow_STT.ui.Label_Text,
-            Text = SetRichText(
-                Body = QCA.translate("Label", "这里记录了每个语音文件与其对应的字幕文本（包含了时间戳）\n你可以对这些文本进行更改，若启用了语言信息标注则小心不要误删")
-            )
-        )
-
-        ChildWindow_STT.ui.Table.SetHorizontalHeaders(['音频路径', '音频内容', '播放'])
-        MainWindowSignals.Signal_TaskStatus.connect(
-            lambda Task, Status: ChildWindow_STT.ui.Table.SetValue(
-                STTResult_Get(self.ui.LineEdit_STT_Whisper_SRTDir.text(), self.ui.LineEdit_STT_Whisper_AudioDir.text())
-            ) if Task == 'Execute_Voice_Transcribing.Execute' and Status == 'Finished' else None
-        )
-
-        ChildWindow_STT.ui.Button_Cancel.setText('取消')
-        ChildWindow_STT.ui.Button_Cancel.clicked.connect(ChildWindow_STT.ui.Button_Close.click)
-        ChildWindow_STT.ui.Button_Confirm.setText('确认')
-        ChildWindow_STT.ui.Button_Confirm.clicked.connect(
-            lambda: Function_ShowMessageBox(
-                QMessageBox.Question, "Ask",
-                "确认应用编辑？",
-                QMessageBox.Yes|QMessageBox.No,
-                {
-                    QMessageBox.Yes: lambda: (
-                        STTResult_Save(
-                            ChildWindow_STT.ui.Table.GetValue(),
-                            self.ui.LineEdit_STT_Whisper_SRTDir.text()
-                        ),
-                        ChildWindow_STT.close(),
-                        Function_ShowMessageBox(
-                            QMessageBox.Question,"Ask",
-                            "当前任务已执行结束，是否跳转至「数据集制作」工具界面？",
-                            QMessageBox.Yes|QMessageBox.No,
-                            {QMessageBox.Yes: lambda: self.ui.Button_Menu_Dataset.click()}
-                        )
-                    )
-                }
-            )
-        )
-
-        MainWindowSignals.Signal_TaskStatus.connect(
-            lambda Task, Status: ChildWindow_STT.show() if Task == 'Execute_Voice_Transcribing.Execute' and Status == 'Finished' else None
-        )
-
         #############################################################
         ###################### Content: Dataset #####################
         #############################################################
@@ -2679,10 +2725,38 @@ class MainWindow(Window_MainWindow):
         # Middle
         self.ui.GroupBox_DAT_VITS_InputParams.setTitle(QCA.translate("GroupBox", "输入参数"))
 
+        DialogBox_AudioSpeakersDataPath = MessageBox_Buttons()
+        DialogBox_AudioSpeakersDataPath.setText("请选择参数类型")
+        DialogBox_AudioSpeakersDataPath.Button1.setText("音频文件目录")
+        DialogBox_AudioSpeakersDataPath.Button1.clicked.connect(
+            lambda: (
+                DialogBox_AudioSpeakersDataPath.hide(),
+                self.ui.LineEdit_DAT_VITS_AudioSpeakersDataPath.setText(
+                    Function_GetFileDialog(
+                        Mode = "SelectDir",
+                        Directory = NormPath(Path(ChildWindow_ASR.ui.LineEdit.text()))
+                    )
+                )
+            )
+        )
+        DialogBox_AudioSpeakersDataPath.Button2.setText("语音识别结果文件路径")
+        DialogBox_AudioSpeakersDataPath.Button2.clicked.connect(
+            lambda: (
+                DialogBox_AudioSpeakersDataPath.hide(),
+                self.ui.LineEdit_DAT_VITS_AudioSpeakersDataPath.setText(
+                    Function_GetFileDialog(
+                        Mode = "SelectFile",
+                        FileType = "txt类型 (*.txt)",
+                        Directory = NormPath(Path(ASR_VPR_AudioSpeakersDataPath_Default).parent)
+                    )
+                )
+            )
+        )
+
         Function_SetText(
             Widget = self.ui.Label_DAT_VITS_AudioSpeakersDataPath,
             Text = SetRichText(
-                Body = QCA.translate("Label", "语音识别结果文件路径\n由语音识别得到的音频文件与对应说话人的信息文件的路径。")
+                Body = QCA.translate("Label", "音频文件目录/语音识别结果文件路径\n音频文件的所在目录（要求按说话人分类），或者提供由语音识别得到的文本文件。")
             )
         )
         Function_SetText(
@@ -2693,10 +2767,8 @@ class MainWindow(Window_MainWindow):
         self.ui.LineEdit_DAT_VITS_AudioSpeakersDataPath.textChanged.connect(
             lambda Value: Config_DAT.EditConfig('VITS', 'WAV_Dir', str(Value))
         )
-        self.ui.LineEdit_DAT_VITS_AudioSpeakersDataPath.SetFileDialog(
-            Mode = "SelectFile",
-            FileType = "txt类型 (*.txt)",
-            Directory = NormPath(Path(ASR_VPR_AudioSpeakersDataPath_Default).parent)
+        self.ui.LineEdit_DAT_VITS_AudioSpeakersDataPath.Button.clicked.connect(
+            lambda: DialogBox_AudioSpeakersDataPath.exec()
         )
         self.ui.Button_DAT_VITS_AudioSpeakersDataPath_Undo.clicked.connect(
             lambda: self.ui.LineEdit_DAT_VITS_AudioSpeakersDataPath.setText('')
@@ -2705,7 +2777,7 @@ class MainWindow(Window_MainWindow):
         Function_SetText(
             Widget = self.ui.Label_DAT_VITS_SRTDir,
             Text = SetRichText(
-                Body = QCA.translate("Label", "SRT文件目录\n字幕文件的所在目录，字幕文件须与对应音频文件同名且在文本中注明所用语言。")
+                Body = QCA.translate("Label", "SRT文件目录\n字幕文件的所在目录，字幕文件须与对应音频文件同名且在文本中注明所属语言。")
             )
         )
         Function_SetText(
@@ -2725,6 +2797,37 @@ class MainWindow(Window_MainWindow):
         )
 
         self.ui.GroupBox_DAT_VITS_VITSParams.setTitle(QCA.translate("GroupBox", "数据集参数"))
+
+        Function_SetText(
+            Widget = self.ui.Label_DAT_VITS_DataFormat,
+            Text = SetRichText(
+                Body = QCA.translate("Label", "数据文本格式\n数据集的文本格式，默认使用VITS的标准。")
+            )
+        )
+        DAT_VITS_DataFormat_Default = '路径|人名|[语言]文本[语言]'
+        Function_SetText(
+            Widget = self.ui.LineEdit_DAT_VITS_DataFormat,
+            Text = str(Config_DAT.GetValue('VITS', 'DataFormat_Path', DAT_VITS_DataFormat_Default)),
+            SetPlaceholderText = True,
+            PlaceholderText = DAT_VITS_DataFormat_Default
+        )
+        self.ui.LineEdit_DAT_VITS_DataFormat.textChanged.connect(
+            lambda Value: (
+                Function_ShowMessageBox(
+                    MessageType = QMessageBox.Warning,
+                    WindowTitle = "Warning",
+                    Text = "请保留关键词：'路径'，'人名'，'语言'，'文本'",
+                ),
+                self.ui.Button_DAT_VITS_DataFormat_Undo.click(),
+            ) if not all(Keyword in Value for Keyword in ['路径', '人名', '语言', '文本']) else None
+        )
+        self.ui.LineEdit_DAT_VITS_DataFormat.textChanged.connect(
+            lambda Value: Config_DAT.EditConfig('VITS', 'DataFormat_Path', str(Value))
+        )
+        self.ui.LineEdit_DAT_VITS_DataFormat.RemoveFileDialogButton()
+        self.ui.Button_DAT_VITS_DataFormat_Undo.clicked.connect(
+            lambda: self.ui.LineEdit_DAT_VITS_DataFormat.setText(DAT_VITS_DataFormat_Default)
+        )
 
         Function_SetText(
             Widget = self.ui.Label_DAT_VITS_AddAuxiliaryData,
@@ -2899,6 +3002,31 @@ class MainWindow(Window_MainWindow):
         self.ui.GroupBox_DAT_VITS_OutputParams.setTitle(QCA.translate("GroupBox", "输出参数"))
 
         Function_SetText(
+            Widget = self.ui.Label_DAT_VITS_ToStandaloneForm,
+            Text = SetRichText(
+                Body = QCA.translate("Label", "输出为独立格式\n通过保持文本和音频的相对路径关系生成数据集以方便打包、上传等需求。")
+            )
+        )
+        self.ui.CheckBox_DAT_VITS_ToStandaloneForm.setChecked(
+            eval(Config_DAT.GetValue('VITS', 'ToStandaloneForm', 'True'))
+        )
+        Function_ConfigureCheckBox(
+            CheckBox = self.ui.CheckBox_DAT_VITS_ToStandaloneForm,
+            CheckedText = "已启用",
+            CheckedEvents = [
+                lambda: Config_DAT.EditConfig('VITS', 'ToStandaloneForm', 'True'),
+            ],
+            UncheckedText = "未启用",
+            UncheckedEvents = [
+                lambda: Config_DAT.EditConfig('VITS', 'ToStandaloneForm', 'False'),
+            ],
+            TakeEffect = True
+        )
+        self.ui.Button_DAT_VITS_ToStandaloneForm_Undo.clicked.connect(
+            lambda: self.ui.CheckBox_DAT_VITS_ToStandaloneForm.setChecked(True)
+        )
+
+        Function_SetText(
             Widget = self.ui.Label_DAT_VITS_WAVDirSplit,
             Text = SetRichText(
                 Body = QCA.translate("Label", "音频输出目录\n用于保存最后处理完成的音频的目录。")
@@ -2928,7 +3056,7 @@ class MainWindow(Window_MainWindow):
                 Body = QCA.translate("Label", "训练集文本路径\n用于保存最后生成的训练集txt文件的路径。")
             )
         )
-        DAT_VITS_FileListPathTraining_Default = Path(CurrentDir).joinpath('数据集制作结果', 'VITS', f'{date.today()}_train.txt').as_posix()
+        DAT_VITS_FileListPathTraining_Default = Path(CurrentDir).joinpath('数据集制作结果', 'VITS', f'{date.today()}', 'Train.txt').as_posix()
         Function_SetText(
             Widget = self.ui.LineEdit_DAT_VITS_FileListPathTraining,
             Text = str(Config_DAT.GetValue('VITS', 'FileList_Path_Training', '')),
@@ -2936,11 +3064,20 @@ class MainWindow(Window_MainWindow):
             PlaceholderText = DAT_VITS_FileListPathTraining_Default
         )
         self.ui.LineEdit_DAT_VITS_FileListPathTraining.textChanged.connect(
+            lambda Value: (
+                Function_ShowMessageBox(
+                    WindowTitle = "Tip",
+                    Text = "为输出数据集为独立格式，已调整文本路径至音频输出目录",
+                ),
+                self.ui.LineEdit_DAT_VITS_FileListPathTraining.setText(Path(self.ui.LineEdit_DAT_VITS_WAVDirSplit.text()).joinpath(Path(Value).name).as_posix()),
+            ) if self.ui.CheckBox_DAT_VITS_ToStandaloneForm.isChecked() and Path(Value).parent.as_posix() != Path(self.ui.LineEdit_DAT_VITS_WAVDirSplit.text()).as_posix() else None
+        )
+        self.ui.LineEdit_DAT_VITS_FileListPathTraining.textChanged.connect(
             lambda Value: Config_DAT.EditConfig('VITS', 'FileList_Path_Training', str(Value))
         )
         self.ui.LineEdit_DAT_VITS_FileListPathTraining.SetFileDialog(
             Mode = "SaveFile",
-            FileType = "txt类型 (*.txt)",
+            FileType = "文本类型 (*.txt *.list)",
             Directory = NormPath(Path(DAT_VITS_FileListPathTraining_Default).parent)
         )
         self.ui.Button_DAT_VITS_FileListPathTraining_Undo.clicked.connect(
@@ -2953,7 +3090,7 @@ class MainWindow(Window_MainWindow):
                 Body = QCA.translate("Label", "验证集文本路径\n用于保存最后生成的验证集txt文件的路径。")
             )
         )
-        DAT_VITS_FileListPathValidation_Default = Path(CurrentDir).joinpath('数据集制作结果', 'VITS', f'{date.today()}_val.txt').as_posix()
+        DAT_VITS_FileListPathValidation_Default = Path(CurrentDir).joinpath('数据集制作结果', 'VITS', f'{date.today()}', 'Val.txt').as_posix()
         Function_SetText(
             Widget = self.ui.LineEdit_DAT_VITS_FileListPathValidation,
             Text = str(Config_DAT.GetValue('VITS', 'FileList_Path_Validation', '')),
@@ -2961,11 +3098,20 @@ class MainWindow(Window_MainWindow):
             PlaceholderText = DAT_VITS_FileListPathValidation_Default
         )
         self.ui.LineEdit_DAT_VITS_FileListPathValidation.textChanged.connect(
+            lambda Value: (
+                Function_ShowMessageBox(
+                    WindowTitle = "Tip",
+                    Text = "为输出数据集为独立格式，已调整文本路径至音频输出目录",
+                ),
+                self.ui.LineEdit_DAT_VITS_FileListPathValidation.setText(Path(self.ui.LineEdit_DAT_VITS_WAVDirSplit.text()).joinpath(Path(Value).name).as_posix()),
+            ) if self.ui.CheckBox_DAT_VITS_ToStandaloneForm.isChecked() and Path(Value).parent.as_posix() != Path(self.ui.LineEdit_DAT_VITS_WAVDirSplit.text()).as_posix() else None
+        )
+        self.ui.LineEdit_DAT_VITS_FileListPathValidation.textChanged.connect(
             lambda Value: Config_DAT.EditConfig('VITS', 'FileList_Path_Validation', str(Value))
         )
         self.ui.LineEdit_DAT_VITS_FileListPathValidation.SetFileDialog(
             Mode = "SaveFile",
-            FileType = "txt类型 (*.txt)",
+            FileType = "文本类型 (*.txt *.list)",
             Directory = NormPath(Path(DAT_VITS_FileListPathValidation_Default).parent)
         )
         self.ui.Button_DAT_VITS_FileListPathValidation_Undo.clicked.connect(
@@ -3058,9 +3204,11 @@ class MainWindow(Window_MainWindow):
                 self.ui.ComboBox_DAT_VITS_SampleWidth,
                 self.ui.CheckBox_DAT_VITS_ToMono,
                 self.ui.LineEdit_DAT_VITS_WAVDirSplit,
+                self.ui.LineEdit_DAT_VITS_DataFormat,
                 self.ui.CheckBox_DAT_VITS_AddAuxiliaryData,
                 self.ui.LineEdit_DAT_VITS_AuxiliaryDataPath,
                 self.ui.DoubleSpinBox_DAT_VITS_TrainRatio,
+                self.ui.CheckBox_DAT_VITS_ToStandaloneForm,
                 self.ui.LineEdit_DAT_VITS_FileListPathTraining,
                 self.ui.LineEdit_DAT_VITS_FileListPathValidation
             ],
@@ -3178,17 +3326,16 @@ class MainWindow(Window_MainWindow):
                 Body = QCA.translate("Label", "迭代轮数\n将全部样本完整迭代一轮的次数。")
             )
         )
-        self.ui.SpinBox_Train_VITS_Epochs.setRange(30, 300000)
+        self.ui.SpinBox_Train_VITS_Epochs.setRange(10, 100000)
         self.ui.SpinBox_Train_VITS_Epochs.setSingleStep(1)
         self.ui.SpinBox_Train_VITS_Epochs.setValue(
-            int(Config_Train.GetValue('VITS', 'Epochs', '100'))
+            int(Config_Train.GetValue('VITS', 'Epochs', '1000'))
         )
         self.ui.SpinBox_Train_VITS_Epochs.valueChanged.connect(
             lambda Value: Config_Train.EditConfig('VITS', 'Epochs', str(Value))
         )
-        self.ui.SpinBox_Train_VITS_Epochs.setToolTip("提示：在均没有预训练模型与辅助数据的情况下建议从一万轮次起步")
         self.ui.Button_Train_VITS_Epochs_Undo.clicked.connect(
-            lambda: self.ui.SpinBox_Train_VITS_Epochs.setValue(100)
+            lambda: self.ui.SpinBox_Train_VITS_Epochs.setValue(1000)
         )
 
         Function_SetText(
@@ -3205,7 +3352,7 @@ class MainWindow(Window_MainWindow):
         self.ui.SpinBox_Train_VITS_BatchSize.valueChanged.connect(
             lambda Value: Config_Train.EditConfig('VITS', 'Batch_Size', str(Value))
         )
-        self.ui.SpinBox_Train_VITS_BatchSize.setToolTip("建议：4~6G: 2; 8~10G: 4; 12~14G: 8; ...")
+        self.ui.SpinBox_Train_VITS_BatchSize.setToolTip("建议：2~4G: 2\n6~8G: 4\n10~12G: 8\n14~16G: 16")
         self.ui.Button_Train_VITS_BatchSize_Undo.clicked.connect(
             lambda: self.ui.SpinBox_Train_VITS_BatchSize.setValue(4)
         )
@@ -3227,11 +3374,12 @@ class MainWindow(Window_MainWindow):
                 lambda: Config_Train.EditConfig('VITS', 'Use_PretrainedModels', 'True'),
                 lambda: self.SetChildWidgetsVisibility(
                     self.ui.Frame_Train_VITS_VITSParams_BasicSettings,
-                    Frame_Train_VITS_VITSParams_BasicSettings_DefaultHeight,
+                    Frame_Train_VITS_VITSParams_BasicSettings_DefaultHeight - (0 if self.ui.CheckBox_Train_VITS_KeepOriginalSpeakers.isChecked() else self.ui.Frame_Train_VITS_ConfigPathLoad.height()),
                     [
                         self.ui.Frame_Train_VITS_ModelPathPretrainedG,
                         self.ui.Frame_Train_VITS_ModelPathPretrainedD,
-                        self.ui.Frame_Train_VITS_KeepOriginalSpeakers
+                        self.ui.Frame_Train_VITS_KeepOriginalSpeakers,
+                        self.ui.Frame_Train_VITS_ConfigPathLoad if self.ui.CheckBox_Train_VITS_KeepOriginalSpeakers.isChecked() else None
                     ],
                     True
                 )
@@ -3245,7 +3393,8 @@ class MainWindow(Window_MainWindow):
                     [
                         self.ui.Frame_Train_VITS_ModelPathPretrainedG,
                         self.ui.Frame_Train_VITS_ModelPathPretrainedD,
-                        self.ui.Frame_Train_VITS_KeepOriginalSpeakers
+                        self.ui.Frame_Train_VITS_KeepOriginalSpeakers,
+                        self.ui.Frame_Train_VITS_ConfigPathLoad
                     ],
                     False
                 )
@@ -3320,19 +3469,23 @@ class MainWindow(Window_MainWindow):
             FileType = "json类型 (*.json)",
             Directory = NormPath(Path(ModelsDir).joinpath('TTS', 'VITS', 'Downloaded'))
         )
+        Function_ParamsSynchronizer(
+            Trigger = DialogBox_KeepOriginalSpeakers.LineEdit,
+            FromTo = {DialogBox_KeepOriginalSpeakers.LineEdit: self.ui.LineEdit_Train_VITS_ConfigPathLoad}
+        )
         DialogBox_KeepOriginalSpeakers.Button_Confirm.setText("确认")
         DialogBox_KeepOriginalSpeakers.Button_Confirm.clicked.connect(
             lambda: Function_ShowMessageBox(
                 MessageType = QMessageBox.Warning,
                 WindowTitle = "Warning",
                 Text = "配置文件路径不存在！",
-            ) if Path(DialogBox_KeepOriginalSpeakers.LineEdit.text()).is_file() == False else DialogBox_KeepOriginalSpeakers.close()
+            ) if Path(DialogBox_KeepOriginalSpeakers.LineEdit.text()).is_file() == False else DialogBox_KeepOriginalSpeakers.hide()
         )
         DialogBox_KeepOriginalSpeakers.Button_Cancel.setText("取消")
         DialogBox_KeepOriginalSpeakers.Button_Cancel.clicked.connect(
             lambda: (
                 self.ui.CheckBox_Train_VITS_KeepOriginalSpeakers.setChecked(False),
-                DialogBox_KeepOriginalSpeakers.close()
+                DialogBox_KeepOriginalSpeakers.hide()
             )
         )
 
@@ -3343,17 +3496,37 @@ class MainWindow(Window_MainWindow):
             )
         )
         self.ui.CheckBox_Train_VITS_KeepOriginalSpeakers.setChecked(
-            False #eval(Config_Train.GetValue('VITS', 'Keep_Original_Speakers', 'False'))
+            eval(Config_Train.GetValue('VITS', 'Keep_Original_Speakers', 'False'))
         )
         Function_ConfigureCheckBox(
             CheckBox = self.ui.CheckBox_Train_VITS_KeepOriginalSpeakers,
             CheckedText = "已启用",
             CheckedEvents = [
-                lambda: Config_Train.EditConfig('VITS', 'Keep_Original_Speakers', 'True')
+                lambda: Config_Train.EditConfig('VITS', 'Keep_Original_Speakers', 'True'),
+                lambda: self.SetChildWidgetsVisibility(
+                    self.ui.Frame_Train_VITS_VITSParams_BasicSettings,
+                    Frame_Train_VITS_VITSParams_BasicSettings_DefaultHeight - (
+                        0 if self.ui.CheckBox_Train_VITS_UsePretrainedModels.isChecked() else (self.ui.Frame_Train_VITS_ModelPathPretrainedG.height() + self.ui.Frame_Train_VITS_ModelPathPretrainedD.height() + self.ui.Frame_Train_VITS_KeepOriginalSpeakers.height())
+                    ),
+                    [
+                        self.ui.Frame_Train_VITS_ConfigPathLoad
+                    ],
+                    True
+                )
             ],
             UncheckedText = "未启用",
             UncheckedEvents = [
-                lambda: Config_Train.EditConfig('VITS', 'Keep_Original_Speakers', 'False')
+                lambda: Config_Train.EditConfig('VITS', 'Keep_Original_Speakers', 'False'),
+                lambda: self.SetChildWidgetsVisibility(
+                    self.ui.Frame_Train_VITS_VITSParams_BasicSettings,
+                    Frame_Train_VITS_VITSParams_BasicSettings_DefaultHeight - (
+                        0 if self.ui.CheckBox_Train_VITS_UsePretrainedModels.isChecked() else (self.ui.Frame_Train_VITS_ModelPathPretrainedG.height() + self.ui.Frame_Train_VITS_ModelPathPretrainedD.height() + self.ui.Frame_Train_VITS_KeepOriginalSpeakers.height())
+                    ),
+                    [
+                        self.ui.Frame_Train_VITS_ConfigPathLoad
+                    ],
+                    False
+                )
             ],
             TakeEffect = True
         )
@@ -3366,6 +3539,35 @@ class MainWindow(Window_MainWindow):
         )
         self.ui.Button_Train_VITS_KeepOriginalSpeakers_Undo.clicked.connect(
             lambda: self.ui.CheckBox_Train_VITS_KeepOriginalSpeakers.setChecked(False)
+        )
+
+        Function_SetText(
+            Widget = self.ui.Label_Train_VITS_ConfigPathLoad,
+            Text = SetRichText(
+                Body = QCA.translate("Label", "配置加载路径\n用于加载底模人物信息的配置文件的所在路径")
+            )
+        )
+        Train_VITS_ConfigPathLoad_Default = Path(ModelsDir).joinpath('TTS', 'VITS', 'Downloaded', 'standard_Config.json').as_posix() if Path(ModelsDir).joinpath('TTS', 'VITS', 'Downloaded', 'standard_Config.json').exists() else ''
+        Function_SetText(
+            Widget = self.ui.LineEdit_Train_VITS_ConfigPathLoad,
+            Text = str(Config_Train.GetValue('VITS', 'Config_Path_Load', Train_VITS_ConfigPathLoad_Default)),
+            SetPlaceholderText = True,
+            PlaceholderText = Train_VITS_ConfigPathLoad_Default
+        )
+        self.ui.LineEdit_Train_VITS_ConfigPathLoad.textChanged.connect(
+            lambda Value: Config_Train.EditConfig('VITS', 'Config_Path_Load', str(Value))
+        )
+        self.ui.LineEdit_Train_VITS_ConfigPathLoad.SetFileDialog(
+            Mode = "SelectFile",
+            FileType = "json类型 (*.json)",
+            Directory = NormPath(Path(ModelsDir).joinpath('TTS', 'VITS', 'Downloaded'))
+        )
+        Function_ParamsSynchronizer(
+            Trigger = self.ui.LineEdit_Train_VITS_ConfigPathLoad,
+            FromTo = {self.ui.LineEdit_Train_VITS_ConfigPathLoad: DialogBox_KeepOriginalSpeakers.LineEdit}
+        )
+        self.ui.Button_Train_VITS_ConfigPathLoad_Undo.clicked.connect(
+            lambda: self.ui.LineEdit_Train_VITS_ConfigPathLoad.setText(Train_VITS_ConfigPathLoad_Default)
         )
 
         self.ui.CheckBox_Train_VITS_VITSParams_Toggle_AdvanceSettings.setChecked(False)
@@ -3400,7 +3602,7 @@ class MainWindow(Window_MainWindow):
                 Body = QCA.translate("Label", "进程数量\n进行数据加载时可并行的进程数量，需根据CPU的性能调节该值。")
             )
         )
-        self.ui.SpinBox_Train_VITS_NumWorkers.setRange(2, 32)
+        self.ui.SpinBox_Train_VITS_NumWorkers.setRange(2, 128)
         self.ui.SpinBox_Train_VITS_NumWorkers.setSingleStep(2)
         self.ui.SpinBox_Train_VITS_NumWorkers.setValue(
             int(Config_Train.GetValue('VITS', 'Num_Workers', '4'))
@@ -3408,7 +3610,6 @@ class MainWindow(Window_MainWindow):
         self.ui.SpinBox_Train_VITS_NumWorkers.valueChanged.connect(
             lambda Value: Config_Train.EditConfig('VITS', 'Num_Workers', str(Value))
         )
-        self.ui.SpinBox_Train_VITS_NumWorkers.setToolTip("提示：如果配置属于低U高显的话不妨试试把数值降到2。")
         self.ui.Button_Train_VITS_NumWorkers_Undo.clicked.connect(
             lambda: self.ui.SpinBox_Train_VITS_NumWorkers.setValue(4)
         )
@@ -3420,7 +3621,7 @@ class MainWindow(Window_MainWindow):
             )
         )
         self.ui.CheckBox_Train_VITS_FP16Run.setChecked(
-            eval(Config_Train.GetValue('VITS', 'FP16_Run', 'True'))
+            eval(Config_Train.GetValue('VITS', 'FP16_Run', 'False'))
         )
         Function_ConfigureCheckBox(
             CheckBox = self.ui.CheckBox_Train_VITS_FP16Run,
@@ -3435,7 +3636,7 @@ class MainWindow(Window_MainWindow):
             TakeEffect = True
         )
         self.ui.Button_Train_VITS_FP16Run_Undo.clicked.connect(
-            lambda: self.ui.CheckBox_Train_VITS_FP16Run.setChecked(True)
+            lambda: self.ui.CheckBox_Train_VITS_FP16Run.setChecked(False)
         )
 
         self.ui.GroupBox_Train_VITS_OutputParams.setTitle(QCA.translate("GroupBox", "输出参数"))
@@ -3446,7 +3647,7 @@ class MainWindow(Window_MainWindow):
                 Body = QCA.translate("Label", "保存间隔\n每次保存模型所间隔的步数。PS: 步数 ≈ 迭代轮次 * 训练样本数 / 批处理量")
             )
         )
-        self.ui.SpinBox_Train_VITS_EvalInterval.setRange(300, 3000000)
+        self.ui.SpinBox_Train_VITS_EvalInterval.setRange(10, 100000)
         self.ui.SpinBox_Train_VITS_EvalInterval.setSingleStep(1)
         self.ui.SpinBox_Train_VITS_EvalInterval.setValue(
             int(Config_Train.GetValue('VITS', 'Eval_Interval', '1000'))
@@ -3485,7 +3686,6 @@ class MainWindow(Window_MainWindow):
         self.ui.LineEdit_Train_VITS_OutputDir.textChanged.connect(
             lambda Value: Config_Train.EditConfig('VITS', 'Output_Dir', str(Value))
         )
-        self.ui.Label_Train_VITS_OutputDir.setToolTip("提示：当目录中存在多个模型时，编号最大的那个会被选为检查点。")
         self.ui.LineEdit_Train_VITS_OutputDir.SetFileDialog(
             Mode = "SelectDir",
             Directory = NormPath(Path(Train_VITS_OutputDir_Default).parent)
@@ -3587,7 +3787,7 @@ class MainWindow(Window_MainWindow):
                 self.ui.SpinBox_Train_VITS_BatchSize,
                 self.ui.CheckBox_Train_VITS_FP16Run,
                 self.ui.CheckBox_Train_VITS_KeepOriginalSpeakers,
-                DialogBox_KeepOriginalSpeakers.LineEdit,
+                self.ui.LineEdit_Train_VITS_ConfigPathLoad,
                 self.ui.SpinBox_Train_VITS_NumWorkers,
                 self.ui.CheckBox_Train_VITS_UsePretrainedModels,
                 self.ui.LineEdit_Train_VITS_ModelPathPretrainedG,
@@ -3744,15 +3944,18 @@ class MainWindow(Window_MainWindow):
         Function_SetText(
             Widget = self.ui.Label_TTS_VITS_Language,
             Text = SetRichText(
-                Body = QCA.translate("Label", "所用语言\n说话人/文字所使用的语言。")
+                Body = QCA.translate("Label", "所属语言\n文字所属的语言，若使用自动检测则保持'None'即可（有概率报错）。")
             )
         )
-        self.ui.ComboBox_TTS_VITS_Language.addItems(['中', '英', '日'])
+        self.ui.ComboBox_TTS_VITS_Language.addItems(['None', '中', '英', '日'])
         self.ui.ComboBox_TTS_VITS_Language.setCurrentText(
-            str(Config_TTS.GetValue('VITS', 'Language', '中'))
+            str(Config_TTS.GetValue('VITS', 'Language', 'None'))
         )
         self.ui.ComboBox_TTS_VITS_Language.currentTextChanged.connect(
             lambda Value: Config_TTS.EditConfig('VITS', 'Language', str(Value))
+        )
+        self.ui.Button_TTS_VITS_Language_Undo.clicked.connect(
+            lambda: self.ui.ComboBox_TTS_VITS_Language.setCurrentText('None')
         )
 
         Function_SetText(
@@ -3948,6 +4151,89 @@ class MainWindow(Window_MainWindow):
             lambda: self.ui.LineEdit_TTS_VITS_AudioPathSave.setText(TTS_VITS_AudioPathSave_Default)
         )
 
+        # ChildWindow
+        ChildWindow_TTS = Window_ChildWindow_TTS()
+
+        ChildWindow_TTS.ui.Button_Close.clicked.connect(
+            lambda: Function_ShowMessageBox(
+                QMessageBox.Question, "Ask",
+                "确认退出试听？",
+                QMessageBox.Yes|QMessageBox.No,
+                {
+                    QMessageBox.Yes: lambda: (
+                        ChildWindow_TTS.ui.Widget.ReleaseMediaPlayer(),
+                        ChildWindow_TTS.hide(),
+                        Function_ShowMessageBox(
+                            QMessageBox.Information,"Tip",
+                            "当前任务已执行结束。"
+                        )
+                    )
+                } 
+            )
+        )
+        ChildWindow_TTS.ui.Button_Maximize.clicked.connect(lambda: ChildWindow_TTS.showNormal() if ChildWindow_TTS.isMaximized() else ChildWindow_TTS.showMaximized())
+
+        Function_SetText(
+            Widget = ChildWindow_TTS.ui.Label_Title,
+            Text = SetRichText(
+                Title = QCA.translate("Label", "语音合成结果")
+            )
+        )
+        Function_SetText(
+            Widget = ChildWindow_TTS.ui.Label_Text,
+            Text = SetRichText(
+                Body = QCA.translate("Label", "点击播放按钮以试听合成语音")
+            )
+        )
+
+        MainWindowSignals.Signal_TaskStatus.connect(
+            lambda Task, Status: ChildWindow_TTS.ui.Widget.SetMediaPlayer(
+                self.ui.LineEdit_TTS_VITS_AudioPathSave.text()
+            ) if Task == 'Execute_Voice_Converting.Execute' and Status == 'Finished' else None
+        )
+
+        ChildWindow_TTS.ui.Button_Cancel.setText('丢弃')
+        ChildWindow_TTS.ui.Button_Cancel.clicked.connect(
+            lambda: Function_ShowMessageBox(
+                QMessageBox.Question, "Ask",
+                "确认丢弃音频？",
+                QMessageBox.Yes|QMessageBox.No,
+                {
+                    QMessageBox.Yes: lambda: (
+                        ChildWindow_TTS.ui.Widget.ReleaseMediaPlayer(),
+                        os.remove(self.ui.LineEdit_TTS_VITS_AudioPathSave.text()),
+                        ChildWindow_TTS.hide(),
+                        Function_ShowMessageBox(
+                            QMessageBox.Information,"Tip",
+                            "当前任务已执行结束。"
+                        )
+                    )
+                }
+            )
+        )
+        ChildWindow_TTS.ui.Button_Confirm.setText('保留')
+        ChildWindow_TTS.ui.Button_Confirm.clicked.connect(
+            lambda: Function_ShowMessageBox(
+                QMessageBox.Question, "Ask",
+                "确认保留音频？",
+                QMessageBox.Yes|QMessageBox.No,
+                {
+                    QMessageBox.Yes: lambda: (
+                        ChildWindow_TTS.ui.Widget.ReleaseMediaPlayer(),
+                        ChildWindow_TTS.hide(),
+                        Function_ShowMessageBox(
+                            QMessageBox.Information,"Tip",
+                            "当前任务已执行结束。"
+                        )
+                    )
+                }
+            )
+        )
+
+        MainWindowSignals.Signal_TaskStatus.connect(
+            lambda Task, Status: ChildWindow_TTS.show() if Task == 'Execute_Voice_Converting.Execute' and Status == 'Finished' else None
+        )
+
         # Right
         MonitorFile_Config_VoiceConverter = MonitorFile(Path_Config_TTS)
         MonitorFile_Config_VoiceConverter.start()
@@ -4036,89 +4322,9 @@ class MainWindow(Window_MainWindow):
                 self.ui.LineEdit_TTS_VITS_AudioPathSave
             ],
             EmptyAllowed = [
+                self.ui.ComboBox_TTS_VITS_Language,
                 self.ui.ComboBox_TTS_VITS_Speaker
             ]
-        )
-
-        # ChildWindow
-        ChildWindow_TTS = Window_ChildWindow_TTS()
-
-        ChildWindow_TTS.ui.Button_Close.clicked.connect(
-            lambda: Function_ShowMessageBox(
-                QMessageBox.Question, "Ask",
-                "确认退出试听？",
-                QMessageBox.Yes|QMessageBox.No,
-                {
-                    QMessageBox.Yes: lambda: (
-                        ChildWindow_TTS.close(),
-                        Function_ShowMessageBox(
-                            QMessageBox.Information,"Tip",
-                            "当前任务已执行结束。"
-                        )
-                    )
-                } 
-            )
-        )
-        ChildWindow_TTS.ui.Button_Maximize.clicked.connect(lambda: ChildWindow_TTS.showNormal() if ChildWindow_TTS.isMaximized() else ChildWindow_TTS.showMaximized())
-
-        Function_SetText(
-            Widget = ChildWindow_TTS.ui.Label_Title,
-            Text = SetRichText(
-                Title = QCA.translate("Label", "语音合成结果")
-            )
-        )
-        Function_SetText(
-            Widget = ChildWindow_TTS.ui.Label_Text,
-            Text = SetRichText(
-                Body = QCA.translate("Label", "点击播放按钮以试听合成语音")
-            )
-        )
-
-        MainWindowSignals.Signal_TaskStatus.connect(
-            lambda Task, Status: ChildWindow_TTS.ui.Widget.SetMediaPlayer(
-                self.ui.LineEdit_TTS_VITS_AudioPathSave.text()
-            ) if Task == 'Execute_Voice_Converting.Execute' and Status == 'Finished' else None
-        )
-
-        ChildWindow_TTS.ui.Button_Cancel.setText('丢弃')
-        ChildWindow_TTS.ui.Button_Cancel.clicked.connect(
-            lambda: Function_ShowMessageBox(
-                QMessageBox.Question, "Ask",
-                "确认丢弃音频？",
-                QMessageBox.Yes|QMessageBox.No,
-                {
-                    QMessageBox.Yes: lambda: (
-                        ChildWindow_TTS.ui.Widget.ReleaseMediaPlayer(),
-                        os.remove(self.ui.LineEdit_TTS_VITS_AudioPathSave.text()),
-                        ChildWindow_TTS.close(),
-                        Function_ShowMessageBox(
-                            QMessageBox.Information,"Tip",
-                            "当前任务已执行结束。"
-                        )
-                    )
-                }
-            )
-        )
-        ChildWindow_TTS.ui.Button_Confirm.setText('保留')
-        ChildWindow_TTS.ui.Button_Confirm.clicked.connect(
-            lambda: Function_ShowMessageBox(
-                QMessageBox.Question, "Ask",
-                "确认保留音频？",
-                QMessageBox.Yes|QMessageBox.No,
-                {
-                    QMessageBox.Yes: lambda: (
-                        ChildWindow_TTS.close(),
-                        Function_ShowMessageBox(
-                            QMessageBox.Information,"Tip",
-                            "当前任务已执行结束。"
-                        )
-                    )
-                }
-            )
-        )
-
-        MainWindowSignals.Signal_TaskStatus.connect(
-            lambda Task, Status: ChildWindow_TTS.show() if Task == 'Execute_Voice_Converting.Execute' and Status == 'Finished' else None
         )
 
         #############################################################
