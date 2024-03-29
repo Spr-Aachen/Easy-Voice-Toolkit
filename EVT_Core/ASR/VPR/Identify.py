@@ -17,16 +17,17 @@ class Voice_Identifying:
     def __init__(self,
         StdAudioSpeaker: dict,
         Audio_Dir_Input: str,
-        AudioSpeakersData_Path: str = './AudioSpeakerData.txt',
         Model_Path: str = './Models/.pth',
         Model_Type: str = 'Ecapa-Tdnn',
         Feature_Method: str = 'melspectrogram',
         DecisionThreshold: float = 0.60,
-        Duration_of_Audio: float = 4.20
+        Duration_of_Audio: float = 4.20,
+        Output_Root: str = "./",
+        Output_DirName: str = "",
+        AudioSpeakersData_Name: str = "AudioSpeakerData"
     ):
         self.StdAudioSpeaker = StdAudioSpeaker
         self.Audio_Dir_Input = Audio_Dir_Input
-        self.AudioSpeakersData_Path = AudioSpeakersData_Path
         self.Model_Path = Model_Path
         self.Model_Dir = Path(Model_Path).parent.__str__()
         self.Model_Name = Path(Model_Path).stem.__str__()
@@ -34,6 +35,8 @@ class Voice_Identifying:
         self.Feature_Method = Feature_Method
         self.DecisionThreshold = DecisionThreshold
         self.Duration_of_Audio = Duration_of_Audio
+        self.Output_Dir = Path(Output_Root).joinpath(Output_DirName).as_posix()
+        self.AudioSpeakersData_Path = Path(self.Output_Dir).joinpath(AudioSpeakersData_Name).as_posix() + ".txt"
 
         os.makedirs(os.path.dirname(self.AudioSpeakersData_Path), exist_ok = True)
 

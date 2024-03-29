@@ -1,33 +1,76 @@
-import numpy
+import os
+import torch
+import traceback
 import librosa
-from scipy.signal import medfilt
+import soundfile
+from pathlib import Path
+
+from .uvr5.mdxnet import MDXNetDereverb
+from .uvr5.vr import AudioPre, AudioPreDeEcho
+
+
+def uvr(
+    AudioData,
+    SampleRate,
+    ModelPath,
+    Target,
+    Agg
+):
+    try:
+        if "onnx_dereverb_by_foxjoy" in ModelPath.lower() and Path(ModelPath).suffix == ".onnx":
+            pre_fun = MDXNetDereverb(
+                model_path = ModelPath,
+                chunks = 15
+            )
+        else:
+            device = "cuda" if torch.cuda.is_available() else "cpu"
+            func = AudioPre if "DeEcho" not in Path(ModelPath).stem else AudioPreDeEcho
+            pre_fun = func(
+                agg = int(Agg),
+                model_path = ModelPath,
+                device = device,
+                is_half = False,
+            )
+        tmp_path = Path(os.getcwd()).joinpath("tmp.wav").as_posix()
+        AudioData = librosa.resample(AudioData, orig_sr = SampleRate, target_sr = 44100)
+        soundfile.write(tmp_path, AudioData.T if len(AudioData.shape) > 1 else AudioData, 44100, subtype = 'PCM_16')
+        data, samplerate = pre_fun._path_audio_(
+            path = tmp_path,
+            target = Target,
+            is_hp3 = "hp3" in Path(ModelPath).stem.lower()
+        )
+    except:
+        traceback.print_exc()
+    finally:
+        os.remove(tmp_path)
+        if ModelPath == "onnx_dereverb_By_FoxJoy":
+            del pre_fun.pred.model
+            del pre_fun.pred.model_
+        else:
+            del pre_fun.model
+            del pre_fun
+        torch.cuda.empty_cache() if torch.cuda.is_available() else None
+        return data.T if len(data.shape) > 1 else data, samplerate
 
 
 def Denoiser(
     AudioData,
-    Mode: int = 1
+    SampleRate,
+    ModelPath,
+    Target = "voice", # 指定要保留人声还是背景音
+    #Agg = 10 # 人声提取激进程度(0-20, step=1)
 ):
-    if Mode == 1: # 中值法
-        # 将数据转换为浮点数类型
-        AudioData = AudioData.astype(float)
-
-        # 对每个声道的数据进行降噪处理
-        for i in range(AudioData.shape[1]):
-            AudioData[:, i] = medfilt(AudioData[:, i], 3)
-
-        # 将数据转换回整型类型
-        AudioData = AudioData.astype(numpy.int16)
-
-    if Mode == 2: # FFT
-        # 通过FFT转换到频域
-        AudioData = librosa.stft(AudioData)
-
-        # 在频域进行降噪处理
-        Mean_RealPart = numpy.mean(AudioData.real) # 对实部求平均
-        Mean_ImagPart = numpy.mean(AudioData.imag) # 对虚部求平均
-        AudioData = AudioData - Mean_RealPart - 1j * Mean_ImagPart # 重构复数 去除直流分量
-
-        # 通过逆FFT转换回时域
-        AudioData = librosa.istft(AudioData)
-
-    return AudioData
+    '''
+    ModelName_Map = {
+        "不带和声": "HP3_all_vocals",
+        "带和声": "HP5_only_main_vocal",
+    }
+    ModelName = ModelName_Map.get(AudioType, "HP3_all_vocals")
+    '''
+    return uvr(
+        AudioData,
+        SampleRate,
+        ModelPath,
+        Target = Target,
+        Agg = 10
+    )

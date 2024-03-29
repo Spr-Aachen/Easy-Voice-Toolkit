@@ -2,8 +2,8 @@ import win32gui
 import win32con
 from ctypes import Structure, c_int, POINTER, WinDLL, byref
 from ctypes.wintypes import UINT, HWND, RECT, MSG, LPRECT
-from PySide6.QtCore import Qt, QPoint, QEvent
-from PySide6.QtGui import QGuiApplication, QCursor, QMouseEvent, QCloseEvent, QResizeEvent
+from PySide6.QtCore import Qt, QPoint, QEvent, QEventLoop
+from PySide6.QtGui import QPixmap, QIcon, QFont, QCursor, QMouseEvent, QShowEvent, QCloseEvent, QMoveEvent, QResizeEvent
 from PySide6.QtWidgets import *
 
 from .QFunctions import *
@@ -200,7 +200,10 @@ class NCCALCSIZE_PARAMS(Structure):
 class WindowBase:
     '''
     '''
+    showed = Signal()
     closed = Signal()
+
+    rectChanged = Signal(QRect)
 
     edge_size = 3 # 窗体边缘尺寸（出现缩放标记的范围）
 
@@ -212,8 +215,15 @@ class WindowBase:
 
         self.TitleBar = TitleBarBase(self)
 
+        self.Mask = QLabel(self)
+        self.rectChanged.connect(self.Mask.setGeometry)
+        self.Mask.setStyleSheet('background-color: rgba(0, 0, 0, 111);')
+        self.Mask.setAlignment(Qt.AlignCenter)
+        self.Mask.setFont(QFont('Microsoft YaHei', int(min_height / 10), QFont.Bold))
+        self.Mask.hide()
+
     def _check_ifdraggable(self, pos) -> bool:
-        return 0 < pos.x() < self.width()# and 0 < pos.y() < self.TitleBar.height()
+        return 0 < pos.x() < self.width() and 0 < pos.y() < self.TitleBar.height()
 
     def _move_window(self, pos) -> None:
         self.windowHandle().startSystemMove()
@@ -252,11 +262,19 @@ class WindowBase:
         if self._check_ifdraggable(event.position()) == True and event.buttons() == Qt.MouseButton.LeftButton:
             self.showNormal() if self.isMaximized() else self.showMaximized() #self.setWindowState(Qt.WindowState.WindowMaximized)
 
-    def closeEvent(self, event: QCloseEvent):
+    def showEvent(self, event: QShowEvent) -> None:
+        self.showed.emit()
+        event.accept()
+
+    def closeEvent(self, event: QCloseEvent) -> None:
         self.closed.emit()
         event.accept()
 
-    def resizeEvent(self, event: QResizeEvent):
+    def moveEvent(self, event: QMoveEvent) -> None:
+        self.rectChanged.emit(self.rect())
+
+    def resizeEvent(self, event: QResizeEvent) -> None:
+        self.rectChanged.emit(self.rect())
         self.setCursor(Qt.CursorShape.ArrowCursor)
 
     def nativeEvent(self, eventType, message):
@@ -264,35 +282,21 @@ class WindowBase:
         if Message.message == win32con.WM_NCCALCSIZE:
             if Message.wParam != 0:
                 Rect = NCCALCSIZE_PARAMS.from_address(Message.lParam).rgrc[0]
-                '''
-                def GetMissingBorderPixels(hWnd: int):
-                    for Window in QGuiApplication.allWindows():
-                        if Window.winId() == hWnd:
-                            MissingBorderSize = [win32con.SM_CXSIZEFRAME, win32con.SM_CYSIZEFRAME]
-                            for Index, MissingBorderLength in enumerate(MissingBorderSize):
-                                MissingBorderPixels = win32api.GetSystemMetrics(MissingBorderLength) + win32api.GetSystemMetrics(win32con.SM_CXPADDEDBORDER)
-                                if MissingBorderPixels > 0:
-                                    MissingBorderSize[Index] = MissingBorderPixels
-                                else:
-                                    def IsCompositionEnabled():
-                                        Result = windll.dwmapi.DwmIsCompositionEnabled(byref(c_int(0)))
-                                        return bool(Result.value)
-                                    MissingBorderSize[Index] = round((6 if IsCompositionEnabled() else 3) * Window.devicePixelRatio())
-                            return MissingBorderSize
-                MissingHBorderPixels, MissingVBorderPixels = GetMissingBorderPixels(Message.hWnd)
-                '''
-                MissingHBorderPixels = MissingVBorderPixels = round(6 * self.devicePixelRatio())
-                Rect.left -= MissingHBorderPixels
-                Rect.top -= MissingVBorderPixels
-                Rect.right += MissingHBorderPixels
-                Rect.bottom += MissingVBorderPixels
+                MissingHBorderPixels, MissingVBorderPixels = GetMissingBorderPixels(Message.hWnd) if IsWindowMaximized(Message.hWnd) and not IsWindowFullScreen(Message.hWnd) else (0, 0)
+                Rect.left += MissingHBorderPixels
+                Rect.top += MissingVBorderPixels
+                Rect.right -= MissingHBorderPixels
+                Rect.bottom -= MissingVBorderPixels
+                return True, win32con.WVR_REDRAW
             else:
                 Rect = LPRECT.from_address(Message.lParam)
+                return True, 0
         if Message.message == win32con.WM_NCHITTEST:
-            left   = QCursor.pos().x() - self.x() < self.edge_size
-            top    = QCursor.pos().y() - self.y() < self.edge_size
-            right  = QCursor.pos().x() - self.x() > self.width() - self.edge_size
-            bottom = QCursor.pos().y() - self.y() > self.height() - self.edge_size
+            border_width = self.edge_size if not IsWindowMaximized(Message.hWnd) and not IsWindowFullScreen(Message.hWnd) else 0
+            left   = QCursor.pos().x() - self.x() < border_width
+            top    = QCursor.pos().y() - self.y() < border_width
+            right  = QCursor.pos().x() - self.x() > self.frameGeometry().width() - border_width
+            bottom = QCursor.pos().y() - self.y() > self.frameGeometry().height() - border_width
             if True not in (left, top, right, bottom):
                 pass
             elif left and top:
@@ -318,7 +322,7 @@ class WindowBase:
         hWnd = self.winId()
         Index = win32con.GWL_STYLE
         Value = win32gui.GetWindowLong(hWnd, Index)
-        win32gui.SetWindowLong(hWnd, Index, Value | win32con.WS_THICKFRAME & ~win32con.WS_CAPTION)
+        win32gui.SetWindowLong(hWnd, Index, Value | win32con.WS_THICKFRAME | win32con.WS_CAPTION)
         if not SetStrechable:
             self.edge_size = 0
         if SetDropShadowEffect:
@@ -339,6 +343,15 @@ class WindowBase:
             self.TitleBar = TitleBar
             self.TitleBar.setParent(self) if self.TitleBar.parent() is None else None
             self.TitleBar.raise_() if self.TitleBar.isHidden() else None
+
+    def ShowMask(self, SetVisible: bool, MaskContent: Optional[str] = None) -> None:
+        if SetVisible:
+            self.Mask.raise_() if self.Mask.isHidden() else None
+            self.Mask.setText(MaskContent) if MaskContent is not None else self.Mask.clear()
+            self.Mask.show()
+        else:
+            self.Mask.clear()
+            self.Mask.hide()
 
 
 class MainWindowBase(WindowBase, QMainWindow):
@@ -393,10 +406,27 @@ class ChildWindowBase(WindowBase, QWidget):
         min_width: int = 630,
         min_height: int = 420
     ):
-        QWidget.__init__(self, parent, f)
+        QWidget.__init__(self, None, f) #QWidget.__init__(self, parent, f)
         WindowBase.__init__(self, min_width, min_height)
 
         self.setFrameless()
+
+        self.setWindowModality(Qt.ApplicationModal)
+
+        self.EventLoop = QEventLoop(self)
+
+        self.showed.connect(lambda: parent.ShowMask(True)) if isinstance(parent, WindowBase) else None
+        self.closed.connect(lambda: parent.ShowMask(False)) if isinstance(parent, WindowBase) else None
+
+    def exec(self) -> int:
+        self.show()
+        Result = self.EventLoop.exec()
+        self.closed.emit()
+        return Result
+
+    def closeEvent(self, event: QCloseEvent) -> None:
+        Result = self.EventLoop.exit()
+        super().closeEvent(event)
 
 
 class DialogBase(WindowBase, QDialog):
@@ -408,7 +438,7 @@ class DialogBase(WindowBase, QDialog):
         min_width: int = 630,
         min_height: int = 420
     ):
-        QDialog.__init__(self, parent, f)
+        QDialog.__init__(self, None, f) #QDialog.__init__(self, parent, f)
         WindowBase.__init__(self, min_width, min_height)
 
         self.setFrameless(SetStrechable = False)
@@ -421,6 +451,14 @@ class DialogBase(WindowBase, QDialog):
         self.TitleBar.MaximizeButton.hide()
         self.TitleBar.MaximizeButton.deleteLater()
 
+        self.showed.connect(lambda: parent.ShowMask(True)) if isinstance(parent, WindowBase) else None
+        self.closed.connect(lambda: parent.ShowMask(False)) if isinstance(parent, WindowBase) else None
+
+    def exec(self) -> int:
+        Result = super().exec()
+        self.closed.emit()
+        return Result
+
     def mouseDoubleClickEvent(self, event: QMouseEvent) -> None:
         return
 
@@ -429,5 +467,113 @@ class DialogBase(WindowBase, QDialog):
 
     def ClearDefaultStyleSheet(self) -> None:
         ComponentsSignals.Signal_SetTheme.disconnect(self.InitDefaultStyleSheet)
+
+##############################################################################################################################
+
+class MessageBoxBase(DialogBase):
+    '''
+    '''
+    ClickedButton = None
+
+    StandardButtonDict = {
+        QMessageBox.NoButton:        QDialogButtonBox.NoButton,
+        QMessageBox.Ok:              QDialogButtonBox.Ok,
+        QMessageBox.Cancel:          QDialogButtonBox.Cancel,
+        QMessageBox.Yes:             QDialogButtonBox.Yes,
+        QMessageBox.No:              QDialogButtonBox.No,
+        QMessageBox.Retry:           QDialogButtonBox.Retry,
+        QMessageBox.Ignore:          QDialogButtonBox.Ignore,
+        QMessageBox.Open:            QDialogButtonBox.Open,
+        QMessageBox.Close:           QDialogButtonBox.Close,
+        QMessageBox.Save:            QDialogButtonBox.Save,
+        QMessageBox.Discard:         QDialogButtonBox.Discard,
+        QMessageBox.Apply:           QDialogButtonBox.Apply,
+        QMessageBox.RestoreDefaults: QDialogButtonBox.RestoreDefaults,
+        QMessageBox.Ok | QMessageBox.Cancel:             QDialogButtonBox.Ok | QDialogButtonBox.Cancel,
+        QMessageBox.Yes | QMessageBox.No:                QDialogButtonBox.Yes | QDialogButtonBox.No,
+        QMessageBox.Retry | QMessageBox.Ignore:          QDialogButtonBox.Retry | QDialogButtonBox.Ignore,
+        QMessageBox.Open | QMessageBox.Close:            QDialogButtonBox.Open | QDialogButtonBox.Close,
+        QMessageBox.Save | QMessageBox.Discard:          QDialogButtonBox.Save | QDialogButtonBox.Discard,
+        QMessageBox.Apply | QMessageBox.RestoreDefaults: QDialogButtonBox.Apply | QDialogButtonBox.RestoreDefaults
+    }
+
+    StandardIconDict = {
+        QMessageBox.Question:    QStyle.SP_MessageBoxQuestion,
+        QMessageBox.Information: QStyle.SP_MessageBoxInformation,
+        QMessageBox.Warning:     QStyle.SP_MessageBoxWarning,
+        QMessageBox.Critical:    QStyle.SP_MessageBoxCritical
+    }
+
+    def __init__(self,
+        parent: Optional[QWidget] = None,
+        min_width = 360,
+        min_height = 210
+    ):  
+        super().__init__(parent, Qt.Dialog, min_width, min_height)
+
+        self.PicLabel = QLabel()
+        self.TextLabel = QLabel()
+        PicTextLayout = QHBoxLayout()
+        PicTextLayout.setContentsMargins(0, 0, 0, 0)
+        PicTextLayout.setSpacing(0)
+        PicTextLayout.addWidget(self.PicLabel, stretch = 0)
+        PicTextLayout.addWidget(self.TextLabel, stretch = 1)
+
+        self.ButtonBox = QDialogButtonBox()
+        self.ButtonBox.clicked.connect(self.updateClickedButton)
+        self.ButtonBox.accepted.connect(self.accept)
+        self.ButtonBox.rejected.connect(self.reject)
+        self.ButtonBox.setOrientation(Qt.Horizontal)
+        self.ButtonBox.setStyleSheet("padding: 6px 18px 6px 18px;")
+
+        self.Layout = QVBoxLayout(self)
+        self.Layout.setContentsMargins(21, 12, 21, 12)
+        self.Layout.setSpacing(12)
+        self.Layout.addLayout(PicTextLayout)
+        self.Layout.addWidget(self.ButtonBox)
+
+    def updateClickedButton(self, button: QAbstractButton):
+        self.ClickedButton = FindKey(self.StandardButtonDict, self.ButtonBox.standardButton(button))
+
+    def exec(self) -> int:
+        Result = super().exec()
+        return self.ClickedButton# if self.ClickedButton is not None else Result
+
+    def setStandardButtons(self, buttons: QMessageBox.StandardButton) -> None:
+        buttons = self.StandardButtonDict.get(buttons, buttons)
+        if isinstance(buttons, QMessageBox.StandardButton):
+            pass
+        self.ButtonBox.setStandardButtons(buttons)
+
+    def setWindowIcon(self, icon: Union[QIcon, QPixmap, QStyle.StandardPixmap]) -> None:
+        icon = self.StandardIconDict.get(icon, icon)
+        if isinstance(icon, QStyle.StandardPixmap):
+            icon = QApplication.style().standardIcon(icon)
+        if isinstance(icon, (QIcon, QPixmap)):
+            pass
+        super().setWindowIcon(icon)
+
+    def setIcon(self, icon: Union[QIcon, QPixmap, QStyle.StandardPixmap]) -> None:
+        icon = self.StandardIconDict.get(icon, icon)
+        Length = int(min(self.width(), self.height()) / 6)
+        if isinstance(icon, QStyle.StandardPixmap):
+            standardIcon = QApplication.style().standardIcon(icon)
+            icon = standardIcon.pixmap(standardIcon.actualSize(QSize(Length, Length)))
+        if isinstance(icon, QIcon):
+            icon = icon.pixmap(icon.actualSize(QSize(Length, Length)))
+        if isinstance(icon, QPixmap):
+            pass
+        self.PicLabel.setPixmap(icon)
+
+    def setText(self, text: str, textsize: float = 11.1, textweight: int = 420):
+        Function_SetText(
+            Widget = self.TextLabel,
+            Text = SetRichText(
+                Title = text,
+                TitleSize = textsize,
+                TitleWeight = textweight,
+                TitleAlign = 'center'
+            )
+        )
 
 ##############################################################################################################################

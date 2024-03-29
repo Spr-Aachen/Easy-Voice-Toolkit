@@ -192,6 +192,8 @@ class LineEditBase(QFrame):
     '''
     textChanged = Signal(str)
 
+    rectChanged = Signal(QRect)
+
     def __init__(self, parent: QWidget = None):
         super().__init__(parent)
 
@@ -209,6 +211,27 @@ class LineEditBase(QFrame):
 
         ComponentsSignals.Signal_SetTheme.connect(self.InitDefaultStyleSheet)
         self.InitDefaultStyleSheet('Auto')
+
+        self.Mask = QLabel(self)
+        self.rectChanged.connect(self.Mask.setGeometry)
+        self.Mask.setStyleSheet('background-color: rgba(0, 0, 0, 111);')
+        self.Mask.setAlignment(Qt.AlignCenter)
+        self.Mask.hide()
+
+    def mouseMoveEvent(self, event: QMouseEvent) -> None:
+        self.Mask.hide()
+
+    def moveEvent(self, event: QMoveEvent) -> None:
+        self.rectChanged.emit(self.rect())
+
+    def resizeEvent(self, event: QResizeEvent) -> None:
+        self.rectChanged.emit(self.rect())
+
+    def setAlignment(self, flag: Qt.AlignmentFlag) -> None:
+        self.LineEdit.setAlignment(flag)
+
+    def setReadOnly(self, arg__1: bool) -> None:
+        self.LineEdit.setReadOnly(arg__1)
 
     def clear(self) -> None:
         self.LineEdit.clear()
@@ -246,6 +269,12 @@ class LineEditBase(QFrame):
 
     def ClearDefaultStyleSheet(self) -> None:
         ComponentsSignals.Signal_SetTheme.disconnect(self.InitDefaultStyleSheet)
+
+    def Alert(self, Enable: bool, MaskContent: Optional[str] = None) -> None:
+        AlertStyle = 'LineEditBase {border-color: red;}'
+        self.setStyleSheet((self.styleSheet() + AlertStyle) if Enable else self.styleSheet().replace(AlertStyle, ''))
+        self.Mask.setText(MaskContent) if MaskContent is not None else None
+        self.Mask.show() if Enable else self.Mask.hide()
 
 ##############################################################################################################################
 

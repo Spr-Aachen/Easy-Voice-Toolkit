@@ -5,7 +5,6 @@ from pathlib import Path
 
 from .utils.Creating_Directories import create_directories
 from .utils.Convert_SRT_to_CSV import change_encoding, convert_srt_to_csv
-from .utils.Change_Sample_Rate import preprocess_audio
 from .utils.Split_Audio import split_files
 from .utils.Create_DS_CSV import create_DS_csv
 from .utils.Merge_CSV import merge_csv
@@ -23,19 +22,13 @@ class Dataset_Creating:
     def __init__(self,
         SRT_Dir: str,
         AudioSpeakersData_Path: str,
-        WAV_SampleRate: Optional[Union[int, str]] = 22050,
-        WAV_SampleWidth: Optional[Union[int, str]] = '32 (Float)',
-        WAV_ToMono: bool = False,
         #WAV_Time_Limitation: float = 10.00,
-        DataFormat: str = 'PATH|NAME|[LANG]TEXT[LANG]',
-        Add_AuxiliaryData: bool = False,
-        AuxiliaryData_Path: str = './AuxiliaryData/AuxiliaryData.txt',
-        TrainRatio: float = 0.7,
-        #ToStandaloneForm: bool = False,
+        DataFormat: str = 'PATH|NAME|LANG|TEXT',
+        #Add_AuxiliaryData: bool = False,
+        #AuxiliaryData_Path: str = './AuxiliaryData/AuxiliaryData.txt',
         Output_Root: str = "./",
         Output_DirName: str = "",
-        FileList_Name_Training: str = 'Train_FileList',
-        FileList_Name_Validation: str = 'Val_FileList'
+        FileList_Name: str = 'FileList'
     ):
         self.SRT_Dir = SRT_Dir
         def Get_WAV_Paths_Input():
@@ -52,9 +45,6 @@ class Dataset_Creating:
                     WAV_Paths_Input.append(Audio)
             return WAV_Paths_Input
         self.WAV_Paths_Input = Get_WAV_Paths_Input()
-        self.WAV_SampleRate = eval(WAV_SampleRate) if WAV_SampleRate is not None else None
-        self.WAV_SampleWidth = str(WAV_SampleWidth) if WAV_SampleWidth is not None else None
-        self.WAV_ToMono = WAV_ToMono
         self.WAV_Dir_Split = Path(Output_Root).joinpath(Output_DirName).as_posix()
         def Get_AudioSpeakers():
             AudioSpeakers = {}
@@ -74,11 +64,7 @@ class Dataset_Creating:
         self.AudioSpeakers = Get_AudioSpeakers()
         #self.WAV_Time_Limitation = WAV_Time_Limitation
         self.DataFormat = DataFormat.replace('路径', 'PATH').replace('人名', 'NAME').replace('语言', 'LANG').replace('文本', 'TEXT')
-        self.AuxiliaryData_Path = AuxiliaryData_Path if Add_AuxiliaryData else None
-        self.TrainRatio = TrainRatio
-        self.ToStandaloneForm = True #self.ToStandaloneForm = ToStandaloneForm
-        self.FileList_Path_Training = Path(self.WAV_Dir_Split).joinpath(FileList_Name_Training).as_posix() + ".txt"
-        self.FileList_Path_Validation = Path(self.WAV_Dir_Split).joinpath(FileList_Name_Validation).as_posix() + ".txt"
+        self.FileList_Path = Path(self.WAV_Dir_Split).joinpath(FileList_Name).as_posix() + ".txt"
 
     def CallingFunctions(self):
         SRT_Counter = len(glob(os.path.join(self.SRT_Dir, '*.srt')))
@@ -88,11 +74,10 @@ class Dataset_Creating:
             sys.exit()
 
         # Create directories
-        WAV_Dir_Prepared = './Temp/ready_for_splitting'
         CSV_Dir_Prepared = './Temp/ready_for_merging'
         CSV_Dir_Merged = './Temp/merged_csv'
         CSV_Dir_Final = './Temp/final_csv'
-        create_directories(WAV_Dir_Prepared, self.WAV_Dir_Split, CSV_Dir_Prepared, CSV_Dir_Merged, CSV_Dir_Final)
+        create_directories(self.WAV_Dir_Split, CSV_Dir_Prepared, CSV_Dir_Merged, CSV_Dir_Final)
 
         # Changing encoding from utf-8 to utf-8-sig
         print('Encoding srt_file(s) to utf-8...')
@@ -106,11 +91,6 @@ class Dataset_Creating:
         for File in glob(os.path.join(self.SRT_Dir, '*.srt')):
             convert_srt_to_csv(File, CSV_Dir_Prepared)
         print('%s-file(s) converted and saved as csv-files to ./csv' %SRT_Counter)
-        print('---------------------------------------------------------------------')
-
-        # Pre-process audio for folder in which wav files are stored
-        preprocess_audio(self.WAV_Paths_Input, self.WAV_SampleRate, self.WAV_SampleWidth, self.WAV_ToMono, WAV_Dir_Prepared)
-        print('Pre-processing of audio files is complete.')
         print('---------------------------------------------------------------------')
 
         # Now slice audio according to start- and end-times in csv
@@ -142,12 +122,12 @@ class Dataset_Creating:
         print('---------------------------------------------------------------------')
 
         # Write transcript to text-file for model training
-        Transcript_Writer(self.AudioSpeakers, self.DataFormat, CSV_Path_Final_Cleaned, self.AuxiliaryData_Path, self.TrainRatio, self.ToStandaloneForm, self.WAV_Dir_Split, self.FileList_Path_Training, self.FileList_Path_Validation)
+        Transcript_Writer(self.AudioSpeakers, self.DataFormat, CSV_Path_Final_Cleaned, self.WAV_Dir_Split, self.FileList_Path)
         print('Transcript written.')
         print('---------------------------------------------------------------------')
 
         # Now remove the created folders
-        for folders in [WAV_Dir_Prepared, CSV_Dir_Prepared, CSV_Dir_Merged, CSV_Dir_Final]:
+        for folders in [CSV_Dir_Prepared, CSV_Dir_Merged, CSV_Dir_Final]:
             shutil.rmtree(folders, ignore_errors = True)
         print('Temp files removed.')
         print('********************************************** FINISHED ************************************************')

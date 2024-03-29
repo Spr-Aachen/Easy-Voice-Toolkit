@@ -129,17 +129,18 @@ class Voice_Transcribing:
     def __init__(self,
         Model_Path: str = './Models/.pt',
         Audio_Dir: str = './WAV_Files',
-        SRT_Dir: str = './SRT_Files',
         Verbose: str2bool = True,
         Add_LanguageInfo: bool = True,
         Condition_on_Previous_Text: str2bool = False,
         fp16: str2bool = True,
+        Output_Root: str = './',
+        Output_Name: str = 'SRT_Files'
     ):
         self.Model_Name = Path(Model_Path).stem.__str__() # name of the Whisper model to use    choices = available_models()
         self.Model_Dir = Path(Model_Path).parent.__str__() # the path to save model files; uses ~/.cache/whisper by default
         self.Device: str = "cuda" if torch.cuda.is_available() else "cpu" # device to use for PyTorch inference
         self.Audio_Dir = Audio_Dir # the path to save audio files
-        self.SRT_Dir = SRT_Dir # help = "directory to save the outputs
+        self.SRT_Dir = Path(Output_Root).joinpath(Output_Name).as_posix() # help = "directory to save the outputs
         self.Verbose = Verbose # whether to print out the progress and debug messages
         self.Task = 'transcribe' # whether to perform X->X speech recognition ('transcribe') or X->English translation ('translate')
         self.Language = None # language spoken in the audio, specify None to perform language detection

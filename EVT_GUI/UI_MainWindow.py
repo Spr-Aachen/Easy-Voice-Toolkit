@@ -2310,10 +2310,59 @@ class Ui_MainWindow(object):
 "	border-width: 0px;\n"
 "	border-style: solid;\n"
 "}")
-        self.horizontalLayout_99 = QHBoxLayout(self.Frame_Models_Top)
-        self.horizontalLayout_99.setSpacing(0)
-        self.horizontalLayout_99.setObjectName(u"horizontalLayout_99")
-        self.horizontalLayout_99.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_18 = QHBoxLayout(self.Frame_Models_Top)
+        self.horizontalLayout_18.setSpacing(0)
+        self.horizontalLayout_18.setObjectName(u"horizontalLayout_18")
+        self.horizontalLayout_18.setContentsMargins(0, 0, 0, 0)
+        self.ToolButton_Models_Process_Title = QToolButton(self.Frame_Models_Top)
+        self.ToolButton_Models_Process_Title.setObjectName(u"ToolButton_Models_Process_Title")
+        sizePolicy1.setHeightForWidth(self.ToolButton_Models_Process_Title.sizePolicy().hasHeightForWidth())
+        self.ToolButton_Models_Process_Title.setSizePolicy(sizePolicy1)
+        self.ToolButton_Models_Process_Title.setStyleSheet(u"QToolButton {\n"
+"	font-size: 24px;\n"
+"	/*text-align: center;*/\n"
+"	color: rgba(201, 210, 222, 210);\n"
+"	padding-left: 12px;\n"
+"	padding-right: 12px;\n"
+"	background-color: transparent;\n"
+"	border-top-width: 0px;\n"
+"	border-right-width: 0px;\n"
+"	border-bottom-width: 3px;\n"
+"	border-left-width: 0px;\n"
+"	border-style: solid;\n"
+"	border-bottom-color: rgba(123, 123, 123, 123);\n"
+"}\n"
+"QToolButton:hover {\n"
+"	color: rgba(210, 222, 234, 234);\n"
+"	background-color: transparent;\n"
+"	border-top-width: 0px;\n"
+"	border-right-width: 0px;\n"
+"	border-bottom-width: 3px;\n"
+"	border-left-width: 0px;\n"
+"	border-style: solid;\n"
+"	border-bottom-color: rgba(120, 180, 240, 123);\n"
+"}\n"
+"QToolButton:checked {\n"
+"	color: rgba(210, 222, 234, 255);\n"
+"	background-color: transparent;\n"
+"	border-top-width: 0px;\n"
+"	border-right-width: 0px;\n"
+"	border-bottom-width: 3px;\n"
+"	border-left-width: 0px;\n"
+"	border-style: solid;\n"
+"	border-bottom-color: rgba(120, 180, 240, 210);\n"
+"}\n"
+"\n"
+"QToolTip {\n"
+"	color:"
+                        " rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.horizontalLayout_18.addWidget(self.ToolButton_Models_Process_Title)
+
         self.ToolButton_Models_ASR_Title = QToolButton(self.Frame_Models_Top)
         self.ToolButton_Models_ASR_Title.setObjectName(u"ToolButton_Models_ASR_Title")
         sizePolicy1.setHeightForWidth(self.ToolButton_Models_ASR_Title.sizePolicy().hasHeightForWidth())
@@ -2361,7 +2410,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}")
 
-        self.horizontalLayout_99.addWidget(self.ToolButton_Models_ASR_Title)
+        self.horizontalLayout_18.addWidget(self.ToolButton_Models_ASR_Title)
 
         self.ToolButton_Models_STT_Title = QToolButton(self.Frame_Models_Top)
         self.ToolButton_Models_STT_Title.setObjectName(u"ToolButton_Models_STT_Title")
@@ -2410,7 +2459,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}")
 
-        self.horizontalLayout_99.addWidget(self.ToolButton_Models_STT_Title)
+        self.horizontalLayout_18.addWidget(self.ToolButton_Models_STT_Title)
 
         self.ToolButton_Models_TTS_Title = QToolButton(self.Frame_Models_Top)
         self.ToolButton_Models_TTS_Title.setObjectName(u"ToolButton_Models_TTS_Title")
@@ -2459,7 +2508,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}")
 
-        self.horizontalLayout_99.addWidget(self.ToolButton_Models_TTS_Title)
+        self.horizontalLayout_18.addWidget(self.ToolButton_Models_TTS_Title)
 
         self.Frame_Models_Title_Spacer = QLabel(self.Frame_Models_Top)
         self.Frame_Models_Title_Spacer.setObjectName(u"Frame_Models_Title_Spacer")
@@ -2480,7 +2529,7 @@ class Ui_MainWindow(object):
 "	border-bottom-color: rgba(123, 123, 123, 123);\n"
 "}")
 
-        self.horizontalLayout_99.addWidget(self.Frame_Models_Title_Spacer)
+        self.horizontalLayout_18.addWidget(self.Frame_Models_Title_Spacer)
 
 
         self.verticalLayout_244.addWidget(self.Frame_Models_Top)
@@ -2530,6 +2579,58 @@ class Ui_MainWindow(object):
 "QTabBar QToolButton:hover {\n"
 "}\n"
 "*/")
+        self.SubPage_Models_Process = QWidget()
+        self.SubPage_Models_Process.setObjectName(u"SubPage_Models_Process")
+        self.gridLayout_102 = QGridLayout(self.SubPage_Models_Process)
+        self.gridLayout_102.setSpacing(12)
+        self.gridLayout_102.setObjectName(u"gridLayout_102")
+        self.gridLayout_102.setContentsMargins(0, 0, 0, 0)
+        self.TabWidget_Models_Process = QTabWidget(self.SubPage_Models_Process)
+        self.TabWidget_Models_Process.setObjectName(u"TabWidget_Models_Process")
+        self.TabWidget_Models_Process.setStyleSheet(u"QTabBar::tab {\n"
+"    min-width: 84px;\n"
+"	min-height: 42px;\n"
+"	font-size: 21px;\n"
+"	/*text-align: center;*/\n"
+"	color: rgba(201, 210, 222, 210);\n"
+"	padding-left: 12px;\n"
+"	padding-right: 12px;\n"
+"	background-color: transparent;\n"
+"    border-width: 1.2px;\n"
+"	border-style: solid;\n"
+"	border-color: rgba(123, 123, 123, 123);\n"
+"}\n"
+"QTabBar::tab:hover, QTabBar::tab:selected {\n"
+"	color: rgba(210, 222, 234, 234);\n"
+"	background-color: rgba(36, 36, 36, 123);\n"
+"}\n"
+"\n"
+"\n"
+"QTabWidget::tab-bar {\n"
+"    alignment: left;\n"
+"}\n"
+"QTabWidget::pane {\n"
+"	background: rgba(36, 36, 36, 123);;\n"
+"    border-width: 1.2px;\n"
+"	border-style: solid;\n"
+"	border-color: rgba(123, 123, 123, 123);\n"
+"}")
+        self.Tab_Models_Process_UVR = QWidget()
+        self.Tab_Models_Process_UVR.setObjectName(u"Tab_Models_Process_UVR")
+        self.verticalLayout_75 = QVBoxLayout(self.Tab_Models_Process_UVR)
+        self.verticalLayout_75.setSpacing(0)
+        self.verticalLayout_75.setObjectName(u"verticalLayout_75")
+        self.verticalLayout_75.setContentsMargins(0, 0, 0, 0)
+        self.Table_Models_Process_UVR = Table_ViewModels(self.Tab_Models_Process_UVR)
+        self.Table_Models_Process_UVR.setObjectName(u"Table_Models_Process_UVR")
+
+        self.verticalLayout_75.addWidget(self.Table_Models_Process_UVR)
+
+        self.TabWidget_Models_Process.addTab(self.Tab_Models_Process_UVR, "")
+
+        self.gridLayout_102.addWidget(self.TabWidget_Models_Process, 0, 0, 1, 1)
+
+        self.StackedWidget_Pages_Models.addWidget(self.SubPage_Models_Process)
         self.SubPage_Models_ASR = QWidget()
         self.SubPage_Models_ASR.setObjectName(u"SubPage_Models_ASR")
         self.gridLayout_7 = QGridLayout(self.SubPage_Models_ASR)
@@ -2670,6 +2771,18 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "	border-color: rgba(123, 123, 123, 123);\n"
 "}")
+        self.Tab_Models_TTS_GPTSoVITS = QWidget()
+        self.Tab_Models_TTS_GPTSoVITS.setObjectName(u"Tab_Models_TTS_GPTSoVITS")
+        self.verticalLayout_72 = QVBoxLayout(self.Tab_Models_TTS_GPTSoVITS)
+        self.verticalLayout_72.setSpacing(0)
+        self.verticalLayout_72.setObjectName(u"verticalLayout_72")
+        self.verticalLayout_72.setContentsMargins(0, 0, 0, 0)
+        self.Table_Models_TTS_GPTSoVITS = Table_ViewModels(self.Tab_Models_TTS_GPTSoVITS)
+        self.Table_Models_TTS_GPTSoVITS.setObjectName(u"Table_Models_TTS_GPTSoVITS")
+
+        self.verticalLayout_72.addWidget(self.Table_Models_TTS_GPTSoVITS)
+
+        self.TabWidget_Models_TTS.addTab(self.Tab_Models_TTS_GPTSoVITS, "")
         self.Tab_Models_TTS_VITS = QWidget()
         self.Tab_Models_TTS_VITS.setObjectName(u"Tab_Models_TTS_VITS")
         self.verticalLayout_38 = QVBoxLayout(self.Tab_Models_TTS_VITS)
@@ -3049,7 +3162,7 @@ class Ui_MainWindow(object):
         self.ScrollArea_Middle_Process.setWidgetResizable(True)
         self.ScrollArea_Middle_WidgetContents_Process = QWidget()
         self.ScrollArea_Middle_WidgetContents_Process.setObjectName(u"ScrollArea_Middle_WidgetContents_Process")
-        self.ScrollArea_Middle_WidgetContents_Process.setGeometry(QRect(0, 0, 591, 1484))
+        self.ScrollArea_Middle_WidgetContents_Process.setGeometry(QRect(0, 0, 591, 1867))
         self.verticalLayout_14 = QVBoxLayout(self.ScrollArea_Middle_WidgetContents_Process)
         self.verticalLayout_14.setSpacing(12)
         self.verticalLayout_14.setObjectName(u"verticalLayout_14")
@@ -3163,9 +3276,9 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_14.addWidget(self.GroupBox_Process_InputParams)
 
-        self.GroupBox_Process_AudioSlicerParams = QGroupBox(self.ScrollArea_Middle_WidgetContents_Process)
-        self.GroupBox_Process_AudioSlicerParams.setObjectName(u"GroupBox_Process_AudioSlicerParams")
-        self.GroupBox_Process_AudioSlicerParams.setStyleSheet(u"QGroupBox {\n"
+        self.GroupBox_Process_DenoiserParams = QGroupBox(self.ScrollArea_Middle_WidgetContents_Process)
+        self.GroupBox_Process_DenoiserParams.setObjectName(u"GroupBox_Process_DenoiserParams")
+        self.GroupBox_Process_DenoiserParams.setStyleSheet(u"QGroupBox {\n"
 "	font-size: 15px;\n"
 "	margin-top: 1.5ex;\n"
 "	color: rgb(255, 255, 255);\n"
@@ -3181,17 +3294,475 @@ class Ui_MainWindow(object):
 "	subcontrol-position: top left;\n"
 "	padding: 3px;\n"
 "}")
-        self.verticalLayout_186 = QVBoxLayout(self.GroupBox_Process_AudioSlicerParams)
+        self.verticalLayout_74 = QVBoxLayout(self.GroupBox_Process_DenoiserParams)
+        self.verticalLayout_74.setSpacing(0)
+        self.verticalLayout_74.setObjectName(u"verticalLayout_74")
+        self.verticalLayout_74.setContentsMargins(0, 12, 0, 12)
+        self.Frame_Process_DenoiserParams_BasicSettings = QFrame(self.GroupBox_Process_DenoiserParams)
+        self.Frame_Process_DenoiserParams_BasicSettings.setObjectName(u"Frame_Process_DenoiserParams_BasicSettings")
+        self.verticalLayout_73 = QVBoxLayout(self.Frame_Process_DenoiserParams_BasicSettings)
+        self.verticalLayout_73.setSpacing(0)
+        self.verticalLayout_73.setObjectName(u"verticalLayout_73")
+        self.verticalLayout_73.setContentsMargins(0, 0, 0, 0)
+        self.Frame_Process_DenoiseAudio = QFrame(self.Frame_Process_DenoiserParams_BasicSettings)
+        self.Frame_Process_DenoiseAudio.setObjectName(u"Frame_Process_DenoiseAudio")
+        self.Frame_Process_DenoiseAudio.setMinimumSize(QSize(0, 105))
+        self.Frame_Process_DenoiseAudio.setStyleSheet(u"QFrame {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QFrame:hover {\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
+"}")
+        self.gridLayout_90 = QGridLayout(self.Frame_Process_DenoiseAudio)
+        self.gridLayout_90.setSpacing(12)
+        self.gridLayout_90.setObjectName(u"gridLayout_90")
+        self.gridLayout_90.setContentsMargins(21, 12, 21, 12)
+        self.Label_Process_DenoiseAudio = QLabel(self.Frame_Process_DenoiseAudio)
+        self.Label_Process_DenoiseAudio.setObjectName(u"Label_Process_DenoiseAudio")
+        sizePolicy5.setHeightForWidth(self.Label_Process_DenoiseAudio.sizePolicy().hasHeightForWidth())
+        self.Label_Process_DenoiseAudio.setSizePolicy(sizePolicy5)
+        self.Label_Process_DenoiseAudio.setStyleSheet(u"QLabel {\n"
+"	/*text-align: center;*/\n"
+"	/*color: rgb(255, 255, 255);*/\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_90.addWidget(self.Label_Process_DenoiseAudio, 0, 0, 1, 1)
+
+        self.HorizontalSpacer_Process_DenoiseAudio = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.gridLayout_90.addItem(self.HorizontalSpacer_Process_DenoiseAudio, 0, 1, 1, 1)
+
+        self.Button_Process_DenoiseAudio_Undo = QPushButton(self.Frame_Process_DenoiseAudio)
+        self.Button_Process_DenoiseAudio_Undo.setObjectName(u"Button_Process_DenoiseAudio_Undo")
+        self.Button_Process_DenoiseAudio_Undo.setMinimumSize(QSize(27, 27))
+        self.Button_Process_DenoiseAudio_Undo.setMaximumSize(QSize(27, 27))
+        self.Button_Process_DenoiseAudio_Undo.setStyleSheet(u"QPushButton {\n"
+"	image: url(:/Button_Icon/Sources/Undo.png);\n"
+"	background-color: transparent;\n"
+"	padding: 4.5px;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgba(201, 210, 222, 123);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgba(201, 210, 222, 210);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_90.addWidget(self.Button_Process_DenoiseAudio_Undo, 0, 2, 1, 1)
+
+        self.CheckBox_Process_DenoiseAudio = QCheckBox(self.Frame_Process_DenoiseAudio)
+        self.CheckBox_Process_DenoiseAudio.setObjectName(u"CheckBox_Process_DenoiseAudio")
+        self.CheckBox_Process_DenoiseAudio.setMinimumSize(QSize(0, 27))
+        self.CheckBox_Process_DenoiseAudio.setStyleSheet(u"QCheckBox {\n"
+"	font-size: 12px;\n"
+"	spacing: 12.3px;\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QCheckBox:hover {\n"
+"	color: rgb(255, 255, 255);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator {\n"
+"	width: 24px;\n"
+"	height: 24px;\n"
+"    background-color: transparent;\n"
+"	padding: 1.2px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QCheckBox::indicator:hover {\n"
+"	background-color: rgba(255, 255, 255, 21);\n"
+"}\n"
+"QCheckBox::indicator:unchecked {\n"
+"	border-image: url(:/CheckBox_Icon/Sources/ToggleOff.png);\n"
+"}\n"
+"QCheckBox::indicator:checked {\n"
+"	border-image: url(:/CheckBox_Icon/Sources/ToggleOn.png);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_90.addWidget(self.CheckBox_Process_DenoiseAudio, 1, 0, 1, 3)
+
+
+        self.verticalLayout_73.addWidget(self.Frame_Process_DenoiseAudio)
+
+        self.Frame_Process_DenoiseModelPath = QFrame(self.Frame_Process_DenoiserParams_BasicSettings)
+        self.Frame_Process_DenoiseModelPath.setObjectName(u"Frame_Process_DenoiseModelPath")
+        self.Frame_Process_DenoiseModelPath.setMinimumSize(QSize(0, 105))
+        self.Frame_Process_DenoiseModelPath.setStyleSheet(u"QFrame {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QFrame:hover {\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
+"}")
+        self.gridLayout_92 = QGridLayout(self.Frame_Process_DenoiseModelPath)
+        self.gridLayout_92.setSpacing(12)
+        self.gridLayout_92.setObjectName(u"gridLayout_92")
+        self.gridLayout_92.setContentsMargins(21, 12, 21, 12)
+        self.Label_Process_DenoiseModelPath = QLabel(self.Frame_Process_DenoiseModelPath)
+        self.Label_Process_DenoiseModelPath.setObjectName(u"Label_Process_DenoiseModelPath")
+        sizePolicy5.setHeightForWidth(self.Label_Process_DenoiseModelPath.sizePolicy().hasHeightForWidth())
+        self.Label_Process_DenoiseModelPath.setSizePolicy(sizePolicy5)
+        self.Label_Process_DenoiseModelPath.setStyleSheet(u"QLabel {\n"
+"	/*text-align: center;*/\n"
+"	/*color: rgb(255, 255, 255);*/\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_92.addWidget(self.Label_Process_DenoiseModelPath, 0, 0, 1, 1)
+
+        self.HorizontalSpacer_Process_DenoiseModelPath = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.gridLayout_92.addItem(self.HorizontalSpacer_Process_DenoiseModelPath, 0, 1, 1, 1)
+
+        self.Button_Process_DenoiseModelPath_Undo = QPushButton(self.Frame_Process_DenoiseModelPath)
+        self.Button_Process_DenoiseModelPath_Undo.setObjectName(u"Button_Process_DenoiseModelPath_Undo")
+        self.Button_Process_DenoiseModelPath_Undo.setMinimumSize(QSize(27, 27))
+        self.Button_Process_DenoiseModelPath_Undo.setMaximumSize(QSize(27, 27))
+        self.Button_Process_DenoiseModelPath_Undo.setStyleSheet(u"QPushButton {\n"
+"	image: url(:/Button_Icon/Sources/Undo.png);\n"
+"	background-color: transparent;\n"
+"	padding: 4.5px;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgba(201, 210, 222, 123);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgba(201, 210, 222, 210);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_92.addWidget(self.Button_Process_DenoiseModelPath_Undo, 0, 2, 1, 1)
+
+        self.LineEdit_Process_DenoiseModelPath = LineEditBase(self.Frame_Process_DenoiseModelPath)
+        self.LineEdit_Process_DenoiseModelPath.setObjectName(u"LineEdit_Process_DenoiseModelPath")
+        self.LineEdit_Process_DenoiseModelPath.setMinimumSize(QSize(0, 27))
+
+        self.gridLayout_92.addWidget(self.LineEdit_Process_DenoiseModelPath, 1, 0, 1, 3)
+
+
+        self.verticalLayout_73.addWidget(self.Frame_Process_DenoiseModelPath)
+
+        self.Frame_Process_DenoiseTarget = QFrame(self.Frame_Process_DenoiserParams_BasicSettings)
+        self.Frame_Process_DenoiseTarget.setObjectName(u"Frame_Process_DenoiseTarget")
+        self.Frame_Process_DenoiseTarget.setMinimumSize(QSize(0, 105))
+        self.Frame_Process_DenoiseTarget.setStyleSheet(u"QFrame {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QFrame:hover {\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
+"}")
+        self.gridLayout_94 = QGridLayout(self.Frame_Process_DenoiseTarget)
+        self.gridLayout_94.setSpacing(12)
+        self.gridLayout_94.setObjectName(u"gridLayout_94")
+        self.gridLayout_94.setContentsMargins(21, 12, 21, 12)
+        self.Label_Process_DenoiseTarget = QLabel(self.Frame_Process_DenoiseTarget)
+        self.Label_Process_DenoiseTarget.setObjectName(u"Label_Process_DenoiseTarget")
+        sizePolicy5.setHeightForWidth(self.Label_Process_DenoiseTarget.sizePolicy().hasHeightForWidth())
+        self.Label_Process_DenoiseTarget.setSizePolicy(sizePolicy5)
+        self.Label_Process_DenoiseTarget.setStyleSheet(u"QLabel {\n"
+"	/*text-align: center;*/\n"
+"	/*color: rgb(255, 255, 255);*/\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_94.addWidget(self.Label_Process_DenoiseTarget, 0, 0, 1, 1)
+
+        self.HorizontalSpacer_Process_DenoiseTarget = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.gridLayout_94.addItem(self.HorizontalSpacer_Process_DenoiseTarget, 0, 1, 1, 1)
+
+        self.Button_Process_DenoiseTarget_Undo = QPushButton(self.Frame_Process_DenoiseTarget)
+        self.Button_Process_DenoiseTarget_Undo.setObjectName(u"Button_Process_DenoiseTarget_Undo")
+        self.Button_Process_DenoiseTarget_Undo.setMinimumSize(QSize(27, 27))
+        self.Button_Process_DenoiseTarget_Undo.setMaximumSize(QSize(27, 27))
+        self.Button_Process_DenoiseTarget_Undo.setStyleSheet(u"QPushButton {\n"
+"	image: url(:/Button_Icon/Sources/Undo.png);\n"
+"	background-color: transparent;\n"
+"	padding: 4.5px;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgba(201, 210, 222, 123);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgba(201, 210, 222, 210);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_94.addWidget(self.Button_Process_DenoiseTarget_Undo, 0, 2, 1, 1)
+
+        self.ComboBox_Process_DenoiseTarget = QComboBox(self.Frame_Process_DenoiseTarget)
+        self.ComboBox_Process_DenoiseTarget.setObjectName(u"ComboBox_Process_DenoiseTarget")
+        self.ComboBox_Process_DenoiseTarget.setMinimumSize(QSize(0, 27))
+        self.ComboBox_Process_DenoiseTarget.setStyleSheet(u"QComboBox {\n"
+"	/*font-size: 12px;*/\n"
+"	text-align: left;\n"
+"	background-color: transparent;\n"
+"	padding-top: 3px;\n"
+"	padding-left: 6px;\n"
+"	padding-bottom: 3px;\n"
+"	padding-right: 6px;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgba(201, 210, 222, 123);\n"
+"}\n"
+"QComboBox:hover {\n"
+"	border-color: rgba(201, 210, 222, 210);\n"
+"}\n"
+"\n"
+"QComboBox::drop-down {\n"
+"	/*width: 12px;\n"
+"	height: 12px;*/\n"
+"	subcontrol-origin: padding;\n"
+"	subcontrol-position: right;\n"
+"	margin-right: 6px;\n"
+"	border: none;\n"
+"}\n"
+"\n"
+"QComboBox::down-arrow {\n"
+"	border-image: url(:/ComboBox_Icon/Sources/DownArrow.png);\n"
+"}\n"
+"QComboBox::down-arrow:on {\n"
+"	border-image: url(:/ComboBox_Icon/Sources/UpArrow.png);\n"
+"}\n"
+"\n"
+"\n"
+"QComboBox QAbstractItemView {\n"
+"	outline: none;\n"
+"	background-color: transparent;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgba(201, 210, 222, 123);\n"
+"}\n"
+"\n"
+"QCom"
+                        "boBox QAbstractItemView::item {\n"
+"	/* height: 30px; */\n"
+"	background-color: transparent;\n"
+"	padding-top: 3px;\n"
+"	padding-left: 6px;\n"
+"	padding-bottom: 3px;\n"
+"	padding-right: 6px;\n"
+"	border: none;\n"
+"}\n"
+"QComboBox QAbstractItemView::item:hover {\n"
+"	background-color: rgba(120, 120, 120, 120);\n"
+"}\n"
+"QComboBox QAbstractItemView::item:selected {\n"
+"	background-color: rgba(120, 120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QComboBox QAbstractScrollArea QScrollBar::vertical {\n"
+"	width: 9px;\n"
+"	background-color: rgb(45, 45, 45);\n"
+"	border-width: 1px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: transparent;\n"
+"	margin: 0px;\n"
+"}\n"
+"QComboBox QAbstractScrollArea QScrollBar::vertical:hover {\n"
+"	background-color: rgb(60, 60, 60);\n"
+"}\n"
+"\n"
+"QComboBox QAbstractScrollArea QScrollBar::add-line:vertical {\n"
+"	height: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: left;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+""
+                        "	border-style: solid;\n"
+"}\n"
+"\n"
+"QComboBox QAbstractScrollArea QScrollBar::sub-line:vertical {\n"
+"	height: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: right;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QComboBox QAbstractScrollArea QScrollBar::add-page:vertical, QComboBox QAbstractScrollArea QScrollBar::sub-page:vertical {\n"
+"	width: 0px;\n"
+"	height: 0px;\n"
+"	background-color: transparent;\n"
+"}\n"
+"\n"
+"QComboBox QAbstractScrollArea QScrollBar::handle:vertical {\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QComboBox QAbstractScrollArea QScrollBar::handle:vertical:hover {\n"
+"	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QComboBox QAbstractScrollArea QScrollBar::horizontal {\n"
+"	height: 9px;\n"
+"	background-color: rgb(45, 45, 45);\n"
+"	border-width: 1px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	borde"
+                        "r-color: transparent;\n"
+"	margin: 0px;\n"
+"}\n"
+"QComboBox QAbstractScrollArea QScrollBar::horizontal:hover {\n"
+"	background-color: rgb(60, 60, 60);\n"
+"}\n"
+"\n"
+"QComboBox QAbstractScrollArea QScrollBar::add-line:horizontal {\n"
+"	width: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: left;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QComboBox QAbstractScrollArea QScrollBar::sub-line:horizontal {\n"
+"	width: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: right;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QComboBox QAbstractScrollArea QScrollBar::add-page:horizontal, QComboBox QAbstractScrollArea QScrollBar::sub-page:horizontal {\n"
+"	width: 0px;\n"
+"	height: 0px;\n"
+"	background-color: transparent;\n"
+"}\n"
+"\n"
+"QComboBox QAbstractScrollArea QScrollBar::handle:horizontal {\n"
+"	background-color: transparent;\n"
+"	"
+                        "border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QComboBox QAbstractScrollArea QScrollBar::handle:horizontal:hover {\n"
+"	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_94.addWidget(self.ComboBox_Process_DenoiseTarget, 1, 0, 1, 3)
+
+
+        self.verticalLayout_73.addWidget(self.Frame_Process_DenoiseTarget)
+
+
+        self.verticalLayout_74.addWidget(self.Frame_Process_DenoiserParams_BasicSettings)
+
+
+        self.verticalLayout_14.addWidget(self.GroupBox_Process_DenoiserParams)
+
+        self.GroupBox_Process_SlicerParams = QGroupBox(self.ScrollArea_Middle_WidgetContents_Process)
+        self.GroupBox_Process_SlicerParams.setObjectName(u"GroupBox_Process_SlicerParams")
+        self.GroupBox_Process_SlicerParams.setStyleSheet(u"QGroupBox {\n"
+"	font-size: 15px;\n"
+"	margin-top: 1.5ex;\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: transparent;\n"
+"	border-width: 1px;\n"
+"	border-style: solid;\n"
+"	border-color: transparent;\n"
+"}\n"
+"QGroupBox::title {\n"
+"	left: 9px;\n"
+"	margin-left: 0px;\n"
+"	subcontrol-origin: margin;\n"
+"	subcontrol-position: top left;\n"
+"	padding: 3px;\n"
+"}")
+        self.verticalLayout_186 = QVBoxLayout(self.GroupBox_Process_SlicerParams)
         self.verticalLayout_186.setSpacing(0)
         self.verticalLayout_186.setObjectName(u"verticalLayout_186")
         self.verticalLayout_186.setContentsMargins(0, 12, 0, 12)
-        self.Frame_Process_AudioSlicerParams_BasicSettings = QFrame(self.GroupBox_Process_AudioSlicerParams)
-        self.Frame_Process_AudioSlicerParams_BasicSettings.setObjectName(u"Frame_Process_AudioSlicerParams_BasicSettings")
-        self.verticalLayout_51 = QVBoxLayout(self.Frame_Process_AudioSlicerParams_BasicSettings)
-        self.verticalLayout_51.setSpacing(0)
+        self.Frame_Process_SlicerParams_BasicSettings = QFrame(self.GroupBox_Process_SlicerParams)
+        self.Frame_Process_SlicerParams_BasicSettings.setObjectName(u"Frame_Process_SlicerParams_BasicSettings")
+        self.verticalLayout_51 = QVBoxLayout(self.Frame_Process_SlicerParams_BasicSettings)
         self.verticalLayout_51.setObjectName(u"verticalLayout_51")
-        self.verticalLayout_51.setContentsMargins(0, 0, 0, 0)
-        self.Frame_Process_SliceAudio = QFrame(self.Frame_Process_AudioSlicerParams_BasicSettings)
+        self.Frame_Process_SliceAudio = QFrame(self.Frame_Process_SlicerParams_BasicSettings)
         self.Frame_Process_SliceAudio.setObjectName(u"Frame_Process_SliceAudio")
         self.Frame_Process_SliceAudio.setMinimumSize(QSize(0, 105))
         self.Frame_Process_SliceAudio.setStyleSheet(u"QFrame {\n"
@@ -3304,11 +3875,11 @@ class Ui_MainWindow(object):
         self.verticalLayout_51.addWidget(self.Frame_Process_SliceAudio)
 
 
-        self.verticalLayout_186.addWidget(self.Frame_Process_AudioSlicerParams_BasicSettings)
+        self.verticalLayout_186.addWidget(self.Frame_Process_SlicerParams_BasicSettings)
 
-        self.CheckBox_Process_AudioSlicerParams_Toggle_AdvanceSettings = QCheckBox(self.GroupBox_Process_AudioSlicerParams)
-        self.CheckBox_Process_AudioSlicerParams_Toggle_AdvanceSettings.setObjectName(u"CheckBox_Process_AudioSlicerParams_Toggle_AdvanceSettings")
-        self.CheckBox_Process_AudioSlicerParams_Toggle_AdvanceSettings.setStyleSheet(u"QCheckBox {\n"
+        self.CheckBox_Process_SlicerParams_Toggle_AdvanceSettings = QCheckBox(self.GroupBox_Process_SlicerParams)
+        self.CheckBox_Process_SlicerParams_Toggle_AdvanceSettings.setObjectName(u"CheckBox_Process_SlicerParams_Toggle_AdvanceSettings")
+        self.CheckBox_Process_SlicerParams_Toggle_AdvanceSettings.setStyleSheet(u"QCheckBox {\n"
 "	font-size: 12px;\n"
 "	font-weight: 630;\n"
 "	spacing: 12px;\n"
@@ -3350,15 +3921,15 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}")
 
-        self.verticalLayout_186.addWidget(self.CheckBox_Process_AudioSlicerParams_Toggle_AdvanceSettings)
+        self.verticalLayout_186.addWidget(self.CheckBox_Process_SlicerParams_Toggle_AdvanceSettings)
 
-        self.Frame_Process_AudioSlicerParams_AdvanceSettings = QFrame(self.GroupBox_Process_AudioSlicerParams)
-        self.Frame_Process_AudioSlicerParams_AdvanceSettings.setObjectName(u"Frame_Process_AudioSlicerParams_AdvanceSettings")
-        self.verticalLayout_54 = QVBoxLayout(self.Frame_Process_AudioSlicerParams_AdvanceSettings)
+        self.Frame_Process_SlicerParams_AdvanceSettings = QFrame(self.GroupBox_Process_SlicerParams)
+        self.Frame_Process_SlicerParams_AdvanceSettings.setObjectName(u"Frame_Process_SlicerParams_AdvanceSettings")
+        self.verticalLayout_54 = QVBoxLayout(self.Frame_Process_SlicerParams_AdvanceSettings)
         self.verticalLayout_54.setSpacing(0)
         self.verticalLayout_54.setObjectName(u"verticalLayout_54")
         self.verticalLayout_54.setContentsMargins(0, 0, 0, 0)
-        self.Frame_Process_RMSThreshold = QFrame(self.Frame_Process_AudioSlicerParams_AdvanceSettings)
+        self.Frame_Process_RMSThreshold = QFrame(self.Frame_Process_SlicerParams_AdvanceSettings)
         self.Frame_Process_RMSThreshold.setObjectName(u"Frame_Process_RMSThreshold")
         self.Frame_Process_RMSThreshold.setMinimumSize(QSize(0, 105))
         self.Frame_Process_RMSThreshold.setStyleSheet(u"QFrame {\n"
@@ -3484,7 +4055,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_54.addWidget(self.Frame_Process_RMSThreshold)
 
-        self.Frame_Process_AudioLengthMin = QFrame(self.Frame_Process_AudioSlicerParams_AdvanceSettings)
+        self.Frame_Process_AudioLengthMin = QFrame(self.Frame_Process_SlicerParams_AdvanceSettings)
         self.Frame_Process_AudioLengthMin.setObjectName(u"Frame_Process_AudioLengthMin")
         self.Frame_Process_AudioLengthMin.setMinimumSize(QSize(0, 105))
         self.Frame_Process_AudioLengthMin.setStyleSheet(u"QFrame {\n"
@@ -3609,7 +4180,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_54.addWidget(self.Frame_Process_AudioLengthMin)
 
-        self.Frame_Process_SilentIntervalMin = QFrame(self.Frame_Process_AudioSlicerParams_AdvanceSettings)
+        self.Frame_Process_SilentIntervalMin = QFrame(self.Frame_Process_SlicerParams_AdvanceSettings)
         self.Frame_Process_SilentIntervalMin.setObjectName(u"Frame_Process_SilentIntervalMin")
         self.Frame_Process_SilentIntervalMin.setMinimumSize(QSize(0, 105))
         self.Frame_Process_SilentIntervalMin.setStyleSheet(u"QFrame {\n"
@@ -3734,7 +4305,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_54.addWidget(self.Frame_Process_SilentIntervalMin)
 
-        self.Frame_Process_HopSize = QFrame(self.Frame_Process_AudioSlicerParams_AdvanceSettings)
+        self.Frame_Process_HopSize = QFrame(self.Frame_Process_SlicerParams_AdvanceSettings)
         self.Frame_Process_HopSize.setObjectName(u"Frame_Process_HopSize")
         self.Frame_Process_HopSize.setMinimumSize(QSize(0, 105))
         self.Frame_Process_HopSize.setStyleSheet(u"QFrame {\n"
@@ -3859,7 +4430,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_54.addWidget(self.Frame_Process_HopSize)
 
-        self.Frame_Process_SilenceKeptMax = QFrame(self.Frame_Process_AudioSlicerParams_AdvanceSettings)
+        self.Frame_Process_SilenceKeptMax = QFrame(self.Frame_Process_SlicerParams_AdvanceSettings)
         self.Frame_Process_SilenceKeptMax.setObjectName(u"Frame_Process_SilenceKeptMax")
         self.Frame_Process_SilenceKeptMax.setMinimumSize(QSize(0, 105))
         self.Frame_Process_SilenceKeptMax.setStyleSheet(u"QFrame {\n"
@@ -3985,10 +4556,10 @@ class Ui_MainWindow(object):
         self.verticalLayout_54.addWidget(self.Frame_Process_SilenceKeptMax)
 
 
-        self.verticalLayout_186.addWidget(self.Frame_Process_AudioSlicerParams_AdvanceSettings)
+        self.verticalLayout_186.addWidget(self.Frame_Process_SlicerParams_AdvanceSettings)
 
 
-        self.verticalLayout_14.addWidget(self.GroupBox_Process_AudioSlicerParams)
+        self.verticalLayout_14.addWidget(self.GroupBox_Process_SlicerParams)
 
         self.GroupBox_Process_OutputParams = QGroupBox(self.ScrollArea_Middle_WidgetContents_Process)
         self.GroupBox_Process_OutputParams.setObjectName(u"GroupBox_Process_OutputParams")
@@ -4260,10 +4831,10 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_61.addWidget(self.Frame_Process_MediaFormatOutput)
 
-        self.Frame_Process_MediaDirOutput = QFrame(self.Frame_Process_OutputParams_BasicSettings)
-        self.Frame_Process_MediaDirOutput.setObjectName(u"Frame_Process_MediaDirOutput")
-        self.Frame_Process_MediaDirOutput.setMinimumSize(QSize(0, 105))
-        self.Frame_Process_MediaDirOutput.setStyleSheet(u"QFrame {\n"
+        self.Frame_Process_OutputDirName = QFrame(self.Frame_Process_OutputParams_BasicSettings)
+        self.Frame_Process_OutputDirName.setObjectName(u"Frame_Process_OutputDirName")
+        self.Frame_Process_OutputDirName.setMinimumSize(QSize(0, 105))
+        self.Frame_Process_OutputDirName.setStyleSheet(u"QFrame {\n"
 "	color: rgb(255, 255, 255);\n"
 "	background-color: transparent;\n"
 "	border-width: 0px;\n"
@@ -4272,15 +4843,15 @@ class Ui_MainWindow(object):
 "QFrame:hover {\n"
 "	background-color: rgba(33, 33, 33, 99);\n"
 "}")
-        self.gridLayout_28 = QGridLayout(self.Frame_Process_MediaDirOutput)
+        self.gridLayout_28 = QGridLayout(self.Frame_Process_OutputDirName)
         self.gridLayout_28.setSpacing(12)
         self.gridLayout_28.setObjectName(u"gridLayout_28")
         self.gridLayout_28.setContentsMargins(21, 12, 21, 12)
-        self.Label_Process_MediaDirOutput = QLabel(self.Frame_Process_MediaDirOutput)
-        self.Label_Process_MediaDirOutput.setObjectName(u"Label_Process_MediaDirOutput")
-        sizePolicy5.setHeightForWidth(self.Label_Process_MediaDirOutput.sizePolicy().hasHeightForWidth())
-        self.Label_Process_MediaDirOutput.setSizePolicy(sizePolicy5)
-        self.Label_Process_MediaDirOutput.setStyleSheet(u"QLabel {\n"
+        self.Label_Process_OutputDirName = QLabel(self.Frame_Process_OutputDirName)
+        self.Label_Process_OutputDirName.setObjectName(u"Label_Process_OutputDirName")
+        sizePolicy5.setHeightForWidth(self.Label_Process_OutputDirName.sizePolicy().hasHeightForWidth())
+        self.Label_Process_OutputDirName.setSizePolicy(sizePolicy5)
+        self.Label_Process_OutputDirName.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	/*color: rgb(255, 255, 255);*/\n"
 "	background-color: transparent;\n"
@@ -4290,17 +4861,17 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}")
 
-        self.gridLayout_28.addWidget(self.Label_Process_MediaDirOutput, 0, 0, 1, 1)
+        self.gridLayout_28.addWidget(self.Label_Process_OutputDirName, 0, 0, 1, 1)
 
-        self.HorizontalSpacer_Process_MediaDirOutput = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+        self.HorizontalSpacer_Process_OutputDirName = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
-        self.gridLayout_28.addItem(self.HorizontalSpacer_Process_MediaDirOutput, 0, 1, 1, 1)
+        self.gridLayout_28.addItem(self.HorizontalSpacer_Process_OutputDirName, 0, 1, 1, 1)
 
-        self.Button_Process_MediaDirOutput_Undo = QPushButton(self.Frame_Process_MediaDirOutput)
-        self.Button_Process_MediaDirOutput_Undo.setObjectName(u"Button_Process_MediaDirOutput_Undo")
-        self.Button_Process_MediaDirOutput_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_Process_MediaDirOutput_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_Process_MediaDirOutput_Undo.setStyleSheet(u"QPushButton {\n"
+        self.Button_Process_OutputDirName_Undo = QPushButton(self.Frame_Process_OutputDirName)
+        self.Button_Process_OutputDirName_Undo.setObjectName(u"Button_Process_OutputDirName_Undo")
+        self.Button_Process_OutputDirName_Undo.setMinimumSize(QSize(27, 27))
+        self.Button_Process_OutputDirName_Undo.setMaximumSize(QSize(27, 27))
+        self.Button_Process_OutputDirName_Undo.setStyleSheet(u"QPushButton {\n"
 "	image: url(:/Button_Icon/Sources/Undo.png);\n"
 "	background-color: transparent;\n"
 "	padding: 4.5px;\n"
@@ -4321,16 +4892,16 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}")
 
-        self.gridLayout_28.addWidget(self.Button_Process_MediaDirOutput_Undo, 0, 2, 1, 1)
+        self.gridLayout_28.addWidget(self.Button_Process_OutputDirName_Undo, 0, 2, 1, 1)
 
-        self.LineEdit_Process_MediaDirOutput = LineEditBase(self.Frame_Process_MediaDirOutput)
-        self.LineEdit_Process_MediaDirOutput.setObjectName(u"LineEdit_Process_MediaDirOutput")
-        self.LineEdit_Process_MediaDirOutput.setMinimumSize(QSize(0, 27))
+        self.LineEdit_Process_OutputDirName = LineEditBase(self.Frame_Process_OutputDirName)
+        self.LineEdit_Process_OutputDirName.setObjectName(u"LineEdit_Process_OutputDirName")
+        self.LineEdit_Process_OutputDirName.setMinimumSize(QSize(0, 27))
 
-        self.gridLayout_28.addWidget(self.LineEdit_Process_MediaDirOutput, 1, 0, 1, 3)
+        self.gridLayout_28.addWidget(self.LineEdit_Process_OutputDirName, 1, 0, 1, 3)
 
 
-        self.verticalLayout_61.addWidget(self.Frame_Process_MediaDirOutput)
+        self.verticalLayout_61.addWidget(self.Frame_Process_OutputDirName)
 
 
         self.verticalLayout_197.addWidget(self.Frame_Process_OutputParams_BasicSettings)
@@ -5640,7 +6211,7 @@ class Ui_MainWindow(object):
         self.ScrollArea_Middle_ASR_VPR.setWidgetResizable(True)
         self.ScrollArea_Middle_WidgetContents_ASR_VPR = QWidget()
         self.ScrollArea_Middle_WidgetContents_ASR_VPR.setObjectName(u"ScrollArea_Middle_WidgetContents_ASR_VPR")
-        self.ScrollArea_Middle_WidgetContents_ASR_VPR.setGeometry(QRect(0, 0, 591, 1144))
+        self.ScrollArea_Middle_WidgetContents_ASR_VPR.setGeometry(QRect(0, 0, 591, 1276))
         self.verticalLayout_7 = QVBoxLayout(self.ScrollArea_Middle_WidgetContents_ASR_VPR)
         self.verticalLayout_7.setSpacing(12)
         self.verticalLayout_7.setObjectName(u"verticalLayout_7")
@@ -6716,10 +7287,10 @@ class Ui_MainWindow(object):
         self.verticalLayout_139.setSpacing(0)
         self.verticalLayout_139.setObjectName(u"verticalLayout_139")
         self.verticalLayout_139.setContentsMargins(0, 0, 0, 0)
-        self.Frame_ASR_VPR_AudioSpeakersDataPath = QFrame(self.Frame_ASR_VPR_OutputParams_BasicSettings)
-        self.Frame_ASR_VPR_AudioSpeakersDataPath.setObjectName(u"Frame_ASR_VPR_AudioSpeakersDataPath")
-        self.Frame_ASR_VPR_AudioSpeakersDataPath.setMinimumSize(QSize(0, 105))
-        self.Frame_ASR_VPR_AudioSpeakersDataPath.setStyleSheet(u"QFrame {\n"
+        self.Frame_ASR_VPR_OutputDirName = QFrame(self.Frame_ASR_VPR_OutputParams_BasicSettings)
+        self.Frame_ASR_VPR_OutputDirName.setObjectName(u"Frame_ASR_VPR_OutputDirName")
+        self.Frame_ASR_VPR_OutputDirName.setMinimumSize(QSize(0, 105))
+        self.Frame_ASR_VPR_OutputDirName.setStyleSheet(u"QFrame {\n"
 "	color: rgb(255, 255, 255);\n"
 "	background-color: transparent;\n"
 "	border-width: 0px;\n"
@@ -6728,15 +7299,15 @@ class Ui_MainWindow(object):
 "QFrame:hover {\n"
 "	background-color: rgba(33, 33, 33, 99);\n"
 "}")
-        self.gridLayout_38 = QGridLayout(self.Frame_ASR_VPR_AudioSpeakersDataPath)
+        self.gridLayout_38 = QGridLayout(self.Frame_ASR_VPR_OutputDirName)
         self.gridLayout_38.setSpacing(12)
         self.gridLayout_38.setObjectName(u"gridLayout_38")
         self.gridLayout_38.setContentsMargins(21, 12, 21, 12)
-        self.Label_ASR_VPR_AudioSpeakersDataPath = QLabel(self.Frame_ASR_VPR_AudioSpeakersDataPath)
-        self.Label_ASR_VPR_AudioSpeakersDataPath.setObjectName(u"Label_ASR_VPR_AudioSpeakersDataPath")
-        sizePolicy5.setHeightForWidth(self.Label_ASR_VPR_AudioSpeakersDataPath.sizePolicy().hasHeightForWidth())
-        self.Label_ASR_VPR_AudioSpeakersDataPath.setSizePolicy(sizePolicy5)
-        self.Label_ASR_VPR_AudioSpeakersDataPath.setStyleSheet(u"QLabel {\n"
+        self.Label_ASR_VPR_OutputDirName = QLabel(self.Frame_ASR_VPR_OutputDirName)
+        self.Label_ASR_VPR_OutputDirName.setObjectName(u"Label_ASR_VPR_OutputDirName")
+        sizePolicy5.setHeightForWidth(self.Label_ASR_VPR_OutputDirName.sizePolicy().hasHeightForWidth())
+        self.Label_ASR_VPR_OutputDirName.setSizePolicy(sizePolicy5)
+        self.Label_ASR_VPR_OutputDirName.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	/*color: rgb(255, 255, 255);*/\n"
 "	background-color: transparent;\n"
@@ -6746,17 +7317,17 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}")
 
-        self.gridLayout_38.addWidget(self.Label_ASR_VPR_AudioSpeakersDataPath, 0, 0, 1, 1)
+        self.gridLayout_38.addWidget(self.Label_ASR_VPR_OutputDirName, 0, 0, 1, 1)
 
-        self.HorizontalSpacer_ASR_VPR_AudioSpeakersDataPath = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+        self.HorizontalSpacer_ASR_VPR_OutputDirName = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
-        self.gridLayout_38.addItem(self.HorizontalSpacer_ASR_VPR_AudioSpeakersDataPath, 0, 1, 1, 1)
+        self.gridLayout_38.addItem(self.HorizontalSpacer_ASR_VPR_OutputDirName, 0, 1, 1, 1)
 
-        self.Button_ASR_VPR_AudioSpeakersDataPath_Undo = QPushButton(self.Frame_ASR_VPR_AudioSpeakersDataPath)
-        self.Button_ASR_VPR_AudioSpeakersDataPath_Undo.setObjectName(u"Button_ASR_VPR_AudioSpeakersDataPath_Undo")
-        self.Button_ASR_VPR_AudioSpeakersDataPath_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_ASR_VPR_AudioSpeakersDataPath_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_ASR_VPR_AudioSpeakersDataPath_Undo.setStyleSheet(u"QPushButton {\n"
+        self.Button_ASR_VPR_OutputDirName_Undo = QPushButton(self.Frame_ASR_VPR_OutputDirName)
+        self.Button_ASR_VPR_OutputDirName_Undo.setObjectName(u"Button_ASR_VPR_OutputDirName_Undo")
+        self.Button_ASR_VPR_OutputDirName_Undo.setMinimumSize(QSize(27, 27))
+        self.Button_ASR_VPR_OutputDirName_Undo.setMaximumSize(QSize(27, 27))
+        self.Button_ASR_VPR_OutputDirName_Undo.setStyleSheet(u"QPushButton {\n"
 "	image: url(:/Button_Icon/Sources/Undo.png);\n"
 "	background-color: transparent;\n"
 "	padding: 4.5px;\n"
@@ -6777,19 +7348,148 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}")
 
-        self.gridLayout_38.addWidget(self.Button_ASR_VPR_AudioSpeakersDataPath_Undo, 0, 2, 1, 1)
+        self.gridLayout_38.addWidget(self.Button_ASR_VPR_OutputDirName_Undo, 0, 2, 1, 1)
 
-        self.LineEdit_ASR_VPR_AudioSpeakersDataPath = LineEditBase(self.Frame_ASR_VPR_AudioSpeakersDataPath)
-        self.LineEdit_ASR_VPR_AudioSpeakersDataPath.setObjectName(u"LineEdit_ASR_VPR_AudioSpeakersDataPath")
-        self.LineEdit_ASR_VPR_AudioSpeakersDataPath.setMinimumSize(QSize(0, 27))
+        self.LineEdit_ASR_VPR_OutputDirName = LineEditBase(self.Frame_ASR_VPR_OutputDirName)
+        self.LineEdit_ASR_VPR_OutputDirName.setObjectName(u"LineEdit_ASR_VPR_OutputDirName")
+        self.LineEdit_ASR_VPR_OutputDirName.setMinimumSize(QSize(0, 27))
 
-        self.gridLayout_38.addWidget(self.LineEdit_ASR_VPR_AudioSpeakersDataPath, 1, 0, 1, 3)
+        self.gridLayout_38.addWidget(self.LineEdit_ASR_VPR_OutputDirName, 1, 0, 1, 3)
 
 
-        self.verticalLayout_139.addWidget(self.Frame_ASR_VPR_AudioSpeakersDataPath)
+        self.verticalLayout_139.addWidget(self.Frame_ASR_VPR_OutputDirName)
 
 
         self.verticalLayout_48.addWidget(self.Frame_ASR_VPR_OutputParams_BasicSettings)
+
+        self.CheckBox_ASR_VPR_OutputParams_Toggle_AdvanceSettings = QCheckBox(self.GroupBox_ASR_VPR_OutputParams)
+        self.CheckBox_ASR_VPR_OutputParams_Toggle_AdvanceSettings.setObjectName(u"CheckBox_ASR_VPR_OutputParams_Toggle_AdvanceSettings")
+        self.CheckBox_ASR_VPR_OutputParams_Toggle_AdvanceSettings.setStyleSheet(u"QCheckBox {\n"
+"	font-size: 12px;\n"
+"	font-weight: 630;\n"
+"	spacing: 12px;\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"	background-color: transparent;\n"
+"	padding-top: 9px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QCheckBox:hover {\n"
+"	color: rgb(255, 255, 255);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator {\n"
+"	width: 12px;\n"
+"	height: 12px;\n"
+"    background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QCheckBox::indicator:hover {\n"
+"	background-color: transparent;\n"
+"}\n"
+"QCheckBox::indicator:unchecked {\n"
+"	border-image: url(:/CheckBox_Icon/Sources/RightCaret.png);\n"
+"}\n"
+"QCheckBox::indicator:checked {\n"
+"	border-image: url(:/CheckBox_Icon/Sources/DownCaret.png);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.verticalLayout_48.addWidget(self.CheckBox_ASR_VPR_OutputParams_Toggle_AdvanceSettings)
+
+        self.Frame_ASR_VPR_OutputParams_AdvanceSettings = QFrame(self.GroupBox_ASR_VPR_OutputParams)
+        self.Frame_ASR_VPR_OutputParams_AdvanceSettings.setObjectName(u"Frame_ASR_VPR_OutputParams_AdvanceSettings")
+        self.Frame_ASR_VPR_OutputParams_AdvanceSettings.setFrameShape(QFrame.StyledPanel)
+        self.Frame_ASR_VPR_OutputParams_AdvanceSettings.setFrameShadow(QFrame.Raised)
+        self.verticalLayout_110 = QVBoxLayout(self.Frame_ASR_VPR_OutputParams_AdvanceSettings)
+        self.verticalLayout_110.setSpacing(0)
+        self.verticalLayout_110.setObjectName(u"verticalLayout_110")
+        self.verticalLayout_110.setContentsMargins(0, 0, 0, 0)
+        self.Frame_ASR_VPR_AudioSpeakersDataName = QFrame(self.Frame_ASR_VPR_OutputParams_AdvanceSettings)
+        self.Frame_ASR_VPR_AudioSpeakersDataName.setObjectName(u"Frame_ASR_VPR_AudioSpeakersDataName")
+        self.Frame_ASR_VPR_AudioSpeakersDataName.setMinimumSize(QSize(0, 105))
+        self.Frame_ASR_VPR_AudioSpeakersDataName.setStyleSheet(u"QFrame {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QFrame:hover {\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
+"}")
+        self.gridLayout_112 = QGridLayout(self.Frame_ASR_VPR_AudioSpeakersDataName)
+        self.gridLayout_112.setSpacing(12)
+        self.gridLayout_112.setObjectName(u"gridLayout_112")
+        self.gridLayout_112.setContentsMargins(21, 12, 21, 12)
+        self.Button_ASR_VPR_AudioSpeakersDataName_Undo = QPushButton(self.Frame_ASR_VPR_AudioSpeakersDataName)
+        self.Button_ASR_VPR_AudioSpeakersDataName_Undo.setObjectName(u"Button_ASR_VPR_AudioSpeakersDataName_Undo")
+        self.Button_ASR_VPR_AudioSpeakersDataName_Undo.setMinimumSize(QSize(27, 27))
+        self.Button_ASR_VPR_AudioSpeakersDataName_Undo.setMaximumSize(QSize(27, 27))
+        self.Button_ASR_VPR_AudioSpeakersDataName_Undo.setStyleSheet(u"QPushButton {\n"
+"	image: url(:/Button_Icon/Sources/Undo.png);\n"
+"	background-color: transparent;\n"
+"	padding: 4.5px;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgba(201, 210, 222, 123);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgba(201, 210, 222, 210);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_112.addWidget(self.Button_ASR_VPR_AudioSpeakersDataName_Undo, 0, 2, 1, 1)
+
+        self.Label_ASR_VPR_AudioSpeakersDataName = QLabel(self.Frame_ASR_VPR_AudioSpeakersDataName)
+        self.Label_ASR_VPR_AudioSpeakersDataName.setObjectName(u"Label_ASR_VPR_AudioSpeakersDataName")
+        sizePolicy5.setHeightForWidth(self.Label_ASR_VPR_AudioSpeakersDataName.sizePolicy().hasHeightForWidth())
+        self.Label_ASR_VPR_AudioSpeakersDataName.setSizePolicy(sizePolicy5)
+        self.Label_ASR_VPR_AudioSpeakersDataName.setStyleSheet(u"QLabel {\n"
+"	/*text-align: center;*/\n"
+"	/*color: rgb(255, 255, 255);*/\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_112.addWidget(self.Label_ASR_VPR_AudioSpeakersDataName, 0, 0, 1, 1)
+
+        self.LineEdit_ASR_VPR_AudioSpeakersDataName = LineEditBase(self.Frame_ASR_VPR_AudioSpeakersDataName)
+        self.LineEdit_ASR_VPR_AudioSpeakersDataName.setObjectName(u"LineEdit_ASR_VPR_AudioSpeakersDataName")
+        self.LineEdit_ASR_VPR_AudioSpeakersDataName.setMinimumSize(QSize(0, 27))
+
+        self.gridLayout_112.addWidget(self.LineEdit_ASR_VPR_AudioSpeakersDataName, 1, 0, 1, 3)
+
+        self.HorizontalSpacer_ASR_VPR_AudioSpeakersDataName = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.gridLayout_112.addItem(self.HorizontalSpacer_ASR_VPR_AudioSpeakersDataName, 0, 1, 1, 1)
+
+
+        self.verticalLayout_110.addWidget(self.Frame_ASR_VPR_AudioSpeakersDataName)
+
+
+        self.verticalLayout_48.addWidget(self.Frame_ASR_VPR_OutputParams_AdvanceSettings)
 
 
         self.verticalLayout_7.addWidget(self.GroupBox_ASR_VPR_OutputParams)
@@ -8188,10 +8888,10 @@ class Ui_MainWindow(object):
         self.verticalLayout_135.setSpacing(0)
         self.verticalLayout_135.setObjectName(u"verticalLayout_135")
         self.verticalLayout_135.setContentsMargins(0, 0, 0, 0)
-        self.Frame_STT_Whisper_SRTDir = QFrame(self.Frame_STT_Whisper_OutputParams_BasicSettings)
-        self.Frame_STT_Whisper_SRTDir.setObjectName(u"Frame_STT_Whisper_SRTDir")
-        self.Frame_STT_Whisper_SRTDir.setMinimumSize(QSize(0, 105))
-        self.Frame_STT_Whisper_SRTDir.setStyleSheet(u"QFrame {\n"
+        self.Frame_STT_Whisper_OutputDirName = QFrame(self.Frame_STT_Whisper_OutputParams_BasicSettings)
+        self.Frame_STT_Whisper_OutputDirName.setObjectName(u"Frame_STT_Whisper_OutputDirName")
+        self.Frame_STT_Whisper_OutputDirName.setMinimumSize(QSize(0, 105))
+        self.Frame_STT_Whisper_OutputDirName.setStyleSheet(u"QFrame {\n"
 "	color: rgb(255, 255, 255);\n"
 "	background-color: transparent;\n"
 "	border-width: 0px;\n"
@@ -8200,15 +8900,15 @@ class Ui_MainWindow(object):
 "QFrame:hover {\n"
 "	background-color: rgba(33, 33, 33, 99);\n"
 "}")
-        self.gridLayout_45 = QGridLayout(self.Frame_STT_Whisper_SRTDir)
+        self.gridLayout_45 = QGridLayout(self.Frame_STT_Whisper_OutputDirName)
         self.gridLayout_45.setSpacing(12)
         self.gridLayout_45.setObjectName(u"gridLayout_45")
         self.gridLayout_45.setContentsMargins(21, 12, 21, 12)
-        self.Label_STT_Whisper_SRTDir = QLabel(self.Frame_STT_Whisper_SRTDir)
-        self.Label_STT_Whisper_SRTDir.setObjectName(u"Label_STT_Whisper_SRTDir")
-        sizePolicy5.setHeightForWidth(self.Label_STT_Whisper_SRTDir.sizePolicy().hasHeightForWidth())
-        self.Label_STT_Whisper_SRTDir.setSizePolicy(sizePolicy5)
-        self.Label_STT_Whisper_SRTDir.setStyleSheet(u"QLabel {\n"
+        self.Label_STT_Whisper_OutputDirName = QLabel(self.Frame_STT_Whisper_OutputDirName)
+        self.Label_STT_Whisper_OutputDirName.setObjectName(u"Label_STT_Whisper_OutputDirName")
+        sizePolicy5.setHeightForWidth(self.Label_STT_Whisper_OutputDirName.sizePolicy().hasHeightForWidth())
+        self.Label_STT_Whisper_OutputDirName.setSizePolicy(sizePolicy5)
+        self.Label_STT_Whisper_OutputDirName.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	/*color: rgb(255, 255, 255);*/\n"
 "	background-color: transparent;\n"
@@ -8218,17 +8918,17 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}")
 
-        self.gridLayout_45.addWidget(self.Label_STT_Whisper_SRTDir, 0, 0, 1, 1)
+        self.gridLayout_45.addWidget(self.Label_STT_Whisper_OutputDirName, 0, 0, 1, 1)
 
-        self.HorizontalSpacer_STT_Whisper_SRTDir = QSpacerItem(481, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+        self.HorizontalSpacer_STT_Whisper_OutputDirName = QSpacerItem(481, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
-        self.gridLayout_45.addItem(self.HorizontalSpacer_STT_Whisper_SRTDir, 0, 1, 1, 1)
+        self.gridLayout_45.addItem(self.HorizontalSpacer_STT_Whisper_OutputDirName, 0, 1, 1, 1)
 
-        self.Button_STT_Whisper_SRTDir_Undo = QPushButton(self.Frame_STT_Whisper_SRTDir)
-        self.Button_STT_Whisper_SRTDir_Undo.setObjectName(u"Button_STT_Whisper_SRTDir_Undo")
-        self.Button_STT_Whisper_SRTDir_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_STT_Whisper_SRTDir_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_STT_Whisper_SRTDir_Undo.setStyleSheet(u"QPushButton {\n"
+        self.Button_STT_Whisper_OutputDirName_Undo = QPushButton(self.Frame_STT_Whisper_OutputDirName)
+        self.Button_STT_Whisper_OutputDirName_Undo.setObjectName(u"Button_STT_Whisper_OutputDirName_Undo")
+        self.Button_STT_Whisper_OutputDirName_Undo.setMinimumSize(QSize(27, 27))
+        self.Button_STT_Whisper_OutputDirName_Undo.setMaximumSize(QSize(27, 27))
+        self.Button_STT_Whisper_OutputDirName_Undo.setStyleSheet(u"QPushButton {\n"
 "	image: url(:/Button_Icon/Sources/Undo.png);\n"
 "	background-color: transparent;\n"
 "	padding: 4.5px;\n"
@@ -8249,16 +8949,16 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}")
 
-        self.gridLayout_45.addWidget(self.Button_STT_Whisper_SRTDir_Undo, 0, 2, 1, 1)
+        self.gridLayout_45.addWidget(self.Button_STT_Whisper_OutputDirName_Undo, 0, 2, 1, 1)
 
-        self.LineEdit_STT_Whisper_SRTDir = LineEditBase(self.Frame_STT_Whisper_SRTDir)
-        self.LineEdit_STT_Whisper_SRTDir.setObjectName(u"LineEdit_STT_Whisper_SRTDir")
-        self.LineEdit_STT_Whisper_SRTDir.setMinimumSize(QSize(0, 27))
+        self.LineEdit_STT_Whisper_OutputDirName = LineEditBase(self.Frame_STT_Whisper_OutputDirName)
+        self.LineEdit_STT_Whisper_OutputDirName.setObjectName(u"LineEdit_STT_Whisper_OutputDirName")
+        self.LineEdit_STT_Whisper_OutputDirName.setMinimumSize(QSize(0, 27))
 
-        self.gridLayout_45.addWidget(self.LineEdit_STT_Whisper_SRTDir, 1, 0, 1, 3)
+        self.gridLayout_45.addWidget(self.LineEdit_STT_Whisper_OutputDirName, 1, 0, 1, 3)
 
 
-        self.verticalLayout_135.addWidget(self.Frame_STT_Whisper_SRTDir)
+        self.verticalLayout_135.addWidget(self.Frame_STT_Whisper_OutputDirName)
 
 
         self.verticalLayout_89.addWidget(self.Frame_STT_Whisper_OutputParams_BasicSettings)
@@ -8571,15 +9271,15 @@ class Ui_MainWindow(object):
 "	border-width: 0px;\n"
 "	border-style: solid;\n"
 "}")
-        self.horizontalLayout_83 = QHBoxLayout(self.Frame_Dataset_Top)
-        self.horizontalLayout_83.setSpacing(0)
-        self.horizontalLayout_83.setObjectName(u"horizontalLayout_83")
-        self.horizontalLayout_83.setContentsMargins(0, 0, 0, 0)
-        self.ToolButton_DatasetCreator_Title = QToolButton(self.Frame_Dataset_Top)
-        self.ToolButton_DatasetCreator_Title.setObjectName(u"ToolButton_DatasetCreator_Title")
-        sizePolicy1.setHeightForWidth(self.ToolButton_DatasetCreator_Title.sizePolicy().hasHeightForWidth())
-        self.ToolButton_DatasetCreator_Title.setSizePolicy(sizePolicy1)
-        self.ToolButton_DatasetCreator_Title.setStyleSheet(u"QToolButton {\n"
+        self.horizontalLayout_17 = QHBoxLayout(self.Frame_Dataset_Top)
+        self.horizontalLayout_17.setSpacing(0)
+        self.horizontalLayout_17.setObjectName(u"horizontalLayout_17")
+        self.horizontalLayout_17.setContentsMargins(0, 0, 0, 0)
+        self.ToolButton_DatasetCreator_Title_GPTSoVITS = QToolButton(self.Frame_Dataset_Top)
+        self.ToolButton_DatasetCreator_Title_GPTSoVITS.setObjectName(u"ToolButton_DatasetCreator_Title_GPTSoVITS")
+        sizePolicy1.setHeightForWidth(self.ToolButton_DatasetCreator_Title_GPTSoVITS.sizePolicy().hasHeightForWidth())
+        self.ToolButton_DatasetCreator_Title_GPTSoVITS.setSizePolicy(sizePolicy1)
+        self.ToolButton_DatasetCreator_Title_GPTSoVITS.setStyleSheet(u"QToolButton {\n"
 "	font-size: 24px;\n"
 "	/*text-align: center;*/\n"
 "	color: rgba(201, 210, 222, 210);\n"
@@ -8622,7 +9322,56 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}")
 
-        self.horizontalLayout_83.addWidget(self.ToolButton_DatasetCreator_Title)
+        self.horizontalLayout_17.addWidget(self.ToolButton_DatasetCreator_Title_GPTSoVITS)
+
+        self.ToolButton_DatasetCreator_Title_VITS = QToolButton(self.Frame_Dataset_Top)
+        self.ToolButton_DatasetCreator_Title_VITS.setObjectName(u"ToolButton_DatasetCreator_Title_VITS")
+        sizePolicy1.setHeightForWidth(self.ToolButton_DatasetCreator_Title_VITS.sizePolicy().hasHeightForWidth())
+        self.ToolButton_DatasetCreator_Title_VITS.setSizePolicy(sizePolicy1)
+        self.ToolButton_DatasetCreator_Title_VITS.setStyleSheet(u"QToolButton {\n"
+"	font-size: 24px;\n"
+"	/*text-align: center;*/\n"
+"	color: rgba(201, 210, 222, 210);\n"
+"	padding-left: 12px;\n"
+"	padding-right: 12px;\n"
+"	background-color: transparent;\n"
+"	border-top-width: 0px;\n"
+"	border-right-width: 0px;\n"
+"	border-bottom-width: 3px;\n"
+"	border-left-width: 0px;\n"
+"	border-style: solid;\n"
+"	border-bottom-color: rgba(123, 123, 123, 123);\n"
+"}\n"
+"QToolButton:hover {\n"
+"	color: rgba(210, 222, 234, 234);\n"
+"	background-color: transparent;\n"
+"	border-top-width: 0px;\n"
+"	border-right-width: 0px;\n"
+"	border-bottom-width: 3px;\n"
+"	border-left-width: 0px;\n"
+"	border-style: solid;\n"
+"	border-bottom-color: rgba(120, 180, 240, 123);\n"
+"}\n"
+"QToolButton:checked {\n"
+"	color: rgba(210, 222, 234, 255);\n"
+"	background-color: transparent;\n"
+"	border-top-width: 0px;\n"
+"	border-right-width: 0px;\n"
+"	border-bottom-width: 3px;\n"
+"	border-left-width: 0px;\n"
+"	border-style: solid;\n"
+"	border-bottom-color: rgba(120, 180, 240, 210);\n"
+"}\n"
+"\n"
+"QToolTip {\n"
+"	color:"
+                        " rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.horizontalLayout_17.addWidget(self.ToolButton_DatasetCreator_Title_VITS)
 
         self.Frame_Dataset_Title_Spacer = QLabel(self.Frame_Dataset_Top)
         self.Frame_Dataset_Title_Spacer.setObjectName(u"Frame_Dataset_Title_Spacer")
@@ -8643,7 +9392,7 @@ class Ui_MainWindow(object):
 "	border-bottom-color: rgba(123, 123, 123, 123);\n"
 "}")
 
-        self.horizontalLayout_83.addWidget(self.Frame_Dataset_Title_Spacer)
+        self.horizontalLayout_17.addWidget(self.Frame_Dataset_Title_Spacer)
 
 
         self.verticalLayout_39.addWidget(self.Frame_Dataset_Top)
@@ -8693,6 +9442,1040 @@ class Ui_MainWindow(object):
 "QTabBar QToolButton:hover {\n"
 "}\n"
 "*/")
+        self.Subpage_DAT_GPTSoVITS = QWidget()
+        self.Subpage_DAT_GPTSoVITS.setObjectName(u"Subpage_DAT_GPTSoVITS")
+        self.gridLayout_108 = QGridLayout(self.Subpage_DAT_GPTSoVITS)
+        self.gridLayout_108.setSpacing(12)
+        self.gridLayout_108.setObjectName(u"gridLayout_108")
+        self.gridLayout_108.setContentsMargins(0, 0, 0, 0)
+        self.Widget_Left_DAT_GPTSoVITS = QWidget(self.Subpage_DAT_GPTSoVITS)
+        self.Widget_Left_DAT_GPTSoVITS.setObjectName(u"Widget_Left_DAT_GPTSoVITS")
+        self.Widget_Left_DAT_GPTSoVITS.setMinimumSize(QSize(150, 0))
+        self.Widget_Left_DAT_GPTSoVITS.setStyleSheet(u"QWidget {\n"
+"	background-color: rgba(36, 36, 36, 123);\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QWidget:hover {\n"
+"}")
+        self.verticalLayout_62 = QVBoxLayout(self.Widget_Left_DAT_GPTSoVITS)
+        self.verticalLayout_62.setSpacing(12)
+        self.verticalLayout_62.setObjectName(u"verticalLayout_62")
+        self.verticalLayout_62.setContentsMargins(12, 12, 12, 12)
+        self.TreeWidget_Catalogue_DAT_GPTSoVITS = QTreeWidget(self.Widget_Left_DAT_GPTSoVITS)
+        __qtreewidgetitem3 = QTreeWidgetItem(self.TreeWidget_Catalogue_DAT_GPTSoVITS)
+        QTreeWidgetItem(__qtreewidgetitem3)
+        self.TreeWidget_Catalogue_DAT_GPTSoVITS.setObjectName(u"TreeWidget_Catalogue_DAT_GPTSoVITS")
+        self.TreeWidget_Catalogue_DAT_GPTSoVITS.setStyleSheet(u"QTreeView {\n"
+"	/*font-size: 12px;\n"
+"	text-align: center;*/\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QTreeView::item {\n"
+"	background-color: transparent;\n"
+"	padding: 2.4px;\n"
+"}\n"
+"QTreeView::item:hover {\n"
+"    background-color: rgba(66, 66, 66, 198);\n"
+"}\n"
+"QTreeView::item:selected {\n"
+"    background-color: ;\n"
+"}\n"
+"\n"
+"QTreeView::branch {\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QTreeView::branch:open:has-children {\n"
+"    image: ;\n"
+"}\n"
+"QTreeView::branch:closed:has-children {\n"
+"    image: ;\n"
+"}\n"
+"QTreeWidget::branch:adjoins-item {\n"
+"    background-color: ;\n"
+"}\n"
+"\n"
+"\n"
+"QScrollBar {\n"
+"	background-color: rgba(45, 45, 45, 135);\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: transparent;\n"
+"	margin: 0px;\n"
+"}\n"
+"QScrollBar:hover {\n"
+"	background-color: r"
+                        "gba(33, 33, 33, 99);\n"
+"}\n"
+"\n"
+"QScrollBar::horizontal {\n"
+"	height: 9px;\n"
+"}\n"
+"QScrollBar::vertical {\n"
+"	width: 9px;\n"
+"}\n"
+"\n"
+"QScrollBar::sub-line, QScrollBar::add-line {\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QScrollBar::sub-page, QScrollBar::add-page {\n"
+"	background-color: transparent;\n"
+"}\n"
+"\n"
+"QScrollBar::handle {\n"
+"	background-color: rgba(90, 90, 90, 90);\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QScrollBar::handle:hover {\n"
+"	background-color: rgba(120, 120, 120, 120);\n"
+"}")
+
+        self.verticalLayout_62.addWidget(self.TreeWidget_Catalogue_DAT_GPTSoVITS)
+
+
+        self.gridLayout_108.addWidget(self.Widget_Left_DAT_GPTSoVITS, 0, 0, 1, 1)
+
+        self.ScrollArea_Middle_DAT_GPTSoVITS = QScrollArea(self.Subpage_DAT_GPTSoVITS)
+        self.ScrollArea_Middle_DAT_GPTSoVITS.setObjectName(u"ScrollArea_Middle_DAT_GPTSoVITS")
+        self.ScrollArea_Middle_DAT_GPTSoVITS.setMinimumSize(QSize(600, 0))
+        self.ScrollArea_Middle_DAT_GPTSoVITS.setStyleSheet(u"QScrollArea {\n"
+"	background-color: rgba(36, 36, 36, 123);\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QScrollArea:hover {\n"
+"}\n"
+"\n"
+"\n"
+"QScrollBar::vertical {\n"
+"	width: 9px;\n"
+"	background-color: rgb(45, 45, 45);\n"
+"	border-width: 1px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: transparent;\n"
+"	margin: 0px;\n"
+"}\n"
+"QScrollBar::vertical:hover {\n"
+"	background-color: rgb(60, 60, 60);\n"
+"}\n"
+"\n"
+"QScrollBar::add-line:vertical {\n"
+"	height: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: bottom;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QScrollBar::sub-line:vertical {\n"
+"	height: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: top;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
+"	width: 0px;\n"
+"	"
+                        "height: 0px;\n"
+"	background-color: transparent;\n"
+"}\n"
+"\n"
+"QScrollBar::handle:vertical {\n"
+"	background-color: rgb(90, 90, 90);\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QScrollBar::handle:vertical:hover {\n"
+"	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QScrollBar::horizontal {\n"
+"	height: 9px;\n"
+"	background-color: rgb(45, 45, 45);\n"
+"	border-width: 1px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: transparent;\n"
+"	margin: 0px;\n"
+"}\n"
+"QScrollBar::horizontal:hover {\n"
+"	background-color: rgb(60, 60, 60);\n"
+"}\n"
+"\n"
+"QScrollBar::add-line:horizontal {\n"
+"	width: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: left;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QScrollBar::sub-line:horizontal {\n"
+"	width: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: right;\n"
+"	subcontrol-origin: margin;\n"
+"	borde"
+                        "r-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {\n"
+"	width: 0px;\n"
+"	height: 0px;\n"
+"	background-color: transparent;\n"
+"}\n"
+"\n"
+"QScrollBar::handle:horizontal {\n"
+"	background-color: rgb(90, 90, 90);\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QScrollBar::handle:horizontal:hover {\n"
+"	background-color: rgb(120, 120, 120);\n"
+"}")
+        self.ScrollArea_Middle_DAT_GPTSoVITS.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
+        self.ScrollArea_Middle_DAT_GPTSoVITS.setWidgetResizable(True)
+        self.ScrollArea_Middle_WidgetContents_DAT_GPTSoVITS = QWidget()
+        self.ScrollArea_Middle_WidgetContents_DAT_GPTSoVITS.setObjectName(u"ScrollArea_Middle_WidgetContents_DAT_GPTSoVITS")
+        self.ScrollArea_Middle_WidgetContents_DAT_GPTSoVITS.setGeometry(QRect(0, 0, 591, 726))
+        self.verticalLayout_63 = QVBoxLayout(self.ScrollArea_Middle_WidgetContents_DAT_GPTSoVITS)
+        self.verticalLayout_63.setSpacing(12)
+        self.verticalLayout_63.setObjectName(u"verticalLayout_63")
+        self.verticalLayout_63.setContentsMargins(12, 12, 12, 12)
+        self.GroupBox_DAT_GPTSoVITS_InputParams = QGroupBox(self.ScrollArea_Middle_WidgetContents_DAT_GPTSoVITS)
+        self.GroupBox_DAT_GPTSoVITS_InputParams.setObjectName(u"GroupBox_DAT_GPTSoVITS_InputParams")
+        self.GroupBox_DAT_GPTSoVITS_InputParams.setStyleSheet(u"QGroupBox {\n"
+"	font-size: 15px;\n"
+"	margin-top: 1.5ex;\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: transparent;\n"
+"	border-width: 1px;\n"
+"	border-style: solid;\n"
+"	border-color: transparent;\n"
+"}\n"
+"QGroupBox::title {\n"
+"	left: 9px;\n"
+"	margin-left: 0px;\n"
+"	subcontrol-origin: margin;\n"
+"	subcontrol-position: top left;\n"
+"	padding: 3px;\n"
+"}")
+        self.verticalLayout_123 = QVBoxLayout(self.GroupBox_DAT_GPTSoVITS_InputParams)
+        self.verticalLayout_123.setSpacing(0)
+        self.verticalLayout_123.setObjectName(u"verticalLayout_123")
+        self.verticalLayout_123.setContentsMargins(0, 12, 0, 12)
+        self.Frame_DAT_GPTSoVITS_InputParams_BasicSettings = QFrame(self.GroupBox_DAT_GPTSoVITS_InputParams)
+        self.Frame_DAT_GPTSoVITS_InputParams_BasicSettings.setObjectName(u"Frame_DAT_GPTSoVITS_InputParams_BasicSettings")
+        self.verticalLayout_64 = QVBoxLayout(self.Frame_DAT_GPTSoVITS_InputParams_BasicSettings)
+        self.verticalLayout_64.setSpacing(0)
+        self.verticalLayout_64.setObjectName(u"verticalLayout_64")
+        self.verticalLayout_64.setContentsMargins(0, 0, 0, 0)
+        self.Frame_DAT_GPTSoVITS_AudioSpeakersDataPath = QFrame(self.Frame_DAT_GPTSoVITS_InputParams_BasicSettings)
+        self.Frame_DAT_GPTSoVITS_AudioSpeakersDataPath.setObjectName(u"Frame_DAT_GPTSoVITS_AudioSpeakersDataPath")
+        self.Frame_DAT_GPTSoVITS_AudioSpeakersDataPath.setMinimumSize(QSize(0, 105))
+        self.Frame_DAT_GPTSoVITS_AudioSpeakersDataPath.setStyleSheet(u"QFrame {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QFrame:hover {\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
+"}")
+        self.gridLayout_82 = QGridLayout(self.Frame_DAT_GPTSoVITS_AudioSpeakersDataPath)
+        self.gridLayout_82.setSpacing(12)
+        self.gridLayout_82.setObjectName(u"gridLayout_82")
+        self.gridLayout_82.setContentsMargins(21, 12, 21, 12)
+        self.Label_DAT_GPTSoVITS_AudioSpeakersDataPath = QLabel(self.Frame_DAT_GPTSoVITS_AudioSpeakersDataPath)
+        self.Label_DAT_GPTSoVITS_AudioSpeakersDataPath.setObjectName(u"Label_DAT_GPTSoVITS_AudioSpeakersDataPath")
+        sizePolicy5.setHeightForWidth(self.Label_DAT_GPTSoVITS_AudioSpeakersDataPath.sizePolicy().hasHeightForWidth())
+        self.Label_DAT_GPTSoVITS_AudioSpeakersDataPath.setSizePolicy(sizePolicy5)
+        self.Label_DAT_GPTSoVITS_AudioSpeakersDataPath.setStyleSheet(u"QLabel {\n"
+"	/*text-align: center;*/\n"
+"	/*color: rgb(255, 255, 255);*/\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_82.addWidget(self.Label_DAT_GPTSoVITS_AudioSpeakersDataPath, 0, 0, 1, 1)
+
+        self.HorizontalSpacer_DAT_GPTSoVITS_InputParams = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.gridLayout_82.addItem(self.HorizontalSpacer_DAT_GPTSoVITS_InputParams, 0, 1, 1, 1)
+
+        self.Button_DAT_GPTSoVITS_AudioSpeakersDataPath_Undo = QPushButton(self.Frame_DAT_GPTSoVITS_AudioSpeakersDataPath)
+        self.Button_DAT_GPTSoVITS_AudioSpeakersDataPath_Undo.setObjectName(u"Button_DAT_GPTSoVITS_AudioSpeakersDataPath_Undo")
+        self.Button_DAT_GPTSoVITS_AudioSpeakersDataPath_Undo.setMinimumSize(QSize(27, 27))
+        self.Button_DAT_GPTSoVITS_AudioSpeakersDataPath_Undo.setMaximumSize(QSize(27, 27))
+        self.Button_DAT_GPTSoVITS_AudioSpeakersDataPath_Undo.setStyleSheet(u"QPushButton {\n"
+"	image: url(:/Button_Icon/Sources/Undo.png);\n"
+"	background-color: transparent;\n"
+"	padding: 4.5px;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgba(201, 210, 222, 123);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgba(201, 210, 222, 210);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_82.addWidget(self.Button_DAT_GPTSoVITS_AudioSpeakersDataPath_Undo, 0, 2, 1, 1)
+
+        self.LineEdit_DAT_GPTSoVITS_AudioSpeakersDataPath = LineEditBase(self.Frame_DAT_GPTSoVITS_AudioSpeakersDataPath)
+        self.LineEdit_DAT_GPTSoVITS_AudioSpeakersDataPath.setObjectName(u"LineEdit_DAT_GPTSoVITS_AudioSpeakersDataPath")
+        self.LineEdit_DAT_GPTSoVITS_AudioSpeakersDataPath.setMinimumSize(QSize(0, 27))
+
+        self.gridLayout_82.addWidget(self.LineEdit_DAT_GPTSoVITS_AudioSpeakersDataPath, 1, 0, 1, 3)
+
+
+        self.verticalLayout_64.addWidget(self.Frame_DAT_GPTSoVITS_AudioSpeakersDataPath)
+
+        self.Frame_DAT_GPTSoVITS_SRTDir = QFrame(self.Frame_DAT_GPTSoVITS_InputParams_BasicSettings)
+        self.Frame_DAT_GPTSoVITS_SRTDir.setObjectName(u"Frame_DAT_GPTSoVITS_SRTDir")
+        self.Frame_DAT_GPTSoVITS_SRTDir.setMinimumSize(QSize(0, 105))
+        self.Frame_DAT_GPTSoVITS_SRTDir.setStyleSheet(u"QFrame {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QFrame:hover {\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
+"}")
+        self.gridLayout_83 = QGridLayout(self.Frame_DAT_GPTSoVITS_SRTDir)
+        self.gridLayout_83.setSpacing(12)
+        self.gridLayout_83.setObjectName(u"gridLayout_83")
+        self.gridLayout_83.setContentsMargins(21, 12, 21, 12)
+        self.Label_DAT_GPTSoVITS_SRTDir = QLabel(self.Frame_DAT_GPTSoVITS_SRTDir)
+        self.Label_DAT_GPTSoVITS_SRTDir.setObjectName(u"Label_DAT_GPTSoVITS_SRTDir")
+        sizePolicy5.setHeightForWidth(self.Label_DAT_GPTSoVITS_SRTDir.sizePolicy().hasHeightForWidth())
+        self.Label_DAT_GPTSoVITS_SRTDir.setSizePolicy(sizePolicy5)
+        self.Label_DAT_GPTSoVITS_SRTDir.setStyleSheet(u"QLabel {\n"
+"	/*text-align: center;*/\n"
+"	/*color: rgb(255, 255, 255);*/\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_83.addWidget(self.Label_DAT_GPTSoVITS_SRTDir, 0, 0, 1, 1)
+
+        self.HorizontalSpacer_DAT_GPTSoVITS_SRTDir = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.gridLayout_83.addItem(self.HorizontalSpacer_DAT_GPTSoVITS_SRTDir, 0, 1, 1, 1)
+
+        self.Button_DAT_GPTSoVITS_SRTDir_Undo = QPushButton(self.Frame_DAT_GPTSoVITS_SRTDir)
+        self.Button_DAT_GPTSoVITS_SRTDir_Undo.setObjectName(u"Button_DAT_GPTSoVITS_SRTDir_Undo")
+        self.Button_DAT_GPTSoVITS_SRTDir_Undo.setMinimumSize(QSize(27, 27))
+        self.Button_DAT_GPTSoVITS_SRTDir_Undo.setMaximumSize(QSize(27, 27))
+        self.Button_DAT_GPTSoVITS_SRTDir_Undo.setStyleSheet(u"QPushButton {\n"
+"	image: url(:/Button_Icon/Sources/Undo.png);\n"
+"	background-color: transparent;\n"
+"	padding: 4.5px;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgba(201, 210, 222, 123);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgba(201, 210, 222, 210);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_83.addWidget(self.Button_DAT_GPTSoVITS_SRTDir_Undo, 0, 2, 1, 1)
+
+        self.LineEdit_DAT_GPTSoVITS_SRTDir = LineEditBase(self.Frame_DAT_GPTSoVITS_SRTDir)
+        self.LineEdit_DAT_GPTSoVITS_SRTDir.setObjectName(u"LineEdit_DAT_GPTSoVITS_SRTDir")
+        self.LineEdit_DAT_GPTSoVITS_SRTDir.setMinimumSize(QSize(0, 27))
+
+        self.gridLayout_83.addWidget(self.LineEdit_DAT_GPTSoVITS_SRTDir, 1, 0, 1, 3)
+
+
+        self.verticalLayout_64.addWidget(self.Frame_DAT_GPTSoVITS_SRTDir)
+
+
+        self.verticalLayout_123.addWidget(self.Frame_DAT_GPTSoVITS_InputParams_BasicSettings)
+
+
+        self.verticalLayout_63.addWidget(self.GroupBox_DAT_GPTSoVITS_InputParams)
+
+        self.GroupBox_DAT_GPTSoVITS_GPTSoVITSParams = QGroupBox(self.ScrollArea_Middle_WidgetContents_DAT_GPTSoVITS)
+        self.GroupBox_DAT_GPTSoVITS_GPTSoVITSParams.setObjectName(u"GroupBox_DAT_GPTSoVITS_GPTSoVITSParams")
+        self.GroupBox_DAT_GPTSoVITS_GPTSoVITSParams.setStyleSheet(u"QGroupBox {\n"
+"	font-size: 15px;\n"
+"	margin-top: 1.5ex;\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: transparent;\n"
+"	border-width: 1px;\n"
+"	border-style: solid;\n"
+"	border-color: transparent;\n"
+"}\n"
+"QGroupBox::title {\n"
+"	left: 9px;\n"
+"	margin-left: 0px;\n"
+"	subcontrol-origin: margin;\n"
+"	subcontrol-position: top left;\n"
+"	padding: 3px;\n"
+"}")
+        self.verticalLayout_124 = QVBoxLayout(self.GroupBox_DAT_GPTSoVITS_GPTSoVITSParams)
+        self.verticalLayout_124.setSpacing(0)
+        self.verticalLayout_124.setObjectName(u"verticalLayout_124")
+        self.verticalLayout_124.setContentsMargins(0, 12, 0, 12)
+        self.Frame_DAT_GPTSoVITS_GPTSoVITSParams_BasicSettings = QFrame(self.GroupBox_DAT_GPTSoVITS_GPTSoVITSParams)
+        self.Frame_DAT_GPTSoVITS_GPTSoVITSParams_BasicSettings.setObjectName(u"Frame_DAT_GPTSoVITS_GPTSoVITSParams_BasicSettings")
+        self.verticalLayout_65 = QVBoxLayout(self.Frame_DAT_GPTSoVITS_GPTSoVITSParams_BasicSettings)
+        self.verticalLayout_65.setSpacing(0)
+        self.verticalLayout_65.setObjectName(u"verticalLayout_65")
+        self.verticalLayout_65.setContentsMargins(0, 0, 0, 0)
+        self.Frame_DAT_GPTSoVITS_DataFormat = QFrame(self.Frame_DAT_GPTSoVITS_GPTSoVITSParams_BasicSettings)
+        self.Frame_DAT_GPTSoVITS_DataFormat.setObjectName(u"Frame_DAT_GPTSoVITS_DataFormat")
+        self.Frame_DAT_GPTSoVITS_DataFormat.setMinimumSize(QSize(0, 105))
+        self.Frame_DAT_GPTSoVITS_DataFormat.setStyleSheet(u"QFrame {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QFrame:hover {\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
+"}")
+        self.gridLayout_84 = QGridLayout(self.Frame_DAT_GPTSoVITS_DataFormat)
+        self.gridLayout_84.setSpacing(12)
+        self.gridLayout_84.setObjectName(u"gridLayout_84")
+        self.gridLayout_84.setContentsMargins(21, 12, 21, 12)
+        self.Label_DAT_GPTSoVITS_DataFormat = QLabel(self.Frame_DAT_GPTSoVITS_DataFormat)
+        self.Label_DAT_GPTSoVITS_DataFormat.setObjectName(u"Label_DAT_GPTSoVITS_DataFormat")
+        sizePolicy5.setHeightForWidth(self.Label_DAT_GPTSoVITS_DataFormat.sizePolicy().hasHeightForWidth())
+        self.Label_DAT_GPTSoVITS_DataFormat.setSizePolicy(sizePolicy5)
+        self.Label_DAT_GPTSoVITS_DataFormat.setStyleSheet(u"QLabel {\n"
+"	/*text-align: center;*/\n"
+"	/*color: rgb(255, 255, 255);*/\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_84.addWidget(self.Label_DAT_GPTSoVITS_DataFormat, 0, 0, 1, 1)
+
+        self.HorizontalSpacer_DAT_GPTSoVITS_DataFormat = QSpacerItem(443, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.gridLayout_84.addItem(self.HorizontalSpacer_DAT_GPTSoVITS_DataFormat, 0, 1, 1, 1)
+
+        self.Button_DAT_GPTSoVITS_DataFormat_Undo = QPushButton(self.Frame_DAT_GPTSoVITS_DataFormat)
+        self.Button_DAT_GPTSoVITS_DataFormat_Undo.setObjectName(u"Button_DAT_GPTSoVITS_DataFormat_Undo")
+        self.Button_DAT_GPTSoVITS_DataFormat_Undo.setMinimumSize(QSize(27, 27))
+        self.Button_DAT_GPTSoVITS_DataFormat_Undo.setMaximumSize(QSize(27, 27))
+        self.Button_DAT_GPTSoVITS_DataFormat_Undo.setStyleSheet(u"QPushButton {\n"
+"	image: url(:/Button_Icon/Sources/Undo.png);\n"
+"	background-color: transparent;\n"
+"	padding: 4.5px;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgba(201, 210, 222, 123);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgba(201, 210, 222, 210);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_84.addWidget(self.Button_DAT_GPTSoVITS_DataFormat_Undo, 0, 2, 1, 1)
+
+        self.LineEdit_DAT_GPTSoVITS_DataFormat = LineEditBase(self.Frame_DAT_GPTSoVITS_DataFormat)
+        self.LineEdit_DAT_GPTSoVITS_DataFormat.setObjectName(u"LineEdit_DAT_GPTSoVITS_DataFormat")
+        self.LineEdit_DAT_GPTSoVITS_DataFormat.setMinimumSize(QSize(0, 27))
+
+        self.gridLayout_84.addWidget(self.LineEdit_DAT_GPTSoVITS_DataFormat, 1, 0, 1, 3)
+
+
+        self.verticalLayout_65.addWidget(self.Frame_DAT_GPTSoVITS_DataFormat)
+
+
+        self.verticalLayout_124.addWidget(self.Frame_DAT_GPTSoVITS_GPTSoVITSParams_BasicSettings)
+
+
+        self.verticalLayout_63.addWidget(self.GroupBox_DAT_GPTSoVITS_GPTSoVITSParams)
+
+        self.GroupBox_DAT_GPTSoVITS_OutputParams = QGroupBox(self.ScrollArea_Middle_WidgetContents_DAT_GPTSoVITS)
+        self.GroupBox_DAT_GPTSoVITS_OutputParams.setObjectName(u"GroupBox_DAT_GPTSoVITS_OutputParams")
+        self.GroupBox_DAT_GPTSoVITS_OutputParams.setStyleSheet(u"QGroupBox {\n"
+"	font-size: 15px;\n"
+"	margin-top: 1.5ex;\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: transparent;\n"
+"	border-width: 1px;\n"
+"	border-style: solid;\n"
+"	border-color: transparent;\n"
+"}\n"
+"QGroupBox::title {\n"
+"	left: 9px;\n"
+"	margin-left: 0px;\n"
+"	subcontrol-origin: margin;\n"
+"	subcontrol-position: top left;\n"
+"	padding: 3px;\n"
+"}")
+        self.verticalLayout_109 = QVBoxLayout(self.GroupBox_DAT_GPTSoVITS_OutputParams)
+        self.verticalLayout_109.setSpacing(0)
+        self.verticalLayout_109.setObjectName(u"verticalLayout_109")
+        self.verticalLayout_109.setContentsMargins(0, 12, 0, 12)
+        self.Frame_DAT_GPTSoVITS_OutputParams_BasicSettings = QFrame(self.GroupBox_DAT_GPTSoVITS_OutputParams)
+        self.Frame_DAT_GPTSoVITS_OutputParams_BasicSettings.setObjectName(u"Frame_DAT_GPTSoVITS_OutputParams_BasicSettings")
+        self.verticalLayout_68 = QVBoxLayout(self.Frame_DAT_GPTSoVITS_OutputParams_BasicSettings)
+        self.verticalLayout_68.setSpacing(0)
+        self.verticalLayout_68.setObjectName(u"verticalLayout_68")
+        self.verticalLayout_68.setContentsMargins(0, 0, 0, 0)
+        self.Frame_DAT_GPTSoVITS_OutputDirName = QFrame(self.Frame_DAT_GPTSoVITS_OutputParams_BasicSettings)
+        self.Frame_DAT_GPTSoVITS_OutputDirName.setObjectName(u"Frame_DAT_GPTSoVITS_OutputDirName")
+        self.Frame_DAT_GPTSoVITS_OutputDirName.setMinimumSize(QSize(0, 105))
+        self.Frame_DAT_GPTSoVITS_OutputDirName.setStyleSheet(u"QFrame {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QFrame:hover {\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
+"}")
+        self.gridLayout_104 = QGridLayout(self.Frame_DAT_GPTSoVITS_OutputDirName)
+        self.gridLayout_104.setSpacing(12)
+        self.gridLayout_104.setObjectName(u"gridLayout_104")
+        self.gridLayout_104.setContentsMargins(21, 12, 21, 12)
+        self.Label_DAT_GPTSoVITS_OutputDirName = QLabel(self.Frame_DAT_GPTSoVITS_OutputDirName)
+        self.Label_DAT_GPTSoVITS_OutputDirName.setObjectName(u"Label_DAT_GPTSoVITS_OutputDirName")
+        sizePolicy5.setHeightForWidth(self.Label_DAT_GPTSoVITS_OutputDirName.sizePolicy().hasHeightForWidth())
+        self.Label_DAT_GPTSoVITS_OutputDirName.setSizePolicy(sizePolicy5)
+        self.Label_DAT_GPTSoVITS_OutputDirName.setStyleSheet(u"QLabel {\n"
+"	/*text-align: center;*/\n"
+"	/*color: rgb(255, 255, 255);*/\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_104.addWidget(self.Label_DAT_GPTSoVITS_OutputDirName, 0, 0, 1, 1)
+
+        self.HorizontalSpacer_DAT_GPTSoVITS_OutputDirName = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.gridLayout_104.addItem(self.HorizontalSpacer_DAT_GPTSoVITS_OutputDirName, 0, 1, 1, 1)
+
+        self.Button_DAT_GPTSoVITS_OutputDirName_Undo = QPushButton(self.Frame_DAT_GPTSoVITS_OutputDirName)
+        self.Button_DAT_GPTSoVITS_OutputDirName_Undo.setObjectName(u"Button_DAT_GPTSoVITS_OutputDirName_Undo")
+        self.Button_DAT_GPTSoVITS_OutputDirName_Undo.setMinimumSize(QSize(27, 27))
+        self.Button_DAT_GPTSoVITS_OutputDirName_Undo.setMaximumSize(QSize(27, 27))
+        self.Button_DAT_GPTSoVITS_OutputDirName_Undo.setStyleSheet(u"QPushButton {\n"
+"	image: url(:/Button_Icon/Sources/Undo.png);\n"
+"	background-color: transparent;\n"
+"	padding: 4.5px;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgba(201, 210, 222, 123);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgba(201, 210, 222, 210);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_104.addWidget(self.Button_DAT_GPTSoVITS_OutputDirName_Undo, 0, 2, 1, 1)
+
+        self.LineEdit_DAT_GPTSoVITS_OutputDirName = LineEditBase(self.Frame_DAT_GPTSoVITS_OutputDirName)
+        self.LineEdit_DAT_GPTSoVITS_OutputDirName.setObjectName(u"LineEdit_DAT_GPTSoVITS_OutputDirName")
+        self.LineEdit_DAT_GPTSoVITS_OutputDirName.setMinimumSize(QSize(0, 27))
+
+        self.gridLayout_104.addWidget(self.LineEdit_DAT_GPTSoVITS_OutputDirName, 1, 0, 1, 3)
+
+
+        self.verticalLayout_68.addWidget(self.Frame_DAT_GPTSoVITS_OutputDirName)
+
+
+        self.verticalLayout_109.addWidget(self.Frame_DAT_GPTSoVITS_OutputParams_BasicSettings)
+
+        self.CheckBox_DAT_GPTSoVITS_OutputParams_Toggle_AdvanceSettings = QCheckBox(self.GroupBox_DAT_GPTSoVITS_OutputParams)
+        self.CheckBox_DAT_GPTSoVITS_OutputParams_Toggle_AdvanceSettings.setObjectName(u"CheckBox_DAT_GPTSoVITS_OutputParams_Toggle_AdvanceSettings")
+        self.CheckBox_DAT_GPTSoVITS_OutputParams_Toggle_AdvanceSettings.setStyleSheet(u"QCheckBox {\n"
+"	font-size: 12px;\n"
+"	font-weight: 630;\n"
+"	spacing: 12px;\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"	background-color: transparent;\n"
+"	padding-top: 9px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QCheckBox:hover {\n"
+"	color: rgb(255, 255, 255);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator {\n"
+"	width: 12px;\n"
+"	height: 12px;\n"
+"    background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QCheckBox::indicator:hover {\n"
+"	background-color: transparent;\n"
+"}\n"
+"QCheckBox::indicator:unchecked {\n"
+"	border-image: url(:/CheckBox_Icon/Sources/RightCaret.png);\n"
+"}\n"
+"QCheckBox::indicator:checked {\n"
+"	border-image: url(:/CheckBox_Icon/Sources/DownCaret.png);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.verticalLayout_109.addWidget(self.CheckBox_DAT_GPTSoVITS_OutputParams_Toggle_AdvanceSettings)
+
+        self.Frame_DAT_GPTSoVITS_OutputParams_AdvanceSettings = QFrame(self.GroupBox_DAT_GPTSoVITS_OutputParams)
+        self.Frame_DAT_GPTSoVITS_OutputParams_AdvanceSettings.setObjectName(u"Frame_DAT_GPTSoVITS_OutputParams_AdvanceSettings")
+        self.Frame_DAT_GPTSoVITS_OutputParams_AdvanceSettings.setFrameShape(QFrame.StyledPanel)
+        self.Frame_DAT_GPTSoVITS_OutputParams_AdvanceSettings.setFrameShadow(QFrame.Raised)
+        self.verticalLayout_108 = QVBoxLayout(self.Frame_DAT_GPTSoVITS_OutputParams_AdvanceSettings)
+        self.verticalLayout_108.setSpacing(0)
+        self.verticalLayout_108.setObjectName(u"verticalLayout_108")
+        self.verticalLayout_108.setContentsMargins(0, 0, 0, 0)
+        self.Frame_DAT_GPTSoVITS_FileListName = QFrame(self.Frame_DAT_GPTSoVITS_OutputParams_AdvanceSettings)
+        self.Frame_DAT_GPTSoVITS_FileListName.setObjectName(u"Frame_DAT_GPTSoVITS_FileListName")
+        self.Frame_DAT_GPTSoVITS_FileListName.setMinimumSize(QSize(0, 105))
+        self.Frame_DAT_GPTSoVITS_FileListName.setStyleSheet(u"QFrame {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QFrame:hover {\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
+"}")
+        self.gridLayout_105 = QGridLayout(self.Frame_DAT_GPTSoVITS_FileListName)
+        self.gridLayout_105.setSpacing(12)
+        self.gridLayout_105.setObjectName(u"gridLayout_105")
+        self.gridLayout_105.setContentsMargins(21, 12, 21, 12)
+        self.Button_DAT_GPTSoVITS_FileListName_Undo = QPushButton(self.Frame_DAT_GPTSoVITS_FileListName)
+        self.Button_DAT_GPTSoVITS_FileListName_Undo.setObjectName(u"Button_DAT_GPTSoVITS_FileListName_Undo")
+        self.Button_DAT_GPTSoVITS_FileListName_Undo.setMinimumSize(QSize(27, 27))
+        self.Button_DAT_GPTSoVITS_FileListName_Undo.setMaximumSize(QSize(27, 27))
+        self.Button_DAT_GPTSoVITS_FileListName_Undo.setStyleSheet(u"QPushButton {\n"
+"	image: url(:/Button_Icon/Sources/Undo.png);\n"
+"	background-color: transparent;\n"
+"	padding: 4.5px;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgba(201, 210, 222, 123);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgba(201, 210, 222, 210);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_105.addWidget(self.Button_DAT_GPTSoVITS_FileListName_Undo, 0, 2, 1, 1)
+
+        self.Label_DAT_GPTSoVITS_FileListName = QLabel(self.Frame_DAT_GPTSoVITS_FileListName)
+        self.Label_DAT_GPTSoVITS_FileListName.setObjectName(u"Label_DAT_GPTSoVITS_FileListName")
+        sizePolicy5.setHeightForWidth(self.Label_DAT_GPTSoVITS_FileListName.sizePolicy().hasHeightForWidth())
+        self.Label_DAT_GPTSoVITS_FileListName.setSizePolicy(sizePolicy5)
+        self.Label_DAT_GPTSoVITS_FileListName.setStyleSheet(u"QLabel {\n"
+"	/*text-align: center;*/\n"
+"	/*color: rgb(255, 255, 255);*/\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_105.addWidget(self.Label_DAT_GPTSoVITS_FileListName, 0, 0, 1, 1)
+
+        self.LineEdit_DAT_GPTSoVITS_FileListName = LineEditBase(self.Frame_DAT_GPTSoVITS_FileListName)
+        self.LineEdit_DAT_GPTSoVITS_FileListName.setObjectName(u"LineEdit_DAT_GPTSoVITS_FileListName")
+        self.LineEdit_DAT_GPTSoVITS_FileListName.setMinimumSize(QSize(0, 27))
+
+        self.gridLayout_105.addWidget(self.LineEdit_DAT_GPTSoVITS_FileListName, 1, 0, 1, 3)
+
+        self.HorizontalSpacer_DAT_GPTSoVITS_FileListName = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.gridLayout_105.addItem(self.HorizontalSpacer_DAT_GPTSoVITS_FileListName, 0, 1, 1, 1)
+
+
+        self.verticalLayout_108.addWidget(self.Frame_DAT_GPTSoVITS_FileListName)
+
+
+        self.verticalLayout_109.addWidget(self.Frame_DAT_GPTSoVITS_OutputParams_AdvanceSettings)
+
+
+        self.verticalLayout_63.addWidget(self.GroupBox_DAT_GPTSoVITS_OutputParams)
+
+        self.VerticalSpacer_DAT_GPTSoVITS = QSpacerItem(0, 0, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+
+        self.verticalLayout_63.addItem(self.VerticalSpacer_DAT_GPTSoVITS)
+
+        self.ScrollArea_Middle_DAT_GPTSoVITS.setWidget(self.ScrollArea_Middle_WidgetContents_DAT_GPTSoVITS)
+
+        self.gridLayout_108.addWidget(self.ScrollArea_Middle_DAT_GPTSoVITS, 0, 1, 1, 1)
+
+        self.Widget_Right_DAT_GPTSoVITS = QWidget(self.Subpage_DAT_GPTSoVITS)
+        self.Widget_Right_DAT_GPTSoVITS.setObjectName(u"Widget_Right_DAT_GPTSoVITS")
+        self.Widget_Right_DAT_GPTSoVITS.setStyleSheet(u"QWidget {\n"
+"	background-color: rgba(36, 36, 36, 123);\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QWidget:hover {\n"
+"}")
+        self.gridLayout_107 = QGridLayout(self.Widget_Right_DAT_GPTSoVITS)
+        self.gridLayout_107.setSpacing(12)
+        self.gridLayout_107.setObjectName(u"gridLayout_107")
+        self.gridLayout_107.setContentsMargins(12, 12, 12, 12)
+        self.TextBrowser_Params_DAT_GPTSoVITS = QTextBrowser(self.Widget_Right_DAT_GPTSoVITS)
+        self.TextBrowser_Params_DAT_GPTSoVITS.setObjectName(u"TextBrowser_Params_DAT_GPTSoVITS")
+        sizePolicy1.setHeightForWidth(self.TextBrowser_Params_DAT_GPTSoVITS.sizePolicy().hasHeightForWidth())
+        self.TextBrowser_Params_DAT_GPTSoVITS.setSizePolicy(sizePolicy1)
+        self.TextBrowser_Params_DAT_GPTSoVITS.setStyleSheet(u"QTextBrowser {\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
+"	/*padding-top: 1.5px;*/\n"
+"	/*padding-bottom: 1.5px;*/\n"
+"	padding-left: 15px;\n"
+"	padding-right: 6px;\n"
+"	border-width: 1px;\n"
+"	border-style: solid;\n"
+"	border-color:transparent;\n"
+"}\n"
+"\n"
+"\n"
+"QScrollBar::vertical {\n"
+"	width: 9px;\n"
+"	background-color: rgb(45, 45, 45);\n"
+"	border-width: 1px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: transparent;\n"
+"	margin: 0px;\n"
+"}\n"
+"QScrollBar::vertical:hover {\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
+"}\n"
+"\n"
+"QScrollBar::add-line:vertical {\n"
+"	height: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: bottom;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QScrollBar::sub-line:vertical {\n"
+"	height: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: top;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	bord"
+                        "er-style: solid;\n"
+"}\n"
+"\n"
+"QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
+"	width: 0px;\n"
+"	height: 0px;\n"
+"	background-color: transparent;\n"
+"}\n"
+"\n"
+"QScrollBar::handle:vertical {\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QScrollBar::handle:vertical:hover {\n"
+"	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QScrollBar::horizontal {\n"
+"	height: 9px;\n"
+"	background-color: rgb(45, 45, 45);\n"
+"	border-width: 1px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: transparent;\n"
+"	margin: 0px;\n"
+"}\n"
+"QScrollBar::horizontal:hover {\n"
+"	background-color: rgb(60, 60, 60);\n"
+"}\n"
+"\n"
+"QScrollBar::add-line:horizontal {\n"
+"	width: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: left;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QScrollBar::sub-line:horizontal {\n"
+"	width: 0px"
+                        ";\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: right;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {\n"
+"	width: 0px;\n"
+"	height: 0px;\n"
+"	background-color: transparent;\n"
+"}\n"
+"\n"
+"QScrollBar::handle:horizontal {\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QScrollBar::handle:horizontal:hover {\n"
+"	background-color: rgb(120, 120, 120);\n"
+"}")
+
+        self.gridLayout_107.addWidget(self.TextBrowser_Params_DAT_GPTSoVITS, 0, 0, 1, 2)
+
+        self.Button_CheckOutput_DAT_GPTSoVITS = QPushButton(self.Widget_Right_DAT_GPTSoVITS)
+        self.Button_CheckOutput_DAT_GPTSoVITS.setObjectName(u"Button_CheckOutput_DAT_GPTSoVITS")
+        self.Button_CheckOutput_DAT_GPTSoVITS.setStyleSheet(u"QPushButton {\n"
+"	text-align: center;\n"
+"	font-size: 12px;\n"
+"	background-color: transparent;\n"
+"	padding: 9.9px;\n"
+"	border-width: 1.5px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_107.addWidget(self.Button_CheckOutput_DAT_GPTSoVITS, 1, 0, 1, 2)
+
+
+        self.gridLayout_108.addWidget(self.Widget_Right_DAT_GPTSoVITS, 0, 2, 1, 1)
+
+        self.ProgressBar_DAT_GPTSoVITS = QProgressBar(self.Subpage_DAT_GPTSoVITS)
+        self.ProgressBar_DAT_GPTSoVITS.setObjectName(u"ProgressBar_DAT_GPTSoVITS")
+        self.ProgressBar_DAT_GPTSoVITS.setMinimumSize(QSize(0, 30))
+        self.ProgressBar_DAT_GPTSoVITS.setStyleSheet(u"QProgressBar {\n"
+"	text-align: center;\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: rgb(60, 60, 60);\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QProgressBar:chunk {\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	background-color: qlineargradient(spread: pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgb(60, 60, 60), stop:1  rgb(123, 123, 123));\n"
+"}")
+        self.ProgressBar_DAT_GPTSoVITS.setValue(0)
+        self.ProgressBar_DAT_GPTSoVITS.setTextVisible(False)
+        self.horizontalLayout_42 = QHBoxLayout(self.ProgressBar_DAT_GPTSoVITS)
+        self.horizontalLayout_42.setSpacing(0)
+        self.horizontalLayout_42.setObjectName(u"horizontalLayout_42")
+        self.horizontalLayout_42.setContentsMargins(0, 0, 0, 0)
+        self.StackedWidget_DAT_GPTSoVITS = QStackedWidget(self.ProgressBar_DAT_GPTSoVITS)
+        self.StackedWidget_DAT_GPTSoVITS.setObjectName(u"StackedWidget_DAT_GPTSoVITS")
+        self.StackedWidget_DAT_GPTSoVITS.setMaximumSize(QSize(16777215, 30))
+        self.StackedWidget_DAT_GPTSoVITS.setStyleSheet(u"QWidget {\n"
+"	background-color: rgba(90, 90, 90, 45);\n"
+"}\n"
+"QWidget:hover {\n"
+"	background-color: rgba(120, 120, 120, 60);\n"
+"}")
+        self.Page_DAT_GPTSoVITS_Execute = QWidget()
+        self.Page_DAT_GPTSoVITS_Execute.setObjectName(u"Page_DAT_GPTSoVITS_Execute")
+        self.verticalLayout_101 = QVBoxLayout(self.Page_DAT_GPTSoVITS_Execute)
+        self.verticalLayout_101.setSpacing(0)
+        self.verticalLayout_101.setObjectName(u"verticalLayout_101")
+        self.verticalLayout_101.setContentsMargins(0, 0, 0, 0)
+        self.Button_DAT_GPTSoVITS_Execute = QPushButton(self.Page_DAT_GPTSoVITS_Execute)
+        self.Button_DAT_GPTSoVITS_Execute.setObjectName(u"Button_DAT_GPTSoVITS_Execute")
+        sizePolicy3.setHeightForWidth(self.Button_DAT_GPTSoVITS_Execute.sizePolicy().hasHeightForWidth())
+        self.Button_DAT_GPTSoVITS_Execute.setSizePolicy(sizePolicy3)
+        self.Button_DAT_GPTSoVITS_Execute.setMinimumSize(QSize(0, 30))
+        self.Button_DAT_GPTSoVITS_Execute.setStyleSheet(u"QPushButton {\n"
+"	text-align: center;\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"	/*background-color: rgba(90, 90, 90, 45);*/\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	color: rgba(255, 255, 255, 240);\n"
+"	/*background-color: rgba(120, 120, 120, 60);*/\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.verticalLayout_101.addWidget(self.Button_DAT_GPTSoVITS_Execute)
+
+        self.StackedWidget_DAT_GPTSoVITS.addWidget(self.Page_DAT_GPTSoVITS_Execute)
+        self.Page_DAT_GPTSoVITS_Terminate = QWidget()
+        self.Page_DAT_GPTSoVITS_Terminate.setObjectName(u"Page_DAT_GPTSoVITS_Terminate")
+        self.verticalLayout_103 = QVBoxLayout(self.Page_DAT_GPTSoVITS_Terminate)
+        self.verticalLayout_103.setSpacing(0)
+        self.verticalLayout_103.setObjectName(u"verticalLayout_103")
+        self.verticalLayout_103.setContentsMargins(0, 0, 0, 0)
+        self.Button_DAT_GPTSoVITS_Terminate = QPushButton(self.Page_DAT_GPTSoVITS_Terminate)
+        self.Button_DAT_GPTSoVITS_Terminate.setObjectName(u"Button_DAT_GPTSoVITS_Terminate")
+        sizePolicy3.setHeightForWidth(self.Button_DAT_GPTSoVITS_Terminate.sizePolicy().hasHeightForWidth())
+        self.Button_DAT_GPTSoVITS_Terminate.setSizePolicy(sizePolicy3)
+        self.Button_DAT_GPTSoVITS_Terminate.setMinimumSize(QSize(0, 30))
+        self.Button_DAT_GPTSoVITS_Terminate.setStyleSheet(u"QPushButton {\n"
+"	text-align: center;\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"	/*background-color: rgba(90, 90, 90, 45);*/\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	color: rgba(255, 255, 255, 240);\n"
+"	/*background-color: rgba(120, 120, 120, 60);*/\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.verticalLayout_103.addWidget(self.Button_DAT_GPTSoVITS_Terminate)
+
+        self.StackedWidget_DAT_GPTSoVITS.addWidget(self.Page_DAT_GPTSoVITS_Terminate)
+
+        self.horizontalLayout_42.addWidget(self.StackedWidget_DAT_GPTSoVITS)
+
+
+        self.gridLayout_108.addWidget(self.ProgressBar_DAT_GPTSoVITS, 1, 0, 1, 3)
+
+        self.gridLayout_108.setColumnStretch(0, 3)
+        self.gridLayout_108.setColumnStretch(1, 10)
+        self.gridLayout_108.setColumnStretch(2, 7)
+        self.StackedWidget_Pages_Dataset.addWidget(self.Subpage_DAT_GPTSoVITS)
         self.Subpage_DAT_VITS = QWidget()
         self.Subpage_DAT_VITS.setObjectName(u"Subpage_DAT_VITS")
         self.gridLayout_8 = QGridLayout(self.Subpage_DAT_VITS)
@@ -8714,8 +10497,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_9.setObjectName(u"verticalLayout_9")
         self.verticalLayout_9.setContentsMargins(12, 12, 12, 12)
         self.TreeWidget_Catalogue_DAT_VITS = QTreeWidget(self.Widget_Left_DAT_VITS)
-        __qtreewidgetitem3 = QTreeWidgetItem(self.TreeWidget_Catalogue_DAT_VITS)
-        QTreeWidgetItem(__qtreewidgetitem3)
+        __qtreewidgetitem4 = QTreeWidgetItem(self.TreeWidget_Catalogue_DAT_VITS)
+        QTreeWidgetItem(__qtreewidgetitem4)
         self.TreeWidget_Catalogue_DAT_VITS.setObjectName(u"TreeWidget_Catalogue_DAT_VITS")
         self.TreeWidget_Catalogue_DAT_VITS.setStyleSheet(u"QTreeView {\n"
 "	/*font-size: 12px;\n"
@@ -8916,7 +10699,7 @@ class Ui_MainWindow(object):
         self.ScrollArea_Middle_DAT_VITS.setWidgetResizable(True)
         self.ScrollArea_Middle_WidgetContents_DAT_VITS = QWidget()
         self.ScrollArea_Middle_WidgetContents_DAT_VITS.setObjectName(u"ScrollArea_Middle_WidgetContents_DAT_VITS")
-        self.ScrollArea_Middle_WidgetContents_DAT_VITS.setGeometry(QRect(0, 0, 591, 1566))
+        self.ScrollArea_Middle_WidgetContents_DAT_VITS.setGeometry(QRect(0, 0, 591, 1488))
         self.verticalLayout_36 = QVBoxLayout(self.ScrollArea_Middle_WidgetContents_DAT_VITS)
         self.verticalLayout_36.setSpacing(12)
         self.verticalLayout_36.setObjectName(u"verticalLayout_36")
@@ -10186,20 +11969,20 @@ class Ui_MainWindow(object):
 "	subcontrol-position: top left;\n"
 "	padding: 3px;\n"
 "}")
-        self.verticalLayout_128 = QVBoxLayout(self.GroupBox_DAT_VITS_OutputParams)
-        self.verticalLayout_128.setSpacing(0)
-        self.verticalLayout_128.setObjectName(u"verticalLayout_128")
-        self.verticalLayout_128.setContentsMargins(0, 12, 0, 12)
+        self.verticalLayout_107 = QVBoxLayout(self.GroupBox_DAT_VITS_OutputParams)
+        self.verticalLayout_107.setSpacing(0)
+        self.verticalLayout_107.setObjectName(u"verticalLayout_107")
+        self.verticalLayout_107.setContentsMargins(0, 12, 0, 12)
         self.Frame_DAT_VITS_OutputParams_BasicSettings = QFrame(self.GroupBox_DAT_VITS_OutputParams)
         self.Frame_DAT_VITS_OutputParams_BasicSettings.setObjectName(u"Frame_DAT_VITS_OutputParams_BasicSettings")
         self.verticalLayout_31 = QVBoxLayout(self.Frame_DAT_VITS_OutputParams_BasicSettings)
         self.verticalLayout_31.setSpacing(0)
         self.verticalLayout_31.setObjectName(u"verticalLayout_31")
         self.verticalLayout_31.setContentsMargins(0, 0, 0, 0)
-        self.Frame_DAT_VITS_ToStandaloneForm = QFrame(self.Frame_DAT_VITS_OutputParams_BasicSettings)
-        self.Frame_DAT_VITS_ToStandaloneForm.setObjectName(u"Frame_DAT_VITS_ToStandaloneForm")
-        self.Frame_DAT_VITS_ToStandaloneForm.setMinimumSize(QSize(0, 105))
-        self.Frame_DAT_VITS_ToStandaloneForm.setStyleSheet(u"QFrame {\n"
+        self.Frame_DAT_VITS_OutputDirName = QFrame(self.Frame_DAT_VITS_OutputParams_BasicSettings)
+        self.Frame_DAT_VITS_OutputDirName.setObjectName(u"Frame_DAT_VITS_OutputDirName")
+        self.Frame_DAT_VITS_OutputDirName.setMinimumSize(QSize(0, 105))
+        self.Frame_DAT_VITS_OutputDirName.setStyleSheet(u"QFrame {\n"
 "	color: rgb(255, 255, 255);\n"
 "	background-color: transparent;\n"
 "	border-width: 0px;\n"
@@ -10208,15 +11991,15 @@ class Ui_MainWindow(object):
 "QFrame:hover {\n"
 "	background-color: rgba(33, 33, 33, 99);\n"
 "}")
-        self.gridLayout_78 = QGridLayout(self.Frame_DAT_VITS_ToStandaloneForm)
-        self.gridLayout_78.setSpacing(12)
-        self.gridLayout_78.setObjectName(u"gridLayout_78")
-        self.gridLayout_78.setContentsMargins(21, 12, 21, 12)
-        self.Label_DAT_VITS_ToStandaloneForm = QLabel(self.Frame_DAT_VITS_ToStandaloneForm)
-        self.Label_DAT_VITS_ToStandaloneForm.setObjectName(u"Label_DAT_VITS_ToStandaloneForm")
-        sizePolicy5.setHeightForWidth(self.Label_DAT_VITS_ToStandaloneForm.sizePolicy().hasHeightForWidth())
-        self.Label_DAT_VITS_ToStandaloneForm.setSizePolicy(sizePolicy5)
-        self.Label_DAT_VITS_ToStandaloneForm.setStyleSheet(u"QLabel {\n"
+        self.gridLayout_54 = QGridLayout(self.Frame_DAT_VITS_OutputDirName)
+        self.gridLayout_54.setSpacing(12)
+        self.gridLayout_54.setObjectName(u"gridLayout_54")
+        self.gridLayout_54.setContentsMargins(21, 12, 21, 12)
+        self.Label_DAT_VITS_OutputDirName = QLabel(self.Frame_DAT_VITS_OutputDirName)
+        self.Label_DAT_VITS_OutputDirName.setObjectName(u"Label_DAT_VITS_OutputDirName")
+        sizePolicy5.setHeightForWidth(self.Label_DAT_VITS_OutputDirName.sizePolicy().hasHeightForWidth())
+        self.Label_DAT_VITS_OutputDirName.setSizePolicy(sizePolicy5)
+        self.Label_DAT_VITS_OutputDirName.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	/*color: rgb(255, 255, 255);*/\n"
 "	background-color: transparent;\n"
@@ -10226,17 +12009,17 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}")
 
-        self.gridLayout_78.addWidget(self.Label_DAT_VITS_ToStandaloneForm, 0, 0, 1, 1)
+        self.gridLayout_54.addWidget(self.Label_DAT_VITS_OutputDirName, 0, 0, 1, 1)
 
-        self.HorizontalSpacer_DAT_VITS_ToStandaloneForm = QSpacerItem(443, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+        self.HorizontalSpacer_DAT_VITS_OutputDirName = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
-        self.gridLayout_78.addItem(self.HorizontalSpacer_DAT_VITS_ToStandaloneForm, 0, 1, 1, 1)
+        self.gridLayout_54.addItem(self.HorizontalSpacer_DAT_VITS_OutputDirName, 0, 1, 1, 1)
 
-        self.Button_DAT_VITS_ToStandaloneForm_Undo = QPushButton(self.Frame_DAT_VITS_ToStandaloneForm)
-        self.Button_DAT_VITS_ToStandaloneForm_Undo.setObjectName(u"Button_DAT_VITS_ToStandaloneForm_Undo")
-        self.Button_DAT_VITS_ToStandaloneForm_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_DAT_VITS_ToStandaloneForm_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_DAT_VITS_ToStandaloneForm_Undo.setStyleSheet(u"QPushButton {\n"
+        self.Button_DAT_VITS_OutputDirName_Undo = QPushButton(self.Frame_DAT_VITS_OutputDirName)
+        self.Button_DAT_VITS_OutputDirName_Undo.setObjectName(u"Button_DAT_VITS_OutputDirName_Undo")
+        self.Button_DAT_VITS_OutputDirName_Undo.setMinimumSize(QSize(27, 27))
+        self.Button_DAT_VITS_OutputDirName_Undo.setMaximumSize(QSize(27, 27))
+        self.Button_DAT_VITS_OutputDirName_Undo.setStyleSheet(u"QPushButton {\n"
 "	image: url(:/Button_Icon/Sources/Undo.png);\n"
 "	background-color: transparent;\n"
 "	padding: 4.5px;\n"
@@ -10257,17 +12040,29 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}")
 
-        self.gridLayout_78.addWidget(self.Button_DAT_VITS_ToStandaloneForm_Undo, 0, 2, 1, 1)
+        self.gridLayout_54.addWidget(self.Button_DAT_VITS_OutputDirName_Undo, 0, 2, 1, 1)
 
-        self.CheckBox_DAT_VITS_ToStandaloneForm = QCheckBox(self.Frame_DAT_VITS_ToStandaloneForm)
-        self.CheckBox_DAT_VITS_ToStandaloneForm.setObjectName(u"CheckBox_DAT_VITS_ToStandaloneForm")
-        self.CheckBox_DAT_VITS_ToStandaloneForm.setMinimumSize(QSize(0, 27))
-        self.CheckBox_DAT_VITS_ToStandaloneForm.setStyleSheet(u"QCheckBox {\n"
+        self.LineEdit_DAT_VITS_OutputDirName = LineEditBase(self.Frame_DAT_VITS_OutputDirName)
+        self.LineEdit_DAT_VITS_OutputDirName.setObjectName(u"LineEdit_DAT_VITS_OutputDirName")
+        self.LineEdit_DAT_VITS_OutputDirName.setMinimumSize(QSize(0, 27))
+
+        self.gridLayout_54.addWidget(self.LineEdit_DAT_VITS_OutputDirName, 1, 0, 1, 3)
+
+
+        self.verticalLayout_31.addWidget(self.Frame_DAT_VITS_OutputDirName)
+
+
+        self.verticalLayout_107.addWidget(self.Frame_DAT_VITS_OutputParams_BasicSettings)
+
+        self.CheckBox_DAT_VITS_OutputParams_Toggle_AdvanceSettings = QCheckBox(self.GroupBox_DAT_VITS_OutputParams)
+        self.CheckBox_DAT_VITS_OutputParams_Toggle_AdvanceSettings.setObjectName(u"CheckBox_DAT_VITS_OutputParams_Toggle_AdvanceSettings")
+        self.CheckBox_DAT_VITS_OutputParams_Toggle_AdvanceSettings.setStyleSheet(u"QCheckBox {\n"
 "	font-size: 12px;\n"
-"	spacing: 12.3px;\n"
+"	font-weight: 630;\n"
+"	spacing: 12px;\n"
 "	color: rgba(255, 255, 255, 210);\n"
 "	background-color: transparent;\n"
-"	padding: 0px;\n"
+"	padding-top: 9px;\n"
 "	border-width: 0px;\n"
 "	border-radius: 6px;\n"
 "	border-style: solid;\n"
@@ -10277,22 +12072,22 @@ class Ui_MainWindow(object):
 "}\n"
 "\n"
 "QCheckBox::indicator {\n"
-"	width: 24px;\n"
-"	height: 24px;\n"
+"	width: 12px;\n"
+"	height: 12px;\n"
 "    background-color: transparent;\n"
-"	padding: 1.2px;\n"
+"	padding: 0px;\n"
 "	border-width: 0px;\n"
 "	border-radius: 6px;\n"
 "	border-style: solid;\n"
 "}\n"
 "QCheckBox::indicator:hover {\n"
-"	background-color: rgba(255, 255, 255, 21);\n"
+"	background-color: transparent;\n"
 "}\n"
 "QCheckBox::indicator:unchecked {\n"
-"	border-image: url(:/CheckBox_Icon/Sources/ToggleOff.png);\n"
+"	border-image: url(:/CheckBox_Icon/Sources/RightCaret.png);\n"
 "}\n"
 "QCheckBox::indicator:checked {\n"
-"	border-image: url(:/CheckBox_Icon/Sources/ToggleOn.png);\n"
+"	border-image: url(:/CheckBox_Icon/Sources/DownCaret.png);\n"
 "}\n"
 "\n"
 "\n"
@@ -10303,15 +12098,20 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}")
 
-        self.gridLayout_78.addWidget(self.CheckBox_DAT_VITS_ToStandaloneForm, 1, 0, 1, 3)
+        self.verticalLayout_107.addWidget(self.CheckBox_DAT_VITS_OutputParams_Toggle_AdvanceSettings)
 
-
-        self.verticalLayout_31.addWidget(self.Frame_DAT_VITS_ToStandaloneForm)
-
-        self.Frame_DAT_VITS_WAVDirSplit = QFrame(self.Frame_DAT_VITS_OutputParams_BasicSettings)
-        self.Frame_DAT_VITS_WAVDirSplit.setObjectName(u"Frame_DAT_VITS_WAVDirSplit")
-        self.Frame_DAT_VITS_WAVDirSplit.setMinimumSize(QSize(0, 105))
-        self.Frame_DAT_VITS_WAVDirSplit.setStyleSheet(u"QFrame {\n"
+        self.Frame_DAT_VITS_OutputParams_AdvanceSettings = QFrame(self.GroupBox_DAT_VITS_OutputParams)
+        self.Frame_DAT_VITS_OutputParams_AdvanceSettings.setObjectName(u"Frame_DAT_VITS_OutputParams_AdvanceSettings")
+        self.Frame_DAT_VITS_OutputParams_AdvanceSettings.setFrameShape(QFrame.StyledPanel)
+        self.Frame_DAT_VITS_OutputParams_AdvanceSettings.setFrameShadow(QFrame.Raised)
+        self.verticalLayout_88 = QVBoxLayout(self.Frame_DAT_VITS_OutputParams_AdvanceSettings)
+        self.verticalLayout_88.setSpacing(0)
+        self.verticalLayout_88.setObjectName(u"verticalLayout_88")
+        self.verticalLayout_88.setContentsMargins(0, 0, 0, 0)
+        self.Frame_DAT_VITS_FileListNameTraining = QFrame(self.Frame_DAT_VITS_OutputParams_AdvanceSettings)
+        self.Frame_DAT_VITS_FileListNameTraining.setObjectName(u"Frame_DAT_VITS_FileListNameTraining")
+        self.Frame_DAT_VITS_FileListNameTraining.setMinimumSize(QSize(0, 105))
+        self.Frame_DAT_VITS_FileListNameTraining.setStyleSheet(u"QFrame {\n"
 "	color: rgb(255, 255, 255);\n"
 "	background-color: transparent;\n"
 "	border-width: 0px;\n"
@@ -10320,87 +12120,15 @@ class Ui_MainWindow(object):
 "QFrame:hover {\n"
 "	background-color: rgba(33, 33, 33, 99);\n"
 "}")
-        self.gridLayout_54 = QGridLayout(self.Frame_DAT_VITS_WAVDirSplit)
-        self.gridLayout_54.setSpacing(12)
-        self.gridLayout_54.setObjectName(u"gridLayout_54")
-        self.gridLayout_54.setContentsMargins(21, 12, 21, 12)
-        self.Label_DAT_VITS_WAVDirSplit = QLabel(self.Frame_DAT_VITS_WAVDirSplit)
-        self.Label_DAT_VITS_WAVDirSplit.setObjectName(u"Label_DAT_VITS_WAVDirSplit")
-        sizePolicy5.setHeightForWidth(self.Label_DAT_VITS_WAVDirSplit.sizePolicy().hasHeightForWidth())
-        self.Label_DAT_VITS_WAVDirSplit.setSizePolicy(sizePolicy5)
-        self.Label_DAT_VITS_WAVDirSplit.setStyleSheet(u"QLabel {\n"
-"	/*text-align: center;*/\n"
-"	/*color: rgb(255, 255, 255);*/\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.gridLayout_54.addWidget(self.Label_DAT_VITS_WAVDirSplit, 0, 0, 1, 1)
-
-        self.HorizontalSpacer_DAT_VITS_WAVDirSplit = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
-
-        self.gridLayout_54.addItem(self.HorizontalSpacer_DAT_VITS_WAVDirSplit, 0, 1, 1, 1)
-
-        self.Button_DAT_VITS_WAVDirSplit_Undo = QPushButton(self.Frame_DAT_VITS_WAVDirSplit)
-        self.Button_DAT_VITS_WAVDirSplit_Undo.setObjectName(u"Button_DAT_VITS_WAVDirSplit_Undo")
-        self.Button_DAT_VITS_WAVDirSplit_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_DAT_VITS_WAVDirSplit_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_DAT_VITS_WAVDirSplit_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgba(201, 210, 222, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(201, 210, 222, 210);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.gridLayout_54.addWidget(self.Button_DAT_VITS_WAVDirSplit_Undo, 0, 2, 1, 1)
-
-        self.LineEdit_DAT_VITS_WAVDirSplit = LineEditBase(self.Frame_DAT_VITS_WAVDirSplit)
-        self.LineEdit_DAT_VITS_WAVDirSplit.setObjectName(u"LineEdit_DAT_VITS_WAVDirSplit")
-        self.LineEdit_DAT_VITS_WAVDirSplit.setMinimumSize(QSize(0, 27))
-
-        self.gridLayout_54.addWidget(self.LineEdit_DAT_VITS_WAVDirSplit, 1, 0, 1, 3)
-
-
-        self.verticalLayout_31.addWidget(self.Frame_DAT_VITS_WAVDirSplit)
-
-        self.Frame_DAT_VITS_FileListPathTraining = QFrame(self.Frame_DAT_VITS_OutputParams_BasicSettings)
-        self.Frame_DAT_VITS_FileListPathTraining.setObjectName(u"Frame_DAT_VITS_FileListPathTraining")
-        self.Frame_DAT_VITS_FileListPathTraining.setMinimumSize(QSize(0, 105))
-        self.Frame_DAT_VITS_FileListPathTraining.setStyleSheet(u"QFrame {\n"
-"	color: rgb(255, 255, 255);\n"
-"	background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QFrame:hover {\n"
-"	background-color: rgba(33, 33, 33, 99);\n"
-"}")
-        self.gridLayout_55 = QGridLayout(self.Frame_DAT_VITS_FileListPathTraining)
+        self.gridLayout_55 = QGridLayout(self.Frame_DAT_VITS_FileListNameTraining)
         self.gridLayout_55.setSpacing(12)
         self.gridLayout_55.setObjectName(u"gridLayout_55")
         self.gridLayout_55.setContentsMargins(21, 12, 21, 12)
-        self.Button_DAT_VITS_FileListPathTraining_Undo = QPushButton(self.Frame_DAT_VITS_FileListPathTraining)
-        self.Button_DAT_VITS_FileListPathTraining_Undo.setObjectName(u"Button_DAT_VITS_FileListPathTraining_Undo")
-        self.Button_DAT_VITS_FileListPathTraining_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_DAT_VITS_FileListPathTraining_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_DAT_VITS_FileListPathTraining_Undo.setStyleSheet(u"QPushButton {\n"
+        self.Button_DAT_VITS_FileListNameTraining_Undo = QPushButton(self.Frame_DAT_VITS_FileListNameTraining)
+        self.Button_DAT_VITS_FileListNameTraining_Undo.setObjectName(u"Button_DAT_VITS_FileListNameTraining_Undo")
+        self.Button_DAT_VITS_FileListNameTraining_Undo.setMinimumSize(QSize(27, 27))
+        self.Button_DAT_VITS_FileListNameTraining_Undo.setMaximumSize(QSize(27, 27))
+        self.Button_DAT_VITS_FileListNameTraining_Undo.setStyleSheet(u"QPushButton {\n"
 "	image: url(:/Button_Icon/Sources/Undo.png);\n"
 "	background-color: transparent;\n"
 "	padding: 4.5px;\n"
@@ -10421,13 +12149,13 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}")
 
-        self.gridLayout_55.addWidget(self.Button_DAT_VITS_FileListPathTraining_Undo, 0, 2, 1, 1)
+        self.gridLayout_55.addWidget(self.Button_DAT_VITS_FileListNameTraining_Undo, 0, 2, 1, 1)
 
-        self.Label_DAT_VITS_FileListPathTraining = QLabel(self.Frame_DAT_VITS_FileListPathTraining)
-        self.Label_DAT_VITS_FileListPathTraining.setObjectName(u"Label_DAT_VITS_FileListPathTraining")
-        sizePolicy5.setHeightForWidth(self.Label_DAT_VITS_FileListPathTraining.sizePolicy().hasHeightForWidth())
-        self.Label_DAT_VITS_FileListPathTraining.setSizePolicy(sizePolicy5)
-        self.Label_DAT_VITS_FileListPathTraining.setStyleSheet(u"QLabel {\n"
+        self.Label_DAT_VITS_FileListNameTraining = QLabel(self.Frame_DAT_VITS_FileListNameTraining)
+        self.Label_DAT_VITS_FileListNameTraining.setObjectName(u"Label_DAT_VITS_FileListNameTraining")
+        sizePolicy5.setHeightForWidth(self.Label_DAT_VITS_FileListNameTraining.sizePolicy().hasHeightForWidth())
+        self.Label_DAT_VITS_FileListNameTraining.setSizePolicy(sizePolicy5)
+        self.Label_DAT_VITS_FileListNameTraining.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	/*color: rgb(255, 255, 255);*/\n"
 "	background-color: transparent;\n"
@@ -10437,25 +12165,25 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}")
 
-        self.gridLayout_55.addWidget(self.Label_DAT_VITS_FileListPathTraining, 0, 0, 1, 1)
+        self.gridLayout_55.addWidget(self.Label_DAT_VITS_FileListNameTraining, 0, 0, 1, 1)
 
-        self.LineEdit_DAT_VITS_FileListPathTraining = LineEditBase(self.Frame_DAT_VITS_FileListPathTraining)
-        self.LineEdit_DAT_VITS_FileListPathTraining.setObjectName(u"LineEdit_DAT_VITS_FileListPathTraining")
-        self.LineEdit_DAT_VITS_FileListPathTraining.setMinimumSize(QSize(0, 27))
+        self.LineEdit_DAT_VITS_FileListNameTraining = LineEditBase(self.Frame_DAT_VITS_FileListNameTraining)
+        self.LineEdit_DAT_VITS_FileListNameTraining.setObjectName(u"LineEdit_DAT_VITS_FileListNameTraining")
+        self.LineEdit_DAT_VITS_FileListNameTraining.setMinimumSize(QSize(0, 27))
 
-        self.gridLayout_55.addWidget(self.LineEdit_DAT_VITS_FileListPathTraining, 1, 0, 1, 3)
+        self.gridLayout_55.addWidget(self.LineEdit_DAT_VITS_FileListNameTraining, 1, 0, 1, 3)
 
-        self.HorizontalSpacer_DAT_VITS_FileListPathTraining = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+        self.HorizontalSpacer_DAT_VITS_FileListNameTraining = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
-        self.gridLayout_55.addItem(self.HorizontalSpacer_DAT_VITS_FileListPathTraining, 0, 1, 1, 1)
+        self.gridLayout_55.addItem(self.HorizontalSpacer_DAT_VITS_FileListNameTraining, 0, 1, 1, 1)
 
 
-        self.verticalLayout_31.addWidget(self.Frame_DAT_VITS_FileListPathTraining)
+        self.verticalLayout_88.addWidget(self.Frame_DAT_VITS_FileListNameTraining)
 
-        self.Frame_DAT_VITS_FileListPathValidation = QFrame(self.Frame_DAT_VITS_OutputParams_BasicSettings)
-        self.Frame_DAT_VITS_FileListPathValidation.setObjectName(u"Frame_DAT_VITS_FileListPathValidation")
-        self.Frame_DAT_VITS_FileListPathValidation.setMinimumSize(QSize(0, 105))
-        self.Frame_DAT_VITS_FileListPathValidation.setStyleSheet(u"QFrame {\n"
+        self.Frame_DAT_VITS_FileListNameValidation = QFrame(self.Frame_DAT_VITS_OutputParams_AdvanceSettings)
+        self.Frame_DAT_VITS_FileListNameValidation.setObjectName(u"Frame_DAT_VITS_FileListNameValidation")
+        self.Frame_DAT_VITS_FileListNameValidation.setMinimumSize(QSize(0, 105))
+        self.Frame_DAT_VITS_FileListNameValidation.setStyleSheet(u"QFrame {\n"
 "	color: rgb(255, 255, 255);\n"
 "	background-color: transparent;\n"
 "	border-width: 0px;\n"
@@ -10464,15 +12192,15 @@ class Ui_MainWindow(object):
 "QFrame:hover {\n"
 "	background-color: rgba(33, 33, 33, 99);\n"
 "}")
-        self.gridLayout_56 = QGridLayout(self.Frame_DAT_VITS_FileListPathValidation)
+        self.gridLayout_56 = QGridLayout(self.Frame_DAT_VITS_FileListNameValidation)
         self.gridLayout_56.setSpacing(12)
         self.gridLayout_56.setObjectName(u"gridLayout_56")
         self.gridLayout_56.setContentsMargins(21, 12, 21, 12)
-        self.Label_DAT_VITS_FileListPathValidation = QLabel(self.Frame_DAT_VITS_FileListPathValidation)
-        self.Label_DAT_VITS_FileListPathValidation.setObjectName(u"Label_DAT_VITS_FileListPathValidation")
-        sizePolicy5.setHeightForWidth(self.Label_DAT_VITS_FileListPathValidation.sizePolicy().hasHeightForWidth())
-        self.Label_DAT_VITS_FileListPathValidation.setSizePolicy(sizePolicy5)
-        self.Label_DAT_VITS_FileListPathValidation.setStyleSheet(u"QLabel {\n"
+        self.Label_DAT_VITS_FileListNameValidation = QLabel(self.Frame_DAT_VITS_FileListNameValidation)
+        self.Label_DAT_VITS_FileListNameValidation.setObjectName(u"Label_DAT_VITS_FileListNameValidation")
+        sizePolicy5.setHeightForWidth(self.Label_DAT_VITS_FileListNameValidation.sizePolicy().hasHeightForWidth())
+        self.Label_DAT_VITS_FileListNameValidation.setSizePolicy(sizePolicy5)
+        self.Label_DAT_VITS_FileListNameValidation.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	/*color: rgb(255, 255, 255);*/\n"
 "	background-color: transparent;\n"
@@ -10482,17 +12210,17 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}")
 
-        self.gridLayout_56.addWidget(self.Label_DAT_VITS_FileListPathValidation, 0, 0, 1, 1)
+        self.gridLayout_56.addWidget(self.Label_DAT_VITS_FileListNameValidation, 0, 0, 1, 1)
 
-        self.HorizontalSpacer_DAT_VITS_FileListPathValidation = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+        self.HorizontalSpacer_DAT_VITS_FileListNameValidation = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
-        self.gridLayout_56.addItem(self.HorizontalSpacer_DAT_VITS_FileListPathValidation, 0, 1, 1, 1)
+        self.gridLayout_56.addItem(self.HorizontalSpacer_DAT_VITS_FileListNameValidation, 0, 1, 1, 1)
 
-        self.Button_DAT_VITS_FileListPathValidation_Undo = QPushButton(self.Frame_DAT_VITS_FileListPathValidation)
-        self.Button_DAT_VITS_FileListPathValidation_Undo.setObjectName(u"Button_DAT_VITS_FileListPathValidation_Undo")
-        self.Button_DAT_VITS_FileListPathValidation_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_DAT_VITS_FileListPathValidation_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_DAT_VITS_FileListPathValidation_Undo.setStyleSheet(u"QPushButton {\n"
+        self.Button_DAT_VITS_FileListNameValidation_Undo = QPushButton(self.Frame_DAT_VITS_FileListNameValidation)
+        self.Button_DAT_VITS_FileListNameValidation_Undo.setObjectName(u"Button_DAT_VITS_FileListNameValidation_Undo")
+        self.Button_DAT_VITS_FileListNameValidation_Undo.setMinimumSize(QSize(27, 27))
+        self.Button_DAT_VITS_FileListNameValidation_Undo.setMaximumSize(QSize(27, 27))
+        self.Button_DAT_VITS_FileListNameValidation_Undo.setStyleSheet(u"QPushButton {\n"
 "	image: url(:/Button_Icon/Sources/Undo.png);\n"
 "	background-color: transparent;\n"
 "	padding: 4.5px;\n"
@@ -10513,19 +12241,19 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}")
 
-        self.gridLayout_56.addWidget(self.Button_DAT_VITS_FileListPathValidation_Undo, 0, 2, 1, 1)
+        self.gridLayout_56.addWidget(self.Button_DAT_VITS_FileListNameValidation_Undo, 0, 2, 1, 1)
 
-        self.LineEdit_DAT_VITS_FileListPathValidation = LineEditBase(self.Frame_DAT_VITS_FileListPathValidation)
-        self.LineEdit_DAT_VITS_FileListPathValidation.setObjectName(u"LineEdit_DAT_VITS_FileListPathValidation")
-        self.LineEdit_DAT_VITS_FileListPathValidation.setMinimumSize(QSize(0, 27))
+        self.LineEdit_DAT_VITS_FileListNameValidation = LineEditBase(self.Frame_DAT_VITS_FileListNameValidation)
+        self.LineEdit_DAT_VITS_FileListNameValidation.setObjectName(u"LineEdit_DAT_VITS_FileListNameValidation")
+        self.LineEdit_DAT_VITS_FileListNameValidation.setMinimumSize(QSize(0, 27))
 
-        self.gridLayout_56.addWidget(self.LineEdit_DAT_VITS_FileListPathValidation, 1, 0, 1, 3)
-
-
-        self.verticalLayout_31.addWidget(self.Frame_DAT_VITS_FileListPathValidation)
+        self.gridLayout_56.addWidget(self.LineEdit_DAT_VITS_FileListNameValidation, 1, 0, 1, 3)
 
 
-        self.verticalLayout_128.addWidget(self.Frame_DAT_VITS_OutputParams_BasicSettings)
+        self.verticalLayout_88.addWidget(self.Frame_DAT_VITS_FileListNameValidation)
+
+
+        self.verticalLayout_107.addWidget(self.Frame_DAT_VITS_OutputParams_AdvanceSettings)
 
 
         self.verticalLayout_36.addWidget(self.GroupBox_DAT_VITS_OutputParams)
@@ -10835,15 +12563,15 @@ class Ui_MainWindow(object):
 "	border-width: 0px;\n"
 "	border-style: solid;\n"
 "}")
-        self.horizontalLayout_72 = QHBoxLayout(self.Frame_Train_Top)
-        self.horizontalLayout_72.setSpacing(0)
-        self.horizontalLayout_72.setObjectName(u"horizontalLayout_72")
-        self.horizontalLayout_72.setContentsMargins(0, 0, 0, 0)
-        self.ToolButton_VoiceTrainer_Title = QToolButton(self.Frame_Train_Top)
-        self.ToolButton_VoiceTrainer_Title.setObjectName(u"ToolButton_VoiceTrainer_Title")
-        sizePolicy1.setHeightForWidth(self.ToolButton_VoiceTrainer_Title.sizePolicy().hasHeightForWidth())
-        self.ToolButton_VoiceTrainer_Title.setSizePolicy(sizePolicy1)
-        self.ToolButton_VoiceTrainer_Title.setStyleSheet(u"QToolButton {\n"
+        self.horizontalLayout_15 = QHBoxLayout(self.Frame_Train_Top)
+        self.horizontalLayout_15.setSpacing(0)
+        self.horizontalLayout_15.setObjectName(u"horizontalLayout_15")
+        self.horizontalLayout_15.setContentsMargins(0, 0, 0, 0)
+        self.ToolButton_VoiceTrainer_Title_GPTSoVITS = QToolButton(self.Frame_Train_Top)
+        self.ToolButton_VoiceTrainer_Title_GPTSoVITS.setObjectName(u"ToolButton_VoiceTrainer_Title_GPTSoVITS")
+        sizePolicy1.setHeightForWidth(self.ToolButton_VoiceTrainer_Title_GPTSoVITS.sizePolicy().hasHeightForWidth())
+        self.ToolButton_VoiceTrainer_Title_GPTSoVITS.setSizePolicy(sizePolicy1)
+        self.ToolButton_VoiceTrainer_Title_GPTSoVITS.setStyleSheet(u"QToolButton {\n"
 "	font-size: 24px;\n"
 "	/*text-align: center;*/\n"
 "	color: rgba(201, 210, 222, 210);\n"
@@ -10886,7 +12614,56 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}")
 
-        self.horizontalLayout_72.addWidget(self.ToolButton_VoiceTrainer_Title)
+        self.horizontalLayout_15.addWidget(self.ToolButton_VoiceTrainer_Title_GPTSoVITS)
+
+        self.ToolButton_VoiceTrainer_Title_VITS = QToolButton(self.Frame_Train_Top)
+        self.ToolButton_VoiceTrainer_Title_VITS.setObjectName(u"ToolButton_VoiceTrainer_Title_VITS")
+        sizePolicy1.setHeightForWidth(self.ToolButton_VoiceTrainer_Title_VITS.sizePolicy().hasHeightForWidth())
+        self.ToolButton_VoiceTrainer_Title_VITS.setSizePolicy(sizePolicy1)
+        self.ToolButton_VoiceTrainer_Title_VITS.setStyleSheet(u"QToolButton {\n"
+"	font-size: 24px;\n"
+"	/*text-align: center;*/\n"
+"	color: rgba(201, 210, 222, 210);\n"
+"	padding-left: 12px;\n"
+"	padding-right: 12px;\n"
+"	background-color: transparent;\n"
+"	border-top-width: 0px;\n"
+"	border-right-width: 0px;\n"
+"	border-bottom-width: 3px;\n"
+"	border-left-width: 0px;\n"
+"	border-style: solid;\n"
+"	border-bottom-color: rgba(123, 123, 123, 123);\n"
+"}\n"
+"QToolButton:hover {\n"
+"	color: rgba(210, 222, 234, 234);\n"
+"	background-color: transparent;\n"
+"	border-top-width: 0px;\n"
+"	border-right-width: 0px;\n"
+"	border-bottom-width: 3px;\n"
+"	border-left-width: 0px;\n"
+"	border-style: solid;\n"
+"	border-bottom-color: rgba(120, 180, 240, 123);\n"
+"}\n"
+"QToolButton:checked {\n"
+"	color: rgba(210, 222, 234, 255);\n"
+"	background-color: transparent;\n"
+"	border-top-width: 0px;\n"
+"	border-right-width: 0px;\n"
+"	border-bottom-width: 3px;\n"
+"	border-left-width: 0px;\n"
+"	border-style: solid;\n"
+"	border-bottom-color: rgba(120, 180, 240, 210);\n"
+"}\n"
+"\n"
+"QToolTip {\n"
+"	color:"
+                        " rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.horizontalLayout_15.addWidget(self.ToolButton_VoiceTrainer_Title_VITS)
 
         self.Frame_Train_Title_Spacer = QLabel(self.Frame_Train_Top)
         self.Frame_Train_Title_Spacer.setObjectName(u"Frame_Train_Title_Spacer")
@@ -10907,7 +12684,7 @@ class Ui_MainWindow(object):
 "	border-bottom-color: rgba(123, 123, 123, 123);\n"
 "}")
 
-        self.horizontalLayout_72.addWidget(self.Frame_Train_Title_Spacer)
+        self.horizontalLayout_15.addWidget(self.Frame_Train_Title_Spacer)
 
 
         self.verticalLayout_43.addWidget(self.Frame_Train_Top)
@@ -10957,6 +12734,1449 @@ class Ui_MainWindow(object):
 "QTabBar QToolButton:hover {\n"
 "}\n"
 "*/")
+        self.Subpage_Train_GPTSoVITS = QWidget()
+        self.Subpage_Train_GPTSoVITS.setObjectName(u"Subpage_Train_GPTSoVITS")
+        self.gridLayout_85 = QGridLayout(self.Subpage_Train_GPTSoVITS)
+        self.gridLayout_85.setSpacing(12)
+        self.gridLayout_85.setObjectName(u"gridLayout_85")
+        self.gridLayout_85.setContentsMargins(0, 0, 0, 0)
+        self.Widget_Left_Train_GPTSoVITS = QWidget(self.Subpage_Train_GPTSoVITS)
+        self.Widget_Left_Train_GPTSoVITS.setObjectName(u"Widget_Left_Train_GPTSoVITS")
+        self.Widget_Left_Train_GPTSoVITS.setMinimumSize(QSize(150, 0))
+        self.Widget_Left_Train_GPTSoVITS.setStyleSheet(u"QWidget {\n"
+"	background-color: rgba(36, 36, 36, 123);\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QWidget:hover {\n"
+"}")
+        self.verticalLayout_59 = QVBoxLayout(self.Widget_Left_Train_GPTSoVITS)
+        self.verticalLayout_59.setSpacing(12)
+        self.verticalLayout_59.setObjectName(u"verticalLayout_59")
+        self.verticalLayout_59.setContentsMargins(12, 12, 12, 12)
+        self.TreeWidget_Catalogue_Train_GPTSoVITS = QTreeWidget(self.Widget_Left_Train_GPTSoVITS)
+        __qtreewidgetitem5 = QTreeWidgetItem(self.TreeWidget_Catalogue_Train_GPTSoVITS)
+        QTreeWidgetItem(__qtreewidgetitem5)
+        self.TreeWidget_Catalogue_Train_GPTSoVITS.setObjectName(u"TreeWidget_Catalogue_Train_GPTSoVITS")
+        self.TreeWidget_Catalogue_Train_GPTSoVITS.setStyleSheet(u"QTreeView {\n"
+"	/*font-size: 12px;\n"
+"	text-align: center;*/\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QTreeView::item {\n"
+"	background-color: transparent;\n"
+"	padding: 2.4px;\n"
+"}\n"
+"QTreeView::item:hover {\n"
+"    background-color: rgba(66, 66, 66, 198);\n"
+"}\n"
+"QTreeView::item:selected {\n"
+"    background-color: ;\n"
+"}\n"
+"\n"
+"QTreeView::branch {\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QTreeView::branch:open:has-children {\n"
+"    image: ;\n"
+"}\n"
+"QTreeView::branch:closed:has-children {\n"
+"    image: ;\n"
+"}\n"
+"QTreeWidget::branch:adjoins-item {\n"
+"    background-color: ;\n"
+"}\n"
+"\n"
+"\n"
+"QScrollBar {\n"
+"	background-color: rgba(45, 45, 45, 135);\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: transparent;\n"
+"	margin: 0px;\n"
+"}\n"
+"QScrollBar:hover {\n"
+"	background-color: r"
+                        "gba(33, 33, 33, 99);\n"
+"}\n"
+"\n"
+"QScrollBar::horizontal {\n"
+"	height: 9px;\n"
+"}\n"
+"QScrollBar::vertical {\n"
+"	width: 9px;\n"
+"}\n"
+"\n"
+"QScrollBar::sub-line, QScrollBar::add-line {\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QScrollBar::sub-page, QScrollBar::add-page {\n"
+"	background-color: transparent;\n"
+"}\n"
+"\n"
+"QScrollBar::handle {\n"
+"	background-color: rgba(90, 90, 90, 90);\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QScrollBar::handle:hover {\n"
+"	background-color: rgba(120, 120, 120, 120);\n"
+"}")
+
+        self.verticalLayout_59.addWidget(self.TreeWidget_Catalogue_Train_GPTSoVITS)
+
+
+        self.gridLayout_85.addWidget(self.Widget_Left_Train_GPTSoVITS, 0, 0, 1, 1)
+
+        self.ScrollArea_Middle_Train_GPTSoVITS = QScrollArea(self.Subpage_Train_GPTSoVITS)
+        self.ScrollArea_Middle_Train_GPTSoVITS.setObjectName(u"ScrollArea_Middle_Train_GPTSoVITS")
+        self.ScrollArea_Middle_Train_GPTSoVITS.setMinimumSize(QSize(600, 0))
+        self.ScrollArea_Middle_Train_GPTSoVITS.setStyleSheet(u"QScrollArea {\n"
+"	background-color: rgba(36, 36, 36, 123);\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QScrollArea:hover {\n"
+"}\n"
+"\n"
+"\n"
+"QScrollBar::vertical {\n"
+"	width: 9px;\n"
+"	background-color: rgb(45, 45, 45);\n"
+"	border-width: 1px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: transparent;\n"
+"	margin: 0px;\n"
+"}\n"
+"QScrollBar::vertical:hover {\n"
+"	background-color: rgb(60, 60, 60);\n"
+"}\n"
+"\n"
+"QScrollBar::add-line:vertical {\n"
+"	height: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: bottom;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QScrollBar::sub-line:vertical {\n"
+"	height: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: top;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
+"	width: 0px;\n"
+"	"
+                        "height: 0px;\n"
+"	background-color: transparent;\n"
+"}\n"
+"\n"
+"QScrollBar::handle:vertical {\n"
+"	background-color: rgb(90, 90, 90);\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QScrollBar::handle:vertical:hover {\n"
+"	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QScrollBar::horizontal {\n"
+"	height: 9px;\n"
+"	background-color: rgb(45, 45, 45);\n"
+"	border-width: 1px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: transparent;\n"
+"	margin: 0px;\n"
+"}\n"
+"QScrollBar::horizontal:hover {\n"
+"	background-color: rgb(60, 60, 60);\n"
+"}\n"
+"\n"
+"QScrollBar::add-line:horizontal {\n"
+"	width: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: left;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QScrollBar::sub-line:horizontal {\n"
+"	width: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: right;\n"
+"	subcontrol-origin: margin;\n"
+"	borde"
+                        "r-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {\n"
+"	width: 0px;\n"
+"	height: 0px;\n"
+"	background-color: transparent;\n"
+"}\n"
+"\n"
+"QScrollBar::handle:horizontal {\n"
+"	background-color: rgb(90, 90, 90);\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QScrollBar::handle:horizontal:hover {\n"
+"	background-color: rgb(120, 120, 120);\n"
+"}")
+        self.ScrollArea_Middle_Train_GPTSoVITS.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
+        self.ScrollArea_Middle_Train_GPTSoVITS.setWidgetResizable(True)
+        self.ScrollArea_Middle_WidgetContents_Train_GPTSoVITS = QWidget()
+        self.ScrollArea_Middle_WidgetContents_Train_GPTSoVITS.setObjectName(u"ScrollArea_Middle_WidgetContents_Train_GPTSoVITS")
+        self.ScrollArea_Middle_WidgetContents_Train_GPTSoVITS.setGeometry(QRect(0, 0, 591, 1171))
+        self.verticalLayout_52 = QVBoxLayout(self.ScrollArea_Middle_WidgetContents_Train_GPTSoVITS)
+        self.verticalLayout_52.setSpacing(12)
+        self.verticalLayout_52.setObjectName(u"verticalLayout_52")
+        self.verticalLayout_52.setContentsMargins(12, 12, 12, 12)
+        self.GroupBox_Train_GPTSoVITS_InputParams = QGroupBox(self.ScrollArea_Middle_WidgetContents_Train_GPTSoVITS)
+        self.GroupBox_Train_GPTSoVITS_InputParams.setObjectName(u"GroupBox_Train_GPTSoVITS_InputParams")
+        self.GroupBox_Train_GPTSoVITS_InputParams.setStyleSheet(u"QGroupBox {\n"
+"	font-size: 15px;\n"
+"	margin-top: 1.5ex;\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: transparent;\n"
+"	border-width: 1px;\n"
+"	border-style: solid;\n"
+"	border-color: transparent;\n"
+"}\n"
+"QGroupBox::title {\n"
+"	left: 9px;\n"
+"	margin-left: 0px;\n"
+"	subcontrol-origin: margin;\n"
+"	subcontrol-position: top left;\n"
+"	padding: 3px;\n"
+"}")
+        self.verticalLayout_121 = QVBoxLayout(self.GroupBox_Train_GPTSoVITS_InputParams)
+        self.verticalLayout_121.setSpacing(0)
+        self.verticalLayout_121.setObjectName(u"verticalLayout_121")
+        self.verticalLayout_121.setContentsMargins(0, 12, 0, 12)
+        self.Frame_Train_GPTSoVITS_InputParams_BasicSettings = QFrame(self.GroupBox_Train_GPTSoVITS_InputParams)
+        self.Frame_Train_GPTSoVITS_InputParams_BasicSettings.setObjectName(u"Frame_Train_GPTSoVITS_InputParams_BasicSettings")
+        self.verticalLayout_55 = QVBoxLayout(self.Frame_Train_GPTSoVITS_InputParams_BasicSettings)
+        self.verticalLayout_55.setSpacing(0)
+        self.verticalLayout_55.setObjectName(u"verticalLayout_55")
+        self.verticalLayout_55.setContentsMargins(0, 0, 0, 0)
+        self.Frame_Train_GPTSoVITS_FileListPath = QFrame(self.Frame_Train_GPTSoVITS_InputParams_BasicSettings)
+        self.Frame_Train_GPTSoVITS_FileListPath.setObjectName(u"Frame_Train_GPTSoVITS_FileListPath")
+        self.Frame_Train_GPTSoVITS_FileListPath.setMinimumSize(QSize(0, 105))
+        self.Frame_Train_GPTSoVITS_FileListPath.setStyleSheet(u"QFrame {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QFrame:hover {\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
+"}")
+        self.gridLayout_81 = QGridLayout(self.Frame_Train_GPTSoVITS_FileListPath)
+        self.gridLayout_81.setSpacing(12)
+        self.gridLayout_81.setObjectName(u"gridLayout_81")
+        self.gridLayout_81.setContentsMargins(21, 12, 21, 12)
+        self.Label_Train_GPTSoVITS_FileListPath = QLabel(self.Frame_Train_GPTSoVITS_FileListPath)
+        self.Label_Train_GPTSoVITS_FileListPath.setObjectName(u"Label_Train_GPTSoVITS_FileListPath")
+        sizePolicy5.setHeightForWidth(self.Label_Train_GPTSoVITS_FileListPath.sizePolicy().hasHeightForWidth())
+        self.Label_Train_GPTSoVITS_FileListPath.setSizePolicy(sizePolicy5)
+        self.Label_Train_GPTSoVITS_FileListPath.setStyleSheet(u"QLabel {\n"
+"	/*text-align: center;*/\n"
+"	/*color: rgb(255, 255, 255);*/\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_81.addWidget(self.Label_Train_GPTSoVITS_FileListPath, 0, 0, 1, 1)
+
+        self.HorizontalSpacer_Train_GPTSoVITS_FileListPath = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.gridLayout_81.addItem(self.HorizontalSpacer_Train_GPTSoVITS_FileListPath, 0, 1, 1, 1)
+
+        self.Button_Train_GPTSoVITS_FileListPath_Undo = QPushButton(self.Frame_Train_GPTSoVITS_FileListPath)
+        self.Button_Train_GPTSoVITS_FileListPath_Undo.setObjectName(u"Button_Train_GPTSoVITS_FileListPath_Undo")
+        self.Button_Train_GPTSoVITS_FileListPath_Undo.setMinimumSize(QSize(27, 27))
+        self.Button_Train_GPTSoVITS_FileListPath_Undo.setMaximumSize(QSize(27, 27))
+        self.Button_Train_GPTSoVITS_FileListPath_Undo.setStyleSheet(u"QPushButton {\n"
+"	image: url(:/Button_Icon/Sources/Undo.png);\n"
+"	background-color: transparent;\n"
+"	padding: 4.5px;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgba(201, 210, 222, 123);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgba(201, 210, 222, 210);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_81.addWidget(self.Button_Train_GPTSoVITS_FileListPath_Undo, 0, 2, 1, 1)
+
+        self.LineEdit_Train_GPTSoVITS_FileListPath = LineEditBase(self.Frame_Train_GPTSoVITS_FileListPath)
+        self.LineEdit_Train_GPTSoVITS_FileListPath.setObjectName(u"LineEdit_Train_GPTSoVITS_FileListPath")
+        self.LineEdit_Train_GPTSoVITS_FileListPath.setMinimumSize(QSize(0, 27))
+
+        self.gridLayout_81.addWidget(self.LineEdit_Train_GPTSoVITS_FileListPath, 1, 0, 1, 3)
+
+
+        self.verticalLayout_55.addWidget(self.Frame_Train_GPTSoVITS_FileListPath)
+
+
+        self.verticalLayout_121.addWidget(self.Frame_Train_GPTSoVITS_InputParams_BasicSettings)
+
+
+        self.verticalLayout_52.addWidget(self.GroupBox_Train_GPTSoVITS_InputParams)
+
+        self.GroupBox_Train_GPTSoVITS_GPTSoVITSParams = QGroupBox(self.ScrollArea_Middle_WidgetContents_Train_GPTSoVITS)
+        self.GroupBox_Train_GPTSoVITS_GPTSoVITSParams.setObjectName(u"GroupBox_Train_GPTSoVITS_GPTSoVITSParams")
+        self.GroupBox_Train_GPTSoVITS_GPTSoVITSParams.setStyleSheet(u"QGroupBox {\n"
+"	font-size: 15px;\n"
+"	margin-top: 1.5ex;\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: transparent;\n"
+"	border-width: 1px;\n"
+"	border-style: solid;\n"
+"	border-color: transparent;\n"
+"}\n"
+"QGroupBox::title {\n"
+"	left: 9px;\n"
+"	margin-left: 0px;\n"
+"	subcontrol-origin: margin;\n"
+"	subcontrol-position: top left;\n"
+"	padding: 3px;\n"
+"}")
+        self.verticalLayout_122 = QVBoxLayout(self.GroupBox_Train_GPTSoVITS_GPTSoVITSParams)
+        self.verticalLayout_122.setSpacing(0)
+        self.verticalLayout_122.setObjectName(u"verticalLayout_122")
+        self.verticalLayout_122.setContentsMargins(0, 12, 0, 12)
+        self.Frame_Train_GPTSoVITS_GPTSoVITSParams_BasicSettings = QFrame(self.GroupBox_Train_GPTSoVITS_GPTSoVITSParams)
+        self.Frame_Train_GPTSoVITS_GPTSoVITSParams_BasicSettings.setObjectName(u"Frame_Train_GPTSoVITS_GPTSoVITSParams_BasicSettings")
+        self.verticalLayout_56 = QVBoxLayout(self.Frame_Train_GPTSoVITS_GPTSoVITSParams_BasicSettings)
+        self.verticalLayout_56.setSpacing(0)
+        self.verticalLayout_56.setObjectName(u"verticalLayout_56")
+        self.verticalLayout_56.setContentsMargins(0, 0, 0, 0)
+        self.Frame_Train_GPTSoVITS_ModelPathPretrainedS1 = QFrame(self.Frame_Train_GPTSoVITS_GPTSoVITSParams_BasicSettings)
+        self.Frame_Train_GPTSoVITS_ModelPathPretrainedS1.setObjectName(u"Frame_Train_GPTSoVITS_ModelPathPretrainedS1")
+        self.Frame_Train_GPTSoVITS_ModelPathPretrainedS1.setMinimumSize(QSize(0, 105))
+        self.Frame_Train_GPTSoVITS_ModelPathPretrainedS1.setStyleSheet(u"QFrame {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QFrame:hover {\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
+"}")
+        self.gridLayout_88 = QGridLayout(self.Frame_Train_GPTSoVITS_ModelPathPretrainedS1)
+        self.gridLayout_88.setSpacing(12)
+        self.gridLayout_88.setObjectName(u"gridLayout_88")
+        self.gridLayout_88.setContentsMargins(21, 12, 21, 12)
+        self.Label_Train_GPTSoVITS_ModelPathPretrainedS1 = QLabel(self.Frame_Train_GPTSoVITS_ModelPathPretrainedS1)
+        self.Label_Train_GPTSoVITS_ModelPathPretrainedS1.setObjectName(u"Label_Train_GPTSoVITS_ModelPathPretrainedS1")
+        sizePolicy5.setHeightForWidth(self.Label_Train_GPTSoVITS_ModelPathPretrainedS1.sizePolicy().hasHeightForWidth())
+        self.Label_Train_GPTSoVITS_ModelPathPretrainedS1.setSizePolicy(sizePolicy5)
+        self.Label_Train_GPTSoVITS_ModelPathPretrainedS1.setStyleSheet(u"QLabel {\n"
+"	/*text-align: center;*/\n"
+"	/*color: rgb(255, 255, 255);*/\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_88.addWidget(self.Label_Train_GPTSoVITS_ModelPathPretrainedS1, 0, 0, 1, 1)
+
+        self.HorizontalSpacer_Train_GPTSoVITS_ModelPathPretrainedS1 = QSpacerItem(443, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.gridLayout_88.addItem(self.HorizontalSpacer_Train_GPTSoVITS_ModelPathPretrainedS1, 0, 1, 1, 1)
+
+        self.Button_Train_GPTSoVITS_ModelPathPretrainedS1_Undo = QPushButton(self.Frame_Train_GPTSoVITS_ModelPathPretrainedS1)
+        self.Button_Train_GPTSoVITS_ModelPathPretrainedS1_Undo.setObjectName(u"Button_Train_GPTSoVITS_ModelPathPretrainedS1_Undo")
+        self.Button_Train_GPTSoVITS_ModelPathPretrainedS1_Undo.setMinimumSize(QSize(27, 27))
+        self.Button_Train_GPTSoVITS_ModelPathPretrainedS1_Undo.setMaximumSize(QSize(27, 27))
+        self.Button_Train_GPTSoVITS_ModelPathPretrainedS1_Undo.setStyleSheet(u"QPushButton {\n"
+"	image: url(:/Button_Icon/Sources/Undo.png);\n"
+"	background-color: transparent;\n"
+"	padding: 4.5px;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgba(201, 210, 222, 123);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgba(201, 210, 222, 210);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_88.addWidget(self.Button_Train_GPTSoVITS_ModelPathPretrainedS1_Undo, 0, 2, 1, 1)
+
+        self.LineEdit_Train_GPTSoVITS_ModelPathPretrainedS1 = LineEditBase(self.Frame_Train_GPTSoVITS_ModelPathPretrainedS1)
+        self.LineEdit_Train_GPTSoVITS_ModelPathPretrainedS1.setObjectName(u"LineEdit_Train_GPTSoVITS_ModelPathPretrainedS1")
+        self.LineEdit_Train_GPTSoVITS_ModelPathPretrainedS1.setMinimumSize(QSize(0, 27))
+
+        self.gridLayout_88.addWidget(self.LineEdit_Train_GPTSoVITS_ModelPathPretrainedS1, 1, 0, 1, 3)
+
+
+        self.verticalLayout_56.addWidget(self.Frame_Train_GPTSoVITS_ModelPathPretrainedS1)
+
+        self.Frame_Train_GPTSoVITS_ModelPathPretrainedS2G = QFrame(self.Frame_Train_GPTSoVITS_GPTSoVITSParams_BasicSettings)
+        self.Frame_Train_GPTSoVITS_ModelPathPretrainedS2G.setObjectName(u"Frame_Train_GPTSoVITS_ModelPathPretrainedS2G")
+        self.Frame_Train_GPTSoVITS_ModelPathPretrainedS2G.setMinimumSize(QSize(0, 105))
+        self.Frame_Train_GPTSoVITS_ModelPathPretrainedS2G.setStyleSheet(u"QFrame {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QFrame:hover {\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
+"}")
+        self.gridLayout_86 = QGridLayout(self.Frame_Train_GPTSoVITS_ModelPathPretrainedS2G)
+        self.gridLayout_86.setSpacing(12)
+        self.gridLayout_86.setObjectName(u"gridLayout_86")
+        self.gridLayout_86.setContentsMargins(21, 12, 21, 12)
+        self.Label_Train_GPTSoVITS_ModelPathPretrainedS2G = QLabel(self.Frame_Train_GPTSoVITS_ModelPathPretrainedS2G)
+        self.Label_Train_GPTSoVITS_ModelPathPretrainedS2G.setObjectName(u"Label_Train_GPTSoVITS_ModelPathPretrainedS2G")
+        sizePolicy5.setHeightForWidth(self.Label_Train_GPTSoVITS_ModelPathPretrainedS2G.sizePolicy().hasHeightForWidth())
+        self.Label_Train_GPTSoVITS_ModelPathPretrainedS2G.setSizePolicy(sizePolicy5)
+        self.Label_Train_GPTSoVITS_ModelPathPretrainedS2G.setStyleSheet(u"QLabel {\n"
+"	/*text-align: center;*/\n"
+"	/*color: rgb(255, 255, 255);*/\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_86.addWidget(self.Label_Train_GPTSoVITS_ModelPathPretrainedS2G, 0, 0, 1, 1)
+
+        self.HorizontalSpacer_Train_GPTSoVITS_ModelPathPretrainedS2G = QSpacerItem(443, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.gridLayout_86.addItem(self.HorizontalSpacer_Train_GPTSoVITS_ModelPathPretrainedS2G, 0, 1, 1, 1)
+
+        self.Button_Train_GPTSoVITS_ModelPathPretrainedS2G_Undo = QPushButton(self.Frame_Train_GPTSoVITS_ModelPathPretrainedS2G)
+        self.Button_Train_GPTSoVITS_ModelPathPretrainedS2G_Undo.setObjectName(u"Button_Train_GPTSoVITS_ModelPathPretrainedS2G_Undo")
+        self.Button_Train_GPTSoVITS_ModelPathPretrainedS2G_Undo.setMinimumSize(QSize(27, 27))
+        self.Button_Train_GPTSoVITS_ModelPathPretrainedS2G_Undo.setMaximumSize(QSize(27, 27))
+        self.Button_Train_GPTSoVITS_ModelPathPretrainedS2G_Undo.setStyleSheet(u"QPushButton {\n"
+"	image: url(:/Button_Icon/Sources/Undo.png);\n"
+"	background-color: transparent;\n"
+"	padding: 4.5px;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgba(201, 210, 222, 123);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgba(201, 210, 222, 210);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_86.addWidget(self.Button_Train_GPTSoVITS_ModelPathPretrainedS2G_Undo, 0, 2, 1, 1)
+
+        self.LineEdit_Train_GPTSoVITS_ModelPathPretrainedS2G = LineEditBase(self.Frame_Train_GPTSoVITS_ModelPathPretrainedS2G)
+        self.LineEdit_Train_GPTSoVITS_ModelPathPretrainedS2G.setObjectName(u"LineEdit_Train_GPTSoVITS_ModelPathPretrainedS2G")
+        self.LineEdit_Train_GPTSoVITS_ModelPathPretrainedS2G.setMinimumSize(QSize(0, 27))
+
+        self.gridLayout_86.addWidget(self.LineEdit_Train_GPTSoVITS_ModelPathPretrainedS2G, 1, 0, 1, 3)
+
+
+        self.verticalLayout_56.addWidget(self.Frame_Train_GPTSoVITS_ModelPathPretrainedS2G)
+
+        self.Frame_Train_GPTSoVITS_ModelDirPretrainedBert = QFrame(self.Frame_Train_GPTSoVITS_GPTSoVITSParams_BasicSettings)
+        self.Frame_Train_GPTSoVITS_ModelDirPretrainedBert.setObjectName(u"Frame_Train_GPTSoVITS_ModelDirPretrainedBert")
+        self.Frame_Train_GPTSoVITS_ModelDirPretrainedBert.setMinimumSize(QSize(0, 105))
+        self.Frame_Train_GPTSoVITS_ModelDirPretrainedBert.setStyleSheet(u"QFrame {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QFrame:hover {\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
+"}")
+        self.gridLayout_89 = QGridLayout(self.Frame_Train_GPTSoVITS_ModelDirPretrainedBert)
+        self.gridLayout_89.setSpacing(12)
+        self.gridLayout_89.setObjectName(u"gridLayout_89")
+        self.gridLayout_89.setContentsMargins(21, 12, 21, 12)
+        self.Label_Train_GPTSoVITS_ModelDirPretrainedBert = QLabel(self.Frame_Train_GPTSoVITS_ModelDirPretrainedBert)
+        self.Label_Train_GPTSoVITS_ModelDirPretrainedBert.setObjectName(u"Label_Train_GPTSoVITS_ModelDirPretrainedBert")
+        sizePolicy5.setHeightForWidth(self.Label_Train_GPTSoVITS_ModelDirPretrainedBert.sizePolicy().hasHeightForWidth())
+        self.Label_Train_GPTSoVITS_ModelDirPretrainedBert.setSizePolicy(sizePolicy5)
+        self.Label_Train_GPTSoVITS_ModelDirPretrainedBert.setStyleSheet(u"QLabel {\n"
+"	/*text-align: center;*/\n"
+"	/*color: rgb(255, 255, 255);*/\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_89.addWidget(self.Label_Train_GPTSoVITS_ModelDirPretrainedBert, 0, 0, 1, 1)
+
+        self.HorizontalSpacer_Train_GPTSoVITS_ModelDirPretrainedBert = QSpacerItem(443, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.gridLayout_89.addItem(self.HorizontalSpacer_Train_GPTSoVITS_ModelDirPretrainedBert, 0, 1, 1, 1)
+
+        self.Button_Train_GPTSoVITS_ModelDirPretrainedBert_Undo = QPushButton(self.Frame_Train_GPTSoVITS_ModelDirPretrainedBert)
+        self.Button_Train_GPTSoVITS_ModelDirPretrainedBert_Undo.setObjectName(u"Button_Train_GPTSoVITS_ModelDirPretrainedBert_Undo")
+        self.Button_Train_GPTSoVITS_ModelDirPretrainedBert_Undo.setMinimumSize(QSize(27, 27))
+        self.Button_Train_GPTSoVITS_ModelDirPretrainedBert_Undo.setMaximumSize(QSize(27, 27))
+        self.Button_Train_GPTSoVITS_ModelDirPretrainedBert_Undo.setStyleSheet(u"QPushButton {\n"
+"	image: url(:/Button_Icon/Sources/Undo.png);\n"
+"	background-color: transparent;\n"
+"	padding: 4.5px;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgba(201, 210, 222, 123);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgba(201, 210, 222, 210);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_89.addWidget(self.Button_Train_GPTSoVITS_ModelDirPretrainedBert_Undo, 0, 2, 1, 1)
+
+        self.LineEdit_Train_GPTSoVITS_ModelDirPretrainedBert = LineEditBase(self.Frame_Train_GPTSoVITS_ModelDirPretrainedBert)
+        self.LineEdit_Train_GPTSoVITS_ModelDirPretrainedBert.setObjectName(u"LineEdit_Train_GPTSoVITS_ModelDirPretrainedBert")
+        self.LineEdit_Train_GPTSoVITS_ModelDirPretrainedBert.setMinimumSize(QSize(0, 27))
+
+        self.gridLayout_89.addWidget(self.LineEdit_Train_GPTSoVITS_ModelDirPretrainedBert, 1, 0, 1, 3)
+
+
+        self.verticalLayout_56.addWidget(self.Frame_Train_GPTSoVITS_ModelDirPretrainedBert)
+
+        self.Frame_Train_GPTSoVITS_ModelDirPretrainedSSL = QFrame(self.Frame_Train_GPTSoVITS_GPTSoVITSParams_BasicSettings)
+        self.Frame_Train_GPTSoVITS_ModelDirPretrainedSSL.setObjectName(u"Frame_Train_GPTSoVITS_ModelDirPretrainedSSL")
+        self.Frame_Train_GPTSoVITS_ModelDirPretrainedSSL.setMinimumSize(QSize(0, 105))
+        self.Frame_Train_GPTSoVITS_ModelDirPretrainedSSL.setStyleSheet(u"QFrame {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QFrame:hover {\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
+"}")
+        self.gridLayout_95 = QGridLayout(self.Frame_Train_GPTSoVITS_ModelDirPretrainedSSL)
+        self.gridLayout_95.setSpacing(12)
+        self.gridLayout_95.setObjectName(u"gridLayout_95")
+        self.gridLayout_95.setContentsMargins(21, 12, 21, 12)
+        self.Label_Train_GPTSoVITS_ModelDirPretrainedSSL = QLabel(self.Frame_Train_GPTSoVITS_ModelDirPretrainedSSL)
+        self.Label_Train_GPTSoVITS_ModelDirPretrainedSSL.setObjectName(u"Label_Train_GPTSoVITS_ModelDirPretrainedSSL")
+        sizePolicy5.setHeightForWidth(self.Label_Train_GPTSoVITS_ModelDirPretrainedSSL.sizePolicy().hasHeightForWidth())
+        self.Label_Train_GPTSoVITS_ModelDirPretrainedSSL.setSizePolicy(sizePolicy5)
+        self.Label_Train_GPTSoVITS_ModelDirPretrainedSSL.setStyleSheet(u"QLabel {\n"
+"	/*text-align: center;*/\n"
+"	/*color: rgb(255, 255, 255);*/\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_95.addWidget(self.Label_Train_GPTSoVITS_ModelDirPretrainedSSL, 0, 0, 1, 1)
+
+        self.HorizontalSpacer_Train_GPTSoVITS_ModelDirPretrainedSSL = QSpacerItem(443, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.gridLayout_95.addItem(self.HorizontalSpacer_Train_GPTSoVITS_ModelDirPretrainedSSL, 0, 1, 1, 1)
+
+        self.Button_Train_GPTSoVITS_ModelDirPretrainedSSL_Undo = QPushButton(self.Frame_Train_GPTSoVITS_ModelDirPretrainedSSL)
+        self.Button_Train_GPTSoVITS_ModelDirPretrainedSSL_Undo.setObjectName(u"Button_Train_GPTSoVITS_ModelDirPretrainedSSL_Undo")
+        self.Button_Train_GPTSoVITS_ModelDirPretrainedSSL_Undo.setMinimumSize(QSize(27, 27))
+        self.Button_Train_GPTSoVITS_ModelDirPretrainedSSL_Undo.setMaximumSize(QSize(27, 27))
+        self.Button_Train_GPTSoVITS_ModelDirPretrainedSSL_Undo.setStyleSheet(u"QPushButton {\n"
+"	image: url(:/Button_Icon/Sources/Undo.png);\n"
+"	background-color: transparent;\n"
+"	padding: 4.5px;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgba(201, 210, 222, 123);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgba(201, 210, 222, 210);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_95.addWidget(self.Button_Train_GPTSoVITS_ModelDirPretrainedSSL_Undo, 0, 2, 1, 1)
+
+        self.LineEdit_Train_GPTSoVITS_ModelDirPretrainedSSL = LineEditBase(self.Frame_Train_GPTSoVITS_ModelDirPretrainedSSL)
+        self.LineEdit_Train_GPTSoVITS_ModelDirPretrainedSSL.setObjectName(u"LineEdit_Train_GPTSoVITS_ModelDirPretrainedSSL")
+        self.LineEdit_Train_GPTSoVITS_ModelDirPretrainedSSL.setMinimumSize(QSize(0, 27))
+
+        self.gridLayout_95.addWidget(self.LineEdit_Train_GPTSoVITS_ModelDirPretrainedSSL, 1, 0, 1, 3)
+
+
+        self.verticalLayout_56.addWidget(self.Frame_Train_GPTSoVITS_ModelDirPretrainedSSL)
+
+        self.Frame_Train_GPTSoVITS_ModelPathPretrainedS2D = QFrame(self.Frame_Train_GPTSoVITS_GPTSoVITSParams_BasicSettings)
+        self.Frame_Train_GPTSoVITS_ModelPathPretrainedS2D.setObjectName(u"Frame_Train_GPTSoVITS_ModelPathPretrainedS2D")
+        self.Frame_Train_GPTSoVITS_ModelPathPretrainedS2D.setMinimumSize(QSize(0, 105))
+        self.Frame_Train_GPTSoVITS_ModelPathPretrainedS2D.setStyleSheet(u"QFrame {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QFrame:hover {\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
+"}")
+        self.gridLayout_87 = QGridLayout(self.Frame_Train_GPTSoVITS_ModelPathPretrainedS2D)
+        self.gridLayout_87.setSpacing(12)
+        self.gridLayout_87.setObjectName(u"gridLayout_87")
+        self.gridLayout_87.setContentsMargins(21, 12, 21, 12)
+        self.Label_Train_GPTSoVITS_ModelPathPretrainedS2D = QLabel(self.Frame_Train_GPTSoVITS_ModelPathPretrainedS2D)
+        self.Label_Train_GPTSoVITS_ModelPathPretrainedS2D.setObjectName(u"Label_Train_GPTSoVITS_ModelPathPretrainedS2D")
+        sizePolicy5.setHeightForWidth(self.Label_Train_GPTSoVITS_ModelPathPretrainedS2D.sizePolicy().hasHeightForWidth())
+        self.Label_Train_GPTSoVITS_ModelPathPretrainedS2D.setSizePolicy(sizePolicy5)
+        self.Label_Train_GPTSoVITS_ModelPathPretrainedS2D.setStyleSheet(u"QLabel {\n"
+"	/*text-align: center;*/\n"
+"	/*color: rgb(255, 255, 255);*/\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_87.addWidget(self.Label_Train_GPTSoVITS_ModelPathPretrainedS2D, 0, 0, 1, 1)
+
+        self.HorizontalSpacer_Train_GPTSoVITS_ModelPathPretrainedS2D = QSpacerItem(443, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.gridLayout_87.addItem(self.HorizontalSpacer_Train_GPTSoVITS_ModelPathPretrainedS2D, 0, 1, 1, 1)
+
+        self.Button_Train_GPTSoVITS_ModelPathPretrainedS2D_Undo = QPushButton(self.Frame_Train_GPTSoVITS_ModelPathPretrainedS2D)
+        self.Button_Train_GPTSoVITS_ModelPathPretrainedS2D_Undo.setObjectName(u"Button_Train_GPTSoVITS_ModelPathPretrainedS2D_Undo")
+        self.Button_Train_GPTSoVITS_ModelPathPretrainedS2D_Undo.setMinimumSize(QSize(27, 27))
+        self.Button_Train_GPTSoVITS_ModelPathPretrainedS2D_Undo.setMaximumSize(QSize(27, 27))
+        self.Button_Train_GPTSoVITS_ModelPathPretrainedS2D_Undo.setStyleSheet(u"QPushButton {\n"
+"	image: url(:/Button_Icon/Sources/Undo.png);\n"
+"	background-color: transparent;\n"
+"	padding: 4.5px;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgba(201, 210, 222, 123);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgba(201, 210, 222, 210);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_87.addWidget(self.Button_Train_GPTSoVITS_ModelPathPretrainedS2D_Undo, 0, 2, 1, 1)
+
+        self.LineEdit_Train_GPTSoVITS_ModelPathPretrainedS2D = LineEditBase(self.Frame_Train_GPTSoVITS_ModelPathPretrainedS2D)
+        self.LineEdit_Train_GPTSoVITS_ModelPathPretrainedS2D.setObjectName(u"LineEdit_Train_GPTSoVITS_ModelPathPretrainedS2D")
+        self.LineEdit_Train_GPTSoVITS_ModelPathPretrainedS2D.setMinimumSize(QSize(0, 27))
+
+        self.gridLayout_87.addWidget(self.LineEdit_Train_GPTSoVITS_ModelPathPretrainedS2D, 1, 0, 1, 3)
+
+
+        self.verticalLayout_56.addWidget(self.Frame_Train_GPTSoVITS_ModelPathPretrainedS2D)
+
+
+        self.verticalLayout_122.addWidget(self.Frame_Train_GPTSoVITS_GPTSoVITSParams_BasicSettings)
+
+        self.CheckBox_Train_GPTSoVITS_GPTSoVITSParams_Toggle_AdvanceSettings = QCheckBox(self.GroupBox_Train_GPTSoVITS_GPTSoVITSParams)
+        self.CheckBox_Train_GPTSoVITS_GPTSoVITSParams_Toggle_AdvanceSettings.setObjectName(u"CheckBox_Train_GPTSoVITS_GPTSoVITSParams_Toggle_AdvanceSettings")
+        self.CheckBox_Train_GPTSoVITS_GPTSoVITSParams_Toggle_AdvanceSettings.setStyleSheet(u"QCheckBox {\n"
+"	font-size: 12px;\n"
+"	font-weight: 630;\n"
+"	spacing: 12px;\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"	background-color: transparent;\n"
+"	padding-top: 9px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QCheckBox:hover {\n"
+"	color: rgb(255, 255, 255);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator {\n"
+"	width: 12px;\n"
+"	height: 12px;\n"
+"    background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QCheckBox::indicator:hover {\n"
+"	background-color: transparent;\n"
+"}\n"
+"QCheckBox::indicator:unchecked {\n"
+"	border-image: url(:/CheckBox_Icon/Sources/RightCaret.png);\n"
+"}\n"
+"QCheckBox::indicator:checked {\n"
+"	border-image: url(:/CheckBox_Icon/Sources/DownCaret.png);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.verticalLayout_122.addWidget(self.CheckBox_Train_GPTSoVITS_GPTSoVITSParams_Toggle_AdvanceSettings)
+
+        self.Frame_Train_GPTSoVITS_GPTSoVITSParams_AdvanceSettings = QFrame(self.GroupBox_Train_GPTSoVITS_GPTSoVITSParams)
+        self.Frame_Train_GPTSoVITS_GPTSoVITSParams_AdvanceSettings.setObjectName(u"Frame_Train_GPTSoVITS_GPTSoVITSParams_AdvanceSettings")
+        self.Frame_Train_GPTSoVITS_GPTSoVITSParams_AdvanceSettings.setFrameShape(QFrame.StyledPanel)
+        self.Frame_Train_GPTSoVITS_GPTSoVITSParams_AdvanceSettings.setFrameShadow(QFrame.Raised)
+        self.verticalLayout_57 = QVBoxLayout(self.Frame_Train_GPTSoVITS_GPTSoVITSParams_AdvanceSettings)
+        self.verticalLayout_57.setSpacing(0)
+        self.verticalLayout_57.setObjectName(u"verticalLayout_57")
+        self.verticalLayout_57.setContentsMargins(0, 0, 0, 0)
+        self.Frame_Train_GPTSoVITS_FP16Run = QFrame(self.Frame_Train_GPTSoVITS_GPTSoVITSParams_AdvanceSettings)
+        self.Frame_Train_GPTSoVITS_FP16Run.setObjectName(u"Frame_Train_GPTSoVITS_FP16Run")
+        self.Frame_Train_GPTSoVITS_FP16Run.setMinimumSize(QSize(0, 105))
+        self.Frame_Train_GPTSoVITS_FP16Run.setStyleSheet(u"QFrame {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QFrame:hover {\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
+"}")
+        self.gridLayout_91 = QGridLayout(self.Frame_Train_GPTSoVITS_FP16Run)
+        self.gridLayout_91.setSpacing(12)
+        self.gridLayout_91.setObjectName(u"gridLayout_91")
+        self.gridLayout_91.setContentsMargins(21, 12, 21, 12)
+        self.Label_Train_GPTSoVITS_FP16Run = QLabel(self.Frame_Train_GPTSoVITS_FP16Run)
+        self.Label_Train_GPTSoVITS_FP16Run.setObjectName(u"Label_Train_GPTSoVITS_FP16Run")
+        sizePolicy5.setHeightForWidth(self.Label_Train_GPTSoVITS_FP16Run.sizePolicy().hasHeightForWidth())
+        self.Label_Train_GPTSoVITS_FP16Run.setSizePolicy(sizePolicy5)
+        self.Label_Train_GPTSoVITS_FP16Run.setStyleSheet(u"QLabel {\n"
+"	/*text-align: center;*/\n"
+"	/*color: rgb(255, 255, 255);*/\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_91.addWidget(self.Label_Train_GPTSoVITS_FP16Run, 0, 0, 1, 1)
+
+        self.HorizontalSpacer_Train_GPTSoVITS_FP16Run = QSpacerItem(443, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.gridLayout_91.addItem(self.HorizontalSpacer_Train_GPTSoVITS_FP16Run, 0, 1, 1, 1)
+
+        self.Button_Train_GPTSoVITS_FP16Run_Undo = QPushButton(self.Frame_Train_GPTSoVITS_FP16Run)
+        self.Button_Train_GPTSoVITS_FP16Run_Undo.setObjectName(u"Button_Train_GPTSoVITS_FP16Run_Undo")
+        self.Button_Train_GPTSoVITS_FP16Run_Undo.setMinimumSize(QSize(27, 27))
+        self.Button_Train_GPTSoVITS_FP16Run_Undo.setMaximumSize(QSize(27, 27))
+        self.Button_Train_GPTSoVITS_FP16Run_Undo.setStyleSheet(u"QPushButton {\n"
+"	image: url(:/Button_Icon/Sources/Undo.png);\n"
+"	background-color: transparent;\n"
+"	padding: 4.5px;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgba(201, 210, 222, 123);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgba(201, 210, 222, 210);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_91.addWidget(self.Button_Train_GPTSoVITS_FP16Run_Undo, 0, 2, 1, 1)
+
+        self.CheckBox_Train_GPTSoVITS_FP16Run = QCheckBox(self.Frame_Train_GPTSoVITS_FP16Run)
+        self.CheckBox_Train_GPTSoVITS_FP16Run.setObjectName(u"CheckBox_Train_GPTSoVITS_FP16Run")
+        self.CheckBox_Train_GPTSoVITS_FP16Run.setMinimumSize(QSize(0, 27))
+        self.CheckBox_Train_GPTSoVITS_FP16Run.setStyleSheet(u"QCheckBox {\n"
+"	font-size: 12px;\n"
+"	spacing: 12.3px;\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QCheckBox:hover {\n"
+"	color: rgb(255, 255, 255);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator {\n"
+"	width: 24px;\n"
+"	height: 24px;\n"
+"    background-color: transparent;\n"
+"	padding: 1.2px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QCheckBox::indicator:hover {\n"
+"	background-color: rgba(255, 255, 255, 21);\n"
+"}\n"
+"QCheckBox::indicator:unchecked {\n"
+"	border-image: url(:/CheckBox_Icon/Sources/ToggleOff.png);\n"
+"}\n"
+"QCheckBox::indicator:checked {\n"
+"	border-image: url(:/CheckBox_Icon/Sources/ToggleOn.png);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_91.addWidget(self.CheckBox_Train_GPTSoVITS_FP16Run, 1, 0, 1, 3)
+
+
+        self.verticalLayout_57.addWidget(self.Frame_Train_GPTSoVITS_FP16Run)
+
+
+        self.verticalLayout_122.addWidget(self.Frame_Train_GPTSoVITS_GPTSoVITSParams_AdvanceSettings)
+
+
+        self.verticalLayout_52.addWidget(self.GroupBox_Train_GPTSoVITS_GPTSoVITSParams)
+
+        self.GroupBox_Train_GPTSoVITS_OutputParams = QGroupBox(self.ScrollArea_Middle_WidgetContents_Train_GPTSoVITS)
+        self.GroupBox_Train_GPTSoVITS_OutputParams.setObjectName(u"GroupBox_Train_GPTSoVITS_OutputParams")
+        self.GroupBox_Train_GPTSoVITS_OutputParams.setStyleSheet(u"QGroupBox {\n"
+"	font-size: 15px;\n"
+"	margin-top: 1.5ex;\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: transparent;\n"
+"	border-width: 1px;\n"
+"	border-style: solid;\n"
+"	border-color: transparent;\n"
+"}\n"
+"QGroupBox::title {\n"
+"	left: 9px;\n"
+"	margin-left: 0px;\n"
+"	subcontrol-origin: margin;\n"
+"	subcontrol-position: top left;\n"
+"	padding: 3px;\n"
+"}")
+        self.verticalLayout_77 = QVBoxLayout(self.GroupBox_Train_GPTSoVITS_OutputParams)
+        self.verticalLayout_77.setSpacing(0)
+        self.verticalLayout_77.setObjectName(u"verticalLayout_77")
+        self.verticalLayout_77.setContentsMargins(0, 12, 0, 12)
+        self.Frame_Train_GPTSoVITS_OutputParams_BasicSettings = QFrame(self.GroupBox_Train_GPTSoVITS_OutputParams)
+        self.Frame_Train_GPTSoVITS_OutputParams_BasicSettings.setObjectName(u"Frame_Train_GPTSoVITS_OutputParams_BasicSettings")
+        self.verticalLayout_58 = QVBoxLayout(self.Frame_Train_GPTSoVITS_OutputParams_BasicSettings)
+        self.verticalLayout_58.setSpacing(0)
+        self.verticalLayout_58.setObjectName(u"verticalLayout_58")
+        self.verticalLayout_58.setContentsMargins(0, 0, 0, 0)
+        self.Frame_Train_GPTSoVITS_OutputDirName = QFrame(self.Frame_Train_GPTSoVITS_OutputParams_BasicSettings)
+        self.Frame_Train_GPTSoVITS_OutputDirName.setObjectName(u"Frame_Train_GPTSoVITS_OutputDirName")
+        self.Frame_Train_GPTSoVITS_OutputDirName.setMinimumSize(QSize(0, 105))
+        self.Frame_Train_GPTSoVITS_OutputDirName.setStyleSheet(u"QFrame {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QFrame:hover {\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
+"}")
+        self.gridLayout_98 = QGridLayout(self.Frame_Train_GPTSoVITS_OutputDirName)
+        self.gridLayout_98.setSpacing(12)
+        self.gridLayout_98.setObjectName(u"gridLayout_98")
+        self.gridLayout_98.setContentsMargins(21, 12, 21, 12)
+        self.Label_Train_GPTSoVITS_OutputDirName = QLabel(self.Frame_Train_GPTSoVITS_OutputDirName)
+        self.Label_Train_GPTSoVITS_OutputDirName.setObjectName(u"Label_Train_GPTSoVITS_OutputDirName")
+        sizePolicy5.setHeightForWidth(self.Label_Train_GPTSoVITS_OutputDirName.sizePolicy().hasHeightForWidth())
+        self.Label_Train_GPTSoVITS_OutputDirName.setSizePolicy(sizePolicy5)
+        self.Label_Train_GPTSoVITS_OutputDirName.setStyleSheet(u"QLabel {\n"
+"	/*text-align: center;*/\n"
+"	/*color: rgb(255, 255, 255);*/\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_98.addWidget(self.Label_Train_GPTSoVITS_OutputDirName, 0, 0, 1, 1)
+
+        self.HorizontalSpacer_Train_GPTSoVITS_OutputDirName = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.gridLayout_98.addItem(self.HorizontalSpacer_Train_GPTSoVITS_OutputDirName, 0, 1, 1, 1)
+
+        self.Button_Train_GPTSoVITS_OutputDirName_Undo = QPushButton(self.Frame_Train_GPTSoVITS_OutputDirName)
+        self.Button_Train_GPTSoVITS_OutputDirName_Undo.setObjectName(u"Button_Train_GPTSoVITS_OutputDirName_Undo")
+        self.Button_Train_GPTSoVITS_OutputDirName_Undo.setMinimumSize(QSize(27, 27))
+        self.Button_Train_GPTSoVITS_OutputDirName_Undo.setMaximumSize(QSize(27, 27))
+        self.Button_Train_GPTSoVITS_OutputDirName_Undo.setStyleSheet(u"QPushButton {\n"
+"	image: url(:/Button_Icon/Sources/Undo.png);\n"
+"	background-color: transparent;\n"
+"	padding: 4.5px;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgba(201, 210, 222, 123);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgba(201, 210, 222, 210);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_98.addWidget(self.Button_Train_GPTSoVITS_OutputDirName_Undo, 0, 2, 1, 1)
+
+        self.LineEdit_Train_GPTSoVITS_OutputDirName = LineEditBase(self.Frame_Train_GPTSoVITS_OutputDirName)
+        self.LineEdit_Train_GPTSoVITS_OutputDirName.setObjectName(u"LineEdit_Train_GPTSoVITS_OutputDirName")
+        self.LineEdit_Train_GPTSoVITS_OutputDirName.setMinimumSize(QSize(0, 27))
+
+        self.gridLayout_98.addWidget(self.LineEdit_Train_GPTSoVITS_OutputDirName, 1, 0, 1, 3)
+
+
+        self.verticalLayout_58.addWidget(self.Frame_Train_GPTSoVITS_OutputDirName)
+
+
+        self.verticalLayout_77.addWidget(self.Frame_Train_GPTSoVITS_OutputParams_BasicSettings)
+
+        self.CheckBox_Train_GPTSoVITS_OutputParams_Toggle_AdvanceSettings = QCheckBox(self.GroupBox_Train_GPTSoVITS_OutputParams)
+        self.CheckBox_Train_GPTSoVITS_OutputParams_Toggle_AdvanceSettings.setObjectName(u"CheckBox_Train_GPTSoVITS_OutputParams_Toggle_AdvanceSettings")
+        self.CheckBox_Train_GPTSoVITS_OutputParams_Toggle_AdvanceSettings.setStyleSheet(u"QCheckBox {\n"
+"	font-size: 12px;\n"
+"	font-weight: 630;\n"
+"	spacing: 12px;\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"	background-color: transparent;\n"
+"	padding-top: 9px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QCheckBox:hover {\n"
+"	color: rgb(255, 255, 255);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator {\n"
+"	width: 12px;\n"
+"	height: 12px;\n"
+"    background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QCheckBox::indicator:hover {\n"
+"	background-color: transparent;\n"
+"}\n"
+"QCheckBox::indicator:unchecked {\n"
+"	border-image: url(:/CheckBox_Icon/Sources/RightCaret.png);\n"
+"}\n"
+"QCheckBox::indicator:checked {\n"
+"	border-image: url(:/CheckBox_Icon/Sources/DownCaret.png);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.verticalLayout_77.addWidget(self.CheckBox_Train_GPTSoVITS_OutputParams_Toggle_AdvanceSettings)
+
+        self.Frame_Train_GPTSoVITS_OutputParams_AdvanceSettings = QFrame(self.GroupBox_Train_GPTSoVITS_OutputParams)
+        self.Frame_Train_GPTSoVITS_OutputParams_AdvanceSettings.setObjectName(u"Frame_Train_GPTSoVITS_OutputParams_AdvanceSettings")
+        self.verticalLayout_60 = QVBoxLayout(self.Frame_Train_GPTSoVITS_OutputParams_AdvanceSettings)
+        self.verticalLayout_60.setSpacing(0)
+        self.verticalLayout_60.setObjectName(u"verticalLayout_60")
+        self.verticalLayout_60.setContentsMargins(0, 0, 0, 0)
+        self.Frame_Train_GPTSoVITS_LogDir = QFrame(self.Frame_Train_GPTSoVITS_OutputParams_AdvanceSettings)
+        self.Frame_Train_GPTSoVITS_LogDir.setObjectName(u"Frame_Train_GPTSoVITS_LogDir")
+        self.Frame_Train_GPTSoVITS_LogDir.setMinimumSize(QSize(0, 105))
+        self.Frame_Train_GPTSoVITS_LogDir.setStyleSheet(u"QFrame {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QFrame:hover {\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
+"}")
+        self.gridLayout_110 = QGridLayout(self.Frame_Train_GPTSoVITS_LogDir)
+        self.gridLayout_110.setSpacing(12)
+        self.gridLayout_110.setObjectName(u"gridLayout_110")
+        self.gridLayout_110.setContentsMargins(21, 12, 21, 12)
+        self.Label_Train_GPTSoVITS_LogDir = QLabel(self.Frame_Train_GPTSoVITS_LogDir)
+        self.Label_Train_GPTSoVITS_LogDir.setObjectName(u"Label_Train_GPTSoVITS_LogDir")
+        sizePolicy5.setHeightForWidth(self.Label_Train_GPTSoVITS_LogDir.sizePolicy().hasHeightForWidth())
+        self.Label_Train_GPTSoVITS_LogDir.setSizePolicy(sizePolicy5)
+        self.Label_Train_GPTSoVITS_LogDir.setStyleSheet(u"QLabel {\n"
+"	/*text-align: center;*/\n"
+"	/*color: rgb(255, 255, 255);*/\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_110.addWidget(self.Label_Train_GPTSoVITS_LogDir, 0, 0, 1, 1)
+
+        self.HorizontalSpacer_Train_GPTSoVITS_LogDir = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.gridLayout_110.addItem(self.HorizontalSpacer_Train_GPTSoVITS_LogDir, 0, 1, 1, 1)
+
+        self.Button_Train_GPTSoVITS_LogDir_Undo = QPushButton(self.Frame_Train_GPTSoVITS_LogDir)
+        self.Button_Train_GPTSoVITS_LogDir_Undo.setObjectName(u"Button_Train_GPTSoVITS_LogDir_Undo")
+        self.Button_Train_GPTSoVITS_LogDir_Undo.setMinimumSize(QSize(27, 27))
+        self.Button_Train_GPTSoVITS_LogDir_Undo.setMaximumSize(QSize(27, 27))
+        self.Button_Train_GPTSoVITS_LogDir_Undo.setStyleSheet(u"QPushButton {\n"
+"	image: url(:/Button_Icon/Sources/Undo.png);\n"
+"	background-color: transparent;\n"
+"	padding: 4.5px;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgba(201, 210, 222, 123);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgba(201, 210, 222, 210);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_110.addWidget(self.Button_Train_GPTSoVITS_LogDir_Undo, 0, 2, 1, 1)
+
+        self.LineEdit_Train_GPTSoVITS_LogDir = LineEditBase(self.Frame_Train_GPTSoVITS_LogDir)
+        self.LineEdit_Train_GPTSoVITS_LogDir.setObjectName(u"LineEdit_Train_GPTSoVITS_LogDir")
+        self.LineEdit_Train_GPTSoVITS_LogDir.setMinimumSize(QSize(0, 27))
+
+        self.gridLayout_110.addWidget(self.LineEdit_Train_GPTSoVITS_LogDir, 1, 0, 1, 3)
+
+
+        self.verticalLayout_60.addWidget(self.Frame_Train_GPTSoVITS_LogDir)
+
+
+        self.verticalLayout_77.addWidget(self.Frame_Train_GPTSoVITS_OutputParams_AdvanceSettings)
+
+
+        self.verticalLayout_52.addWidget(self.GroupBox_Train_GPTSoVITS_OutputParams)
+
+        self.VerticalSpacer_Train_GPTSoVITS = QSpacerItem(0, 0, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+
+        self.verticalLayout_52.addItem(self.VerticalSpacer_Train_GPTSoVITS)
+
+        self.ScrollArea_Middle_Train_GPTSoVITS.setWidget(self.ScrollArea_Middle_WidgetContents_Train_GPTSoVITS)
+
+        self.gridLayout_85.addWidget(self.ScrollArea_Middle_Train_GPTSoVITS, 0, 1, 1, 1)
+
+        self.Widget_Right_Train_GPTSoVITS = QWidget(self.Subpage_Train_GPTSoVITS)
+        self.Widget_Right_Train_GPTSoVITS.setObjectName(u"Widget_Right_Train_GPTSoVITS")
+        self.Widget_Right_Train_GPTSoVITS.setStyleSheet(u"QWidget {\n"
+"	background-color: rgba(36, 36, 36, 123);\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QWidget:hover {\n"
+"}")
+        self.verticalLayout_76 = QVBoxLayout(self.Widget_Right_Train_GPTSoVITS)
+        self.verticalLayout_76.setSpacing(12)
+        self.verticalLayout_76.setObjectName(u"verticalLayout_76")
+        self.verticalLayout_76.setContentsMargins(12, 12, 12, 12)
+        self.TextBrowser_Params_Train_GPTSoVITS = QTextBrowser(self.Widget_Right_Train_GPTSoVITS)
+        self.TextBrowser_Params_Train_GPTSoVITS.setObjectName(u"TextBrowser_Params_Train_GPTSoVITS")
+        sizePolicy1.setHeightForWidth(self.TextBrowser_Params_Train_GPTSoVITS.sizePolicy().hasHeightForWidth())
+        self.TextBrowser_Params_Train_GPTSoVITS.setSizePolicy(sizePolicy1)
+        self.TextBrowser_Params_Train_GPTSoVITS.setStyleSheet(u"QTextBrowser {\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
+"	/*padding-top: 1.5px;*/\n"
+"	/*padding-bottom: 1.5px;*/\n"
+"	padding-left: 15px;\n"
+"	padding-right: 6px;\n"
+"	border-width: 1px;\n"
+"	border-style: solid;\n"
+"	border-color:transparent;\n"
+"}\n"
+"\n"
+"\n"
+"QScrollBar::vertical {\n"
+"	width: 9px;\n"
+"	background-color: rgb(45, 45, 45);\n"
+"	border-width: 1px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: transparent;\n"
+"	margin: 0px;\n"
+"}\n"
+"QScrollBar::vertical:hover {\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
+"}\n"
+"\n"
+"QScrollBar::add-line:vertical {\n"
+"	height: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: bottom;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QScrollBar::sub-line:vertical {\n"
+"	height: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: top;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	bord"
+                        "er-style: solid;\n"
+"}\n"
+"\n"
+"QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
+"	width: 0px;\n"
+"	height: 0px;\n"
+"	background-color: transparent;\n"
+"}\n"
+"\n"
+"QScrollBar::handle:vertical {\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QScrollBar::handle:vertical:hover {\n"
+"	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QScrollBar::horizontal {\n"
+"	height: 9px;\n"
+"	background-color: rgb(45, 45, 45);\n"
+"	border-width: 1px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: transparent;\n"
+"	margin: 0px;\n"
+"}\n"
+"QScrollBar::horizontal:hover {\n"
+"	background-color: rgb(60, 60, 60);\n"
+"}\n"
+"\n"
+"QScrollBar::add-line:horizontal {\n"
+"	width: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: left;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QScrollBar::sub-line:horizontal {\n"
+"	width: 0px"
+                        ";\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: right;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {\n"
+"	width: 0px;\n"
+"	height: 0px;\n"
+"	background-color: transparent;\n"
+"}\n"
+"\n"
+"QScrollBar::handle:horizontal {\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QScrollBar::handle:horizontal:hover {\n"
+"	background-color: rgb(120, 120, 120);\n"
+"}")
+
+        self.verticalLayout_76.addWidget(self.TextBrowser_Params_Train_GPTSoVITS)
+
+        self.Button_RunTensorboard_Train_GPTSoVITS = QPushButton(self.Widget_Right_Train_GPTSoVITS)
+        self.Button_RunTensorboard_Train_GPTSoVITS.setObjectName(u"Button_RunTensorboard_Train_GPTSoVITS")
+        self.Button_RunTensorboard_Train_GPTSoVITS.setStyleSheet(u"QPushButton {\n"
+"	text-align: center;\n"
+"	font-size: 12px;\n"
+"	background-color: transparent;\n"
+"	padding: 9.9px;\n"
+"	border-width: 1.5px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.verticalLayout_76.addWidget(self.Button_RunTensorboard_Train_GPTSoVITS)
+
+        self.Button_CheckOutput_Train_GPTSoVITS = QPushButton(self.Widget_Right_Train_GPTSoVITS)
+        self.Button_CheckOutput_Train_GPTSoVITS.setObjectName(u"Button_CheckOutput_Train_GPTSoVITS")
+        self.Button_CheckOutput_Train_GPTSoVITS.setStyleSheet(u"QPushButton {\n"
+"	text-align: center;\n"
+"	font-size: 12px;\n"
+"	background-color: transparent;\n"
+"	padding: 9.9px;\n"
+"	border-width: 1.5px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.verticalLayout_76.addWidget(self.Button_CheckOutput_Train_GPTSoVITS)
+
+
+        self.gridLayout_85.addWidget(self.Widget_Right_Train_GPTSoVITS, 0, 2, 1, 1)
+
+        self.ProgressBar_Train_GPTSoVITS = QProgressBar(self.Subpage_Train_GPTSoVITS)
+        self.ProgressBar_Train_GPTSoVITS.setObjectName(u"ProgressBar_Train_GPTSoVITS")
+        self.ProgressBar_Train_GPTSoVITS.setMinimumSize(QSize(0, 30))
+        self.ProgressBar_Train_GPTSoVITS.setStyleSheet(u"QProgressBar {\n"
+"	text-align: center;\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: rgb(60, 60, 60);\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QProgressBar:chunk {\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	background-color: qlineargradient(spread: pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgb(60, 60, 60), stop:1  rgb(123, 123, 123));\n"
+"}")
+        self.ProgressBar_Train_GPTSoVITS.setValue(0)
+        self.ProgressBar_Train_GPTSoVITS.setTextVisible(False)
+        self.horizontalLayout_41 = QHBoxLayout(self.ProgressBar_Train_GPTSoVITS)
+        self.horizontalLayout_41.setSpacing(0)
+        self.horizontalLayout_41.setObjectName(u"horizontalLayout_41")
+        self.horizontalLayout_41.setContentsMargins(0, 0, 0, 0)
+        self.StackedWidget_Train_GPTSoVITS = QStackedWidget(self.ProgressBar_Train_GPTSoVITS)
+        self.StackedWidget_Train_GPTSoVITS.setObjectName(u"StackedWidget_Train_GPTSoVITS")
+        self.StackedWidget_Train_GPTSoVITS.setMaximumSize(QSize(16777215, 30))
+        self.StackedWidget_Train_GPTSoVITS.setStyleSheet(u"QWidget {\n"
+"	background-color: rgba(90, 90, 90, 45);\n"
+"}\n"
+"QWidget:hover {\n"
+"	background-color: rgba(120, 120, 120, 60);\n"
+"}")
+        self.Page_Train_GPTSoVITS_Execute = QWidget()
+        self.Page_Train_GPTSoVITS_Execute.setObjectName(u"Page_Train_GPTSoVITS_Execute")
+        self.verticalLayout_96 = QVBoxLayout(self.Page_Train_GPTSoVITS_Execute)
+        self.verticalLayout_96.setSpacing(0)
+        self.verticalLayout_96.setObjectName(u"verticalLayout_96")
+        self.verticalLayout_96.setContentsMargins(0, 0, 0, 0)
+        self.Button_Train_GPTSoVITS_Execute = QPushButton(self.Page_Train_GPTSoVITS_Execute)
+        self.Button_Train_GPTSoVITS_Execute.setObjectName(u"Button_Train_GPTSoVITS_Execute")
+        sizePolicy3.setHeightForWidth(self.Button_Train_GPTSoVITS_Execute.sizePolicy().hasHeightForWidth())
+        self.Button_Train_GPTSoVITS_Execute.setSizePolicy(sizePolicy3)
+        self.Button_Train_GPTSoVITS_Execute.setMinimumSize(QSize(0, 30))
+        self.Button_Train_GPTSoVITS_Execute.setStyleSheet(u"QPushButton {\n"
+"	text-align: center;\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"	/*background-color: rgba(90, 90, 90, 45);*/\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	color: rgba(255, 255, 255, 240);\n"
+"	/*background-color: rgba(120, 120, 120, 60);*/\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.verticalLayout_96.addWidget(self.Button_Train_GPTSoVITS_Execute)
+
+        self.StackedWidget_Train_GPTSoVITS.addWidget(self.Page_Train_GPTSoVITS_Execute)
+        self.Page_Train_GPTSoVITS_Terminate = QWidget()
+        self.Page_Train_GPTSoVITS_Terminate.setObjectName(u"Page_Train_GPTSoVITS_Terminate")
+        self.verticalLayout_97 = QVBoxLayout(self.Page_Train_GPTSoVITS_Terminate)
+        self.verticalLayout_97.setSpacing(0)
+        self.verticalLayout_97.setObjectName(u"verticalLayout_97")
+        self.verticalLayout_97.setContentsMargins(0, 0, 0, 0)
+        self.Button_Train_GPTSoVITS_Terminate = QPushButton(self.Page_Train_GPTSoVITS_Terminate)
+        self.Button_Train_GPTSoVITS_Terminate.setObjectName(u"Button_Train_GPTSoVITS_Terminate")
+        sizePolicy3.setHeightForWidth(self.Button_Train_GPTSoVITS_Terminate.sizePolicy().hasHeightForWidth())
+        self.Button_Train_GPTSoVITS_Terminate.setSizePolicy(sizePolicy3)
+        self.Button_Train_GPTSoVITS_Terminate.setMinimumSize(QSize(0, 30))
+        self.Button_Train_GPTSoVITS_Terminate.setStyleSheet(u"QPushButton {\n"
+"	text-align: center;\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"	/*background-color: rgba(90, 90, 90, 45);*/\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	color: rgba(255, 255, 255, 240);\n"
+"	/*background-color: rgba(120, 120, 120, 60);*/\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.verticalLayout_97.addWidget(self.Button_Train_GPTSoVITS_Terminate)
+
+        self.StackedWidget_Train_GPTSoVITS.addWidget(self.Page_Train_GPTSoVITS_Terminate)
+
+        self.horizontalLayout_41.addWidget(self.StackedWidget_Train_GPTSoVITS)
+
+
+        self.gridLayout_85.addWidget(self.ProgressBar_Train_GPTSoVITS, 1, 0, 1, 3)
+
+        self.gridLayout_85.setColumnStretch(0, 3)
+        self.gridLayout_85.setColumnStretch(1, 10)
+        self.gridLayout_85.setColumnStretch(2, 7)
+        self.StackedWidget_Pages_Train.addWidget(self.Subpage_Train_GPTSoVITS)
         self.Subpage_Train_VITS = QWidget()
         self.Subpage_Train_VITS.setObjectName(u"Subpage_Train_VITS")
         self.gridLayout_22 = QGridLayout(self.Subpage_Train_VITS)
@@ -11165,8 +14385,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_10.setObjectName(u"verticalLayout_10")
         self.verticalLayout_10.setContentsMargins(12, 12, 12, 12)
         self.TreeWidget_Catalogue_Train_VITS = QTreeWidget(self.Widget_Left_Train_VITS)
-        __qtreewidgetitem4 = QTreeWidgetItem(self.TreeWidget_Catalogue_Train_VITS)
-        QTreeWidgetItem(__qtreewidgetitem4)
+        __qtreewidgetitem6 = QTreeWidgetItem(self.TreeWidget_Catalogue_Train_VITS)
+        QTreeWidgetItem(__qtreewidgetitem6)
         self.TreeWidget_Catalogue_Train_VITS.setObjectName(u"TreeWidget_Catalogue_Train_VITS")
         self.TreeWidget_Catalogue_Train_VITS.setStyleSheet(u"QTreeView {\n"
 "	/*font-size: 12px;\n"
@@ -11481,7 +14701,7 @@ class Ui_MainWindow(object):
         self.ScrollArea_Middle_Train_VITS.setWidgetResizable(True)
         self.ScrollArea_Middle_WidgetContents_Train_VITS = QWidget()
         self.ScrollArea_Middle_WidgetContents_Train_VITS.setObjectName(u"ScrollArea_Middle_WidgetContents_Train_VITS")
-        self.ScrollArea_Middle_WidgetContents_Train_VITS.setGeometry(QRect(0, 0, 591, 1566))
+        self.ScrollArea_Middle_WidgetContents_Train_VITS.setGeometry(QRect(0, 0, 591, 1702))
         self.verticalLayout_28 = QVBoxLayout(self.ScrollArea_Middle_WidgetContents_Train_VITS)
         self.verticalLayout_28.setSpacing(12)
         self.verticalLayout_28.setObjectName(u"verticalLayout_28")
@@ -12700,10 +15920,8 @@ class Ui_MainWindow(object):
 "	subcontrol-position: top left;\n"
 "	padding: 3px;\n"
 "}")
-        self.verticalLayout_145 = QVBoxLayout(self.GroupBox_Train_VITS_OutputParams)
-        self.verticalLayout_145.setSpacing(0)
-        self.verticalLayout_145.setObjectName(u"verticalLayout_145")
-        self.verticalLayout_145.setContentsMargins(0, 12, 0, 12)
+        self.verticalLayout_80 = QVBoxLayout(self.GroupBox_Train_VITS_OutputParams)
+        self.verticalLayout_80.setObjectName(u"verticalLayout_80")
         self.Frame_Train_VITS_OutputParams_BasicSettings = QFrame(self.GroupBox_Train_VITS_OutputParams)
         self.Frame_Train_VITS_OutputParams_BasicSettings.setObjectName(u"Frame_Train_VITS_OutputParams_BasicSettings")
         self.verticalLayout_26 = QVBoxLayout(self.Frame_Train_VITS_OutputParams_BasicSettings)
@@ -12835,10 +16053,10 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_26.addWidget(self.Frame_Train_VITS_EvalInterval)
 
-        self.Frame_Train_VITS_OutputDir = QFrame(self.Frame_Train_VITS_OutputParams_BasicSettings)
-        self.Frame_Train_VITS_OutputDir.setObjectName(u"Frame_Train_VITS_OutputDir")
-        self.Frame_Train_VITS_OutputDir.setMinimumSize(QSize(0, 105))
-        self.Frame_Train_VITS_OutputDir.setStyleSheet(u"QFrame {\n"
+        self.Frame_Train_VITS_OutputDirName = QFrame(self.Frame_Train_VITS_OutputParams_BasicSettings)
+        self.Frame_Train_VITS_OutputDirName.setObjectName(u"Frame_Train_VITS_OutputDirName")
+        self.Frame_Train_VITS_OutputDirName.setMinimumSize(QSize(0, 105))
+        self.Frame_Train_VITS_OutputDirName.setStyleSheet(u"QFrame {\n"
 "	color: rgb(255, 255, 255);\n"
 "	background-color: transparent;\n"
 "	border-width: 0px;\n"
@@ -12847,15 +16065,15 @@ class Ui_MainWindow(object):
 "QFrame:hover {\n"
 "	background-color: rgba(33, 33, 33, 99);\n"
 "}")
-        self.gridLayout_68 = QGridLayout(self.Frame_Train_VITS_OutputDir)
+        self.gridLayout_68 = QGridLayout(self.Frame_Train_VITS_OutputDirName)
         self.gridLayout_68.setSpacing(12)
         self.gridLayout_68.setObjectName(u"gridLayout_68")
         self.gridLayout_68.setContentsMargins(21, 12, 21, 12)
-        self.Label_Train_VITS_OutputDir = QLabel(self.Frame_Train_VITS_OutputDir)
-        self.Label_Train_VITS_OutputDir.setObjectName(u"Label_Train_VITS_OutputDir")
-        sizePolicy5.setHeightForWidth(self.Label_Train_VITS_OutputDir.sizePolicy().hasHeightForWidth())
-        self.Label_Train_VITS_OutputDir.setSizePolicy(sizePolicy5)
-        self.Label_Train_VITS_OutputDir.setStyleSheet(u"QLabel {\n"
+        self.Label_Train_VITS_OutputDirName = QLabel(self.Frame_Train_VITS_OutputDirName)
+        self.Label_Train_VITS_OutputDirName.setObjectName(u"Label_Train_VITS_OutputDirName")
+        sizePolicy5.setHeightForWidth(self.Label_Train_VITS_OutputDirName.sizePolicy().hasHeightForWidth())
+        self.Label_Train_VITS_OutputDirName.setSizePolicy(sizePolicy5)
+        self.Label_Train_VITS_OutputDirName.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	/*color: rgb(255, 255, 255);*/\n"
 "	background-color: transparent;\n"
@@ -12865,17 +16083,17 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}")
 
-        self.gridLayout_68.addWidget(self.Label_Train_VITS_OutputDir, 0, 0, 1, 1)
+        self.gridLayout_68.addWidget(self.Label_Train_VITS_OutputDirName, 0, 0, 1, 1)
 
-        self.HorizontalSpacer_Train_VITS_OutputDir = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+        self.HorizontalSpacer_Train_VITS_OutputDirName = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
-        self.gridLayout_68.addItem(self.HorizontalSpacer_Train_VITS_OutputDir, 0, 1, 1, 1)
+        self.gridLayout_68.addItem(self.HorizontalSpacer_Train_VITS_OutputDirName, 0, 1, 1, 1)
 
-        self.Button_Train_VITS_OutputDir_Undo = QPushButton(self.Frame_Train_VITS_OutputDir)
-        self.Button_Train_VITS_OutputDir_Undo.setObjectName(u"Button_Train_VITS_OutputDir_Undo")
-        self.Button_Train_VITS_OutputDir_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_Train_VITS_OutputDir_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_Train_VITS_OutputDir_Undo.setStyleSheet(u"QPushButton {\n"
+        self.Button_Train_VITS_OutputDirName_Undo = QPushButton(self.Frame_Train_VITS_OutputDirName)
+        self.Button_Train_VITS_OutputDirName_Undo.setObjectName(u"Button_Train_VITS_OutputDirName_Undo")
+        self.Button_Train_VITS_OutputDirName_Undo.setMinimumSize(QSize(27, 27))
+        self.Button_Train_VITS_OutputDirName_Undo.setMaximumSize(QSize(27, 27))
+        self.Button_Train_VITS_OutputDirName_Undo.setStyleSheet(u"QPushButton {\n"
 "	image: url(:/Button_Icon/Sources/Undo.png);\n"
 "	background-color: transparent;\n"
 "	padding: 4.5px;\n"
@@ -12896,19 +16114,146 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}")
 
-        self.gridLayout_68.addWidget(self.Button_Train_VITS_OutputDir_Undo, 0, 2, 1, 1)
+        self.gridLayout_68.addWidget(self.Button_Train_VITS_OutputDirName_Undo, 0, 2, 1, 1)
 
-        self.LineEdit_Train_VITS_OutputDir = LineEditBase(self.Frame_Train_VITS_OutputDir)
-        self.LineEdit_Train_VITS_OutputDir.setObjectName(u"LineEdit_Train_VITS_OutputDir")
-        self.LineEdit_Train_VITS_OutputDir.setMinimumSize(QSize(0, 27))
+        self.LineEdit_Train_VITS_OutputDirName = LineEditBase(self.Frame_Train_VITS_OutputDirName)
+        self.LineEdit_Train_VITS_OutputDirName.setObjectName(u"LineEdit_Train_VITS_OutputDirName")
+        self.LineEdit_Train_VITS_OutputDirName.setMinimumSize(QSize(0, 27))
 
-        self.gridLayout_68.addWidget(self.LineEdit_Train_VITS_OutputDir, 1, 0, 1, 3)
-
-
-        self.verticalLayout_26.addWidget(self.Frame_Train_VITS_OutputDir)
+        self.gridLayout_68.addWidget(self.LineEdit_Train_VITS_OutputDirName, 1, 0, 1, 3)
 
 
-        self.verticalLayout_145.addWidget(self.Frame_Train_VITS_OutputParams_BasicSettings)
+        self.verticalLayout_26.addWidget(self.Frame_Train_VITS_OutputDirName)
+
+
+        self.verticalLayout_80.addWidget(self.Frame_Train_VITS_OutputParams_BasicSettings)
+
+        self.CheckBox_Train_VITS_OutputParams_Toggle_AdvanceSettings = QCheckBox(self.GroupBox_Train_VITS_OutputParams)
+        self.CheckBox_Train_VITS_OutputParams_Toggle_AdvanceSettings.setObjectName(u"CheckBox_Train_VITS_OutputParams_Toggle_AdvanceSettings")
+        self.CheckBox_Train_VITS_OutputParams_Toggle_AdvanceSettings.setStyleSheet(u"QCheckBox {\n"
+"	font-size: 12px;\n"
+"	font-weight: 630;\n"
+"	spacing: 12px;\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"	background-color: transparent;\n"
+"	padding-top: 9px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QCheckBox:hover {\n"
+"	color: rgb(255, 255, 255);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator {\n"
+"	width: 12px;\n"
+"	height: 12px;\n"
+"    background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QCheckBox::indicator:hover {\n"
+"	background-color: transparent;\n"
+"}\n"
+"QCheckBox::indicator:unchecked {\n"
+"	border-image: url(:/CheckBox_Icon/Sources/RightCaret.png);\n"
+"}\n"
+"QCheckBox::indicator:checked {\n"
+"	border-image: url(:/CheckBox_Icon/Sources/DownCaret.png);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.verticalLayout_80.addWidget(self.CheckBox_Train_VITS_OutputParams_Toggle_AdvanceSettings)
+
+        self.Frame_Train_VITS_OutputParams_AdvanceSettings = QFrame(self.GroupBox_Train_VITS_OutputParams)
+        self.Frame_Train_VITS_OutputParams_AdvanceSettings.setObjectName(u"Frame_Train_VITS_OutputParams_AdvanceSettings")
+        self.verticalLayout_79 = QVBoxLayout(self.Frame_Train_VITS_OutputParams_AdvanceSettings)
+        self.verticalLayout_79.setSpacing(0)
+        self.verticalLayout_79.setObjectName(u"verticalLayout_79")
+        self.verticalLayout_79.setContentsMargins(0, 0, 0, 0)
+        self.Frame_Train_VITS_LogDir = QFrame(self.Frame_Train_VITS_OutputParams_AdvanceSettings)
+        self.Frame_Train_VITS_LogDir.setObjectName(u"Frame_Train_VITS_LogDir")
+        self.Frame_Train_VITS_LogDir.setMinimumSize(QSize(0, 105))
+        self.Frame_Train_VITS_LogDir.setStyleSheet(u"QFrame {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QFrame:hover {\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
+"}")
+        self.gridLayout_111 = QGridLayout(self.Frame_Train_VITS_LogDir)
+        self.gridLayout_111.setSpacing(12)
+        self.gridLayout_111.setObjectName(u"gridLayout_111")
+        self.gridLayout_111.setContentsMargins(21, 12, 21, 12)
+        self.Label_Train_VITS_LogDir = QLabel(self.Frame_Train_VITS_LogDir)
+        self.Label_Train_VITS_LogDir.setObjectName(u"Label_Train_VITS_LogDir")
+        sizePolicy5.setHeightForWidth(self.Label_Train_VITS_LogDir.sizePolicy().hasHeightForWidth())
+        self.Label_Train_VITS_LogDir.setSizePolicy(sizePolicy5)
+        self.Label_Train_VITS_LogDir.setStyleSheet(u"QLabel {\n"
+"	/*text-align: center;*/\n"
+"	/*color: rgb(255, 255, 255);*/\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_111.addWidget(self.Label_Train_VITS_LogDir, 0, 0, 1, 1)
+
+        self.HorizontalSpacer_Train_VITS_LogDir = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.gridLayout_111.addItem(self.HorizontalSpacer_Train_VITS_LogDir, 0, 1, 1, 1)
+
+        self.Button_Train_VITS_LogDir_Undo = QPushButton(self.Frame_Train_VITS_LogDir)
+        self.Button_Train_VITS_LogDir_Undo.setObjectName(u"Button_Train_VITS_LogDir_Undo")
+        self.Button_Train_VITS_LogDir_Undo.setMinimumSize(QSize(27, 27))
+        self.Button_Train_VITS_LogDir_Undo.setMaximumSize(QSize(27, 27))
+        self.Button_Train_VITS_LogDir_Undo.setStyleSheet(u"QPushButton {\n"
+"	image: url(:/Button_Icon/Sources/Undo.png);\n"
+"	background-color: transparent;\n"
+"	padding: 4.5px;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgba(201, 210, 222, 123);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgba(201, 210, 222, 210);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_111.addWidget(self.Button_Train_VITS_LogDir_Undo, 0, 2, 1, 1)
+
+        self.LineEdit_Train_VITS_LogDir = LineEditBase(self.Frame_Train_VITS_LogDir)
+        self.LineEdit_Train_VITS_LogDir.setObjectName(u"LineEdit_Train_VITS_LogDir")
+        self.LineEdit_Train_VITS_LogDir.setMinimumSize(QSize(0, 27))
+
+        self.gridLayout_111.addWidget(self.LineEdit_Train_VITS_LogDir, 1, 0, 1, 3)
+
+
+        self.verticalLayout_79.addWidget(self.Frame_Train_VITS_LogDir)
+
+
+        self.verticalLayout_80.addWidget(self.Frame_Train_VITS_OutputParams_AdvanceSettings)
 
 
         self.verticalLayout_28.addWidget(self.GroupBox_Train_VITS_OutputParams)
@@ -12943,15 +16288,15 @@ class Ui_MainWindow(object):
 "	border-width: 0px;\n"
 "	border-style: solid;\n"
 "}")
-        self.horizontalLayout_81 = QHBoxLayout(self.Frame_TTS_Top)
-        self.horizontalLayout_81.setSpacing(0)
-        self.horizontalLayout_81.setObjectName(u"horizontalLayout_81")
-        self.horizontalLayout_81.setContentsMargins(0, 0, 0, 0)
-        self.ToolButton_VoiceConverter_Title = QToolButton(self.Frame_TTS_Top)
-        self.ToolButton_VoiceConverter_Title.setObjectName(u"ToolButton_VoiceConverter_Title")
-        sizePolicy1.setHeightForWidth(self.ToolButton_VoiceConverter_Title.sizePolicy().hasHeightForWidth())
-        self.ToolButton_VoiceConverter_Title.setSizePolicy(sizePolicy1)
-        self.ToolButton_VoiceConverter_Title.setStyleSheet(u"QToolButton {\n"
+        self.horizontalLayout_16 = QHBoxLayout(self.Frame_TTS_Top)
+        self.horizontalLayout_16.setSpacing(0)
+        self.horizontalLayout_16.setObjectName(u"horizontalLayout_16")
+        self.horizontalLayout_16.setContentsMargins(0, 0, 0, 0)
+        self.ToolButton_VoiceConverter_Title_GPTSoVITS = QToolButton(self.Frame_TTS_Top)
+        self.ToolButton_VoiceConverter_Title_GPTSoVITS.setObjectName(u"ToolButton_VoiceConverter_Title_GPTSoVITS")
+        sizePolicy1.setHeightForWidth(self.ToolButton_VoiceConverter_Title_GPTSoVITS.sizePolicy().hasHeightForWidth())
+        self.ToolButton_VoiceConverter_Title_GPTSoVITS.setSizePolicy(sizePolicy1)
+        self.ToolButton_VoiceConverter_Title_GPTSoVITS.setStyleSheet(u"QToolButton {\n"
 "	font-size: 24px;\n"
 "	/*text-align: center;*/\n"
 "	color: rgba(201, 210, 222, 210);\n"
@@ -12994,7 +16339,56 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}")
 
-        self.horizontalLayout_81.addWidget(self.ToolButton_VoiceConverter_Title)
+        self.horizontalLayout_16.addWidget(self.ToolButton_VoiceConverter_Title_GPTSoVITS)
+
+        self.ToolButton_VoiceConverter_Title_VITS = QToolButton(self.Frame_TTS_Top)
+        self.ToolButton_VoiceConverter_Title_VITS.setObjectName(u"ToolButton_VoiceConverter_Title_VITS")
+        sizePolicy1.setHeightForWidth(self.ToolButton_VoiceConverter_Title_VITS.sizePolicy().hasHeightForWidth())
+        self.ToolButton_VoiceConverter_Title_VITS.setSizePolicy(sizePolicy1)
+        self.ToolButton_VoiceConverter_Title_VITS.setStyleSheet(u"QToolButton {\n"
+"	font-size: 24px;\n"
+"	/*text-align: center;*/\n"
+"	color: rgba(201, 210, 222, 210);\n"
+"	padding-left: 12px;\n"
+"	padding-right: 12px;\n"
+"	background-color: transparent;\n"
+"	border-top-width: 0px;\n"
+"	border-right-width: 0px;\n"
+"	border-bottom-width: 3px;\n"
+"	border-left-width: 0px;\n"
+"	border-style: solid;\n"
+"	border-bottom-color: rgba(123, 123, 123, 123);\n"
+"}\n"
+"QToolButton:hover {\n"
+"	color: rgba(210, 222, 234, 234);\n"
+"	background-color: transparent;\n"
+"	border-top-width: 0px;\n"
+"	border-right-width: 0px;\n"
+"	border-bottom-width: 3px;\n"
+"	border-left-width: 0px;\n"
+"	border-style: solid;\n"
+"	border-bottom-color: rgba(120, 180, 240, 123);\n"
+"}\n"
+"QToolButton:checked {\n"
+"	color: rgba(210, 222, 234, 255);\n"
+"	background-color: transparent;\n"
+"	border-top-width: 0px;\n"
+"	border-right-width: 0px;\n"
+"	border-bottom-width: 3px;\n"
+"	border-left-width: 0px;\n"
+"	border-style: solid;\n"
+"	border-bottom-color: rgba(120, 180, 240, 210);\n"
+"}\n"
+"\n"
+"QToolTip {\n"
+"	color:"
+                        " rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.horizontalLayout_16.addWidget(self.ToolButton_VoiceConverter_Title_VITS)
 
         self.Frame_TTS_Title_Spacer = QLabel(self.Frame_TTS_Top)
         self.Frame_TTS_Title_Spacer.setObjectName(u"Frame_TTS_Title_Spacer")
@@ -13015,7 +16409,7 @@ class Ui_MainWindow(object):
 "	border-bottom-color: rgba(123, 123, 123, 123);\n"
 "}")
 
-        self.horizontalLayout_81.addWidget(self.Frame_TTS_Title_Spacer)
+        self.horizontalLayout_16.addWidget(self.Frame_TTS_Title_Spacer)
 
 
         self.verticalLayout_42.addWidget(self.Frame_TTS_Top)
@@ -13065,6 +16459,963 @@ class Ui_MainWindow(object):
 "QTabBar QToolButton:hover {\n"
 "}\n"
 "*/")
+        self.Subpage_TTS_GPTSoVITS = QWidget()
+        self.Subpage_TTS_GPTSoVITS.setObjectName(u"Subpage_TTS_GPTSoVITS")
+        self.gridLayout_109 = QGridLayout(self.Subpage_TTS_GPTSoVITS)
+        self.gridLayout_109.setSpacing(12)
+        self.gridLayout_109.setObjectName(u"gridLayout_109")
+        self.gridLayout_109.setContentsMargins(0, 0, 0, 0)
+        self.Widget_Left_TTS_GPTSoVITS = QWidget(self.Subpage_TTS_GPTSoVITS)
+        self.Widget_Left_TTS_GPTSoVITS.setObjectName(u"Widget_Left_TTS_GPTSoVITS")
+        self.Widget_Left_TTS_GPTSoVITS.setMinimumSize(QSize(150, 0))
+        self.Widget_Left_TTS_GPTSoVITS.setStyleSheet(u"QWidget {\n"
+"	background-color: rgba(36, 36, 36, 123);\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QWidget:hover {\n"
+"}")
+        self.verticalLayout_69 = QVBoxLayout(self.Widget_Left_TTS_GPTSoVITS)
+        self.verticalLayout_69.setSpacing(12)
+        self.verticalLayout_69.setObjectName(u"verticalLayout_69")
+        self.verticalLayout_69.setContentsMargins(12, 12, 12, 12)
+        self.TreeWidget_Catalogue_TTS_GPTSoVITS = QTreeWidget(self.Widget_Left_TTS_GPTSoVITS)
+        __qtreewidgetitem7 = QTreeWidgetItem(self.TreeWidget_Catalogue_TTS_GPTSoVITS)
+        QTreeWidgetItem(__qtreewidgetitem7)
+        self.TreeWidget_Catalogue_TTS_GPTSoVITS.setObjectName(u"TreeWidget_Catalogue_TTS_GPTSoVITS")
+        self.TreeWidget_Catalogue_TTS_GPTSoVITS.setStyleSheet(u"QTreeView {\n"
+"	/*font-size: 12px;\n"
+"	text-align: center;*/\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QTreeView::item {\n"
+"	background-color: transparent;\n"
+"	padding: 2.4px;\n"
+"}\n"
+"QTreeView::item:hover {\n"
+"    background-color: rgba(66, 66, 66, 198);\n"
+"}\n"
+"QTreeView::item:selected {\n"
+"    background-color: ;\n"
+"}\n"
+"\n"
+"QTreeView::branch {\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QTreeView::branch:open:has-children {\n"
+"    image: ;\n"
+"}\n"
+"QTreeView::branch:closed:has-children {\n"
+"    image: ;\n"
+"}\n"
+"QTreeWidget::branch:adjoins-item {\n"
+"    background-color: ;\n"
+"}\n"
+"\n"
+"\n"
+"QScrollBar {\n"
+"	background-color: rgba(45, 45, 45, 135);\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: transparent;\n"
+"	margin: 0px;\n"
+"}\n"
+"QScrollBar:hover {\n"
+"	background-color: r"
+                        "gba(33, 33, 33, 99);\n"
+"}\n"
+"\n"
+"QScrollBar::horizontal {\n"
+"	height: 9px;\n"
+"}\n"
+"QScrollBar::vertical {\n"
+"	width: 9px;\n"
+"}\n"
+"\n"
+"QScrollBar::sub-line, QScrollBar::add-line {\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QScrollBar::sub-page, QScrollBar::add-page {\n"
+"	background-color: transparent;\n"
+"}\n"
+"\n"
+"QScrollBar::handle {\n"
+"	background-color: rgba(90, 90, 90, 90);\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QScrollBar::handle:hover {\n"
+"	background-color: rgba(120, 120, 120, 120);\n"
+"}")
+
+        self.verticalLayout_69.addWidget(self.TreeWidget_Catalogue_TTS_GPTSoVITS)
+
+
+        self.gridLayout_109.addWidget(self.Widget_Left_TTS_GPTSoVITS, 0, 0, 1, 1)
+
+        self.ScrollArea_Middle_TTS_GPTSoVITS = QScrollArea(self.Subpage_TTS_GPTSoVITS)
+        self.ScrollArea_Middle_TTS_GPTSoVITS.setObjectName(u"ScrollArea_Middle_TTS_GPTSoVITS")
+        self.ScrollArea_Middle_TTS_GPTSoVITS.setMinimumSize(QSize(600, 0))
+        self.ScrollArea_Middle_TTS_GPTSoVITS.setStyleSheet(u"QScrollArea {\n"
+"	background-color: rgba(36, 36, 36, 123);\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QScrollArea:hover {\n"
+"}\n"
+"\n"
+"\n"
+"QScrollBar::vertical {\n"
+"	width: 9px;\n"
+"	background-color: rgb(45, 45, 45);\n"
+"	border-width: 1px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: transparent;\n"
+"	margin: 0px;\n"
+"}\n"
+"QScrollBar::vertical:hover {\n"
+"	background-color: rgb(60, 60, 60);\n"
+"}\n"
+"\n"
+"QScrollBar::add-line:vertical {\n"
+"	height: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: bottom;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QScrollBar::sub-line:vertical {\n"
+"	height: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: top;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
+"	width: 0px;\n"
+"	"
+                        "height: 0px;\n"
+"	background-color: transparent;\n"
+"}\n"
+"\n"
+"QScrollBar::handle:vertical {\n"
+"	background-color: rgb(90, 90, 90);\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QScrollBar::handle:vertical:hover {\n"
+"	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QScrollBar::horizontal {\n"
+"	height: 9px;\n"
+"	background-color: rgb(45, 45, 45);\n"
+"	border-width: 1px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: transparent;\n"
+"	margin: 0px;\n"
+"}\n"
+"QScrollBar::horizontal:hover {\n"
+"	background-color: rgb(60, 60, 60);\n"
+"}\n"
+"\n"
+"QScrollBar::add-line:horizontal {\n"
+"	width: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: left;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QScrollBar::sub-line:horizontal {\n"
+"	width: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: right;\n"
+"	subcontrol-origin: margin;\n"
+"	borde"
+                        "r-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {\n"
+"	width: 0px;\n"
+"	height: 0px;\n"
+"	background-color: transparent;\n"
+"}\n"
+"\n"
+"QScrollBar::handle:horizontal {\n"
+"	background-color: rgb(90, 90, 90);\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QScrollBar::handle:horizontal:hover {\n"
+"	background-color: rgb(120, 120, 120);\n"
+"}")
+        self.ScrollArea_Middle_TTS_GPTSoVITS.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
+        self.ScrollArea_Middle_TTS_GPTSoVITS.setWidgetResizable(True)
+        self.ScrollArea_Middle_WidgetContents_TTS_GPTSoVITS = QWidget()
+        self.ScrollArea_Middle_WidgetContents_TTS_GPTSoVITS.setObjectName(u"ScrollArea_Middle_WidgetContents_TTS_GPTSoVITS")
+        self.ScrollArea_Middle_WidgetContents_TTS_GPTSoVITS.setGeometry(QRect(0, 0, 591, 649))
+        self.verticalLayout_66 = QVBoxLayout(self.ScrollArea_Middle_WidgetContents_TTS_GPTSoVITS)
+        self.verticalLayout_66.setSpacing(12)
+        self.verticalLayout_66.setObjectName(u"verticalLayout_66")
+        self.verticalLayout_66.setContentsMargins(12, 12, 12, 12)
+        self.GroupBox_TTS_GPTSoVITS_InputParams = QGroupBox(self.ScrollArea_Middle_WidgetContents_TTS_GPTSoVITS)
+        self.GroupBox_TTS_GPTSoVITS_InputParams.setObjectName(u"GroupBox_TTS_GPTSoVITS_InputParams")
+        self.GroupBox_TTS_GPTSoVITS_InputParams.setStyleSheet(u"QGroupBox {\n"
+"	font-size: 15px;\n"
+"	margin-top: 1.5ex;\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: transparent;\n"
+"	border-width: 1px;\n"
+"	border-style: solid;\n"
+"	border-color: transparent;\n"
+"}\n"
+"QGroupBox::title {\n"
+"	left: 9px;\n"
+"	margin-left: 0px;\n"
+"	subcontrol-origin: margin;\n"
+"	subcontrol-position: top left;\n"
+"	padding: 3px;\n"
+"}")
+        self.verticalLayout_125 = QVBoxLayout(self.GroupBox_TTS_GPTSoVITS_InputParams)
+        self.verticalLayout_125.setSpacing(0)
+        self.verticalLayout_125.setObjectName(u"verticalLayout_125")
+        self.verticalLayout_125.setContentsMargins(0, 12, 0, 12)
+        self.Frame_TTS_GPTSoVITS_InputParams_BasicSettings = QFrame(self.GroupBox_TTS_GPTSoVITS_InputParams)
+        self.Frame_TTS_GPTSoVITS_InputParams_BasicSettings.setObjectName(u"Frame_TTS_GPTSoVITS_InputParams_BasicSettings")
+        self.verticalLayout_71 = QVBoxLayout(self.Frame_TTS_GPTSoVITS_InputParams_BasicSettings)
+        self.verticalLayout_71.setSpacing(0)
+        self.verticalLayout_71.setObjectName(u"verticalLayout_71")
+        self.verticalLayout_71.setContentsMargins(0, 0, 0, 0)
+        self.Frame_TTS_GPTSoVITS_ModelPathLoadS1 = QFrame(self.Frame_TTS_GPTSoVITS_InputParams_BasicSettings)
+        self.Frame_TTS_GPTSoVITS_ModelPathLoadS1.setObjectName(u"Frame_TTS_GPTSoVITS_ModelPathLoadS1")
+        self.Frame_TTS_GPTSoVITS_ModelPathLoadS1.setMinimumSize(QSize(0, 105))
+        self.Frame_TTS_GPTSoVITS_ModelPathLoadS1.setStyleSheet(u"QFrame {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QFrame:hover {\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
+"}")
+        self.gridLayout_97 = QGridLayout(self.Frame_TTS_GPTSoVITS_ModelPathLoadS1)
+        self.gridLayout_97.setSpacing(12)
+        self.gridLayout_97.setObjectName(u"gridLayout_97")
+        self.gridLayout_97.setContentsMargins(21, 12, 21, 12)
+        self.Label_TTS_GPTSoVITS_ModelPathLoadS1 = QLabel(self.Frame_TTS_GPTSoVITS_ModelPathLoadS1)
+        self.Label_TTS_GPTSoVITS_ModelPathLoadS1.setObjectName(u"Label_TTS_GPTSoVITS_ModelPathLoadS1")
+        sizePolicy5.setHeightForWidth(self.Label_TTS_GPTSoVITS_ModelPathLoadS1.sizePolicy().hasHeightForWidth())
+        self.Label_TTS_GPTSoVITS_ModelPathLoadS1.setSizePolicy(sizePolicy5)
+        self.Label_TTS_GPTSoVITS_ModelPathLoadS1.setStyleSheet(u"QLabel {\n"
+"	/*text-align: center;*/\n"
+"	/*color: rgb(255, 255, 255);*/\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_97.addWidget(self.Label_TTS_GPTSoVITS_ModelPathLoadS1, 0, 0, 1, 1)
+
+        self.HorizontalSpacer_TTS_GPTSoVITS_ModelPathLoadS1 = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.gridLayout_97.addItem(self.HorizontalSpacer_TTS_GPTSoVITS_ModelPathLoadS1, 0, 1, 1, 1)
+
+        self.Button_TTS_GPTSoVITS_ModelPathLoadS1_Undo = QPushButton(self.Frame_TTS_GPTSoVITS_ModelPathLoadS1)
+        self.Button_TTS_GPTSoVITS_ModelPathLoadS1_Undo.setObjectName(u"Button_TTS_GPTSoVITS_ModelPathLoadS1_Undo")
+        self.Button_TTS_GPTSoVITS_ModelPathLoadS1_Undo.setMinimumSize(QSize(27, 27))
+        self.Button_TTS_GPTSoVITS_ModelPathLoadS1_Undo.setMaximumSize(QSize(27, 27))
+        self.Button_TTS_GPTSoVITS_ModelPathLoadS1_Undo.setStyleSheet(u"QPushButton {\n"
+"	image: url(:/Button_Icon/Sources/Undo.png);\n"
+"	background-color: transparent;\n"
+"	padding: 4.5px;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgba(201, 210, 222, 123);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgba(201, 210, 222, 210);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_97.addWidget(self.Button_TTS_GPTSoVITS_ModelPathLoadS1_Undo, 0, 2, 1, 1)
+
+        self.LineEdit_TTS_GPTSoVITS_ModelPathLoadS1 = LineEditBase(self.Frame_TTS_GPTSoVITS_ModelPathLoadS1)
+        self.LineEdit_TTS_GPTSoVITS_ModelPathLoadS1.setObjectName(u"LineEdit_TTS_GPTSoVITS_ModelPathLoadS1")
+        self.LineEdit_TTS_GPTSoVITS_ModelPathLoadS1.setMinimumSize(QSize(0, 27))
+
+        self.gridLayout_97.addWidget(self.LineEdit_TTS_GPTSoVITS_ModelPathLoadS1, 1, 0, 1, 3)
+
+
+        self.verticalLayout_71.addWidget(self.Frame_TTS_GPTSoVITS_ModelPathLoadS1)
+
+        self.Frame_TTS_GPTSoVITS_ModelPathLoadS2G = QFrame(self.Frame_TTS_GPTSoVITS_InputParams_BasicSettings)
+        self.Frame_TTS_GPTSoVITS_ModelPathLoadS2G.setObjectName(u"Frame_TTS_GPTSoVITS_ModelPathLoadS2G")
+        self.Frame_TTS_GPTSoVITS_ModelPathLoadS2G.setMinimumSize(QSize(0, 105))
+        self.Frame_TTS_GPTSoVITS_ModelPathLoadS2G.setStyleSheet(u"QFrame {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QFrame:hover {\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
+"}")
+        self.gridLayout_99 = QGridLayout(self.Frame_TTS_GPTSoVITS_ModelPathLoadS2G)
+        self.gridLayout_99.setSpacing(12)
+        self.gridLayout_99.setObjectName(u"gridLayout_99")
+        self.gridLayout_99.setContentsMargins(21, 12, 21, 12)
+        self.Label_TTS_GPTSoVITS_ModelPathLoadS2G = QLabel(self.Frame_TTS_GPTSoVITS_ModelPathLoadS2G)
+        self.Label_TTS_GPTSoVITS_ModelPathLoadS2G.setObjectName(u"Label_TTS_GPTSoVITS_ModelPathLoadS2G")
+        sizePolicy5.setHeightForWidth(self.Label_TTS_GPTSoVITS_ModelPathLoadS2G.sizePolicy().hasHeightForWidth())
+        self.Label_TTS_GPTSoVITS_ModelPathLoadS2G.setSizePolicy(sizePolicy5)
+        self.Label_TTS_GPTSoVITS_ModelPathLoadS2G.setStyleSheet(u"QLabel {\n"
+"	/*text-align: center;*/\n"
+"	/*color: rgb(255, 255, 255);*/\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_99.addWidget(self.Label_TTS_GPTSoVITS_ModelPathLoadS2G, 0, 0, 1, 1)
+
+        self.HorizontalSpacer_TTS_GPTSoVITS_ModelPathLoadS2G = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.gridLayout_99.addItem(self.HorizontalSpacer_TTS_GPTSoVITS_ModelPathLoadS2G, 0, 1, 1, 1)
+
+        self.Button_TTS_GPTSoVITS_ModelPathLoadS2G_Undo = QPushButton(self.Frame_TTS_GPTSoVITS_ModelPathLoadS2G)
+        self.Button_TTS_GPTSoVITS_ModelPathLoadS2G_Undo.setObjectName(u"Button_TTS_GPTSoVITS_ModelPathLoadS2G_Undo")
+        self.Button_TTS_GPTSoVITS_ModelPathLoadS2G_Undo.setMinimumSize(QSize(27, 27))
+        self.Button_TTS_GPTSoVITS_ModelPathLoadS2G_Undo.setMaximumSize(QSize(27, 27))
+        self.Button_TTS_GPTSoVITS_ModelPathLoadS2G_Undo.setStyleSheet(u"QPushButton {\n"
+"	image: url(:/Button_Icon/Sources/Undo.png);\n"
+"	background-color: transparent;\n"
+"	padding: 4.5px;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgba(201, 210, 222, 123);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgba(201, 210, 222, 210);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_99.addWidget(self.Button_TTS_GPTSoVITS_ModelPathLoadS2G_Undo, 0, 2, 1, 1)
+
+        self.LineEdit_TTS_GPTSoVITS_ModelPathLoadS2G = LineEditBase(self.Frame_TTS_GPTSoVITS_ModelPathLoadS2G)
+        self.LineEdit_TTS_GPTSoVITS_ModelPathLoadS2G.setObjectName(u"LineEdit_TTS_GPTSoVITS_ModelPathLoadS2G")
+        self.LineEdit_TTS_GPTSoVITS_ModelPathLoadS2G.setMinimumSize(QSize(0, 27))
+
+        self.gridLayout_99.addWidget(self.LineEdit_TTS_GPTSoVITS_ModelPathLoadS2G, 1, 0, 1, 3)
+
+
+        self.verticalLayout_71.addWidget(self.Frame_TTS_GPTSoVITS_ModelPathLoadS2G)
+
+        self.Frame_TTS_GPTSoVITS_ModelDirLoadBert = QFrame(self.Frame_TTS_GPTSoVITS_InputParams_BasicSettings)
+        self.Frame_TTS_GPTSoVITS_ModelDirLoadBert.setObjectName(u"Frame_TTS_GPTSoVITS_ModelDirLoadBert")
+        self.Frame_TTS_GPTSoVITS_ModelDirLoadBert.setMinimumSize(QSize(0, 105))
+        self.Frame_TTS_GPTSoVITS_ModelDirLoadBert.setStyleSheet(u"QFrame {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QFrame:hover {\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
+"}")
+        self.gridLayout_100 = QGridLayout(self.Frame_TTS_GPTSoVITS_ModelDirLoadBert)
+        self.gridLayout_100.setSpacing(12)
+        self.gridLayout_100.setObjectName(u"gridLayout_100")
+        self.gridLayout_100.setContentsMargins(21, 12, 21, 12)
+        self.Label_TTS_GPTSoVITS_ModelDirLoadBert = QLabel(self.Frame_TTS_GPTSoVITS_ModelDirLoadBert)
+        self.Label_TTS_GPTSoVITS_ModelDirLoadBert.setObjectName(u"Label_TTS_GPTSoVITS_ModelDirLoadBert")
+        sizePolicy5.setHeightForWidth(self.Label_TTS_GPTSoVITS_ModelDirLoadBert.sizePolicy().hasHeightForWidth())
+        self.Label_TTS_GPTSoVITS_ModelDirLoadBert.setSizePolicy(sizePolicy5)
+        self.Label_TTS_GPTSoVITS_ModelDirLoadBert.setStyleSheet(u"QLabel {\n"
+"	/*text-align: center;*/\n"
+"	/*color: rgb(255, 255, 255);*/\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_100.addWidget(self.Label_TTS_GPTSoVITS_ModelDirLoadBert, 0, 0, 1, 1)
+
+        self.HorizontalSpacer_TTS_GPTSoVITS_ModelDirLoadBert = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.gridLayout_100.addItem(self.HorizontalSpacer_TTS_GPTSoVITS_ModelDirLoadBert, 0, 1, 1, 1)
+
+        self.Button_TTS_GPTSoVITS_ModelDirLoadBert_Undo = QPushButton(self.Frame_TTS_GPTSoVITS_ModelDirLoadBert)
+        self.Button_TTS_GPTSoVITS_ModelDirLoadBert_Undo.setObjectName(u"Button_TTS_GPTSoVITS_ModelDirLoadBert_Undo")
+        self.Button_TTS_GPTSoVITS_ModelDirLoadBert_Undo.setMinimumSize(QSize(27, 27))
+        self.Button_TTS_GPTSoVITS_ModelDirLoadBert_Undo.setMaximumSize(QSize(27, 27))
+        self.Button_TTS_GPTSoVITS_ModelDirLoadBert_Undo.setStyleSheet(u"QPushButton {\n"
+"	image: url(:/Button_Icon/Sources/Undo.png);\n"
+"	background-color: transparent;\n"
+"	padding: 4.5px;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgba(201, 210, 222, 123);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgba(201, 210, 222, 210);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_100.addWidget(self.Button_TTS_GPTSoVITS_ModelDirLoadBert_Undo, 0, 2, 1, 1)
+
+        self.LineEdit_TTS_GPTSoVITS_ModelDirLoadBert = LineEditBase(self.Frame_TTS_GPTSoVITS_ModelDirLoadBert)
+        self.LineEdit_TTS_GPTSoVITS_ModelDirLoadBert.setObjectName(u"LineEdit_TTS_GPTSoVITS_ModelDirLoadBert")
+        self.LineEdit_TTS_GPTSoVITS_ModelDirLoadBert.setMinimumSize(QSize(0, 27))
+
+        self.gridLayout_100.addWidget(self.LineEdit_TTS_GPTSoVITS_ModelDirLoadBert, 1, 0, 1, 3)
+
+
+        self.verticalLayout_71.addWidget(self.Frame_TTS_GPTSoVITS_ModelDirLoadBert)
+
+        self.Frame_TTS_GPTSoVITS_ModelDirLoadSSL = QFrame(self.Frame_TTS_GPTSoVITS_InputParams_BasicSettings)
+        self.Frame_TTS_GPTSoVITS_ModelDirLoadSSL.setObjectName(u"Frame_TTS_GPTSoVITS_ModelDirLoadSSL")
+        self.Frame_TTS_GPTSoVITS_ModelDirLoadSSL.setMinimumSize(QSize(0, 105))
+        self.Frame_TTS_GPTSoVITS_ModelDirLoadSSL.setStyleSheet(u"QFrame {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QFrame:hover {\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
+"}")
+        self.gridLayout_101 = QGridLayout(self.Frame_TTS_GPTSoVITS_ModelDirLoadSSL)
+        self.gridLayout_101.setSpacing(12)
+        self.gridLayout_101.setObjectName(u"gridLayout_101")
+        self.gridLayout_101.setContentsMargins(21, 12, 21, 12)
+        self.Label_TTS_GPTSoVITS_ModelDirLoadSSL = QLabel(self.Frame_TTS_GPTSoVITS_ModelDirLoadSSL)
+        self.Label_TTS_GPTSoVITS_ModelDirLoadSSL.setObjectName(u"Label_TTS_GPTSoVITS_ModelDirLoadSSL")
+        sizePolicy5.setHeightForWidth(self.Label_TTS_GPTSoVITS_ModelDirLoadSSL.sizePolicy().hasHeightForWidth())
+        self.Label_TTS_GPTSoVITS_ModelDirLoadSSL.setSizePolicy(sizePolicy5)
+        self.Label_TTS_GPTSoVITS_ModelDirLoadSSL.setStyleSheet(u"QLabel {\n"
+"	/*text-align: center;*/\n"
+"	/*color: rgb(255, 255, 255);*/\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_101.addWidget(self.Label_TTS_GPTSoVITS_ModelDirLoadSSL, 0, 0, 1, 1)
+
+        self.HorizontalSpacer_TTS_GPTSoVITS_ModelDirLoadSSL = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.gridLayout_101.addItem(self.HorizontalSpacer_TTS_GPTSoVITS_ModelDirLoadSSL, 0, 1, 1, 1)
+
+        self.Button_TTS_GPTSoVITS_ModelDirLoadSSL_Undo = QPushButton(self.Frame_TTS_GPTSoVITS_ModelDirLoadSSL)
+        self.Button_TTS_GPTSoVITS_ModelDirLoadSSL_Undo.setObjectName(u"Button_TTS_GPTSoVITS_ModelDirLoadSSL_Undo")
+        self.Button_TTS_GPTSoVITS_ModelDirLoadSSL_Undo.setMinimumSize(QSize(27, 27))
+        self.Button_TTS_GPTSoVITS_ModelDirLoadSSL_Undo.setMaximumSize(QSize(27, 27))
+        self.Button_TTS_GPTSoVITS_ModelDirLoadSSL_Undo.setStyleSheet(u"QPushButton {\n"
+"	image: url(:/Button_Icon/Sources/Undo.png);\n"
+"	background-color: transparent;\n"
+"	padding: 4.5px;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgba(201, 210, 222, 123);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgba(201, 210, 222, 210);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_101.addWidget(self.Button_TTS_GPTSoVITS_ModelDirLoadSSL_Undo, 0, 2, 1, 1)
+
+        self.LineEdit_TTS_GPTSoVITS_ModelDirLoadSSL = LineEditBase(self.Frame_TTS_GPTSoVITS_ModelDirLoadSSL)
+        self.LineEdit_TTS_GPTSoVITS_ModelDirLoadSSL.setObjectName(u"LineEdit_TTS_GPTSoVITS_ModelDirLoadSSL")
+        self.LineEdit_TTS_GPTSoVITS_ModelDirLoadSSL.setMinimumSize(QSize(0, 27))
+
+        self.gridLayout_101.addWidget(self.LineEdit_TTS_GPTSoVITS_ModelDirLoadSSL, 1, 0, 1, 3)
+
+
+        self.verticalLayout_71.addWidget(self.Frame_TTS_GPTSoVITS_ModelDirLoadSSL)
+
+
+        self.verticalLayout_125.addWidget(self.Frame_TTS_GPTSoVITS_InputParams_BasicSettings)
+
+
+        self.verticalLayout_66.addWidget(self.GroupBox_TTS_GPTSoVITS_InputParams)
+
+        self.GroupBox_TTS_GPTSoVITS_GPTSoVITSParams = QGroupBox(self.ScrollArea_Middle_WidgetContents_TTS_GPTSoVITS)
+        self.GroupBox_TTS_GPTSoVITS_GPTSoVITSParams.setObjectName(u"GroupBox_TTS_GPTSoVITS_GPTSoVITSParams")
+        self.GroupBox_TTS_GPTSoVITS_GPTSoVITSParams.setStyleSheet(u"QGroupBox {\n"
+"	font-size: 15px;\n"
+"	margin-top: 1.5ex;\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: transparent;\n"
+"	border-width: 1px;\n"
+"	border-style: solid;\n"
+"	border-color: transparent;\n"
+"}\n"
+"QGroupBox::title {\n"
+"	left: 9px;\n"
+"	margin-left: 0px;\n"
+"	subcontrol-origin: margin;\n"
+"	subcontrol-position: top left;\n"
+"	padding: 3px;\n"
+"}")
+        self.verticalLayout_126 = QVBoxLayout(self.GroupBox_TTS_GPTSoVITS_GPTSoVITSParams)
+        self.verticalLayout_126.setSpacing(0)
+        self.verticalLayout_126.setObjectName(u"verticalLayout_126")
+        self.verticalLayout_126.setContentsMargins(0, 12, 0, 12)
+        self.Frame_TTS_GPTSoVITS_GPTSoVITSParams_BasicSettings = QFrame(self.GroupBox_TTS_GPTSoVITS_GPTSoVITSParams)
+        self.Frame_TTS_GPTSoVITS_GPTSoVITSParams_BasicSettings.setObjectName(u"Frame_TTS_GPTSoVITS_GPTSoVITSParams_BasicSettings")
+        self.verticalLayout_70 = QVBoxLayout(self.Frame_TTS_GPTSoVITS_GPTSoVITSParams_BasicSettings)
+        self.verticalLayout_70.setSpacing(0)
+        self.verticalLayout_70.setObjectName(u"verticalLayout_70")
+        self.verticalLayout_70.setContentsMargins(0, 0, 0, 0)
+        self.Frame_TTS_GPTSoVITS_FP16Run = QFrame(self.Frame_TTS_GPTSoVITS_GPTSoVITSParams_BasicSettings)
+        self.Frame_TTS_GPTSoVITS_FP16Run.setObjectName(u"Frame_TTS_GPTSoVITS_FP16Run")
+        self.Frame_TTS_GPTSoVITS_FP16Run.setMinimumSize(QSize(0, 105))
+        self.Frame_TTS_GPTSoVITS_FP16Run.setStyleSheet(u"QFrame {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QFrame:hover {\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
+"}")
+        self.gridLayout_96 = QGridLayout(self.Frame_TTS_GPTSoVITS_FP16Run)
+        self.gridLayout_96.setSpacing(12)
+        self.gridLayout_96.setObjectName(u"gridLayout_96")
+        self.gridLayout_96.setContentsMargins(21, 12, 21, 12)
+        self.Label_TTS_GPTSoVITS_FP16Run = QLabel(self.Frame_TTS_GPTSoVITS_FP16Run)
+        self.Label_TTS_GPTSoVITS_FP16Run.setObjectName(u"Label_TTS_GPTSoVITS_FP16Run")
+        sizePolicy5.setHeightForWidth(self.Label_TTS_GPTSoVITS_FP16Run.sizePolicy().hasHeightForWidth())
+        self.Label_TTS_GPTSoVITS_FP16Run.setSizePolicy(sizePolicy5)
+        self.Label_TTS_GPTSoVITS_FP16Run.setStyleSheet(u"QLabel {\n"
+"	/*text-align: center;*/\n"
+"	/*color: rgb(255, 255, 255);*/\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_96.addWidget(self.Label_TTS_GPTSoVITS_FP16Run, 0, 0, 1, 1)
+
+        self.HorizontalSpacer_TTS_GPTSoVITS_FP16Run = QSpacerItem(443, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.gridLayout_96.addItem(self.HorizontalSpacer_TTS_GPTSoVITS_FP16Run, 0, 1, 1, 1)
+
+        self.Button_TTS_GPTSoVITS_FP16Run_Undo = QPushButton(self.Frame_TTS_GPTSoVITS_FP16Run)
+        self.Button_TTS_GPTSoVITS_FP16Run_Undo.setObjectName(u"Button_TTS_GPTSoVITS_FP16Run_Undo")
+        self.Button_TTS_GPTSoVITS_FP16Run_Undo.setMinimumSize(QSize(27, 27))
+        self.Button_TTS_GPTSoVITS_FP16Run_Undo.setMaximumSize(QSize(27, 27))
+        self.Button_TTS_GPTSoVITS_FP16Run_Undo.setStyleSheet(u"QPushButton {\n"
+"	image: url(:/Button_Icon/Sources/Undo.png);\n"
+"	background-color: transparent;\n"
+"	padding: 4.5px;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgba(201, 210, 222, 123);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgba(201, 210, 222, 210);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_96.addWidget(self.Button_TTS_GPTSoVITS_FP16Run_Undo, 0, 2, 1, 1)
+
+        self.CheckBox_TTS_GPTSoVITS_FP16Run = QCheckBox(self.Frame_TTS_GPTSoVITS_FP16Run)
+        self.CheckBox_TTS_GPTSoVITS_FP16Run.setObjectName(u"CheckBox_TTS_GPTSoVITS_FP16Run")
+        self.CheckBox_TTS_GPTSoVITS_FP16Run.setMinimumSize(QSize(0, 27))
+        self.CheckBox_TTS_GPTSoVITS_FP16Run.setStyleSheet(u"QCheckBox {\n"
+"	font-size: 12px;\n"
+"	spacing: 12.3px;\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QCheckBox:hover {\n"
+"	color: rgb(255, 255, 255);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator {\n"
+"	width: 24px;\n"
+"	height: 24px;\n"
+"    background-color: transparent;\n"
+"	padding: 1.2px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QCheckBox::indicator:hover {\n"
+"	background-color: rgba(255, 255, 255, 21);\n"
+"}\n"
+"QCheckBox::indicator:unchecked {\n"
+"	border-image: url(:/CheckBox_Icon/Sources/ToggleOff.png);\n"
+"}\n"
+"QCheckBox::indicator:checked {\n"
+"	border-image: url(:/CheckBox_Icon/Sources/ToggleOn.png);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_96.addWidget(self.CheckBox_TTS_GPTSoVITS_FP16Run, 1, 0, 1, 3)
+
+
+        self.verticalLayout_70.addWidget(self.Frame_TTS_GPTSoVITS_FP16Run)
+
+
+        self.verticalLayout_126.addWidget(self.Frame_TTS_GPTSoVITS_GPTSoVITSParams_BasicSettings)
+
+
+        self.verticalLayout_66.addWidget(self.GroupBox_TTS_GPTSoVITS_GPTSoVITSParams)
+
+        self.VerticalSpacer_TTS_GPTSoVITS = QSpacerItem(0, 0, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+
+        self.verticalLayout_66.addItem(self.VerticalSpacer_TTS_GPTSoVITS)
+
+        self.ScrollArea_Middle_TTS_GPTSoVITS.setWidget(self.ScrollArea_Middle_WidgetContents_TTS_GPTSoVITS)
+
+        self.gridLayout_109.addWidget(self.ScrollArea_Middle_TTS_GPTSoVITS, 0, 1, 1, 1)
+
+        self.Widget_Right_TTS_GPTSoVITS = QWidget(self.Subpage_TTS_GPTSoVITS)
+        self.Widget_Right_TTS_GPTSoVITS.setObjectName(u"Widget_Right_TTS_GPTSoVITS")
+        self.Widget_Right_TTS_GPTSoVITS.setStyleSheet(u"QWidget {\n"
+"	background-color: rgba(36, 36, 36, 123);\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QWidget:hover {\n"
+"}")
+        self.gridLayout_106 = QGridLayout(self.Widget_Right_TTS_GPTSoVITS)
+        self.gridLayout_106.setSpacing(12)
+        self.gridLayout_106.setObjectName(u"gridLayout_106")
+        self.gridLayout_106.setContentsMargins(12, 12, 12, 12)
+        self.TextBrowser_Params_TTS_GPTSoVITS = QTextBrowser(self.Widget_Right_TTS_GPTSoVITS)
+        self.TextBrowser_Params_TTS_GPTSoVITS.setObjectName(u"TextBrowser_Params_TTS_GPTSoVITS")
+        sizePolicy1.setHeightForWidth(self.TextBrowser_Params_TTS_GPTSoVITS.sizePolicy().hasHeightForWidth())
+        self.TextBrowser_Params_TTS_GPTSoVITS.setSizePolicy(sizePolicy1)
+        self.TextBrowser_Params_TTS_GPTSoVITS.setStyleSheet(u"QTextBrowser {\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
+"	/*padding-top: 1.5px;*/\n"
+"	/*padding-bottom: 1.5px;*/\n"
+"	padding-left: 15px;\n"
+"	padding-right: 6px;\n"
+"	border-width: 1px;\n"
+"	border-style: solid;\n"
+"	border-color:transparent;\n"
+"}\n"
+"\n"
+"\n"
+"QScrollBar::vertical {\n"
+"	width: 9px;\n"
+"	background-color: rgb(45, 45, 45);\n"
+"	border-width: 1px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: transparent;\n"
+"	margin: 0px;\n"
+"}\n"
+"QScrollBar::vertical:hover {\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
+"}\n"
+"\n"
+"QScrollBar::add-line:vertical {\n"
+"	height: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: bottom;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QScrollBar::sub-line:vertical {\n"
+"	height: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: top;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	bord"
+                        "er-style: solid;\n"
+"}\n"
+"\n"
+"QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
+"	width: 0px;\n"
+"	height: 0px;\n"
+"	background-color: transparent;\n"
+"}\n"
+"\n"
+"QScrollBar::handle:vertical {\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QScrollBar::handle:vertical:hover {\n"
+"	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QScrollBar::horizontal {\n"
+"	height: 9px;\n"
+"	background-color: rgb(45, 45, 45);\n"
+"	border-width: 1px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: transparent;\n"
+"	margin: 0px;\n"
+"}\n"
+"QScrollBar::horizontal:hover {\n"
+"	background-color: rgb(60, 60, 60);\n"
+"}\n"
+"\n"
+"QScrollBar::add-line:horizontal {\n"
+"	width: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: left;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QScrollBar::sub-line:horizontal {\n"
+"	width: 0px"
+                        ";\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: right;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {\n"
+"	width: 0px;\n"
+"	height: 0px;\n"
+"	background-color: transparent;\n"
+"}\n"
+"\n"
+"QScrollBar::handle:horizontal {\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QScrollBar::handle:horizontal:hover {\n"
+"	background-color: rgb(120, 120, 120);\n"
+"}")
+
+        self.gridLayout_106.addWidget(self.TextBrowser_Params_TTS_GPTSoVITS, 0, 0, 1, 1)
+
+
+        self.gridLayout_109.addWidget(self.Widget_Right_TTS_GPTSoVITS, 0, 2, 1, 1)
+
+        self.ProgressBar_TTS_GPTSoVITS = QProgressBar(self.Subpage_TTS_GPTSoVITS)
+        self.ProgressBar_TTS_GPTSoVITS.setObjectName(u"ProgressBar_TTS_GPTSoVITS")
+        self.ProgressBar_TTS_GPTSoVITS.setMinimumSize(QSize(0, 30))
+        self.ProgressBar_TTS_GPTSoVITS.setStyleSheet(u"QProgressBar {\n"
+"	text-align: center;\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: rgb(60, 60, 60);\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QProgressBar:chunk {\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	background-color: qlineargradient(spread: pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgb(60, 60, 60), stop:1  rgb(123, 123, 123));\n"
+"}")
+        self.ProgressBar_TTS_GPTSoVITS.setValue(0)
+        self.ProgressBar_TTS_GPTSoVITS.setTextVisible(False)
+        self.horizontalLayout_56 = QHBoxLayout(self.ProgressBar_TTS_GPTSoVITS)
+        self.horizontalLayout_56.setSpacing(0)
+        self.horizontalLayout_56.setObjectName(u"horizontalLayout_56")
+        self.horizontalLayout_56.setContentsMargins(0, 0, 0, 0)
+        self.StackedWidget_TTS_GPTSoVITS = QStackedWidget(self.ProgressBar_TTS_GPTSoVITS)
+        self.StackedWidget_TTS_GPTSoVITS.setObjectName(u"StackedWidget_TTS_GPTSoVITS")
+        self.StackedWidget_TTS_GPTSoVITS.setMaximumSize(QSize(16777215, 30))
+        self.StackedWidget_TTS_GPTSoVITS.setStyleSheet(u"QWidget {\n"
+"	background-color: rgba(90, 90, 90, 45);\n"
+"}\n"
+"QWidget:hover {\n"
+"	background-color: rgba(120, 120, 120, 60);\n"
+"}")
+        self.Page_TTS_GPTSoVITS_Execute = QWidget()
+        self.Page_TTS_GPTSoVITS_Execute.setObjectName(u"Page_TTS_GPTSoVITS_Execute")
+        self.verticalLayout_136 = QVBoxLayout(self.Page_TTS_GPTSoVITS_Execute)
+        self.verticalLayout_136.setSpacing(0)
+        self.verticalLayout_136.setObjectName(u"verticalLayout_136")
+        self.verticalLayout_136.setContentsMargins(0, 0, 0, 0)
+        self.Button_TTS_GPTSoVITS_Execute = QPushButton(self.Page_TTS_GPTSoVITS_Execute)
+        self.Button_TTS_GPTSoVITS_Execute.setObjectName(u"Button_TTS_GPTSoVITS_Execute")
+        sizePolicy3.setHeightForWidth(self.Button_TTS_GPTSoVITS_Execute.sizePolicy().hasHeightForWidth())
+        self.Button_TTS_GPTSoVITS_Execute.setSizePolicy(sizePolicy3)
+        self.Button_TTS_GPTSoVITS_Execute.setMinimumSize(QSize(0, 30))
+        self.Button_TTS_GPTSoVITS_Execute.setStyleSheet(u"QPushButton {\n"
+"	text-align: center;\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"	/*background-color: rgba(90, 90, 90, 45);*/\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	color: rgba(255, 255, 255, 240);\n"
+"	/*background-color: rgba(120, 120, 120, 60);*/\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.verticalLayout_136.addWidget(self.Button_TTS_GPTSoVITS_Execute)
+
+        self.StackedWidget_TTS_GPTSoVITS.addWidget(self.Page_TTS_GPTSoVITS_Execute)
+        self.Page_TTS_GPTSoVITS_Terminate = QWidget()
+        self.Page_TTS_GPTSoVITS_Terminate.setObjectName(u"Page_TTS_GPTSoVITS_Terminate")
+        self.verticalLayout_138 = QVBoxLayout(self.Page_TTS_GPTSoVITS_Terminate)
+        self.verticalLayout_138.setSpacing(0)
+        self.verticalLayout_138.setObjectName(u"verticalLayout_138")
+        self.verticalLayout_138.setContentsMargins(0, 0, 0, 0)
+        self.Button_TTS_GPTSoVITS_Terminate = QPushButton(self.Page_TTS_GPTSoVITS_Terminate)
+        self.Button_TTS_GPTSoVITS_Terminate.setObjectName(u"Button_TTS_GPTSoVITS_Terminate")
+        sizePolicy3.setHeightForWidth(self.Button_TTS_GPTSoVITS_Terminate.sizePolicy().hasHeightForWidth())
+        self.Button_TTS_GPTSoVITS_Terminate.setSizePolicy(sizePolicy3)
+        self.Button_TTS_GPTSoVITS_Terminate.setMinimumSize(QSize(0, 30))
+        self.Button_TTS_GPTSoVITS_Terminate.setStyleSheet(u"QPushButton {\n"
+"	text-align: center;\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"	/*background-color: rgba(90, 90, 90, 45);*/\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	color: rgba(255, 255, 255, 240);\n"
+"	/*background-color: rgba(120, 120, 120, 60);*/\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.verticalLayout_138.addWidget(self.Button_TTS_GPTSoVITS_Terminate)
+
+        self.StackedWidget_TTS_GPTSoVITS.addWidget(self.Page_TTS_GPTSoVITS_Terminate)
+
+        self.horizontalLayout_56.addWidget(self.StackedWidget_TTS_GPTSoVITS)
+
+
+        self.gridLayout_109.addWidget(self.ProgressBar_TTS_GPTSoVITS, 1, 0, 1, 3)
+
+        self.gridLayout_109.setColumnStretch(0, 3)
+        self.gridLayout_109.setColumnStretch(1, 10)
+        self.gridLayout_109.setColumnStretch(2, 7)
+        self.StackedWidget_Pages_TTS.addWidget(self.Subpage_TTS_GPTSoVITS)
         self.Subpage_TTS_VITS = QWidget()
         self.Subpage_TTS_VITS.setObjectName(u"Subpage_TTS_VITS")
         self.gridLayout_20 = QGridLayout(self.Subpage_TTS_VITS)
@@ -13086,8 +17437,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_11.setObjectName(u"verticalLayout_11")
         self.verticalLayout_11.setContentsMargins(12, 12, 12, 12)
         self.TreeWidget_Catalogue_TTS_VITS = QTreeWidget(self.Widget_Left_TTS_VITS)
-        __qtreewidgetitem5 = QTreeWidgetItem(self.TreeWidget_Catalogue_TTS_VITS)
-        QTreeWidgetItem(__qtreewidgetitem5)
+        __qtreewidgetitem8 = QTreeWidgetItem(self.TreeWidget_Catalogue_TTS_VITS)
+        QTreeWidgetItem(__qtreewidgetitem8)
         self.TreeWidget_Catalogue_TTS_VITS.setObjectName(u"TreeWidget_Catalogue_TTS_VITS")
         self.TreeWidget_Catalogue_TTS_VITS.setStyleSheet(u"QTreeView {\n"
 "	/*font-size: 12px;\n"
@@ -15102,10 +19453,10 @@ class Ui_MainWindow(object):
         self.StackedWidget_Pages.addWidget(self.Page_TTS)
         self.Page_Settings = QWidget()
         self.Page_Settings.setObjectName(u"Page_Settings")
-        self.verticalLayout_109 = QVBoxLayout(self.Page_Settings)
-        self.verticalLayout_109.setSpacing(21)
-        self.verticalLayout_109.setObjectName(u"verticalLayout_109")
-        self.verticalLayout_109.setContentsMargins(21, 12, 21, 12)
+        self.verticalLayout_78 = QVBoxLayout(self.Page_Settings)
+        self.verticalLayout_78.setSpacing(21)
+        self.verticalLayout_78.setObjectName(u"verticalLayout_78")
+        self.verticalLayout_78.setContentsMargins(21, 12, 21, 12)
         self.Frame_Settings_Top = QFrame(self.Page_Settings)
         self.Frame_Settings_Top.setObjectName(u"Frame_Settings_Top")
         self.Frame_Settings_Top.setMinimumSize(QSize(0, 60))
@@ -15118,11 +19469,11 @@ class Ui_MainWindow(object):
         self.horizontalLayout_4.setSpacing(0)
         self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
         self.horizontalLayout_4.setContentsMargins(0, 0, 0, 0)
-        self.ToolButton_Settings_Title = QToolButton(self.Frame_Settings_Top)
-        self.ToolButton_Settings_Title.setObjectName(u"ToolButton_Settings_Title")
-        sizePolicy1.setHeightForWidth(self.ToolButton_Settings_Title.sizePolicy().hasHeightForWidth())
-        self.ToolButton_Settings_Title.setSizePolicy(sizePolicy1)
-        self.ToolButton_Settings_Title.setStyleSheet(u"QToolButton {\n"
+        self.ToolButton_Settings_Title_Client = QToolButton(self.Frame_Settings_Top)
+        self.ToolButton_Settings_Title_Client.setObjectName(u"ToolButton_Settings_Title_Client")
+        sizePolicy1.setHeightForWidth(self.ToolButton_Settings_Title_Client.sizePolicy().hasHeightForWidth())
+        self.ToolButton_Settings_Title_Client.setSizePolicy(sizePolicy1)
+        self.ToolButton_Settings_Title_Client.setStyleSheet(u"QToolButton {\n"
 "	font-size: 24px;\n"
 "	/*text-align: center;*/\n"
 "	color: rgba(201, 210, 222, 210);\n"
@@ -15135,7 +19486,7 @@ class Ui_MainWindow(object):
 "	border-left-width: 0px;\n"
 "	border-style: solid;\n"
 "	border-bottom-color: rgba(123, 123, 123, 123);\n"
-"}/*\n"
+"}\n"
 "QToolButton:hover {\n"
 "	color: rgba(210, 222, 234, 234);\n"
 "	background-color: transparent;\n"
@@ -15155,17 +19506,66 @@ class Ui_MainWindow(object):
 "	border-left-width: 0px;\n"
 "	border-style: solid;\n"
 "	border-bottom-color: rgba(120, 180, 240, 210);\n"
-"}*/\n"
+"}\n"
 "\n"
 "QToolTip {\n"
-"	co"
-                        "lor: rgba(255, 255, 255, 210);\n"
+"	color:"
+                        " rgba(255, 255, 255, 210);\n"
 "    background-color: transparent;\n"
 "	border-width: 0px;\n"
 "	border-style: solid;\n"
 "}")
 
-        self.horizontalLayout_4.addWidget(self.ToolButton_Settings_Title)
+        self.horizontalLayout_4.addWidget(self.ToolButton_Settings_Title_Client)
+
+        self.ToolButton_Settings_Title_Tools = QToolButton(self.Frame_Settings_Top)
+        self.ToolButton_Settings_Title_Tools.setObjectName(u"ToolButton_Settings_Title_Tools")
+        sizePolicy1.setHeightForWidth(self.ToolButton_Settings_Title_Tools.sizePolicy().hasHeightForWidth())
+        self.ToolButton_Settings_Title_Tools.setSizePolicy(sizePolicy1)
+        self.ToolButton_Settings_Title_Tools.setStyleSheet(u"QToolButton {\n"
+"	font-size: 24px;\n"
+"	/*text-align: center;*/\n"
+"	color: rgba(201, 210, 222, 210);\n"
+"	padding-left: 12px;\n"
+"	padding-right: 12px;\n"
+"	background-color: transparent;\n"
+"	border-top-width: 0px;\n"
+"	border-right-width: 0px;\n"
+"	border-bottom-width: 3px;\n"
+"	border-left-width: 0px;\n"
+"	border-style: solid;\n"
+"	border-bottom-color: rgba(123, 123, 123, 123);\n"
+"}\n"
+"QToolButton:hover {\n"
+"	color: rgba(210, 222, 234, 234);\n"
+"	background-color: transparent;\n"
+"	border-top-width: 0px;\n"
+"	border-right-width: 0px;\n"
+"	border-bottom-width: 3px;\n"
+"	border-left-width: 0px;\n"
+"	border-style: solid;\n"
+"	border-bottom-color: rgba(120, 180, 240, 123);\n"
+"}\n"
+"QToolButton:checked {\n"
+"	color: rgba(210, 222, 234, 255);\n"
+"	background-color: transparent;\n"
+"	border-top-width: 0px;\n"
+"	border-right-width: 0px;\n"
+"	border-bottom-width: 3px;\n"
+"	border-left-width: 0px;\n"
+"	border-style: solid;\n"
+"	border-bottom-color: rgba(120, 180, 240, 210);\n"
+"}\n"
+"\n"
+"QToolTip {\n"
+"	color:"
+                        " rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.horizontalLayout_4.addWidget(self.ToolButton_Settings_Title_Tools)
 
         self.Frame_Settings_Title_Spacer = QLabel(self.Frame_Settings_Top)
         self.Frame_Settings_Title_Spacer.setObjectName(u"Frame_Settings_Title_Spacer")
@@ -15189,20 +19589,201 @@ class Ui_MainWindow(object):
         self.horizontalLayout_4.addWidget(self.Frame_Settings_Title_Spacer)
 
 
-        self.verticalLayout_109.addWidget(self.Frame_Settings_Top)
+        self.verticalLayout_78.addWidget(self.Frame_Settings_Top)
 
-        self.Frame_Settings_Middle = QFrame(self.Page_Settings)
-        self.Frame_Settings_Middle.setObjectName(u"Frame_Settings_Middle")
-        self.Frame_Settings_Middle.setStyleSheet(u"QFrame {\n"
+        self.StackedWidget_Pages_Settings = QStackedWidget(self.Page_Settings)
+        self.StackedWidget_Pages_Settings.setObjectName(u"StackedWidget_Pages_Settings")
+        self.StackedWidget_Pages_Settings.setStyleSheet(u"QWidget {\n"
+"	background-color: transparent;\n"
+"}\n"
+"\n"
+"\n"
+"/*\n"
+"QTabWidget {\n"
+"	background-color: transparent;\n"
+"}\n"
+"QTabWidget::tab-bar {\n"
+"}\n"
+"QTabWidget::pane {\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"\n"
+"QTabBar::tab {\n"
+"	font-size: 18px;\n"
+"	font-weight: 420;\n"
+"	spacing: 12px;\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"	background-color: transparent;\n"
+"	padding: 12px;\n"
+"	border-top-width: 0px;\n"
+"	border-right-width: 0px;\n"
+"	border-bottom-width: 3px;\n"
+"	border-left-width: 0px;\n"
+"	border-style: solid;\n"
+"	border-bottom-color: rgba(123, 123, 123, 123);\n"
+"}\n"
+"QTabBar::tab:selected {\n"
+"	color: rgba(255, 255, 255, 255);\n"
+"}\n"
+"QTabBar::tab:hover:!selected {\n"
+"}\n"
+"\n"
+"\n"
+"QTabBar QToolButton {\n"
+"}\n"
+"QTabBar QToolButton:hover {\n"
+"}\n"
+"*/")
+        self.SubPage_Settings_Client = QWidget()
+        self.SubPage_Settings_Client.setObjectName(u"SubPage_Settings_Client")
+        self.gridLayout_80 = QGridLayout(self.SubPage_Settings_Client)
+        self.gridLayout_80.setSpacing(12)
+        self.gridLayout_80.setObjectName(u"gridLayout_80")
+        self.gridLayout_80.setContentsMargins(0, 0, 0, 0)
+        self.ScrollArea_Settings_Client = QScrollArea(self.SubPage_Settings_Client)
+        self.ScrollArea_Settings_Client.setObjectName(u"ScrollArea_Settings_Client")
+        self.ScrollArea_Settings_Client.setStyleSheet(u"QScrollArea {\n"
 "	background-color: rgba(36, 36, 36, 123);\n"
 "	border-width: 0px;\n"
 "	border-style: solid;\n"
+"}\n"
+"QScrollArea:hover {\n"
+"}\n"
+"\n"
+"\n"
+"QScrollBar::vertical {\n"
+"	width: 9px;\n"
+"	background-color: rgb(45, 45, 45);\n"
+"	border-width: 1px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: transparent;\n"
+"	margin: 0px;\n"
+"}\n"
+"QScrollBar::vertical:hover {\n"
+"	background-color: rgb(60, 60, 60);\n"
+"}\n"
+"\n"
+"QScrollBar::add-line:vertical {\n"
+"	height: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: bottom;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QScrollBar::sub-line:vertical {\n"
+"	height: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: top;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
+"	width: 0px;\n"
+"	"
+                        "height: 0px;\n"
+"	background-color: transparent;\n"
+"}\n"
+"\n"
+"QScrollBar::handle:vertical {\n"
+"	background-color: rgb(90, 90, 90);\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QScrollBar::handle:vertical:hover {\n"
+"	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QScrollBar::horizontal {\n"
+"	height: 9px;\n"
+"	background-color: rgb(45, 45, 45);\n"
+"	border-width: 1px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: transparent;\n"
+"	margin: 0px;\n"
+"}\n"
+"QScrollBar::horizontal:hover {\n"
+"	background-color: rgb(60, 60, 60);\n"
+"}\n"
+"\n"
+"QScrollBar::add-line:horizontal {\n"
+"	width: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: left;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QScrollBar::sub-line:horizontal {\n"
+"	width: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: right;\n"
+"	subcontrol-origin: margin;\n"
+"	borde"
+                        "r-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {\n"
+"	width: 0px;\n"
+"	height: 0px;\n"
+"	background-color: transparent;\n"
+"}\n"
+"\n"
+"QScrollBar::handle:horizontal {\n"
+"	background-color: rgb(90, 90, 90);\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QScrollBar::handle:horizontal:hover {\n"
+"	background-color: rgb(120, 120, 120);\n"
 "}")
-        self.verticalLayout_13 = QVBoxLayout(self.Frame_Settings_Middle)
+        self.ScrollArea_Settings_Client.setWidgetResizable(True)
+        self.ScrollAreaWidgetContents_Settings_Client = QWidget()
+        self.ScrollAreaWidgetContents_Settings_Client.setObjectName(u"ScrollAreaWidgetContents_Settings_Client")
+        self.ScrollAreaWidgetContents_Settings_Client.setGeometry(QRect(0, 0, 1028, 561))
+        self.verticalLayout_106 = QVBoxLayout(self.ScrollAreaWidgetContents_Settings_Client)
+        self.verticalLayout_106.setSpacing(0)
+        self.verticalLayout_106.setObjectName(u"verticalLayout_106")
+        self.verticalLayout_106.setContentsMargins(0, 0, 0, 0)
+        self.GroupBox_Settings_Client_Outlook = QGroupBox(self.ScrollAreaWidgetContents_Settings_Client)
+        self.GroupBox_Settings_Client_Outlook.setObjectName(u"GroupBox_Settings_Client_Outlook")
+        self.GroupBox_Settings_Client_Outlook.setStyleSheet(u"QGroupBox {\n"
+"	font-size: 15px;\n"
+"	margin-top: 1.5ex;\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: transparent;\n"
+"	border-width: 1px;\n"
+"	border-style: solid;\n"
+"	border-color: transparent;\n"
+"}\n"
+"QGroupBox::title {\n"
+"	left: 9px;\n"
+"	margin-left: 0px;\n"
+"	subcontrol-origin: margin;\n"
+"	subcontrol-position: top left;\n"
+"	padding: 3px;\n"
+"}")
+        self.verticalLayout_13 = QVBoxLayout(self.GroupBox_Settings_Client_Outlook)
         self.verticalLayout_13.setSpacing(0)
         self.verticalLayout_13.setObjectName(u"verticalLayout_13")
-        self.verticalLayout_13.setContentsMargins(0, 0, 0, 0)
-        self.Frame_Setting_Language = QFrame(self.Frame_Settings_Middle)
+        self.verticalLayout_13.setContentsMargins(0, 12, 0, 12)
+        self.Frame_Setting_Language = QFrame(self.GroupBox_Settings_Client_Outlook)
         self.Frame_Setting_Language.setObjectName(u"Frame_Setting_Language")
         self.Frame_Setting_Language.setMinimumSize(QSize(0, 90))
         self.Frame_Setting_Language.setStyleSheet(u"QFrame {\n"
@@ -15221,6 +19802,8 @@ class Ui_MainWindow(object):
         self.horizontalLayout_66.setContentsMargins(21, 12, 21, 12)
         self.Label_Setting_Language = QLabel(self.Frame_Setting_Language)
         self.Label_Setting_Language.setObjectName(u"Label_Setting_Language")
+        sizePolicy4.setHeightForWidth(self.Label_Setting_Language.sizePolicy().hasHeightForWidth())
+        self.Label_Setting_Language.setSizePolicy(sizePolicy4)
         self.Label_Setting_Language.setStyleSheet(u"QLabel {\n"
 "	font-size: 15px;\n"
 "	/*text-align: center;*/\n"
@@ -15234,14 +19817,9 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_66.addWidget(self.Label_Setting_Language)
 
-        self.HorizontalSpacer_Setting_Language = QSpacerItem(969, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
-
-        self.horizontalLayout_66.addItem(self.HorizontalSpacer_Setting_Language)
-
         self.ComboBox_Setting_Language = QComboBox(self.Frame_Setting_Language)
         self.ComboBox_Setting_Language.setObjectName(u"ComboBox_Setting_Language")
-        self.ComboBox_Setting_Language.setMinimumSize(QSize(123, 0))
-        self.ComboBox_Setting_Language.setMaximumSize(QSize(123, 16777215))
+        self.ComboBox_Setting_Language.setMinimumSize(QSize(123, 30))
         self.ComboBox_Setting_Language.setStyleSheet(u"QComboBox {\n"
 "	/*font-size: 12px;*/\n"
 "	text-align: left;\n"
@@ -15418,7 +19996,32 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_13.addWidget(self.Frame_Setting_Language)
 
-        self.Frame_Setting_AutoUpdate = QFrame(self.Frame_Settings_Middle)
+
+        self.verticalLayout_106.addWidget(self.GroupBox_Settings_Client_Outlook)
+
+        self.GroupBox_Settings_Client_Function = QGroupBox(self.ScrollAreaWidgetContents_Settings_Client)
+        self.GroupBox_Settings_Client_Function.setObjectName(u"GroupBox_Settings_Client_Function")
+        self.GroupBox_Settings_Client_Function.setStyleSheet(u"QGroupBox {\n"
+"	font-size: 15px;\n"
+"	margin-top: 1.5ex;\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: transparent;\n"
+"	border-width: 1px;\n"
+"	border-style: solid;\n"
+"	border-color: transparent;\n"
+"}\n"
+"QGroupBox::title {\n"
+"	left: 9px;\n"
+"	margin-left: 0px;\n"
+"	subcontrol-origin: margin;\n"
+"	subcontrol-position: top left;\n"
+"	padding: 3px;\n"
+"}")
+        self.verticalLayout_84 = QVBoxLayout(self.GroupBox_Settings_Client_Function)
+        self.verticalLayout_84.setSpacing(0)
+        self.verticalLayout_84.setObjectName(u"verticalLayout_84")
+        self.verticalLayout_84.setContentsMargins(0, 12, 0, 12)
+        self.Frame_Setting_AutoUpdate = QFrame(self.GroupBox_Settings_Client_Function)
         self.Frame_Setting_AutoUpdate.setObjectName(u"Frame_Setting_AutoUpdate")
         self.Frame_Setting_AutoUpdate.setMinimumSize(QSize(0, 90))
         self.Frame_Setting_AutoUpdate.setStyleSheet(u"QFrame {\n"
@@ -15437,6 +20040,8 @@ class Ui_MainWindow(object):
         self.horizontalLayout_65.setContentsMargins(21, 12, 21, 12)
         self.Label_Setting_AutoUpdate = QLabel(self.Frame_Setting_AutoUpdate)
         self.Label_Setting_AutoUpdate.setObjectName(u"Label_Setting_AutoUpdate")
+        sizePolicy4.setHeightForWidth(self.Label_Setting_AutoUpdate.sizePolicy().hasHeightForWidth())
+        self.Label_Setting_AutoUpdate.setSizePolicy(sizePolicy4)
         self.Label_Setting_AutoUpdate.setStyleSheet(u"QLabel {\n"
 "	font-size: 15px;\n"
 "	/*text-align: center;*/\n"
@@ -15450,16 +20055,11 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_65.addWidget(self.Label_Setting_AutoUpdate)
 
-        self.HorizontalSpacer_Setting_AutoUpdate = QSpacerItem(0, 0, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
-
-        self.horizontalLayout_65.addItem(self.HorizontalSpacer_Setting_AutoUpdate)
-
         self.CheckBox_Setting_AutoUpdate = QCheckBox(self.Frame_Setting_AutoUpdate)
         self.CheckBox_Setting_AutoUpdate.setObjectName(u"CheckBox_Setting_AutoUpdate")
         sizePolicy5.setHeightForWidth(self.CheckBox_Setting_AutoUpdate.sizePolicy().hasHeightForWidth())
         self.CheckBox_Setting_AutoUpdate.setSizePolicy(sizePolicy5)
-        self.CheckBox_Setting_AutoUpdate.setMinimumSize(QSize(123, 0))
-        self.CheckBox_Setting_AutoUpdate.setMaximumSize(QSize(123, 16777215))
+        self.CheckBox_Setting_AutoUpdate.setMinimumSize(QSize(0, 30))
         self.CheckBox_Setting_AutoUpdate.setStyleSheet(u"QCheckBox {\n"
 "	font-size: 15px;\n"
 "	spacing: 12.3px;\n"
@@ -15504,9 +20104,780 @@ class Ui_MainWindow(object):
         self.horizontalLayout_65.addWidget(self.CheckBox_Setting_AutoUpdate)
 
 
-        self.verticalLayout_13.addWidget(self.Frame_Setting_AutoUpdate)
+        self.verticalLayout_84.addWidget(self.Frame_Setting_AutoUpdate)
 
-        self.Frame_Setting_Synchronizer = QFrame(self.Frame_Settings_Middle)
+
+        self.verticalLayout_106.addWidget(self.GroupBox_Settings_Client_Function)
+
+        self.GroupBox_Settings_Client_Operation = QGroupBox(self.ScrollAreaWidgetContents_Settings_Client)
+        self.GroupBox_Settings_Client_Operation.setObjectName(u"GroupBox_Settings_Client_Operation")
+        self.GroupBox_Settings_Client_Operation.setStyleSheet(u"QGroupBox {\n"
+"	font-size: 15px;\n"
+"	margin-top: 1.5ex;\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: transparent;\n"
+"	border-width: 1px;\n"
+"	border-style: solid;\n"
+"	border-color: transparent;\n"
+"}\n"
+"QGroupBox::title {\n"
+"	left: 9px;\n"
+"	margin-left: 0px;\n"
+"	subcontrol-origin: margin;\n"
+"	subcontrol-position: top left;\n"
+"	padding: 3px;\n"
+"}")
+        self.verticalLayout_85 = QVBoxLayout(self.GroupBox_Settings_Client_Operation)
+        self.verticalLayout_85.setSpacing(0)
+        self.verticalLayout_85.setObjectName(u"verticalLayout_85")
+        self.verticalLayout_85.setContentsMargins(0, 12, 0, 12)
+        self.Frame_Setting_Operation = QFrame(self.GroupBox_Settings_Client_Operation)
+        self.Frame_Setting_Operation.setObjectName(u"Frame_Setting_Operation")
+        self.Frame_Setting_Operation.setMinimumSize(QSize(0, 90))
+        self.Frame_Setting_Operation.setStyleSheet(u"QFrame {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: transparent;\n"
+"	border-width: 1px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(45, 45, 45);\n"
+"}\n"
+"QFrame:hover {\n"
+"	border-color: rgb(60, 60, 60);\n"
+"}")
+        self.horizontalLayout_6 = QHBoxLayout(self.Frame_Setting_Operation)
+        self.horizontalLayout_6.setSpacing(42)
+        self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
+        self.horizontalLayout_6.setContentsMargins(21, 12, 21, 12)
+        self.Button_Setting_ClientRebooter = QPushButton(self.Frame_Setting_Operation)
+        self.Button_Setting_ClientRebooter.setObjectName(u"Button_Setting_ClientRebooter")
+        self.Button_Setting_ClientRebooter.setStyleSheet(u"QPushButton {\n"
+"	text-align: center;\n"
+"	font-size: 12px;\n"
+"	background-color: transparent;\n"
+"	padding: 12px;\n"
+"	border-width: 1.5px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.horizontalLayout_6.addWidget(self.Button_Setting_ClientRebooter)
+
+        self.Button_Setting_IntegrityChecker = QPushButton(self.Frame_Setting_Operation)
+        self.Button_Setting_IntegrityChecker.setObjectName(u"Button_Setting_IntegrityChecker")
+        self.Button_Setting_IntegrityChecker.setMinimumSize(QSize(123, 0))
+        self.Button_Setting_IntegrityChecker.setStyleSheet(u"QPushButton {\n"
+"	text-align: center;\n"
+"	font-size: 12px;\n"
+"	background-color: transparent;\n"
+"	padding: 12px;\n"
+"	border-width: 1.5px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.horizontalLayout_6.addWidget(self.Button_Setting_IntegrityChecker)
+
+        self.HorizontalSpacer_Setting_Operation = QSpacerItem(0, 0, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.horizontalLayout_6.addItem(self.HorizontalSpacer_Setting_Operation)
+
+        self.horizontalLayout_6.setStretch(0, 2)
+        self.horizontalLayout_6.setStretch(1, 2)
+        self.horizontalLayout_6.setStretch(2, 6)
+
+        self.verticalLayout_85.addWidget(self.Frame_Setting_Operation)
+
+
+        self.verticalLayout_106.addWidget(self.GroupBox_Settings_Client_Operation)
+
+        self.VerticalSpacer_Settings_Client = QSpacerItem(20, 174, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+
+        self.verticalLayout_106.addItem(self.VerticalSpacer_Settings_Client)
+
+        self.ScrollArea_Settings_Client.setWidget(self.ScrollAreaWidgetContents_Settings_Client)
+
+        self.gridLayout_80.addWidget(self.ScrollArea_Settings_Client, 0, 0, 1, 1)
+
+        self.StackedWidget_Pages_Settings.addWidget(self.SubPage_Settings_Client)
+        self.SubPage_Settings_Tools = QWidget()
+        self.SubPage_Settings_Tools.setObjectName(u"SubPage_Settings_Tools")
+        self.gridLayout_93 = QGridLayout(self.SubPage_Settings_Tools)
+        self.gridLayout_93.setSpacing(12)
+        self.gridLayout_93.setObjectName(u"gridLayout_93")
+        self.gridLayout_93.setContentsMargins(0, 0, 0, 0)
+        self.ScrollArea_Settings_Tools = QScrollArea(self.SubPage_Settings_Tools)
+        self.ScrollArea_Settings_Tools.setObjectName(u"ScrollArea_Settings_Tools")
+        self.ScrollArea_Settings_Tools.setStyleSheet(u"QScrollArea {\n"
+"	background-color: rgba(36, 36, 36, 123);\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QScrollArea:hover {\n"
+"}\n"
+"\n"
+"\n"
+"QScrollBar::vertical {\n"
+"	width: 9px;\n"
+"	background-color: rgb(45, 45, 45);\n"
+"	border-width: 1px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: transparent;\n"
+"	margin: 0px;\n"
+"}\n"
+"QScrollBar::vertical:hover {\n"
+"	background-color: rgb(60, 60, 60);\n"
+"}\n"
+"\n"
+"QScrollBar::add-line:vertical {\n"
+"	height: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: bottom;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QScrollBar::sub-line:vertical {\n"
+"	height: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: top;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
+"	width: 0px;\n"
+"	"
+                        "height: 0px;\n"
+"	background-color: transparent;\n"
+"}\n"
+"\n"
+"QScrollBar::handle:vertical {\n"
+"	background-color: rgb(90, 90, 90);\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QScrollBar::handle:vertical:hover {\n"
+"	background-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QScrollBar::horizontal {\n"
+"	height: 9px;\n"
+"	background-color: rgb(45, 45, 45);\n"
+"	border-width: 1px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: transparent;\n"
+"	margin: 0px;\n"
+"}\n"
+"QScrollBar::horizontal:hover {\n"
+"	background-color: rgb(60, 60, 60);\n"
+"}\n"
+"\n"
+"QScrollBar::add-line:horizontal {\n"
+"	width: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: left;\n"
+"	subcontrol-origin: margin;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QScrollBar::sub-line:horizontal {\n"
+"	width: 0px;\n"
+"	background-color: transparent;\n"
+"	subcontrol-position: right;\n"
+"	subcontrol-origin: margin;\n"
+"	borde"
+                        "r-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"\n"
+"QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {\n"
+"	width: 0px;\n"
+"	height: 0px;\n"
+"	background-color: transparent;\n"
+"}\n"
+"\n"
+"QScrollBar::handle:horizontal {\n"
+"	background-color: rgb(90, 90, 90);\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QScrollBar::handle:horizontal:hover {\n"
+"	background-color: rgb(120, 120, 120);\n"
+"}")
+        self.ScrollArea_Settings_Tools.setWidgetResizable(True)
+        self.ScrollAreaWidgetContents_Settings_Tools = QWidget()
+        self.ScrollAreaWidgetContents_Settings_Tools.setObjectName(u"ScrollAreaWidgetContents_Settings_Tools")
+        self.ScrollAreaWidgetContents_Settings_Tools.setGeometry(QRect(0, 0, 237, 811))
+        self.verticalLayout_105 = QVBoxLayout(self.ScrollAreaWidgetContents_Settings_Tools)
+        self.verticalLayout_105.setSpacing(0)
+        self.verticalLayout_105.setObjectName(u"verticalLayout_105")
+        self.verticalLayout_105.setContentsMargins(0, 0, 0, 0)
+        self.GroupBox_Settings_Tools_Path = QGroupBox(self.ScrollAreaWidgetContents_Settings_Tools)
+        self.GroupBox_Settings_Tools_Path.setObjectName(u"GroupBox_Settings_Tools_Path")
+        self.GroupBox_Settings_Tools_Path.setStyleSheet(u"QGroupBox {\n"
+"	font-size: 15px;\n"
+"	margin-top: 1.5ex;\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: transparent;\n"
+"	border-width: 1px;\n"
+"	border-style: solid;\n"
+"	border-color: transparent;\n"
+"}\n"
+"QGroupBox::title {\n"
+"	left: 9px;\n"
+"	margin-left: 0px;\n"
+"	subcontrol-origin: margin;\n"
+"	subcontrol-position: top left;\n"
+"	padding: 3px;\n"
+"}")
+        self.verticalLayout_83 = QVBoxLayout(self.GroupBox_Settings_Tools_Path)
+        self.verticalLayout_83.setSpacing(0)
+        self.verticalLayout_83.setObjectName(u"verticalLayout_83")
+        self.verticalLayout_83.setContentsMargins(0, 12, 0, 12)
+        self.Frame_Process_OutputRoot = QFrame(self.GroupBox_Settings_Tools_Path)
+        self.Frame_Process_OutputRoot.setObjectName(u"Frame_Process_OutputRoot")
+        self.Frame_Process_OutputRoot.setMinimumSize(QSize(0, 90))
+        self.Frame_Process_OutputRoot.setStyleSheet(u"QFrame {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: transparent;\n"
+"	border-width: 1px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(45, 45, 45);\n"
+"}\n"
+"QFrame:hover {\n"
+"	border-color: rgb(60, 60, 60);\n"
+"}")
+        self.horizontalLayout_19 = QHBoxLayout(self.Frame_Process_OutputRoot)
+        self.horizontalLayout_19.setSpacing(12)
+        self.horizontalLayout_19.setObjectName(u"horizontalLayout_19")
+        self.horizontalLayout_19.setContentsMargins(21, 12, 21, 12)
+        self.Label_Process_OutputRoot = QLabel(self.Frame_Process_OutputRoot)
+        self.Label_Process_OutputRoot.setObjectName(u"Label_Process_OutputRoot")
+        sizePolicy4.setHeightForWidth(self.Label_Process_OutputRoot.sizePolicy().hasHeightForWidth())
+        self.Label_Process_OutputRoot.setSizePolicy(sizePolicy4)
+        self.Label_Process_OutputRoot.setStyleSheet(u"QLabel {\n"
+"	font-size: 15px;\n"
+"	/*text-align: center;*/\n"
+"	/*color: rgb(255, 255, 255);*/\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.horizontalLayout_19.addWidget(self.Label_Process_OutputRoot)
+
+        self.LineEdit_Process_OutputRoot = LineEditBase(self.Frame_Process_OutputRoot)
+        self.LineEdit_Process_OutputRoot.setObjectName(u"LineEdit_Process_OutputRoot")
+        self.LineEdit_Process_OutputRoot.setMaximumSize(QSize(16777215, 30))
+
+        self.horizontalLayout_19.addWidget(self.LineEdit_Process_OutputRoot)
+
+        self.Button_Process_OutputRoot_Undo = QPushButton(self.Frame_Process_OutputRoot)
+        self.Button_Process_OutputRoot_Undo.setObjectName(u"Button_Process_OutputRoot_Undo")
+        self.Button_Process_OutputRoot_Undo.setMaximumSize(QSize(30, 30))
+        self.Button_Process_OutputRoot_Undo.setStyleSheet(u"QPushButton {\n"
+"	image: url(:/Button_Icon/Sources/Undo.png);\n"
+"	background-color: transparent;\n"
+"	padding: 4.5px;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgba(201, 210, 222, 123);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgba(201, 210, 222, 210);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.horizontalLayout_19.addWidget(self.Button_Process_OutputRoot_Undo)
+
+
+        self.verticalLayout_83.addWidget(self.Frame_Process_OutputRoot)
+
+        self.Frame_ASR_VPR_OutputRoot = QFrame(self.GroupBox_Settings_Tools_Path)
+        self.Frame_ASR_VPR_OutputRoot.setObjectName(u"Frame_ASR_VPR_OutputRoot")
+        self.Frame_ASR_VPR_OutputRoot.setMinimumSize(QSize(0, 105))
+        self.Frame_ASR_VPR_OutputRoot.setStyleSheet(u"QFrame {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QFrame:hover {\n"
+"	background-color: rgba(33, 33, 33, 99);\n"
+"}")
+        self.horizontalLayout_25 = QHBoxLayout(self.Frame_ASR_VPR_OutputRoot)
+        self.horizontalLayout_25.setSpacing(12)
+        self.horizontalLayout_25.setObjectName(u"horizontalLayout_25")
+        self.horizontalLayout_25.setContentsMargins(21, 12, 21, 12)
+        self.Label_ASR_VPR_OutputRoot = QLabel(self.Frame_ASR_VPR_OutputRoot)
+        self.Label_ASR_VPR_OutputRoot.setObjectName(u"Label_ASR_VPR_OutputRoot")
+        sizePolicy4.setHeightForWidth(self.Label_ASR_VPR_OutputRoot.sizePolicy().hasHeightForWidth())
+        self.Label_ASR_VPR_OutputRoot.setSizePolicy(sizePolicy4)
+        self.Label_ASR_VPR_OutputRoot.setStyleSheet(u"QLabel {\n"
+"	font-size: 15px;\n"
+"	/*text-align: center;*/\n"
+"	/*color: rgb(255, 255, 255);*/\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.horizontalLayout_25.addWidget(self.Label_ASR_VPR_OutputRoot)
+
+        self.LineEdit_ASR_VPR_OutputRoot = LineEditBase(self.Frame_ASR_VPR_OutputRoot)
+        self.LineEdit_ASR_VPR_OutputRoot.setObjectName(u"LineEdit_ASR_VPR_OutputRoot")
+        self.LineEdit_ASR_VPR_OutputRoot.setMaximumSize(QSize(16777215, 30))
+
+        self.horizontalLayout_25.addWidget(self.LineEdit_ASR_VPR_OutputRoot)
+
+        self.Button_ASR_VPR_OutputRoot_Undo = QPushButton(self.Frame_ASR_VPR_OutputRoot)
+        self.Button_ASR_VPR_OutputRoot_Undo.setObjectName(u"Button_ASR_VPR_OutputRoot_Undo")
+        self.Button_ASR_VPR_OutputRoot_Undo.setMaximumSize(QSize(30, 30))
+        self.Button_ASR_VPR_OutputRoot_Undo.setStyleSheet(u"QPushButton {\n"
+"	image: url(:/Button_Icon/Sources/Undo.png);\n"
+"	background-color: transparent;\n"
+"	padding: 4.5px;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgba(201, 210, 222, 123);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgba(201, 210, 222, 210);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.horizontalLayout_25.addWidget(self.Button_ASR_VPR_OutputRoot_Undo)
+
+
+        self.verticalLayout_83.addWidget(self.Frame_ASR_VPR_OutputRoot)
+
+        self.Frame_STT_Whisper_OutputRoot = QFrame(self.GroupBox_Settings_Tools_Path)
+        self.Frame_STT_Whisper_OutputRoot.setObjectName(u"Frame_STT_Whisper_OutputRoot")
+        self.Frame_STT_Whisper_OutputRoot.setMinimumSize(QSize(0, 90))
+        self.Frame_STT_Whisper_OutputRoot.setStyleSheet(u"QFrame {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: transparent;\n"
+"	border-width: 1px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(45, 45, 45);\n"
+"}\n"
+"QFrame:hover {\n"
+"	border-color: rgb(60, 60, 60);\n"
+"}")
+        self.horizontalLayout_20 = QHBoxLayout(self.Frame_STT_Whisper_OutputRoot)
+        self.horizontalLayout_20.setSpacing(12)
+        self.horizontalLayout_20.setObjectName(u"horizontalLayout_20")
+        self.horizontalLayout_20.setContentsMargins(21, 12, 21, 12)
+        self.Label_STT_Whisper_OutputRoot = QLabel(self.Frame_STT_Whisper_OutputRoot)
+        self.Label_STT_Whisper_OutputRoot.setObjectName(u"Label_STT_Whisper_OutputRoot")
+        sizePolicy4.setHeightForWidth(self.Label_STT_Whisper_OutputRoot.sizePolicy().hasHeightForWidth())
+        self.Label_STT_Whisper_OutputRoot.setSizePolicy(sizePolicy4)
+        self.Label_STT_Whisper_OutputRoot.setStyleSheet(u"QLabel {\n"
+"	font-size: 15px;\n"
+"	/*text-align: center;*/\n"
+"	/*color: rgb(255, 255, 255);*/\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.horizontalLayout_20.addWidget(self.Label_STT_Whisper_OutputRoot)
+
+        self.LineEdit_STT_Whisper_OutputRoot = LineEditBase(self.Frame_STT_Whisper_OutputRoot)
+        self.LineEdit_STT_Whisper_OutputRoot.setObjectName(u"LineEdit_STT_Whisper_OutputRoot")
+        self.LineEdit_STT_Whisper_OutputRoot.setMaximumSize(QSize(16777215, 30))
+
+        self.horizontalLayout_20.addWidget(self.LineEdit_STT_Whisper_OutputRoot)
+
+        self.Button_STT_Whisper_OutputRoot_Undo = QPushButton(self.Frame_STT_Whisper_OutputRoot)
+        self.Button_STT_Whisper_OutputRoot_Undo.setObjectName(u"Button_STT_Whisper_OutputRoot_Undo")
+        self.Button_STT_Whisper_OutputRoot_Undo.setMaximumSize(QSize(30, 30))
+        self.Button_STT_Whisper_OutputRoot_Undo.setStyleSheet(u"QPushButton {\n"
+"	image: url(:/Button_Icon/Sources/Undo.png);\n"
+"	background-color: transparent;\n"
+"	padding: 4.5px;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgba(201, 210, 222, 123);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgba(201, 210, 222, 210);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.horizontalLayout_20.addWidget(self.Button_STT_Whisper_OutputRoot_Undo)
+
+
+        self.verticalLayout_83.addWidget(self.Frame_STT_Whisper_OutputRoot)
+
+        self.Frame_DAT_GPTSoVITS_OutputRoot = QFrame(self.GroupBox_Settings_Tools_Path)
+        self.Frame_DAT_GPTSoVITS_OutputRoot.setObjectName(u"Frame_DAT_GPTSoVITS_OutputRoot")
+        self.Frame_DAT_GPTSoVITS_OutputRoot.setMinimumSize(QSize(0, 90))
+        self.Frame_DAT_GPTSoVITS_OutputRoot.setStyleSheet(u"QFrame {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: transparent;\n"
+"	border-width: 1px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(45, 45, 45);\n"
+"}\n"
+"QFrame:hover {\n"
+"	border-color: rgb(60, 60, 60);\n"
+"}")
+        self.horizontalLayout_21 = QHBoxLayout(self.Frame_DAT_GPTSoVITS_OutputRoot)
+        self.horizontalLayout_21.setSpacing(12)
+        self.horizontalLayout_21.setObjectName(u"horizontalLayout_21")
+        self.horizontalLayout_21.setContentsMargins(21, 12, 21, 12)
+        self.Label_DAT_GPTSoVITS_OutputRoot = QLabel(self.Frame_DAT_GPTSoVITS_OutputRoot)
+        self.Label_DAT_GPTSoVITS_OutputRoot.setObjectName(u"Label_DAT_GPTSoVITS_OutputRoot")
+        sizePolicy4.setHeightForWidth(self.Label_DAT_GPTSoVITS_OutputRoot.sizePolicy().hasHeightForWidth())
+        self.Label_DAT_GPTSoVITS_OutputRoot.setSizePolicy(sizePolicy4)
+        self.Label_DAT_GPTSoVITS_OutputRoot.setStyleSheet(u"QLabel {\n"
+"	font-size: 15px;\n"
+"	/*text-align: center;*/\n"
+"	/*color: rgb(255, 255, 255);*/\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.horizontalLayout_21.addWidget(self.Label_DAT_GPTSoVITS_OutputRoot)
+
+        self.LineEdit_DAT_GPTSoVITS_OutputRoot = LineEditBase(self.Frame_DAT_GPTSoVITS_OutputRoot)
+        self.LineEdit_DAT_GPTSoVITS_OutputRoot.setObjectName(u"LineEdit_DAT_GPTSoVITS_OutputRoot")
+        self.LineEdit_DAT_GPTSoVITS_OutputRoot.setMaximumSize(QSize(16777215, 30))
+
+        self.horizontalLayout_21.addWidget(self.LineEdit_DAT_GPTSoVITS_OutputRoot)
+
+        self.Button_DAT_GPTSoVITS_OutputRoot_Undo = QPushButton(self.Frame_DAT_GPTSoVITS_OutputRoot)
+        self.Button_DAT_GPTSoVITS_OutputRoot_Undo.setObjectName(u"Button_DAT_GPTSoVITS_OutputRoot_Undo")
+        self.Button_DAT_GPTSoVITS_OutputRoot_Undo.setMaximumSize(QSize(30, 30))
+        self.Button_DAT_GPTSoVITS_OutputRoot_Undo.setStyleSheet(u"QPushButton {\n"
+"	image: url(:/Button_Icon/Sources/Undo.png);\n"
+"	background-color: transparent;\n"
+"	padding: 4.5px;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgba(201, 210, 222, 123);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgba(201, 210, 222, 210);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.horizontalLayout_21.addWidget(self.Button_DAT_GPTSoVITS_OutputRoot_Undo)
+
+
+        self.verticalLayout_83.addWidget(self.Frame_DAT_GPTSoVITS_OutputRoot)
+
+        self.Frame_DAT_VITS_OutputRoot = QFrame(self.GroupBox_Settings_Tools_Path)
+        self.Frame_DAT_VITS_OutputRoot.setObjectName(u"Frame_DAT_VITS_OutputRoot")
+        self.Frame_DAT_VITS_OutputRoot.setMinimumSize(QSize(0, 90))
+        self.Frame_DAT_VITS_OutputRoot.setStyleSheet(u"QFrame {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: transparent;\n"
+"	border-width: 1px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(45, 45, 45);\n"
+"}\n"
+"QFrame:hover {\n"
+"	border-color: rgb(60, 60, 60);\n"
+"}")
+        self.horizontalLayout_22 = QHBoxLayout(self.Frame_DAT_VITS_OutputRoot)
+        self.horizontalLayout_22.setSpacing(12)
+        self.horizontalLayout_22.setObjectName(u"horizontalLayout_22")
+        self.horizontalLayout_22.setContentsMargins(21, 12, 21, 12)
+        self.Label_DAT_VITS_OutputRoot = QLabel(self.Frame_DAT_VITS_OutputRoot)
+        self.Label_DAT_VITS_OutputRoot.setObjectName(u"Label_DAT_VITS_OutputRoot")
+        sizePolicy4.setHeightForWidth(self.Label_DAT_VITS_OutputRoot.sizePolicy().hasHeightForWidth())
+        self.Label_DAT_VITS_OutputRoot.setSizePolicy(sizePolicy4)
+        self.Label_DAT_VITS_OutputRoot.setStyleSheet(u"QLabel {\n"
+"	font-size: 15px;\n"
+"	/*text-align: center;*/\n"
+"	/*color: rgb(255, 255, 255);*/\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.horizontalLayout_22.addWidget(self.Label_DAT_VITS_OutputRoot)
+
+        self.LineEdit_DAT_VITS_OutputRoot = LineEditBase(self.Frame_DAT_VITS_OutputRoot)
+        self.LineEdit_DAT_VITS_OutputRoot.setObjectName(u"LineEdit_DAT_VITS_OutputRoot")
+        self.LineEdit_DAT_VITS_OutputRoot.setMaximumSize(QSize(16777215, 30))
+
+        self.horizontalLayout_22.addWidget(self.LineEdit_DAT_VITS_OutputRoot)
+
+        self.Button_DAT_VITS_OutputRoot_Undo = QPushButton(self.Frame_DAT_VITS_OutputRoot)
+        self.Button_DAT_VITS_OutputRoot_Undo.setObjectName(u"Button_DAT_VITS_OutputRoot_Undo")
+        self.Button_DAT_VITS_OutputRoot_Undo.setMaximumSize(QSize(30, 30))
+        self.Button_DAT_VITS_OutputRoot_Undo.setStyleSheet(u"QPushButton {\n"
+"	image: url(:/Button_Icon/Sources/Undo.png);\n"
+"	background-color: transparent;\n"
+"	padding: 4.5px;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgba(201, 210, 222, 123);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgba(201, 210, 222, 210);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.horizontalLayout_22.addWidget(self.Button_DAT_VITS_OutputRoot_Undo)
+
+
+        self.verticalLayout_83.addWidget(self.Frame_DAT_VITS_OutputRoot)
+
+        self.Frame_Train_GPTSoVITS_OutputRoot = QFrame(self.GroupBox_Settings_Tools_Path)
+        self.Frame_Train_GPTSoVITS_OutputRoot.setObjectName(u"Frame_Train_GPTSoVITS_OutputRoot")
+        self.Frame_Train_GPTSoVITS_OutputRoot.setMinimumSize(QSize(0, 90))
+        self.Frame_Train_GPTSoVITS_OutputRoot.setStyleSheet(u"QFrame {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: transparent;\n"
+"	border-width: 1px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(45, 45, 45);\n"
+"}\n"
+"QFrame:hover {\n"
+"	border-color: rgb(60, 60, 60);\n"
+"}")
+        self.horizontalLayout_23 = QHBoxLayout(self.Frame_Train_GPTSoVITS_OutputRoot)
+        self.horizontalLayout_23.setSpacing(12)
+        self.horizontalLayout_23.setObjectName(u"horizontalLayout_23")
+        self.horizontalLayout_23.setContentsMargins(21, 12, 21, 12)
+        self.Label_Train_GPTSoVITS_OutputRoot = QLabel(self.Frame_Train_GPTSoVITS_OutputRoot)
+        self.Label_Train_GPTSoVITS_OutputRoot.setObjectName(u"Label_Train_GPTSoVITS_OutputRoot")
+        sizePolicy4.setHeightForWidth(self.Label_Train_GPTSoVITS_OutputRoot.sizePolicy().hasHeightForWidth())
+        self.Label_Train_GPTSoVITS_OutputRoot.setSizePolicy(sizePolicy4)
+        self.Label_Train_GPTSoVITS_OutputRoot.setStyleSheet(u"QLabel {\n"
+"	font-size: 15px;\n"
+"	/*text-align: center;*/\n"
+"	/*color: rgb(255, 255, 255);*/\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.horizontalLayout_23.addWidget(self.Label_Train_GPTSoVITS_OutputRoot)
+
+        self.LineEdit_Train_GPTSoVITS_OutputRoot = LineEditBase(self.Frame_Train_GPTSoVITS_OutputRoot)
+        self.LineEdit_Train_GPTSoVITS_OutputRoot.setObjectName(u"LineEdit_Train_GPTSoVITS_OutputRoot")
+        self.LineEdit_Train_GPTSoVITS_OutputRoot.setMaximumSize(QSize(16777215, 30))
+
+        self.horizontalLayout_23.addWidget(self.LineEdit_Train_GPTSoVITS_OutputRoot)
+
+        self.Button_Train_GPTSoVITS_OutputRoot_Undo = QPushButton(self.Frame_Train_GPTSoVITS_OutputRoot)
+        self.Button_Train_GPTSoVITS_OutputRoot_Undo.setObjectName(u"Button_Train_GPTSoVITS_OutputRoot_Undo")
+        self.Button_Train_GPTSoVITS_OutputRoot_Undo.setMaximumSize(QSize(30, 30))
+        self.Button_Train_GPTSoVITS_OutputRoot_Undo.setStyleSheet(u"QPushButton {\n"
+"	image: url(:/Button_Icon/Sources/Undo.png);\n"
+"	background-color: transparent;\n"
+"	padding: 4.5px;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgba(201, 210, 222, 123);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgba(201, 210, 222, 210);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.horizontalLayout_23.addWidget(self.Button_Train_GPTSoVITS_OutputRoot_Undo)
+
+
+        self.verticalLayout_83.addWidget(self.Frame_Train_GPTSoVITS_OutputRoot)
+
+        self.Frame_Train_VITS_OutputRoot = QFrame(self.GroupBox_Settings_Tools_Path)
+        self.Frame_Train_VITS_OutputRoot.setObjectName(u"Frame_Train_VITS_OutputRoot")
+        self.Frame_Train_VITS_OutputRoot.setMinimumSize(QSize(0, 90))
+        self.Frame_Train_VITS_OutputRoot.setStyleSheet(u"QFrame {\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: transparent;\n"
+"	border-width: 1px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(45, 45, 45);\n"
+"}\n"
+"QFrame:hover {\n"
+"	border-color: rgb(60, 60, 60);\n"
+"}")
+        self.horizontalLayout_24 = QHBoxLayout(self.Frame_Train_VITS_OutputRoot)
+        self.horizontalLayout_24.setSpacing(12)
+        self.horizontalLayout_24.setObjectName(u"horizontalLayout_24")
+        self.horizontalLayout_24.setContentsMargins(21, 12, 21, 12)
+        self.Label_Train_VITS_OutputRoot = QLabel(self.Frame_Train_VITS_OutputRoot)
+        self.Label_Train_VITS_OutputRoot.setObjectName(u"Label_Train_VITS_OutputRoot")
+        sizePolicy4.setHeightForWidth(self.Label_Train_VITS_OutputRoot.sizePolicy().hasHeightForWidth())
+        self.Label_Train_VITS_OutputRoot.setSizePolicy(sizePolicy4)
+        self.Label_Train_VITS_OutputRoot.setStyleSheet(u"QLabel {\n"
+"	font-size: 15px;\n"
+"	/*text-align: center;*/\n"
+"	/*color: rgb(255, 255, 255);*/\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.horizontalLayout_24.addWidget(self.Label_Train_VITS_OutputRoot)
+
+        self.LineEdit_Train_VITS_OutputRoot = LineEditBase(self.Frame_Train_VITS_OutputRoot)
+        self.LineEdit_Train_VITS_OutputRoot.setObjectName(u"LineEdit_Train_VITS_OutputRoot")
+        self.LineEdit_Train_VITS_OutputRoot.setMaximumSize(QSize(16777215, 30))
+
+        self.horizontalLayout_24.addWidget(self.LineEdit_Train_VITS_OutputRoot)
+
+        self.Button_Train_VITS_OutputRoot_Undo = QPushButton(self.Frame_Train_VITS_OutputRoot)
+        self.Button_Train_VITS_OutputRoot_Undo.setObjectName(u"Button_Train_VITS_OutputRoot_Undo")
+        self.Button_Train_VITS_OutputRoot_Undo.setMaximumSize(QSize(30, 30))
+        self.Button_Train_VITS_OutputRoot_Undo.setStyleSheet(u"QPushButton {\n"
+"	image: url(:/Button_Icon/Sources/Undo.png);\n"
+"	background-color: transparent;\n"
+"	padding: 4.5px;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgba(201, 210, 222, 123);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgba(201, 210, 222, 210);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.horizontalLayout_24.addWidget(self.Button_Train_VITS_OutputRoot_Undo)
+
+
+        self.verticalLayout_83.addWidget(self.Frame_Train_VITS_OutputRoot)
+
+
+        self.verticalLayout_105.addWidget(self.GroupBox_Settings_Tools_Path)
+
+        self.GroupBox_Settings_Tools_Function = QGroupBox(self.ScrollAreaWidgetContents_Settings_Tools)
+        self.GroupBox_Settings_Tools_Function.setObjectName(u"GroupBox_Settings_Tools_Function")
+        self.GroupBox_Settings_Tools_Function.setStyleSheet(u"QGroupBox {\n"
+"	font-size: 15px;\n"
+"	margin-top: 1.5ex;\n"
+"	color: rgb(255, 255, 255);\n"
+"	background-color: transparent;\n"
+"	border-width: 1px;\n"
+"	border-style: solid;\n"
+"	border-color: transparent;\n"
+"}\n"
+"QGroupBox::title {\n"
+"	left: 9px;\n"
+"	margin-left: 0px;\n"
+"	subcontrol-origin: margin;\n"
+"	subcontrol-position: top left;\n"
+"	padding: 3px;\n"
+"}")
+        self.verticalLayout_82 = QVBoxLayout(self.GroupBox_Settings_Tools_Function)
+        self.verticalLayout_82.setSpacing(0)
+        self.verticalLayout_82.setObjectName(u"verticalLayout_82")
+        self.verticalLayout_82.setContentsMargins(0, 12, 0, 12)
+        self.Frame_Setting_Synchronizer = QFrame(self.GroupBox_Settings_Tools_Function)
         self.Frame_Setting_Synchronizer.setObjectName(u"Frame_Setting_Synchronizer")
         self.Frame_Setting_Synchronizer.setMinimumSize(QSize(0, 90))
         self.Frame_Setting_Synchronizer.setStyleSheet(u"QFrame {\n"
@@ -15519,12 +20890,14 @@ class Ui_MainWindow(object):
 "QFrame:hover {\n"
 "	border-color: rgb(60, 60, 60);\n"
 "}")
-        self.horizontalLayout_67 = QHBoxLayout(self.Frame_Setting_Synchronizer)
-        self.horizontalLayout_67.setSpacing(12)
-        self.horizontalLayout_67.setObjectName(u"horizontalLayout_67")
-        self.horizontalLayout_67.setContentsMargins(21, 12, 21, 12)
+        self.horizontalLayout_74 = QHBoxLayout(self.Frame_Setting_Synchronizer)
+        self.horizontalLayout_74.setSpacing(12)
+        self.horizontalLayout_74.setObjectName(u"horizontalLayout_74")
+        self.horizontalLayout_74.setContentsMargins(21, 12, 21, 12)
         self.Label_Setting_Synchronizer = QLabel(self.Frame_Setting_Synchronizer)
         self.Label_Setting_Synchronizer.setObjectName(u"Label_Setting_Synchronizer")
+        sizePolicy4.setHeightForWidth(self.Label_Setting_Synchronizer.sizePolicy().hasHeightForWidth())
+        self.Label_Setting_Synchronizer.setSizePolicy(sizePolicy4)
         self.Label_Setting_Synchronizer.setStyleSheet(u"QLabel {\n"
 "	font-size: 15px;\n"
 "	/*text-align: center;*/\n"
@@ -15536,18 +20909,13 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}")
 
-        self.horizontalLayout_67.addWidget(self.Label_Setting_Synchronizer)
-
-        self.HorizontalSpacer_Setting_Synchronizer = QSpacerItem(0, 0, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
-
-        self.horizontalLayout_67.addItem(self.HorizontalSpacer_Setting_Synchronizer)
+        self.horizontalLayout_74.addWidget(self.Label_Setting_Synchronizer)
 
         self.CheckBox_Setting_Synchronizer = QCheckBox(self.Frame_Setting_Synchronizer)
         self.CheckBox_Setting_Synchronizer.setObjectName(u"CheckBox_Setting_Synchronizer")
         sizePolicy5.setHeightForWidth(self.CheckBox_Setting_Synchronizer.sizePolicy().hasHeightForWidth())
         self.CheckBox_Setting_Synchronizer.setSizePolicy(sizePolicy5)
-        self.CheckBox_Setting_Synchronizer.setMinimumSize(QSize(123, 0))
-        self.CheckBox_Setting_Synchronizer.setMaximumSize(QSize(123, 16777215))
+        self.CheckBox_Setting_Synchronizer.setMinimumSize(QSize(0, 30))
         self.CheckBox_Setting_Synchronizer.setStyleSheet(u"QCheckBox {\n"
 "	font-size: 15px;\n"
 "	spacing: 12.3px;\n"
@@ -15589,97 +20957,21 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}")
 
-        self.horizontalLayout_67.addWidget(self.CheckBox_Setting_Synchronizer)
+        self.horizontalLayout_74.addWidget(self.CheckBox_Setting_Synchronizer)
 
 
-        self.verticalLayout_13.addWidget(self.Frame_Setting_Synchronizer)
-
-        self.Frame_Setting_Operation = QFrame(self.Frame_Settings_Middle)
-        self.Frame_Setting_Operation.setObjectName(u"Frame_Setting_Operation")
-        self.Frame_Setting_Operation.setMinimumSize(QSize(0, 90))
-        self.Frame_Setting_Operation.setStyleSheet(u"QFrame {\n"
-"	color: rgb(255, 255, 255);\n"
-"	background-color: transparent;\n"
-"	border-width: 1px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(45, 45, 45);\n"
-"}\n"
-"QFrame:hover {\n"
-"	border-color: rgb(60, 60, 60);\n"
-"}")
-        self.horizontalLayout_6 = QHBoxLayout(self.Frame_Setting_Operation)
-        self.horizontalLayout_6.setSpacing(42)
-        self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
-        self.horizontalLayout_6.setContentsMargins(21, 12, 21, 12)
-        self.Button_Setting_ClientRebooter = QPushButton(self.Frame_Setting_Operation)
-        self.Button_Setting_ClientRebooter.setObjectName(u"Button_Setting_ClientRebooter")
-        self.Button_Setting_ClientRebooter.setMinimumSize(QSize(123, 0))
-        self.Button_Setting_ClientRebooter.setMaximumSize(QSize(123, 16777215))
-        self.Button_Setting_ClientRebooter.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	font-size: 12px;\n"
-"	background-color: transparent;\n"
-"	padding: 12px;\n"
-"	border-width: 1.5px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgb(120, 120, 120);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.horizontalLayout_6.addWidget(self.Button_Setting_ClientRebooter)
-
-        self.Button_Setting_IntegrityChecker = QPushButton(self.Frame_Setting_Operation)
-        self.Button_Setting_IntegrityChecker.setObjectName(u"Button_Setting_IntegrityChecker")
-        self.Button_Setting_IntegrityChecker.setMinimumSize(QSize(123, 0))
-        self.Button_Setting_IntegrityChecker.setMaximumSize(QSize(123, 16777215))
-        self.Button_Setting_IntegrityChecker.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	font-size: 12px;\n"
-"	background-color: transparent;\n"
-"	padding: 12px;\n"
-"	border-width: 1.5px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgb(120, 120, 120);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.horizontalLayout_6.addWidget(self.Button_Setting_IntegrityChecker)
-
-        self.HorizontalSpacer_Setting_Operation = QSpacerItem(0, 0, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
-
-        self.horizontalLayout_6.addItem(self.HorizontalSpacer_Setting_Operation)
+        self.verticalLayout_82.addWidget(self.Frame_Setting_Synchronizer)
 
 
-        self.verticalLayout_13.addWidget(self.Frame_Setting_Operation)
+        self.verticalLayout_105.addWidget(self.GroupBox_Settings_Tools_Function)
 
+        self.ScrollArea_Settings_Tools.setWidget(self.ScrollAreaWidgetContents_Settings_Tools)
 
-        self.verticalLayout_109.addWidget(self.Frame_Settings_Middle)
+        self.gridLayout_93.addWidget(self.ScrollArea_Settings_Tools, 0, 0, 1, 1)
 
-        self.VerticalSpacer_Settings = QSpacerItem(20, 378, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+        self.StackedWidget_Pages_Settings.addWidget(self.SubPage_Settings_Tools)
 
-        self.verticalLayout_109.addItem(self.VerticalSpacer_Settings)
+        self.verticalLayout_78.addWidget(self.StackedWidget_Pages_Settings)
 
         self.StackedWidget_Pages.addWidget(self.Page_Settings)
         self.Page_Info = QWidget()
@@ -16355,10 +21647,13 @@ class Ui_MainWindow(object):
         self.StackedWidget_Pages_ASR.setCurrentIndex(0)
         self.StackedWidget_Pages_STT.setCurrentIndex(0)
         self.StackedWidget_Pages_Dataset.setCurrentIndex(0)
+        self.StackedWidget_DAT_GPTSoVITS.setCurrentIndex(0)
         self.StackedWidget_DAT_VITS.setCurrentIndex(0)
         self.StackedWidget_Pages_Train.setCurrentIndex(0)
+        self.StackedWidget_Train_GPTSoVITS.setCurrentIndex(0)
         self.StackedWidget_Train_VITS.setCurrentIndex(0)
         self.StackedWidget_Pages_TTS.setCurrentIndex(0)
+        self.StackedWidget_Pages_Settings.setCurrentIndex(0)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -16392,11 +21687,14 @@ class Ui_MainWindow(object):
         self.Label_Env_Install_PyReqs_Status.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Env_Install_Pytorch.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Env_Install_Pytorch_Status.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.ToolButton_Models_Process_Title.setText(QCoreApplication.translate("MainWindow", u"Label", None))
         self.ToolButton_Models_ASR_Title.setText(QCoreApplication.translate("MainWindow", u"Label", None))
         self.ToolButton_Models_STT_Title.setText(QCoreApplication.translate("MainWindow", u"Label", None))
         self.ToolButton_Models_TTS_Title.setText(QCoreApplication.translate("MainWindow", u"Label", None))
+        self.TabWidget_Models_Process.setTabText(self.TabWidget_Models_Process.indexOf(self.Tab_Models_Process_UVR), QCoreApplication.translate("MainWindow", u"Tab 1", None))
         self.TabWidget_Models_ASR.setTabText(self.TabWidget_Models_ASR.indexOf(self.Tab_Models_ASR_VPR), QCoreApplication.translate("MainWindow", u"Tab 1", None))
         self.TabWidget_Models_STT.setTabText(self.TabWidget_Models_STT.indexOf(self.Tab_Models_STT_Whisper), QCoreApplication.translate("MainWindow", u"Tab 1", None))
+        self.TabWidget_Models_TTS.setTabText(self.TabWidget_Models_TTS.indexOf(self.Tab_Models_TTS_GPTSoVITS), QCoreApplication.translate("MainWindow", u"\u9875", None))
         self.TabWidget_Models_TTS.setTabText(self.TabWidget_Models_TTS.indexOf(self.Tab_Models_TTS_VITS), QCoreApplication.translate("MainWindow", u"Tab 1", None))
         self.ToolButton_AudioProcessor_Title.setText(QCoreApplication.translate("MainWindow", u"Label", None))
         ___qtreewidgetitem = self.TreeWidget_Catalogue_Process.headerItem()
@@ -16412,10 +21710,15 @@ class Ui_MainWindow(object):
 
         self.GroupBox_Process_InputParams.setTitle(QCoreApplication.translate("MainWindow", u"GroupBox1", None))
         self.Label_Process_MediaDirInput.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.GroupBox_Process_AudioSlicerParams.setTitle(QCoreApplication.translate("MainWindow", u"GroupBox2", None))
+        self.GroupBox_Process_DenoiserParams.setTitle(QCoreApplication.translate("MainWindow", u"GroupBox2", None))
+        self.Label_Process_DenoiseAudio.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.CheckBox_Process_DenoiseAudio.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
+        self.Label_Process_DenoiseModelPath.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.Label_Process_DenoiseTarget.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.GroupBox_Process_SlicerParams.setTitle(QCoreApplication.translate("MainWindow", u"GroupBox2", None))
         self.Label_Process_SliceAudio.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.CheckBox_Process_SliceAudio.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
-        self.CheckBox_Process_AudioSlicerParams_Toggle_AdvanceSettings.setText(QCoreApplication.translate("MainWindow", u"CheckBox2", None))
+        self.CheckBox_Process_SlicerParams_Toggle_AdvanceSettings.setText(QCoreApplication.translate("MainWindow", u"CheckBox2", None))
         self.Label_Process_RMSThreshold.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Process_AudioLengthMin.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Process_SilentIntervalMin.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
@@ -16423,7 +21726,7 @@ class Ui_MainWindow(object):
         self.Label_Process_SilenceKeptMax.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.GroupBox_Process_OutputParams.setTitle(QCoreApplication.translate("MainWindow", u"GroupBox3", None))
         self.Label_Process_MediaFormatOutput.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.Label_Process_MediaDirOutput.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.Label_Process_OutputDirName.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.CheckBox_Process_OutputParams_Toggle_AdvanceSettings.setText(QCoreApplication.translate("MainWindow", u"CheckBox2", None))
         self.Label_Process_SampleRate.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Process_SampleWidth.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
@@ -16452,7 +21755,9 @@ class Ui_MainWindow(object):
         self.Label_ASR_VPR_FeatureMethod.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_ASR_VPR_DurationOfAudio.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.GroupBox_ASR_VPR_OutputParams.setTitle(QCoreApplication.translate("MainWindow", u"GroupBox3", None))
-        self.Label_ASR_VPR_AudioSpeakersDataPath.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.Label_ASR_VPR_OutputDirName.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.CheckBox_ASR_VPR_OutputParams_Toggle_AdvanceSettings.setText(QCoreApplication.translate("MainWindow", u"CheckBox3", None))
+        self.Label_ASR_VPR_AudioSpeakersDataName.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.ToolButton_VoiceTranscriber_Title.setText(QCoreApplication.translate("MainWindow", u"Label", None))
         ___qtreewidgetitem6 = self.TreeWidget_Catalogue_STT_Whisper.headerItem()
         ___qtreewidgetitem6.setText(0, QCoreApplication.translate("MainWindow", u"HeaderView", None));
@@ -16479,18 +21784,39 @@ class Ui_MainWindow(object):
         self.Label_STT_Whisper_Verbose.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.CheckBox_STT_Whisper_Verbose.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
         self.GroupBox_STT_Whisper_OutputParams.setTitle(QCoreApplication.translate("MainWindow", u"GroupBox3", None))
-        self.Label_STT_Whisper_SRTDir.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.ToolButton_DatasetCreator_Title.setText(QCoreApplication.translate("MainWindow", u"Label", None))
-        ___qtreewidgetitem9 = self.TreeWidget_Catalogue_DAT_VITS.headerItem()
+        self.Label_STT_Whisper_OutputDirName.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.ToolButton_DatasetCreator_Title_GPTSoVITS.setText(QCoreApplication.translate("MainWindow", u"Label", None))
+        self.ToolButton_DatasetCreator_Title_VITS.setText(QCoreApplication.translate("MainWindow", u"Label", None))
+        ___qtreewidgetitem9 = self.TreeWidget_Catalogue_DAT_GPTSoVITS.headerItem()
         ___qtreewidgetitem9.setText(0, QCoreApplication.translate("MainWindow", u"HeaderView", None));
 
-        __sortingEnabled3 = self.TreeWidget_Catalogue_DAT_VITS.isSortingEnabled()
-        self.TreeWidget_Catalogue_DAT_VITS.setSortingEnabled(False)
-        ___qtreewidgetitem10 = self.TreeWidget_Catalogue_DAT_VITS.topLevelItem(0)
+        __sortingEnabled3 = self.TreeWidget_Catalogue_DAT_GPTSoVITS.isSortingEnabled()
+        self.TreeWidget_Catalogue_DAT_GPTSoVITS.setSortingEnabled(False)
+        ___qtreewidgetitem10 = self.TreeWidget_Catalogue_DAT_GPTSoVITS.topLevelItem(0)
         ___qtreewidgetitem10.setText(0, QCoreApplication.translate("MainWindow", u"RootItem", None));
         ___qtreewidgetitem11 = ___qtreewidgetitem10.child(0)
         ___qtreewidgetitem11.setText(0, QCoreApplication.translate("MainWindow", u"ChildItem", None));
-        self.TreeWidget_Catalogue_DAT_VITS.setSortingEnabled(__sortingEnabled3)
+        self.TreeWidget_Catalogue_DAT_GPTSoVITS.setSortingEnabled(__sortingEnabled3)
+
+        self.GroupBox_DAT_GPTSoVITS_InputParams.setTitle(QCoreApplication.translate("MainWindow", u"GroupBox1", None))
+        self.Label_DAT_GPTSoVITS_AudioSpeakersDataPath.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.Label_DAT_GPTSoVITS_SRTDir.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.GroupBox_DAT_GPTSoVITS_GPTSoVITSParams.setTitle(QCoreApplication.translate("MainWindow", u"GroupBox2", None))
+        self.Label_DAT_GPTSoVITS_DataFormat.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.GroupBox_DAT_GPTSoVITS_OutputParams.setTitle(QCoreApplication.translate("MainWindow", u"GroupBox3", None))
+        self.Label_DAT_GPTSoVITS_OutputDirName.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.CheckBox_DAT_GPTSoVITS_OutputParams_Toggle_AdvanceSettings.setText(QCoreApplication.translate("MainWindow", u"CheckBox3", None))
+        self.Label_DAT_GPTSoVITS_FileListName.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        ___qtreewidgetitem12 = self.TreeWidget_Catalogue_DAT_VITS.headerItem()
+        ___qtreewidgetitem12.setText(0, QCoreApplication.translate("MainWindow", u"HeaderView", None));
+
+        __sortingEnabled4 = self.TreeWidget_Catalogue_DAT_VITS.isSortingEnabled()
+        self.TreeWidget_Catalogue_DAT_VITS.setSortingEnabled(False)
+        ___qtreewidgetitem13 = self.TreeWidget_Catalogue_DAT_VITS.topLevelItem(0)
+        ___qtreewidgetitem13.setText(0, QCoreApplication.translate("MainWindow", u"RootItem", None));
+        ___qtreewidgetitem14 = ___qtreewidgetitem13.child(0)
+        ___qtreewidgetitem14.setText(0, QCoreApplication.translate("MainWindow", u"ChildItem", None));
+        self.TreeWidget_Catalogue_DAT_VITS.setSortingEnabled(__sortingEnabled4)
 
         self.GroupBox_DAT_VITS_InputParams.setTitle(QCoreApplication.translate("MainWindow", u"GroupBox1", None))
         self.Label_DAT_VITS_AudioSpeakersDataPath.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
@@ -16507,22 +21833,48 @@ class Ui_MainWindow(object):
         self.Label_DAT_VITS_ToMono.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.CheckBox_DAT_VITS_ToMono.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
         self.GroupBox_DAT_VITS_OutputParams.setTitle(QCoreApplication.translate("MainWindow", u"GroupBox3", None))
-        self.Label_DAT_VITS_ToStandaloneForm.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.CheckBox_DAT_VITS_ToStandaloneForm.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
-        self.Label_DAT_VITS_WAVDirSplit.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.Label_DAT_VITS_FileListPathTraining.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.Label_DAT_VITS_FileListPathValidation.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.ToolButton_VoiceTrainer_Title.setText(QCoreApplication.translate("MainWindow", u"Label", None))
-        ___qtreewidgetitem12 = self.TreeWidget_Catalogue_Train_VITS.headerItem()
-        ___qtreewidgetitem12.setText(0, QCoreApplication.translate("MainWindow", u"HeaderView", None));
+        self.Label_DAT_VITS_OutputDirName.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.CheckBox_DAT_VITS_OutputParams_Toggle_AdvanceSettings.setText(QCoreApplication.translate("MainWindow", u"CheckBox3", None))
+        self.Label_DAT_VITS_FileListNameTraining.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.Label_DAT_VITS_FileListNameValidation.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.ToolButton_VoiceTrainer_Title_GPTSoVITS.setText(QCoreApplication.translate("MainWindow", u"Label", None))
+        self.ToolButton_VoiceTrainer_Title_VITS.setText(QCoreApplication.translate("MainWindow", u"Label", None))
+        ___qtreewidgetitem15 = self.TreeWidget_Catalogue_Train_GPTSoVITS.headerItem()
+        ___qtreewidgetitem15.setText(0, QCoreApplication.translate("MainWindow", u"HeaderView", None));
 
-        __sortingEnabled4 = self.TreeWidget_Catalogue_Train_VITS.isSortingEnabled()
+        __sortingEnabled5 = self.TreeWidget_Catalogue_Train_GPTSoVITS.isSortingEnabled()
+        self.TreeWidget_Catalogue_Train_GPTSoVITS.setSortingEnabled(False)
+        ___qtreewidgetitem16 = self.TreeWidget_Catalogue_Train_GPTSoVITS.topLevelItem(0)
+        ___qtreewidgetitem16.setText(0, QCoreApplication.translate("MainWindow", u"RootItem", None));
+        ___qtreewidgetitem17 = ___qtreewidgetitem16.child(0)
+        ___qtreewidgetitem17.setText(0, QCoreApplication.translate("MainWindow", u"ChildItem", None));
+        self.TreeWidget_Catalogue_Train_GPTSoVITS.setSortingEnabled(__sortingEnabled5)
+
+        self.GroupBox_Train_GPTSoVITS_InputParams.setTitle(QCoreApplication.translate("MainWindow", u"GroupBox1", None))
+        self.Label_Train_GPTSoVITS_FileListPath.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.GroupBox_Train_GPTSoVITS_GPTSoVITSParams.setTitle(QCoreApplication.translate("MainWindow", u"GroupBox2", None))
+        self.Label_Train_GPTSoVITS_ModelPathPretrainedS1.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.Label_Train_GPTSoVITS_ModelPathPretrainedS2G.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.Label_Train_GPTSoVITS_ModelDirPretrainedBert.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.Label_Train_GPTSoVITS_ModelDirPretrainedSSL.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.Label_Train_GPTSoVITS_ModelPathPretrainedS2D.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.CheckBox_Train_GPTSoVITS_GPTSoVITSParams_Toggle_AdvanceSettings.setText(QCoreApplication.translate("MainWindow", u"CheckBox2", None))
+        self.Label_Train_GPTSoVITS_FP16Run.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.CheckBox_Train_GPTSoVITS_FP16Run.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
+        self.GroupBox_Train_GPTSoVITS_OutputParams.setTitle(QCoreApplication.translate("MainWindow", u"GroupBox3", None))
+        self.Label_Train_GPTSoVITS_OutputDirName.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.CheckBox_Train_GPTSoVITS_OutputParams_Toggle_AdvanceSettings.setText(QCoreApplication.translate("MainWindow", u"CheckBox3", None))
+        self.Label_Train_GPTSoVITS_LogDir.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        ___qtreewidgetitem18 = self.TreeWidget_Catalogue_Train_VITS.headerItem()
+        ___qtreewidgetitem18.setText(0, QCoreApplication.translate("MainWindow", u"HeaderView", None));
+
+        __sortingEnabled6 = self.TreeWidget_Catalogue_Train_VITS.isSortingEnabled()
         self.TreeWidget_Catalogue_Train_VITS.setSortingEnabled(False)
-        ___qtreewidgetitem13 = self.TreeWidget_Catalogue_Train_VITS.topLevelItem(0)
-        ___qtreewidgetitem13.setText(0, QCoreApplication.translate("MainWindow", u"RootItem", None));
-        ___qtreewidgetitem14 = ___qtreewidgetitem13.child(0)
-        ___qtreewidgetitem14.setText(0, QCoreApplication.translate("MainWindow", u"ChildItem", None));
-        self.TreeWidget_Catalogue_Train_VITS.setSortingEnabled(__sortingEnabled4)
+        ___qtreewidgetitem19 = self.TreeWidget_Catalogue_Train_VITS.topLevelItem(0)
+        ___qtreewidgetitem19.setText(0, QCoreApplication.translate("MainWindow", u"RootItem", None));
+        ___qtreewidgetitem20 = ___qtreewidgetitem19.child(0)
+        ___qtreewidgetitem20.setText(0, QCoreApplication.translate("MainWindow", u"ChildItem", None));
+        self.TreeWidget_Catalogue_Train_VITS.setSortingEnabled(__sortingEnabled6)
 
         self.GroupBox_Train_VITS_InputParams.setTitle(QCoreApplication.translate("MainWindow", u"GroupBox1", None))
         self.Label_Train_VITS_FileListPathTraining.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
@@ -16543,18 +21895,40 @@ class Ui_MainWindow(object):
         self.CheckBox_Train_VITS_FP16Run.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
         self.GroupBox_Train_VITS_OutputParams.setTitle(QCoreApplication.translate("MainWindow", u"GroupBox3", None))
         self.Label_Train_VITS_EvalInterval.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.Label_Train_VITS_OutputDir.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.ToolButton_VoiceConverter_Title.setText(QCoreApplication.translate("MainWindow", u"Label", None))
-        ___qtreewidgetitem15 = self.TreeWidget_Catalogue_TTS_VITS.headerItem()
-        ___qtreewidgetitem15.setText(0, QCoreApplication.translate("MainWindow", u"HeaderView", None));
+        self.Label_Train_VITS_OutputDirName.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.CheckBox_Train_VITS_OutputParams_Toggle_AdvanceSettings.setText(QCoreApplication.translate("MainWindow", u"CheckBox3", None))
+        self.Label_Train_VITS_LogDir.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.ToolButton_VoiceConverter_Title_GPTSoVITS.setText(QCoreApplication.translate("MainWindow", u"Label", None))
+        self.ToolButton_VoiceConverter_Title_VITS.setText(QCoreApplication.translate("MainWindow", u"Label", None))
+        ___qtreewidgetitem21 = self.TreeWidget_Catalogue_TTS_GPTSoVITS.headerItem()
+        ___qtreewidgetitem21.setText(0, QCoreApplication.translate("MainWindow", u"HeaderView", None));
 
-        __sortingEnabled5 = self.TreeWidget_Catalogue_TTS_VITS.isSortingEnabled()
+        __sortingEnabled7 = self.TreeWidget_Catalogue_TTS_GPTSoVITS.isSortingEnabled()
+        self.TreeWidget_Catalogue_TTS_GPTSoVITS.setSortingEnabled(False)
+        ___qtreewidgetitem22 = self.TreeWidget_Catalogue_TTS_GPTSoVITS.topLevelItem(0)
+        ___qtreewidgetitem22.setText(0, QCoreApplication.translate("MainWindow", u"RootItem", None));
+        ___qtreewidgetitem23 = ___qtreewidgetitem22.child(0)
+        ___qtreewidgetitem23.setText(0, QCoreApplication.translate("MainWindow", u"ChildItem", None));
+        self.TreeWidget_Catalogue_TTS_GPTSoVITS.setSortingEnabled(__sortingEnabled7)
+
+        self.GroupBox_TTS_GPTSoVITS_InputParams.setTitle(QCoreApplication.translate("MainWindow", u"GroupBox1", None))
+        self.Label_TTS_GPTSoVITS_ModelPathLoadS1.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.Label_TTS_GPTSoVITS_ModelPathLoadS2G.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.Label_TTS_GPTSoVITS_ModelDirLoadBert.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.Label_TTS_GPTSoVITS_ModelDirLoadSSL.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.GroupBox_TTS_GPTSoVITS_GPTSoVITSParams.setTitle(QCoreApplication.translate("MainWindow", u"GroupBox2", None))
+        self.Label_TTS_GPTSoVITS_FP16Run.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.CheckBox_TTS_GPTSoVITS_FP16Run.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
+        ___qtreewidgetitem24 = self.TreeWidget_Catalogue_TTS_VITS.headerItem()
+        ___qtreewidgetitem24.setText(0, QCoreApplication.translate("MainWindow", u"HeaderView", None));
+
+        __sortingEnabled8 = self.TreeWidget_Catalogue_TTS_VITS.isSortingEnabled()
         self.TreeWidget_Catalogue_TTS_VITS.setSortingEnabled(False)
-        ___qtreewidgetitem16 = self.TreeWidget_Catalogue_TTS_VITS.topLevelItem(0)
-        ___qtreewidgetitem16.setText(0, QCoreApplication.translate("MainWindow", u"RootItem", None));
-        ___qtreewidgetitem17 = ___qtreewidgetitem16.child(0)
-        ___qtreewidgetitem17.setText(0, QCoreApplication.translate("MainWindow", u"ChildItem", None));
-        self.TreeWidget_Catalogue_TTS_VITS.setSortingEnabled(__sortingEnabled5)
+        ___qtreewidgetitem25 = self.TreeWidget_Catalogue_TTS_VITS.topLevelItem(0)
+        ___qtreewidgetitem25.setText(0, QCoreApplication.translate("MainWindow", u"RootItem", None));
+        ___qtreewidgetitem26 = ___qtreewidgetitem25.child(0)
+        ___qtreewidgetitem26.setText(0, QCoreApplication.translate("MainWindow", u"ChildItem", None));
+        self.TreeWidget_Catalogue_TTS_VITS.setSortingEnabled(__sortingEnabled8)
 
         self.GroupBox_TTS_VITS_InputParams.setTitle(QCoreApplication.translate("MainWindow", u"GroupBox1", None))
         self.Label_TTS_VITS_ConfigPathLoad.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
@@ -16569,10 +21943,23 @@ class Ui_MainWindow(object):
         self.Label_TTS_VITS_SpeechRate.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.GroupBox_TTS_VITS_OutputParams.setTitle(QCoreApplication.translate("MainWindow", u"GroupBox3", None))
         self.Label_TTS_VITS_AudioPathSave.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.ToolButton_Settings_Title.setText(QCoreApplication.translate("MainWindow", u"Label", None))
+        self.ToolButton_Settings_Title_Client.setText(QCoreApplication.translate("MainWindow", u"Label", None))
+        self.ToolButton_Settings_Title_Tools.setText(QCoreApplication.translate("MainWindow", u"Label", None))
+        self.GroupBox_Settings_Client_Outlook.setTitle(QCoreApplication.translate("MainWindow", u"GroupBox", None))
         self.Label_Setting_Language.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.GroupBox_Settings_Client_Function.setTitle(QCoreApplication.translate("MainWindow", u"GroupBox", None))
         self.Label_Setting_AutoUpdate.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.CheckBox_Setting_AutoUpdate.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
+        self.GroupBox_Settings_Client_Operation.setTitle(QCoreApplication.translate("MainWindow", u"GroupBox", None))
+        self.GroupBox_Settings_Tools_Path.setTitle(QCoreApplication.translate("MainWindow", u"GroupBox", None))
+        self.Label_Process_OutputRoot.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.Label_ASR_VPR_OutputRoot.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.Label_STT_Whisper_OutputRoot.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.Label_DAT_GPTSoVITS_OutputRoot.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.Label_DAT_VITS_OutputRoot.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.Label_Train_GPTSoVITS_OutputRoot.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.Label_Train_VITS_OutputRoot.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.GroupBox_Settings_Tools_Function.setTitle(QCoreApplication.translate("MainWindow", u"GroupBox", None))
         self.Label_Setting_Synchronizer.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.CheckBox_Setting_Synchronizer.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
         self.ToolButton_Info_Title.setText(QCoreApplication.translate("MainWindow", u"Label", None))

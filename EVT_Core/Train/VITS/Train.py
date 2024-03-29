@@ -240,12 +240,14 @@ class Training:
         Num_Workers: int = 4,
         Model_Path_Pretrained_G: Optional[str] = None,
         Model_Path_Pretrained_D: Optional[str] = None,
-        Keep_Original_Speakers: bool = False
+        Keep_Original_Speakers: bool = False,
+        Log_Dir: str = "./"
     ):
         self.Num_Workers = Num_Workers
         self.Model_Path_Pretrained_G = Model_Path_Pretrained_G
         self.Model_Path_Pretrained_D = Model_Path_Pretrained_D
         self.Keep_Original_Speakers = Keep_Original_Speakers
+        self.Log_Dir = Log_Dir
 
         self.UsePretrainedModel = False if None in (self.Model_Path_Pretrained_G, self.Model_Path_Pretrained_D) else True
 
@@ -460,8 +462,8 @@ class Training:
             logger = get_logger(hps.model_dir)
             #logger.info(hps)
             #check_git_hash(hps.model_dir)
-            writer = SummaryWriter(log_dir=hps.model_dir)
-            writer_eval = SummaryWriter(log_dir=Path(hps.model_dir).joinpath("eval").__str__())
+            writer = SummaryWriter(log_dir = self.Log_Dir)
+            writer_eval = SummaryWriter(log_dir = Path(self.Log_Dir).joinpath("eval").__str__())
 
         dist.init_process_group(
             backend = 'gloo' if platform.system() == 'Windows' else 'nccl', # Windows不支持NCCL backend，故使用GLOO
@@ -676,8 +678,8 @@ class Voice_Training(Preprocessing, Training):
     def __init__(self,
         FileList_Path_Training: str,
         FileList_Path_Validation: str,
-        Set_Eval_Interval: int = 1000,
         Set_Epochs: int = 10000,
+        Set_Eval_Interval: int = 1000,
         Set_Batch_Size: int = 16,
         Set_FP16_Run: bool = True,
         Keep_Original_Speakers: bool = False,
@@ -686,10 +688,13 @@ class Voice_Training(Preprocessing, Training):
         Use_PretrainedModels: bool = True,
         Model_Path_Pretrained_G: Optional[str] = None,
         Model_Path_Pretrained_D: Optional[str] = None,
-        Dir_Output: str = './'
+        Output_Root: str = "./",
+        Output_Dir_Name: str = "",
+        Output_LogDir: str = ""
     ):
+        Dir_Output = Path(Output_Root).joinpath(Output_Dir_Name).as_posix()
         Preprocessing.__init__(self, FileList_Path_Training, FileList_Path_Validation, Dir_Output, Set_Eval_Interval, Set_Epochs, Set_Batch_Size, Set_FP16_Run, Keep_Original_Speakers, Config_Path_Load)
-        Training.__init__(self, Num_Workers, Model_Path_Pretrained_G if Use_PretrainedModels else None, Model_Path_Pretrained_D if Use_PretrainedModels else None, Keep_Original_Speakers)
+        Training.__init__(self, Num_Workers, Model_Path_Pretrained_G if Use_PretrainedModels else None, Model_Path_Pretrained_D if Use_PretrainedModels else None, Keep_Original_Speakers, Output_LogDir)
         self.Model_Dir_Save = Dir_Output
 
     def Preprocessing_and_Training(self):

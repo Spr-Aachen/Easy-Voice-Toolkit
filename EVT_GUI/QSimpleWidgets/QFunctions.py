@@ -1,8 +1,9 @@
 import os
 import darkdetect
 from typing import Union, Optional
+from ctypes import c_int, byref, windll
 from PySide6.QtCore import Qt, QObject, QFile, QRect, QRectF, QSize, Signal, Slot, QPropertyAnimation, QParallelAnimationGroup, QEasingCurve, QUrl
-from PySide6.QtGui import QColor, QRgba64, QIcon, QPainter, QDesktopServices
+from PySide6.QtGui import QGuiApplication, QColor, QRgba64, QIcon, QPainter, QDesktopServices
 from PySide6.QtWidgets import *
 
 from .Utils import *
@@ -195,7 +196,7 @@ def Function_GetFileDialog(
     Directory: Optional[str] = None
 ):
     os.makedirs(Directory, exist_ok = True) if Directory is not None and Path(Directory).exists() == False else None
-    if Mode == 'SelectDir':
+    if Mode == 'SelectFolder':
         DisplayText = QFileDialog.getExistingDirectory(
             caption = "选择文件夹",
             dir = Directory if Directory is not None else os.getcwd()
@@ -215,8 +216,33 @@ def Function_GetFileDialog(
     return DisplayText
 
 
+def GetMissingBorderPixels(hWnd: int):
+    MissingBorderSize = []
+
+    for QWindow in QGuiApplication.allWindows():
+        if QWindow.winId() == hWnd:
+            Window = QWindow
+            break
+
+    SIZEFRAME = {
+        win32con.SM_CXSIZEFRAME: True,
+        win32con.SM_CYSIZEFRAME: False
+    }
+    for BorderLengthIndex, dpiScaling in SIZEFRAME.items():
+        MissingBorderPixels = GetSystemMetrics(hWnd, BorderLengthIndex, dpiScaling) + GetSystemMetrics(hWnd, 92, dpiScaling) #MissingBorderPixels = win32api.GetSystemMetrics(MissingBorderLength) + win32api.GetSystemMetrics(win32con.SM_CXPADDEDBORDER)
+        if not MissingBorderPixels > 0:
+            def IsCompositionEnabled():
+                Result = windll.dwmapi.DwmIsCompositionEnabled(byref(c_int(0)))
+                return bool(Result.value)
+            MissingBorderPixels = round((6 if IsCompositionEnabled() else 3) * Window.devicePixelRatio())
+        MissingBorderSize.append(MissingBorderPixels)
+
+    return MissingBorderSize
+
+
 def Function_OpenURL(
     URL: Union[str, list],
+    CreateIfNotExist: bool = False
 ):
     '''
     Function to open web/local URL
@@ -224,6 +250,7 @@ def Function_OpenURL(
     def OpenURL(URL):
         QURL = QUrl().fromLocalFile(NormPath(URL))
         if QURL.isValid():
+            os.makedirs(NormPath(URL), exist_ok = True) if CreateIfNotExist else None
             IsSucceeded = QDesktopServices.openUrl(QURL)
             RunCMD([f'start {URL}']) if not IsSucceeded else None
         else:

@@ -15,17 +15,28 @@ ffmpeg-python
 
 num2words
 
+PyYAML
 numba
 scipy
 matplotlib
 protobuf
+onnxruntime
 tensorboard
 inflect
+chardet
 unidecode
 langdetect
+sentencepiece
+wordsegment
+nltk
 eng_to_ipa
+g2p_en
 pypinyin
-jieba
+jieba #jieba_fast
 cn2an
 #opencc
 pyopenjtalk
+LangSegment>=0.2.0
+gradio==3.38.0
+gradio_client==0.8.1
+modelscope==1.10.0

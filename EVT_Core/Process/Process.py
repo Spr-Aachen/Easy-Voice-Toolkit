@@ -29,23 +29,27 @@ class Audio_Processing:
 
     def __init__(self,
         Media_Dir_Input: str,
-        Media_Dir_Output: str,
         Media_Format_Output: Optional[str] = 'wav',
         SampleRate: Optional[Union[int, str]] = None,
         SampleWidth: Optional[Union[int, str]] = None,
         ToMono: bool = False,
-        #Denoise_Audio: bool = True,
+        Denoise_Audio: bool = True,
+        Denoise_Model_Path: str = "",
+        Denoise_Target: str = '',
         Slice_Audio: bool = True,
         RMS_Threshold: float = -40.,
         Audio_Length_Min: int = 5000,
         Silent_Interval_Min: int = 300,
         Hop_Size: int = 10,
-        Silence_Kept_Max: int = 1000
+        Silence_Kept_Max: int = 1000,
+        Media_Root_Output: str = "./",
+        Media_DirName_Output: str = "",
     ):
         self.Media_Dir_Input = Media_Dir_Input
-        self.Media_Dir_Output = Media_Dir_Output
         self.Media_Format_Output = Media_Format_Output.lower() if Media_Format_Output is not None else None
-        self.Denoise_Audio = False #self.Denoise_Audio = Denoise_Audio
+        self.Denoise_Audio = Denoise_Audio
+        self.DenoiseModel_Path = Denoise_Model_Path
+        self.DenoiseTarget = Denoise_Target.replace('人声', 'vocals').replace('背景声', 'instrument')
         self.Slice_Audio = Slice_Audio
         self.RMS_Threshold = RMS_Threshold
         self.Audio_Length_Min = Audio_Length_Min
@@ -55,8 +59,9 @@ class Audio_Processing:
         self.SampleRate = eval(SampleRate) if SampleRate is not None else None
         self.SampleWidth = str(SampleWidth) if SampleWidth is not None else None
         self.ToMono = ToMono
+        self.Media_Dir_Output = Path(Media_Root_Output).joinpath(Media_DirName_Output).as_posix()
 
-        os.makedirs(Media_Dir_Output, exist_ok = True)
+        os.makedirs(self.Media_Dir_Output, exist_ok = True)
 
     def GetPatterns(self,
         Directory: str,
@@ -93,7 +98,12 @@ class Audio_Processing:
 
         if self.Denoise_Audio:
             WriteParamsList.clear()
-            AudioData = Denoiser(AudioData)
+            AudioData, SampleRate = Denoiser(
+                AudioData,
+                SampleRate,
+                ModelPath = self.DenoiseModel_Path,
+                Target = self.DenoiseTarget
+            )
             Audio_Name_Output = Audio_Name_Input.rsplit('.', 1)[0] + '_Denoised_' + '.' + self.Media_Format_Output
             Audio_Path_Output = os.path.normpath(os.path.join(self.Media_Dir_Output, Audio_Name_Output))
             WriteParamsList.append((Audio_Path_Output, AudioData.T if len(AudioData.shape) > 1 else AudioData, int(SampleRate)))
@@ -130,7 +140,7 @@ class Audio_Processing:
     def Process_Audio(self):
         print('Processing media...')
 
-        with ThreadPoolExecutor(max_workers = os.cpu_count()) as Executor:
+        with ThreadPoolExecutor(max_workers = os.cpu_count() if not self.Denoise_Audio else 1) as Executor:
             Executor.map(
                 self.ProcessMedia,
                 self.GetPatterns(self.Media_Dir_Input, self.MediaExtensions)

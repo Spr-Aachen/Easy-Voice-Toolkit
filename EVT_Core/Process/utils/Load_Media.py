@@ -10,7 +10,7 @@ def Loader(
     Mono: bool = True
 ):
     '''
-    Load an media file like using librosa.load()
+    Load a media file like using librosa.load()
     '''
     AudioFile = AudioSegment.from_file(Path)
 

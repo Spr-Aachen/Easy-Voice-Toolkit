@@ -3,6 +3,50 @@
     "models": [
         {
             "tags": [
+                "Process",
+                "UVR"
+            ],
+            "name": "HP3_all_vocals.pth",
+            "size": "60.5MB",
+            "date": "2024-03-22 16:03:34.957344",
+            "SHA": "45e6b65199e781b4a6542002699be9f19cd3d1cb7d1558bc2bfbcd84674dfe28",
+            "downloadurl": "https://huggingface.co/Delik/uvr5_weights/resolve/main/HP3_all_vocals.pth?download=true",
+            "link": "https://huggingface.co/Delik/uvr5_weights"
+        },
+        {
+            "tags": [
+                "Process",
+                "UVR"
+            ],
+            "name": "HP5_only_main_vocal.pth",
+            "size": "60.5MB",
+            "date": "2024-03-22 16:04:08.833732",
+            "SHA": "5908891829634926119720241e8573d97cbeb8277110a7512bdb0bd7563258ee",
+            "downloadurl": "https://huggingface.co/Delik/uvr5_weights/resolve/main/HP5_only_main_vocal.pth?download=true",
+            "link": "https://huggingface.co/Delik/uvr5_weights"
+        },
+        {
+            "tags": [
+                "Process",
+                "UVR"
+            ],
+            "name": "Onnx_dereverb_By_FoxJoy",
+            "size": {
+                "vocals.onnx": "63.7MB"
+            },
+            "date": {
+                "vocals.onnx": "2024-03-10 19:20:47.579919"
+            },
+            "SHA": {
+                "vocals.onnx": "233bb5c6aaa365e568659a0a81211746fa881f8f47f82d9e864fce1f7692db80"
+            },
+            "downloadurl": {
+                "vocals.onnx": "https://huggingface.co/Delik/uvr5_weights/resolve/main/Onnx_dereverb_By_FoxJoy/vocals.onnx?download=true"
+            },
+            "link": "https://huggingface.co/Delik/uvr5_weights"
+        },
+        {
+            "tags": [
                 "ASR",
                 "VPR"
             ],
@@ -64,37 +108,113 @@
         {
             "tags": [
                 "TTS",
-                "VITS"
+                "GPT-SoVITS"
             ],
-            "name": "standard_Config（暂无）",
-            "size": "",
-            "date": "",
-            "SHA": "",
-            "downloadurl": "",
-            "link": ""
+            "name": "s1&s2",
+            "size": {
+                "s1bert25hz-2kh-longer-epoch=68e-step=50232.ckpt": "",
+                "s2G488k.pth": "106MB",
+                "s2D488k.pth": "93.5MB"
+            },
+            "date": {
+                "s1bert25hz-2kh-longer-epoch=68e-step=50232.ckpt": "",
+                "s2G488k.pth": "",
+                "s2D488k.pth": ""
+            },
+            "SHA": {
+                "s1bert25hz-2kh-longer-epoch=68e-step=50232.ckpt": "b1c1e17e9c99547a89388f72048cd6e1b41b5a18b170e86a46dfde0324d63eb1",
+                "s2G488k.pth": "020a014e1e01e550e510f2f61fae5e5f5b6aab40f15c22f1f12f724df507e835",
+                "s2D488k.pth": "fc579c1db3c1e21b721001cf99d7a584214280df19b002e200b630a34fa06eb8"
+            },
+            "downloadurl": {
+                "s1bert25hz-2kh-longer-epoch=68e-step=50232.ckpt": "https://huggingface.co/lj1995/GPT-SoVITS/resolve/main/s1bert25hz-2kh-longer-epoch%3D68e-step%3D50232.ckpt?download=true",
+                "s2G488k.pth": "https://huggingface.co/lj1995/GPT-SoVITS/resolve/main/s2G488k.pth?download=true",
+                "s2D488k.pth": "https://huggingface.co/lj1995/GPT-SoVITS/resolve/main/s2D488k.pth?download=true"
+            },
+            "link": "https://huggingface.co/lj1995/GPT-SoVITS"
+        },
+        {
+            "tags": [
+                "TTS",
+                "GPT-SoVITS"
+            ],
+            "name": "chinese-hubert-base",
+            "size": {
+                "config.json": "0.0MB",
+                "preprocessor_config.json": "0.0MB",
+                "pytorch_model.bin": "180.1"
+            },
+            "date": {
+                "config.json": "2024-03-09 10:43:20.473571",
+                "preprocessor_config.json": "2024-03-09 10:43:15.740161",
+                "pytorch_model.bin": "2024-03-09 10:43:36.856372"
+            },
+            "SHA": {
+                "config.json": "c3e5060a1277e0f078cc6be9da4528a605dba6ece93018981fe2c820e5c7b103",
+                "preprocessor_config.json": "dcd684124d06722947939d41ea6ae58dbf10968c60a11a29f23ddc602c64a29b",
+                "pytorch_model.bin": "24164f129c66499d1346e2aa55f183250c223161ec2770c0da3d3b08cf432d3c"
+            },
+            "downloadurl": {
+                "config.json": "https://huggingface.co/lj1995/GPT-SoVITS/resolve/main/chinese-hubert-base/config.json?download=true",
+                "preprocessor_config.json": "https://huggingface.co/lj1995/GPT-SoVITS/resolve/main/chinese-hubert-base/preprocessor_config.json?download=true",
+                "pytorch_model.bin": "https://huggingface.co/lj1995/GPT-SoVITS/resolve/main/chinese-hubert-base/pytorch_model.bin?download=true"
+            },
+            "link": "https://huggingface.co/lj1995/GPT-SoVITS"
+        },
+        {
+            "tags": [
+                "TTS",
+                "GPT-SoVITS"
+            ],
+            "name": "chinese-roberta-wwm-ext-large",
+            "size": {
+                "config.json": "0.0MB",
+                "tokenizer.json": "0.3MB",
+                "pytorch_model.bin": "621.1MB"
+            },
+            "date": {
+                "config.json": "2024-03-09 10:43:29.774951",
+                "tokenizer.json": "2024-03-09 10:43:34.205848",
+                "pytorch_model.bin": "2024-03-09 10:45:27.980667"
+            },
+            "SHA": {
+                "config.json": "3d57de2fd7e80d0e5c8ff194f0bbb6baa10df7e43fc262a0cc71298a78b0a3e5",
+                "tokenizer.json": "173796956820ea27bd14f76bf28162607ff4254807e2948253eb5b46f5bb643b",
+                "pytorch_model.bin": "e53a693acc59ace251d143d068096ae0d7b79e4b1b503fa84c9dcf576448c1d8"
+            },
+            "downloadurl": {
+                "config.json": "https://huggingface.co/lj1995/GPT-SoVITS/resolve/main/chinese-roberta-wwm-ext-large/config.json?download=true",
+                "tokenizer.json": "https://huggingface.co/lj1995/GPT-SoVITS/resolve/main/chinese-roberta-wwm-ext-large/tokenizer.json?download=true",
+                "pytorch_model.bin": "https://huggingface.co/lj1995/GPT-SoVITS/resolve/main/chinese-roberta-wwm-ext-large/pytorch_model.bin?download=true"
+            },
+            "link": "https://huggingface.co/lj1995/GPT-SoVITS"
         },
         {
             "tags": [
                 "TTS",
                 "VITS"
             ],
-            "name": "standard_G（暂无）",
-            "size": "",
-            "date": "",
-            "SHA": "",
-            "downloadurl": "",
-            "link": ""
-        },
-        {
-            "tags": [
-                "TTS",
-                "VITS"
-            ],
-            "name": "standard_D（暂无）",
-            "size": "",
-            "date": "",
-            "SHA": "",
-            "downloadurl": "",
+            "name": "standard（暂无）",
+            "size": {
+                "standard_G": "",
+                "standard_D": "",
+                "standard_Config": ""
+            },
+            "date": {
+                "standard_G": "",
+                "standard_D": "",
+                "standard_Config": ""
+            },
+            "SHA": {
+                "standard_G": "None",
+                "standard_D": "None",
+                "standard_Config": "None"
+            },
+            "downloadurl": {
+                "standard_G": "",
+                "standard_D": "",
+                "standard_Config": ""
+            },
             "link": ""
         }
     ]

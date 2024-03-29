@@ -46,9 +46,9 @@
 <br>Voice Convertion
 
 <br>这些功能依次关联，能够形成一套完整的工作流
-<br>These functions are independent of each other but seamlessly integrated to form a complete workflow
+<br>These functions can be seamlessly integrated to form a complete workflow
 <br>用户可以根据自己的需求有选择性地使用，亦或者依次通过这些工具将未经处理的语音文件逐步变为理想的语音模型
-<br>Users can use these tools selectively according to their own needs, or use them in sequence to gradually transform raw audio files into ideal speech models.
+<br>Users can use these tools selectively according to their own needs, or use them in sequence to gradually transform raw audio files into ideal speech models
 
 ### 鸣谢<br>Acknowledgement
 
@@ -60,6 +60,7 @@
 - [whisper](https://github.com/openai/whisper)
 - [SRT-to-CSV-and-audio-split](https://github.com/tobiasrordorf/SRT-to-CSV-and-audio-split)
 - [vits](https://github.com/CjangCjengh/vits)
+- [GPT-SoVITS](https://github.com/RVC-Boss/GPT-SoVITS)
 
 
 ## 注意事项<br>Consideration
@@ -218,7 +219,7 @@
 <br>**A**: 开代理或者直接用懒人包
 
 -   **Q**: 好多参数都不清楚要如何设置该怎么办？
-<br>**A**: 不明白的话使用默认值就好，至于有些参数（如语音识别工具中的“判断阈值”）可能要视实际效果多调试几次
+<br>**A**: 不明白的话使用默认值就好
 
 -   **Q**: 你这永久免费开源...它保真吗？
 <br>**A**: 嗯哼~♪

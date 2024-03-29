@@ -7,6 +7,7 @@ from PySide6.QtWidgets import *
 from .QSimpleWidgets.Utils import *
 from .QSimpleWidgets.QFunctions import *
 from .Components import *
+from .Window import *
 
 ##############################################################################################################################
 
@@ -199,13 +200,14 @@ def Function_ConfigureCheckBox(
 def Function_SetURL(
     Button: QAbstractButton,
     URL: Union[str, QWidget, list],
-    ButtonTooltip: str = "Open"
+    ButtonTooltip: str = "Open",
+    CreateIfNotExist: bool = False
 ):
     '''
     Function to open URL (through button)
     '''
     Button.clicked.connect(
-        lambda: Function_OpenURL([(Function_ParamsHandler(URL, None) if isinstance(URL, QWidget) else URL) for URL in ToIterable(URL)])
+        lambda: Function_OpenURL([(Function_ParamsHandler(URL, None) if isinstance(URL, QWidget) else URL) for URL in ToIterable(URL)], CreateIfNotExist)
     )
     Button.setToolTipDuration(-1)
     Button.setToolTip(ButtonTooltip)
@@ -241,6 +243,7 @@ def Function_SetFileDialog(
 
 
 def Function_ShowMessageBox(
+    WindowToMask: Optional[WindowBase] = None,
     MessageType: object = QMessageBox.Information,
     WindowTitle: str = ...,
     Text: str = ...,
@@ -250,7 +253,7 @@ def Function_ShowMessageBox(
     '''
     Function to pop up a msgbox
     '''
-    MsgBox = QMessageBox() #MsgBox = MessageBoxBase()
+    MsgBox = MessageBoxBase(WindowToMask)
 
     MsgBox.setIcon(MessageType)
     MsgBox.setWindowTitle(WindowTitle)
@@ -313,7 +316,8 @@ def Function_ParamsSynchronizer(
         for UI_Get, UI_Set in FromTo.items():
             Param_Get = Function_ParamsHandler(UI_Get, "Get")
             Param_Get = Param_Get * Times if isinstance(Param_Get, (int, float, complex)) else Param_Get
-            Function_ParamsHandler(UI_Set, Param_Get, "Set")
+            for UI_Set in ToIterable(UI_Set):
+                Function_ParamsHandler(UI_Set, Param_Get, "Set")
     
     TriggerList = ToIterable(Trigger)
 

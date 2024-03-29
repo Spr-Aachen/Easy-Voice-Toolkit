@@ -1,6 +1,7 @@
 import os
 import glob
 import sys
+import shutil
 import logging
 logging.basicConfig(stream = sys.stdout, encoding = 'utf-8')
 logger = logging
@@ -9,8 +10,8 @@ import subprocess
 import matplotlib
 import matplotlib.pylab as plt
 import numpy as np
-from scipy.io.wavfile import read
 import torch
+from pathlib import Path
 
 
 MATPLOTLIB_FLAG = False
@@ -44,12 +45,13 @@ def load_checkpoint(checkpoint_path, model, optimizer, keep_speaker_emb: bool = 
     return model, optimizer, learning_rate, iteration
 
 
-def save_checkpoint(model, optimizer, learning_rate, iteration, checkpoint_path):
+def save_checkpoint(model, optimizer, learning_rate, iteration, checkpoint_path): # fix issue: torch.save doesn't support chinese path
     logger.info(f"Saving model and optimizer state at iteration {iteration} to {checkpoint_path}")
     if hasattr(model, 'module'):
         state_dict = model.module.state_dict()
     else:
         state_dict = model.state_dict()
+    checkpoint_path_tmp = Path(Path(checkpoint_path).root).joinpath("checkpoint_tmp").as_posix()
     torch.save(
         {
             'model': state_dict,
@@ -57,8 +59,9 @@ def save_checkpoint(model, optimizer, learning_rate, iteration, checkpoint_path)
             'optimizer': optimizer.state_dict(),
             'learning_rate': learning_rate
         },
-        checkpoint_path
+        checkpoint_path_tmp
     )
+    shutil.move(checkpoint_path_tmp, Path(checkpoint_path).parent.as_posix())
 
 
 def summarize(writer, global_step, scalars={}, histograms={}, images={}, audios={}, audio_sampling_rate=22050):
