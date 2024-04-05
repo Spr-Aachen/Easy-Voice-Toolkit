@@ -1,8 +1,8 @@
 from typing import Optional
 from PySide6.QtCore import Qt, QObject
 
-from .QSimpleWidgets.WindowCustomizer import *
-from .QSimpleWidgets.ComponentsCustomizer import *
+from QEasyWidgets.WindowCustomizer import *
+from QEasyWidgets.ComponentsCustomizer import *
 from .UI_MainWindow import Ui_MainWindow
 from .UI_ChildWindow_ASR import Ui_ChildWindow_ASR
 from .UI_ChildWindow_STT import Ui_ChildWindow_STT

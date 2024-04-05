@@ -2,10 +2,10 @@ from typing import Optional
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QWidget
 
-from .QSimpleWidgets.Utils import *
-from .QSimpleWidgets.QFunctions import *
-from .QSimpleWidgets.Sources import *
-from .QSimpleWidgets.ComponentsCustomizer import *
+from QEasyWidgets.ComponentsCustomizer import *
+from QEasyWidgets.Utils import *
+from QEasyWidgets.QFunctions import *
+from .Sources import *
 
 ##############################################################################################################################
 
@@ -396,6 +396,11 @@ class Table_ASRResult(TableBase):
             except:
                 pass
         return ValueDict
+
+
+class Table_DATResult(TableBase):
+    '''
+    '''
 
 
 class Table_STTResult(TableBase):

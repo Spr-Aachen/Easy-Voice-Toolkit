@@ -8,7 +8,7 @@ import pynvml
 #from packaging import version
 from PySide6.QtCore import QObject, Signal
 
-from .QSimpleWidgets.Utils import *
+from QEasyWidgets.Utils import *
 
 ##############################################################################################################################
 
@@ -425,7 +425,7 @@ class PyReqs_Installer(QObject):
             else:
                 exit(-1)
             '''
-            _, _, ReturnCode = RunCMD([f'pip3 install {Package} --index-url {Mirror}'])
+            _, _, ReturnCode = RunCMD([f'pip3 install {Package} -y --index-url {Mirror}'])
             if ReturnCode == 0:
                 break
 
@@ -435,7 +435,7 @@ class PyReqs_Installer(QObject):
             Requirements = f.read().splitlines() #Requirements = f.readlines()
         for Index, Requirement in enumerate(Requirements):
             if not (Requirement.startswith('#') or Requirement.strip() == ''):
-                Package = Requirement.strip()
+                Package = re.split('=|>|<|#', Requirement)[0].strip()
                 Result = self.Check_PyReq(Package)
                 if Result == False:
                     if self.EmitFlag == True:
@@ -500,16 +500,17 @@ class Pytorch_Installer(QObject):
 
     def Install_Pytorch(self, Package: str):
         pynvml.nvmlInit()
-        CudaVersion = pynvml.nvmlDeviceGetCudaComputeCapability(pynvml.nvmlDeviceGetHandleByIndex(0))[1]
+        CudaList = [117, 118, 121]
+        CudaVersion = min(CudaList, key = lambda Cuda: abs(Cuda - pynvml.nvmlSystemGetCudaDriverVersion()//100))
         MirrorList = [f'https://download.pytorch.org/whl/cu{CudaVersion}', '']
         for Mirror in MirrorList:
-            Result = RunCMD([f'pip3 install {Package} --index-url {Mirror}'])
+            Result = RunCMD([f'pip3 install {Package} -y --index-url {Mirror}' if Package in ['torch', 'torchvision', 'torchaudio'] else f'pip3 install {Package} -y'])
             if Result.returncode == 0:
                 break
 
     def Execute_Pytorch_Installation(self):
-        PackageList = ['torch', 'torchvision', 'torchaudio']
-        for Package in PackageList:
+        PackageList = ['torch', 'torchvision', 'torchaudio', 'pytorch-lightning']
+        for Index, Package in enumerate(PackageList):
             Result = self.Check_Pytorch(Package)
             if Result == False:
                 if self.EmitFlag == True:
@@ -518,13 +519,13 @@ class Pytorch_Installer(QObject):
                 EnvConfiguratorSignals.Signal_PytorchStatus.emit(f"Installing {Package}. Please wait...")
                 try:
                     self.Install_Pytorch(Package)
-                    EnvConfiguratorSignals.Signal_PytorchInstalled.emit()
-                    EnvConfiguratorSignals.Signal_PytorchStatus.emit("Successfully installed!")
+                    EnvConfiguratorSignals.Signal_PytorchInstalled.emit() if Index + 1 == len(PackageList) else None
+                    EnvConfiguratorSignals.Signal_PytorchStatus.emit("Successfully installed!") if Index + 1 == len(PackageList) else None
                 except Exception as e:
                     EnvConfiguratorSignals.Signal_PytorchInstallFailed.emit(e)
                     EnvConfiguratorSignals.Signal_PytorchStatus.emit("Installation failed:(")
             else:
-                EnvConfiguratorSignals.Signal_PytorchDetected.emit()
+                EnvConfiguratorSignals.Signal_PytorchDetected.emit() if Index + 1 == len(PackageList) else None
                 EnvConfiguratorSignals.Signal_PytorchStatus.emit(f"{Package} detected. Version: {Result}")
 
     def Execute(self, Params: tuple):

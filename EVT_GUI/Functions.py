@@ -4,8 +4,8 @@ from PySide6.QtCore import Qt, QObject, Signal, Slot
 from PySide6.QtGui import QFont
 from PySide6.QtWidgets import *
 
-from .QSimpleWidgets.Utils import *
-from .QSimpleWidgets.QFunctions import *
+from QEasyWidgets.Utils import *
+from QEasyWidgets.QFunctions import *
 from .Components import *
 from .Window import *
 

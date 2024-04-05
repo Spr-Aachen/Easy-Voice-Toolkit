@@ -2,7 +2,7 @@ from PySide6.QtCore import (QCoreApplication, QMetaObject, QRect, QSize, Qt)
 from PySide6.QtWidgets import *
 
 from .Components import LineEditBase, Table_ViewModels, Table_EditAudioSpeaker
-from .QSimpleWidgets import Sources
+from . import Sources
 
 
 class Ui_MainWindow(object):
@@ -304,12 +304,12 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_3.addWidget(self.Button_Menu_Home)
 
-        self.Button_Menu_Download = QToolButton(self.Frame_Menu)
-        self.Button_Menu_Download.setObjectName(u"Button_Menu_Download")
-        sizePolicy1.setHeightForWidth(self.Button_Menu_Download.sizePolicy().hasHeightForWidth())
-        self.Button_Menu_Download.setSizePolicy(sizePolicy1)
-        self.Button_Menu_Download.setMinimumSize(QSize(0, 48))
-        self.Button_Menu_Download.setStyleSheet(u"QToolButton {\n"
+        self.Button_Menu_Env = QToolButton(self.Frame_Menu)
+        self.Button_Menu_Env.setObjectName(u"Button_Menu_Env")
+        sizePolicy1.setHeightForWidth(self.Button_Menu_Env.sizePolicy().hasHeightForWidth())
+        self.Button_Menu_Env.setSizePolicy(sizePolicy1)
+        self.Button_Menu_Env.setMinimumSize(QSize(0, 48))
+        self.Button_Menu_Env.setStyleSheet(u"QToolButton {\n"
 "	/*color: rgb(255, 255, 255);*/\n"
 "	background-color: transparent;\n"
 "	border-width: 0px;\n"
@@ -335,11 +335,11 @@ class Ui_MainWindow(object):
 "	border-width: 0px;\n"
 "	border-style: solid;\n"
 "}")
-        self.horizontalLayout_7 = QHBoxLayout(self.Button_Menu_Download)
+        self.horizontalLayout_7 = QHBoxLayout(self.Button_Menu_Env)
         self.horizontalLayout_7.setSpacing(0)
         self.horizontalLayout_7.setObjectName(u"horizontalLayout_7")
         self.horizontalLayout_7.setContentsMargins(0, 0, 0, 0)
-        self.Label_Menu_Env_Install_Icon = QLabel(self.Button_Menu_Download)
+        self.Label_Menu_Env_Install_Icon = QLabel(self.Button_Menu_Env)
         self.Label_Menu_Env_Install_Icon.setObjectName(u"Label_Menu_Env_Install_Icon")
         self.Label_Menu_Env_Install_Icon.setMinimumSize(QSize(48, 48))
         self.Label_Menu_Env_Install_Icon.setMaximumSize(QSize(48, 48))
@@ -361,7 +361,7 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_7.addWidget(self.Label_Menu_Env_Install_Icon)
 
-        self.Label_Menu_Env_Install_Text = QLabel(self.Button_Menu_Download)
+        self.Label_Menu_Env_Install_Text = QLabel(self.Button_Menu_Env)
         self.Label_Menu_Env_Install_Text.setObjectName(u"Label_Menu_Env_Install_Text")
         sizePolicy2.setHeightForWidth(self.Label_Menu_Env_Install_Text.sizePolicy().hasHeightForWidth())
         self.Label_Menu_Env_Install_Text.setSizePolicy(sizePolicy2)
@@ -379,7 +379,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_7.addWidget(self.Label_Menu_Env_Install_Text)
 
 
-        self.verticalLayout_3.addWidget(self.Button_Menu_Download)
+        self.verticalLayout_3.addWidget(self.Button_Menu_Env)
 
         self.Button_Menu_Models = QToolButton(self.Frame_Menu)
         self.Button_Menu_Models.setObjectName(u"Button_Menu_Models")

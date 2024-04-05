@@ -7,8 +7,8 @@ from PySide6.QtCore import Qt, QObject, QThread, Signal
 from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import QApplication, QWidget, QVBoxLayout, QSizePolicy, QPushButton, QProgressBar, QLabel
 
+from QEasyWidgets.Utils import CheckUpdate, DownloadFile, NormPath, SetRichText, RunBat, BootWithBat, GetFileInfo, GetBaseDir, ManageConfig
 from EVT_GUI.Functions import Function_AnimateProgressBar, Function_SetText#, Function_ShowMessageBox
-from EVT_GUI.QSimpleWidgets.Utils import CheckUpdate, DownloadFile, NormPath, SetRichText, RunBat, BootWithBat, GetFileInfo, GetBaseDir, ManageConfig
 
 ##############################################################################################################################
 

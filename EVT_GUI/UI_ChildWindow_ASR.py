@@ -2,7 +2,7 @@ from PySide6.QtCore import (QCoreApplication, QMetaObject, QSize)
 from PySide6.QtWidgets import *
 
 from .Components import Table_ASRResult, LineEditBase
-from .QSimpleWidgets import Sources
+from . import Sources
 
 
 class Ui_ChildWindow_ASR(object):

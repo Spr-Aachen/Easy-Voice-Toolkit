@@ -11,8 +11,8 @@ from PySide6.QtCore import Qt, QObject, Signal, Slot, QThread
 from PySide6.QtCore import QCoreApplication as QCA
 from PySide6.QtWidgets import *
 
-from EVT_GUI.QSimpleWidgets.Utils import *
-from EVT_GUI.QSimpleWidgets.QTasks import *
+from QEasyWidgets.Utils import *
+from QEasyWidgets.QTasks import *
 from EVT_GUI.Window import *
 from EVT_GUI.Functions import *
 from EVT_GUI.EnvConfigurator import *
@@ -973,16 +973,16 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_Menu_Home.setToolTip(QCA.translate("ToolTip", "主页"))
 
         self.ui.Label_Menu_Env_Install_Text.setText(QCA.translate("Label", "环境"))
-        self.ui.Button_Menu_Download.clicked.connect(
+        self.ui.Button_Menu_Env.clicked.connect(
             lambda: Function_AnimateStackedWidget(
                 StackedWidget = self.ui.StackedWidget_Pages,
                 TargetIndex = 1
             )
         )
-        self.ui.Button_Menu_Download.setCheckable(True)
-        self.ui.Button_Menu_Download.setChecked(False)
-        self.ui.Button_Menu_Download.setAutoExclusive(True)
-        self.ui.Button_Menu_Download.setToolTip(QCA.translate("ToolTip", "环境配置"))
+        self.ui.Button_Menu_Env.setCheckable(True)
+        self.ui.Button_Menu_Env.setChecked(False)
+        self.ui.Button_Menu_Env.setAutoExclusive(True)
+        self.ui.Button_Menu_Env.setToolTip(QCA.translate("ToolTip", "环境配置"))
 
         self.ui.Label_Menu_Models_Text.setText(QCA.translate("Label", "模型"))
         self.ui.Button_Menu_Models.clicked.connect(
@@ -1185,7 +1185,7 @@ class MainWindow(Window_MainWindow):
             lambda: Function_ShowMessageBox(self,
                 WindowTitle = "Tip",
                 Text = "未检测到Aria2，已开始下载",
-                ButtonEvents = {QMessageBox.Ok: lambda: self.ui.Button_Menu_Download.click()}
+                ButtonEvents = {QMessageBox.Ok: lambda: self.ui.Button_Menu_Env.click()}
             )
         )
         EnvConfiguratorSignals.Signal_Aria2Installed.connect(#self.ui.Button_Install_Aria2.click)
@@ -1229,7 +1229,7 @@ class MainWindow(Window_MainWindow):
             lambda: Function_ShowMessageBox(self,
                 WindowTitle = "Tip",
                 Text = "未检测到FFmpeg，已开始下载",
-                ButtonEvents = {QMessageBox.Ok: lambda: self.ui.Button_Menu_Download.click()}
+                ButtonEvents = {QMessageBox.Ok: lambda: self.ui.Button_Menu_Env.click()}
             )
         )
         EnvConfiguratorSignals.Signal_FFmpegInstalled.connect(#self.ui.Button_Install_FFmpeg.click)
@@ -1273,7 +1273,7 @@ class MainWindow(Window_MainWindow):
             lambda: Function_ShowMessageBox(self,
                 WindowTitle = "Tip",
                 Text = "未检测到3.8版本以上的Python，已开始下载",
-                ButtonEvents = {QMessageBox.Ok: lambda: self.ui.Button_Menu_Download.click()}
+                ButtonEvents = {QMessageBox.Ok: lambda: self.ui.Button_Menu_Env.click()}
             )
         )
         EnvConfiguratorSignals.Signal_PythonInstalled.connect(#self.ui.Button_Install_Python.click)
@@ -1317,7 +1317,7 @@ class MainWindow(Window_MainWindow):
             lambda: Function_ShowMessageBox(self,
                 WindowTitle = "Tip",
                 Text = "缺失Python依赖库，已开始下载",
-                ButtonEvents = {QMessageBox.Ok: lambda: self.ui.Button_Menu_Download.click()}
+                ButtonEvents = {QMessageBox.Ok: lambda: self.ui.Button_Menu_Env.click()}
             )
         )
         EnvConfiguratorSignals.Signal_PyReqsInstalled.connect(#self.ui.Button_Install_PyReqs.click)
@@ -1361,7 +1361,7 @@ class MainWindow(Window_MainWindow):
             lambda: Function_ShowMessageBox(self,
                 WindowTitle = "Tip",
                 Text = "缺失Pytorch相关库，已开始下载",
-                ButtonEvents = {QMessageBox.Ok: lambda: self.ui.Button_Menu_Download.click()}
+                ButtonEvents = {QMessageBox.Ok: lambda: self.ui.Button_Menu_Env.click()}
             )
         )
         EnvConfiguratorSignals.Signal_PytorchInstalled.connect(#self.ui.Button_Install_Pytorch.click)
@@ -1515,7 +1515,7 @@ class MainWindow(Window_MainWindow):
                 NormPath(Path(ResourceDir).joinpath('Sources/Guidance_Layout.png'))
             ],
             [
-                '欢迎来到音频处理工具界面\n该工具会将媒体文件批量转换为音频文件，然后自动切除音频的静音部分',
+                '欢迎来到音频处理工具界面\n该工具用于将媒体文件批量转换为音频文件并进行降噪、静音切除等操作',
                 '顶部区域用于切换当前工具类型（目前仅有一种）\n中间区域用于设置当前工具的各项参数；设置完毕后点击底部区域的按钮即可执行当前工具'
             ]
         )
@@ -2105,7 +2105,7 @@ class MainWindow(Window_MainWindow):
                 NormPath(Path(ResourceDir).joinpath('Sources/Guidance_Layout.png'))
             ],
             [
-                '欢迎来到语音识别工具界面\n该工具会在不同说话人的音频中批量筛选出属于同一说话人的音频，用户需要提供一段目标说话人的语音',
+                '欢迎来到语音识别工具界面\n该工具用于从不同说话人的音频中批量筛选出属于同一说话人的音频',
                 '顶部区域用于切换当前工具类型（目前仅有一种）\n中间区域用于设置当前工具的各项参数；设置完毕后点击底部区域的按钮即可执行当前工具'
             ]
         )
@@ -2572,7 +2572,7 @@ class MainWindow(Window_MainWindow):
                 NormPath(Path(ResourceDir).joinpath('Sources/Guidance_Layout.png'))
             ],
             [
-                '欢迎来到语音转录工具界面\n将语音文件的内容批量转换为带时间戳的文本并以字幕文件的形式保存',
+                '欢迎来到语音转录工具界面\n该工具用于将语音文件批量转换为字幕文件并进行语言标注等操作',
                 '顶部区域用于切换当前工具类型\n中间区域用于设置当前工具的各项参数；设置完毕后点击底部区域的按钮即可执行当前工具'
             ]
         )
@@ -2630,7 +2630,7 @@ class MainWindow(Window_MainWindow):
         Function_SetText(
             Widget = self.ui.Label_STT_Whisper_AddLanguageInfo,
             Text = SetRichText(
-                Body = QCA.translate("Label", "标注语言信息\n标注音频中说话人所使用的语言，若用于数据集制作则建议启用。")
+                Body = QCA.translate("Label", "语种标注\n标注音频中说话人所使用的语言，若用于数据集制作则建议启用。")
             )
         )
         self.ui.CheckBox_STT_Whisper_AddLanguageInfo.setChecked(
@@ -2837,7 +2837,7 @@ class MainWindow(Window_MainWindow):
         Function_SetText(
             Widget = ChildWindow_STT.ui.Label_Text,
             Text = SetRichText(
-                Body = QCA.translate("Label", "这里记录了每个语音文件与其对应的字幕文本（包含了时间戳）\n你可以对这些文本进行更改，若启用了语言信息标注则小心不要误删")
+                Body = QCA.translate("Label", "这里记录了每个语音文件与其对应的字幕文本（包含了时间戳）\n你可以对这些文本进行更改，若启用了语种标注则小心不要误删")
             )
         )
 
@@ -2978,7 +2978,7 @@ class MainWindow(Window_MainWindow):
                 NormPath(Path(ResourceDir).joinpath('Sources/Guidance_Layout.png'))
             ],
             [
-                '欢迎来到数据集工具界面\n生成适用于语音模型训练的数据集。用户需要提供语音文件与对应的字幕文件',
+                '欢迎来到数据集工具界面\n该工具用于生成适用于语音模型训练的数据集',
                 '顶部区域用于切换当前工具类型\n中间区域用于设置当前工具的各项参数；设置完毕后点击底部区域的按钮即可执行当前工具'
             ]
         )
@@ -3908,7 +3908,7 @@ class MainWindow(Window_MainWindow):
                 NormPath(Path(ResourceDir).joinpath('Sources/Guidance_Layout.png'))
             ],
             [
-                '欢迎来到语音训练工具界面\n训练出适用于语音合成的模型文件。用户需要提供语音数据集',
+                '欢迎来到语音训练工具界面\n该工具用于训练出适用于语音合成的模型文件',
                 '顶部区域用于切换当前工具类型（目前仅有一种）\n中间区域用于设置当前工具的各项参数；设置完毕后点击底部区域的按钮即可执行当前工具'
             ]
         )
@@ -5036,7 +5036,7 @@ class MainWindow(Window_MainWindow):
                 NormPath(Path(ResourceDir).joinpath('Sources/Guidance_Layout.png'))
             ],
             [
-                '欢迎来到语音合成工具界面\n将文字转为语音并生成音频文件，用户需要提供相应的模型和配置文件',
+                '欢迎来到语音合成工具界面\n该工具用于将文字转为语音，用户需要提供相应的模型和配置文件',
                 '顶部区域用于切换当前工具类型（目前仅有一种）\n中间区域用于设置当前工具的各项参数；设置完毕后点击底部区域的按钮即可执行当前工具'
             ]
         )

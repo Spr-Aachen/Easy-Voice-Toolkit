@@ -65,6 +65,11 @@
 
 ## 注意事项<br>Consideration
 
+### 系统<br>System
+
+目前UI界面仅支持Windows系统
+<br>Currently the UI interface only supports Windows system
+
 ### 语言<br>Language
 
 目前各个工具对语言的支持情况如下：
@@ -126,8 +131,8 @@
 - 下载[轻量化的安装程序](https://github.com/Spr-Aachen/Easy-Voice-Toolkit/releases/latest)：包体小且拥有安装引导，但是未配置环境依赖且不带模型
 <br>Download the [lightweight installer](https://github.com/Spr-Aachen/Easy-Voice-Toolkit/releases/latest): small package comes with installation instructions, but without necessary environmental dependencies and models
 
-- 下载[解压即用的懒人包]()：配置了所有环境依赖并附带有预设模型，但是包体较大且需要解压
-<br>Download the [Ready-to-use portable package](): huge package with all environmental dependencies and several model presets, need to unpack after download
+- 下载[解压即用的懒人包](https://pixeldrain.com/api/file/JLUJwfNA?download)：配置了所有环境依赖并附带有预设模型，但是包体较大且需要解压
+<br>Download the [Ready-to-use portable package](https://pixeldrain.com/api/file/JLUJwfNA?download): huge package with all environmental dependencies and several model presets, need to unpack after download
 
 #### 运行<br>Run
 
@@ -173,7 +178,7 @@
 - 安装GUI依赖
 <br>Install GUI dependency
     ```shell
-    pip install pyside6 pywin32==300 psutil pynvml darkdetect PyGithub
+    pip install pyside6 QEasyWidgets pywin32==300 psutil pynvml darkdetect PyGithub
     ```
 
 #### 运行程序<br>Run Programm
