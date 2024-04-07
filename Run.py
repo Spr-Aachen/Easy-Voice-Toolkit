@@ -1192,10 +1192,10 @@ class MainWindow(Window_MainWindow):
             lambda: EnvConfiguratorSignals.Signal_Aria2Detected.emit()
         )
         EnvConfiguratorSignals.Signal_Aria2InstallFailed.connect(
-            lambda: Function_ShowMessageBox(self,
+            lambda Exception: Function_ShowMessageBox(self,
                 MessageType = QMessageBox.Warning,
                 WindowTitle = "Warning",
-                Text = "安装Aria2出错",
+                Text = f"安装Aria2出错：\n{Exception}",
             )
         )
         EnvConfiguratorSignals.Signal_Aria2Detected.connect(
@@ -1236,10 +1236,10 @@ class MainWindow(Window_MainWindow):
             lambda: EnvConfiguratorSignals.Signal_FFmpegDetected.emit()
         )
         EnvConfiguratorSignals.Signal_FFmpegInstallFailed.connect(
-            lambda: Function_ShowMessageBox(self,
+            lambda Exception: Function_ShowMessageBox(self,
                 MessageType = QMessageBox.Warning,
                 WindowTitle = "Warning",
-                Text = "安装FFmpeg出错",
+                Text = f"安装FFmpeg出错：\n{Exception}",
             )
         )
         EnvConfiguratorSignals.Signal_FFmpegDetected.connect(
@@ -1280,10 +1280,10 @@ class MainWindow(Window_MainWindow):
             lambda: EnvConfiguratorSignals.Signal_PythonDetected.emit()
         )
         EnvConfiguratorSignals.Signal_PythonInstallFailed.connect(
-            lambda: Function_ShowMessageBox(self,
+            lambda Exception: Function_ShowMessageBox(self,
                 MessageType = QMessageBox.Warning,
                 WindowTitle = "Warning",
-                Text = "安装Python出错",
+                Text = f"安装Python出错：\n{Exception}",
             )
         )
         EnvConfiguratorSignals.Signal_PythonDetected.connect(
@@ -1324,10 +1324,10 @@ class MainWindow(Window_MainWindow):
             lambda: EnvConfiguratorSignals.Signal_PyReqsDetected.emit()
         )
         EnvConfiguratorSignals.Signal_PythonInstallFailed.connect(
-            lambda: Function_ShowMessageBox(self,
+            lambda Exception: Function_ShowMessageBox(self,
                 MessageType = QMessageBox.Warning,
                 WindowTitle = "Warning",
-                Text = "安装Python依赖库出错"
+                Text = f"安装Python依赖库出错：\n{Exception}"
             )
         )
         EnvConfiguratorSignals.Signal_PyReqsDetected.connect(
@@ -1349,7 +1349,7 @@ class MainWindow(Window_MainWindow):
             Method = Pytorch_Installer.Execute,
             Params = ()
         )
-        EnvConfiguratorSignals.Signal_PythonDetected.connect(
+        EnvConfiguratorSignals.Signal_PyReqsDetected.connect(
             self.ui.Button_Install_Pytorch.click #if Config.GetValue('Env', 'Pytorch', 'Undetected') == 'Undetected' else EnvConfiguratorSignals.Signal_PytorchDetected.emit
         )
         self.ui.Button_Install_Pytorch.setText('')
@@ -1368,10 +1368,10 @@ class MainWindow(Window_MainWindow):
             lambda: EnvConfiguratorSignals.Signal_PytorchDetected.emit()
         )
         EnvConfiguratorSignals.Signal_PytorchInstallFailed.connect(
-            lambda: Function_ShowMessageBox(self,
+            lambda Exception: Function_ShowMessageBox(self,
                 MessageType = QMessageBox.Warning,
                 WindowTitle = "Warning",
-                Text = "安装Pytorch出错",
+                Text = f"安装Pytorch出错：\n{Exception}",
             )
         )
         EnvConfiguratorSignals.Signal_PytorchDetected.connect(

@@ -85,7 +85,7 @@ class Aria2_Installer(QObject):
             File_Name = 'Aria2'
             File_Format = 'zip'
             Path_Download = os.path.join(Dir_Download, f"{File_Name}.{File_Format}")
-            Dir_Install = f"{os.getenv('SystemDrive')}/Aria2"
+            Dir_Install = Path(f"{os.getenv('SystemDrive')}/Aria2").__str__()
             DownloadFile(URL, Dir_Download, File_Name, File_Format, None)
             shutil.unpack_archive(Path_Download, Dir_Install, Path_Download.rsplit('.', 1)[-1])
             MoveFiles(os.path.dirname(GetPaths(Dir_Install, 'aria2c.exe')[0]), Dir_Install)
@@ -144,7 +144,7 @@ class FFmpeg_Installer(QObject):
             File_Name = 'FFmpeg'
             File_Format = 'zip'
             Path_Download = os.path.join(Dir_Download, f"{File_Name}.{File_Format}")
-            Dir_Install = f"{os.getenv('SystemDrive')}/FFmpeg"
+            Dir_Install = Path(f"{os.getenv('SystemDrive')}/FFmpeg").__str__()
             Path_Binary = os.path.normpath(os.path.join(Dir_Install, 'bin'))
             DownloadFile(URL, Dir_Download, File_Name, File_Format, None)
             shutil.unpack_archive(Path_Download, Dir_Install, Path_Download.rsplit('.', 1)[-1])
@@ -204,7 +204,7 @@ class GCC_Installer(QObject):
             File_Name = 'MinGW'
             File_Format = 'zip'
             Path_Download = os.path.join(Dir_Download, f"{File_Name}.{File_Format}")
-            Dir_Install = f"{os.getenv('SystemDrive')}/MinGW"
+            Dir_Install = Path(f"{os.getenv('SystemDrive')}/MinGW").__str__()
             Path_Binary = os.path.normpath(os.path.join(Dir_Install, 'bin'))
             DownloadFile(URL, Dir_Download, File_Name, File_Format, None)
             shutil.unpack_archive(Path_Download, Dir_Install, Path_Download.rsplit('.', 1)[-1])
@@ -264,7 +264,7 @@ class CMake_Installer(QObject):
             File_Name = 'CMake'
             File_Format = 'zip'
             Path_Download = os.path.join(Dir_Download, f"{File_Name}.{File_Format}")
-            Dir_Install = f"{os.getenv('SystemDrive')}/CMake"
+            Dir_Install = Path(f"{os.getenv('SystemDrive')}/CMake").__str__()
             Path_Binary = os.path.normpath(os.path.join(Dir_Install, 'bin'))
             DownloadFile(URL, Dir_Download, File_Name, File_Format, None)
             shutil.unpack_archive(Path_Download, Dir_Install, Path_Download.rsplit('.', 1)[-1])
@@ -282,7 +282,7 @@ class CMake_Installer(QObject):
                 self.MinGW_Bin_Path = Path
                 break
             elif Index == len(PathList) - 1:
-                self.MinGW_Bin_Path = f"{os.getenv('SystemDrive')}/MinGW/bin"
+                self.MinGW_Bin_Path = Path(f"{os.getenv('SystemDrive')}/MinGW/bin").__str__()
         #shutil.copy2(os.path.join(self.MinGW_Bin_Path, 'mingw32-make.exe'), os.path.join(self.MinGW_Bin_Path, 'make.exe')) if not os.path.isfile(os.path.join(self.MinGW_Bin_Path, 'make.exe')) else None
 
         Result = self.Check_CMake()
@@ -515,7 +515,7 @@ class Pytorch_Installer(QObject):
             if Result == False:
                 if self.EmitFlag == True:
                     EnvConfiguratorSignals.Signal_PytorchUndetected.emit()
-                    self.EmitFlag == False
+                    self.EmitFlag = False
                 EnvConfiguratorSignals.Signal_PytorchStatus.emit(f"Installing {Package}. Please wait...")
                 try:
                     self.Install_Pytorch(Package)
