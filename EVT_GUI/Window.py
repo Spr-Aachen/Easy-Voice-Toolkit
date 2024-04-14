@@ -13,6 +13,8 @@ from .UI_ChildWindow_TTS import Ui_ChildWindow_TTS
 class Window_MainWindow(MainWindowBase):
     ui = Ui_MainWindow()
 
+    Theme = str()
+
     def __init__(self, parent = None):
         super().__init__(parent, min_width = 1280, min_height = 720)
 
@@ -26,6 +28,10 @@ class Window_MainWindow(MainWindowBase):
 
     def InitDefaultStyleSheet(self, Theme: str) -> None:
         super().setStyleSheet(Function_GetStyleSheet('Window', Theme).replace('#CentralWidget', f'#{self.CentralWidget.objectName()}'))
+        self.Theme = Theme if Theme in ('Light', 'Dark') else darkdetect.theme()
+
+    def theme(self) -> str:
+        return self.Theme
 
 ##############################################################################################################################
 

@@ -25,7 +25,7 @@ class Ui_ChildWindow_ASR(object):
         self.horizontalLayout_2.setSpacing(0)
         self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
         self.horizontalLayout_2.setContentsMargins(0, 0, 0, 0)
-        self.horizontalSpacer = QSpacerItem(792, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.horizontalSpacer = QSpacerItem(792, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.horizontalLayout_2.addItem(self.horizontalSpacer)
 
@@ -90,7 +90,7 @@ class Ui_ChildWindow_ASR(object):
         self.gridLayout.setContentsMargins(21, 12, 21, 12)
         self.Label_Title = QLabel(self.CentralWidget)
         self.Label_Title.setObjectName(u"Label_Title")
-        sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
+        sizePolicy = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.Label_Title.sizePolicy().hasHeightForWidth())
@@ -187,6 +187,32 @@ class Ui_ChildWindow_ASR(object):
 
         self.horizontalLayout.addWidget(self.Button_Cancel)
 
+        self.Button_Save = QPushButton(ChildWindow_ASR)
+        self.Button_Save.setObjectName(u"Button_Save")
+        self.Button_Save.setStyleSheet(u"QPushButton {\n"
+"	text-align: center;\n"
+"	font-size: 12px;\n"
+"	background-color: transparent;\n"
+"	padding: 9.9px;\n"
+"	border-width: 1.5px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgb(120, 120, 120);\n"
+"}\n"
+"\n"
+"\n"
+"QToolTip {\n"
+"	color: rgba(255, 255, 255, 210);\n"
+"    background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.horizontalLayout.addWidget(self.Button_Save)
+
         self.Button_Confirm = QPushButton(ChildWindow_ASR)
         self.Button_Confirm.setObjectName(u"Button_Confirm")
         self.Button_Confirm.setStyleSheet(u"QPushButton {\n"
@@ -228,4 +254,5 @@ class Ui_ChildWindow_ASR(object):
         self.Label_Text.setText(QCoreApplication.translate("ChildWindow_ASR", u"Text", None))
         self.CheckBox.setText(QCoreApplication.translate("ChildWindow_ASR", u"CheckBox", None))
         self.Button_Cancel.setText(QCoreApplication.translate("ChildWindow_ASR", u"PushButton", None))
+        self.Button_Save.setText(QCoreApplication.translate("ChildWindow_ASR", u"PushButton", None))
         self.Button_Confirm.setText(QCoreApplication.translate("ChildWindow_ASR", u"PushButton", None))

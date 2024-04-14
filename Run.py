@@ -20,7 +20,7 @@ from EVT_GUI.EnvConfigurator import *
 ##############################################################################################################################
 
 # Set current version
-CurrentVersion = "v1.0.0"
+CurrentVersion = "v1.0.2"
 
 ##############################################################################################################################
 
@@ -621,26 +621,35 @@ class Model_Downloader(QObject):
 
 # ClientFunc: GetASRResult
 def ASRResult_Get(AudioSpeakersData_Path: str):
-    AudioSpeakerSim = []
+    AudioSpeakerSimList = []
     with open(AudioSpeakersData_Path, mode = 'r', encoding = 'utf-8') as AudioSpeakersData:
         AudioSpeakerSimLines = AudioSpeakersData.readlines()
     for AudioSpeakerSimLine in AudioSpeakerSimLines:
-        AudioSpeakerSim.append(AudioSpeakerSimLine.split('|'))
-    return AudioSpeakerSim
+        AudioSpeakerSim = AudioSpeakerSimLine.strip().split('|')
+        if len(AudioSpeakerSim) == 2:
+            AudioSpeakerSim.append('')
+        AudioSpeakerSimList.append(AudioSpeakerSim)
+    return AudioSpeakerSimList
 
 
 # ClientFunc: SaveASRResult
-def ASRResult_Save(AudioSpeakers: dict, AudioSpeakersData_Path: str, MoveAudio: bool, MoveToDst: str):
+def ASRResult_Save(AudioSpeakers: dict, AudioSpeakersData_Path: str, MoveAudio: bool, MoveToDst: Optional[str] = None):
     with open(AudioSpeakersData_Path, mode = 'w', encoding = 'utf-8') as AudioSpeakersData:
         Lines = []
         for Audio, Speaker in AudioSpeakers.items():
             Speaker = Speaker.strip()
-            if Speaker != '':
+            if Speaker == '':
+                continue
+            if MoveAudio:
+                if MoveToDst is None:
+                    raise Exception("Destination shouldn't be 'None'")
                 MoveToDst_Sub = NormPath(Path(MoveToDst).joinpath(Speaker))
-                os.makedirs(MoveToDst_Sub, exist_ok = True) if MoveAudio and Path(MoveToDst_Sub).exists() == False else None
+                os.makedirs(MoveToDst_Sub, exist_ok = True) if Path(MoveToDst_Sub).exists() == False else None
                 Audio_Dst = NormPath(Path(MoveToDst_Sub).joinpath(Path(Audio).name).as_posix())
-                shutil.copy(Audio, MoveToDst_Sub) if MoveAudio and not Path(Audio_Dst).exists() else None
-                Lines.append(f"{Audio_Dst if MoveAudio else Audio}|{Speaker}\n")
+                shutil.copy(Audio, MoveToDst_Sub) if not Path(Audio_Dst).exists() else None
+                Lines.append(f"{Audio_Dst}|{Speaker}\n")
+            else:
+                Lines.append(f"{Audio}|{Speaker}\n")
         AudioSpeakersData.writelines(Lines)
 
 
@@ -924,8 +933,29 @@ class MainWindow(Window_MainWindow):
         ########################## TitleBar #########################
         #############################################################
 
-        # Title
-        self.ui.Label_Title.setText("Easy Voice Toolkit - by Spr_Aachen")
+        # Theme toggler
+        self.ui.CheckBox_SwitchTheme.setChecked(
+            {'Light': True, 'Dark': False}.get(Config.GetValue('Settings', 'Theme'))
+        ) if Config.GetValue('Settings', 'Theme', 'Dark') in ('Light', 'Dark') else None
+        ComponentsSignals.Signal_SetTheme.connect(
+            lambda Theme: self.ui.CheckBox_SwitchTheme.setChecked(
+                {'Light': True, 'Dark': False}.get(self.theme())
+            )
+        )
+        Function_ConfigureCheckBox(
+            CheckBox = self.ui.CheckBox_SwitchTheme,
+            CheckedText = "Light",
+            CheckedEvents = [
+                lambda: Config.EditConfig('Settings', 'Theme', 'Light'),
+                lambda: ComponentsSignals.Signal_SetTheme.emit('Light') if self.theme() != 'Light' else None
+            ],
+            UncheckedText = "Dark",
+            UncheckedEvents = [
+                lambda: Config.EditConfig('Settings', 'Theme', 'Dark'),
+                lambda: ComponentsSignals.Signal_SetTheme.emit('Dark') if self.theme() != 'Dark' else None
+            ],
+            TakeEffect = True
+        )
 
         # Window controling buttons
         self.closed.connect(
@@ -1164,6 +1194,7 @@ class MainWindow(Window_MainWindow):
         ##################### Content: Environ ######################
         #############################################################
 
+        # EnvInstallation
         self.ui.ToolButton_Env_Install_Title.setText(QCA.translate("Label", "自动配置"))
 
         self.ui.Label_Env_Install_Aria2.setText("Aria2")
@@ -2299,6 +2330,33 @@ class MainWindow(Window_MainWindow):
 
         self.ui.GroupBox_ASR_VPR_OutputParams.setTitle(QCA.translate("GroupBox", "输出参数"))
 
+        '''
+        Function_SetText(
+            Widget = self.ui.Label_ASR_VPR_FilterResult,
+            Text = SetRichText(
+                Body = QCA.translate("Label", "按阈值过滤结果\n令结果编辑表单仅显示高于阈值的识别结果，当数据量过大时建议启用该项。")
+            )
+        )
+        self.ui.CheckBox_ASR_VPR_FilterResult.setChecked(
+            eval(Config_ASR.GetValue('VPR', 'FilterResult', 'False'))
+        )
+        Function_ConfigureCheckBox(
+            CheckBox = self.ui.CheckBox_ASR_VPR_FilterResult,
+            CheckedText = "已启用",
+            CheckedEvents = [
+                lambda: Config_ASR.EditConfig('VPR', 'FilterResult', 'True')
+            ],
+            UncheckedText = "未启用",
+            UncheckedEvents = [
+                lambda: Config_ASR.EditConfig('VPR', 'FilterResult', 'False')
+            ],
+            TakeEffect = True
+        )
+        self.ui.Button_ASR_VPR_FilterResult_Undo.clicked.connect(
+            lambda: self.ui.CheckBox_ASR_VPR_FilterResult.setChecked(False)
+        )
+        '''
+
         Function_SetText(
             Widget = self.ui.Label_ASR_VPR_OutputDirName,
             Text = SetRichText(
@@ -2418,12 +2476,6 @@ class MainWindow(Window_MainWindow):
         )
 
         ChildWindow_ASR.ui.Table.SetHorizontalHeaders(['音频路径', '人物姓名', '相似度', '播放', '操作'])
-        MainWindowSignals.Signal_TaskStatus.connect(
-            lambda Task, Status: ChildWindow_ASR.ui.Table.SetValue(
-                ASRResult_Get(LineEdit_ASR_VPR_AudioSpeakersDataPath.text()),
-                list(self.ui.Table_ASR_VPR_StdAudioSpeaker.GetValue().keys()) + ['']
-            ) if Task == 'Execute_Voice_Identifying_VPR.Execute' and Status == 'Finished' else None
-        )
 
         ChildWindow_ASR.ui.CheckBox.setText("结束编辑时将拥有匹配人物的音频保存到:")
         ChildWindow_ASR.ui.CheckBox.setChecked(True)
@@ -2435,11 +2487,25 @@ class MainWindow(Window_MainWindow):
 
         ChildWindow_ASR.ui.Button_Cancel.setText('取消')
         ChildWindow_ASR.ui.Button_Cancel.clicked.connect(ChildWindow_ASR.ui.Button_Close.click)
+        ChildWindow_ASR.ui.Button_Save.setText('保存')
+        ChildWindow_ASR.ui.Button_Save.clicked.connect(
+            lambda: (
+                ASRResult_Save(
+                    ChildWindow_ASR.ui.Table.GetValue(),
+                    LineEdit_ASR_VPR_AudioSpeakersDataPath.text(),
+                    False
+                ),
+                Function_ShowMessageBox(self,
+                    QMessageBox.Information, "Tip",
+                    "已保存当前结果。"
+                )
+            )
+        )
         ChildWindow_ASR.ui.Button_Confirm.setText('确认')
         ChildWindow_ASR.ui.Button_Confirm.clicked.connect(
             lambda: Function_ShowMessageBox(self,
                 QMessageBox.Question, "Ask",
-                "确认应用编辑？",
+                "确认结束并应用编辑？",
                 QMessageBox.Yes|QMessageBox.No,
                 {
                     QMessageBox.Yes: lambda: (
@@ -2520,6 +2586,22 @@ class MainWindow(Window_MainWindow):
             )
         )
 
+        self.ui.Button_EditResult_ASR_VPR.setText(QCA.translate("Button", "编辑识别结果"))
+        def EditASRResult():
+            ASRResultPath = Function_GetFileDialog(
+                Mode = "SelectFile",
+                FileType = "txt类型 (*.txt)",
+                Directory = Path(CurrentDir).joinpath('语音识别结果', 'VPR').as_posix()
+            )
+            if NormPath(ASRResultPath) is not None:
+                self.ShowMask(True, "正在加载表单")
+                ChildWindow_ASR.ui.Table.SetValue(
+                    ASRResult_Get(ASRResultPath),
+                    None
+                )
+                ChildWindow_ASR.exec()
+        self.ui.Button_EditResult_ASR_VPR.clicked.connect(EditASRResult)
+
         self.ui.Button_CheckOutput_ASR_VPR.setText(QCA.translate("Button", "打开输出目录"))
         Function_SetURL(
             Button = self.ui.Button_CheckOutput_ASR_VPR,
@@ -2551,6 +2633,10 @@ class MainWindow(Window_MainWindow):
             ],
             FinishEvents = [
                 lambda: self.ShowMask(True, "正在加载表单"),
+                lambda: ChildWindow_ASR.ui.Table.SetValue(
+                    ASRResult_Get(LineEdit_ASR_VPR_AudioSpeakersDataPath.text()),
+                    list(self.ui.Table_ASR_VPR_StdAudioSpeaker.GetValue().keys()) + ['']
+                ),
                 ChildWindow_ASR.exec,
                 lambda: Function_ShowMessageBox(self,
                     QMessageBox.Information, "Tip",
@@ -2842,11 +2928,6 @@ class MainWindow(Window_MainWindow):
         )
 
         ChildWindow_STT.ui.Table.SetHorizontalHeaders(['音频路径', '音频内容', '播放'])
-        MainWindowSignals.Signal_TaskStatus.connect(
-            lambda Task, Status: ChildWindow_STT.ui.Table.SetValue(
-                STTResult_Get(LineEdit_STT_Whisper_OutputDir.text(), self.ui.LineEdit_STT_Whisper_AudioDir.text())
-            ) if Task == 'Execute_Voice_Transcribing_Whisper.Execute' and Status == 'Finished' else None
-        )
 
         ChildWindow_STT.ui.Button_Cancel.setText('取消')
         ChildWindow_STT.ui.Button_Cancel.clicked.connect(ChildWindow_STT.ui.Button_Close.click)
@@ -2957,6 +3038,9 @@ class MainWindow(Window_MainWindow):
             ],
             FinishEvents = [
                 lambda: self.ShowMask(True, "正在加载表单"),
+                lambda: ChildWindow_STT.ui.Table.SetValue(
+                    STTResult_Get(LineEdit_STT_Whisper_OutputDir.text(), self.ui.LineEdit_STT_Whisper_AudioDir.text())
+                ),
                 ChildWindow_STT.exec,
                 lambda: Function_ShowMessageBox(self,
                     QMessageBox.Information, "Tip",
@@ -5602,12 +5686,6 @@ class MainWindow(Window_MainWindow):
             )
         )
 
-        MainWindowSignals.Signal_TaskStatus.connect(
-            lambda Task, Status: ChildWindow_TTS.ui.Widget.SetMediaPlayer(
-                self.ui.LineEdit_TTS_VITS_AudioPathSave.text()
-            ) if Task == 'Execute_Voice_Converting_VITS.Execute' and Status == 'Finished' else None
-        )
-
         ChildWindow_TTS.ui.Button_Cancel.setText('丢弃')
         ChildWindow_TTS.ui.Button_Cancel.clicked.connect(
             lambda: Function_ShowMessageBox(self,
@@ -5732,6 +5810,9 @@ class MainWindow(Window_MainWindow):
             ],
             FinishEvents = [
                 lambda: self.ShowMask(True, "正在加载播放器"),
+                lambda: ChildWindow_TTS.ui.Widget.SetMediaPlayer(
+                    self.ui.LineEdit_TTS_VITS_AudioPathSave.text()
+                ),
                 ChildWindow_TTS.exec,
                 lambda: Function_ShowMessageBox(self,
                     QMessageBox.Information, "Tip",
@@ -5757,6 +5838,38 @@ class MainWindow(Window_MainWindow):
         )
 
         self.ui.GroupBox_Settings_Client_Outlook.setTitle(QCA.translate("GroupBox", "外观设置"))
+
+        self.ui.Label_Setting_Theme.setText(QCA.translate("Label", "主题"))
+        self.ui.ComboBox_Setting_Theme.addItems(['跟随系统', '亮色', '暗色'])
+        ComponentsSignals.Signal_SetTheme.connect(
+            lambda Theme: self.ui.ComboBox_Setting_Theme.setCurrentText(
+                {
+                    'Auto': '跟随系统',
+                    'Light': '亮色',
+                    'Dark': '暗色'
+                }.get(Theme)
+            )
+        )
+        self.ui.ComboBox_Setting_Theme.currentIndexChanged.connect(
+            lambda: Config.EditConfig(
+                'Settings',
+                'Theme',
+                {
+                    '跟随系统': 'Auto',
+                    '亮色': 'Light',
+                    '暗色': 'Dark'
+                }.get(self.ui.ComboBox_Setting_Theme.currentText())
+            )
+        )
+        self.ui.ComboBox_Setting_Theme.currentIndexChanged.connect(
+            lambda: ComponentsSignals.Signal_SetTheme.emit(
+                {
+                    '跟随系统': 'Auto',
+                    '亮色': 'Light',
+                    '暗色': 'Dark'
+                }.get(self.ui.ComboBox_Setting_Theme.currentText())
+            )
+        )
 
         self.ui.Label_Setting_Language.setText(QCA.translate("Label", "语言"))
         self.ui.ComboBox_Setting_Language.addItems(['中文'])

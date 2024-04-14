@@ -135,6 +135,7 @@ class Table_ViewModels(TableBase):
     def SetValue(self, Params: list = [['', '', '', 'url'], ]):
         self.ClearRows()
         for Param in Params:
+            QApplication.processEvents()
             self.AddRow(Param)
 
 
@@ -220,6 +221,7 @@ class Table_EditAudioSpeaker(TableBase):
         self.ClearRows()
         ParamDict = ToIterable(Params)
         for Key, Value in ParamDict.items():
+            QApplication.processEvents()
             Param = (Key, Value)
             #Index = next((i for i, key in enumerate(ParamDict) if key == Key), None)
             self.AddRow(Param, FileType)
@@ -268,49 +270,6 @@ class Table_ASRResult(TableBase):
             border-color: rgba(201, 210, 222, 123);
         }
         '''
-        ComboBoxStyle = '''
-        QComboBox {
-            background-color: transparent;
-            padding-top: 3px;
-            padding-left: 6px;
-            padding-bottom: 3px;
-            padding-right: 6px;
-            border-width: 1px;
-            border-style: solid;
-            border-color: rgba(201, 210, 222, 123);
-        }
-        QComboBox::drop-down {
-            subcontrol-origin: padding;
-            subcontrol-position: right;
-            margin-right: 6px;
-            border: none;
-        }
-        QComboBox::down-arrow {
-            border-image: url(:/ComboBox_Icon/Sources/DownArrow.png);
-        }
-        QComboBox::down-arrow:on {
-            border-image: url(:/ComboBox_Icon/Sources/UpArrow.png);
-        }
-        QComboBox QAbstractItemView {
-            outline: none;
-            background-color: transparent;
-            border: none;
-        }
-        QComboBox QAbstractItemView::item {
-            background-color: transparent;
-            padding-top: 3px;
-            padding-left: 6px;
-            padding-bottom: 3px;
-            padding-right: 6px;
-            border: none;
-        }
-        QComboBox QAbstractItemView::item:hover {
-            background-color: rgba(120, 120, 120, 120);
-        }
-        QComboBox QAbstractItemView::item:selected {
-            background-color: rgba(120, 120, 120, 120);
-        }
-        '''
         ButtonStyle = '''
         QPushButton {
             background-color: transparent;
@@ -331,8 +290,7 @@ class Table_ASRResult(TableBase):
         SetColumnLayout(Column0Layout)
         Column0Layout.addWidget(Label0)
 
-        ComboBox = QComboBox()
-        ComboBox.setStyleSheet(ComboBoxStyle)
+        ComboBox = ComboBoxBase()
         ComboBox.addItems(ComboItems)
         ComboBox.setCurrentText(Param[1])
         Column1Layout = QHBoxLayout()
@@ -381,9 +339,15 @@ class Table_ASRResult(TableBase):
             RowHeight
         )
 
-    def SetValue(self, Params: list = [['%Path%', '%Namex%', '%Sim%'], ], ComboItems: list = ['%Name1%', ]):
+    def SetValue(self, Params: list = [['%Path%', '%Namex%', '%Sim%'], ], ComboItems: Optional[list] = ['%Name1%', ]):
         self.ClearRows()
+        if ComboItems is None:
+            ComboItems = []
+            for Param in Params:
+                ComboItem = Param[1]
+                ComboItems.append(ComboItem) if ComboItem not in ComboItems else None
         for Param in Params:
+            QApplication.processEvents()
             self.AddRow(Param, ComboItems)
 
     def GetValue(self):
@@ -396,11 +360,6 @@ class Table_ASRResult(TableBase):
             except:
                 pass
         return ValueDict
-
-
-class Table_DATResult(TableBase):
-    '''
-    '''
 
 
 class Table_STTResult(TableBase):
@@ -475,6 +434,7 @@ class Table_STTResult(TableBase):
         self.ClearRows()
         ParamDict = ToIterable(Params)
         for Key, Value in ParamDict.items():
+            QApplication.processEvents()
             Param = (Key, Value)
             self.AddRow(Param)
 

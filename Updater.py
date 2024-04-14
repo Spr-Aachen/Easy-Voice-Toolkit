@@ -219,7 +219,7 @@ class Widget_Updater(QWidget):
         UpdaterSignals.Signal_Message.connect(
             lambda Message: Function_SetText(
                 self.Label,
-                SetRichText(Message, 'center', 9, 420, 'black', 0.3, 12)
+                SetRichText(Message, 'center', 9, 420, 0.3, 12)
             )
         )
         UpdaterSignals.Signal_IsUpdateSucceeded.connect(
