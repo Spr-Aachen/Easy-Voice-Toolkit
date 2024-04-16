@@ -5,10 +5,10 @@ from pathlib import Path
 from typing import Optional
 from PySide6.QtCore import Qt, QObject, QThread, Signal
 from PySide6.QtGui import QIcon
-from PySide6.QtWidgets import QApplication, QWidget, QVBoxLayout, QSizePolicy, QPushButton, QProgressBar, QLabel
+from PySide6.QtWidgets import QApplication, QVBoxLayout, QSizePolicy, QWidget, QMessageBox, QPushButton, QProgressBar, QLabel
 
 from QEasyWidgets.Utils import CheckUpdate, DownloadFile, NormPath, SetRichText, RunBat, BootWithBat, GetFileInfo, GetBaseDir, ManageConfig
-from EVT_GUI.Functions import Function_AnimateProgressBar, Function_SetText#, Function_ShowMessageBox
+from EVT_GUI.Functions import Function_AnimateProgressBar, Function_SetText, Function_ShowMessageBox
 
 ##############################################################################################################################
 
@@ -102,7 +102,12 @@ def Updater(
         )
 
     except:
-        UpdaterSignals.Signal_Message.emit("更新检查失败！\nFailed to check for updates!")
+        #UpdaterSignals.Signal_Message.emit("更新检查失败！\nFailed to check for updates!")
+        Function_ShowMessageBox(
+            MessageType = QMessageBox.Warning,
+            WindowTitle = 'Warning',
+            Text = '更新检查失败！\nFailed to check for updates!'
+        )
         UpdaterSignals.Signal_IsUpdateSucceeded.emit(False)
 
     else:
@@ -118,8 +123,12 @@ def Updater(
                     SHA_Expected = None
                 )
             except Exception as e:
-                UpdaterSignals.Signal_Message.emit("文件下载失败！\nFailed to download files!")
-                #Function_ShowMessageBox(WindowTitle = 'Error', Text = f'Error occurred while downloading files: {e}')
+                #UpdaterSignals.Signal_Message.emit("文件下载失败！\nFailed to download files!")
+                Function_ShowMessageBox(
+                    MessageType = QMessageBox.Warning,
+                    WindowTitle = 'Warning',
+                    Text = '文件下载失败！\nFailed to download files!'
+                )
                 UpdaterSignals.Signal_IsUpdateSucceeded.emit(False)
             else:
                 # Unpack
@@ -158,7 +167,7 @@ class Execute_Update_Checking(QObject):
         Updater(
             CurrentVersion = CurrentVersion,
             DownloadDir = DownloadDir,
-            Name = f"Easy Voice Toolkit {Config.GetValue('Info', 'CurrentVersion')}",
+            Name = "EVT Update",
             ExtractDir = ExtractDir,
             TargetDir = TargetDir
         )
@@ -269,7 +278,7 @@ class Widget_Updater(QWidget):
         )
         self.ExecuteButton.click()
 
-        self.SkipButton.setText('跳过更新')
+        self.SkipButton.setText("跳过")
         self.SkipButton.clicked.connect(
             lambda: UpdaterSignals.Signal_IsUpdateSucceeded.emit(False)
         )

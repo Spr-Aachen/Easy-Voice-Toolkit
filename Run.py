@@ -20,7 +20,7 @@ from EVT_GUI.EnvConfigurator import *
 ##############################################################################################################################
 
 # Set current version
-CurrentVersion = "v1.0.2"
+CurrentVersion = "v1.0.3"
 
 ##############################################################################################################################
 
@@ -619,6 +619,12 @@ class Model_Downloader(QObject):
         self.finished.emit(str(Error))
 
 
+# ClientFunc: AddLocalModel
+def AddLocalModel(ModelPath: str, Sector: list[str] = ['Tool', 'Type']):
+    MoveToDst = NormPath(Path(ModelsDir).joinpath(*Sector))
+    shutil.move(ModelPath, MoveToDst)
+
+
 # ClientFunc: GetASRResult
 def ASRResult_Get(AudioSpeakersData_Path: str):
     AudioSpeakerSimList = []
@@ -934,9 +940,13 @@ class MainWindow(Window_MainWindow):
         #############################################################
 
         # Theme toggler
-        self.ui.CheckBox_SwitchTheme.setChecked(
-            {'Light': True, 'Dark': False}.get(Config.GetValue('Settings', 'Theme'))
-        ) if Config.GetValue('Settings', 'Theme', 'Dark') in ('Light', 'Dark') else None
+        '''
+        MainWindowSignals.Signal_MainWindowShown.connect(
+            lambda: self.ui.CheckBox_SwitchTheme.setChecked(
+                {'Light': True, 'Dark': False}.get(Config.GetValue('Settings', 'Theme'), False)
+            )# if Config.GetValue('Settings', 'Theme', 'Dark') in ('Light', 'Dark') else None
+        )
+        '''
         ComponentsSignals.Signal_SetTheme.connect(
             lambda Theme: self.ui.CheckBox_SwitchTheme.setChecked(
                 {'Light': True, 'Dark': False}.get(self.theme())
@@ -1421,7 +1431,7 @@ class MainWindow(Window_MainWindow):
         ####################### Content: Models #####################
         #############################################################
 
-        self.ui.Button_Menu_Models.clicked.connect(
+        MainWindowSignals.Signal_MainWindowShown.connect(
             lambda: self.Function_SetMethodExecutor(
                 Method = Model_View.Execute
             )
@@ -1532,6 +1542,57 @@ class MainWindow(Window_MainWindow):
                 Params = Params
             )
         )
+
+        self.ui.Button_Models_Refresh.setText(QCA.translate("ToolButton", '刷新'))
+        self.ui.Button_Models_Refresh.clicked.connect(
+            lambda: self.Function_SetMethodExecutor(
+                Method = Model_View.Execute
+            )
+        )
+
+        self.ui.Button_Models_Append.setText(QCA.translate("ToolButton", '添加'))
+        LineEdit_Models_Append = QLineEdit()
+        DialogBox_Models_Append = MessageBox_Buttons(self)
+        DialogBox_Models_Append.setText("请选择添加方式")
+        DialogBox_Models_Append.Button1.setText("模型文件目录（多文件）")
+        DialogBox_Models_Append.Button1.clicked.connect(
+            lambda: (
+                LineEdit_Models_Append.setText(
+                    Function_GetFileDialog(
+                        Mode = "SelectFolder"
+                    )
+                ),
+                DialogBox_Models_Append.close(),
+            )
+        )
+        DialogBox_Models_Append.Button2.setText("模型文件路径（单文件）")
+        DialogBox_Models_Append.Button2.clicked.connect(
+            lambda: (
+                LineEdit_Models_Append.setText(
+                    Function_GetFileDialog(
+                        Mode = "SelectFile",
+                        FileType = "模型文件 (*.pt *.pth *.ckpt *.bin *.json')"
+                    )
+                ),
+                DialogBox_Models_Append.close(),
+            )
+        )
+        def AppendModel():
+            DialogBox_Models_Append.exec()
+            ModelPath = LineEdit_Models_Append.text()
+            if NormPath(ModelPath) is None:
+                return
+            ToolIndexList = ['Process', 'ASR', 'STT', 'TTS']
+            ToolIndex = self.ui.StackedWidget_Pages_Models.currentIndex()
+            TabWidget = Function_FindChildUI(self.ui.StackedWidget_Pages_Models.currentWidget(), QTabWidget)
+            TypeIndex = TabWidget.currentIndex()
+            Sector = [
+                ToolIndexList[ToolIndex],
+                TabWidget.tabText(TypeIndex).rsplit('（')[0],
+            ]
+            AddLocalModel(ModelPath, Sector)
+            self.ui.Button_Models_Refresh.click()
+        self.ui.Button_Models_Append.clicked.connect(AppendModel)
 
         #############################################################
         ###################### Content: Process #####################
@@ -3099,26 +3160,26 @@ class MainWindow(Window_MainWindow):
         DialogBox_GPTSoVITS_AudioSpeakersDataPath.Button1.setText("音频文件目录")
         DialogBox_GPTSoVITS_AudioSpeakersDataPath.Button1.clicked.connect(
             lambda: (
-                DialogBox_GPTSoVITS_AudioSpeakersDataPath.close(),
                 self.ui.LineEdit_DAT_GPTSoVITS_AudioSpeakersDataPath.setText(
                     Function_GetFileDialog(
                         Mode = "SelectFolder",
                         Directory = NormPath(Path(ChildWindow_ASR.ui.LineEdit.text()))
                     )
-                )
+                ),
+                DialogBox_GPTSoVITS_AudioSpeakersDataPath.close(),
             )
         )
         DialogBox_GPTSoVITS_AudioSpeakersDataPath.Button2.setText("语音识别结果文本路径")
         DialogBox_GPTSoVITS_AudioSpeakersDataPath.Button2.clicked.connect(
             lambda: (
-                DialogBox_GPTSoVITS_AudioSpeakersDataPath.close(),
                 self.ui.LineEdit_DAT_GPTSoVITS_AudioSpeakersDataPath.setText(
                     Function_GetFileDialog(
                         Mode = "SelectFile",
                         FileType = "txt类型 (*.txt)",
                         Directory = Path(CurrentDir).joinpath('语音识别结果', 'VPR').as_posix()
                     )
-                )
+                ),
+                DialogBox_GPTSoVITS_AudioSpeakersDataPath.close(),
             )
         )
 
@@ -3479,26 +3540,26 @@ class MainWindow(Window_MainWindow):
         DialogBox_VITS_AudioSpeakersDataPath.Button1.setText("音频文件目录")
         DialogBox_VITS_AudioSpeakersDataPath.Button1.clicked.connect(
             lambda: (
-                DialogBox_VITS_AudioSpeakersDataPath.close(),
                 self.ui.LineEdit_DAT_VITS_AudioSpeakersDataPath.setText(
                     Function_GetFileDialog(
                         Mode = "SelectFolder",
                         Directory = NormPath(Path(ChildWindow_ASR.ui.LineEdit.text()))
                     )
-                )
+                ),
+                DialogBox_VITS_AudioSpeakersDataPath.close(),
             )
         )
         DialogBox_VITS_AudioSpeakersDataPath.Button2.setText("语音识别结果文本路径")
         DialogBox_VITS_AudioSpeakersDataPath.Button2.clicked.connect(
             lambda: (
-                DialogBox_VITS_AudioSpeakersDataPath.close(),
                 self.ui.LineEdit_DAT_VITS_AudioSpeakersDataPath.setText(
                     Function_GetFileDialog(
                         Mode = "SelectFile",
                         FileType = "txt类型 (*.txt)",
                         Directory = Path(CurrentDir).joinpath('语音识别结果', 'VPR').as_posix()
                     )
-                )
+                ),
+                DialogBox_VITS_AudioSpeakersDataPath.close(),
             )
         )
 
@@ -5841,34 +5902,25 @@ class MainWindow(Window_MainWindow):
 
         self.ui.Label_Setting_Theme.setText(QCA.translate("Label", "主题"))
         self.ui.ComboBox_Setting_Theme.addItems(['跟随系统', '亮色', '暗色'])
+        ThemeDict = {
+            '跟随系统': 'Auto',
+            '亮色': 'Light',
+            '暗色': 'Dark'
+        }
         ComponentsSignals.Signal_SetTheme.connect(
             lambda Theme: self.ui.ComboBox_Setting_Theme.setCurrentText(
-                {
-                    'Auto': '跟随系统',
-                    'Light': '亮色',
-                    'Dark': '暗色'
-                }.get(Theme)
+                FindKey(ThemeDict, Theme)
             )
         )
         self.ui.ComboBox_Setting_Theme.currentIndexChanged.connect(
             lambda: Config.EditConfig(
-                'Settings',
-                'Theme',
-                {
-                    '跟随系统': 'Auto',
-                    '亮色': 'Light',
-                    '暗色': 'Dark'
-                }.get(self.ui.ComboBox_Setting_Theme.currentText())
+                'Settings', 'Theme', ThemeDict.get(self.ui.ComboBox_Setting_Theme.currentText())
             )
         )
         self.ui.ComboBox_Setting_Theme.currentIndexChanged.connect(
             lambda: ComponentsSignals.Signal_SetTheme.emit(
-                {
-                    '跟随系统': 'Auto',
-                    '亮色': 'Light',
-                    '暗色': 'Dark'
-                }.get(self.ui.ComboBox_Setting_Theme.currentText())
-            )
+                ThemeDict.get(self.ui.ComboBox_Setting_Theme.currentText())
+            ) if self.theme() != ThemeDict.get(self.ui.ComboBox_Setting_Theme.currentText()) else None
         )
 
         self.ui.Label_Setting_Language.setText(QCA.translate("Label", "语言"))
@@ -6235,6 +6287,9 @@ class MainWindow(Window_MainWindow):
 
         # Display Version
         self.ui.Label_Version.setText(CurrentVersion)
+
+        # Set Theme
+        ComponentsSignals.Signal_SetTheme.emit(Config.GetValue('Settings', 'Theme', 'Dark'))
 
         # Show MainWindow (and emit signal)
         self.show()

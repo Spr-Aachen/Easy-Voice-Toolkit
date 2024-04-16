@@ -11,8 +11,6 @@ class Ui_MainWindow(object):
             MainWindow.setObjectName(u"MainWindow")
         MainWindow.resize(1280, 720)
         MainWindow.setMinimumSize(QSize(1280, 720))
-        MainWindow.setStyleSheet(u"color: black;\n"
-"background-color: rgba(246, 246, 246, 246);")
         self.CentralWidget = QWidget(MainWindow)
         self.CentralWidget.setObjectName(u"CentralWidget")
         self.verticalLayout = QVBoxLayout(self.CentralWidget)
@@ -2449,10 +2447,54 @@ class Ui_MainWindow(object):
 "	border-bottom-color: rgba(123, 123, 123, 123);\n"
 "}")
         self.horizontalLayout_27 = QHBoxLayout(self.Frame_Models_Title_Spacer)
+        self.horizontalLayout_27.setSpacing(12)
         self.horizontalLayout_27.setObjectName(u"horizontalLayout_27")
+        self.horizontalLayout_27.setContentsMargins(0, 0, 0, 0)
         self.HorizontalSpacer_Models_Title_Spacer = QSpacerItem(549, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.horizontalLayout_27.addItem(self.HorizontalSpacer_Models_Title_Spacer)
+
+        self.Button_Models_Refresh = QPushButton(self.Frame_Models_Title_Spacer)
+        self.Button_Models_Refresh.setObjectName(u"Button_Models_Refresh")
+        sizePolicy5.setHeightForWidth(self.Button_Models_Refresh.sizePolicy().hasHeightForWidth())
+        self.Button_Models_Refresh.setSizePolicy(sizePolicy5)
+        self.Button_Models_Refresh.setMinimumSize(QSize(84, 0))
+        self.Button_Models_Refresh.setStyleSheet(u"QPushButton {\n"
+"	font-size: 12pt;\n"
+"	text-align: right;\n"
+"	image-position: left;\n"
+"	image: url(:/Button_Icon/Sources/Refresh.png);\n"
+"	padding: 12px;\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QPushButton:hover {\n"
+"	background-color: rgba(201, 210, 222, 33);\n"
+"}")
+
+        self.horizontalLayout_27.addWidget(self.Button_Models_Refresh)
+
+        self.Button_Models_Append = QPushButton(self.Frame_Models_Title_Spacer)
+        self.Button_Models_Append.setObjectName(u"Button_Models_Append")
+        sizePolicy5.setHeightForWidth(self.Button_Models_Append.sizePolicy().hasHeightForWidth())
+        self.Button_Models_Append.setSizePolicy(sizePolicy5)
+        self.Button_Models_Append.setMinimumSize(QSize(84, 0))
+        self.Button_Models_Append.setStyleSheet(u"QPushButton {\n"
+"	font-size: 12pt;\n"
+"	text-align: right;\n"
+"	image-position: left;\n"
+"	image: url(:/Button_Icon/Sources/Plus.png);\n"
+"	padding: 12px;\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QPushButton:hover {\n"
+"	background-color: rgba(201, 210, 222, 33);\n"
+"}")
+
+        self.horizontalLayout_27.addWidget(self.Button_Models_Append)
 
 
         self.horizontalLayout_18.addWidget(self.Frame_Models_Title_Spacer)
