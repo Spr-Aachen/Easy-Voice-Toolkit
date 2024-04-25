@@ -111,7 +111,7 @@ def Updater(
         UpdaterSignals.Signal_IsUpdateSucceeded.emit(False)
 
     else:
-        if IsUpdateNeeded:
+        def Update():
             try:
                 # Download
                 UpdaterSignals.Signal_Message.emit("正在下载文件...\nDownloading files...")
@@ -150,6 +150,17 @@ def Updater(
                 shutil.rmtree(ExtractDir)
                 '''
                 UpdaterSignals.Signal_IsUpdateSucceeded.emit(True)
+        if IsUpdateNeeded:
+            Function_ShowMessageBox(
+                MessageType = QMessageBox.Question,
+                WindowTitle = 'Ask',
+                Text = '检测到可用的新版本，是否更新？\nNew version available, wanna update?',
+                Buttons = QMessageBox.Yes|QMessageBox.No,
+                ButtonEvents = {
+                    QMessageBox.Yes: lambda: Update(),
+                    QMessageBox.No: lambda: UpdaterSignals.Signal_IsUpdateSucceeded.emit(False)
+                }
+            )
         else:
             UpdaterSignals.Signal_Message.emit("已是最新版本！\nAlready up to date!")
             UpdaterSignals.Signal_IsUpdateSucceeded.emit(False)

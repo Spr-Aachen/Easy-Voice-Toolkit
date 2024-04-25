@@ -6,14 +6,14 @@ from QEasyWidgets.ComponentsCustomizer import *
 from .UI_MainWindow import Ui_MainWindow
 from .UI_ChildWindow_ASR import Ui_ChildWindow_ASR
 from .UI_ChildWindow_STT import Ui_ChildWindow_STT
+from .UI_ChildWindow_DAT_GPPTSoVITS import Ui_ChildWindow_DAT_GPTSoVITS
+from .UI_ChildWindow_DAT_VITS import Ui_ChildWindow_DAT_VITS
 from .UI_ChildWindow_TTS import Ui_ChildWindow_TTS
 
 ##############################################################################################################################
 
 class Window_MainWindow(MainWindowBase):
     ui = Ui_MainWindow()
-
-    Theme = str()
 
     def __init__(self, parent = None):
         super().__init__(parent, min_width = 1280, min_height = 720)
@@ -23,15 +23,6 @@ class Window_MainWindow(MainWindowBase):
         self.setTitleBar(self.ui.TitleBar)
 
         self.setCentralWidget(self.ui.CentralWidget)
-        ComponentsSignals.Signal_SetTheme.connect(self.InitDefaultStyleSheet)
-        self.InitDefaultStyleSheet('Auto')
-
-    def InitDefaultStyleSheet(self, Theme: str) -> None:
-        super().setStyleSheet(Function_GetStyleSheet('Window', Theme).replace('#CentralWidget', f'#{self.CentralWidget.objectName()}'))
-        self.Theme = Theme if Theme in ('Light', 'Dark') else darkdetect.theme()
-
-    def theme(self) -> str:
-        return self.Theme
 
 ##############################################################################################################################
 
@@ -45,12 +36,6 @@ class Window_ChildWindow_ASR(ChildWindowBase):
 
         self.setTitleBar(self.ui.TitleBar)
 
-        ComponentsSignals.Signal_SetTheme.connect(self.InitDefaultStyleSheet)
-        self.InitDefaultStyleSheet('Auto')
-
-    def InitDefaultStyleSheet(self, Theme: str) -> None:
-        super().setStyleSheet(Function_GetStyleSheet('Window', Theme).replace('#CentralWidget', f'#{self.objectName()}'))
-
 
 class Window_ChildWindow_STT(ChildWindowBase):
     ui = Ui_ChildWindow_STT()
@@ -62,11 +47,27 @@ class Window_ChildWindow_STT(ChildWindowBase):
 
         self.setTitleBar(self.ui.TitleBar)
 
-        ComponentsSignals.Signal_SetTheme.connect(self.InitDefaultStyleSheet)
-        self.InitDefaultStyleSheet('Auto')
 
-    def InitDefaultStyleSheet(self, Theme: str) -> None:
-        super().setStyleSheet(Function_GetStyleSheet('Window', Theme).replace('#CentralWidget', f'#{self.objectName()}'))
+class Window_ChildWindow_DAT_GPTSoVITS(ChildWindowBase):
+    ui = Ui_ChildWindow_DAT_GPTSoVITS()
+
+    def __init__(self, parent = None):
+        super().__init__(parent, min_width = 960, min_height = 540)
+
+        self.ui.setupUi(self)
+
+        self.setTitleBar(self.ui.TitleBar)
+
+
+class Window_ChildWindow_DAT_VITS(ChildWindowBase):
+    ui = Ui_ChildWindow_DAT_VITS()
+
+    def __init__(self, parent = None):
+        super().__init__(parent, min_width = 960, min_height = 540)
+
+        self.ui.setupUi(self)
+
+        self.setTitleBar(self.ui.TitleBar)
 
 
 class Window_ChildWindow_TTS(ChildWindowBase):
@@ -78,12 +79,6 @@ class Window_ChildWindow_TTS(ChildWindowBase):
         self.ui.setupUi(self)
 
         self.setTitleBar(self.ui.TitleBar)
-
-        ComponentsSignals.Signal_SetTheme.connect(self.InitDefaultStyleSheet)
-        self.InitDefaultStyleSheet('Auto')
-
-    def InitDefaultStyleSheet(self, Theme: str) -> None:
-        super().setStyleSheet(Function_GetStyleSheet('Window', Theme).replace('#CentralWidget', f'#{self.objectName()}'))
 
 ##############################################################################################################################
 
@@ -189,8 +184,6 @@ class MessageBox_Buttons(MessageBoxBase):
 
         self.layout().setContentsMargins(6, 12, 6, 12)
         self.layout().setSpacing(6)
-
-        self.TitleBar.CloseButton.hide()
 
         ButtonStyle = '''
         QPushButton {

@@ -11,8 +11,6 @@ class Ui_ChildWindow_STT(object):
             ChildWindow_STT.setObjectName(u"ChildWindow_STT")
         ChildWindow_STT.resize(630, 420)
         ChildWindow_STT.setMinimumSize(QSize(630, 420))
-        ChildWindow_STT.setStyleSheet(u"color: rgb(210, 222, 234);\n"
-"background-color: rgba(24, 24, 24, 240);")
         self.verticalLayout = QVBoxLayout(ChildWindow_STT)
         self.verticalLayout.setSpacing(0)
         self.verticalLayout.setObjectName(u"verticalLayout")
@@ -25,7 +23,7 @@ class Ui_ChildWindow_STT(object):
         self.horizontalLayout_2.setSpacing(0)
         self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
         self.horizontalLayout_2.setContentsMargins(0, 0, 0, 0)
-        self.horizontalSpacer = QSpacerItem(792, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.horizontalSpacer = QSpacerItem(792, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.horizontalLayout_2.addItem(self.horizontalSpacer)
 
@@ -90,7 +88,7 @@ class Ui_ChildWindow_STT(object):
         self.gridLayout.setContentsMargins(21, 12, 21, 12)
         self.Label_Title = QLabel(self.CentralWidget)
         self.Label_Title.setObjectName(u"Label_Title")
-        sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
+        sizePolicy = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.Label_Title.sizePolicy().hasHeightForWidth())

@@ -1,7 +1,7 @@
 from PySide6.QtCore import (QCoreApplication, QMetaObject, QRect, QSize, Qt)
 from PySide6.QtWidgets import *
 
-from .Components import LineEditBase, ComboBoxBase, SpinBoxBase, DoubleSpinBoxBase, ScrollAreaBase, Table_ViewModels, Table_EditAudioSpeaker
+from .Components import MenuButton, LabelBase, LineEditBase, ComboBoxBase, SpinBoxBase, DoubleSpinBoxBase, ScrollAreaBase, Table_ViewModels, Table_EditAudioSpeaker
 from . import Sources
 
 
@@ -91,8 +91,8 @@ class Ui_MainWindow(object):
 "}\n"
 "\n"
 "QCheckBox::indicator {\n"
-"	width: 24px;\n"
-"	height: 24px;\n"
+"	width: 16.8px;\n"
+"	height: 16.8px;\n"
 "    background-color: transparent;\n"
 "	padding: 0px;\n"
 "	border-width: 0px;\n"
@@ -100,13 +100,13 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}\n"
 "QCheckBox::indicator:hover {\n"
-"	background-color: rgba(255, 255, 255, 21);\n"
+"	background-color: rgba(255, 255, 255, 24);\n"
 "}\n"
 "QCheckBox::indicator:unchecked {\n"
-"	border-image: url(:/CheckBox_Icon/Sources/ToggleOff.png);\n"
+"	border-image: url(:/CheckBox_Icon/Sources/Moon.png);\n"
 "}\n"
 "QCheckBox::indicator:checked {\n"
-"	border-image: url(:/CheckBox_Icon/Sources/ToggleOn.png);\n"
+"	border-image: url(:/CheckBox_Icon/Sources/Sun.png);\n"
 "}")
 
         self.horizontalLayout_11.addWidget(self.CheckBox_SwitchTheme)
@@ -975,10 +975,11 @@ class Ui_MainWindow(object):
         self.verticalLayout_100.setSpacing(21)
         self.verticalLayout_100.setObjectName(u"verticalLayout_100")
         self.verticalLayout_100.setContentsMargins(12, 0, 12, 0)
-        self.TextBrowser_Pic_Home = QTextBrowser(self.Frame_High_Home)
-        self.TextBrowser_Pic_Home.setObjectName(u"TextBrowser_Pic_Home")
-        self.TextBrowser_Pic_Home.setMinimumSize(QSize(0, 210))
-        self.TextBrowser_Pic_Home.setStyleSheet(u"QTextBrowser {\n"
+        self.Label_Cover_Home = LabelBase(self.Frame_High_Home)
+        self.Label_Cover_Home.setObjectName(u"Label_Cover_Home")
+        sizePolicy.setHeightForWidth(self.Label_Cover_Home.sizePolicy().hasHeightForWidth())
+        self.Label_Cover_Home.setSizePolicy(sizePolicy)
+        self.Label_Cover_Home.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	background-color: grey;\n"
 "	padding: 0px;\n"
@@ -986,112 +987,10 @@ class Ui_MainWindow(object):
 "	border-radius: 6px;\n"
 "	border-style: solid;\n"
 "}\n"
-"QTextBrowser:hover {\n"
-"}\n"
-"\n"
-"\n"
-"QScrollBar::vertical {\n"
-"	width: 9px;\n"
-"	background-color: rgb(45, 45, 45);\n"
-"	border-width: 1px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: transparent;\n"
-"	margin: 0px;\n"
-"}\n"
-"QScrollBar::vertical:hover {\n"
-"	background-color: rgb(60, 60, 60);\n"
-"}\n"
-"\n"
-"QScrollBar::add-line:vertical {\n"
-"	height: 0px;\n"
-"	background-color: transparent;\n"
-"	subcontrol-position: bottom;\n"
-"	subcontrol-origin: margin;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"\n"
-"QScrollBar::sub-line:vertical {\n"
-"	height: 0px;\n"
-"	background-color: transparent;\n"
-"	subcontrol-position: top;\n"
-"	subcontrol-origin: margin;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"\n"
-"QScrollBar::add-page:vertic"
-                        "al, QScrollBar::sub-page:vertical {\n"
-"	width: 0px;\n"
-"	height: 0px;\n"
-"	background-color: transparent;\n"
-"}\n"
-"\n"
-"QScrollBar::handle:vertical {\n"
-"	background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QScrollBar::handle:vertical:hover {\n"
-"	background-color: rgb(120, 120, 120);\n"
-"}\n"
-"\n"
-"\n"
-"QScrollBar::horizontal {\n"
-"	height: 9px;\n"
-"	background-color: rgb(45, 45, 45);\n"
-"	border-width: 1px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: transparent;\n"
-"	margin: 0px;\n"
-"}\n"
-"QScrollBar::horizontal:hover {\n"
-"	background-color: rgb(60, 60, 60);\n"
-"}\n"
-"\n"
-"QScrollBar::add-line:horizontal {\n"
-"	width: 0px;\n"
-"	background-color: transparent;\n"
-"	subcontrol-position: left;\n"
-"	subcontrol-origin: margin;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"\n"
-"QScrollBar::sub-line:horizontal {\n"
-"	width: 0px;\n"
-"	background-color: transparent;\n"
-"	subcontrol-posit"
-                        "ion: right;\n"
-"	subcontrol-origin: margin;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"\n"
-"QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {\n"
-"	width: 0px;\n"
-"	height: 0px;\n"
-"	background-color: transparent;\n"
-"}\n"
-"\n"
-"QScrollBar::handle:horizontal {\n"
-"	background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QScrollBar::handle:horizontal:hover {\n"
-"	background-color: rgb(120, 120, 120);\n"
+"QLabel:hover {\n"
 "}")
 
-        self.verticalLayout_100.addWidget(self.TextBrowser_Pic_Home)
+        self.verticalLayout_100.addWidget(self.Label_Cover_Home)
 
         self.TextBrowser_Text_Home = QTextBrowser(self.Frame_High_Home)
         self.TextBrowser_Text_Home.setObjectName(u"TextBrowser_Text_Home")
@@ -1537,6 +1436,44 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_3.addWidget(self.ToolButton_Env_Install_Title)
 
+        self.ToolButton_Env_Manage_Title = QToolButton(self.Frame_Env_Install_Top)
+        self.ToolButton_Env_Manage_Title.setObjectName(u"ToolButton_Env_Manage_Title")
+        sizePolicy1.setHeightForWidth(self.ToolButton_Env_Manage_Title.sizePolicy().hasHeightForWidth())
+        self.ToolButton_Env_Manage_Title.setSizePolicy(sizePolicy1)
+        self.ToolButton_Env_Manage_Title.setStyleSheet(u"QToolButton {\n"
+"	font-size: 24px;\n"
+"	/*text-align: center;*/\n"
+"	padding-left: 12px;\n"
+"	padding-right: 12px;\n"
+"	background-color: transparent;\n"
+"	border-top-width: 0px;\n"
+"	border-right-width: 0px;\n"
+"	border-bottom-width: 3px;\n"
+"	border-left-width: 0px;\n"
+"	border-style: solid;\n"
+"	border-bottom-color: rgba(123, 123, 123, 123);\n"
+"}\n"
+"QToolButton:hover {\n"
+"	background-color: transparent;\n"
+"	border-top-width: 0px;\n"
+"	border-right-width: 0px;\n"
+"	border-bottom-width: 3px;\n"
+"	border-left-width: 0px;\n"
+"	border-style: solid;\n"
+"	border-bottom-color: rgba(120, 180, 240, 123);\n"
+"}\n"
+"QToolButton:checked {\n"
+"	background-color: transparent;\n"
+"	border-top-width: 0px;\n"
+"	border-right-width: 0px;\n"
+"	border-bottom-width: 3px;\n"
+"	border-left-width: 0px;\n"
+"	border-style: solid;\n"
+"	border-bottom-color: rgba(120, 180, 240, 210);\n"
+"}")
+
+        self.horizontalLayout_3.addWidget(self.ToolButton_Env_Manage_Title)
+
         self.Frame_Env_Install_Title_Spacer = QLabel(self.Frame_Env_Install_Top)
         self.Frame_Env_Install_Title_Spacer.setObjectName(u"Frame_Env_Install_Title_Spacer")
         sizePolicy4 = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Preferred)
@@ -1574,7 +1511,7 @@ class Ui_MainWindow(object):
         self.ScrollArea_Env_Install.setWidgetResizable(True)
         self.ScrollAreaWidgetContents_Env_Install = QWidget()
         self.ScrollAreaWidgetContents_Env_Install.setObjectName(u"ScrollAreaWidgetContents_Env_Install")
-        self.ScrollAreaWidgetContents_Env_Install.setGeometry(QRect(0, 0, 1026, 559))
+        self.ScrollAreaWidgetContents_Env_Install.setGeometry(QRect(0, 0, 199, 495))
         self.verticalLayout_130 = QVBoxLayout(self.ScrollAreaWidgetContents_Env_Install)
         self.verticalLayout_130.setSpacing(0)
         self.verticalLayout_130.setObjectName(u"verticalLayout_130")
@@ -2062,7 +1999,7 @@ class Ui_MainWindow(object):
         self.ScrollArea_Env_Manage.setWidgetResizable(True)
         self.ScrollAreaWidgetContents_Env_Manage = QWidget()
         self.ScrollAreaWidgetContents_Env_Manage.setObjectName(u"ScrollAreaWidgetContents_Env_Manage")
-        self.ScrollAreaWidgetContents_Env_Manage.setGeometry(QRect(0, 0, 246, 308))
+        self.ScrollAreaWidgetContents_Env_Manage.setGeometry(QRect(0, 0, 248, 212))
         self.verticalLayout_81 = QVBoxLayout(self.ScrollAreaWidgetContents_Env_Manage)
         self.verticalLayout_81.setSpacing(0)
         self.verticalLayout_81.setObjectName(u"verticalLayout_81")
@@ -2128,81 +2065,6 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_105.addWidget(self.Frame_Env_Manage_Pytorch_Version)
 
-        self.Frame_Env_Manage_Pytorch_Reinstall = QFrame(self.GroupBox_Env_Manage_Pytorch)
-        self.Frame_Env_Manage_Pytorch_Reinstall.setObjectName(u"Frame_Env_Manage_Pytorch_Reinstall")
-        self.Frame_Env_Manage_Pytorch_Reinstall.setMinimumSize(QSize(0, 90))
-        self.Frame_Env_Manage_Pytorch_Reinstall.setStyleSheet(u"QFrame {\n"
-"	background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QFrame:hover {\n"
-"	background-color: rgba(36, 36, 36, 12);\n"
-"}")
-        self.horizontalLayout_75 = QHBoxLayout(self.Frame_Env_Manage_Pytorch_Reinstall)
-        self.horizontalLayout_75.setSpacing(12)
-        self.horizontalLayout_75.setObjectName(u"horizontalLayout_75")
-        self.horizontalLayout_75.setContentsMargins(21, 12, 21, 12)
-        self.Label_Env_Manage_Pytorch_Reinstall = QLabel(self.Frame_Env_Manage_Pytorch_Reinstall)
-        self.Label_Env_Manage_Pytorch_Reinstall.setObjectName(u"Label_Env_Manage_Pytorch_Reinstall")
-        sizePolicy4.setHeightForWidth(self.Label_Env_Manage_Pytorch_Reinstall.sizePolicy().hasHeightForWidth())
-        self.Label_Env_Manage_Pytorch_Reinstall.setSizePolicy(sizePolicy4)
-        self.Label_Env_Manage_Pytorch_Reinstall.setStyleSheet(u"QLabel {\n"
-"	font-size: 15px;\n"
-"	/*text-align: center;*/\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.horizontalLayout_75.addWidget(self.Label_Env_Manage_Pytorch_Reinstall)
-
-        self.CheckBox_Env_Manage_Pytorch_Reinstall = QCheckBox(self.Frame_Env_Manage_Pytorch_Reinstall)
-        self.CheckBox_Env_Manage_Pytorch_Reinstall.setObjectName(u"CheckBox_Env_Manage_Pytorch_Reinstall")
-        sizePolicy5 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
-        sizePolicy5.setHorizontalStretch(0)
-        sizePolicy5.setVerticalStretch(0)
-        sizePolicy5.setHeightForWidth(self.CheckBox_Env_Manage_Pytorch_Reinstall.sizePolicy().hasHeightForWidth())
-        self.CheckBox_Env_Manage_Pytorch_Reinstall.setSizePolicy(sizePolicy5)
-        self.CheckBox_Env_Manage_Pytorch_Reinstall.setMinimumSize(QSize(0, 30))
-        self.CheckBox_Env_Manage_Pytorch_Reinstall.setStyleSheet(u"QCheckBox {\n"
-"	font-size: 15px;\n"
-"	spacing: 12.3px;\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QCheckBox:hover {\n"
-"}\n"
-"\n"
-"QCheckBox::indicator {\n"
-"	width: 30px;\n"
-"	height: 30px;\n"
-"    background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QCheckBox::indicator:hover {\n"
-"	background-color: rgba(255, 255, 255, 21);\n"
-"}\n"
-"QCheckBox::indicator:unchecked {\n"
-"	border-image: url(:/CheckBox_Icon/Sources/ToggleOff.png);\n"
-"}\n"
-"QCheckBox::indicator:checked {\n"
-"	border-image: url(:/CheckBox_Icon/Sources/ToggleOn.png);\n"
-"}")
-
-        self.horizontalLayout_75.addWidget(self.CheckBox_Env_Manage_Pytorch_Reinstall)
-
-
-        self.verticalLayout_105.addWidget(self.Frame_Env_Manage_Pytorch_Reinstall)
-
         self.Frame_Env_Manage_Pytorch_Install = QFrame(self.GroupBox_Env_Manage_Pytorch)
         self.Frame_Env_Manage_Pytorch_Install.setObjectName(u"Frame_Env_Manage_Pytorch_Install")
         self.Frame_Env_Manage_Pytorch_Install.setMinimumSize(QSize(0, 90))
@@ -2222,10 +2084,10 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_26.addItem(self.HorizontalSpacer_Env_Manage_Pytorch_Install)
 
-        self.Button_Setting_IntegrityChecker_Install = QPushButton(self.Frame_Env_Manage_Pytorch_Install)
-        self.Button_Setting_IntegrityChecker_Install.setObjectName(u"Button_Setting_IntegrityChecker_Install")
-        self.Button_Setting_IntegrityChecker_Install.setMinimumSize(QSize(123, 0))
-        self.Button_Setting_IntegrityChecker_Install.setStyleSheet(u"QPushButton {\n"
+        self.Button_Env_Manage_Pytorch_Install = QPushButton(self.Frame_Env_Manage_Pytorch_Install)
+        self.Button_Env_Manage_Pytorch_Install.setObjectName(u"Button_Env_Manage_Pytorch_Install")
+        self.Button_Env_Manage_Pytorch_Install.setMinimumSize(QSize(123, 0))
+        self.Button_Env_Manage_Pytorch_Install.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
 "	font-size: 12px;\n"
 "	background-color: transparent;\n"
@@ -2239,7 +2101,7 @@ class Ui_MainWindow(object):
 "	border-color: rgb(120, 120, 120);\n"
 "}")
 
-        self.horizontalLayout_26.addWidget(self.Button_Setting_IntegrityChecker_Install)
+        self.horizontalLayout_26.addWidget(self.Button_Env_Manage_Pytorch_Install)
 
 
         self.verticalLayout_105.addWidget(self.Frame_Env_Manage_Pytorch_Install)
@@ -2456,6 +2318,9 @@ class Ui_MainWindow(object):
 
         self.Button_Models_Refresh = QPushButton(self.Frame_Models_Title_Spacer)
         self.Button_Models_Refresh.setObjectName(u"Button_Models_Refresh")
+        sizePolicy5 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
+        sizePolicy5.setHorizontalStretch(0)
+        sizePolicy5.setVerticalStretch(0)
         sizePolicy5.setHeightForWidth(self.Button_Models_Refresh.sizePolicy().hasHeightForWidth())
         self.Button_Models_Refresh.setSizePolicy(sizePolicy5)
         self.Button_Models_Refresh.setMinimumSize(QSize(84, 0))
@@ -2919,7 +2784,7 @@ class Ui_MainWindow(object):
         self.ScrollArea_Middle_Process.setWidgetResizable(True)
         self.ScrollArea_Middle_WidgetContents_Process = QWidget()
         self.ScrollArea_Middle_WidgetContents_Process.setObjectName(u"ScrollArea_Middle_WidgetContents_Process")
-        self.ScrollArea_Middle_WidgetContents_Process.setGeometry(QRect(0, 0, 581, 1867))
+        self.ScrollArea_Middle_WidgetContents_Process.setGeometry(QRect(0, 0, 581, 1823))
         self.verticalLayout_14 = QVBoxLayout(self.ScrollArea_Middle_WidgetContents_Process)
         self.verticalLayout_14.setSpacing(12)
         self.verticalLayout_14.setObjectName(u"verticalLayout_14")
@@ -2985,24 +2850,17 @@ class Ui_MainWindow(object):
 
         self.gridLayout_12.addItem(self.HorizontalSpacer_Process_MediaDirInput, 0, 1, 1, 1)
 
-        self.Button_Process_MediaDirInput_Undo = QPushButton(self.Frame_Process_MediaDirInput)
-        self.Button_Process_MediaDirInput_Undo.setObjectName(u"Button_Process_MediaDirInput_Undo")
-        self.Button_Process_MediaDirInput_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_Process_MediaDirInput_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_Process_MediaDirInput_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_Process_MediaDirInput_MoreActions = MenuButton(self.Frame_Process_MediaDirInput)
+        self.Button_Process_MediaDirInput_MoreActions.setObjectName(u"Button_Process_MediaDirInput_MoreActions")
+        self.Button_Process_MediaDirInput_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_Process_MediaDirInput_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_Process_MediaDirInput_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_12.addWidget(self.Button_Process_MediaDirInput_Undo, 0, 2, 1, 1)
+        self.gridLayout_12.addWidget(self.Button_Process_MediaDirInput_MoreActions, 0, 2, 1, 1)
 
         self.LineEdit_Process_MediaDirInput = LineEditBase(self.Frame_Process_MediaDirInput)
         self.LineEdit_Process_MediaDirInput.setObjectName(u"LineEdit_Process_MediaDirInput")
@@ -3080,24 +2938,17 @@ class Ui_MainWindow(object):
 
         self.gridLayout_90.addItem(self.HorizontalSpacer_Process_DenoiseAudio, 0, 1, 1, 1)
 
-        self.Button_Process_DenoiseAudio_Undo = QPushButton(self.Frame_Process_DenoiseAudio)
-        self.Button_Process_DenoiseAudio_Undo.setObjectName(u"Button_Process_DenoiseAudio_Undo")
-        self.Button_Process_DenoiseAudio_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_Process_DenoiseAudio_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_Process_DenoiseAudio_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_Process_DenoiseAudio_MoreActions = MenuButton(self.Frame_Process_DenoiseAudio)
+        self.Button_Process_DenoiseAudio_MoreActions.setObjectName(u"Button_Process_DenoiseAudio_MoreActions")
+        self.Button_Process_DenoiseAudio_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_Process_DenoiseAudio_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_Process_DenoiseAudio_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_90.addWidget(self.Button_Process_DenoiseAudio_Undo, 0, 2, 1, 1)
+        self.gridLayout_90.addWidget(self.Button_Process_DenoiseAudio_MoreActions, 0, 2, 1, 1)
 
         self.CheckBox_Process_DenoiseAudio = QCheckBox(self.Frame_Process_DenoiseAudio)
         self.CheckBox_Process_DenoiseAudio.setObjectName(u"CheckBox_Process_DenoiseAudio")
@@ -3172,24 +3023,17 @@ class Ui_MainWindow(object):
 
         self.gridLayout_92.addItem(self.HorizontalSpacer_Process_DenoiseModelPath, 0, 1, 1, 1)
 
-        self.Button_Process_DenoiseModelPath_Undo = QPushButton(self.Frame_Process_DenoiseModelPath)
-        self.Button_Process_DenoiseModelPath_Undo.setObjectName(u"Button_Process_DenoiseModelPath_Undo")
-        self.Button_Process_DenoiseModelPath_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_Process_DenoiseModelPath_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_Process_DenoiseModelPath_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_Process_DenoiseModelPath_MoreActions = MenuButton(self.Frame_Process_DenoiseModelPath)
+        self.Button_Process_DenoiseModelPath_MoreActions.setObjectName(u"Button_Process_DenoiseModelPath_MoreActions")
+        self.Button_Process_DenoiseModelPath_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_Process_DenoiseModelPath_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_Process_DenoiseModelPath_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_92.addWidget(self.Button_Process_DenoiseModelPath_Undo, 0, 2, 1, 1)
+        self.gridLayout_92.addWidget(self.Button_Process_DenoiseModelPath_MoreActions, 0, 2, 1, 1)
 
         self.LineEdit_Process_DenoiseModelPath = LineEditBase(self.Frame_Process_DenoiseModelPath)
         self.LineEdit_Process_DenoiseModelPath.setObjectName(u"LineEdit_Process_DenoiseModelPath")
@@ -3234,24 +3078,17 @@ class Ui_MainWindow(object):
 
         self.gridLayout_94.addItem(self.HorizontalSpacer_Process_DenoiseTarget, 0, 1, 1, 1)
 
-        self.Button_Process_DenoiseTarget_Undo = QPushButton(self.Frame_Process_DenoiseTarget)
-        self.Button_Process_DenoiseTarget_Undo.setObjectName(u"Button_Process_DenoiseTarget_Undo")
-        self.Button_Process_DenoiseTarget_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_Process_DenoiseTarget_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_Process_DenoiseTarget_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_Process_DenoiseTarget_MoreActions = MenuButton(self.Frame_Process_DenoiseTarget)
+        self.Button_Process_DenoiseTarget_MoreActions.setObjectName(u"Button_Process_DenoiseTarget_MoreActions")
+        self.Button_Process_DenoiseTarget_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_Process_DenoiseTarget_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_Process_DenoiseTarget_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_94.addWidget(self.Button_Process_DenoiseTarget_Undo, 0, 2, 1, 1)
+        self.gridLayout_94.addWidget(self.Button_Process_DenoiseTarget_MoreActions, 0, 2, 1, 1)
 
         self.ComboBox_Process_DenoiseTarget = ComboBoxBase(self.Frame_Process_DenoiseTarget)
         self.ComboBox_Process_DenoiseTarget.setObjectName(u"ComboBox_Process_DenoiseTarget")
@@ -3292,7 +3129,9 @@ class Ui_MainWindow(object):
         self.Frame_Process_SlicerParams_BasicSettings = QFrame(self.GroupBox_Process_SlicerParams)
         self.Frame_Process_SlicerParams_BasicSettings.setObjectName(u"Frame_Process_SlicerParams_BasicSettings")
         self.verticalLayout_51 = QVBoxLayout(self.Frame_Process_SlicerParams_BasicSettings)
+        self.verticalLayout_51.setSpacing(0)
         self.verticalLayout_51.setObjectName(u"verticalLayout_51")
+        self.verticalLayout_51.setContentsMargins(0, 0, 0, 0)
         self.Frame_Process_SliceAudio = QFrame(self.Frame_Process_SlicerParams_BasicSettings)
         self.Frame_Process_SliceAudio.setObjectName(u"Frame_Process_SliceAudio")
         self.Frame_Process_SliceAudio.setMinimumSize(QSize(0, 105))
@@ -3327,24 +3166,17 @@ class Ui_MainWindow(object):
 
         self.gridLayout_13.addItem(self.HorizontalSpacer_Process_SliceAudio, 0, 1, 1, 1)
 
-        self.Button_Process_SliceAudio_Undo = QPushButton(self.Frame_Process_SliceAudio)
-        self.Button_Process_SliceAudio_Undo.setObjectName(u"Button_Process_SliceAudio_Undo")
-        self.Button_Process_SliceAudio_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_Process_SliceAudio_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_Process_SliceAudio_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_Process_SliceAudio_MoreActions = MenuButton(self.Frame_Process_SliceAudio)
+        self.Button_Process_SliceAudio_MoreActions.setObjectName(u"Button_Process_SliceAudio_MoreActions")
+        self.Button_Process_SliceAudio_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_Process_SliceAudio_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_Process_SliceAudio_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_13.addWidget(self.Button_Process_SliceAudio_Undo, 0, 2, 1, 1)
+        self.gridLayout_13.addWidget(self.Button_Process_SliceAudio_MoreActions, 0, 2, 1, 1)
 
         self.CheckBox_Process_SliceAudio = QCheckBox(self.Frame_Process_SliceAudio)
         self.CheckBox_Process_SliceAudio.setObjectName(u"CheckBox_Process_SliceAudio")
@@ -3464,24 +3296,17 @@ class Ui_MainWindow(object):
 
         self.gridLayout_17.addItem(self.HorizontalSpacer_Process_RMSThreshold, 0, 1, 1, 1)
 
-        self.Button_Process_RMSThreshold_Undo = QPushButton(self.Frame_Process_RMSThreshold)
-        self.Button_Process_RMSThreshold_Undo.setObjectName(u"Button_Process_RMSThreshold_Undo")
-        self.Button_Process_RMSThreshold_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_Process_RMSThreshold_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_Process_RMSThreshold_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_Process_RMSThreshold_MoreActions = MenuButton(self.Frame_Process_RMSThreshold)
+        self.Button_Process_RMSThreshold_MoreActions.setObjectName(u"Button_Process_RMSThreshold_MoreActions")
+        self.Button_Process_RMSThreshold_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_Process_RMSThreshold_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_Process_RMSThreshold_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_17.addWidget(self.Button_Process_RMSThreshold_Undo, 0, 2, 1, 1)
+        self.gridLayout_17.addWidget(self.Button_Process_RMSThreshold_MoreActions, 0, 2, 1, 1)
 
         self.DoubleSpinBox_Process_RMSThreshold = DoubleSpinBoxBase(self.Frame_Process_RMSThreshold)
         self.DoubleSpinBox_Process_RMSThreshold.setObjectName(u"DoubleSpinBox_Process_RMSThreshold")
@@ -3529,24 +3354,17 @@ class Ui_MainWindow(object):
 
         self.gridLayout_23.addItem(self.HorizontalSpacer_Process_AudioLengthMin, 0, 1, 1, 1)
 
-        self.Button_Process_AudioLengthMin_Undo = QPushButton(self.Frame_Process_AudioLengthMin)
-        self.Button_Process_AudioLengthMin_Undo.setObjectName(u"Button_Process_AudioLengthMin_Undo")
-        self.Button_Process_AudioLengthMin_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_Process_AudioLengthMin_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_Process_AudioLengthMin_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_Process_AudioLengthMin_MoreActions = MenuButton(self.Frame_Process_AudioLengthMin)
+        self.Button_Process_AudioLengthMin_MoreActions.setObjectName(u"Button_Process_AudioLengthMin_MoreActions")
+        self.Button_Process_AudioLengthMin_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_Process_AudioLengthMin_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_Process_AudioLengthMin_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_23.addWidget(self.Button_Process_AudioLengthMin_Undo, 0, 2, 1, 1)
+        self.gridLayout_23.addWidget(self.Button_Process_AudioLengthMin_MoreActions, 0, 2, 1, 1)
 
         self.SpinBox_Process_AudioLengthMin = SpinBoxBase(self.Frame_Process_AudioLengthMin)
         self.SpinBox_Process_AudioLengthMin.setObjectName(u"SpinBox_Process_AudioLengthMin")
@@ -3593,24 +3411,17 @@ class Ui_MainWindow(object):
 
         self.gridLayout_24.addItem(self.HorizontalSpacer_Process_SilentIntervalMin, 0, 1, 1, 1)
 
-        self.Button_Process_SilentIntervalMin_Undo = QPushButton(self.Frame_Process_SilentIntervalMin)
-        self.Button_Process_SilentIntervalMin_Undo.setObjectName(u"Button_Process_SilentIntervalMin_Undo")
-        self.Button_Process_SilentIntervalMin_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_Process_SilentIntervalMin_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_Process_SilentIntervalMin_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_Process_SilentIntervalMin_MoreActions = MenuButton(self.Frame_Process_SilentIntervalMin)
+        self.Button_Process_SilentIntervalMin_MoreActions.setObjectName(u"Button_Process_SilentIntervalMin_MoreActions")
+        self.Button_Process_SilentIntervalMin_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_Process_SilentIntervalMin_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_Process_SilentIntervalMin_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_24.addWidget(self.Button_Process_SilentIntervalMin_Undo, 0, 2, 1, 1)
+        self.gridLayout_24.addWidget(self.Button_Process_SilentIntervalMin_MoreActions, 0, 2, 1, 1)
 
         self.SpinBox_Process_SilentIntervalMin = SpinBoxBase(self.Frame_Process_SilentIntervalMin)
         self.SpinBox_Process_SilentIntervalMin.setObjectName(u"SpinBox_Process_SilentIntervalMin")
@@ -3657,24 +3468,17 @@ class Ui_MainWindow(object):
 
         self.gridLayout_25.addItem(self.HorizontalSpacer_Process_HopSize, 0, 1, 1, 1)
 
-        self.Button_Process_HopSize_Undo = QPushButton(self.Frame_Process_HopSize)
-        self.Button_Process_HopSize_Undo.setObjectName(u"Button_Process_HopSize_Undo")
-        self.Button_Process_HopSize_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_Process_HopSize_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_Process_HopSize_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_Process_HopSize_MoreActions = MenuButton(self.Frame_Process_HopSize)
+        self.Button_Process_HopSize_MoreActions.setObjectName(u"Button_Process_HopSize_MoreActions")
+        self.Button_Process_HopSize_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_Process_HopSize_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_Process_HopSize_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_25.addWidget(self.Button_Process_HopSize_Undo, 0, 2, 1, 1)
+        self.gridLayout_25.addWidget(self.Button_Process_HopSize_MoreActions, 0, 2, 1, 1)
 
         self.SpinBox_Process_HopSize = SpinBoxBase(self.Frame_Process_HopSize)
         self.SpinBox_Process_HopSize.setObjectName(u"SpinBox_Process_HopSize")
@@ -3721,24 +3525,17 @@ class Ui_MainWindow(object):
 
         self.gridLayout_26.addItem(self.HorizontalSpacer_Process_SilenceKeptMax, 0, 1, 1, 1)
 
-        self.Button_Process_SilenceKeptMax_Undo = QPushButton(self.Frame_Process_SilenceKeptMax)
-        self.Button_Process_SilenceKeptMax_Undo.setObjectName(u"Button_Process_SilenceKeptMax_Undo")
-        self.Button_Process_SilenceKeptMax_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_Process_SilenceKeptMax_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_Process_SilenceKeptMax_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_Process_SilenceKeptMax_MoreActions = MenuButton(self.Frame_Process_SilenceKeptMax)
+        self.Button_Process_SilenceKeptMax_MoreActions.setObjectName(u"Button_Process_SilenceKeptMax_MoreActions")
+        self.Button_Process_SilenceKeptMax_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_Process_SilenceKeptMax_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_Process_SilenceKeptMax_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_26.addWidget(self.Button_Process_SilenceKeptMax_Undo, 0, 2, 1, 1)
+        self.gridLayout_26.addWidget(self.Button_Process_SilenceKeptMax_MoreActions, 0, 2, 1, 1)
 
         self.SpinBox_Process_SilenceKeptMax = SpinBoxBase(self.Frame_Process_SilenceKeptMax)
         self.SpinBox_Process_SilenceKeptMax.setObjectName(u"SpinBox_Process_SilenceKeptMax")
@@ -3818,24 +3615,17 @@ class Ui_MainWindow(object):
 
         self.gridLayout_27.addItem(self.HorizontalSpacer_Process_MediaFormatOutput, 0, 1, 1, 1)
 
-        self.Button_Process_MediaFormatOutput_Undo = QPushButton(self.Frame_Process_MediaFormatOutput)
-        self.Button_Process_MediaFormatOutput_Undo.setObjectName(u"Button_Process_MediaFormatOutput_Undo")
-        self.Button_Process_MediaFormatOutput_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_Process_MediaFormatOutput_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_Process_MediaFormatOutput_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_Process_MediaFormatOutput_MoreActions = MenuButton(self.Frame_Process_MediaFormatOutput)
+        self.Button_Process_MediaFormatOutput_MoreActions.setObjectName(u"Button_Process_MediaFormatOutput_MoreActions")
+        self.Button_Process_MediaFormatOutput_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_Process_MediaFormatOutput_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_Process_MediaFormatOutput_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_27.addWidget(self.Button_Process_MediaFormatOutput_Undo, 0, 2, 1, 1)
+        self.gridLayout_27.addWidget(self.Button_Process_MediaFormatOutput_MoreActions, 0, 2, 1, 1)
 
         self.ComboBox_Process_MediaFormatOutput = ComboBoxBase(self.Frame_Process_MediaFormatOutput)
         self.ComboBox_Process_MediaFormatOutput.setObjectName(u"ComboBox_Process_MediaFormatOutput")
@@ -3880,24 +3670,17 @@ class Ui_MainWindow(object):
 
         self.gridLayout_28.addItem(self.HorizontalSpacer_Process_OutputDirName, 0, 1, 1, 1)
 
-        self.Button_Process_OutputDirName_Undo = QPushButton(self.Frame_Process_OutputDirName)
-        self.Button_Process_OutputDirName_Undo.setObjectName(u"Button_Process_OutputDirName_Undo")
-        self.Button_Process_OutputDirName_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_Process_OutputDirName_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_Process_OutputDirName_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_Process_OutputDirName_MoreActions = MenuButton(self.Frame_Process_OutputDirName)
+        self.Button_Process_OutputDirName_MoreActions.setObjectName(u"Button_Process_OutputDirName_MoreActions")
+        self.Button_Process_OutputDirName_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_Process_OutputDirName_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_Process_OutputDirName_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_28.addWidget(self.Button_Process_OutputDirName_Undo, 0, 2, 1, 1)
+        self.gridLayout_28.addWidget(self.Button_Process_OutputDirName_MoreActions, 0, 2, 1, 1)
 
         self.LineEdit_Process_OutputDirName = LineEditBase(self.Frame_Process_OutputDirName)
         self.LineEdit_Process_OutputDirName.setObjectName(u"LineEdit_Process_OutputDirName")
@@ -3987,24 +3770,17 @@ class Ui_MainWindow(object):
 
         self.gridLayout_29.addItem(self.HorizontalSpacer_Process_SampleRate, 0, 1, 1, 1)
 
-        self.Button_Process_SampleRate_Undo = QPushButton(self.Frame_Process_SampleRate)
-        self.Button_Process_SampleRate_Undo.setObjectName(u"Button_Process_SampleRate_Undo")
-        self.Button_Process_SampleRate_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_Process_SampleRate_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_Process_SampleRate_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_Process_SampleRate_MoreActions = MenuButton(self.Frame_Process_SampleRate)
+        self.Button_Process_SampleRate_MoreActions.setObjectName(u"Button_Process_SampleRate_MoreActions")
+        self.Button_Process_SampleRate_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_Process_SampleRate_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_Process_SampleRate_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_29.addWidget(self.Button_Process_SampleRate_Undo, 0, 2, 1, 1)
+        self.gridLayout_29.addWidget(self.Button_Process_SampleRate_MoreActions, 0, 2, 1, 1)
 
         self.ComboBox_Process_SampleRate = ComboBoxBase(self.Frame_Process_SampleRate)
         self.ComboBox_Process_SampleRate.setObjectName(u"ComboBox_Process_SampleRate")
@@ -4049,24 +3825,17 @@ class Ui_MainWindow(object):
 
         self.gridLayout_30.addItem(self.HorizontalSpacer_Process_SampleWidth, 0, 1, 1, 1)
 
-        self.Button_Process_SampleWidth_Undo = QPushButton(self.Frame_Process_SampleWidth)
-        self.Button_Process_SampleWidth_Undo.setObjectName(u"Button_Process_SampleWidth_Undo")
-        self.Button_Process_SampleWidth_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_Process_SampleWidth_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_Process_SampleWidth_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_Process_SampleWidth_MoreActions = MenuButton(self.Frame_Process_SampleWidth)
+        self.Button_Process_SampleWidth_MoreActions.setObjectName(u"Button_Process_SampleWidth_MoreActions")
+        self.Button_Process_SampleWidth_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_Process_SampleWidth_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_Process_SampleWidth_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_30.addWidget(self.Button_Process_SampleWidth_Undo, 0, 2, 1, 1)
+        self.gridLayout_30.addWidget(self.Button_Process_SampleWidth_MoreActions, 0, 2, 1, 1)
 
         self.ComboBox_Process_SampleWidth = ComboBoxBase(self.Frame_Process_SampleWidth)
         self.ComboBox_Process_SampleWidth.setObjectName(u"ComboBox_Process_SampleWidth")
@@ -4111,24 +3880,17 @@ class Ui_MainWindow(object):
 
         self.gridLayout_31.addItem(self.HorizontalSpacer_Process_ToMono, 0, 1, 1, 1)
 
-        self.Button_Process_ToMono_Undo = QPushButton(self.Frame_Process_ToMono)
-        self.Button_Process_ToMono_Undo.setObjectName(u"Button_Process_ToMono_Undo")
-        self.Button_Process_ToMono_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_Process_ToMono_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_Process_ToMono_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_Process_ToMono_MoreActions = MenuButton(self.Frame_Process_ToMono)
+        self.Button_Process_ToMono_MoreActions.setObjectName(u"Button_Process_ToMono_MoreActions")
+        self.Button_Process_ToMono_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_Process_ToMono_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_Process_ToMono_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_31.addWidget(self.Button_Process_ToMono_Undo, 0, 2, 1, 1)
+        self.gridLayout_31.addWidget(self.Button_Process_ToMono_MoreActions, 0, 2, 1, 1)
 
         self.CheckBox_Process_ToMono = QCheckBox(self.Frame_Process_ToMono)
         self.CheckBox_Process_ToMono.setObjectName(u"CheckBox_Process_ToMono")
@@ -4569,7 +4331,7 @@ class Ui_MainWindow(object):
         self.ScrollArea_Middle_ASR_VPR.setWidgetResizable(True)
         self.ScrollArea_Middle_WidgetContents_ASR_VPR = QWidget()
         self.ScrollArea_Middle_WidgetContents_ASR_VPR.setObjectName(u"ScrollArea_Middle_WidgetContents_ASR_VPR")
-        self.ScrollArea_Middle_WidgetContents_ASR_VPR.setGeometry(QRect(0, 0, 581, 1276))
+        self.ScrollArea_Middle_WidgetContents_ASR_VPR.setGeometry(QRect(0, 0, 581, 1256))
         self.verticalLayout_7 = QVBoxLayout(self.ScrollArea_Middle_WidgetContents_ASR_VPR)
         self.verticalLayout_7.setSpacing(12)
         self.verticalLayout_7.setObjectName(u"verticalLayout_7")
@@ -4635,24 +4397,17 @@ class Ui_MainWindow(object):
 
         self.gridLayout_32.addItem(self.HorizontalSpacer_ASR_VPR_AudioDirInput, 0, 1, 1, 1)
 
-        self.Button_ASR_VPR_AudioDirInput_Undo = QPushButton(self.Frame_ASR_VPR_AudioDirInput)
-        self.Button_ASR_VPR_AudioDirInput_Undo.setObjectName(u"Button_ASR_VPR_AudioDirInput_Undo")
-        self.Button_ASR_VPR_AudioDirInput_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_ASR_VPR_AudioDirInput_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_ASR_VPR_AudioDirInput_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_ASR_VPR_AudioDirInput_MoreActions = MenuButton(self.Frame_ASR_VPR_AudioDirInput)
+        self.Button_ASR_VPR_AudioDirInput_MoreActions.setObjectName(u"Button_ASR_VPR_AudioDirInput_MoreActions")
+        self.Button_ASR_VPR_AudioDirInput_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_ASR_VPR_AudioDirInput_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_ASR_VPR_AudioDirInput_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_32.addWidget(self.Button_ASR_VPR_AudioDirInput_Undo, 0, 2, 1, 1)
+        self.gridLayout_32.addWidget(self.Button_ASR_VPR_AudioDirInput_MoreActions, 0, 2, 1, 1)
 
         self.LineEdit_ASR_VPR_AudioDirInput = LineEditBase(self.Frame_ASR_VPR_AudioDirInput)
         self.LineEdit_ASR_VPR_AudioDirInput.setObjectName(u"LineEdit_ASR_VPR_AudioDirInput")
@@ -4773,24 +4528,17 @@ class Ui_MainWindow(object):
 
         self.gridLayout_33.addWidget(self.DoubleSpinBox_ASR_VPR_DecisionThreshold, 1, 0, 1, 3)
 
-        self.Button_ASR_VPR_DecisionThreshold_Undo = QPushButton(self.Frame_ASR_VPR_DecisionThreshold)
-        self.Button_ASR_VPR_DecisionThreshold_Undo.setObjectName(u"Button_ASR_VPR_DecisionThreshold_Undo")
-        self.Button_ASR_VPR_DecisionThreshold_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_ASR_VPR_DecisionThreshold_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_ASR_VPR_DecisionThreshold_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_ASR_VPR_DecisionThreshold_MoreActions = MenuButton(self.Frame_ASR_VPR_DecisionThreshold)
+        self.Button_ASR_VPR_DecisionThreshold_MoreActions.setObjectName(u"Button_ASR_VPR_DecisionThreshold_MoreActions")
+        self.Button_ASR_VPR_DecisionThreshold_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_ASR_VPR_DecisionThreshold_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_ASR_VPR_DecisionThreshold_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_33.addWidget(self.Button_ASR_VPR_DecisionThreshold_Undo, 0, 2, 1, 1)
+        self.gridLayout_33.addWidget(self.Button_ASR_VPR_DecisionThreshold_MoreActions, 0, 2, 1, 1)
 
         self.HorizontalSpacer_ASR_VPR_DecisionThreshold = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
@@ -4833,24 +4581,17 @@ class Ui_MainWindow(object):
 
         self.gridLayout_34.addItem(self.HorizontalSpacer_ASR_VPR_ModelPath, 0, 1, 1, 1)
 
-        self.Button_ASR_VPR_ModelPath_Undo = QPushButton(self.Frame_ASR_VPR_ModelPath)
-        self.Button_ASR_VPR_ModelPath_Undo.setObjectName(u"Button_ASR_VPR_ModelPath_Undo")
-        self.Button_ASR_VPR_ModelPath_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_ASR_VPR_ModelPath_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_ASR_VPR_ModelPath_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_ASR_VPR_ModelPath_MoreActions = MenuButton(self.Frame_ASR_VPR_ModelPath)
+        self.Button_ASR_VPR_ModelPath_MoreActions.setObjectName(u"Button_ASR_VPR_ModelPath_MoreActions")
+        self.Button_ASR_VPR_ModelPath_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_ASR_VPR_ModelPath_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_ASR_VPR_ModelPath_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_34.addWidget(self.Button_ASR_VPR_ModelPath_Undo, 0, 2, 1, 1)
+        self.gridLayout_34.addWidget(self.Button_ASR_VPR_ModelPath_MoreActions, 0, 2, 1, 1)
 
         self.LineEdit_ASR_VPR_ModelPath = LineEditBase(self.Frame_ASR_VPR_ModelPath)
         self.LineEdit_ASR_VPR_ModelPath.setObjectName(u"LineEdit_ASR_VPR_ModelPath")
@@ -4940,24 +4681,17 @@ class Ui_MainWindow(object):
 
         self.gridLayout_35.addItem(self.HorizontalSpacer_ASR_VPR_ModelType, 0, 1, 1, 1)
 
-        self.Button_ASR_VPR_ModelType_Undo = QPushButton(self.Frame_ASR_VPR_ModelType)
-        self.Button_ASR_VPR_ModelType_Undo.setObjectName(u"Button_ASR_VPR_ModelType_Undo")
-        self.Button_ASR_VPR_ModelType_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_ASR_VPR_ModelType_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_ASR_VPR_ModelType_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_ASR_VPR_ModelType_MoreActions = MenuButton(self.Frame_ASR_VPR_ModelType)
+        self.Button_ASR_VPR_ModelType_MoreActions.setObjectName(u"Button_ASR_VPR_ModelType_MoreActions")
+        self.Button_ASR_VPR_ModelType_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_ASR_VPR_ModelType_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_ASR_VPR_ModelType_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_35.addWidget(self.Button_ASR_VPR_ModelType_Undo, 0, 2, 1, 1)
+        self.gridLayout_35.addWidget(self.Button_ASR_VPR_ModelType_MoreActions, 0, 2, 1, 1)
 
         self.ComboBox_ASR_VPR_ModelType = ComboBoxBase(self.Frame_ASR_VPR_ModelType)
         self.ComboBox_ASR_VPR_ModelType.setObjectName(u"ComboBox_ASR_VPR_ModelType")
@@ -5002,24 +4736,17 @@ class Ui_MainWindow(object):
 
         self.gridLayout_36.addItem(self.HorizontalSpacer_ASR_VPR_FeatureMethod, 0, 1, 1, 1)
 
-        self.Button_ASR_VPR_FeatureMethod_Undo = QPushButton(self.Frame_ASR_VPR_FeatureMethod)
-        self.Button_ASR_VPR_FeatureMethod_Undo.setObjectName(u"Button_ASR_VPR_FeatureMethod_Undo")
-        self.Button_ASR_VPR_FeatureMethod_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_ASR_VPR_FeatureMethod_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_ASR_VPR_FeatureMethod_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_ASR_VPR_FeatureMethod_MoreActions = MenuButton(self.Frame_ASR_VPR_FeatureMethod)
+        self.Button_ASR_VPR_FeatureMethod_MoreActions.setObjectName(u"Button_ASR_VPR_FeatureMethod_MoreActions")
+        self.Button_ASR_VPR_FeatureMethod_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_ASR_VPR_FeatureMethod_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_ASR_VPR_FeatureMethod_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_36.addWidget(self.Button_ASR_VPR_FeatureMethod_Undo, 0, 2, 1, 1)
+        self.gridLayout_36.addWidget(self.Button_ASR_VPR_FeatureMethod_MoreActions, 0, 2, 1, 1)
 
         self.ComboBox_ASR_VPR_FeatureMethod = ComboBoxBase(self.Frame_ASR_VPR_FeatureMethod)
         self.ComboBox_ASR_VPR_FeatureMethod.setObjectName(u"ComboBox_ASR_VPR_FeatureMethod")
@@ -5064,24 +4791,17 @@ class Ui_MainWindow(object):
 
         self.gridLayout_37.addItem(self.HorizontalSpacer_ASR_VPR_DurationOfAudio, 0, 1, 1, 1)
 
-        self.Button_ASR_VPR_DurationOfAudio_Undo = QPushButton(self.Frame_ASR_VPR_DurationOfAudio)
-        self.Button_ASR_VPR_DurationOfAudio_Undo.setObjectName(u"Button_ASR_VPR_DurationOfAudio_Undo")
-        self.Button_ASR_VPR_DurationOfAudio_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_ASR_VPR_DurationOfAudio_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_ASR_VPR_DurationOfAudio_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_ASR_VPR_DurationOfAudio_MoreActions = MenuButton(self.Frame_ASR_VPR_DurationOfAudio)
+        self.Button_ASR_VPR_DurationOfAudio_MoreActions.setObjectName(u"Button_ASR_VPR_DurationOfAudio_MoreActions")
+        self.Button_ASR_VPR_DurationOfAudio_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_ASR_VPR_DurationOfAudio_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_ASR_VPR_DurationOfAudio_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_37.addWidget(self.Button_ASR_VPR_DurationOfAudio_Undo, 0, 2, 1, 1)
+        self.gridLayout_37.addWidget(self.Button_ASR_VPR_DurationOfAudio_MoreActions, 0, 2, 1, 1)
 
         self.DoubleSpinBox_ASR_VPR_DurationOfAudio = DoubleSpinBoxBase(self.Frame_ASR_VPR_DurationOfAudio)
         self.DoubleSpinBox_ASR_VPR_DurationOfAudio.setObjectName(u"DoubleSpinBox_ASR_VPR_DurationOfAudio")
@@ -5162,24 +4882,17 @@ class Ui_MainWindow(object):
 
         self.gridLayout_38.addItem(self.HorizontalSpacer_ASR_VPR_OutputDirName, 0, 1, 1, 1)
 
-        self.Button_ASR_VPR_OutputDirName_Undo = QPushButton(self.Frame_ASR_VPR_OutputDirName)
-        self.Button_ASR_VPR_OutputDirName_Undo.setObjectName(u"Button_ASR_VPR_OutputDirName_Undo")
-        self.Button_ASR_VPR_OutputDirName_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_ASR_VPR_OutputDirName_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_ASR_VPR_OutputDirName_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_ASR_VPR_OutputDirName_MoreActions = MenuButton(self.Frame_ASR_VPR_OutputDirName)
+        self.Button_ASR_VPR_OutputDirName_MoreActions.setObjectName(u"Button_ASR_VPR_OutputDirName_MoreActions")
+        self.Button_ASR_VPR_OutputDirName_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_ASR_VPR_OutputDirName_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_ASR_VPR_OutputDirName_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_38.addWidget(self.Button_ASR_VPR_OutputDirName_Undo, 0, 2, 1, 1)
+        self.gridLayout_38.addWidget(self.Button_ASR_VPR_OutputDirName_MoreActions, 0, 2, 1, 1)
 
         self.LineEdit_ASR_VPR_OutputDirName = LineEditBase(self.Frame_ASR_VPR_OutputDirName)
         self.LineEdit_ASR_VPR_OutputDirName.setObjectName(u"LineEdit_ASR_VPR_OutputDirName")
@@ -5252,24 +4965,17 @@ class Ui_MainWindow(object):
         self.gridLayout_112.setSpacing(12)
         self.gridLayout_112.setObjectName(u"gridLayout_112")
         self.gridLayout_112.setContentsMargins(21, 12, 21, 12)
-        self.Button_ASR_VPR_AudioSpeakersDataName_Undo = QPushButton(self.Frame_ASR_VPR_AudioSpeakersDataName)
-        self.Button_ASR_VPR_AudioSpeakersDataName_Undo.setObjectName(u"Button_ASR_VPR_AudioSpeakersDataName_Undo")
-        self.Button_ASR_VPR_AudioSpeakersDataName_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_ASR_VPR_AudioSpeakersDataName_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_ASR_VPR_AudioSpeakersDataName_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_ASR_VPR_AudioSpeakersDataName_MoreActions = MenuButton(self.Frame_ASR_VPR_AudioSpeakersDataName)
+        self.Button_ASR_VPR_AudioSpeakersDataName_MoreActions.setObjectName(u"Button_ASR_VPR_AudioSpeakersDataName_MoreActions")
+        self.Button_ASR_VPR_AudioSpeakersDataName_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_ASR_VPR_AudioSpeakersDataName_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_ASR_VPR_AudioSpeakersDataName_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_112.addWidget(self.Button_ASR_VPR_AudioSpeakersDataName_Undo, 0, 2, 1, 1)
+        self.gridLayout_112.addWidget(self.Button_ASR_VPR_AudioSpeakersDataName_MoreActions, 0, 2, 1, 1)
 
         self.Label_ASR_VPR_AudioSpeakersDataName = QLabel(self.Frame_ASR_VPR_AudioSpeakersDataName)
         self.Label_ASR_VPR_AudioSpeakersDataName.setObjectName(u"Label_ASR_VPR_AudioSpeakersDataName")
@@ -5711,7 +5417,7 @@ class Ui_MainWindow(object):
         self.ScrollArea_Middle_STT_Whisper.setWidgetResizable(True)
         self.ScrollArea_Middle_WidgetContents_STT_Whisper = QWidget()
         self.ScrollArea_Middle_WidgetContents_STT_Whisper.setObjectName(u"ScrollArea_Middle_WidgetContents_STT_Whisper")
-        self.ScrollArea_Middle_WidgetContents_STT_Whisper.setGeometry(QRect(0, 0, 581, 934))
+        self.ScrollArea_Middle_WidgetContents_STT_Whisper.setGeometry(QRect(0, 0, 581, 915))
         self.verticalLayout_16 = QVBoxLayout(self.ScrollArea_Middle_WidgetContents_STT_Whisper)
         self.verticalLayout_16.setSpacing(12)
         self.verticalLayout_16.setObjectName(u"verticalLayout_16")
@@ -5777,24 +5483,17 @@ class Ui_MainWindow(object):
 
         self.gridLayout_39.addItem(self.HorizontalSpacer_STT_Whisper_AudioDir, 0, 1, 1, 1)
 
-        self.Button_STT_Whisper_AudioDir_Undo = QPushButton(self.Frame_STT_Whisper_AudioDir)
-        self.Button_STT_Whisper_AudioDir_Undo.setObjectName(u"Button_STT_Whisper_AudioDir_Undo")
-        self.Button_STT_Whisper_AudioDir_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_STT_Whisper_AudioDir_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_STT_Whisper_AudioDir_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_STT_Whisper_AudioDir_MoreActions = MenuButton(self.Frame_STT_Whisper_AudioDir)
+        self.Button_STT_Whisper_AudioDir_MoreActions.setObjectName(u"Button_STT_Whisper_AudioDir_MoreActions")
+        self.Button_STT_Whisper_AudioDir_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_STT_Whisper_AudioDir_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_STT_Whisper_AudioDir_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_39.addWidget(self.Button_STT_Whisper_AudioDir_Undo, 0, 2, 1, 1)
+        self.gridLayout_39.addWidget(self.Button_STT_Whisper_AudioDir_MoreActions, 0, 2, 1, 1)
 
         self.LineEdit_STT_Whisper_AudioDir = LineEditBase(self.Frame_STT_Whisper_AudioDir)
         self.LineEdit_STT_Whisper_AudioDir.setObjectName(u"LineEdit_STT_Whisper_AudioDir")
@@ -5872,24 +5571,17 @@ class Ui_MainWindow(object):
 
         self.gridLayout_40.addItem(self.HorizontalSpacer_STT_Whisper_AddLanguageInfo, 0, 1, 1, 1)
 
-        self.Button_STT_Whisper_AddLanguageInfo_Undo = QPushButton(self.Frame_STT_Whisper_AddLanguageInfo)
-        self.Button_STT_Whisper_AddLanguageInfo_Undo.setObjectName(u"Button_STT_Whisper_AddLanguageInfo_Undo")
-        self.Button_STT_Whisper_AddLanguageInfo_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_STT_Whisper_AddLanguageInfo_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_STT_Whisper_AddLanguageInfo_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_STT_Whisper_AddLanguageInfo_MoreActions = MenuButton(self.Frame_STT_Whisper_AddLanguageInfo)
+        self.Button_STT_Whisper_AddLanguageInfo_MoreActions.setObjectName(u"Button_STT_Whisper_AddLanguageInfo_MoreActions")
+        self.Button_STT_Whisper_AddLanguageInfo_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_STT_Whisper_AddLanguageInfo_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_STT_Whisper_AddLanguageInfo_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_40.addWidget(self.Button_STT_Whisper_AddLanguageInfo_Undo, 0, 2, 1, 1)
+        self.gridLayout_40.addWidget(self.Button_STT_Whisper_AddLanguageInfo_MoreActions, 0, 2, 1, 1)
 
         self.CheckBox_STT_Whisper_AddLanguageInfo = QCheckBox(self.Frame_STT_Whisper_AddLanguageInfo)
         self.CheckBox_STT_Whisper_AddLanguageInfo.setObjectName(u"CheckBox_STT_Whisper_AddLanguageInfo")
@@ -5964,24 +5656,17 @@ class Ui_MainWindow(object):
 
         self.gridLayout_41.addItem(self.HorizontalSpacer_STT_Whisper_ModelPath, 0, 1, 1, 1)
 
-        self.Button_STT_Whisper_ModelPath_Undo = QPushButton(self.Frame_STT_Whisper_ModelPath)
-        self.Button_STT_Whisper_ModelPath_Undo.setObjectName(u"Button_STT_Whisper_ModelPath_Undo")
-        self.Button_STT_Whisper_ModelPath_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_STT_Whisper_ModelPath_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_STT_Whisper_ModelPath_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_STT_Whisper_ModelPath_MoreActions = MenuButton(self.Frame_STT_Whisper_ModelPath)
+        self.Button_STT_Whisper_ModelPath_MoreActions.setObjectName(u"Button_STT_Whisper_ModelPath_MoreActions")
+        self.Button_STT_Whisper_ModelPath_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_STT_Whisper_ModelPath_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_STT_Whisper_ModelPath_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_41.addWidget(self.Button_STT_Whisper_ModelPath_Undo, 0, 2, 1, 1)
+        self.gridLayout_41.addWidget(self.Button_STT_Whisper_ModelPath_MoreActions, 0, 2, 1, 1)
 
         self.LineEdit_STT_Whisper_ModelPath = LineEditBase(self.Frame_STT_Whisper_ModelPath)
         self.LineEdit_STT_Whisper_ModelPath.setObjectName(u"LineEdit_STT_Whisper_ModelPath")
@@ -6107,24 +5792,17 @@ class Ui_MainWindow(object):
 
         self.gridLayout_44.addWidget(self.CheckBox_STT_Whisper_fp16, 1, 0, 1, 3)
 
-        self.Button_STT_Whisper_fp16_Undo = QPushButton(self.Frame_STT_Whisper_fp16)
-        self.Button_STT_Whisper_fp16_Undo.setObjectName(u"Button_STT_Whisper_fp16_Undo")
-        self.Button_STT_Whisper_fp16_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_STT_Whisper_fp16_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_STT_Whisper_fp16_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_STT_Whisper_fp16_MoreActions = MenuButton(self.Frame_STT_Whisper_fp16)
+        self.Button_STT_Whisper_fp16_MoreActions.setObjectName(u"Button_STT_Whisper_fp16_MoreActions")
+        self.Button_STT_Whisper_fp16_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_STT_Whisper_fp16_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_STT_Whisper_fp16_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_44.addWidget(self.Button_STT_Whisper_fp16_Undo, 0, 2, 1, 1)
+        self.gridLayout_44.addWidget(self.Button_STT_Whisper_fp16_MoreActions, 0, 2, 1, 1)
 
 
         self.verticalLayout_15.addWidget(self.Frame_STT_Whisper_fp16)
@@ -6184,24 +5862,17 @@ class Ui_MainWindow(object):
 
         self.gridLayout_43.addItem(self.HorizontalSpacer_STT_Whisper_ConditionOnPreviousText, 0, 1, 1, 1)
 
-        self.Button_STT_Whisper_ConditionOnPreviousText_Undo = QPushButton(self.Frame_STT_Whisper_ConditionOnPreviousText)
-        self.Button_STT_Whisper_ConditionOnPreviousText_Undo.setObjectName(u"Button_STT_Whisper_ConditionOnPreviousText_Undo")
-        self.Button_STT_Whisper_ConditionOnPreviousText_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_STT_Whisper_ConditionOnPreviousText_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_STT_Whisper_ConditionOnPreviousText_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_STT_Whisper_ConditionOnPreviousText_MoreActions = MenuButton(self.Frame_STT_Whisper_ConditionOnPreviousText)
+        self.Button_STT_Whisper_ConditionOnPreviousText_MoreActions.setObjectName(u"Button_STT_Whisper_ConditionOnPreviousText_MoreActions")
+        self.Button_STT_Whisper_ConditionOnPreviousText_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_STT_Whisper_ConditionOnPreviousText_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_STT_Whisper_ConditionOnPreviousText_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_43.addWidget(self.Button_STT_Whisper_ConditionOnPreviousText_Undo, 0, 2, 1, 1)
+        self.gridLayout_43.addWidget(self.Button_STT_Whisper_ConditionOnPreviousText_MoreActions, 0, 2, 1, 1)
 
         self.Label_STT_Whisper_ConditionOnPreviousText = QLabel(self.Frame_STT_Whisper_ConditionOnPreviousText)
         self.Label_STT_Whisper_ConditionOnPreviousText.setObjectName(u"Label_STT_Whisper_ConditionOnPreviousText")
@@ -6291,24 +5962,17 @@ class Ui_MainWindow(object):
 
         self.gridLayout_42.addWidget(self.CheckBox_STT_Whisper_Verbose, 1, 0, 1, 3)
 
-        self.Button_STT_Whisper_Verbose_Undo = QPushButton(self.Frame_STT_Whisper_Verbose)
-        self.Button_STT_Whisper_Verbose_Undo.setObjectName(u"Button_STT_Whisper_Verbose_Undo")
-        self.Button_STT_Whisper_Verbose_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_STT_Whisper_Verbose_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_STT_Whisper_Verbose_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_STT_Whisper_Verbose_MoreActions = MenuButton(self.Frame_STT_Whisper_Verbose)
+        self.Button_STT_Whisper_Verbose_MoreActions.setObjectName(u"Button_STT_Whisper_Verbose_MoreActions")
+        self.Button_STT_Whisper_Verbose_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_STT_Whisper_Verbose_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_STT_Whisper_Verbose_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_42.addWidget(self.Button_STT_Whisper_Verbose_Undo, 0, 2, 1, 1)
+        self.gridLayout_42.addWidget(self.Button_STT_Whisper_Verbose_MoreActions, 0, 2, 1, 1)
 
 
         self.verticalLayout_15.addWidget(self.Frame_STT_Whisper_Verbose)
@@ -6380,24 +6044,17 @@ class Ui_MainWindow(object):
 
         self.gridLayout_45.addItem(self.HorizontalSpacer_STT_Whisper_OutputDirName, 0, 1, 1, 1)
 
-        self.Button_STT_Whisper_OutputDirName_Undo = QPushButton(self.Frame_STT_Whisper_OutputDirName)
-        self.Button_STT_Whisper_OutputDirName_Undo.setObjectName(u"Button_STT_Whisper_OutputDirName_Undo")
-        self.Button_STT_Whisper_OutputDirName_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_STT_Whisper_OutputDirName_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_STT_Whisper_OutputDirName_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_STT_Whisper_OutputDirName_MoreActions = MenuButton(self.Frame_STT_Whisper_OutputDirName)
+        self.Button_STT_Whisper_OutputDirName_MoreActions.setObjectName(u"Button_STT_Whisper_OutputDirName_MoreActions")
+        self.Button_STT_Whisper_OutputDirName_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_STT_Whisper_OutputDirName_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_STT_Whisper_OutputDirName_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_45.addWidget(self.Button_STT_Whisper_OutputDirName_Undo, 0, 2, 1, 1)
+        self.gridLayout_45.addWidget(self.Button_STT_Whisper_OutputDirName_MoreActions, 0, 2, 1, 1)
 
         self.LineEdit_STT_Whisper_OutputDirName = LineEditBase(self.Frame_STT_Whisper_OutputDirName)
         self.LineEdit_STT_Whisper_OutputDirName.setObjectName(u"LineEdit_STT_Whisper_OutputDirName")
@@ -6846,7 +6503,7 @@ class Ui_MainWindow(object):
         self.ScrollArea_Middle_DAT_GPTSoVITS.setWidgetResizable(True)
         self.ScrollArea_Middle_WidgetContents_DAT_GPTSoVITS = QWidget()
         self.ScrollArea_Middle_WidgetContents_DAT_GPTSoVITS.setObjectName(u"ScrollArea_Middle_WidgetContents_DAT_GPTSoVITS")
-        self.ScrollArea_Middle_WidgetContents_DAT_GPTSoVITS.setGeometry(QRect(0, 0, 581, 726))
+        self.ScrollArea_Middle_WidgetContents_DAT_GPTSoVITS.setGeometry(QRect(0, 0, 581, 707))
         self.verticalLayout_63 = QVBoxLayout(self.ScrollArea_Middle_WidgetContents_DAT_GPTSoVITS)
         self.verticalLayout_63.setSpacing(12)
         self.verticalLayout_63.setObjectName(u"verticalLayout_63")
@@ -6912,24 +6569,17 @@ class Ui_MainWindow(object):
 
         self.gridLayout_82.addItem(self.HorizontalSpacer_DAT_GPTSoVITS_InputParams, 0, 1, 1, 1)
 
-        self.Button_DAT_GPTSoVITS_AudioSpeakersDataPath_Undo = QPushButton(self.Frame_DAT_GPTSoVITS_AudioSpeakersDataPath)
-        self.Button_DAT_GPTSoVITS_AudioSpeakersDataPath_Undo.setObjectName(u"Button_DAT_GPTSoVITS_AudioSpeakersDataPath_Undo")
-        self.Button_DAT_GPTSoVITS_AudioSpeakersDataPath_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_DAT_GPTSoVITS_AudioSpeakersDataPath_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_DAT_GPTSoVITS_AudioSpeakersDataPath_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_DAT_GPTSoVITS_AudioSpeakersDataPath_MoreActions = MenuButton(self.Frame_DAT_GPTSoVITS_AudioSpeakersDataPath)
+        self.Button_DAT_GPTSoVITS_AudioSpeakersDataPath_MoreActions.setObjectName(u"Button_DAT_GPTSoVITS_AudioSpeakersDataPath_MoreActions")
+        self.Button_DAT_GPTSoVITS_AudioSpeakersDataPath_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_DAT_GPTSoVITS_AudioSpeakersDataPath_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_DAT_GPTSoVITS_AudioSpeakersDataPath_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_82.addWidget(self.Button_DAT_GPTSoVITS_AudioSpeakersDataPath_Undo, 0, 2, 1, 1)
+        self.gridLayout_82.addWidget(self.Button_DAT_GPTSoVITS_AudioSpeakersDataPath_MoreActions, 0, 2, 1, 1)
 
         self.LineEdit_DAT_GPTSoVITS_AudioSpeakersDataPath = LineEditBase(self.Frame_DAT_GPTSoVITS_AudioSpeakersDataPath)
         self.LineEdit_DAT_GPTSoVITS_AudioSpeakersDataPath.setObjectName(u"LineEdit_DAT_GPTSoVITS_AudioSpeakersDataPath")
@@ -6974,24 +6624,17 @@ class Ui_MainWindow(object):
 
         self.gridLayout_83.addItem(self.HorizontalSpacer_DAT_GPTSoVITS_SRTDir, 0, 1, 1, 1)
 
-        self.Button_DAT_GPTSoVITS_SRTDir_Undo = QPushButton(self.Frame_DAT_GPTSoVITS_SRTDir)
-        self.Button_DAT_GPTSoVITS_SRTDir_Undo.setObjectName(u"Button_DAT_GPTSoVITS_SRTDir_Undo")
-        self.Button_DAT_GPTSoVITS_SRTDir_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_DAT_GPTSoVITS_SRTDir_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_DAT_GPTSoVITS_SRTDir_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_DAT_GPTSoVITS_SRTDir_MoreActions = MenuButton(self.Frame_DAT_GPTSoVITS_SRTDir)
+        self.Button_DAT_GPTSoVITS_SRTDir_MoreActions.setObjectName(u"Button_DAT_GPTSoVITS_SRTDir_MoreActions")
+        self.Button_DAT_GPTSoVITS_SRTDir_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_DAT_GPTSoVITS_SRTDir_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_DAT_GPTSoVITS_SRTDir_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_83.addWidget(self.Button_DAT_GPTSoVITS_SRTDir_Undo, 0, 2, 1, 1)
+        self.gridLayout_83.addWidget(self.Button_DAT_GPTSoVITS_SRTDir_MoreActions, 0, 2, 1, 1)
 
         self.LineEdit_DAT_GPTSoVITS_SRTDir = LineEditBase(self.Frame_DAT_GPTSoVITS_SRTDir)
         self.LineEdit_DAT_GPTSoVITS_SRTDir.setObjectName(u"LineEdit_DAT_GPTSoVITS_SRTDir")
@@ -7069,24 +6712,17 @@ class Ui_MainWindow(object):
 
         self.gridLayout_84.addItem(self.HorizontalSpacer_DAT_GPTSoVITS_DataFormat, 0, 1, 1, 1)
 
-        self.Button_DAT_GPTSoVITS_DataFormat_Undo = QPushButton(self.Frame_DAT_GPTSoVITS_DataFormat)
-        self.Button_DAT_GPTSoVITS_DataFormat_Undo.setObjectName(u"Button_DAT_GPTSoVITS_DataFormat_Undo")
-        self.Button_DAT_GPTSoVITS_DataFormat_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_DAT_GPTSoVITS_DataFormat_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_DAT_GPTSoVITS_DataFormat_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_DAT_GPTSoVITS_DataFormat_MoreActions = MenuButton(self.Frame_DAT_GPTSoVITS_DataFormat)
+        self.Button_DAT_GPTSoVITS_DataFormat_MoreActions.setObjectName(u"Button_DAT_GPTSoVITS_DataFormat_MoreActions")
+        self.Button_DAT_GPTSoVITS_DataFormat_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_DAT_GPTSoVITS_DataFormat_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_DAT_GPTSoVITS_DataFormat_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_84.addWidget(self.Button_DAT_GPTSoVITS_DataFormat_Undo, 0, 2, 1, 1)
+        self.gridLayout_84.addWidget(self.Button_DAT_GPTSoVITS_DataFormat_MoreActions, 0, 2, 1, 1)
 
         self.LineEdit_DAT_GPTSoVITS_DataFormat = LineEditBase(self.Frame_DAT_GPTSoVITS_DataFormat)
         self.LineEdit_DAT_GPTSoVITS_DataFormat.setObjectName(u"LineEdit_DAT_GPTSoVITS_DataFormat")
@@ -7164,24 +6800,17 @@ class Ui_MainWindow(object):
 
         self.gridLayout_104.addItem(self.HorizontalSpacer_DAT_GPTSoVITS_OutputDirName, 0, 1, 1, 1)
 
-        self.Button_DAT_GPTSoVITS_OutputDirName_Undo = QPushButton(self.Frame_DAT_GPTSoVITS_OutputDirName)
-        self.Button_DAT_GPTSoVITS_OutputDirName_Undo.setObjectName(u"Button_DAT_GPTSoVITS_OutputDirName_Undo")
-        self.Button_DAT_GPTSoVITS_OutputDirName_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_DAT_GPTSoVITS_OutputDirName_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_DAT_GPTSoVITS_OutputDirName_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_DAT_GPTSoVITS_OutputDirName_MoreActions = MenuButton(self.Frame_DAT_GPTSoVITS_OutputDirName)
+        self.Button_DAT_GPTSoVITS_OutputDirName_MoreActions.setObjectName(u"Button_DAT_GPTSoVITS_OutputDirName_MoreActions")
+        self.Button_DAT_GPTSoVITS_OutputDirName_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_DAT_GPTSoVITS_OutputDirName_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_DAT_GPTSoVITS_OutputDirName_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_104.addWidget(self.Button_DAT_GPTSoVITS_OutputDirName_Undo, 0, 2, 1, 1)
+        self.gridLayout_104.addWidget(self.Button_DAT_GPTSoVITS_OutputDirName_MoreActions, 0, 2, 1, 1)
 
         self.LineEdit_DAT_GPTSoVITS_OutputDirName = LineEditBase(self.Frame_DAT_GPTSoVITS_OutputDirName)
         self.LineEdit_DAT_GPTSoVITS_OutputDirName.setObjectName(u"LineEdit_DAT_GPTSoVITS_OutputDirName")
@@ -7254,24 +6883,17 @@ class Ui_MainWindow(object):
         self.gridLayout_105.setSpacing(12)
         self.gridLayout_105.setObjectName(u"gridLayout_105")
         self.gridLayout_105.setContentsMargins(21, 12, 21, 12)
-        self.Button_DAT_GPTSoVITS_FileListName_Undo = QPushButton(self.Frame_DAT_GPTSoVITS_FileListName)
-        self.Button_DAT_GPTSoVITS_FileListName_Undo.setObjectName(u"Button_DAT_GPTSoVITS_FileListName_Undo")
-        self.Button_DAT_GPTSoVITS_FileListName_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_DAT_GPTSoVITS_FileListName_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_DAT_GPTSoVITS_FileListName_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_DAT_GPTSoVITS_FileListName_MoreActions = MenuButton(self.Frame_DAT_GPTSoVITS_FileListName)
+        self.Button_DAT_GPTSoVITS_FileListName_MoreActions.setObjectName(u"Button_DAT_GPTSoVITS_FileListName_MoreActions")
+        self.Button_DAT_GPTSoVITS_FileListName_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_DAT_GPTSoVITS_FileListName_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_DAT_GPTSoVITS_FileListName_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_105.addWidget(self.Button_DAT_GPTSoVITS_FileListName_Undo, 0, 2, 1, 1)
+        self.gridLayout_105.addWidget(self.Button_DAT_GPTSoVITS_FileListName_MoreActions, 0, 2, 1, 1)
 
         self.Label_DAT_GPTSoVITS_FileListName = QLabel(self.Frame_DAT_GPTSoVITS_FileListName)
         self.Label_DAT_GPTSoVITS_FileListName.setObjectName(u"Label_DAT_GPTSoVITS_FileListName")
@@ -7612,7 +7234,7 @@ class Ui_MainWindow(object):
         self.ScrollArea_Middle_DAT_VITS.setWidgetResizable(True)
         self.ScrollArea_Middle_WidgetContents_DAT_VITS = QWidget()
         self.ScrollArea_Middle_WidgetContents_DAT_VITS.setObjectName(u"ScrollArea_Middle_WidgetContents_DAT_VITS")
-        self.ScrollArea_Middle_WidgetContents_DAT_VITS.setGeometry(QRect(0, 0, 581, 1488))
+        self.ScrollArea_Middle_WidgetContents_DAT_VITS.setGeometry(QRect(0, 0, 581, 1468))
         self.verticalLayout_36 = QVBoxLayout(self.ScrollArea_Middle_WidgetContents_DAT_VITS)
         self.verticalLayout_36.setSpacing(12)
         self.verticalLayout_36.setObjectName(u"verticalLayout_36")
@@ -7678,24 +7300,17 @@ class Ui_MainWindow(object):
 
         self.gridLayout_46.addItem(self.HorizontalSpacer_DAT_VITS_InputParams, 0, 1, 1, 1)
 
-        self.Button_DAT_VITS_AudioSpeakersDataPath_Undo = QPushButton(self.Frame_DAT_VITS_AudioSpeakersDataPath)
-        self.Button_DAT_VITS_AudioSpeakersDataPath_Undo.setObjectName(u"Button_DAT_VITS_AudioSpeakersDataPath_Undo")
-        self.Button_DAT_VITS_AudioSpeakersDataPath_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_DAT_VITS_AudioSpeakersDataPath_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_DAT_VITS_AudioSpeakersDataPath_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_DAT_VITS_AudioSpeakersDataPath_MoreActions = MenuButton(self.Frame_DAT_VITS_AudioSpeakersDataPath)
+        self.Button_DAT_VITS_AudioSpeakersDataPath_MoreActions.setObjectName(u"Button_DAT_VITS_AudioSpeakersDataPath_MoreActions")
+        self.Button_DAT_VITS_AudioSpeakersDataPath_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_DAT_VITS_AudioSpeakersDataPath_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_DAT_VITS_AudioSpeakersDataPath_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_46.addWidget(self.Button_DAT_VITS_AudioSpeakersDataPath_Undo, 0, 2, 1, 1)
+        self.gridLayout_46.addWidget(self.Button_DAT_VITS_AudioSpeakersDataPath_MoreActions, 0, 2, 1, 1)
 
         self.LineEdit_DAT_VITS_AudioSpeakersDataPath = LineEditBase(self.Frame_DAT_VITS_AudioSpeakersDataPath)
         self.LineEdit_DAT_VITS_AudioSpeakersDataPath.setObjectName(u"LineEdit_DAT_VITS_AudioSpeakersDataPath")
@@ -7740,24 +7355,17 @@ class Ui_MainWindow(object):
 
         self.gridLayout_47.addItem(self.HorizontalSpacer_DAT_VITS_SRTDir, 0, 1, 1, 1)
 
-        self.Button_DAT_VITS_SRTDir_Undo = QPushButton(self.Frame_DAT_VITS_SRTDir)
-        self.Button_DAT_VITS_SRTDir_Undo.setObjectName(u"Button_DAT_VITS_SRTDir_Undo")
-        self.Button_DAT_VITS_SRTDir_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_DAT_VITS_SRTDir_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_DAT_VITS_SRTDir_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_DAT_VITS_SRTDir_MoreActions = MenuButton(self.Frame_DAT_VITS_SRTDir)
+        self.Button_DAT_VITS_SRTDir_MoreActions.setObjectName(u"Button_DAT_VITS_SRTDir_MoreActions")
+        self.Button_DAT_VITS_SRTDir_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_DAT_VITS_SRTDir_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_DAT_VITS_SRTDir_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_47.addWidget(self.Button_DAT_VITS_SRTDir_Undo, 0, 2, 1, 1)
+        self.gridLayout_47.addWidget(self.Button_DAT_VITS_SRTDir_MoreActions, 0, 2, 1, 1)
 
         self.LineEdit_DAT_VITS_SRTDir = LineEditBase(self.Frame_DAT_VITS_SRTDir)
         self.LineEdit_DAT_VITS_SRTDir.setObjectName(u"LineEdit_DAT_VITS_SRTDir")
@@ -7835,24 +7443,17 @@ class Ui_MainWindow(object):
 
         self.gridLayout_76.addItem(self.HorizontalSpacer_DAT_VITS_DataFormat, 0, 1, 1, 1)
 
-        self.Button_DAT_VITS_DataFormat_Undo = QPushButton(self.Frame_DAT_VITS_DataFormat)
-        self.Button_DAT_VITS_DataFormat_Undo.setObjectName(u"Button_DAT_VITS_DataFormat_Undo")
-        self.Button_DAT_VITS_DataFormat_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_DAT_VITS_DataFormat_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_DAT_VITS_DataFormat_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_DAT_VITS_DataFormat_MoreActions = MenuButton(self.Frame_DAT_VITS_DataFormat)
+        self.Button_DAT_VITS_DataFormat_MoreActions.setObjectName(u"Button_DAT_VITS_DataFormat_MoreActions")
+        self.Button_DAT_VITS_DataFormat_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_DAT_VITS_DataFormat_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_DAT_VITS_DataFormat_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_76.addWidget(self.Button_DAT_VITS_DataFormat_Undo, 0, 2, 1, 1)
+        self.gridLayout_76.addWidget(self.Button_DAT_VITS_DataFormat_MoreActions, 0, 2, 1, 1)
 
         self.LineEdit_DAT_VITS_DataFormat = LineEditBase(self.Frame_DAT_VITS_DataFormat)
         self.LineEdit_DAT_VITS_DataFormat.setObjectName(u"LineEdit_DAT_VITS_DataFormat")
@@ -7897,24 +7498,17 @@ class Ui_MainWindow(object):
 
         self.gridLayout_48.addItem(self.HorizontalSpacer_DAT_VITS_AddAuxiliaryData, 0, 1, 1, 1)
 
-        self.Button_DAT_VITS_AddAuxiliaryData_Undo = QPushButton(self.Frame_DAT_VITS_AddAuxiliaryData)
-        self.Button_DAT_VITS_AddAuxiliaryData_Undo.setObjectName(u"Button_DAT_VITS_AddAuxiliaryData_Undo")
-        self.Button_DAT_VITS_AddAuxiliaryData_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_DAT_VITS_AddAuxiliaryData_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_DAT_VITS_AddAuxiliaryData_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_DAT_VITS_AddAuxiliaryData_MoreActions = MenuButton(self.Frame_DAT_VITS_AddAuxiliaryData)
+        self.Button_DAT_VITS_AddAuxiliaryData_MoreActions.setObjectName(u"Button_DAT_VITS_AddAuxiliaryData_MoreActions")
+        self.Button_DAT_VITS_AddAuxiliaryData_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_DAT_VITS_AddAuxiliaryData_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_DAT_VITS_AddAuxiliaryData_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_48.addWidget(self.Button_DAT_VITS_AddAuxiliaryData_Undo, 0, 2, 1, 1)
+        self.gridLayout_48.addWidget(self.Button_DAT_VITS_AddAuxiliaryData_MoreActions, 0, 2, 1, 1)
 
         self.CheckBox_DAT_VITS_AddAuxiliaryData = QCheckBox(self.Frame_DAT_VITS_AddAuxiliaryData)
         self.CheckBox_DAT_VITS_AddAuxiliaryData.setObjectName(u"CheckBox_DAT_VITS_AddAuxiliaryData")
@@ -7989,24 +7583,17 @@ class Ui_MainWindow(object):
 
         self.gridLayout_53.addItem(self.HorizontalSpacer_DAT_VITS_AuxiliaryDataPath, 0, 1, 1, 1)
 
-        self.Button_DAT_VITS_AuxiliaryDataPath_Undo = QPushButton(self.Frame_DAT_VITS_AuxiliaryDataPath)
-        self.Button_DAT_VITS_AuxiliaryDataPath_Undo.setObjectName(u"Button_DAT_VITS_AuxiliaryDataPath_Undo")
-        self.Button_DAT_VITS_AuxiliaryDataPath_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_DAT_VITS_AuxiliaryDataPath_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_DAT_VITS_AuxiliaryDataPath_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_DAT_VITS_AuxiliaryDataPath_MoreActions = MenuButton(self.Frame_DAT_VITS_AuxiliaryDataPath)
+        self.Button_DAT_VITS_AuxiliaryDataPath_MoreActions.setObjectName(u"Button_DAT_VITS_AuxiliaryDataPath_MoreActions")
+        self.Button_DAT_VITS_AuxiliaryDataPath_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_DAT_VITS_AuxiliaryDataPath_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_DAT_VITS_AuxiliaryDataPath_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_53.addWidget(self.Button_DAT_VITS_AuxiliaryDataPath_Undo, 0, 2, 1, 1)
+        self.gridLayout_53.addWidget(self.Button_DAT_VITS_AuxiliaryDataPath_MoreActions, 0, 2, 1, 1)
 
         self.LineEdit_DAT_VITS_AuxiliaryDataPath = LineEditBase(self.Frame_DAT_VITS_AuxiliaryDataPath)
         self.LineEdit_DAT_VITS_AuxiliaryDataPath.setObjectName(u"LineEdit_DAT_VITS_AuxiliaryDataPath")
@@ -8098,24 +7685,17 @@ class Ui_MainWindow(object):
 
         self.gridLayout_49.addItem(self.HorizontalSpacer_DAT_VITS_TrainRatio, 0, 1, 1, 1)
 
-        self.Button_DAT_VITS_TrainRatio_Undo = QPushButton(self.Frame_DAT_VITS_TrainRatio)
-        self.Button_DAT_VITS_TrainRatio_Undo.setObjectName(u"Button_DAT_VITS_TrainRatio_Undo")
-        self.Button_DAT_VITS_TrainRatio_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_DAT_VITS_TrainRatio_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_DAT_VITS_TrainRatio_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_DAT_VITS_TrainRatio_MoreActions = MenuButton(self.Frame_DAT_VITS_TrainRatio)
+        self.Button_DAT_VITS_TrainRatio_MoreActions.setObjectName(u"Button_DAT_VITS_TrainRatio_MoreActions")
+        self.Button_DAT_VITS_TrainRatio_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_DAT_VITS_TrainRatio_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_DAT_VITS_TrainRatio_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_49.addWidget(self.Button_DAT_VITS_TrainRatio_Undo, 0, 2, 1, 1)
+        self.gridLayout_49.addWidget(self.Button_DAT_VITS_TrainRatio_MoreActions, 0, 2, 1, 1)
 
         self.DoubleSpinBox_DAT_VITS_TrainRatio = DoubleSpinBoxBase(self.Frame_DAT_VITS_TrainRatio)
         self.DoubleSpinBox_DAT_VITS_TrainRatio.setObjectName(u"DoubleSpinBox_DAT_VITS_TrainRatio")
@@ -8163,24 +7743,17 @@ class Ui_MainWindow(object):
 
         self.gridLayout_50.addItem(self.HorizontalSpacer_DAT_VITS_SampleRate, 0, 1, 1, 1)
 
-        self.Button_DAT_VITS_SampleRate_Undo = QPushButton(self.Frame_DAT_VITS_SampleRate)
-        self.Button_DAT_VITS_SampleRate_Undo.setObjectName(u"Button_DAT_VITS_SampleRate_Undo")
-        self.Button_DAT_VITS_SampleRate_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_DAT_VITS_SampleRate_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_DAT_VITS_SampleRate_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_DAT_VITS_SampleRate_MoreActions = MenuButton(self.Frame_DAT_VITS_SampleRate)
+        self.Button_DAT_VITS_SampleRate_MoreActions.setObjectName(u"Button_DAT_VITS_SampleRate_MoreActions")
+        self.Button_DAT_VITS_SampleRate_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_DAT_VITS_SampleRate_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_DAT_VITS_SampleRate_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_50.addWidget(self.Button_DAT_VITS_SampleRate_Undo, 0, 2, 1, 1)
+        self.gridLayout_50.addWidget(self.Button_DAT_VITS_SampleRate_MoreActions, 0, 2, 1, 1)
 
         self.ComboBox_DAT_VITS_SampleRate = ComboBoxBase(self.Frame_DAT_VITS_SampleRate)
         self.ComboBox_DAT_VITS_SampleRate.setObjectName(u"ComboBox_DAT_VITS_SampleRate")
@@ -8225,24 +7798,17 @@ class Ui_MainWindow(object):
 
         self.gridLayout_51.addItem(self.HorizontalSpacer_DAT_VITS_SampleWidth, 0, 1, 1, 1)
 
-        self.Button_DAT_VITS_SampleWidth_Undo = QPushButton(self.Frame_DAT_VITS_SampleWidth)
-        self.Button_DAT_VITS_SampleWidth_Undo.setObjectName(u"Button_DAT_VITS_SampleWidth_Undo")
-        self.Button_DAT_VITS_SampleWidth_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_DAT_VITS_SampleWidth_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_DAT_VITS_SampleWidth_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_DAT_VITS_SampleWidth_MoreActions = MenuButton(self.Frame_DAT_VITS_SampleWidth)
+        self.Button_DAT_VITS_SampleWidth_MoreActions.setObjectName(u"Button_DAT_VITS_SampleWidth_MoreActions")
+        self.Button_DAT_VITS_SampleWidth_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_DAT_VITS_SampleWidth_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_DAT_VITS_SampleWidth_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_51.addWidget(self.Button_DAT_VITS_SampleWidth_Undo, 0, 2, 1, 1)
+        self.gridLayout_51.addWidget(self.Button_DAT_VITS_SampleWidth_MoreActions, 0, 2, 1, 1)
 
         self.ComboBox_DAT_VITS_SampleWidth = ComboBoxBase(self.Frame_DAT_VITS_SampleWidth)
         self.ComboBox_DAT_VITS_SampleWidth.setObjectName(u"ComboBox_DAT_VITS_SampleWidth")
@@ -8287,24 +7853,17 @@ class Ui_MainWindow(object):
 
         self.gridLayout_52.addItem(self.HorizontalSpacer_DAT_VITS_ToMono, 0, 1, 1, 1)
 
-        self.Button_DAT_VITS_ToMono_Undo = QPushButton(self.Frame_DAT_VITS_ToMono)
-        self.Button_DAT_VITS_ToMono_Undo.setObjectName(u"Button_DAT_VITS_ToMono_Undo")
-        self.Button_DAT_VITS_ToMono_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_DAT_VITS_ToMono_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_DAT_VITS_ToMono_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_DAT_VITS_ToMono_MoreActions = MenuButton(self.Frame_DAT_VITS_ToMono)
+        self.Button_DAT_VITS_ToMono_MoreActions.setObjectName(u"Button_DAT_VITS_ToMono_MoreActions")
+        self.Button_DAT_VITS_ToMono_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_DAT_VITS_ToMono_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_DAT_VITS_ToMono_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_52.addWidget(self.Button_DAT_VITS_ToMono_Undo, 0, 2, 1, 1)
+        self.gridLayout_52.addWidget(self.Button_DAT_VITS_ToMono_MoreActions, 0, 2, 1, 1)
 
         self.CheckBox_DAT_VITS_ToMono = QCheckBox(self.Frame_DAT_VITS_ToMono)
         self.CheckBox_DAT_VITS_ToMono.setObjectName(u"CheckBox_DAT_VITS_ToMono")
@@ -8412,24 +7971,17 @@ class Ui_MainWindow(object):
 
         self.gridLayout_54.addItem(self.HorizontalSpacer_DAT_VITS_OutputDirName, 0, 1, 1, 1)
 
-        self.Button_DAT_VITS_OutputDirName_Undo = QPushButton(self.Frame_DAT_VITS_OutputDirName)
-        self.Button_DAT_VITS_OutputDirName_Undo.setObjectName(u"Button_DAT_VITS_OutputDirName_Undo")
-        self.Button_DAT_VITS_OutputDirName_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_DAT_VITS_OutputDirName_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_DAT_VITS_OutputDirName_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_DAT_VITS_OutputDirName_MoreActions = MenuButton(self.Frame_DAT_VITS_OutputDirName)
+        self.Button_DAT_VITS_OutputDirName_MoreActions.setObjectName(u"Button_DAT_VITS_OutputDirName_MoreActions")
+        self.Button_DAT_VITS_OutputDirName_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_DAT_VITS_OutputDirName_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_DAT_VITS_OutputDirName_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_54.addWidget(self.Button_DAT_VITS_OutputDirName_Undo, 0, 2, 1, 1)
+        self.gridLayout_54.addWidget(self.Button_DAT_VITS_OutputDirName_MoreActions, 0, 2, 1, 1)
 
         self.LineEdit_DAT_VITS_OutputDirName = LineEditBase(self.Frame_DAT_VITS_OutputDirName)
         self.LineEdit_DAT_VITS_OutputDirName.setObjectName(u"LineEdit_DAT_VITS_OutputDirName")
@@ -8502,24 +8054,17 @@ class Ui_MainWindow(object):
         self.gridLayout_55.setSpacing(12)
         self.gridLayout_55.setObjectName(u"gridLayout_55")
         self.gridLayout_55.setContentsMargins(21, 12, 21, 12)
-        self.Button_DAT_VITS_FileListNameTraining_Undo = QPushButton(self.Frame_DAT_VITS_FileListNameTraining)
-        self.Button_DAT_VITS_FileListNameTraining_Undo.setObjectName(u"Button_DAT_VITS_FileListNameTraining_Undo")
-        self.Button_DAT_VITS_FileListNameTraining_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_DAT_VITS_FileListNameTraining_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_DAT_VITS_FileListNameTraining_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_DAT_VITS_FileListNameTraining_MoreActions = MenuButton(self.Frame_DAT_VITS_FileListNameTraining)
+        self.Button_DAT_VITS_FileListNameTraining_MoreActions.setObjectName(u"Button_DAT_VITS_FileListNameTraining_MoreActions")
+        self.Button_DAT_VITS_FileListNameTraining_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_DAT_VITS_FileListNameTraining_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_DAT_VITS_FileListNameTraining_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_55.addWidget(self.Button_DAT_VITS_FileListNameTraining_Undo, 0, 2, 1, 1)
+        self.gridLayout_55.addWidget(self.Button_DAT_VITS_FileListNameTraining_MoreActions, 0, 2, 1, 1)
 
         self.Label_DAT_VITS_FileListNameTraining = QLabel(self.Frame_DAT_VITS_FileListNameTraining)
         self.Label_DAT_VITS_FileListNameTraining.setObjectName(u"Label_DAT_VITS_FileListNameTraining")
@@ -8583,24 +8128,17 @@ class Ui_MainWindow(object):
 
         self.gridLayout_56.addItem(self.HorizontalSpacer_DAT_VITS_FileListNameValidation, 0, 1, 1, 1)
 
-        self.Button_DAT_VITS_FileListNameValidation_Undo = QPushButton(self.Frame_DAT_VITS_FileListNameValidation)
-        self.Button_DAT_VITS_FileListNameValidation_Undo.setObjectName(u"Button_DAT_VITS_FileListNameValidation_Undo")
-        self.Button_DAT_VITS_FileListNameValidation_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_DAT_VITS_FileListNameValidation_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_DAT_VITS_FileListNameValidation_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_DAT_VITS_FileListNameValidation_MoreActions = MenuButton(self.Frame_DAT_VITS_FileListNameValidation)
+        self.Button_DAT_VITS_FileListNameValidation_MoreActions.setObjectName(u"Button_DAT_VITS_FileListNameValidation_MoreActions")
+        self.Button_DAT_VITS_FileListNameValidation_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_DAT_VITS_FileListNameValidation_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_DAT_VITS_FileListNameValidation_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_56.addWidget(self.Button_DAT_VITS_FileListNameValidation_Undo, 0, 2, 1, 1)
+        self.gridLayout_56.addWidget(self.Button_DAT_VITS_FileListNameValidation_MoreActions, 0, 2, 1, 1)
 
         self.LineEdit_DAT_VITS_FileListNameValidation = LineEditBase(self.Frame_DAT_VITS_FileListNameValidation)
         self.LineEdit_DAT_VITS_FileListNameValidation.setObjectName(u"LineEdit_DAT_VITS_FileListNameValidation")
@@ -9047,7 +8585,7 @@ class Ui_MainWindow(object):
         self.ScrollArea_Middle_Train_GPTSoVITS.setWidgetResizable(True)
         self.ScrollArea_Middle_WidgetContents_Train_GPTSoVITS = QWidget()
         self.ScrollArea_Middle_WidgetContents_Train_GPTSoVITS.setObjectName(u"ScrollArea_Middle_WidgetContents_Train_GPTSoVITS")
-        self.ScrollArea_Middle_WidgetContents_Train_GPTSoVITS.setGeometry(QRect(0, 0, 581, 1171))
+        self.ScrollArea_Middle_WidgetContents_Train_GPTSoVITS.setGeometry(QRect(0, 0, 581, 1151))
         self.verticalLayout_52 = QVBoxLayout(self.ScrollArea_Middle_WidgetContents_Train_GPTSoVITS)
         self.verticalLayout_52.setSpacing(12)
         self.verticalLayout_52.setObjectName(u"verticalLayout_52")
@@ -9113,24 +8651,17 @@ class Ui_MainWindow(object):
 
         self.gridLayout_81.addItem(self.HorizontalSpacer_Train_GPTSoVITS_FileListPath, 0, 1, 1, 1)
 
-        self.Button_Train_GPTSoVITS_FileListPath_Undo = QPushButton(self.Frame_Train_GPTSoVITS_FileListPath)
-        self.Button_Train_GPTSoVITS_FileListPath_Undo.setObjectName(u"Button_Train_GPTSoVITS_FileListPath_Undo")
-        self.Button_Train_GPTSoVITS_FileListPath_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_Train_GPTSoVITS_FileListPath_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_Train_GPTSoVITS_FileListPath_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_Train_GPTSoVITS_FileListPath_MoreActions = MenuButton(self.Frame_Train_GPTSoVITS_FileListPath)
+        self.Button_Train_GPTSoVITS_FileListPath_MoreActions.setObjectName(u"Button_Train_GPTSoVITS_FileListPath_MoreActions")
+        self.Button_Train_GPTSoVITS_FileListPath_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_Train_GPTSoVITS_FileListPath_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_Train_GPTSoVITS_FileListPath_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_81.addWidget(self.Button_Train_GPTSoVITS_FileListPath_Undo, 0, 2, 1, 1)
+        self.gridLayout_81.addWidget(self.Button_Train_GPTSoVITS_FileListPath_MoreActions, 0, 2, 1, 1)
 
         self.LineEdit_Train_GPTSoVITS_FileListPath = LineEditBase(self.Frame_Train_GPTSoVITS_FileListPath)
         self.LineEdit_Train_GPTSoVITS_FileListPath.setObjectName(u"LineEdit_Train_GPTSoVITS_FileListPath")
@@ -9208,24 +8739,17 @@ class Ui_MainWindow(object):
 
         self.gridLayout_88.addItem(self.HorizontalSpacer_Train_GPTSoVITS_ModelPathPretrainedS1, 0, 1, 1, 1)
 
-        self.Button_Train_GPTSoVITS_ModelPathPretrainedS1_Undo = QPushButton(self.Frame_Train_GPTSoVITS_ModelPathPretrainedS1)
-        self.Button_Train_GPTSoVITS_ModelPathPretrainedS1_Undo.setObjectName(u"Button_Train_GPTSoVITS_ModelPathPretrainedS1_Undo")
-        self.Button_Train_GPTSoVITS_ModelPathPretrainedS1_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_Train_GPTSoVITS_ModelPathPretrainedS1_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_Train_GPTSoVITS_ModelPathPretrainedS1_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_Train_GPTSoVITS_ModelPathPretrainedS1_MoreActions = MenuButton(self.Frame_Train_GPTSoVITS_ModelPathPretrainedS1)
+        self.Button_Train_GPTSoVITS_ModelPathPretrainedS1_MoreActions.setObjectName(u"Button_Train_GPTSoVITS_ModelPathPretrainedS1_MoreActions")
+        self.Button_Train_GPTSoVITS_ModelPathPretrainedS1_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_Train_GPTSoVITS_ModelPathPretrainedS1_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_Train_GPTSoVITS_ModelPathPretrainedS1_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_88.addWidget(self.Button_Train_GPTSoVITS_ModelPathPretrainedS1_Undo, 0, 2, 1, 1)
+        self.gridLayout_88.addWidget(self.Button_Train_GPTSoVITS_ModelPathPretrainedS1_MoreActions, 0, 2, 1, 1)
 
         self.LineEdit_Train_GPTSoVITS_ModelPathPretrainedS1 = LineEditBase(self.Frame_Train_GPTSoVITS_ModelPathPretrainedS1)
         self.LineEdit_Train_GPTSoVITS_ModelPathPretrainedS1.setObjectName(u"LineEdit_Train_GPTSoVITS_ModelPathPretrainedS1")
@@ -9270,24 +8794,17 @@ class Ui_MainWindow(object):
 
         self.gridLayout_86.addItem(self.HorizontalSpacer_Train_GPTSoVITS_ModelPathPretrainedS2G, 0, 1, 1, 1)
 
-        self.Button_Train_GPTSoVITS_ModelPathPretrainedS2G_Undo = QPushButton(self.Frame_Train_GPTSoVITS_ModelPathPretrainedS2G)
-        self.Button_Train_GPTSoVITS_ModelPathPretrainedS2G_Undo.setObjectName(u"Button_Train_GPTSoVITS_ModelPathPretrainedS2G_Undo")
-        self.Button_Train_GPTSoVITS_ModelPathPretrainedS2G_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_Train_GPTSoVITS_ModelPathPretrainedS2G_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_Train_GPTSoVITS_ModelPathPretrainedS2G_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_Train_GPTSoVITS_ModelPathPretrainedS2G_MoreActions = MenuButton(self.Frame_Train_GPTSoVITS_ModelPathPretrainedS2G)
+        self.Button_Train_GPTSoVITS_ModelPathPretrainedS2G_MoreActions.setObjectName(u"Button_Train_GPTSoVITS_ModelPathPretrainedS2G_MoreActions")
+        self.Button_Train_GPTSoVITS_ModelPathPretrainedS2G_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_Train_GPTSoVITS_ModelPathPretrainedS2G_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_Train_GPTSoVITS_ModelPathPretrainedS2G_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_86.addWidget(self.Button_Train_GPTSoVITS_ModelPathPretrainedS2G_Undo, 0, 2, 1, 1)
+        self.gridLayout_86.addWidget(self.Button_Train_GPTSoVITS_ModelPathPretrainedS2G_MoreActions, 0, 2, 1, 1)
 
         self.LineEdit_Train_GPTSoVITS_ModelPathPretrainedS2G = LineEditBase(self.Frame_Train_GPTSoVITS_ModelPathPretrainedS2G)
         self.LineEdit_Train_GPTSoVITS_ModelPathPretrainedS2G.setObjectName(u"LineEdit_Train_GPTSoVITS_ModelPathPretrainedS2G")
@@ -9332,24 +8849,17 @@ class Ui_MainWindow(object):
 
         self.gridLayout_89.addItem(self.HorizontalSpacer_Train_GPTSoVITS_ModelDirPretrainedBert, 0, 1, 1, 1)
 
-        self.Button_Train_GPTSoVITS_ModelDirPretrainedBert_Undo = QPushButton(self.Frame_Train_GPTSoVITS_ModelDirPretrainedBert)
-        self.Button_Train_GPTSoVITS_ModelDirPretrainedBert_Undo.setObjectName(u"Button_Train_GPTSoVITS_ModelDirPretrainedBert_Undo")
-        self.Button_Train_GPTSoVITS_ModelDirPretrainedBert_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_Train_GPTSoVITS_ModelDirPretrainedBert_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_Train_GPTSoVITS_ModelDirPretrainedBert_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_Train_GPTSoVITS_ModelDirPretrainedBert_MoreActions = MenuButton(self.Frame_Train_GPTSoVITS_ModelDirPretrainedBert)
+        self.Button_Train_GPTSoVITS_ModelDirPretrainedBert_MoreActions.setObjectName(u"Button_Train_GPTSoVITS_ModelDirPretrainedBert_MoreActions")
+        self.Button_Train_GPTSoVITS_ModelDirPretrainedBert_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_Train_GPTSoVITS_ModelDirPretrainedBert_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_Train_GPTSoVITS_ModelDirPretrainedBert_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_89.addWidget(self.Button_Train_GPTSoVITS_ModelDirPretrainedBert_Undo, 0, 2, 1, 1)
+        self.gridLayout_89.addWidget(self.Button_Train_GPTSoVITS_ModelDirPretrainedBert_MoreActions, 0, 2, 1, 1)
 
         self.LineEdit_Train_GPTSoVITS_ModelDirPretrainedBert = LineEditBase(self.Frame_Train_GPTSoVITS_ModelDirPretrainedBert)
         self.LineEdit_Train_GPTSoVITS_ModelDirPretrainedBert.setObjectName(u"LineEdit_Train_GPTSoVITS_ModelDirPretrainedBert")
@@ -9394,24 +8904,17 @@ class Ui_MainWindow(object):
 
         self.gridLayout_95.addItem(self.HorizontalSpacer_Train_GPTSoVITS_ModelDirPretrainedSSL, 0, 1, 1, 1)
 
-        self.Button_Train_GPTSoVITS_ModelDirPretrainedSSL_Undo = QPushButton(self.Frame_Train_GPTSoVITS_ModelDirPretrainedSSL)
-        self.Button_Train_GPTSoVITS_ModelDirPretrainedSSL_Undo.setObjectName(u"Button_Train_GPTSoVITS_ModelDirPretrainedSSL_Undo")
-        self.Button_Train_GPTSoVITS_ModelDirPretrainedSSL_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_Train_GPTSoVITS_ModelDirPretrainedSSL_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_Train_GPTSoVITS_ModelDirPretrainedSSL_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_Train_GPTSoVITS_ModelDirPretrainedSSL_MoreActions = MenuButton(self.Frame_Train_GPTSoVITS_ModelDirPretrainedSSL)
+        self.Button_Train_GPTSoVITS_ModelDirPretrainedSSL_MoreActions.setObjectName(u"Button_Train_GPTSoVITS_ModelDirPretrainedSSL_MoreActions")
+        self.Button_Train_GPTSoVITS_ModelDirPretrainedSSL_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_Train_GPTSoVITS_ModelDirPretrainedSSL_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_Train_GPTSoVITS_ModelDirPretrainedSSL_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_95.addWidget(self.Button_Train_GPTSoVITS_ModelDirPretrainedSSL_Undo, 0, 2, 1, 1)
+        self.gridLayout_95.addWidget(self.Button_Train_GPTSoVITS_ModelDirPretrainedSSL_MoreActions, 0, 2, 1, 1)
 
         self.LineEdit_Train_GPTSoVITS_ModelDirPretrainedSSL = LineEditBase(self.Frame_Train_GPTSoVITS_ModelDirPretrainedSSL)
         self.LineEdit_Train_GPTSoVITS_ModelDirPretrainedSSL.setObjectName(u"LineEdit_Train_GPTSoVITS_ModelDirPretrainedSSL")
@@ -9456,24 +8959,17 @@ class Ui_MainWindow(object):
 
         self.gridLayout_87.addItem(self.HorizontalSpacer_Train_GPTSoVITS_ModelPathPretrainedS2D, 0, 1, 1, 1)
 
-        self.Button_Train_GPTSoVITS_ModelPathPretrainedS2D_Undo = QPushButton(self.Frame_Train_GPTSoVITS_ModelPathPretrainedS2D)
-        self.Button_Train_GPTSoVITS_ModelPathPretrainedS2D_Undo.setObjectName(u"Button_Train_GPTSoVITS_ModelPathPretrainedS2D_Undo")
-        self.Button_Train_GPTSoVITS_ModelPathPretrainedS2D_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_Train_GPTSoVITS_ModelPathPretrainedS2D_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_Train_GPTSoVITS_ModelPathPretrainedS2D_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_Train_GPTSoVITS_ModelPathPretrainedS2D_MoreActions = MenuButton(self.Frame_Train_GPTSoVITS_ModelPathPretrainedS2D)
+        self.Button_Train_GPTSoVITS_ModelPathPretrainedS2D_MoreActions.setObjectName(u"Button_Train_GPTSoVITS_ModelPathPretrainedS2D_MoreActions")
+        self.Button_Train_GPTSoVITS_ModelPathPretrainedS2D_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_Train_GPTSoVITS_ModelPathPretrainedS2D_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_Train_GPTSoVITS_ModelPathPretrainedS2D_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_87.addWidget(self.Button_Train_GPTSoVITS_ModelPathPretrainedS2D_Undo, 0, 2, 1, 1)
+        self.gridLayout_87.addWidget(self.Button_Train_GPTSoVITS_ModelPathPretrainedS2D_MoreActions, 0, 2, 1, 1)
 
         self.LineEdit_Train_GPTSoVITS_ModelPathPretrainedS2D = LineEditBase(self.Frame_Train_GPTSoVITS_ModelPathPretrainedS2D)
         self.LineEdit_Train_GPTSoVITS_ModelPathPretrainedS2D.setObjectName(u"LineEdit_Train_GPTSoVITS_ModelPathPretrainedS2D")
@@ -9565,24 +9061,17 @@ class Ui_MainWindow(object):
 
         self.gridLayout_91.addItem(self.HorizontalSpacer_Train_GPTSoVITS_FP16Run, 0, 1, 1, 1)
 
-        self.Button_Train_GPTSoVITS_FP16Run_Undo = QPushButton(self.Frame_Train_GPTSoVITS_FP16Run)
-        self.Button_Train_GPTSoVITS_FP16Run_Undo.setObjectName(u"Button_Train_GPTSoVITS_FP16Run_Undo")
-        self.Button_Train_GPTSoVITS_FP16Run_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_Train_GPTSoVITS_FP16Run_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_Train_GPTSoVITS_FP16Run_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_Train_GPTSoVITS_FP16Run_MoreActions = MenuButton(self.Frame_Train_GPTSoVITS_FP16Run)
+        self.Button_Train_GPTSoVITS_FP16Run_MoreActions.setObjectName(u"Button_Train_GPTSoVITS_FP16Run_MoreActions")
+        self.Button_Train_GPTSoVITS_FP16Run_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_Train_GPTSoVITS_FP16Run_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_Train_GPTSoVITS_FP16Run_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_91.addWidget(self.Button_Train_GPTSoVITS_FP16Run_Undo, 0, 2, 1, 1)
+        self.gridLayout_91.addWidget(self.Button_Train_GPTSoVITS_FP16Run_MoreActions, 0, 2, 1, 1)
 
         self.CheckBox_Train_GPTSoVITS_FP16Run = QCheckBox(self.Frame_Train_GPTSoVITS_FP16Run)
         self.CheckBox_Train_GPTSoVITS_FP16Run.setObjectName(u"CheckBox_Train_GPTSoVITS_FP16Run")
@@ -9690,24 +9179,17 @@ class Ui_MainWindow(object):
 
         self.gridLayout_98.addItem(self.HorizontalSpacer_Train_GPTSoVITS_OutputDirName, 0, 1, 1, 1)
 
-        self.Button_Train_GPTSoVITS_OutputDirName_Undo = QPushButton(self.Frame_Train_GPTSoVITS_OutputDirName)
-        self.Button_Train_GPTSoVITS_OutputDirName_Undo.setObjectName(u"Button_Train_GPTSoVITS_OutputDirName_Undo")
-        self.Button_Train_GPTSoVITS_OutputDirName_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_Train_GPTSoVITS_OutputDirName_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_Train_GPTSoVITS_OutputDirName_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_Train_GPTSoVITS_OutputDirName_MoreActions = MenuButton(self.Frame_Train_GPTSoVITS_OutputDirName)
+        self.Button_Train_GPTSoVITS_OutputDirName_MoreActions.setObjectName(u"Button_Train_GPTSoVITS_OutputDirName_MoreActions")
+        self.Button_Train_GPTSoVITS_OutputDirName_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_Train_GPTSoVITS_OutputDirName_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_Train_GPTSoVITS_OutputDirName_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_98.addWidget(self.Button_Train_GPTSoVITS_OutputDirName_Undo, 0, 2, 1, 1)
+        self.gridLayout_98.addWidget(self.Button_Train_GPTSoVITS_OutputDirName_MoreActions, 0, 2, 1, 1)
 
         self.LineEdit_Train_GPTSoVITS_OutputDirName = LineEditBase(self.Frame_Train_GPTSoVITS_OutputDirName)
         self.LineEdit_Train_GPTSoVITS_OutputDirName.setObjectName(u"LineEdit_Train_GPTSoVITS_OutputDirName")
@@ -9797,24 +9279,17 @@ class Ui_MainWindow(object):
 
         self.gridLayout_110.addItem(self.HorizontalSpacer_Train_GPTSoVITS_LogDir, 0, 1, 1, 1)
 
-        self.Button_Train_GPTSoVITS_LogDir_Undo = QPushButton(self.Frame_Train_GPTSoVITS_LogDir)
-        self.Button_Train_GPTSoVITS_LogDir_Undo.setObjectName(u"Button_Train_GPTSoVITS_LogDir_Undo")
-        self.Button_Train_GPTSoVITS_LogDir_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_Train_GPTSoVITS_LogDir_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_Train_GPTSoVITS_LogDir_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_Train_GPTSoVITS_LogDir_MoreActions = MenuButton(self.Frame_Train_GPTSoVITS_LogDir)
+        self.Button_Train_GPTSoVITS_LogDir_MoreActions.setObjectName(u"Button_Train_GPTSoVITS_LogDir_MoreActions")
+        self.Button_Train_GPTSoVITS_LogDir_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_Train_GPTSoVITS_LogDir_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_Train_GPTSoVITS_LogDir_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_110.addWidget(self.Button_Train_GPTSoVITS_LogDir_Undo, 0, 2, 1, 1)
+        self.gridLayout_110.addWidget(self.Button_Train_GPTSoVITS_LogDir_MoreActions, 0, 2, 1, 1)
 
         self.LineEdit_Train_GPTSoVITS_LogDir = LineEditBase(self.Frame_Train_GPTSoVITS_LogDir)
         self.LineEdit_Train_GPTSoVITS_LogDir.setObjectName(u"LineEdit_Train_GPTSoVITS_LogDir")
@@ -10352,7 +9827,7 @@ class Ui_MainWindow(object):
         self.ScrollArea_Middle_Train_VITS.setWidgetResizable(True)
         self.ScrollArea_Middle_WidgetContents_Train_VITS = QWidget()
         self.ScrollArea_Middle_WidgetContents_Train_VITS.setObjectName(u"ScrollArea_Middle_WidgetContents_Train_VITS")
-        self.ScrollArea_Middle_WidgetContents_Train_VITS.setGeometry(QRect(0, 0, 581, 1702))
+        self.ScrollArea_Middle_WidgetContents_Train_VITS.setGeometry(QRect(0, 0, 581, 1682))
         self.verticalLayout_28 = QVBoxLayout(self.ScrollArea_Middle_WidgetContents_Train_VITS)
         self.verticalLayout_28.setSpacing(12)
         self.verticalLayout_28.setObjectName(u"verticalLayout_28")
@@ -10418,24 +9893,17 @@ class Ui_MainWindow(object):
 
         self.gridLayout_57.addItem(self.HorizontalSpacer_Train_VITS_FileListPathTraining, 0, 1, 1, 1)
 
-        self.Button_Train_VITS_FileListPathTraining_Undo = QPushButton(self.Frame_Train_VITS_FileListPathTraining)
-        self.Button_Train_VITS_FileListPathTraining_Undo.setObjectName(u"Button_Train_VITS_FileListPathTraining_Undo")
-        self.Button_Train_VITS_FileListPathTraining_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_Train_VITS_FileListPathTraining_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_Train_VITS_FileListPathTraining_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_Train_VITS_FileListPathTraining_MoreActions = MenuButton(self.Frame_Train_VITS_FileListPathTraining)
+        self.Button_Train_VITS_FileListPathTraining_MoreActions.setObjectName(u"Button_Train_VITS_FileListPathTraining_MoreActions")
+        self.Button_Train_VITS_FileListPathTraining_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_Train_VITS_FileListPathTraining_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_Train_VITS_FileListPathTraining_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_57.addWidget(self.Button_Train_VITS_FileListPathTraining_Undo, 0, 2, 1, 1)
+        self.gridLayout_57.addWidget(self.Button_Train_VITS_FileListPathTraining_MoreActions, 0, 2, 1, 1)
 
         self.LineEdit_Train_VITS_FileListPathTraining = LineEditBase(self.Frame_Train_VITS_FileListPathTraining)
         self.LineEdit_Train_VITS_FileListPathTraining.setObjectName(u"LineEdit_Train_VITS_FileListPathTraining")
@@ -10480,24 +9948,17 @@ class Ui_MainWindow(object):
 
         self.gridLayout_58.addItem(self.HorizontalSpacer_Train_VITS_FileListPathValidation, 0, 1, 1, 1)
 
-        self.Button_Train_VITS_FileListPathValidation_Undo = QPushButton(self.Frame_Train_VITS_FileListPathValidation)
-        self.Button_Train_VITS_FileListPathValidation_Undo.setObjectName(u"Button_Train_VITS_FileListPathValidation_Undo")
-        self.Button_Train_VITS_FileListPathValidation_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_Train_VITS_FileListPathValidation_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_Train_VITS_FileListPathValidation_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_Train_VITS_FileListPathValidation_MoreActions = MenuButton(self.Frame_Train_VITS_FileListPathValidation)
+        self.Button_Train_VITS_FileListPathValidation_MoreActions.setObjectName(u"Button_Train_VITS_FileListPathValidation_MoreActions")
+        self.Button_Train_VITS_FileListPathValidation_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_Train_VITS_FileListPathValidation_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_Train_VITS_FileListPathValidation_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_58.addWidget(self.Button_Train_VITS_FileListPathValidation_Undo, 0, 2, 1, 1)
+        self.gridLayout_58.addWidget(self.Button_Train_VITS_FileListPathValidation_MoreActions, 0, 2, 1, 1)
 
         self.LineEdit_Train_VITS_FileListPathValidation = LineEditBase(self.Frame_Train_VITS_FileListPathValidation)
         self.LineEdit_Train_VITS_FileListPathValidation.setObjectName(u"LineEdit_Train_VITS_FileListPathValidation")
@@ -10575,24 +10036,17 @@ class Ui_MainWindow(object):
 
         self.gridLayout_59.addItem(self.HorizontalSpacer_Train_VITS_Epochs, 0, 1, 1, 1)
 
-        self.Button_Train_VITS_Epochs_Undo = QPushButton(self.Frame_Train_VITS_Epochs)
-        self.Button_Train_VITS_Epochs_Undo.setObjectName(u"Button_Train_VITS_Epochs_Undo")
-        self.Button_Train_VITS_Epochs_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_Train_VITS_Epochs_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_Train_VITS_Epochs_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_Train_VITS_Epochs_MoreActions = MenuButton(self.Frame_Train_VITS_Epochs)
+        self.Button_Train_VITS_Epochs_MoreActions.setObjectName(u"Button_Train_VITS_Epochs_MoreActions")
+        self.Button_Train_VITS_Epochs_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_Train_VITS_Epochs_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_Train_VITS_Epochs_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_59.addWidget(self.Button_Train_VITS_Epochs_Undo, 0, 2, 1, 1)
+        self.gridLayout_59.addWidget(self.Button_Train_VITS_Epochs_MoreActions, 0, 2, 1, 1)
 
         self.SpinBox_Train_VITS_Epochs = SpinBoxBase(self.Frame_Train_VITS_Epochs)
         self.SpinBox_Train_VITS_Epochs.setObjectName(u"SpinBox_Train_VITS_Epochs")
@@ -10639,24 +10093,17 @@ class Ui_MainWindow(object):
 
         self.gridLayout_60.addItem(self.HorizontalSpacer_Train_VITS_BatchSize, 0, 1, 1, 1)
 
-        self.Button_Train_VITS_BatchSize_Undo = QPushButton(self.Frame_Train_VITS_BatchSize)
-        self.Button_Train_VITS_BatchSize_Undo.setObjectName(u"Button_Train_VITS_BatchSize_Undo")
-        self.Button_Train_VITS_BatchSize_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_Train_VITS_BatchSize_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_Train_VITS_BatchSize_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_Train_VITS_BatchSize_MoreActions = MenuButton(self.Frame_Train_VITS_BatchSize)
+        self.Button_Train_VITS_BatchSize_MoreActions.setObjectName(u"Button_Train_VITS_BatchSize_MoreActions")
+        self.Button_Train_VITS_BatchSize_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_Train_VITS_BatchSize_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_Train_VITS_BatchSize_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_60.addWidget(self.Button_Train_VITS_BatchSize_Undo, 0, 2, 1, 1)
+        self.gridLayout_60.addWidget(self.Button_Train_VITS_BatchSize_MoreActions, 0, 2, 1, 1)
 
         self.SpinBox_Train_VITS_BatchSize = SpinBoxBase(self.Frame_Train_VITS_BatchSize)
         self.SpinBox_Train_VITS_BatchSize.setObjectName(u"SpinBox_Train_VITS_BatchSize")
@@ -10703,24 +10150,17 @@ class Ui_MainWindow(object):
 
         self.gridLayout_61.addItem(self.HorizontalSpacer_Train_VITS_UsePretrainedModels, 0, 1, 1, 1)
 
-        self.Button_Train_VITS_UsePretrainedModels_Undo = QPushButton(self.Frame_Train_VITS_UsePretrainedModels)
-        self.Button_Train_VITS_UsePretrainedModels_Undo.setObjectName(u"Button_Train_VITS_UsePretrainedModels_Undo")
-        self.Button_Train_VITS_UsePretrainedModels_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_Train_VITS_UsePretrainedModels_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_Train_VITS_UsePretrainedModels_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_Train_VITS_UsePretrainedModels_MoreActions = MenuButton(self.Frame_Train_VITS_UsePretrainedModels)
+        self.Button_Train_VITS_UsePretrainedModels_MoreActions.setObjectName(u"Button_Train_VITS_UsePretrainedModels_MoreActions")
+        self.Button_Train_VITS_UsePretrainedModels_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_Train_VITS_UsePretrainedModels_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_Train_VITS_UsePretrainedModels_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_61.addWidget(self.Button_Train_VITS_UsePretrainedModels_Undo, 0, 2, 1, 1)
+        self.gridLayout_61.addWidget(self.Button_Train_VITS_UsePretrainedModels_MoreActions, 0, 2, 1, 1)
 
         self.CheckBox_Train_VITS_UsePretrainedModels = QCheckBox(self.Frame_Train_VITS_UsePretrainedModels)
         self.CheckBox_Train_VITS_UsePretrainedModels.setObjectName(u"CheckBox_Train_VITS_UsePretrainedModels")
@@ -10795,24 +10235,17 @@ class Ui_MainWindow(object):
 
         self.gridLayout_65.addItem(self.HorizontalSpacer_Train_VITS_ModelPathPretrainedG, 0, 1, 1, 1)
 
-        self.Button_Train_VITS_ModelPathPretrainedG_Undo = QPushButton(self.Frame_Train_VITS_ModelPathPretrainedG)
-        self.Button_Train_VITS_ModelPathPretrainedG_Undo.setObjectName(u"Button_Train_VITS_ModelPathPretrainedG_Undo")
-        self.Button_Train_VITS_ModelPathPretrainedG_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_Train_VITS_ModelPathPretrainedG_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_Train_VITS_ModelPathPretrainedG_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_Train_VITS_ModelPathPretrainedG_MoreActions = MenuButton(self.Frame_Train_VITS_ModelPathPretrainedG)
+        self.Button_Train_VITS_ModelPathPretrainedG_MoreActions.setObjectName(u"Button_Train_VITS_ModelPathPretrainedG_MoreActions")
+        self.Button_Train_VITS_ModelPathPretrainedG_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_Train_VITS_ModelPathPretrainedG_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_Train_VITS_ModelPathPretrainedG_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_65.addWidget(self.Button_Train_VITS_ModelPathPretrainedG_Undo, 0, 2, 1, 1)
+        self.gridLayout_65.addWidget(self.Button_Train_VITS_ModelPathPretrainedG_MoreActions, 0, 2, 1, 1)
 
         self.LineEdit_Train_VITS_ModelPathPretrainedG = LineEditBase(self.Frame_Train_VITS_ModelPathPretrainedG)
         self.LineEdit_Train_VITS_ModelPathPretrainedG.setObjectName(u"LineEdit_Train_VITS_ModelPathPretrainedG")
@@ -10857,24 +10290,17 @@ class Ui_MainWindow(object):
 
         self.gridLayout_66.addItem(self.HorizontalSpacer_Train_VITS_ModelPathPretrainedD, 0, 1, 1, 1)
 
-        self.Button_Train_VITS_ModelPathPretrainedD_Undo = QPushButton(self.Frame_Train_VITS_ModelPathPretrainedD)
-        self.Button_Train_VITS_ModelPathPretrainedD_Undo.setObjectName(u"Button_Train_VITS_ModelPathPretrainedD_Undo")
-        self.Button_Train_VITS_ModelPathPretrainedD_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_Train_VITS_ModelPathPretrainedD_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_Train_VITS_ModelPathPretrainedD_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_Train_VITS_ModelPathPretrainedD_MoreActions = MenuButton(self.Frame_Train_VITS_ModelPathPretrainedD)
+        self.Button_Train_VITS_ModelPathPretrainedD_MoreActions.setObjectName(u"Button_Train_VITS_ModelPathPretrainedD_MoreActions")
+        self.Button_Train_VITS_ModelPathPretrainedD_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_Train_VITS_ModelPathPretrainedD_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_Train_VITS_ModelPathPretrainedD_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_66.addWidget(self.Button_Train_VITS_ModelPathPretrainedD_Undo, 0, 2, 1, 1)
+        self.gridLayout_66.addWidget(self.Button_Train_VITS_ModelPathPretrainedD_MoreActions, 0, 2, 1, 1)
 
         self.LineEdit_Train_VITS_ModelPathPretrainedD = LineEditBase(self.Frame_Train_VITS_ModelPathPretrainedD)
         self.LineEdit_Train_VITS_ModelPathPretrainedD.setObjectName(u"LineEdit_Train_VITS_ModelPathPretrainedD")
@@ -10919,24 +10345,17 @@ class Ui_MainWindow(object):
 
         self.gridLayout_67.addItem(self.HorizontalSpacer_Train_VITS_KeepOriginalSpeakers, 0, 1, 1, 1)
 
-        self.Button_Train_VITS_KeepOriginalSpeakers_Undo = QPushButton(self.Frame_Train_VITS_KeepOriginalSpeakers)
-        self.Button_Train_VITS_KeepOriginalSpeakers_Undo.setObjectName(u"Button_Train_VITS_KeepOriginalSpeakers_Undo")
-        self.Button_Train_VITS_KeepOriginalSpeakers_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_Train_VITS_KeepOriginalSpeakers_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_Train_VITS_KeepOriginalSpeakers_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_Train_VITS_KeepOriginalSpeakers_MoreActions = MenuButton(self.Frame_Train_VITS_KeepOriginalSpeakers)
+        self.Button_Train_VITS_KeepOriginalSpeakers_MoreActions.setObjectName(u"Button_Train_VITS_KeepOriginalSpeakers_MoreActions")
+        self.Button_Train_VITS_KeepOriginalSpeakers_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_Train_VITS_KeepOriginalSpeakers_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_Train_VITS_KeepOriginalSpeakers_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_67.addWidget(self.Button_Train_VITS_KeepOriginalSpeakers_Undo, 0, 2, 1, 1)
+        self.gridLayout_67.addWidget(self.Button_Train_VITS_KeepOriginalSpeakers_MoreActions, 0, 2, 1, 1)
 
         self.CheckBox_Train_VITS_KeepOriginalSpeakers = QCheckBox(self.Frame_Train_VITS_KeepOriginalSpeakers)
         self.CheckBox_Train_VITS_KeepOriginalSpeakers.setObjectName(u"CheckBox_Train_VITS_KeepOriginalSpeakers")
@@ -11011,24 +10430,17 @@ class Ui_MainWindow(object):
 
         self.gridLayout_77.addItem(self.HorizontalSpacer_Train_VITS_ConfigPathLoad, 0, 1, 1, 1)
 
-        self.Button_Train_VITS_ConfigPathLoad_Undo = QPushButton(self.Frame_Train_VITS_ConfigPathLoad)
-        self.Button_Train_VITS_ConfigPathLoad_Undo.setObjectName(u"Button_Train_VITS_ConfigPathLoad_Undo")
-        self.Button_Train_VITS_ConfigPathLoad_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_Train_VITS_ConfigPathLoad_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_Train_VITS_ConfigPathLoad_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_Train_VITS_ConfigPathLoad_MoreActions = MenuButton(self.Frame_Train_VITS_ConfigPathLoad)
+        self.Button_Train_VITS_ConfigPathLoad_MoreActions.setObjectName(u"Button_Train_VITS_ConfigPathLoad_MoreActions")
+        self.Button_Train_VITS_ConfigPathLoad_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_Train_VITS_ConfigPathLoad_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_Train_VITS_ConfigPathLoad_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_77.addWidget(self.Button_Train_VITS_ConfigPathLoad_Undo, 0, 2, 1, 1)
+        self.gridLayout_77.addWidget(self.Button_Train_VITS_ConfigPathLoad_MoreActions, 0, 2, 1, 1)
 
         self.LineEdit_Train_VITS_ConfigPathLoad = LineEditBase(self.Frame_Train_VITS_ConfigPathLoad)
         self.LineEdit_Train_VITS_ConfigPathLoad.setObjectName(u"LineEdit_Train_VITS_ConfigPathLoad")
@@ -11120,24 +10532,17 @@ class Ui_MainWindow(object):
 
         self.gridLayout_63.addItem(self.HorizontalSpacer_Train_VITS_NumWorkers, 0, 1, 1, 1)
 
-        self.Button_Train_VITS_NumWorkers_Undo = QPushButton(self.Frame_Train_VITS_NumWorkers)
-        self.Button_Train_VITS_NumWorkers_Undo.setObjectName(u"Button_Train_VITS_NumWorkers_Undo")
-        self.Button_Train_VITS_NumWorkers_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_Train_VITS_NumWorkers_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_Train_VITS_NumWorkers_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_Train_VITS_NumWorkers_MoreActions = MenuButton(self.Frame_Train_VITS_NumWorkers)
+        self.Button_Train_VITS_NumWorkers_MoreActions.setObjectName(u"Button_Train_VITS_NumWorkers_MoreActions")
+        self.Button_Train_VITS_NumWorkers_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_Train_VITS_NumWorkers_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_Train_VITS_NumWorkers_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_63.addWidget(self.Button_Train_VITS_NumWorkers_Undo, 0, 2, 1, 1)
+        self.gridLayout_63.addWidget(self.Button_Train_VITS_NumWorkers_MoreActions, 0, 2, 1, 1)
 
         self.SpinBox_Train_VITS_NumWorkers = SpinBoxBase(self.Frame_Train_VITS_NumWorkers)
         self.SpinBox_Train_VITS_NumWorkers.setObjectName(u"SpinBox_Train_VITS_NumWorkers")
@@ -11184,24 +10589,17 @@ class Ui_MainWindow(object):
 
         self.gridLayout_64.addItem(self.HorizontalSpacer_Train_VITS_FP16Run, 0, 1, 1, 1)
 
-        self.Button_Train_VITS_FP16Run_Undo = QPushButton(self.Frame_Train_VITS_FP16Run)
-        self.Button_Train_VITS_FP16Run_Undo.setObjectName(u"Button_Train_VITS_FP16Run_Undo")
-        self.Button_Train_VITS_FP16Run_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_Train_VITS_FP16Run_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_Train_VITS_FP16Run_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_Train_VITS_FP16Run_MoreActions = MenuButton(self.Frame_Train_VITS_FP16Run)
+        self.Button_Train_VITS_FP16Run_MoreActions.setObjectName(u"Button_Train_VITS_FP16Run_MoreActions")
+        self.Button_Train_VITS_FP16Run_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_Train_VITS_FP16Run_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_Train_VITS_FP16Run_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_64.addWidget(self.Button_Train_VITS_FP16Run_Undo, 0, 2, 1, 1)
+        self.gridLayout_64.addWidget(self.Button_Train_VITS_FP16Run_MoreActions, 0, 2, 1, 1)
 
         self.CheckBox_Train_VITS_FP16Run = QCheckBox(self.Frame_Train_VITS_FP16Run)
         self.CheckBox_Train_VITS_FP16Run.setObjectName(u"CheckBox_Train_VITS_FP16Run")
@@ -11307,24 +10705,17 @@ class Ui_MainWindow(object):
 
         self.gridLayout_62.addItem(self.HorizontalSpacer_Train_VITS_EvalInterval, 0, 1, 1, 1)
 
-        self.Button_Train_VITS_EvalInterval_Undo = QPushButton(self.Frame_Train_VITS_EvalInterval)
-        self.Button_Train_VITS_EvalInterval_Undo.setObjectName(u"Button_Train_VITS_EvalInterval_Undo")
-        self.Button_Train_VITS_EvalInterval_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_Train_VITS_EvalInterval_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_Train_VITS_EvalInterval_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_Train_VITS_EvalInterval_MoreActions = MenuButton(self.Frame_Train_VITS_EvalInterval)
+        self.Button_Train_VITS_EvalInterval_MoreActions.setObjectName(u"Button_Train_VITS_EvalInterval_MoreActions")
+        self.Button_Train_VITS_EvalInterval_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_Train_VITS_EvalInterval_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_Train_VITS_EvalInterval_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_62.addWidget(self.Button_Train_VITS_EvalInterval_Undo, 0, 2, 1, 1)
+        self.gridLayout_62.addWidget(self.Button_Train_VITS_EvalInterval_MoreActions, 0, 2, 1, 1)
 
         self.SpinBox_Train_VITS_EvalInterval = SpinBoxBase(self.Frame_Train_VITS_EvalInterval)
         self.SpinBox_Train_VITS_EvalInterval.setObjectName(u"SpinBox_Train_VITS_EvalInterval")
@@ -11371,24 +10762,17 @@ class Ui_MainWindow(object):
 
         self.gridLayout_68.addItem(self.HorizontalSpacer_Train_VITS_OutputDirName, 0, 1, 1, 1)
 
-        self.Button_Train_VITS_OutputDirName_Undo = QPushButton(self.Frame_Train_VITS_OutputDirName)
-        self.Button_Train_VITS_OutputDirName_Undo.setObjectName(u"Button_Train_VITS_OutputDirName_Undo")
-        self.Button_Train_VITS_OutputDirName_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_Train_VITS_OutputDirName_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_Train_VITS_OutputDirName_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_Train_VITS_OutputDirName_MoreActions = MenuButton(self.Frame_Train_VITS_OutputDirName)
+        self.Button_Train_VITS_OutputDirName_MoreActions.setObjectName(u"Button_Train_VITS_OutputDirName_MoreActions")
+        self.Button_Train_VITS_OutputDirName_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_Train_VITS_OutputDirName_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_Train_VITS_OutputDirName_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_68.addWidget(self.Button_Train_VITS_OutputDirName_Undo, 0, 2, 1, 1)
+        self.gridLayout_68.addWidget(self.Button_Train_VITS_OutputDirName_MoreActions, 0, 2, 1, 1)
 
         self.LineEdit_Train_VITS_OutputDirName = LineEditBase(self.Frame_Train_VITS_OutputDirName)
         self.LineEdit_Train_VITS_OutputDirName.setObjectName(u"LineEdit_Train_VITS_OutputDirName")
@@ -11478,24 +10862,17 @@ class Ui_MainWindow(object):
 
         self.gridLayout_111.addItem(self.HorizontalSpacer_Train_VITS_LogDir, 0, 1, 1, 1)
 
-        self.Button_Train_VITS_LogDir_Undo = QPushButton(self.Frame_Train_VITS_LogDir)
-        self.Button_Train_VITS_LogDir_Undo.setObjectName(u"Button_Train_VITS_LogDir_Undo")
-        self.Button_Train_VITS_LogDir_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_Train_VITS_LogDir_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_Train_VITS_LogDir_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_Train_VITS_LogDir_MoreActions = MenuButton(self.Frame_Train_VITS_LogDir)
+        self.Button_Train_VITS_LogDir_MoreActions.setObjectName(u"Button_Train_VITS_LogDir_MoreActions")
+        self.Button_Train_VITS_LogDir_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_Train_VITS_LogDir_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_Train_VITS_LogDir_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_111.addWidget(self.Button_Train_VITS_LogDir_Undo, 0, 2, 1, 1)
+        self.gridLayout_111.addWidget(self.Button_Train_VITS_LogDir_MoreActions, 0, 2, 1, 1)
 
         self.LineEdit_Train_VITS_LogDir = LineEditBase(self.Frame_Train_VITS_LogDir)
         self.LineEdit_Train_VITS_LogDir.setObjectName(u"LineEdit_Train_VITS_LogDir")
@@ -11762,7 +11139,7 @@ class Ui_MainWindow(object):
         self.ScrollArea_Middle_TTS_GPTSoVITS.setWidgetResizable(True)
         self.ScrollArea_Middle_WidgetContents_TTS_GPTSoVITS = QWidget()
         self.ScrollArea_Middle_WidgetContents_TTS_GPTSoVITS.setObjectName(u"ScrollArea_Middle_WidgetContents_TTS_GPTSoVITS")
-        self.ScrollArea_Middle_WidgetContents_TTS_GPTSoVITS.setGeometry(QRect(0, 0, 581, 649))
+        self.ScrollArea_Middle_WidgetContents_TTS_GPTSoVITS.setGeometry(QRect(0, 0, 581, 637))
         self.verticalLayout_66 = QVBoxLayout(self.ScrollArea_Middle_WidgetContents_TTS_GPTSoVITS)
         self.verticalLayout_66.setSpacing(12)
         self.verticalLayout_66.setObjectName(u"verticalLayout_66")
@@ -11828,24 +11205,17 @@ class Ui_MainWindow(object):
 
         self.gridLayout_97.addItem(self.HorizontalSpacer_TTS_GPTSoVITS_ModelPathLoadS1, 0, 1, 1, 1)
 
-        self.Button_TTS_GPTSoVITS_ModelPathLoadS1_Undo = QPushButton(self.Frame_TTS_GPTSoVITS_ModelPathLoadS1)
-        self.Button_TTS_GPTSoVITS_ModelPathLoadS1_Undo.setObjectName(u"Button_TTS_GPTSoVITS_ModelPathLoadS1_Undo")
-        self.Button_TTS_GPTSoVITS_ModelPathLoadS1_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_TTS_GPTSoVITS_ModelPathLoadS1_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_TTS_GPTSoVITS_ModelPathLoadS1_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_TTS_GPTSoVITS_ModelPathLoadS1_MoreActions = MenuButton(self.Frame_TTS_GPTSoVITS_ModelPathLoadS1)
+        self.Button_TTS_GPTSoVITS_ModelPathLoadS1_MoreActions.setObjectName(u"Button_TTS_GPTSoVITS_ModelPathLoadS1_MoreActions")
+        self.Button_TTS_GPTSoVITS_ModelPathLoadS1_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_TTS_GPTSoVITS_ModelPathLoadS1_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_TTS_GPTSoVITS_ModelPathLoadS1_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_97.addWidget(self.Button_TTS_GPTSoVITS_ModelPathLoadS1_Undo, 0, 2, 1, 1)
+        self.gridLayout_97.addWidget(self.Button_TTS_GPTSoVITS_ModelPathLoadS1_MoreActions, 0, 2, 1, 1)
 
         self.LineEdit_TTS_GPTSoVITS_ModelPathLoadS1 = LineEditBase(self.Frame_TTS_GPTSoVITS_ModelPathLoadS1)
         self.LineEdit_TTS_GPTSoVITS_ModelPathLoadS1.setObjectName(u"LineEdit_TTS_GPTSoVITS_ModelPathLoadS1")
@@ -11890,24 +11260,17 @@ class Ui_MainWindow(object):
 
         self.gridLayout_99.addItem(self.HorizontalSpacer_TTS_GPTSoVITS_ModelPathLoadS2G, 0, 1, 1, 1)
 
-        self.Button_TTS_GPTSoVITS_ModelPathLoadS2G_Undo = QPushButton(self.Frame_TTS_GPTSoVITS_ModelPathLoadS2G)
-        self.Button_TTS_GPTSoVITS_ModelPathLoadS2G_Undo.setObjectName(u"Button_TTS_GPTSoVITS_ModelPathLoadS2G_Undo")
-        self.Button_TTS_GPTSoVITS_ModelPathLoadS2G_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_TTS_GPTSoVITS_ModelPathLoadS2G_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_TTS_GPTSoVITS_ModelPathLoadS2G_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_TTS_GPTSoVITS_ModelPathLoadS2G_MoreActions = MenuButton(self.Frame_TTS_GPTSoVITS_ModelPathLoadS2G)
+        self.Button_TTS_GPTSoVITS_ModelPathLoadS2G_MoreActions.setObjectName(u"Button_TTS_GPTSoVITS_ModelPathLoadS2G_MoreActions")
+        self.Button_TTS_GPTSoVITS_ModelPathLoadS2G_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_TTS_GPTSoVITS_ModelPathLoadS2G_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_TTS_GPTSoVITS_ModelPathLoadS2G_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_99.addWidget(self.Button_TTS_GPTSoVITS_ModelPathLoadS2G_Undo, 0, 2, 1, 1)
+        self.gridLayout_99.addWidget(self.Button_TTS_GPTSoVITS_ModelPathLoadS2G_MoreActions, 0, 2, 1, 1)
 
         self.LineEdit_TTS_GPTSoVITS_ModelPathLoadS2G = LineEditBase(self.Frame_TTS_GPTSoVITS_ModelPathLoadS2G)
         self.LineEdit_TTS_GPTSoVITS_ModelPathLoadS2G.setObjectName(u"LineEdit_TTS_GPTSoVITS_ModelPathLoadS2G")
@@ -11952,24 +11315,17 @@ class Ui_MainWindow(object):
 
         self.gridLayout_100.addItem(self.HorizontalSpacer_TTS_GPTSoVITS_ModelDirLoadBert, 0, 1, 1, 1)
 
-        self.Button_TTS_GPTSoVITS_ModelDirLoadBert_Undo = QPushButton(self.Frame_TTS_GPTSoVITS_ModelDirLoadBert)
-        self.Button_TTS_GPTSoVITS_ModelDirLoadBert_Undo.setObjectName(u"Button_TTS_GPTSoVITS_ModelDirLoadBert_Undo")
-        self.Button_TTS_GPTSoVITS_ModelDirLoadBert_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_TTS_GPTSoVITS_ModelDirLoadBert_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_TTS_GPTSoVITS_ModelDirLoadBert_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_TTS_GPTSoVITS_ModelDirLoadBert_MoreActions = MenuButton(self.Frame_TTS_GPTSoVITS_ModelDirLoadBert)
+        self.Button_TTS_GPTSoVITS_ModelDirLoadBert_MoreActions.setObjectName(u"Button_TTS_GPTSoVITS_ModelDirLoadBert_MoreActions")
+        self.Button_TTS_GPTSoVITS_ModelDirLoadBert_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_TTS_GPTSoVITS_ModelDirLoadBert_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_TTS_GPTSoVITS_ModelDirLoadBert_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_100.addWidget(self.Button_TTS_GPTSoVITS_ModelDirLoadBert_Undo, 0, 2, 1, 1)
+        self.gridLayout_100.addWidget(self.Button_TTS_GPTSoVITS_ModelDirLoadBert_MoreActions, 0, 2, 1, 1)
 
         self.LineEdit_TTS_GPTSoVITS_ModelDirLoadBert = LineEditBase(self.Frame_TTS_GPTSoVITS_ModelDirLoadBert)
         self.LineEdit_TTS_GPTSoVITS_ModelDirLoadBert.setObjectName(u"LineEdit_TTS_GPTSoVITS_ModelDirLoadBert")
@@ -12014,24 +11370,17 @@ class Ui_MainWindow(object):
 
         self.gridLayout_101.addItem(self.HorizontalSpacer_TTS_GPTSoVITS_ModelDirLoadSSL, 0, 1, 1, 1)
 
-        self.Button_TTS_GPTSoVITS_ModelDirLoadSSL_Undo = QPushButton(self.Frame_TTS_GPTSoVITS_ModelDirLoadSSL)
-        self.Button_TTS_GPTSoVITS_ModelDirLoadSSL_Undo.setObjectName(u"Button_TTS_GPTSoVITS_ModelDirLoadSSL_Undo")
-        self.Button_TTS_GPTSoVITS_ModelDirLoadSSL_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_TTS_GPTSoVITS_ModelDirLoadSSL_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_TTS_GPTSoVITS_ModelDirLoadSSL_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_TTS_GPTSoVITS_ModelDirLoadSSL_MoreActions = MenuButton(self.Frame_TTS_GPTSoVITS_ModelDirLoadSSL)
+        self.Button_TTS_GPTSoVITS_ModelDirLoadSSL_MoreActions.setObjectName(u"Button_TTS_GPTSoVITS_ModelDirLoadSSL_MoreActions")
+        self.Button_TTS_GPTSoVITS_ModelDirLoadSSL_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_TTS_GPTSoVITS_ModelDirLoadSSL_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_TTS_GPTSoVITS_ModelDirLoadSSL_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_101.addWidget(self.Button_TTS_GPTSoVITS_ModelDirLoadSSL_Undo, 0, 2, 1, 1)
+        self.gridLayout_101.addWidget(self.Button_TTS_GPTSoVITS_ModelDirLoadSSL_MoreActions, 0, 2, 1, 1)
 
         self.LineEdit_TTS_GPTSoVITS_ModelDirLoadSSL = LineEditBase(self.Frame_TTS_GPTSoVITS_ModelDirLoadSSL)
         self.LineEdit_TTS_GPTSoVITS_ModelDirLoadSSL.setObjectName(u"LineEdit_TTS_GPTSoVITS_ModelDirLoadSSL")
@@ -12109,24 +11458,17 @@ class Ui_MainWindow(object):
 
         self.gridLayout_96.addItem(self.HorizontalSpacer_TTS_GPTSoVITS_FP16Run, 0, 1, 1, 1)
 
-        self.Button_TTS_GPTSoVITS_FP16Run_Undo = QPushButton(self.Frame_TTS_GPTSoVITS_FP16Run)
-        self.Button_TTS_GPTSoVITS_FP16Run_Undo.setObjectName(u"Button_TTS_GPTSoVITS_FP16Run_Undo")
-        self.Button_TTS_GPTSoVITS_FP16Run_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_TTS_GPTSoVITS_FP16Run_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_TTS_GPTSoVITS_FP16Run_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_TTS_GPTSoVITS_FP16Run_MoreActions = MenuButton(self.Frame_TTS_GPTSoVITS_FP16Run)
+        self.Button_TTS_GPTSoVITS_FP16Run_MoreActions.setObjectName(u"Button_TTS_GPTSoVITS_FP16Run_MoreActions")
+        self.Button_TTS_GPTSoVITS_FP16Run_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_TTS_GPTSoVITS_FP16Run_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_TTS_GPTSoVITS_FP16Run_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_96.addWidget(self.Button_TTS_GPTSoVITS_FP16Run_Undo, 0, 2, 1, 1)
+        self.gridLayout_96.addWidget(self.Button_TTS_GPTSoVITS_FP16Run_MoreActions, 0, 2, 1, 1)
 
         self.CheckBox_TTS_GPTSoVITS_FP16Run = QCheckBox(self.Frame_TTS_GPTSoVITS_FP16Run)
         self.CheckBox_TTS_GPTSoVITS_FP16Run.setObjectName(u"CheckBox_TTS_GPTSoVITS_FP16Run")
@@ -12460,7 +11802,7 @@ class Ui_MainWindow(object):
         self.ScrollArea_Middle_TTS_VITS.setWidgetResizable(True)
         self.ScrollArea_Middle_WidgetContents_TTS_VITS = QWidget()
         self.ScrollArea_Middle_WidgetContents_TTS_VITS.setObjectName(u"ScrollArea_Middle_WidgetContents_TTS_VITS")
-        self.ScrollArea_Middle_WidgetContents_TTS_VITS.setGeometry(QRect(0, 0, 581, 1261))
+        self.ScrollArea_Middle_WidgetContents_TTS_VITS.setGeometry(QRect(0, 0, 581, 1242))
         self.verticalLayout_19 = QVBoxLayout(self.ScrollArea_Middle_WidgetContents_TTS_VITS)
         self.verticalLayout_19.setSpacing(12)
         self.verticalLayout_19.setObjectName(u"verticalLayout_19")
@@ -12526,24 +11868,17 @@ class Ui_MainWindow(object):
 
         self.gridLayout_69.addItem(self.HorizontalSpacer_TTS_VITS_ConfigPathLoad, 0, 1, 1, 1)
 
-        self.Button_TTS_VITS_ConfigPathLoad_Undo = QPushButton(self.Frame_TTS_VITS_ConfigPathLoad)
-        self.Button_TTS_VITS_ConfigPathLoad_Undo.setObjectName(u"Button_TTS_VITS_ConfigPathLoad_Undo")
-        self.Button_TTS_VITS_ConfigPathLoad_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_TTS_VITS_ConfigPathLoad_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_TTS_VITS_ConfigPathLoad_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_TTS_VITS_ConfigPathLoad_MoreActions = MenuButton(self.Frame_TTS_VITS_ConfigPathLoad)
+        self.Button_TTS_VITS_ConfigPathLoad_MoreActions.setObjectName(u"Button_TTS_VITS_ConfigPathLoad_MoreActions")
+        self.Button_TTS_VITS_ConfigPathLoad_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_TTS_VITS_ConfigPathLoad_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_TTS_VITS_ConfigPathLoad_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_69.addWidget(self.Button_TTS_VITS_ConfigPathLoad_Undo, 0, 2, 1, 1)
+        self.gridLayout_69.addWidget(self.Button_TTS_VITS_ConfigPathLoad_MoreActions, 0, 2, 1, 1)
 
         self.LineEdit_TTS_VITS_ConfigPathLoad = LineEditBase(self.Frame_TTS_VITS_ConfigPathLoad)
         self.LineEdit_TTS_VITS_ConfigPathLoad.setObjectName(u"LineEdit_TTS_VITS_ConfigPathLoad")
@@ -12588,24 +11923,17 @@ class Ui_MainWindow(object):
 
         self.gridLayout_70.addItem(self.HorizontalSpacer_TTS_VITS_ModelPathLoad, 0, 1, 1, 1)
 
-        self.Button_TTS_VITS_ModelPathLoad_Undo = QPushButton(self.Frame_TTS_VITS_ModelPathLoad)
-        self.Button_TTS_VITS_ModelPathLoad_Undo.setObjectName(u"Button_TTS_VITS_ModelPathLoad_Undo")
-        self.Button_TTS_VITS_ModelPathLoad_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_TTS_VITS_ModelPathLoad_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_TTS_VITS_ModelPathLoad_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_TTS_VITS_ModelPathLoad_MoreActions = MenuButton(self.Frame_TTS_VITS_ModelPathLoad)
+        self.Button_TTS_VITS_ModelPathLoad_MoreActions.setObjectName(u"Button_TTS_VITS_ModelPathLoad_MoreActions")
+        self.Button_TTS_VITS_ModelPathLoad_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_TTS_VITS_ModelPathLoad_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_TTS_VITS_ModelPathLoad_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_70.addWidget(self.Button_TTS_VITS_ModelPathLoad_Undo, 0, 2, 1, 1)
+        self.gridLayout_70.addWidget(self.Button_TTS_VITS_ModelPathLoad_MoreActions, 0, 2, 1, 1)
 
         self.LineEdit_TTS_VITS_ModelPathLoad = LineEditBase(self.Frame_TTS_VITS_ModelPathLoad)
         self.LineEdit_TTS_VITS_ModelPathLoad.setObjectName(u"LineEdit_TTS_VITS_ModelPathLoad")
@@ -12781,24 +12109,17 @@ class Ui_MainWindow(object):
 
         self.gridLayout_79.addItem(self.HorizontalSpacer_TTS_VITS_Language, 0, 1, 1, 1)
 
-        self.Button_TTS_VITS_Language_Undo = QPushButton(self.Frame_TTS_VITS_Language)
-        self.Button_TTS_VITS_Language_Undo.setObjectName(u"Button_TTS_VITS_Language_Undo")
-        self.Button_TTS_VITS_Language_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_TTS_VITS_Language_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_TTS_VITS_Language_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_TTS_VITS_Language_MoreActions = MenuButton(self.Frame_TTS_VITS_Language)
+        self.Button_TTS_VITS_Language_MoreActions.setObjectName(u"Button_TTS_VITS_Language_MoreActions")
+        self.Button_TTS_VITS_Language_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_TTS_VITS_Language_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_TTS_VITS_Language_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_79.addWidget(self.Button_TTS_VITS_Language_Undo, 0, 2, 1, 1)
+        self.gridLayout_79.addWidget(self.Button_TTS_VITS_Language_MoreActions, 0, 2, 1, 1)
 
         self.ComboBox_TTS_VITS_Language = ComboBoxBase(self.Frame_TTS_VITS_Language)
         self.ComboBox_TTS_VITS_Language.setObjectName(u"ComboBox_TTS_VITS_Language")
@@ -12927,24 +12248,17 @@ class Ui_MainWindow(object):
 
         self.gridLayout_71.addItem(self.HorizontalSpacer_TTS_VITS_EmotionStrength, 0, 1, 1, 1)
 
-        self.Button_TTS_VITS_EmotionStrength_Undo = QPushButton(self.Frame_TTS_VITS_EmotionStrength)
-        self.Button_TTS_VITS_EmotionStrength_Undo.setObjectName(u"Button_TTS_VITS_EmotionStrength_Undo")
-        self.Button_TTS_VITS_EmotionStrength_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_TTS_VITS_EmotionStrength_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_TTS_VITS_EmotionStrength_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_TTS_VITS_EmotionStrength_MoreActions = MenuButton(self.Frame_TTS_VITS_EmotionStrength)
+        self.Button_TTS_VITS_EmotionStrength_MoreActions.setObjectName(u"Button_TTS_VITS_EmotionStrength_MoreActions")
+        self.Button_TTS_VITS_EmotionStrength_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_TTS_VITS_EmotionStrength_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_TTS_VITS_EmotionStrength_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_71.addWidget(self.Button_TTS_VITS_EmotionStrength_Undo, 0, 2, 1, 1)
+        self.gridLayout_71.addWidget(self.Button_TTS_VITS_EmotionStrength_MoreActions, 0, 2, 1, 1)
 
         self.ChildFrame_TTS_VITS_EmotionStrength = QFrame(self.Frame_TTS_VITS_EmotionStrength)
         self.ChildFrame_TTS_VITS_EmotionStrength.setObjectName(u"ChildFrame_TTS_VITS_EmotionStrength")
@@ -13041,24 +12355,17 @@ class Ui_MainWindow(object):
 
         self.gridLayout_72.addItem(self.HorizontalSpacer_TTS_VITS_PhonemeDuration, 0, 1, 1, 1)
 
-        self.Button_TTS_VITS_PhonemeDuration_Undo = QPushButton(self.Frame_TTS_VITS_PhonemeDuration)
-        self.Button_TTS_VITS_PhonemeDuration_Undo.setObjectName(u"Button_TTS_VITS_PhonemeDuration_Undo")
-        self.Button_TTS_VITS_PhonemeDuration_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_TTS_VITS_PhonemeDuration_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_TTS_VITS_PhonemeDuration_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_TTS_VITS_PhonemeDuration_MoreActions = MenuButton(self.Frame_TTS_VITS_PhonemeDuration)
+        self.Button_TTS_VITS_PhonemeDuration_MoreActions.setObjectName(u"Button_TTS_VITS_PhonemeDuration_MoreActions")
+        self.Button_TTS_VITS_PhonemeDuration_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_TTS_VITS_PhonemeDuration_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_TTS_VITS_PhonemeDuration_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_72.addWidget(self.Button_TTS_VITS_PhonemeDuration_Undo, 0, 2, 1, 1)
+        self.gridLayout_72.addWidget(self.Button_TTS_VITS_PhonemeDuration_MoreActions, 0, 2, 1, 1)
 
         self.ChildFrame_TTS_VITS_PhonemeDuration = QFrame(self.Frame_TTS_VITS_PhonemeDuration)
         self.ChildFrame_TTS_VITS_PhonemeDuration.setObjectName(u"ChildFrame_TTS_VITS_PhonemeDuration")
@@ -13155,24 +12462,17 @@ class Ui_MainWindow(object):
 
         self.gridLayout_73.addItem(self.HorizontalSpacer_TTS_VITS_SpeechRate, 0, 1, 1, 1)
 
-        self.Button_TTS_VITS_SpeechRate_Undo = QPushButton(self.Frame_TTS_VITS_SpeechRate)
-        self.Button_TTS_VITS_SpeechRate_Undo.setObjectName(u"Button_TTS_VITS_SpeechRate_Undo")
-        self.Button_TTS_VITS_SpeechRate_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_TTS_VITS_SpeechRate_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_TTS_VITS_SpeechRate_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_TTS_VITS_SpeechRate_MoreActions = MenuButton(self.Frame_TTS_VITS_SpeechRate)
+        self.Button_TTS_VITS_SpeechRate_MoreActions.setObjectName(u"Button_TTS_VITS_SpeechRate_MoreActions")
+        self.Button_TTS_VITS_SpeechRate_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_TTS_VITS_SpeechRate_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_TTS_VITS_SpeechRate_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_73.addWidget(self.Button_TTS_VITS_SpeechRate_Undo, 0, 2, 1, 1)
+        self.gridLayout_73.addWidget(self.Button_TTS_VITS_SpeechRate_MoreActions, 0, 2, 1, 1)
 
         self.ChildFrame_TTS_VITS_SpeechRate = QFrame(self.Frame_TTS_VITS_SpeechRate)
         self.ChildFrame_TTS_VITS_SpeechRate.setObjectName(u"ChildFrame_TTS_VITS_SpeechRate")
@@ -13302,24 +12602,17 @@ class Ui_MainWindow(object):
 
         self.gridLayout_74.addItem(self.HorizontalSpacer_TTS_VITS_AudioPathSave, 0, 1, 1, 1)
 
-        self.Button_TTS_VITS_AudioPathSave_Undo = QPushButton(self.Frame_TTS_VITS_AudioPathSave)
-        self.Button_TTS_VITS_AudioPathSave_Undo.setObjectName(u"Button_TTS_VITS_AudioPathSave_Undo")
-        self.Button_TTS_VITS_AudioPathSave_Undo.setMinimumSize(QSize(27, 27))
-        self.Button_TTS_VITS_AudioPathSave_Undo.setMaximumSize(QSize(27, 27))
-        self.Button_TTS_VITS_AudioPathSave_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_TTS_VITS_AudioPathSave_MoreActions = MenuButton(self.Frame_TTS_VITS_AudioPathSave)
+        self.Button_TTS_VITS_AudioPathSave_MoreActions.setObjectName(u"Button_TTS_VITS_AudioPathSave_MoreActions")
+        self.Button_TTS_VITS_AudioPathSave_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_TTS_VITS_AudioPathSave_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_TTS_VITS_AudioPathSave_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_74.addWidget(self.Button_TTS_VITS_AudioPathSave_Undo, 0, 2, 1, 1)
+        self.gridLayout_74.addWidget(self.Button_TTS_VITS_AudioPathSave_MoreActions, 0, 2, 1, 1)
 
         self.LineEdit_TTS_VITS_AudioPathSave = LineEditBase(self.Frame_TTS_VITS_AudioPathSave)
         self.LineEdit_TTS_VITS_AudioPathSave.setObjectName(u"LineEdit_TTS_VITS_AudioPathSave")
@@ -13664,7 +12957,7 @@ class Ui_MainWindow(object):
         self.ScrollArea_Settings_Client.setWidgetResizable(True)
         self.ScrollAreaWidgetContents_Settings_Client = QWidget()
         self.ScrollAreaWidgetContents_Settings_Client.setObjectName(u"ScrollAreaWidgetContents_Settings_Client")
-        self.ScrollAreaWidgetContents_Settings_Client.setGeometry(QRect(0, 0, 310, 474))
+        self.ScrollAreaWidgetContents_Settings_Client.setGeometry(QRect(0, 0, 311, 456))
         self.verticalLayout_106 = QVBoxLayout(self.ScrollAreaWidgetContents_Settings_Client)
         self.verticalLayout_106.setSpacing(0)
         self.verticalLayout_106.setObjectName(u"verticalLayout_106")
@@ -13975,7 +13268,7 @@ class Ui_MainWindow(object):
         self.ScrollArea_Settings_Tools.setWidgetResizable(True)
         self.ScrollAreaWidgetContents_Settings_Tools = QWidget()
         self.ScrollAreaWidgetContents_Settings_Tools.setObjectName(u"ScrollAreaWidgetContents_Settings_Tools")
-        self.ScrollAreaWidgetContents_Settings_Tools.setGeometry(QRect(0, 0, 235, 811))
+        self.ScrollAreaWidgetContents_Settings_Tools.setGeometry(QRect(0, 0, 238, 799))
         self.verticalLayout_34 = QVBoxLayout(self.ScrollAreaWidgetContents_Settings_Tools)
         self.verticalLayout_34.setSpacing(0)
         self.verticalLayout_34.setObjectName(u"verticalLayout_34")
@@ -14038,23 +13331,16 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_19.addWidget(self.LineEdit_Process_OutputRoot)
 
-        self.Button_Process_OutputRoot_Undo = QPushButton(self.Frame_Process_OutputRoot)
-        self.Button_Process_OutputRoot_Undo.setObjectName(u"Button_Process_OutputRoot_Undo")
-        self.Button_Process_OutputRoot_Undo.setMaximumSize(QSize(30, 30))
-        self.Button_Process_OutputRoot_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_Process_OutputRoot_MoreActions = MenuButton(self.Frame_Process_OutputRoot)
+        self.Button_Process_OutputRoot_MoreActions.setObjectName(u"Button_Process_OutputRoot_MoreActions")
+        self.Button_Process_OutputRoot_MoreActions.setMaximumSize(QSize(30, 30))
+        self.Button_Process_OutputRoot_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.horizontalLayout_19.addWidget(self.Button_Process_OutputRoot_Undo)
+        self.horizontalLayout_19.addWidget(self.Button_Process_OutputRoot_MoreActions)
 
 
         self.verticalLayout_83.addWidget(self.Frame_Process_OutputRoot)
@@ -14096,23 +13382,16 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_25.addWidget(self.LineEdit_ASR_VPR_OutputRoot)
 
-        self.Button_ASR_VPR_OutputRoot_Undo = QPushButton(self.Frame_ASR_VPR_OutputRoot)
-        self.Button_ASR_VPR_OutputRoot_Undo.setObjectName(u"Button_ASR_VPR_OutputRoot_Undo")
-        self.Button_ASR_VPR_OutputRoot_Undo.setMaximumSize(QSize(30, 30))
-        self.Button_ASR_VPR_OutputRoot_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_ASR_VPR_OutputRoot_MoreActions = MenuButton(self.Frame_ASR_VPR_OutputRoot)
+        self.Button_ASR_VPR_OutputRoot_MoreActions.setObjectName(u"Button_ASR_VPR_OutputRoot_MoreActions")
+        self.Button_ASR_VPR_OutputRoot_MoreActions.setMaximumSize(QSize(30, 30))
+        self.Button_ASR_VPR_OutputRoot_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.horizontalLayout_25.addWidget(self.Button_ASR_VPR_OutputRoot_Undo)
+        self.horizontalLayout_25.addWidget(self.Button_ASR_VPR_OutputRoot_MoreActions)
 
 
         self.verticalLayout_83.addWidget(self.Frame_ASR_VPR_OutputRoot)
@@ -14154,23 +13433,16 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_20.addWidget(self.LineEdit_STT_Whisper_OutputRoot)
 
-        self.Button_STT_Whisper_OutputRoot_Undo = QPushButton(self.Frame_STT_Whisper_OutputRoot)
-        self.Button_STT_Whisper_OutputRoot_Undo.setObjectName(u"Button_STT_Whisper_OutputRoot_Undo")
-        self.Button_STT_Whisper_OutputRoot_Undo.setMaximumSize(QSize(30, 30))
-        self.Button_STT_Whisper_OutputRoot_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_STT_Whisper_OutputRoot_MoreActions = MenuButton(self.Frame_STT_Whisper_OutputRoot)
+        self.Button_STT_Whisper_OutputRoot_MoreActions.setObjectName(u"Button_STT_Whisper_OutputRoot_MoreActions")
+        self.Button_STT_Whisper_OutputRoot_MoreActions.setMaximumSize(QSize(30, 30))
+        self.Button_STT_Whisper_OutputRoot_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.horizontalLayout_20.addWidget(self.Button_STT_Whisper_OutputRoot_Undo)
+        self.horizontalLayout_20.addWidget(self.Button_STT_Whisper_OutputRoot_MoreActions)
 
 
         self.verticalLayout_83.addWidget(self.Frame_STT_Whisper_OutputRoot)
@@ -14212,23 +13484,16 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_21.addWidget(self.LineEdit_DAT_GPTSoVITS_OutputRoot)
 
-        self.Button_DAT_GPTSoVITS_OutputRoot_Undo = QPushButton(self.Frame_DAT_GPTSoVITS_OutputRoot)
-        self.Button_DAT_GPTSoVITS_OutputRoot_Undo.setObjectName(u"Button_DAT_GPTSoVITS_OutputRoot_Undo")
-        self.Button_DAT_GPTSoVITS_OutputRoot_Undo.setMaximumSize(QSize(30, 30))
-        self.Button_DAT_GPTSoVITS_OutputRoot_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_DAT_GPTSoVITS_OutputRoot_MoreActions = MenuButton(self.Frame_DAT_GPTSoVITS_OutputRoot)
+        self.Button_DAT_GPTSoVITS_OutputRoot_MoreActions.setObjectName(u"Button_DAT_GPTSoVITS_OutputRoot_MoreActions")
+        self.Button_DAT_GPTSoVITS_OutputRoot_MoreActions.setMaximumSize(QSize(30, 30))
+        self.Button_DAT_GPTSoVITS_OutputRoot_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.horizontalLayout_21.addWidget(self.Button_DAT_GPTSoVITS_OutputRoot_Undo)
+        self.horizontalLayout_21.addWidget(self.Button_DAT_GPTSoVITS_OutputRoot_MoreActions)
 
 
         self.verticalLayout_83.addWidget(self.Frame_DAT_GPTSoVITS_OutputRoot)
@@ -14270,23 +13535,16 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_22.addWidget(self.LineEdit_DAT_VITS_OutputRoot)
 
-        self.Button_DAT_VITS_OutputRoot_Undo = QPushButton(self.Frame_DAT_VITS_OutputRoot)
-        self.Button_DAT_VITS_OutputRoot_Undo.setObjectName(u"Button_DAT_VITS_OutputRoot_Undo")
-        self.Button_DAT_VITS_OutputRoot_Undo.setMaximumSize(QSize(30, 30))
-        self.Button_DAT_VITS_OutputRoot_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_DAT_VITS_OutputRoot_MoreActions = MenuButton(self.Frame_DAT_VITS_OutputRoot)
+        self.Button_DAT_VITS_OutputRoot_MoreActions.setObjectName(u"Button_DAT_VITS_OutputRoot_MoreActions")
+        self.Button_DAT_VITS_OutputRoot_MoreActions.setMaximumSize(QSize(30, 30))
+        self.Button_DAT_VITS_OutputRoot_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.horizontalLayout_22.addWidget(self.Button_DAT_VITS_OutputRoot_Undo)
+        self.horizontalLayout_22.addWidget(self.Button_DAT_VITS_OutputRoot_MoreActions)
 
 
         self.verticalLayout_83.addWidget(self.Frame_DAT_VITS_OutputRoot)
@@ -14328,23 +13586,16 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_23.addWidget(self.LineEdit_Train_GPTSoVITS_OutputRoot)
 
-        self.Button_Train_GPTSoVITS_OutputRoot_Undo = QPushButton(self.Frame_Train_GPTSoVITS_OutputRoot)
-        self.Button_Train_GPTSoVITS_OutputRoot_Undo.setObjectName(u"Button_Train_GPTSoVITS_OutputRoot_Undo")
-        self.Button_Train_GPTSoVITS_OutputRoot_Undo.setMaximumSize(QSize(30, 30))
-        self.Button_Train_GPTSoVITS_OutputRoot_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_Train_GPTSoVITS_OutputRoot_MoreActions = MenuButton(self.Frame_Train_GPTSoVITS_OutputRoot)
+        self.Button_Train_GPTSoVITS_OutputRoot_MoreActions.setObjectName(u"Button_Train_GPTSoVITS_OutputRoot_MoreActions")
+        self.Button_Train_GPTSoVITS_OutputRoot_MoreActions.setMaximumSize(QSize(30, 30))
+        self.Button_Train_GPTSoVITS_OutputRoot_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.horizontalLayout_23.addWidget(self.Button_Train_GPTSoVITS_OutputRoot_Undo)
+        self.horizontalLayout_23.addWidget(self.Button_Train_GPTSoVITS_OutputRoot_MoreActions)
 
 
         self.verticalLayout_83.addWidget(self.Frame_Train_GPTSoVITS_OutputRoot)
@@ -14386,23 +13637,16 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_24.addWidget(self.LineEdit_Train_VITS_OutputRoot)
 
-        self.Button_Train_VITS_OutputRoot_Undo = QPushButton(self.Frame_Train_VITS_OutputRoot)
-        self.Button_Train_VITS_OutputRoot_Undo.setObjectName(u"Button_Train_VITS_OutputRoot_Undo")
-        self.Button_Train_VITS_OutputRoot_Undo.setMaximumSize(QSize(30, 30))
-        self.Button_Train_VITS_OutputRoot_Undo.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Undo.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
+        self.Button_Train_VITS_OutputRoot_MoreActions = MenuButton(self.Frame_Train_VITS_OutputRoot)
+        self.Button_Train_VITS_OutputRoot_MoreActions.setObjectName(u"Button_Train_VITS_OutputRoot_MoreActions")
+        self.Button_Train_VITS_OutputRoot_MoreActions.setMaximumSize(QSize(30, 30))
+        self.Button_Train_VITS_OutputRoot_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
 "	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
+"	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.horizontalLayout_24.addWidget(self.Button_Train_VITS_OutputRoot_Undo)
+        self.horizontalLayout_24.addWidget(self.Button_Train_VITS_OutputRoot_MoreActions)
 
 
         self.verticalLayout_83.addWidget(self.Frame_Train_VITS_OutputRoot)
@@ -15086,7 +14330,6 @@ class Ui_MainWindow(object):
     # setupUi
 
     def retranslateUi(self, MainWindow):
-        self.CheckBox_SwitchTheme.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
         self.Label_Menu_Home_Text.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Menu_Env_Install_Text.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Menu_Models_Text.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
@@ -15103,6 +14346,7 @@ class Ui_MainWindow(object):
         self.Label_Repo_Text.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Donate_Text.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.ToolButton_Env_Install_Title.setText(QCoreApplication.translate("MainWindow", u"Label", None))
+        self.ToolButton_Env_Manage_Title.setText(QCoreApplication.translate("MainWindow", u"Label", None))
         self.Label_Env_Install_Aria2_Status.setText(QCoreApplication.translate("MainWindow", u"--", None))
         self.Label_Env_Install_Aria2.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Env_Install_FFmpeg_Status.setText(QCoreApplication.translate("MainWindow", u"--", None))
@@ -15115,8 +14359,6 @@ class Ui_MainWindow(object):
         self.Label_Env_Install_Pytorch.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.GroupBox_Env_Manage_Pytorch.setTitle(QCoreApplication.translate("MainWindow", u"GroupBox", None))
         self.Label_Env_Manage_Pytorch_Version.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.Label_Env_Manage_Pytorch_Reinstall.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.CheckBox_Env_Manage_Pytorch_Reinstall.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
         self.ToolButton_Models_Process_Title.setText(QCoreApplication.translate("MainWindow", u"Label", None))
         self.ToolButton_Models_ASR_Title.setText(QCoreApplication.translate("MainWindow", u"Label", None))
         self.ToolButton_Models_STT_Title.setText(QCoreApplication.translate("MainWindow", u"Label", None))

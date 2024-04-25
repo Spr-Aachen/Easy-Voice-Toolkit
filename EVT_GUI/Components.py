@@ -348,14 +348,14 @@ class Table_ASRResult(TableBase):
                 ComboItems.append(ComboItem) if ComboItem not in ComboItems else None
         for Param in Params:
             QApplication.processEvents()
-            self.AddRow(Param, ComboItems)
+            self.AddRow(Param, ComboItems + [''])
 
     def GetValue(self):
         ValueDict = {}
         for RowCount in range(self.rowCount()):
             try:
                 Key = Function_GetText(self.cellWidget(RowCount, 0).findChild(QLabel))
-                Value = self.cellWidget(RowCount, 1).findChild(QComboBox).currentText()
+                Value = self.cellWidget(RowCount, 1).findChild(ComboBoxBase).currentText()
                 ValueDict[Key] = Value
             except:
                 pass
@@ -448,5 +448,74 @@ class Table_STTResult(TableBase):
             except:
                 pass
         return ValueDict
+
+
+class Table_DATResult(TableBase):
+    '''
+    '''
+    def __init__(self, parent: QWidget = None):
+        super().__init__(parent)
+
+        self.setRowCount(0)
+        self.setColumnCount(2)
+        self.SetIndexHeaderVisible(True)
+        self.verticalHeader().setSectionResizeMode(QHeaderView.Fixed)
+
+    def setStyleSheet(self, StyleSheet: str):
+        super().setStyleSheet(StyleSheet +  '''
+        QHeaderView::section, QTableView, QTableView::item {
+            border-radius:0px;
+        }
+        '''
+        )
+
+    def AddRow(self, Param: tuple):
+        RowHeight = 30
+        def SetColumnLayout(ColumnLayout):
+            ColumnLayout.setContentsMargins(0, 0, 0, 0)
+            ColumnLayout.setSpacing(0)
+
+        LineEdit = LineEditBase()
+        LineEdit.ClearDefaultStyleSheet()
+        LineEdit.setStyleSheet(LineEdit.styleSheet() + 'LineEditBase {border-radius: 0px;}')
+        LineEdit.RemoveFileDialogButton()
+        Function_SetText(LineEdit, Param[1], SetPlaceholderText = True)
+        Column0Layout = QHBoxLayout()
+        SetColumnLayout(Column0Layout)
+        Column0Layout.addWidget(LineEdit)
+
+        PlayerWidget = MediaPlayerBase()
+        PlayerWidget.setStyleSheet(PlayerWidget.styleSheet() + 'border-radius: 0px;')
+        PlayerWidget.SetMediaPlayer(Param[0])
+        PlayerWidget.layout().setContentsMargins(6, 6, 6, 6)
+        PlayerWidget.Slider.hide()
+        Column1Layout = QHBoxLayout()
+        SetColumnLayout(Column1Layout)
+        Column1Layout.addWidget(PlayerWidget)
+
+        super().AddRow(
+            [Column0Layout, Column1Layout],
+            [QHeaderView.Stretch, QHeaderView.Fixed],
+            [None, RowHeight],
+            RowHeight
+        )
+
+    def SetValue(self, Params: dict = {'%Path%': '%Data%'}):
+        self.ClearRows()
+        ParamDict = ToIterable(Params)
+        for Key, Value in ParamDict.items():
+            QApplication.processEvents()
+            Param = (Key, Value)
+            self.AddRow(Param)
+
+    def GetValue(self):
+        ValueList = []
+        for RowCount in range(self.rowCount()):
+            try:
+                Value = Function_GetText(self.cellWidget(RowCount, 0).findChild(QLineEdit))
+                ValueList.append(Value)
+            except:
+                pass
+        return ValueList
 
 ##############################################################################################################################
