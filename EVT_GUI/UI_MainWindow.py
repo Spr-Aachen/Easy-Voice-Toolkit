@@ -1,7 +1,7 @@
 from PySide6.QtCore import (QCoreApplication, QMetaObject, QRect, QSize, Qt)
 from PySide6.QtWidgets import *
 
-from .Components import MenuButton, LabelBase, LineEditBase, ComboBoxBase, SpinBoxBase, DoubleSpinBoxBase, ScrollAreaBase, Table_ViewModels, Table_EditAudioSpeaker
+from .Components import WidgetBase, MenuButton, LabelBase, LineEditBase, ComboBoxBase, SpinBoxBase, DoubleSpinBoxBase, ToolBoxBase, ScrollAreaBase, Table_ViewModels, Table_EditAudioSpeaker
 from . import Sources
 
 
@@ -77,7 +77,6 @@ class Ui_MainWindow(object):
 
         self.CheckBox_SwitchTheme = QCheckBox(self.Frame_Top)
         self.CheckBox_SwitchTheme.setObjectName(u"CheckBox_SwitchTheme")
-        self.CheckBox_SwitchTheme.setMinimumSize(QSize(0, 27))
         self.CheckBox_SwitchTheme.setStyleSheet(u"QCheckBox {\n"
 "	font-size: 12px;\n"
 "	spacing: 12.3px;\n"
@@ -1436,44 +1435,6 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_3.addWidget(self.ToolButton_Env_Install_Title)
 
-        self.ToolButton_Env_Manage_Title = QToolButton(self.Frame_Env_Install_Top)
-        self.ToolButton_Env_Manage_Title.setObjectName(u"ToolButton_Env_Manage_Title")
-        sizePolicy1.setHeightForWidth(self.ToolButton_Env_Manage_Title.sizePolicy().hasHeightForWidth())
-        self.ToolButton_Env_Manage_Title.setSizePolicy(sizePolicy1)
-        self.ToolButton_Env_Manage_Title.setStyleSheet(u"QToolButton {\n"
-"	font-size: 24px;\n"
-"	/*text-align: center;*/\n"
-"	padding-left: 12px;\n"
-"	padding-right: 12px;\n"
-"	background-color: transparent;\n"
-"	border-top-width: 0px;\n"
-"	border-right-width: 0px;\n"
-"	border-bottom-width: 3px;\n"
-"	border-left-width: 0px;\n"
-"	border-style: solid;\n"
-"	border-bottom-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QToolButton:hover {\n"
-"	background-color: transparent;\n"
-"	border-top-width: 0px;\n"
-"	border-right-width: 0px;\n"
-"	border-bottom-width: 3px;\n"
-"	border-left-width: 0px;\n"
-"	border-style: solid;\n"
-"	border-bottom-color: rgba(120, 180, 240, 123);\n"
-"}\n"
-"QToolButton:checked {\n"
-"	background-color: transparent;\n"
-"	border-top-width: 0px;\n"
-"	border-right-width: 0px;\n"
-"	border-bottom-width: 3px;\n"
-"	border-left-width: 0px;\n"
-"	border-style: solid;\n"
-"	border-bottom-color: rgba(120, 180, 240, 210);\n"
-"}")
-
-        self.horizontalLayout_3.addWidget(self.ToolButton_Env_Manage_Title)
-
         self.Frame_Env_Install_Title_Spacer = QLabel(self.Frame_Env_Install_Top)
         self.Frame_Env_Install_Title_Spacer.setObjectName(u"Frame_Env_Install_Title_Spacer")
         sizePolicy4 = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Preferred)
@@ -1511,7 +1472,7 @@ class Ui_MainWindow(object):
         self.ScrollArea_Env_Install.setWidgetResizable(True)
         self.ScrollAreaWidgetContents_Env_Install = QWidget()
         self.ScrollAreaWidgetContents_Env_Install.setObjectName(u"ScrollAreaWidgetContents_Env_Install")
-        self.ScrollAreaWidgetContents_Env_Install.setGeometry(QRect(0, 0, 199, 495))
+        self.ScrollAreaWidgetContents_Env_Install.setGeometry(QRect(0, 0, 1026, 559))
         self.verticalLayout_130 = QVBoxLayout(self.ScrollAreaWidgetContents_Env_Install)
         self.verticalLayout_130.setSpacing(0)
         self.verticalLayout_130.setObjectName(u"verticalLayout_130")
@@ -1999,7 +1960,7 @@ class Ui_MainWindow(object):
         self.ScrollArea_Env_Manage.setWidgetResizable(True)
         self.ScrollAreaWidgetContents_Env_Manage = QWidget()
         self.ScrollAreaWidgetContents_Env_Manage.setObjectName(u"ScrollAreaWidgetContents_Env_Manage")
-        self.ScrollAreaWidgetContents_Env_Manage.setGeometry(QRect(0, 0, 248, 212))
+        self.ScrollAreaWidgetContents_Env_Manage.setGeometry(QRect(0, 0, 246, 218))
         self.verticalLayout_81 = QVBoxLayout(self.ScrollAreaWidgetContents_Env_Manage)
         self.verticalLayout_81.setSpacing(0)
         self.verticalLayout_81.setObjectName(u"verticalLayout_81")
@@ -2601,10 +2562,10 @@ class Ui_MainWindow(object):
 "	border-width: 0px;\n"
 "	border-style: solid;\n"
 "}")
-        self.horizontalLayout_68 = QHBoxLayout(self.Frame_Process_Top)
-        self.horizontalLayout_68.setSpacing(0)
-        self.horizontalLayout_68.setObjectName(u"horizontalLayout_68")
-        self.horizontalLayout_68.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_32 = QHBoxLayout(self.Frame_Process_Top)
+        self.horizontalLayout_32.setSpacing(0)
+        self.horizontalLayout_32.setObjectName(u"horizontalLayout_32")
+        self.horizontalLayout_32.setContentsMargins(0, 0, 0, 0)
         self.ToolButton_AudioProcessor_Title = QToolButton(self.Frame_Process_Top)
         self.ToolButton_AudioProcessor_Title.setObjectName(u"ToolButton_AudioProcessor_Title")
         sizePolicy1.setHeightForWidth(self.ToolButton_AudioProcessor_Title.sizePolicy().hasHeightForWidth())
@@ -2641,15 +2602,13 @@ class Ui_MainWindow(object):
 "	border-bottom-color: rgba(120, 180, 240, 210);\n"
 "}")
 
-        self.horizontalLayout_68.addWidget(self.ToolButton_AudioProcessor_Title)
+        self.horizontalLayout_32.addWidget(self.ToolButton_AudioProcessor_Title)
 
-        self.Frame_Process_Title_Spacer = QLabel(self.Frame_Process_Top)
-        self.Frame_Process_Title_Spacer.setObjectName(u"Frame_Process_Title_Spacer")
-        sizePolicy4.setHeightForWidth(self.Frame_Process_Title_Spacer.sizePolicy().hasHeightForWidth())
-        self.Frame_Process_Title_Spacer.setSizePolicy(sizePolicy4)
-        self.Frame_Process_Title_Spacer.setStyleSheet(u"QLabel {\n"
-"	font-size: 24px;\n"
-"	/*text-align: center;\n"
+        self.Frame_AudioProcessor_Title = QFrame(self.Frame_Process_Top)
+        self.Frame_AudioProcessor_Title.setObjectName(u"Frame_AudioProcessor_Title")
+        self.Frame_AudioProcessor_Title.setStyleSheet(u"QFrame {\n"
+"	/*font-size: 24px;\n"
+"	text-align: center;\n"
 "	padding-left: 12px;\n"
 "	padding-right: 12px;*/\n"
 "	background-color: transparent;\n"
@@ -2660,8 +2619,16 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "	border-bottom-color: rgba(123, 123, 123, 123);\n"
 "}")
+        self.horizontalLayout_31 = QHBoxLayout(self.Frame_AudioProcessor_Title)
+        self.horizontalLayout_31.setSpacing(12)
+        self.horizontalLayout_31.setObjectName(u"horizontalLayout_31")
+        self.horizontalLayout_31.setContentsMargins(0, 0, 0, 0)
+        self.HorizontalSpacer_AudioProcessor_Title = QSpacerItem(549, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
-        self.horizontalLayout_68.addWidget(self.Frame_Process_Title_Spacer)
+        self.horizontalLayout_31.addItem(self.HorizontalSpacer_AudioProcessor_Title)
+
+
+        self.horizontalLayout_32.addWidget(self.Frame_AudioProcessor_Title)
 
 
         self.verticalLayout_40.addWidget(self.Frame_Process_Top)
@@ -2784,7 +2751,7 @@ class Ui_MainWindow(object):
         self.ScrollArea_Middle_Process.setWidgetResizable(True)
         self.ScrollArea_Middle_WidgetContents_Process = QWidget()
         self.ScrollArea_Middle_WidgetContents_Process.setObjectName(u"ScrollArea_Middle_WidgetContents_Process")
-        self.ScrollArea_Middle_WidgetContents_Process.setGeometry(QRect(0, 0, 581, 1823))
+        self.ScrollArea_Middle_WidgetContents_Process.setGeometry(QRect(0, 0, 581, 1157))
         self.verticalLayout_14 = QVBoxLayout(self.ScrollArea_Middle_WidgetContents_Process)
         self.verticalLayout_14.setSpacing(12)
         self.verticalLayout_14.setObjectName(u"verticalLayout_14")
@@ -3220,49 +3187,16 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_186.addWidget(self.Frame_Process_SlicerParams_BasicSettings)
 
-        self.CheckBox_Process_SlicerParams_Toggle_AdvanceSettings = QCheckBox(self.GroupBox_Process_SlicerParams)
-        self.CheckBox_Process_SlicerParams_Toggle_AdvanceSettings.setObjectName(u"CheckBox_Process_SlicerParams_Toggle_AdvanceSettings")
-        self.CheckBox_Process_SlicerParams_Toggle_AdvanceSettings.setStyleSheet(u"QCheckBox {\n"
-"	font-size: 12px;\n"
-"	font-weight: 630;\n"
-"	spacing: 12px;\n"
-"	background-color: transparent;\n"
-"	padding-top: 9px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QCheckBox:hover {\n"
-"}\n"
-"\n"
-"QCheckBox::indicator {\n"
-"	width: 12px;\n"
-"	height: 12px;\n"
-"    background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QCheckBox::indicator:hover {\n"
-"	background-color: transparent;\n"
-"}\n"
-"QCheckBox::indicator:unchecked {\n"
-"	border-image: url(:/CheckBox_Icon/Sources/RightCaret.png);\n"
-"}\n"
-"QCheckBox::indicator:checked {\n"
-"	border-image: url(:/CheckBox_Icon/Sources/DownCaret.png);\n"
-"}")
-
-        self.verticalLayout_186.addWidget(self.CheckBox_Process_SlicerParams_Toggle_AdvanceSettings)
-
-        self.Frame_Process_SlicerParams_AdvanceSettings = QFrame(self.GroupBox_Process_SlicerParams)
-        self.Frame_Process_SlicerParams_AdvanceSettings.setObjectName(u"Frame_Process_SlicerParams_AdvanceSettings")
-        self.verticalLayout_54 = QVBoxLayout(self.Frame_Process_SlicerParams_AdvanceSettings)
+        self.ToolBox_Process_SlicerParams_AdvanceSettings = ToolBoxBase(self.GroupBox_Process_SlicerParams)
+        self.ToolBox_Process_SlicerParams_AdvanceSettings.setObjectName(u"ToolBox_Process_SlicerParams_AdvanceSettings")
+        self.ToolBox_Process_SlicerParams_AdvanceSettings_Page1Content = WidgetBase()
+        self.ToolBox_Process_SlicerParams_AdvanceSettings_Page1Content.setObjectName(u"ToolBox_Process_SlicerParams_AdvanceSettings_Page1Content")
+        self.ToolBox_Process_SlicerParams_AdvanceSettings_Page1Content.setGeometry(QRect(0, 0, 538, 525))
+        self.verticalLayout_54 = QVBoxLayout(self.ToolBox_Process_SlicerParams_AdvanceSettings_Page1Content)
         self.verticalLayout_54.setSpacing(0)
         self.verticalLayout_54.setObjectName(u"verticalLayout_54")
         self.verticalLayout_54.setContentsMargins(0, 0, 0, 0)
-        self.Frame_Process_RMSThreshold = QFrame(self.Frame_Process_SlicerParams_AdvanceSettings)
+        self.Frame_Process_RMSThreshold = QFrame(self.ToolBox_Process_SlicerParams_AdvanceSettings_Page1Content)
         self.Frame_Process_RMSThreshold.setObjectName(u"Frame_Process_RMSThreshold")
         self.Frame_Process_RMSThreshold.setMinimumSize(QSize(0, 105))
         self.Frame_Process_RMSThreshold.setStyleSheet(u"QFrame {\n"
@@ -3320,7 +3254,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_54.addWidget(self.Frame_Process_RMSThreshold)
 
-        self.Frame_Process_AudioLengthMin = QFrame(self.Frame_Process_SlicerParams_AdvanceSettings)
+        self.Frame_Process_AudioLengthMin = QFrame(self.ToolBox_Process_SlicerParams_AdvanceSettings_Page1Content)
         self.Frame_Process_AudioLengthMin.setObjectName(u"Frame_Process_AudioLengthMin")
         self.Frame_Process_AudioLengthMin.setMinimumSize(QSize(0, 105))
         self.Frame_Process_AudioLengthMin.setStyleSheet(u"QFrame {\n"
@@ -3377,7 +3311,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_54.addWidget(self.Frame_Process_AudioLengthMin)
 
-        self.Frame_Process_SilentIntervalMin = QFrame(self.Frame_Process_SlicerParams_AdvanceSettings)
+        self.Frame_Process_SilentIntervalMin = QFrame(self.ToolBox_Process_SlicerParams_AdvanceSettings_Page1Content)
         self.Frame_Process_SilentIntervalMin.setObjectName(u"Frame_Process_SilentIntervalMin")
         self.Frame_Process_SilentIntervalMin.setMinimumSize(QSize(0, 105))
         self.Frame_Process_SilentIntervalMin.setStyleSheet(u"QFrame {\n"
@@ -3434,7 +3368,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_54.addWidget(self.Frame_Process_SilentIntervalMin)
 
-        self.Frame_Process_HopSize = QFrame(self.Frame_Process_SlicerParams_AdvanceSettings)
+        self.Frame_Process_HopSize = QFrame(self.ToolBox_Process_SlicerParams_AdvanceSettings_Page1Content)
         self.Frame_Process_HopSize.setObjectName(u"Frame_Process_HopSize")
         self.Frame_Process_HopSize.setMinimumSize(QSize(0, 105))
         self.Frame_Process_HopSize.setStyleSheet(u"QFrame {\n"
@@ -3491,7 +3425,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_54.addWidget(self.Frame_Process_HopSize)
 
-        self.Frame_Process_SilenceKeptMax = QFrame(self.Frame_Process_SlicerParams_AdvanceSettings)
+        self.Frame_Process_SilenceKeptMax = QFrame(self.ToolBox_Process_SlicerParams_AdvanceSettings_Page1Content)
         self.Frame_Process_SilenceKeptMax.setObjectName(u"Frame_Process_SilenceKeptMax")
         self.Frame_Process_SilenceKeptMax.setMinimumSize(QSize(0, 105))
         self.Frame_Process_SilenceKeptMax.setStyleSheet(u"QFrame {\n"
@@ -3548,8 +3482,9 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_54.addWidget(self.Frame_Process_SilenceKeptMax)
 
+        self.ToolBox_Process_SlicerParams_AdvanceSettings.addItem(self.ToolBox_Process_SlicerParams_AdvanceSettings_Page1Content, u"")
 
-        self.verticalLayout_186.addWidget(self.Frame_Process_SlicerParams_AdvanceSettings)
+        self.verticalLayout_186.addWidget(self.ToolBox_Process_SlicerParams_AdvanceSettings)
 
 
         self.verticalLayout_14.addWidget(self.GroupBox_Process_SlicerParams)
@@ -3694,49 +3629,16 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_197.addWidget(self.Frame_Process_OutputParams_BasicSettings)
 
-        self.CheckBox_Process_OutputParams_Toggle_AdvanceSettings = QCheckBox(self.GroupBox_Process_OutputParams)
-        self.CheckBox_Process_OutputParams_Toggle_AdvanceSettings.setObjectName(u"CheckBox_Process_OutputParams_Toggle_AdvanceSettings")
-        self.CheckBox_Process_OutputParams_Toggle_AdvanceSettings.setStyleSheet(u"QCheckBox {\n"
-"	font-size: 12px;\n"
-"	font-weight: 630;\n"
-"	spacing: 12px;\n"
-"	background-color: transparent;\n"
-"	padding-top: 9px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QCheckBox:hover {\n"
-"}\n"
-"\n"
-"QCheckBox::indicator {\n"
-"	width: 12px;\n"
-"	height: 12px;\n"
-"    background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QCheckBox::indicator:hover {\n"
-"	background-color: transparent;\n"
-"}\n"
-"QCheckBox::indicator:unchecked {\n"
-"	border-image: url(:/CheckBox_Icon/Sources/RightCaret.png);\n"
-"}\n"
-"QCheckBox::indicator:checked {\n"
-"	border-image: url(:/CheckBox_Icon/Sources/DownCaret.png);\n"
-"}")
-
-        self.verticalLayout_197.addWidget(self.CheckBox_Process_OutputParams_Toggle_AdvanceSettings)
-
-        self.Frame_Process_OutputParams_AdvanceSettings = QFrame(self.GroupBox_Process_OutputParams)
-        self.Frame_Process_OutputParams_AdvanceSettings.setObjectName(u"Frame_Process_OutputParams_AdvanceSettings")
-        self.verticalLayout_67 = QVBoxLayout(self.Frame_Process_OutputParams_AdvanceSettings)
+        self.ToolBox_Process_OutputParams_AdvanceSettings = ToolBoxBase(self.GroupBox_Process_OutputParams)
+        self.ToolBox_Process_OutputParams_AdvanceSettings.setObjectName(u"ToolBox_Process_OutputParams_AdvanceSettings")
+        self.ToolBox_Process_OutputParams_AdvanceSettings_Page1Content = WidgetBase()
+        self.ToolBox_Process_OutputParams_AdvanceSettings_Page1Content.setObjectName(u"ToolBox_Process_OutputParams_AdvanceSettings_Page1Content")
+        self.ToolBox_Process_OutputParams_AdvanceSettings_Page1Content.setGeometry(QRect(0, 0, 538, 315))
+        self.verticalLayout_67 = QVBoxLayout(self.ToolBox_Process_OutputParams_AdvanceSettings_Page1Content)
         self.verticalLayout_67.setSpacing(0)
         self.verticalLayout_67.setObjectName(u"verticalLayout_67")
         self.verticalLayout_67.setContentsMargins(0, 0, 0, 0)
-        self.Frame_Process_SampleRate = QFrame(self.Frame_Process_OutputParams_AdvanceSettings)
+        self.Frame_Process_SampleRate = QFrame(self.ToolBox_Process_OutputParams_AdvanceSettings_Page1Content)
         self.Frame_Process_SampleRate.setObjectName(u"Frame_Process_SampleRate")
         self.Frame_Process_SampleRate.setMinimumSize(QSize(0, 105))
         self.Frame_Process_SampleRate.setStyleSheet(u"QFrame {\n"
@@ -3791,7 +3693,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_67.addWidget(self.Frame_Process_SampleRate)
 
-        self.Frame_Process_SampleWidth = QFrame(self.Frame_Process_OutputParams_AdvanceSettings)
+        self.Frame_Process_SampleWidth = QFrame(self.ToolBox_Process_OutputParams_AdvanceSettings_Page1Content)
         self.Frame_Process_SampleWidth.setObjectName(u"Frame_Process_SampleWidth")
         self.Frame_Process_SampleWidth.setMinimumSize(QSize(0, 105))
         self.Frame_Process_SampleWidth.setStyleSheet(u"QFrame {\n"
@@ -3846,7 +3748,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_67.addWidget(self.Frame_Process_SampleWidth)
 
-        self.Frame_Process_ToMono = QFrame(self.Frame_Process_OutputParams_AdvanceSettings)
+        self.Frame_Process_ToMono = QFrame(self.ToolBox_Process_OutputParams_AdvanceSettings_Page1Content)
         self.Frame_Process_ToMono.setObjectName(u"Frame_Process_ToMono")
         self.Frame_Process_ToMono.setMinimumSize(QSize(0, 105))
         self.Frame_Process_ToMono.setStyleSheet(u"QFrame {\n"
@@ -3931,8 +3833,9 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_67.addWidget(self.Frame_Process_ToMono)
 
+        self.ToolBox_Process_OutputParams_AdvanceSettings.addItem(self.ToolBox_Process_OutputParams_AdvanceSettings_Page1Content, u"")
 
-        self.verticalLayout_197.addWidget(self.Frame_Process_OutputParams_AdvanceSettings)
+        self.verticalLayout_197.addWidget(self.ToolBox_Process_OutputParams_AdvanceSettings)
 
 
         self.verticalLayout_14.addWidget(self.GroupBox_Process_OutputParams)
@@ -4148,10 +4051,10 @@ class Ui_MainWindow(object):
 "	border-width: 0px;\n"
 "	border-style: solid;\n"
 "}")
-        self.horizontalLayout_69 = QHBoxLayout(self.Frame_ASR_Top)
-        self.horizontalLayout_69.setSpacing(0)
-        self.horizontalLayout_69.setObjectName(u"horizontalLayout_69")
-        self.horizontalLayout_69.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_53 = QHBoxLayout(self.Frame_ASR_Top)
+        self.horizontalLayout_53.setSpacing(0)
+        self.horizontalLayout_53.setObjectName(u"horizontalLayout_53")
+        self.horizontalLayout_53.setContentsMargins(0, 0, 0, 0)
         self.ToolButton_VoiceIdentifier_Title = QToolButton(self.Frame_ASR_Top)
         self.ToolButton_VoiceIdentifier_Title.setObjectName(u"ToolButton_VoiceIdentifier_Title")
         sizePolicy1.setHeightForWidth(self.ToolButton_VoiceIdentifier_Title.sizePolicy().hasHeightForWidth())
@@ -4188,15 +4091,13 @@ class Ui_MainWindow(object):
 "	border-bottom-color: rgba(120, 180, 240, 210);\n"
 "}")
 
-        self.horizontalLayout_69.addWidget(self.ToolButton_VoiceIdentifier_Title)
+        self.horizontalLayout_53.addWidget(self.ToolButton_VoiceIdentifier_Title)
 
-        self.Frame_ASR_Title_Spacer = QLabel(self.Frame_ASR_Top)
-        self.Frame_ASR_Title_Spacer.setObjectName(u"Frame_ASR_Title_Spacer")
-        sizePolicy4.setHeightForWidth(self.Frame_ASR_Title_Spacer.sizePolicy().hasHeightForWidth())
-        self.Frame_ASR_Title_Spacer.setSizePolicy(sizePolicy4)
-        self.Frame_ASR_Title_Spacer.setStyleSheet(u"QLabel {\n"
-"	font-size: 24px;\n"
-"	/*text-align: center;\n"
+        self.Frame_VoiceIdentifier_Title = QFrame(self.Frame_ASR_Top)
+        self.Frame_VoiceIdentifier_Title.setObjectName(u"Frame_VoiceIdentifier_Title")
+        self.Frame_VoiceIdentifier_Title.setStyleSheet(u"QFrame {\n"
+"	/*font-size: 24px;\n"
+"	text-align: center;\n"
 "	padding-left: 12px;\n"
 "	padding-right: 12px;*/\n"
 "	background-color: transparent;\n"
@@ -4207,8 +4108,16 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "	border-bottom-color: rgba(123, 123, 123, 123);\n"
 "}")
+        self.horizontalLayout_46 = QHBoxLayout(self.Frame_VoiceIdentifier_Title)
+        self.horizontalLayout_46.setSpacing(12)
+        self.horizontalLayout_46.setObjectName(u"horizontalLayout_46")
+        self.horizontalLayout_46.setContentsMargins(0, 0, 0, 0)
+        self.HorizontalSpacer_VoiceIdentifier_Title = QSpacerItem(549, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
-        self.horizontalLayout_69.addWidget(self.Frame_ASR_Title_Spacer)
+        self.horizontalLayout_46.addItem(self.HorizontalSpacer_VoiceIdentifier_Title)
+
+
+        self.horizontalLayout_53.addWidget(self.Frame_VoiceIdentifier_Title)
 
 
         self.verticalLayout_44.addWidget(self.Frame_ASR_Top)
@@ -4331,7 +4240,7 @@ class Ui_MainWindow(object):
         self.ScrollArea_Middle_ASR_VPR.setWidgetResizable(True)
         self.ScrollArea_Middle_WidgetContents_ASR_VPR = QWidget()
         self.ScrollArea_Middle_WidgetContents_ASR_VPR.setObjectName(u"ScrollArea_Middle_WidgetContents_ASR_VPR")
-        self.ScrollArea_Middle_WidgetContents_ASR_VPR.setGeometry(QRect(0, 0, 581, 1256))
+        self.ScrollArea_Middle_WidgetContents_ASR_VPR.setGeometry(QRect(0, 0, 581, 1004))
         self.verticalLayout_7 = QVBoxLayout(self.ScrollArea_Middle_WidgetContents_ASR_VPR)
         self.verticalLayout_7.setSpacing(12)
         self.verticalLayout_7.setObjectName(u"verticalLayout_7")
@@ -4605,49 +4514,16 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_47.addWidget(self.Frame_ASR_VPR_VPRParams_BasicSettings)
 
-        self.CheckBox_ASR_VPR_VPRParams_Toggle_AdvanceSettings = QCheckBox(self.GroupBox_ASR_VPR_VPRParams)
-        self.CheckBox_ASR_VPR_VPRParams_Toggle_AdvanceSettings.setObjectName(u"CheckBox_ASR_VPR_VPRParams_Toggle_AdvanceSettings")
-        self.CheckBox_ASR_VPR_VPRParams_Toggle_AdvanceSettings.setStyleSheet(u"QCheckBox {\n"
-"	font-size: 12px;\n"
-"	font-weight: 630;\n"
-"	spacing: 12px;\n"
-"	background-color: transparent;\n"
-"	padding-top: 9px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QCheckBox:hover {\n"
-"}\n"
-"\n"
-"QCheckBox::indicator {\n"
-"	width: 12px;\n"
-"	height: 12px;\n"
-"    background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QCheckBox::indicator:hover {\n"
-"	background-color: transparent;\n"
-"}\n"
-"QCheckBox::indicator:unchecked {\n"
-"	border-image: url(:/CheckBox_Icon/Sources/RightCaret.png);\n"
-"}\n"
-"QCheckBox::indicator:checked {\n"
-"	border-image: url(:/CheckBox_Icon/Sources/DownCaret.png);\n"
-"}")
-
-        self.verticalLayout_47.addWidget(self.CheckBox_ASR_VPR_VPRParams_Toggle_AdvanceSettings)
-
-        self.Frame_ASR_VPR_VPRParams_AdvanceSettings = QFrame(self.GroupBox_ASR_VPR_VPRParams)
-        self.Frame_ASR_VPR_VPRParams_AdvanceSettings.setObjectName(u"Frame_ASR_VPR_VPRParams_AdvanceSettings")
-        self.verticalLayout_21 = QVBoxLayout(self.Frame_ASR_VPR_VPRParams_AdvanceSettings)
+        self.ToolBox_ASR_VPR_VPRParams_AdvanceSettings = ToolBoxBase(self.GroupBox_ASR_VPR_VPRParams)
+        self.ToolBox_ASR_VPR_VPRParams_AdvanceSettings.setObjectName(u"ToolBox_ASR_VPR_VPRParams_AdvanceSettings")
+        self.ToolBox_ASR_VPR_VPRParams_AdvanceSettings_Page1Content = WidgetBase()
+        self.ToolBox_ASR_VPR_VPRParams_AdvanceSettings_Page1Content.setObjectName(u"ToolBox_ASR_VPR_VPRParams_AdvanceSettings_Page1Content")
+        self.ToolBox_ASR_VPR_VPRParams_AdvanceSettings_Page1Content.setGeometry(QRect(0, 0, 538, 315))
+        self.verticalLayout_21 = QVBoxLayout(self.ToolBox_ASR_VPR_VPRParams_AdvanceSettings_Page1Content)
         self.verticalLayout_21.setSpacing(0)
         self.verticalLayout_21.setObjectName(u"verticalLayout_21")
         self.verticalLayout_21.setContentsMargins(0, 0, 0, 0)
-        self.Frame_ASR_VPR_ModelType = QFrame(self.Frame_ASR_VPR_VPRParams_AdvanceSettings)
+        self.Frame_ASR_VPR_ModelType = QFrame(self.ToolBox_ASR_VPR_VPRParams_AdvanceSettings_Page1Content)
         self.Frame_ASR_VPR_ModelType.setObjectName(u"Frame_ASR_VPR_ModelType")
         self.Frame_ASR_VPR_ModelType.setMinimumSize(QSize(0, 105))
         self.Frame_ASR_VPR_ModelType.setStyleSheet(u"QFrame {\n"
@@ -4702,7 +4578,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_21.addWidget(self.Frame_ASR_VPR_ModelType)
 
-        self.Frame_ASR_VPR_FeatureMethod = QFrame(self.Frame_ASR_VPR_VPRParams_AdvanceSettings)
+        self.Frame_ASR_VPR_FeatureMethod = QFrame(self.ToolBox_ASR_VPR_VPRParams_AdvanceSettings_Page1Content)
         self.Frame_ASR_VPR_FeatureMethod.setObjectName(u"Frame_ASR_VPR_FeatureMethod")
         self.Frame_ASR_VPR_FeatureMethod.setMinimumSize(QSize(0, 105))
         self.Frame_ASR_VPR_FeatureMethod.setStyleSheet(u"QFrame {\n"
@@ -4757,7 +4633,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_21.addWidget(self.Frame_ASR_VPR_FeatureMethod)
 
-        self.Frame_ASR_VPR_DurationOfAudio = QFrame(self.Frame_ASR_VPR_VPRParams_AdvanceSettings)
+        self.Frame_ASR_VPR_DurationOfAudio = QFrame(self.ToolBox_ASR_VPR_VPRParams_AdvanceSettings_Page1Content)
         self.Frame_ASR_VPR_DurationOfAudio.setObjectName(u"Frame_ASR_VPR_DurationOfAudio")
         self.Frame_ASR_VPR_DurationOfAudio.setMinimumSize(QSize(0, 105))
         self.Frame_ASR_VPR_DurationOfAudio.setStyleSheet(u"QFrame {\n"
@@ -4815,8 +4691,9 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_21.addWidget(self.Frame_ASR_VPR_DurationOfAudio)
 
+        self.ToolBox_ASR_VPR_VPRParams_AdvanceSettings.addItem(self.ToolBox_ASR_VPR_VPRParams_AdvanceSettings_Page1Content, u"")
 
-        self.verticalLayout_47.addWidget(self.Frame_ASR_VPR_VPRParams_AdvanceSettings)
+        self.verticalLayout_47.addWidget(self.ToolBox_ASR_VPR_VPRParams_AdvanceSettings)
 
 
         self.verticalLayout_7.addWidget(self.GroupBox_ASR_VPR_VPRParams)
@@ -4906,51 +4783,18 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_48.addWidget(self.Frame_ASR_VPR_OutputParams_BasicSettings)
 
-        self.CheckBox_ASR_VPR_OutputParams_Toggle_AdvanceSettings = QCheckBox(self.GroupBox_ASR_VPR_OutputParams)
-        self.CheckBox_ASR_VPR_OutputParams_Toggle_AdvanceSettings.setObjectName(u"CheckBox_ASR_VPR_OutputParams_Toggle_AdvanceSettings")
-        self.CheckBox_ASR_VPR_OutputParams_Toggle_AdvanceSettings.setStyleSheet(u"QCheckBox {\n"
-"	font-size: 12px;\n"
-"	font-weight: 630;\n"
-"	spacing: 12px;\n"
-"	background-color: transparent;\n"
-"	padding-top: 9px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QCheckBox:hover {\n"
-"}\n"
-"\n"
-"QCheckBox::indicator {\n"
-"	width: 12px;\n"
-"	height: 12px;\n"
-"    background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QCheckBox::indicator:hover {\n"
-"	background-color: transparent;\n"
-"}\n"
-"QCheckBox::indicator:unchecked {\n"
-"	border-image: url(:/CheckBox_Icon/Sources/RightCaret.png);\n"
-"}\n"
-"QCheckBox::indicator:checked {\n"
-"	border-image: url(:/CheckBox_Icon/Sources/DownCaret.png);\n"
-"}")
-
-        self.verticalLayout_48.addWidget(self.CheckBox_ASR_VPR_OutputParams_Toggle_AdvanceSettings)
-
-        self.Frame_ASR_VPR_OutputParams_AdvanceSettings = QFrame(self.GroupBox_ASR_VPR_OutputParams)
-        self.Frame_ASR_VPR_OutputParams_AdvanceSettings.setObjectName(u"Frame_ASR_VPR_OutputParams_AdvanceSettings")
-        self.Frame_ASR_VPR_OutputParams_AdvanceSettings.setFrameShape(QFrame.StyledPanel)
-        self.Frame_ASR_VPR_OutputParams_AdvanceSettings.setFrameShadow(QFrame.Raised)
-        self.verticalLayout_110 = QVBoxLayout(self.Frame_ASR_VPR_OutputParams_AdvanceSettings)
+        self.ToolBox_ASR_VPR_OutputParams_AdvanceSettings = ToolBoxBase(self.GroupBox_ASR_VPR_OutputParams)
+        self.ToolBox_ASR_VPR_OutputParams_AdvanceSettings.setObjectName(u"ToolBox_ASR_VPR_OutputParams_AdvanceSettings")
+        self.ToolBox_ASR_VPR_OutputParams_AdvanceSettings.setFrameShape(QFrame.StyledPanel)
+        self.ToolBox_ASR_VPR_OutputParams_AdvanceSettings.setFrameShadow(QFrame.Raised)
+        self.ToolBox_ASR_VPR_OutputParams_AdvanceSettings_Page1Content = WidgetBase()
+        self.ToolBox_ASR_VPR_OutputParams_AdvanceSettings_Page1Content.setObjectName(u"ToolBox_ASR_VPR_OutputParams_AdvanceSettings_Page1Content")
+        self.ToolBox_ASR_VPR_OutputParams_AdvanceSettings_Page1Content.setGeometry(QRect(0, 0, 536, 105))
+        self.verticalLayout_110 = QVBoxLayout(self.ToolBox_ASR_VPR_OutputParams_AdvanceSettings_Page1Content)
         self.verticalLayout_110.setSpacing(0)
         self.verticalLayout_110.setObjectName(u"verticalLayout_110")
         self.verticalLayout_110.setContentsMargins(0, 0, 0, 0)
-        self.Frame_ASR_VPR_AudioSpeakersDataName = QFrame(self.Frame_ASR_VPR_OutputParams_AdvanceSettings)
+        self.Frame_ASR_VPR_AudioSpeakersDataName = QFrame(self.ToolBox_ASR_VPR_OutputParams_AdvanceSettings_Page1Content)
         self.Frame_ASR_VPR_AudioSpeakersDataName.setObjectName(u"Frame_ASR_VPR_AudioSpeakersDataName")
         self.Frame_ASR_VPR_AudioSpeakersDataName.setMinimumSize(QSize(0, 105))
         self.Frame_ASR_VPR_AudioSpeakersDataName.setStyleSheet(u"QFrame {\n"
@@ -5005,8 +4849,9 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_110.addWidget(self.Frame_ASR_VPR_AudioSpeakersDataName)
 
+        self.ToolBox_ASR_VPR_OutputParams_AdvanceSettings.addItem(self.ToolBox_ASR_VPR_OutputParams_AdvanceSettings_Page1Content, u"")
 
-        self.verticalLayout_48.addWidget(self.Frame_ASR_VPR_OutputParams_AdvanceSettings)
+        self.verticalLayout_48.addWidget(self.ToolBox_ASR_VPR_OutputParams_AdvanceSettings)
 
 
         self.verticalLayout_7.addWidget(self.GroupBox_ASR_VPR_OutputParams)
@@ -5234,10 +5079,10 @@ class Ui_MainWindow(object):
 "	border-width: 0px;\n"
 "	border-style: solid;\n"
 "}")
-        self.horizontalLayout_82 = QHBoxLayout(self.Frame_STT_Top)
-        self.horizontalLayout_82.setSpacing(0)
-        self.horizontalLayout_82.setObjectName(u"horizontalLayout_82")
-        self.horizontalLayout_82.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_55 = QHBoxLayout(self.Frame_STT_Top)
+        self.horizontalLayout_55.setSpacing(0)
+        self.horizontalLayout_55.setObjectName(u"horizontalLayout_55")
+        self.horizontalLayout_55.setContentsMargins(0, 0, 0, 0)
         self.ToolButton_VoiceTranscriber_Title = QToolButton(self.Frame_STT_Top)
         self.ToolButton_VoiceTranscriber_Title.setObjectName(u"ToolButton_VoiceTranscriber_Title")
         sizePolicy1.setHeightForWidth(self.ToolButton_VoiceTranscriber_Title.sizePolicy().hasHeightForWidth())
@@ -5274,15 +5119,13 @@ class Ui_MainWindow(object):
 "	border-bottom-color: rgba(120, 180, 240, 210);\n"
 "}")
 
-        self.horizontalLayout_82.addWidget(self.ToolButton_VoiceTranscriber_Title)
+        self.horizontalLayout_55.addWidget(self.ToolButton_VoiceTranscriber_Title)
 
-        self.Frame_STT_Title_Spacer = QLabel(self.Frame_STT_Top)
-        self.Frame_STT_Title_Spacer.setObjectName(u"Frame_STT_Title_Spacer")
-        sizePolicy4.setHeightForWidth(self.Frame_STT_Title_Spacer.sizePolicy().hasHeightForWidth())
-        self.Frame_STT_Title_Spacer.setSizePolicy(sizePolicy4)
-        self.Frame_STT_Title_Spacer.setStyleSheet(u"QLabel {\n"
-"	font-size: 24px;\n"
-"	/*text-align: center;\n"
+        self.Frame_VoiceTranscriber_Title = QFrame(self.Frame_STT_Top)
+        self.Frame_VoiceTranscriber_Title.setObjectName(u"Frame_VoiceTranscriber_Title")
+        self.Frame_VoiceTranscriber_Title.setStyleSheet(u"QFrame {\n"
+"	/*font-size: 24px;\n"
+"	text-align: center;\n"
 "	padding-left: 12px;\n"
 "	padding-right: 12px;*/\n"
 "	background-color: transparent;\n"
@@ -5293,8 +5136,16 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "	border-bottom-color: rgba(123, 123, 123, 123);\n"
 "}")
+        self.horizontalLayout_54 = QHBoxLayout(self.Frame_VoiceTranscriber_Title)
+        self.horizontalLayout_54.setSpacing(12)
+        self.horizontalLayout_54.setObjectName(u"horizontalLayout_54")
+        self.horizontalLayout_54.setContentsMargins(0, 0, 0, 0)
+        self.HorizontalSpacer_VoiceTranscriber_Title = QSpacerItem(549, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
-        self.horizontalLayout_82.addWidget(self.Frame_STT_Title_Spacer)
+        self.horizontalLayout_54.addItem(self.HorizontalSpacer_VoiceTranscriber_Title)
+
+
+        self.horizontalLayout_55.addWidget(self.Frame_VoiceTranscriber_Title)
 
 
         self.verticalLayout_41.addWidget(self.Frame_STT_Top)
@@ -5417,7 +5268,7 @@ class Ui_MainWindow(object):
         self.ScrollArea_Middle_STT_Whisper.setWidgetResizable(True)
         self.ScrollArea_Middle_WidgetContents_STT_Whisper = QWidget()
         self.ScrollArea_Middle_WidgetContents_STT_Whisper.setObjectName(u"ScrollArea_Middle_WidgetContents_STT_Whisper")
-        self.ScrollArea_Middle_WidgetContents_STT_Whisper.setGeometry(QRect(0, 0, 581, 915))
+        self.ScrollArea_Middle_WidgetContents_STT_Whisper.setGeometry(QRect(0, 0, 581, 693))
         self.verticalLayout_16 = QVBoxLayout(self.ScrollArea_Middle_WidgetContents_STT_Whisper)
         self.verticalLayout_16.setSpacing(12)
         self.verticalLayout_16.setObjectName(u"verticalLayout_16")
@@ -5680,49 +5531,16 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_49.addWidget(self.Frame_STT_Whisper_WhisperParams_BasicSettings)
 
-        self.CheckBox_STT_Whisper_WhisperParams_Toggle_AdvanceSettings = QCheckBox(self.GroupBox_STT_Whisper_WhisperParams)
-        self.CheckBox_STT_Whisper_WhisperParams_Toggle_AdvanceSettings.setObjectName(u"CheckBox_STT_Whisper_WhisperParams_Toggle_AdvanceSettings")
-        self.CheckBox_STT_Whisper_WhisperParams_Toggle_AdvanceSettings.setStyleSheet(u"QCheckBox {\n"
-"	font-size: 12px;\n"
-"	font-weight: 630;\n"
-"	spacing: 12px;\n"
-"	background-color: transparent;\n"
-"	padding-top: 9px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QCheckBox:hover {\n"
-"}\n"
-"\n"
-"QCheckBox::indicator {\n"
-"	width: 12px;\n"
-"	height: 12px;\n"
-"    background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QCheckBox::indicator:hover {\n"
-"	background-color: transparent;\n"
-"}\n"
-"QCheckBox::indicator:unchecked {\n"
-"	border-image: url(:/CheckBox_Icon/Sources/RightCaret.png);\n"
-"}\n"
-"QCheckBox::indicator:checked {\n"
-"	border-image: url(:/CheckBox_Icon/Sources/DownCaret.png);\n"
-"}")
-
-        self.verticalLayout_49.addWidget(self.CheckBox_STT_Whisper_WhisperParams_Toggle_AdvanceSettings)
-
-        self.Frame_STT_Whisper_WhisperParams_AdvanceSettings = QFrame(self.GroupBox_STT_Whisper_WhisperParams)
-        self.Frame_STT_Whisper_WhisperParams_AdvanceSettings.setObjectName(u"Frame_STT_Whisper_WhisperParams_AdvanceSettings")
-        self.verticalLayout_15 = QVBoxLayout(self.Frame_STT_Whisper_WhisperParams_AdvanceSettings)
+        self.ToolBox_STT_Whisper_WhisperParams_AdvanceSettings = ToolBoxBase(self.GroupBox_STT_Whisper_WhisperParams)
+        self.ToolBox_STT_Whisper_WhisperParams_AdvanceSettings.setObjectName(u"ToolBox_STT_Whisper_WhisperParams_AdvanceSettings")
+        self.ToolBox_STT_Whisper_WhisperParams_AdvanceSettings_Page1Content = WidgetBase()
+        self.ToolBox_STT_Whisper_WhisperParams_AdvanceSettings_Page1Content.setObjectName(u"ToolBox_STT_Whisper_WhisperParams_AdvanceSettings_Page1Content")
+        self.ToolBox_STT_Whisper_WhisperParams_AdvanceSettings_Page1Content.setGeometry(QRect(0, 0, 538, 315))
+        self.verticalLayout_15 = QVBoxLayout(self.ToolBox_STT_Whisper_WhisperParams_AdvanceSettings_Page1Content)
         self.verticalLayout_15.setSpacing(0)
         self.verticalLayout_15.setObjectName(u"verticalLayout_15")
         self.verticalLayout_15.setContentsMargins(0, 0, 0, 0)
-        self.Frame_STT_Whisper_fp16 = QFrame(self.Frame_STT_Whisper_WhisperParams_AdvanceSettings)
+        self.Frame_STT_Whisper_fp16 = QFrame(self.ToolBox_STT_Whisper_WhisperParams_AdvanceSettings_Page1Content)
         self.Frame_STT_Whisper_fp16.setObjectName(u"Frame_STT_Whisper_fp16")
         self.Frame_STT_Whisper_fp16.setMinimumSize(QSize(0, 105))
         self.Frame_STT_Whisper_fp16.setStyleSheet(u"QFrame {\n"
@@ -5807,7 +5625,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_15.addWidget(self.Frame_STT_Whisper_fp16)
 
-        self.Frame_STT_Whisper_ConditionOnPreviousText = QFrame(self.Frame_STT_Whisper_WhisperParams_AdvanceSettings)
+        self.Frame_STT_Whisper_ConditionOnPreviousText = QFrame(self.ToolBox_STT_Whisper_WhisperParams_AdvanceSettings_Page1Content)
         self.Frame_STT_Whisper_ConditionOnPreviousText.setObjectName(u"Frame_STT_Whisper_ConditionOnPreviousText")
         self.Frame_STT_Whisper_ConditionOnPreviousText.setMinimumSize(QSize(0, 105))
         self.Frame_STT_Whisper_ConditionOnPreviousText.setStyleSheet(u"QFrame {\n"
@@ -5892,7 +5710,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_15.addWidget(self.Frame_STT_Whisper_ConditionOnPreviousText)
 
-        self.Frame_STT_Whisper_Verbose = QFrame(self.Frame_STT_Whisper_WhisperParams_AdvanceSettings)
+        self.Frame_STT_Whisper_Verbose = QFrame(self.ToolBox_STT_Whisper_WhisperParams_AdvanceSettings_Page1Content)
         self.Frame_STT_Whisper_Verbose.setObjectName(u"Frame_STT_Whisper_Verbose")
         self.Frame_STT_Whisper_Verbose.setMinimumSize(QSize(0, 105))
         self.Frame_STT_Whisper_Verbose.setStyleSheet(u"QFrame {\n"
@@ -5977,8 +5795,9 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_15.addWidget(self.Frame_STT_Whisper_Verbose)
 
+        self.ToolBox_STT_Whisper_WhisperParams_AdvanceSettings.addItem(self.ToolBox_STT_Whisper_WhisperParams_AdvanceSettings_Page1Content, u"")
 
-        self.verticalLayout_49.addWidget(self.Frame_STT_Whisper_WhisperParams_AdvanceSettings)
+        self.verticalLayout_49.addWidget(self.ToolBox_STT_Whisper_WhisperParams_AdvanceSettings)
 
 
         self.verticalLayout_16.addWidget(self.GroupBox_STT_Whisper_WhisperParams)
@@ -6362,13 +6181,11 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_17.addWidget(self.ToolButton_DatasetCreator_Title_VITS)
 
-        self.Frame_Dataset_Title_Spacer = QLabel(self.Frame_Dataset_Top)
-        self.Frame_Dataset_Title_Spacer.setObjectName(u"Frame_Dataset_Title_Spacer")
-        sizePolicy4.setHeightForWidth(self.Frame_Dataset_Title_Spacer.sizePolicy().hasHeightForWidth())
-        self.Frame_Dataset_Title_Spacer.setSizePolicy(sizePolicy4)
-        self.Frame_Dataset_Title_Spacer.setStyleSheet(u"QLabel {\n"
-"	font-size: 24px;\n"
-"	/*text-align: center;\n"
+        self.Frame_DatasetCreator_Title = QFrame(self.Frame_Dataset_Top)
+        self.Frame_DatasetCreator_Title.setObjectName(u"Frame_DatasetCreator_Title")
+        self.Frame_DatasetCreator_Title.setStyleSheet(u"QFrame {\n"
+"	/*font-size: 24px;\n"
+"	text-align: center;\n"
 "	padding-left: 12px;\n"
 "	padding-right: 12px;*/\n"
 "	background-color: transparent;\n"
@@ -6379,8 +6196,16 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "	border-bottom-color: rgba(123, 123, 123, 123);\n"
 "}")
+        self.horizontalLayout_57 = QHBoxLayout(self.Frame_DatasetCreator_Title)
+        self.horizontalLayout_57.setSpacing(12)
+        self.horizontalLayout_57.setObjectName(u"horizontalLayout_57")
+        self.horizontalLayout_57.setContentsMargins(0, 0, 0, 0)
+        self.HorizontalSpacer_DatasetCreator_Title = QSpacerItem(549, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
-        self.horizontalLayout_17.addWidget(self.Frame_Dataset_Title_Spacer)
+        self.horizontalLayout_57.addItem(self.HorizontalSpacer_DatasetCreator_Title)
+
+
+        self.horizontalLayout_17.addWidget(self.Frame_DatasetCreator_Title)
 
 
         self.verticalLayout_39.addWidget(self.Frame_Dataset_Top)
@@ -6503,7 +6328,7 @@ class Ui_MainWindow(object):
         self.ScrollArea_Middle_DAT_GPTSoVITS.setWidgetResizable(True)
         self.ScrollArea_Middle_WidgetContents_DAT_GPTSoVITS = QWidget()
         self.ScrollArea_Middle_WidgetContents_DAT_GPTSoVITS.setObjectName(u"ScrollArea_Middle_WidgetContents_DAT_GPTSoVITS")
-        self.ScrollArea_Middle_WidgetContents_DAT_GPTSoVITS.setGeometry(QRect(0, 0, 581, 707))
+        self.ScrollArea_Middle_WidgetContents_DAT_GPTSoVITS.setGeometry(QRect(0, 0, 581, 695))
         self.verticalLayout_63 = QVBoxLayout(self.ScrollArea_Middle_WidgetContents_DAT_GPTSoVITS)
         self.verticalLayout_63.setSpacing(12)
         self.verticalLayout_63.setObjectName(u"verticalLayout_63")
@@ -6824,51 +6649,18 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_109.addWidget(self.Frame_DAT_GPTSoVITS_OutputParams_BasicSettings)
 
-        self.CheckBox_DAT_GPTSoVITS_OutputParams_Toggle_AdvanceSettings = QCheckBox(self.GroupBox_DAT_GPTSoVITS_OutputParams)
-        self.CheckBox_DAT_GPTSoVITS_OutputParams_Toggle_AdvanceSettings.setObjectName(u"CheckBox_DAT_GPTSoVITS_OutputParams_Toggle_AdvanceSettings")
-        self.CheckBox_DAT_GPTSoVITS_OutputParams_Toggle_AdvanceSettings.setStyleSheet(u"QCheckBox {\n"
-"	font-size: 12px;\n"
-"	font-weight: 630;\n"
-"	spacing: 12px;\n"
-"	background-color: transparent;\n"
-"	padding-top: 9px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QCheckBox:hover {\n"
-"}\n"
-"\n"
-"QCheckBox::indicator {\n"
-"	width: 12px;\n"
-"	height: 12px;\n"
-"    background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QCheckBox::indicator:hover {\n"
-"	background-color: transparent;\n"
-"}\n"
-"QCheckBox::indicator:unchecked {\n"
-"	border-image: url(:/CheckBox_Icon/Sources/RightCaret.png);\n"
-"}\n"
-"QCheckBox::indicator:checked {\n"
-"	border-image: url(:/CheckBox_Icon/Sources/DownCaret.png);\n"
-"}")
-
-        self.verticalLayout_109.addWidget(self.CheckBox_DAT_GPTSoVITS_OutputParams_Toggle_AdvanceSettings)
-
-        self.Frame_DAT_GPTSoVITS_OutputParams_AdvanceSettings = QFrame(self.GroupBox_DAT_GPTSoVITS_OutputParams)
-        self.Frame_DAT_GPTSoVITS_OutputParams_AdvanceSettings.setObjectName(u"Frame_DAT_GPTSoVITS_OutputParams_AdvanceSettings")
-        self.Frame_DAT_GPTSoVITS_OutputParams_AdvanceSettings.setFrameShape(QFrame.StyledPanel)
-        self.Frame_DAT_GPTSoVITS_OutputParams_AdvanceSettings.setFrameShadow(QFrame.Raised)
-        self.verticalLayout_108 = QVBoxLayout(self.Frame_DAT_GPTSoVITS_OutputParams_AdvanceSettings)
+        self.ToolBox_DAT_GPTSoVITS_OutputParams_AdvanceSettings = ToolBoxBase(self.GroupBox_DAT_GPTSoVITS_OutputParams)
+        self.ToolBox_DAT_GPTSoVITS_OutputParams_AdvanceSettings.setObjectName(u"ToolBox_DAT_GPTSoVITS_OutputParams_AdvanceSettings")
+        self.ToolBox_DAT_GPTSoVITS_OutputParams_AdvanceSettings.setFrameShape(QFrame.StyledPanel)
+        self.ToolBox_DAT_GPTSoVITS_OutputParams_AdvanceSettings.setFrameShadow(QFrame.Raised)
+        self.ToolBox_DAT_GPTSoVITS_OutputParams_AdvanceSettings_Page1Content = WidgetBase()
+        self.ToolBox_DAT_GPTSoVITS_OutputParams_AdvanceSettings_Page1Content.setObjectName(u"ToolBox_DAT_GPTSoVITS_OutputParams_AdvanceSettings_Page1Content")
+        self.ToolBox_DAT_GPTSoVITS_OutputParams_AdvanceSettings_Page1Content.setGeometry(QRect(0, 0, 536, 105))
+        self.verticalLayout_108 = QVBoxLayout(self.ToolBox_DAT_GPTSoVITS_OutputParams_AdvanceSettings_Page1Content)
         self.verticalLayout_108.setSpacing(0)
         self.verticalLayout_108.setObjectName(u"verticalLayout_108")
         self.verticalLayout_108.setContentsMargins(0, 0, 0, 0)
-        self.Frame_DAT_GPTSoVITS_FileListName = QFrame(self.Frame_DAT_GPTSoVITS_OutputParams_AdvanceSettings)
+        self.Frame_DAT_GPTSoVITS_FileListName = QFrame(self.ToolBox_DAT_GPTSoVITS_OutputParams_AdvanceSettings_Page1Content)
         self.Frame_DAT_GPTSoVITS_FileListName.setObjectName(u"Frame_DAT_GPTSoVITS_FileListName")
         self.Frame_DAT_GPTSoVITS_FileListName.setMinimumSize(QSize(0, 105))
         self.Frame_DAT_GPTSoVITS_FileListName.setStyleSheet(u"QFrame {\n"
@@ -6923,8 +6715,9 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_108.addWidget(self.Frame_DAT_GPTSoVITS_FileListName)
 
+        self.ToolBox_DAT_GPTSoVITS_OutputParams_AdvanceSettings.addItem(self.ToolBox_DAT_GPTSoVITS_OutputParams_AdvanceSettings_Page1Content, u"")
 
-        self.verticalLayout_109.addWidget(self.Frame_DAT_GPTSoVITS_OutputParams_AdvanceSettings)
+        self.verticalLayout_109.addWidget(self.ToolBox_DAT_GPTSoVITS_OutputParams_AdvanceSettings)
 
 
         self.verticalLayout_63.addWidget(self.GroupBox_DAT_GPTSoVITS_OutputParams)
@@ -7234,7 +7027,7 @@ class Ui_MainWindow(object):
         self.ScrollArea_Middle_DAT_VITS.setWidgetResizable(True)
         self.ScrollArea_Middle_WidgetContents_DAT_VITS = QWidget()
         self.ScrollArea_Middle_WidgetContents_DAT_VITS.setObjectName(u"ScrollArea_Middle_WidgetContents_DAT_VITS")
-        self.ScrollArea_Middle_WidgetContents_DAT_VITS.setGeometry(QRect(0, 0, 581, 1468))
+        self.ScrollArea_Middle_WidgetContents_DAT_VITS.setGeometry(QRect(0, 0, 581, 1006))
         self.verticalLayout_36 = QVBoxLayout(self.ScrollArea_Middle_WidgetContents_DAT_VITS)
         self.verticalLayout_36.setSpacing(12)
         self.verticalLayout_36.setObjectName(u"verticalLayout_36")
@@ -7607,51 +7400,18 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_115.addWidget(self.Frame_DAT_VITS_VITSParams_BasicSettings)
 
-        self.CheckBox_DAT_VITS_VITSParams_Toggle_AdvanceSettings = QCheckBox(self.GroupBox_DAT_VITS_VITSParams)
-        self.CheckBox_DAT_VITS_VITSParams_Toggle_AdvanceSettings.setObjectName(u"CheckBox_DAT_VITS_VITSParams_Toggle_AdvanceSettings")
-        self.CheckBox_DAT_VITS_VITSParams_Toggle_AdvanceSettings.setStyleSheet(u"QCheckBox {\n"
-"	font-size: 12px;\n"
-"	font-weight: 630;\n"
-"	spacing: 12px;\n"
-"	background-color: transparent;\n"
-"	padding-top: 9px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QCheckBox:hover {\n"
-"}\n"
-"\n"
-"QCheckBox::indicator {\n"
-"	width: 12px;\n"
-"	height: 12px;\n"
-"    background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QCheckBox::indicator:hover {\n"
-"	background-color: transparent;\n"
-"}\n"
-"QCheckBox::indicator:unchecked {\n"
-"	border-image: url(:/CheckBox_Icon/Sources/RightCaret.png);\n"
-"}\n"
-"QCheckBox::indicator:checked {\n"
-"	border-image: url(:/CheckBox_Icon/Sources/DownCaret.png);\n"
-"}")
-
-        self.verticalLayout_115.addWidget(self.CheckBox_DAT_VITS_VITSParams_Toggle_AdvanceSettings)
-
-        self.Frame_DAT_VITS_VITSParams_AdvanceSettings = QFrame(self.GroupBox_DAT_VITS_VITSParams)
-        self.Frame_DAT_VITS_VITSParams_AdvanceSettings.setObjectName(u"Frame_DAT_VITS_VITSParams_AdvanceSettings")
-        self.Frame_DAT_VITS_VITSParams_AdvanceSettings.setFrameShape(QFrame.StyledPanel)
-        self.Frame_DAT_VITS_VITSParams_AdvanceSettings.setFrameShadow(QFrame.Raised)
-        self.verticalLayout_53 = QVBoxLayout(self.Frame_DAT_VITS_VITSParams_AdvanceSettings)
+        self.ToolBox_DAT_VITS_VITSParams_AdvanceSettings = ToolBoxBase(self.GroupBox_DAT_VITS_VITSParams)
+        self.ToolBox_DAT_VITS_VITSParams_AdvanceSettings.setObjectName(u"ToolBox_DAT_VITS_VITSParams_AdvanceSettings")
+        self.ToolBox_DAT_VITS_VITSParams_AdvanceSettings.setFrameShape(QFrame.StyledPanel)
+        self.ToolBox_DAT_VITS_VITSParams_AdvanceSettings.setFrameShadow(QFrame.Raised)
+        self.ToolBox_DAT_VITS_VITSParams_AdvanceSettings_Page1Content = WidgetBase()
+        self.ToolBox_DAT_VITS_VITSParams_AdvanceSettings_Page1Content.setObjectName(u"ToolBox_DAT_VITS_VITSParams_AdvanceSettings_Page1Content")
+        self.ToolBox_DAT_VITS_VITSParams_AdvanceSettings_Page1Content.setGeometry(QRect(0, 0, 147, 420))
+        self.verticalLayout_53 = QVBoxLayout(self.ToolBox_DAT_VITS_VITSParams_AdvanceSettings_Page1Content)
         self.verticalLayout_53.setSpacing(0)
         self.verticalLayout_53.setObjectName(u"verticalLayout_53")
         self.verticalLayout_53.setContentsMargins(0, 0, 0, 0)
-        self.Frame_DAT_VITS_TrainRatio = QFrame(self.Frame_DAT_VITS_VITSParams_AdvanceSettings)
+        self.Frame_DAT_VITS_TrainRatio = QFrame(self.ToolBox_DAT_VITS_VITSParams_AdvanceSettings_Page1Content)
         self.Frame_DAT_VITS_TrainRatio.setObjectName(u"Frame_DAT_VITS_TrainRatio")
         self.Frame_DAT_VITS_TrainRatio.setMinimumSize(QSize(0, 105))
         self.Frame_DAT_VITS_TrainRatio.setStyleSheet(u"QFrame {\n"
@@ -7709,7 +7469,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_53.addWidget(self.Frame_DAT_VITS_TrainRatio)
 
-        self.Frame_DAT_VITS_SampleRate = QFrame(self.Frame_DAT_VITS_VITSParams_AdvanceSettings)
+        self.Frame_DAT_VITS_SampleRate = QFrame(self.ToolBox_DAT_VITS_VITSParams_AdvanceSettings_Page1Content)
         self.Frame_DAT_VITS_SampleRate.setObjectName(u"Frame_DAT_VITS_SampleRate")
         self.Frame_DAT_VITS_SampleRate.setMinimumSize(QSize(0, 105))
         self.Frame_DAT_VITS_SampleRate.setStyleSheet(u"QFrame {\n"
@@ -7764,7 +7524,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_53.addWidget(self.Frame_DAT_VITS_SampleRate)
 
-        self.Frame_DAT_VITS_SampleWidth = QFrame(self.Frame_DAT_VITS_VITSParams_AdvanceSettings)
+        self.Frame_DAT_VITS_SampleWidth = QFrame(self.ToolBox_DAT_VITS_VITSParams_AdvanceSettings_Page1Content)
         self.Frame_DAT_VITS_SampleWidth.setObjectName(u"Frame_DAT_VITS_SampleWidth")
         self.Frame_DAT_VITS_SampleWidth.setMinimumSize(QSize(0, 105))
         self.Frame_DAT_VITS_SampleWidth.setStyleSheet(u"QFrame {\n"
@@ -7819,7 +7579,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_53.addWidget(self.Frame_DAT_VITS_SampleWidth)
 
-        self.Frame_DAT_VITS_ToMono = QFrame(self.Frame_DAT_VITS_VITSParams_AdvanceSettings)
+        self.Frame_DAT_VITS_ToMono = QFrame(self.ToolBox_DAT_VITS_VITSParams_AdvanceSettings_Page1Content)
         self.Frame_DAT_VITS_ToMono.setObjectName(u"Frame_DAT_VITS_ToMono")
         self.Frame_DAT_VITS_ToMono.setMinimumSize(QSize(0, 105))
         self.Frame_DAT_VITS_ToMono.setStyleSheet(u"QFrame {\n"
@@ -7904,8 +7664,9 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_53.addWidget(self.Frame_DAT_VITS_ToMono)
 
+        self.ToolBox_DAT_VITS_VITSParams_AdvanceSettings.addItem(self.ToolBox_DAT_VITS_VITSParams_AdvanceSettings_Page1Content, u"")
 
-        self.verticalLayout_115.addWidget(self.Frame_DAT_VITS_VITSParams_AdvanceSettings)
+        self.verticalLayout_115.addWidget(self.ToolBox_DAT_VITS_VITSParams_AdvanceSettings)
 
 
         self.verticalLayout_36.addWidget(self.GroupBox_DAT_VITS_VITSParams)
@@ -7995,51 +7756,18 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_107.addWidget(self.Frame_DAT_VITS_OutputParams_BasicSettings)
 
-        self.CheckBox_DAT_VITS_OutputParams_Toggle_AdvanceSettings = QCheckBox(self.GroupBox_DAT_VITS_OutputParams)
-        self.CheckBox_DAT_VITS_OutputParams_Toggle_AdvanceSettings.setObjectName(u"CheckBox_DAT_VITS_OutputParams_Toggle_AdvanceSettings")
-        self.CheckBox_DAT_VITS_OutputParams_Toggle_AdvanceSettings.setStyleSheet(u"QCheckBox {\n"
-"	font-size: 12px;\n"
-"	font-weight: 630;\n"
-"	spacing: 12px;\n"
-"	background-color: transparent;\n"
-"	padding-top: 9px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QCheckBox:hover {\n"
-"}\n"
-"\n"
-"QCheckBox::indicator {\n"
-"	width: 12px;\n"
-"	height: 12px;\n"
-"    background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QCheckBox::indicator:hover {\n"
-"	background-color: transparent;\n"
-"}\n"
-"QCheckBox::indicator:unchecked {\n"
-"	border-image: url(:/CheckBox_Icon/Sources/RightCaret.png);\n"
-"}\n"
-"QCheckBox::indicator:checked {\n"
-"	border-image: url(:/CheckBox_Icon/Sources/DownCaret.png);\n"
-"}")
-
-        self.verticalLayout_107.addWidget(self.CheckBox_DAT_VITS_OutputParams_Toggle_AdvanceSettings)
-
-        self.Frame_DAT_VITS_OutputParams_AdvanceSettings = QFrame(self.GroupBox_DAT_VITS_OutputParams)
-        self.Frame_DAT_VITS_OutputParams_AdvanceSettings.setObjectName(u"Frame_DAT_VITS_OutputParams_AdvanceSettings")
-        self.Frame_DAT_VITS_OutputParams_AdvanceSettings.setFrameShape(QFrame.StyledPanel)
-        self.Frame_DAT_VITS_OutputParams_AdvanceSettings.setFrameShadow(QFrame.Raised)
-        self.verticalLayout_88 = QVBoxLayout(self.Frame_DAT_VITS_OutputParams_AdvanceSettings)
+        self.ToolBox_DAT_VITS_OutputParams_AdvanceSettings = ToolBoxBase(self.GroupBox_DAT_VITS_OutputParams)
+        self.ToolBox_DAT_VITS_OutputParams_AdvanceSettings.setObjectName(u"ToolBox_DAT_VITS_OutputParams_AdvanceSettings")
+        self.ToolBox_DAT_VITS_OutputParams_AdvanceSettings.setFrameShape(QFrame.StyledPanel)
+        self.ToolBox_DAT_VITS_OutputParams_AdvanceSettings.setFrameShadow(QFrame.Raised)
+        self.ToolBox_DAT_VITS_OutputParams_AdvanceSettings_Page1Content = WidgetBase()
+        self.ToolBox_DAT_VITS_OutputParams_AdvanceSettings_Page1Content.setObjectName(u"ToolBox_DAT_VITS_OutputParams_AdvanceSettings_Page1Content")
+        self.ToolBox_DAT_VITS_OutputParams_AdvanceSettings_Page1Content.setGeometry(QRect(0, 0, 147, 210))
+        self.verticalLayout_88 = QVBoxLayout(self.ToolBox_DAT_VITS_OutputParams_AdvanceSettings_Page1Content)
         self.verticalLayout_88.setSpacing(0)
         self.verticalLayout_88.setObjectName(u"verticalLayout_88")
         self.verticalLayout_88.setContentsMargins(0, 0, 0, 0)
-        self.Frame_DAT_VITS_FileListNameTraining = QFrame(self.Frame_DAT_VITS_OutputParams_AdvanceSettings)
+        self.Frame_DAT_VITS_FileListNameTraining = QFrame(self.ToolBox_DAT_VITS_OutputParams_AdvanceSettings_Page1Content)
         self.Frame_DAT_VITS_FileListNameTraining.setObjectName(u"Frame_DAT_VITS_FileListNameTraining")
         self.Frame_DAT_VITS_FileListNameTraining.setMinimumSize(QSize(0, 105))
         self.Frame_DAT_VITS_FileListNameTraining.setStyleSheet(u"QFrame {\n"
@@ -8094,7 +7822,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_88.addWidget(self.Frame_DAT_VITS_FileListNameTraining)
 
-        self.Frame_DAT_VITS_FileListNameValidation = QFrame(self.Frame_DAT_VITS_OutputParams_AdvanceSettings)
+        self.Frame_DAT_VITS_FileListNameValidation = QFrame(self.ToolBox_DAT_VITS_OutputParams_AdvanceSettings_Page1Content)
         self.Frame_DAT_VITS_FileListNameValidation.setObjectName(u"Frame_DAT_VITS_FileListNameValidation")
         self.Frame_DAT_VITS_FileListNameValidation.setMinimumSize(QSize(0, 105))
         self.Frame_DAT_VITS_FileListNameValidation.setStyleSheet(u"QFrame {\n"
@@ -8149,8 +7877,9 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_88.addWidget(self.Frame_DAT_VITS_FileListNameValidation)
 
+        self.ToolBox_DAT_VITS_OutputParams_AdvanceSettings.addItem(self.ToolBox_DAT_VITS_OutputParams_AdvanceSettings_Page1Content, u"")
 
-        self.verticalLayout_107.addWidget(self.Frame_DAT_VITS_OutputParams_AdvanceSettings)
+        self.verticalLayout_107.addWidget(self.ToolBox_DAT_VITS_OutputParams_AdvanceSettings)
 
 
         self.verticalLayout_36.addWidget(self.GroupBox_DAT_VITS_OutputParams)
@@ -8444,13 +8173,11 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_15.addWidget(self.ToolButton_VoiceTrainer_Title_VITS)
 
-        self.Frame_Train_Title_Spacer = QLabel(self.Frame_Train_Top)
-        self.Frame_Train_Title_Spacer.setObjectName(u"Frame_Train_Title_Spacer")
-        sizePolicy4.setHeightForWidth(self.Frame_Train_Title_Spacer.sizePolicy().hasHeightForWidth())
-        self.Frame_Train_Title_Spacer.setSizePolicy(sizePolicy4)
-        self.Frame_Train_Title_Spacer.setStyleSheet(u"QLabel {\n"
-"	font-size: 24px;\n"
-"	/*text-align: center;\n"
+        self.Frame_VoiceTrainer_Title = QFrame(self.Frame_Train_Top)
+        self.Frame_VoiceTrainer_Title.setObjectName(u"Frame_VoiceTrainer_Title")
+        self.Frame_VoiceTrainer_Title.setStyleSheet(u"QFrame {\n"
+"	/*font-size: 24px;\n"
+"	text-align: center;\n"
 "	padding-left: 12px;\n"
 "	padding-right: 12px;*/\n"
 "	background-color: transparent;\n"
@@ -8461,8 +8188,16 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "	border-bottom-color: rgba(123, 123, 123, 123);\n"
 "}")
+        self.horizontalLayout_58 = QHBoxLayout(self.Frame_VoiceTrainer_Title)
+        self.horizontalLayout_58.setSpacing(12)
+        self.horizontalLayout_58.setObjectName(u"horizontalLayout_58")
+        self.horizontalLayout_58.setContentsMargins(0, 0, 0, 0)
+        self.HorizontalSpacer_VoiceTrainer_Title = QSpacerItem(549, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
-        self.horizontalLayout_15.addWidget(self.Frame_Train_Title_Spacer)
+        self.horizontalLayout_58.addItem(self.HorizontalSpacer_VoiceTrainer_Title)
+
+
+        self.horizontalLayout_15.addWidget(self.Frame_VoiceTrainer_Title)
 
 
         self.verticalLayout_43.addWidget(self.Frame_Train_Top)
@@ -8585,7 +8320,7 @@ class Ui_MainWindow(object):
         self.ScrollArea_Middle_Train_GPTSoVITS.setWidgetResizable(True)
         self.ScrollArea_Middle_WidgetContents_Train_GPTSoVITS = QWidget()
         self.ScrollArea_Middle_WidgetContents_Train_GPTSoVITS.setObjectName(u"ScrollArea_Middle_WidgetContents_Train_GPTSoVITS")
-        self.ScrollArea_Middle_WidgetContents_Train_GPTSoVITS.setGeometry(QRect(0, 0, 581, 1151))
+        self.ScrollArea_Middle_WidgetContents_Train_GPTSoVITS.setGeometry(QRect(0, 0, 581, 1109))
         self.verticalLayout_52 = QVBoxLayout(self.ScrollArea_Middle_WidgetContents_Train_GPTSoVITS)
         self.verticalLayout_52.setSpacing(12)
         self.verticalLayout_52.setObjectName(u"verticalLayout_52")
@@ -8983,51 +8718,18 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_122.addWidget(self.Frame_Train_GPTSoVITS_GPTSoVITSParams_BasicSettings)
 
-        self.CheckBox_Train_GPTSoVITS_GPTSoVITSParams_Toggle_AdvanceSettings = QCheckBox(self.GroupBox_Train_GPTSoVITS_GPTSoVITSParams)
-        self.CheckBox_Train_GPTSoVITS_GPTSoVITSParams_Toggle_AdvanceSettings.setObjectName(u"CheckBox_Train_GPTSoVITS_GPTSoVITSParams_Toggle_AdvanceSettings")
-        self.CheckBox_Train_GPTSoVITS_GPTSoVITSParams_Toggle_AdvanceSettings.setStyleSheet(u"QCheckBox {\n"
-"	font-size: 12px;\n"
-"	font-weight: 630;\n"
-"	spacing: 12px;\n"
-"	background-color: transparent;\n"
-"	padding-top: 9px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QCheckBox:hover {\n"
-"}\n"
-"\n"
-"QCheckBox::indicator {\n"
-"	width: 12px;\n"
-"	height: 12px;\n"
-"    background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QCheckBox::indicator:hover {\n"
-"	background-color: transparent;\n"
-"}\n"
-"QCheckBox::indicator:unchecked {\n"
-"	border-image: url(:/CheckBox_Icon/Sources/RightCaret.png);\n"
-"}\n"
-"QCheckBox::indicator:checked {\n"
-"	border-image: url(:/CheckBox_Icon/Sources/DownCaret.png);\n"
-"}")
-
-        self.verticalLayout_122.addWidget(self.CheckBox_Train_GPTSoVITS_GPTSoVITSParams_Toggle_AdvanceSettings)
-
-        self.Frame_Train_GPTSoVITS_GPTSoVITSParams_AdvanceSettings = QFrame(self.GroupBox_Train_GPTSoVITS_GPTSoVITSParams)
-        self.Frame_Train_GPTSoVITS_GPTSoVITSParams_AdvanceSettings.setObjectName(u"Frame_Train_GPTSoVITS_GPTSoVITSParams_AdvanceSettings")
-        self.Frame_Train_GPTSoVITS_GPTSoVITSParams_AdvanceSettings.setFrameShape(QFrame.StyledPanel)
-        self.Frame_Train_GPTSoVITS_GPTSoVITSParams_AdvanceSettings.setFrameShadow(QFrame.Raised)
-        self.verticalLayout_57 = QVBoxLayout(self.Frame_Train_GPTSoVITS_GPTSoVITSParams_AdvanceSettings)
+        self.ToolBox_Train_GPTSoVITS_GPTSoVITSParams_AdvanceSettings = ToolBoxBase(self.GroupBox_Train_GPTSoVITS_GPTSoVITSParams)
+        self.ToolBox_Train_GPTSoVITS_GPTSoVITSParams_AdvanceSettings.setObjectName(u"ToolBox_Train_GPTSoVITS_GPTSoVITSParams_AdvanceSettings")
+        self.ToolBox_Train_GPTSoVITS_GPTSoVITSParams_AdvanceSettings.setFrameShape(QFrame.StyledPanel)
+        self.ToolBox_Train_GPTSoVITS_GPTSoVITSParams_AdvanceSettings.setFrameShadow(QFrame.Raised)
+        self.ToolBox_Train_GPTSoVITS_GPTSoVITSParams_AdvanceSettings_Page1Content = WidgetBase()
+        self.ToolBox_Train_GPTSoVITS_GPTSoVITSParams_AdvanceSettings_Page1Content.setObjectName(u"ToolBox_Train_GPTSoVITS_GPTSoVITSParams_AdvanceSettings_Page1Content")
+        self.ToolBox_Train_GPTSoVITS_GPTSoVITSParams_AdvanceSettings_Page1Content.setGeometry(QRect(0, 0, 536, 105))
+        self.verticalLayout_57 = QVBoxLayout(self.ToolBox_Train_GPTSoVITS_GPTSoVITSParams_AdvanceSettings_Page1Content)
         self.verticalLayout_57.setSpacing(0)
         self.verticalLayout_57.setObjectName(u"verticalLayout_57")
         self.verticalLayout_57.setContentsMargins(0, 0, 0, 0)
-        self.Frame_Train_GPTSoVITS_FP16Run = QFrame(self.Frame_Train_GPTSoVITS_GPTSoVITSParams_AdvanceSettings)
+        self.Frame_Train_GPTSoVITS_FP16Run = QFrame(self.ToolBox_Train_GPTSoVITS_GPTSoVITSParams_AdvanceSettings_Page1Content)
         self.Frame_Train_GPTSoVITS_FP16Run.setObjectName(u"Frame_Train_GPTSoVITS_FP16Run")
         self.Frame_Train_GPTSoVITS_FP16Run.setMinimumSize(QSize(0, 105))
         self.Frame_Train_GPTSoVITS_FP16Run.setStyleSheet(u"QFrame {\n"
@@ -9112,8 +8814,9 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_57.addWidget(self.Frame_Train_GPTSoVITS_FP16Run)
 
+        self.ToolBox_Train_GPTSoVITS_GPTSoVITSParams_AdvanceSettings.addItem(self.ToolBox_Train_GPTSoVITS_GPTSoVITSParams_AdvanceSettings_Page1Content, u"")
 
-        self.verticalLayout_122.addWidget(self.Frame_Train_GPTSoVITS_GPTSoVITSParams_AdvanceSettings)
+        self.verticalLayout_122.addWidget(self.ToolBox_Train_GPTSoVITS_GPTSoVITSParams_AdvanceSettings)
 
 
         self.verticalLayout_52.addWidget(self.GroupBox_Train_GPTSoVITS_GPTSoVITSParams)
@@ -9203,49 +8906,16 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_77.addWidget(self.Frame_Train_GPTSoVITS_OutputParams_BasicSettings)
 
-        self.CheckBox_Train_GPTSoVITS_OutputParams_Toggle_AdvanceSettings = QCheckBox(self.GroupBox_Train_GPTSoVITS_OutputParams)
-        self.CheckBox_Train_GPTSoVITS_OutputParams_Toggle_AdvanceSettings.setObjectName(u"CheckBox_Train_GPTSoVITS_OutputParams_Toggle_AdvanceSettings")
-        self.CheckBox_Train_GPTSoVITS_OutputParams_Toggle_AdvanceSettings.setStyleSheet(u"QCheckBox {\n"
-"	font-size: 12px;\n"
-"	font-weight: 630;\n"
-"	spacing: 12px;\n"
-"	background-color: transparent;\n"
-"	padding-top: 9px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QCheckBox:hover {\n"
-"}\n"
-"\n"
-"QCheckBox::indicator {\n"
-"	width: 12px;\n"
-"	height: 12px;\n"
-"    background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QCheckBox::indicator:hover {\n"
-"	background-color: transparent;\n"
-"}\n"
-"QCheckBox::indicator:unchecked {\n"
-"	border-image: url(:/CheckBox_Icon/Sources/RightCaret.png);\n"
-"}\n"
-"QCheckBox::indicator:checked {\n"
-"	border-image: url(:/CheckBox_Icon/Sources/DownCaret.png);\n"
-"}")
-
-        self.verticalLayout_77.addWidget(self.CheckBox_Train_GPTSoVITS_OutputParams_Toggle_AdvanceSettings)
-
-        self.Frame_Train_GPTSoVITS_OutputParams_AdvanceSettings = QFrame(self.GroupBox_Train_GPTSoVITS_OutputParams)
-        self.Frame_Train_GPTSoVITS_OutputParams_AdvanceSettings.setObjectName(u"Frame_Train_GPTSoVITS_OutputParams_AdvanceSettings")
-        self.verticalLayout_60 = QVBoxLayout(self.Frame_Train_GPTSoVITS_OutputParams_AdvanceSettings)
+        self.ToolBox_Train_GPTSoVITS_OutputParams_AdvanceSettings = ToolBoxBase(self.GroupBox_Train_GPTSoVITS_OutputParams)
+        self.ToolBox_Train_GPTSoVITS_OutputParams_AdvanceSettings.setObjectName(u"ToolBox_Train_GPTSoVITS_OutputParams_AdvanceSettings")
+        self.ToolBox_Train_GPTSoVITS_OutputParams_AdvanceSettings_Page1Content = WidgetBase()
+        self.ToolBox_Train_GPTSoVITS_OutputParams_AdvanceSettings_Page1Content.setObjectName(u"ToolBox_Train_GPTSoVITS_OutputParams_AdvanceSettings_Page1Content")
+        self.ToolBox_Train_GPTSoVITS_OutputParams_AdvanceSettings_Page1Content.setGeometry(QRect(0, 0, 538, 105))
+        self.verticalLayout_60 = QVBoxLayout(self.ToolBox_Train_GPTSoVITS_OutputParams_AdvanceSettings_Page1Content)
         self.verticalLayout_60.setSpacing(0)
         self.verticalLayout_60.setObjectName(u"verticalLayout_60")
         self.verticalLayout_60.setContentsMargins(0, 0, 0, 0)
-        self.Frame_Train_GPTSoVITS_LogDir = QFrame(self.Frame_Train_GPTSoVITS_OutputParams_AdvanceSettings)
+        self.Frame_Train_GPTSoVITS_LogDir = QFrame(self.ToolBox_Train_GPTSoVITS_OutputParams_AdvanceSettings_Page1Content)
         self.Frame_Train_GPTSoVITS_LogDir.setObjectName(u"Frame_Train_GPTSoVITS_LogDir")
         self.Frame_Train_GPTSoVITS_LogDir.setMinimumSize(QSize(0, 105))
         self.Frame_Train_GPTSoVITS_LogDir.setStyleSheet(u"QFrame {\n"
@@ -9300,8 +8970,9 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_60.addWidget(self.Frame_Train_GPTSoVITS_LogDir)
 
+        self.ToolBox_Train_GPTSoVITS_OutputParams_AdvanceSettings.addItem(self.ToolBox_Train_GPTSoVITS_OutputParams_AdvanceSettings_Page1Content, u"")
 
-        self.verticalLayout_77.addWidget(self.Frame_Train_GPTSoVITS_OutputParams_AdvanceSettings)
+        self.verticalLayout_77.addWidget(self.ToolBox_Train_GPTSoVITS_OutputParams_AdvanceSettings)
 
 
         self.verticalLayout_52.addWidget(self.GroupBox_Train_GPTSoVITS_OutputParams)
@@ -9827,7 +9498,7 @@ class Ui_MainWindow(object):
         self.ScrollArea_Middle_Train_VITS.setWidgetResizable(True)
         self.ScrollArea_Middle_WidgetContents_Train_VITS = QWidget()
         self.ScrollArea_Middle_WidgetContents_Train_VITS.setObjectName(u"ScrollArea_Middle_WidgetContents_Train_VITS")
-        self.ScrollArea_Middle_WidgetContents_Train_VITS.setGeometry(QRect(0, 0, 581, 1682))
+        self.ScrollArea_Middle_WidgetContents_Train_VITS.setGeometry(QRect(0, 0, 581, 1529))
         self.verticalLayout_28 = QVBoxLayout(self.ScrollArea_Middle_WidgetContents_Train_VITS)
         self.verticalLayout_28.setSpacing(12)
         self.verticalLayout_28.setObjectName(u"verticalLayout_28")
@@ -10454,51 +10125,18 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_114.addWidget(self.Frame_Train_VITS_VITSParams_BasicSettings)
 
-        self.CheckBox_Train_VITS_VITSParams_Toggle_AdvanceSettings = QCheckBox(self.GroupBox_Train_VITS_VITSParams)
-        self.CheckBox_Train_VITS_VITSParams_Toggle_AdvanceSettings.setObjectName(u"CheckBox_Train_VITS_VITSParams_Toggle_AdvanceSettings")
-        self.CheckBox_Train_VITS_VITSParams_Toggle_AdvanceSettings.setStyleSheet(u"QCheckBox {\n"
-"	font-size: 12px;\n"
-"	font-weight: 630;\n"
-"	spacing: 12px;\n"
-"	background-color: transparent;\n"
-"	padding-top: 9px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QCheckBox:hover {\n"
-"}\n"
-"\n"
-"QCheckBox::indicator {\n"
-"	width: 12px;\n"
-"	height: 12px;\n"
-"    background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QCheckBox::indicator:hover {\n"
-"	background-color: transparent;\n"
-"}\n"
-"QCheckBox::indicator:unchecked {\n"
-"	border-image: url(:/CheckBox_Icon/Sources/RightCaret.png);\n"
-"}\n"
-"QCheckBox::indicator:checked {\n"
-"	border-image: url(:/CheckBox_Icon/Sources/DownCaret.png);\n"
-"}")
-
-        self.verticalLayout_114.addWidget(self.CheckBox_Train_VITS_VITSParams_Toggle_AdvanceSettings)
-
-        self.Frame_Train_VITS_VITSParams_AdvanceSettings = QFrame(self.GroupBox_Train_VITS_VITSParams)
-        self.Frame_Train_VITS_VITSParams_AdvanceSettings.setObjectName(u"Frame_Train_VITS_VITSParams_AdvanceSettings")
-        self.Frame_Train_VITS_VITSParams_AdvanceSettings.setFrameShape(QFrame.StyledPanel)
-        self.Frame_Train_VITS_VITSParams_AdvanceSettings.setFrameShadow(QFrame.Raised)
-        self.verticalLayout_35 = QVBoxLayout(self.Frame_Train_VITS_VITSParams_AdvanceSettings)
+        self.ToolBox_Train_VITS_VITSParams_AdvanceSettings = ToolBoxBase(self.GroupBox_Train_VITS_VITSParams)
+        self.ToolBox_Train_VITS_VITSParams_AdvanceSettings.setObjectName(u"ToolBox_Train_VITS_VITSParams_AdvanceSettings")
+        self.ToolBox_Train_VITS_VITSParams_AdvanceSettings.setFrameShape(QFrame.StyledPanel)
+        self.ToolBox_Train_VITS_VITSParams_AdvanceSettings.setFrameShadow(QFrame.Raised)
+        self.ToolBox_Train_VITS_VITSParams_AdvanceSettings_Page1Content = WidgetBase()
+        self.ToolBox_Train_VITS_VITSParams_AdvanceSettings_Page1Content.setObjectName(u"ToolBox_Train_VITS_VITSParams_AdvanceSettings_Page1Content")
+        self.ToolBox_Train_VITS_VITSParams_AdvanceSettings_Page1Content.setGeometry(QRect(0, 0, 147, 210))
+        self.verticalLayout_35 = QVBoxLayout(self.ToolBox_Train_VITS_VITSParams_AdvanceSettings_Page1Content)
         self.verticalLayout_35.setSpacing(0)
         self.verticalLayout_35.setObjectName(u"verticalLayout_35")
         self.verticalLayout_35.setContentsMargins(0, 0, 0, 0)
-        self.Frame_Train_VITS_NumWorkers = QFrame(self.Frame_Train_VITS_VITSParams_AdvanceSettings)
+        self.Frame_Train_VITS_NumWorkers = QFrame(self.ToolBox_Train_VITS_VITSParams_AdvanceSettings_Page1Content)
         self.Frame_Train_VITS_NumWorkers.setObjectName(u"Frame_Train_VITS_NumWorkers")
         self.Frame_Train_VITS_NumWorkers.setMinimumSize(QSize(0, 105))
         self.Frame_Train_VITS_NumWorkers.setStyleSheet(u"QFrame {\n"
@@ -10555,7 +10193,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_35.addWidget(self.Frame_Train_VITS_NumWorkers)
 
-        self.Frame_Train_VITS_FP16Run = QFrame(self.Frame_Train_VITS_VITSParams_AdvanceSettings)
+        self.Frame_Train_VITS_FP16Run = QFrame(self.ToolBox_Train_VITS_VITSParams_AdvanceSettings_Page1Content)
         self.Frame_Train_VITS_FP16Run.setObjectName(u"Frame_Train_VITS_FP16Run")
         self.Frame_Train_VITS_FP16Run.setMinimumSize(QSize(0, 105))
         self.Frame_Train_VITS_FP16Run.setStyleSheet(u"QFrame {\n"
@@ -10640,8 +10278,9 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_35.addWidget(self.Frame_Train_VITS_FP16Run)
 
+        self.ToolBox_Train_VITS_VITSParams_AdvanceSettings.addItem(self.ToolBox_Train_VITS_VITSParams_AdvanceSettings_Page1Content, u"")
 
-        self.verticalLayout_114.addWidget(self.Frame_Train_VITS_VITSParams_AdvanceSettings)
+        self.verticalLayout_114.addWidget(self.ToolBox_Train_VITS_VITSParams_AdvanceSettings)
 
 
         self.verticalLayout_28.addWidget(self.GroupBox_Train_VITS_VITSParams)
@@ -10786,49 +10425,16 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_80.addWidget(self.Frame_Train_VITS_OutputParams_BasicSettings)
 
-        self.CheckBox_Train_VITS_OutputParams_Toggle_AdvanceSettings = QCheckBox(self.GroupBox_Train_VITS_OutputParams)
-        self.CheckBox_Train_VITS_OutputParams_Toggle_AdvanceSettings.setObjectName(u"CheckBox_Train_VITS_OutputParams_Toggle_AdvanceSettings")
-        self.CheckBox_Train_VITS_OutputParams_Toggle_AdvanceSettings.setStyleSheet(u"QCheckBox {\n"
-"	font-size: 12px;\n"
-"	font-weight: 630;\n"
-"	spacing: 12px;\n"
-"	background-color: transparent;\n"
-"	padding-top: 9px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QCheckBox:hover {\n"
-"}\n"
-"\n"
-"QCheckBox::indicator {\n"
-"	width: 12px;\n"
-"	height: 12px;\n"
-"    background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QCheckBox::indicator:hover {\n"
-"	background-color: transparent;\n"
-"}\n"
-"QCheckBox::indicator:unchecked {\n"
-"	border-image: url(:/CheckBox_Icon/Sources/RightCaret.png);\n"
-"}\n"
-"QCheckBox::indicator:checked {\n"
-"	border-image: url(:/CheckBox_Icon/Sources/DownCaret.png);\n"
-"}")
-
-        self.verticalLayout_80.addWidget(self.CheckBox_Train_VITS_OutputParams_Toggle_AdvanceSettings)
-
-        self.Frame_Train_VITS_OutputParams_AdvanceSettings = QFrame(self.GroupBox_Train_VITS_OutputParams)
-        self.Frame_Train_VITS_OutputParams_AdvanceSettings.setObjectName(u"Frame_Train_VITS_OutputParams_AdvanceSettings")
-        self.verticalLayout_79 = QVBoxLayout(self.Frame_Train_VITS_OutputParams_AdvanceSettings)
+        self.ToolBox_Train_VITS_OutputParams_AdvanceSettings = ToolBoxBase(self.GroupBox_Train_VITS_OutputParams)
+        self.ToolBox_Train_VITS_OutputParams_AdvanceSettings.setObjectName(u"ToolBox_Train_VITS_OutputParams_AdvanceSettings")
+        self.ToolBox_Train_VITS_OutputParams_AdvanceSettings_Page1Content = WidgetBase()
+        self.ToolBox_Train_VITS_OutputParams_AdvanceSettings_Page1Content.setObjectName(u"ToolBox_Train_VITS_OutputParams_AdvanceSettings_Page1Content")
+        self.ToolBox_Train_VITS_OutputParams_AdvanceSettings_Page1Content.setGeometry(QRect(0, 0, 147, 105))
+        self.verticalLayout_79 = QVBoxLayout(self.ToolBox_Train_VITS_OutputParams_AdvanceSettings_Page1Content)
         self.verticalLayout_79.setSpacing(0)
         self.verticalLayout_79.setObjectName(u"verticalLayout_79")
         self.verticalLayout_79.setContentsMargins(0, 0, 0, 0)
-        self.Frame_Train_VITS_LogDir = QFrame(self.Frame_Train_VITS_OutputParams_AdvanceSettings)
+        self.Frame_Train_VITS_LogDir = QFrame(self.ToolBox_Train_VITS_OutputParams_AdvanceSettings_Page1Content)
         self.Frame_Train_VITS_LogDir.setObjectName(u"Frame_Train_VITS_LogDir")
         self.Frame_Train_VITS_LogDir.setMinimumSize(QSize(0, 105))
         self.Frame_Train_VITS_LogDir.setStyleSheet(u"QFrame {\n"
@@ -10883,8 +10489,9 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_79.addWidget(self.Frame_Train_VITS_LogDir)
 
+        self.ToolBox_Train_VITS_OutputParams_AdvanceSettings.addItem(self.ToolBox_Train_VITS_OutputParams_AdvanceSettings_Page1Content, u"")
 
-        self.verticalLayout_80.addWidget(self.Frame_Train_VITS_OutputParams_AdvanceSettings)
+        self.verticalLayout_80.addWidget(self.ToolBox_Train_VITS_OutputParams_AdvanceSettings)
 
 
         self.verticalLayout_28.addWidget(self.GroupBox_Train_VITS_OutputParams)
@@ -10998,13 +10605,11 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_16.addWidget(self.ToolButton_VoiceConverter_Title_VITS)
 
-        self.Frame_TTS_Title_Spacer = QLabel(self.Frame_TTS_Top)
-        self.Frame_TTS_Title_Spacer.setObjectName(u"Frame_TTS_Title_Spacer")
-        sizePolicy4.setHeightForWidth(self.Frame_TTS_Title_Spacer.sizePolicy().hasHeightForWidth())
-        self.Frame_TTS_Title_Spacer.setSizePolicy(sizePolicy4)
-        self.Frame_TTS_Title_Spacer.setStyleSheet(u"QLabel {\n"
-"	font-size: 24px;\n"
-"	/*text-align: center;\n"
+        self.Frame_VoiceConverter_Title = QFrame(self.Frame_TTS_Top)
+        self.Frame_VoiceConverter_Title.setObjectName(u"Frame_VoiceConverter_Title")
+        self.Frame_VoiceConverter_Title.setStyleSheet(u"QFrame {\n"
+"	/*font-size: 24px;\n"
+"	text-align: center;\n"
 "	padding-left: 12px;\n"
 "	padding-right: 12px;*/\n"
 "	background-color: transparent;\n"
@@ -11015,8 +10620,16 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "	border-bottom-color: rgba(123, 123, 123, 123);\n"
 "}")
+        self.horizontalLayout_59 = QHBoxLayout(self.Frame_VoiceConverter_Title)
+        self.horizontalLayout_59.setSpacing(12)
+        self.horizontalLayout_59.setObjectName(u"horizontalLayout_59")
+        self.horizontalLayout_59.setContentsMargins(0, 0, 0, 0)
+        self.HorizontalSpacer_VoiceConverter_Title = QSpacerItem(549, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
-        self.horizontalLayout_16.addWidget(self.Frame_TTS_Title_Spacer)
+        self.horizontalLayout_59.addItem(self.HorizontalSpacer_VoiceConverter_Title)
+
+
+        self.horizontalLayout_16.addWidget(self.Frame_VoiceConverter_Title)
 
 
         self.verticalLayout_42.addWidget(self.Frame_TTS_Top)
@@ -11139,7 +10752,7 @@ class Ui_MainWindow(object):
         self.ScrollArea_Middle_TTS_GPTSoVITS.setWidgetResizable(True)
         self.ScrollArea_Middle_WidgetContents_TTS_GPTSoVITS = QWidget()
         self.ScrollArea_Middle_WidgetContents_TTS_GPTSoVITS.setObjectName(u"ScrollArea_Middle_WidgetContents_TTS_GPTSoVITS")
-        self.ScrollArea_Middle_WidgetContents_TTS_GPTSoVITS.setGeometry(QRect(0, 0, 581, 637))
+        self.ScrollArea_Middle_WidgetContents_TTS_GPTSoVITS.setGeometry(QRect(0, 0, 581, 649))
         self.verticalLayout_66 = QVBoxLayout(self.ScrollArea_Middle_WidgetContents_TTS_GPTSoVITS)
         self.verticalLayout_66.setSpacing(12)
         self.verticalLayout_66.setObjectName(u"verticalLayout_66")
@@ -11802,7 +11415,7 @@ class Ui_MainWindow(object):
         self.ScrollArea_Middle_TTS_VITS.setWidgetResizable(True)
         self.ScrollArea_Middle_WidgetContents_TTS_VITS = QWidget()
         self.ScrollArea_Middle_WidgetContents_TTS_VITS.setObjectName(u"ScrollArea_Middle_WidgetContents_TTS_VITS")
-        self.ScrollArea_Middle_WidgetContents_TTS_VITS.setGeometry(QRect(0, 0, 581, 1242))
+        self.ScrollArea_Middle_WidgetContents_TTS_VITS.setGeometry(QRect(0, 0, 581, 1020))
         self.verticalLayout_19 = QVBoxLayout(self.ScrollArea_Middle_WidgetContents_TTS_VITS)
         self.verticalLayout_19.setSpacing(12)
         self.verticalLayout_19.setObjectName(u"verticalLayout_19")
@@ -12172,49 +11785,16 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_117.addWidget(self.Frame_TTS_VITS_VITSParams_BasicSettings)
 
-        self.CheckBox_TTS_VITS_VITSParams_Toggle_AdvanceSettings = QCheckBox(self.GroupBox_TTS_VITS_VITSParams)
-        self.CheckBox_TTS_VITS_VITSParams_Toggle_AdvanceSettings.setObjectName(u"CheckBox_TTS_VITS_VITSParams_Toggle_AdvanceSettings")
-        self.CheckBox_TTS_VITS_VITSParams_Toggle_AdvanceSettings.setStyleSheet(u"QCheckBox {\n"
-"	font-size: 12px;\n"
-"	font-weight: 630;\n"
-"	spacing: 12px;\n"
-"	background-color: transparent;\n"
-"	padding-top: 9px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QCheckBox:hover {\n"
-"}\n"
-"\n"
-"QCheckBox::indicator {\n"
-"	width: 12px;\n"
-"	height: 12px;\n"
-"    background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QCheckBox::indicator:hover {\n"
-"	background-color: transparent;\n"
-"}\n"
-"QCheckBox::indicator:unchecked {\n"
-"	border-image: url(:/CheckBox_Icon/Sources/RightCaret.png);\n"
-"}\n"
-"QCheckBox::indicator:checked {\n"
-"	border-image: url(:/CheckBox_Icon/Sources/DownCaret.png);\n"
-"}")
-
-        self.verticalLayout_117.addWidget(self.CheckBox_TTS_VITS_VITSParams_Toggle_AdvanceSettings)
-
-        self.Frame_TTS_VITS_VITSParams_AdvanceSettings = QFrame(self.GroupBox_TTS_VITS_VITSParams)
-        self.Frame_TTS_VITS_VITSParams_AdvanceSettings.setObjectName(u"Frame_TTS_VITS_VITSParams_AdvanceSettings")
-        self.verticalLayout_118 = QVBoxLayout(self.Frame_TTS_VITS_VITSParams_AdvanceSettings)
+        self.ToolBox_TTS_VITS_VITSParams_AdvanceSettings = ToolBoxBase(self.GroupBox_TTS_VITS_VITSParams)
+        self.ToolBox_TTS_VITS_VITSParams_AdvanceSettings.setObjectName(u"ToolBox_TTS_VITS_VITSParams_AdvanceSettings")
+        self.ToolBox_TTS_VITS_VITSParams_AdvanceSettings_Page1Content = WidgetBase()
+        self.ToolBox_TTS_VITS_VITSParams_AdvanceSettings_Page1Content.setObjectName(u"ToolBox_TTS_VITS_VITSParams_AdvanceSettings_Page1Content")
+        self.ToolBox_TTS_VITS_VITSParams_AdvanceSettings_Page1Content.setGeometry(QRect(0, 0, 147, 315))
+        self.verticalLayout_118 = QVBoxLayout(self.ToolBox_TTS_VITS_VITSParams_AdvanceSettings_Page1Content)
         self.verticalLayout_118.setSpacing(0)
         self.verticalLayout_118.setObjectName(u"verticalLayout_118")
         self.verticalLayout_118.setContentsMargins(0, 0, 0, 0)
-        self.Frame_TTS_VITS_EmotionStrength = QFrame(self.Frame_TTS_VITS_VITSParams_AdvanceSettings)
+        self.Frame_TTS_VITS_EmotionStrength = QFrame(self.ToolBox_TTS_VITS_VITSParams_AdvanceSettings_Page1Content)
         self.Frame_TTS_VITS_EmotionStrength.setObjectName(u"Frame_TTS_VITS_EmotionStrength")
         self.Frame_TTS_VITS_EmotionStrength.setMinimumSize(QSize(0, 105))
         self.Frame_TTS_VITS_EmotionStrength.setStyleSheet(u"QFrame {\n"
@@ -12321,7 +11901,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_118.addWidget(self.Frame_TTS_VITS_EmotionStrength)
 
-        self.Frame_TTS_VITS_PhonemeDuration = QFrame(self.Frame_TTS_VITS_VITSParams_AdvanceSettings)
+        self.Frame_TTS_VITS_PhonemeDuration = QFrame(self.ToolBox_TTS_VITS_VITSParams_AdvanceSettings_Page1Content)
         self.Frame_TTS_VITS_PhonemeDuration.setObjectName(u"Frame_TTS_VITS_PhonemeDuration")
         self.Frame_TTS_VITS_PhonemeDuration.setMinimumSize(QSize(0, 105))
         self.Frame_TTS_VITS_PhonemeDuration.setStyleSheet(u"QFrame {\n"
@@ -12428,7 +12008,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_118.addWidget(self.Frame_TTS_VITS_PhonemeDuration)
 
-        self.Frame_TTS_VITS_SpeechRate = QFrame(self.Frame_TTS_VITS_VITSParams_AdvanceSettings)
+        self.Frame_TTS_VITS_SpeechRate = QFrame(self.ToolBox_TTS_VITS_VITSParams_AdvanceSettings_Page1Content)
         self.Frame_TTS_VITS_SpeechRate.setObjectName(u"Frame_TTS_VITS_SpeechRate")
         self.Frame_TTS_VITS_SpeechRate.setMinimumSize(QSize(0, 105))
         self.Frame_TTS_VITS_SpeechRate.setStyleSheet(u"QFrame {\n"
@@ -12535,8 +12115,9 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_118.addWidget(self.Frame_TTS_VITS_SpeechRate)
 
+        self.ToolBox_TTS_VITS_VITSParams_AdvanceSettings.addItem(self.ToolBox_TTS_VITS_VITSParams_AdvanceSettings_Page1Content, u"")
 
-        self.verticalLayout_117.addWidget(self.Frame_TTS_VITS_VITSParams_AdvanceSettings)
+        self.verticalLayout_117.addWidget(self.ToolBox_TTS_VITS_VITSParams_AdvanceSettings)
 
 
         self.verticalLayout_19.addWidget(self.GroupBox_TTS_VITS_VITSParams)
@@ -12957,7 +12538,7 @@ class Ui_MainWindow(object):
         self.ScrollArea_Settings_Client.setWidgetResizable(True)
         self.ScrollAreaWidgetContents_Settings_Client = QWidget()
         self.ScrollAreaWidgetContents_Settings_Client.setObjectName(u"ScrollAreaWidgetContents_Settings_Client")
-        self.ScrollAreaWidgetContents_Settings_Client.setGeometry(QRect(0, 0, 311, 456))
+        self.ScrollAreaWidgetContents_Settings_Client.setGeometry(QRect(0, 0, 1026, 559))
         self.verticalLayout_106 = QVBoxLayout(self.ScrollAreaWidgetContents_Settings_Client)
         self.verticalLayout_106.setSpacing(0)
         self.verticalLayout_106.setObjectName(u"verticalLayout_106")
@@ -13268,7 +12849,7 @@ class Ui_MainWindow(object):
         self.ScrollArea_Settings_Tools.setWidgetResizable(True)
         self.ScrollAreaWidgetContents_Settings_Tools = QWidget()
         self.ScrollAreaWidgetContents_Settings_Tools.setObjectName(u"ScrollAreaWidgetContents_Settings_Tools")
-        self.ScrollAreaWidgetContents_Settings_Tools.setGeometry(QRect(0, 0, 238, 799))
+        self.ScrollAreaWidgetContents_Settings_Tools.setGeometry(QRect(0, 0, 235, 811))
         self.verticalLayout_34 = QVBoxLayout(self.ScrollAreaWidgetContents_Settings_Tools)
         self.verticalLayout_34.setSpacing(0)
         self.verticalLayout_34.setObjectName(u"verticalLayout_34")
@@ -14346,7 +13927,6 @@ class Ui_MainWindow(object):
         self.Label_Repo_Text.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Donate_Text.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.ToolButton_Env_Install_Title.setText(QCoreApplication.translate("MainWindow", u"Label", None))
-        self.ToolButton_Env_Manage_Title.setText(QCoreApplication.translate("MainWindow", u"Label", None))
         self.Label_Env_Install_Aria2_Status.setText(QCoreApplication.translate("MainWindow", u"--", None))
         self.Label_Env_Install_Aria2.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Env_Install_FFmpeg_Status.setText(QCoreApplication.translate("MainWindow", u"--", None))
@@ -14390,20 +13970,20 @@ class Ui_MainWindow(object):
         self.GroupBox_Process_SlicerParams.setTitle(QCoreApplication.translate("MainWindow", u"GroupBox2", None))
         self.Label_Process_SliceAudio.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.CheckBox_Process_SliceAudio.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
-        self.CheckBox_Process_SlicerParams_Toggle_AdvanceSettings.setText(QCoreApplication.translate("MainWindow", u"CheckBox2", None))
         self.Label_Process_RMSThreshold.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Process_AudioLengthMin.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Process_SilentIntervalMin.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Process_HopSize.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Process_SilenceKeptMax.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.ToolBox_Process_SlicerParams_AdvanceSettings.setItemText(self.ToolBox_Process_SlicerParams_AdvanceSettings.indexOf(self.ToolBox_Process_SlicerParams_AdvanceSettings_Page1Content), "")
         self.GroupBox_Process_OutputParams.setTitle(QCoreApplication.translate("MainWindow", u"GroupBox3", None))
         self.Label_Process_MediaFormatOutput.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Process_OutputDirName.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.CheckBox_Process_OutputParams_Toggle_AdvanceSettings.setText(QCoreApplication.translate("MainWindow", u"CheckBox2", None))
         self.Label_Process_SampleRate.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Process_SampleWidth.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Process_ToMono.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.CheckBox_Process_ToMono.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
+        self.ToolBox_Process_OutputParams_AdvanceSettings.setItemText(self.ToolBox_Process_OutputParams_AdvanceSettings.indexOf(self.ToolBox_Process_OutputParams_AdvanceSettings_Page1Content), "")
         self.ToolButton_VoiceIdentifier_Title.setText(QCoreApplication.translate("MainWindow", u"Label", None))
         ___qtreewidgetitem3 = self.TreeWidget_Catalogue_ASR_VPR.headerItem()
         ___qtreewidgetitem3.setText(0, QCoreApplication.translate("MainWindow", u"HeaderView", None));
@@ -14422,14 +14002,14 @@ class Ui_MainWindow(object):
         self.GroupBox_ASR_VPR_VPRParams.setTitle(QCoreApplication.translate("MainWindow", u"GroupBox2", None))
         self.Label_ASR_VPR_DecisionThreshold.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_ASR_VPR_ModelPath.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.CheckBox_ASR_VPR_VPRParams_Toggle_AdvanceSettings.setText(QCoreApplication.translate("MainWindow", u"CheckBox2", None))
         self.Label_ASR_VPR_ModelType.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_ASR_VPR_FeatureMethod.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_ASR_VPR_DurationOfAudio.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.ToolBox_ASR_VPR_VPRParams_AdvanceSettings.setItemText(self.ToolBox_ASR_VPR_VPRParams_AdvanceSettings.indexOf(self.ToolBox_ASR_VPR_VPRParams_AdvanceSettings_Page1Content), "")
         self.GroupBox_ASR_VPR_OutputParams.setTitle(QCoreApplication.translate("MainWindow", u"GroupBox3", None))
         self.Label_ASR_VPR_OutputDirName.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.CheckBox_ASR_VPR_OutputParams_Toggle_AdvanceSettings.setText(QCoreApplication.translate("MainWindow", u"CheckBox3", None))
         self.Label_ASR_VPR_AudioSpeakersDataName.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.ToolBox_ASR_VPR_OutputParams_AdvanceSettings.setItemText(self.ToolBox_ASR_VPR_OutputParams_AdvanceSettings.indexOf(self.ToolBox_ASR_VPR_OutputParams_AdvanceSettings_Page1Content), "")
         self.ToolButton_VoiceTranscriber_Title.setText(QCoreApplication.translate("MainWindow", u"Label", None))
         ___qtreewidgetitem6 = self.TreeWidget_Catalogue_STT_Whisper.headerItem()
         ___qtreewidgetitem6.setText(0, QCoreApplication.translate("MainWindow", u"HeaderView", None));
@@ -14448,13 +14028,13 @@ class Ui_MainWindow(object):
         self.Label_STT_Whisper_AddLanguageInfo.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.CheckBox_STT_Whisper_AddLanguageInfo.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
         self.Label_STT_Whisper_ModelPath.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.CheckBox_STT_Whisper_WhisperParams_Toggle_AdvanceSettings.setText(QCoreApplication.translate("MainWindow", u"CheckBox2", None))
         self.Label_STT_Whisper_fp16.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.CheckBox_STT_Whisper_fp16.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
         self.CheckBox_STT_Whisper_ConditionOnPreviousText.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
         self.Label_STT_Whisper_ConditionOnPreviousText.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_STT_Whisper_Verbose.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.CheckBox_STT_Whisper_Verbose.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
+        self.ToolBox_STT_Whisper_WhisperParams_AdvanceSettings.setItemText(self.ToolBox_STT_Whisper_WhisperParams_AdvanceSettings.indexOf(self.ToolBox_STT_Whisper_WhisperParams_AdvanceSettings_Page1Content), "")
         self.GroupBox_STT_Whisper_OutputParams.setTitle(QCoreApplication.translate("MainWindow", u"GroupBox3", None))
         self.Label_STT_Whisper_OutputDirName.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.ToolButton_DatasetCreator_Title_GPTSoVITS.setText(QCoreApplication.translate("MainWindow", u"Label", None))
@@ -14477,8 +14057,8 @@ class Ui_MainWindow(object):
         self.Label_DAT_GPTSoVITS_DataFormat.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.GroupBox_DAT_GPTSoVITS_OutputParams.setTitle(QCoreApplication.translate("MainWindow", u"GroupBox3", None))
         self.Label_DAT_GPTSoVITS_OutputDirName.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.CheckBox_DAT_GPTSoVITS_OutputParams_Toggle_AdvanceSettings.setText(QCoreApplication.translate("MainWindow", u"CheckBox3", None))
         self.Label_DAT_GPTSoVITS_FileListName.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.ToolBox_DAT_GPTSoVITS_OutputParams_AdvanceSettings.setItemText(self.ToolBox_DAT_GPTSoVITS_OutputParams_AdvanceSettings.indexOf(self.ToolBox_DAT_GPTSoVITS_OutputParams_AdvanceSettings_Page1Content), "")
         ___qtreewidgetitem12 = self.TreeWidget_Catalogue_DAT_VITS.headerItem()
         ___qtreewidgetitem12.setText(0, QCoreApplication.translate("MainWindow", u"HeaderView", None));
 
@@ -14498,17 +14078,17 @@ class Ui_MainWindow(object):
         self.Label_DAT_VITS_AddAuxiliaryData.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.CheckBox_DAT_VITS_AddAuxiliaryData.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
         self.Label_DAT_VITS_AuxiliaryDataPath.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.CheckBox_DAT_VITS_VITSParams_Toggle_AdvanceSettings.setText(QCoreApplication.translate("MainWindow", u"CheckBox2", None))
         self.Label_DAT_VITS_TrainRatio.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_DAT_VITS_SampleRate.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_DAT_VITS_SampleWidth.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_DAT_VITS_ToMono.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.CheckBox_DAT_VITS_ToMono.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
+        self.ToolBox_DAT_VITS_VITSParams_AdvanceSettings.setItemText(self.ToolBox_DAT_VITS_VITSParams_AdvanceSettings.indexOf(self.ToolBox_DAT_VITS_VITSParams_AdvanceSettings_Page1Content), "")
         self.GroupBox_DAT_VITS_OutputParams.setTitle(QCoreApplication.translate("MainWindow", u"GroupBox3", None))
         self.Label_DAT_VITS_OutputDirName.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.CheckBox_DAT_VITS_OutputParams_Toggle_AdvanceSettings.setText(QCoreApplication.translate("MainWindow", u"CheckBox3", None))
         self.Label_DAT_VITS_FileListNameTraining.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_DAT_VITS_FileListNameValidation.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.ToolBox_DAT_VITS_OutputParams_AdvanceSettings.setItemText(self.ToolBox_DAT_VITS_OutputParams_AdvanceSettings.indexOf(self.ToolBox_DAT_VITS_OutputParams_AdvanceSettings_Page1Content), "")
         self.ToolButton_VoiceTrainer_Title_GPTSoVITS.setText(QCoreApplication.translate("MainWindow", u"Label", None))
         self.ToolButton_VoiceTrainer_Title_VITS.setText(QCoreApplication.translate("MainWindow", u"Label", None))
         ___qtreewidgetitem15 = self.TreeWidget_Catalogue_Train_GPTSoVITS.headerItem()
@@ -14530,13 +14110,13 @@ class Ui_MainWindow(object):
         self.Label_Train_GPTSoVITS_ModelDirPretrainedBert.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Train_GPTSoVITS_ModelDirPretrainedSSL.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Train_GPTSoVITS_ModelPathPretrainedS2D.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.CheckBox_Train_GPTSoVITS_GPTSoVITSParams_Toggle_AdvanceSettings.setText(QCoreApplication.translate("MainWindow", u"CheckBox2", None))
         self.Label_Train_GPTSoVITS_FP16Run.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.CheckBox_Train_GPTSoVITS_FP16Run.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
+        self.ToolBox_Train_GPTSoVITS_GPTSoVITSParams_AdvanceSettings.setItemText(self.ToolBox_Train_GPTSoVITS_GPTSoVITSParams_AdvanceSettings.indexOf(self.ToolBox_Train_GPTSoVITS_GPTSoVITSParams_AdvanceSettings_Page1Content), "")
         self.GroupBox_Train_GPTSoVITS_OutputParams.setTitle(QCoreApplication.translate("MainWindow", u"GroupBox3", None))
         self.Label_Train_GPTSoVITS_OutputDirName.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.CheckBox_Train_GPTSoVITS_OutputParams_Toggle_AdvanceSettings.setText(QCoreApplication.translate("MainWindow", u"CheckBox3", None))
         self.Label_Train_GPTSoVITS_LogDir.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.ToolBox_Train_GPTSoVITS_OutputParams_AdvanceSettings.setItemText(self.ToolBox_Train_GPTSoVITS_OutputParams_AdvanceSettings.indexOf(self.ToolBox_Train_GPTSoVITS_OutputParams_AdvanceSettings_Page1Content), "")
         ___qtreewidgetitem18 = self.TreeWidget_Catalogue_Train_VITS.headerItem()
         ___qtreewidgetitem18.setText(0, QCoreApplication.translate("MainWindow", u"HeaderView", None));
 
@@ -14561,15 +14141,15 @@ class Ui_MainWindow(object):
         self.Label_Train_VITS_KeepOriginalSpeakers.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.CheckBox_Train_VITS_KeepOriginalSpeakers.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
         self.Label_Train_VITS_ConfigPathLoad.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.CheckBox_Train_VITS_VITSParams_Toggle_AdvanceSettings.setText(QCoreApplication.translate("MainWindow", u"CheckBox2", None))
         self.Label_Train_VITS_NumWorkers.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Train_VITS_FP16Run.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.CheckBox_Train_VITS_FP16Run.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
+        self.ToolBox_Train_VITS_VITSParams_AdvanceSettings.setItemText(self.ToolBox_Train_VITS_VITSParams_AdvanceSettings.indexOf(self.ToolBox_Train_VITS_VITSParams_AdvanceSettings_Page1Content), "")
         self.GroupBox_Train_VITS_OutputParams.setTitle(QCoreApplication.translate("MainWindow", u"GroupBox3", None))
         self.Label_Train_VITS_EvalInterval.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Train_VITS_OutputDirName.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.CheckBox_Train_VITS_OutputParams_Toggle_AdvanceSettings.setText(QCoreApplication.translate("MainWindow", u"CheckBox3", None))
         self.Label_Train_VITS_LogDir.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.ToolBox_Train_VITS_OutputParams_AdvanceSettings.setItemText(self.ToolBox_Train_VITS_OutputParams_AdvanceSettings.indexOf(self.ToolBox_Train_VITS_OutputParams_AdvanceSettings_Page1Content), "")
         self.ToolButton_VoiceConverter_Title_GPTSoVITS.setText(QCoreApplication.translate("MainWindow", u"Label", None))
         self.ToolButton_VoiceConverter_Title_VITS.setText(QCoreApplication.translate("MainWindow", u"Label", None))
         ___qtreewidgetitem21 = self.TreeWidget_Catalogue_TTS_GPTSoVITS.headerItem()
@@ -14609,10 +14189,10 @@ class Ui_MainWindow(object):
         self.Label_TTS_VITS_Text.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_TTS_VITS_Language.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_TTS_VITS_Speaker.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.CheckBox_TTS_VITS_VITSParams_Toggle_AdvanceSettings.setText(QCoreApplication.translate("MainWindow", u"CheckBox2", None))
         self.Label_TTS_VITS_EmotionStrength.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_TTS_VITS_PhonemeDuration.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_TTS_VITS_SpeechRate.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.ToolBox_TTS_VITS_VITSParams_AdvanceSettings.setItemText(self.ToolBox_TTS_VITS_VITSParams_AdvanceSettings.indexOf(self.ToolBox_TTS_VITS_VITSParams_AdvanceSettings_Page1Content), "")
         self.GroupBox_TTS_VITS_OutputParams.setTitle(QCoreApplication.translate("MainWindow", u"GroupBox3", None))
         self.Label_TTS_VITS_AudioPathSave.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.ToolButton_Settings_Title_Client.setText(QCoreApplication.translate("MainWindow", u"Label", None))

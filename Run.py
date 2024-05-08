@@ -20,7 +20,7 @@ from EVT_GUI.EnvConfigurator import *
 ##############################################################################################################################
 
 # Set current version
-CurrentVersion = "v1.0.5"
+CurrentVersion = "v1.0.7"
 
 ##############################################################################################################################
 
@@ -122,16 +122,18 @@ class Execute_Audio_Processing(QObject):
     def Execute(self, Params: tuple):
         self.started.emit()
 
-        Output, Error = RunCMD(
+        CMD = SubprocessManager(CommunicateThroughConsole = True)
+        self.Process = CMD.create(
             Args = [
                 f'cd "{ResourceDir}"',
                 'python -c "'
                 'from EVT_Core.Process.Process import Audio_Processing; '
                 f"AudioConvertandSlice = Audio_Processing{str(Params)}; "
                 'AudioConvertandSlice.Process_Audio()"'
-            ],
+            ]
+        )
+        Output, Error = CMD.monitor(
             ShowProgress = True,
-            CommunicateThroughConsole = True,
             DecodeResult = True,
             LogPath = LogPath
         )[:2]
@@ -143,6 +145,9 @@ class Execute_Audio_Processing(QObject):
             Error = None
 
         self.finished.emit(str(Error))
+
+    def Terminate(self):
+        ProcessTerminator(self.Process.pid) if hasattr(self, 'Process') else None
 
 
 # Tools: VoiceIdentifier
@@ -160,7 +165,8 @@ class Execute_Voice_Identifying_VPR(QObject):
     def Execute(self, Params: tuple):
         self.started.emit()
 
-        Output, Error = RunCMD(
+        CMD = SubprocessManager(CommunicateThroughConsole = True)
+        self.Process = CMD.create(
             Args = [
                 f'cd "{ResourceDir}"',
                 'python -c "'
@@ -168,9 +174,10 @@ class Execute_Voice_Identifying_VPR(QObject):
                 f"AudioContrastInference = Voice_Identifying{str(Params)}; "
                 'AudioContrastInference.GetModel(); '
                 'AudioContrastInference.Inference()"'
-            ],
+            ]
+        )
+        Output, Error = CMD.monitor(
             ShowProgress = True,
-            CommunicateThroughConsole = True,
             DecodeResult = True,
             LogPath = LogPath
         )[:2]
@@ -182,6 +189,9 @@ class Execute_Voice_Identifying_VPR(QObject):
             Error = None
 
         self.finished.emit(str(Error))
+
+    def Terminate(self):
+        ProcessTerminator(self.Process.pid) if hasattr(self, 'Process') else None
 
 
 # Tools: VoiceTranscriber
@@ -207,16 +217,18 @@ class Execute_Voice_Transcribing_Whisper(QObject):
             "日":       "ja",
             "japanese": "ja"
         }
-        Output, Error = RunCMD(
+        CMD = SubprocessManager(CommunicateThroughConsole = True)
+        self.Process = CMD.create(
             Args = [
                 f'cd "{ResourceDir}"',
                 'python -c "'
                 'from EVT_Core.STT.Whisper.Transcribe import Voice_Transcribing; '
                 f"WAVtoSRT = Voice_Transcribing{str(ItemReplacer(LANGUAGES, Params))}; "
                 'WAVtoSRT.Transcriber()"'
-            ],
+            ]
+        )
+        Output, Error = CMD.monitor(
             ShowProgress = True,
-            CommunicateThroughConsole = True,
             DecodeResult = True,
             LogPath = LogPath
         )[:2]
@@ -228,6 +240,9 @@ class Execute_Voice_Transcribing_Whisper(QObject):
             Error = None
 
         self.finished.emit(str(Error))
+
+    def Terminate(self):
+        ProcessTerminator(self.Process.pid) if hasattr(self, 'Process') else None
 
 
 # Tools: DatasetCreator
@@ -245,16 +260,18 @@ class Execute_Dataset_Creating_GPTSoVITS(QObject):
     def Execute(self, Params: tuple):
         self.started.emit()
 
-        Output, Error = RunCMD(
+        CMD = SubprocessManager(CommunicateThroughConsole = True)
+        self.Process = CMD.create(
             Args = [
                 f'cd "{ResourceDir}"',
                 'python -c "'
                 'from EVT_Core.Dataset.GPT_SoVITS.Create import Dataset_Creating; '
                 f"SRTtoCSVandSplitAudio = Dataset_Creating{str(Params)}; "
                 'SRTtoCSVandSplitAudio.CallingFunctions()"'
-            ],
+            ]
+        )
+        Output, Error = CMD.monitor(
             ShowProgress = True,
-            CommunicateThroughConsole = True,
             DecodeResult = True,
             LogPath = LogPath
         )[:2]
@@ -266,6 +283,9 @@ class Execute_Dataset_Creating_GPTSoVITS(QObject):
             Error = None
 
         self.finished.emit(str(Error))
+
+    def Terminate(self):
+        ProcessTerminator(self.Process.pid) if hasattr(self, 'Process') else None
 
 
 class Execute_Dataset_Creating_VITS(QObject):
@@ -282,16 +302,18 @@ class Execute_Dataset_Creating_VITS(QObject):
     def Execute(self, Params: tuple):
         self.started.emit()
 
-        Output, Error = RunCMD(
+        CMD = SubprocessManager(CommunicateThroughConsole = True)
+        self.Process = CMD.create(
             Args = [
                 f'cd "{ResourceDir}"',
                 'python -c "'
                 'from EVT_Core.Dataset.VITS.Create import Dataset_Creating; '
                 f"SRTtoCSVandSplitAudio = Dataset_Creating{str(Params)}; "
                 'SRTtoCSVandSplitAudio.CallingFunctions()"'
-            ],
+            ]
+        )
+        Output, Error = CMD.monitor(
             ShowProgress = True,
-            CommunicateThroughConsole = True,
             DecodeResult = True,
             LogPath = LogPath
         )[:2]
@@ -303,6 +325,9 @@ class Execute_Dataset_Creating_VITS(QObject):
             Error = None
 
         self.finished.emit(str(Error))
+
+    def Terminate(self):
+        ProcessTerminator(self.Process.pid) if hasattr(self, 'Process') else None
 
 
 # Tools: VoiceTrainer
@@ -320,15 +345,17 @@ class Execute_Voice_Training_GPTSoVITS(QObject):
     def Execute(self, Params: tuple):
         self.started.emit()
 
-        Output, Error = RunCMD(
+        CMD = SubprocessManager(CommunicateThroughConsole = True)
+        self.Process = CMD.create(
             Args = [
                 f'cd "{ResourceDir}"',
                 'python -c "'
                 'from EVT_Core.Train.GPT_SoVITS.Train import Train; '
                 f'Train{str(Params)}"'
-            ],
+            ]
+        )
+        Output, Error = CMD.monitor(
             ShowProgress = True,
-            CommunicateThroughConsole = True,
             DecodeResult = True,
             LogPath = LogPath
         )[:2]
@@ -340,6 +367,9 @@ class Execute_Voice_Training_GPTSoVITS(QObject):
             Error = None
 
         self.finished.emit(str(Error))
+
+    def Terminate(self):
+        ProcessTerminator(self.Process.pid) if hasattr(self, 'Process') else None
 
 
 class Execute_Voice_Training_VITS(QObject):
@@ -356,16 +386,18 @@ class Execute_Voice_Training_VITS(QObject):
     def Execute(self, Params: tuple):
         self.started.emit()
 
-        Output, Error = RunCMD(
+        CMD = SubprocessManager(CommunicateThroughConsole = True)
+        self.Process = CMD.create(
             Args = [
                 f'cd "{ResourceDir}"',
                 'python -c "'
                 'from EVT_Core.Train.VITS.Train import Voice_Training; '
                 f"PreprocessandTrain = Voice_Training{str(Params)}; "
                 'PreprocessandTrain.Preprocessing_and_Training()"'
-            ],
+            ]
+        )
+        Output, Error = CMD.monitor(
             ShowProgress = True,
-            CommunicateThroughConsole = True,
             DecodeResult = True,
             LogPath = LogPath
         )[:2]
@@ -377,6 +409,9 @@ class Execute_Voice_Training_VITS(QObject):
             Error = None
 
         self.finished.emit(str(Error))
+
+    def Terminate(self):
+        ProcessTerminator(self.Process.pid) if hasattr(self, 'Process') else None
 
 
 # Tools: VoiceConverter
@@ -394,15 +429,17 @@ class Execute_Voice_Converting_GPTSoVITS(QObject):
     def Execute(self, Params: tuple):
         self.started.emit()
 
-        Output, Error = RunCMD(
+        CMD = SubprocessManager(CommunicateThroughConsole = True)
+        self.Process = CMD.create(
             Args = [
                 f'cd "{ResourceDir}"',
                 'python -c "'
                 'from EVT_Core.TTS.GPT_SoVITS.Convert import Convert; '
                 f'Convert{str(Params)}"'
-            ],
+            ]
+        )
+        Output, Error = CMD.monitor(
             ShowProgress = True,
-            CommunicateThroughConsole = True,
             DecodeResult = True,
             LogPath = LogPath
         )[:2]
@@ -414,6 +451,9 @@ class Execute_Voice_Converting_GPTSoVITS(QObject):
             Error = None
 
         self.finished.emit(str(Error))
+
+    def Terminate(self):
+        ProcessTerminator(self.Process.pid) if hasattr(self, 'Process') else None
 
 
 def Get_Speakers(Config_Path_Load):
@@ -447,16 +487,18 @@ class Execute_Voice_Converting_VITS(QObject):
             "日":       "JA",
             "Japanese": "JA"
         }
-        Output, Error = RunCMD(
+        CMD = SubprocessManager(CommunicateThroughConsole = True)
+        self.Process = CMD.create(
             Args = [
                 f'cd "{ResourceDir}"',
                 'python -c "'
                 'from EVT_Core.TTS.VITS.Convert import Voice_Converting; '
                 f"TTS = Voice_Converting{str(ItemReplacer(LANGUAGES, Params))}; "
                 'TTS.Converting()"'
-            ],
+            ]
+        )
+        Output, Error = CMD.monitor(
             ShowProgress = True,
-            CommunicateThroughConsole = True,
             DecodeResult = True,
             LogPath = LogPath
         )[:2]
@@ -468,6 +510,9 @@ class Execute_Voice_Converting_VITS(QObject):
             Error = None
 
         self.finished.emit(str(Error))
+
+    def Terminate(self):
+        ProcessTerminator(self.Process.pid) if hasattr(self, 'Process') else None
 
 
 # ClientFunc: GetModelsInfo
@@ -802,6 +847,8 @@ class CustomSignals_MainWindow(QObject):
     # Monitor task
     Signal_TaskStatus = Signal(str, str)
 
+    # Force exit
+    Signal_ForceQuit = Signal()
 
 MainWindowSignals = CustomSignals_MainWindow()
 
@@ -820,26 +867,24 @@ class MainWindow(Window_MainWindow):
         self.MonitorUsage.start()
 
     def SetChildWidgetsVisibility(self,
-            Container: QWidget,
-            DefaultHeight: int,
-            ChildWidgets: list[Optional[QWidget]],
-            SetVisible: bool,
-            AdjustContainer: bool = True
-        ):
+        Container: QWidget,
+        ChildWidgets: list[Optional[QWidget]],
+        SetVisible: bool,
+        AdjustContainer: bool = True
+    ):
         ChildWidgets = [ChildWidget for ChildWidget in ChildWidgets if ChildWidget is not None]
-        MinHeight = DefaultHeight - sum([ChildWidget.height() for ChildWidget in ChildWidgets])
-        MaxHeight = DefaultHeight
         for ChildWidget in ChildWidgets:
             ChildWidget.setVisible(SetVisible)
         if AdjustContainer:
+            CurrentHeight = Container.height()
+            #Container.updateGeometry()
+            AdjustedHeight = Container.minimumSizeHint().height()
             Function_AnimateFrame(
                 Frame = Container,
-                MinHeight = MinHeight,
-                MaxHeight = MaxHeight,
-                Duration = 0,
+                MinHeight = CurrentHeight if SetVisible else AdjustedHeight,
+                MaxHeight = AdjustedHeight if SetVisible else CurrentHeight,
                 Mode = 'Extend' if SetVisible else 'Reduce'
             )
-            Container.adjustSize()
 
     def Function_SetMethodExecutor(self,
         ExecuteButton: Optional[QAbstractButton] = None,
@@ -905,7 +950,7 @@ class MainWindow(Window_MainWindow):
 
         if ExecuteButton is not None:
             ExecuteButton.clicked.connect(ExecuteMethod)
-            ExecuteButton.setText("Execute 执行") if len(ExecuteButton.text().strip()) == 0 else None
+            ExecuteButton.setText(QCA.translate("Button", "执行")) if len(ExecuteButton.text().strip()) == 0 else None
         else:
             TempButton = QPushButton(self)
             TempButton.clicked.connect(ExecuteMethod)
@@ -923,15 +968,11 @@ class MainWindow(Window_MainWindow):
                 except:
                     WorkerThread.quit()
 
-            ProcessTerminator(
-                Program = 'python.exe',
-                SelfIgnored = True,
-                SearchKeyword = True
-            )
+            ClassInstance.Terminate() if hasattr(ClassInstance, 'Terminate') else ProcessTerminator('python.exe', SearchKeyword = True)
 
             MainWindowSignals.Signal_TaskStatus.emit(QualName, 'Failed') if hasattr(ClassInstance, 'finished') else None
 
-            ProgressBar.setValue(0)
+            ProgressBar.setValue(0) if ProgressBar else None
 
         if TerminateButton is not None:
             TerminateButton.clicked.connect(
@@ -943,7 +984,8 @@ class MainWindow(Window_MainWindow):
                     ButtonEvents = {QMessageBox.Yes: lambda: TerminateMethod()}
                 )
             )
-            TerminateButton.setText("Terminate 终止") if len(TerminateButton.text().strip()) == 0 else None
+            TerminateButton.setText(QCA.translate("Button", "终止")) if len(TerminateButton.text().strip()) == 0 else None
+            MainWindowSignals.Signal_ForceQuit.connect(TerminateMethod)
         else:
             pass
 
@@ -979,12 +1021,8 @@ class MainWindow(Window_MainWindow):
         # Window controling buttons
         self.closed.connect(
             lambda: (
-                ProcessTerminator(
-                    Program = 'python.exe',
-                    SelfIgnored = False,
-                    SearchKeyword = True
-                ),
-                QApplication.exit(),
+                MainWindowSignals.Signal_ForceQuit.emit(),
+                MainWindowSignals.Signal_TaskStatus.connect(QApplication.exit),
                 #os._exit(0)
             )
         )
@@ -1216,7 +1254,7 @@ class MainWindow(Window_MainWindow):
         # EnvInstallation
         self.ui.ToolButton_Env_Install_Title.setText(QCA.translate("Label", "自动配置"))
 
-        self.ui.Label_Env_Install_Aria2.setText("Aria2")
+        self.ui.Label_Env_Install_Aria2.setText(QCA.translate("Label", "Aria2"))
         self.Function_SetMethodExecutor(
             ExecuteButton = self.ui.Button_Install_Aria2,
             ProgressBar = self.ui.ProgressBar_Env_Install_Aria2,
@@ -1260,7 +1298,7 @@ class MainWindow(Window_MainWindow):
             lambda Status: self.ui.Label_Env_Install_Aria2_Status.setText(Status)
         )
 
-        self.ui.Label_Env_Install_FFmpeg.setText("FFmpeg")
+        self.ui.Label_Env_Install_FFmpeg.setText(QCA.translate("Label", "FFmpeg"))
         self.Function_SetMethodExecutor(
             ExecuteButton = self.ui.Button_Install_FFmpeg,
             ProgressBar = self.ui.ProgressBar_Env_Install_FFmpeg,
@@ -1304,7 +1342,7 @@ class MainWindow(Window_MainWindow):
             lambda Status: self.ui.Label_Env_Install_FFmpeg_Status.setText(Status)
         )
 
-        self.ui.Label_Env_Install_Python.setText("Python")
+        self.ui.Label_Env_Install_Python.setText(QCA.translate("Label", "Python"))
         self.Function_SetMethodExecutor(
             ExecuteButton = self.ui.Button_Install_Python,
             ProgressBar = self.ui.ProgressBar_Env_Install_Python,
@@ -1348,7 +1386,7 @@ class MainWindow(Window_MainWindow):
             lambda Status: self.ui.Label_Env_Install_Python_Status.setText(Status)
         )
 
-        self.ui.Label_Env_Install_PyReqs.setText("Python Requirements")
+        self.ui.Label_Env_Install_PyReqs.setText(QCA.translate("Label", "Python Requirements"))
         self.Function_SetMethodExecutor(
             ExecuteButton = self.ui.Button_Install_PyReqs,
             ProgressBar = self.ui.ProgressBar_Env_Install_PyReqs,
@@ -1392,7 +1430,7 @@ class MainWindow(Window_MainWindow):
             lambda Status: self.ui.Label_Env_Install_PyReqs_Status.setText(Status)
         )
 
-        self.ui.Label_Env_Install_Pytorch.setText("Pytorch")
+        self.ui.Label_Env_Install_Pytorch.setText(QCA.translate("Label", "Pytorch"))
         self.Function_SetMethodExecutor(
             ExecuteButton = self.ui.Button_Install_Pytorch,
             ProgressBar = self.ui.ProgressBar_Env_Install_Pytorch,
@@ -1562,8 +1600,8 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_Models_Append.setText(QCA.translate("ToolButton", '添加'))
         LineEdit_Models_Append = QLineEdit()
         DialogBox_Models_Append = MessageBox_Buttons(self)
-        DialogBox_Models_Append.setText("请选择添加方式")
-        DialogBox_Models_Append.Button1.setText("模型文件目录（多文件）")
+        DialogBox_Models_Append.setText(QCA.translate("MsgBox", "请选择添加方式"))
+        DialogBox_Models_Append.Button1.setText(QCA.translate("Button", "模型文件目录（多文件）"))
         DialogBox_Models_Append.Button1.clicked.connect(
             lambda: (
                 LineEdit_Models_Append.setText(
@@ -1574,7 +1612,7 @@ class MainWindow(Window_MainWindow):
                 DialogBox_Models_Append.close(),
             )
         )
-        DialogBox_Models_Append.Button2.setText("模型文件路径（单文件）")
+        DialogBox_Models_Append.Button2.setText(QCA.translate("Button", "模型文件路径（单文件）"))
         DialogBox_Models_Append.Button2.clicked.connect(
             lambda: (
                 LineEdit_Models_Append.setText(
@@ -1609,7 +1647,7 @@ class MainWindow(Window_MainWindow):
 
         # Guidance
         DialogBox_Process = MessageBox_Stacked(self)
-        DialogBox_Process.setWindowTitle('Guidance（该引导仅出现一次）')
+        DialogBox_Process.setWindowTitle(QCA.translate("MsgBox", "引导（仅出现一次）"))
         DialogBox_Process.SetContent(
             [
                 NormPath(Path(ResourceDir).joinpath('Sources/Guidance_Process.png')),
@@ -1683,7 +1721,6 @@ class MainWindow(Window_MainWindow):
         self.ui.CheckBox_Process_DenoiseAudio.setChecked(
             eval(Config_Process.GetValue('AudioProcessor', 'Denoise_Audio', 'True'))
         )
-        Frame_Process_DenoiserParams_BasicSettings_DefaultHeight = self.ui.Frame_Process_DenoiserParams_BasicSettings.sizeHint().height()
         Function_ConfigureCheckBox(
             CheckBox = self.ui.CheckBox_Process_DenoiseAudio,
             CheckedText = "已启用",
@@ -1691,7 +1728,6 @@ class MainWindow(Window_MainWindow):
                 lambda: Config_Process.EditConfig('AudioProcessor', 'Denoise_Audio', 'True'),
                 lambda: self.SetChildWidgetsVisibility(
                     self.ui.Frame_Process_DenoiserParams_BasicSettings,
-                    Frame_Process_DenoiserParams_BasicSettings_DefaultHeight,
                     [
                         self.ui.Frame_Process_DenoiseModelPath,
                         self.ui.Frame_Process_DenoiseTarget,
@@ -1704,7 +1740,6 @@ class MainWindow(Window_MainWindow):
                 lambda: Config_Process.EditConfig('AudioProcessor', 'Denoise_Audio', 'False'),
                 lambda: self.SetChildWidgetsVisibility(
                     self.ui.Frame_Process_DenoiserParams_BasicSettings,
-                    Frame_Process_DenoiserParams_BasicSettings_DefaultHeight,
                     [
                         self.ui.Frame_Process_DenoiseModelPath,
                         self.ui.Frame_Process_DenoiseTarget,
@@ -1754,16 +1789,16 @@ class MainWindow(Window_MainWindow):
                 Body = QCA.translate("Label", "提取目标\n选择在降噪时要保留的声音对象。")
             )
         )
-        self.ui.ComboBox_Process_DenoiseTarget.addItems(['人声', '背景声'])
+        self.ui.ComboBox_Process_DenoiseTarget.addItems([QCA.translate("ComboBox", '人声'), QCA.translate("ComboBox", '背景声')])
         self.ui.ComboBox_Process_DenoiseTarget.setCurrentText(
-            str(Config_Process.GetValue('AudioProcessor', 'Denoise_Target', '人声'))
+            QCA.translate("ComboBox", str(Config_Process.GetValue('AudioProcessor', 'Denoise_Target', '人声')))
         )
         self.ui.ComboBox_Process_DenoiseTarget.currentTextChanged.connect(
             lambda Value: Config_Process.EditConfig('AudioProcessor', 'Denoise_Target', str(Value))
         )
         self.ui.Button_Process_DenoiseTarget_MoreActions.SetMenu(
             ActionEvents = {
-                "重置": lambda: self.ui.ComboBox_Process_DenoiseTarget.setCurrentText('人声')
+                "重置": lambda: self.ui.ComboBox_Process_DenoiseTarget.setCurrentText(QCA.translate("ComboBox", '人声'))
             }
         )
 
@@ -1778,15 +1813,13 @@ class MainWindow(Window_MainWindow):
         self.ui.CheckBox_Process_SliceAudio.setChecked(
             eval(Config_Process.GetValue('AudioProcessor', 'Slice_Audio', 'True'))
         )
-        Frame_Process_SlicerParams_AdvanceSettings_DefaultHeight = self.ui.Frame_Process_SlicerParams_AdvanceSettings.sizeHint().height()
         Function_ConfigureCheckBox(
             CheckBox = self.ui.CheckBox_Process_SliceAudio,
             CheckedText = "已启用",
             CheckedEvents = [
                 lambda: Config_Process.EditConfig('AudioProcessor', 'Slice_Audio', 'True'),
                 lambda: self.SetChildWidgetsVisibility(
-                    self.ui.Frame_Process_SlicerParams_AdvanceSettings,
-                    Frame_Process_SlicerParams_AdvanceSettings_DefaultHeight,
+                    self.ui.ToolBox_Process_SlicerParams_AdvanceSettings_Page1Content,
                     [
                         self.ui.Frame_Process_RMSThreshold,
                         self.ui.Frame_Process_HopSize,
@@ -1795,15 +1828,14 @@ class MainWindow(Window_MainWindow):
                         self.ui.Frame_Process_AudioLengthMin
                     ],
                     True,
-                    True if self.ui.CheckBox_Process_SlicerParams_Toggle_AdvanceSettings.isChecked() else False
+                    True
                 )
             ],
             UncheckedText = "未启用",
             UncheckedEvents = [
                 lambda: Config_Process.EditConfig('AudioProcessor', 'Slice_Audio', 'False'),
                 lambda: self.SetChildWidgetsVisibility(
-                    self.ui.Frame_Process_SlicerParams_AdvanceSettings,
-                    Frame_Process_SlicerParams_AdvanceSettings_DefaultHeight,
+                    self.ui.ToolBox_Process_SlicerParams_AdvanceSettings_Page1Content,
                     [
                         self.ui.Frame_Process_RMSThreshold,
                         self.ui.Frame_Process_HopSize,
@@ -1812,7 +1844,7 @@ class MainWindow(Window_MainWindow):
                         self.ui.Frame_Process_AudioLengthMin
                     ],
                     False,
-                    True if self.ui.CheckBox_Process_SlicerParams_Toggle_AdvanceSettings.isChecked() else False
+                    True
                 )
             ],
             TakeEffect = True
@@ -1823,35 +1855,8 @@ class MainWindow(Window_MainWindow):
             }
         )
 
-        self.ui.CheckBox_Process_SlicerParams_Toggle_AdvanceSettings.setChecked(
-            False #eval(Config_Process.GetValue('AudioProcessor', 'Toggle_AdvanceSettings', ''))
-        )
-        Function_ConfigureCheckBox(
-            CheckBox = self.ui.CheckBox_Process_SlicerParams_Toggle_AdvanceSettings,
-            CheckedText = "高级设置",
-            CheckedEvents = [
-                lambda: Function_AnimateFrame(
-                    self.ui.Frame_Process_SlicerParams_AdvanceSettings,
-                    None, None,
-                    0, self.ui.Frame_Process_SlicerParams_AdvanceSettings.sizeHint().height() if self.ui.CheckBox_Process_SliceAudio.isChecked() else 0,
-                    210,
-                    'Extend'
-                ),
-                #lambda: Config_Process.EditConfig('AudioProcessor', 'Toggle_AdvanceSettings', 'True')
-            ],
-            UncheckedText = "高级设置",
-            UncheckedEvents = [
-                lambda: Function_AnimateFrame(
-                    self.ui.Frame_Process_SlicerParams_AdvanceSettings,
-                    None, None,
-                    0, self.ui.Frame_Process_SlicerParams_AdvanceSettings.sizeHint().height() if self.ui.CheckBox_Process_SliceAudio.isChecked() else 0,
-                    210,
-                    'Reduce'
-                ),
-                #lambda: Config_Process.EditConfig('AudioProcessor', 'Toggle_AdvanceSettings', 'False')
-            ],
-            TakeEffect = True
-        )
+        self.ui.ToolBox_Process_SlicerParams_AdvanceSettings.widget(0).setText(QCA.translate("ToolBox", "高级设置"))
+        self.ui.ToolBox_Process_SlicerParams_AdvanceSettings.widget(0).collapse()
 
         Function_SetText(
             Widget = self.ui.Label_Process_RMSThreshold,
@@ -2011,31 +2016,8 @@ class MainWindow(Window_MainWindow):
         self.ui.LineEdit_Process_OutputRoot.textChanged.connect(SetText_LineEdit_Process_OutputDir)
         #SetText_LineEdit_Process_OutputDir()
 
-        self.ui.CheckBox_Process_OutputParams_Toggle_AdvanceSettings.setChecked(False)
-        Function_ConfigureCheckBox(
-            CheckBox = self.ui.CheckBox_Process_OutputParams_Toggle_AdvanceSettings,
-            CheckedText = "高级设置",
-            CheckedEvents = [
-                lambda: Function_AnimateFrame(
-                    self.ui.Frame_Process_OutputParams_AdvanceSettings,
-                    None, None,
-                    0, self.ui.Frame_Process_OutputParams_AdvanceSettings.sizeHint().height(),
-                    210,
-                    'Extend'
-                )
-            ],
-            UncheckedText = "高级设置",
-            UncheckedEvents = [
-                lambda: Function_AnimateFrame(
-                    self.ui.Frame_Process_OutputParams_AdvanceSettings,
-                    None, None,
-                    0, self.ui.Frame_Process_OutputParams_AdvanceSettings.sizeHint().height(),
-                    210,
-                    'Reduce'
-                )
-            ],
-            TakeEffect = True
-        )
+        self.ui.ToolBox_Process_OutputParams_AdvanceSettings.widget(0).setText(QCA.translate("ToolBox", "高级设置"))
+        self.ui.ToolBox_Process_OutputParams_AdvanceSettings.widget(0).collapse()
 
         Function_SetText(
             Widget = self.ui.Label_Process_ToMono,
@@ -2151,7 +2133,7 @@ class MainWindow(Window_MainWindow):
         )
         Function_ScrollToWidget(
             Trigger = self.ui.TreeWidget_Catalogue_Process.topLevelItem(2).child(1),
-            TargetWidget = self.ui.Frame_Process_SlicerParams_AdvanceSettings,
+            TargetWidget = self.ui.ToolBox_Process_SlicerParams_AdvanceSettings,
             ScrollArea = self.ui.ScrollArea_Middle_Process
         )
         Function_ScrollToWidget(
@@ -2166,7 +2148,7 @@ class MainWindow(Window_MainWindow):
         )
         Function_ScrollToWidget(
             Trigger = self.ui.TreeWidget_Catalogue_Process.topLevelItem(3).child(1),
-            TargetWidget = self.ui.Frame_Process_OutputParams_AdvanceSettings,
+            TargetWidget = self.ui.ToolBox_Process_OutputParams_AdvanceSettings,
             ScrollArea = self.ui.ScrollArea_Middle_Process
         )
 
@@ -2233,7 +2215,7 @@ class MainWindow(Window_MainWindow):
 
         # Guidance
         DialogBox_ASR = MessageBox_Stacked(self)
-        DialogBox_ASR.setWindowTitle('Guidance（该引导仅出现一次）')
+        DialogBox_ASR.setWindowTitle(QCA.translate("MsgBox", "引导（仅出现一次）"))
         DialogBox_ASR.SetContent(
             [
                 NormPath(Path(ResourceDir).joinpath('Sources/Guidance_ASR.png')),
@@ -2362,31 +2344,8 @@ class MainWindow(Window_MainWindow):
             }
         )
 
-        self.ui.CheckBox_ASR_VPR_VPRParams_Toggle_AdvanceSettings.setChecked(False)
-        Function_ConfigureCheckBox(
-            CheckBox = self.ui.CheckBox_ASR_VPR_VPRParams_Toggle_AdvanceSettings,
-            CheckedText = "高级设置",
-            CheckedEvents = [
-                lambda: Function_AnimateFrame(
-                    self.ui.Frame_ASR_VPR_VPRParams_AdvanceSettings,
-                    None, None,
-                    0, self.ui.Frame_ASR_VPR_VPRParams_AdvanceSettings.sizeHint().height(),
-                    210,
-                    'Extend'
-                )
-            ],
-            UncheckedText = "高级设置",
-            UncheckedEvents = [
-                lambda: Function_AnimateFrame(
-                    self.ui.Frame_ASR_VPR_VPRParams_AdvanceSettings,
-                    None, None,
-                    0, self.ui.Frame_ASR_VPR_VPRParams_AdvanceSettings.sizeHint().height(),
-                    210,
-                    'Reduce'
-                )
-            ],
-            TakeEffect = True
-        )
+        self.ui.ToolBox_ASR_VPR_VPRParams_AdvanceSettings.widget(0).setText(QCA.translate("ToolBox", "高级设置"))
+        self.ui.ToolBox_ASR_VPR_VPRParams_AdvanceSettings.widget(0).collapse()
 
         Function_SetText(
             Widget = self.ui.Label_ASR_VPR_ModelType,
@@ -2501,31 +2460,8 @@ class MainWindow(Window_MainWindow):
             }
         )
 
-        self.ui.CheckBox_ASR_VPR_OutputParams_Toggle_AdvanceSettings.setChecked(False)
-        Function_ConfigureCheckBox(
-            CheckBox = self.ui.CheckBox_ASR_VPR_OutputParams_Toggle_AdvanceSettings,
-            CheckedText = "高级设置",
-            CheckedEvents = [
-                lambda: Function_AnimateFrame(
-                    self.ui.Frame_ASR_VPR_OutputParams_AdvanceSettings,
-                    None, None,
-                    0, self.ui.Frame_ASR_VPR_OutputParams_AdvanceSettings.sizeHint().height(),
-                    210,
-                    'Extend'
-                )
-            ],
-            UncheckedText = "高级设置",
-            UncheckedEvents = [
-                lambda: Function_AnimateFrame(
-                    self.ui.Frame_ASR_VPR_OutputParams_AdvanceSettings,
-                    None, None,
-                    0, self.ui.Frame_ASR_VPR_OutputParams_AdvanceSettings.sizeHint().height(),
-                    210,
-                    'Reduce'
-                )
-            ],
-            TakeEffect = True
-        )
+        self.ui.ToolBox_ASR_VPR_OutputParams_AdvanceSettings.widget(0).setText(QCA.translate("ToolBox", "高级设置"))
+        self.ui.ToolBox_ASR_VPR_OutputParams_AdvanceSettings.widget(0).collapse()
 
         Function_SetText(
             Widget = self.ui.Label_ASR_VPR_AudioSpeakersDataName,
@@ -2603,7 +2539,7 @@ class MainWindow(Window_MainWindow):
 
         ChildWindow_ASR.ui.Table.SetHorizontalHeaders(['音频路径', '人物姓名', '相似度', '播放', '操作'])
 
-        ChildWindow_ASR.ui.CheckBox.setText("结束编辑时将拥有匹配人物的音频保存到:")
+        ChildWindow_ASR.ui.CheckBox.setText(QCA.translate("CheckBox", "结束编辑时将拥有匹配人物的音频保存到:"))
         ChildWindow_ASR.ui.CheckBox.setChecked(True)
         ChildWindow_ASR.ui.LineEdit.ClearDefaultStyleSheet()
         ChildWindow_ASR.ui.LineEdit.setStyleSheet(ChildWindow_ASR.ui.LineEdit.styleSheet() + 'LineEditBase {border-width: 0px 0px 1px 0px; border-radius: 0px;}')
@@ -2611,9 +2547,9 @@ class MainWindow(Window_MainWindow):
         ChildWindow_ASR.ui.LineEdit.RemoveFileDialogButton()
         ChildWindow_ASR.ui.LineEdit.setReadOnly(True)
 
-        ChildWindow_ASR.ui.Button_Cancel.setText('取消')
+        ChildWindow_ASR.ui.Button_Cancel.setText(QCA.translate("Button", "取消"))
         ChildWindow_ASR.ui.Button_Cancel.clicked.connect(ChildWindow_ASR.ui.Button_Close.click)
-        ChildWindow_ASR.ui.Button_Save.setText('保存')
+        ChildWindow_ASR.ui.Button_Save.setText(QCA.translate("Button", "保存"))
         ChildWindow_ASR.ui.Button_Save.clicked.connect(
             lambda: (
                 ASRResult_Save(
@@ -2627,7 +2563,7 @@ class MainWindow(Window_MainWindow):
                 )
             )
         )
-        ChildWindow_ASR.ui.Button_Confirm.setText('确认')
+        ChildWindow_ASR.ui.Button_Confirm.setText(QCA.translate("Button", "确认"))
         ChildWindow_ASR.ui.Button_Confirm.clicked.connect(
             lambda: Function_ShowMessageBox(self,
                 QMessageBox.Question, "Ask",
@@ -2684,7 +2620,7 @@ class MainWindow(Window_MainWindow):
         )
         Function_ScrollToWidget(
             Trigger = self.ui.TreeWidget_Catalogue_ASR_VPR.topLevelItem(1).child(1),
-            TargetWidget = self.ui.Frame_ASR_VPR_VPRParams_AdvanceSettings,
+            TargetWidget = self.ui.ToolBox_ASR_VPR_VPRParams_AdvanceSettings,
             ScrollArea = self.ui.ScrollArea_Middle_ASR_VPR
         )
         Function_ScrollToWidget(
@@ -2699,7 +2635,7 @@ class MainWindow(Window_MainWindow):
         )
         Function_ScrollToWidget(
             Trigger = self.ui.TreeWidget_Catalogue_ASR_VPR.topLevelItem(2).child(1),
-            TargetWidget = self.ui.Frame_ASR_VPR_OutputParams_AdvanceSettings,
+            TargetWidget = self.ui.ToolBox_ASR_VPR_OutputParams_AdvanceSettings,
             ScrollArea = self.ui.ScrollArea_Middle_ASR_VPR
         )
 
@@ -2777,7 +2713,7 @@ class MainWindow(Window_MainWindow):
 
         # Guidance
         DialogBox_STT = MessageBox_Stacked(self)
-        DialogBox_STT.setWindowTitle('Guidance（该引导仅出现一次）')
+        DialogBox_STT.setWindowTitle(QCA.translate("MsgBox", "引导（仅出现一次）"))
         DialogBox_STT.SetContent(
             [
                 NormPath(Path(ResourceDir).joinpath('Sources/Guidance_STT.png')),
@@ -2897,31 +2833,8 @@ class MainWindow(Window_MainWindow):
             }
         )
 
-        self.ui.CheckBox_STT_Whisper_WhisperParams_Toggle_AdvanceSettings.setChecked(False)
-        Function_ConfigureCheckBox(
-            CheckBox = self.ui.CheckBox_STT_Whisper_WhisperParams_Toggle_AdvanceSettings,
-            CheckedText = "高级设置",
-            CheckedEvents = [
-                lambda: Function_AnimateFrame(
-                    self.ui.Frame_STT_Whisper_WhisperParams_AdvanceSettings,
-                    None, None,
-                    0, self.ui.Frame_STT_Whisper_WhisperParams_AdvanceSettings.sizeHint().height(),
-                    210,
-                    'Extend'
-                )
-            ],
-            UncheckedText = "高级设置",
-            UncheckedEvents = [
-                lambda: Function_AnimateFrame(
-                    self.ui.Frame_STT_Whisper_WhisperParams_AdvanceSettings,
-                    None, None,
-                    0, self.ui.Frame_STT_Whisper_WhisperParams_AdvanceSettings.sizeHint().height(),
-                    210,
-                    'Reduce'
-                )
-            ],
-            TakeEffect = True
-        )
+        self.ui.ToolBox_STT_Whisper_WhisperParams_AdvanceSettings.widget(0).setText(QCA.translate("ToolBox", "高级设置"))
+        self.ui.ToolBox_STT_Whisper_WhisperParams_AdvanceSettings.widget(0).collapse()
 
         Function_SetText(
             Widget = self.ui.Label_STT_Whisper_Verbose,
@@ -3072,9 +2985,9 @@ class MainWindow(Window_MainWindow):
 
         ChildWindow_STT.ui.Table.SetHorizontalHeaders(['音频路径', '音频内容', '播放'])
 
-        ChildWindow_STT.ui.Button_Cancel.setText('取消')
+        ChildWindow_STT.ui.Button_Cancel.setText(QCA.translate("Button", "取消"))
         ChildWindow_STT.ui.Button_Cancel.clicked.connect(ChildWindow_STT.ui.Button_Close.click)
-        ChildWindow_STT.ui.Button_Confirm.setText('确认')
+        ChildWindow_STT.ui.Button_Confirm.setText(QCA.translate("Button", "确认"))
         ChildWindow_STT.ui.Button_Confirm.clicked.connect(
             lambda: Function_ShowMessageBox(self,
                 QMessageBox.Question, "Ask",
@@ -3129,7 +3042,7 @@ class MainWindow(Window_MainWindow):
         )
         Function_ScrollToWidget(
             Trigger = self.ui.TreeWidget_Catalogue_STT_Whisper.topLevelItem(1).child(1),
-            TargetWidget = self.ui.Frame_STT_Whisper_WhisperParams_AdvanceSettings,
+            TargetWidget = self.ui.ToolBox_STT_Whisper_WhisperParams_AdvanceSettings,
             ScrollArea = self.ui.ScrollArea_Middle_STT_Whisper
         )
         Function_ScrollToWidget(
@@ -3198,7 +3111,7 @@ class MainWindow(Window_MainWindow):
 
         # Guidance
         DialogBox_Dataset = MessageBox_Stacked(self)
-        DialogBox_Dataset.setWindowTitle('Guidance（该引导仅出现一次）')
+        DialogBox_Dataset.setWindowTitle(QCA.translate("MsgBox", "引导（仅出现一次）"))
         DialogBox_Dataset.SetContent(
             [
                 NormPath(Path(ResourceDir).joinpath('Sources/Guidance_Dataset.png')),
@@ -3238,8 +3151,8 @@ class MainWindow(Window_MainWindow):
         self.ui.GroupBox_DAT_GPTSoVITS_InputParams.setTitle(QCA.translate("GroupBox", "输入参数"))
 
         DialogBox_GPTSoVITS_AudioSpeakersDataPath = MessageBox_Buttons(self)
-        DialogBox_GPTSoVITS_AudioSpeakersDataPath.setText("请选择参数类型")
-        DialogBox_GPTSoVITS_AudioSpeakersDataPath.Button1.setText("音频文件目录")
+        DialogBox_GPTSoVITS_AudioSpeakersDataPath.setText(QCA.translate("MsgBox", "请选择参数类型"))
+        DialogBox_GPTSoVITS_AudioSpeakersDataPath.Button1.setText(QCA.translate("Button", "音频文件目录"))
         DialogBox_GPTSoVITS_AudioSpeakersDataPath.Button1.clicked.connect(
             lambda: (
                 self.ui.LineEdit_DAT_GPTSoVITS_AudioSpeakersDataPath.setText(
@@ -3251,7 +3164,7 @@ class MainWindow(Window_MainWindow):
                 DialogBox_GPTSoVITS_AudioSpeakersDataPath.close(),
             )
         )
-        DialogBox_GPTSoVITS_AudioSpeakersDataPath.Button2.setText("语音识别结果文本路径")
+        DialogBox_GPTSoVITS_AudioSpeakersDataPath.Button2.setText(QCA.translate("Button", "语音识别结果文本路径"))
         DialogBox_GPTSoVITS_AudioSpeakersDataPath.Button2.clicked.connect(
             lambda: (
                 self.ui.LineEdit_DAT_GPTSoVITS_AudioSpeakersDataPath.setText(
@@ -3360,7 +3273,6 @@ class MainWindow(Window_MainWindow):
         self.ui.CheckBox_DAT_GPTSoVITS_AddAuxiliaryData.setChecked(
             eval(Config_DAT_GPTSoVITS.GetValue('GPT-SoVITS', 'Add_AuxiliaryData', 'False'))
         )
-        Frame_DAT_GPTSoVITS_GPTSoVITSParams_BasicSettings_DefaultHeight = self.ui.Frame_DAT_GPTSoVITS_GPTSoVITSParams_BasicSettings.sizeHint().height()
         Function_ConfigureCheckBox(
             CheckBox = self.ui.CheckBox_DAT_GPTSoVITS_AddAuxiliaryData,
             CheckedText = "已启用",
@@ -3368,7 +3280,6 @@ class MainWindow(Window_MainWindow):
                 lambda: Config_DAT_GPTSoVITS.EditConfig('GPT-SoVITS', 'Add_AuxiliaryData', 'True'),
                 lambda: self.SetChildWidgetsVisibility(
                     self.ui.Frame_DAT_GPTSoVITS_GPTSoVITSParams_BasicSettings,
-                    Frame_DAT_GPTSoVITS_GPTSoVITSParams_BasicSettings_DefaultHeight,
                     [
                         self.ui.Frame_DAT_GPTSoVITS_AuxiliaryDataPath
                     ],
@@ -3380,7 +3291,6 @@ class MainWindow(Window_MainWindow):
                 lambda: Config_DAT_GPTSoVITS.EditConfig('GPT-SoVITS', 'Add_AuxiliaryData', 'False'),
                 lambda: self.SetChildWidgetsVisibility(
                     self.ui.Frame_DAT_GPTSoVITS_GPTSoVITSParams_BasicSettings,
-                    Frame_DAT_GPTSoVITS_GPTSoVITSParams_BasicSettings_DefaultHeight,
                     [
                         self.ui.Frame_DAT_GPTSoVITS_AuxiliaryDataPath
                     ],
@@ -3450,31 +3360,8 @@ class MainWindow(Window_MainWindow):
             }
         )
 
-        self.ui.CheckBox_DAT_GPTSoVITS_OutputParams_Toggle_AdvanceSettings.setChecked(False)
-        Function_ConfigureCheckBox(
-            CheckBox = self.ui.CheckBox_DAT_GPTSoVITS_OutputParams_Toggle_AdvanceSettings,
-            CheckedText = "高级设置",
-            CheckedEvents = [
-                lambda: Function_AnimateFrame(
-                    self.ui.Frame_DAT_GPTSoVITS_OutputParams_AdvanceSettings,
-                    None, None,
-                    0, self.ui.Frame_DAT_GPTSoVITS_OutputParams_AdvanceSettings.sizeHint().height(),
-                    210,
-                    'Extend'
-                )
-            ],
-            UncheckedText = "高级设置",
-            UncheckedEvents = [
-                lambda: Function_AnimateFrame(
-                    self.ui.Frame_DAT_GPTSoVITS_OutputParams_AdvanceSettings,
-                    None, None,
-                    0, self.ui.Frame_DAT_GPTSoVITS_OutputParams_AdvanceSettings.sizeHint().height(),
-                    210,
-                    'Reduce'
-                )
-            ],
-            TakeEffect = True
-        )
+        self.ui.ToolBox_DAT_GPTSoVITS_OutputParams_AdvanceSettings.widget(0).setText(QCA.translate("ToolBox", "高级设置"))
+        self.ui.ToolBox_DAT_GPTSoVITS_OutputParams_AdvanceSettings.widget(0).collapse()
 
         Function_SetText(
             Widget = self.ui.Label_DAT_GPTSoVITS_FileListName,
@@ -3552,9 +3439,9 @@ class MainWindow(Window_MainWindow):
 
         ChildWindow_DAT_GPTSoVITS.ui.Table.SetHorizontalHeaders(['数据文本', '播放'])
 
-        ChildWindow_DAT_GPTSoVITS.ui.Button_Cancel.setText('取消')
+        ChildWindow_DAT_GPTSoVITS.ui.Button_Cancel.setText(QCA.translate("Button", "取消"))
         ChildWindow_DAT_GPTSoVITS.ui.Button_Cancel.clicked.connect(ChildWindow_DAT_GPTSoVITS.ui.Button_Close.click)
-        ChildWindow_DAT_GPTSoVITS.ui.Button_Confirm.setText('确认')
+        ChildWindow_DAT_GPTSoVITS.ui.Button_Confirm.setText(QCA.translate("Button", "确认"))
         ChildWindow_DAT_GPTSoVITS.ui.Button_Confirm.clicked.connect(
             lambda: Function_ShowMessageBox(self,
                 QMessageBox.Question, "Ask",
@@ -3618,7 +3505,7 @@ class MainWindow(Window_MainWindow):
         )
         Function_ScrollToWidget(
             Trigger = self.ui.TreeWidget_Catalogue_DAT_GPTSoVITS.topLevelItem(2).child(1),
-            TargetWidget = self.ui.Frame_DAT_GPTSoVITS_OutputParams_AdvanceSettings,
+            TargetWidget = self.ui.ToolBox_DAT_GPTSoVITS_OutputParams_AdvanceSettings,
             ScrollArea = self.ui.ScrollArea_Middle_DAT_GPTSoVITS
         )
 
@@ -3694,8 +3581,8 @@ class MainWindow(Window_MainWindow):
         self.ui.GroupBox_DAT_VITS_InputParams.setTitle(QCA.translate("GroupBox", "输入参数"))
 
         DialogBox_VITS_AudioSpeakersDataPath = MessageBox_Buttons(self)
-        DialogBox_VITS_AudioSpeakersDataPath.setText("请选择参数类型")
-        DialogBox_VITS_AudioSpeakersDataPath.Button1.setText("音频文件目录")
+        DialogBox_VITS_AudioSpeakersDataPath.setText(QCA.translate("MsgBox", "请选择参数类型"))
+        DialogBox_VITS_AudioSpeakersDataPath.Button1.setText(QCA.translate("Button", "音频文件目录"))
         DialogBox_VITS_AudioSpeakersDataPath.Button1.clicked.connect(
             lambda: (
                 self.ui.LineEdit_DAT_VITS_AudioSpeakersDataPath.setText(
@@ -3707,7 +3594,7 @@ class MainWindow(Window_MainWindow):
                 DialogBox_VITS_AudioSpeakersDataPath.close(),
             )
         )
-        DialogBox_VITS_AudioSpeakersDataPath.Button2.setText("语音识别结果文本路径")
+        DialogBox_VITS_AudioSpeakersDataPath.Button2.setText(QCA.translate("Button", "语音识别结果文本路径"))
         DialogBox_VITS_AudioSpeakersDataPath.Button2.clicked.connect(
             lambda: (
                 self.ui.LineEdit_DAT_VITS_AudioSpeakersDataPath.setText(
@@ -3815,7 +3702,6 @@ class MainWindow(Window_MainWindow):
         self.ui.CheckBox_DAT_VITS_AddAuxiliaryData.setChecked(
             eval(Config_DAT_VITS.GetValue('VITS', 'Add_AuxiliaryData', 'False'))
         )
-        Frame_DAT_VITS_VITSParams_BasicSettings_DefaultHeight = self.ui.Frame_DAT_VITS_VITSParams_BasicSettings.sizeHint().height()
         Function_ConfigureCheckBox(
             CheckBox = self.ui.CheckBox_DAT_VITS_AddAuxiliaryData,
             CheckedText = "已启用",
@@ -3823,7 +3709,6 @@ class MainWindow(Window_MainWindow):
                 lambda: Config_DAT_VITS.EditConfig('VITS', 'Add_AuxiliaryData', 'True'),
                 lambda: self.SetChildWidgetsVisibility(
                     self.ui.Frame_DAT_VITS_VITSParams_BasicSettings,
-                    Frame_DAT_VITS_VITSParams_BasicSettings_DefaultHeight,
                     [
                         self.ui.Frame_DAT_VITS_AuxiliaryDataPath
                     ],
@@ -3835,7 +3720,6 @@ class MainWindow(Window_MainWindow):
                 lambda: Config_DAT_VITS.EditConfig('VITS', 'Add_AuxiliaryData', 'False'),
                 lambda: self.SetChildWidgetsVisibility(
                     self.ui.Frame_DAT_VITS_VITSParams_BasicSettings,
-                    Frame_DAT_VITS_VITSParams_BasicSettings_DefaultHeight,
                     [
                         self.ui.Frame_DAT_VITS_AuxiliaryDataPath
                     ],
@@ -3878,31 +3762,8 @@ class MainWindow(Window_MainWindow):
             }
         )
 
-        self.ui.CheckBox_DAT_VITS_VITSParams_Toggle_AdvanceSettings.setChecked(False)
-        Function_ConfigureCheckBox(
-            CheckBox = self.ui.CheckBox_DAT_VITS_VITSParams_Toggle_AdvanceSettings,
-            CheckedText = "高级设置",
-            CheckedEvents = [
-                lambda: Function_AnimateFrame(
-                    self.ui.Frame_DAT_VITS_VITSParams_AdvanceSettings,
-                    None, None,
-                    0, self.ui.Frame_DAT_VITS_VITSParams_AdvanceSettings.sizeHint().height(),
-                    210,
-                    'Extend'
-                )
-            ],
-            UncheckedText = "高级设置",
-            UncheckedEvents = [
-                lambda: Function_AnimateFrame(
-                    self.ui.Frame_DAT_VITS_VITSParams_AdvanceSettings,
-                    None, None,
-                    0, self.ui.Frame_DAT_VITS_VITSParams_AdvanceSettings.sizeHint().height(),
-                    210,
-                    'Reduce'
-                )
-            ],
-            TakeEffect = True
-        )
+        self.ui.ToolBox_DAT_VITS_VITSParams_AdvanceSettings.widget(0).setText(QCA.translate("ToolBox", "高级设置"))
+        self.ui.ToolBox_DAT_VITS_VITSParams_AdvanceSettings.widget(0).collapse()
 
         Function_SetText(
             Widget = self.ui.Label_DAT_VITS_TrainRatio,
@@ -4015,31 +3876,8 @@ class MainWindow(Window_MainWindow):
             }
         )
 
-        self.ui.CheckBox_DAT_VITS_OutputParams_Toggle_AdvanceSettings.setChecked(False)
-        Function_ConfigureCheckBox(
-            CheckBox = self.ui.CheckBox_DAT_VITS_OutputParams_Toggle_AdvanceSettings,
-            CheckedText = "高级设置",
-            CheckedEvents = [
-                lambda: Function_AnimateFrame(
-                    self.ui.Frame_DAT_VITS_OutputParams_AdvanceSettings,
-                    None, None,
-                    0, self.ui.Frame_DAT_VITS_OutputParams_AdvanceSettings.sizeHint().height(),
-                    210,
-                    'Extend'
-                )
-            ],
-            UncheckedText = "高级设置",
-            UncheckedEvents = [
-                lambda: Function_AnimateFrame(
-                    self.ui.Frame_DAT_VITS_OutputParams_AdvanceSettings,
-                    None, None,
-                    0, self.ui.Frame_DAT_VITS_OutputParams_AdvanceSettings.sizeHint().height(),
-                    210,
-                    'Reduce'
-                )
-            ],
-            TakeEffect = True
-        )
+        self.ui.ToolBox_DAT_VITS_OutputParams_AdvanceSettings.widget(0).setText(QCA.translate("ToolBox", "高级设置"))
+        self.ui.ToolBox_DAT_VITS_OutputParams_AdvanceSettings.widget(0).collapse()
 
         Function_SetText(
             Widget = self.ui.Label_DAT_VITS_FileListNameTraining,
@@ -4152,9 +3990,9 @@ class MainWindow(Window_MainWindow):
         ChildWindow_DAT_VITS.ui.Table_Train.SetHorizontalHeaders(['数据文本', '播放'])
         ChildWindow_DAT_VITS.ui.Table_Val.SetHorizontalHeaders(['数据文本', '播放'])
 
-        ChildWindow_DAT_VITS.ui.Button_Cancel.setText('取消')
+        ChildWindow_DAT_VITS.ui.Button_Cancel.setText(QCA.translate("Button", "取消"))
         ChildWindow_DAT_VITS.ui.Button_Cancel.clicked.connect(ChildWindow_DAT_VITS.ui.Button_Close.click)
-        ChildWindow_DAT_VITS.ui.Button_Confirm.setText('确认')
+        ChildWindow_DAT_VITS.ui.Button_Confirm.setText(QCA.translate("Button", "确认"))
         ChildWindow_DAT_VITS.ui.Button_Confirm.clicked.connect(
             lambda: Function_ShowMessageBox(self,
                 QMessageBox.Question, "Ask",
@@ -4213,7 +4051,7 @@ class MainWindow(Window_MainWindow):
         )
         Function_ScrollToWidget(
             Trigger = self.ui.TreeWidget_Catalogue_DAT_VITS.topLevelItem(1).child(1),
-            TargetWidget = self.ui.Frame_DAT_VITS_VITSParams_AdvanceSettings,
+            TargetWidget = self.ui.ToolBox_DAT_VITS_VITSParams_AdvanceSettings,
             ScrollArea = self.ui.ScrollArea_Middle_DAT_VITS
         )
         Function_ScrollToWidget(
@@ -4228,7 +4066,7 @@ class MainWindow(Window_MainWindow):
         )
         Function_ScrollToWidget(
             Trigger = self.ui.TreeWidget_Catalogue_DAT_VITS.topLevelItem(2).child(1),
-            TargetWidget = self.ui.Frame_DAT_VITS_OutputParams_AdvanceSettings,
+            TargetWidget = self.ui.ToolBox_DAT_VITS_OutputParams_AdvanceSettings,
             ScrollArea = self.ui.ScrollArea_Middle_DAT_VITS
         )
 
@@ -4300,7 +4138,7 @@ class MainWindow(Window_MainWindow):
 
         # Guidance
         DialogBox_Train = MessageBox_Stacked(self)
-        DialogBox_Train.setWindowTitle('Guidance（该引导仅出现一次）')
+        DialogBox_Train.setWindowTitle(QCA.translate("MsgBox", "引导（仅出现一次）"))
         DialogBox_Train.SetContent(
             [
                 NormPath(Path(ResourceDir).joinpath('Sources/Guidance_Train.png')),
@@ -4547,31 +4385,8 @@ class MainWindow(Window_MainWindow):
             }
         )
 
-        self.ui.CheckBox_Train_GPTSoVITS_GPTSoVITSParams_Toggle_AdvanceSettings.setChecked(False)
-        Function_ConfigureCheckBox(
-            CheckBox = self.ui.CheckBox_Train_GPTSoVITS_GPTSoVITSParams_Toggle_AdvanceSettings,
-            CheckedText = "高级设置",
-            CheckedEvents = [
-                lambda: Function_AnimateFrame(
-                    self.ui.Frame_Train_GPTSoVITS_GPTSoVITSParams_AdvanceSettings,
-                    None, None,
-                    0, self.ui.Frame_Train_GPTSoVITS_GPTSoVITSParams_AdvanceSettings.sizeHint().height(),
-                    210,
-                    'Extend'
-                )
-            ],
-            UncheckedText = "高级设置",
-            UncheckedEvents = [
-                lambda: Function_AnimateFrame(
-                    self.ui.Frame_Train_GPTSoVITS_GPTSoVITSParams_AdvanceSettings,
-                    None, None,
-                    0, self.ui.Frame_Train_GPTSoVITS_GPTSoVITSParams_AdvanceSettings.sizeHint().height(),
-                    210,
-                    'Reduce'
-                )
-            ],
-            TakeEffect = True
-        )
+        self.ui.ToolBox_Train_GPTSoVITS_GPTSoVITSParams_AdvanceSettings.widget(0).setText(QCA.translate("ToolBox", "高级设置"))
+        self.ui.ToolBox_Train_GPTSoVITS_GPTSoVITSParams_AdvanceSettings.widget(0).collapse()
 
         Function_SetText(
             Widget = self.ui.Label_Train_GPTSoVITS_FP16Run,
@@ -4626,31 +4441,8 @@ class MainWindow(Window_MainWindow):
             }
         )
 
-        self.ui.CheckBox_Train_GPTSoVITS_OutputParams_Toggle_AdvanceSettings.setChecked(False)
-        Function_ConfigureCheckBox(
-            CheckBox = self.ui.CheckBox_Train_GPTSoVITS_OutputParams_Toggle_AdvanceSettings,
-            CheckedText = "高级设置",
-            CheckedEvents = [
-                lambda: Function_AnimateFrame(
-                    self.ui.Frame_Train_GPTSoVITS_OutputParams_AdvanceSettings,
-                    None, None,
-                    0, self.ui.Frame_Train_GPTSoVITS_OutputParams_AdvanceSettings.sizeHint().height(),
-                    210,
-                    'Extend'
-                )
-            ],
-            UncheckedText = "高级设置",
-            UncheckedEvents = [
-                lambda: Function_AnimateFrame(
-                    self.ui.Frame_Train_GPTSoVITS_OutputParams_AdvanceSettings,
-                    None, None,
-                    0, self.ui.Frame_Train_GPTSoVITS_OutputParams_AdvanceSettings.sizeHint().height(),
-                    210,
-                    'Reduce'
-                )
-            ],
-            TakeEffect = True
-        )
+        self.ui.ToolBox_Train_GPTSoVITS_OutputParams_AdvanceSettings.widget(0).setText(QCA.translate("ToolBox", "高级设置"))
+        self.ui.ToolBox_Train_GPTSoVITS_OutputParams_AdvanceSettings.widget(0).collapse()
 
         Function_SetText(
             Widget = self.ui.Label_Train_GPTSoVITS_LogDir,
@@ -4736,7 +4528,7 @@ class MainWindow(Window_MainWindow):
         )
         Function_ScrollToWidget(
             Trigger = self.ui.TreeWidget_Catalogue_Train_GPTSoVITS.topLevelItem(1).child(1),
-            TargetWidget = self.ui.Frame_Train_GPTSoVITS_GPTSoVITSParams_AdvanceSettings,
+            TargetWidget = self.ui.ToolBox_Train_GPTSoVITS_GPTSoVITSParams_AdvanceSettings,
             ScrollArea = self.ui.ScrollArea_Middle_Train_GPTSoVITS
         )
         Function_ScrollToWidget(
@@ -4751,7 +4543,7 @@ class MainWindow(Window_MainWindow):
         )
         Function_ScrollToWidget(
             Trigger = self.ui.TreeWidget_Catalogue_Train_GPTSoVITS.topLevelItem(2).child(1),
-            TargetWidget = self.ui.Frame_Train_GPTSoVITS_OutputParams_AdvanceSettings,
+            TargetWidget = self.ui.ToolBox_Train_GPTSoVITS_OutputParams_AdvanceSettings,
             ScrollArea = self.ui.ScrollArea_Middle_Train_GPTSoVITS
         )
 
@@ -4764,7 +4556,7 @@ class MainWindow(Window_MainWindow):
             )
         )
 
-        self.ui.Button_RunTensorboard_Train_GPTSoVITS.setText("启动Tensorboard")
+        self.ui.Button_RunTensorboard_Train_GPTSoVITS.setText(QCA.translate("Button", "启动Tensorboard"))
         self.Function_SetMethodExecutor(
             ExecuteButton = self.ui.Button_RunTensorboard_Train_GPTSoVITS,
             Method = Tensorboard_Runner.Execute,
@@ -4984,7 +4776,6 @@ class MainWindow(Window_MainWindow):
         self.ui.CheckBox_Train_VITS_UsePretrainedModels.setChecked(
             eval(Config_Train_VITS.GetValue('VITS', 'Use_PretrainedModels', 'True'))
         )
-        Frame_Train_VITS_VITSParams_BasicSettings_DefaultHeight = self.ui.Frame_Train_VITS_VITSParams_BasicSettings.sizeHint().height()
         Function_ConfigureCheckBox(
             CheckBox = self.ui.CheckBox_Train_VITS_UsePretrainedModels,
             CheckedText = "已启用",
@@ -4992,7 +4783,6 @@ class MainWindow(Window_MainWindow):
                 lambda: Config_Train_VITS.EditConfig('VITS', 'Use_PretrainedModels', 'True'),
                 lambda: self.SetChildWidgetsVisibility(
                     self.ui.Frame_Train_VITS_VITSParams_BasicSettings,
-                    Frame_Train_VITS_VITSParams_BasicSettings_DefaultHeight - (0 if self.ui.CheckBox_Train_VITS_KeepOriginalSpeakers.isChecked() else self.ui.Frame_Train_VITS_ConfigPathLoad.height()),
                     [
                         self.ui.Frame_Train_VITS_ModelPathPretrainedG,
                         self.ui.Frame_Train_VITS_ModelPathPretrainedD,
@@ -5007,7 +4797,6 @@ class MainWindow(Window_MainWindow):
                 lambda: Config_Train_VITS.EditConfig('VITS', 'Use_PretrainedModels', 'False'),
                 lambda: self.SetChildWidgetsVisibility(
                     self.ui.Frame_Train_VITS_VITSParams_BasicSettings,
-                    Frame_Train_VITS_VITSParams_BasicSettings_DefaultHeight,
                     [
                         self.ui.Frame_Train_VITS_ModelPathPretrainedG,
                         self.ui.Frame_Train_VITS_ModelPathPretrainedD,
@@ -5099,7 +4888,7 @@ class MainWindow(Window_MainWindow):
             Trigger = DialogBox_KeepOriginalSpeakers.LineEdit,
             FromTo = {DialogBox_KeepOriginalSpeakers.LineEdit: self.ui.LineEdit_Train_VITS_ConfigPathLoad}
         )
-        DialogBox_KeepOriginalSpeakers.Button_Confirm.setText("确认")
+        DialogBox_KeepOriginalSpeakers.Button_Confirm.setText(QCA.translate("Button", "确认"))
         DialogBox_KeepOriginalSpeakers.Button_Confirm.clicked.connect(
             lambda: Function_ShowMessageBox(self,
                 MessageType = QMessageBox.Warning,
@@ -5107,7 +4896,7 @@ class MainWindow(Window_MainWindow):
                 Text = "配置文件路径不存在！",
             ) if Path(DialogBox_KeepOriginalSpeakers.LineEdit.text()).is_file() == False else DialogBox_KeepOriginalSpeakers.close()
         )
-        DialogBox_KeepOriginalSpeakers.Button_Cancel.setText("取消")
+        DialogBox_KeepOriginalSpeakers.Button_Cancel.setText(QCA.translate("Button", "取消"))
         DialogBox_KeepOriginalSpeakers.Button_Cancel.clicked.connect(
             lambda: (
                 self.ui.CheckBox_Train_VITS_KeepOriginalSpeakers.setChecked(False),
@@ -5131,9 +4920,6 @@ class MainWindow(Window_MainWindow):
                 lambda: Config_Train_VITS.EditConfig('VITS', 'Keep_Original_Speakers', 'True'),
                 lambda: self.SetChildWidgetsVisibility(
                     self.ui.Frame_Train_VITS_VITSParams_BasicSettings,
-                    Frame_Train_VITS_VITSParams_BasicSettings_DefaultHeight - (
-                        0 if self.ui.CheckBox_Train_VITS_UsePretrainedModels.isChecked() else (self.ui.Frame_Train_VITS_ModelPathPretrainedG.height() + self.ui.Frame_Train_VITS_ModelPathPretrainedD.height() + self.ui.Frame_Train_VITS_KeepOriginalSpeakers.height())
-                    ),
                     [
                         self.ui.Frame_Train_VITS_ConfigPathLoad
                     ],
@@ -5145,9 +4931,6 @@ class MainWindow(Window_MainWindow):
                 lambda: Config_Train_VITS.EditConfig('VITS', 'Keep_Original_Speakers', 'False'),
                 lambda: self.SetChildWidgetsVisibility(
                     self.ui.Frame_Train_VITS_VITSParams_BasicSettings,
-                    Frame_Train_VITS_VITSParams_BasicSettings_DefaultHeight - (
-                        0 if self.ui.CheckBox_Train_VITS_UsePretrainedModels.isChecked() else (self.ui.Frame_Train_VITS_ModelPathPretrainedG.height() + self.ui.Frame_Train_VITS_ModelPathPretrainedD.height() + self.ui.Frame_Train_VITS_KeepOriginalSpeakers.height())
-                    ),
                     [
                         self.ui.Frame_Train_VITS_ConfigPathLoad
                     ],
@@ -5201,31 +4984,8 @@ class MainWindow(Window_MainWindow):
             }
         )
 
-        self.ui.CheckBox_Train_VITS_VITSParams_Toggle_AdvanceSettings.setChecked(False)
-        Function_ConfigureCheckBox(
-            CheckBox = self.ui.CheckBox_Train_VITS_VITSParams_Toggle_AdvanceSettings,
-            CheckedText = "高级设置",
-            CheckedEvents = [
-                lambda: Function_AnimateFrame(
-                    self.ui.Frame_Train_VITS_VITSParams_AdvanceSettings,
-                    None, None,
-                    0, self.ui.Frame_Train_VITS_VITSParams_AdvanceSettings.sizeHint().height(),
-                    210,
-                    'Extend'
-                )
-            ],
-            UncheckedText = "高级设置",
-            UncheckedEvents = [
-                lambda: Function_AnimateFrame(
-                    self.ui.Frame_Train_VITS_VITSParams_AdvanceSettings,
-                    None, None,
-                    0, self.ui.Frame_Train_VITS_VITSParams_AdvanceSettings.sizeHint().height(),
-                    210,
-                    'Reduce'
-                )
-            ],
-            TakeEffect = True
-        )
+        self.ui.ToolBox_Train_VITS_VITSParams_AdvanceSettings.widget(0).setText(QCA.translate("ToolBox", "高级设置"))
+        self.ui.ToolBox_Train_VITS_VITSParams_AdvanceSettings.widget(0).collapse()
 
         Function_SetText(
             Widget = self.ui.Label_Train_VITS_NumWorkers,
@@ -5297,31 +5057,8 @@ class MainWindow(Window_MainWindow):
             }
         )
 
-        self.ui.CheckBox_Train_VITS_OutputParams_Toggle_AdvanceSettings.setChecked(False)
-        Function_ConfigureCheckBox(
-            CheckBox = self.ui.CheckBox_Train_VITS_OutputParams_Toggle_AdvanceSettings,
-            CheckedText = "高级设置",
-            CheckedEvents = [
-                lambda: Function_AnimateFrame(
-                    self.ui.Frame_Train_VITS_OutputParams_AdvanceSettings,
-                    None, None,
-                    0, self.ui.Frame_Train_VITS_OutputParams_AdvanceSettings.sizeHint().height(),
-                    210,
-                    'Extend'
-                )
-            ],
-            UncheckedText = "高级设置",
-            UncheckedEvents = [
-                lambda: Function_AnimateFrame(
-                    self.ui.Frame_Train_VITS_OutputParams_AdvanceSettings,
-                    None, None,
-                    0, self.ui.Frame_Train_VITS_OutputParams_AdvanceSettings.sizeHint().height(),
-                    210,
-                    'Reduce'
-                )
-            ],
-            TakeEffect = True
-        )
+        self.ui.ToolBox_Train_VITS_OutputParams_AdvanceSettings.widget(0).setText(QCA.translate("ToolBox", "高级设置"))
+        self.ui.ToolBox_Train_VITS_OutputParams_AdvanceSettings.widget(0).collapse()
 
         Function_SetText(
             Widget = self.ui.Label_Train_VITS_OutputDirName,
@@ -5394,7 +5131,7 @@ class MainWindow(Window_MainWindow):
         )
         Function_ScrollToWidget(
             Trigger = self.ui.TreeWidget_Catalogue_Train_VITS.topLevelItem(1).child(1),
-            TargetWidget = self.ui.Frame_Train_VITS_VITSParams_AdvanceSettings,
+            TargetWidget = self.ui.ToolBox_Train_VITS_VITSParams_AdvanceSettings,
             ScrollArea = self.ui.ScrollArea_Middle_Train_VITS
         )
         Function_ScrollToWidget(
@@ -5409,7 +5146,7 @@ class MainWindow(Window_MainWindow):
         )
         Function_ScrollToWidget(
             Trigger = self.ui.TreeWidget_Catalogue_Train_VITS.topLevelItem(2).child(1),
-            TargetWidget = self.ui.Frame_Train_VITS_OutputParams_AdvanceSettings,
+            TargetWidget = self.ui.ToolBox_Train_VITS_OutputParams_AdvanceSettings,
             ScrollArea = self.ui.ScrollArea_Middle_Train_VITS
         )
 
@@ -5422,7 +5159,7 @@ class MainWindow(Window_MainWindow):
             )
         )
 
-        self.ui.Button_RunTensorboard_Train_VITS.setText("启动Tensorboard")
+        self.ui.Button_RunTensorboard_Train_VITS.setText(QCA.translate("Button", "启动Tensorboard"))
         self.Function_SetMethodExecutor(
             ExecuteButton = self.ui.Button_RunTensorboard_Train_VITS,
             Method = Tensorboard_Runner.Execute,
@@ -5493,7 +5230,7 @@ class MainWindow(Window_MainWindow):
 
         # Guidance
         DialogBox_TTS = MessageBox_Stacked(self)
-        DialogBox_TTS.setWindowTitle('Guidance（该引导仅出现一次）')
+        DialogBox_TTS.setWindowTitle(QCA.translate("MsgBox", "引导（仅出现一次）"))
         DialogBox_TTS.SetContent(
             [
                 NormPath(Path(ResourceDir).joinpath('Sources/Guidance_TTS.png')),
@@ -5851,9 +5588,9 @@ class MainWindow(Window_MainWindow):
                 Body = QCA.translate("Label", "所属语言\n文字所属的语言，若使用自动检测则保持'None'即可（有概率报错）。")
             )
         )
-        self.ui.ComboBox_TTS_VITS_Language.addItems(['None', '中', '英', '日'])
+        self.ui.ComboBox_TTS_VITS_Language.addItems(['None', QCA.translate("ComboBox", '中'), QCA.translate("ComboBox", '英'), QCA.translate("ComboBox", '日')])
         self.ui.ComboBox_TTS_VITS_Language.setCurrentText(
-            str(Config_TTS_VITS.GetValue('VITS', 'Language', 'None'))
+            QCA.translate("ComboBox", str(Config_TTS_VITS.GetValue('VITS', 'Language', 'None')))
         )
         self.ui.ComboBox_TTS_VITS_Language.currentTextChanged.connect(
             lambda Value: Config_TTS_VITS.EditConfig('VITS', 'Language', str(Value))
@@ -5881,31 +5618,8 @@ class MainWindow(Window_MainWindow):
             lambda Value: Config_TTS_VITS.EditConfig('VITS', 'Speaker', str(Value))
         )
 
-        self.ui.CheckBox_TTS_VITS_VITSParams_Toggle_AdvanceSettings.setChecked(False)
-        Function_ConfigureCheckBox(
-            CheckBox = self.ui.CheckBox_TTS_VITS_VITSParams_Toggle_AdvanceSettings,
-            CheckedText = "高级设置",
-            CheckedEvents = [
-                lambda: Function_AnimateFrame(
-                    self.ui.Frame_TTS_VITS_VITSParams_AdvanceSettings,
-                    None, None,
-                    0, self.ui.Frame_TTS_VITS_VITSParams_AdvanceSettings.sizeHint().height(),
-                    210,
-                    'Extend'
-                )
-            ],
-            UncheckedText = "高级设置",
-            UncheckedEvents = [
-                lambda: Function_AnimateFrame(
-                    self.ui.Frame_TTS_VITS_VITSParams_AdvanceSettings,
-                    None, None,
-                    0, self.ui.Frame_TTS_VITS_VITSParams_AdvanceSettings.sizeHint().height(),
-                    210,
-                    'Reduce'
-                )
-            ],
-            TakeEffect = True
-        )
+        self.ui.ToolBox_TTS_VITS_VITSParams_AdvanceSettings.widget(0).setText(QCA.translate("ToolBox", "高级设置"))
+        self.ui.ToolBox_TTS_VITS_VITSParams_AdvanceSettings.widget(0).collapse()
 
         Function_SetText(
             Widget = self.ui.Label_TTS_VITS_EmotionStrength,
@@ -6097,7 +5811,7 @@ class MainWindow(Window_MainWindow):
             )
         )
 
-        ChildWindow_TTS.ui.Button_Cancel.setText('丢弃')
+        ChildWindow_TTS.ui.Button_Cancel.setText(QCA.translate("Button", "丢弃"))
         ChildWindow_TTS.ui.Button_Cancel.clicked.connect(
             lambda: Function_ShowMessageBox(self,
                 QMessageBox.Question, "Ask",
@@ -6112,7 +5826,7 @@ class MainWindow(Window_MainWindow):
                 }
             )
         )
-        ChildWindow_TTS.ui.Button_Confirm.setText('保留')
+        ChildWindow_TTS.ui.Button_Confirm.setText(QCA.translate("Button", "保留"))
         ChildWindow_TTS.ui.Button_Confirm.clicked.connect(
             lambda: Function_ShowMessageBox(self,
                 QMessageBox.Question, "Ask",
@@ -6181,7 +5895,7 @@ class MainWindow(Window_MainWindow):
         )
         Function_ScrollToWidget(
             Trigger = self.ui.TreeWidget_Catalogue_TTS_VITS.topLevelItem(1).child(1),
-            TargetWidget = self.ui.Frame_TTS_VITS_VITSParams_AdvanceSettings,
+            TargetWidget = self.ui.ToolBox_TTS_VITS_VITSParams_AdvanceSettings,
             ScrollArea = self.ui.ScrollArea_Middle_TTS_VITS
         )
         Function_ScrollToWidget(
@@ -6251,7 +5965,7 @@ class MainWindow(Window_MainWindow):
         self.ui.GroupBox_Settings_Client_Outlook.setTitle(QCA.translate("GroupBox", "外观设置"))
 
         self.ui.Label_Setting_Theme.setText(QCA.translate("Label", "主题"))
-        self.ui.ComboBox_Setting_Theme.addItems(['跟随系统', '亮色', '暗色'])
+        self.ui.ComboBox_Setting_Theme.addItems([QCA.translate("ComboBox", '跟随系统'), QCA.translate("ComboBox", '亮色'), QCA.translate("ComboBox", '暗色')])
         ThemeDict = {
             '跟随系统': Theme.Auto,
             '亮色': Theme.Light,
@@ -6259,7 +5973,7 @@ class MainWindow(Window_MainWindow):
         }
         ComponentsSignals.Signal_SetTheme.connect(
             lambda Theme: self.ui.ComboBox_Setting_Theme.setCurrentText(
-                FindKey(ThemeDict, Theme)
+                QCA.translate("ComboBox", FindKey(ThemeDict, Theme))
             )
         )
         self.ui.ComboBox_Setting_Theme.currentIndexChanged.connect(
@@ -6274,19 +5988,15 @@ class MainWindow(Window_MainWindow):
         )
 
         self.ui.Label_Setting_Language.setText(QCA.translate("Label", "语言"))
-        self.ui.ComboBox_Setting_Language.addItems(['中文'])
-        self.ui.ComboBox_Setting_Language.setCurrentText(
-            {
-                'Chinese': '中文'
-            }.get(Config.GetValue('Settings', 'Language', 'Chinese'))
-        )
-        self.ui.ComboBox_Setting_Language.currentIndexChanged.connect(
-            lambda: Config.EditConfig(
-                'Settings',
-                'Language',
-                {
-                    '中文': 'Chinese'
-                }.get(self.ui.ComboBox_Setting_Language.currentText())
+        self.ui.ComboBox_Setting_Language.addItems([QCA.translate("ComboBox", '跟随系统')])
+        LanguageDict = {
+            '跟随系统': Language.Auto,
+            #'中文': Language.ZH,
+            #'英文': Language.EN
+        }
+        ComponentsSignals.Signal_SetLanguage.connect(
+            lambda Language: self.ui.ComboBox_Setting_Language.setCurrentText(
+                QCA.translate("ComboBox", FindKey(LanguageDict, Language))
             )
         )
 
@@ -6677,6 +6387,11 @@ if __name__ == "__main__":
     SC = QSplashScreen(QPixmap(NormPath(Path(ResourceDir).joinpath('Sources/SplashScreen.png'))))
     #SC.showMessage('Loading...', alignment = Qt.AlignmentFlag.AlignCenter)
     SC.show()
+
+    # Set Language
+    Translator = TranslationBase()
+    Translator.load(Language.Auto)
+    App.installTranslator(Translator)
 
     # Init&Show MainWindow
     MW = MainWindow()

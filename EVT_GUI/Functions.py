@@ -11,38 +11,6 @@ from .Window import *
 
 ##############################################################################################################################
 
-def Function_FindChildUI(
-    ParentUI: QWidget,
-    ChildType: object
-):
-    '''
-    Function to find child UI
-    '''
-    ParentUI_Children = ParentUI.children()
-
-    for ParentUI_Child in ParentUI_Children:
-        if isinstance(ParentUI_Child, ChildType):
-            return ParentUI_Child
-
-
-def Function_FindParentUI(
-    ChildUI: QWidget,
-    ParentType: object
-):
-    '''
-    Function to find parent UI
-    '''
-    ChildUI_Parent = ChildUI.parent()
-
-    while not isinstance(ChildUI_Parent, ParentType):
-        try:
-            ChildUI_Parent = ChildUI_Parent.parent()
-        except:
-            raise Exception(f"{ChildUI}'s parent UI not found! Please check if the layout is correct.")
-
-    return ChildUI_Parent
-
-
 def Function_InsertUI(
     ParentUI: QWidget,
     InsertType: object,
