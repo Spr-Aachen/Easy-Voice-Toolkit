@@ -3857,10 +3857,10 @@ class Ui_MainWindow(object):
 "QWidget:hover {\n"
 "	background-color: rgba(36, 36, 36, 3);\n"
 "}")
-        self.gridLayout_9 = QGridLayout(self.Widget_Right_Process)
-        self.gridLayout_9.setSpacing(12)
-        self.gridLayout_9.setObjectName(u"gridLayout_9")
-        self.gridLayout_9.setContentsMargins(12, 12, 12, 12)
+        self.gridLayout_3 = QGridLayout(self.Widget_Right_Process)
+        self.gridLayout_3.setSpacing(12)
+        self.gridLayout_3.setObjectName(u"gridLayout_3")
+        self.gridLayout_3.setContentsMargins(12, 12, 12, 12)
         self.TextBrowser_Params_Process = QTextBrowser(self.Widget_Right_Process)
         self.TextBrowser_Params_Process.setObjectName(u"TextBrowser_Params_Process")
         sizePolicy1.setHeightForWidth(self.TextBrowser_Params_Process.sizePolicy().hasHeightForWidth())
@@ -3916,16 +3916,16 @@ class Ui_MainWindow(object):
                         ": rgba(123, 123, 123, 210);\n"
 "}")
 
-        self.gridLayout_9.addWidget(self.TextBrowser_Params_Process, 0, 0, 1, 1)
+        self.gridLayout_3.addWidget(self.TextBrowser_Params_Process, 0, 0, 1, 3)
 
-        self.Button_CheckOutput_Process = QPushButton(self.Widget_Right_Process)
-        self.Button_CheckOutput_Process.setObjectName(u"Button_CheckOutput_Process")
-        self.Button_CheckOutput_Process.setStyleSheet(u"QPushButton {\n"
+        self.Button_ResetSettings_Process = QPushButton(self.Widget_Right_Process)
+        self.Button_ResetSettings_Process.setObjectName(u"Button_ResetSettings_Process")
+        self.Button_ResetSettings_Process.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
 "	font-size: 12px;\n"
 "	background-color: transparent;\n"
-"	padding: 9.9px;\n"
-"	border-width: 1.5px;\n"
+"	padding: 6.6px;\n"
+"	border-width: 1.2px;\n"
 "	border-radius: 6px;\n"
 "	border-style: solid;\n"
 "	border-color: rgb(90, 90, 90);\n"
@@ -3934,7 +3934,61 @@ class Ui_MainWindow(object):
 "	border-color: rgb(120, 120, 120);\n"
 "}")
 
-        self.gridLayout_9.addWidget(self.Button_CheckOutput_Process, 1, 0, 1, 1)
+        self.gridLayout_3.addWidget(self.Button_ResetSettings_Process, 1, 0, 1, 1)
+
+        self.Button_ImportSettings_Process = QPushButton(self.Widget_Right_Process)
+        self.Button_ImportSettings_Process.setObjectName(u"Button_ImportSettings_Process")
+        self.Button_ImportSettings_Process.setStyleSheet(u"QPushButton {\n"
+"	text-align: center;\n"
+"	font-size: 12px;\n"
+"	background-color: transparent;\n"
+"	padding: 6.6px;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgb(120, 120, 120);\n"
+"}")
+
+        self.gridLayout_3.addWidget(self.Button_ImportSettings_Process, 1, 1, 1, 1)
+
+        self.Button_ExportSettings_Process = QPushButton(self.Widget_Right_Process)
+        self.Button_ExportSettings_Process.setObjectName(u"Button_ExportSettings_Process")
+        self.Button_ExportSettings_Process.setStyleSheet(u"QPushButton {\n"
+"	text-align: center;\n"
+"	font-size: 12px;\n"
+"	background-color: transparent;\n"
+"	padding: 6.6px;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgb(120, 120, 120);\n"
+"}")
+
+        self.gridLayout_3.addWidget(self.Button_ExportSettings_Process, 1, 2, 1, 1)
+
+        self.Button_CheckOutput_Process = QPushButton(self.Widget_Right_Process)
+        self.Button_CheckOutput_Process.setObjectName(u"Button_CheckOutput_Process")
+        self.Button_CheckOutput_Process.setStyleSheet(u"QPushButton {\n"
+"	text-align: center;\n"
+"	font-size: 12px;\n"
+"	background-color: transparent;\n"
+"	padding: 6.6px;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgb(120, 120, 120);\n"
+"}")
+
+        self.gridLayout_3.addWidget(self.Button_CheckOutput_Process, 2, 0, 1, 3)
 
 
         self.gridLayout_6.addWidget(self.Widget_Right_Process, 0, 2, 1, 1)
@@ -4928,7 +4982,61 @@ class Ui_MainWindow(object):
                         ": rgba(123, 123, 123, 210);\n"
 "}")
 
-        self.gridLayout_2.addWidget(self.TextBrowser_Params_ASR_VPR, 0, 0, 1, 1)
+        self.gridLayout_2.addWidget(self.TextBrowser_Params_ASR_VPR, 0, 0, 1, 3)
+
+        self.Button_ResetSettings_ASR_VPR = QPushButton(self.Widget_Right_ASR_VPR)
+        self.Button_ResetSettings_ASR_VPR.setObjectName(u"Button_ResetSettings_ASR_VPR")
+        self.Button_ResetSettings_ASR_VPR.setStyleSheet(u"QPushButton {\n"
+"	text-align: center;\n"
+"	font-size: 12px;\n"
+"	background-color: transparent;\n"
+"	padding: 6.6px;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgb(120, 120, 120);\n"
+"}")
+
+        self.gridLayout_2.addWidget(self.Button_ResetSettings_ASR_VPR, 1, 0, 1, 1)
+
+        self.Button_ImportSettings_ASR_VPR = QPushButton(self.Widget_Right_ASR_VPR)
+        self.Button_ImportSettings_ASR_VPR.setObjectName(u"Button_ImportSettings_ASR_VPR")
+        self.Button_ImportSettings_ASR_VPR.setStyleSheet(u"QPushButton {\n"
+"	text-align: center;\n"
+"	font-size: 12px;\n"
+"	background-color: transparent;\n"
+"	padding: 6.6px;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgb(120, 120, 120);\n"
+"}")
+
+        self.gridLayout_2.addWidget(self.Button_ImportSettings_ASR_VPR, 1, 1, 1, 1)
+
+        self.Button_ExportSettings_ASR_VPR = QPushButton(self.Widget_Right_ASR_VPR)
+        self.Button_ExportSettings_ASR_VPR.setObjectName(u"Button_ExportSettings_ASR_VPR")
+        self.Button_ExportSettings_ASR_VPR.setStyleSheet(u"QPushButton {\n"
+"	text-align: center;\n"
+"	font-size: 12px;\n"
+"	background-color: transparent;\n"
+"	padding: 6.6px;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgb(120, 120, 120);\n"
+"}")
+
+        self.gridLayout_2.addWidget(self.Button_ExportSettings_ASR_VPR, 1, 2, 1, 1)
 
         self.Button_EditResult_ASR_VPR = QPushButton(self.Widget_Right_ASR_VPR)
         self.Button_EditResult_ASR_VPR.setObjectName(u"Button_EditResult_ASR_VPR")
@@ -4936,8 +5044,8 @@ class Ui_MainWindow(object):
 "	text-align: center;\n"
 "	font-size: 12px;\n"
 "	background-color: transparent;\n"
-"	padding: 9.9px;\n"
-"	border-width: 1.5px;\n"
+"	padding: 6.6px;\n"
+"	border-width: 1.2px;\n"
 "	border-radius: 6px;\n"
 "	border-style: solid;\n"
 "	border-color: rgb(90, 90, 90);\n"
@@ -4946,7 +5054,7 @@ class Ui_MainWindow(object):
 "	border-color: rgb(120, 120, 120);\n"
 "}")
 
-        self.gridLayout_2.addWidget(self.Button_EditResult_ASR_VPR, 1, 0, 1, 1)
+        self.gridLayout_2.addWidget(self.Button_EditResult_ASR_VPR, 2, 0, 1, 3)
 
         self.Button_CheckOutput_ASR_VPR = QPushButton(self.Widget_Right_ASR_VPR)
         self.Button_CheckOutput_ASR_VPR.setObjectName(u"Button_CheckOutput_ASR_VPR")
@@ -4954,8 +5062,8 @@ class Ui_MainWindow(object):
 "	text-align: center;\n"
 "	font-size: 12px;\n"
 "	background-color: transparent;\n"
-"	padding: 9.9px;\n"
-"	border-width: 1.5px;\n"
+"	padding: 6.6px;\n"
+"	border-width: 1.2px;\n"
 "	border-radius: 6px;\n"
 "	border-style: solid;\n"
 "	border-color: rgb(90, 90, 90);\n"
@@ -4964,7 +5072,7 @@ class Ui_MainWindow(object):
 "	border-color: rgb(120, 120, 120);\n"
 "}")
 
-        self.gridLayout_2.addWidget(self.Button_CheckOutput_ASR_VPR, 2, 0, 1, 1)
+        self.gridLayout_2.addWidget(self.Button_CheckOutput_ASR_VPR, 3, 0, 1, 3)
 
 
         self.gridLayout_21.addWidget(self.Widget_Right_ASR_VPR, 0, 2, 1, 1)
@@ -5907,10 +6015,10 @@ class Ui_MainWindow(object):
 "QWidget:hover {\n"
 "	background-color: rgba(36, 36, 36, 3);\n"
 "}")
-        self.gridLayout_15 = QGridLayout(self.Widget_Right_STT_Whisper)
-        self.gridLayout_15.setSpacing(12)
-        self.gridLayout_15.setObjectName(u"gridLayout_15")
-        self.gridLayout_15.setContentsMargins(12, 12, 12, 12)
+        self.gridLayout_4 = QGridLayout(self.Widget_Right_STT_Whisper)
+        self.gridLayout_4.setSpacing(12)
+        self.gridLayout_4.setObjectName(u"gridLayout_4")
+        self.gridLayout_4.setContentsMargins(12, 12, 12, 12)
         self.TextBrowser_Params_STT_Whisper = QTextBrowser(self.Widget_Right_STT_Whisper)
         self.TextBrowser_Params_STT_Whisper.setObjectName(u"TextBrowser_Params_STT_Whisper")
         sizePolicy1.setHeightForWidth(self.TextBrowser_Params_STT_Whisper.sizePolicy().hasHeightForWidth())
@@ -5966,16 +6074,16 @@ class Ui_MainWindow(object):
                         ": rgba(123, 123, 123, 210);\n"
 "}")
 
-        self.gridLayout_15.addWidget(self.TextBrowser_Params_STT_Whisper, 0, 0, 1, 2)
+        self.gridLayout_4.addWidget(self.TextBrowser_Params_STT_Whisper, 0, 0, 1, 3)
 
-        self.Button_CheckOutput_STT_Whisper = QPushButton(self.Widget_Right_STT_Whisper)
-        self.Button_CheckOutput_STT_Whisper.setObjectName(u"Button_CheckOutput_STT_Whisper")
-        self.Button_CheckOutput_STT_Whisper.setStyleSheet(u"QPushButton {\n"
+        self.Button_ResetSettings_STT_Whisper = QPushButton(self.Widget_Right_STT_Whisper)
+        self.Button_ResetSettings_STT_Whisper.setObjectName(u"Button_ResetSettings_STT_Whisper")
+        self.Button_ResetSettings_STT_Whisper.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
 "	font-size: 12px;\n"
 "	background-color: transparent;\n"
-"	padding: 9.9px;\n"
-"	border-width: 1.5px;\n"
+"	padding: 6.6px;\n"
+"	border-width: 1.2px;\n"
 "	border-radius: 6px;\n"
 "	border-style: solid;\n"
 "	border-color: rgb(90, 90, 90);\n"
@@ -5984,7 +6092,61 @@ class Ui_MainWindow(object):
 "	border-color: rgb(120, 120, 120);\n"
 "}")
 
-        self.gridLayout_15.addWidget(self.Button_CheckOutput_STT_Whisper, 1, 0, 1, 2)
+        self.gridLayout_4.addWidget(self.Button_ResetSettings_STT_Whisper, 1, 0, 1, 1)
+
+        self.Button_ImportSettings_STT_Whisper = QPushButton(self.Widget_Right_STT_Whisper)
+        self.Button_ImportSettings_STT_Whisper.setObjectName(u"Button_ImportSettings_STT_Whisper")
+        self.Button_ImportSettings_STT_Whisper.setStyleSheet(u"QPushButton {\n"
+"	text-align: center;\n"
+"	font-size: 12px;\n"
+"	background-color: transparent;\n"
+"	padding: 6.6px;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgb(120, 120, 120);\n"
+"}")
+
+        self.gridLayout_4.addWidget(self.Button_ImportSettings_STT_Whisper, 1, 1, 1, 1)
+
+        self.Button_ExportSettings_STT_Whisper = QPushButton(self.Widget_Right_STT_Whisper)
+        self.Button_ExportSettings_STT_Whisper.setObjectName(u"Button_ExportSettings_STT_Whisper")
+        self.Button_ExportSettings_STT_Whisper.setStyleSheet(u"QPushButton {\n"
+"	text-align: center;\n"
+"	font-size: 12px;\n"
+"	background-color: transparent;\n"
+"	padding: 6.6px;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgb(120, 120, 120);\n"
+"}")
+
+        self.gridLayout_4.addWidget(self.Button_ExportSettings_STT_Whisper, 1, 2, 1, 1)
+
+        self.Button_CheckOutput_STT_Whisper = QPushButton(self.Widget_Right_STT_Whisper)
+        self.Button_CheckOutput_STT_Whisper.setObjectName(u"Button_CheckOutput_STT_Whisper")
+        self.Button_CheckOutput_STT_Whisper.setStyleSheet(u"QPushButton {\n"
+"	text-align: center;\n"
+"	font-size: 12px;\n"
+"	background-color: transparent;\n"
+"	padding: 6.6px;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgb(120, 120, 120);\n"
+"}")
+
+        self.gridLayout_4.addWidget(self.Button_CheckOutput_STT_Whisper, 2, 0, 1, 3)
 
 
         self.gridLayout_19.addWidget(self.Widget_Right_STT_Whisper, 0, 2, 1, 1)
@@ -6739,10 +6901,10 @@ class Ui_MainWindow(object):
 "QWidget:hover {\n"
 "	background-color: rgba(36, 36, 36, 3);\n"
 "}")
-        self.gridLayout_107 = QGridLayout(self.Widget_Right_DAT_GPTSoVITS)
-        self.gridLayout_107.setSpacing(12)
-        self.gridLayout_107.setObjectName(u"gridLayout_107")
-        self.gridLayout_107.setContentsMargins(12, 12, 12, 12)
+        self.gridLayout_5 = QGridLayout(self.Widget_Right_DAT_GPTSoVITS)
+        self.gridLayout_5.setSpacing(12)
+        self.gridLayout_5.setObjectName(u"gridLayout_5")
+        self.gridLayout_5.setContentsMargins(12, 12, 12, 12)
         self.TextBrowser_Params_DAT_GPTSoVITS = QTextBrowser(self.Widget_Right_DAT_GPTSoVITS)
         self.TextBrowser_Params_DAT_GPTSoVITS.setObjectName(u"TextBrowser_Params_DAT_GPTSoVITS")
         sizePolicy1.setHeightForWidth(self.TextBrowser_Params_DAT_GPTSoVITS.sizePolicy().hasHeightForWidth())
@@ -6798,16 +6960,16 @@ class Ui_MainWindow(object):
                         ": rgba(123, 123, 123, 210);\n"
 "}")
 
-        self.gridLayout_107.addWidget(self.TextBrowser_Params_DAT_GPTSoVITS, 0, 0, 1, 2)
+        self.gridLayout_5.addWidget(self.TextBrowser_Params_DAT_GPTSoVITS, 0, 0, 1, 3)
 
-        self.Button_CheckOutput_DAT_GPTSoVITS = QPushButton(self.Widget_Right_DAT_GPTSoVITS)
-        self.Button_CheckOutput_DAT_GPTSoVITS.setObjectName(u"Button_CheckOutput_DAT_GPTSoVITS")
-        self.Button_CheckOutput_DAT_GPTSoVITS.setStyleSheet(u"QPushButton {\n"
+        self.Button_ResetSettings_DAT_GPTSoVITS = QPushButton(self.Widget_Right_DAT_GPTSoVITS)
+        self.Button_ResetSettings_DAT_GPTSoVITS.setObjectName(u"Button_ResetSettings_DAT_GPTSoVITS")
+        self.Button_ResetSettings_DAT_GPTSoVITS.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
 "	font-size: 12px;\n"
 "	background-color: transparent;\n"
-"	padding: 9.9px;\n"
-"	border-width: 1.5px;\n"
+"	padding: 6.6px;\n"
+"	border-width: 1.2px;\n"
 "	border-radius: 6px;\n"
 "	border-style: solid;\n"
 "	border-color: rgb(90, 90, 90);\n"
@@ -6816,7 +6978,61 @@ class Ui_MainWindow(object):
 "	border-color: rgb(120, 120, 120);\n"
 "}")
 
-        self.gridLayout_107.addWidget(self.Button_CheckOutput_DAT_GPTSoVITS, 1, 0, 1, 2)
+        self.gridLayout_5.addWidget(self.Button_ResetSettings_DAT_GPTSoVITS, 1, 0, 1, 1)
+
+        self.Button_ImportSettings_DAT_GPTSoVITS = QPushButton(self.Widget_Right_DAT_GPTSoVITS)
+        self.Button_ImportSettings_DAT_GPTSoVITS.setObjectName(u"Button_ImportSettings_DAT_GPTSoVITS")
+        self.Button_ImportSettings_DAT_GPTSoVITS.setStyleSheet(u"QPushButton {\n"
+"	text-align: center;\n"
+"	font-size: 12px;\n"
+"	background-color: transparent;\n"
+"	padding: 6.6px;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgb(120, 120, 120);\n"
+"}")
+
+        self.gridLayout_5.addWidget(self.Button_ImportSettings_DAT_GPTSoVITS, 1, 1, 1, 1)
+
+        self.Button_ExportSettings_DAT_GPTSoVITS = QPushButton(self.Widget_Right_DAT_GPTSoVITS)
+        self.Button_ExportSettings_DAT_GPTSoVITS.setObjectName(u"Button_ExportSettings_DAT_GPTSoVITS")
+        self.Button_ExportSettings_DAT_GPTSoVITS.setStyleSheet(u"QPushButton {\n"
+"	text-align: center;\n"
+"	font-size: 12px;\n"
+"	background-color: transparent;\n"
+"	padding: 6.6px;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgb(120, 120, 120);\n"
+"}")
+
+        self.gridLayout_5.addWidget(self.Button_ExportSettings_DAT_GPTSoVITS, 1, 2, 1, 1)
+
+        self.Button_CheckOutput_DAT_GPTSoVITS = QPushButton(self.Widget_Right_DAT_GPTSoVITS)
+        self.Button_CheckOutput_DAT_GPTSoVITS.setObjectName(u"Button_CheckOutput_DAT_GPTSoVITS")
+        self.Button_CheckOutput_DAT_GPTSoVITS.setStyleSheet(u"QPushButton {\n"
+"	text-align: center;\n"
+"	font-size: 12px;\n"
+"	background-color: transparent;\n"
+"	padding: 6.6px;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgb(120, 120, 120);\n"
+"}")
+
+        self.gridLayout_5.addWidget(self.Button_CheckOutput_DAT_GPTSoVITS, 2, 0, 1, 3)
 
 
         self.gridLayout_108.addWidget(self.Widget_Right_DAT_GPTSoVITS, 0, 2, 1, 1)
@@ -7901,10 +8117,10 @@ class Ui_MainWindow(object):
 "QWidget:hover {\n"
 "	background-color: rgba(36, 36, 36, 3);\n"
 "}")
-        self.gridLayout_16 = QGridLayout(self.Widget_Right_DAT_VITS)
-        self.gridLayout_16.setSpacing(12)
-        self.gridLayout_16.setObjectName(u"gridLayout_16")
-        self.gridLayout_16.setContentsMargins(12, 12, 12, 12)
+        self.gridLayout_9 = QGridLayout(self.Widget_Right_DAT_VITS)
+        self.gridLayout_9.setSpacing(12)
+        self.gridLayout_9.setObjectName(u"gridLayout_9")
+        self.gridLayout_9.setContentsMargins(12, 12, 12, 12)
         self.TextBrowser_Params_DAT_VITS = QTextBrowser(self.Widget_Right_DAT_VITS)
         self.TextBrowser_Params_DAT_VITS.setObjectName(u"TextBrowser_Params_DAT_VITS")
         sizePolicy1.setHeightForWidth(self.TextBrowser_Params_DAT_VITS.sizePolicy().hasHeightForWidth())
@@ -7960,16 +8176,16 @@ class Ui_MainWindow(object):
                         ": rgba(123, 123, 123, 210);\n"
 "}")
 
-        self.gridLayout_16.addWidget(self.TextBrowser_Params_DAT_VITS, 0, 0, 1, 2)
+        self.gridLayout_9.addWidget(self.TextBrowser_Params_DAT_VITS, 0, 0, 1, 3)
 
-        self.Button_CheckOutput_DAT_VITS = QPushButton(self.Widget_Right_DAT_VITS)
-        self.Button_CheckOutput_DAT_VITS.setObjectName(u"Button_CheckOutput_DAT_VITS")
-        self.Button_CheckOutput_DAT_VITS.setStyleSheet(u"QPushButton {\n"
+        self.Button_ResetSettings_DAT_VITS = QPushButton(self.Widget_Right_DAT_VITS)
+        self.Button_ResetSettings_DAT_VITS.setObjectName(u"Button_ResetSettings_DAT_VITS")
+        self.Button_ResetSettings_DAT_VITS.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
 "	font-size: 12px;\n"
 "	background-color: transparent;\n"
-"	padding: 9.9px;\n"
-"	border-width: 1.5px;\n"
+"	padding: 6.6px;\n"
+"	border-width: 1.2px;\n"
 "	border-radius: 6px;\n"
 "	border-style: solid;\n"
 "	border-color: rgb(90, 90, 90);\n"
@@ -7978,7 +8194,61 @@ class Ui_MainWindow(object):
 "	border-color: rgb(120, 120, 120);\n"
 "}")
 
-        self.gridLayout_16.addWidget(self.Button_CheckOutput_DAT_VITS, 1, 0, 1, 2)
+        self.gridLayout_9.addWidget(self.Button_ResetSettings_DAT_VITS, 1, 0, 1, 1)
+
+        self.Button_ImportSettings_DAT_VITS = QPushButton(self.Widget_Right_DAT_VITS)
+        self.Button_ImportSettings_DAT_VITS.setObjectName(u"Button_ImportSettings_DAT_VITS")
+        self.Button_ImportSettings_DAT_VITS.setStyleSheet(u"QPushButton {\n"
+"	text-align: center;\n"
+"	font-size: 12px;\n"
+"	background-color: transparent;\n"
+"	padding: 6.6px;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgb(120, 120, 120);\n"
+"}")
+
+        self.gridLayout_9.addWidget(self.Button_ImportSettings_DAT_VITS, 1, 1, 1, 1)
+
+        self.Button_ExportSettings_DAT_VITS = QPushButton(self.Widget_Right_DAT_VITS)
+        self.Button_ExportSettings_DAT_VITS.setObjectName(u"Button_ExportSettings_DAT_VITS")
+        self.Button_ExportSettings_DAT_VITS.setStyleSheet(u"QPushButton {\n"
+"	text-align: center;\n"
+"	font-size: 12px;\n"
+"	background-color: transparent;\n"
+"	padding: 6.6px;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgb(120, 120, 120);\n"
+"}")
+
+        self.gridLayout_9.addWidget(self.Button_ExportSettings_DAT_VITS, 1, 2, 1, 1)
+
+        self.Button_CheckOutput_DAT_VITS = QPushButton(self.Widget_Right_DAT_VITS)
+        self.Button_CheckOutput_DAT_VITS.setObjectName(u"Button_CheckOutput_DAT_VITS")
+        self.Button_CheckOutput_DAT_VITS.setStyleSheet(u"QPushButton {\n"
+"	text-align: center;\n"
+"	font-size: 12px;\n"
+"	background-color: transparent;\n"
+"	padding: 6.6px;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgb(120, 120, 120);\n"
+"}")
+
+        self.gridLayout_9.addWidget(self.Button_CheckOutput_DAT_VITS, 2, 0, 1, 3)
 
 
         self.gridLayout_8.addWidget(self.Widget_Right_DAT_VITS, 0, 2, 1, 1)
@@ -8994,10 +9264,10 @@ class Ui_MainWindow(object):
 "QWidget:hover {\n"
 "	background-color: rgba(36, 36, 36, 3);\n"
 "}")
-        self.verticalLayout_76 = QVBoxLayout(self.Widget_Right_Train_GPTSoVITS)
-        self.verticalLayout_76.setSpacing(12)
-        self.verticalLayout_76.setObjectName(u"verticalLayout_76")
-        self.verticalLayout_76.setContentsMargins(12, 12, 12, 12)
+        self.gridLayout_14 = QGridLayout(self.Widget_Right_Train_GPTSoVITS)
+        self.gridLayout_14.setSpacing(12)
+        self.gridLayout_14.setObjectName(u"gridLayout_14")
+        self.gridLayout_14.setContentsMargins(12, 12, 12, 12)
         self.TextBrowser_Params_Train_GPTSoVITS = QTextBrowser(self.Widget_Right_Train_GPTSoVITS)
         self.TextBrowser_Params_Train_GPTSoVITS.setObjectName(u"TextBrowser_Params_Train_GPTSoVITS")
         sizePolicy1.setHeightForWidth(self.TextBrowser_Params_Train_GPTSoVITS.sizePolicy().hasHeightForWidth())
@@ -9053,7 +9323,61 @@ class Ui_MainWindow(object):
                         ": rgba(123, 123, 123, 210);\n"
 "}")
 
-        self.verticalLayout_76.addWidget(self.TextBrowser_Params_Train_GPTSoVITS)
+        self.gridLayout_14.addWidget(self.TextBrowser_Params_Train_GPTSoVITS, 0, 0, 1, 3)
+
+        self.Button_ResetSettings_Train_GPTSoVITS = QPushButton(self.Widget_Right_Train_GPTSoVITS)
+        self.Button_ResetSettings_Train_GPTSoVITS.setObjectName(u"Button_ResetSettings_Train_GPTSoVITS")
+        self.Button_ResetSettings_Train_GPTSoVITS.setStyleSheet(u"QPushButton {\n"
+"	text-align: center;\n"
+"	font-size: 12px;\n"
+"	background-color: transparent;\n"
+"	padding: 6.6px;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgb(120, 120, 120);\n"
+"}")
+
+        self.gridLayout_14.addWidget(self.Button_ResetSettings_Train_GPTSoVITS, 1, 0, 1, 1)
+
+        self.Button_ImportSettings_Train_GPTSoVITS = QPushButton(self.Widget_Right_Train_GPTSoVITS)
+        self.Button_ImportSettings_Train_GPTSoVITS.setObjectName(u"Button_ImportSettings_Train_GPTSoVITS")
+        self.Button_ImportSettings_Train_GPTSoVITS.setStyleSheet(u"QPushButton {\n"
+"	text-align: center;\n"
+"	font-size: 12px;\n"
+"	background-color: transparent;\n"
+"	padding: 6.6px;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgb(120, 120, 120);\n"
+"}")
+
+        self.gridLayout_14.addWidget(self.Button_ImportSettings_Train_GPTSoVITS, 1, 1, 1, 1)
+
+        self.Button_ExportSettings_Train_GPTSoVITS = QPushButton(self.Widget_Right_Train_GPTSoVITS)
+        self.Button_ExportSettings_Train_GPTSoVITS.setObjectName(u"Button_ExportSettings_Train_GPTSoVITS")
+        self.Button_ExportSettings_Train_GPTSoVITS.setStyleSheet(u"QPushButton {\n"
+"	text-align: center;\n"
+"	font-size: 12px;\n"
+"	background-color: transparent;\n"
+"	padding: 6.6px;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgb(120, 120, 120);\n"
+"}")
+
+        self.gridLayout_14.addWidget(self.Button_ExportSettings_Train_GPTSoVITS, 1, 2, 1, 1)
 
         self.Button_RunTensorboard_Train_GPTSoVITS = QPushButton(self.Widget_Right_Train_GPTSoVITS)
         self.Button_RunTensorboard_Train_GPTSoVITS.setObjectName(u"Button_RunTensorboard_Train_GPTSoVITS")
@@ -9061,8 +9385,8 @@ class Ui_MainWindow(object):
 "	text-align: center;\n"
 "	font-size: 12px;\n"
 "	background-color: transparent;\n"
-"	padding: 9.9px;\n"
-"	border-width: 1.5px;\n"
+"	padding: 6.6px;\n"
+"	border-width: 1.2px;\n"
 "	border-radius: 6px;\n"
 "	border-style: solid;\n"
 "	border-color: rgb(90, 90, 90);\n"
@@ -9071,7 +9395,7 @@ class Ui_MainWindow(object):
 "	border-color: rgb(120, 120, 120);\n"
 "}")
 
-        self.verticalLayout_76.addWidget(self.Button_RunTensorboard_Train_GPTSoVITS)
+        self.gridLayout_14.addWidget(self.Button_RunTensorboard_Train_GPTSoVITS, 2, 0, 1, 3)
 
         self.Button_CheckOutput_Train_GPTSoVITS = QPushButton(self.Widget_Right_Train_GPTSoVITS)
         self.Button_CheckOutput_Train_GPTSoVITS.setObjectName(u"Button_CheckOutput_Train_GPTSoVITS")
@@ -9079,8 +9403,8 @@ class Ui_MainWindow(object):
 "	text-align: center;\n"
 "	font-size: 12px;\n"
 "	background-color: transparent;\n"
-"	padding: 9.9px;\n"
-"	border-width: 1.5px;\n"
+"	padding: 6.6px;\n"
+"	border-width: 1.2px;\n"
 "	border-radius: 6px;\n"
 "	border-style: solid;\n"
 "	border-color: rgb(90, 90, 90);\n"
@@ -9089,7 +9413,7 @@ class Ui_MainWindow(object):
 "	border-color: rgb(120, 120, 120);\n"
 "}")
 
-        self.verticalLayout_76.addWidget(self.Button_CheckOutput_Train_GPTSoVITS)
+        self.gridLayout_14.addWidget(self.Button_CheckOutput_Train_GPTSoVITS, 3, 0, 1, 3)
 
 
         self.gridLayout_85.addWidget(self.Widget_Right_Train_GPTSoVITS, 0, 2, 1, 1)
@@ -9206,24 +9530,6 @@ class Ui_MainWindow(object):
         self.gridLayout.setSpacing(12)
         self.gridLayout.setObjectName(u"gridLayout")
         self.gridLayout.setContentsMargins(12, 12, 12, 12)
-        self.Button_RunTensorboard_Train_VITS = QPushButton(self.Widget_Right_Train_VITS)
-        self.Button_RunTensorboard_Train_VITS.setObjectName(u"Button_RunTensorboard_Train_VITS")
-        self.Button_RunTensorboard_Train_VITS.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	font-size: 12px;\n"
-"	background-color: transparent;\n"
-"	padding: 9.9px;\n"
-"	border-width: 1.5px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgb(120, 120, 120);\n"
-"}")
-
-        self.gridLayout.addWidget(self.Button_RunTensorboard_Train_VITS, 1, 0, 1, 2)
-
         self.TextBrowser_Params_Train_VITS = QTextBrowser(self.Widget_Right_Train_VITS)
         self.TextBrowser_Params_Train_VITS.setObjectName(u"TextBrowser_Params_Train_VITS")
         sizePolicy1.setHeightForWidth(self.TextBrowser_Params_Train_VITS.sizePolicy().hasHeightForWidth())
@@ -9279,16 +9585,16 @@ class Ui_MainWindow(object):
                         ": rgba(123, 123, 123, 210);\n"
 "}")
 
-        self.gridLayout.addWidget(self.TextBrowser_Params_Train_VITS, 0, 0, 1, 2)
+        self.gridLayout.addWidget(self.TextBrowser_Params_Train_VITS, 0, 0, 1, 3)
 
-        self.Button_CheckOutput_Train_VITS = QPushButton(self.Widget_Right_Train_VITS)
-        self.Button_CheckOutput_Train_VITS.setObjectName(u"Button_CheckOutput_Train_VITS")
-        self.Button_CheckOutput_Train_VITS.setStyleSheet(u"QPushButton {\n"
+        self.Button_ResetSettings_Train_VITS = QPushButton(self.Widget_Right_Train_VITS)
+        self.Button_ResetSettings_Train_VITS.setObjectName(u"Button_ResetSettings_Train_VITS")
+        self.Button_ResetSettings_Train_VITS.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
 "	font-size: 12px;\n"
 "	background-color: transparent;\n"
-"	padding: 9.9px;\n"
-"	border-width: 1.5px;\n"
+"	padding: 6.6px;\n"
+"	border-width: 1.2px;\n"
 "	border-radius: 6px;\n"
 "	border-style: solid;\n"
 "	border-color: rgb(90, 90, 90);\n"
@@ -9297,7 +9603,79 @@ class Ui_MainWindow(object):
 "	border-color: rgb(120, 120, 120);\n"
 "}")
 
-        self.gridLayout.addWidget(self.Button_CheckOutput_Train_VITS, 2, 0, 1, 2)
+        self.gridLayout.addWidget(self.Button_ResetSettings_Train_VITS, 1, 0, 1, 1)
+
+        self.Button_ImportSettings_Train_VITS = QPushButton(self.Widget_Right_Train_VITS)
+        self.Button_ImportSettings_Train_VITS.setObjectName(u"Button_ImportSettings_Train_VITS")
+        self.Button_ImportSettings_Train_VITS.setStyleSheet(u"QPushButton {\n"
+"	text-align: center;\n"
+"	font-size: 12px;\n"
+"	background-color: transparent;\n"
+"	padding: 6.6px;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgb(120, 120, 120);\n"
+"}")
+
+        self.gridLayout.addWidget(self.Button_ImportSettings_Train_VITS, 1, 1, 1, 1)
+
+        self.Button_ExportSettings_Train_VITS = QPushButton(self.Widget_Right_Train_VITS)
+        self.Button_ExportSettings_Train_VITS.setObjectName(u"Button_ExportSettings_Train_VITS")
+        self.Button_ExportSettings_Train_VITS.setStyleSheet(u"QPushButton {\n"
+"	text-align: center;\n"
+"	font-size: 12px;\n"
+"	background-color: transparent;\n"
+"	padding: 6.6px;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgb(120, 120, 120);\n"
+"}")
+
+        self.gridLayout.addWidget(self.Button_ExportSettings_Train_VITS, 1, 2, 1, 1)
+
+        self.Button_RunTensorboard_Train_VITS = QPushButton(self.Widget_Right_Train_VITS)
+        self.Button_RunTensorboard_Train_VITS.setObjectName(u"Button_RunTensorboard_Train_VITS")
+        self.Button_RunTensorboard_Train_VITS.setStyleSheet(u"QPushButton {\n"
+"	text-align: center;\n"
+"	font-size: 12px;\n"
+"	background-color: transparent;\n"
+"	padding: 6.6px;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgb(120, 120, 120);\n"
+"}")
+
+        self.gridLayout.addWidget(self.Button_RunTensorboard_Train_VITS, 2, 0, 1, 3)
+
+        self.Button_CheckOutput_Train_VITS = QPushButton(self.Widget_Right_Train_VITS)
+        self.Button_CheckOutput_Train_VITS.setObjectName(u"Button_CheckOutput_Train_VITS")
+        self.Button_CheckOutput_Train_VITS.setStyleSheet(u"QPushButton {\n"
+"	text-align: center;\n"
+"	font-size: 12px;\n"
+"	background-color: transparent;\n"
+"	padding: 6.6px;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgb(120, 120, 120);\n"
+"}")
+
+        self.gridLayout.addWidget(self.Button_CheckOutput_Train_VITS, 3, 0, 1, 3)
 
 
         self.gridLayout_22.addWidget(self.Widget_Right_Train_VITS, 0, 2, 1, 1)
@@ -11145,10 +11523,10 @@ class Ui_MainWindow(object):
 "QWidget:hover {\n"
 "	background-color: rgba(36, 36, 36, 3);\n"
 "}")
-        self.gridLayout_106 = QGridLayout(self.Widget_Right_TTS_GPTSoVITS)
-        self.gridLayout_106.setSpacing(12)
-        self.gridLayout_106.setObjectName(u"gridLayout_106")
-        self.gridLayout_106.setContentsMargins(12, 12, 12, 12)
+        self.gridLayout_15 = QGridLayout(self.Widget_Right_TTS_GPTSoVITS)
+        self.gridLayout_15.setSpacing(12)
+        self.gridLayout_15.setObjectName(u"gridLayout_15")
+        self.gridLayout_15.setContentsMargins(12, 12, 12, 12)
         self.TextBrowser_Params_TTS_GPTSoVITS = QTextBrowser(self.Widget_Right_TTS_GPTSoVITS)
         self.TextBrowser_Params_TTS_GPTSoVITS.setObjectName(u"TextBrowser_Params_TTS_GPTSoVITS")
         sizePolicy1.setHeightForWidth(self.TextBrowser_Params_TTS_GPTSoVITS.sizePolicy().hasHeightForWidth())
@@ -11204,7 +11582,61 @@ class Ui_MainWindow(object):
                         ": rgba(123, 123, 123, 210);\n"
 "}")
 
-        self.gridLayout_106.addWidget(self.TextBrowser_Params_TTS_GPTSoVITS, 0, 0, 1, 1)
+        self.gridLayout_15.addWidget(self.TextBrowser_Params_TTS_GPTSoVITS, 0, 0, 1, 3)
+
+        self.Button_ResetSettings_TTS_GPTSoVITS = QPushButton(self.Widget_Right_TTS_GPTSoVITS)
+        self.Button_ResetSettings_TTS_GPTSoVITS.setObjectName(u"Button_ResetSettings_TTS_GPTSoVITS")
+        self.Button_ResetSettings_TTS_GPTSoVITS.setStyleSheet(u"QPushButton {\n"
+"	text-align: center;\n"
+"	font-size: 12px;\n"
+"	background-color: transparent;\n"
+"	padding: 6.6px;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgb(120, 120, 120);\n"
+"}")
+
+        self.gridLayout_15.addWidget(self.Button_ResetSettings_TTS_GPTSoVITS, 1, 0, 1, 1)
+
+        self.Button_ImportSettings_TTS_GPTSoVITS = QPushButton(self.Widget_Right_TTS_GPTSoVITS)
+        self.Button_ImportSettings_TTS_GPTSoVITS.setObjectName(u"Button_ImportSettings_TTS_GPTSoVITS")
+        self.Button_ImportSettings_TTS_GPTSoVITS.setStyleSheet(u"QPushButton {\n"
+"	text-align: center;\n"
+"	font-size: 12px;\n"
+"	background-color: transparent;\n"
+"	padding: 6.6px;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgb(120, 120, 120);\n"
+"}")
+
+        self.gridLayout_15.addWidget(self.Button_ImportSettings_TTS_GPTSoVITS, 1, 1, 1, 1)
+
+        self.Button_ExportSettings_TTS_GPTSoVITS = QPushButton(self.Widget_Right_TTS_GPTSoVITS)
+        self.Button_ExportSettings_TTS_GPTSoVITS.setObjectName(u"Button_ExportSettings_TTS_GPTSoVITS")
+        self.Button_ExportSettings_TTS_GPTSoVITS.setStyleSheet(u"QPushButton {\n"
+"	text-align: center;\n"
+"	font-size: 12px;\n"
+"	background-color: transparent;\n"
+"	padding: 6.6px;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgb(120, 120, 120);\n"
+"}")
+
+        self.gridLayout_15.addWidget(self.Button_ExportSettings_TTS_GPTSoVITS, 1, 2, 1, 1)
 
 
         self.gridLayout_109.addWidget(self.Widget_Right_TTS_GPTSoVITS, 0, 2, 1, 1)
@@ -12227,10 +12659,10 @@ class Ui_MainWindow(object):
 "QWidget:hover {\n"
 "	background-color: rgba(36, 36, 36, 3);\n"
 "}")
-        self.gridLayout_18 = QGridLayout(self.Widget_Right_TTS_VITS)
-        self.gridLayout_18.setSpacing(12)
-        self.gridLayout_18.setObjectName(u"gridLayout_18")
-        self.gridLayout_18.setContentsMargins(12, 12, 12, 12)
+        self.gridLayout_16 = QGridLayout(self.Widget_Right_TTS_VITS)
+        self.gridLayout_16.setSpacing(12)
+        self.gridLayout_16.setObjectName(u"gridLayout_16")
+        self.gridLayout_16.setContentsMargins(12, 12, 12, 12)
         self.TextBrowser_Params_TTS_VITS = QTextBrowser(self.Widget_Right_TTS_VITS)
         self.TextBrowser_Params_TTS_VITS.setObjectName(u"TextBrowser_Params_TTS_VITS")
         sizePolicy1.setHeightForWidth(self.TextBrowser_Params_TTS_VITS.sizePolicy().hasHeightForWidth())
@@ -12286,16 +12718,16 @@ class Ui_MainWindow(object):
                         ": rgba(123, 123, 123, 210);\n"
 "}")
 
-        self.gridLayout_18.addWidget(self.TextBrowser_Params_TTS_VITS, 0, 0, 1, 1)
+        self.gridLayout_16.addWidget(self.TextBrowser_Params_TTS_VITS, 0, 0, 1, 3)
 
-        self.Button_CheckOutput_TTS_VITS = QPushButton(self.Widget_Right_TTS_VITS)
-        self.Button_CheckOutput_TTS_VITS.setObjectName(u"Button_CheckOutput_TTS_VITS")
-        self.Button_CheckOutput_TTS_VITS.setStyleSheet(u"QPushButton {\n"
+        self.Button_ResetSettings_TTS_VITS = QPushButton(self.Widget_Right_TTS_VITS)
+        self.Button_ResetSettings_TTS_VITS.setObjectName(u"Button_ResetSettings_TTS_VITS")
+        self.Button_ResetSettings_TTS_VITS.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
 "	font-size: 12px;\n"
 "	background-color: transparent;\n"
-"	padding: 9.9px;\n"
-"	border-width: 1.5px;\n"
+"	padding: 6.6px;\n"
+"	border-width: 1.2px;\n"
 "	border-radius: 6px;\n"
 "	border-style: solid;\n"
 "	border-color: rgb(90, 90, 90);\n"
@@ -12304,7 +12736,61 @@ class Ui_MainWindow(object):
 "	border-color: rgb(120, 120, 120);\n"
 "}")
 
-        self.gridLayout_18.addWidget(self.Button_CheckOutput_TTS_VITS, 1, 0, 1, 1)
+        self.gridLayout_16.addWidget(self.Button_ResetSettings_TTS_VITS, 1, 0, 1, 1)
+
+        self.Button_ImportSettings_TTS_VITS = QPushButton(self.Widget_Right_TTS_VITS)
+        self.Button_ImportSettings_TTS_VITS.setObjectName(u"Button_ImportSettings_TTS_VITS")
+        self.Button_ImportSettings_TTS_VITS.setStyleSheet(u"QPushButton {\n"
+"	text-align: center;\n"
+"	font-size: 12px;\n"
+"	background-color: transparent;\n"
+"	padding: 6.6px;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgb(120, 120, 120);\n"
+"}")
+
+        self.gridLayout_16.addWidget(self.Button_ImportSettings_TTS_VITS, 1, 1, 1, 1)
+
+        self.Button_ExportSettings_TTS_VITS = QPushButton(self.Widget_Right_TTS_VITS)
+        self.Button_ExportSettings_TTS_VITS.setObjectName(u"Button_ExportSettings_TTS_VITS")
+        self.Button_ExportSettings_TTS_VITS.setStyleSheet(u"QPushButton {\n"
+"	text-align: center;\n"
+"	font-size: 12px;\n"
+"	background-color: transparent;\n"
+"	padding: 6.6px;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgb(120, 120, 120);\n"
+"}")
+
+        self.gridLayout_16.addWidget(self.Button_ExportSettings_TTS_VITS, 1, 2, 1, 1)
+
+        self.Button_CheckOutput_TTS_VITS = QPushButton(self.Widget_Right_TTS_VITS)
+        self.Button_CheckOutput_TTS_VITS.setObjectName(u"Button_CheckOutput_TTS_VITS")
+        self.Button_CheckOutput_TTS_VITS.setStyleSheet(u"QPushButton {\n"
+"	text-align: center;\n"
+"	font-size: 12px;\n"
+"	background-color: transparent;\n"
+"	padding: 6.6px;\n"
+"	border-width: 1.2px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(90, 90, 90);\n"
+"}\n"
+"QPushButton:hover {\n"
+"	border-color: rgb(120, 120, 120);\n"
+"}")
+
+        self.gridLayout_16.addWidget(self.Button_CheckOutput_TTS_VITS, 2, 0, 1, 3)
 
 
         self.gridLayout_20.addWidget(self.Widget_Right_TTS_VITS, 0, 2, 1, 1)

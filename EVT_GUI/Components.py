@@ -156,7 +156,7 @@ class Table_EditAudioSpeaker(TableBase):
             lambda: self.ValueChanged.emit(self.GetValue())
         )
 
-    def AddRow(self, Param: Optional[tuple] = None, FileType: Optional[str] = None):
+    def AddRow(self, Param: Optional[tuple] = None):
         RowHeight = 30
         ButtonStyle = '''
         QPushButton {
@@ -186,7 +186,7 @@ class Table_EditAudioSpeaker(TableBase):
         LineEdit1 = LineEditBase()
         LineEdit1.ClearDefaultStyleSheet()
         LineEdit1.setStyleSheet(LineEdit1.styleSheet() + 'LineEditBase {border-radius: 0px;}')
-        LineEdit1.SetFileDialog("SelectFile", FileType)
+        #LineEdit1.SetFileDialog("SelectFile", FileType)
         Function_SetText(LineEdit1, Param[1] if Param else '', SetPlaceholderText = True)
         LineEdit1.textChanged.connect(
             lambda: self.ValueChanged.emit(self.GetValue())
@@ -217,14 +217,18 @@ class Table_EditAudioSpeaker(TableBase):
             RowHeight
         )
 
-    def SetValue(self, Params: dict = {'%Speaker%': '%Path%'}, FileType: Optional[str] = None):
+    def SetValue(self, Params: dict = {'%Speaker%': '%Path%'}):
         self.ClearRows()
-        ParamDict = ToIterable(Params)
+        ParamDict = ToIterable(Params if Params is None or len(Params) != 0 else {'': ''})
         for Key, Value in ParamDict.items():
             QApplication.processEvents()
             Param = (Key, Value)
             #Index = next((i for i, key in enumerate(ParamDict) if key == Key), None)
-            self.AddRow(Param, FileType)
+            self.AddRow(Param)
+
+    def SetFileDialog(self, FileType: Optional[str] = None):
+        for RowCount in range(self.rowCount()):
+            self.cellWidget(RowCount, 1).findChild(LineEditBase).SetFileDialog("SelectFile", FileType)
 
     def GetValue(self):
         ValueDict = {}
