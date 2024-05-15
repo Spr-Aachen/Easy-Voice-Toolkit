@@ -10,7 +10,7 @@ from .Components import *
 from .Window import *
 
 ##############################################################################################################################
-
+"""
 def Function_InsertUI(
     ParentUI: QWidget,
     InsertType: object,
@@ -74,7 +74,7 @@ def Function_InsertUI(
     InsertUI.setToolTip(UIToolTip)
 
     return InsertUI
-
+"""
 
 def Function_ScrollToWidget(
     Trigger: QWidget,
@@ -154,6 +154,30 @@ def Function_SetTreeView(
         TreeView.setHeaderLabels(HeaderTexts)
         TreeView.header().setOrientation(Qt.Vertical)
 '''
+
+def Function_SetChildWidgetsVisibility(
+    Container: QWidget,
+    ChildWidgets: list[Optional[QWidget]],
+    SetVisible: bool,
+    AdjustContainer: bool = True
+):
+    '''
+    Function to set the visibility of child-widgets
+    '''
+    ChildWidgets = [ChildWidget for ChildWidget in ChildWidgets if ChildWidget is not None]
+    for ChildWidget in ChildWidgets:
+        ChildWidget.setVisible(SetVisible)
+    if AdjustContainer:
+        CurrentHeight = Container.height()
+        #Container.updateGeometry()
+        AdjustedHeight = Container.minimumSizeHint().height()
+        Function_AnimateFrame(
+            Frame = Container,
+            MinHeight = CurrentHeight if SetVisible else AdjustedHeight,
+            MaxHeight = AdjustedHeight if SetVisible else CurrentHeight,
+            Mode = 'Extend' if SetVisible else 'Reduce'
+        )
+
 
 def Function_ConfigureCheckBox(
     CheckBox: QCheckBox,
@@ -246,6 +270,7 @@ def Function_ShowMessageBox(
 
     ButtonEvents[Result]() if Result in list(ButtonEvents.keys()) else None
 
+##############################################################################################################################
 
 def Function_ParamsHandler(
     UI: QObject,
@@ -366,6 +391,7 @@ def Function_ParamsChecker(
 
     return Args
 
+##############################################################################################################################
 
 def Function_AnimateStackedWidget(
     StackedWidget: QStackedWidget,
@@ -438,5 +464,83 @@ def Function_AnimateProgressBar(
     else:
         ProgressBar.setRange(MinValue, MaxValue)
         ProgressBar.setValue(MaxValue)
+
+##############################################################################################################################
+
+def Function_SetWidgetValue(
+    Widget: QWidget,
+    Config: ManageConfig,
+    Section: str = ...,
+    Option: str = ...,
+    Value = ...,
+    Times: Union[int, float] = 1,
+    SetPlaceholderText: bool = False,
+    PlaceholderText: Optional[str] = None
+):
+    if isinstance(Widget, (QLineEdit, LineEditBase, QPlainTextEdit)):
+        Function_SetText(Widget, Value, SetPlaceholderText = SetPlaceholderText, PlaceholderText = PlaceholderText)
+        Widget.textChanged.connect(lambda Value: Config.EditConfig(Section, Option, str(Value)))
+    if isinstance(Widget, QComboBox):
+        Widget.setCurrentText(str(Value))
+        Widget.currentTextChanged.connect(lambda Value: Config.EditConfig(Section, Option, str(Value)))
+    if isinstance(Widget, (QSlider, QSpinBox)):
+        Widget.setValue(int(eval(str(Value)) * Times))
+        Widget.valueChanged.connect(lambda Value: Config.EditConfig(Section, Option, str(eval(str(Value)) / Times)))
+    if isinstance(Widget, QDoubleSpinBox):
+        Widget.setValue(float(eval(str(Value)) * Times))
+        Widget.valueChanged.connect(lambda Value: Config.EditConfig(Section, Option, str(eval(str(Value)) / Times)))
+    if isinstance(Widget, (QCheckBox, QRadioButton)):
+        Widget.setChecked(eval(str(Value)))
+        Widget.toggled.connect(lambda Value: Config.EditConfig(Section, Option, str(Value)))
+    if isinstance(Widget, Table_EditAudioSpeaker):
+        Widget.SetValue(eval(str(Value)))
+        Widget.ValueChanged.connect(lambda Value: Config.EditConfig(Section, Option, str(Value)))
+
+
+class ParamsManager:
+    def __init__(self,
+        ConfigPath: str,
+    ):
+        self.ConfigPath = ConfigPath
+        self.Config = ManageConfig(ConfigPath)
+
+        self.RegistratedWidgets = {}
+
+    def Registrate(self, Widget: QWidget, value: tuple):
+        self.RegistratedWidgets[Widget] = value
+
+    def SetParam(self,
+        Widget: QWidget,
+        Section: str = ...,
+        Option: str = ...,
+        DefaultValue = None,
+        Times: Union[int, float] = 1,
+        SetPlaceholderText: bool = False,
+        PlaceholderText: Optional[str] = None,
+        Registrate: bool = True
+    ):
+        Value = self.Config.GetValue(Section, Option, str(DefaultValue))
+        Function_SetWidgetValue(Widget, self.Config, Section, Option, Value, Times, SetPlaceholderText, PlaceholderText)
+        self.Registrate(Widget, (Section, Option, DefaultValue, Times, SetPlaceholderText, PlaceholderText)) if Registrate else None
+
+    def ResetParam(self, Widget: QWidget):
+        value = self.RegistratedWidgets[Widget]
+        Function_SetWidgetValue(Widget, self.Config, *value)
+
+    def ResetSettings(self):
+        for Widget in list(self.RegistratedWidgets.keys()):
+            self.ResetParam(Widget)
+
+    def ImportSettings(self, ReadPath: str):
+        ConfigParser = ManageConfig(ReadPath).ReadConfig()
+        with open(self.ConfigPath, 'w') as Config:
+            ConfigParser.write(Config)
+        for Widget, value in list(self.RegistratedWidgets.items()):
+            self.SetParam(Widget, *value)
+
+    def ExportSettings(self, SavePath: str):
+        ConfigParser = self.Config.ReadConfig()
+        with open(SavePath, 'w') as Config:
+            ConfigParser.write(Config)
 
 ##############################################################################################################################
