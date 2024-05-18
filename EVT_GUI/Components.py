@@ -57,6 +57,8 @@ class Table_ViewModels(TableBase):
         )
 
     def AddRow(self, Param: tuple):
+        ModelName, ModelType, ModelSize, ModelDate, DownloadParam = Param
+
         RowHeight = 36
         LabelStyle = '''
         QLabel {
@@ -80,59 +82,66 @@ class Table_ViewModels(TableBase):
             ColumnLayout.setContentsMargins(0, 0, 0, 0)
             ColumnLayout.setSpacing(0)
 
-        Label0 = QLabel()
-        Label0.setStyleSheet(LabelStyle)
-        Function_SetText(Label0, Param[0])
-        Column0Layout = QHBoxLayout()
-        SetColumnLayout(Column0Layout)
-        Column0Layout.addWidget(Label0)
+        Label_ModelName = QLabel()
+        Label_ModelName.setStyleSheet(LabelStyle)
+        Function_SetText(Label_ModelName, ModelName)
+        ColumnLayout_ModelName = QHBoxLayout()
+        SetColumnLayout(ColumnLayout_ModelName)
+        ColumnLayout_ModelName.addWidget(Label_ModelName)
 
-        Label1 = QLabel()
-        Label1.setStyleSheet(LabelStyle)
-        Function_SetText(Label1, Param[1])
-        Column1Layout = QHBoxLayout()
-        SetColumnLayout(Column1Layout)
-        Column1Layout.addWidget(Label1)
+        Label_ModelType = QLabel()
+        Label_ModelType.setStyleSheet(LabelStyle)
+        Function_SetText(Label_ModelType, ModelType)
+        ColumnLayout_ModelType = QHBoxLayout()
+        SetColumnLayout(ColumnLayout_ModelType)
+        ColumnLayout_ModelType.addWidget(Label_ModelType)
 
-        Label2 = QLabel()
-        Label2.setStyleSheet(LabelStyle)
-        Function_SetText(Label2, Param[2])
-        Column2Layout = QHBoxLayout()
-        SetColumnLayout(Column2Layout)
-        Column2Layout.addWidget(Label2)
+        Label_ModelSize = QLabel()
+        Label_ModelSize.setStyleSheet(LabelStyle)
+        Function_SetText(Label_ModelSize, ModelSize)
+        ColumnLayout_ModelSize = QHBoxLayout()
+        SetColumnLayout(ColumnLayout_ModelSize)
+        ColumnLayout_ModelSize.addWidget(Label_ModelSize)
+
+        Label_ModelDate = QLabel()
+        Label_ModelDate.setStyleSheet(LabelStyle)
+        Function_SetText(Label_ModelDate, ModelDate)
+        ColumnLayout_ModelDate = QHBoxLayout()
+        SetColumnLayout(ColumnLayout_ModelDate)
+        ColumnLayout_ModelDate.addWidget(Label_ModelDate)
 
         StackedWidget = QStackedWidget()
         StackedWidget.setContentsMargins(0, 0, 0, 0)
         OpenButton = QPushButton()
         OpenButton.setStyleSheet(ButtonStyle + "QPushButton {image: url(:/Button_Icon/Sources/OpenedFolder.png);}")
-        OpenButton.clicked.connect(lambda: Function_OpenURL(Param[3] if isinstance(Param[3], str) else Param[3][1]))
+        OpenButton.clicked.connect(lambda: Function_OpenURL(DownloadParam if isinstance(DownloadParam, str) else DownloadParam[1]))
         DownloadButton = QPushButton()
         DownloadButton.setStyleSheet(ButtonStyle + "QPushButton {image: url(:/Button_Icon/Sources/Download.png);}")
-        DownloadButton.clicked.connect(lambda: self.Download.emit(Param[3]) if isinstance(Param[3], tuple) else None)
+        DownloadButton.clicked.connect(lambda: self.Download.emit(DownloadParam) if isinstance(DownloadParam, tuple) else None)
         DownloadButton.clicked.connect(lambda: StackedWidget.setCurrentWidget(OpenButton))
         StackedWidget.addWidget(OpenButton)
         StackedWidget.addWidget(DownloadButton)
-        StackedWidget.setCurrentWidget(OpenButton) if isinstance(Param[3], str) else StackedWidget.setCurrentWidget(DownloadButton)
+        StackedWidget.setCurrentWidget(OpenButton) if isinstance(DownloadParam, str) else StackedWidget.setCurrentWidget(DownloadButton)
         CopyButton = QPushButton()
         CopyButton.setStyleSheet(ButtonStyle + "QPushButton {image: url(:/Button_Icon/Sources/Clipboard.png);}")
-        CopyButton.clicked.connect(lambda: self.Clipboard.setText(Param[3][0]) if isinstance(Param[3], tuple) else None)
+        CopyButton.clicked.connect(lambda: self.Clipboard.setText(DownloadParam[0]) if isinstance(DownloadParam, tuple) else None)
         CopyButton.clicked.connect(lambda: Function_ShowMessageBox(WindowTitle = "Tip", Text = "已复制链接到剪切板"))
         Function_SetRetainSizeWhenHidden(CopyButton)
         CopyButton.hide() if StackedWidget.currentWidget() == OpenButton else None
         StackedWidget.currentChanged.connect(lambda: CopyButton.hide() if StackedWidget.currentWidget() == OpenButton else None)
-        Column3Layout = QHBoxLayout()
-        SetColumnLayout(Column3Layout)
-        Column3Layout.addWidget(StackedWidget)
-        Column3Layout.addWidget(CopyButton)
+        ColumnLayout_Management = QHBoxLayout()
+        SetColumnLayout(ColumnLayout_Management)
+        ColumnLayout_Management.addWidget(StackedWidget)
+        ColumnLayout_Management.addWidget(CopyButton)
 
         super().AddRow(
-            [Column0Layout, Column1Layout, Column2Layout, Column3Layout],
-            [QHeaderView.Stretch, QHeaderView.Stretch, QHeaderView.Stretch, QHeaderView.Fixed],
-            [None, None, None, 2 * RowHeight],
+            [ColumnLayout_ModelName, ColumnLayout_ModelType, ColumnLayout_ModelSize, ColumnLayout_ModelDate, ColumnLayout_Management],
+            [QHeaderView.Stretch, QHeaderView.Interactive, QHeaderView.Interactive, QHeaderView.Stretch, QHeaderView.Fixed],
+            [None, None, None, None, 2 * RowHeight],
             RowHeight
         )
 
-    def SetValue(self, Params: list = [['', '', '', 'url'], ]):
+    def SetValue(self, Params: list = [['name', 'type', 'size', 'date', 'url'], ]):
         self.ClearRows()
         for Param in Params:
             QApplication.processEvents()

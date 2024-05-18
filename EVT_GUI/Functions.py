@@ -479,22 +479,51 @@ def Function_SetWidgetValue(
 ):
     if isinstance(Widget, (QLineEdit, LineEditBase, QPlainTextEdit)):
         Function_SetText(Widget, Value, SetPlaceholderText = SetPlaceholderText, PlaceholderText = PlaceholderText)
-        Widget.textChanged.connect(lambda Value: Config.EditConfig(Section, Option, str(Value)))
+        def EditConfig(Value):
+            Config.EditConfig(Section, Option, str(Value))
+        if Config is not None:
+            Widget.textChanged.connect(EditConfig)
+            EditConfig(Value)
+
     if isinstance(Widget, QComboBox):
         Widget.setCurrentText(str(Value))
-        Widget.currentTextChanged.connect(lambda Value: Config.EditConfig(Section, Option, str(Value)))
+        def EditConfig(Value):
+            Config.EditConfig(Section, Option, str(Value))
+        if Config is not None:
+            Widget.currentTextChanged.connect(EditConfig)
+            EditConfig(Value)
+
     if isinstance(Widget, (QSlider, QSpinBox)):
         Widget.setValue(int(eval(str(Value)) * Times))
-        Widget.valueChanged.connect(lambda Value: Config.EditConfig(Section, Option, str(eval(str(Value)) / Times)))
+        def EditConfig(Value):
+            Config.EditConfig(Section, Option, str(eval(str(Value)) / Times))
+        if Config is not None:
+            Widget.valueChanged.connect(EditConfig)
+            EditConfig(Value)
+
     if isinstance(Widget, QDoubleSpinBox):
         Widget.setValue(float(eval(str(Value)) * Times))
-        Widget.valueChanged.connect(lambda Value: Config.EditConfig(Section, Option, str(eval(str(Value)) / Times)))
+        def EditConfig(Value):
+            Config.EditConfig(Section, Option, str(eval(str(Value)) / Times))
+        if Config is not None:
+            Widget.valueChanged.connect(EditConfig)
+            EditConfig(Value)
+
     if isinstance(Widget, (QCheckBox, QRadioButton)):
         Widget.setChecked(eval(str(Value)))
-        Widget.toggled.connect(lambda Value: Config.EditConfig(Section, Option, str(Value)))
+        def EditConfig(Value):
+            Config.EditConfig(Section, Option, str(Value))
+        if Config is not None:
+            Widget.toggled.connect(EditConfig)
+            EditConfig(Value)
+
     if isinstance(Widget, Table_EditAudioSpeaker):
         Widget.SetValue(eval(str(Value)))
-        Widget.ValueChanged.connect(lambda Value: Config.EditConfig(Section, Option, str(Value)))
+        def EditConfig(Value):
+            Config.EditConfig(Section, Option, str(Value))
+        if Config is not None:
+            Widget.ValueChanged.connect(EditConfig)
+            EditConfig(Value)
 
 
 class ParamsManager:
@@ -527,20 +556,25 @@ class ParamsManager:
         value = self.RegistratedWidgets[Widget]
         Function_SetWidgetValue(Widget, self.Config, *value)
 
+    def ClearSettings(self):
+        with open(self.ConfigPath, 'w') as Config:
+            pass
+        self.Config = ManageConfig(self.ConfigPath)
+
     def ResetSettings(self):
+        self.ClearSettings()
         for Widget in list(self.RegistratedWidgets.keys()):
             self.ResetParam(Widget)
 
     def ImportSettings(self, ReadPath: str):
-        ConfigParser = ManageConfig(ReadPath).ReadConfig()
+        ConfigParser = ManageConfig(ReadPath).Parser()
         with open(self.ConfigPath, 'w') as Config:
             ConfigParser.write(Config)
         for Widget, value in list(self.RegistratedWidgets.items()):
             self.SetParam(Widget, *value)
 
     def ExportSettings(self, SavePath: str):
-        ConfigParser = self.Config.ReadConfig()
         with open(SavePath, 'w') as Config:
-            ConfigParser.write(Config)
+            self.Config.Parser().write(Config)
 
 ##############################################################################################################################

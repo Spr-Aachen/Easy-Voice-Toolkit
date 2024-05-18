@@ -20,7 +20,7 @@ from EVT_GUI.EnvConfigurator import *
 ##############################################################################################################################
 
 # Set current version
-CurrentVersion = "v1.0.8"
+CurrentVersion = "v1.0.9"
 
 ##############################################################################################################################
 
@@ -557,22 +557,24 @@ class Model_View(QObject):
                 Name = ModelDict["name"]
                 for Model, ModelSHA in ModelDict["SHA"].items():
                     ModelName = Model
+                    ModelName, ModelType = ModelName.rsplit('.', 1)
                     ModelSize = ModelDict["size"][Model]
                     ModelDate = ModelDict["date"][Model]
                     ModelSHA = ModelSHA
                     ModelURL = ModelDict["downloadurl"][Model]
                     ModelDir = Path(ModelsDir).joinpath("Downloaded", Name)
                     DownloadParam = (ModelURL, ModelDir, ModelName, Path(ModelURL).suffix, ModelSHA)
-                    ModelsInfo[ModelSHA] = [str(f"[{Name}]{ModelName}"), str(ModelSize), str(ModelDate), tuple(DownloadParam)]
+                    ModelsInfo[ModelSHA] = [str(f"[{Name}]{ModelName}"), str(ModelType), str(ModelSize), str(ModelDate), tuple(DownloadParam)]
             else:
                 ModelName = ModelDict["name"]
+                ModelName, ModelType = ModelName.rsplit('.', 1)
                 ModelSize = ModelDict["size"]
                 ModelDate = ModelDict["date"]
                 ModelSHA = ModelDict["SHA"]
                 ModelURL = ModelDict["downloadurl"]
                 ModelDir = Path(ModelsDir).joinpath("Downloaded")
                 DownloadParam = (ModelURL, ModelDir, ModelName, Path(ModelURL).suffix, ModelSHA)
-                ModelsInfo[ModelSHA] = [str(ModelName), str(ModelSize), str(ModelDate), tuple(DownloadParam)]
+                ModelsInfo[ModelSHA] = [str(ModelName), str(ModelType), str(ModelSize), str(ModelDate), tuple(DownloadParam)]
         with ThreadPoolExecutor(max_workers = os.cpu_count()) as Executor:
             Executor.map(
                 GetModelInfo_Cloud,
@@ -587,14 +589,15 @@ class Model_View(QObject):
         ModelPaths_Local = list(set(ModelPaths_Local))
         def GetModelInfo_Local(ModelPath):
             Name = Path(ModelPath).parts[-2] if Path(ModelPath).parent.__str__() not in Path(ModelsDir).joinpath("Downloaded").__str__() else None
-            ModelName = Path(ModelPath).stem
+            ModelName = Path(ModelPath).name
+            ModelName, ModelType = ModelName.rsplit('.', 1)
             ModelSize = round(Path(ModelPath).stat().st_size / (1024 ** 2), 1)
             ModelDate = datetime.fromtimestamp(Path(ModelPath).stat().st_mtime)
             with open(ModelPath, "rb") as m:
                 ModelBytes = m.read()
             ModelSHA = hashlib.sha256(ModelBytes).hexdigest()
             ModelDir = Path(ModelPath).parent
-            ModelsInfo[ModelSHA] = [str(f"[{Name}]{ModelName}" if Name is not None else ModelName), str(ModelSize)+'MB', str(ModelDate), str(ModelDir)]
+            ModelsInfo[ModelSHA] = [str(f"[{Name}]{ModelName}" if Name is not None else ModelName), str(ModelType), str(ModelSize)+'MB', str(ModelDate), str(ModelDir)]
         with ThreadPoolExecutor(max_workers = os.cpu_count()) as Executor:
             Executor.map(
                 GetModelInfo_Local,
@@ -1479,7 +1482,7 @@ class MainWindow(Window_MainWindow):
         )
 
         self.ui.TabWidget_Models_Process.setTabText(0, 'UVR（人声分离）')
-        self.ui.Table_Models_Process_UVR.SetHorizontalHeaders(['名字', '大小', '日期', '操作'])
+        self.ui.Table_Models_Process_UVR.SetHorizontalHeaders(['名字', '类型', '大小', '日期', '操作'])
         ModelViewSignals.Signal_Process_UVR.connect(self.ui.Table_Models_Process_UVR.SetValue)
         self.ui.Table_Models_Process_UVR.Download.connect(
             lambda Params: self.Function_SetMethodExecutor(
@@ -1503,7 +1506,7 @@ class MainWindow(Window_MainWindow):
         )
 
         self.ui.TabWidget_Models_ASR.setTabText(0, 'VPR（声纹识别）')
-        self.ui.Table_Models_ASR_VPR.SetHorizontalHeaders(['名字', '大小', '日期', '操作'])
+        self.ui.Table_Models_ASR_VPR.SetHorizontalHeaders(['名字', '类型', '大小', '日期', '操作'])
         ModelViewSignals.Signal_ASR_VPR.connect(self.ui.Table_Models_ASR_VPR.SetValue)
         self.ui.Table_Models_ASR_VPR.Download.connect(
             lambda Params: self.Function_SetMethodExecutor(
@@ -1527,7 +1530,7 @@ class MainWindow(Window_MainWindow):
         )
 
         self.ui.TabWidget_Models_STT.setTabText(0, 'Whisper')
-        self.ui.Table_Models_STT_Whisper.SetHorizontalHeaders(['名字', '大小', '日期', '操作'])
+        self.ui.Table_Models_STT_Whisper.SetHorizontalHeaders(['名字', '类型', '大小', '日期', '操作'])
         ModelViewSignals.Signal_STT_Whisper.connect(self.ui.Table_Models_STT_Whisper.SetValue)
         self.ui.Table_Models_STT_Whisper.Download.connect(
             lambda Params: self.Function_SetMethodExecutor(
@@ -1551,7 +1554,7 @@ class MainWindow(Window_MainWindow):
         )
 
         self.ui.TabWidget_Models_TTS.setTabText(0, 'GPT-SoVITS')
-        self.ui.Table_Models_TTS_GPTSoVITS.SetHorizontalHeaders(['名字', '大小', '日期', '操作'])
+        self.ui.Table_Models_TTS_GPTSoVITS.SetHorizontalHeaders(['名字', '类型', '大小', '日期', '操作'])
         ModelViewSignals.Signal_TTS_GPTSoVITS.connect(self.ui.Table_Models_TTS_GPTSoVITS.SetValue)
         self.ui.Table_Models_TTS_GPTSoVITS.Download.connect(
             lambda Params: self.Function_SetMethodExecutor(
@@ -1561,7 +1564,7 @@ class MainWindow(Window_MainWindow):
         )
 
         self.ui.TabWidget_Models_TTS.setTabText(1, 'VITS')
-        self.ui.Table_Models_TTS_VITS.SetHorizontalHeaders(['名字', '大小', '日期', '操作'])
+        self.ui.Table_Models_TTS_VITS.SetHorizontalHeaders(['名字', '类型', '大小', '日期', '操作'])
         ModelViewSignals.Signal_TTS_VITS.connect(self.ui.Table_Models_TTS_VITS.SetValue)
         self.ui.Table_Models_TTS_VITS.Download.connect(
             lambda Params: self.Function_SetMethodExecutor(
@@ -1674,7 +1677,7 @@ class MainWindow(Window_MainWindow):
         )
         ParamsManager_Process.SetParam(
             Widget = self.ui.LineEdit_Process_MediaDirInput,
-            Section = 'AudioProcessor',
+            Section = 'Input Params',
             Option = 'Media_Dir_Input',
             DefaultValue = '',
             SetPlaceholderText = True
@@ -1699,7 +1702,7 @@ class MainWindow(Window_MainWindow):
         )
         ParamsManager_Process.SetParam(
             Widget = self.ui.CheckBox_Process_DenoiseAudio,
-            Section = 'AudioProcessor',
+            Section = 'Denoiser Params',
             Option = 'Denoise_Audio',
             DefaultValue = True
         )
@@ -1744,7 +1747,7 @@ class MainWindow(Window_MainWindow):
         Process_DenoiseModelPath_Default = Path(ModelsDir).joinpath('Process', 'UVR', 'Downloaded', 'HP5_only_main_vocal.pth').as_posix()
         ParamsManager_Process.SetParam(
             Widget = self.ui.LineEdit_Process_DenoiseModelPath,
-            Section = 'AudioProcessor',
+            Section = 'Denoiser Params',
             Option = 'Denoise_Model_Path',
             DefaultValue = Process_DenoiseModelPath_Default,
             SetPlaceholderText = True
@@ -1770,7 +1773,7 @@ class MainWindow(Window_MainWindow):
         self.ui.ComboBox_Process_DenoiseTarget.addItems([QCA.translate("ComboBox", '人声'), QCA.translate("ComboBox", '背景声')])
         ParamsManager_Process.SetParam(
             Widget = self.ui.ComboBox_Process_DenoiseTarget,
-            Section = 'AudioProcessor',
+            Section = 'Denoiser Params',
             Option = 'Denoise_Target',
             DefaultValue = '人声'
         )
@@ -1790,7 +1793,7 @@ class MainWindow(Window_MainWindow):
         )
         ParamsManager_Process.SetParam(
             Widget = self.ui.CheckBox_Process_SliceAudio,
-            Section = 'AudioProcessor',
+            Section = 'Slicer Params',
             Option = 'Slice_Audio',
             DefaultValue = True
         )
@@ -1847,7 +1850,7 @@ class MainWindow(Window_MainWindow):
         #self.ui.DoubleSpinBox_Process_RMSThreshold.setSingleStep(0.01)
         ParamsManager_Process.SetParam(
             Widget = self.ui.DoubleSpinBox_Process_RMSThreshold,
-            Section = 'AudioProcessor',
+            Section = 'Slicer Params',
             Option = 'RMS_Threshold',
             DefaultValue = -34.
         )
@@ -1868,7 +1871,7 @@ class MainWindow(Window_MainWindow):
         self.ui.SpinBox_Process_HopSize.setSingleStep(1)
         ParamsManager_Process.SetParam(
             Widget = self.ui.SpinBox_Process_HopSize,
-            Section = 'AudioProcessor',
+            Section = 'Slicer Params',
             Option = 'Hop_Size',
             DefaultValue = 10
         )
@@ -1888,7 +1891,7 @@ class MainWindow(Window_MainWindow):
         self.ui.SpinBox_Process_SilentIntervalMin.setSingleStep(1)
         ParamsManager_Process.SetParam(
             Widget = self.ui.SpinBox_Process_SilentIntervalMin,
-            Section = 'AudioProcessor',
+            Section = 'Slicer Params',
             Option = 'Silent_Interval_Min',
             DefaultValue = 300
         )
@@ -1909,7 +1912,7 @@ class MainWindow(Window_MainWindow):
         self.ui.SpinBox_Process_SilenceKeptMax.setSingleStep(1)
         ParamsManager_Process.SetParam(
             Widget = self.ui.SpinBox_Process_SilenceKeptMax,
-            Section = 'AudioProcessor',
+            Section = 'Slicer Params',
             Option = 'Silence_Kept_Max',
             DefaultValue = 500
         )
@@ -1930,7 +1933,7 @@ class MainWindow(Window_MainWindow):
         self.ui.SpinBox_Process_AudioLengthMin.setSingleStep(1)
         ParamsManager_Process.SetParam(
             Widget = self.ui.SpinBox_Process_AudioLengthMin,
-            Section = 'AudioProcessor',
+            Section = 'Slicer Params',
             Option = 'Audio_Length_Min',
             DefaultValue = 4000
         )
@@ -1951,7 +1954,7 @@ class MainWindow(Window_MainWindow):
         self.ui.ComboBox_Process_MediaFormatOutput.addItems(['flac', 'wav', 'mp3', 'aac', 'm4a', 'wma', 'aiff', 'au', 'ogg', 'None'])
         ParamsManager_Process.SetParam(
             Widget = self.ui.ComboBox_Process_MediaFormatOutput,
-            Section = 'AudioProcessor',
+            Section = 'Output Params',
             Option = 'Media_Format_Output',
             DefaultValue = 'wav'
         )
@@ -1970,7 +1973,7 @@ class MainWindow(Window_MainWindow):
         Process_OutputDirName_Default = str(date.today())
         ParamsManager_Process.SetParam(
             Widget = self.ui.LineEdit_Process_OutputDirName,
-            Section = 'AudioProcessor',
+            Section = 'Output Params',
             Option = 'Output_Dir_Name',
             DefaultValue = '',
             SetPlaceholderText = True,
@@ -1994,10 +1997,8 @@ class MainWindow(Window_MainWindow):
                 LineEdit_Process_OutputDir.setText(DirText)
                 Alert = Path(DirText).exists() and list(Path(DirText).iterdir()) != []
             self.ui.LineEdit_Process_OutputDirName.Alert(True if Alert else False, "注意：目录已包含文件")
-        self.ui.LineEdit_Process_OutputDirName.textChanged.connect(SetText_LineEdit_Process_OutputDir)
-        self.ui.LineEdit_Process_OutputDirName.focusedOut.connect(SetText_LineEdit_Process_OutputDir)
-        self.ui.LineEdit_Process_OutputRoot.textChanged.connect(SetText_LineEdit_Process_OutputDir)
-        self.ui.LineEdit_Process_OutputRoot.focusedOut.connect(SetText_LineEdit_Process_OutputDir)
+        self.ui.LineEdit_Process_OutputDirName.interacted.connect(SetText_LineEdit_Process_OutputDir)
+        self.ui.LineEdit_Process_OutputRoot.interacted.connect(SetText_LineEdit_Process_OutputDir)
         #SetText_LineEdit_Process_OutputDir()
 
         self.ui.ToolBox_Process_OutputParams_AdvanceSettings.widget(0).setText(QCA.translate("ToolBox", "高级设置"))
@@ -2011,7 +2012,7 @@ class MainWindow(Window_MainWindow):
         )
         ParamsManager_Process.SetParam(
             Widget = self.ui.CheckBox_Process_ToMono,
-            Section = 'AudioProcessor',
+            Section = 'Output Params',
             Option = 'ToMono',
             DefaultValue = False
         )
@@ -2040,7 +2041,7 @@ class MainWindow(Window_MainWindow):
         self.ui.ComboBox_Process_SampleRate.addItems(['22050', '44100', '48000', '96000', '192000', 'None'])
         ParamsManager_Process.SetParam(
             Widget = self.ui.ComboBox_Process_SampleRate,
-            Section = 'AudioProcessor',
+            Section = 'Output Params',
             Option = 'SampleRate',
             DefaultValue = None
         )
@@ -2059,7 +2060,7 @@ class MainWindow(Window_MainWindow):
         self.ui.ComboBox_Process_SampleWidth.addItems(['8', '16', '24', '32', '32 (Float)', 'None'])
         ParamsManager_Process.SetParam(
             Widget = self.ui.ComboBox_Process_SampleWidth,
-            Section = 'AudioProcessor',
+            Section = 'Output Params',
             Option = 'SampleWidth',
             DefaultValue = None
         )
@@ -2272,7 +2273,7 @@ class MainWindow(Window_MainWindow):
         )
         ParamsManager_ASR_VPR.SetParam(
             Widget = self.ui.LineEdit_ASR_VPR_AudioDirInput,
-            Section = 'VPR',
+            Section = 'Input Params',
             Option = 'Audio_Dir_Input',
             DefaultValue = '',
             SetPlaceholderText = True
@@ -2297,7 +2298,7 @@ class MainWindow(Window_MainWindow):
         self.ui.Table_ASR_VPR_StdAudioSpeaker.SetHorizontalHeaders(['人物姓名', '音频路径', '增删'])
         ParamsManager_ASR_VPR.SetParam(
             Widget = self.ui.Table_ASR_VPR_StdAudioSpeaker,
-            Section = 'VPR',
+            Section = 'Input Params',
             Option = 'StdAudioSpeaker',
             DefaultValue = {"": ""}
         )
@@ -2317,7 +2318,7 @@ class MainWindow(Window_MainWindow):
         self.ui.DoubleSpinBox_ASR_VPR_DecisionThreshold.setSingleStep(0.01)
         ParamsManager_ASR_VPR.SetParam(
             Widget = self.ui.DoubleSpinBox_ASR_VPR_DecisionThreshold,
-            Section = 'VPR',
+            Section = 'VPR Params',
             Option = 'DecisionThreshold',
             DefaultValue = 0.75
         )
@@ -2336,7 +2337,7 @@ class MainWindow(Window_MainWindow):
         ASR_VPR_ModelPath_Default = Path(ModelsDir).joinpath('ASR', 'VPR', 'Downloaded', 'Ecapa-Tdnn_spectrogram.pth').as_posix()
         ParamsManager_ASR_VPR.SetParam(
             Widget = self.ui.LineEdit_ASR_VPR_ModelPath,
-            Section = 'VPR',
+            Section = 'VPR Params',
             Option = 'Model_Path',
             DefaultValue = ASR_VPR_ModelPath_Default,
             SetPlaceholderText = True,
@@ -2366,7 +2367,7 @@ class MainWindow(Window_MainWindow):
         self.ui.ComboBox_ASR_VPR_ModelType.addItems(['Ecapa-Tdnn'])
         ParamsManager_ASR_VPR.SetParam(
             Widget = self.ui.ComboBox_ASR_VPR_ModelType,
-            Section = 'VPR',
+            Section = 'VPR Params',
             Option = 'Model_Type',
             DefaultValue = 'Ecapa-Tdnn'
         )
@@ -2385,7 +2386,7 @@ class MainWindow(Window_MainWindow):
         self.ui.ComboBox_ASR_VPR_FeatureMethod.addItems(['spectrogram', 'melspectrogram'])
         ParamsManager_ASR_VPR.SetParam(
             Widget = self.ui.ComboBox_ASR_VPR_FeatureMethod,
-            Section = 'VPR',
+            Section = 'VPR Params',
             Option = 'Feature_Method',
             DefaultValue = 'spectrogram'
         )
@@ -2405,7 +2406,7 @@ class MainWindow(Window_MainWindow):
         #self.ui.DoubleSpinBox_ASR_VPR_DurationOfAudio.setSingleStep(0.01)
         ParamsManager_ASR_VPR.SetParam(
             Widget = self.ui.DoubleSpinBox_ASR_VPR_DurationOfAudio,
-            Section = 'VPR',
+            Section = 'VPR Params',
             Option = 'Duration_of_Audio',
             DefaultValue = 3.00
         )
@@ -2426,7 +2427,7 @@ class MainWindow(Window_MainWindow):
         )
         ParamsManager_ASR_VPR.SetParam(
             Widget = self.ui.CheckBox_ASR_VPR_FilterResult,
-            Section = 'VPR',
+            Section = 'Output Params',
             Option = 'FilterResult',
             DefaultValue = False
         )
@@ -2456,7 +2457,7 @@ class MainWindow(Window_MainWindow):
         ASR_VPR_OutputDirName_Default = str(date.today())
         ParamsManager_ASR_VPR.SetParam(
             Widget = self.ui.LineEdit_ASR_VPR_OutputDirName,
-            Section = 'VPR',
+            Section = 'Output Params',
             Option = 'Audio_Dir_Output',
             DefaultValue = '',
             SetPlaceholderText = True,
@@ -2482,7 +2483,7 @@ class MainWindow(Window_MainWindow):
         ASR_VPR_AudioSpeakersDataName_Default = "Recgonition_" + str(date.today())
         ParamsManager_ASR_VPR.SetParam(
             Widget = self.ui.LineEdit_ASR_VPR_AudioSpeakersDataName,
-            Section = 'VPR',
+            Section = 'Output Params',
             Option = 'FileList_Name',
             DefaultValue = ASR_VPR_AudioSpeakersDataName_Default,
             SetPlaceholderText = True,
@@ -2506,10 +2507,8 @@ class MainWindow(Window_MainWindow):
                 LineEdit_ASR_VPR_OutputDir.setText(DirText)
                 Alert = Path(DirText).exists() and list(Path(DirText).iterdir()) != []
             self.ui.LineEdit_ASR_VPR_OutputDirName.Alert(True if Alert else False, "注意：目录已包含文件")
-        self.ui.LineEdit_ASR_VPR_OutputDirName.textChanged.connect(SetText_LineEdit_ASR_VPR_OutputDir)
-        self.ui.LineEdit_ASR_VPR_OutputDirName.focusedOut.connect(SetText_LineEdit_ASR_VPR_OutputDir)
-        self.ui.LineEdit_ASR_VPR_OutputRoot.textChanged.connect(SetText_LineEdit_ASR_VPR_OutputDir)
-        self.ui.LineEdit_ASR_VPR_OutputRoot.focusedOut.connect(SetText_LineEdit_ASR_VPR_OutputDir)
+        self.ui.LineEdit_ASR_VPR_OutputDirName.interacted.connect(SetText_LineEdit_ASR_VPR_OutputDir)
+        self.ui.LineEdit_ASR_VPR_OutputRoot.interacted.connect(SetText_LineEdit_ASR_VPR_OutputDir)
         #SetText_LineEdit_ASR_VPR_OutputDir()
 
         LineEdit_ASR_VPR_AudioSpeakersDataPath = QLineEdit()
@@ -2522,8 +2521,7 @@ class MainWindow(Window_MainWindow):
                 LineEdit_ASR_VPR_AudioSpeakersDataPath.setText(PathText)
                 Alert = Path(PathText).exists()
             self.ui.LineEdit_ASR_VPR_AudioSpeakersDataName.Alert(True if Alert else False, "注意：路径已存在")
-        self.ui.LineEdit_ASR_VPR_AudioSpeakersDataName.textChanged.connect(SetText_LineEdit_ASR_VPR_AudioSpeakersDataPath)
-        self.ui.LineEdit_ASR_VPR_AudioSpeakersDataName.focusedOut.connect(SetText_LineEdit_ASR_VPR_AudioSpeakersDataPath)
+        self.ui.LineEdit_ASR_VPR_AudioSpeakersDataName.interacted.connect(SetText_LineEdit_ASR_VPR_AudioSpeakersDataPath)
         LineEdit_ASR_VPR_OutputDir.textChanged.connect(SetText_LineEdit_ASR_VPR_AudioSpeakersDataPath)
         #SetText_LineEdit_ASR_VPR_AudioSpeakersDataPath()
 
@@ -2805,7 +2803,7 @@ class MainWindow(Window_MainWindow):
         )
         ParamsManager_STT_Whisper.SetParam(
             Widget = self.ui.LineEdit_STT_Whisper_AudioDir,
-            Section = 'Whisper',
+            Section = 'Input Params',
             Option = 'Audio_Dir',
             DefaultValue = '',
             SetPlaceholderText = True
@@ -2830,7 +2828,7 @@ class MainWindow(Window_MainWindow):
         )
         ParamsManager_STT_Whisper.SetParam(
             Widget = self.ui.CheckBox_STT_Whisper_AddLanguageInfo,
-            Section = 'Whisper',
+            Section = 'Whisper Params',
             Option = 'Add_LanguageInfo',
             DefaultValue = True
         )
@@ -2859,7 +2857,7 @@ class MainWindow(Window_MainWindow):
         STT_Whisper_ModelPath_Default = Path(ModelsDir).joinpath('STT', 'Whisper', 'Downloaded', 'small.pt').as_posix()
         ParamsManager_STT_Whisper.SetParam(
             Widget = self.ui.LineEdit_STT_Whisper_ModelPath,
-            Section = 'Whisper',
+            Section = 'Whisper Params',
             Option = 'Model_Path',
             DefaultValue = STT_Whisper_ModelPath_Default,
             SetPlaceholderText = True,
@@ -2888,7 +2886,7 @@ class MainWindow(Window_MainWindow):
         )
         ParamsManager_STT_Whisper.SetParam(
             Widget = self.ui.CheckBox_STT_Whisper_Verbose,
-            Section = 'Whisper',
+            Section = 'Whisper Params',
             Option = 'Verbose',
             DefaultValue = True
         )
@@ -2916,7 +2914,7 @@ class MainWindow(Window_MainWindow):
         )
         ParamsManager_STT_Whisper.SetParam(
             Widget = self.ui.CheckBox_STT_Whisper_fp16,
-            Section = 'Whisper',
+            Section = 'Whisper Params',
             Option = 'fp16',
             DefaultValue = True
         )
@@ -2944,7 +2942,7 @@ class MainWindow(Window_MainWindow):
         )
         ParamsManager_STT_Whisper.SetParam(
             Widget = self.ui.CheckBox_STT_Whisper_ConditionOnPreviousText,
-            Section = 'Whisper',
+            Section = 'Whisper Params',
             Option = 'Condition_on_Previous_Text',
             DefaultValue = False
         )
@@ -2975,7 +2973,7 @@ class MainWindow(Window_MainWindow):
         STT_Whisper_OutputDirName_Default = str(date.today())
         ParamsManager_STT_Whisper.SetParam(
             Widget = self.ui.LineEdit_STT_Whisper_OutputDirName,
-            Section = 'Whisper',
+            Section = 'Output Params',
             Option = 'SRT_Dir_Name',
             DefaultValue = '',
             SetPlaceholderText = True,
@@ -2999,10 +2997,8 @@ class MainWindow(Window_MainWindow):
                 LineEdit_STT_Whisper_OutputDir.setText(DirText)
                 Alert = Path(DirText).exists() and list(Path(DirText).iterdir()) != []
             self.ui.LineEdit_STT_Whisper_OutputDirName.Alert(True if Alert else False, "注意：目录已包含文件")
-        self.ui.LineEdit_STT_Whisper_OutputDirName.textChanged.connect(SetText_LineEdit_STT_Whisper_OutputDir)
-        self.ui.LineEdit_STT_Whisper_OutputDirName.focusedOut.connect(SetText_LineEdit_STT_Whisper_OutputDir)
-        self.ui.LineEdit_STT_Whisper_OutputRoot.textChanged.connect(SetText_LineEdit_STT_Whisper_OutputDir)
-        self.ui.LineEdit_STT_Whisper_OutputRoot.focusedOut.connect(SetText_LineEdit_STT_Whisper_OutputDir)
+        self.ui.LineEdit_STT_Whisper_OutputDirName.interacted.connect(SetText_LineEdit_STT_Whisper_OutputDir)
+        self.ui.LineEdit_STT_Whisper_OutputRoot.interacted.connect(SetText_LineEdit_STT_Whisper_OutputDir)
         #SetText_LineEdit_STT_Whisper_OutputDir()
 
         # ChildWindow
@@ -3263,7 +3259,7 @@ class MainWindow(Window_MainWindow):
         )
         ParamsManager_DAT_GPTSoVITS.SetParam(
             Widget = self.ui.LineEdit_DAT_GPTSoVITS_AudioSpeakersDataPath,
-            Section = 'GPT-SoVITS',
+            Section = 'Input Params',
             Option = 'WAV_Dir',
             DefaultValue = '',
             SetPlaceholderText = True
@@ -3286,7 +3282,7 @@ class MainWindow(Window_MainWindow):
         )
         ParamsManager_DAT_GPTSoVITS.SetParam(
             Widget = self.ui.LineEdit_DAT_GPTSoVITS_SRTDir,
-            Section = 'GPT-SoVITS',
+            Section = 'Input Params',
             Option = 'SRT_Dir',
             DefaultValue = '',
             SetPlaceholderText = True
@@ -3313,7 +3309,7 @@ class MainWindow(Window_MainWindow):
         DAT_GPTSoVITS_DataFormat_Default = '路径|人名|语言|文本'
         ParamsManager_DAT_GPTSoVITS.SetParam(
             Widget = self.ui.LineEdit_DAT_GPTSoVITS_DataFormat,
-            Section = 'GPT-SoVITS',
+            Section = 'GPT-SoVITS Params',
             Option = 'DataFormat_Path',
             DefaultValue = DAT_GPTSoVITS_DataFormat_Default,
             SetPlaceholderText = True,
@@ -3346,7 +3342,7 @@ class MainWindow(Window_MainWindow):
         )
         ParamsManager_DAT_GPTSoVITS.SetParam(
             Widget = self.ui.CheckBox_DAT_GPTSoVITS_AddAuxiliaryData,
-            Section = 'GPT-SoVITS',
+            Section = 'GPT-SoVITS Params',
             Option = 'Add_AuxiliaryData',
             DefaultValue = False
         )
@@ -3389,7 +3385,7 @@ class MainWindow(Window_MainWindow):
         DAT_GPTSoVITS_AuxiliaryDataPath_Default = Path(CurrentDir).joinpath('AuxiliaryData', 'GPT-SoVITS', 'AuxiliaryData.txt').as_posix()
         ParamsManager_DAT_GPTSoVITS.SetParam(
             Widget = self.ui.LineEdit_DAT_GPTSoVITS_AuxiliaryDataPath,
-            Section = 'GPT-SoVITS',
+            Section = 'GPT-SoVITS Params',
             Option = 'Add_AuxiliaryData',
             DefaultValue = False,
             SetPlaceholderText = True,
@@ -3419,7 +3415,7 @@ class MainWindow(Window_MainWindow):
         DAT_GPTSoVITS_OutputDirName_Default = str(date.today())
         ParamsManager_DAT_GPTSoVITS.SetParam(
             Widget = self.ui.LineEdit_DAT_GPTSoVITS_OutputDirName,
-            Section = 'GPT-SoVITS',
+            Section = 'Output Params',
             Option = 'Output_Dir_Name',
             DefaultValue = '',
             SetPlaceholderText = True,
@@ -3445,7 +3441,7 @@ class MainWindow(Window_MainWindow):
         DAT_GPTSoVITS_FileListName_Default = "Train_" + str(date.today())
         ParamsManager_DAT_GPTSoVITS.SetParam(
             Widget = self.ui.LineEdit_DAT_GPTSoVITS_FileListName,
-            Section = 'GPT-SoVITS',
+            Section = 'Output Params',
             Option = 'FileList_Name',
             DefaultValue = DAT_GPTSoVITS_FileListName_Default,
             SetPlaceholderText = True,
@@ -3469,10 +3465,8 @@ class MainWindow(Window_MainWindow):
                 LineEdit_DAT_GPTSoVITS_OutputDir.setText(DirText)
                 Alert = Path(DirText).exists() and list(Path(DirText).iterdir()) != []
             self.ui.LineEdit_DAT_GPTSoVITS_OutputDirName.Alert(True if Alert else False, "注意：目录已包含文件")
-        self.ui.LineEdit_DAT_GPTSoVITS_OutputDirName.textChanged.connect(SetText_LineEdit_DAT_GPTSoVITS_OutputDir)
-        self.ui.LineEdit_DAT_GPTSoVITS_OutputDirName.focusedOut.connect(SetText_LineEdit_DAT_GPTSoVITS_OutputDir)
-        self.ui.LineEdit_DAT_GPTSoVITS_OutputRoot.textChanged.connect(SetText_LineEdit_DAT_GPTSoVITS_OutputDir)
-        self.ui.LineEdit_DAT_GPTSoVITS_OutputRoot.focusedOut.connect(SetText_LineEdit_DAT_GPTSoVITS_OutputDir)
+        self.ui.LineEdit_DAT_GPTSoVITS_OutputDirName.interacted.connect(SetText_LineEdit_DAT_GPTSoVITS_OutputDir)
+        self.ui.LineEdit_DAT_GPTSoVITS_OutputRoot.interacted.connect(SetText_LineEdit_DAT_GPTSoVITS_OutputDir)
         #SetText_LineEdit_DAT_GPTSoVITS_OutputDir()
 
         LineEdit_DAT_GPTSoVITS_FileListPath = QLineEdit()
@@ -3485,8 +3479,7 @@ class MainWindow(Window_MainWindow):
                 LineEdit_DAT_GPTSoVITS_FileListPath.setText(PathText)
                 Alert = Path(PathText).exists()
             self.ui.LineEdit_DAT_GPTSoVITS_FileListName.Alert(True if Alert else False, "注意：路径已存在")
-        self.ui.LineEdit_DAT_GPTSoVITS_FileListName.textChanged.connect(SetText_LineEdit_DAT_GPTSoVITS_FileListPath)
-        self.ui.LineEdit_DAT_GPTSoVITS_FileListName.focusedOut.connect(SetText_LineEdit_DAT_GPTSoVITS_FileListPath)
+        self.ui.LineEdit_DAT_GPTSoVITS_FileListName.interacted.connect(SetText_LineEdit_DAT_GPTSoVITS_FileListPath)
         LineEdit_DAT_GPTSoVITS_OutputDir.textChanged.connect(SetText_LineEdit_DAT_GPTSoVITS_FileListPath)
         #SetText_LineEdit_DAT_GPTSoVITS_FileListPath()
 
@@ -3724,7 +3717,7 @@ class MainWindow(Window_MainWindow):
         )
         ParamsManager_DAT_VITS.SetParam(
             Widget = self.ui.LineEdit_DAT_VITS_AudioSpeakersDataPath,
-            Section = 'VITS',
+            Section = 'Input Params',
             Option = 'WAV_Dir',
             DefaultValue = '',
             SetPlaceholderText = True
@@ -3747,7 +3740,7 @@ class MainWindow(Window_MainWindow):
         )
         ParamsManager_DAT_VITS.SetParam(
             Widget = self.ui.LineEdit_DAT_VITS_SRTDir,
-            Section = 'VITS',
+            Section = 'Input Params',
             Option = 'SRT_Dir',
             DefaultValue = '',
             SetPlaceholderText = True
@@ -3774,7 +3767,7 @@ class MainWindow(Window_MainWindow):
         DAT_VITS_DataFormat_Default = '路径|人名|[语言]文本[语言]'
         ParamsManager_DAT_VITS.SetParam(
             Widget = self.ui.LineEdit_DAT_VITS_DataFormat,
-            Section = 'VITS',
+            Section = 'VITS Params',
             Option = 'DataFormat_Path',
             DefaultValue = DAT_VITS_DataFormat_Default,
             SetPlaceholderText = True,
@@ -3806,7 +3799,7 @@ class MainWindow(Window_MainWindow):
         )
         ParamsManager_DAT_VITS.SetParam(
             Widget = self.ui.CheckBox_DAT_VITS_AddAuxiliaryData,
-            Section = 'VITS',
+            Section = 'VITS Params',
             Option = 'Add_AuxiliaryData',
             DefaultValue = False
         )
@@ -3849,7 +3842,7 @@ class MainWindow(Window_MainWindow):
         DAT_VITS_AuxiliaryDataPath_Default = Path(CurrentDir).joinpath('AuxiliaryData', 'VITS', 'AuxiliaryData.txt').as_posix()
         ParamsManager_DAT_VITS.SetParam(
             Widget = self.ui.LineEdit_DAT_VITS_AuxiliaryDataPath,
-            Section = 'VITS',
+            Section = 'VITS Params',
             Option = 'AuxiliaryData_Path',
             DefaultValue = DAT_VITS_AuxiliaryDataPath_Default,
             SetPlaceholderText = True,
@@ -3880,7 +3873,7 @@ class MainWindow(Window_MainWindow):
         self.ui.DoubleSpinBox_DAT_VITS_TrainRatio.setSingleStep(0.1)
         ParamsManager_DAT_VITS.SetParam(
             Widget = self.ui.DoubleSpinBox_DAT_VITS_TrainRatio,
-            Section = 'VITS',
+            Section = 'VITS Params',
             Option = 'TrainRatio',
             DefaultValue = 0.7
         )
@@ -3899,7 +3892,7 @@ class MainWindow(Window_MainWindow):
         self.ui.ComboBox_DAT_VITS_SampleRate.addItems(['22050', '44100', '48000', '96000', '192000', 'None'])
         ParamsManager_DAT_VITS.SetParam(
             Widget = self.ui.ComboBox_DAT_VITS_SampleRate,
-            Section = 'VITS',
+            Section = 'VITS Params',
             Option = 'SampleRate',
             DefaultValue = 22050
         )
@@ -3918,7 +3911,7 @@ class MainWindow(Window_MainWindow):
         self.ui.ComboBox_DAT_VITS_SampleWidth.addItems(['8', '16', '24', '32', '32 (Float)', 'None'])
         ParamsManager_DAT_VITS.SetParam(
             Widget = self.ui.ComboBox_DAT_VITS_SampleWidth,
-            Section = 'VITS',
+            Section = 'VITS Params',
             Option = 'SampleWidth',
             DefaultValue = 16
         )
@@ -3936,7 +3929,7 @@ class MainWindow(Window_MainWindow):
         )
         ParamsManager_DAT_VITS.SetParam(
             Widget = self.ui.CheckBox_DAT_VITS_ToMono,
-            Section = 'VITS',
+            Section = 'VITS Params',
             Option = 'ToMono',
             DefaultValue = True
         )
@@ -3967,7 +3960,7 @@ class MainWindow(Window_MainWindow):
         DAT_VITS_OutputDirName_Default = str(date.today())
         ParamsManager_DAT_VITS.SetParam(
             Widget = self.ui.LineEdit_DAT_VITS_OutputDirName,
-            Section = 'VITS',
+            Section = 'Output Params',
             Option = 'Output_Dir_Name',
             DefaultValue = '',
             SetPlaceholderText = True,
@@ -3993,7 +3986,7 @@ class MainWindow(Window_MainWindow):
         DAT_VITS_FileListNameTraining_Default = "Train_" + str(date.today())
         ParamsManager_DAT_VITS.SetParam(
             Widget = self.ui.LineEdit_DAT_VITS_FileListNameTraining,
-            Section = 'VITS',
+            Section = 'Output Params',
             Option = 'FileList_Name_Training',
             DefaultValue = DAT_VITS_FileListNameTraining_Default,
             SetPlaceholderText = True,
@@ -4016,7 +4009,7 @@ class MainWindow(Window_MainWindow):
         DAT_VITS_FileListNameValidation_Default = "Val_" + str(date.today())
         ParamsManager_DAT_VITS.SetParam(
             Widget = self.ui.LineEdit_DAT_VITS_FileListNameValidation,
-            Section = 'VITS',
+            Section = 'Output Params',
             Option = 'FileList_Name_Validation',
             DefaultValue = DAT_VITS_FileListNameValidation_Default,
             SetPlaceholderText = True,
@@ -4040,10 +4033,8 @@ class MainWindow(Window_MainWindow):
                 LineEdit_DAT_VITS_OutputDir.setText(DirText)
                 Alert = Path(DirText).exists() and list(Path(DirText).iterdir()) != []
             self.ui.LineEdit_DAT_VITS_OutputDirName.Alert(True if Alert else False, "注意：目录已包含文件")
-        self.ui.LineEdit_DAT_VITS_OutputDirName.textChanged.connect(SetText_LineEdit_DAT_VITS_OutputDir)
-        self.ui.LineEdit_DAT_VITS_OutputDirName.focusedOut.connect(SetText_LineEdit_DAT_VITS_OutputDir)
-        self.ui.LineEdit_DAT_VITS_OutputRoot.textChanged.connect(SetText_LineEdit_DAT_VITS_OutputDir)
-        self.ui.LineEdit_DAT_VITS_OutputRoot.focusedOut.connect(SetText_LineEdit_DAT_VITS_OutputDir)
+        self.ui.LineEdit_DAT_VITS_OutputDirName.interacted.connect(SetText_LineEdit_DAT_VITS_OutputDir)
+        self.ui.LineEdit_DAT_VITS_OutputRoot.interacted.connect(SetText_LineEdit_DAT_VITS_OutputDir)
         #SetText_LineEdit_DAT_VITS_OutputDir()
 
         LineEdit_DAT_VITS_FileListPathTraining = QLineEdit()
@@ -4056,8 +4047,7 @@ class MainWindow(Window_MainWindow):
                 LineEdit_DAT_VITS_FileListPathTraining.setText(PathText)
                 Alert = Path(PathText).exists()
             self.ui.LineEdit_DAT_VITS_FileListNameTraining.Alert(True if Alert else False, "注意：路径已存在")
-        self.ui.LineEdit_DAT_VITS_FileListNameTraining.textChanged.connect(SetText_LineEdit_DAT_VITS_FileListPathTraining)
-        self.ui.LineEdit_DAT_VITS_FileListNameTraining.focusedOut.connect(SetText_LineEdit_DAT_VITS_FileListPathTraining)
+        self.ui.LineEdit_DAT_VITS_FileListNameTraining.interacted.connect(SetText_LineEdit_DAT_VITS_FileListPathTraining)
         LineEdit_DAT_VITS_OutputDir.textChanged.connect(SetText_LineEdit_DAT_VITS_FileListPathTraining)
         #SetText_LineEdit_DAT_VITS_FileListPathTraining()
 
@@ -4071,8 +4061,7 @@ class MainWindow(Window_MainWindow):
                 LineEdit_DAT_VITS_FileListPathValidation.setText(PathText)
                 Alert = Path(PathText).exists()
             self.ui.LineEdit_DAT_VITS_FileListNameValidation.Alert(True if Alert else False, "注意：路径已存在")
-        self.ui.LineEdit_DAT_VITS_FileListNameValidation.textChanged.connect(SetText_LineEdit_DAT_VITS_FileListPathValidation)
-        self.ui.LineEdit_DAT_VITS_FileListNameValidation.focusedOut.connect(SetText_LineEdit_DAT_VITS_FileListPathValidation)
+        self.ui.LineEdit_DAT_VITS_FileListNameValidation.interacted.connect(SetText_LineEdit_DAT_VITS_FileListPathValidation)
         LineEdit_DAT_VITS_OutputDir.textChanged.connect(SetText_LineEdit_DAT_VITS_FileListPathValidation)
         #SetText_LineEdit_DAT_VITS_FileListPathValidation()
 
@@ -4329,7 +4318,7 @@ class MainWindow(Window_MainWindow):
         )
         ParamsManager_Train_GPTSoVITS.SetParam(
             Widget = self.ui.LineEdit_Train_GPTSoVITS_FileListPath,
-            Section = 'GPT-SoVITS',
+            Section = 'Input Params',
             Option = 'FileList_Path',
             DefaultValue = '',
             SetPlaceholderText = True
@@ -4359,7 +4348,7 @@ class MainWindow(Window_MainWindow):
         self.ui.SpinBox_Train_GPTSoVITS_S1Epochs.setSingleStep(1)
         ParamsManager_Train_GPTSoVITS.SetParam(
             Widget = self.ui.SpinBox_Train_GPTSoVITS_S1Epochs,
-            Section = 'GPT-SoVITS',
+            Section = 'GPT-SoVITS Params',
             Option = 'Epochs',
             DefaultValue = 8
         )
@@ -4379,7 +4368,7 @@ class MainWindow(Window_MainWindow):
         self.ui.SpinBox_Train_GPTSoVITS_S2Epochs.setSingleStep(1)
         ParamsManager_Train_GPTSoVITS.SetParam(
             Widget = self.ui.SpinBox_Train_GPTSoVITS_S2Epochs,
-            Section = 'GPT-SoVITS',
+            Section = 'GPT-SoVITS Params',
             Option = 'Epochs',
             DefaultValue = 15
         )
@@ -4399,7 +4388,7 @@ class MainWindow(Window_MainWindow):
         Train_GPTSoVITS_ModelPathPretrainedS1_Default = Path(ModelsDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's1bert25hz-2kh-longer-epoch=68e-step=50232.ckpt').as_posix()
         ParamsManager_Train_GPTSoVITS.SetParam(
             Widget = self.ui.LineEdit_Train_GPTSoVITS_ModelPathPretrainedS1,
-            Section = 'GPT-SoVITS',
+            Section = 'GPT-SoVITS Params',
             Option = 'Model_Path_Pretrained_s1',
             DefaultValue = Train_GPTSoVITS_ModelPathPretrainedS1_Default,
             SetPlaceholderText = True,
@@ -4426,7 +4415,7 @@ class MainWindow(Window_MainWindow):
         Train_GPTSoVITS_ModelPathPretrainedS2G_Default = Path(ModelsDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's2G488k.pth').as_posix()
         ParamsManager_Train_GPTSoVITS.SetParam(
             Widget = self.ui.LineEdit_Train_GPTSoVITS_ModelPathPretrainedS2G,
-            Section = 'GPT-SoVITS',
+            Section = 'GPT-SoVITS Params',
             Option = 'Model_Path_Pretrained_s2G',
             DefaultValue = Train_GPTSoVITS_ModelPathPretrainedS2G_Default,
             SetPlaceholderText = True,
@@ -4453,7 +4442,7 @@ class MainWindow(Window_MainWindow):
         Train_GPTSoVITS_ModelPathPretrainedS2D_Default = Path(ModelsDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's2D488k.pth').as_posix()
         ParamsManager_Train_GPTSoVITS.SetParam(
             Widget = self.ui.LineEdit_Train_GPTSoVITS_ModelPathPretrainedS2D,
-            Section = 'GPT-SoVITS',
+            Section = 'GPT-SoVITS Params',
             Option = 'Model_Path_Pretrained_s2D',
             DefaultValue = Train_GPTSoVITS_ModelPathPretrainedS2D_Default,
             SetPlaceholderText = True,
@@ -4480,7 +4469,7 @@ class MainWindow(Window_MainWindow):
         Train_GPTSoVITS_ModelDirPretrainedBert_Default = Path(ModelsDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 'chinese-roberta-wwm-ext-large').as_posix()
         ParamsManager_Train_GPTSoVITS.SetParam(
             Widget = self.ui.LineEdit_Train_GPTSoVITS_ModelDirPretrainedBert,
-            Section = 'GPT-SoVITS',
+            Section = 'GPT-SoVITS Params',
             Option = 'Model_Dir_Pretrained_bert',
             DefaultValue = Train_GPTSoVITS_ModelDirPretrainedBert_Default,
             SetPlaceholderText = True,
@@ -4506,7 +4495,7 @@ class MainWindow(Window_MainWindow):
         Train_GPTSoVITS_ModelDirPretrainedSSL_Default = Path(ModelsDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 'chinese-hubert-base').as_posix()
         ParamsManager_Train_GPTSoVITS.SetParam(
             Widget = self.ui.LineEdit_Train_GPTSoVITS_ModelDirPretrainedSSL,
-            Section = 'GPT-SoVITS',
+            Section = 'GPT-SoVITS Params',
             Option = 'Model_Dir_Pretrained_ssl',
             DefaultValue = Train_GPTSoVITS_ModelDirPretrainedSSL_Default,
             SetPlaceholderText = True,
@@ -4534,7 +4523,7 @@ class MainWindow(Window_MainWindow):
         )
         ParamsManager_Train_GPTSoVITS.SetParam(
             Widget = self.ui.CheckBox_Train_GPTSoVITS_FP16Run,
-            Section = 'GPT-SoVITS',
+            Section = 'GPT-SoVITS Params',
             Option = 'FP16_Run',
             DefaultValue = False
         )
@@ -4565,7 +4554,7 @@ class MainWindow(Window_MainWindow):
         Train_GPTSoVITS_OutputDirName_Default = str(date.today())
         ParamsManager_Train_GPTSoVITS.SetParam(
             Widget = self.ui.LineEdit_Train_GPTSoVITS_OutputDirName,
-            Section = 'GPT-SoVITS',
+            Section = 'Output Params',
             Option = 'Output_Dir_Name',
             DefaultValue = '',
             SetPlaceholderText = True,
@@ -4591,7 +4580,7 @@ class MainWindow(Window_MainWindow):
         Train_GPTSoVITS_LogDir_Default = Path(Path(CurrentDir).root).joinpath('EVT_TrainLog', 'GPT-SoVITS', str(date.today())).as_posix()
         ParamsManager_Train_GPTSoVITS.SetParam(
             Widget = self.ui.LineEdit_Train_GPTSoVITS_LogDir,
-            Section = 'GPT-SoVITS',
+            Section = 'Output Params',
             Option = 'Output_LogDir',
             DefaultValue = Train_GPTSoVITS_LogDir_Default,
             SetPlaceholderText = True,
@@ -4628,10 +4617,8 @@ class MainWindow(Window_MainWindow):
                 LineEdit_Train_GPTSoVITS_OutputDir.setText(DirText)
                 Alert = Path(DirText).exists() and list(Path(DirText).iterdir()) != []
             self.ui.LineEdit_Train_GPTSoVITS_OutputDirName.Alert(True if Alert else False, "注意：目录已包含文件")
-        self.ui.LineEdit_Train_GPTSoVITS_OutputDirName.textChanged.connect(SetText_LineEdit_Train_GPTSoVITS_OutputDir)
-        self.ui.LineEdit_Train_GPTSoVITS_OutputDirName.focusedOut.connect(SetText_LineEdit_Train_GPTSoVITS_OutputDir)
-        self.ui.LineEdit_Train_GPTSoVITS_OutputRoot.textChanged.connect(SetText_LineEdit_Train_GPTSoVITS_OutputDir)
-        self.ui.LineEdit_Train_GPTSoVITS_OutputRoot.focusedOut.connect(SetText_LineEdit_Train_GPTSoVITS_OutputDir)
+        self.ui.LineEdit_Train_GPTSoVITS_OutputDirName.interacted.connect(SetText_LineEdit_Train_GPTSoVITS_OutputDir)
+        self.ui.LineEdit_Train_GPTSoVITS_OutputRoot.interacted.connect(SetText_LineEdit_Train_GPTSoVITS_OutputDir)
         #SetText_LineEdit_Train_GPTSoVITS_OutputDir()
 
         # GPTSo-VITS - Left
@@ -4811,7 +4798,7 @@ class MainWindow(Window_MainWindow):
         )
         ParamsManager_Train_VITS.SetParam(
             Widget = self.ui.LineEdit_Train_VITS_FileListPathTraining,
-            Section = 'VITS',
+            Section = 'Input Params',
             Option = 'FileList_Path_Training',
             DefaultValue = '',
             SetPlaceholderText = True
@@ -4836,7 +4823,7 @@ class MainWindow(Window_MainWindow):
         )
         ParamsManager_Train_VITS.SetParam(
             Widget = self.ui.LineEdit_Train_VITS_FileListPathValidation,
-            Section = 'VITS',
+            Section = 'Input Params',
             Option = 'FileList_Path_Validation',
             DefaultValue = '',
             SetPlaceholderText = True
@@ -4853,42 +4840,6 @@ class MainWindow(Window_MainWindow):
             }
         )
 
-        Function_SetText(
-            Widget = self.ui.Label_Train_VITS_LogDir,
-            Text = SetRichText(
-                Body = QCA.translate("Label", "日志输出目录\n训练时生成的日志的存放目录。")
-            )
-        )
-        Train_VITS_LogDir_Default = Path(Path(CurrentDir).root).joinpath('EVT_TrainLog', 'VITS', str(date.today())).as_posix()
-        ParamsManager_Train_VITS.SetParam(
-            Widget = self.ui.LineEdit_Train_VITS_LogDir,
-            Section = 'VITS',
-            Option = 'Output_LogDir',
-            DefaultValue = Train_VITS_LogDir_Default,
-            SetPlaceholderText = True,
-            PlaceholderText = Train_VITS_LogDir_Default
-        )
-        self.ui.LineEdit_Train_VITS_LogDir.textChanged.connect(
-            lambda Value: (
-                Function_ShowMessageBox(self,
-                    MessageType = QMessageBox.Warning,
-                    WindowTitle = "Warning",
-                    Text = "保存路径不支持非ASCII字符，请使用英文路径以避免训练报错",
-                ),
-                self.ui.LineEdit_Train_VITS_LogDir.clear()
-            ) if not all(Char.isascii() for Char in Value) else None
-        )
-        self.ui.LineEdit_Train_VITS_LogDir.SetFileDialog(
-            Mode = "SelectFolder",
-            Directory = NormPath(Path(Train_VITS_LogDir_Default).parent)
-        )
-        self.ui.Button_Train_VITS_LogDir_MoreActions.SetMenu(
-            ActionEvents = {
-                "重置": lambda: ParamsManager_Train_VITS.ResetParam(self.ui.LineEdit_Train_VITS_LogDir),
-                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_Train_VITS_LogDir.text())
-            }
-        )
-
         self.ui.GroupBox_Train_VITS_VITSParams.setTitle(QCA.translate("GroupBox", "训练参数"))
 
         Function_SetText(
@@ -4901,7 +4852,7 @@ class MainWindow(Window_MainWindow):
         self.ui.SpinBox_Train_VITS_Epochs.setSingleStep(1)
         ParamsManager_Train_VITS.SetParam(
             Widget = self.ui.SpinBox_Train_VITS_Epochs,
-            Section = 'VITS',
+            Section = 'VITS Params',
             Option = 'Epochs',
             DefaultValue = 1000
         )
@@ -4921,7 +4872,7 @@ class MainWindow(Window_MainWindow):
         self.ui.SpinBox_Train_VITS_BatchSize.setSingleStep(1)
         ParamsManager_Train_VITS.SetParam(
             Widget = self.ui.SpinBox_Train_VITS_BatchSize,
-            Section = 'VITS',
+            Section = 'VITS Params',
             Option = 'Batch_Size',
             DefaultValue = 4
         )
@@ -4940,7 +4891,7 @@ class MainWindow(Window_MainWindow):
         )
         ParamsManager_Train_VITS.SetParam(
             Widget = self.ui.CheckBox_Train_VITS_UsePretrainedModels,
-            Section = 'VITS',
+            Section = 'VITS Params',
             Option = 'Use_PretrainedModels',
             DefaultValue = True
         )
@@ -4989,7 +4940,7 @@ class MainWindow(Window_MainWindow):
         Train_VITS_ModelPathPretrainedG_Default = Path(ModelsDir).joinpath('TTS', 'VITS', 'Downloaded', 'standard_G.pth').as_posix()
         ParamsManager_Train_VITS.SetParam(
             Widget = self.ui.LineEdit_Train_VITS_ModelPathPretrainedG,
-            Section = 'VITS',
+            Section = 'VITS Params',
             Option = 'Model_Path_Pretrained_G',
             DefaultValue = Train_VITS_ModelPathPretrainedG_Default,
             SetPlaceholderText = True,
@@ -5016,7 +4967,7 @@ class MainWindow(Window_MainWindow):
         Train_VITS_ModelPathPretrainedD_Default = Path(ModelsDir).joinpath('TTS', 'VITS', 'Downloaded', 'standard_D.pth').as_posix()
         ParamsManager_Train_VITS.SetParam(
             Widget = self.ui.LineEdit_Train_VITS_ModelPathPretrainedD,
-            Section = 'VITS',
+            Section = 'VITS Params',
             Option = 'Model_Path_Pretrained_D',
             DefaultValue = Train_VITS_ModelPathPretrainedD_Default,
             SetPlaceholderText = True,
@@ -5076,7 +5027,7 @@ class MainWindow(Window_MainWindow):
         )
         ParamsManager_Train_VITS.SetParam(
             Widget = self.ui.CheckBox_Train_VITS_KeepOriginalSpeakers,
-            Section = 'VITS',
+            Section = 'VITS Params',
             Option = 'Keep_Original_Speakers',
             DefaultValue = False
         )
@@ -5126,7 +5077,7 @@ class MainWindow(Window_MainWindow):
         Train_VITS_ConfigPathLoad_Default = Path(ModelsDir).joinpath('TTS', 'VITS', 'Downloaded', 'standard_Config.json').as_posix()
         ParamsManager_Train_VITS.SetParam(
             Widget = self.ui.LineEdit_Train_VITS_ConfigPathLoad,
-            Section = 'VITS',
+            Section = 'VITS Params',
             Option = 'Config_Path_Load',
             DefaultValue = Train_VITS_ConfigPathLoad_Default,
             SetPlaceholderText = True,
@@ -5161,7 +5112,7 @@ class MainWindow(Window_MainWindow):
         self.ui.SpinBox_Train_VITS_NumWorkers.setSingleStep(2)
         ParamsManager_Train_VITS.SetParam(
             Widget = self.ui.SpinBox_Train_VITS_NumWorkers,
-            Section = 'VITS',
+            Section = 'VITS Params',
             Option = 'Num_Workers',
             DefaultValue = 4
         )
@@ -5179,7 +5130,7 @@ class MainWindow(Window_MainWindow):
         )
         ParamsManager_Train_VITS.SetParam(
             Widget = self.ui.CheckBox_Train_VITS_FP16Run,
-            Section = 'VITS',
+            Section = 'VITS Params',
             Option = 'FP16_Run',
             DefaultValue = False
         )
@@ -5211,7 +5162,7 @@ class MainWindow(Window_MainWindow):
         self.ui.SpinBox_Train_VITS_EvalInterval.setSingleStep(1)
         ParamsManager_Train_VITS.SetParam(
             Widget = self.ui.SpinBox_Train_VITS_EvalInterval,
-            Section = 'VITS',
+            Section = 'Output Params',
             Option = 'Eval_Interval',
             DefaultValue = 1000
         )
@@ -5234,7 +5185,7 @@ class MainWindow(Window_MainWindow):
         Train_VITS_OutputDirName_Default = str(date.today())
         ParamsManager_Train_VITS.SetParam(
             Widget = self.ui.LineEdit_Train_VITS_OutputDirName,
-            Section = 'VITS',
+            Section = 'Output Params',
             Option = 'Output_Dir_Name',
             DefaultValue = '',
             SetPlaceholderText = True,
@@ -5258,11 +5209,45 @@ class MainWindow(Window_MainWindow):
                 LineEdit_Train_VITS_OutputDir.setText(DirText)
                 Alert = Path(DirText).exists() and list(Path(DirText).iterdir()) != []
             self.ui.LineEdit_Train_VITS_OutputDirName.Alert(True if Alert else False, "注意：目录已包含文件")
-        self.ui.LineEdit_Train_VITS_OutputDirName.textChanged.connect(SetText_LineEdit_Train_VITS_OutputDir)
-        self.ui.LineEdit_Train_VITS_OutputDirName.focusedOut.connect(SetText_LineEdit_Train_VITS_OutputDir)
-        self.ui.LineEdit_Train_VITS_OutputRoot.textChanged.connect(SetText_LineEdit_Train_VITS_OutputDir)
-        self.ui.LineEdit_Train_VITS_OutputRoot.focusedOut.connect(SetText_LineEdit_Train_VITS_OutputDir)
+        self.ui.LineEdit_Train_VITS_OutputDirName.interacted.connect(SetText_LineEdit_Train_VITS_OutputDir)
+        self.ui.LineEdit_Train_VITS_OutputRoot.interacted.connect(SetText_LineEdit_Train_VITS_OutputDir)
         #SetText_LineEdit_Train_VITS_OutputDir()
+
+        Function_SetText(
+            Widget = self.ui.Label_Train_VITS_LogDir,
+            Text = SetRichText(
+                Body = QCA.translate("Label", "日志输出目录\n训练时生成的日志的存放目录。")
+            )
+        )
+        Train_VITS_LogDir_Default = Path(Path(CurrentDir).root).joinpath('EVT_TrainLog', 'VITS', str(date.today())).as_posix()
+        ParamsManager_Train_VITS.SetParam(
+            Widget = self.ui.LineEdit_Train_VITS_LogDir,
+            Section = 'Output Params',
+            Option = 'Output_LogDir',
+            DefaultValue = Train_VITS_LogDir_Default,
+            SetPlaceholderText = True,
+            PlaceholderText = Train_VITS_LogDir_Default
+        )
+        self.ui.LineEdit_Train_VITS_LogDir.textChanged.connect(
+            lambda Value: (
+                Function_ShowMessageBox(self,
+                    MessageType = QMessageBox.Warning,
+                    WindowTitle = "Warning",
+                    Text = "保存路径不支持非ASCII字符，请使用英文路径以避免训练报错",
+                ),
+                self.ui.LineEdit_Train_VITS_LogDir.clear()
+            ) if not all(Char.isascii() for Char in Value) else None
+        )
+        self.ui.LineEdit_Train_VITS_LogDir.SetFileDialog(
+            Mode = "SelectFolder",
+            Directory = NormPath(Path(Train_VITS_LogDir_Default).parent)
+        )
+        self.ui.Button_Train_VITS_LogDir_MoreActions.SetMenu(
+            ActionEvents = {
+                "重置": lambda: ParamsManager_Train_VITS.ResetParam(self.ui.LineEdit_Train_VITS_LogDir),
+                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_Train_VITS_LogDir.text())
+            }
+        )
 
         # VITS - Left
         Function_SetTreeWidget(
@@ -5473,7 +5458,7 @@ class MainWindow(Window_MainWindow):
         TTS_GPTSoVITS_ModelPathLoadS1_Default = Path(ModelsDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's1bert25hz-2kh-longer-epoch=68e-step=50232.ckpt').as_posix()
         ParamsManager_TTS_GPTSoVITS.SetParam(
             Widget = self.ui.LineEdit_TTS_GPTSoVITS_ModelPathLoadS1,
-            Section = 'GPT-SoVITS',
+            Section = 'Input Params',
             Option = 'Model_Path_Load_s1',
             DefaultValue = TTS_GPTSoVITS_ModelPathLoadS1_Default,
             SetPlaceholderText = True,
@@ -5500,7 +5485,7 @@ class MainWindow(Window_MainWindow):
         TTS_GPTSoVITS_ModelPathLoadS2G_Default = Path(ModelsDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's2G488k.pth').as_posix()
         ParamsManager_TTS_GPTSoVITS.SetParam(
             Widget = self.ui.LineEdit_TTS_GPTSoVITS_ModelPathLoadS2G,
-            Section = 'GPT-SoVITS',
+            Section = 'Input Params',
             Option = 'Model_Path_Load_s2G',
             DefaultValue = TTS_GPTSoVITS_ModelPathLoadS2G_Default,
             SetPlaceholderText = True,
@@ -5527,7 +5512,7 @@ class MainWindow(Window_MainWindow):
         TTS_GPTSoVITS_ModelDirLoadBert_Default = Path(ModelsDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 'chinese-roberta-wwm-ext-large').as_posix()
         ParamsManager_TTS_GPTSoVITS.SetParam(
             Widget = self.ui.LineEdit_TTS_GPTSoVITS_ModelDirLoadBert,
-            Section = 'GPT-SoVITS',
+            Section = 'Input Params',
             Option = 'Model_Dir_Load_bert',
             DefaultValue = TTS_GPTSoVITS_ModelDirLoadBert_Default,
             SetPlaceholderText = True,
@@ -5553,7 +5538,7 @@ class MainWindow(Window_MainWindow):
         TTS_GPTSoVITS_ModelDirLoadSSL_Default = Path(ModelsDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 'chinese-hubert-base').as_posix()
         ParamsManager_TTS_GPTSoVITS.SetParam(
             Widget = self.ui.LineEdit_TTS_GPTSoVITS_ModelDirLoadSSL,
-            Section = 'GPT-SoVITS',
+            Section = 'Input Params',
             Option = 'Model_Dir_Load_ssl',
             DefaultValue = TTS_GPTSoVITS_ModelDirLoadSSL_Default,
             SetPlaceholderText = True,
@@ -5580,7 +5565,7 @@ class MainWindow(Window_MainWindow):
         )
         ParamsManager_TTS_GPTSoVITS.SetParam(
             Widget = self.ui.CheckBox_TTS_GPTSoVITS_FP16Run,
-            Section = 'GPT-SoVITS',
+            Section = 'GPT-SoVITS Params',
             Option = 'FP16_Run',
             DefaultValue = False
         )
@@ -5606,6 +5591,31 @@ class MainWindow(Window_MainWindow):
         MonitorFile_Config_VoiceConverter_GPTSoVITS.Signal_FileContent.connect(
             lambda FileContent: self.ui.TextBrowser_Params_TTS_GPTSoVITS.setText(
                 FileContent
+            )
+        )
+
+        self.ui.Button_ResetSettings_TTS_GPTSoVITS.setText(QCA.translate("Button", "全部重置"))
+        self.ui.Button_ResetSettings_TTS_GPTSoVITS.clicked.connect(
+            lambda: ParamsManager_TTS_GPTSoVITS.ResetSettings()
+        )
+
+        self.ui.Button_ImportSettings_TTS_GPTSoVITS.setText(QCA.translate("Button", "导入配置"))
+        self.ui.Button_ImportSettings_TTS_GPTSoVITS.clicked.connect(
+            lambda: ParamsManager_TTS_GPTSoVITS.ImportSettings(
+                Function_GetFileDialog(
+                    Mode = "SelectFile",
+                    FileType = "ini类型 (*.ini)"
+                )
+            )
+        )
+
+        self.ui.Button_ExportSettings_TTS_GPTSoVITS.setText(QCA.translate("Button", "导出配置"))
+        self.ui.Button_ExportSettings_TTS_GPTSoVITS.clicked.connect(
+            lambda: ParamsManager_TTS_GPTSoVITS.ExportSettings(
+                Function_GetFileDialog(
+                    Mode = "SaveFile",
+                    FileType = "ini类型 (*.ini)"
+                )
             )
         )
 
@@ -5699,7 +5709,7 @@ class MainWindow(Window_MainWindow):
         TTS_VITS_ConfigPathLoad_Default = Path(ModelsDir).joinpath('TTS', 'VITS', 'Downloaded', 'standard_Config.json').as_posix()
         ParamsManager_TTS_VITS.SetParam(
             Widget = self.ui.LineEdit_TTS_VITS_ConfigPathLoad,
-            Section = 'VITS',
+            Section = 'Input Params',
             Option = 'Config_Path_Load',
             DefaultValue = '',
             SetPlaceholderText = True,
@@ -5732,7 +5742,7 @@ class MainWindow(Window_MainWindow):
         TTS_VITS_ModelPathLoad_Default = Path(ModelsDir).joinpath('TTS', 'VITS', 'Downloaded', 'standard_G.pth').as_posix()
         ParamsManager_TTS_VITS.SetParam(
             Widget = self.ui.LineEdit_TTS_VITS_ModelPathLoad,
-            Section = 'VITS',
+            Section = 'Input Params',
             Option = 'Model_Path_Load',
             DefaultValue = '',
             SetPlaceholderText = True,
@@ -5760,7 +5770,7 @@ class MainWindow(Window_MainWindow):
         )
         ParamsManager_TTS_VITS.SetParam(
             Widget = self.ui.PlainTextEdit_TTS_VITS_Text,
-            Section = 'VITS',
+            Section = 'VITS Params',
             Option = 'Text',
             DefaultValue = '',
             SetPlaceholderText = True,
@@ -5776,7 +5786,7 @@ class MainWindow(Window_MainWindow):
         self.ui.ComboBox_TTS_VITS_Language.addItems(['None', QCA.translate("ComboBox", '中'), QCA.translate("ComboBox", '英'), QCA.translate("ComboBox", '日')])
         ParamsManager_TTS_VITS.SetParam(
             Widget = self.ui.ComboBox_TTS_VITS_Language,
-            Section = 'VITS',
+            Section = 'VITS Params',
             Option = 'Language',
             DefaultValue = None
         )
@@ -5798,7 +5808,7 @@ class MainWindow(Window_MainWindow):
         '''
         ParamsManager_TTS_VITS.SetParam(
             Widget = self.ui.ComboBox_TTS_VITS_Speaker,
-            Section = 'VITS',
+            Section = 'VITS Params',
             Option = 'Speaker',
             DefaultValue = ''
         )
@@ -5819,7 +5829,7 @@ class MainWindow(Window_MainWindow):
         self.ui.HorizontalSlider_TTS_VITS_EmotionStrength.setTickInterval(1)
         ParamsManager_TTS_VITS.SetParam(
             Widget = self.ui.HorizontalSlider_TTS_VITS_EmotionStrength,
-            Section = 'VITS',
+            Section = 'VITS Params',
             Option = 'EmotionStrength',
             DefaultValue = 0.67,
             Times = 100
@@ -5835,7 +5845,7 @@ class MainWindow(Window_MainWindow):
         self.ui.DoubleSpinBox_TTS_VITS_EmotionStrength.setSingleStep(0.01)
         ParamsManager_TTS_VITS.SetParam(
             Widget = self.ui.DoubleSpinBox_TTS_VITS_EmotionStrength,
-            Section = 'VITS',
+            Section = 'VITS Params',
             Option = 'EmotionStrength',
             DefaultValue = 0.67
         )
@@ -5863,7 +5873,7 @@ class MainWindow(Window_MainWindow):
         self.ui.HorizontalSlider_TTS_VITS_PhonemeDuration.setTickInterval(1)
         ParamsManager_TTS_VITS.SetParam(
             Widget = self.ui.HorizontalSlider_TTS_VITS_PhonemeDuration,
-            Section = 'VITS',
+            Section = 'VITS Params',
             Option = 'PhonemeDuration',
             DefaultValue = 0.8,
             Times = 10
@@ -5879,7 +5889,7 @@ class MainWindow(Window_MainWindow):
         self.ui.DoubleSpinBox_TTS_VITS_PhonemeDuration.setSingleStep(0.1)
         ParamsManager_TTS_VITS.SetParam(
             Widget = self.ui.DoubleSpinBox_TTS_VITS_PhonemeDuration,
-            Section = 'VITS',
+            Section = 'VITS Params',
             Option = 'PhonemeDuration',
             DefaultValue = 0.8
         )
@@ -5907,7 +5917,7 @@ class MainWindow(Window_MainWindow):
         self.ui.HorizontalSlider_TTS_VITS_SpeechRate.setTickInterval(1)
         ParamsManager_TTS_VITS.SetParam(
             Widget = self.ui.HorizontalSlider_TTS_VITS_SpeechRate,
-            Section = 'VITS',
+            Section = 'VITS Params',
             Option = 'SpeechRate',
             DefaultValue = 1.,
             Times = 10
@@ -5923,7 +5933,7 @@ class MainWindow(Window_MainWindow):
         self.ui.DoubleSpinBox_TTS_VITS_SpeechRate.setSingleStep(0.1)
         ParamsManager_TTS_VITS.SetParam(
             Widget = self.ui.DoubleSpinBox_TTS_VITS_SpeechRate,
-            Section = 'VITS',
+            Section = 'VITS Params',
             Option = 'SpeechRate',
             DefaultValue = 1.
         )
@@ -5951,7 +5961,7 @@ class MainWindow(Window_MainWindow):
         TTS_VITS_AudioPathSave_Default = Path(CurrentDir).joinpath('语音合成结果', 'VITS', f"{date.today()}.wav").as_posix()
         ParamsManager_TTS_VITS.SetParam(
             Widget = self.ui.LineEdit_TTS_VITS_AudioPathSave,
-            Section = 'VITS',
+            Section = 'Output Params',
             Option = 'Audio_Path_Save',
             DefaultValue = '',
             SetPlaceholderText = True,
@@ -6030,7 +6040,7 @@ class MainWindow(Window_MainWindow):
             )
         )
 
-        # Right
+        # VITS - Right
         MonitorFile_Config_VoiceConverter_VITS = MonitorFile(Path_Config_TTS_VITS)
         MonitorFile_Config_VoiceConverter_VITS.start()
         MonitorFile_Config_VoiceConverter_VITS.Signal_FileContent.connect(
@@ -6268,155 +6278,40 @@ class MainWindow(Window_MainWindow):
             )
         )
 
-        self.ui.GroupBox_Settings_Tools_Path.setTitle(QCA.translate("GroupBox", "路径设置"))
-
-        self.ui.Label_Process_OutputRoot.setText(QCA.translate("Label", "音频处理输出目录"))
-        Process_OutputRoot_Default = Path(CurrentDir).joinpath('音频处理结果').as_posix()
-        ParamsManager_Process.SetParam(
-            Widget = self.ui.LineEdit_Process_OutputRoot,
-            Section = 'AudioProcessor',
-            Option = 'Output_Root',
-            DefaultValue = Process_OutputRoot_Default,
-            SetPlaceholderText = True,
-            PlaceholderText = Process_OutputRoot_Default
-        )
-        self.ui.LineEdit_Process_OutputRoot.SetFileDialog(
-            Mode = "SelectFolder",
-            Directory = NormPath(Path(Process_OutputRoot_Default).parent)
-        )
-        self.ui.Button_Process_OutputRoot_MoreActions.SetMenu(
-            ActionEvents = {
-                "重置": lambda: ParamsManager_Process.ResetParam(self.ui.LineEdit_Process_OutputRoot)
-            }
-        )
-
-        self.ui.Label_ASR_VPR_OutputRoot.setText(QCA.translate("Label", "声纹识别结果输出目录"))
-        ASR_VPR_AudioSpeakersDataRoot_Default = Path(CurrentDir).joinpath('语音识别结果', 'VPR').as_posix()
-        ParamsManager_ASR_VPR.SetParam(
-            Widget = self.ui.LineEdit_ASR_VPR_OutputRoot,
-            Section = 'VPR',
-            Option = 'Audio_Root_Output',
-            DefaultValue = ASR_VPR_AudioSpeakersDataRoot_Default,
-            SetPlaceholderText = True,
-            PlaceholderText = ASR_VPR_AudioSpeakersDataRoot_Default
-        )
-        self.ui.LineEdit_ASR_VPR_OutputRoot.SetFileDialog(
-            Mode = "SelectFolder",
-            Directory = NormPath(Path(ASR_VPR_AudioSpeakersDataRoot_Default).parent)
-        )
-        self.ui.Button_ASR_VPR_OutputRoot_MoreActions.SetMenu(
-            ActionEvents = {
-                "重置": lambda: ParamsManager_ASR_VPR.ResetParam(self.ui.LineEdit_ASR_VPR_OutputRoot),
-                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_ASR_VPR_OutputRoot.text())
-            }
-        )
-
-        self.ui.Label_STT_Whisper_OutputRoot.setText(QCA.translate("Label", "Whisper转录输出目录"))
-        STT_Whisper_OutputRoot_Default = Path(CurrentDir).joinpath('语音转录结果', 'Whisper').as_posix()
-        ParamsManager_STT_Whisper.SetParam(
-            Widget = self.ui.LineEdit_STT_Whisper_OutputRoot,
-            Section = 'Whisper',
-            Option = 'Output_Root',
-            DefaultValue = STT_Whisper_OutputRoot_Default,
-            SetPlaceholderText = True,
-            PlaceholderText = STT_Whisper_OutputRoot_Default
-        )
-        self.ui.LineEdit_STT_Whisper_OutputRoot.SetFileDialog(
-            Mode = "SelectFolder",
-            Directory = NormPath(Path(STT_Whisper_OutputRoot_Default).parent)
-        )
-        self.ui.Button_STT_Whisper_OutputRoot_MoreActions.SetMenu(
-            ActionEvents = {
-                "重置": lambda: ParamsManager_STT_Whisper.ResetParam(self.ui.LineEdit_STT_Whisper_OutputRoot),
-                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_STT_Whisper_OutputRoot.text())
-            }
-        )
-
-        self.ui.Label_DAT_GPTSoVITS_OutputRoot.setText( QCA.translate("Label", "GPTSoVITS数据集输出目录"))
-        DAT_GPTSoVITS_OutputRoot_Default = Path(CurrentDir).joinpath('数据集制作结果', 'GPT-SoVITS').as_posix()
-        ParamsManager_DAT_GPTSoVITS.SetParam(
-            Widget = self.ui.LineEdit_DAT_GPTSoVITS_OutputRoot,
-            Section = 'GPT-SoVITS',
-            Option = 'Output_Root',
-            DefaultValue = DAT_GPTSoVITS_OutputRoot_Default,
-            SetPlaceholderText = True,
-            PlaceholderText = DAT_GPTSoVITS_OutputRoot_Default
-        )
-        self.ui.LineEdit_DAT_GPTSoVITS_OutputRoot.SetFileDialog(
-            Mode = "SelectFolder",
-            Directory = NormPath(Path(DAT_GPTSoVITS_OutputRoot_Default).parent)
-        )
-        self.ui.Button_DAT_GPTSoVITS_OutputRoot_MoreActions.SetMenu(
-            ActionEvents = {
-                "重置": lambda: ParamsManager_DAT_GPTSoVITS.ResetParam(self.ui.LineEdit_DAT_GPTSoVITS_OutputRoot),
-                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_DAT_GPTSoVITS_OutputRoot.text())
-            }
-        )
-
-        self.ui.Label_DAT_VITS_OutputRoot.setText(QCA.translate("Label", "VITS数据集输出目录"))
-        DAT_VITS_OutputRoot_Default = Path(CurrentDir).joinpath('数据集制作结果', 'VITS').as_posix()
-        ParamsManager_DAT_VITS.SetParam(
-            Widget = self.ui.LineEdit_DAT_VITS_OutputRoot,
-            Section = 'VITS',
-            Option = 'Output_Root',
-            DefaultValue = DAT_VITS_OutputRoot_Default,
-            SetPlaceholderText = True,
-            PlaceholderText = DAT_VITS_OutputRoot_Default
-        )
-        self.ui.LineEdit_DAT_VITS_OutputRoot.SetFileDialog(
-            Mode = "SelectFolder",
-            Directory = NormPath(Path(DAT_VITS_OutputRoot_Default).parent)
-        )
-        self.ui.Button_DAT_VITS_OutputRoot_MoreActions.SetMenu(
-            ActionEvents = {
-                "重置": lambda: ParamsManager_DAT_VITS.ResetParam(self.ui.LineEdit_DAT_VITS_OutputRoot),
-                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_DAT_VITS_OutputRoot.text())
-            }
-        )
-
-        self.ui.Label_Train_GPTSoVITS_OutputRoot.setText(QCA.translate("Label", "GPTSoVITS训练输出目录"))
-        Train_GPTSoVITS_OutputRoot_Default = Path(CurrentDir).joinpath('模型训练结果', 'GPT-SoVITS').as_posix()
-        ParamsManager_Train_GPTSoVITS.SetParam(
-            Widget = self.ui.LineEdit_Train_GPTSoVITS_OutputRoot,
-            Section = 'GPT-SoVITS',
-            Option = 'Output_Root',
-            DefaultValue = Train_GPTSoVITS_OutputRoot_Default,
-            SetPlaceholderText = True,
-            PlaceholderText = Train_GPTSoVITS_OutputRoot_Default
-        )
-        self.ui.LineEdit_Train_GPTSoVITS_OutputRoot.SetFileDialog(
-            Mode = "SelectFolder",
-            Directory = NormPath(Path(Train_GPTSoVITS_OutputRoot_Default).parent)
-        )
-        self.ui.Button_Train_GPTSoVITS_OutputRoot_MoreActions.SetMenu(
-            ActionEvents = {
-                "重置": lambda: ParamsManager_Train_GPTSoVITS.ResetParam(self.ui.LineEdit_Train_GPTSoVITS_OutputRoot),
-                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_Train_GPTSoVITS_OutputRoot.text())
-            }
-        )
-
-        self.ui.Label_Train_VITS_OutputRoot.setText(QCA.translate("Label", "VITS训练输出目录"))
-        Train_VITS_OutputRoot_Default = Path(CurrentDir).joinpath('模型训练结果', 'VITS').as_posix()
-        ParamsManager_Train_VITS.SetParam(
-            Widget = self.ui.LineEdit_Train_VITS_OutputRoot,
-            Section = 'VITS',
-            Option = 'Output_Root',
-            DefaultValue = Train_VITS_OutputRoot_Default,
-            SetPlaceholderText = True,
-            PlaceholderText = Train_VITS_OutputRoot_Default
-        )
-        self.ui.LineEdit_Train_VITS_OutputRoot.SetFileDialog(
-            Mode = "SelectFolder",
-            Directory = NormPath(Path(Train_VITS_OutputRoot_Default).parent)
-        )
-        self.ui.Button_Train_VITS_OutputRoot_MoreActions.SetMenu(
-            ActionEvents = {
-                "重置": lambda: ParamsManager_Train_VITS.ResetParam(self.ui.LineEdit_Train_VITS_OutputRoot),
-                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_Train_VITS_OutputRoot.text())
-            }
-        )
-
         self.ui.GroupBox_Settings_Tools_Function.setTitle(QCA.translate("GroupBox", "功能设置"))
+
+        self.ui.Label_Setting_AutoReset.setText(QCA.translate("Label", "启动时重置所有工具的参数设置"))
+        self.ui.CheckBox_Setting_AutoReset.setChecked(
+            {
+                'Enabled': True,
+                'Disabled': False
+            }.get(Config.GetValue('Tools', 'AutoReset', 'Enabled'))
+        )
+        Function_ConfigureCheckBox(
+            CheckBox = self.ui.CheckBox_Setting_AutoReset,
+            CheckedText = "已启用",
+            CheckedEvents = [
+                lambda: Config.EditConfig('Tools', 'AutoReset', 'Enabled'),
+                lambda: MainWindowSignals.Signal_MainWindowShown.connect(
+                    lambda: (
+                        ParamsManager_Process.ResetSettings(),
+                        ParamsManager_ASR_VPR.ResetSettings(),
+                        ParamsManager_STT_Whisper.ResetSettings(),
+                        ParamsManager_DAT_GPTSoVITS.ResetSettings(),
+                        ParamsManager_DAT_VITS.ResetSettings(),
+                        ParamsManager_Train_GPTSoVITS.ResetSettings(),
+                        ParamsManager_Train_VITS.ResetSettings(),
+                        ParamsManager_TTS_GPTSoVITS.ResetSettings(),
+                        ParamsManager_TTS_VITS.ResetSettings()
+                    )
+                )
+            ],
+            UncheckedText = "未启用",
+            UncheckedEvents = [
+                lambda: Config.EditConfig('Tools', 'AutoReset', 'Disabled'),
+            ],
+            TakeEffect = True
+        )
 
         self.ui.Label_Setting_Synchronizer.setText(QCA.translate("Label", "自动关联前后工具的部分参数设置"))
         self.ui.CheckBox_Setting_Synchronizer.setChecked(
@@ -6470,6 +6365,154 @@ class MainWindow(Window_MainWindow):
                 )
             ],
             TakeEffect = False
+        )
+
+        self.ui.GroupBox_Settings_Tools_Path.setTitle(QCA.translate("GroupBox", "路径设置"))
+
+        self.ui.Label_Process_OutputRoot.setText(QCA.translate("Label", "音频处理输出目录"))
+        Process_OutputRoot_Default = Path(CurrentDir).joinpath('音频处理结果').as_posix()
+        ParamsManager_Process.SetParam(
+            Widget = self.ui.LineEdit_Process_OutputRoot,
+            Section = 'Output Params',
+            Option = 'Output_Root',
+            DefaultValue = Process_OutputRoot_Default,
+            SetPlaceholderText = True,
+            PlaceholderText = Process_OutputRoot_Default
+        )
+        self.ui.LineEdit_Process_OutputRoot.SetFileDialog(
+            Mode = "SelectFolder",
+            Directory = NormPath(Path(Process_OutputRoot_Default).parent)
+        )
+        self.ui.Button_Process_OutputRoot_MoreActions.SetMenu(
+            ActionEvents = {
+                "重置": lambda: ParamsManager_Process.ResetParam(self.ui.LineEdit_Process_OutputRoot)
+            }
+        )
+
+        self.ui.Label_ASR_VPR_OutputRoot.setText(QCA.translate("Label", "声纹识别结果输出目录"))
+        ASR_VPR_AudioSpeakersDataRoot_Default = Path(CurrentDir).joinpath('语音识别结果', 'VPR').as_posix()
+        ParamsManager_ASR_VPR.SetParam(
+            Widget = self.ui.LineEdit_ASR_VPR_OutputRoot,
+            Section = 'Output Params',
+            Option = 'Audio_Root_Output',
+            DefaultValue = ASR_VPR_AudioSpeakersDataRoot_Default,
+            SetPlaceholderText = True,
+            PlaceholderText = ASR_VPR_AudioSpeakersDataRoot_Default
+        )
+        self.ui.LineEdit_ASR_VPR_OutputRoot.SetFileDialog(
+            Mode = "SelectFolder",
+            Directory = NormPath(Path(ASR_VPR_AudioSpeakersDataRoot_Default).parent)
+        )
+        self.ui.Button_ASR_VPR_OutputRoot_MoreActions.SetMenu(
+            ActionEvents = {
+                "重置": lambda: ParamsManager_ASR_VPR.ResetParam(self.ui.LineEdit_ASR_VPR_OutputRoot),
+                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_ASR_VPR_OutputRoot.text())
+            }
+        )
+
+        self.ui.Label_STT_Whisper_OutputRoot.setText(QCA.translate("Label", "Whisper转录输出目录"))
+        STT_Whisper_OutputRoot_Default = Path(CurrentDir).joinpath('语音转录结果', 'Whisper').as_posix()
+        ParamsManager_STT_Whisper.SetParam(
+            Widget = self.ui.LineEdit_STT_Whisper_OutputRoot,
+            Section = 'Output Params',
+            Option = 'Output_Root',
+            DefaultValue = STT_Whisper_OutputRoot_Default,
+            SetPlaceholderText = True,
+            PlaceholderText = STT_Whisper_OutputRoot_Default
+        )
+        self.ui.LineEdit_STT_Whisper_OutputRoot.SetFileDialog(
+            Mode = "SelectFolder",
+            Directory = NormPath(Path(STT_Whisper_OutputRoot_Default).parent)
+        )
+        self.ui.Button_STT_Whisper_OutputRoot_MoreActions.SetMenu(
+            ActionEvents = {
+                "重置": lambda: ParamsManager_STT_Whisper.ResetParam(self.ui.LineEdit_STT_Whisper_OutputRoot),
+                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_STT_Whisper_OutputRoot.text())
+            }
+        )
+
+        self.ui.Label_DAT_GPTSoVITS_OutputRoot.setText( QCA.translate("Label", "GPTSoVITS数据集输出目录"))
+        DAT_GPTSoVITS_OutputRoot_Default = Path(CurrentDir).joinpath('数据集制作结果', 'GPT-SoVITS').as_posix()
+        ParamsManager_DAT_GPTSoVITS.SetParam(
+            Widget = self.ui.LineEdit_DAT_GPTSoVITS_OutputRoot,
+            Section = 'Output Params',
+            Option = 'Output_Root',
+            DefaultValue = DAT_GPTSoVITS_OutputRoot_Default,
+            SetPlaceholderText = True,
+            PlaceholderText = DAT_GPTSoVITS_OutputRoot_Default
+        )
+        self.ui.LineEdit_DAT_GPTSoVITS_OutputRoot.SetFileDialog(
+            Mode = "SelectFolder",
+            Directory = NormPath(Path(DAT_GPTSoVITS_OutputRoot_Default).parent)
+        )
+        self.ui.Button_DAT_GPTSoVITS_OutputRoot_MoreActions.SetMenu(
+            ActionEvents = {
+                "重置": lambda: ParamsManager_DAT_GPTSoVITS.ResetParam(self.ui.LineEdit_DAT_GPTSoVITS_OutputRoot),
+                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_DAT_GPTSoVITS_OutputRoot.text())
+            }
+        )
+
+        self.ui.Label_DAT_VITS_OutputRoot.setText(QCA.translate("Label", "VITS数据集输出目录"))
+        DAT_VITS_OutputRoot_Default = Path(CurrentDir).joinpath('数据集制作结果', 'VITS').as_posix()
+        ParamsManager_DAT_VITS.SetParam(
+            Widget = self.ui.LineEdit_DAT_VITS_OutputRoot,
+            Section = 'Output Params',
+            Option = 'Output_Root',
+            DefaultValue = DAT_VITS_OutputRoot_Default,
+            SetPlaceholderText = True,
+            PlaceholderText = DAT_VITS_OutputRoot_Default
+        )
+        self.ui.LineEdit_DAT_VITS_OutputRoot.SetFileDialog(
+            Mode = "SelectFolder",
+            Directory = NormPath(Path(DAT_VITS_OutputRoot_Default).parent)
+        )
+        self.ui.Button_DAT_VITS_OutputRoot_MoreActions.SetMenu(
+            ActionEvents = {
+                "重置": lambda: ParamsManager_DAT_VITS.ResetParam(self.ui.LineEdit_DAT_VITS_OutputRoot),
+                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_DAT_VITS_OutputRoot.text())
+            }
+        )
+
+        self.ui.Label_Train_GPTSoVITS_OutputRoot.setText(QCA.translate("Label", "GPTSoVITS训练输出目录"))
+        Train_GPTSoVITS_OutputRoot_Default = Path(CurrentDir).joinpath('模型训练结果', 'GPT-SoVITS').as_posix()
+        ParamsManager_Train_GPTSoVITS.SetParam(
+            Widget = self.ui.LineEdit_Train_GPTSoVITS_OutputRoot,
+            Section = 'Output Params',
+            Option = 'Output_Root',
+            DefaultValue = Train_GPTSoVITS_OutputRoot_Default,
+            SetPlaceholderText = True,
+            PlaceholderText = Train_GPTSoVITS_OutputRoot_Default
+        )
+        self.ui.LineEdit_Train_GPTSoVITS_OutputRoot.SetFileDialog(
+            Mode = "SelectFolder",
+            Directory = NormPath(Path(Train_GPTSoVITS_OutputRoot_Default).parent)
+        )
+        self.ui.Button_Train_GPTSoVITS_OutputRoot_MoreActions.SetMenu(
+            ActionEvents = {
+                "重置": lambda: ParamsManager_Train_GPTSoVITS.ResetParam(self.ui.LineEdit_Train_GPTSoVITS_OutputRoot),
+                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_Train_GPTSoVITS_OutputRoot.text())
+            }
+        )
+
+        self.ui.Label_Train_VITS_OutputRoot.setText(QCA.translate("Label", "VITS训练输出目录"))
+        Train_VITS_OutputRoot_Default = Path(CurrentDir).joinpath('模型训练结果', 'VITS').as_posix()
+        ParamsManager_Train_VITS.SetParam(
+            Widget = self.ui.LineEdit_Train_VITS_OutputRoot,
+            Section = 'Output Params',
+            Option = 'Output_Root',
+            DefaultValue = Train_VITS_OutputRoot_Default,
+            SetPlaceholderText = True,
+            PlaceholderText = Train_VITS_OutputRoot_Default
+        )
+        self.ui.LineEdit_Train_VITS_OutputRoot.SetFileDialog(
+            Mode = "SelectFolder",
+            Directory = NormPath(Path(Train_VITS_OutputRoot_Default).parent)
+        )
+        self.ui.Button_Train_VITS_OutputRoot_MoreActions.SetMenu(
+            ActionEvents = {
+                "重置": lambda: ParamsManager_Train_VITS.ResetParam(self.ui.LineEdit_Train_VITS_OutputRoot),
+                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_Train_VITS_OutputRoot.text())
+            }
         )
 
         #############################################################
@@ -6562,13 +6605,9 @@ class MainWindow(Window_MainWindow):
 
         # Display Usage
         self.MonitorUsage.Signal_UsageInfo.connect(
-            lambda Usage_CPU, Usage_GPU: self.ui.Label_Usage_CPU.setText(
-                f"CPU: {Usage_CPU}"
-            )
-        )
-        self.MonitorUsage.Signal_UsageInfo.connect(
-            lambda Usage_CPU, Usage_GPU: self.ui.Label_Usage_GPU.setText(
-                f"GPU: {Usage_GPU}"
+            lambda Usage_CPU, Usage_GPU: (
+                self.ui.Label_Usage_CPU.setText(f"CPU: {Usage_CPU}"),
+                self.ui.Label_Usage_GPU.setText(f"GPU: {Usage_GPU}")
             )
         )
 

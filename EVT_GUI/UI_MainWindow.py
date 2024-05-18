@@ -1960,33 +1960,21 @@ class Ui_MainWindow(object):
         self.ScrollArea_Env_Manage.setWidgetResizable(True)
         self.ScrollAreaWidgetContents_Env_Manage = QWidget()
         self.ScrollAreaWidgetContents_Env_Manage.setObjectName(u"ScrollAreaWidgetContents_Env_Manage")
-        self.ScrollAreaWidgetContents_Env_Manage.setGeometry(QRect(0, 0, 246, 218))
+        self.ScrollAreaWidgetContents_Env_Manage.setGeometry(QRect(0, 0, 81, 99))
         self.verticalLayout_81 = QVBoxLayout(self.ScrollAreaWidgetContents_Env_Manage)
         self.verticalLayout_81.setSpacing(0)
         self.verticalLayout_81.setObjectName(u"verticalLayout_81")
         self.verticalLayout_81.setContentsMargins(0, 0, 0, 0)
-        self.GroupBox_Env_Manage_Pytorch = QGroupBox(self.ScrollAreaWidgetContents_Env_Manage)
-        self.GroupBox_Env_Manage_Pytorch.setObjectName(u"GroupBox_Env_Manage_Pytorch")
-        self.GroupBox_Env_Manage_Pytorch.setStyleSheet(u"QGroupBox {\n"
-"	font-size: 15px;\n"
-"	margin-top: 1.5ex;\n"
-"	background-color: transparent;\n"
-"	border-width: 1px;\n"
-"	border-style: solid;\n"
-"	border-color: transparent;\n"
-"}\n"
-"QGroupBox::title {\n"
-"	left: 9px;\n"
-"	margin-left: 0px;\n"
-"	subcontrol-origin: margin;\n"
-"	subcontrol-position: top left;\n"
-"	padding: 3px;\n"
-"}")
-        self.verticalLayout_105 = QVBoxLayout(self.GroupBox_Env_Manage_Pytorch)
+        self.ToolBox_Env_Manage_Pytorch = ToolBoxBase(self.ScrollAreaWidgetContents_Env_Manage)
+        self.ToolBox_Env_Manage_Pytorch.setObjectName(u"ToolBox_Env_Manage_Pytorch")
+        self.ToolBox_Env_Manage_Pytorch_Page1Content = WidgetBase()
+        self.ToolBox_Env_Manage_Pytorch_Page1Content.setObjectName(u"ToolBox_Env_Manage_Pytorch_Page1Content")
+        self.ToolBox_Env_Manage_Pytorch_Page1Content.setGeometry(QRect(0, 0, 244, 204))
+        self.verticalLayout_105 = QVBoxLayout(self.ToolBox_Env_Manage_Pytorch_Page1Content)
         self.verticalLayout_105.setSpacing(0)
         self.verticalLayout_105.setObjectName(u"verticalLayout_105")
         self.verticalLayout_105.setContentsMargins(0, 12, 0, 12)
-        self.Frame_Env_Manage_Pytorch_Version = QFrame(self.GroupBox_Env_Manage_Pytorch)
+        self.Frame_Env_Manage_Pytorch_Version = QFrame(self.ToolBox_Env_Manage_Pytorch_Page1Content)
         self.Frame_Env_Manage_Pytorch_Version.setObjectName(u"Frame_Env_Manage_Pytorch_Version")
         self.Frame_Env_Manage_Pytorch_Version.setMinimumSize(QSize(0, 90))
         self.Frame_Env_Manage_Pytorch_Version.setStyleSheet(u"QFrame {\n"
@@ -2026,7 +2014,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_105.addWidget(self.Frame_Env_Manage_Pytorch_Version)
 
-        self.Frame_Env_Manage_Pytorch_Install = QFrame(self.GroupBox_Env_Manage_Pytorch)
+        self.Frame_Env_Manage_Pytorch_Install = QFrame(self.ToolBox_Env_Manage_Pytorch_Page1Content)
         self.Frame_Env_Manage_Pytorch_Install.setObjectName(u"Frame_Env_Manage_Pytorch_Install")
         self.Frame_Env_Manage_Pytorch_Install.setMinimumSize(QSize(0, 90))
         self.Frame_Env_Manage_Pytorch_Install.setStyleSheet(u"QFrame {\n"
@@ -2067,8 +2055,9 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_105.addWidget(self.Frame_Env_Manage_Pytorch_Install)
 
+        self.ToolBox_Env_Manage_Pytorch.addItem(self.ToolBox_Env_Manage_Pytorch_Page1Content, u"")
 
-        self.verticalLayout_81.addWidget(self.GroupBox_Env_Manage_Pytorch)
+        self.verticalLayout_81.addWidget(self.ToolBox_Env_Manage_Pytorch)
 
         self.VerticalSpacer_Env_Manage = QSpacerItem(17, 250, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
@@ -13335,11 +13324,179 @@ class Ui_MainWindow(object):
         self.ScrollArea_Settings_Tools.setWidgetResizable(True)
         self.ScrollAreaWidgetContents_Settings_Tools = QWidget()
         self.ScrollAreaWidgetContents_Settings_Tools.setObjectName(u"ScrollAreaWidgetContents_Settings_Tools")
-        self.ScrollAreaWidgetContents_Settings_Tools.setGeometry(QRect(0, 0, 235, 811))
+        self.ScrollAreaWidgetContents_Settings_Tools.setGeometry(QRect(0, 0, 235, 901))
         self.verticalLayout_34 = QVBoxLayout(self.ScrollAreaWidgetContents_Settings_Tools)
         self.verticalLayout_34.setSpacing(0)
         self.verticalLayout_34.setObjectName(u"verticalLayout_34")
         self.verticalLayout_34.setContentsMargins(0, 0, 0, 0)
+        self.GroupBox_Settings_Tools_Function = QGroupBox(self.ScrollAreaWidgetContents_Settings_Tools)
+        self.GroupBox_Settings_Tools_Function.setObjectName(u"GroupBox_Settings_Tools_Function")
+        self.GroupBox_Settings_Tools_Function.setStyleSheet(u"QGroupBox {\n"
+"	font-size: 15px;\n"
+"	margin-top: 1.5ex;\n"
+"	background-color: transparent;\n"
+"	border-width: 1px;\n"
+"	border-style: solid;\n"
+"	border-color: transparent;\n"
+"}\n"
+"QGroupBox::title {\n"
+"	left: 9px;\n"
+"	margin-left: 0px;\n"
+"	subcontrol-origin: margin;\n"
+"	subcontrol-position: top left;\n"
+"	padding: 3px;\n"
+"}")
+        self.verticalLayout_76 = QVBoxLayout(self.GroupBox_Settings_Tools_Function)
+        self.verticalLayout_76.setSpacing(0)
+        self.verticalLayout_76.setObjectName(u"verticalLayout_76")
+        self.verticalLayout_76.setContentsMargins(0, 12, 0, 12)
+        self.Frame_Setting_AutoReset = QFrame(self.GroupBox_Settings_Tools_Function)
+        self.Frame_Setting_AutoReset.setObjectName(u"Frame_Setting_AutoReset")
+        self.Frame_Setting_AutoReset.setMinimumSize(QSize(0, 90))
+        self.Frame_Setting_AutoReset.setStyleSheet(u"QFrame {\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QFrame:hover {\n"
+"	background-color: rgba(36, 36, 36, 12);\n"
+"}")
+        self.horizontalLayout_75 = QHBoxLayout(self.Frame_Setting_AutoReset)
+        self.horizontalLayout_75.setSpacing(12)
+        self.horizontalLayout_75.setObjectName(u"horizontalLayout_75")
+        self.horizontalLayout_75.setContentsMargins(21, 12, 21, 12)
+        self.Label_Setting_AutoReset = QLabel(self.Frame_Setting_AutoReset)
+        self.Label_Setting_AutoReset.setObjectName(u"Label_Setting_AutoReset")
+        sizePolicy4.setHeightForWidth(self.Label_Setting_AutoReset.sizePolicy().hasHeightForWidth())
+        self.Label_Setting_AutoReset.setSizePolicy(sizePolicy4)
+        self.Label_Setting_AutoReset.setStyleSheet(u"QLabel {\n"
+"	font-size: 15px;\n"
+"	/*text-align: center;*/\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.horizontalLayout_75.addWidget(self.Label_Setting_AutoReset)
+
+        self.CheckBox_Setting_AutoReset = QCheckBox(self.Frame_Setting_AutoReset)
+        self.CheckBox_Setting_AutoReset.setObjectName(u"CheckBox_Setting_AutoReset")
+        sizePolicy5.setHeightForWidth(self.CheckBox_Setting_AutoReset.sizePolicy().hasHeightForWidth())
+        self.CheckBox_Setting_AutoReset.setSizePolicy(sizePolicy5)
+        self.CheckBox_Setting_AutoReset.setMinimumSize(QSize(0, 30))
+        self.CheckBox_Setting_AutoReset.setStyleSheet(u"QCheckBox {\n"
+"	font-size: 15px;\n"
+"	spacing: 12.3px;\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QCheckBox:hover {\n"
+"}\n"
+"\n"
+"QCheckBox::indicator {\n"
+"	width: 30px;\n"
+"	height: 30px;\n"
+"    background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QCheckBox::indicator:hover {\n"
+"	background-color: rgba(255, 255, 255, 21);\n"
+"}\n"
+"QCheckBox::indicator:unchecked {\n"
+"	border-image: url(:/CheckBox_Icon/Sources/ToggleOff.png);\n"
+"}\n"
+"QCheckBox::indicator:checked {\n"
+"	border-image: url(:/CheckBox_Icon/Sources/ToggleOn.png);\n"
+"}")
+
+        self.horizontalLayout_75.addWidget(self.CheckBox_Setting_AutoReset)
+
+
+        self.verticalLayout_76.addWidget(self.Frame_Setting_AutoReset)
+
+        self.Frame_Setting_Synchronizer = QFrame(self.GroupBox_Settings_Tools_Function)
+        self.Frame_Setting_Synchronizer.setObjectName(u"Frame_Setting_Synchronizer")
+        self.Frame_Setting_Synchronizer.setMinimumSize(QSize(0, 90))
+        self.Frame_Setting_Synchronizer.setStyleSheet(u"QFrame {\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QFrame:hover {\n"
+"	background-color: rgba(36, 36, 36, 12);\n"
+"}")
+        self.horizontalLayout_74 = QHBoxLayout(self.Frame_Setting_Synchronizer)
+        self.horizontalLayout_74.setSpacing(12)
+        self.horizontalLayout_74.setObjectName(u"horizontalLayout_74")
+        self.horizontalLayout_74.setContentsMargins(21, 12, 21, 12)
+        self.Label_Setting_Synchronizer = QLabel(self.Frame_Setting_Synchronizer)
+        self.Label_Setting_Synchronizer.setObjectName(u"Label_Setting_Synchronizer")
+        sizePolicy4.setHeightForWidth(self.Label_Setting_Synchronizer.sizePolicy().hasHeightForWidth())
+        self.Label_Setting_Synchronizer.setSizePolicy(sizePolicy4)
+        self.Label_Setting_Synchronizer.setStyleSheet(u"QLabel {\n"
+"	font-size: 15px;\n"
+"	/*text-align: center;*/\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.horizontalLayout_74.addWidget(self.Label_Setting_Synchronizer)
+
+        self.CheckBox_Setting_Synchronizer = QCheckBox(self.Frame_Setting_Synchronizer)
+        self.CheckBox_Setting_Synchronizer.setObjectName(u"CheckBox_Setting_Synchronizer")
+        sizePolicy5.setHeightForWidth(self.CheckBox_Setting_Synchronizer.sizePolicy().hasHeightForWidth())
+        self.CheckBox_Setting_Synchronizer.setSizePolicy(sizePolicy5)
+        self.CheckBox_Setting_Synchronizer.setMinimumSize(QSize(0, 30))
+        self.CheckBox_Setting_Synchronizer.setStyleSheet(u"QCheckBox {\n"
+"	font-size: 15px;\n"
+"	spacing: 12.3px;\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QCheckBox:hover {\n"
+"}\n"
+"\n"
+"QCheckBox::indicator {\n"
+"	width: 30px;\n"
+"	height: 30px;\n"
+"    background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QCheckBox::indicator:hover {\n"
+"	background-color: rgba(255, 255, 255, 21);\n"
+"}\n"
+"QCheckBox::indicator:unchecked {\n"
+"	border-image: url(:/CheckBox_Icon/Sources/ToggleOff.png);\n"
+"}\n"
+"QCheckBox::indicator:checked {\n"
+"	border-image: url(:/CheckBox_Icon/Sources/ToggleOn.png);\n"
+"}")
+
+        self.horizontalLayout_74.addWidget(self.CheckBox_Setting_Synchronizer)
+
+
+        self.verticalLayout_76.addWidget(self.Frame_Setting_Synchronizer)
+
+
+        self.verticalLayout_34.addWidget(self.GroupBox_Settings_Tools_Function)
+
         self.GroupBox_Settings_Tools_Path = QGroupBox(self.ScrollAreaWidgetContents_Settings_Tools)
         self.GroupBox_Settings_Tools_Path.setObjectName(u"GroupBox_Settings_Tools_Path")
         self.GroupBox_Settings_Tools_Path.setStyleSheet(u"QGroupBox {\n"
@@ -13724,102 +13881,6 @@ class Ui_MainWindow(object):
         self.VerticalSpacer_Settings_Tools = QSpacerItem(20, 9, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.verticalLayout_34.addItem(self.VerticalSpacer_Settings_Tools)
-
-        self.GroupBox_Settings_Tools_Function = QGroupBox(self.ScrollAreaWidgetContents_Settings_Tools)
-        self.GroupBox_Settings_Tools_Function.setObjectName(u"GroupBox_Settings_Tools_Function")
-        self.GroupBox_Settings_Tools_Function.setStyleSheet(u"QGroupBox {\n"
-"	font-size: 15px;\n"
-"	margin-top: 1.5ex;\n"
-"	background-color: transparent;\n"
-"	border-width: 1px;\n"
-"	border-style: solid;\n"
-"	border-color: transparent;\n"
-"}\n"
-"QGroupBox::title {\n"
-"	left: 9px;\n"
-"	margin-left: 0px;\n"
-"	subcontrol-origin: margin;\n"
-"	subcontrol-position: top left;\n"
-"	padding: 3px;\n"
-"}")
-        self.verticalLayout_82 = QVBoxLayout(self.GroupBox_Settings_Tools_Function)
-        self.verticalLayout_82.setSpacing(0)
-        self.verticalLayout_82.setObjectName(u"verticalLayout_82")
-        self.verticalLayout_82.setContentsMargins(0, 12, 0, 12)
-        self.Frame_Setting_Synchronizer = QFrame(self.GroupBox_Settings_Tools_Function)
-        self.Frame_Setting_Synchronizer.setObjectName(u"Frame_Setting_Synchronizer")
-        self.Frame_Setting_Synchronizer.setMinimumSize(QSize(0, 90))
-        self.Frame_Setting_Synchronizer.setStyleSheet(u"QFrame {\n"
-"	background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QFrame:hover {\n"
-"	background-color: rgba(36, 36, 36, 12);\n"
-"}")
-        self.horizontalLayout_74 = QHBoxLayout(self.Frame_Setting_Synchronizer)
-        self.horizontalLayout_74.setSpacing(12)
-        self.horizontalLayout_74.setObjectName(u"horizontalLayout_74")
-        self.horizontalLayout_74.setContentsMargins(21, 12, 21, 12)
-        self.Label_Setting_Synchronizer = QLabel(self.Frame_Setting_Synchronizer)
-        self.Label_Setting_Synchronizer.setObjectName(u"Label_Setting_Synchronizer")
-        sizePolicy4.setHeightForWidth(self.Label_Setting_Synchronizer.sizePolicy().hasHeightForWidth())
-        self.Label_Setting_Synchronizer.setSizePolicy(sizePolicy4)
-        self.Label_Setting_Synchronizer.setStyleSheet(u"QLabel {\n"
-"	font-size: 15px;\n"
-"	/*text-align: center;*/\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.horizontalLayout_74.addWidget(self.Label_Setting_Synchronizer)
-
-        self.CheckBox_Setting_Synchronizer = QCheckBox(self.Frame_Setting_Synchronizer)
-        self.CheckBox_Setting_Synchronizer.setObjectName(u"CheckBox_Setting_Synchronizer")
-        sizePolicy5.setHeightForWidth(self.CheckBox_Setting_Synchronizer.sizePolicy().hasHeightForWidth())
-        self.CheckBox_Setting_Synchronizer.setSizePolicy(sizePolicy5)
-        self.CheckBox_Setting_Synchronizer.setMinimumSize(QSize(0, 30))
-        self.CheckBox_Setting_Synchronizer.setStyleSheet(u"QCheckBox {\n"
-"	font-size: 15px;\n"
-"	spacing: 12.3px;\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QCheckBox:hover {\n"
-"}\n"
-"\n"
-"QCheckBox::indicator {\n"
-"	width: 30px;\n"
-"	height: 30px;\n"
-"    background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QCheckBox::indicator:hover {\n"
-"	background-color: rgba(255, 255, 255, 21);\n"
-"}\n"
-"QCheckBox::indicator:unchecked {\n"
-"	border-image: url(:/CheckBox_Icon/Sources/ToggleOff.png);\n"
-"}\n"
-"QCheckBox::indicator:checked {\n"
-"	border-image: url(:/CheckBox_Icon/Sources/ToggleOn.png);\n"
-"}")
-
-        self.horizontalLayout_74.addWidget(self.CheckBox_Setting_Synchronizer)
-
-
-        self.verticalLayout_82.addWidget(self.Frame_Setting_Synchronizer)
-
-
-        self.verticalLayout_34.addWidget(self.GroupBox_Settings_Tools_Function)
 
         self.ScrollArea_Settings_Tools.setWidget(self.ScrollAreaWidgetContents_Settings_Tools)
 
@@ -14423,8 +14484,8 @@ class Ui_MainWindow(object):
         self.Label_Env_Install_PyReqs.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Env_Install_Pytorch_Status.setText(QCoreApplication.translate("MainWindow", u"--", None))
         self.Label_Env_Install_Pytorch.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.GroupBox_Env_Manage_Pytorch.setTitle(QCoreApplication.translate("MainWindow", u"GroupBox", None))
         self.Label_Env_Manage_Pytorch_Version.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.ToolBox_Env_Manage_Pytorch.setItemText(self.ToolBox_Env_Manage_Pytorch.indexOf(self.ToolBox_Env_Manage_Pytorch_Page1Content), "")
         self.ToolButton_Models_Process_Title.setText(QCoreApplication.translate("MainWindow", u"Label", None))
         self.ToolButton_Models_ASR_Title.setText(QCoreApplication.translate("MainWindow", u"Label", None))
         self.ToolButton_Models_STT_Title.setText(QCoreApplication.translate("MainWindow", u"Label", None))
@@ -14690,6 +14751,11 @@ class Ui_MainWindow(object):
         self.Label_Setting_AutoUpdate.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.CheckBox_Setting_AutoUpdate.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
         self.GroupBox_Settings_Client_Operation.setTitle(QCoreApplication.translate("MainWindow", u"GroupBox", None))
+        self.GroupBox_Settings_Tools_Function.setTitle(QCoreApplication.translate("MainWindow", u"GroupBox", None))
+        self.Label_Setting_AutoReset.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.CheckBox_Setting_AutoReset.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
+        self.Label_Setting_Synchronizer.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.CheckBox_Setting_Synchronizer.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
         self.GroupBox_Settings_Tools_Path.setTitle(QCoreApplication.translate("MainWindow", u"GroupBox", None))
         self.Label_Process_OutputRoot.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_ASR_VPR_OutputRoot.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
@@ -14698,9 +14764,6 @@ class Ui_MainWindow(object):
         self.Label_DAT_VITS_OutputRoot.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Train_GPTSoVITS_OutputRoot.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Train_VITS_OutputRoot.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.GroupBox_Settings_Tools_Function.setTitle(QCoreApplication.translate("MainWindow", u"GroupBox", None))
-        self.Label_Setting_Synchronizer.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.CheckBox_Setting_Synchronizer.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
         self.ToolButton_Info_Title.setText(QCoreApplication.translate("MainWindow", u"Label", None))
         self.Button_Console_Title.setText(QCoreApplication.translate("MainWindow", u"Label", None))
         self.Label_ToolsStatus.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
