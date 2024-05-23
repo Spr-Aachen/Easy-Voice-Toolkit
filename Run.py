@@ -20,7 +20,7 @@ from EVT_GUI.EnvConfigurator import *
 ##############################################################################################################################
 
 # Set current version
-CurrentVersion = "v1.0.9"
+CurrentVersion = "v1.1.0"
 
 ##############################################################################################################################
 
@@ -844,15 +844,6 @@ class CustomSignals_MainWindow(QObject):
     '''
     Signal_MainWindowShown = Signal()
 
-    # Run task
-    Signal_ExecuteTask = Signal(tuple)
-
-    # Monitor task
-    Signal_TaskStatus = Signal(str, str)
-
-    # Force exit
-    Signal_ForceQuit = Signal()
-
 MainWindowSignals = CustomSignals_MainWindow()
 
 
@@ -868,109 +859,6 @@ class MainWindow(Window_MainWindow):
 
         self.MonitorUsage = MonitorUsage()
         self.MonitorUsage.start()
-
-    def Function_SetMethodExecutor(self,
-        ExecuteButton: Optional[QAbstractButton] = None,
-        TerminateButton: Optional[QAbstractButton] = None,
-        ProgressBar: Optional[QProgressBar] = None,
-        ConsoleWidget: Optional[QWidget] = None,
-        Method: object = ...,
-        Params: Optional[tuple] = None,
-        ParamsFrom: Optional[list[QObject]] = None,
-        EmptyAllowed: Optional[list[QObject]] = None,
-        #StartEvents: Optional[list] = None,
-        FinishEvents: Optional[list] = None
-    ):
-        '''
-        Function to execute outer class methods (through button)
-        '''
-        QualName = str(Method.__qualname__)
-        ClassName =  QualName.split('.')[0]
-        MethodName = QualName.split('.')[1]
-
-        ClassInstance = globals()[ClassName]()
-        ClassInstance.started.connect(lambda: MainWindowSignals.Signal_TaskStatus.emit(QualName, 'Started')) if hasattr(ClassInstance, 'started') else None
-        #ClassInstance.started.connect(lambda: RunEvents(StartEvents)) if hasattr(ClassInstance, 'started') else None
-        ClassInstance.finished.connect(lambda Error: MainWindowSignals.Signal_TaskStatus.emit(QualName, 'Finished') if Error == str(None) else None) if hasattr(ClassInstance, 'finished') else None
-        ClassInstance.finished.connect(lambda Error: RunEvents(FinishEvents) if Error == str(None) else None) if hasattr(ClassInstance, 'finished') else None
-        ClassInstance.finished.connect(lambda Error: MainWindowSignals.Signal_TaskStatus.emit(QualName, 'Failed') if Error != str(None) else None) if hasattr(ClassInstance, 'finished') else None
-        ClassInstance.finished.connect(lambda Error: Function_ShowMessageBox(self, QMessageBox.Warning, 'Failure', f'发生错误：\n{Error}') if Error != str(None) else None) if hasattr(ClassInstance, 'finished') else None
-
-        if not isinstance(ClassInstance, QThread):
-            WorkerThread = QThread()
-            ClassInstance.moveToThread(WorkerThread)
-            ClassInstance.finished.connect(WorkerThread.quit) if hasattr(ClassInstance, 'finished') else None
-        else:
-            WorkerThread = ClassInstance
-
-        @Slot()
-        def ExecuteMethod():
-            '''
-            Update the attributes for outer class methods and wait to execute with multithreading
-            '''
-            Args = Params#if Params != () else None
-            if ParamsFrom not in ([], None):
-                Args = Function_ParamsChecker(ParamsFrom, EmptyAllowed)
-                if Args == "Abort":
-                    return print("Aborted.")
-                else:
-                    pass #print("Continued.\n")
-
-            MainWindowSignals = CustomSignals_MainWindow()
-            MainWindowSignals.Signal_ExecuteTask.connect(getattr(ClassInstance, MethodName)) #MainWindowSignals.Signal_ExecuteTask.connect(lambda Args: getattr(ClassInstance, MethodName)(*Args))
-
-            WorkerThread.started.connect(lambda: Function_AnimateFrame(ConsoleWidget, MinHeight = 0, MaxHeight = 210, Mode = "Extend")) if ConsoleWidget else None
-            WorkerThread.started.connect(lambda: Function_AnimateProgressBar(ProgressBar, IsTaskAlive = True)) if ProgressBar else None
-            WorkerThread.started.connect(lambda: Function_AnimateStackedWidget(Function_FindParentUI(ExecuteButton, QStackedWidget), TargetIndex = 1)) if TerminateButton else None
-            WorkerThread.finished.connect(lambda: Function_AnimateFrame(ConsoleWidget, MinHeight = 0, MaxHeight = 210, Mode = "Reduce")) if ConsoleWidget else None
-            WorkerThread.finished.connect(lambda: Function_AnimateProgressBar(ProgressBar, IsTaskAlive = False)) if ProgressBar else None
-            WorkerThread.finished.connect(lambda: Function_AnimateStackedWidget(Function_FindParentUI(ExecuteButton, QStackedWidget), TargetIndex = 0)) if TerminateButton else None
-            #WorkerThread.finished.connect(lambda: MainWindowSignals.Signal_ExecuteTask.disconnect(getattr(ClassInstance, MethodName)))
-
-            MainWindowSignals.Signal_ExecuteTask.emit(Args)
-
-            WorkerThread.start()
-
-        if ExecuteButton is not None:
-            ExecuteButton.clicked.connect(ExecuteMethod)
-            ExecuteButton.setText(QCA.translate("Button", "执行")) if len(ExecuteButton.text().strip()) == 0 else None
-        else:
-            TempButton = QPushButton(self)
-            TempButton.clicked.connect(ExecuteMethod)
-            TempButton.click()
-            WorkerThread.finished.connect(TempButton.deleteLater)
-
-        @Slot()
-        def TerminateMethod():
-            '''
-            Terminate the running thread
-            '''
-            if not WorkerThread.isFinished():
-                try:
-                    WorkerThread.terminate()
-                except:
-                    WorkerThread.quit()
-
-            ClassInstance.Terminate() if hasattr(ClassInstance, 'Terminate') else ProcessTerminator('python.exe', SearchKeyword = True)
-
-            MainWindowSignals.Signal_TaskStatus.emit(QualName, 'Failed') if hasattr(ClassInstance, 'finished') else None
-
-            ProgressBar.setValue(0) if ProgressBar else None
-
-        if TerminateButton is not None:
-            TerminateButton.clicked.connect(
-                lambda: Function_ShowMessageBox(self,
-                    MessageType = QMessageBox.Question,
-                    WindowTitle = "Ask",
-                    Text = "当前任务仍在执行中，是否确认终止？",
-                    Buttons = QMessageBox.Yes|QMessageBox.No,
-                    ButtonEvents = {QMessageBox.Yes: lambda: TerminateMethod()}
-                )
-            )
-            TerminateButton.setText(QCA.translate("Button", "终止")) if len(TerminateButton.text().strip()) == 0 else None
-            MainWindowSignals.Signal_ForceQuit.connect(TerminateMethod)
-        else:
-            pass
 
     def Main(self):
         '''
@@ -1004,8 +892,8 @@ class MainWindow(Window_MainWindow):
         # Window controling buttons
         self.closed.connect(
             lambda: (
-                MainWindowSignals.Signal_ForceQuit.emit(),
-                MainWindowSignals.Signal_TaskStatus.connect(QApplication.exit),
+                FunctionSignals.Signal_ForceQuit.emit(),
+                FunctionSignals.Signal_TaskStatus.connect(QApplication.exit),
                 #os._exit(0)
             )
         )
@@ -1167,15 +1055,10 @@ class MainWindow(Window_MainWindow):
         #############################################################
 
         #self.ui.ToolButton_Home_Title.setText(QCA.translate("Label", "主页"))
-
-        Image = QImage()
-        Image.load(NormPath(Path(ResourceDir).joinpath('Sources/Cover.png'), 'Posix'))
-        Pixmap = QPixmap.fromImage(Image)
-        def SetPic():
-            Length = max(self.ui.Label_Cover_Home.width(), self.ui.Label_Cover_Home.height())
-            ScaledPixmap = Pixmap.scaled(Length, Length, Qt.KeepAspectRatio, Qt.SmoothTransformation)
-            self.ui.Label_Cover_Home.setPixmap(ScaledPixmap)
-        self.ui.Label_Cover_Home.Resized.connect(SetPic)
+        Function_SetImage(
+            Widget = self.ui.Label_Cover_Home,
+            ImagePath = Path(ResourceDir).joinpath('Sources/Cover.png')
+        )
 
         Function_SetText(
             Widget = self.ui.TextBrowser_Text_Home,
@@ -1238,7 +1121,7 @@ class MainWindow(Window_MainWindow):
         self.ui.ToolButton_Env_Install_Title.setText(QCA.translate("Label", "自动配置"))
 
         self.ui.Label_Env_Install_Aria2.setText(QCA.translate("Label", "Aria2"))
-        self.Function_SetMethodExecutor(
+        Function_SetMethodExecutor(self,
             ExecuteButton = self.ui.Button_Install_Aria2,
             ProgressBar = self.ui.ProgressBar_Env_Install_Aria2,
             Method = Aria2_Installer.Execute,
@@ -1282,7 +1165,7 @@ class MainWindow(Window_MainWindow):
         )
 
         self.ui.Label_Env_Install_FFmpeg.setText(QCA.translate("Label", "FFmpeg"))
-        self.Function_SetMethodExecutor(
+        Function_SetMethodExecutor(self,
             ExecuteButton = self.ui.Button_Install_FFmpeg,
             ProgressBar = self.ui.ProgressBar_Env_Install_FFmpeg,
             Method = FFmpeg_Installer.Execute,
@@ -1326,7 +1209,7 @@ class MainWindow(Window_MainWindow):
         )
 
         self.ui.Label_Env_Install_Python.setText(QCA.translate("Label", "Python"))
-        self.Function_SetMethodExecutor(
+        Function_SetMethodExecutor(self,
             ExecuteButton = self.ui.Button_Install_Python,
             ProgressBar = self.ui.ProgressBar_Env_Install_Python,
             Method = Python_Installer.Execute,
@@ -1370,7 +1253,7 @@ class MainWindow(Window_MainWindow):
         )
 
         self.ui.Label_Env_Install_PyReqs.setText(QCA.translate("Label", "Python Requirements"))
-        self.Function_SetMethodExecutor(
+        Function_SetMethodExecutor(self,
             ExecuteButton = self.ui.Button_Install_PyReqs,
             ProgressBar = self.ui.ProgressBar_Env_Install_PyReqs,
             Method = PyReqs_Installer.Execute,
@@ -1414,7 +1297,7 @@ class MainWindow(Window_MainWindow):
         )
 
         self.ui.Label_Env_Install_Pytorch.setText(QCA.translate("Label", "Pytorch"))
-        self.Function_SetMethodExecutor(
+        Function_SetMethodExecutor(self,
             ExecuteButton = self.ui.Button_Install_Pytorch,
             ProgressBar = self.ui.ProgressBar_Env_Install_Pytorch,
             Method = Pytorch_Installer.Execute,
@@ -1462,7 +1345,7 @@ class MainWindow(Window_MainWindow):
         #############################################################
 
         MainWindowSignals.Signal_MainWindowShown.connect(
-            lambda: self.Function_SetMethodExecutor(
+            lambda: Function_SetMethodExecutor(self,
                 Method = Model_View.Execute
             )
         )
@@ -1485,7 +1368,7 @@ class MainWindow(Window_MainWindow):
         self.ui.Table_Models_Process_UVR.SetHorizontalHeaders(['名字', '类型', '大小', '日期', '操作'])
         ModelViewSignals.Signal_Process_UVR.connect(self.ui.Table_Models_Process_UVR.SetValue)
         self.ui.Table_Models_Process_UVR.Download.connect(
-            lambda Params: self.Function_SetMethodExecutor(
+            lambda Params: Function_SetMethodExecutor(self,
                 Method = Model_Downloader.Execute,
                 Params = Params
             )
@@ -1509,7 +1392,7 @@ class MainWindow(Window_MainWindow):
         self.ui.Table_Models_ASR_VPR.SetHorizontalHeaders(['名字', '类型', '大小', '日期', '操作'])
         ModelViewSignals.Signal_ASR_VPR.connect(self.ui.Table_Models_ASR_VPR.SetValue)
         self.ui.Table_Models_ASR_VPR.Download.connect(
-            lambda Params: self.Function_SetMethodExecutor(
+            lambda Params: Function_SetMethodExecutor(self,
                 Method = Model_Downloader.Execute,
                 Params = Params
             )
@@ -1533,7 +1416,7 @@ class MainWindow(Window_MainWindow):
         self.ui.Table_Models_STT_Whisper.SetHorizontalHeaders(['名字', '类型', '大小', '日期', '操作'])
         ModelViewSignals.Signal_STT_Whisper.connect(self.ui.Table_Models_STT_Whisper.SetValue)
         self.ui.Table_Models_STT_Whisper.Download.connect(
-            lambda Params: self.Function_SetMethodExecutor(
+            lambda Params: Function_SetMethodExecutor(self,
                 Method = Model_Downloader.Execute,
                 Params = Params
             )
@@ -1557,7 +1440,7 @@ class MainWindow(Window_MainWindow):
         self.ui.Table_Models_TTS_GPTSoVITS.SetHorizontalHeaders(['名字', '类型', '大小', '日期', '操作'])
         ModelViewSignals.Signal_TTS_GPTSoVITS.connect(self.ui.Table_Models_TTS_GPTSoVITS.SetValue)
         self.ui.Table_Models_TTS_GPTSoVITS.Download.connect(
-            lambda Params: self.Function_SetMethodExecutor(
+            lambda Params: Function_SetMethodExecutor(self,
                 Method = Model_Downloader.Execute,
                 Params = Params
             )
@@ -1567,7 +1450,7 @@ class MainWindow(Window_MainWindow):
         self.ui.Table_Models_TTS_VITS.SetHorizontalHeaders(['名字', '类型', '大小', '日期', '操作'])
         ModelViewSignals.Signal_TTS_VITS.connect(self.ui.Table_Models_TTS_VITS.SetValue)
         self.ui.Table_Models_TTS_VITS.Download.connect(
-            lambda Params: self.Function_SetMethodExecutor(
+            lambda Params: Function_SetMethodExecutor(self,
                 Method = Model_Downloader.Execute,
                 Params = Params
             )
@@ -1575,7 +1458,7 @@ class MainWindow(Window_MainWindow):
 
         self.ui.Button_Models_Refresh.setText(QCA.translate("ToolButton", '刷新'))
         self.ui.Button_Models_Refresh.clicked.connect(
-            lambda: self.Function_SetMethodExecutor(
+            lambda: Function_SetMethodExecutor(self,
                 Method = Model_View.Execute
             )
         )
@@ -2073,18 +1956,12 @@ class MainWindow(Window_MainWindow):
         # Left
         Function_SetTreeWidget(
             TreeWidget = self.ui.TreeWidget_Catalogue_Process,
-            RootItemTexts = [
-                self.ui.GroupBox_Process_InputParams.title(),
-                self.ui.GroupBox_Process_DenoiserParams.title(),
-                self.ui.GroupBox_Process_SlicerParams.title(),
-                self.ui.GroupBox_Process_OutputParams.title()
-            ],
-            ChildItemTexts = [
-                ("基础设置"),
-                ("基础设置"),
-                ("基础设置","高级设置"),
-                ("基础设置","高级设置")
-            ],
+            ItemTexts = {
+                self.ui.GroupBox_Process_InputParams.title(): ("基础设置"),
+                self.ui.GroupBox_Process_DenoiserParams.title(): ("基础设置"),
+                self.ui.GroupBox_Process_SlicerParams.title(): ("基础设置","高级设置"),
+                self.ui.GroupBox_Process_OutputParams.title(): ("基础设置","高级设置")
+            },
             AddVertically = True
         )
         Function_ScrollToWidget(
@@ -2183,7 +2060,7 @@ class MainWindow(Window_MainWindow):
         # Bottom
         self.ui.Button_Process_Execute.setToolTip(QCA.translate("ToolTip", "执行音频处理"))
         self.ui.Button_Process_Terminate.setToolTip(QCA.translate("ToolTip", "终止音频处理"))
-        self.Function_SetMethodExecutor(
+        Function_SetMethodExecutor(self,
             ExecuteButton = self.ui.Button_Process_Execute,
             TerminateButton = self.ui.Button_Process_Terminate,
             ProgressBar = self.ui.ProgressBar_Process,
@@ -2604,16 +2481,11 @@ class MainWindow(Window_MainWindow):
         # Left
         Function_SetTreeWidget(
             TreeWidget = self.ui.TreeWidget_Catalogue_ASR_VPR,
-            RootItemTexts = [
-                self.ui.GroupBox_ASR_VPR_InputParams.title(),
-                self.ui.GroupBox_ASR_VPR_VPRParams.title(),
-                self.ui.GroupBox_ASR_VPR_OutputParams.title()
-            ],
-            ChildItemTexts = [
-                ("基础设置"),
-                ("基础设置","高级设置"),
-                ("基础设置","高级设置")
-            ],
+            ItemTexts = {
+                self.ui.GroupBox_ASR_VPR_InputParams.title(): ("基础设置"),
+                self.ui.GroupBox_ASR_VPR_VPRParams.title(): ("基础设置","高级设置"),
+                self.ui.GroupBox_ASR_VPR_OutputParams.title(): ("基础设置","高级设置")
+            },
             AddVertically = True
         )
         Function_ScrollToWidget(
@@ -2718,7 +2590,7 @@ class MainWindow(Window_MainWindow):
         # Bottom
         self.ui.Button_ASR_VPR_Execute.setToolTip("执行语音识别")
         self.ui.Button_ASR_VPR_Terminate.setToolTip("终止语音识别")
-        self.Function_SetMethodExecutor(
+        Function_SetMethodExecutor(self,
             ExecuteButton = self.ui.Button_ASR_VPR_Execute,
             TerminateButton = self.ui.Button_ASR_VPR_Terminate,
             ProgressBar = self.ui.ProgressBar_ASR_VPR,
@@ -3056,16 +2928,11 @@ class MainWindow(Window_MainWindow):
         # Left
         Function_SetTreeWidget(
             TreeWidget = self.ui.TreeWidget_Catalogue_STT_Whisper,
-            RootItemTexts = [
-                self.ui.GroupBox_STT_Whisper_InputParams.title(),
-                self.ui.GroupBox_STT_Whisper_WhisperParams.title(),
-                self.ui.GroupBox_STT_Whisper_OutputParams.title()
-            ],
-            ChildItemTexts = [
-                ("基础设置"),
-                ("基础设置","高级设置"),
-                ("基础设置")
-            ],
+            ItemTexts = {
+                self.ui.GroupBox_STT_Whisper_InputParams.title(): ("基础设置"),
+                self.ui.GroupBox_STT_Whisper_WhisperParams.title(): ("基础设置","高级设置"),
+                self.ui.GroupBox_STT_Whisper_OutputParams.title(): ("基础设置")
+            },
             AddVertically = True
         )
         Function_ScrollToWidget(
@@ -3149,7 +3016,7 @@ class MainWindow(Window_MainWindow):
         # Bottom
         self.ui.Button_STT_Whisper_Execute.setToolTip("执行语音转录")
         self.ui.Button_STT_Whisper_Terminate.setToolTip("终止语音转录")
-        self.Function_SetMethodExecutor(
+        Function_SetMethodExecutor(self,
             ExecuteButton = self.ui.Button_STT_Whisper_Execute,
             TerminateButton = self.ui.Button_STT_Whisper_Terminate,
             ProgressBar = self.ui.ProgressBar_STT_Whisper,
@@ -3537,16 +3404,11 @@ class MainWindow(Window_MainWindow):
         # GPT-SoVITS - Left
         Function_SetTreeWidget(
             TreeWidget = self.ui.TreeWidget_Catalogue_DAT_GPTSoVITS,
-            RootItemTexts = [
-                self.ui.GroupBox_DAT_GPTSoVITS_InputParams.title(),
-                self.ui.GroupBox_DAT_GPTSoVITS_GPTSoVITSParams.title(),
-                self.ui.GroupBox_DAT_GPTSoVITS_OutputParams.title()
-            ],
-            ChildItemTexts = [
-                ("基础设置"),
-                ("基础设置"),
-                ("基础设置","高级设置")
-            ],
+            ItemTexts = {
+                self.ui.GroupBox_DAT_GPTSoVITS_InputParams.title(): ("基础设置"),
+                self.ui.GroupBox_DAT_GPTSoVITS_GPTSoVITSParams.title(): ("基础设置"),
+                self.ui.GroupBox_DAT_GPTSoVITS_OutputParams.title(): ("基础设置","高级设置")
+            },
             AddVertically = True
         )
         Function_ScrollToWidget(
@@ -3630,7 +3492,7 @@ class MainWindow(Window_MainWindow):
         # GPT-SoVITS - Bottom
         self.ui.Button_DAT_GPTSoVITS_Execute.setToolTip("执行数据集制作")
         self.ui.Button_DAT_GPTSoVITS_Terminate.setToolTip("终止数据集制作")
-        self.Function_SetMethodExecutor(
+        Function_SetMethodExecutor(self,
             ExecuteButton = self.ui.Button_DAT_GPTSoVITS_Execute,
             TerminateButton = self.ui.Button_DAT_GPTSoVITS_Terminate,
             ProgressBar = self.ui.ProgressBar_DAT_GPTSoVITS,
@@ -4125,16 +3987,11 @@ class MainWindow(Window_MainWindow):
         # VITS - Left
         Function_SetTreeWidget(
             TreeWidget = self.ui.TreeWidget_Catalogue_DAT_VITS,
-            RootItemTexts = [
-                self.ui.GroupBox_DAT_VITS_InputParams.title(),
-                self.ui.GroupBox_DAT_VITS_VITSParams.title(),
-                self.ui.GroupBox_DAT_VITS_OutputParams.title()
-            ],
-            ChildItemTexts = [
-                ("基础设置"),
-                ("基础设置","高级设置"),
-                ("基础设置","高级设置")
-            ],
+            ItemTexts = {
+                self.ui.GroupBox_DAT_VITS_InputParams.title(): ("基础设置"),
+                self.ui.GroupBox_DAT_VITS_VITSParams.title(): ("基础设置","高级设置"),
+                self.ui.GroupBox_DAT_VITS_OutputParams.title(): ("基础设置","高级设置")
+            },
             AddVertically = True
         )
         Function_ScrollToWidget(
@@ -4223,7 +4080,7 @@ class MainWindow(Window_MainWindow):
         # VITS - Bottom
         self.ui.Button_DAT_VITS_Execute.setToolTip("执行数据集制作")
         self.ui.Button_DAT_VITS_Terminate.setToolTip("终止数据集制作")
-        self.Function_SetMethodExecutor(
+        Function_SetMethodExecutor(self,
             ExecuteButton = self.ui.Button_DAT_VITS_Execute,
             TerminateButton = self.ui.Button_DAT_VITS_Terminate,
             ProgressBar = self.ui.ProgressBar_DAT_VITS,
@@ -4624,16 +4481,11 @@ class MainWindow(Window_MainWindow):
         # GPTSo-VITS - Left
         Function_SetTreeWidget(
             TreeWidget = self.ui.TreeWidget_Catalogue_Train_GPTSoVITS,
-            RootItemTexts = [
-                self.ui.GroupBox_Train_GPTSoVITS_InputParams.title(),
-                self.ui.GroupBox_Train_GPTSoVITS_GPTSoVITSParams.title(),
-                self.ui.GroupBox_Train_GPTSoVITS_OutputParams.title()
-            ],
-            ChildItemTexts = [
-                ("基础设置"),
-                ("基础设置","高级设置"),
-                ("基础设置","高级设置")
-            ],
+            ItemTexts = {
+                self.ui.GroupBox_Train_GPTSoVITS_InputParams.title(): ("基础设置"),
+                self.ui.GroupBox_Train_GPTSoVITS_GPTSoVITSParams.title(): ("基础设置","高级设置"),
+                self.ui.GroupBox_Train_GPTSoVITS_OutputParams.title(): ("基础设置","高级设置")
+            },
             AddVertically = True
         )
         Function_ScrollToWidget(
@@ -4712,7 +4564,7 @@ class MainWindow(Window_MainWindow):
         )
 
         self.ui.Button_RunTensorboard_Train_GPTSoVITS.setText(QCA.translate("Button", "启动Tensorboard"))
-        self.Function_SetMethodExecutor(
+        Function_SetMethodExecutor(self,
             ExecuteButton = self.ui.Button_RunTensorboard_Train_GPTSoVITS,
             Method = Tensorboard_Runner.Execute,
             ParamsFrom = [
@@ -4731,7 +4583,7 @@ class MainWindow(Window_MainWindow):
         # GPT-SoVITS - Bottom
         self.ui.Button_Train_GPTSoVITS_Execute.setToolTip("执行模型训练")
         self.ui.Button_Train_GPTSoVITS_Terminate.setToolTip("终止模型训练")
-        self.Function_SetMethodExecutor(
+        Function_SetMethodExecutor(self,
             ExecuteButton = self.ui.Button_Train_GPTSoVITS_Execute,
             TerminateButton = self.ui.Button_Train_GPTSoVITS_Terminate,
             ProgressBar = self.ui.ProgressBar_Train_GPTSoVITS,
@@ -4761,7 +4613,7 @@ class MainWindow(Window_MainWindow):
                 )
             ]
         )
-        MainWindowSignals.Signal_TaskStatus.connect(
+        FunctionSignals.Signal_TaskStatus.connect(
             lambda Task, Status: Function_ShowMessageBox(self,
                 MessageType = QMessageBox.Question,
                 WindowTitle = "Ask",
@@ -5252,16 +5104,11 @@ class MainWindow(Window_MainWindow):
         # VITS - Left
         Function_SetTreeWidget(
             TreeWidget = self.ui.TreeWidget_Catalogue_Train_VITS,
-            RootItemTexts = [
-                self.ui.GroupBox_Train_VITS_InputParams.title(),
-                self.ui.GroupBox_Train_VITS_VITSParams.title(),
-                self.ui.GroupBox_Train_VITS_OutputParams.title()
-            ],
-            ChildItemTexts = [
-                ("基础设置"),
-                ("基础设置","高级设置"),
-                ("基础设置","高级设置")
-            ],
+            ItemTexts = {
+                self.ui.GroupBox_Train_VITS_InputParams.title(): ("基础设置"),
+                self.ui.GroupBox_Train_VITS_VITSParams.title(): ("基础设置","高级设置"),
+                self.ui.GroupBox_Train_VITS_OutputParams.title(): ("基础设置","高级设置")
+            },
             AddVertically = True
         )
         Function_ScrollToWidget(
@@ -5340,7 +5187,7 @@ class MainWindow(Window_MainWindow):
         )
 
         self.ui.Button_RunTensorboard_Train_VITS.setText(QCA.translate("Button", "启动Tensorboard"))
-        self.Function_SetMethodExecutor(
+        Function_SetMethodExecutor(self,
             ExecuteButton = self.ui.Button_RunTensorboard_Train_VITS,
             Method = Tensorboard_Runner.Execute,
             ParamsFrom = [
@@ -5359,7 +5206,7 @@ class MainWindow(Window_MainWindow):
         # VITS - Bottom
         self.ui.Button_Train_VITS_Execute.setToolTip("执行模型训练")
         self.ui.Button_Train_VITS_Terminate.setToolTip("终止模型训练")
-        self.Function_SetMethodExecutor(
+        Function_SetMethodExecutor(self,
             ExecuteButton = self.ui.Button_Train_VITS_Execute,
             TerminateButton = self.ui.Button_Train_VITS_Terminate,
             ProgressBar = self.ui.ProgressBar_Train_VITS,
@@ -5394,7 +5241,7 @@ class MainWindow(Window_MainWindow):
                 )
             ]
         )
-        MainWindowSignals.Signal_TaskStatus.connect(
+        FunctionSignals.Signal_TaskStatus.connect(
             lambda Task, Status: Function_ShowMessageBox(self,
                 MessageType = QMessageBox.Question,
                 WindowTitle = "Ask",
@@ -5632,14 +5479,10 @@ class MainWindow(Window_MainWindow):
         # GPT-SoVITS - Left
         Function_SetTreeWidget(
             TreeWidget = self.ui.TreeWidget_Catalogue_TTS_GPTSoVITS,
-            RootItemTexts = [
-                self.ui.GroupBox_TTS_GPTSoVITS_InputParams.title(),
-                self.ui.GroupBox_TTS_GPTSoVITS_GPTSoVITSParams.title()
-            ],
-            ChildItemTexts = [
-                ("基础设置"),
-                ("基础设置")
-            ],
+            ItemTexts = {
+                self.ui.GroupBox_TTS_GPTSoVITS_InputParams.title(): ("基础设置"),
+                self.ui.GroupBox_TTS_GPTSoVITS_GPTSoVITSParams.title(): ("基础设置")
+            },
             AddVertically = True
         )
         Function_ScrollToWidget(
@@ -5666,7 +5509,7 @@ class MainWindow(Window_MainWindow):
         # GPT-SoVITS - Bottom
         self.ui.Button_TTS_GPTSoVITS_Execute.setToolTip("执行语音合成")
         self.ui.Button_TTS_GPTSoVITS_Terminate.setToolTip("终止语音合成")
-        self.Function_SetMethodExecutor(
+        Function_SetMethodExecutor(self,
             ExecuteButton = self.ui.Button_TTS_GPTSoVITS_Execute,
             TerminateButton = self.ui.Button_TTS_GPTSoVITS_Terminate,
             ProgressBar = self.ui.ProgressBar_TTS_GPTSoVITS,
@@ -6085,16 +5928,11 @@ class MainWindow(Window_MainWindow):
         # VITS - Left
         Function_SetTreeWidget(
             TreeWidget = self.ui.TreeWidget_Catalogue_TTS_VITS,
-            RootItemTexts = [
-                self.ui.GroupBox_TTS_VITS_InputParams.title(),
-                self.ui.GroupBox_TTS_VITS_VITSParams.title(),
-                self.ui.GroupBox_TTS_VITS_OutputParams.title()
-            ],
-            ChildItemTexts = [
-                ("基础设置"),
-                ("基础设置","高级设置"),
-                ("基础设置")
-            ],
+            ItemTexts = {
+                self.ui.GroupBox_TTS_VITS_InputParams.title(): ("基础设置"),
+                self.ui.GroupBox_TTS_VITS_VITSParams.title(): ("基础设置","高级设置"),
+                self.ui.GroupBox_TTS_VITS_OutputParams.title(): ("基础设置")
+            },
             AddVertically = True
         )
         Function_ScrollToWidget(
@@ -6136,7 +5974,7 @@ class MainWindow(Window_MainWindow):
         # VITS - Bottom
         self.ui.Button_TTS_VITS_Execute.setToolTip("执行语音合成")
         self.ui.Button_TTS_VITS_Terminate.setToolTip("终止语音合成")
-        self.Function_SetMethodExecutor(
+        Function_SetMethodExecutor(self,
             ExecuteButton = self.ui.Button_TTS_VITS_Execute,
             TerminateButton = self.ui.Button_TTS_VITS_Terminate,
             ProgressBar = self.ui.ProgressBar_TTS_VITS,
@@ -6253,12 +6091,12 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_Setting_ClientRebooter.setText(QCA.translate("Button", "重启客户端"))
         self.ui.Button_Setting_ClientRebooter.setToolTip(QCA.translate("ToolTip", "重启EVT客户端"))
 
-        self.Function_SetMethodExecutor(
+        Function_SetMethodExecutor(self,
             ExecuteButton = self.ui.Button_Setting_IntegrityChecker,
             Method = Integrity_Checker.Execute,
             Params = ()
         )
-        MainWindowSignals.Signal_TaskStatus.connect(
+        FunctionSignals.Signal_TaskStatus.connect(
             lambda Task, Status: self.ui.Button_Setting_IntegrityChecker.setCheckable(
                 False if Status == 'Started' else True
             )
@@ -6590,7 +6428,7 @@ class MainWindow(Window_MainWindow):
 
         # Display ToolsStatus
         self.ui.Label_ToolsStatus.clear()
-        MainWindowSignals.Signal_TaskStatus.connect(
+        FunctionSignals.Signal_TaskStatus.connect(
             lambda Task, Status: self.ui.Label_ToolsStatus.setText(
                 f"工具状态：{'忙碌' if Status == 'Started' else '空闲'}"
             ) if Task in [

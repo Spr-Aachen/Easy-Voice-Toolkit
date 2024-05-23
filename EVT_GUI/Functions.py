@@ -1,6 +1,7 @@
 import re
 from typing import Union, Optional
 from PySide6.QtCore import Qt, QObject, Signal, Slot
+from PySide6.QtCore import QCoreApplication as QCA
 from PySide6.QtGui import QFont
 from PySide6.QtWidgets import *
 
@@ -10,71 +11,25 @@ from .Components import *
 from .Window import *
 
 ##############################################################################################################################
-"""
-def Function_InsertUI(
-    ParentUI: QWidget,
-    InsertType: object,
-    InsertPosition: str = "End",
-    UIParam: Optional[str] = None,
-    UIToolTip: Optional[str] = None,
-):
+
+# Where to store custom signals
+class CustomSignals_Functions(QObject):
     '''
-    Function to insert UI
+    Set up signals for functions
     '''
-    InsertUI = InsertType(UIParam)
-    if isinstance(InsertUI, QAbstractButton):
-        InsertUI.setMinimumHeight(24)
-        InsertUI.setStyleSheet(
-            f"{InsertType.__name__}"
-            "{"
-                "text-align: center;"
-                "font-size: 12px;"
-                "color: rgb(255, 255, 255);"
-                "background-color: rgb(90, 90, 90);"
-                "padding: 0px;"
-                "border-width: 0px;"
-                "border-radius: 6px;"
-                "border-style: solid;"
-            "}"
-            f"{InsertType.__name__}:hover"
-            "{"
-                "background-color: rgb(120, 120, 120);"
-            "}"
+    # Run task
+    Signal_ExecuteTask = Signal(tuple)
 
-            "QToolTip"
-            "{"
-                "color: rgba(255, 255, 255, 210);"
-                "background-color: transparent;"
-                "border-width: 0px;"
-                "border-style: solid;"
-            "}"
-        )
-    else:
-        pass
+    # Monitor task
+    Signal_TaskStatus = Signal(str, str)
 
-    Layout = ParentUI.layout() if ParentUI.layout() != None else QGridLayout(ParentUI)
-    if InsertPosition == "Start":
-        RowCount = 0
-    if InsertPosition == "End":
-        RowCount = ParentUI.document().lineCount() if isinstance(ParentUI, (QPlainTextEdit, QTextEdit, QTextBrowser)) else round(ParentUI.height()/15)
-    for Row in range(0, RowCount):
-        SpacingUI = QWidget(ParentUI)
-        SpacingUI.setStyleSheet(
-            "QWidget"
-            "{"
-                "background-color: transparent;"
-                "padding: 0px;"
-                "border-width: 0px;"
-            "}"
-        )
-        Layout.addWidget(SpacingUI, Row, 0)
-    Layout.addWidget(InsertUI, RowCount, 0)
-    
-    InsertUI.setToolTipDuration(-1)
-    InsertUI.setToolTip(UIToolTip)
+    # Force exit
+    Signal_ForceQuit = Signal()
 
-    return InsertUI
-"""
+
+FunctionSignals = CustomSignals_Functions()
+
+##############################################################################################################################
 
 def Function_ScrollToWidget(
     Trigger: QWidget,
@@ -107,8 +62,7 @@ def Function_ScrollToWidget(
 
 def Function_SetTreeWidget(
     TreeWidget: QTreeWidget,
-    RootItemTexts: list = [],
-    ChildItemTexts: list = [()],
+    ItemTexts: dict = {'RootItemText': ('ChildItemText', )},
     AddVertically: bool = False,
     HideHeader: bool = True,
     ExpandItems: bool = True
@@ -119,13 +73,13 @@ def Function_SetTreeWidget(
 
     RootItems = []
 
-    for Index, RootItemText in enumerate(ToIterable(RootItemTexts)):
+    for Index, RootItemText in enumerate(ItemTexts.keys()):
         RootItem = QTreeWidgetItem(TreeWidget)
         RootItem.setText(0 if AddVertically else Index, RootItemText)
         RootItemTextFont = QFont()
         RootItemTextFont.setPixelSize(15)
         RootItem.setFont(0 if AddVertically else Index, RootItemTextFont)
-        for ChildItemText in ToIterable(ChildItemTexts[Index]):
+        for ChildItemText in ToIterable(list(ItemTexts.values())[Index]):
             ChildItem = QTreeWidgetItem(RootItem)
             ChildItem.setText(0 if AddVertically else Index, ChildItemText)
             ChildItemTextFont = QFont()
@@ -177,6 +131,19 @@ def Function_SetChildWidgetsVisibility(
             MaxHeight = AdjustedHeight if SetVisible else CurrentHeight,
             Mode = 'Extend' if SetVisible else 'Reduce'
         )
+
+
+def Function_SetImage(Widget: QWidget, ImagePath: str):
+    '''
+    '''
+    Image = QImage()
+    Image.load(NormPath(ImagePath))
+    Pixmap = QPixmap.fromImage(Image)
+    def SetPic():
+        Length = max(Widget.width(), Widget.height())
+        ScaledPixmap = Pixmap.scaled(Length, Length, Qt.KeepAspectRatio, Qt.SmoothTransformation)
+        Widget.setPixmap(ScaledPixmap)
+    Widget.resized.connect(SetPic) if hasattr(Widget, 'resized') else SetPic()
 
 
 def Function_ConfigureCheckBox(
@@ -557,7 +524,7 @@ class ParamsManager:
         Function_SetWidgetValue(Widget, self.Config, *value)
 
     def ClearSettings(self):
-        with open(self.ConfigPath, 'w') as Config:
+        with open(self.ConfigPath, 'w'):
             pass
         self.Config = ManageConfig(self.ConfigPath)
 
@@ -576,5 +543,137 @@ class ParamsManager:
     def ExportSettings(self, SavePath: str):
         with open(SavePath, 'w') as Config:
             self.Config.Parser().write(Config)
+
+##############################################################################################################################
+
+class Execute_Task(QObject):
+    '''
+    A example class to excute tasks
+    '''
+    started = Signal()
+    finished = Signal(str)
+
+    def __init__(self):
+        super().__init__()
+
+    @Slot(tuple)
+    def Execute(self, Params: tuple):
+        self.started.emit()
+
+        def _run(self, Params: tuple):
+            '''
+            Should put your task here and need to return an error info
+            '''
+        Error = self._run(Params)
+
+        self.finished.emit(str(Error))
+
+    def Terminate(self):
+        ProcessTerminator(self.Process.pid) if hasattr(self, 'Process') else None
+
+
+def Function_SetMethodExecutor(
+    ParentWindow: Optional[QWidget] = None,
+    ExecuteButton: Optional[QAbstractButton] = None,
+    TerminateButton: Optional[QAbstractButton] = None,
+    ProgressBar: Optional[QProgressBar] = None,
+    ConsoleWidget: Optional[QWidget] = None,
+    Method: object = ...,
+    Params: Optional[tuple] = None,
+    ParamsFrom: Optional[list[QObject]] = None,
+    EmptyAllowed: Optional[list[QObject]] = None,
+    #StartEvents: Optional[list] = None,
+    FinishEvents: Optional[list] = None
+):
+    '''
+    Function to execute outer class methods
+    '''
+    QualName = str(Method.__qualname__)
+    MethodName = QualName.split('.')[1]
+
+    ClassInstance = GetClassFromMethod(Method)()
+    ClassInstance.started.connect(lambda: FunctionSignals.Signal_TaskStatus.emit(QualName, 'Started')) if hasattr(ClassInstance, 'started') else None
+    #ClassInstance.started.connect(lambda: RunEvents(StartEvents)) if hasattr(ClassInstance, 'started') else None
+    ClassInstance.finished.connect(lambda Error: FunctionSignals.Signal_TaskStatus.emit(QualName, 'Finished') if Error == str(None) else None) if hasattr(ClassInstance, 'finished') else None
+    ClassInstance.finished.connect(lambda Error: RunEvents(FinishEvents) if Error == str(None) else None) if hasattr(ClassInstance, 'finished') else None
+    ClassInstance.finished.connect(lambda Error: FunctionSignals.Signal_TaskStatus.emit(QualName, 'Failed') if Error != str(None) else None) if hasattr(ClassInstance, 'finished') else None
+    ClassInstance.finished.connect(lambda Error: Function_ShowMessageBox(ParentWindow, QMessageBox.Warning, 'Failure', f'发生错误：\n{Error}') if Error != str(None) else None) if hasattr(ClassInstance, 'finished') else None
+
+    if not isinstance(ClassInstance, QThread):
+        WorkerThread = QThread()
+        ClassInstance.moveToThread(WorkerThread)
+        ClassInstance.finished.connect(WorkerThread.quit) if hasattr(ClassInstance, 'finished') else None
+    else:
+        WorkerThread = ClassInstance
+
+    @Slot()
+    def ExecuteMethod():
+        '''
+        Update the attributes for outer class methods and wait to execute with multithreading
+        '''
+        Args = Params#if Params != () else None
+        if ParamsFrom not in ([], None):
+            Args = Function_ParamsChecker(ParamsFrom, EmptyAllowed)
+            if Args == "Abort":
+                return print("Aborted.")
+            else:
+                pass #print("Continued.\n")
+
+        FunctionSignals = CustomSignals_Functions()
+        FunctionSignals.Signal_ExecuteTask.connect(getattr(ClassInstance, MethodName)) #FunctionSignals.Signal_ExecuteTask.connect(lambda Args: getattr(ClassInstance, MethodName)(*Args))
+
+        WorkerThread.started.connect(lambda: Function_AnimateFrame(ConsoleWidget, MinHeight = 0, MaxHeight = 210, Mode = "Extend")) if ConsoleWidget else None
+        WorkerThread.started.connect(lambda: Function_AnimateProgressBar(ProgressBar, IsTaskAlive = True)) if ProgressBar else None
+        WorkerThread.started.connect(lambda: Function_AnimateStackedWidget(Function_FindParentUI(ExecuteButton, QStackedWidget), TargetIndex = 1)) if TerminateButton else None
+        WorkerThread.finished.connect(lambda: Function_AnimateFrame(ConsoleWidget, MinHeight = 0, MaxHeight = 210, Mode = "Reduce")) if ConsoleWidget else None
+        WorkerThread.finished.connect(lambda: Function_AnimateProgressBar(ProgressBar, IsTaskAlive = False)) if ProgressBar else None
+        WorkerThread.finished.connect(lambda: Function_AnimateStackedWidget(Function_FindParentUI(ExecuteButton, QStackedWidget), TargetIndex = 0)) if TerminateButton else None
+        #WorkerThread.finished.connect(lambda: FunctionSignals.Signal_ExecuteTask.disconnect(getattr(ClassInstance, MethodName)))
+
+        FunctionSignals.Signal_ExecuteTask.emit(Args)
+
+        WorkerThread.start()
+
+    if ExecuteButton is not None:
+        ExecuteButton.clicked.connect(ExecuteMethod)
+        ExecuteButton.setText(QCA.translate("Button", "执行")) if len(ExecuteButton.text().strip()) == 0 else None
+    else:
+        TempButton = QPushButton(ParentWindow)
+        TempButton.clicked.connect(ExecuteMethod)
+        TempButton.setVisible(False)
+        TempButton.click()
+        WorkerThread.finished.connect(TempButton.deleteLater)
+
+    @Slot()
+    def TerminateMethod():
+        '''
+        Terminate the running thread
+        '''
+        if not WorkerThread.isFinished():
+            try:
+                WorkerThread.terminate()
+            except:
+                WorkerThread.quit()
+
+        ClassInstance.Terminate() if hasattr(ClassInstance, 'Terminate') else ProcessTerminator('python.exe', SearchKeyword = True)
+
+        FunctionSignals.Signal_TaskStatus.emit(QualName, 'Failed') if hasattr(ClassInstance, 'finished') else None
+
+        ProgressBar.setValue(0) if ProgressBar else None
+
+    if TerminateButton is not None:
+        TerminateButton.clicked.connect(
+            lambda: Function_ShowMessageBox(ParentWindow,
+                MessageType = QMessageBox.Question,
+                WindowTitle = "Ask",
+                Text = "当前任务仍在执行中，是否确认终止？",
+                Buttons = QMessageBox.Yes|QMessageBox.No,
+                ButtonEvents = {QMessageBox.Yes: lambda: TerminateMethod()}
+            )
+        )
+        TerminateButton.setText(QCA.translate("Button", "终止")) if len(TerminateButton.text().strip()) == 0 else None
+        FunctionSignals.Signal_ForceQuit.connect(TerminateMethod)
+    else:
+        pass
 
 ##############################################################################################################################

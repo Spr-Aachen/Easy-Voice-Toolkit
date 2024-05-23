@@ -8,7 +8,7 @@ from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import QApplication, QVBoxLayout, QSizePolicy, QWidget, QMessageBox, QPushButton, QProgressBar, QLabel
 
 from QEasyWidgets.Utils import CheckUpdate, DownloadFile, NormPath, SetRichText, RunBat, BootWithBat, GetFileInfo, GetBaseDir, ManageConfig
-from EVT_GUI.Functions import Function_AnimateProgressBar, Function_SetText, Function_ShowMessageBox
+from EVT_GUI.Functions import Function_SetMethodExecutor, Function_SetText, Function_ShowMessageBox
 
 ##############################################################################################################################
 
@@ -233,37 +233,6 @@ class Widget_Updater(QWidget):
         self.Layout.addWidget(self.ProgressBar)
         self.Layout.addWidget(self.SkipButton)
 
-    def Function_ExecuteMethod(self,
-        ProgressBar: Optional[QProgressBar] = None,
-        Method: object = ...,
-        Params: Optional[tuple] = ()
-    ):
-        ClassName =  str(Method.__qualname__).split('.')[0]
-        MethodName = str(Method.__qualname__).split('.')[1]
-
-        ClassInstance = globals()[ClassName]()
-
-        WorkerThread = QThread()
-        ClassInstance.moveToThread(WorkerThread)
-        ClassInstance.finished.connect(WorkerThread.quit)
-
-        def ExecuteMethod():
-            Args = Params
-
-            QFunctionsSignals = CustomSignals_Updater()
-            QFunctionsSignals.Signal_ExecuteTask.connect(getattr(ClassInstance, MethodName))
-
-            WorkerThread.started.connect(lambda: Function_AnimateProgressBar(ProgressBar, IsTaskAlive = True)) if ProgressBar else None
-            WorkerThread.finished.connect(lambda: Function_AnimateProgressBar(ProgressBar, IsTaskAlive = False)) if ProgressBar else None
-
-            QFunctionsSignals.Signal_ExecuteTask.emit(Args)
-            WorkerThread.start()
-
-        TempButton = QPushButton(self)
-        TempButton.hide()
-        TempButton.clicked.connect(ExecuteMethod)
-        TempButton.click()
-
     def Main(self):
         self.DownloadURL = str()
         def UpdateDownloadURL(DownloadURL):
@@ -284,7 +253,7 @@ class Widget_Updater(QWidget):
                     Text = '检测到可用的新版本，是否更新？\nNew version available, wanna update?',
                     Buttons = QMessageBox.Yes|QMessageBox.No,
                     ButtonEvents = {
-                        QMessageBox.Yes: lambda: self.Function_ExecuteMethod(
+                        QMessageBox.Yes: lambda: Function_SetMethodExecutor(self,
                             ProgressBar = self.ProgressBar,
                             Method = Execute_Update_Downloading.Execute,
                             Params = (self.DownloadURL)
@@ -308,7 +277,7 @@ class Widget_Updater(QWidget):
             )
         )
 
-        self.Function_ExecuteMethod(
+        Function_SetMethodExecutor(self,
             ProgressBar = self.ProgressBar,
             Method = Execute_Update_Checking.Execute,
             Params = ()
