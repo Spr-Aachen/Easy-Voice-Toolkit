@@ -32,17 +32,17 @@
 
 <br>工具箱目前包含以下功能：
 
-- [音频处理](/docs/Audio-Processor.md)
+- [音频处理](/docs/CN/Audio-Processor.md)
 
-- [语音识别](/docs/Voice-Recognizer.md)
+- [语音识别](/docs/CN/Voice-Recognizer.md)
 
-- [语音转录](/docs/Voice-Transcriber.md)
+- [语音转录](/docs/CN/Voice-Transcriber.md)
 
-- [数据集制作](/docs/Dataset-Creator.md)
+- [数据集制作](/docs/CN/Dataset-Creator.md)
 
-- [模型训练](/docs/Voice-Trainer.md)
+- [模型训练](/docs/CN/Voice-Trainer.md)
 
-- [语音合成](/docs/Voice-Converter.md)
+- [语音合成](/docs/CN/Voice-Converter.md)
 
 <br>这些功能依次关联，能够形成一套完整的工作流
 <br>用户可以根据自己的需求有选择性地使用，亦或者依次通过这些工具将未经处理的语音文件逐步变为理想的语音模型

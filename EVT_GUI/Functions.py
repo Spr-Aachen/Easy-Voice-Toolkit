@@ -33,20 +33,17 @@ FunctionSignals = CustomSignals_Functions()
 
 def Function_ScrollToWidget(
     Trigger: QWidget,
-    TargetWidget: Optional[QWidget],
-    ScrollArea: QScrollArea,
+    TargetWidget: QWidget,
+    ScrollArea: Optional[QScrollArea] = None,
     #Alignment: str = 'Top'
 ):
     '''
     '''
+    if ScrollArea is None:
+        ScrollArea = Function_FindParentUI(TargetWidget, QScrollArea)
+
     def ScrollToWidget():
-        if TargetWidget is not None:
-            TargetRect = TargetWidget.mapToGlobal(QPoint(0, 0))
-        else:
-            try:
-                TargetRect = ScrollArea.widget().layout().itemAt(Trigger.property("Index")).mapToGlobal(QPoint(0, 0))
-            except:
-                raise Exception("Please set property 'Index' for Trigger widget!")
+        TargetRect = TargetWidget.mapToGlobal(QPoint(0, 0))
         TargetYPos = TargetRect.y() - ScrollArea.widget().mapToGlobal(QPoint(0, 0)).y()
 
         ScrollArea.verticalScrollBar().setValue(TargetYPos)
@@ -60,11 +57,49 @@ def Function_ScrollToWidget(
         Trigger.clicked.connect(ScrollToWidget)
 
 
+def Function_AddToTreeWidget(
+    Widget: QWidget,
+    TreeWidget: TreeWidgetBase,
+    RootItemText: str,
+    ChildItemText: Optional[str] = None,
+    ScrollArea: Optional[QScrollArea] = None
+):
+    '''
+    '''
+    RootItemTexts = TreeWidget.rootItemTexts()
+    if RootItemText in RootItemTexts:
+        RootItem = TreeWidget.topLevelItem(RootItemTexts.index(RootItemText))
+    else:
+        RootItem = QTreeWidgetItem(TreeWidget)
+        RootItem.setText(0, RootItemText)
+        RootItemTextFont = QFont()
+        RootItemTextFont.setPixelSize(15)
+        RootItem.setFont(0, RootItemTextFont)
+    RootItem.setExpanded(True) if not RootItem.isExpanded() else None
+
+    ChildItemTexts = TreeWidget.childItemTexts(RootItem)
+    if ChildItemText is None:
+        ChildItem = None
+    elif ChildItemText in ChildItemTexts:
+        ChildItem = RootItem.child(ChildItemTexts.index(ChildItemText))
+    else:
+        ChildItem = QTreeWidgetItem(RootItem)
+        ChildItem.setText(0, ChildItemText)
+        ChildItemTextFont = QFont()
+        ChildItemTextFont.setPixelSize(12)
+        ChildItem.setFont(0, ChildItemTextFont)
+
+    Function_ScrollToWidget(
+        Trigger = ChildItem if ChildItem is not None else RootItem,
+        TargetWidget = Widget,
+        ScrollArea = ScrollArea
+    )
+
+
 def Function_SetTreeWidget(
     TreeWidget: QTreeWidget,
     ItemTexts: dict = {'RootItemText': ('ChildItemText', )},
     AddVertically: bool = False,
-    HideHeader: bool = True,
     ExpandItems: bool = True
 ):
     '''
@@ -91,23 +126,8 @@ def Function_SetTreeWidget(
     TreeWidget.setColumnCount(1) if AddVertically else None
     TreeWidget.addTopLevelItems(RootItems)
 
-    TreeWidget.setHeaderHidden(HideHeader)
-
     TreeWidget.expandAll() if ExpandItems else None
 
-'''
-def Function_SetTreeView(
-    TreeView: QTreeView,
-    HeaderTexts: list = [],
-    RootItemTexts: list = [()],
-    ChildItemTexts: list = [(())],
-    AddVertically: bool = False
-):
-
-    for Index, HeaderText in enumerate(HeaderTexts):
-        TreeView.setHeaderLabels(HeaderTexts)
-        TreeView.header().setOrientation(Qt.Vertical)
-'''
 
 def Function_SetChildWidgetsVisibility(
     Container: QWidget,
@@ -279,7 +299,7 @@ def Function_ParamsHandler(
 def Function_ParamsSynchronizer(
     Trigger: Union[QObject, list],
     FromTo: dict = {},
-    Times: Optional[float] = None,
+    Times: Union[int, float] = 1,
     Connection: str = "Connect"
 ):
     '''
@@ -316,7 +336,7 @@ def Function_ParamsChecker(
     Params = []
 
     for UI in ParamsFrom:
-        Param = Function_ParamsHandler(UI, "Get")
+        Param = Function_ParamsHandler(UI, "Get") if isinstance(UI, QWidget) else UI
         if isinstance(Param, str):
             if Param.strip() == "None" or Param.strip() == "":
                 if UI in ToIterable(EmptyAllowed):

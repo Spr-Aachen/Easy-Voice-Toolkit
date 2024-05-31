@@ -8,9 +8,9 @@ import signal
 import subprocess
 import torch
 from pathlib import Path
+from scipy.io.wavfile import write
 
 from .config import python_exec, webui_port_infer_tts, is_share
-#from .GPT_SoVITS.inference_webui import change_gpt_weights, change_sovits_weights, get_tts_wav
 
 
 current_dir = Path(__file__).absolute().parent.as_posix()
@@ -138,16 +138,61 @@ def Convert(
     Model_Path_Load_s2G: str = "GPT_SoVITS/pretrained_models/s2G488k.pth",
     Model_Dir_Load_bert: str = "GPT_SoVITS/pretrained_models/chinese-roberta-wwm-ext-large",
     Model_Dir_Load_ssl: str = "GPT_SoVITS/pretrained_models/chinese-hubert-base",
-    Set_FP16_Run: bool = False
+    Ref_Audio: str = "",
+    Ref_Text_Free: bool = False,
+    Ref_Text: str = "",
+    Ref_Language: str = "多语种混合",
+    Text: str = '请输入语句',
+    Language: str = "多语种混合",
+    How_To_Cut: str = "按标点符号切",
+    Top_K: int = 5,
+    Top_P: float = 1.,
+    Temperature: float = 1.,
+    Set_FP16_Run: bool = False,
+    Audio_Path_Save: str = ...,
+    Use_WebUI: bool = False
 ):
     # 1C-推理
-    change_tts_inference(
-        if_tts = True,
-        bert_path = Model_Dir_Load_bert,
-        cnhubert_base_path = Model_Dir_Load_ssl,
-        gpu_number = gpus,
-        is_half = Set_FP16_Run,
-        gpt_path = Model_Path_Load_s1,
-        sovits_path = Model_Path_Load_s2G
-    )
+    if Use_WebUI:
+        change_tts_inference(
+            if_tts = True,
+            bert_path = Model_Dir_Load_bert,
+            cnhubert_base_path = Model_Dir_Load_ssl,
+            gpu_number = gpus,
+            is_half = Set_FP16_Run,
+            gpt_path = Model_Path_Load_s1,
+            sovits_path = Model_Path_Load_s2G
+        )
+    else:
+        os.environ["gpt_path"] = Model_Path_Load_s1
+        os.environ["sovits_path"] = Model_Path_Load_s2G
+        os.environ["cnhubert_base_path"] = Model_Dir_Load_ssl
+        os.environ["bert_path"] = Model_Dir_Load_bert
+        os.environ["_CUDA_VISIBLE_DEVICES"] = gpus
+        os.environ["is_half"] = str(Set_FP16_Run)
+        os.environ["infer_ttswebui"] = str(webui_port_infer_tts)
+        os.environ["is_share"] = str(is_share)
+
+        from .GPT_SoVITS.inference_webui import gpt_path, sovits_path, change_gpt_weights, change_sovits_weights, get_tts_wav
+
+        change_gpt_weights(gpt_path)
+
+        change_sovits_weights(sovits_path)
+
+        TTS_Result = get_tts_wav(
+            ref_wav_path = Ref_Audio,
+            prompt_text = Ref_Text,
+            prompt_language = Ref_Language,
+            text = Text,
+            text_language = Language,
+            how_to_cut = How_To_Cut,
+            top_k = Top_K,
+            top_p = Top_P,
+            temperature = Temperature,
+            ref_free = Ref_Text_Free
+        )
+        SR, Audio = list(TTS_Result)[-1]
+
+        write(Audio_Path_Save, SR, Audio)
+
     # 2-GPT-SoVITS-变声
