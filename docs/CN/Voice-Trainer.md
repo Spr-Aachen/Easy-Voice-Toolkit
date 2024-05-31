@@ -1,11 +1,11 @@
 <div align = "center">
 
-## 语音模型训练<br>Voice Trainer
+## 语音模型训练
 
 ![Voice Trainer](/docs/media/Voice-Trainer.png)
 
 </div>
 
 
-### 介绍<br>Intro
+### 介绍
 训练出适用于语音合成的模型文件

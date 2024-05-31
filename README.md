@@ -1,6 +1,6 @@
 <div align = "center">
 
-# 简易语音工具箱<br>Easy Voice Toolkit
+# Easy Voice Toolkit
 
 ![Title](/docs/media/Title.png "Home Page")
 
@@ -32,17 +32,17 @@ A toolkit based on open source voice projects，which provides a variety of auto
 
 Functions that are currently included in the toolkit are as follows:
 
-- [Audio Processing](/docs/Audio-Processor.md)
+- [Audio Processing](/docs/EN/Audio-Processor.md)
 
-- [Voice Recognition](/docs/Voice-Recognizer.md)
+- [Voice Recognition](/docs/EN/Voice-Recognizer.md)
 
-- [Voice Transcribing](/docs/Voice-Transcriber.md)
+- [Voice Transcribing](/docs/EN/Voice-Transcriber.md)
 
-- [Dataset Creating (SRT Converting & WAV Splitting)](/docs/Dataset-Creator.md)
+- [Dataset Creating (SRT Converting & WAV Splitting)](/docs/EN/Dataset-Creator.md)
 
-- [Model Training](/docs/Voice-Trainer.md)
+- [Model Training](/docs/EN/Voice-Trainer.md)
 
-- [Voice Convertion](/docs/Voice-Converter.md)
+- [Voice Convertion](/docs/EN/Voice-Converter.md)
 
 <br>These functions can be seamlessly integrated to form a complete workflow
 <br>Users can use these tools selectively according to their own needs, or use them in sequence to gradually transform raw audio files into ideal speech models
@@ -235,7 +235,7 @@ Reference: [so-vits-svc](https://github.com/svc-develop-team/so-vits-svc)
 ## Contact Details
 
 [![QQ](https://img.shields.io/badge/QQ-2835946988-brightgreen?style=for-the-badge&logo=tencent-qq&logoColor=white)]()
-<br>Please feel free to contact me at any time, any comments and suggestions will be appreciated:)
+<br>Feel free to contact me at any time, any comments and suggestions will be appreciated:)
 
 
 ## Stargazers over time

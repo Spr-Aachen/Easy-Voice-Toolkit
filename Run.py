@@ -20,7 +20,7 @@ from EVT_GUI.EnvConfigurator import *
 ##############################################################################################################################
 
 # Set current version
-CurrentVersion = "v1.1.0"
+CurrentVersion = "v1.1.1"
 
 ##############################################################################################################################
 
@@ -1549,8 +1549,17 @@ class MainWindow(Window_MainWindow):
             )
         )
 
+        # Left
+        self.ui.TreeWidget_Catalogue_Process.clear()
+        self.ui.TreeWidget_Catalogue_Process.setHeaderHidden(True)
+
         # Middle
         self.ui.GroupBox_Process_InputParams.setTitle(QCA.translate("GroupBox", "输入参数"))
+        Function_AddToTreeWidget(
+            Widget = self.ui.GroupBox_Process_InputParams,
+            TreeWidget = self.ui.TreeWidget_Catalogue_Process,
+            RootItemText = QCA.translate("Tree", "输入参数")
+        )
 
         Function_SetText(
             Widget = self.ui.Label_Process_MediaDirInput,
@@ -1574,8 +1583,19 @@ class MainWindow(Window_MainWindow):
                 "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_Process_MediaDirInput.text())
             }
         )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_Process_MediaDirInput,
+            TreeWidget = self.ui.TreeWidget_Catalogue_Process,
+            RootItemText = QCA.translate("Tree", "输入参数"),
+            ChildItemText = QCA.translate("Tree", "媒体输入目录")
+        )
 
         self.ui.GroupBox_Process_DenoiserParams.setTitle(QCA.translate("GroupBox", "降噪参数"))
+        Function_AddToTreeWidget(
+            Widget = self.ui.GroupBox_Process_DenoiserParams,
+            TreeWidget = self.ui.TreeWidget_Catalogue_Process,
+            RootItemText = QCA.translate("Tree", "降噪参数")
+        )
 
         Function_SetText(
             Widget = self.ui.Label_Process_DenoiseAudio,
@@ -1620,6 +1640,12 @@ class MainWindow(Window_MainWindow):
                 "重置": lambda: ParamsManager_Process.ResetParam(self.ui.CheckBox_Process_DenoiseAudio)
             }
         )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_Process_DenoiseAudio,
+            TreeWidget = self.ui.TreeWidget_Catalogue_Process,
+            RootItemText = QCA.translate("Tree", "降噪参数"),
+            ChildItemText = QCA.translate("Tree", "启用杂音去除")
+        )
 
         Function_SetText(
             Widget = self.ui.Label_Process_DenoiseModelPath,
@@ -1646,6 +1672,12 @@ class MainWindow(Window_MainWindow):
                 "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_Process_DenoiseModelPath.text())
             }
         )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_Process_DenoiseModelPath,
+            TreeWidget = self.ui.TreeWidget_Catalogue_Process,
+            RootItemText = QCA.translate("Tree", "降噪参数"),
+            ChildItemText = QCA.translate("Tree", "uvr5模型路径")
+        )
 
         Function_SetText(
             Widget = self.ui.Label_Process_DenoiseTarget,
@@ -1665,8 +1697,19 @@ class MainWindow(Window_MainWindow):
                 "重置": lambda: ParamsManager_Process.ResetParam(self.ui.ComboBox_Process_DenoiseTarget)
             }
         )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_Process_DenoiseTarget,
+            TreeWidget = self.ui.TreeWidget_Catalogue_Process,
+            RootItemText = QCA.translate("Tree", "降噪参数"),
+            ChildItemText = QCA.translate("Tree", "提取目标")
+        )
 
         self.ui.GroupBox_Process_SlicerParams.setTitle(QCA.translate("GroupBox", "静音切除参数"))
+        Function_AddToTreeWidget(
+            Widget = self.ui.GroupBox_Process_SlicerParams,
+            TreeWidget = self.ui.TreeWidget_Catalogue_Process,
+            RootItemText = QCA.translate("Tree", "静音切除参数")
+        )
 
         Function_SetText(
             Widget = self.ui.Label_Process_SliceAudio,
@@ -1719,6 +1762,12 @@ class MainWindow(Window_MainWindow):
                 "重置": lambda: ParamsManager_Process.ResetParam(self.ui.CheckBox_Process_SliceAudio)
             }
         )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_Process_SliceAudio,
+            TreeWidget = self.ui.TreeWidget_Catalogue_Process,
+            RootItemText = QCA.translate("Tree", "静音切除参数"),
+            ChildItemText = QCA.translate("Tree", "启用静音切除")
+        )
 
         self.ui.ToolBox_Process_SlicerParams_AdvanceSettings.widget(0).setText(QCA.translate("ToolBox", "高级设置"))
         self.ui.ToolBox_Process_SlicerParams_AdvanceSettings.widget(0).collapse()
@@ -1743,6 +1792,12 @@ class MainWindow(Window_MainWindow):
             }
             
         )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_Process_RMSThreshold,
+            TreeWidget = self.ui.TreeWidget_Catalogue_Process,
+            RootItemText = QCA.translate("Tree", "静音切除参数"),
+            ChildItemText = QCA.translate("Tree", "均方根阈值")
+        )
 
         Function_SetText(
             Widget = self.ui.Label_Process_HopSize,
@@ -1762,6 +1817,12 @@ class MainWindow(Window_MainWindow):
             ActionEvents = {
                 "重置": lambda: ParamsManager_Process.ResetParam(self.ui.SpinBox_Process_HopSize)
             }
+        )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_Process_HopSize,
+            TreeWidget = self.ui.TreeWidget_Catalogue_Process,
+            RootItemText = QCA.translate("Tree", "静音切除参数"),
+            ChildItemText = QCA.translate("Tree", "跃点大小")
         )
 
         Function_SetText(
@@ -1784,6 +1845,12 @@ class MainWindow(Window_MainWindow):
                 "重置": lambda: ParamsManager_Process.ResetParam(self.ui.SpinBox_Process_SilentIntervalMin)
             }
         )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_Process_SilentIntervalMin,
+            TreeWidget = self.ui.TreeWidget_Catalogue_Process,
+            RootItemText = QCA.translate("Tree", "静音切除参数"),
+            ChildItemText = QCA.translate("Tree", "最小静音间隔")
+        )
 
         Function_SetText(
             Widget = self.ui.Label_Process_SilenceKeptMax,
@@ -1805,6 +1872,12 @@ class MainWindow(Window_MainWindow):
                 "重置": lambda: ParamsManager_Process.ResetParam(self.ui.SpinBox_Process_SilenceKeptMax)
             }
         )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_Process_SilenceKeptMax,
+            TreeWidget = self.ui.TreeWidget_Catalogue_Process,
+            RootItemText = QCA.translate("Tree", "静音切除参数"),
+            ChildItemText = QCA.translate("Tree", "最大静音长度")
+        )
 
         Function_SetText(
             Widget = self.ui.Label_Process_AudioLengthMin,
@@ -1825,8 +1898,19 @@ class MainWindow(Window_MainWindow):
                 "重置": lambda: ParamsManager_Process.ResetParam(self.ui.SpinBox_Process_AudioLengthMin)
             }
         )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_Process_AudioLengthMin,
+            TreeWidget = self.ui.TreeWidget_Catalogue_Process,
+            RootItemText = QCA.translate("Tree", "静音切除参数"),
+            ChildItemText = QCA.translate("Tree", "最小音频长度")
+        )
 
         self.ui.GroupBox_Process_OutputParams.setTitle(QCA.translate("GroupBox", "输出参数"))
+        Function_AddToTreeWidget(
+            Widget = self.ui.GroupBox_Process_OutputParams,
+            TreeWidget = self.ui.TreeWidget_Catalogue_Process,
+            RootItemText = QCA.translate("Tree", "输出参数")
+        )
 
         Function_SetText(
             Widget = self.ui.Label_Process_MediaFormatOutput,
@@ -1845,6 +1929,12 @@ class MainWindow(Window_MainWindow):
             ActionEvents = {
                 "重置": lambda: ParamsManager_Process.ResetParam(self.ui.ComboBox_Process_MediaFormatOutput)
             }
+        )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_Process_AudioLengthMin,
+            TreeWidget = self.ui.TreeWidget_Catalogue_Process,
+            RootItemText = QCA.translate("Tree", "输出参数"),
+            ChildItemText = QCA.translate("Tree", "媒体输出格式")
         )
 
         Function_SetText(
@@ -1868,6 +1958,12 @@ class MainWindow(Window_MainWindow):
                 "重置": lambda: ParamsManager_Process.ResetParam(self.ui.LineEdit_Process_OutputDirName),
                 "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_Process_OutputDirName.text())
             }
+        )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_Process_OutputDirName,
+            TreeWidget = self.ui.TreeWidget_Catalogue_Process,
+            RootItemText = QCA.translate("Tree", "输出参数"),
+            ChildItemText = QCA.translate("Tree", "输出目录名")
         )
 
         LineEdit_Process_OutputDir = QLineEdit()
@@ -1914,6 +2010,12 @@ class MainWindow(Window_MainWindow):
                 "重置": lambda: ParamsManager_Process.ResetParam(self.ui.CheckBox_Process_ToMono)
             }
         )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_Process_ToMono,
+            TreeWidget = self.ui.TreeWidget_Catalogue_Process,
+            RootItemText = QCA.translate("Tree", "输出参数"),
+            ChildItemText = QCA.translate("Tree", "合并声道")
+        )
 
         Function_SetText(
             Widget = self.ui.Label_Process_SampleRate,
@@ -1932,6 +2034,12 @@ class MainWindow(Window_MainWindow):
             ActionEvents = {
                 "重置": lambda: ParamsManager_Process.ResetParam(self.ui.ComboBox_Process_SampleRate)
             }
+        )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_Process_SampleRate,
+            TreeWidget = self.ui.TreeWidget_Catalogue_Process,
+            RootItemText = QCA.translate("Tree", "输出参数"),
+            ChildItemText = QCA.translate("Tree", "输出采样率")
         )
 
         Function_SetText(
@@ -1952,67 +2060,11 @@ class MainWindow(Window_MainWindow):
                 "重置": lambda: ParamsManager_Process.ResetParam(self.ui.ComboBox_Process_SampleWidth)
             }
         )
-
-        # Left
-        Function_SetTreeWidget(
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_Process_SampleWidth,
             TreeWidget = self.ui.TreeWidget_Catalogue_Process,
-            ItemTexts = {
-                self.ui.GroupBox_Process_InputParams.title(): ("基础设置"),
-                self.ui.GroupBox_Process_DenoiserParams.title(): ("基础设置"),
-                self.ui.GroupBox_Process_SlicerParams.title(): ("基础设置","高级设置"),
-                self.ui.GroupBox_Process_OutputParams.title(): ("基础设置","高级设置")
-            },
-            AddVertically = True
-        )
-        Function_ScrollToWidget(
-            Trigger = self.ui.TreeWidget_Catalogue_Process.topLevelItem(0),
-            TargetWidget = self.ui.GroupBox_Process_InputParams,
-            ScrollArea = self.ui.ScrollArea_Middle_Process
-        )
-        Function_ScrollToWidget(
-            Trigger = self.ui.TreeWidget_Catalogue_Process.topLevelItem(0).child(0),
-            TargetWidget = self.ui.Frame_Process_InputParams_BasicSettings,
-            ScrollArea = self.ui.ScrollArea_Middle_Process
-        )
-        Function_ScrollToWidget(
-            Trigger = self.ui.TreeWidget_Catalogue_Process.topLevelItem(1),
-            TargetWidget = self.ui.GroupBox_Process_DenoiserParams,
-            ScrollArea = self.ui.ScrollArea_Middle_Process
-        )
-        Function_ScrollToWidget(
-            Trigger = self.ui.TreeWidget_Catalogue_Process.topLevelItem(1).child(0),
-            TargetWidget = self.ui.Frame_Process_DenoiserParams_BasicSettings,
-            ScrollArea = self.ui.ScrollArea_Middle_Process
-        )
-        Function_ScrollToWidget(
-            Trigger = self.ui.TreeWidget_Catalogue_Process.topLevelItem(2),
-            TargetWidget = self.ui.GroupBox_Process_SlicerParams,
-            ScrollArea = self.ui.ScrollArea_Middle_Process
-        )
-        Function_ScrollToWidget(
-            Trigger = self.ui.TreeWidget_Catalogue_Process.topLevelItem(2).child(0),
-            TargetWidget = self.ui.Frame_Process_SlicerParams_BasicSettings,
-            ScrollArea = self.ui.ScrollArea_Middle_Process
-        )
-        Function_ScrollToWidget(
-            Trigger = self.ui.TreeWidget_Catalogue_Process.topLevelItem(2).child(1),
-            TargetWidget = self.ui.ToolBox_Process_SlicerParams_AdvanceSettings,
-            ScrollArea = self.ui.ScrollArea_Middle_Process
-        )
-        Function_ScrollToWidget(
-            Trigger = self.ui.TreeWidget_Catalogue_Process.topLevelItem(3),
-            TargetWidget = self.ui.GroupBox_Process_OutputParams,
-            ScrollArea = self.ui.ScrollArea_Middle_Process
-        )
-        Function_ScrollToWidget(
-            Trigger = self.ui.TreeWidget_Catalogue_Process.topLevelItem(3).child(0),
-            TargetWidget = self.ui.Frame_Process_OutputParams_BasicSettings,
-            ScrollArea = self.ui.ScrollArea_Middle_Process
-        )
-        Function_ScrollToWidget(
-            Trigger = self.ui.TreeWidget_Catalogue_Process.topLevelItem(3).child(1),
-            TargetWidget = self.ui.ToolBox_Process_OutputParams_AdvanceSettings,
-            ScrollArea = self.ui.ScrollArea_Middle_Process
+            RootItemText = QCA.translate("Tree", "输出参数"),
+            ChildItemText = QCA.translate("Tree", "输出采样位数")
         )
 
         # Right
@@ -2139,8 +2191,17 @@ class MainWindow(Window_MainWindow):
             )
         )
 
+        # Left
+        self.ui.TreeWidget_Catalogue_ASR_VPR.clear()
+        self.ui.TreeWidget_Catalogue_ASR_VPR.setHeaderHidden(True)
+
         # Middle
         self.ui.GroupBox_ASR_VPR_InputParams.setTitle(QCA.translate("GroupBox", "输入参数"))
+        Function_AddToTreeWidget(
+            Widget = self.ui.GroupBox_ASR_VPR_InputParams,
+            TreeWidget = self.ui.TreeWidget_Catalogue_ASR_VPR,
+            RootItemText = QCA.translate("Tree", "输入参数")
+        )
 
         Function_SetText(
             Widget = self.ui.Label_ASR_VPR_AudioDirInput,
@@ -2165,6 +2226,12 @@ class MainWindow(Window_MainWindow):
                 "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_ASR_VPR_AudioDirInput.text())
             }
         )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_ASR_VPR_AudioDirInput,
+            TreeWidget = self.ui.TreeWidget_Catalogue_ASR_VPR,
+            RootItemText = QCA.translate("Tree", "输入参数"),
+            ChildItemText = QCA.translate("Tree", "音频输入目录")
+        )
 
         Function_SetText(
             Widget = self.ui.Label_ASR_VPR_StdAudioSpeaker,
@@ -2182,8 +2249,19 @@ class MainWindow(Window_MainWindow):
         self.ui.Table_ASR_VPR_StdAudioSpeaker.SetFileDialog(
             FileType = "音频类型 (*.flac *.wav *.mp3 *.aac *.m4a *.wma *.aiff *.au *.ogg)"
         )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_ASR_VPR_StdAudioSpeaker,
+            TreeWidget = self.ui.TreeWidget_Catalogue_ASR_VPR,
+            RootItemText = QCA.translate("Tree", "输入参数"),
+            ChildItemText = QCA.translate("Tree", "目标人物与音频")
+        )
 
         self.ui.GroupBox_ASR_VPR_VPRParams.setTitle(QCA.translate("GroupBox", "语音识别参数"))
+        Function_AddToTreeWidget(
+            Widget = self.ui.GroupBox_ASR_VPR_VPRParams,
+            TreeWidget = self.ui.TreeWidget_Catalogue_ASR_VPR,
+            RootItemText = QCA.translate("Tree", "语音识别参数")
+        )
 
         Function_SetText(
             Widget = self.ui.Label_ASR_VPR_DecisionThreshold,
@@ -2203,6 +2281,12 @@ class MainWindow(Window_MainWindow):
             ActionEvents = {
                 "重置": lambda: ParamsManager_ASR_VPR.ResetParam(self.ui.DoubleSpinBox_ASR_VPR_DecisionThreshold)
             }
+        )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_ASR_VPR_DecisionThreshold,
+            TreeWidget = self.ui.TreeWidget_Catalogue_ASR_VPR,
+            RootItemText = QCA.translate("Tree", "语音识别参数"),
+            ChildItemText = QCA.translate("Tree", "判断阈值")
         )
 
         Function_SetText(
@@ -2231,6 +2315,12 @@ class MainWindow(Window_MainWindow):
                 "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_ASR_VPR_ModelPath.text())
             }
         )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_ASR_VPR_ModelPath,
+            TreeWidget = self.ui.TreeWidget_Catalogue_ASR_VPR,
+            RootItemText = QCA.translate("Tree", "语音识别参数"),
+            ChildItemText = QCA.translate("Tree", "模型加载路径")
+        )
 
         self.ui.ToolBox_ASR_VPR_VPRParams_AdvanceSettings.widget(0).setText(QCA.translate("ToolBox", "高级设置"))
         self.ui.ToolBox_ASR_VPR_VPRParams_AdvanceSettings.widget(0).collapse()
@@ -2253,6 +2343,12 @@ class MainWindow(Window_MainWindow):
                 "重置": lambda: ParamsManager_ASR_VPR.ResetParam(self.ui.ComboBox_ASR_VPR_ModelType)
             }
         )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_ASR_VPR_ModelType,
+            TreeWidget = self.ui.TreeWidget_Catalogue_ASR_VPR,
+            RootItemText = QCA.translate("Tree", "语音识别参数"),
+            ChildItemText = QCA.translate("Tree", "模型类型")
+        )
 
         Function_SetText(
             Widget = self.ui.Label_ASR_VPR_FeatureMethod,
@@ -2271,6 +2367,12 @@ class MainWindow(Window_MainWindow):
             ActionEvents = {
                 "重置": lambda: ParamsManager_ASR_VPR.ResetParam(self.ui.ComboBox_ASR_VPR_FeatureMethod)
             }
+        )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_ASR_VPR_FeatureMethod,
+            TreeWidget = self.ui.TreeWidget_Catalogue_ASR_VPR,
+            RootItemText = QCA.translate("Tree", "语音识别参数"),
+            ChildItemText = QCA.translate("Tree", "预处理方法")
         )
 
         Function_SetText(
@@ -2292,8 +2394,19 @@ class MainWindow(Window_MainWindow):
                 "重置": lambda: ParamsManager_ASR_VPR.ResetParam(self.ui.DoubleSpinBox_ASR_VPR_DurationOfAudio)
             }
         )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_ASR_VPR_DurationOfAudio,
+            TreeWidget = self.ui.TreeWidget_Catalogue_ASR_VPR,
+            RootItemText = QCA.translate("Tree", "语音识别参数"),
+            ChildItemText = QCA.translate("Tree", "音频长度")
+        )
 
         self.ui.GroupBox_ASR_VPR_OutputParams.setTitle(QCA.translate("GroupBox", "输出参数"))
+        Function_AddToTreeWidget(
+            Widget = self.ui.GroupBox_ASR_VPR_OutputParams,
+            TreeWidget = self.ui.TreeWidget_Catalogue_ASR_VPR,
+            RootItemText = QCA.translate("Tree", "输出参数")
+        )
 
         '''
         Function_SetText(
@@ -2323,6 +2436,12 @@ class MainWindow(Window_MainWindow):
                 "重置": lambda: ParamsManager_ASR_VPR.ResetParam(self.ui.CheckBox_ASR_VPR_FilterResult)
             }
         )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_ASR_VPR_FilterResult,
+            TreeWidget = self.ui.TreeWidget_Catalogue_ASR_VPR,
+            RootItemText = QCA.translate("Tree", "输出参数"),
+            ChildItemText = QCA.translate("Tree", "按阈值过滤结果")
+        )
         '''
 
         Function_SetText(
@@ -2346,6 +2465,12 @@ class MainWindow(Window_MainWindow):
                 "重置": lambda: ParamsManager_ASR_VPR.ResetParam(self.ui.LineEdit_ASR_VPR_OutputDirName),
                 "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_ASR_VPR_OutputDirName.text())
             }
+        )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_ASR_VPR_OutputDirName,
+            TreeWidget = self.ui.TreeWidget_Catalogue_ASR_VPR,
+            RootItemText = QCA.translate("Tree", "输出参数"),
+            ChildItemText = QCA.translate("Tree", "输出目录名")
         )
 
         self.ui.ToolBox_ASR_VPR_OutputParams_AdvanceSettings.widget(0).setText(QCA.translate("ToolBox", "高级设置"))
@@ -2372,6 +2497,12 @@ class MainWindow(Window_MainWindow):
                 "重置": lambda: ParamsManager_ASR_VPR.ResetParam(self.ui.LineEdit_ASR_VPR_AudioSpeakersDataName),
                 "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_ASR_VPR_AudioSpeakersDataName.text())
             }
+        )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_ASR_VPR_AudioSpeakersDataName,
+            TreeWidget = self.ui.TreeWidget_Catalogue_ASR_VPR,
+            RootItemText = QCA.translate("Tree", "输出参数"),
+            ChildItemText = QCA.translate("Tree", "识别结果文本名")
         )
 
         LineEdit_ASR_VPR_OutputDir = QLineEdit()
@@ -2476,57 +2607,6 @@ class MainWindow(Window_MainWindow):
                     )
                 }
             )
-        )
-
-        # Left
-        Function_SetTreeWidget(
-            TreeWidget = self.ui.TreeWidget_Catalogue_ASR_VPR,
-            ItemTexts = {
-                self.ui.GroupBox_ASR_VPR_InputParams.title(): ("基础设置"),
-                self.ui.GroupBox_ASR_VPR_VPRParams.title(): ("基础设置","高级设置"),
-                self.ui.GroupBox_ASR_VPR_OutputParams.title(): ("基础设置","高级设置")
-            },
-            AddVertically = True
-        )
-        Function_ScrollToWidget(
-            Trigger = self.ui.TreeWidget_Catalogue_ASR_VPR.topLevelItem(0),
-            TargetWidget = self.ui.GroupBox_ASR_VPR_InputParams,
-            ScrollArea = self.ui.ScrollArea_Middle_ASR_VPR
-        )
-        Function_ScrollToWidget(
-            Trigger = self.ui.TreeWidget_Catalogue_ASR_VPR.topLevelItem(0).child(0),
-            TargetWidget = self.ui.Frame_ASR_VPR_InputParams_BasicSettings,
-            ScrollArea = self.ui.ScrollArea_Middle_ASR_VPR
-        )
-        Function_ScrollToWidget(
-            Trigger = self.ui.TreeWidget_Catalogue_ASR_VPR.topLevelItem(1),
-            TargetWidget = self.ui.GroupBox_ASR_VPR_VPRParams,
-            ScrollArea = self.ui.ScrollArea_Middle_ASR_VPR
-        )
-        Function_ScrollToWidget(
-            Trigger = self.ui.TreeWidget_Catalogue_ASR_VPR.topLevelItem(1).child(0),
-            TargetWidget = self.ui.Frame_ASR_VPR_VPRParams_BasicSettings,
-            ScrollArea = self.ui.ScrollArea_Middle_ASR_VPR
-        )
-        Function_ScrollToWidget(
-            Trigger = self.ui.TreeWidget_Catalogue_ASR_VPR.topLevelItem(1).child(1),
-            TargetWidget = self.ui.ToolBox_ASR_VPR_VPRParams_AdvanceSettings,
-            ScrollArea = self.ui.ScrollArea_Middle_ASR_VPR
-        )
-        Function_ScrollToWidget(
-            Trigger = self.ui.TreeWidget_Catalogue_ASR_VPR.topLevelItem(2),
-            TargetWidget = self.ui.GroupBox_ASR_VPR_OutputParams,
-            ScrollArea = self.ui.ScrollArea_Middle_ASR_VPR
-        )
-        Function_ScrollToWidget(
-            Trigger = self.ui.TreeWidget_Catalogue_ASR_VPR.topLevelItem(2).child(0),
-            TargetWidget = self.ui.Frame_ASR_VPR_OutputParams_BasicSettings,
-            ScrollArea = self.ui.ScrollArea_Middle_ASR_VPR
-        )
-        Function_ScrollToWidget(
-            Trigger = self.ui.TreeWidget_Catalogue_ASR_VPR.topLevelItem(2).child(1),
-            TargetWidget = self.ui.ToolBox_ASR_VPR_OutputParams_AdvanceSettings,
-            ScrollArea = self.ui.ScrollArea_Middle_ASR_VPR
         )
 
         # Right
@@ -2664,8 +2744,17 @@ class MainWindow(Window_MainWindow):
             )
         )
 
+        # Left
+        self.ui.TreeWidget_Catalogue_STT_Whisper.clear()
+        self.ui.TreeWidget_Catalogue_STT_Whisper.setHeaderHidden(True)
+
         # Middle
         self.ui.GroupBox_STT_Whisper_InputParams.setTitle(QCA.translate("GroupBox", "输入参数"))
+        Function_AddToTreeWidget(
+            Widget = self.ui.GroupBox_STT_Whisper_InputParams,
+            TreeWidget = self.ui.TreeWidget_Catalogue_STT_Whisper,
+            RootItemText = QCA.translate("Tree", "输入参数")
+        )
 
         Function_SetText(
             Widget = self.ui.Label_STT_Whisper_AudioDir,
@@ -2689,8 +2778,19 @@ class MainWindow(Window_MainWindow):
                 "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_STT_Whisper_AudioDir.text())
             }
         )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_STT_Whisper_AudioDir,
+            TreeWidget = self.ui.TreeWidget_Catalogue_STT_Whisper,
+            RootItemText = QCA.translate("Tree", "输入参数"),
+            ChildItemText = QCA.translate("Tree", "音频输入目录")
+        )
 
         self.ui.GroupBox_STT_Whisper_WhisperParams.setTitle(QCA.translate("GroupBox", "语音转录参数"))
+        Function_AddToTreeWidget(
+            Widget = self.ui.GroupBox_STT_Whisper_WhisperParams,
+            TreeWidget = self.ui.TreeWidget_Catalogue_STT_Whisper,
+            RootItemText = QCA.translate("Tree", "语音转录参数")
+        )
 
         Function_SetText(
             Widget = self.ui.Label_STT_Whisper_AddLanguageInfo,
@@ -2719,6 +2819,12 @@ class MainWindow(Window_MainWindow):
                 "重置": lambda: ParamsManager_STT_Whisper.ResetParam(self.ui.CheckBox_STT_Whisper_AddLanguageInfo)
             }
         )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_STT_Whisper_AddLanguageInfo,
+            TreeWidget = self.ui.TreeWidget_Catalogue_STT_Whisper,
+            RootItemText = QCA.translate("Tree", "语音转录参数"),
+            ChildItemText = QCA.translate("Tree", "语种标注")
+        )
 
         Function_SetText(
             Widget = self.ui.Label_STT_Whisper_ModelPath,
@@ -2745,6 +2851,12 @@ class MainWindow(Window_MainWindow):
                 "重置": lambda: ParamsManager_STT_Whisper.ResetParam(self.ui.LineEdit_STT_Whisper_ModelPath),
                 "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_STT_Whisper_ModelPath.text())
             }
+        )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_STT_Whisper_ModelPath,
+            TreeWidget = self.ui.TreeWidget_Catalogue_STT_Whisper,
+            RootItemText = QCA.translate("Tree", "语音转录参数"),
+            ChildItemText = QCA.translate("Tree", "模型加载路径")
         )
 
         self.ui.ToolBox_STT_Whisper_WhisperParams_AdvanceSettings.widget(0).setText(QCA.translate("ToolBox", "高级设置"))
@@ -2777,6 +2889,12 @@ class MainWindow(Window_MainWindow):
                 "重置": lambda: ParamsManager_STT_Whisper.ResetParam(self.ui.CheckBox_STT_Whisper_Verbose)
             }
         )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_STT_Whisper_Verbose,
+            TreeWidget = self.ui.TreeWidget_Catalogue_STT_Whisper,
+            RootItemText = QCA.translate("Tree", "语音转录参数"),
+            ChildItemText = QCA.translate("Tree", "显示转录内容")
+        )
 
         Function_SetText(
             Widget = self.ui.Label_STT_Whisper_fp16,
@@ -2804,6 +2922,12 @@ class MainWindow(Window_MainWindow):
             ActionEvents = {
                 "重置": lambda: ParamsManager_STT_Whisper.ResetParam(self.ui.CheckBox_STT_Whisper_fp16)
             }
+        )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_STT_Whisper_fp16,
+            TreeWidget = self.ui.TreeWidget_Catalogue_STT_Whisper,
+            RootItemText = QCA.translate("Tree", "语音转录参数"),
+            ChildItemText = QCA.translate("Tree", "半精度计算")
         )
 
         Function_SetText(
@@ -2833,8 +2957,19 @@ class MainWindow(Window_MainWindow):
                 "重置": lambda: ParamsManager_STT_Whisper.ResetParam(self.ui.CheckBox_STT_Whisper_ConditionOnPreviousText)
             }
         )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_STT_Whisper_ConditionOnPreviousText,
+            TreeWidget = self.ui.TreeWidget_Catalogue_STT_Whisper,
+            RootItemText = QCA.translate("Tree", "语音转录参数"),
+            ChildItemText = QCA.translate("Tree", "关联上下文")
+        )
 
         self.ui.GroupBox_STT_Whisper_OutputParams.setTitle(QCA.translate("GroupBox", "输出参数"))
+        Function_AddToTreeWidget(
+            Widget = self.ui.GroupBox_STT_Whisper_OutputParams,
+            TreeWidget = self.ui.TreeWidget_Catalogue_STT_Whisper,
+            RootItemText = QCA.translate("Tree", "输出参数")
+        )
 
         Function_SetText(
             Widget = self.ui.Label_STT_Whisper_OutputDirName,
@@ -2857,6 +2992,12 @@ class MainWindow(Window_MainWindow):
                 "重置": lambda: ParamsManager_STT_Whisper.ResetParam(self.ui.LineEdit_STT_Whisper_OutputDirName),
                 "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_STT_Whisper_OutputDirName.text())
             }
+        )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_STT_Whisper_OutputDirName,
+            TreeWidget = self.ui.TreeWidget_Catalogue_STT_Whisper,
+            RootItemText = QCA.translate("Tree", "输出参数"),
+            ChildItemText = QCA.translate("Tree", "输出目录名")
         )
 
         LineEdit_STT_Whisper_OutputDir = QLineEdit()
@@ -2923,52 +3064,6 @@ class MainWindow(Window_MainWindow):
                     )
                 }
             )
-        )
-
-        # Left
-        Function_SetTreeWidget(
-            TreeWidget = self.ui.TreeWidget_Catalogue_STT_Whisper,
-            ItemTexts = {
-                self.ui.GroupBox_STT_Whisper_InputParams.title(): ("基础设置"),
-                self.ui.GroupBox_STT_Whisper_WhisperParams.title(): ("基础设置","高级设置"),
-                self.ui.GroupBox_STT_Whisper_OutputParams.title(): ("基础设置")
-            },
-            AddVertically = True
-        )
-        Function_ScrollToWidget(
-            Trigger = self.ui.TreeWidget_Catalogue_STT_Whisper.topLevelItem(0),
-            TargetWidget = self.ui.GroupBox_STT_Whisper_InputParams,
-            ScrollArea = self.ui.ScrollArea_Middle_STT_Whisper
-        )
-        Function_ScrollToWidget(
-            Trigger = self.ui.TreeWidget_Catalogue_STT_Whisper.topLevelItem(0).child(0),
-            TargetWidget = self.ui.Frame_STT_Whisper_InputParams_BasicSettings,
-            ScrollArea = self.ui.ScrollArea_Middle_STT_Whisper
-        )
-        Function_ScrollToWidget(
-            Trigger = self.ui.TreeWidget_Catalogue_STT_Whisper.topLevelItem(1),
-            TargetWidget = self.ui.GroupBox_STT_Whisper_WhisperParams,
-            ScrollArea = self.ui.ScrollArea_Middle_STT_Whisper
-        )
-        Function_ScrollToWidget(
-            Trigger = self.ui.TreeWidget_Catalogue_STT_Whisper.topLevelItem(1).child(0),
-            TargetWidget = self.ui.Frame_STT_Whisper_WhisperParams_BasicSettings,
-            ScrollArea = self.ui.ScrollArea_Middle_STT_Whisper
-        )
-        Function_ScrollToWidget(
-            Trigger = self.ui.TreeWidget_Catalogue_STT_Whisper.topLevelItem(1).child(1),
-            TargetWidget = self.ui.ToolBox_STT_Whisper_WhisperParams_AdvanceSettings,
-            ScrollArea = self.ui.ScrollArea_Middle_STT_Whisper
-        )
-        Function_ScrollToWidget(
-            Trigger = self.ui.TreeWidget_Catalogue_STT_Whisper.topLevelItem(2),
-            TargetWidget = self.ui.GroupBox_STT_Whisper_OutputParams,
-            ScrollArea = self.ui.ScrollArea_Middle_STT_Whisper
-        )
-        Function_ScrollToWidget(
-            Trigger = self.ui.TreeWidget_Catalogue_STT_Whisper.topLevelItem(2).child(0),
-            TargetWidget = self.ui.Frame_STT_Whisper_OutputParams_BasicSettings,
-            ScrollArea = self.ui.ScrollArea_Middle_STT_Whisper
         )
 
         # Right
@@ -3087,8 +3182,17 @@ class MainWindow(Window_MainWindow):
             )
         )
 
+        # GPT-SoVITS - Left
+        self.ui.TreeWidget_Catalogue_DAT_GPTSoVITS.clear()
+        self.ui.TreeWidget_Catalogue_DAT_GPTSoVITS.setHeaderHidden(True)
+
         # GPT-SoVITS - Middle
         self.ui.GroupBox_DAT_GPTSoVITS_InputParams.setTitle(QCA.translate("GroupBox", "输入参数"))
+        Function_AddToTreeWidget(
+            Widget = self.ui.GroupBox_DAT_GPTSoVITS_InputParams,
+            TreeWidget = self.ui.TreeWidget_Catalogue_DAT_GPTSoVITS,
+            RootItemText = QCA.translate("Tree", "输入参数")
+        )
 
         DialogBox_GPTSoVITS_AudioSpeakersDataPath = MessageBox_Buttons(self)
         DialogBox_GPTSoVITS_AudioSpeakersDataPath.setText(QCA.translate("MsgBox", "请选择参数类型"))
@@ -3140,6 +3244,12 @@ class MainWindow(Window_MainWindow):
                 "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_DAT_GPTSoVITS_AudioSpeakersDataPath.text())
             }
         )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_DAT_GPTSoVITS_AudioSpeakersDataPath,
+            TreeWidget = self.ui.TreeWidget_Catalogue_DAT_GPTSoVITS,
+            RootItemText = QCA.translate("Tree", "输入参数"),
+            ChildItemText = QCA.translate("Tree", "音频文件目录")
+        )
 
         Function_SetText(
             Widget = self.ui.Label_DAT_GPTSoVITS_SRTDir,
@@ -3164,8 +3274,19 @@ class MainWindow(Window_MainWindow):
                 "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_DAT_GPTSoVITS_SRTDir.text())
             }
         )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_DAT_GPTSoVITS_SRTDir,
+            TreeWidget = self.ui.TreeWidget_Catalogue_DAT_GPTSoVITS,
+            RootItemText = QCA.translate("Tree", "输入参数"),
+            ChildItemText = QCA.translate("Tree", "字幕输入目录")
+        )
 
         self.ui.GroupBox_DAT_GPTSoVITS_GPTSoVITSParams.setTitle(QCA.translate("GroupBox", "数据集参数"))
+        Function_AddToTreeWidget(
+            Widget = self.ui.GroupBox_DAT_GPTSoVITS_GPTSoVITSParams,
+            TreeWidget = self.ui.TreeWidget_Catalogue_DAT_GPTSoVITS,
+            RootItemText = QCA.translate("Tree", "数据集参数")
+        )
 
         Function_SetText(
             Widget = self.ui.Label_DAT_GPTSoVITS_DataFormat,
@@ -3199,79 +3320,19 @@ class MainWindow(Window_MainWindow):
                 "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_DAT_GPTSoVITS_DataFormat.text())
             }
         )
-
-        '''
-        Function_SetText(
-            Widget = self.ui.Label_DAT_GPTSoVITS_AddAuxiliaryData,
-            Text = SetRichText(
-                Body = QCA.translate("Label", "添加辅助数据\n添加用以辅助训练的数据集，若当前语音数据的质量/数量较低则建议启用。")
-            )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_DAT_GPTSoVITS_DataFormat,
+            TreeWidget = self.ui.TreeWidget_Catalogue_DAT_GPTSoVITS,
+            RootItemText = QCA.translate("Tree", "数据集参数"),
+            ChildItemText = QCA.translate("Tree", "数据文本格式")
         )
-        ParamsManager_DAT_GPTSoVITS.SetParam(
-            Widget = self.ui.CheckBox_DAT_GPTSoVITS_AddAuxiliaryData,
-            Section = 'GPT-SoVITS Params',
-            Option = 'Add_AuxiliaryData',
-            DefaultValue = False
-        )
-        Function_ConfigureCheckBox(
-            CheckBox = self.ui.CheckBox_DAT_GPTSoVITS_AddAuxiliaryData,
-            CheckedText = "已启用",
-            CheckedEvents = [
-                lambda: Function_SetChildWidgetsVisibility(
-                    self.ui.Frame_DAT_GPTSoVITS_GPTSoVITSParams_BasicSettings,
-                    [
-                        self.ui.Frame_DAT_GPTSoVITS_AuxiliaryDataPath
-                    ],
-                    True
-                )
-            ],
-            UncheckedText = "未启用",
-            UncheckedEvents = [
-                lambda: Function_SetChildWidgetsVisibility(
-                    self.ui.Frame_DAT_GPTSoVITS_GPTSoVITSParams_BasicSettings,
-                    [
-                        self.ui.Frame_DAT_GPTSoVITS_AuxiliaryDataPath
-                    ],
-                    False
-                )
-            ],
-            TakeEffect = True
-        )
-        self.ui.Button_DAT_GPTSoVITS_AddAuxiliaryData_MoreActions.SetMenu(
-            ActionEvents = {
-                "重置": lambda: ParamsManager_DAT_GPTSoVITS.ResetParam(self.ui.CheckBox_DAT_GPTSoVITS_AddAuxiliaryData)
-            }
-        )
-
-        Function_SetText(
-            Widget = self.ui.Label_DAT_GPTSoVITS_AuxiliaryDataPath,
-            Text = SetRichText(
-                Body = QCA.translate("Label", "辅助数据文本路径\n辅助数据集的文本的路径。")
-            )
-        )
-        DAT_GPTSoVITS_AuxiliaryDataPath_Default = Path(CurrentDir).joinpath('AuxiliaryData', 'GPT-SoVITS', 'AuxiliaryData.txt').as_posix()
-        ParamsManager_DAT_GPTSoVITS.SetParam(
-            Widget = self.ui.LineEdit_DAT_GPTSoVITS_AuxiliaryDataPath,
-            Section = 'GPT-SoVITS Params',
-            Option = 'Add_AuxiliaryData',
-            DefaultValue = False,
-            SetPlaceholderText = True,
-            PlaceholderText = DAT_GPTSoVITS_AuxiliaryDataPath_Default
-        )
-        self.ui.LineEdit_DAT_GPTSoVITS_AuxiliaryDataPath.SetFileDialog(
-            Mode = "SelectFile",
-            FileType = "文本类型 (*.csv *.txt)",
-            Directory = NormPath(Path(CurrentDir).joinpath('AuxiliaryData', 'GPT-SoVITS'))
-        )
-        self.ui.Button_DAT_GPTSoVITS_AuxiliaryDataPath_MoreActions.SetMenu(
-            ActionEvents = {
-                "重置": lambda: ParamsManager_DAT_GPTSoVITS.ResetParam(self.ui.LineEdit_DAT_GPTSoVITS_AuxiliaryDataPath),
-                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_DAT_GPTSoVITS_AuxiliaryDataPath.text())
-            }
-        )
-        '''
 
         self.ui.GroupBox_DAT_GPTSoVITS_OutputParams.setTitle(QCA.translate("GroupBox", "输出参数"))
+        Function_AddToTreeWidget(
+            Widget = self.ui.GroupBox_DAT_GPTSoVITS_OutputParams,
+            TreeWidget = self.ui.TreeWidget_Catalogue_DAT_GPTSoVITS,
+            RootItemText = QCA.translate("Tree", "输出参数")
+        )
 
         Function_SetText(
             Widget = self.ui.Label_DAT_GPTSoVITS_OutputDirName,
@@ -3294,6 +3355,12 @@ class MainWindow(Window_MainWindow):
                 "重置": lambda: ParamsManager_DAT_GPTSoVITS.ResetParam(self.ui.LineEdit_DAT_GPTSoVITS_OutputDirName),
                 "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_DAT_GPTSoVITS_OutputDirName.text())
             }
+        )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_DAT_GPTSoVITS_OutputDirName,
+            TreeWidget = self.ui.TreeWidget_Catalogue_DAT_GPTSoVITS,
+            RootItemText = QCA.translate("Tree", "输出参数"),
+            ChildItemText = QCA.translate("Tree", "输出目录名")
         )
 
         self.ui.ToolBox_DAT_GPTSoVITS_OutputParams_AdvanceSettings.widget(0).setText(QCA.translate("ToolBox", "高级设置"))
@@ -3320,6 +3387,12 @@ class MainWindow(Window_MainWindow):
                 "重置": lambda: ParamsManager_DAT_GPTSoVITS.ResetParam(self.ui.LineEdit_DAT_GPTSoVITS_FileListName),
                 "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_DAT_GPTSoVITS_FileListName.text())
             }
+        )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_DAT_GPTSoVITS_FileListName,
+            TreeWidget = self.ui.TreeWidget_Catalogue_DAT_GPTSoVITS,
+            RootItemText = QCA.translate("Tree", "输出参数"),
+            ChildItemText = QCA.translate("Tree", "数据集文本名")
         )
 
         LineEdit_DAT_GPTSoVITS_OutputDir = QLineEdit()
@@ -3401,52 +3474,6 @@ class MainWindow(Window_MainWindow):
             )
         )
 
-        # GPT-SoVITS - Left
-        Function_SetTreeWidget(
-            TreeWidget = self.ui.TreeWidget_Catalogue_DAT_GPTSoVITS,
-            ItemTexts = {
-                self.ui.GroupBox_DAT_GPTSoVITS_InputParams.title(): ("基础设置"),
-                self.ui.GroupBox_DAT_GPTSoVITS_GPTSoVITSParams.title(): ("基础设置"),
-                self.ui.GroupBox_DAT_GPTSoVITS_OutputParams.title(): ("基础设置","高级设置")
-            },
-            AddVertically = True
-        )
-        Function_ScrollToWidget(
-            Trigger = self.ui.TreeWidget_Catalogue_DAT_GPTSoVITS.topLevelItem(0),
-            TargetWidget = self.ui.GroupBox_DAT_GPTSoVITS_InputParams,
-            ScrollArea = self.ui.ScrollArea_Middle_DAT_GPTSoVITS
-        )
-        Function_ScrollToWidget(
-            Trigger = self.ui.TreeWidget_Catalogue_DAT_GPTSoVITS.topLevelItem(0).child(0),
-            TargetWidget = self.ui.Frame_DAT_GPTSoVITS_InputParams_BasicSettings,
-            ScrollArea = self.ui.ScrollArea_Middle_DAT_GPTSoVITS
-        )
-        Function_ScrollToWidget(
-            Trigger = self.ui.TreeWidget_Catalogue_DAT_GPTSoVITS.topLevelItem(1),
-            TargetWidget = self.ui.GroupBox_DAT_GPTSoVITS_GPTSoVITSParams,
-            ScrollArea = self.ui.ScrollArea_Middle_DAT_GPTSoVITS
-        )
-        Function_ScrollToWidget(
-            Trigger = self.ui.TreeWidget_Catalogue_DAT_GPTSoVITS.topLevelItem(1).child(0),
-            TargetWidget = self.ui.Frame_DAT_GPTSoVITS_GPTSoVITSParams_BasicSettings,
-            ScrollArea = self.ui.ScrollArea_Middle_DAT_GPTSoVITS
-        )
-        Function_ScrollToWidget(
-            Trigger = self.ui.TreeWidget_Catalogue_DAT_GPTSoVITS.topLevelItem(2),
-            TargetWidget = self.ui.GroupBox_DAT_GPTSoVITS_OutputParams,
-            ScrollArea = self.ui.ScrollArea_Middle_DAT_GPTSoVITS
-        )
-        Function_ScrollToWidget(
-            Trigger = self.ui.TreeWidget_Catalogue_DAT_GPTSoVITS.topLevelItem(2).child(0),
-            TargetWidget = self.ui.Frame_DAT_GPTSoVITS_OutputParams_BasicSettings,
-            ScrollArea = self.ui.ScrollArea_Middle_DAT_GPTSoVITS
-        )
-        Function_ScrollToWidget(
-            Trigger = self.ui.TreeWidget_Catalogue_DAT_GPTSoVITS.topLevelItem(2).child(1),
-            TargetWidget = self.ui.ToolBox_DAT_GPTSoVITS_OutputParams_AdvanceSettings,
-            ScrollArea = self.ui.ScrollArea_Middle_DAT_GPTSoVITS
-        )
-
         # GPT-SoVITS - Right
         MonitorFile_Config_DatasetCreator_GPTSoVITS = MonitorFile(Path_Config_DAT_GPTSoVITS)
         MonitorFile_Config_DatasetCreator_GPTSoVITS.start()
@@ -3502,14 +3529,11 @@ class MainWindow(Window_MainWindow):
                 self.ui.LineEdit_DAT_GPTSoVITS_SRTDir,
                 self.ui.LineEdit_DAT_GPTSoVITS_AudioSpeakersDataPath,
                 self.ui.LineEdit_DAT_GPTSoVITS_DataFormat,
-                #self.ui.CheckBox_DAT_GPTSoVITS_AddAuxiliaryData,
-                #self.ui.LineEdit_DAT_GPTSoVITS_AuxiliaryDataPath,
                 self.ui.LineEdit_DAT_GPTSoVITS_OutputRoot,
                 self.ui.LineEdit_DAT_GPTSoVITS_OutputDirName,
                 self.ui.LineEdit_DAT_GPTSoVITS_FileListName
             ],
             EmptyAllowed = [
-                #self.ui.LineEdit_DAT_GPTSoVITS_AuxiliaryDataPath
             ],
             FinishEvents = [
                 lambda: self.ShowMask(True, "正在加载表单"),
@@ -3540,8 +3564,17 @@ class MainWindow(Window_MainWindow):
             )
         )
 
+        # VITS - Left
+        self.ui.TreeWidget_Catalogue_DAT_VITS.clear()
+        self.ui.TreeWidget_Catalogue_DAT_VITS.setHeaderHidden(True)
+
         # VITS - Middle
         self.ui.GroupBox_DAT_VITS_InputParams.setTitle(QCA.translate("GroupBox", "输入参数"))
+        Function_AddToTreeWidget(
+            Widget = self.ui.GroupBox_DAT_VITS_InputParams,
+            TreeWidget = self.ui.TreeWidget_Catalogue_DAT_VITS,
+            RootItemText = QCA.translate("Tree", "输入参数")
+        )
 
         DialogBox_VITS_AudioSpeakersDataPath = MessageBox_Buttons(self)
         DialogBox_VITS_AudioSpeakersDataPath.setText(QCA.translate("MsgBox", "请选择参数类型"))
@@ -3593,6 +3626,12 @@ class MainWindow(Window_MainWindow):
                 "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_DAT_VITS_AudioSpeakersDataPath.text())
             }
         )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_DAT_VITS_AudioSpeakersDataPath,
+            TreeWidget = self.ui.TreeWidget_Catalogue_DAT_VITS,
+            RootItemText = QCA.translate("Tree", "输入参数"),
+            ChildItemText = QCA.translate("Tree", "音频文件目录")
+        )
 
         Function_SetText(
             Widget = self.ui.Label_DAT_VITS_SRTDir,
@@ -3617,8 +3656,19 @@ class MainWindow(Window_MainWindow):
                 "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_DAT_VITS_SRTDir.text())
             }
         )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_DAT_VITS_SRTDir,
+            TreeWidget = self.ui.TreeWidget_Catalogue_DAT_VITS,
+            RootItemText = QCA.translate("Tree", "输入参数"),
+            ChildItemText = QCA.translate("Tree", "字幕输入目录")
+        )
 
         self.ui.GroupBox_DAT_VITS_VITSParams.setTitle(QCA.translate("GroupBox", "数据集参数"))
+        Function_AddToTreeWidget(
+            Widget = self.ui.GroupBox_DAT_VITS_VITSParams,
+            TreeWidget = self.ui.TreeWidget_Catalogue_DAT_VITS,
+            RootItemText = QCA.translate("Tree", "数据集参数")
+        )
 
         Function_SetText(
             Widget = self.ui.Label_DAT_VITS_DataFormat,
@@ -3651,6 +3701,12 @@ class MainWindow(Window_MainWindow):
                 "重置": lambda: ParamsManager_DAT_VITS.ResetParam(self.ui.LineEdit_DAT_VITS_DataFormat),
                 "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_DAT_VITS_DataFormat.text())
             }
+        )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_DAT_VITS_DataFormat,
+            TreeWidget = self.ui.TreeWidget_Catalogue_DAT_VITS,
+            RootItemText = QCA.translate("Tree", "数据集参数"),
+            ChildItemText = QCA.translate("Tree", "数据文本格式")
         )
 
         Function_SetText(
@@ -3694,6 +3750,12 @@ class MainWindow(Window_MainWindow):
                 "重置": lambda: ParamsManager_DAT_VITS.ResetParam(self.ui.CheckBox_DAT_VITS_AddAuxiliaryData)
             }
         )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_DAT_VITS_AddAuxiliaryData,
+            TreeWidget = self.ui.TreeWidget_Catalogue_DAT_VITS,
+            RootItemText = QCA.translate("Tree", "数据集参数"),
+            ChildItemText = QCA.translate("Tree", "添加辅助数据")
+        )
 
         Function_SetText(
             Widget = self.ui.Label_DAT_VITS_AuxiliaryDataPath,
@@ -3721,6 +3783,12 @@ class MainWindow(Window_MainWindow):
                 "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_DAT_VITS_AuxiliaryDataPath.text())
             }
         )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_DAT_VITS_AuxiliaryDataPath,
+            TreeWidget = self.ui.TreeWidget_Catalogue_DAT_VITS,
+            RootItemText = QCA.translate("Tree", "数据集参数"),
+            ChildItemText = QCA.translate("Tree", "辅助数据文本路径")
+        )
 
         self.ui.ToolBox_DAT_VITS_VITSParams_AdvanceSettings.widget(0).setText(QCA.translate("ToolBox", "高级设置"))
         self.ui.ToolBox_DAT_VITS_VITSParams_AdvanceSettings.widget(0).collapse()
@@ -3744,6 +3812,12 @@ class MainWindow(Window_MainWindow):
                 "重置": lambda: ParamsManager_DAT_VITS.ResetParam(self.ui.DoubleSpinBox_DAT_VITS_TrainRatio)
             }
         )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_DAT_VITS_TrainRatio,
+            TreeWidget = self.ui.TreeWidget_Catalogue_DAT_VITS,
+            RootItemText = QCA.translate("Tree", "数据集参数"),
+            ChildItemText = QCA.translate("Tree", "训练集占比")
+        )
 
         Function_SetText(
             Widget = self.ui.Label_DAT_VITS_SampleRate,
@@ -3763,6 +3837,12 @@ class MainWindow(Window_MainWindow):
                 "重置": lambda: ParamsManager_DAT_VITS.ResetParam(self.ui.ComboBox_DAT_VITS_SampleRate)
             }
         )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_DAT_VITS_SampleRate,
+            TreeWidget = self.ui.TreeWidget_Catalogue_DAT_VITS,
+            RootItemText = QCA.translate("Tree", "数据集参数"),
+            ChildItemText = QCA.translate("Tree", "采样率")
+        )
 
         Function_SetText(
             Widget = self.ui.Label_DAT_VITS_SampleWidth,
@@ -3781,6 +3861,12 @@ class MainWindow(Window_MainWindow):
             ActionEvents = {
                 "重置": lambda: ParamsManager_DAT_VITS.ResetParam(self.ui.ComboBox_DAT_VITS_SampleWidth)
             }
+        )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_DAT_VITS_SampleWidth,
+            TreeWidget = self.ui.TreeWidget_Catalogue_DAT_VITS,
+            RootItemText = QCA.translate("Tree", "数据集参数"),
+            ChildItemText = QCA.translate("Tree", "采样位数")
         )
 
         Function_SetText(
@@ -3810,8 +3896,19 @@ class MainWindow(Window_MainWindow):
                 "重置": lambda: ParamsManager_DAT_VITS.ResetParam(self.ui.CheckBox_DAT_VITS_ToMono)
             }
         )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_DAT_VITS_ToMono,
+            TreeWidget = self.ui.TreeWidget_Catalogue_DAT_VITS,
+            RootItemText = QCA.translate("Tree", "数据集参数"),
+            ChildItemText = QCA.translate("Tree", "合并声道")
+        )
 
         self.ui.GroupBox_DAT_VITS_OutputParams.setTitle(QCA.translate("GroupBox", "输出参数"))
+        Function_AddToTreeWidget(
+            Widget = self.ui.GroupBox_DAT_VITS_OutputParams,
+            TreeWidget = self.ui.TreeWidget_Catalogue_DAT_VITS,
+            RootItemText = QCA.translate("Tree", "输出参数")
+        )
 
         Function_SetText(
             Widget = self.ui.Label_DAT_VITS_OutputDirName,
@@ -3834,6 +3931,12 @@ class MainWindow(Window_MainWindow):
                 "重置": lambda: ParamsManager_DAT_VITS.ResetParam(self.ui.LineEdit_DAT_VITS_OutputDirName),
                 "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_DAT_VITS_OutputDirName.text())
             }
+        )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_DAT_VITS_OutputDirName,
+            TreeWidget = self.ui.TreeWidget_Catalogue_DAT_VITS,
+            RootItemText = QCA.translate("Tree", "输出参数"),
+            ChildItemText = QCA.translate("Tree", "输出目录名")
         )
 
         self.ui.ToolBox_DAT_VITS_OutputParams_AdvanceSettings.widget(0).setText(QCA.translate("ToolBox", "高级设置"))
@@ -3861,6 +3964,12 @@ class MainWindow(Window_MainWindow):
                 "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_DAT_VITS_FileListNameTraining.text())
             }
         )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_DAT_VITS_FileListNameTraining,
+            TreeWidget = self.ui.TreeWidget_Catalogue_DAT_VITS,
+            RootItemText = QCA.translate("Tree", "输出参数"),
+            ChildItemText = QCA.translate("Tree", "训练集文本名")
+        )
 
         Function_SetText(
             Widget = self.ui.Label_DAT_VITS_FileListNameValidation,
@@ -3883,6 +3992,12 @@ class MainWindow(Window_MainWindow):
                 "重置": lambda: ParamsManager_DAT_VITS.ResetParam(self.ui.LineEdit_DAT_VITS_FileListNameValidation),
                 "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_DAT_VITS_FileListNameValidation.text())
             }
+        )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_DAT_VITS_FileListNameValidation,
+            TreeWidget = self.ui.TreeWidget_Catalogue_DAT_VITS,
+            RootItemText = QCA.translate("Tree", "输出参数"),
+            ChildItemText = QCA.translate("Tree", "验证集文本名")
         )
 
         LineEdit_DAT_VITS_OutputDir = QLineEdit()
@@ -3982,57 +4097,6 @@ class MainWindow(Window_MainWindow):
                     )
                 }
             )
-        )
-
-        # VITS - Left
-        Function_SetTreeWidget(
-            TreeWidget = self.ui.TreeWidget_Catalogue_DAT_VITS,
-            ItemTexts = {
-                self.ui.GroupBox_DAT_VITS_InputParams.title(): ("基础设置"),
-                self.ui.GroupBox_DAT_VITS_VITSParams.title(): ("基础设置","高级设置"),
-                self.ui.GroupBox_DAT_VITS_OutputParams.title(): ("基础设置","高级设置")
-            },
-            AddVertically = True
-        )
-        Function_ScrollToWidget(
-            Trigger = self.ui.TreeWidget_Catalogue_DAT_VITS.topLevelItem(0),
-            TargetWidget = self.ui.GroupBox_DAT_VITS_InputParams,
-            ScrollArea = self.ui.ScrollArea_Middle_DAT_VITS
-        )
-        Function_ScrollToWidget(
-            Trigger = self.ui.TreeWidget_Catalogue_DAT_VITS.topLevelItem(0).child(0),
-            TargetWidget = self.ui.Frame_DAT_VITS_InputParams_BasicSettings,
-            ScrollArea = self.ui.ScrollArea_Middle_DAT_VITS
-        )
-        Function_ScrollToWidget(
-            Trigger = self.ui.TreeWidget_Catalogue_DAT_VITS.topLevelItem(1),
-            TargetWidget = self.ui.GroupBox_DAT_VITS_VITSParams,
-            ScrollArea = self.ui.ScrollArea_Middle_DAT_VITS
-        )
-        Function_ScrollToWidget(
-            Trigger = self.ui.TreeWidget_Catalogue_DAT_VITS.topLevelItem(1).child(0),
-            TargetWidget = self.ui.Frame_DAT_VITS_VITSParams_BasicSettings,
-            ScrollArea = self.ui.ScrollArea_Middle_DAT_VITS
-        )
-        Function_ScrollToWidget(
-            Trigger = self.ui.TreeWidget_Catalogue_DAT_VITS.topLevelItem(1).child(1),
-            TargetWidget = self.ui.ToolBox_DAT_VITS_VITSParams_AdvanceSettings,
-            ScrollArea = self.ui.ScrollArea_Middle_DAT_VITS
-        )
-        Function_ScrollToWidget(
-            Trigger = self.ui.TreeWidget_Catalogue_DAT_VITS.topLevelItem(2),
-            TargetWidget = self.ui.GroupBox_DAT_VITS_OutputParams,
-            ScrollArea = self.ui.ScrollArea_Middle_DAT_VITS
-        )
-        Function_ScrollToWidget(
-            Trigger = self.ui.TreeWidget_Catalogue_DAT_VITS.topLevelItem(2).child(0),
-            TargetWidget = self.ui.Frame_DAT_VITS_OutputParams_BasicSettings,
-            ScrollArea = self.ui.ScrollArea_Middle_DAT_VITS
-        )
-        Function_ScrollToWidget(
-            Trigger = self.ui.TreeWidget_Catalogue_DAT_VITS.topLevelItem(2).child(1),
-            TargetWidget = self.ui.ToolBox_DAT_VITS_OutputParams_AdvanceSettings,
-            ScrollArea = self.ui.ScrollArea_Middle_DAT_VITS
         )
 
         # VITS - Right
@@ -4164,8 +4228,17 @@ class MainWindow(Window_MainWindow):
             )
         )
 
+        # GPT-SoVITS - Left
+        self.ui.TreeWidget_Catalogue_Train_GPTSoVITS.clear()
+        self.ui.TreeWidget_Catalogue_Train_GPTSoVITS.setHeaderHidden(True)
+
         # GPT-SoVITS - Midlle
         self.ui.GroupBox_Train_GPTSoVITS_InputParams.setTitle(QCA.translate("GroupBox", "输入参数"))
+        Function_AddToTreeWidget(
+            Widget = self.ui.GroupBox_Train_GPTSoVITS_InputParams,
+            TreeWidget = self.ui.TreeWidget_Catalogue_Train_GPTSoVITS,
+            RootItemText = QCA.translate("Tree", "输入参数")
+        )
 
         Function_SetText(
             Widget = self.ui.Label_Train_GPTSoVITS_FileListPath,
@@ -4191,8 +4264,19 @@ class MainWindow(Window_MainWindow):
                 "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_Train_GPTSoVITS_FileListPath.text())
             }
         )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_Train_GPTSoVITS_FileListPath,
+            TreeWidget = self.ui.TreeWidget_Catalogue_Train_GPTSoVITS,
+            RootItemText = QCA.translate("Tree", "输入参数"),
+            ChildItemText = QCA.translate("Tree", "训练集文本路径")
+        )
 
         self.ui.GroupBox_Train_GPTSoVITS_GPTSoVITSParams.setTitle(QCA.translate("GroupBox", "训练参数"))
+        Function_AddToTreeWidget(
+            Widget = self.ui.GroupBox_Train_GPTSoVITS_GPTSoVITSParams,
+            TreeWidget = self.ui.TreeWidget_Catalogue_Train_GPTSoVITS,
+            RootItemText = QCA.translate("Tree", "训练参数")
+        )
 
         '''
         Function_SetText(
@@ -4214,6 +4298,12 @@ class MainWindow(Window_MainWindow):
                 "重置": lambda: ParamsManager_Train_GPTSoVITS.ResetParam(self.ui.SpinBox_Train_GPTSoVITS_S1Epochs)
             }
         )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_Train_GPTSoVITS_Epochs,
+            TreeWidget = self.ui.TreeWidget_Catalogue_Train_GPTSoVITS,
+            RootItemText = QCA.translate("Tree", "训练参数"),
+            ChildItemText = QCA.translate("Tree", "s1迭代轮数")
+        )
 
         Function_SetText(
             Widget = self.ui.Label_Train_GPTSoVITS_S2Epochs,
@@ -4233,6 +4323,12 @@ class MainWindow(Window_MainWindow):
             ActionEvents = {
                 "重置": lambda: ParamsManager_Train_GPTSoVITS.ResetParam(self.ui.SpinBox_Train_GPTSoVITS_S2Epochs)
             }
+        )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_Train_GPTSoVITS_S2Epochs,
+            TreeWidget = self.ui.TreeWidget_Catalogue_Train_GPTSoVITS,
+            RootItemText = QCA.translate("Tree", "训练参数"),
+            ChildItemText = QCA.translate("Tree", "s2迭代轮数")
         )
         '''
 
@@ -4262,6 +4358,12 @@ class MainWindow(Window_MainWindow):
                 "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_Train_GPTSoVITS_ModelPathPretrainedS1.text())
             }
         )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_Train_GPTSoVITS_ModelPathPretrainedS1,
+            TreeWidget = self.ui.TreeWidget_Catalogue_Train_GPTSoVITS,
+            RootItemText = QCA.translate("Tree", "训练参数"),
+            ChildItemText = QCA.translate("Tree", "预训练s1模型路径")
+        )
 
         Function_SetText(
             Widget = self.ui.Label_Train_GPTSoVITS_ModelPathPretrainedS2G,
@@ -4288,6 +4390,12 @@ class MainWindow(Window_MainWindow):
                 "重置": lambda: ParamsManager_Train_GPTSoVITS.ResetParam(self.ui.LineEdit_Train_GPTSoVITS_ModelPathPretrainedS2G),
                 "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_Train_GPTSoVITS_ModelPathPretrainedS2G.text())
             }
+        )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_Train_GPTSoVITS_ModelPathPretrainedS2G,
+            TreeWidget = self.ui.TreeWidget_Catalogue_Train_GPTSoVITS,
+            RootItemText = QCA.translate("Tree", "训练参数"),
+            ChildItemText = QCA.translate("Tree", "预训练s2G模型路径")
         )
 
         Function_SetText(
@@ -4316,6 +4424,12 @@ class MainWindow(Window_MainWindow):
                 "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_Train_GPTSoVITS_ModelPathPretrainedS2D.text())
             }
         )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_Train_GPTSoVITS_ModelPathPretrainedS2D,
+            TreeWidget = self.ui.TreeWidget_Catalogue_Train_GPTSoVITS,
+            RootItemText = QCA.translate("Tree", "训练参数"),
+            ChildItemText = QCA.translate("Tree", "预训练s2D模型路径")
+        )
 
         Function_SetText(
             Widget = self.ui.Label_Train_GPTSoVITS_ModelDirPretrainedBert,
@@ -4342,6 +4456,12 @@ class MainWindow(Window_MainWindow):
                 "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_Train_GPTSoVITS_ModelDirPretrainedBert.text())
             }
         )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_Train_GPTSoVITS_ModelDirPretrainedBert,
+            TreeWidget = self.ui.TreeWidget_Catalogue_Train_GPTSoVITS,
+            RootItemText = QCA.translate("Tree", "训练参数"),
+            ChildItemText = QCA.translate("Tree", "预训练bert模型路径")
+        )
 
         Function_SetText(
             Widget = self.ui.Label_Train_GPTSoVITS_ModelDirPretrainedSSL,
@@ -4367,6 +4487,12 @@ class MainWindow(Window_MainWindow):
                 "重置": lambda: ParamsManager_Train_GPTSoVITS.ResetParam(self.ui.LineEdit_Train_GPTSoVITS_ModelDirPretrainedSSL),
                 "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_Train_GPTSoVITS_ModelDirPretrainedSSL.text())
             }
+        )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_Train_GPTSoVITS_ModelDirPretrainedSSL,
+            TreeWidget = self.ui.TreeWidget_Catalogue_Train_GPTSoVITS,
+            RootItemText = QCA.translate("Tree", "训练参数"),
+            ChildItemText = QCA.translate("Tree", "预训练ssl模型路径")
         )
 
         self.ui.ToolBox_Train_GPTSoVITS_GPTSoVITSParams_AdvanceSettings.widget(0).setText(QCA.translate("ToolBox", "高级设置"))
@@ -4399,8 +4525,19 @@ class MainWindow(Window_MainWindow):
                 "重置": lambda: ParamsManager_Train_GPTSoVITS.ResetParam(self.ui.CheckBox_Train_GPTSoVITS_FP16Run)
             }
         )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_Train_GPTSoVITS_FP16Run,
+            TreeWidget = self.ui.TreeWidget_Catalogue_Train_GPTSoVITS,
+            RootItemText = QCA.translate("Tree", "训练参数"),
+            ChildItemText = QCA.translate("Tree", "半精度训练")
+        )
 
         self.ui.GroupBox_Train_GPTSoVITS_OutputParams.setTitle(QCA.translate("GroupBox", "输出参数"))
+        Function_AddToTreeWidget(
+            Widget = self.ui.GroupBox_Train_GPTSoVITS_OutputParams,
+            TreeWidget = self.ui.TreeWidget_Catalogue_Train_GPTSoVITS,
+            RootItemText = QCA.translate("Tree", "输出参数")
+        )
 
         Function_SetText(
             Widget = self.ui.Label_Train_GPTSoVITS_OutputDirName,
@@ -4423,6 +4560,12 @@ class MainWindow(Window_MainWindow):
                 "重置": lambda: ParamsManager_Train_GPTSoVITS.ResetParam(self.ui.LineEdit_Train_GPTSoVITS_OutputDirName),
                 "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_Train_GPTSoVITS_OutputDirName.text())
             }
+        )
+        Function_AddToTreeWidget(
+            Widget = self.ui.LineEdit_Train_GPTSoVITS_OutputDirName,
+            TreeWidget = self.ui.TreeWidget_Catalogue_Train_GPTSoVITS,
+            RootItemText = QCA.translate("Tree", "输出参数"),
+            ChildItemText = QCA.translate("Tree", "输出目录名")
         )
 
         self.ui.ToolBox_Train_GPTSoVITS_OutputParams_AdvanceSettings.widget(0).setText(QCA.translate("ToolBox", "高级设置"))
@@ -4463,6 +4606,12 @@ class MainWindow(Window_MainWindow):
                 "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_Train_GPTSoVITS_LogDir.text())
             }
         )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_Train_GPTSoVITS_LogDir,
+            TreeWidget = self.ui.TreeWidget_Catalogue_Train_GPTSoVITS,
+            RootItemText = QCA.translate("Tree", "输出参数"),
+            ChildItemText = QCA.translate("Tree", "日志输出目录")
+        )
 
         LineEdit_Train_GPTSoVITS_OutputDir = QLineEdit()
         def SetText_LineEdit_Train_GPTSoVITS_OutputDir():
@@ -4477,57 +4626,6 @@ class MainWindow(Window_MainWindow):
         self.ui.LineEdit_Train_GPTSoVITS_OutputDirName.interacted.connect(SetText_LineEdit_Train_GPTSoVITS_OutputDir)
         self.ui.LineEdit_Train_GPTSoVITS_OutputRoot.interacted.connect(SetText_LineEdit_Train_GPTSoVITS_OutputDir)
         #SetText_LineEdit_Train_GPTSoVITS_OutputDir()
-
-        # GPTSo-VITS - Left
-        Function_SetTreeWidget(
-            TreeWidget = self.ui.TreeWidget_Catalogue_Train_GPTSoVITS,
-            ItemTexts = {
-                self.ui.GroupBox_Train_GPTSoVITS_InputParams.title(): ("基础设置"),
-                self.ui.GroupBox_Train_GPTSoVITS_GPTSoVITSParams.title(): ("基础设置","高级设置"),
-                self.ui.GroupBox_Train_GPTSoVITS_OutputParams.title(): ("基础设置","高级设置")
-            },
-            AddVertically = True
-        )
-        Function_ScrollToWidget(
-            Trigger = self.ui.TreeWidget_Catalogue_Train_GPTSoVITS.topLevelItem(0),
-            TargetWidget = self.ui.GroupBox_Train_GPTSoVITS_InputParams,
-            ScrollArea = self.ui.ScrollArea_Middle_Train_GPTSoVITS
-        )
-        Function_ScrollToWidget(
-            Trigger = self.ui.TreeWidget_Catalogue_Train_GPTSoVITS.topLevelItem(0).child(0),
-            TargetWidget = self.ui.Frame_Train_GPTSoVITS_InputParams_BasicSettings,
-            ScrollArea = self.ui.ScrollArea_Middle_Train_GPTSoVITS
-        )
-        Function_ScrollToWidget(
-            Trigger = self.ui.TreeWidget_Catalogue_Train_GPTSoVITS.topLevelItem(1),
-            TargetWidget = self.ui.GroupBox_Train_GPTSoVITS_GPTSoVITSParams,
-            ScrollArea = self.ui.ScrollArea_Middle_Train_GPTSoVITS
-        )
-        Function_ScrollToWidget(
-            Trigger = self.ui.TreeWidget_Catalogue_Train_GPTSoVITS.topLevelItem(1).child(0),
-            TargetWidget = self.ui.Frame_Train_GPTSoVITS_GPTSoVITSParams_BasicSettings,
-            ScrollArea = self.ui.ScrollArea_Middle_Train_GPTSoVITS
-        )
-        Function_ScrollToWidget(
-            Trigger = self.ui.TreeWidget_Catalogue_Train_GPTSoVITS.topLevelItem(1).child(1),
-            TargetWidget = self.ui.ToolBox_Train_GPTSoVITS_GPTSoVITSParams_AdvanceSettings,
-            ScrollArea = self.ui.ScrollArea_Middle_Train_GPTSoVITS
-        )
-        Function_ScrollToWidget(
-            Trigger = self.ui.TreeWidget_Catalogue_Train_GPTSoVITS.topLevelItem(2),
-            TargetWidget = self.ui.GroupBox_Train_GPTSoVITS_OutputParams,
-            ScrollArea = self.ui.ScrollArea_Middle_Train_GPTSoVITS
-        )
-        Function_ScrollToWidget(
-            Trigger = self.ui.TreeWidget_Catalogue_Train_GPTSoVITS.topLevelItem(2).child(0),
-            TargetWidget = self.ui.Frame_Train_GPTSoVITS_OutputParams_BasicSettings,
-            ScrollArea = self.ui.ScrollArea_Middle_Train_GPTSoVITS
-        )
-        Function_ScrollToWidget(
-            Trigger = self.ui.TreeWidget_Catalogue_Train_GPTSoVITS.topLevelItem(2).child(1),
-            TargetWidget = self.ui.ToolBox_Train_GPTSoVITS_OutputParams_AdvanceSettings,
-            ScrollArea = self.ui.ScrollArea_Middle_Train_GPTSoVITS
-        )
 
         # GPT-SoVITS - Right
         MonitorFile_Config_VoiceTrainer_GPTSoVITS = MonitorFile(Path_Config_Train_GPTSoVITS)
@@ -4639,8 +4737,17 @@ class MainWindow(Window_MainWindow):
             )
         )
 
+        # VITS - Left
+        self.ui.TreeWidget_Catalogue_Train_VITS.clear()
+        self.ui.TreeWidget_Catalogue_Train_VITS.setHeaderHidden(True)
+
         # VITS - Midlle
         self.ui.GroupBox_Train_VITS_InputParams.setTitle(QCA.translate("GroupBox", "输入参数"))
+        Function_AddToTreeWidget(
+            Widget = self.ui.GroupBox_Train_VITS_InputParams,
+            TreeWidget = self.ui.TreeWidget_Catalogue_Train_VITS,
+            RootItemText = QCA.translate("Tree", "输入参数")
+        )
 
         Function_SetText(
             Widget = self.ui.Label_Train_VITS_FileListPathTraining,
@@ -4665,6 +4772,12 @@ class MainWindow(Window_MainWindow):
                 "重置": lambda: ParamsManager_Train_VITS.ResetParam(self.ui.LineEdit_Train_VITS_FileListPathTraining),
                 "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_Train_VITS_FileListPathTraining.text())
             }
+        )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_Train_VITS_FileListPathTraining,
+            TreeWidget = self.ui.TreeWidget_Catalogue_Train_VITS,
+            RootItemText = QCA.translate("Tree", "输入参数"),
+            ChildItemText = QCA.translate("Tree", "训练集文本路径")
         )
 
         Function_SetText(
@@ -4691,8 +4804,19 @@ class MainWindow(Window_MainWindow):
                 "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_Train_VITS_FileListPathValidation.text())
             }
         )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_Train_VITS_FileListPathValidation,
+            TreeWidget = self.ui.TreeWidget_Catalogue_Train_VITS,
+            RootItemText = QCA.translate("Tree", "输入参数"),
+            ChildItemText = QCA.translate("Tree", "验证集文本路径")
+        )
 
         self.ui.GroupBox_Train_VITS_VITSParams.setTitle(QCA.translate("GroupBox", "训练参数"))
+        Function_AddToTreeWidget(
+            Widget = self.ui.GroupBox_Train_VITS_VITSParams,
+            TreeWidget = self.ui.TreeWidget_Catalogue_Train_VITS,
+            RootItemText = QCA.translate("Tree", "训练参数")
+        )
 
         Function_SetText(
             Widget = self.ui.Label_Train_VITS_Epochs,
@@ -4712,6 +4836,12 @@ class MainWindow(Window_MainWindow):
             ActionEvents = {
                 "重置": lambda: ParamsManager_Train_VITS.ResetParam(self.ui.SpinBox_Train_VITS_Epochs)
             }
+        )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_Train_VITS_Epochs,
+            TreeWidget = self.ui.TreeWidget_Catalogue_Train_VITS,
+            RootItemText = QCA.translate("Tree", "训练参数"),
+            ChildItemText = QCA.translate("Tree", "迭代轮数")
         )
 
         Function_SetText(
@@ -4733,6 +4863,12 @@ class MainWindow(Window_MainWindow):
             ActionEvents = {
                 "重置": lambda: ParamsManager_Train_VITS.ResetParam(self.ui.SpinBox_Train_VITS_BatchSize)
             }
+        )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_Train_VITS_BatchSize,
+            TreeWidget = self.ui.TreeWidget_Catalogue_Train_VITS,
+            RootItemText = QCA.translate("Tree", "训练参数"),
+            ChildItemText = QCA.translate("Tree", "批处理量")
         )
 
         Function_SetText(
@@ -4782,6 +4918,12 @@ class MainWindow(Window_MainWindow):
                 "重置": lambda: ParamsManager_Train_VITS.ResetParam(self.ui.CheckBox_Train_VITS_UsePretrainedModels)
             }
         )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_Train_VITS_UsePretrainedModels,
+            TreeWidget = self.ui.TreeWidget_Catalogue_Train_VITS,
+            RootItemText = QCA.translate("Tree", "训练参数"),
+            ChildItemText = QCA.translate("Tree", "使用预训练模型")
+        )
 
         Function_SetText(
             Widget = self.ui.Label_Train_VITS_ModelPathPretrainedG,
@@ -4809,6 +4951,12 @@ class MainWindow(Window_MainWindow):
                 "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_Train_VITS_ModelPathPretrainedG.text())
             }
         )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_Train_VITS_ModelPathPretrainedG,
+            TreeWidget = self.ui.TreeWidget_Catalogue_Train_VITS,
+            RootItemText = QCA.translate("Tree", "训练参数"),
+            ChildItemText = QCA.translate("Tree", "预训练G模型路径")
+        )
 
         Function_SetText(
             Widget = self.ui.Label_Train_VITS_ModelPathPretrainedD,
@@ -4835,6 +4983,12 @@ class MainWindow(Window_MainWindow):
                 "重置": lambda: ParamsManager_Train_VITS.ResetParam(self.ui.LineEdit_Train_VITS_ModelPathPretrainedD),
                 "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_Train_VITS_ModelPathPretrainedD.text())
             }
+        )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_Train_VITS_ModelPathPretrainedD,
+            TreeWidget = self.ui.TreeWidget_Catalogue_Train_VITS,
+            RootItemText = QCA.translate("Tree", "训练参数"),
+            ChildItemText = QCA.translate("Tree", "预训练D模型路径")
         )
 
         DialogBox_KeepOriginalSpeakers = MessageBox_LineEdit(self)
@@ -4919,6 +5073,12 @@ class MainWindow(Window_MainWindow):
                 "重置": lambda: ParamsManager_Train_VITS.ResetParam(self.ui.CheckBox_Train_VITS_KeepOriginalSpeakers)
             }
         )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_Train_VITS_KeepOriginalSpeakers,
+            TreeWidget = self.ui.TreeWidget_Catalogue_Train_VITS,
+            RootItemText = QCA.translate("Tree", "训练参数"),
+            ChildItemText = QCA.translate("Tree", "保留原说话人")
+        )
 
         Function_SetText(
             Widget = self.ui.Label_Train_VITS_ConfigPathLoad,
@@ -4950,6 +5110,12 @@ class MainWindow(Window_MainWindow):
                 "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_Train_VITS_ConfigPathLoad.text())
             }
         )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_Train_VITS_ConfigPathLoad,
+            TreeWidget = self.ui.TreeWidget_Catalogue_Train_VITS,
+            RootItemText = QCA.translate("Tree", "训练参数"),
+            ChildItemText = QCA.translate("Tree", "配置加载路径")
+        )
 
         self.ui.ToolBox_Train_VITS_VITSParams_AdvanceSettings.widget(0).setText(QCA.translate("ToolBox", "高级设置"))
         self.ui.ToolBox_Train_VITS_VITSParams_AdvanceSettings.widget(0).collapse()
@@ -4972,6 +5138,12 @@ class MainWindow(Window_MainWindow):
             ActionEvents = {
                 "重置": lambda: ParamsManager_Train_VITS.ResetParam(self.ui.SpinBox_Train_VITS_NumWorkers)
             }
+        )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_Train_VITS_NumWorkers,
+            TreeWidget = self.ui.TreeWidget_Catalogue_Train_VITS,
+            RootItemText = QCA.translate("Tree", "训练参数"),
+            ChildItemText = QCA.translate("Tree", "进程数量")
         )
 
         Function_SetText(
@@ -5001,8 +5173,19 @@ class MainWindow(Window_MainWindow):
                 "重置": lambda: ParamsManager_Train_VITS.ResetParam(self.ui.CheckBox_Train_VITS_FP16Run)
             }
         )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_Train_VITS_FP16Run,
+            TreeWidget = self.ui.TreeWidget_Catalogue_Train_VITS,
+            RootItemText = QCA.translate("Tree", "训练参数"),
+            ChildItemText = QCA.translate("Tree", "半精度训练")
+        )
 
         self.ui.GroupBox_Train_VITS_OutputParams.setTitle(QCA.translate("GroupBox", "输出参数"))
+        Function_AddToTreeWidget(
+            Widget = self.ui.GroupBox_Train_VITS_OutputParams,
+            TreeWidget = self.ui.TreeWidget_Catalogue_Train_VITS,
+            RootItemText = QCA.translate("Tree", "输出参数")
+        )
 
         Function_SetText(
             Widget = self.ui.Label_Train_VITS_EvalInterval,
@@ -5023,6 +5206,12 @@ class MainWindow(Window_MainWindow):
             ActionEvents = {
                 "重置": lambda: ParamsManager_Train_VITS.ResetParam(self.ui.SpinBox_Train_VITS_EvalInterval)
             }
+        )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_Train_VITS_EvalInterval,
+            TreeWidget = self.ui.TreeWidget_Catalogue_Train_VITS,
+            RootItemText = QCA.translate("Tree", "输出参数"),
+            ChildItemText = QCA.translate("Tree", "保存间隔")
         )
 
         self.ui.ToolBox_Train_VITS_OutputParams_AdvanceSettings.widget(0).setText(QCA.translate("ToolBox", "高级设置"))
@@ -5049,6 +5238,12 @@ class MainWindow(Window_MainWindow):
                 "重置": lambda: ParamsManager_Train_VITS.ResetParam(self.ui.LineEdit_Train_VITS_OutputDirName),
                 "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_Train_VITS_OutputDirName.text())
             }
+        )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_Train_VITS_OutputDirName,
+            TreeWidget = self.ui.TreeWidget_Catalogue_Train_VITS,
+            RootItemText = QCA.translate("Tree", "输出参数"),
+            ChildItemText = QCA.translate("Tree", "输出目录名")
         )
 
         LineEdit_Train_VITS_OutputDir = QLineEdit()
@@ -5100,56 +5295,11 @@ class MainWindow(Window_MainWindow):
                 "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_Train_VITS_LogDir.text())
             }
         )
-
-        # VITS - Left
-        Function_SetTreeWidget(
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_Train_VITS_LogDir,
             TreeWidget = self.ui.TreeWidget_Catalogue_Train_VITS,
-            ItemTexts = {
-                self.ui.GroupBox_Train_VITS_InputParams.title(): ("基础设置"),
-                self.ui.GroupBox_Train_VITS_VITSParams.title(): ("基础设置","高级设置"),
-                self.ui.GroupBox_Train_VITS_OutputParams.title(): ("基础设置","高级设置")
-            },
-            AddVertically = True
-        )
-        Function_ScrollToWidget(
-            Trigger = self.ui.TreeWidget_Catalogue_Train_VITS.topLevelItem(0),
-            TargetWidget = self.ui.GroupBox_Train_VITS_InputParams,
-            ScrollArea = self.ui.ScrollArea_Middle_Train_VITS
-        )
-        Function_ScrollToWidget(
-            Trigger = self.ui.TreeWidget_Catalogue_Train_VITS.topLevelItem(0).child(0),
-            TargetWidget = self.ui.Frame_Train_VITS_InputParams_BasicSettings,
-            ScrollArea = self.ui.ScrollArea_Middle_Train_VITS
-        )
-        Function_ScrollToWidget(
-            Trigger = self.ui.TreeWidget_Catalogue_Train_VITS.topLevelItem(1),
-            TargetWidget = self.ui.GroupBox_Train_VITS_VITSParams,
-            ScrollArea = self.ui.ScrollArea_Middle_Train_VITS
-        )
-        Function_ScrollToWidget(
-            Trigger = self.ui.TreeWidget_Catalogue_Train_VITS.topLevelItem(1).child(0),
-            TargetWidget = self.ui.Frame_Train_VITS_VITSParams_BasicSettings,
-            ScrollArea = self.ui.ScrollArea_Middle_Train_VITS
-        )
-        Function_ScrollToWidget(
-            Trigger = self.ui.TreeWidget_Catalogue_Train_VITS.topLevelItem(1).child(1),
-            TargetWidget = self.ui.ToolBox_Train_VITS_VITSParams_AdvanceSettings,
-            ScrollArea = self.ui.ScrollArea_Middle_Train_VITS
-        )
-        Function_ScrollToWidget(
-            Trigger = self.ui.TreeWidget_Catalogue_Train_VITS.topLevelItem(2),
-            TargetWidget = self.ui.GroupBox_Train_VITS_OutputParams,
-            ScrollArea = self.ui.ScrollArea_Middle_Train_VITS
-        )
-        Function_ScrollToWidget(
-            Trigger = self.ui.TreeWidget_Catalogue_Train_VITS.topLevelItem(2).child(0),
-            TargetWidget = self.ui.Frame_Train_VITS_OutputParams_BasicSettings,
-            ScrollArea = self.ui.ScrollArea_Middle_Train_VITS
-        )
-        Function_ScrollToWidget(
-            Trigger = self.ui.TreeWidget_Catalogue_Train_VITS.topLevelItem(2).child(1),
-            TargetWidget = self.ui.ToolBox_Train_VITS_OutputParams_AdvanceSettings,
-            ScrollArea = self.ui.ScrollArea_Middle_Train_VITS
+            RootItemText = QCA.translate("Tree", "输出参数"),
+            ChildItemText = QCA.translate("Tree", "日志输出目录")
         )
 
         # VITS - Right
@@ -5293,8 +5443,17 @@ class MainWindow(Window_MainWindow):
             )
         )
 
+        # GPT-SoVITS - Left
+        self.ui.TreeWidget_Catalogue_TTS_GPTSoVITS.clear()
+        self.ui.TreeWidget_Catalogue_TTS_GPTSoVITS.setHeaderHidden(True)
+
         # GPT-SoVTIS - Middle
         self.ui.GroupBox_TTS_GPTSoVITS_InputParams.setTitle(QCA.translate("GroupBox", "输入参数"))
+        Function_AddToTreeWidget(
+            Widget = self.ui.GroupBox_TTS_GPTSoVITS_InputParams,
+            TreeWidget = self.ui.TreeWidget_Catalogue_TTS_GPTSoVITS,
+            RootItemText = QCA.translate("Tree", "输入参数")
+        )
 
         Function_SetText(
             Widget = self.ui.Label_TTS_GPTSoVITS_ModelPathLoadS1,
@@ -5321,6 +5480,12 @@ class MainWindow(Window_MainWindow):
                 "重置": lambda: ParamsManager_TTS_GPTSoVITS.ResetParam(self.ui.LineEdit_TTS_GPTSoVITS_ModelPathLoadS1),
                 "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_TTS_GPTSoVITS_ModelPathLoadS1.text())
             }
+        )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_TTS_GPTSoVITS_ModelPathLoadS1,
+            TreeWidget = self.ui.TreeWidget_Catalogue_TTS_GPTSoVITS,
+            RootItemText = QCA.translate("Tree", "输入参数"),
+            ChildItemText = QCA.translate("Tree", "s1模型加载路径")
         )
 
         Function_SetText(
@@ -5349,6 +5514,12 @@ class MainWindow(Window_MainWindow):
                 "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_TTS_GPTSoVITS_ModelPathLoadS2G.text())
             }
         )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_TTS_GPTSoVITS_ModelPathLoadS2G,
+            TreeWidget = self.ui.TreeWidget_Catalogue_TTS_GPTSoVITS,
+            RootItemText = QCA.translate("Tree", "输入参数"),
+            ChildItemText = QCA.translate("Tree", "s2G模型加载路径")
+        )
 
         Function_SetText(
             Widget = self.ui.Label_TTS_GPTSoVITS_ModelDirLoadBert,
@@ -5374,6 +5545,12 @@ class MainWindow(Window_MainWindow):
                 "重置": lambda: ParamsManager_TTS_GPTSoVITS.ResetParam(self.ui.LineEdit_TTS_GPTSoVITS_ModelDirLoadBert),
                 "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_TTS_GPTSoVITS_ModelDirLoadBert.text())
             }
+        )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_TTS_GPTSoVITS_ModelDirLoadBert,
+            TreeWidget = self.ui.TreeWidget_Catalogue_TTS_GPTSoVITS,
+            RootItemText = QCA.translate("Tree", "输入参数"),
+            ChildItemText = QCA.translate("Tree", "预训练bert模型加载路径")
         )
 
         Function_SetText(
@@ -5401,8 +5578,380 @@ class MainWindow(Window_MainWindow):
                 "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_TTS_GPTSoVITS_ModelDirLoadSSL.text())
             }
         )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_TTS_GPTSoVITS_ModelDirLoadSSL,
+            TreeWidget = self.ui.TreeWidget_Catalogue_TTS_GPTSoVITS,
+            RootItemText = QCA.translate("Tree", "输入参数"),
+            ChildItemText = QCA.translate("Tree", "预训练ssl模型加载路径")
+        )
+
+        self.ui.GroupBox_TTS_GPTSoVITS_RefParams.setTitle(QCA.translate("GroupBox", "参考语音参数"))
+        Function_AddToTreeWidget(
+            Widget = self.ui.GroupBox_TTS_GPTSoVITS_RefParams,
+            TreeWidget = self.ui.TreeWidget_Catalogue_TTS_GPTSoVITS,
+            RootItemText = QCA.translate("Tree", "参考语音参数")
+        )
+
+        Function_SetText(
+            Widget = self.ui.Label_TTS_GPTSoVITS_RefAudio,
+            Text = SetRichText(
+                Body = QCA.translate("Label", "参考音频\n请上传3~10秒内参考音频，超过会报错！")
+            )
+        )
+        ParamsManager_TTS_GPTSoVITS.SetParam(
+            Widget = self.ui.LineEdit_TTS_GPTSoVITS_RefAudio,
+            Section = 'Ref Params',
+            Option = 'Ref_Audio',
+            DefaultValue = ''
+        )
+        self.ui.LineEdit_TTS_GPTSoVITS_RefAudio.SetFileDialog(
+            Mode = "SelectFile",
+            FileType = "音频类型 (*.flac *.wav *.mp3 *.aac *.m4a *.wma *.aiff *.au *.ogg)"
+        )
+        self.ui.Button_TTS_GPTSoVITS_RefAudio_MoreActions.SetMenu(
+            ActionEvents = {
+                "重置": lambda: ParamsManager_TTS_GPTSoVITS.ResetParam(self.ui.LineEdit_TTS_GPTSoVITS_RefAudio),
+                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_TTS_GPTSoVITS_RefAudio.text())
+            }
+        )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_TTS_GPTSoVITS_RefAudio,
+            TreeWidget = self.ui.TreeWidget_Catalogue_TTS_GPTSoVITS,
+            RootItemText = QCA.translate("Tree", "参考语音参数"),
+            ChildItemText = QCA.translate("Tree", "参考音频")
+        )
 
         self.ui.GroupBox_TTS_GPTSoVITS_GPTSoVITSParams.setTitle(QCA.translate("GroupBox", "语音合成参数"))
+        Function_AddToTreeWidget(
+            Widget = self.ui.GroupBox_TTS_GPTSoVITS_GPTSoVITSParams,
+            TreeWidget = self.ui.TreeWidget_Catalogue_TTS_GPTSoVITS,
+            RootItemText = QCA.translate("Tree", "语音合成参数")
+        )
+
+        Function_SetText(
+            Widget = self.ui.Label_TTS_GPTSoVITS_RefTextFree,
+            Text = SetRichText(
+                Body = QCA.translate("Label", "无参考文本模式\n开启无参考文本模式。不填参考文本亦相当于开启。")
+            )
+        )
+        ParamsManager_TTS_GPTSoVITS.SetParam(
+            Widget = self.ui.CheckBox_TTS_GPTSoVITS_RefTextFree,
+            Section = 'Ref Params',
+            Option = 'Ref_Text_Free',
+            DefaultValue = False
+        )
+        Function_ConfigureCheckBox(
+            CheckBox = self.ui.CheckBox_TTS_GPTSoVITS_RefTextFree,
+            CheckedText = "已启用",
+            CheckedEvents = [
+                lambda: Function_SetChildWidgetsVisibility(
+                    self.ui.Frame_TTS_GPTSoVITS_RefParams_BasicSettings,
+                    [
+                        self.ui.Frame_TTS_GPTSoVITS_RefText
+                    ],
+                    False
+                )
+            ],
+            UncheckedText = "未启用",
+            UncheckedEvents = [
+                lambda: Function_SetChildWidgetsVisibility(
+                    self.ui.Frame_TTS_GPTSoVITS_RefParams_BasicSettings,
+                    [
+                        self.ui.Frame_TTS_GPTSoVITS_RefText
+                    ],
+                    True
+                )
+            ],
+            TakeEffect = True
+        )
+        self.ui.Button_TTS_GPTSoVITS_RefTextFree_MoreActions.SetMenu(
+            ActionEvents = {
+                "重置": lambda: ParamsManager_TTS_GPTSoVITS.ResetParam(self.ui.CheckBox_TTS_GPTSoVITS_RefTextFree)
+            }
+        )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_TTS_GPTSoVITS_RefTextFree,
+            TreeWidget = self.ui.TreeWidget_Catalogue_TTS_GPTSoVITS,
+            RootItemText = QCA.translate("Tree", "参考语音参数"),
+            ChildItemText = QCA.translate("Tree", "无参考文本模式")
+        )
+
+        Function_SetText(
+            Widget = self.ui.Label_TTS_GPTSoVITS_RefText,
+            Text = SetRichText(
+                Body = QCA.translate("Label", "参考文本\n参考音频的文本。")
+            )
+        )
+        ParamsManager_TTS_GPTSoVITS.SetParam(
+            Widget = self.ui.LineEdit_TTS_GPTSoVITS_RefText,
+            Section = 'Ref Params',
+            Option = 'Ref_Text',
+            DefaultValue = ''
+        )
+        self.ui.LineEdit_TTS_GPTSoVITS_RefText.RemoveFileDialogButton()
+        self.ui.Button_TTS_GPTSoVITS_RefText_MoreActions.SetMenu(
+            ActionEvents = {
+                "重置": lambda: ParamsManager_TTS_GPTSoVITS.ResetParam(self.ui.LineEdit_TTS_GPTSoVITS_RefText),
+                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_TTS_GPTSoVITS_RefText.text())
+            }
+        )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_TTS_GPTSoVITS_RefText,
+            TreeWidget = self.ui.TreeWidget_Catalogue_TTS_GPTSoVITS,
+            RootItemText = QCA.translate("Tree", "参考语音参数"),
+            ChildItemText = QCA.translate("Tree", "参考文本")
+        )
+
+        Function_SetText(
+            Widget = self.ui.Label_TTS_GPTSoVITS_RefLanguage,
+            Text = SetRichText(
+                Body = QCA.translate("Label", "所属语言\n文字所属的语言。")
+            )
+        )
+        self.ui.ComboBox_TTS_GPTSoVITS_RefLanguage.addItems([QCA.translate("ComboBox", '中文'), QCA.translate("ComboBox", '英文'), QCA.translate("ComboBox", '日文'), QCA.translate("ComboBox", '多语种混合')])
+        ParamsManager_TTS_GPTSoVITS.SetParam(
+            Widget = self.ui.ComboBox_TTS_GPTSoVITS_RefLanguage,
+            Section = 'Ref Params',
+            Option = 'Ref_Language',
+            DefaultValue = '多语种混合'
+        )
+        self.ui.Button_TTS_GPTSoVITS_RefLanguage_MoreActions.SetMenu(
+            ActionEvents = {
+                "重置": lambda: ParamsManager_TTS_GPTSoVITS.ResetParam(self.ui.ComboBox_TTS_GPTSoVITS_RefLanguage)
+            }
+        )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_TTS_GPTSoVITS_RefLanguage,
+            TreeWidget = self.ui.TreeWidget_Catalogue_TTS_VITS,
+            RootItemText = QCA.translate("Tree", "参考语音参数"),
+            ChildItemText = QCA.translate("Tree", "所属语言")
+        )
+
+        self.ui.GroupBox_TTS_GPTSoVITS_GPTSoVITSParams.setTitle(QCA.translate("GroupBox", "语音合成参数"))
+        Function_AddToTreeWidget(
+            Widget = self.ui.GroupBox_TTS_GPTSoVITS_GPTSoVITSParams,
+            TreeWidget = self.ui.TreeWidget_Catalogue_TTS_GPTSoVITS,
+            RootItemText = QCA.translate("Tree", "语音合成参数")
+        )
+
+        Function_SetText(
+            Widget = self.ui.Label_TTS_GPTSoVITS_Text,
+            Text = SetRichText(
+                Body = QCA.translate("Label", "合成文本\n合成音频的文本。")
+            )
+        )
+        ParamsManager_TTS_GPTSoVITS.SetParam(
+            Widget = self.ui.PlainTextEdit_TTS_GPTSoVITS_Text,
+            Section = 'GPTSoVITS Params',
+            Option = 'Text',
+            DefaultValue = ''
+        )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_TTS_GPTSoVITS_Text,
+            TreeWidget = self.ui.TreeWidget_Catalogue_TTS_GPTSoVITS,
+            RootItemText = QCA.translate("Tree", "语音合成参数"),
+            ChildItemText = QCA.translate("Tree", "合成文本")
+        )
+
+        Function_SetText(
+            Widget = self.ui.Label_TTS_GPTSoVITS_Language,
+            Text = SetRichText(
+                Body = QCA.translate("Label", "所属语言\n文字所属的语言。")
+            )
+        )
+        self.ui.ComboBox_TTS_GPTSoVITS_Language.addItems([QCA.translate("ComboBox", '中文'), QCA.translate("ComboBox", '英文'), QCA.translate("ComboBox", '日文'), QCA.translate("ComboBox", '多语种混合')])
+        ParamsManager_TTS_GPTSoVITS.SetParam(
+            Widget = self.ui.ComboBox_TTS_GPTSoVITS_Language,
+            Section = 'GPTSoVITS Params',
+            Option = 'Language',
+            DefaultValue = '多语种混合'
+        )
+        self.ui.Button_TTS_GPTSoVITS_Language_MoreActions.SetMenu(
+            ActionEvents = {
+                "重置": lambda: ParamsManager_TTS_GPTSoVITS.ResetParam(self.ui.ComboBox_TTS_GPTSoVITS_Language)
+            }
+        )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_TTS_GPTSoVITS_Language,
+            TreeWidget = self.ui.TreeWidget_Catalogue_TTS_VITS,
+            RootItemText = QCA.translate("Tree", "语音合成参数"),
+            ChildItemText = QCA.translate("Tree", "所属语言")
+        )
+
+        Function_SetText(
+            Widget = self.ui.Label_TTS_GPTSoVITS_HowToCut,
+            Text = SetRichText(
+                Body = QCA.translate("Label", "切分方式\n切分合成文本的方式。")
+            )
+        )
+        self.ui.ComboBox_TTS_GPTSoVITS_HowToCut.addItems([QCA.translate("ComboBox", '不切'), QCA.translate("ComboBox", '凑四句一切'), QCA.translate("ComboBox", '按中文句号。切'), QCA.translate("ComboBox", '按英文句号.切'), QCA.translate("ComboBox", '按标点符号切')])
+        ParamsManager_TTS_GPTSoVITS.SetParam(
+            Widget = self.ui.ComboBox_TTS_GPTSoVITS_HowToCut,
+            Section = 'GPTSoVITS Params',
+            Option = 'How_To_Cut',
+            DefaultValue = '按标点符号切'
+        )
+        self.ui.Button_TTS_GPTSoVITS_HowToCut_MoreActions.SetMenu(
+            ActionEvents = {
+                "重置": lambda: ParamsManager_TTS_GPTSoVITS.ResetParam(self.ui.ComboBox_TTS_GPTSoVITS_HowToCut)
+            }
+        )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_TTS_GPTSoVITS_HowToCut,
+            TreeWidget = self.ui.TreeWidget_Catalogue_TTS_VITS,
+            RootItemText = QCA.translate("Tree", "语音合成参数"),
+            ChildItemText = QCA.translate("Tree", "切分方式")
+        )
+
+        self.ui.ToolBox_TTS_GPTSoVITS_GPTSoVITSParams_AdvanceSettings.widget(0).setText(QCA.translate("ToolBox", "高级设置"))
+        self.ui.ToolBox_TTS_GPTSoVITS_GPTSoVITSParams_AdvanceSettings.widget(0).collapse()
+
+        Function_SetText(
+            Widget = self.ui.Label_TTS_GPTSoVITS_TopK,
+            Text = SetRichText(
+                Body = QCA.translate("Label", "Top_K\ngpt采样参数(无参考文本时不要太低)。")
+            )
+        )
+        self.ui.HorizontalSlider_TTS_GPTSoVITS_TopK.setMinimum(1)
+        self.ui.HorizontalSlider_TTS_GPTSoVITS_TopK.setMaximum(100)
+        self.ui.HorizontalSlider_TTS_GPTSoVITS_TopK.setTickInterval(1)
+        ParamsManager_TTS_GPTSoVITS.SetParam(
+            Widget = self.ui.HorizontalSlider_TTS_GPTSoVITS_TopK,
+            Section = 'GPTSoVITS Params',
+            Option = 'Top_K',
+            DefaultValue = 5
+        )
+        Function_ParamsSynchronizer(
+            Trigger = self.ui.HorizontalSlider_TTS_GPTSoVITS_TopK,
+            FromTo = {
+                self.ui.HorizontalSlider_TTS_GPTSoVITS_TopK: self.ui.SpinBox_TTS_GPTSoVITS_TopK
+            }
+        )
+        self.ui.SpinBox_TTS_GPTSoVITS_TopK.setRange(1, 100)
+        self.ui.SpinBox_TTS_GPTSoVITS_TopK.setSingleStep(1)
+        ParamsManager_TTS_GPTSoVITS.SetParam(
+            Widget = self.ui.SpinBox_TTS_GPTSoVITS_TopK,
+            Section = 'GPTSoVITS Params',
+            Option = 'Top_K',
+            DefaultValue = 5
+        )
+        Function_ParamsSynchronizer(
+            Trigger = self.ui.SpinBox_TTS_GPTSoVITS_TopK,
+            FromTo = {
+                self.ui.SpinBox_TTS_GPTSoVITS_TopK: self.ui.HorizontalSlider_TTS_GPTSoVITS_TopK
+            }
+        )
+        self.ui.Button_TTS_GPTSoVITS_TopK_MoreActions.SetMenu(
+            ActionEvents = {
+                "重置": lambda: ParamsManager_TTS_GPTSoVITS.ResetParam(self.ui.SpinBox_TTS_GPTSoVITS_TopK)
+            }
+        )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_TTS_GPTSoVITS_TopK,
+            TreeWidget = self.ui.TreeWidget_Catalogue_TTS_GPTSoVITS,
+            RootItemText = QCA.translate("Tree", "语音合成参数"),
+            ChildItemText = QCA.translate("Tree", "Top_K")
+        )
+
+        Function_SetText(
+            Widget = self.ui.Label_TTS_GPTSoVITS_TopP,
+            Text = SetRichText(
+                Body = QCA.translate("Label", "Top_P\ngpt采样参数(无参考文本时不要太低)。")
+            )
+        )
+        self.ui.HorizontalSlider_TTS_GPTSoVITS_TopP.setMinimum(0)
+        self.ui.HorizontalSlider_TTS_GPTSoVITS_TopP.setMaximum(100)
+        self.ui.HorizontalSlider_TTS_GPTSoVITS_TopP.setTickInterval(5)
+        ParamsManager_TTS_GPTSoVITS.SetParam(
+            Widget = self.ui.HorizontalSlider_TTS_GPTSoVITS_TopP,
+            Section = 'GPTSoVITS Params',
+            Option = 'Top_P',
+            DefaultValue = 100,
+            Times = 100
+        )
+        Function_ParamsSynchronizer(
+            Trigger = self.ui.HorizontalSlider_TTS_GPTSoVITS_TopP,
+            FromTo = {
+                self.ui.HorizontalSlider_TTS_GPTSoVITS_TopP: self.ui.DoubleSpinBox_TTS_GPTSoVITS_TopP
+            },
+            Times = 0.01
+        )
+        self.ui.DoubleSpinBox_TTS_GPTSoVITS_TopP.setRange(0, 1)
+        self.ui.DoubleSpinBox_TTS_GPTSoVITS_TopP.setSingleStep(0.05)
+        ParamsManager_TTS_GPTSoVITS.SetParam(
+            Widget = self.ui.DoubleSpinBox_TTS_GPTSoVITS_TopP,
+            Section = 'GPTSoVITS Params',
+            Option = 'Top_P',
+            DefaultValue = 1
+        )
+        Function_ParamsSynchronizer(
+            Trigger = self.ui.DoubleSpinBox_TTS_GPTSoVITS_TopP,
+            FromTo = {
+                self.ui.DoubleSpinBox_TTS_GPTSoVITS_TopP: self.ui.HorizontalSlider_TTS_GPTSoVITS_TopP
+            },
+            Times = 100
+        )
+        self.ui.Button_TTS_GPTSoVITS_TopP_MoreActions.SetMenu(
+            ActionEvents = {
+                "重置": lambda: ParamsManager_TTS_GPTSoVITS.ResetParam(self.ui.DoubleSpinBox_TTS_GPTSoVITS_TopP)
+            }
+        )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_TTS_GPTSoVITS_TopP,
+            TreeWidget = self.ui.TreeWidget_Catalogue_TTS_GPTSoVITS,
+            RootItemText = QCA.translate("Tree", "语音合成参数"),
+            ChildItemText = QCA.translate("Tree", "Top_P")
+        )
+
+        Function_SetText(
+            Widget = self.ui.Label_TTS_GPTSoVITS_Temperature,
+            Text = SetRichText(
+                Body = QCA.translate("Label", "Temperature\ngpt采样参数(无参考文本时不要太低)。")
+            )
+        )
+        self.ui.HorizontalSlider_TTS_GPTSoVITS_Temperature.setMinimum(0)
+        self.ui.HorizontalSlider_TTS_GPTSoVITS_Temperature.setMaximum(100)
+        self.ui.HorizontalSlider_TTS_GPTSoVITS_Temperature.setTickInterval(5)
+        ParamsManager_TTS_GPTSoVITS.SetParam(
+            Widget = self.ui.HorizontalSlider_TTS_GPTSoVITS_Temperature,
+            Section = 'GPTSoVITS Params',
+            Option = 'Temperature',
+            DefaultValue = 100,
+            Times = 100
+        )
+        Function_ParamsSynchronizer(
+            Trigger = self.ui.HorizontalSlider_TTS_GPTSoVITS_Temperature,
+            FromTo = {
+                self.ui.HorizontalSlider_TTS_GPTSoVITS_Temperature: self.ui.DoubleSpinBox_TTS_GPTSoVITS_Temperature
+            },
+            Times = 0.01
+        )
+        self.ui.DoubleSpinBox_TTS_GPTSoVITS_Temperature.setRange(0, 1)
+        self.ui.DoubleSpinBox_TTS_GPTSoVITS_Temperature.setSingleStep(0.05)
+        ParamsManager_TTS_GPTSoVITS.SetParam(
+            Widget = self.ui.DoubleSpinBox_TTS_GPTSoVITS_Temperature,
+            Section = 'GPTSoVITS Params',
+            Option = 'Temperature',
+            DefaultValue = 1
+        )
+        Function_ParamsSynchronizer(
+            Trigger = self.ui.DoubleSpinBox_TTS_GPTSoVITS_Temperature,
+            FromTo = {
+                self.ui.DoubleSpinBox_TTS_GPTSoVITS_Temperature: self.ui.HorizontalSlider_TTS_GPTSoVITS_Temperature
+            },
+            Times = 100
+        )
+        self.ui.Button_TTS_GPTSoVITS_Temperature_MoreActions.SetMenu(
+            ActionEvents = {
+                "重置": lambda: ParamsManager_TTS_GPTSoVITS.ResetParam(self.ui.DoubleSpinBox_TTS_GPTSoVITS_Temperature)
+            }
+        )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_TTS_GPTSoVITS_Temperature,
+            TreeWidget = self.ui.TreeWidget_Catalogue_TTS_GPTSoVITS,
+            RootItemText = QCA.translate("Tree", "语音合成参数"),
+            ChildItemText = QCA.translate("Tree", "Temperature")
+        )
 
         Function_SetText(
             Widget = self.ui.Label_TTS_GPTSoVITS_FP16Run,
@@ -5430,6 +5979,83 @@ class MainWindow(Window_MainWindow):
             ActionEvents = {
                 "重置": lambda: ParamsManager_TTS_GPTSoVITS.ResetParam(self.ui.CheckBox_TTS_GPTSoVITS_FP16Run)
             }
+        )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_TTS_GPTSoVITS_FP16Run,
+            TreeWidget = self.ui.TreeWidget_Catalogue_TTS_GPTSoVITS,
+            RootItemText = QCA.translate("Tree", "语音合成参数"),
+            ChildItemText = QCA.translate("Tree", "半精度推理")
+        )
+
+        TTS_GPTSoVITS_AudioDirSave = Path(CurrentDir).joinpath('语音合成结果', 'GPT-SoVITS').as_posix()
+        TTS_GPTSoVITS_AudioPathSave = Path(TTS_GPTSoVITS_AudioDirSave).joinpath("temp.wav").as_posix()
+
+        # ChildWindow
+        ChildWindow_TTS_GPTSoVITS = Window_ChildWindow_TTS_GPTSoVITS(self)
+
+        ChildWindow_TTS_GPTSoVITS.ui.Button_Close.clicked.connect(
+            lambda: Function_ShowMessageBox(self,
+                QMessageBox.Question, "Ask",
+                "确认退出试听？",
+                QMessageBox.Yes|QMessageBox.No,
+                {
+                    QMessageBox.Yes: lambda: (
+                        ChildWindow_TTS_GPTSoVITS.ui.Widget.ReleaseMediaPlayer(),
+                        ChildWindow_TTS_GPTSoVITS.close()
+                    )
+                } 
+            )
+        )
+        ChildWindow_TTS_GPTSoVITS.ui.Button_Maximize.clicked.connect(lambda: ChildWindow_TTS_GPTSoVITS.showNormal() if ChildWindow_TTS_GPTSoVITS.isMaximized() else ChildWindow_TTS_GPTSoVITS.showMaximized())
+
+        Function_SetText(
+            Widget = ChildWindow_TTS_GPTSoVITS.ui.Label_Title,
+            Text = SetRichText(
+                Title = QCA.translate("Label", "语音合成结果")
+            )
+        )
+        Function_SetText(
+            Widget = ChildWindow_TTS_GPTSoVITS.ui.Label_Text,
+            Text = SetRichText(
+                Body = QCA.translate("Label", "点击播放按钮以试听合成语音")
+            )
+        )
+
+        ChildWindow_TTS_GPTSoVITS.ui.Button_Cancel.setText(QCA.translate("Button", "丢弃"))
+        ChildWindow_TTS_GPTSoVITS.ui.Button_Cancel.clicked.connect(
+            lambda: Function_ShowMessageBox(self,
+                QMessageBox.Question, "Ask",
+                "确认丢弃音频？",
+                QMessageBox.Yes|QMessageBox.No,
+                {
+                    QMessageBox.Yes: lambda: (
+                        ChildWindow_TTS_GPTSoVITS.ui.Widget.ReleaseMediaPlayer(),
+                        os.remove(TTS_GPTSoVITS_AudioPathSave),
+                        ChildWindow_TTS_GPTSoVITS.close()
+                    )
+                }
+            )
+        )
+        ChildWindow_TTS_GPTSoVITS.ui.Button_Confirm.setText(QCA.translate("Button", "保留"))
+        ChildWindow_TTS_GPTSoVITS.ui.Button_Confirm.clicked.connect(
+            lambda: Function_ShowMessageBox(self,
+                QMessageBox.Question, "Ask",
+                "确认保留音频？",
+                QMessageBox.Yes|QMessageBox.No,
+                {
+                    QMessageBox.Yes: lambda: (
+                        ChildWindow_TTS_GPTSoVITS.ui.Widget.ReleaseMediaPlayer(),
+                        shutil.move(
+                            TTS_GPTSoVITS_AudioPathSave,
+                            Function_GetFileDialog(
+                                Mode = "SaveFile",
+                                FileType = "wav类型 (*.wav)"
+                            )
+                        ),
+                        ChildWindow_TTS_GPTSoVITS.close()
+                    )
+                }
+            )
         )
 
         # GPT-SoVITS - Right
@@ -5466,44 +6092,12 @@ class MainWindow(Window_MainWindow):
             )
         )
 
-        '''
         self.ui.Button_CheckOutput_TTS_GPTSoVITS.setText(QCA.translate("Button", "查看输出文件"))
         Function_SetURL(
             Button = self.ui.Button_CheckOutput_TTS_GPTSoVITS,
-            URL = self.ui.LineEdit_TTS_GPTSoVITS_AudioPathSave,
+            URL = TTS_GPTSoVITS_AudioDirSave,
             ButtonTooltip = "Click to open",
             CreateIfNotExist = True
-        )
-        '''
-
-        # GPT-SoVITS - Left
-        Function_SetTreeWidget(
-            TreeWidget = self.ui.TreeWidget_Catalogue_TTS_GPTSoVITS,
-            ItemTexts = {
-                self.ui.GroupBox_TTS_GPTSoVITS_InputParams.title(): ("基础设置"),
-                self.ui.GroupBox_TTS_GPTSoVITS_GPTSoVITSParams.title(): ("基础设置")
-            },
-            AddVertically = True
-        )
-        Function_ScrollToWidget(
-            Trigger = self.ui.TreeWidget_Catalogue_TTS_GPTSoVITS.topLevelItem(0),
-            TargetWidget = self.ui.GroupBox_TTS_GPTSoVITS_InputParams,
-            ScrollArea = self.ui.ScrollArea_Middle_TTS_GPTSoVITS
-        )
-        Function_ScrollToWidget(
-            Trigger = self.ui.TreeWidget_Catalogue_TTS_GPTSoVITS.topLevelItem(0).child(0),
-            TargetWidget = self.ui.Frame_TTS_GPTSoVITS_InputParams_BasicSettings,
-            ScrollArea = self.ui.ScrollArea_Middle_TTS_GPTSoVITS
-        )
-        Function_ScrollToWidget(
-            Trigger = self.ui.TreeWidget_Catalogue_TTS_GPTSoVITS.topLevelItem(1),
-            TargetWidget = self.ui.GroupBox_TTS_GPTSoVITS_GPTSoVITSParams,
-            ScrollArea = self.ui.ScrollArea_Middle_TTS_GPTSoVITS
-        )
-        Function_ScrollToWidget(
-            Trigger = self.ui.TreeWidget_Catalogue_TTS_GPTSoVITS.topLevelItem(1).child(0),
-            TargetWidget = self.ui.Frame_TTS_GPTSoVITS_GPTSoVITSParams_BasicSettings,
-            ScrollArea = self.ui.ScrollArea_Middle_TTS_GPTSoVITS
         )
 
         # GPT-SoVITS - Bottom
@@ -5520,7 +6114,32 @@ class MainWindow(Window_MainWindow):
                 self.ui.LineEdit_TTS_GPTSoVITS_ModelPathLoadS2G,
                 self.ui.LineEdit_TTS_GPTSoVITS_ModelDirLoadBert,
                 self.ui.LineEdit_TTS_GPTSoVITS_ModelDirLoadSSL,
-                self.ui.CheckBox_TTS_GPTSoVITS_FP16Run
+                self.ui.LineEdit_TTS_GPTSoVITS_RefAudio,
+                self.ui.CheckBox_TTS_GPTSoVITS_RefTextFree,
+                self.ui.LineEdit_TTS_GPTSoVITS_RefText,
+                self.ui.ComboBox_TTS_GPTSoVITS_RefLanguage,
+                self.ui.PlainTextEdit_TTS_GPTSoVITS_Text,
+                self.ui.ComboBox_TTS_GPTSoVITS_Language,
+                self.ui.ComboBox_TTS_GPTSoVITS_HowToCut,
+                self.ui.SpinBox_TTS_GPTSoVITS_TopK,
+                self.ui.DoubleSpinBox_TTS_GPTSoVITS_TopP,
+                self.ui.DoubleSpinBox_TTS_GPTSoVITS_Temperature,
+                self.ui.CheckBox_TTS_GPTSoVITS_FP16Run,
+                TTS_GPTSoVITS_AudioPathSave
+            ],
+            EmptyAllowed = [
+                self.ui.LineEdit_TTS_GPTSoVITS_RefText
+            ],
+            FinishEvents = [
+                lambda: self.ShowMask(True, "正在加载播放器"),
+                lambda: ChildWindow_TTS_GPTSoVITS.ui.Widget.SetMediaPlayer(
+                    TTS_GPTSoVITS_AudioPathSave
+                ),
+                ChildWindow_TTS_GPTSoVITS.exec,
+                lambda: Function_ShowMessageBox(self,
+                    QMessageBox.Information, "Tip",
+                    "当前任务已执行结束。"
+                )
             ]
         )
 
@@ -5540,8 +6159,17 @@ class MainWindow(Window_MainWindow):
             )
         )
 
+        # VITS - Left
+        self.ui.TreeWidget_Catalogue_TTS_VITS.clear()
+        self.ui.TreeWidget_Catalogue_TTS_VITS.setHeaderHidden(True)
+
         # VTIS - Middle
         self.ui.GroupBox_TTS_VITS_InputParams.setTitle(QCA.translate("GroupBox", "输入参数"))
+        Function_AddToTreeWidget(
+            Widget = self.ui.GroupBox_TTS_VITS_InputParams,
+            TreeWidget = self.ui.TreeWidget_Catalogue_TTS_VITS,
+            RootItemText = QCA.translate("Tree", "输入参数")
+        )
 
         Function_SetText(
             Widget = self.ui.Label_TTS_VITS_ConfigPathLoad,
@@ -5575,6 +6203,12 @@ class MainWindow(Window_MainWindow):
                 "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_TTS_VITS_ConfigPathLoad.text())
             }
         )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_TTS_VITS_ConfigPathLoad,
+            TreeWidget = self.ui.TreeWidget_Catalogue_TTS_VITS,
+            RootItemText = QCA.translate("Tree", "输入参数"),
+            ChildItemText = QCA.translate("Tree", "配置加载路径")
+        )
 
         Function_SetText(
             Widget = self.ui.Label_TTS_VITS_ModelPathLoad,
@@ -5602,8 +6236,19 @@ class MainWindow(Window_MainWindow):
                 "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_TTS_VITS_ModelPathLoad.text())
             }
         )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_TTS_VITS_ModelPathLoad,
+            TreeWidget = self.ui.TreeWidget_Catalogue_TTS_VITS,
+            RootItemText = QCA.translate("Tree", "输入参数"),
+            ChildItemText = QCA.translate("Tree", "G模型加载路径")
+        )
 
         self.ui.GroupBox_TTS_VITS_VITSParams.setTitle(QCA.translate("GroupBox", "语音合成参数"))
+        Function_AddToTreeWidget(
+            Widget = self.ui.GroupBox_TTS_VITS_VITSParams,
+            TreeWidget = self.ui.TreeWidget_Catalogue_TTS_VITS,
+            RootItemText = QCA.translate("Tree", "语音合成参数")
+        )
 
         Function_SetText(
             Widget = self.ui.Label_TTS_VITS_Text,
@@ -5618,6 +6263,12 @@ class MainWindow(Window_MainWindow):
             DefaultValue = '',
             SetPlaceholderText = True,
             PlaceholderText = '请输入语句'
+        )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_TTS_VITS_Text,
+            TreeWidget = self.ui.TreeWidget_Catalogue_TTS_VITS,
+            RootItemText = QCA.translate("Tree", "语音合成参数"),
+            ChildItemText = QCA.translate("Tree", "输入文字")
         )
 
         Function_SetText(
@@ -5638,6 +6289,12 @@ class MainWindow(Window_MainWindow):
                 "重置": lambda: ParamsManager_TTS_VITS.ResetParam(self.ui.ComboBox_TTS_VITS_Language)
             }
         )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_TTS_VITS_Language,
+            TreeWidget = self.ui.TreeWidget_Catalogue_TTS_VITS,
+            RootItemText = QCA.translate("Tree", "语音合成参数"),
+            ChildItemText = QCA.translate("Tree", "所属语言")
+        )
 
         Function_SetText(
             Widget = self.ui.Label_TTS_VITS_Speaker,
@@ -5657,6 +6314,12 @@ class MainWindow(Window_MainWindow):
         )
         '''
         self.ui.ComboBox_TTS_VITS_Speaker.setCurrentIndex(0)
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_TTS_VITS_Speaker,
+            TreeWidget = self.ui.TreeWidget_Catalogue_TTS_VITS,
+            RootItemText = QCA.translate("Tree", "语音合成参数"),
+            ChildItemText = QCA.translate("Tree", "人物名字")
+        )
 
         self.ui.ToolBox_TTS_VITS_VITSParams_AdvanceSettings.widget(0).setText(QCA.translate("ToolBox", "高级设置"))
         self.ui.ToolBox_TTS_VITS_VITSParams_AdvanceSettings.widget(0).collapse()
@@ -5704,6 +6367,12 @@ class MainWindow(Window_MainWindow):
                 "重置": lambda: ParamsManager_TTS_VITS.ResetParam(self.ui.DoubleSpinBox_TTS_VITS_EmotionStrength)
             }
         )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_TTS_VITS_EmotionStrength,
+            TreeWidget = self.ui.TreeWidget_Catalogue_TTS_VITS,
+            RootItemText = QCA.translate("Tree", "语音合成参数"),
+            ChildItemText = QCA.translate("Tree", "情感强度")
+        )
 
         Function_SetText(
             Widget = self.ui.Label_TTS_VITS_PhonemeDuration,
@@ -5747,6 +6416,12 @@ class MainWindow(Window_MainWindow):
             ActionEvents = {
                 "重置": lambda: ParamsManager_TTS_VITS.ResetParam(self.ui.DoubleSpinBox_TTS_VITS_PhonemeDuration)
             }
+        )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_TTS_VITS_PhonemeDuration,
+            TreeWidget = self.ui.TreeWidget_Catalogue_TTS_VITS,
+            RootItemText = QCA.translate("Tree", "语音合成参数"),
+            ChildItemText = QCA.translate("Tree", "音素音长")
         )
 
         Function_SetText(
@@ -5792,8 +6467,19 @@ class MainWindow(Window_MainWindow):
                 "重置": lambda: ParamsManager_TTS_VITS.ResetParam(self.ui.DoubleSpinBox_TTS_VITS_SpeechRate)
             }
         )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_TTS_VITS_SpeechRate,
+            TreeWidget = self.ui.TreeWidget_Catalogue_TTS_VITS,
+            RootItemText = QCA.translate("Tree", "语音合成参数"),
+            ChildItemText = QCA.translate("Tree", "整体语速")
+        )
 
         self.ui.GroupBox_TTS_VITS_OutputParams.setTitle(QCA.translate("GroupBox", "输出参数"))
+        Function_AddToTreeWidget(
+            Widget = self.ui.GroupBox_TTS_VITS_OutputParams,
+            TreeWidget = self.ui.TreeWidget_Catalogue_TTS_VITS,
+            RootItemText = QCA.translate("Tree", "输出参数")
+        )
 
         Function_SetText(
             Widget = self.ui.Label_TTS_VITS_AudioPathSave,
@@ -5820,6 +6506,12 @@ class MainWindow(Window_MainWindow):
                 "重置": lambda: ParamsManager_TTS_VITS.ResetParam(self.ui.LineEdit_TTS_VITS_AudioPathSave),
                 "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_TTS_VITS_AudioPathSave.text())
             }
+        )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_TTS_VITS_AudioPathSave,
+            TreeWidget = self.ui.TreeWidget_Catalogue_TTS_VITS,
+            RootItemText = QCA.translate("Tree", "输出参数"),
+            ChildItemText = QCA.translate("Tree", "音频保存路径")
         )
 
         # ChildWindow
@@ -5923,52 +6615,6 @@ class MainWindow(Window_MainWindow):
             URL = self.ui.LineEdit_TTS_VITS_AudioPathSave,
             ButtonTooltip = "Click to open",
             CreateIfNotExist = True
-        )
-
-        # VITS - Left
-        Function_SetTreeWidget(
-            TreeWidget = self.ui.TreeWidget_Catalogue_TTS_VITS,
-            ItemTexts = {
-                self.ui.GroupBox_TTS_VITS_InputParams.title(): ("基础设置"),
-                self.ui.GroupBox_TTS_VITS_VITSParams.title(): ("基础设置","高级设置"),
-                self.ui.GroupBox_TTS_VITS_OutputParams.title(): ("基础设置")
-            },
-            AddVertically = True
-        )
-        Function_ScrollToWidget(
-            Trigger = self.ui.TreeWidget_Catalogue_TTS_VITS.topLevelItem(0),
-            TargetWidget = self.ui.GroupBox_TTS_VITS_InputParams,
-            ScrollArea = self.ui.ScrollArea_Middle_TTS_VITS
-        )
-        Function_ScrollToWidget(
-            Trigger = self.ui.TreeWidget_Catalogue_TTS_VITS.topLevelItem(0).child(0),
-            TargetWidget = self.ui.Frame_TTS_VITS_InputParams_BasicSettings,
-            ScrollArea = self.ui.ScrollArea_Middle_TTS_VITS
-        )
-        Function_ScrollToWidget(
-            Trigger = self.ui.TreeWidget_Catalogue_TTS_VITS.topLevelItem(1),
-            TargetWidget = self.ui.GroupBox_TTS_VITS_VITSParams,
-            ScrollArea = self.ui.ScrollArea_Middle_TTS_VITS
-        )
-        Function_ScrollToWidget(
-            Trigger = self.ui.TreeWidget_Catalogue_TTS_VITS.topLevelItem(1).child(0),
-            TargetWidget = self.ui.Frame_TTS_VITS_VITSParams_BasicSettings,
-            ScrollArea = self.ui.ScrollArea_Middle_TTS_VITS
-        )
-        Function_ScrollToWidget(
-            Trigger = self.ui.TreeWidget_Catalogue_TTS_VITS.topLevelItem(1).child(1),
-            TargetWidget = self.ui.ToolBox_TTS_VITS_VITSParams_AdvanceSettings,
-            ScrollArea = self.ui.ScrollArea_Middle_TTS_VITS
-        )
-        Function_ScrollToWidget(
-            Trigger = self.ui.TreeWidget_Catalogue_TTS_VITS.topLevelItem(1),
-            TargetWidget = self.ui.GroupBox_TTS_VITS_OutputParams,
-            ScrollArea = self.ui.ScrollArea_Middle_TTS_VITS
-        )
-        Function_ScrollToWidget(
-            Trigger = self.ui.TreeWidget_Catalogue_TTS_VITS.topLevelItem(1).child(0),
-            TargetWidget = self.ui.Frame_TTS_VITS_OutputParams_BasicSettings,
-            ScrollArea = self.ui.ScrollArea_Middle_TTS_VITS
         )
 
         # VITS - Bottom
