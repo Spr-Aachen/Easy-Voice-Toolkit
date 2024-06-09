@@ -96,39 +96,6 @@ def Function_AddToTreeWidget(
     )
 
 
-def Function_SetTreeWidget(
-    TreeWidget: QTreeWidget,
-    ItemTexts: dict = {'RootItemText': ('ChildItemText', )},
-    AddVertically: bool = False,
-    ExpandItems: bool = True
-):
-    '''
-    '''
-    TreeWidget.clear()
-
-    RootItems = []
-
-    for Index, RootItemText in enumerate(ItemTexts.keys()):
-        RootItem = QTreeWidgetItem(TreeWidget)
-        RootItem.setText(0 if AddVertically else Index, RootItemText)
-        RootItemTextFont = QFont()
-        RootItemTextFont.setPixelSize(15)
-        RootItem.setFont(0 if AddVertically else Index, RootItemTextFont)
-        for ChildItemText in ToIterable(list(ItemTexts.values())[Index]):
-            ChildItem = QTreeWidgetItem(RootItem)
-            ChildItem.setText(0 if AddVertically else Index, ChildItemText)
-            ChildItemTextFont = QFont()
-            ChildItemTextFont.setPixelSize(12)
-            ChildItem.setFont(0 if AddVertically else Index, ChildItemTextFont)
-
-        RootItems.append(RootItem)
-
-    TreeWidget.setColumnCount(1) if AddVertically else None
-    TreeWidget.addTopLevelItems(RootItems)
-
-    TreeWidget.expandAll() if ExpandItems else None
-
-
 def Function_SetChildWidgetsVisibility(
     Container: QWidget,
     ChildWidgets: list[Optional[QWidget]],
@@ -268,7 +235,7 @@ def Function_ParamsHandler(
     Function to get/set the param of UI
     '''
     if Mode == "Get":
-        if isinstance(UI, (QLineEdit, LineEditBase, QPlainTextEdit)):
+        if isinstance(UI, (QLineEdit, LineEditBase, TextEditBase, QPlainTextEdit)):
             return Function_GetText(UI)
         if isinstance(UI, QComboBox):
             return UI.currentText()
@@ -281,7 +248,7 @@ def Function_ParamsHandler(
             return UI.GetValue()
 
     if Mode == "Set":
-        if isinstance(UI, (QLineEdit, LineEditBase)):
+        if isinstance(UI, (QLineEdit, LineEditBase, TextEditBase)):
             UI.setText(Param)
         if isinstance(UI, QPlainTextEdit):
             UI.setPlainText(Param)
@@ -464,7 +431,7 @@ def Function_SetWidgetValue(
     SetPlaceholderText: bool = False,
     PlaceholderText: Optional[str] = None
 ):
-    if isinstance(Widget, (QLineEdit, LineEditBase, QPlainTextEdit)):
+    if isinstance(Widget, (QLineEdit, LineEditBase, TextEditBase)):
         Function_SetText(Widget, Value, SetPlaceholderText = SetPlaceholderText, PlaceholderText = PlaceholderText)
         def EditConfig(Value):
             Config.EditConfig(Section, Option, str(Value))
@@ -555,13 +522,13 @@ class ParamsManager:
 
     def ImportSettings(self, ReadPath: str):
         ConfigParser = ManageConfig(ReadPath).Parser()
-        with open(self.ConfigPath, 'w') as Config:
+        with open(self.ConfigPath, 'w', encoding = 'utf-8') as Config:
             ConfigParser.write(Config)
         for Widget, value in list(self.RegistratedWidgets.items()):
             self.SetParam(Widget, *value)
 
     def ExportSettings(self, SavePath: str):
-        with open(SavePath, 'w') as Config:
+        with open(SavePath, 'w', encoding = 'utf-8') as Config:
             self.Config.Parser().write(Config)
 
 ##############################################################################################################################

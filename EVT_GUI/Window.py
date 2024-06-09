@@ -81,7 +81,7 @@ class Window_ChildWindow_TTS_GPTSoVITS(ChildWindowBase):
         self.setTitleBar(self.ui.TitleBar)
 
 
-class Window_ChildWindow_TTS(ChildWindowBase):
+class Window_ChildWindow_TTS_VITS(ChildWindowBase):
     ui = Ui_ChildWindow_TTS()
 
     def __init__(self, parent = None):

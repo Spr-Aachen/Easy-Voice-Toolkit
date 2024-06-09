@@ -1,7 +1,7 @@
 from PySide6.QtCore import (QCoreApplication, QMetaObject, QRect, QSize, Qt)
 from PySide6.QtWidgets import *
 
-from .Components import WidgetBase, MenuButton, LabelBase, LineEditBase, ComboBoxBase, SpinBoxBase, DoubleSpinBoxBase, ToolBoxBase, ScrollAreaBase, TreeWidgetBase, Table_ViewModels, Table_EditAudioSpeaker
+from .Components import WidgetBase, MenuButton, LabelBase, LineEditBase, TextEditBase, ComboBoxBase, SpinBoxBase, DoubleSpinBoxBase, ToolBoxBase, ScrollAreaBase, TreeWidgetBase, Table_ViewModels, Table_EditAudioSpeaker
 from . import Sources
 
 
@@ -1434,6 +1434,44 @@ class Ui_MainWindow(object):
 "}")
 
         self.horizontalLayout_3.addWidget(self.ToolButton_Env_Install_Title)
+
+        self.ToolButton_Env_Manage_Title = QToolButton(self.Frame_Env_Install_Top)
+        self.ToolButton_Env_Manage_Title.setObjectName(u"ToolButton_Env_Manage_Title")
+        sizePolicy1.setHeightForWidth(self.ToolButton_Env_Manage_Title.sizePolicy().hasHeightForWidth())
+        self.ToolButton_Env_Manage_Title.setSizePolicy(sizePolicy1)
+        self.ToolButton_Env_Manage_Title.setStyleSheet(u"QToolButton {\n"
+"	font-size: 24px;\n"
+"	/*text-align: center;*/\n"
+"	padding-left: 12px;\n"
+"	padding-right: 12px;\n"
+"	background-color: transparent;\n"
+"	border-top-width: 0px;\n"
+"	border-right-width: 0px;\n"
+"	border-bottom-width: 3px;\n"
+"	border-left-width: 0px;\n"
+"	border-style: solid;\n"
+"	border-bottom-color: rgba(123, 123, 123, 123);\n"
+"}\n"
+"QToolButton:hover {\n"
+"	background-color: transparent;\n"
+"	border-top-width: 0px;\n"
+"	border-right-width: 0px;\n"
+"	border-bottom-width: 3px;\n"
+"	border-left-width: 0px;\n"
+"	border-style: solid;\n"
+"	border-bottom-color: rgba(120, 180, 240, 123);\n"
+"}\n"
+"QToolButton:checked {\n"
+"	background-color: transparent;\n"
+"	border-top-width: 0px;\n"
+"	border-right-width: 0px;\n"
+"	border-bottom-width: 3px;\n"
+"	border-left-width: 0px;\n"
+"	border-style: solid;\n"
+"	border-bottom-color: rgba(120, 180, 240, 210);\n"
+"}")
+
+        self.horizontalLayout_3.addWidget(self.ToolButton_Env_Manage_Title)
 
         self.Frame_Env_Install_Title_Spacer = QLabel(self.Frame_Env_Install_Top)
         self.Frame_Env_Install_Title_Spacer.setObjectName(u"Frame_Env_Install_Title_Spacer")
@@ -11109,7 +11147,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_133.addWidget(self.Label_TTS_GPTSoVITS_Text)
 
-        self.PlainTextEdit_TTS_GPTSoVITS_Text = QPlainTextEdit(self.Frame_TTS_GPTSoVITS_Text)
+        self.PlainTextEdit_TTS_GPTSoVITS_Text = TextEditBase(self.Frame_TTS_GPTSoVITS_Text)
         self.PlainTextEdit_TTS_GPTSoVITS_Text.setObjectName(u"PlainTextEdit_TTS_GPTSoVITS_Text")
         sizePolicy3.setHeightForWidth(self.PlainTextEdit_TTS_GPTSoVITS_Text.sizePolicy().hasHeightForWidth())
         self.PlainTextEdit_TTS_GPTSoVITS_Text.setSizePolicy(sizePolicy3)
@@ -12200,7 +12238,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_98.addWidget(self.Label_TTS_VITS_Text)
 
-        self.PlainTextEdit_TTS_VITS_Text = QPlainTextEdit(self.Frame_TTS_VITS_Text)
+        self.PlainTextEdit_TTS_VITS_Text = TextEditBase(self.Frame_TTS_VITS_Text)
         self.PlainTextEdit_TTS_VITS_Text.setObjectName(u"PlainTextEdit_TTS_VITS_Text")
         sizePolicy3.setHeightForWidth(self.PlainTextEdit_TTS_VITS_Text.sizePolicy().hasHeightForWidth())
         self.PlainTextEdit_TTS_VITS_Text.setSizePolicy(sizePolicy3)
@@ -14633,6 +14671,7 @@ class Ui_MainWindow(object):
         self.Label_Repo_Text.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Donate_Text.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.ToolButton_Env_Install_Title.setText(QCoreApplication.translate("MainWindow", u"Label", None))
+        self.ToolButton_Env_Manage_Title.setText(QCoreApplication.translate("MainWindow", u"Label", None))
         self.Label_Env_Install_Aria2_Status.setText(QCoreApplication.translate("MainWindow", u"--", None))
         self.Label_Env_Install_Aria2.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Env_Install_FFmpeg_Status.setText(QCoreApplication.translate("MainWindow", u"--", None))

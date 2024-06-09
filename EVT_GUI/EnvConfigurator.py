@@ -498,19 +498,32 @@ class Pytorch_Installer(QObject):
         except OSError:
             return False
 
-    def Install_Pytorch(self, Package: str):
-        pynvml.nvmlInit()
-        CudaList = [117, 118, 121]
-        CudaVersion = min(CudaList, key = lambda Cuda: abs(Cuda - pynvml.nvmlSystemGetCudaDriverVersion()//100))
-        MirrorList = [f'https://download.pytorch.org/whl/cu{CudaVersion}', '']
-        for Mirror in MirrorList:
-            Result = RunCMD([f'pip3 install {Package} -y --index-url {Mirror}' if Package in ['torch', 'torchvision', 'torchaudio'] else f'pip3 install {Package} -y'])
-            if Result.returncode == 0:
-                break
+    def Install_Pytorch(self, Package: str, Reinstall: bool):
+        DisplayCommand = 'cmd /c start cmd /k ' if platform.system() == 'Windows' else 'x-terminal-emulator -e '
+        if Package in ('torch', 'torchvision', 'torchaudio'):
+            pynvml.nvmlInit()
+            CudaList = [117, 118, 121]
+            CudaVersion = min(CudaList, key = lambda Cuda: abs(Cuda - pynvml.nvmlSystemGetCudaDriverVersion()//100))
+            MirrorList = [f'https://download.pytorch.org/whl/cu{CudaVersion}', '']
+            for Mirror in MirrorList:
+                Result = RunCMD([
+                    DisplayCommand if Reinstall else '' + f'pip3 install {Package} -y --index-url {Mirror}' + '--force-reinstall' if Reinstall else ''
+                ])
+                if Result.returncode == 0:
+                    break
+        else:
+            RunCMD(
+                [DisplayCommand if Reinstall else '' + f'pip3 uninstall {Package} -y'] if Reinstall else [] +
+                [DisplayCommand if Reinstall else '' + f'pip3 install {Package} -y']
+            )
 
-    def Execute_Pytorch_Installation(self):
+    def Execute_Pytorch_Installation(self, Version: Optional[str] = None, Reinstall: bool = False):
         PackageList = ['torch', 'torchvision', 'torchaudio', 'pytorch-lightning']
-        for Index, Package in enumerate(PackageList):
+        VersionDict = {
+            '2.0.1': {'torch': '2.0.1', 'torchvision': '0.15.2', 'torchaudio': '2.0.2', 'pytorch-lightning': '2.1'},
+            '2.2.2': {'torch': '2.2.2', 'torchvision': '0.17.2', 'torchaudio': '2.2.2', 'pytorch-lightning': '2.2'}
+        }.get(Version)
+        for Index, Package in enumerate(PackageList if VersionDict is None else [f'{Package}=={VersionDict[Package]}' for Package in PackageList]):
             Result = self.Check_Pytorch(Package)
             if Result == False:
                 if self.EmitFlag == True:
@@ -518,13 +531,14 @@ class Pytorch_Installer(QObject):
                     self.EmitFlag = False
                 EnvConfiguratorSignals.Signal_PytorchStatus.emit(f"Installing {Package}. Please wait...")
                 try:
-                    self.Install_Pytorch(Package)
+                    self.Install_Pytorch(Package, Reinstall = False)
                     EnvConfiguratorSignals.Signal_PytorchInstalled.emit() if Index + 1 == len(PackageList) else None
                     EnvConfiguratorSignals.Signal_PytorchStatus.emit("Successfully installed!") if Index + 1 == len(PackageList) else None
                 except Exception as e:
                     EnvConfiguratorSignals.Signal_PytorchInstallFailed.emit(e)
                     EnvConfiguratorSignals.Signal_PytorchStatus.emit("Installation failed:(")
             else:
+                self.Install_Pytorch(Package, Reinstall) if Reinstall else None
                 EnvConfiguratorSignals.Signal_PytorchDetected.emit() if Index + 1 == len(PackageList) else None
                 EnvConfiguratorSignals.Signal_PytorchStatus.emit(f"{Package} detected. Version: {Result}")
 

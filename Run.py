@@ -20,7 +20,7 @@ from EVT_GUI.EnvConfigurator import *
 ##############################################################################################################################
 
 # Set current version
-CurrentVersion = "v1.1.1"
+CurrentVersion = "v1.1.2"
 
 ##############################################################################################################################
 
@@ -1119,6 +1119,15 @@ class MainWindow(Window_MainWindow):
 
         # EnvInstallation
         self.ui.ToolButton_Env_Install_Title.setText(QCA.translate("Label", "自动配置"))
+        self.ui.ToolButton_Env_Install_Title.setCheckable(True)
+        self.ui.ToolButton_Env_Install_Title.setChecked(True)
+        self.ui.ToolButton_Env_Install_Title.setAutoExclusive(True)
+        self.ui.ToolButton_Env_Install_Title.clicked.connect(
+            lambda: Function_AnimateStackedWidget(
+                StackedWidget = self.ui.StackedWidget_Pages_Env,
+                TargetIndex = 0
+            )
+        )
 
         self.ui.Label_Env_Install_Aria2.setText(QCA.translate("Label", "Aria2"))
         Function_SetMethodExecutor(self,
@@ -1338,6 +1347,34 @@ class MainWindow(Window_MainWindow):
         )
         EnvConfiguratorSignals.Signal_PytorchStatus.connect(
             lambda Status: self.ui.Label_Env_Install_Pytorch_Status.setText(Status)
+        )
+
+        # EnvManagement
+        self.ui.ToolButton_Env_Manage_Title.setText(QCA.translate("ToolButton", "安装管理"))
+        self.ui.ToolButton_Env_Manage_Title.setCheckable(True)
+        self.ui.ToolButton_Env_Manage_Title.setChecked(False)
+        self.ui.ToolButton_Env_Manage_Title.setAutoExclusive(True)
+        self.ui.ToolButton_Env_Manage_Title.clicked.connect(
+            lambda: Function_AnimateStackedWidget(
+                StackedWidget = self.ui.StackedWidget_Pages_Env,
+                TargetIndex = 1
+            )
+        )
+
+        self.ui.ToolBox_Env_Manage_Pytorch.widget(0).setText(QCA.translate("ToolBox", "Pytorch"))
+        self.ui.ToolBox_Env_Manage_Pytorch.widget(0).collapse()
+
+        self.ui.Label_Env_Manage_Pytorch_Version.setText(QCA.translate("Label", "选择Pytorch版本"))
+        self.ui.ComboBox_Env_Manage_Pytorch_Version.addItems([ '2.0.1', '2.2.2'])
+
+        self.ui.Button_Env_Manage_Pytorch_Install.setText(QCA.translate("Button", "重装"))
+        Function_SetMethodExecutor(self,
+            ExecuteButton = self.ui.Button_Env_Manage_Pytorch_Install,
+            Method = Pytorch_Installer.Execute,
+            ParamsFrom = [
+                self.ui.ComboBox_Env_Manage_Pytorch_Version,
+                True
+            ]
         )
 
         #############################################################
@@ -6516,61 +6553,61 @@ class MainWindow(Window_MainWindow):
         )
 
         # ChildWindow
-        ChildWindow_TTS = Window_ChildWindow_TTS(self)
+        ChildWindow_TTS_VITS = Window_ChildWindow_TTS_VITS(self)
 
-        ChildWindow_TTS.ui.Button_Close.clicked.connect(
+        ChildWindow_TTS_VITS.ui.Button_Close.clicked.connect(
             lambda: Function_ShowMessageBox(self,
                 QMessageBox.Question, "Ask",
                 "确认退出试听？",
                 QMessageBox.Yes|QMessageBox.No,
                 {
                     QMessageBox.Yes: lambda: (
-                        ChildWindow_TTS.ui.Widget.ReleaseMediaPlayer(),
-                        ChildWindow_TTS.close()
+                        ChildWindow_TTS_VITS.ui.Widget.ReleaseMediaPlayer(),
+                        ChildWindow_TTS_VITS.close()
                     )
                 } 
             )
         )
-        ChildWindow_TTS.ui.Button_Maximize.clicked.connect(lambda: ChildWindow_TTS.showNormal() if ChildWindow_TTS.isMaximized() else ChildWindow_TTS.showMaximized())
+        ChildWindow_TTS_VITS.ui.Button_Maximize.clicked.connect(lambda: ChildWindow_TTS_VITS.showNormal() if ChildWindow_TTS_VITS.isMaximized() else ChildWindow_TTS_VITS.showMaximized())
 
         Function_SetText(
-            Widget = ChildWindow_TTS.ui.Label_Title,
+            Widget = ChildWindow_TTS_VITS.ui.Label_Title,
             Text = SetRichText(
                 Title = QCA.translate("Label", "语音合成结果")
             )
         )
         Function_SetText(
-            Widget = ChildWindow_TTS.ui.Label_Text,
+            Widget = ChildWindow_TTS_VITS.ui.Label_Text,
             Text = SetRichText(
                 Body = QCA.translate("Label", "点击播放按钮以试听合成语音")
             )
         )
 
-        ChildWindow_TTS.ui.Button_Cancel.setText(QCA.translate("Button", "丢弃"))
-        ChildWindow_TTS.ui.Button_Cancel.clicked.connect(
+        ChildWindow_TTS_VITS.ui.Button_Cancel.setText(QCA.translate("Button", "丢弃"))
+        ChildWindow_TTS_VITS.ui.Button_Cancel.clicked.connect(
             lambda: Function_ShowMessageBox(self,
                 QMessageBox.Question, "Ask",
                 "确认丢弃音频？",
                 QMessageBox.Yes|QMessageBox.No,
                 {
                     QMessageBox.Yes: lambda: (
-                        ChildWindow_TTS.ui.Widget.ReleaseMediaPlayer(),
+                        ChildWindow_TTS_VITS.ui.Widget.ReleaseMediaPlayer(),
                         os.remove(self.ui.LineEdit_TTS_VITS_AudioPathSave.text()),
-                        ChildWindow_TTS.close()
+                        ChildWindow_TTS_VITS.close()
                     )
                 }
             )
         )
-        ChildWindow_TTS.ui.Button_Confirm.setText(QCA.translate("Button", "保留"))
-        ChildWindow_TTS.ui.Button_Confirm.clicked.connect(
+        ChildWindow_TTS_VITS.ui.Button_Confirm.setText(QCA.translate("Button", "保留"))
+        ChildWindow_TTS_VITS.ui.Button_Confirm.clicked.connect(
             lambda: Function_ShowMessageBox(self,
                 QMessageBox.Question, "Ask",
                 "确认保留音频？",
                 QMessageBox.Yes|QMessageBox.No,
                 {
                     QMessageBox.Yes: lambda: (
-                        ChildWindow_TTS.ui.Widget.ReleaseMediaPlayer(),
-                        ChildWindow_TTS.close()
+                        ChildWindow_TTS_VITS.ui.Widget.ReleaseMediaPlayer(),
+                        ChildWindow_TTS_VITS.close()
                     )
                 }
             )
@@ -6644,10 +6681,10 @@ class MainWindow(Window_MainWindow):
             ],
             FinishEvents = [
                 lambda: self.ShowMask(True, "正在加载播放器"),
-                lambda: ChildWindow_TTS.ui.Widget.SetMediaPlayer(
+                lambda: ChildWindow_TTS_VITS.ui.Widget.SetMediaPlayer(
                     self.ui.LineEdit_TTS_VITS_AudioPathSave.text()
                 ),
-                ChildWindow_TTS.exec,
+                ChildWindow_TTS_VITS.exec,
                 lambda: Function_ShowMessageBox(self,
                     QMessageBox.Information, "Tip",
                     "当前任务已执行结束。"
