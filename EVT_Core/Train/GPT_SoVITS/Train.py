@@ -210,19 +210,22 @@ if torch.cuda.is_available() or ngpu != 0:
             if_gpu_ok = True  # 至少有一张能用的N卡
             gpu_infos.append("%s\t%s" % (i, gpu_name))
             mem.append(int(torch.cuda.get_device_properties(i).total_memory/ 1024/ 1024/ 1024+ 0.4))
+'''
 # 判断是否支持mps加速
 if torch.backends.mps.is_available():
     if_gpu_ok = True
     gpu_infos.append("%s\t%s" % ("0", "Apple GPU"))
     mem.append(psutil.virtual_memory().total/ 1024 / 1024 / 1024) # 实测使用系统内存作为显存不会爆显存
 os.environ['PYTORCH_ENABLE_MPS_FALLBACK'] = '1' # 当遇到mps不支持的步骤时使用cpu
+'''
 
 if if_gpu_ok and len(gpu_infos) > 0:
     gpu_info = "\n".join(gpu_infos)
     default_batch_size = min(mem) // 2
 else:
-    gpu_info = "很遗憾您这没有能用的显卡来支持您训练"
-    default_batch_size = 1
+    gpu_info = ("%s\t%s" % ("0", "CPU"))
+    gpu_infos.append("%s\t%s" % ("0", "CPU"))
+    default_batch_size = int(psutil.virtual_memory().total/ 1024 / 1024 / 1024 / 2)
 gpus = "-".join([i[0] for i in gpu_infos])
 
 

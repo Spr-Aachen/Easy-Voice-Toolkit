@@ -41,3 +41,4 @@ LangSegment>=0.2.0
 gradio==3.38.0
 gradio_client==0.8.1
 modelscope==1.10.0
+PyQt5

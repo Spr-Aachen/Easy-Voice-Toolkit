@@ -20,7 +20,7 @@ from EVT_GUI.EnvConfigurator import *
 ##############################################################################################################################
 
 # Set current version
-CurrentVersion = "v1.1.2"
+CurrentVersion = "v1.1.3"
 
 ##############################################################################################################################
 
@@ -1068,18 +1068,20 @@ class MainWindow(Window_MainWindow):
                 TitleSize = 24,
                 TitleWeight = 840,
                 Body = QCA.translate("TextBrowser",
-                    "一个基于Whisper、VITS等项目实现的简易语音工具箱，提供了包括语音模型训练在内的多种自动化音频工具\n"
-                    "\n"
-                    "工具箱目前包含以下功能：\n"
-                    "音频处理\n"
-                    "语音识别\n"
-                    "语音转录\n"
-                    "数据集制作\n"
-                    "模型训练\n"
-                    "语音合成\n"
-                    "\n"
-                    "这些功能彼此之间相互独立，但又能无缝衔接地形成一套完整的工作流\n"
-                    "用户可以根据自己的需求有选择性地使用，亦或者依次通过这些工具将未经处理的语音文件逐步变为理想的语音模型\n"
+                    """
+                    一个基于Whisper、VITS等项目实现的简易语音工具箱，提供了包括语音模型训练在内的多种自动化音频工具
+
+                    工具箱目前包含以下功能：
+                    音频处理
+                    语音识别
+                    语音转录
+                    数据集制作
+                    模型训练
+                    语音合成
+
+                    这些功能彼此之间相互独立，但又能无缝衔接地形成一套完整的工作流
+                    用户可以根据自己的需求有选择性地使用，亦或者依次通过这些工具将未经处理的语音文件逐步变为理想的语音模型
+                    """
                 ),
                 BodyAlign = "left",
                 BodySize = 12,
@@ -1562,12 +1564,14 @@ class MainWindow(Window_MainWindow):
             ]
         )
         self.ui.Button_Menu_Process.clicked.connect(
-            lambda: DialogBox_Process.exec() if eval(Config.GetValue('Dialog', 'GuidanceShown_Process', 'False')) is False else None,
-            type = Qt.QueuedConnection
+            lambda: (
+                DialogBox_Process.exec(),
+                Config.EditConfig('Dialog', 'GuidanceShown_Process', 'True')
+            ) if eval(Config.GetValue('Dialog', 'GuidanceShown_Process', 'False')) is False else None
         )
-        self.ui.Button_Menu_Process.clicked.connect(
-            lambda: Config.EditConfig('Dialog', 'GuidanceShown_Process', 'True'),
-            type = Qt.QueuedConnection
+
+        self.ui.Button_AudioProcessor_Help.clicked.connect(
+            lambda: DialogBox_Process.exec()
         )
 
         # ParamsManager
@@ -2204,12 +2208,14 @@ class MainWindow(Window_MainWindow):
             ]
         )
         self.ui.Button_Menu_ASR.clicked.connect(
-            lambda: DialogBox_ASR.exec() if eval(Config.GetValue('Dialog', 'GuidanceShown_ASR', 'False')) is False else None,
-            type = Qt.QueuedConnection
+            lambda: (
+                DialogBox_ASR.exec(),
+                Config.EditConfig('Dialog', 'GuidanceShown_ASR', 'True')
+            ) if eval(Config.GetValue('Dialog', 'GuidanceShown_ASR', 'False')) is False else None
         )
-        self.ui.Button_Menu_ASR.clicked.connect(
-            lambda: Config.EditConfig('Dialog', 'GuidanceShown_ASR', 'True'),
-            type = Qt.QueuedConnection
+
+        self.ui.Button_VoiceIdentifier_Help.clicked.connect(
+            lambda: DialogBox_ASR.exec()
         )
 
         # ParamsManager
@@ -2757,12 +2763,14 @@ class MainWindow(Window_MainWindow):
             ]
         )
         self.ui.Button_Menu_STT.clicked.connect(
-            lambda: DialogBox_STT.exec() if eval(Config.GetValue('Dialog', 'GuidanceShown_STT', 'False')) is False else None,
-            type = Qt.QueuedConnection
+            lambda: (
+                DialogBox_STT.exec(),
+                Config.EditConfig('Dialog', 'GuidanceShown_STT', 'True')
+            ) if eval(Config.GetValue('Dialog', 'GuidanceShown_STT', 'False')) is False else None
         )
-        self.ui.Button_Menu_STT.clicked.connect(
-            lambda: Config.EditConfig('Dialog', 'GuidanceShown_STT', 'True'),
-            type = Qt.QueuedConnection
+
+        self.ui.Button_VoiceTranscriber_Help.clicked.connect(
+            lambda: DialogBox_STT.exec()
         )
 
         # ParamsManager
@@ -3195,12 +3203,14 @@ class MainWindow(Window_MainWindow):
             ]
         )
         self.ui.Button_Menu_Dataset.clicked.connect(
-            lambda: DialogBox_Dataset.exec() if eval(Config.GetValue('Dialog', 'GuidanceShown_Dataset', 'False')) is False else None,
-            type = Qt.QueuedConnection
+            lambda: (
+                DialogBox_Dataset.exec(),
+                Config.EditConfig('Dialog', 'GuidanceShown_Dataset', 'True')
+            ) if eval(Config.GetValue('Dialog', 'GuidanceShown_Dataset', 'False')) is False else None
         )
-        self.ui.Button_Menu_Dataset.clicked.connect(
-            lambda: Config.EditConfig('Dialog', 'GuidanceShown_Dataset', 'True'),
-            type = Qt.QueuedConnection
+
+        self.ui.Button_DatasetCreator_Help.clicked.connect(
+            lambda: DialogBox_Dataset.exec()
         )
 
         # GPT-SoVITS - ParamsManager
@@ -4241,12 +4251,14 @@ class MainWindow(Window_MainWindow):
             ]
         )
         self.ui.Button_Menu_Train.clicked.connect(
-            lambda: DialogBox_Train.exec() if eval(Config.GetValue('Dialog', 'GuidanceShown_Train', 'False')) is False else None,
-            type = Qt.QueuedConnection
+            lambda: (
+                DialogBox_Train.exec(),
+                Config.EditConfig('Dialog', 'GuidanceShown_Train', 'True')
+            ) if eval(Config.GetValue('Dialog', 'GuidanceShown_Train', 'False')) is False else None
         )
-        self.ui.Button_Menu_Train.clicked.connect(
-            lambda: Config.EditConfig('Dialog', 'GuidanceShown_Train', 'True'),
-            type = Qt.QueuedConnection
+
+        self.ui.Button_VoiceTrainer_Help.clicked.connect(
+            lambda: DialogBox_Train.exec()
         )
 
         # GPT-SoVITS - ParamsManager
@@ -5456,12 +5468,14 @@ class MainWindow(Window_MainWindow):
             ]
         )
         self.ui.Button_Menu_TTS.clicked.connect(
-            lambda: DialogBox_TTS.exec() if eval(Config.GetValue('Dialog', 'GuidanceShown_TTS', 'False')) is False else None,
-            type = Qt.QueuedConnection
+            lambda: (
+                DialogBox_TTS.exec(),
+                Config.EditConfig('Dialog', 'GuidanceShown_TTS', 'True')
+            ) if eval(Config.GetValue('Dialog', 'GuidanceShown_TTS', 'False')) is False else None
         )
-        self.ui.Button_Menu_TTS.clicked.connect(
-            lambda: Config.EditConfig('Dialog', 'GuidanceShown_TTS', 'True'),
-            type = Qt.QueuedConnection
+
+        self.ui.Button_VoiceConverter_Help.clicked.connect(
+            lambda: DialogBox_TTS.exec()
         )
 
         # GPT-SoVITS - ParamsManager
@@ -5622,480 +5636,6 @@ class MainWindow(Window_MainWindow):
             ChildItemText = QCA.translate("Tree", "预训练ssl模型加载路径")
         )
 
-        self.ui.GroupBox_TTS_GPTSoVITS_RefParams.setTitle(QCA.translate("GroupBox", "参考语音参数"))
-        Function_AddToTreeWidget(
-            Widget = self.ui.GroupBox_TTS_GPTSoVITS_RefParams,
-            TreeWidget = self.ui.TreeWidget_Catalogue_TTS_GPTSoVITS,
-            RootItemText = QCA.translate("Tree", "参考语音参数")
-        )
-
-        Function_SetText(
-            Widget = self.ui.Label_TTS_GPTSoVITS_RefAudio,
-            Text = SetRichText(
-                Body = QCA.translate("Label", "参考音频\n请上传3~10秒内参考音频，超过会报错！")
-            )
-        )
-        ParamsManager_TTS_GPTSoVITS.SetParam(
-            Widget = self.ui.LineEdit_TTS_GPTSoVITS_RefAudio,
-            Section = 'Ref Params',
-            Option = 'Ref_Audio',
-            DefaultValue = ''
-        )
-        self.ui.LineEdit_TTS_GPTSoVITS_RefAudio.SetFileDialog(
-            Mode = "SelectFile",
-            FileType = "音频类型 (*.flac *.wav *.mp3 *.aac *.m4a *.wma *.aiff *.au *.ogg)"
-        )
-        self.ui.Button_TTS_GPTSoVITS_RefAudio_MoreActions.SetMenu(
-            ActionEvents = {
-                "重置": lambda: ParamsManager_TTS_GPTSoVITS.ResetParam(self.ui.LineEdit_TTS_GPTSoVITS_RefAudio),
-                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_TTS_GPTSoVITS_RefAudio.text())
-            }
-        )
-        Function_AddToTreeWidget(
-            Widget = self.ui.Label_TTS_GPTSoVITS_RefAudio,
-            TreeWidget = self.ui.TreeWidget_Catalogue_TTS_GPTSoVITS,
-            RootItemText = QCA.translate("Tree", "参考语音参数"),
-            ChildItemText = QCA.translate("Tree", "参考音频")
-        )
-
-        self.ui.GroupBox_TTS_GPTSoVITS_GPTSoVITSParams.setTitle(QCA.translate("GroupBox", "语音合成参数"))
-        Function_AddToTreeWidget(
-            Widget = self.ui.GroupBox_TTS_GPTSoVITS_GPTSoVITSParams,
-            TreeWidget = self.ui.TreeWidget_Catalogue_TTS_GPTSoVITS,
-            RootItemText = QCA.translate("Tree", "语音合成参数")
-        )
-
-        Function_SetText(
-            Widget = self.ui.Label_TTS_GPTSoVITS_RefTextFree,
-            Text = SetRichText(
-                Body = QCA.translate("Label", "无参考文本模式\n开启无参考文本模式。不填参考文本亦相当于开启。")
-            )
-        )
-        ParamsManager_TTS_GPTSoVITS.SetParam(
-            Widget = self.ui.CheckBox_TTS_GPTSoVITS_RefTextFree,
-            Section = 'Ref Params',
-            Option = 'Ref_Text_Free',
-            DefaultValue = False
-        )
-        Function_ConfigureCheckBox(
-            CheckBox = self.ui.CheckBox_TTS_GPTSoVITS_RefTextFree,
-            CheckedText = "已启用",
-            CheckedEvents = [
-                lambda: Function_SetChildWidgetsVisibility(
-                    self.ui.Frame_TTS_GPTSoVITS_RefParams_BasicSettings,
-                    [
-                        self.ui.Frame_TTS_GPTSoVITS_RefText
-                    ],
-                    False
-                )
-            ],
-            UncheckedText = "未启用",
-            UncheckedEvents = [
-                lambda: Function_SetChildWidgetsVisibility(
-                    self.ui.Frame_TTS_GPTSoVITS_RefParams_BasicSettings,
-                    [
-                        self.ui.Frame_TTS_GPTSoVITS_RefText
-                    ],
-                    True
-                )
-            ],
-            TakeEffect = True
-        )
-        self.ui.Button_TTS_GPTSoVITS_RefTextFree_MoreActions.SetMenu(
-            ActionEvents = {
-                "重置": lambda: ParamsManager_TTS_GPTSoVITS.ResetParam(self.ui.CheckBox_TTS_GPTSoVITS_RefTextFree)
-            }
-        )
-        Function_AddToTreeWidget(
-            Widget = self.ui.Label_TTS_GPTSoVITS_RefTextFree,
-            TreeWidget = self.ui.TreeWidget_Catalogue_TTS_GPTSoVITS,
-            RootItemText = QCA.translate("Tree", "参考语音参数"),
-            ChildItemText = QCA.translate("Tree", "无参考文本模式")
-        )
-
-        Function_SetText(
-            Widget = self.ui.Label_TTS_GPTSoVITS_RefText,
-            Text = SetRichText(
-                Body = QCA.translate("Label", "参考文本\n参考音频的文本。")
-            )
-        )
-        ParamsManager_TTS_GPTSoVITS.SetParam(
-            Widget = self.ui.LineEdit_TTS_GPTSoVITS_RefText,
-            Section = 'Ref Params',
-            Option = 'Ref_Text',
-            DefaultValue = ''
-        )
-        self.ui.LineEdit_TTS_GPTSoVITS_RefText.RemoveFileDialogButton()
-        self.ui.Button_TTS_GPTSoVITS_RefText_MoreActions.SetMenu(
-            ActionEvents = {
-                "重置": lambda: ParamsManager_TTS_GPTSoVITS.ResetParam(self.ui.LineEdit_TTS_GPTSoVITS_RefText),
-                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_TTS_GPTSoVITS_RefText.text())
-            }
-        )
-        Function_AddToTreeWidget(
-            Widget = self.ui.Label_TTS_GPTSoVITS_RefText,
-            TreeWidget = self.ui.TreeWidget_Catalogue_TTS_GPTSoVITS,
-            RootItemText = QCA.translate("Tree", "参考语音参数"),
-            ChildItemText = QCA.translate("Tree", "参考文本")
-        )
-
-        Function_SetText(
-            Widget = self.ui.Label_TTS_GPTSoVITS_RefLanguage,
-            Text = SetRichText(
-                Body = QCA.translate("Label", "所属语言\n文字所属的语言。")
-            )
-        )
-        self.ui.ComboBox_TTS_GPTSoVITS_RefLanguage.addItems([QCA.translate("ComboBox", '中文'), QCA.translate("ComboBox", '英文'), QCA.translate("ComboBox", '日文'), QCA.translate("ComboBox", '多语种混合')])
-        ParamsManager_TTS_GPTSoVITS.SetParam(
-            Widget = self.ui.ComboBox_TTS_GPTSoVITS_RefLanguage,
-            Section = 'Ref Params',
-            Option = 'Ref_Language',
-            DefaultValue = '多语种混合'
-        )
-        self.ui.Button_TTS_GPTSoVITS_RefLanguage_MoreActions.SetMenu(
-            ActionEvents = {
-                "重置": lambda: ParamsManager_TTS_GPTSoVITS.ResetParam(self.ui.ComboBox_TTS_GPTSoVITS_RefLanguage)
-            }
-        )
-        Function_AddToTreeWidget(
-            Widget = self.ui.Label_TTS_GPTSoVITS_RefLanguage,
-            TreeWidget = self.ui.TreeWidget_Catalogue_TTS_VITS,
-            RootItemText = QCA.translate("Tree", "参考语音参数"),
-            ChildItemText = QCA.translate("Tree", "所属语言")
-        )
-
-        self.ui.GroupBox_TTS_GPTSoVITS_GPTSoVITSParams.setTitle(QCA.translate("GroupBox", "语音合成参数"))
-        Function_AddToTreeWidget(
-            Widget = self.ui.GroupBox_TTS_GPTSoVITS_GPTSoVITSParams,
-            TreeWidget = self.ui.TreeWidget_Catalogue_TTS_GPTSoVITS,
-            RootItemText = QCA.translate("Tree", "语音合成参数")
-        )
-
-        Function_SetText(
-            Widget = self.ui.Label_TTS_GPTSoVITS_Text,
-            Text = SetRichText(
-                Body = QCA.translate("Label", "合成文本\n合成音频的文本。")
-            )
-        )
-        ParamsManager_TTS_GPTSoVITS.SetParam(
-            Widget = self.ui.PlainTextEdit_TTS_GPTSoVITS_Text,
-            Section = 'GPTSoVITS Params',
-            Option = 'Text',
-            DefaultValue = ''
-        )
-        Function_AddToTreeWidget(
-            Widget = self.ui.Label_TTS_GPTSoVITS_Text,
-            TreeWidget = self.ui.TreeWidget_Catalogue_TTS_GPTSoVITS,
-            RootItemText = QCA.translate("Tree", "语音合成参数"),
-            ChildItemText = QCA.translate("Tree", "合成文本")
-        )
-
-        Function_SetText(
-            Widget = self.ui.Label_TTS_GPTSoVITS_Language,
-            Text = SetRichText(
-                Body = QCA.translate("Label", "所属语言\n文字所属的语言。")
-            )
-        )
-        self.ui.ComboBox_TTS_GPTSoVITS_Language.addItems([QCA.translate("ComboBox", '中文'), QCA.translate("ComboBox", '英文'), QCA.translate("ComboBox", '日文'), QCA.translate("ComboBox", '多语种混合')])
-        ParamsManager_TTS_GPTSoVITS.SetParam(
-            Widget = self.ui.ComboBox_TTS_GPTSoVITS_Language,
-            Section = 'GPTSoVITS Params',
-            Option = 'Language',
-            DefaultValue = '多语种混合'
-        )
-        self.ui.Button_TTS_GPTSoVITS_Language_MoreActions.SetMenu(
-            ActionEvents = {
-                "重置": lambda: ParamsManager_TTS_GPTSoVITS.ResetParam(self.ui.ComboBox_TTS_GPTSoVITS_Language)
-            }
-        )
-        Function_AddToTreeWidget(
-            Widget = self.ui.Label_TTS_GPTSoVITS_Language,
-            TreeWidget = self.ui.TreeWidget_Catalogue_TTS_VITS,
-            RootItemText = QCA.translate("Tree", "语音合成参数"),
-            ChildItemText = QCA.translate("Tree", "所属语言")
-        )
-
-        Function_SetText(
-            Widget = self.ui.Label_TTS_GPTSoVITS_HowToCut,
-            Text = SetRichText(
-                Body = QCA.translate("Label", "切分方式\n切分合成文本的方式。")
-            )
-        )
-        self.ui.ComboBox_TTS_GPTSoVITS_HowToCut.addItems([QCA.translate("ComboBox", '不切'), QCA.translate("ComboBox", '凑四句一切'), QCA.translate("ComboBox", '按中文句号。切'), QCA.translate("ComboBox", '按英文句号.切'), QCA.translate("ComboBox", '按标点符号切')])
-        ParamsManager_TTS_GPTSoVITS.SetParam(
-            Widget = self.ui.ComboBox_TTS_GPTSoVITS_HowToCut,
-            Section = 'GPTSoVITS Params',
-            Option = 'How_To_Cut',
-            DefaultValue = '按标点符号切'
-        )
-        self.ui.Button_TTS_GPTSoVITS_HowToCut_MoreActions.SetMenu(
-            ActionEvents = {
-                "重置": lambda: ParamsManager_TTS_GPTSoVITS.ResetParam(self.ui.ComboBox_TTS_GPTSoVITS_HowToCut)
-            }
-        )
-        Function_AddToTreeWidget(
-            Widget = self.ui.Label_TTS_GPTSoVITS_HowToCut,
-            TreeWidget = self.ui.TreeWidget_Catalogue_TTS_VITS,
-            RootItemText = QCA.translate("Tree", "语音合成参数"),
-            ChildItemText = QCA.translate("Tree", "切分方式")
-        )
-
-        self.ui.ToolBox_TTS_GPTSoVITS_GPTSoVITSParams_AdvanceSettings.widget(0).setText(QCA.translate("ToolBox", "高级设置"))
-        self.ui.ToolBox_TTS_GPTSoVITS_GPTSoVITSParams_AdvanceSettings.widget(0).collapse()
-
-        Function_SetText(
-            Widget = self.ui.Label_TTS_GPTSoVITS_TopK,
-            Text = SetRichText(
-                Body = QCA.translate("Label", "Top_K\ngpt采样参数(无参考文本时不要太低)。")
-            )
-        )
-        self.ui.HorizontalSlider_TTS_GPTSoVITS_TopK.setMinimum(1)
-        self.ui.HorizontalSlider_TTS_GPTSoVITS_TopK.setMaximum(100)
-        self.ui.HorizontalSlider_TTS_GPTSoVITS_TopK.setTickInterval(1)
-        ParamsManager_TTS_GPTSoVITS.SetParam(
-            Widget = self.ui.HorizontalSlider_TTS_GPTSoVITS_TopK,
-            Section = 'GPTSoVITS Params',
-            Option = 'Top_K',
-            DefaultValue = 5
-        )
-        Function_ParamsSynchronizer(
-            Trigger = self.ui.HorizontalSlider_TTS_GPTSoVITS_TopK,
-            FromTo = {
-                self.ui.HorizontalSlider_TTS_GPTSoVITS_TopK: self.ui.SpinBox_TTS_GPTSoVITS_TopK
-            }
-        )
-        self.ui.SpinBox_TTS_GPTSoVITS_TopK.setRange(1, 100)
-        self.ui.SpinBox_TTS_GPTSoVITS_TopK.setSingleStep(1)
-        ParamsManager_TTS_GPTSoVITS.SetParam(
-            Widget = self.ui.SpinBox_TTS_GPTSoVITS_TopK,
-            Section = 'GPTSoVITS Params',
-            Option = 'Top_K',
-            DefaultValue = 5
-        )
-        Function_ParamsSynchronizer(
-            Trigger = self.ui.SpinBox_TTS_GPTSoVITS_TopK,
-            FromTo = {
-                self.ui.SpinBox_TTS_GPTSoVITS_TopK: self.ui.HorizontalSlider_TTS_GPTSoVITS_TopK
-            }
-        )
-        self.ui.Button_TTS_GPTSoVITS_TopK_MoreActions.SetMenu(
-            ActionEvents = {
-                "重置": lambda: ParamsManager_TTS_GPTSoVITS.ResetParam(self.ui.SpinBox_TTS_GPTSoVITS_TopK)
-            }
-        )
-        Function_AddToTreeWidget(
-            Widget = self.ui.Label_TTS_GPTSoVITS_TopK,
-            TreeWidget = self.ui.TreeWidget_Catalogue_TTS_GPTSoVITS,
-            RootItemText = QCA.translate("Tree", "语音合成参数"),
-            ChildItemText = QCA.translate("Tree", "Top_K")
-        )
-
-        Function_SetText(
-            Widget = self.ui.Label_TTS_GPTSoVITS_TopP,
-            Text = SetRichText(
-                Body = QCA.translate("Label", "Top_P\ngpt采样参数(无参考文本时不要太低)。")
-            )
-        )
-        self.ui.HorizontalSlider_TTS_GPTSoVITS_TopP.setMinimum(0)
-        self.ui.HorizontalSlider_TTS_GPTSoVITS_TopP.setMaximum(100)
-        self.ui.HorizontalSlider_TTS_GPTSoVITS_TopP.setTickInterval(5)
-        ParamsManager_TTS_GPTSoVITS.SetParam(
-            Widget = self.ui.HorizontalSlider_TTS_GPTSoVITS_TopP,
-            Section = 'GPTSoVITS Params',
-            Option = 'Top_P',
-            DefaultValue = 100,
-            Times = 100
-        )
-        Function_ParamsSynchronizer(
-            Trigger = self.ui.HorizontalSlider_TTS_GPTSoVITS_TopP,
-            FromTo = {
-                self.ui.HorizontalSlider_TTS_GPTSoVITS_TopP: self.ui.DoubleSpinBox_TTS_GPTSoVITS_TopP
-            },
-            Times = 0.01
-        )
-        self.ui.DoubleSpinBox_TTS_GPTSoVITS_TopP.setRange(0, 1)
-        self.ui.DoubleSpinBox_TTS_GPTSoVITS_TopP.setSingleStep(0.05)
-        ParamsManager_TTS_GPTSoVITS.SetParam(
-            Widget = self.ui.DoubleSpinBox_TTS_GPTSoVITS_TopP,
-            Section = 'GPTSoVITS Params',
-            Option = 'Top_P',
-            DefaultValue = 1
-        )
-        Function_ParamsSynchronizer(
-            Trigger = self.ui.DoubleSpinBox_TTS_GPTSoVITS_TopP,
-            FromTo = {
-                self.ui.DoubleSpinBox_TTS_GPTSoVITS_TopP: self.ui.HorizontalSlider_TTS_GPTSoVITS_TopP
-            },
-            Times = 100
-        )
-        self.ui.Button_TTS_GPTSoVITS_TopP_MoreActions.SetMenu(
-            ActionEvents = {
-                "重置": lambda: ParamsManager_TTS_GPTSoVITS.ResetParam(self.ui.DoubleSpinBox_TTS_GPTSoVITS_TopP)
-            }
-        )
-        Function_AddToTreeWidget(
-            Widget = self.ui.Label_TTS_GPTSoVITS_TopP,
-            TreeWidget = self.ui.TreeWidget_Catalogue_TTS_GPTSoVITS,
-            RootItemText = QCA.translate("Tree", "语音合成参数"),
-            ChildItemText = QCA.translate("Tree", "Top_P")
-        )
-
-        Function_SetText(
-            Widget = self.ui.Label_TTS_GPTSoVITS_Temperature,
-            Text = SetRichText(
-                Body = QCA.translate("Label", "Temperature\ngpt采样参数(无参考文本时不要太低)。")
-            )
-        )
-        self.ui.HorizontalSlider_TTS_GPTSoVITS_Temperature.setMinimum(0)
-        self.ui.HorizontalSlider_TTS_GPTSoVITS_Temperature.setMaximum(100)
-        self.ui.HorizontalSlider_TTS_GPTSoVITS_Temperature.setTickInterval(5)
-        ParamsManager_TTS_GPTSoVITS.SetParam(
-            Widget = self.ui.HorizontalSlider_TTS_GPTSoVITS_Temperature,
-            Section = 'GPTSoVITS Params',
-            Option = 'Temperature',
-            DefaultValue = 100,
-            Times = 100
-        )
-        Function_ParamsSynchronizer(
-            Trigger = self.ui.HorizontalSlider_TTS_GPTSoVITS_Temperature,
-            FromTo = {
-                self.ui.HorizontalSlider_TTS_GPTSoVITS_Temperature: self.ui.DoubleSpinBox_TTS_GPTSoVITS_Temperature
-            },
-            Times = 0.01
-        )
-        self.ui.DoubleSpinBox_TTS_GPTSoVITS_Temperature.setRange(0, 1)
-        self.ui.DoubleSpinBox_TTS_GPTSoVITS_Temperature.setSingleStep(0.05)
-        ParamsManager_TTS_GPTSoVITS.SetParam(
-            Widget = self.ui.DoubleSpinBox_TTS_GPTSoVITS_Temperature,
-            Section = 'GPTSoVITS Params',
-            Option = 'Temperature',
-            DefaultValue = 1
-        )
-        Function_ParamsSynchronizer(
-            Trigger = self.ui.DoubleSpinBox_TTS_GPTSoVITS_Temperature,
-            FromTo = {
-                self.ui.DoubleSpinBox_TTS_GPTSoVITS_Temperature: self.ui.HorizontalSlider_TTS_GPTSoVITS_Temperature
-            },
-            Times = 100
-        )
-        self.ui.Button_TTS_GPTSoVITS_Temperature_MoreActions.SetMenu(
-            ActionEvents = {
-                "重置": lambda: ParamsManager_TTS_GPTSoVITS.ResetParam(self.ui.DoubleSpinBox_TTS_GPTSoVITS_Temperature)
-            }
-        )
-        Function_AddToTreeWidget(
-            Widget = self.ui.Label_TTS_GPTSoVITS_Temperature,
-            TreeWidget = self.ui.TreeWidget_Catalogue_TTS_GPTSoVITS,
-            RootItemText = QCA.translate("Tree", "语音合成参数"),
-            ChildItemText = QCA.translate("Tree", "Temperature")
-        )
-
-        Function_SetText(
-            Widget = self.ui.Label_TTS_GPTSoVITS_FP16Run,
-            Text = SetRichText(
-                Body = QCA.translate("Label", "半精度推理\n通过混合了float16精度的推理方式减小显存占用。")
-            )
-        )
-        ParamsManager_TTS_GPTSoVITS.SetParam(
-            Widget = self.ui.CheckBox_TTS_GPTSoVITS_FP16Run,
-            Section = 'GPT-SoVITS Params',
-            Option = 'FP16_Run',
-            DefaultValue = False
-        )
-        Function_ConfigureCheckBox(
-            CheckBox = self.ui.CheckBox_TTS_GPTSoVITS_FP16Run,
-            CheckedText = "已启用",
-            CheckedEvents = [
-            ],
-            UncheckedText = "未启用",
-            UncheckedEvents = [
-            ],
-            TakeEffect = True
-        )
-        self.ui.Button_TTS_GPTSoVITS_FP16Run_MoreActions.SetMenu(
-            ActionEvents = {
-                "重置": lambda: ParamsManager_TTS_GPTSoVITS.ResetParam(self.ui.CheckBox_TTS_GPTSoVITS_FP16Run)
-            }
-        )
-        Function_AddToTreeWidget(
-            Widget = self.ui.Label_TTS_GPTSoVITS_FP16Run,
-            TreeWidget = self.ui.TreeWidget_Catalogue_TTS_GPTSoVITS,
-            RootItemText = QCA.translate("Tree", "语音合成参数"),
-            ChildItemText = QCA.translate("Tree", "半精度推理")
-        )
-
-        TTS_GPTSoVITS_AudioDirSave = Path(CurrentDir).joinpath('语音合成结果', 'GPT-SoVITS').as_posix()
-        TTS_GPTSoVITS_AudioPathSave = Path(TTS_GPTSoVITS_AudioDirSave).joinpath("temp.wav").as_posix()
-        os.makedirs(TTS_GPTSoVITS_AudioDirSave) if not Path(TTS_GPTSoVITS_AudioDirSave).exists() else None
-
-        # ChildWindow
-        ChildWindow_TTS_GPTSoVITS = Window_ChildWindow_TTS_GPTSoVITS(self)
-
-        ChildWindow_TTS_GPTSoVITS.ui.Button_Close.clicked.connect(
-            lambda: Function_ShowMessageBox(self,
-                QMessageBox.Question, "Ask",
-                "确认退出试听？",
-                QMessageBox.Yes|QMessageBox.No,
-                {
-                    QMessageBox.Yes: lambda: (
-                        ChildWindow_TTS_GPTSoVITS.ui.Widget.ReleaseMediaPlayer(),
-                        ChildWindow_TTS_GPTSoVITS.close()
-                    )
-                } 
-            )
-        )
-        ChildWindow_TTS_GPTSoVITS.ui.Button_Maximize.clicked.connect(lambda: ChildWindow_TTS_GPTSoVITS.showNormal() if ChildWindow_TTS_GPTSoVITS.isMaximized() else ChildWindow_TTS_GPTSoVITS.showMaximized())
-
-        Function_SetText(
-            Widget = ChildWindow_TTS_GPTSoVITS.ui.Label_Title,
-            Text = SetRichText(
-                Title = QCA.translate("Label", "语音合成结果")
-            )
-        )
-        Function_SetText(
-            Widget = ChildWindow_TTS_GPTSoVITS.ui.Label_Text,
-            Text = SetRichText(
-                Body = QCA.translate("Label", "点击播放按钮以试听合成语音")
-            )
-        )
-
-        ChildWindow_TTS_GPTSoVITS.ui.Button_Cancel.setText(QCA.translate("Button", "丢弃"))
-        ChildWindow_TTS_GPTSoVITS.ui.Button_Cancel.clicked.connect(
-            lambda: Function_ShowMessageBox(self,
-                QMessageBox.Question, "Ask",
-                "确认丢弃音频？",
-                QMessageBox.Yes|QMessageBox.No,
-                {
-                    QMessageBox.Yes: lambda: (
-                        ChildWindow_TTS_GPTSoVITS.ui.Widget.ReleaseMediaPlayer(),
-                        os.remove(TTS_GPTSoVITS_AudioPathSave),
-                        ChildWindow_TTS_GPTSoVITS.close()
-                    )
-                }
-            )
-        )
-        ChildWindow_TTS_GPTSoVITS.ui.Button_Confirm.setText(QCA.translate("Button", "保留"))
-        ChildWindow_TTS_GPTSoVITS.ui.Button_Confirm.clicked.connect(
-            lambda: Function_ShowMessageBox(self,
-                QMessageBox.Question, "Ask",
-                "确认保留音频？",
-                QMessageBox.Yes|QMessageBox.No,
-                {
-                    QMessageBox.Yes: lambda: (
-                        ChildWindow_TTS_GPTSoVITS.ui.Widget.ReleaseMediaPlayer(),
-                        shutil.move(
-                            TTS_GPTSoVITS_AudioPathSave,
-                            Function_GetFileDialog(
-                                Mode = "SaveFile",
-                                FileType = "wav类型 (*.wav)"
-                            )
-                        ),
-                        ChildWindow_TTS_GPTSoVITS.close()
-                    )
-                }
-            )
-        )
-
         # GPT-SoVITS - Right
         MonitorFile_Config_VoiceConverter_GPTSoVITS = MonitorFile(Path_Config_TTS_GPTSoVITS)
         MonitorFile_Config_VoiceConverter_GPTSoVITS.start()
@@ -6130,14 +5670,6 @@ class MainWindow(Window_MainWindow):
             )
         )
 
-        self.ui.Button_CheckOutput_TTS_GPTSoVITS.setText(QCA.translate("Button", "查看输出文件"))
-        Function_SetURL(
-            Button = self.ui.Button_CheckOutput_TTS_GPTSoVITS,
-            URL = TTS_GPTSoVITS_AudioDirSave,
-            ButtonTooltip = "Click to open",
-            CreateIfNotExist = True
-        )
-
         # GPT-SoVITS - Bottom
         self.ui.Button_TTS_GPTSoVITS_Execute.setToolTip("执行语音合成")
         self.ui.Button_TTS_GPTSoVITS_Terminate.setToolTip("终止语音合成")
@@ -6152,28 +5684,10 @@ class MainWindow(Window_MainWindow):
                 self.ui.LineEdit_TTS_GPTSoVITS_ModelPathLoadS2G,
                 self.ui.LineEdit_TTS_GPTSoVITS_ModelDirLoadBert,
                 self.ui.LineEdit_TTS_GPTSoVITS_ModelDirLoadSSL,
-                self.ui.LineEdit_TTS_GPTSoVITS_RefAudio,
-                self.ui.CheckBox_TTS_GPTSoVITS_RefTextFree,
-                self.ui.LineEdit_TTS_GPTSoVITS_RefText,
-                self.ui.ComboBox_TTS_GPTSoVITS_RefLanguage,
-                self.ui.PlainTextEdit_TTS_GPTSoVITS_Text,
-                self.ui.ComboBox_TTS_GPTSoVITS_Language,
-                self.ui.ComboBox_TTS_GPTSoVITS_HowToCut,
-                self.ui.SpinBox_TTS_GPTSoVITS_TopK,
-                self.ui.DoubleSpinBox_TTS_GPTSoVITS_TopP,
-                self.ui.DoubleSpinBox_TTS_GPTSoVITS_Temperature,
-                self.ui.CheckBox_TTS_GPTSoVITS_FP16Run,
-                TTS_GPTSoVITS_AudioPathSave
             ],
             EmptyAllowed = [
-                self.ui.LineEdit_TTS_GPTSoVITS_RefText
             ],
             FinishEvents = [
-                lambda: self.ShowMask(True, "正在加载播放器"),
-                lambda: ChildWindow_TTS_GPTSoVITS.ui.Widget.SetMediaPlayer(
-                    TTS_GPTSoVITS_AudioPathSave
-                ),
-                ChildWindow_TTS_GPTSoVITS.exec,
                 lambda: Function_ShowMessageBox(self,
                     QMessageBox.Information, "Tip",
                     "当前任务已执行结束。"
@@ -6512,45 +6026,9 @@ class MainWindow(Window_MainWindow):
             ChildItemText = QCA.translate("Tree", "整体语速")
         )
 
-        self.ui.GroupBox_TTS_VITS_OutputParams.setTitle(QCA.translate("GroupBox", "输出参数"))
-        Function_AddToTreeWidget(
-            Widget = self.ui.GroupBox_TTS_VITS_OutputParams,
-            TreeWidget = self.ui.TreeWidget_Catalogue_TTS_VITS,
-            RootItemText = QCA.translate("Tree", "输出参数")
-        )
-
-        Function_SetText(
-            Widget = self.ui.Label_TTS_VITS_AudioPathSave,
-            Text = SetRichText(
-                Body = QCA.translate("Label", "音频保存路径\n用于保存推理得到的音频的路径。")
-            )
-        )
-        TTS_VITS_AudioPathSave_Default = Path(CurrentDir).joinpath('语音合成结果', 'VITS', f"{date.today()}.wav").as_posix()
-        ParamsManager_TTS_VITS.SetParam(
-            Widget = self.ui.LineEdit_TTS_VITS_AudioPathSave,
-            Section = 'Output Params',
-            Option = 'Audio_Path_Save',
-            DefaultValue = '',
-            SetPlaceholderText = True,
-            PlaceholderText = TTS_VITS_AudioPathSave_Default
-        )
-        self.ui.LineEdit_TTS_VITS_AudioPathSave.SetFileDialog(
-            Mode = "SaveFile",
-            FileType = "wav类型 (*.wav)",
-            Directory = NormPath(Path(TTS_VITS_AudioPathSave_Default).parent)
-        )
-        self.ui.Button_TTS_VITS_AudioPathSave_MoreActions.SetMenu(
-            ActionEvents = {
-                "重置": lambda: ParamsManager_TTS_VITS.ResetParam(self.ui.LineEdit_TTS_VITS_AudioPathSave),
-                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_TTS_VITS_AudioPathSave.text())
-            }
-        )
-        Function_AddToTreeWidget(
-            Widget = self.ui.Label_TTS_VITS_AudioPathSave,
-            TreeWidget = self.ui.TreeWidget_Catalogue_TTS_VITS,
-            RootItemText = QCA.translate("Tree", "输出参数"),
-            ChildItemText = QCA.translate("Tree", "音频保存路径")
-        )
+        TTS_VITS_AudioDirSave = Path(CurrentDir).joinpath('语音合成结果', 'VITS').as_posix()
+        TTS_VITS_AudioPathSave = Path(TTS_VITS_AudioDirSave).joinpath("temp.wav").as_posix()
+        os.makedirs(TTS_VITS_AudioDirSave) if not Path(TTS_VITS_AudioDirSave).exists() else None
 
         # ChildWindow
         ChildWindow_TTS_VITS = Window_ChildWindow_TTS_VITS(self)
@@ -6592,7 +6070,7 @@ class MainWindow(Window_MainWindow):
                 {
                     QMessageBox.Yes: lambda: (
                         ChildWindow_TTS_VITS.ui.Widget.ReleaseMediaPlayer(),
-                        os.remove(self.ui.LineEdit_TTS_VITS_AudioPathSave.text()),
+                        os.remove(TTS_VITS_AudioPathSave),
                         ChildWindow_TTS_VITS.close()
                     )
                 }
@@ -6607,6 +6085,13 @@ class MainWindow(Window_MainWindow):
                 {
                     QMessageBox.Yes: lambda: (
                         ChildWindow_TTS_VITS.ui.Widget.ReleaseMediaPlayer(),
+                        shutil.move(
+                            TTS_VITS_AudioPathSave,
+                            Function_GetFileDialog(
+                                Mode = "SaveFile",
+                                FileType = "wav类型 (*.wav)"
+                            )
+                        ),
                         ChildWindow_TTS_VITS.close()
                     )
                 }
@@ -6647,10 +6132,10 @@ class MainWindow(Window_MainWindow):
             )
         )
 
-        self.ui.Button_CheckOutput_TTS_VITS.setText(QCA.translate("Button", "打开输出文件"))
+        self.ui.Button_CheckOutput_TTS_VITS.setText(QCA.translate("Button", "查看输出文件"))
         Function_SetURL(
             Button = self.ui.Button_CheckOutput_TTS_VITS,
-            URL = self.ui.LineEdit_TTS_VITS_AudioPathSave,
+            URL = TTS_VITS_AudioDirSave,
             ButtonTooltip = "Click to open",
             CreateIfNotExist = True
         )
@@ -6673,7 +6158,7 @@ class MainWindow(Window_MainWindow):
                 self.ui.DoubleSpinBox_TTS_VITS_EmotionStrength,
                 self.ui.DoubleSpinBox_TTS_VITS_PhonemeDuration,
                 self.ui.DoubleSpinBox_TTS_VITS_SpeechRate,
-                self.ui.LineEdit_TTS_VITS_AudioPathSave
+                TTS_VITS_AudioPathSave
             ],
             EmptyAllowed = [
                 self.ui.ComboBox_TTS_VITS_Language,
@@ -6682,7 +6167,7 @@ class MainWindow(Window_MainWindow):
             FinishEvents = [
                 lambda: self.ShowMask(True, "正在加载播放器"),
                 lambda: ChildWindow_TTS_VITS.ui.Widget.SetMediaPlayer(
-                    self.ui.LineEdit_TTS_VITS_AudioPathSave.text()
+                    TTS_VITS_AudioPathSave
                 ),
                 ChildWindow_TTS_VITS.exec,
                 lambda: Function_ShowMessageBox(self,
@@ -7051,15 +6536,17 @@ class MainWindow(Window_MainWindow):
                 TitleSize = 24,
                 TitleWeight = 840,
                 Body = QCA.translate("TextBrowser",
-                    "请自行解决数据集的授权问题。对于使用未经授权的数据集进行训练所导致的任何问题，您将承担全部责任，并且该仓库及其维护者不承担任何后果！\n"
-                    "\n"
-                    "您还需要服从以下条例：\n"
-                    "0. 本项目仅用于学术交流目的，旨在促进沟通和学习。不适用于生产环境。\n"
-                    "1. 基于 Easy Voice Toolkit 发布的任何视频必须在描述中明确指出它们用于变声，并指定声音或音频的输入源，例如使用他人发布的视频或音频，并将分离出的人声作为转换的输入源，必须提供清晰的原始视频链接。如果您使用自己的声音或其他商业语音合成软件生成的声音作为转换的输入源，也必须在描述中说明。\n"
-                    "2. 您将对输入源引起的任何侵权问题负全部责任。当使用其他商业语音合成软件作为输入源时，请确保遵守该软件的使用条款。请注意，许多语音合成引擎在其使用条款中明确声明不能用于输入源转换。\n"
-                    "3. 继续使用本项目被视为同意本仓库 README 中所述的相关条款。本仓库的 README 有义务进行劝导，但不承担可能出现的任何后续问题的责任。\n"
-                    "4. 如果您分发此仓库的代码或将由此项目生成的任何结果公开发布（包括但不限于视频分享平台），请注明原始作者和代码来源（即此仓库）。\n"
-                    "5. 如果您将此项目用于任何其他计划，请提前与本仓库的作者联系并告知。\n"
+                    """
+                    请自行解决数据集的授权问题。对于使用未经授权的数据集进行训练所导致的任何问题，您将承担全部责任，并且该仓库及其维护者不承担任何后果！
+
+                    您还需要服从以下条例：
+                    0. 本项目仅用于学术交流目的，旨在促进沟通和学习。不适用于生产环境。
+                    1. 基于 Easy Voice Toolkit 发布的任何视频必须在描述中明确指出它们用于变声，并指定声音或音频的输入源，例如使用他人发布的视频或音频，并将分离出的人声作为转换的输入源，必须提供清晰的原始视频链接。如果您使用自己的声音或其他商业语音合成软件生成的声音作为转换的输入源，也必须在描述中说明。
+                    2. 您将对输入源引起的任何侵权问题负全部责任。当使用其他商业语音合成软件作为输入源时，请确保遵守该软件的使用条款。请注意，许多语音合成引擎在其使用条款中明确声明不能用于输入源转换。
+                    3. 继续使用本项目被视为同意本仓库 README 中所述的相关条款。本仓库的 README 有义务进行劝导，但不承担可能出现的任何后续问题的责任。
+                    4. 如果您分发此仓库的代码或将由此项目生成的任何结果公开发布（包括但不限于视频分享平台），请注明原始作者和代码来源（即此仓库）。
+                    5. 如果您将此项目用于任何其他计划，请提前与本仓库的作者联系并告知。
+                    """
                 ),
                 BodyAlign = "left",
                 BodySize = 12,

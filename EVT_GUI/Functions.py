@@ -431,7 +431,7 @@ def Function_SetWidgetValue(
     SetPlaceholderText: bool = False,
     PlaceholderText: Optional[str] = None
 ):
-    if isinstance(Widget, (QLineEdit, LineEditBase, TextEditBase)):
+    if isinstance(Widget, (QLineEdit, LineEditBase, TextEditBase, QPlainTextEdit)):
         Function_SetText(Widget, Value, SetPlaceholderText = SetPlaceholderText, PlaceholderText = PlaceholderText)
         def EditConfig(Value):
             Config.EditConfig(Section, Option, str(Value))

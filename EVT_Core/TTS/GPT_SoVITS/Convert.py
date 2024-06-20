@@ -110,7 +110,8 @@ def change_tts_inference(
     gpu_number,
     is_half,
     gpt_path,
-    sovits_path
+    sovits_path,
+    use_webui
 ):
     global p_tts_inference
     if(if_tts==True and p_tts_inference==None):
@@ -122,7 +123,8 @@ def change_tts_inference(
         os.environ["is_half"]=str(is_half)
         os.environ["infer_ttswebui"]=str(webui_port_infer_tts)
         os.environ["is_share"]=str(is_share)
-        cmd = f'"{python_exec}" "GPT_SoVITS/inference_webui.py"'
+        os.environ['USE_WEBUI']=str(use_webui)
+        cmd = f'"{python_exec}" "GPT_SoVITS/inference.py"'
         print("TTS推理进程已开启")
         print(cmd)
         p_tts_inference = subprocess.Popen(cmd, shell=True)
@@ -153,16 +155,17 @@ def Convert(
     Use_WebUI: bool = False
 ):
     # 1C-推理
-    if Use_WebUI:
-        change_tts_inference(
-            if_tts = True,
-            bert_path = Model_Dir_Load_bert,
-            cnhubert_base_path = Model_Dir_Load_ssl,
-            gpu_number = gpus,
-            is_half = Set_FP16_Run,
-            gpt_path = Model_Path_Load_s1,
-            sovits_path = Model_Path_Load_s2G
-        )
+    change_tts_inference(
+        if_tts = True,
+        bert_path = Model_Dir_Load_bert,
+        cnhubert_base_path = Model_Dir_Load_ssl,
+        gpu_number = gpus,
+        is_half = Set_FP16_Run,
+        gpt_path = Model_Path_Load_s1,
+        sovits_path = Model_Path_Load_s2G,
+        use_webui = Use_WebUI
+    )
+    '''
     else:
         os.environ["gpt_path"] = Model_Path_Load_s1
         os.environ["sovits_path"] = Model_Path_Load_s2G
@@ -194,5 +197,6 @@ def Convert(
         SR, Audio = list(TTS_Result)[-1]
 
         write(Audio_Path_Save, SR, Audio)
+    '''
 
     # 2-GPT-SoVITS-变声
