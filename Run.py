@@ -20,7 +20,7 @@ from EVT_GUI.EnvConfigurator import *
 ##############################################################################################################################
 
 # Set current version
-CurrentVersion = "v1.1.3"
+CurrentVersion = "v1.1.4"
 
 ##############################################################################################################################
 
@@ -391,9 +391,8 @@ class Execute_Voice_Training_VITS(QObject):
             Args = [
                 f'cd "{ResourceDir}"',
                 'python -c "'
-                'from EVT_Core.Train.VITS.Train import Voice_Training; '
-                f"PreprocessandTrain = Voice_Training{str(Params)}; "
-                'PreprocessandTrain.Preprocessing_and_Training()"'
+                'from EVT_Core.Train.VITS.Train import Train; '
+                f'Train{str(Params)}"'
             ]
         )
         Output, Error = CMD.monitor(
@@ -492,9 +491,8 @@ class Execute_Voice_Converting_VITS(QObject):
             Args = [
                 f'cd "{ResourceDir}"',
                 'python -c "'
-                'from EVT_Core.TTS.VITS.Convert import Voice_Converting; '
-                f"TTS = Voice_Converting{str(ItemReplacer(LANGUAGES, Params))}; "
-                'TTS.Converting()"'
+                'from EVT_Core.TTS.VITS.Convert import Convert; '
+                f'Convert{str(ItemReplacer(LANGUAGES, Params))}"'
             ]
         )
         Output, Error = CMD.monitor(
@@ -3514,6 +3512,7 @@ class MainWindow(Window_MainWindow):
                     QMessageBox.Yes: lambda: (
                         DATResult_Save(
                             ChildWindow_DAT_GPTSoVITS.ui.Table.GetValue(),
+                            LineEdit_DAT_GPTSoVITS_FileListPath.text()
                         ),
                         ChildWindow_DAT_GPTSoVITS.close()
                     )
@@ -5426,10 +5425,11 @@ class MainWindow(Window_MainWindow):
                 self.ui.LineEdit_Train_VITS_ModelPathPretrainedD,
                 self.ui.LineEdit_Train_VITS_OutputRoot,
                 self.ui.LineEdit_Train_VITS_OutputDirName,
+                'Config.json',
                 self.ui.LineEdit_Train_VITS_LogDir
             ],
             EmptyAllowed = [
-                DialogBox_KeepOriginalSpeakers.LineEdit,
+                self.ui.LineEdit_Train_VITS_ConfigPathLoad,
                 self.ui.LineEdit_Train_VITS_ModelPathPretrainedG,
                 self.ui.LineEdit_Train_VITS_ModelPathPretrainedD
             ],

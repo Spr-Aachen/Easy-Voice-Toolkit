@@ -4,8 +4,8 @@ from torch import nn
 from torch.nn import functional as F
 from torch.nn.utils import remove_weight_norm, weight_norm
 
-from .Modules import LayerNorm
-from .Commons import subsequent_mask, convert_pad_shape, fused_add_tanh_sigmoid_multiply
+from modules import LayerNorm
+from commons import subsequent_mask, convert_pad_shape, fused_add_tanh_sigmoid_multiply
 
 
 class MultiHeadAttention(nn.Module):

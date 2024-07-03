@@ -1,11 +1,11 @@
 import numpy as np
 import torch
 
-from .Core import maximum_path_nb
+from .core import maximum_path_nb
 
 
 def maximum_path(neg_cent, mask):
-    """ Cython optimized version.
+    """ Numba optimized version.
     neg_cent: [b, t_t, t_s]
     mask: [b, t_t, t_s]
     """

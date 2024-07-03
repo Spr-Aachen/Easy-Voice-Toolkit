@@ -36,7 +36,7 @@ Functions that are currently included in the toolkit are as follows:
 
 - [Voice Recognition](/docs/EN/Voice-Recognizer.md)
 
-- [Voice Transcribing](/docs/EN/Voice-Transcriber.md)
+- [Voice Transcription](/docs/EN/Voice-Transcriber.md)
 
 - [Dataset Creating (SRT Converting & WAV Splitting)](/docs/EN/Dataset-Creator.md)
 
@@ -152,7 +152,7 @@ Please make sure that you've installed [Python](https://www.python.org/downloads
 
 - Install pytorch (Command can be get from the [official site](https://pytorch.org/get-started/locally/))
     ```shell
-    # e.g. (注意自己的cuda版本，这里以11.8为例)
+    # e.g. (Mind your cuda version，here we take 11.8 as an example)
     pip3 install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu118
     ```
 

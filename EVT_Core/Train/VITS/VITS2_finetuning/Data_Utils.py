@@ -3,10 +3,10 @@ import random
 import torch
 import torchaudio
 
-from .Commons import intersperse
-from .Mel_Processing import spectrogram_torch, mel_spectrogram_torch
-from .Utils import load_audiopaths_sid_text
-from .text import text_to_sequence, cleaned_text_to_sequence
+from commons import intersperse
+from mel_processing import spectrogram_torch, mel_spectrogram_torch
+from utils import load_audiopaths_sid_text
+from text import text_to_sequence, cleaned_text_to_sequence
 
 
 class TextAudioSpeakerLoader(torch.utils.data.Dataset):

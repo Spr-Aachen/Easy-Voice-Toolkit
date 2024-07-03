@@ -1,7 +1,7 @@
 import numpy as np
 import torch
 
-from .Core import maximum_path_nb
+from .core import maximum_path_nb
 
 
 def maximum_path(neg_cent, mask):

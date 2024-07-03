@@ -124,7 +124,7 @@ def change_tts_inference(
         os.environ["infer_ttswebui"]=str(webui_port_infer_tts)
         os.environ["is_share"]=str(is_share)
         os.environ['USE_WEBUI']=str(use_webui)
-        cmd = f'"{python_exec}" "GPT_SoVITS/inference.py"'
+        cmd = f'"{python_exec}" "GPT_SoVITS/inference_gui.py"'
         print("TTS推理进程已开启")
         print(cmd)
         p_tts_inference = subprocess.Popen(cmd, shell=True)

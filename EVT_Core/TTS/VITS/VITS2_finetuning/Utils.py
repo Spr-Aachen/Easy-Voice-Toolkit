@@ -1,4 +1,5 @@
 import os
+import re
 import glob
 import sys
 import shutil
@@ -11,6 +12,7 @@ import matplotlib
 import matplotlib.pylab as plt
 import numpy as np
 import torch
+from typing import Optional
 from pathlib import Path
 
 
@@ -151,22 +153,6 @@ def load_audiopaths_sid_text(filename, split = "|"):
     return audiopaths_sid_text
 
 
-def get_hparams(
-    Config_Path: str,
-    Model_Dir: str
-):
-    if not os.path.exists(Model_Dir):
-        os.makedirs(Model_Dir)
-
-    with open(Config_Path, 'r', encoding = 'utf-8') as f:
-        data = f.read()
-    config = json.loads(data)
-
-    hparams = HParams(**config)
-    hparams.model_dir = Model_Dir
-    return hparams
-
-
 def add_elements(
     Iterable1,
     Iterable2
@@ -243,3 +229,33 @@ class HParams():
 
     def __repr__(self):
         return self.__dict__.__repr__()
+
+
+def get_hparams(
+    Config_Path: str,
+    Model_Dir: Optional[str] = None
+):
+    with open(Config_Path, 'r', encoding = 'utf-8') as f:
+        data = f.read()
+    config = json.loads(data)
+    hparams = HParams(**config)
+
+    if Model_Dir is not None:
+        os.makedirs(Model_Dir) if not Path(Model_Dir).exists() else None
+        hparams.model_dir = Model_Dir
+
+    return hparams
+
+
+def Get_Config_Path(ConfigPath):
+    if Path(ConfigPath).is_dir():
+        ConfigPaths = [File for File in os.listdir(ConfigPath) if Path(File).suffix == '.json']
+        ConfigPath = sorted(ConfigPaths, key = lambda ConfigPath: re.sub(r'[A-Za-z]+', '', Path(ConfigPath).name))[-1]
+    return ConfigPath
+
+
+def Get_Model_Path(ModelPath):
+    if Path(ModelPath).is_dir():
+        ModelPaths = [File for File in os.listdir(ModelPath) if Path(File).suffix == '.pth' and 'G_' in File]
+        ModelPath = sorted(ModelPaths, key = lambda ModelPath: re.sub(r'G_[A-Za-z]+', '', Path(ModelPath).name))[-1]
+    return ModelPath

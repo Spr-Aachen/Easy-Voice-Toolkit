@@ -501,7 +501,10 @@ class Pytorch_Installer(QObject):
     def Install_Pytorch(self, Package: str, Reinstall: bool):
         DisplayCommand = 'cmd /c start cmd /k ' if platform.system() == 'Windows' else 'x-terminal-emulator -e '
         if Package in ('torch', 'torchvision', 'torchaudio'):
-            pynvml.nvmlInit()
+            try:
+                pynvml.nvmlInit()
+            except:
+                raise Exception("Failed to get NVIDIA GPUs' info.")
             CudaList = [117, 118, 121]
             CudaVersion = min(CudaList, key = lambda Cuda: abs(Cuda - pynvml.nvmlSystemGetCudaDriverVersion()//100))
             MirrorList = [f'https://download.pytorch.org/whl/cu{CudaVersion}', '']
