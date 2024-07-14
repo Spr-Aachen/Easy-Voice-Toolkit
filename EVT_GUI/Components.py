@@ -153,6 +153,8 @@ class Table_EditAudioSpeaker(TableBase):
     '''
     ValueChanged = Signal(dict)
 
+    FileType = None
+
     def __init__(self, parent: QWidget = None):
         super().__init__(parent)
 
@@ -195,7 +197,7 @@ class Table_EditAudioSpeaker(TableBase):
         LineEdit1 = LineEditBase()
         LineEdit1.ClearDefaultStyleSheet()
         LineEdit1.setStyleSheet(LineEdit1.styleSheet() + 'LineEditBase {border-radius: 0px;}')
-        #LineEdit1.SetFileDialog("SelectFile", FileType)
+        LineEdit1.SetFileDialog("SelectFile", self.FileType)
         Function_SetText(LineEdit1, Param[1] if Param else '', SetPlaceholderText = True)
         LineEdit1.textChanged.connect(
             lambda: self.ValueChanged.emit(self.GetValue())
@@ -236,8 +238,11 @@ class Table_EditAudioSpeaker(TableBase):
             self.AddRow(Param)
 
     def SetFileDialog(self, FileType: Optional[str] = None):
+        '''
         for RowCount in range(self.rowCount()):
             self.cellWidget(RowCount, 1).findChild(LineEditBase).SetFileDialog("SelectFile", FileType)
+        '''
+        self.FileType = FileType
 
     def GetValue(self):
         ValueDict = {}

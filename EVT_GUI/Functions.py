@@ -377,18 +377,19 @@ def Function_AnimateFrame(
     MinHeight: Optional[int] = None,
     MaxHeight: Optional[int] = None,
     Duration: int = 210,
-    Mode: str = "Toggle"
+    Mode: str = "Toggle",
+    SupportSplitter: bool = False
 ):
     '''
     Function to animate frame
     '''
     def ExtendFrame():
-        Function_SetWidgetSizeAnimation(Frame, MaxWidth, None, Duration).start() if MaxWidth not in (None, Frame.width()) else None
-        Function_SetWidgetSizeAnimation(Frame, None, MaxHeight, Duration).start() if MaxHeight not in (None, Frame.height()) else None
+        Function_SetWidgetSizeAnimation(Frame, MaxWidth, None, Duration, SupportSplitter).start() if MaxWidth not in (None, Frame.width()) else None
+        Function_SetWidgetSizeAnimation(Frame, None, MaxHeight, Duration, SupportSplitter).start() if MaxHeight not in (None, Frame.height()) else None
 
     def ReduceFrame():
-        Function_SetWidgetSizeAnimation(Frame, MinWidth, None, Duration).start() if MinWidth not in (None, Frame.width()) else None
-        Function_SetWidgetSizeAnimation(Frame, None, MinHeight, Duration).start() if MinHeight not in (None, Frame.height()) else None
+        Function_SetWidgetSizeAnimation(Frame, MinWidth, None, Duration, SupportSplitter).start() if MinWidth not in (None, Frame.width()) else None
+        Function_SetWidgetSizeAnimation(Frame, None, MinHeight, Duration, SupportSplitter).start() if MinHeight not in (None, Frame.height()) else None
 
     if Mode == "Extend":
         ExtendFrame()

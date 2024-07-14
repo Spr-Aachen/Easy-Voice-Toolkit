@@ -20,7 +20,7 @@ from EVT_GUI.EnvConfigurator import *
 ##############################################################################################################################
 
 # Set current version
-CurrentVersion = "v1.1.4"
+CurrentVersion = "v1.1.5"
 
 ##############################################################################################################################
 
@@ -6593,9 +6593,11 @@ class MainWindow(Window_MainWindow):
             lambda: Function_AnimateFrame(
                 Frame = self.ui.Frame_Console,
                 MinHeight = 0,
-                MaxHeight = 210
+                MaxHeight = 210,
+                SupportSplitter = True
             )
         )
+        self.ui.Frame_Console.setFixedHeight(0)
 
         # Display ToolsStatus
         self.ui.Label_ToolsStatus.clear()

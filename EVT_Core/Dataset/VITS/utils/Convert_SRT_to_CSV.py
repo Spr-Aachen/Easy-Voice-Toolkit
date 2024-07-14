@@ -59,7 +59,7 @@ def convert_srt_to_csv(
     ID_Extension = ID_Extension.replace('__', '_')
     ID_Extension = ID_Extension.replace('___', '_')
     '''
-    DF_Text['id'] = ID_Extension + DF_Text['id'].map(str)
+    DF_Text['id'] = ID_Extension + DF_Text['id'].astype(str)
 
     file_extension = ID_Extension[:-1]
 
