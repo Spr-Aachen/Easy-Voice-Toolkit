@@ -1,11 +1,10 @@
 from typing import Optional
-from PySide6.QtCore import Qt
-from PySide6.QtWidgets import QWidget
+from PySide6.QtCore import Qt, Signal
+from PySide6.QtWidgets import *
+from QEasyWidgets import QFunctions as QFunc
+from QEasyWidgets.Components import *
 
-from QEasyWidgets.ComponentsCustomizer import *
-from QEasyWidgets.Utils import *
-from QEasyWidgets.QFunctions import *
-from .Sources import *
+from ..assets.Sources import *
 
 ##############################################################################################################################
 
@@ -84,28 +83,28 @@ class Table_ViewModels(TableBase):
 
         Label_ModelName = QLabel()
         Label_ModelName.setStyleSheet(LabelStyle)
-        Function_SetText(Label_ModelName, ModelName)
+        QFunc.Function_SetText(Label_ModelName, ModelName)
         ColumnLayout_ModelName = QHBoxLayout()
         SetColumnLayout(ColumnLayout_ModelName)
         ColumnLayout_ModelName.addWidget(Label_ModelName)
 
         Label_ModelType = QLabel()
         Label_ModelType.setStyleSheet(LabelStyle)
-        Function_SetText(Label_ModelType, ModelType)
+        QFunc.Function_SetText(Label_ModelType, ModelType)
         ColumnLayout_ModelType = QHBoxLayout()
         SetColumnLayout(ColumnLayout_ModelType)
         ColumnLayout_ModelType.addWidget(Label_ModelType)
 
         Label_ModelSize = QLabel()
         Label_ModelSize.setStyleSheet(LabelStyle)
-        Function_SetText(Label_ModelSize, ModelSize)
+        QFunc.Function_SetText(Label_ModelSize, ModelSize)
         ColumnLayout_ModelSize = QHBoxLayout()
         SetColumnLayout(ColumnLayout_ModelSize)
         ColumnLayout_ModelSize.addWidget(Label_ModelSize)
 
         Label_ModelDate = QLabel()
         Label_ModelDate.setStyleSheet(LabelStyle)
-        Function_SetText(Label_ModelDate, ModelDate)
+        QFunc.Function_SetText(Label_ModelDate, ModelDate)
         ColumnLayout_ModelDate = QHBoxLayout()
         SetColumnLayout(ColumnLayout_ModelDate)
         ColumnLayout_ModelDate.addWidget(Label_ModelDate)
@@ -113,20 +112,20 @@ class Table_ViewModels(TableBase):
         StackedWidget = QStackedWidget()
         StackedWidget.setContentsMargins(0, 0, 0, 0)
         OpenButton = QPushButton()
-        OpenButton.setStyleSheet(ButtonStyle + "QPushButton {image: url(:/Button_Icon/Sources/OpenedFolder.png);}")
-        OpenButton.clicked.connect(lambda: Function_OpenURL(DownloadParam if isinstance(DownloadParam, str) else DownloadParam[1]))
+        OpenButton.setStyleSheet(ButtonStyle + "QPushButton {image: url(:/Button_Icon/images/OpenedFolder.png);}")
+        OpenButton.clicked.connect(lambda: QFunc.Function_OpenURL(DownloadParam if isinstance(DownloadParam, str) else DownloadParam[1]))
         DownloadButton = QPushButton()
-        DownloadButton.setStyleSheet(ButtonStyle + "QPushButton {image: url(:/Button_Icon/Sources/Download.png);}")
+        DownloadButton.setStyleSheet(ButtonStyle + "QPushButton {image: url(:/Button_Icon/images/Download.png);}")
         DownloadButton.clicked.connect(lambda: self.Download.emit(DownloadParam) if isinstance(DownloadParam, tuple) else None)
         DownloadButton.clicked.connect(lambda: StackedWidget.setCurrentWidget(OpenButton))
         StackedWidget.addWidget(OpenButton)
         StackedWidget.addWidget(DownloadButton)
         StackedWidget.setCurrentWidget(OpenButton) if isinstance(DownloadParam, str) else StackedWidget.setCurrentWidget(DownloadButton)
         CopyButton = QPushButton()
-        CopyButton.setStyleSheet(ButtonStyle + "QPushButton {image: url(:/Button_Icon/Sources/Clipboard.png);}")
+        CopyButton.setStyleSheet(ButtonStyle + "QPushButton {image: url(:/Button_Icon/images/Clipboard.png);}")
         CopyButton.clicked.connect(lambda: self.Clipboard.setText(DownloadParam[0]) if isinstance(DownloadParam, tuple) else None)
         CopyButton.clicked.connect(lambda: Function_ShowMessageBox(WindowTitle = "Tip", Text = "已复制链接到剪切板"))
-        Function_SetRetainSizeWhenHidden(CopyButton)
+        QFunc.Function_SetRetainSizeWhenHidden(CopyButton)
         CopyButton.hide() if StackedWidget.currentWidget() == OpenButton else None
         StackedWidget.currentChanged.connect(lambda: CopyButton.hide() if StackedWidget.currentWidget() == OpenButton else None)
         ColumnLayout_Management = QHBoxLayout()
@@ -186,7 +185,7 @@ class Table_EditAudioSpeaker(TableBase):
         LineEdit0.ClearDefaultStyleSheet()
         LineEdit0.setStyleSheet(LineEdit0.styleSheet() + 'LineEditBase {border-radius: 0px;}')
         LineEdit0.RemoveFileDialogButton()
-        Function_SetText(LineEdit0, Param[0] if Param else '', SetPlaceholderText = True)
+        QFunc.Function_SetText(LineEdit0, Param[0] if Param else '', SetPlaceholderText = True)
         LineEdit0.textChanged.connect(
             lambda: self.ValueChanged.emit(self.GetValue())
         )
@@ -198,7 +197,7 @@ class Table_EditAudioSpeaker(TableBase):
         LineEdit1.ClearDefaultStyleSheet()
         LineEdit1.setStyleSheet(LineEdit1.styleSheet() + 'LineEditBase {border-radius: 0px;}')
         LineEdit1.SetFileDialog("SelectFile", self.FileType)
-        Function_SetText(LineEdit1, Param[1] if Param else '', SetPlaceholderText = True)
+        QFunc.Function_SetText(LineEdit1, Param[1] if Param else '', SetPlaceholderText = True)
         LineEdit1.textChanged.connect(
             lambda: self.ValueChanged.emit(self.GetValue())
         )
@@ -230,7 +229,7 @@ class Table_EditAudioSpeaker(TableBase):
 
     def SetValue(self, Params: dict = {'%Speaker%': '%Path%'}):
         self.ClearRows()
-        ParamDict = ToIterable(Params if Params is None or len(Params) != 0 else {'': ''})
+        ParamDict = QFunc.ToIterable(Params if Params is None or len(Params) != 0 else {'': ''})
         for Key, Value in ParamDict.items():
             QApplication.processEvents()
             Param = (Key, Value)
@@ -248,8 +247,8 @@ class Table_EditAudioSpeaker(TableBase):
         ValueDict = {}
         for RowCount in range(self.rowCount()):
             try:
-                Key = Function_GetText(self.cellWidget(RowCount, 0).findChild(QLineEdit))
-                Value = Function_GetText(self.cellWidget(RowCount, 1).findChild(QLineEdit))
+                Key = QFunc.Function_GetText(self.cellWidget(RowCount, 0).findChild(QLineEdit))
+                Value = QFunc.Function_GetText(self.cellWidget(RowCount, 1).findChild(QLineEdit))
                 ValueDict[Key] = Value
             except:
                 pass
@@ -303,7 +302,7 @@ class Table_ASRResult(TableBase):
 
         Label0 = QLabel()
         Label0.setStyleSheet(LabelStyle)
-        Function_SetText(Label0, Param[0])
+        QFunc.Function_SetText(Label0, Param[0])
         Column0Layout = QHBoxLayout()
         SetColumnLayout(Column0Layout)
         Column0Layout.addWidget(Label0)
@@ -317,7 +316,7 @@ class Table_ASRResult(TableBase):
 
         Label2 = QLabel()
         Label2.setStyleSheet(LabelStyle)
-        Function_SetText(Label2, Param[2])
+        QFunc.Function_SetText(Label2, Param[2])
         Column2Layout = QHBoxLayout()
         SetColumnLayout(Column2Layout)
         Column2Layout.addWidget(Label2)
@@ -372,7 +371,7 @@ class Table_ASRResult(TableBase):
         ValueDict = {}
         for RowCount in range(self.rowCount()):
             try:
-                Key = Function_GetText(self.cellWidget(RowCount, 0).findChild(QLabel))
+                Key = QFunc.Function_GetText(self.cellWidget(RowCount, 0).findChild(QLabel))
                 Value = self.cellWidget(RowCount, 1).findChild(ComboBoxBase).currentText()
                 ValueDict[Key] = Value
             except:
@@ -418,7 +417,7 @@ class Table_STTResult(TableBase):
 
         Label0 = QLabel()
         Label0.setStyleSheet(LabelStyle)
-        Function_SetText(Label0, Param[0])
+        QFunc.Function_SetText(Label0, Param[0])
         Column0Layout = QHBoxLayout()
         SetColumnLayout(Column0Layout)
         Column0Layout.addWidget(Label0)
@@ -427,7 +426,7 @@ class Table_STTResult(TableBase):
         LineEdit.ClearDefaultStyleSheet()
         LineEdit.setStyleSheet(LineEdit.styleSheet() + 'LineEditBase {border-radius: 0px;}')
         LineEdit.RemoveFileDialogButton()
-        Function_SetText(LineEdit, Param[1], SetPlaceholderText = True)
+        QFunc.Function_SetText(LineEdit, Param[1], SetPlaceholderText = True)
         Column1Layout = QHBoxLayout()
         SetColumnLayout(Column1Layout)
         Column1Layout.addWidget(LineEdit)
@@ -450,7 +449,7 @@ class Table_STTResult(TableBase):
 
     def SetValue(self, Params: dict = {'%Path%': '%Transcription%'}):
         self.ClearRows()
-        ParamDict = ToIterable(Params)
+        ParamDict = QFunc.ToIterable(Params)
         for Key, Value in ParamDict.items():
             QApplication.processEvents()
             Param = (Key, Value)
@@ -460,8 +459,8 @@ class Table_STTResult(TableBase):
         ValueDict = {}
         for RowCount in range(self.rowCount()):
             try:
-                Key = Function_GetText(self.cellWidget(RowCount, 0).findChild(QLabel))
-                Value = Function_GetText(self.cellWidget(RowCount, 1).findChild(QLineEdit))
+                Key = QFunc.Function_GetText(self.cellWidget(RowCount, 0).findChild(QLabel))
+                Value = QFunc.Function_GetText(self.cellWidget(RowCount, 1).findChild(QLineEdit))
                 ValueDict[Key] = Value
             except:
                 pass
@@ -497,7 +496,7 @@ class Table_DATResult(TableBase):
         LineEdit.ClearDefaultStyleSheet()
         LineEdit.setStyleSheet(LineEdit.styleSheet() + 'LineEditBase {border-radius: 0px;}')
         LineEdit.RemoveFileDialogButton()
-        Function_SetText(LineEdit, Param[1], SetPlaceholderText = True)
+        QFunc.Function_SetText(LineEdit, Param[1], SetPlaceholderText = True)
         Column0Layout = QHBoxLayout()
         SetColumnLayout(Column0Layout)
         Column0Layout.addWidget(LineEdit)
@@ -520,7 +519,7 @@ class Table_DATResult(TableBase):
 
     def SetValue(self, Params: dict = {'%Path%': '%Data%'}):
         self.ClearRows()
-        ParamDict = ToIterable(Params)
+        ParamDict = QFunc.ToIterable(Params)
         for Key, Value in ParamDict.items():
             QApplication.processEvents()
             Param = (Key, Value)
@@ -530,7 +529,7 @@ class Table_DATResult(TableBase):
         ValueList = []
         for RowCount in range(self.rowCount()):
             try:
-                Value = Function_GetText(self.cellWidget(RowCount, 0).findChild(QLineEdit))
+                Value = QFunc.Function_GetText(self.cellWidget(RowCount, 0).findChild(QLineEdit))
                 ValueList.append(Value)
             except:
                 pass

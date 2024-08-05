@@ -1,14 +1,16 @@
 from typing import Optional
 from PySide6.QtCore import Qt, QObject
+from PySide6.QtWidgets import *
+from QEasyWidgets import QFunctions as QFunc
+from QEasyWidgets.Windows import *
+from QEasyWidgets.Components import *
 
-from QEasyWidgets.WindowCustomizer import *
-from QEasyWidgets.ComponentsCustomizer import *
-from .UI_MainWindow import Ui_MainWindow
-from .UI_ChildWindow_ASR import Ui_ChildWindow_ASR
-from .UI_ChildWindow_STT import Ui_ChildWindow_STT
-from .UI_ChildWindow_DAT_GPPTSoVITS import Ui_ChildWindow_DAT_GPTSoVITS
-from .UI_ChildWindow_DAT_VITS import Ui_ChildWindow_DAT_VITS
-from .UI_ChildWindow_TTS import Ui_ChildWindow_TTS
+from .ui.UI_MainWindow import Ui_MainWindow
+from .ui.UI_ChildWindow_ASR_VPR import Ui_ChildWindow_ASR_VPR
+from .ui.UI_ChildWindow_STT_Whisper import Ui_ChildWindow_STT_Whisper
+from .ui.UI_ChildWindow_DAT_GPTSoVITS import Ui_ChildWindow_DAT_GPTSoVITS
+from .ui.UI_ChildWindow_DAT_VITS import Ui_ChildWindow_DAT_VITS
+from .ui.UI_ChildWindow_TTS_VITS import Ui_ChildWindow_TTS_VITS
 
 ##############################################################################################################################
 
@@ -27,7 +29,7 @@ class Window_MainWindow(MainWindowBase):
 ##############################################################################################################################
 
 class Window_ChildWindow_ASR(ChildWindowBase):
-    ui = Ui_ChildWindow_ASR()
+    ui = Ui_ChildWindow_ASR_VPR()
 
     def __init__(self, parent = None):
         super().__init__(parent, min_width = 960, min_height = 540)
@@ -38,7 +40,7 @@ class Window_ChildWindow_ASR(ChildWindowBase):
 
 
 class Window_ChildWindow_STT(ChildWindowBase):
-    ui = Ui_ChildWindow_STT()
+    ui = Ui_ChildWindow_STT_Whisper()
 
     def __init__(self, parent = None):
         super().__init__(parent, min_width = 960, min_height = 540)
@@ -71,7 +73,7 @@ class Window_ChildWindow_DAT_VITS(ChildWindowBase):
 
 
 class Window_ChildWindow_TTS_GPTSoVITS(ChildWindowBase):
-    ui = Ui_ChildWindow_TTS()
+    ui = Ui_ChildWindow_TTS_VITS()
 
     def __init__(self, parent = None):
         super().__init__(parent, min_width = 450, min_height = 300)
@@ -82,7 +84,7 @@ class Window_ChildWindow_TTS_GPTSoVITS(ChildWindowBase):
 
 
 class Window_ChildWindow_TTS_VITS(ChildWindowBase):
-    ui = Ui_ChildWindow_TTS()
+    ui = Ui_ChildWindow_TTS_VITS()
 
     def __init__(self, parent = None):
         super().__init__(parent, min_width = 450, min_height = 300)
@@ -108,7 +110,7 @@ class MessageBox_Stacked(MessageBoxBase):
         self.ButtonP.clicked.connect(lambda: self.StackedWidget.setCurrentIndex(self.StackedWidget.currentIndex() - 1))
         self.ButtonP.setFixedWidth(33)
         self.ButtonP.setFixedHeight(66)
-        Function_SetRetainSizeWhenHidden(self.ButtonP)
+        QFunc.Function_SetRetainSizeWhenHidden(self.ButtonP)
         self.ButtonP.setStyleSheet(
             "QPushButton {"
             "   background-color: transparent;"
@@ -125,7 +127,7 @@ class MessageBox_Stacked(MessageBoxBase):
         self.ButtonN.clicked.connect(lambda: self.StackedWidget.setCurrentIndex(self.StackedWidget.currentIndex() + 1))
         self.ButtonN.setFixedWidth(33)
         self.ButtonN.setFixedHeight(66)
-        Function_SetRetainSizeWhenHidden(self.ButtonN)
+        QFunc.Function_SetRetainSizeWhenHidden(self.ButtonN)
         self.ButtonN.setStyleSheet(
             "QPushButton {"
             "   background-color: transparent;"
@@ -148,16 +150,16 @@ class MessageBox_Stacked(MessageBoxBase):
         self.Layout.insertLayout(0, Layout)
 
     def SetContent(self, Images: list, Texts: list):
-        Function_SetNoContents(self.StackedWidget)
+        QFunc.Function_SetNoContents(self.StackedWidget)
 
-        for Index, Image in enumerate(ToIterable(Images)):
+        for Index, Image in enumerate(QFunc.ToIterable(Images)):
             Label = QLabel()
-            Function_SetText(Label, SetRichText(ToIterable(Texts)[Index], 'left', 9.9, 420))
+            QFunc.Function_SetText(Label, QFunc.SetRichText(QFunc.ToIterable(Texts)[Index], 'left', 9.9, 420))
 
             TextBrowser = QTextBrowser()
             TextBrowser.setStyleSheet(
                 "QTextBrowser {"
-                f"    background-image: url({NormPath(Image, 'Posix')});"
+                f"    background-image: url({QFunc.NormPath(Image, 'Posix')});"
                 "    background-repeat: no-repeat;"
                 "    background-position: center 0px;"
                 "    padding: 0px;"
@@ -277,6 +279,6 @@ class MessageBox_LineEdit(MessageBoxBase):
 
     def SetContent(self, Title: str, Body:str):
         self.setText(Title)
-        Function_SetText(self.TextLabel, SetRichText(Body = Body, BodySize = 9.6))
+        QFunc.Function_SetText(self.TextLabel, QFunc.SetRichText(Body = Body, BodySize = 9.6))
 
 ##############################################################################################################################

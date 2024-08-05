@@ -1,21 +1,21 @@
 from PySide6.QtCore import (QCoreApplication, QMetaObject, QSize)
 from PySide6.QtWidgets import *
 
-from .Components import Table_STTResult
-from . import Sources
+from ...components.Components import Table_DATResult
+from ...assets import Sources
 
 
-class Ui_ChildWindow_STT(object):
-    def setupUi(self, ChildWindow_STT):
-        if not ChildWindow_STT.objectName():
-            ChildWindow_STT.setObjectName(u"ChildWindow_STT")
-        ChildWindow_STT.resize(630, 420)
-        ChildWindow_STT.setMinimumSize(QSize(630, 420))
-        self.verticalLayout = QVBoxLayout(ChildWindow_STT)
+class Ui_ChildWindow_DAT_GPTSoVITS(object):
+    def setupUi(self, ChildWindow_DAT_GPTSoVITS):
+        if not ChildWindow_DAT_GPTSoVITS.objectName():
+            ChildWindow_DAT_GPTSoVITS.setObjectName(u"ChildWindow_DAT_GPTSoVITS")
+        ChildWindow_DAT_GPTSoVITS.resize(630, 420)
+        ChildWindow_DAT_GPTSoVITS.setMinimumSize(QSize(630, 420))
+        self.verticalLayout = QVBoxLayout(ChildWindow_DAT_GPTSoVITS)
         self.verticalLayout.setSpacing(0)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
-        self.TitleBar = QWidget(ChildWindow_STT)
+        self.TitleBar = QWidget(ChildWindow_DAT_GPTSoVITS)
         self.TitleBar.setObjectName(u"TitleBar")
         self.TitleBar.setMinimumSize(QSize(0, 30))
         self.TitleBar.setMaximumSize(QSize(16777215, 30))
@@ -30,7 +30,7 @@ class Ui_ChildWindow_STT(object):
         self.Button_Maximize = QPushButton(self.TitleBar)
         self.Button_Maximize.setObjectName(u"Button_Maximize")
         self.Button_Maximize.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/FullScreen.png);\n"
+"	image: url(:/Button_Icon/images/FullScreen.png);\n"
 "	background-color: transparent;\n"
 "	padding: 6.6px;\n"
 "	border-width: 0px;\n"
@@ -55,7 +55,7 @@ class Ui_ChildWindow_STT(object):
         self.Button_Close = QPushButton(self.TitleBar)
         self.Button_Close.setObjectName(u"Button_Close")
         self.Button_Close.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/X.png);\n"
+"	image: url(:/Button_Icon/images/X.png);\n"
 "	background-color: transparent;\n"
 "	padding: 6.6px;\n"
 "	border-width: 0px;\n"
@@ -80,7 +80,7 @@ class Ui_ChildWindow_STT(object):
 
         self.verticalLayout.addWidget(self.TitleBar)
 
-        self.CentralWidget = QWidget(ChildWindow_STT)
+        self.CentralWidget = QWidget(ChildWindow_DAT_GPTSoVITS)
         self.CentralWidget.setObjectName(u"CentralWidget")
         self.gridLayout = QGridLayout(self.CentralWidget)
         self.gridLayout.setSpacing(12)
@@ -121,7 +121,7 @@ class Ui_ChildWindow_STT(object):
 
         self.gridLayout.addWidget(self.Label_Text, 1, 0, 1, 1)
 
-        self.Table = Table_STTResult(self.CentralWidget)
+        self.Table = Table_DATResult(self.CentralWidget)
         self.Table.setObjectName(u"Table")
 
         self.gridLayout.addWidget(self.Table, 2, 0, 1, 1)
@@ -133,7 +133,7 @@ class Ui_ChildWindow_STT(object):
         self.horizontalLayout.setSpacing(12)
         self.horizontalLayout.setObjectName(u"horizontalLayout")
         self.horizontalLayout.setContentsMargins(21, 12, 21, 12)
-        self.Button_Cancel = QPushButton(ChildWindow_STT)
+        self.Button_Cancel = QPushButton(ChildWindow_DAT_GPTSoVITS)
         self.Button_Cancel.setObjectName(u"Button_Cancel")
         self.Button_Cancel.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
@@ -159,7 +159,7 @@ class Ui_ChildWindow_STT(object):
 
         self.horizontalLayout.addWidget(self.Button_Cancel)
 
-        self.Button_Confirm = QPushButton(ChildWindow_STT)
+        self.Button_Confirm = QPushButton(ChildWindow_DAT_GPTSoVITS)
         self.Button_Confirm.setObjectName(u"Button_Confirm")
         self.Button_Confirm.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
@@ -189,14 +189,14 @@ class Ui_ChildWindow_STT(object):
         self.verticalLayout.addLayout(self.horizontalLayout)
 
 
-        self.retranslateUi(ChildWindow_STT)
+        self.retranslateUi(ChildWindow_DAT_GPTSoVITS)
 
-        QMetaObject.connectSlotsByName(ChildWindow_STT)
+        QMetaObject.connectSlotsByName(ChildWindow_DAT_GPTSoVITS)
     # setupUi
 
-    def retranslateUi(self, ChildWindow_STT):
-        ChildWindow_STT.setWindowTitle(QCoreApplication.translate("ChildWindow_STT", u"Form", None))
-        self.Label_Title.setText(QCoreApplication.translate("ChildWindow_STT", u"Title", None))
-        self.Label_Text.setText(QCoreApplication.translate("ChildWindow_STT", u"Text", None))
-        self.Button_Cancel.setText(QCoreApplication.translate("ChildWindow_STT", u"PushButton", None))
-        self.Button_Confirm.setText(QCoreApplication.translate("ChildWindow_STT", u"PushButton", None))
+    def retranslateUi(self, ChildWindow_DAT_GPTSoVITS):
+        ChildWindow_DAT_GPTSoVITS.setWindowTitle(QCoreApplication.translate("ChildWindow_DAT_GPTSoVITS", u"Form", None))
+        self.Label_Title.setText(QCoreApplication.translate("ChildWindow_DAT_GPTSoVITS", u"Title", None))
+        self.Label_Text.setText(QCoreApplication.translate("ChildWindow_DAT_GPTSoVITS", u"Text", None))
+        self.Button_Cancel.setText(QCoreApplication.translate("ChildWindow_DAT_GPTSoVITS", u"PushButton", None))
+        self.Button_Confirm.setText(QCoreApplication.translate("ChildWindow_DAT_GPTSoVITS", u"PushButton", None))

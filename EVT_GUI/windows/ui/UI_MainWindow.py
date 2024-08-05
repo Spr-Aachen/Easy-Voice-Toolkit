@@ -1,8 +1,8 @@
 from PySide6.QtCore import (QCoreApplication, QMetaObject, QRect, QSize, Qt)
 from PySide6.QtWidgets import *
 
-from .Components import WidgetBase, MenuButton, LabelBase, LineEditBase, TextEditBase, ComboBoxBase, SpinBoxBase, DoubleSpinBoxBase, ToolBoxBase, ScrollAreaBase, TreeWidgetBase, Table_ViewModels, Table_EditAudioSpeaker
-from . import Sources
+from ...components.Components import WidgetBase, MenuButton, LabelBase, LineEditBase, TextEditBase, ComboBoxBase, SpinBoxBase, DoubleSpinBoxBase, ToolBoxBase, ScrollAreaBase, TreeWidgetBase, Table_ViewModels, Table_EditAudioSpeaker
+from ...assets import Sources
 
 
 class Ui_MainWindow(object):
@@ -43,7 +43,7 @@ class Ui_MainWindow(object):
         self.Button_Toggle_Menu.setStyleSheet(u"QPushButton {\n"
 "	/*text-align: center;\n"
 "	font-size: 15px;*/\n"
-"	image: url(:/Button_Icon/Sources/Menu.png);\n"
+"	image: url(:/Button_Icon/images/Menu.png);\n"
 "	/*background-repeat: no-repeat;\n"
 "	background-origin: content;\n"
 "	background-position: center;*/\n"
@@ -102,10 +102,10 @@ class Ui_MainWindow(object):
 "	background-color: rgba(255, 255, 255, 24);\n"
 "}\n"
 "QCheckBox::indicator:unchecked {\n"
-"	border-image: url(:/CheckBox_Icon/Sources/Moon.png);\n"
+"	border-image: url(:/CheckBox_Icon/images/Moon.png);\n"
 "}\n"
 "QCheckBox::indicator:checked {\n"
-"	border-image: url(:/CheckBox_Icon/Sources/Sun.png);\n"
+"	border-image: url(:/CheckBox_Icon/images/Sun.png);\n"
 "}")
 
         self.horizontalLayout_11.addWidget(self.CheckBox_SwitchTheme)
@@ -123,7 +123,7 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.Button_Minimize_Window.sizePolicy().hasHeightForWidth())
         self.Button_Minimize_Window.setSizePolicy(sizePolicy)
         self.Button_Minimize_Window.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Dash.png);\n"
+"	image: url(:/Button_Icon/images/Dash.png);\n"
 "	background-color: transparent;\n"
 "	padding: 6.6px;\n"
 "	border-width: 0px;\n"
@@ -142,7 +142,7 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.Button_Maximize_Window.sizePolicy().hasHeightForWidth())
         self.Button_Maximize_Window.setSizePolicy(sizePolicy)
         self.Button_Maximize_Window.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/FullScreen.png);\n"
+"	image: url(:/Button_Icon/images/FullScreen.png);\n"
 "	background-color: transparent;\n"
 "	padding: 6.6px;\n"
 "	border-width: 0px;\n"
@@ -161,7 +161,7 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.Button_Close_Window.sizePolicy().hasHeightForWidth())
         self.Button_Close_Window.setSizePolicy(sizePolicy)
         self.Button_Close_Window.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/X.png);\n"
+"	image: url(:/Button_Icon/images/X.png);\n"
 "	background-color: transparent;\n"
 "	padding: 6.6px;\n"
 "	border-width: 0px;\n"
@@ -235,7 +235,7 @@ class Ui_MainWindow(object):
 "	/*text-align: center;\n"
 "	font-size: 15px;*/\n"
 "	margin: 12px;\n"
-"	border-image: url(:/Button_Icon/Sources/Home.png);\n"
+"	border-image: url(:/Button_Icon/images/Home.png);\n"
 "	/*background-repeat: no-repeat;\n"
 "	background-origin: content;\n"
 "	background-position: center;*/\n"
@@ -306,7 +306,7 @@ class Ui_MainWindow(object):
 "	/*text-align: center;\n"
 "	font-size: 15px;*/\n"
 "	margin: 12px;\n"
-"	border-image: url(:/Button_Icon/Sources/Box.png);\n"
+"	border-image: url(:/Button_Icon/images/Box.png);\n"
 "	/*background-repeat: no-repeat;\n"
 "	background-origin: content;\n"
 "	background-position: center;*/\n"
@@ -373,7 +373,7 @@ class Ui_MainWindow(object):
 "	/*text-align: center;\n"
 "	font-size: 15px;*/\n"
 "	margin: 12px;\n"
-"	border-image: url(:/Button_Icon/Sources/Boxes.png);\n"
+"	border-image: url(:/Button_Icon/images/Boxes.png);\n"
 "	/*background-repeat: no-repeat;\n"
 "	background-origin: content;\n"
 "	background-position: center;*/\n"
@@ -440,7 +440,7 @@ class Ui_MainWindow(object):
 "	/*text-align: center;\n"
 "	font-size: 15px;*/\n"
 "	margin: 12px;\n"
-"	border-image: url(:/Button_Icon/Sources/Audio.png);\n"
+"	border-image: url(:/Button_Icon/images/Audio.png);\n"
 "	/*background-repeat: no-repeat;\n"
 "	background-origin: content;\n"
 "	background-position: center;*/\n"
@@ -507,7 +507,7 @@ class Ui_MainWindow(object):
 "	/*text-align: center;\n"
 "	font-size: 15px;*/\n"
 "	margin: 12px;\n"
-"	border-image: url(:/Button_Icon/Sources/ASR.png);\n"
+"	border-image: url(:/Button_Icon/images/ASR.png);\n"
 "	/*background-repeat: no-repeat;\n"
 "	background-origin: content;\n"
 "	background-position: center;*/\n"
@@ -574,7 +574,7 @@ class Ui_MainWindow(object):
 "	/*text-align: center;\n"
 "	font-size: 15px;*/\n"
 "	margin: 12px;\n"
-"	border-image: url(:/Button_Icon/Sources/STT.png);\n"
+"	border-image: url(:/Button_Icon/images/STT.png);\n"
 "	/*background-repeat: no-repeat;\n"
 "	background-origin: content;\n"
 "	background-position: center;*/\n"
@@ -641,7 +641,7 @@ class Ui_MainWindow(object):
 "	/*text-align: center;\n"
 "	font-size: 15px;*/\n"
 "	margin: 12px;\n"
-"	border-image: url(:/Button_Icon/Sources/Dataset.png);\n"
+"	border-image: url(:/Button_Icon/images/Dataset.png);\n"
 "	/*background-repeat: no-repeat;\n"
 "	background-origin: content;\n"
 "	background-position: center;*/\n"
@@ -708,7 +708,7 @@ class Ui_MainWindow(object):
 "	/*text-align: center;\n"
 "	font-size: 15px;*/\n"
 "	margin: 12px;\n"
-"	border-image: url(:/Button_Icon/Sources/HDD.png);\n"
+"	border-image: url(:/Button_Icon/images/HDD.png);\n"
 "	/*background-repeat: no-repeat;\n"
 "	background-origin: content;\n"
 "	background-position: center;*/\n"
@@ -775,7 +775,7 @@ class Ui_MainWindow(object):
 "	/*text-align: center;\n"
 "	font-size: 15px;*/\n"
 "	margin: 12px;\n"
-"	border-image: url(:/Button_Icon/Sources/TTS.png);\n"
+"	border-image: url(:/Button_Icon/images/TTS.png);\n"
 "	/*background-repeat: no-repeat;\n"
 "	background-origin: content;\n"
 "	background-position: center;*/\n"
@@ -846,7 +846,7 @@ class Ui_MainWindow(object):
 "	/*text-align: center;\n"
 "	font-size: 15px;*/\n"
 "	margin: 12px;\n"
-"	border-image: url(:/Button_Icon/Sources/Settings.png);\n"
+"	border-image: url(:/Button_Icon/images/Settings.png);\n"
 "	/*background-repeat: no-repeat;\n"
 "	background-origin: content;\n"
 "	background-position: center;*/\n"
@@ -913,7 +913,7 @@ class Ui_MainWindow(object):
 "	/*text-align: center;\n"
 "	font-size: 15px;*/\n"
 "	margin: 12px;\n"
-"	border-image: url(:/Button_Icon/Sources/Info.png);\n"
+"	border-image: url(:/Button_Icon/images/Info.png);\n"
 "	/*background-repeat: no-repeat;\n"
 "	background-origin: content;\n"
 "	background-position: center;*/\n"
@@ -957,7 +957,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_5.setContentsMargins(0, 0, 0, 0)
         self.Splitter_Pages = QSplitter(self.Frame_Pages)
         self.Splitter_Pages.setObjectName(u"Splitter_Pages")
-        self.Splitter_Pages.setOrientation(Qt.Vertical)
+        self.Splitter_Pages.setOrientation(Qt.Orientation.Vertical)
         self.Splitter_Pages.setHandleWidth(0)
         self.Splitter_Pages.setChildrenCollapsible(False)
         self.StackedWidget_Pages = QStackedWidget(self.Splitter_Pages)
@@ -1155,7 +1155,7 @@ class Ui_MainWindow(object):
 "	/*text-align: center;\n"
 "	font-size: 15px;*/\n"
 "	margin: 12px;\n"
-"	image: url(:/Button_Icon/Sources/Play.png);\n"
+"	image: url(:/Button_Icon/images/Play.png);\n"
 "	/*background-repeat: no-repeat;\n"
 "	background-origin: content;\n"
 "	background-position: center;*/\n"
@@ -1218,7 +1218,7 @@ class Ui_MainWindow(object):
 "	/*text-align: center;\n"
 "	font-size: 15px;*/\n"
 "	margin: 12px;\n"
-"	image: url(:/Button_Icon/Sources/Server.png);\n"
+"	image: url(:/Button_Icon/images/Server.png);\n"
 "	/*background-repeat: no-repeat;\n"
 "	background-origin: content;\n"
 "	background-position: center;*/\n"
@@ -1281,7 +1281,7 @@ class Ui_MainWindow(object):
 "	/*text-align: center;\n"
 "	font-size: 15px;*/\n"
 "	margin: 12px;\n"
-"	image: url(:/Button_Icon/Sources/GitHub.png);\n"
+"	image: url(:/Button_Icon/images/GitHub.png);\n"
 "	/*background-repeat: no-repeat;\n"
 "	background-origin: content;\n"
 "	background-position: center;*/\n"
@@ -1344,7 +1344,7 @@ class Ui_MainWindow(object):
 "	/*text-align: center;\n"
 "	font-size: 15px;*/\n"
 "	margin: 12px;\n"
-"	image: url(:/Button_Icon/Sources/Heart.png);\n"
+"	image: url(:/Button_Icon/images/Heart.png);\n"
 "	/*background-repeat: no-repeat;\n"
 "	background-origin: content;\n"
 "	background-position: center;*/\n"
@@ -1552,7 +1552,7 @@ class Ui_MainWindow(object):
         self.Button_Install_Aria2.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
 "	font-size: 15px;\n"
-"	image: url(:/Button_Icon/Sources/Refresh.png);\n"
+"	image: url(:/Button_Icon/images/Refresh.png);\n"
 "	background-color: transparent;\n"
 "	padding: 4.5px;\n"
 "	border-width: 1.2px;\n"
@@ -1642,7 +1642,7 @@ class Ui_MainWindow(object):
         self.Button_Install_FFmpeg.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
 "	font-size: 15px;\n"
-"	image: url(:/Button_Icon/Sources/Refresh.png);\n"
+"	image: url(:/Button_Icon/images/Refresh.png);\n"
 "	background-color: transparent;\n"
 "	padding: 4.5px;\n"
 "	border-width: 1.2px;\n"
@@ -1732,7 +1732,7 @@ class Ui_MainWindow(object):
         self.Button_Install_Python.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
 "	font-size: 15px;\n"
-"	image: url(:/Button_Icon/Sources/Refresh.png);\n"
+"	image: url(:/Button_Icon/images/Refresh.png);\n"
 "	background-color: transparent;\n"
 "	padding: 4.5px;\n"
 "	border-width: 1.2px;\n"
@@ -1822,7 +1822,7 @@ class Ui_MainWindow(object):
         self.Button_Install_PyReqs.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
 "	font-size: 15px;\n"
-"	image: url(:/Button_Icon/Sources/Refresh.png);\n"
+"	image: url(:/Button_Icon/images/Refresh.png);\n"
 "	background-color: transparent;\n"
 "	padding: 4.5px;\n"
 "	border-width: 1.2px;\n"
@@ -1912,7 +1912,7 @@ class Ui_MainWindow(object):
         self.Button_Install_Pytorch.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
 "	font-size: 15px;\n"
-"	image: url(:/Button_Icon/Sources/Refresh.png);\n"
+"	image: url(:/Button_Icon/images/Refresh.png);\n"
 "	background-color: transparent;\n"
 "	padding: 4.5px;\n"
 "	border-width: 1.2px;\n"
@@ -2003,7 +2003,7 @@ class Ui_MainWindow(object):
         self.ScrollArea_Env_Manage.setWidgetResizable(True)
         self.ScrollAreaWidgetContents_Env_Manage = QWidget()
         self.ScrollAreaWidgetContents_Env_Manage.setObjectName(u"ScrollAreaWidgetContents_Env_Manage")
-        self.ScrollAreaWidgetContents_Env_Manage.setGeometry(QRect(0, 0, 81, 99))
+        self.ScrollAreaWidgetContents_Env_Manage.setGeometry(QRect(0, 0, 86, 84))
         self.verticalLayout_81 = QVBoxLayout(self.ScrollAreaWidgetContents_Env_Manage)
         self.verticalLayout_81.setSpacing(0)
         self.verticalLayout_81.setObjectName(u"verticalLayout_81")
@@ -2321,7 +2321,7 @@ class Ui_MainWindow(object):
 "	font-size: 12pt;\n"
 "	text-align: right;\n"
 "	image-position: left;\n"
-"	image: url(:/Button_Icon/Sources/Refresh.png);\n"
+"	image: url(:/Button_Icon/images/Refresh.png);\n"
 "	padding: 12px;\n"
 "	background-color: transparent;\n"
 "	border-width: 0px;\n"
@@ -2342,7 +2342,7 @@ class Ui_MainWindow(object):
 "	font-size: 12pt;\n"
 "	text-align: right;\n"
 "	image-position: left;\n"
-"	image: url(:/Button_Icon/Sources/Plus.png);\n"
+"	image: url(:/Button_Icon/images/Plus.png);\n"
 "	padding: 12px;\n"
 "	background-color: transparent;\n"
 "	border-width: 0px;\n"
@@ -2664,7 +2664,7 @@ class Ui_MainWindow(object):
         self.Button_AudioProcessor_Help.setMinimumSize(QSize(45, 45))
         self.Button_AudioProcessor_Help.setStyleSheet(u"QPushButton {\n"
 "	image-position: center;\n"
-"	image: url(:/Button_Icon/Sources/Question.png);\n"
+"	image: url(:/Button_Icon/images/Question.png);\n"
 "	padding: 12px;\n"
 "	background-color: transparent;\n"
 "	border-width: 0px;\n"
@@ -2720,11 +2720,11 @@ class Ui_MainWindow(object):
         self.ScrollArea_Middle_Process = ScrollAreaBase(self.Subpage_Process)
         self.ScrollArea_Middle_Process.setObjectName(u"ScrollArea_Middle_Process")
         self.ScrollArea_Middle_Process.setMinimumSize(QSize(600, 0))
-        self.ScrollArea_Middle_Process.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
+        self.ScrollArea_Middle_Process.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOn)
         self.ScrollArea_Middle_Process.setWidgetResizable(True)
         self.ScrollArea_Middle_WidgetContents_Process = QWidget()
         self.ScrollArea_Middle_WidgetContents_Process.setObjectName(u"ScrollArea_Middle_WidgetContents_Process")
-        self.ScrollArea_Middle_WidgetContents_Process.setGeometry(QRect(0, 0, 581, 1157))
+        self.ScrollArea_Middle_WidgetContents_Process.setGeometry(QRect(0, 0, 586, 1127))
         self.verticalLayout_14 = QVBoxLayout(self.ScrollArea_Middle_WidgetContents_Process)
         self.verticalLayout_14.setSpacing(12)
         self.verticalLayout_14.setObjectName(u"verticalLayout_14")
@@ -2918,10 +2918,10 @@ class Ui_MainWindow(object):
 "	background-color: rgba(255, 255, 255, 21);\n"
 "}\n"
 "QCheckBox::indicator:unchecked {\n"
-"	border-image: url(:/CheckBox_Icon/Sources/ToggleOff.png);\n"
+"	border-image: url(:/CheckBox_Icon/images/ToggleOff.png);\n"
 "}\n"
 "QCheckBox::indicator:checked {\n"
-"	border-image: url(:/CheckBox_Icon/Sources/ToggleOn.png);\n"
+"	border-image: url(:/CheckBox_Icon/images/ToggleOn.png);\n"
 "}")
 
         self.gridLayout_90.addWidget(self.CheckBox_Process_DenoiseAudio, 1, 0, 1, 3)
@@ -3146,10 +3146,10 @@ class Ui_MainWindow(object):
 "	background-color: rgba(255, 255, 255, 21);\n"
 "}\n"
 "QCheckBox::indicator:unchecked {\n"
-"	border-image: url(:/CheckBox_Icon/Sources/ToggleOff.png);\n"
+"	border-image: url(:/CheckBox_Icon/images/ToggleOff.png);\n"
 "}\n"
 "QCheckBox::indicator:checked {\n"
-"	border-image: url(:/CheckBox_Icon/Sources/ToggleOn.png);\n"
+"	border-image: url(:/CheckBox_Icon/images/ToggleOn.png);\n"
 "}")
 
         self.gridLayout_13.addWidget(self.CheckBox_Process_SliceAudio, 1, 0, 1, 3)
@@ -3795,10 +3795,10 @@ class Ui_MainWindow(object):
 "	background-color: rgba(255, 255, 255, 21);\n"
 "}\n"
 "QCheckBox::indicator:unchecked {\n"
-"	border-image: url(:/CheckBox_Icon/Sources/ToggleOff.png);\n"
+"	border-image: url(:/CheckBox_Icon/images/ToggleOff.png);\n"
 "}\n"
 "QCheckBox::indicator:checked {\n"
-"	border-image: url(:/CheckBox_Icon/Sources/ToggleOn.png);\n"
+"	border-image: url(:/CheckBox_Icon/images/ToggleOn.png);\n"
 "}")
 
         self.gridLayout_31.addWidget(self.CheckBox_Process_ToMono, 1, 0, 1, 3)
@@ -4148,7 +4148,7 @@ class Ui_MainWindow(object):
         self.Button_VoiceIdentifier_Help.setMinimumSize(QSize(45, 45))
         self.Button_VoiceIdentifier_Help.setStyleSheet(u"QPushButton {\n"
 "	image-position: center;\n"
-"	image: url(:/Button_Icon/Sources/Question.png);\n"
+"	image: url(:/Button_Icon/images/Question.png);\n"
 "	padding: 12px;\n"
 "	background-color: transparent;\n"
 "	border-width: 0px;\n"
@@ -4204,11 +4204,11 @@ class Ui_MainWindow(object):
         self.ScrollArea_Middle_ASR_VPR = ScrollAreaBase(self.Subpage_ASR_VPR)
         self.ScrollArea_Middle_ASR_VPR.setObjectName(u"ScrollArea_Middle_ASR_VPR")
         self.ScrollArea_Middle_ASR_VPR.setMinimumSize(QSize(600, 0))
-        self.ScrollArea_Middle_ASR_VPR.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
+        self.ScrollArea_Middle_ASR_VPR.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOn)
         self.ScrollArea_Middle_ASR_VPR.setWidgetResizable(True)
         self.ScrollArea_Middle_WidgetContents_ASR_VPR = QWidget()
         self.ScrollArea_Middle_WidgetContents_ASR_VPR.setObjectName(u"ScrollArea_Middle_WidgetContents_ASR_VPR")
-        self.ScrollArea_Middle_WidgetContents_ASR_VPR.setGeometry(QRect(0, 0, 581, 1004))
+        self.ScrollArea_Middle_WidgetContents_ASR_VPR.setGeometry(QRect(0, 0, 586, 974))
         self.verticalLayout_7 = QVBoxLayout(self.ScrollArea_Middle_WidgetContents_ASR_VPR)
         self.verticalLayout_7.setSpacing(12)
         self.verticalLayout_7.setObjectName(u"verticalLayout_7")
@@ -4753,8 +4753,8 @@ class Ui_MainWindow(object):
 
         self.ToolBox_ASR_VPR_OutputParams_AdvanceSettings = ToolBoxBase(self.GroupBox_ASR_VPR_OutputParams)
         self.ToolBox_ASR_VPR_OutputParams_AdvanceSettings.setObjectName(u"ToolBox_ASR_VPR_OutputParams_AdvanceSettings")
-        self.ToolBox_ASR_VPR_OutputParams_AdvanceSettings.setFrameShape(QFrame.StyledPanel)
-        self.ToolBox_ASR_VPR_OutputParams_AdvanceSettings.setFrameShadow(QFrame.Raised)
+        self.ToolBox_ASR_VPR_OutputParams_AdvanceSettings.setFrameShape(QFrame.Shape.StyledPanel)
+        self.ToolBox_ASR_VPR_OutputParams_AdvanceSettings.setFrameShadow(QFrame.Shadow.Raised)
         self.ToolBox_ASR_VPR_OutputParams_AdvanceSettings_Page1Content = WidgetBase()
         self.ToolBox_ASR_VPR_OutputParams_AdvanceSettings_Page1Content.setObjectName(u"ToolBox_ASR_VPR_OutputParams_AdvanceSettings_Page1Content")
         self.ToolBox_ASR_VPR_OutputParams_AdvanceSettings_Page1Content.setGeometry(QRect(0, 0, 147, 105))
@@ -5171,7 +5171,7 @@ class Ui_MainWindow(object):
         self.Button_VoiceTranscriber_Help.setMinimumSize(QSize(45, 45))
         self.Button_VoiceTranscriber_Help.setStyleSheet(u"QPushButton {\n"
 "	image-position: center;\n"
-"	image: url(:/Button_Icon/Sources/Question.png);\n"
+"	image: url(:/Button_Icon/images/Question.png);\n"
 "	padding: 12px;\n"
 "	background-color: transparent;\n"
 "	border-width: 0px;\n"
@@ -5227,11 +5227,11 @@ class Ui_MainWindow(object):
         self.ScrollArea_Middle_STT_Whisper = ScrollAreaBase(self.Subpage_STT_Whisper)
         self.ScrollArea_Middle_STT_Whisper.setObjectName(u"ScrollArea_Middle_STT_Whisper")
         self.ScrollArea_Middle_STT_Whisper.setMinimumSize(QSize(600, 0))
-        self.ScrollArea_Middle_STT_Whisper.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
+        self.ScrollArea_Middle_STT_Whisper.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOn)
         self.ScrollArea_Middle_STT_Whisper.setWidgetResizable(True)
         self.ScrollArea_Middle_WidgetContents_STT_Whisper = QWidget()
         self.ScrollArea_Middle_WidgetContents_STT_Whisper.setObjectName(u"ScrollArea_Middle_WidgetContents_STT_Whisper")
-        self.ScrollArea_Middle_WidgetContents_STT_Whisper.setGeometry(QRect(0, 0, 581, 693))
+        self.ScrollArea_Middle_WidgetContents_STT_Whisper.setGeometry(QRect(0, 0, 586, 678))
         self.verticalLayout_16 = QVBoxLayout(self.ScrollArea_Middle_WidgetContents_STT_Whisper)
         self.verticalLayout_16.setSpacing(12)
         self.verticalLayout_16.setObjectName(u"verticalLayout_16")
@@ -5425,10 +5425,10 @@ class Ui_MainWindow(object):
 "	background-color: rgba(255, 255, 255, 21);\n"
 "}\n"
 "QCheckBox::indicator:unchecked {\n"
-"	border-image: url(:/CheckBox_Icon/Sources/ToggleOff.png);\n"
+"	border-image: url(:/CheckBox_Icon/images/ToggleOff.png);\n"
 "}\n"
 "QCheckBox::indicator:checked {\n"
-"	border-image: url(:/CheckBox_Icon/Sources/ToggleOn.png);\n"
+"	border-image: url(:/CheckBox_Icon/images/ToggleOn.png);\n"
 "}")
 
         self.gridLayout_40.addWidget(self.CheckBox_STT_Whisper_AddLanguageInfo, 1, 0, 1, 3)
@@ -5565,10 +5565,10 @@ class Ui_MainWindow(object):
 "	background-color: rgba(255, 255, 255, 21);\n"
 "}\n"
 "QCheckBox::indicator:unchecked {\n"
-"	border-image: url(:/CheckBox_Icon/Sources/ToggleOff.png);\n"
+"	border-image: url(:/CheckBox_Icon/images/ToggleOff.png);\n"
 "}\n"
 "QCheckBox::indicator:checked {\n"
-"	border-image: url(:/CheckBox_Icon/Sources/ToggleOn.png);\n"
+"	border-image: url(:/CheckBox_Icon/images/ToggleOn.png);\n"
 "}")
 
         self.gridLayout_44.addWidget(self.CheckBox_STT_Whisper_fp16, 1, 0, 1, 3)
@@ -5631,10 +5631,10 @@ class Ui_MainWindow(object):
 "	background-color: rgba(255, 255, 255, 21);\n"
 "}\n"
 "QCheckBox::indicator:unchecked {\n"
-"	border-image: url(:/CheckBox_Icon/Sources/ToggleOff.png);\n"
+"	border-image: url(:/CheckBox_Icon/images/ToggleOff.png);\n"
 "}\n"
 "QCheckBox::indicator:checked {\n"
-"	border-image: url(:/CheckBox_Icon/Sources/ToggleOn.png);\n"
+"	border-image: url(:/CheckBox_Icon/images/ToggleOn.png);\n"
 "}")
 
         self.gridLayout_43.addWidget(self.CheckBox_STT_Whisper_ConditionOnPreviousText, 1, 0, 1, 3)
@@ -5735,10 +5735,10 @@ class Ui_MainWindow(object):
 "	background-color: rgba(255, 255, 255, 21);\n"
 "}\n"
 "QCheckBox::indicator:unchecked {\n"
-"	border-image: url(:/CheckBox_Icon/Sources/ToggleOff.png);\n"
+"	border-image: url(:/CheckBox_Icon/images/ToggleOff.png);\n"
 "}\n"
 "QCheckBox::indicator:checked {\n"
-"	border-image: url(:/CheckBox_Icon/Sources/ToggleOn.png);\n"
+"	border-image: url(:/CheckBox_Icon/images/ToggleOn.png);\n"
 "}")
 
         self.gridLayout_42.addWidget(self.CheckBox_STT_Whisper_Verbose, 1, 0, 1, 3)
@@ -6226,7 +6226,7 @@ class Ui_MainWindow(object):
         self.Button_DatasetCreator_Help.setMinimumSize(QSize(45, 45))
         self.Button_DatasetCreator_Help.setStyleSheet(u"QPushButton {\n"
 "	image-position: center;\n"
-"	image: url(:/Button_Icon/Sources/Question.png);\n"
+"	image: url(:/Button_Icon/images/Question.png);\n"
 "	padding: 12px;\n"
 "	background-color: transparent;\n"
 "	border-width: 0px;\n"
@@ -6282,11 +6282,11 @@ class Ui_MainWindow(object):
         self.ScrollArea_Middle_DAT_GPTSoVITS = ScrollAreaBase(self.Subpage_DAT_GPTSoVITS)
         self.ScrollArea_Middle_DAT_GPTSoVITS.setObjectName(u"ScrollArea_Middle_DAT_GPTSoVITS")
         self.ScrollArea_Middle_DAT_GPTSoVITS.setMinimumSize(QSize(600, 0))
-        self.ScrollArea_Middle_DAT_GPTSoVITS.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
+        self.ScrollArea_Middle_DAT_GPTSoVITS.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOn)
         self.ScrollArea_Middle_DAT_GPTSoVITS.setWidgetResizable(True)
         self.ScrollArea_Middle_WidgetContents_DAT_GPTSoVITS = QWidget()
         self.ScrollArea_Middle_WidgetContents_DAT_GPTSoVITS.setObjectName(u"ScrollArea_Middle_WidgetContents_DAT_GPTSoVITS")
-        self.ScrollArea_Middle_WidgetContents_DAT_GPTSoVITS.setGeometry(QRect(0, 0, 581, 695))
+        self.ScrollArea_Middle_WidgetContents_DAT_GPTSoVITS.setGeometry(QRect(0, 0, 586, 680))
         self.verticalLayout_63 = QVBoxLayout(self.ScrollArea_Middle_WidgetContents_DAT_GPTSoVITS)
         self.verticalLayout_63.setSpacing(12)
         self.verticalLayout_63.setObjectName(u"verticalLayout_63")
@@ -6609,8 +6609,8 @@ class Ui_MainWindow(object):
 
         self.ToolBox_DAT_GPTSoVITS_OutputParams_AdvanceSettings = ToolBoxBase(self.GroupBox_DAT_GPTSoVITS_OutputParams)
         self.ToolBox_DAT_GPTSoVITS_OutputParams_AdvanceSettings.setObjectName(u"ToolBox_DAT_GPTSoVITS_OutputParams_AdvanceSettings")
-        self.ToolBox_DAT_GPTSoVITS_OutputParams_AdvanceSettings.setFrameShape(QFrame.StyledPanel)
-        self.ToolBox_DAT_GPTSoVITS_OutputParams_AdvanceSettings.setFrameShadow(QFrame.Raised)
+        self.ToolBox_DAT_GPTSoVITS_OutputParams_AdvanceSettings.setFrameShape(QFrame.Shape.StyledPanel)
+        self.ToolBox_DAT_GPTSoVITS_OutputParams_AdvanceSettings.setFrameShadow(QFrame.Shadow.Raised)
         self.ToolBox_DAT_GPTSoVITS_OutputParams_AdvanceSettings_Page1Content = WidgetBase()
         self.ToolBox_DAT_GPTSoVITS_OutputParams_AdvanceSettings_Page1Content.setObjectName(u"ToolBox_DAT_GPTSoVITS_OutputParams_AdvanceSettings_Page1Content")
         self.ToolBox_DAT_GPTSoVITS_OutputParams_AdvanceSettings_Page1Content.setGeometry(QRect(0, 0, 147, 105))
@@ -6959,11 +6959,11 @@ class Ui_MainWindow(object):
         self.ScrollArea_Middle_DAT_VITS = ScrollAreaBase(self.Subpage_DAT_VITS)
         self.ScrollArea_Middle_DAT_VITS.setObjectName(u"ScrollArea_Middle_DAT_VITS")
         self.ScrollArea_Middle_DAT_VITS.setMinimumSize(QSize(600, 0))
-        self.ScrollArea_Middle_DAT_VITS.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
+        self.ScrollArea_Middle_DAT_VITS.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOn)
         self.ScrollArea_Middle_DAT_VITS.setWidgetResizable(True)
         self.ScrollArea_Middle_WidgetContents_DAT_VITS = QWidget()
         self.ScrollArea_Middle_WidgetContents_DAT_VITS.setObjectName(u"ScrollArea_Middle_WidgetContents_DAT_VITS")
-        self.ScrollArea_Middle_WidgetContents_DAT_VITS.setGeometry(QRect(0, 0, 581, 1006))
+        self.ScrollArea_Middle_WidgetContents_DAT_VITS.setGeometry(QRect(0, 0, 586, 976))
         self.verticalLayout_36 = QVBoxLayout(self.ScrollArea_Middle_WidgetContents_DAT_VITS)
         self.verticalLayout_36.setSpacing(12)
         self.verticalLayout_36.setObjectName(u"verticalLayout_36")
@@ -7267,10 +7267,10 @@ class Ui_MainWindow(object):
 "	background-color: rgba(255, 255, 255, 21);\n"
 "}\n"
 "QCheckBox::indicator:unchecked {\n"
-"	border-image: url(:/CheckBox_Icon/Sources/ToggleOff.png);\n"
+"	border-image: url(:/CheckBox_Icon/images/ToggleOff.png);\n"
 "}\n"
 "QCheckBox::indicator:checked {\n"
-"	border-image: url(:/CheckBox_Icon/Sources/ToggleOn.png);\n"
+"	border-image: url(:/CheckBox_Icon/images/ToggleOn.png);\n"
 "}")
 
         self.gridLayout_48.addWidget(self.CheckBox_DAT_VITS_AddAuxiliaryData, 1, 0, 1, 3)
@@ -7338,8 +7338,8 @@ class Ui_MainWindow(object):
 
         self.ToolBox_DAT_VITS_VITSParams_AdvanceSettings = ToolBoxBase(self.GroupBox_DAT_VITS_VITSParams)
         self.ToolBox_DAT_VITS_VITSParams_AdvanceSettings.setObjectName(u"ToolBox_DAT_VITS_VITSParams_AdvanceSettings")
-        self.ToolBox_DAT_VITS_VITSParams_AdvanceSettings.setFrameShape(QFrame.StyledPanel)
-        self.ToolBox_DAT_VITS_VITSParams_AdvanceSettings.setFrameShadow(QFrame.Raised)
+        self.ToolBox_DAT_VITS_VITSParams_AdvanceSettings.setFrameShape(QFrame.Shape.StyledPanel)
+        self.ToolBox_DAT_VITS_VITSParams_AdvanceSettings.setFrameShadow(QFrame.Shadow.Raised)
         self.ToolBox_DAT_VITS_VITSParams_AdvanceSettings_Page1Content = WidgetBase()
         self.ToolBox_DAT_VITS_VITSParams_AdvanceSettings_Page1Content.setObjectName(u"ToolBox_DAT_VITS_VITSParams_AdvanceSettings_Page1Content")
         self.ToolBox_DAT_VITS_VITSParams_AdvanceSettings_Page1Content.setGeometry(QRect(0, 0, 147, 420))
@@ -7589,10 +7589,10 @@ class Ui_MainWindow(object):
 "	background-color: rgba(255, 255, 255, 21);\n"
 "}\n"
 "QCheckBox::indicator:unchecked {\n"
-"	border-image: url(:/CheckBox_Icon/Sources/ToggleOff.png);\n"
+"	border-image: url(:/CheckBox_Icon/images/ToggleOff.png);\n"
 "}\n"
 "QCheckBox::indicator:checked {\n"
-"	border-image: url(:/CheckBox_Icon/Sources/ToggleOn.png);\n"
+"	border-image: url(:/CheckBox_Icon/images/ToggleOn.png);\n"
 "}")
 
         self.gridLayout_52.addWidget(self.CheckBox_DAT_VITS_ToMono, 1, 0, 1, 3)
@@ -7694,8 +7694,8 @@ class Ui_MainWindow(object):
 
         self.ToolBox_DAT_VITS_OutputParams_AdvanceSettings = ToolBoxBase(self.GroupBox_DAT_VITS_OutputParams)
         self.ToolBox_DAT_VITS_OutputParams_AdvanceSettings.setObjectName(u"ToolBox_DAT_VITS_OutputParams_AdvanceSettings")
-        self.ToolBox_DAT_VITS_OutputParams_AdvanceSettings.setFrameShape(QFrame.StyledPanel)
-        self.ToolBox_DAT_VITS_OutputParams_AdvanceSettings.setFrameShadow(QFrame.Raised)
+        self.ToolBox_DAT_VITS_OutputParams_AdvanceSettings.setFrameShape(QFrame.Shape.StyledPanel)
+        self.ToolBox_DAT_VITS_OutputParams_AdvanceSettings.setFrameShadow(QFrame.Shadow.Raised)
         self.ToolBox_DAT_VITS_OutputParams_AdvanceSettings_Page1Content = WidgetBase()
         self.ToolBox_DAT_VITS_OutputParams_AdvanceSettings_Page1Content.setObjectName(u"ToolBox_DAT_VITS_OutputParams_AdvanceSettings_Page1Content")
         self.ToolBox_DAT_VITS_OutputParams_AdvanceSettings_Page1Content.setGeometry(QRect(0, 0, 147, 210))
@@ -8191,7 +8191,7 @@ class Ui_MainWindow(object):
         self.Button_VoiceTrainer_Help.setMinimumSize(QSize(45, 45))
         self.Button_VoiceTrainer_Help.setStyleSheet(u"QPushButton {\n"
 "	image-position: center;\n"
-"	image: url(:/Button_Icon/Sources/Question.png);\n"
+"	image: url(:/Button_Icon/images/Question.png);\n"
 "	padding: 12px;\n"
 "	background-color: transparent;\n"
 "	border-width: 0px;\n"
@@ -8247,11 +8247,11 @@ class Ui_MainWindow(object):
         self.ScrollArea_Middle_Train_GPTSoVITS = ScrollAreaBase(self.Subpage_Train_GPTSoVITS)
         self.ScrollArea_Middle_Train_GPTSoVITS.setObjectName(u"ScrollArea_Middle_Train_GPTSoVITS")
         self.ScrollArea_Middle_Train_GPTSoVITS.setMinimumSize(QSize(600, 0))
-        self.ScrollArea_Middle_Train_GPTSoVITS.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
+        self.ScrollArea_Middle_Train_GPTSoVITS.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOn)
         self.ScrollArea_Middle_Train_GPTSoVITS.setWidgetResizable(True)
         self.ScrollArea_Middle_WidgetContents_Train_GPTSoVITS = QWidget()
         self.ScrollArea_Middle_WidgetContents_Train_GPTSoVITS.setObjectName(u"ScrollArea_Middle_WidgetContents_Train_GPTSoVITS")
-        self.ScrollArea_Middle_WidgetContents_Train_GPTSoVITS.setGeometry(QRect(0, 0, 581, 1109))
+        self.ScrollArea_Middle_WidgetContents_Train_GPTSoVITS.setGeometry(QRect(0, 0, 586, 1079))
         self.verticalLayout_52 = QVBoxLayout(self.ScrollArea_Middle_WidgetContents_Train_GPTSoVITS)
         self.verticalLayout_52.setSpacing(12)
         self.verticalLayout_52.setObjectName(u"verticalLayout_52")
@@ -8651,8 +8651,8 @@ class Ui_MainWindow(object):
 
         self.ToolBox_Train_GPTSoVITS_GPTSoVITSParams_AdvanceSettings = ToolBoxBase(self.GroupBox_Train_GPTSoVITS_GPTSoVITSParams)
         self.ToolBox_Train_GPTSoVITS_GPTSoVITSParams_AdvanceSettings.setObjectName(u"ToolBox_Train_GPTSoVITS_GPTSoVITSParams_AdvanceSettings")
-        self.ToolBox_Train_GPTSoVITS_GPTSoVITSParams_AdvanceSettings.setFrameShape(QFrame.StyledPanel)
-        self.ToolBox_Train_GPTSoVITS_GPTSoVITSParams_AdvanceSettings.setFrameShadow(QFrame.Raised)
+        self.ToolBox_Train_GPTSoVITS_GPTSoVITSParams_AdvanceSettings.setFrameShape(QFrame.Shape.StyledPanel)
+        self.ToolBox_Train_GPTSoVITS_GPTSoVITSParams_AdvanceSettings.setFrameShadow(QFrame.Shadow.Raised)
         self.ToolBox_Train_GPTSoVITS_GPTSoVITSParams_AdvanceSettings_Page1Content = WidgetBase()
         self.ToolBox_Train_GPTSoVITS_GPTSoVITSParams_AdvanceSettings_Page1Content.setObjectName(u"ToolBox_Train_GPTSoVITS_GPTSoVITSParams_AdvanceSettings_Page1Content")
         self.ToolBox_Train_GPTSoVITS_GPTSoVITSParams_AdvanceSettings_Page1Content.setGeometry(QRect(0, 0, 147, 105))
@@ -8734,10 +8734,10 @@ class Ui_MainWindow(object):
 "	background-color: rgba(255, 255, 255, 21);\n"
 "}\n"
 "QCheckBox::indicator:unchecked {\n"
-"	border-image: url(:/CheckBox_Icon/Sources/ToggleOff.png);\n"
+"	border-image: url(:/CheckBox_Icon/images/ToggleOff.png);\n"
 "}\n"
 "QCheckBox::indicator:checked {\n"
-"	border-image: url(:/CheckBox_Icon/Sources/ToggleOn.png);\n"
+"	border-image: url(:/CheckBox_Icon/images/ToggleOn.png);\n"
 "}")
 
         self.gridLayout_91.addWidget(self.CheckBox_Train_GPTSoVITS_FP16Run, 1, 0, 1, 3)
@@ -9457,11 +9457,11 @@ class Ui_MainWindow(object):
         self.ScrollArea_Middle_Train_VITS = ScrollAreaBase(self.Subpage_Train_VITS)
         self.ScrollArea_Middle_Train_VITS.setObjectName(u"ScrollArea_Middle_Train_VITS")
         self.ScrollArea_Middle_Train_VITS.setMinimumSize(QSize(600, 0))
-        self.ScrollArea_Middle_Train_VITS.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
+        self.ScrollArea_Middle_Train_VITS.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOn)
         self.ScrollArea_Middle_Train_VITS.setWidgetResizable(True)
         self.ScrollArea_Middle_WidgetContents_Train_VITS = QWidget()
         self.ScrollArea_Middle_WidgetContents_Train_VITS.setObjectName(u"ScrollArea_Middle_WidgetContents_Train_VITS")
-        self.ScrollArea_Middle_WidgetContents_Train_VITS.setGeometry(QRect(0, 0, 581, 1529))
+        self.ScrollArea_Middle_WidgetContents_Train_VITS.setGeometry(QRect(0, 0, 586, 1499))
         self.verticalLayout_28 = QVBoxLayout(self.ScrollArea_Middle_WidgetContents_Train_VITS)
         self.verticalLayout_28.setSpacing(12)
         self.verticalLayout_28.setObjectName(u"verticalLayout_28")
@@ -9824,10 +9824,10 @@ class Ui_MainWindow(object):
 "	background-color: rgba(255, 255, 255, 21);\n"
 "}\n"
 "QCheckBox::indicator:unchecked {\n"
-"	border-image: url(:/CheckBox_Icon/Sources/ToggleOff.png);\n"
+"	border-image: url(:/CheckBox_Icon/images/ToggleOff.png);\n"
 "}\n"
 "QCheckBox::indicator:checked {\n"
-"	border-image: url(:/CheckBox_Icon/Sources/ToggleOn.png);\n"
+"	border-image: url(:/CheckBox_Icon/images/ToggleOn.png);\n"
 "}")
 
         self.gridLayout_61.addWidget(self.CheckBox_Train_VITS_UsePretrainedModels, 1, 0, 1, 3)
@@ -10019,10 +10019,10 @@ class Ui_MainWindow(object):
 "	background-color: rgba(255, 255, 255, 21);\n"
 "}\n"
 "QCheckBox::indicator:unchecked {\n"
-"	border-image: url(:/CheckBox_Icon/Sources/ToggleOff.png);\n"
+"	border-image: url(:/CheckBox_Icon/images/ToggleOff.png);\n"
 "}\n"
 "QCheckBox::indicator:checked {\n"
-"	border-image: url(:/CheckBox_Icon/Sources/ToggleOn.png);\n"
+"	border-image: url(:/CheckBox_Icon/images/ToggleOn.png);\n"
 "}")
 
         self.gridLayout_67.addWidget(self.CheckBox_Train_VITS_KeepOriginalSpeakers, 1, 0, 1, 3)
@@ -10090,8 +10090,8 @@ class Ui_MainWindow(object):
 
         self.ToolBox_Train_VITS_VITSParams_AdvanceSettings = ToolBoxBase(self.GroupBox_Train_VITS_VITSParams)
         self.ToolBox_Train_VITS_VITSParams_AdvanceSettings.setObjectName(u"ToolBox_Train_VITS_VITSParams_AdvanceSettings")
-        self.ToolBox_Train_VITS_VITSParams_AdvanceSettings.setFrameShape(QFrame.StyledPanel)
-        self.ToolBox_Train_VITS_VITSParams_AdvanceSettings.setFrameShadow(QFrame.Raised)
+        self.ToolBox_Train_VITS_VITSParams_AdvanceSettings.setFrameShape(QFrame.Shape.StyledPanel)
+        self.ToolBox_Train_VITS_VITSParams_AdvanceSettings.setFrameShadow(QFrame.Shadow.Raised)
         self.ToolBox_Train_VITS_VITSParams_AdvanceSettings_Page1Content = WidgetBase()
         self.ToolBox_Train_VITS_VITSParams_AdvanceSettings_Page1Content.setObjectName(u"ToolBox_Train_VITS_VITSParams_AdvanceSettings_Page1Content")
         self.ToolBox_Train_VITS_VITSParams_AdvanceSettings_Page1Content.setGeometry(QRect(0, 0, 147, 210))
@@ -10230,10 +10230,10 @@ class Ui_MainWindow(object):
 "	background-color: rgba(255, 255, 255, 21);\n"
 "}\n"
 "QCheckBox::indicator:unchecked {\n"
-"	border-image: url(:/CheckBox_Icon/Sources/ToggleOff.png);\n"
+"	border-image: url(:/CheckBox_Icon/images/ToggleOff.png);\n"
 "}\n"
 "QCheckBox::indicator:checked {\n"
-"	border-image: url(:/CheckBox_Icon/Sources/ToggleOn.png);\n"
+"	border-image: url(:/CheckBox_Icon/images/ToggleOn.png);\n"
 "}")
 
         self.gridLayout_64.addWidget(self.CheckBox_Train_VITS_FP16Run, 1, 0, 1, 3)
@@ -10596,7 +10596,7 @@ class Ui_MainWindow(object):
         self.Button_VoiceConverter_Help.setMinimumSize(QSize(45, 45))
         self.Button_VoiceConverter_Help.setStyleSheet(u"QPushButton {\n"
 "	image-position: center;\n"
-"	image: url(:/Button_Icon/Sources/Question.png);\n"
+"	image: url(:/Button_Icon/images/Question.png);\n"
 "	padding: 12px;\n"
 "	background-color: transparent;\n"
 "	border-width: 0px;\n"
@@ -10652,11 +10652,11 @@ class Ui_MainWindow(object):
         self.ScrollArea_Middle_TTS_GPTSoVITS = ScrollAreaBase(self.Subpage_TTS_GPTSoVITS)
         self.ScrollArea_Middle_TTS_GPTSoVITS.setObjectName(u"ScrollArea_Middle_TTS_GPTSoVITS")
         self.ScrollArea_Middle_TTS_GPTSoVITS.setMinimumSize(QSize(600, 0))
-        self.ScrollArea_Middle_TTS_GPTSoVITS.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
+        self.ScrollArea_Middle_TTS_GPTSoVITS.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOn)
         self.ScrollArea_Middle_TTS_GPTSoVITS.setWidgetResizable(True)
         self.ScrollArea_Middle_WidgetContents_TTS_GPTSoVITS = QWidget()
         self.ScrollArea_Middle_WidgetContents_TTS_GPTSoVITS.setObjectName(u"ScrollArea_Middle_WidgetContents_TTS_GPTSoVITS")
-        self.ScrollArea_Middle_WidgetContents_TTS_GPTSoVITS.setGeometry(QRect(0, 0, 581, 494))
+        self.ScrollArea_Middle_WidgetContents_TTS_GPTSoVITS.setGeometry(QRect(0, 0, 586, 494))
         self.verticalLayout_66 = QVBoxLayout(self.ScrollArea_Middle_WidgetContents_TTS_GPTSoVITS)
         self.verticalLayout_66.setSpacing(12)
         self.verticalLayout_66.setObjectName(u"verticalLayout_66")
@@ -11175,11 +11175,11 @@ class Ui_MainWindow(object):
         self.ScrollArea_Middle_TTS_VITS = ScrollAreaBase(self.Subpage_TTS_VITS)
         self.ScrollArea_Middle_TTS_VITS.setObjectName(u"ScrollArea_Middle_TTS_VITS")
         self.ScrollArea_Middle_TTS_VITS.setMinimumSize(QSize(600, 0))
-        self.ScrollArea_Middle_TTS_VITS.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
+        self.ScrollArea_Middle_TTS_VITS.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOn)
         self.ScrollArea_Middle_TTS_VITS.setWidgetResizable(True)
         self.ScrollArea_Middle_WidgetContents_TTS_VITS = QWidget()
         self.ScrollArea_Middle_WidgetContents_TTS_VITS.setObjectName(u"ScrollArea_Middle_WidgetContents_TTS_VITS")
-        self.ScrollArea_Middle_WidgetContents_TTS_VITS.setGeometry(QRect(0, 0, 581, 865))
+        self.ScrollArea_Middle_WidgetContents_TTS_VITS.setGeometry(QRect(0, 0, 586, 850))
         self.verticalLayout_19 = QVBoxLayout(self.ScrollArea_Middle_WidgetContents_TTS_VITS)
         self.verticalLayout_19.setSpacing(12)
         self.verticalLayout_19.setObjectName(u"verticalLayout_19")
@@ -11388,64 +11388,6 @@ class Ui_MainWindow(object):
         self.PlainTextEdit_TTS_VITS_Text.setObjectName(u"PlainTextEdit_TTS_VITS_Text")
         sizePolicy3.setHeightForWidth(self.PlainTextEdit_TTS_VITS_Text.sizePolicy().hasHeightForWidth())
         self.PlainTextEdit_TTS_VITS_Text.setSizePolicy(sizePolicy3)
-        self.PlainTextEdit_TTS_VITS_Text.setStyleSheet(u"QPlainTextEdit {\n"
-"	/*font-size: 12px;*/\n"
-"	text-align: left;\n"
-"	selection-background-color: darkgrey;\n"
-"	background-color: transparent;\n"
-"	padding-top: 3px;\n"
-"	padding-left: 6px;\n"
-"	padding-bottom: 3px;\n"
-"	padding-right: 6px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgba(201, 210, 222, 123);\n"
-"}\n"
-"QPlainTextEdit:hover {\n"
-"	border-color: rgba(201, 210, 222, 246);\n"
-"}\n"
-"\n"
-"\n"
-"QScrollBar {\n"
-"	background-color: transparent;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: transparent;\n"
-"	margin: 0px;\n"
-"}\n"
-"QScrollBar:hover {\n"
-"}\n"
-"\n"
-"QScrollBar::horizontal {\n"
-"	height: 9px;\n"
-"}\n"
-"QScrollBar::vertical {\n"
-"	width: 9px;\n"
-"}\n"
-"\n"
-"QScrollBar::sub-line, QScrollBar::add-line {\n"
-"	background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"\n"
-"QScrollBar::sub-page, QScrollBar::add-page {\n"
-"	background-co"
-                        "lor: transparent;\n"
-"}\n"
-"\n"
-"QScrollBar::handle {\n"
-"	background-color: rgba(123, 123, 123, 123);\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QScrollBar::handle:hover {\n"
-"	background-color: rgba(123, 123, 123, 210);\n"
-"}")
 
         self.verticalLayout_98.addWidget(self.PlainTextEdit_TTS_VITS_Text)
 
@@ -11649,7 +11591,7 @@ class Ui_MainWindow(object):
 "	background-color: rgba(210, 222, 234, 234);\n"
 "	/*border-color: rgba(201, 210, 222, 210);*/\n"
 "}")
-        self.HorizontalSlider_TTS_VITS_EmotionStrength.setOrientation(Qt.Horizontal)
+        self.HorizontalSlider_TTS_VITS_EmotionStrength.setOrientation(Qt.Orientation.Horizontal)
 
         self.horizontalLayout_43.addWidget(self.HorizontalSlider_TTS_VITS_EmotionStrength)
 
@@ -11756,7 +11698,7 @@ class Ui_MainWindow(object):
 "	background-color: rgba(210, 222, 234, 234);\n"
 "	/*border-color: rgba(201, 210, 222, 210);*/\n"
 "}")
-        self.HorizontalSlider_TTS_VITS_PhonemeDuration.setOrientation(Qt.Horizontal)
+        self.HorizontalSlider_TTS_VITS_PhonemeDuration.setOrientation(Qt.Orientation.Horizontal)
 
         self.horizontalLayout_44.addWidget(self.HorizontalSlider_TTS_VITS_PhonemeDuration)
 
@@ -11863,7 +11805,7 @@ class Ui_MainWindow(object):
 "	background-color: rgba(210, 222, 234, 234);\n"
 "	/*border-color: rgba(201, 210, 222, 210);*/\n"
 "}")
-        self.HorizontalSlider_TTS_VITS_SpeechRate.setOrientation(Qt.Horizontal)
+        self.HorizontalSlider_TTS_VITS_SpeechRate.setOrientation(Qt.Orientation.Horizontal)
 
         self.horizontalLayout_45.addWidget(self.HorizontalSlider_TTS_VITS_SpeechRate)
 
@@ -12459,10 +12401,10 @@ class Ui_MainWindow(object):
 "	background-color: rgba(255, 255, 255, 21);\n"
 "}\n"
 "QCheckBox::indicator:unchecked {\n"
-"	border-image: url(:/CheckBox_Icon/Sources/ToggleOff.png);\n"
+"	border-image: url(:/CheckBox_Icon/images/ToggleOff.png);\n"
 "}\n"
 "QCheckBox::indicator:checked {\n"
-"	border-image: url(:/CheckBox_Icon/Sources/ToggleOn.png);\n"
+"	border-image: url(:/CheckBox_Icon/images/ToggleOn.png);\n"
 "}")
 
         self.horizontalLayout_65.addWidget(self.CheckBox_Setting_AutoUpdate)
@@ -12666,10 +12608,10 @@ class Ui_MainWindow(object):
 "	background-color: rgba(255, 255, 255, 21);\n"
 "}\n"
 "QCheckBox::indicator:unchecked {\n"
-"	border-image: url(:/CheckBox_Icon/Sources/ToggleOff.png);\n"
+"	border-image: url(:/CheckBox_Icon/images/ToggleOff.png);\n"
 "}\n"
 "QCheckBox::indicator:checked {\n"
-"	border-image: url(:/CheckBox_Icon/Sources/ToggleOn.png);\n"
+"	border-image: url(:/CheckBox_Icon/images/ToggleOn.png);\n"
 "}")
 
         self.horizontalLayout_75.addWidget(self.CheckBox_Setting_AutoReset)
@@ -12738,10 +12680,10 @@ class Ui_MainWindow(object):
 "	background-color: rgba(255, 255, 255, 21);\n"
 "}\n"
 "QCheckBox::indicator:unchecked {\n"
-"	border-image: url(:/CheckBox_Icon/Sources/ToggleOff.png);\n"
+"	border-image: url(:/CheckBox_Icon/images/ToggleOff.png);\n"
 "}\n"
 "QCheckBox::indicator:checked {\n"
-"	border-image: url(:/CheckBox_Icon/Sources/ToggleOn.png);\n"
+"	border-image: url(:/CheckBox_Icon/images/ToggleOn.png);\n"
 "}")
 
         self.horizontalLayout_74.addWidget(self.CheckBox_Setting_Synchronizer)
@@ -13404,7 +13346,7 @@ class Ui_MainWindow(object):
         self.Button_Console_Copy.setObjectName(u"Button_Console_Copy")
         self.Button_Console_Copy.setMaximumSize(QSize(24, 24))
         self.Button_Console_Copy.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/Clipboard.png);\n"
+"	image: url(:/Button_Icon/images/Clipboard.png);\n"
 "	background-color: transparent;\n"
 "	padding: 4.5px;\n"
 "	border-width: 0px;\n"
@@ -13422,7 +13364,7 @@ class Ui_MainWindow(object):
         self.Button_Console_Clear.setObjectName(u"Button_Console_Clear")
         self.Button_Console_Clear.setMaximumSize(QSize(24, 24))
         self.Button_Console_Clear.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/TrashCan.png);\n"
+"	image: url(:/Button_Icon/images/TrashCan.png);\n"
 "	background-color: transparent;\n"
 "	padding: 4.5px;\n"
 "	border-width: 0px;\n"
@@ -13440,7 +13382,7 @@ class Ui_MainWindow(object):
         self.Button_Console_Fold.setObjectName(u"Button_Console_Fold")
         self.Button_Console_Fold.setMaximumSize(QSize(24, 24))
         self.Button_Console_Fold.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/ComboBox_Icon/Sources/DownArrow.png);\n"
+"	image: url(:/ComboBox_Icon/images/DownArrow.png);\n"
 "	background-color: transparent;\n"
 "	padding: 4.5px;\n"
 "	border-width: 0px;\n"
@@ -13562,7 +13504,7 @@ class Ui_MainWindow(object):
         self.Button_Toggle_Console.setStyleSheet(u"QPushButton {\n"
 "	/*text-align: center;\n"
 "	font-size: 15px;*/\n"
-"	image: url(:/Button_Icon/Sources/Console.png);\n"
+"	image: url(:/Button_Icon/images/Console.png);\n"
 "	/*background-repeat: no-repeat;\n"
 "	background-origin: content;\n"
 "	background-position: center;*/\n"

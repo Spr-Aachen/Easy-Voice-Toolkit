@@ -1,4 +1,5 @@
 import os
+import re
 #import sys
 import platform
 import shutil
@@ -6,9 +7,10 @@ import pynvml
 #import subprocess
 #import pkg_resources
 #from packaging import version
+from pathlib import Path
+from typing import Optional
 from PySide6.QtCore import QObject, Signal
-
-from QEasyWidgets.Utils import *
+from QEasyWidgets import QFunctions as QFunc
 
 ##############################################################################################################################
 
@@ -73,7 +75,7 @@ class Aria2_Installer(QObject):
 
     def Check_Aria2(self):
         try:
-            Aria2Version = str(RunCMD([['aria2c', '-v']], DecodeResult = True)[0])
+            Aria2Version = str(QFunc.RunCMD([['aria2c', '-v']], DecodeResult = True)[0])
             return Aria2Version
         except OSError:
             return False
@@ -86,14 +88,14 @@ class Aria2_Installer(QObject):
             File_Format = 'zip'
             Path_Download = os.path.join(Dir_Download, f"{File_Name}.{File_Format}")
             Dir_Install = Path(f"{os.getenv('SystemDrive')}/Aria2").__str__()
-            DownloadFile(URL, Dir_Download, File_Name, File_Format, None)
+            QFunc.DownloadFile(URL, Dir_Download, File_Name, File_Format, None)
             shutil.unpack_archive(Path_Download, Dir_Install, Path_Download.rsplit('.', 1)[-1])
-            MoveFiles(os.path.dirname(GetPaths(Dir_Install, 'aria2c.exe')[0]), Dir_Install)
-            SetEnvVar('PATH', Dir_Install, 'User')
+            QFunc.MoveFiles(os.path.dirname(QFunc.GetPaths(Dir_Install, 'aria2c.exe')[0]), Dir_Install)
+            QFunc.SetEnvVar('PATH', Dir_Install, 'User')
             os.remove(Path_Download)
 
         if platform.system() == 'Linux':
-            RunCMD(['sudo apt-get update', 'sudo apt-get install aria2'])
+            QFunc.RunCMD(['sudo apt-get update', 'sudo apt-get install aria2'])
 
     def Execute_Aria2_Installation(self):
         Result = self.Check_Aria2()
@@ -112,7 +114,7 @@ class Aria2_Installer(QObject):
             EnvConfiguratorSignals.Signal_Aria2Status.emit(f"Aria2 detected. Version: {Result}")
 
     def Execute(self, Params: tuple):
-        TaskAccelerating(
+        QFunc.TaskAccelerating(
             TargetList = [self.Execute_Aria2_Installation],
             ArgsList = [Params],
             TypeList = ['MultiThreading'],
@@ -132,7 +134,7 @@ class FFmpeg_Installer(QObject):
 
     def Check_FFmpeg(self):
         try:
-            FFmpegVersion = str(RunCMD([['ffmpeg', '-version']], DecodeResult = True)[0])
+            FFmpegVersion = str(QFunc.RunCMD([['ffmpeg', '-version']], DecodeResult = True)[0])
             return FFmpegVersion
         except OSError:
             return False
@@ -146,14 +148,14 @@ class FFmpeg_Installer(QObject):
             Path_Download = os.path.join(Dir_Download, f"{File_Name}.{File_Format}")
             Dir_Install = Path(f"{os.getenv('SystemDrive')}/FFmpeg").__str__()
             Path_Binary = os.path.normpath(os.path.join(Dir_Install, 'bin'))
-            DownloadFile(URL, Dir_Download, File_Name, File_Format, None)
+            QFunc.DownloadFile(URL, Dir_Download, File_Name, File_Format, None)
             shutil.unpack_archive(Path_Download, Dir_Install, Path_Download.rsplit('.', 1)[-1])
-            MoveFiles(os.path.dirname(GetPaths(Dir_Install, 'bin')[0]), Dir_Install)
-            SetEnvVar('PATH', Path_Binary, 'User')
+            QFunc.MoveFiles(os.path.dirname(QFunc.GetPaths(Dir_Install, 'bin')[0]), Dir_Install)
+            QFunc.SetEnvVar('PATH', Path_Binary, 'User')
             os.remove(Path_Download)
 
         if platform.system() == 'Linux':
-            RunCMD(['sudo apt-get update', 'sudo apt-get install ffmpeg'])
+            QFunc.RunCMD(['sudo apt-get update', 'sudo apt-get install ffmpeg'])
 
     def Execute_FFmpeg_Installation(self):
         Result = self.Check_FFmpeg()
@@ -172,7 +174,7 @@ class FFmpeg_Installer(QObject):
             EnvConfiguratorSignals.Signal_FFmpegStatus.emit(f"FFmpeg detected. Version: {Result}")
 
     def Execute(self, Params: tuple):
-        TaskAccelerating(
+        QFunc.TaskAccelerating(
             TargetList = [self.Execute_FFmpeg_Installation],
             ArgsList = [Params],
             TypeList = ['MultiThreading'],
@@ -192,7 +194,7 @@ class GCC_Installer(QObject):
 
     def Check_GCC(self):
         try:
-            GCCVersion = str(RunCMD([['gcc', '--version']], DecodeResult = True)[0])
+            GCCVersion = str(QFunc.RunCMD([['gcc', '--version']], DecodeResult = True)[0])
             return GCCVersion
         except OSError:
             return False
@@ -206,14 +208,14 @@ class GCC_Installer(QObject):
             Path_Download = os.path.join(Dir_Download, f"{File_Name}.{File_Format}")
             Dir_Install = Path(f"{os.getenv('SystemDrive')}/MinGW").__str__()
             Path_Binary = os.path.normpath(os.path.join(Dir_Install, 'bin'))
-            DownloadFile(URL, Dir_Download, File_Name, File_Format, None)
+            QFunc.DownloadFile(URL, Dir_Download, File_Name, File_Format, None)
             shutil.unpack_archive(Path_Download, Dir_Install, Path_Download.rsplit('.', 1)[-1])
-            MoveFiles(os.path.dirname(GetPaths(Dir_Install, 'bin')[0]), Dir_Install)
-            SetEnvVar('PATH', Path_Binary, 'User')
+            QFunc.MoveFiles(os.path.dirname(QFunc.GetPaths(Dir_Install, 'bin')[0]), Dir_Install)
+            QFunc.SetEnvVar('PATH', Path_Binary, 'User')
             os.remove(Path_Download)
 
         if platform.system() == 'Linux':
-            RunCMD(['sudo apt-get update', 'sudo apt-get install build-essential'])
+            QFunc.RunCMD(['sudo apt-get update', 'sudo apt-get install build-essential'])
 
     def Execute_GCC_Installation(self):
         Result = self.Check_GCC()
@@ -232,7 +234,7 @@ class GCC_Installer(QObject):
             EnvConfiguratorSignals.Signal_GCCStatus.emit(f"GCC detected. Version: {Result}")
 
     def Execute(self, Params: tuple):
-        TaskAccelerating(
+        QFunc.TaskAccelerating(
             TargetList = [self.Execute_GCC_Installation],
             ArgsList = [Params],
             TypeList = ['MultiThreading'],
@@ -252,7 +254,7 @@ class CMake_Installer(QObject):
 
     def Check_CMake(self):
         try:
-            CMakeVersion = str(RunCMD([['cmake', '--version']], DecodeResult = True)[0])
+            CMakeVersion = str(QFunc.RunCMD([['cmake', '--version']], DecodeResult = True)[0])
             return CMakeVersion
         except OSError:
             return False
@@ -266,14 +268,14 @@ class CMake_Installer(QObject):
             Path_Download = os.path.join(Dir_Download, f"{File_Name}.{File_Format}")
             Dir_Install = Path(f"{os.getenv('SystemDrive')}/CMake").__str__()
             Path_Binary = os.path.normpath(os.path.join(Dir_Install, 'bin'))
-            DownloadFile(URL, Dir_Download, File_Name, File_Format, None)
+            QFunc.DownloadFile(URL, Dir_Download, File_Name, File_Format, None)
             shutil.unpack_archive(Path_Download, Dir_Install, Path_Download.rsplit('.', 1)[-1])
-            MoveFiles(os.path.dirname(GetPaths(Dir_Install, 'bin')[0]), Dir_Install)
-            SetEnvVar('PATH', Path_Binary, 'User')
+            QFunc.MoveFiles(os.path.dirname(QFunc.GetPaths(Dir_Install, 'bin')[0]), Dir_Install)
+            QFunc.SetEnvVar('PATH', Path_Binary, 'User')
             os.remove(Path_Download)
 
         if platform.system() == 'Linux':
-            RunCMD(['sudo apt-get update', 'sudo apt-get install build-essential'])
+            QFunc.RunCMD(['sudo apt-get update', 'sudo apt-get install build-essential'])
 
     def Execute_CMake_Installation(self):
         PathList = os.environ['PATH'].split(os.pathsep)
@@ -300,12 +302,12 @@ class CMake_Installer(QObject):
             EnvConfiguratorSignals.Signal_CMakeDetected.emit()
             EnvConfiguratorSignals.Signal_CMakeStatus.emit(f"CMake detected. Version: {Result}")
 
-        RunCMD(['set CMAKE_MAKE_PROGRAM={}'.format(os.path.join(self.MinGW_Bin_Path, 'mingw32-make.exe'))])
-        RunCMD(['set CC={}'.format(os.path.join(self.MinGW_Bin_Path, 'gcc.exe'))])
-        RunCMD(['set CXX={}'.format(os.path.join(self.MinGW_Bin_Path, 'g++.exe'))])
+        QFunc.RunCMD(['set CMAKE_MAKE_PROGRAM={}'.format(os.path.join(self.MinGW_Bin_Path, 'mingw32-make.exe'))])
+        QFunc.RunCMD(['set CC={}'.format(os.path.join(self.MinGW_Bin_Path, 'gcc.exe'))])
+        QFunc.RunCMD(['set CXX={}'.format(os.path.join(self.MinGW_Bin_Path, 'g++.exe'))])
 
     def Execute(self, Params: tuple):
-        TaskAccelerating(
+        QFunc.TaskAccelerating(
             TargetList = [self.Execute_CMake_Installation],
             ArgsList = [Params],
             TypeList = ['MultiThreading'],
@@ -335,7 +337,7 @@ class Python_Installer(QObject):
             return False
         '''
         try:
-            PythonVersion = str(RunCMD([['python', '--version']], DecodeResult = True)[0])
+            PythonVersion = str(QFunc.RunCMD([['python', '--version']], DecodeResult = True)[0])
             if PythonVersion.split('.')[0] == 'Python 3' and int(PythonVersion.split('.')[1]) >= 8:
                 return PythonVersion
             else:
@@ -350,12 +352,12 @@ class Python_Installer(QObject):
             File_Name = 'python'
             File_Format = 'exe'
             Path_Download = os.path.join(Dir_Download, f"{File_Name}.{File_Format}")
-            DownloadFile(URL, Dir_Download, File_Name, File_Format, None)
-            RunCMD([f'{Path_Download} /quiet InstallAllUsers=1 PrependPath=1'])
+            QFunc.DownloadFile(URL, Dir_Download, File_Name, File_Format, None)
+            QFunc.RunCMD([f'{Path_Download} /quiet InstallAllUsers=1 PrependPath=1'])
             os.remove(Path_Download)
 
         if platform.system() == 'Linux':
-            RunCMD(['sudo apt-get update', 'sudo apt-get install -y python3'])
+            QFunc.RunCMD(['sudo apt-get update', 'sudo apt-get install -y python3'])
 
     def Execute_Python_Installation(self, Version_Download: str):
         Result = self.Check_Python()
@@ -374,7 +376,7 @@ class Python_Installer(QObject):
             EnvConfiguratorSignals.Signal_PythonStatus.emit(f"Python detected. Version: {Result}")
 
     def Execute(self, Params: tuple):
-        TaskAccelerating(
+        QFunc.TaskAccelerating(
             TargetList = [self.Execute_Python_Installation],
             ArgsList = [Params],
             TypeList = ['MultiThreading'],
@@ -404,7 +406,7 @@ class PyReqs_Installer(QObject):
             return False
         '''
         try:
-            PackageInfo = str(RunCMD([['pip', 'show', Package]], DecodeResult = True)[0])
+            PackageInfo = str(QFunc.RunCMD([['pip', 'show', Package]], DecodeResult = True)[0])
             if PackageInfo != 'None':
                 return PackageInfo
             else:
@@ -425,7 +427,7 @@ class PyReqs_Installer(QObject):
             else:
                 exit(-1)
             '''
-            _, _, ReturnCode = RunCMD([f'pip3 install {Package} -y --index-url {Mirror}'])
+            _, _, ReturnCode = QFunc.RunCMD([f'pip3 install {Package} -y --index-url {Mirror}'])
             if ReturnCode == 0:
                 break
 
@@ -458,7 +460,7 @@ class PyReqs_Installer(QObject):
                 EnvConfiguratorSignals.Signal_PyReqsStatus.emit("Installation failed:(")
 
     def Execute(self, Params: tuple):
-        TaskAccelerating(
+        QFunc.TaskAccelerating(
             TargetList = [self.Execute_PyReqs_Installation],
             ArgsList = [Params],
             TypeList = ['MultiThreading'],
@@ -490,7 +492,7 @@ class Pytorch_Installer(QObject):
             return False
         '''
         try:
-            PackageInfo = str(RunCMD([['pip', 'show', Package]], DecodeResult = True)[0])
+            PackageInfo = str(QFunc.RunCMD([['pip', 'show', Package]], DecodeResult = True)[0])
             if PackageInfo != 'None':
                 return PackageInfo
             else:
@@ -509,13 +511,13 @@ class Pytorch_Installer(QObject):
             CudaVersion = min(CudaList, key = lambda Cuda: abs(Cuda - pynvml.nvmlSystemGetCudaDriverVersion()//100))
             MirrorList = [f'https://download.pytorch.org/whl/cu{CudaVersion}', '']
             for Mirror in MirrorList:
-                Result = RunCMD([
+                Result = QFunc.RunCMD([
                     DisplayCommand if Reinstall else '' + f'pip3 install {Package} -y --index-url {Mirror}' + '--force-reinstall' if Reinstall else ''
                 ])
                 if Result.returncode == 0:
                     break
         else:
-            RunCMD(
+            QFunc.RunCMD(
                 [DisplayCommand if Reinstall else '' + f'pip3 uninstall {Package} -y'] if Reinstall else [] +
                 [DisplayCommand if Reinstall else '' + f'pip3 install {Package} -y']
             )
@@ -546,7 +548,7 @@ class Pytorch_Installer(QObject):
                 EnvConfiguratorSignals.Signal_PytorchStatus.emit(f"{Package} detected. Version: {Result}")
 
     def Execute(self, Params: tuple):
-        TaskAccelerating(
+        QFunc.TaskAccelerating(
             TargetList = [self.Execute_Pytorch_Installation],
             ArgsList = [Params],
             TypeList = ['MultiThreading'],

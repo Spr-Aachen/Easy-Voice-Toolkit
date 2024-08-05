@@ -181,6 +181,17 @@ Please make sure that you've installed [Python](https://www.python.org/downloads
 <br>Click to use the demo above, or access to Colab and upload [Run.ipynb](https://github.com/Spr-Aachen/Easy-Voice-Toolkit/blob/main/Run.ipynb)
 
 
+## Future Features
+
+### To Do
+- Add support for Linux OS
+- Add chatbot (LLM) integration
+
+### WIP
+- Frontend-Backend Separation
+- Internationalization
+
+
 ## Tested Devices
 
 ### Windows OS

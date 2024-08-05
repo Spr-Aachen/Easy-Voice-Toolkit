@@ -6,39 +6,30 @@ from typing import Optional
 from PySide6.QtCore import Qt, QObject, QThread, Signal
 from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import QApplication, QVBoxLayout, QSizePolicy, QWidget, QMessageBox, QPushButton, QProgressBar, QLabel
+from QEasyWidgets import QFunctions as QFunc
 
-from QEasyWidgets.Utils import CheckUpdate, DownloadFile, NormPath, SetRichText, RunBat, BootWithBat, GetFileInfo, GetBaseDir, ManageConfig
-from EVT_GUI.Functions import Function_SetMethodExecutor, Function_SetText, Function_ShowMessageBox
+from EVT_GUI.Functions import Function_SetMethodExecutor, Function_ShowMessageBox
+from Config import *
 
 ##############################################################################################################################
 
-_, IsFileCompiled = GetFileInfo()
+# Set up client config
+Config = QFunc.ManageConfig(ConfigPath)
 
 
-TargetDir = GetBaseDir(__file__ if IsFileCompiled == False else sys.executable)
-#os.chdir(TargetDir)
-
-ResourceDir = TargetDir if GetBaseDir(SearchMEIPASS = True) is None else GetBaseDir(SearchMEIPASS = True)
-
-
-ConfigPath = NormPath(Path(TargetDir).joinpath('Config', 'Config.ini'))
-Config = ManageConfig(ConfigPath)
-
-
-CurrentVersion = str(Config.GetValue('Info', 'CurrentVersion'))
+# Set path of executer
 ExecuterName = str(Config.GetValue('Info', 'ExecuterName'))
-DownloadDir = TargetDir
-ExtractDir = NormPath(Path(TargetDir).joinpath('Temp'))
-ExecuterPath = NormPath(Path(TargetDir).joinpath(ExecuterName))
+ExecuterPath = QFunc.NormPath(Path(TargetDir).joinpath(ExecuterName))
 
 
-FoldersToKeep = [NormPath(Path(TargetDir).joinpath('Config'))]
+# Set folders to be excluded
+FoldersToKeep = [ConfigDir]
 if Path(TargetDir).joinpath('FFmpeg').exists():
-    FoldersToKeep.append(NormPath(Path(TargetDir).joinpath('FFmpeg')))
+    FoldersToKeep.append(QFunc.NormPath(Path(TargetDir).joinpath('FFmpeg')))
 if Path(TargetDir).joinpath('Python').exists():
-    FoldersToKeep.append(NormPath(Path(TargetDir).joinpath('Python')))
+    FoldersToKeep.append(QFunc.NormPath(Path(TargetDir).joinpath('Python')))
 if Path(TargetDir).joinpath('Download').exists():
-    FoldersToKeep.append(NormPath(Path(TargetDir).joinpath('Download')))
+    FoldersToKeep.append(QFunc.NormPath(Path(TargetDir).joinpath('Download')))
 
 ##############################################################################################################################
 
@@ -60,15 +51,15 @@ UpdaterSignals = CustomSignals_Updater()
 
 
 def RebootIfFailed():
-    BootWithBat(
+    QFunc.BootWithBat(
         ProgramPath = ExecuterPath,
         DelayTime = 0,
-        BatFilePath = Path(NormPath(TargetDir)).joinpath('Booter.bat')
+        BatFilePath = Path(QFunc.NormPath(TargetDir)).joinpath('Booter.bat')
     )
 
 
 def RebootIfSucceeded():
-    RunBat(
+    QFunc.RunBat(
         CommandList = [
             '@echo off',
             'echo Ready to move files and reboot',
@@ -79,7 +70,7 @@ def RebootIfSucceeded():
             f'start "Programm Running" "{ExecuterPath}"',
             'del "%~f0"'
         ],
-        BatFilePath = NormPath(Path(TargetDir).joinpath('Updater.bat'))
+        BatFilePath = QFunc.NormPath(Path(TargetDir).joinpath('Updater.bat'))
     )
 
 
@@ -90,7 +81,7 @@ def UpdateChecker(
     '''
     try:
         UpdaterSignals.Signal_Message.emit("正在检查更新，请稍等...\nChecking for updates, please wait...")
-        IsUpdateNeeded, DownloadURL = CheckUpdate(
+        IsUpdateNeeded, DownloadURL = QFunc.CheckUpdate(
             RepoOwner = 'Spr-Aachen',
             RepoName = 'Easy-Voice-Toolkit',
             FileName = 'EVT',
@@ -121,7 +112,7 @@ def UpdateDownloader(
     try:
         # Download
         UpdaterSignals.Signal_Message.emit("正在下载文件...\nDownloading files...")
-        FileInfo = DownloadFile(
+        FileInfo = QFunc.DownloadFile(
             DownloadURL = DownloadURL,
             DownloadDir = DownloadDir,
             FileName = Name,
@@ -134,7 +125,7 @@ def UpdateDownloader(
     else:
         # Unpack
         UpdaterSignals.Signal_Message.emit("正在解压文件...\nUnpacking files...")
-        ExtractDir = NormPath(Path(TargetDir).joinpath('Temp')) if ExtractDir == TargetDir else ExtractDir
+        ExtractDir = QFunc.NormPath(Path(TargetDir).joinpath('Temp')) if ExtractDir == TargetDir else ExtractDir
         shutil.unpack_archive(
             filename = FileInfo[1],
             extract_dir = ExtractDir
@@ -207,7 +198,7 @@ class Widget_Updater(QWidget):
             self.height()
         )
 
-        self.setWindowIcon(QIcon(NormPath(Path(ResourceDir).joinpath('Icon.ico'))))
+        self.setWindowIcon(QIcon(QFunc.NormPath(Path(ResourceDir).joinpath('Icon.ico'))))
 
         self.Label = QLabel()
         self.Label.setVisible(True)
@@ -239,9 +230,9 @@ class Widget_Updater(QWidget):
             self.DownloadURL = DownloadURL
 
         UpdaterSignals.Signal_Message.connect(
-            lambda Message: Function_SetText(
+            lambda Message: QFunc.Function_SetText(
                 self.Label,
-                SetRichText(Message, 'center', 9, 420, 0.3, 12)
+                QFunc.SetRichText(Message, 'center', 9, 420, 0.3, 12)
             )
         )
         UpdaterSignals.Signal_ReadyToUpdate.connect(

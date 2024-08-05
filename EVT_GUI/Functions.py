@@ -1,14 +1,16 @@
-import re
+import os
+import platform
 from typing import Union, Optional
-from PySide6.QtCore import Qt, QObject, Signal, Slot
+from PySide6.QtCore import Qt, QObject, Signal, Slot, QThread, QPoint
 from PySide6.QtCore import QCoreApplication as QCA
-from PySide6.QtGui import QFont
+from PySide6.QtGui import *
 from PySide6.QtWidgets import *
+from QEasyWidgets import QFunctions as QFunc
+from QEasyWidgets.Windows import *
+from QEasyWidgets.Components import *
 
-from QEasyWidgets.Utils import *
-from QEasyWidgets.QFunctions import *
-from .Components import *
-from .Window import *
+from .components.Components import *
+from .windows.Windows import *
 
 ##############################################################################################################################
 
@@ -40,7 +42,7 @@ def Function_ScrollToWidget(
     '''
     '''
     if ScrollArea is None:
-        ScrollArea = Function_FindParentUI(TargetWidget, QScrollArea)
+        ScrollArea = QFunc.Function_FindParentUI(TargetWidget, QScrollArea)
 
     def ScrollToWidget():
         TargetRect = TargetWidget.mapToGlobal(QPoint(0, 0))
@@ -124,7 +126,7 @@ def Function_SetImage(Widget: QWidget, ImagePath: str):
     '''
     '''
     Image = QImage()
-    Image.load(NormPath(ImagePath))
+    Image.load(QFunc.NormPath(ImagePath))
     Pixmap = QPixmap.fromImage(Image)
     def SetPic():
         Length = max(Widget.width(), Widget.height())
@@ -150,11 +152,11 @@ def Function_ConfigureCheckBox(
         UncheckedEvents.append(lambda: CheckBox.setText(UncheckedText))
 
     CheckBox.toggled.connect(
-        lambda IsChecked: RunEvents(CheckedEvents if IsChecked else UncheckedEvents)
+        lambda IsChecked: QFunc.RunEvents(CheckedEvents if IsChecked else UncheckedEvents)
     )
 
-    RunEvents(CheckedEvents) if TakeEffect and CheckBox.isChecked() else None
-    RunEvents(UncheckedEvents) if TakeEffect and not CheckBox.isChecked() else None
+    QFunc.RunEvents(CheckedEvents) if TakeEffect and CheckBox.isChecked() else None
+    QFunc.RunEvents(UncheckedEvents) if TakeEffect and not CheckBox.isChecked() else None
 
 
 def Function_SetURL(
@@ -167,7 +169,7 @@ def Function_SetURL(
     Function to open URL (through button)
     '''
     Button.clicked.connect(
-        lambda: Function_OpenURL([(Function_ParamsHandler(URL, None) if isinstance(URL, QWidget) else URL) for URL in ToIterable(URL)], CreateIfNotExist)
+        lambda: QFunc.Function_OpenURL([(Function_ParamsHandler(URL, None) if isinstance(URL, QWidget) else URL) for URL in QFunc.ToIterable(URL)], CreateIfNotExist)
     )
     Button.setToolTipDuration(-1)
     Button.setToolTip(ButtonTooltip)
@@ -189,7 +191,7 @@ def Function_SetFileDialog(
 
     @Slot()
     def SetFileDialog():
-        DisplayText = Function_GetFileDialog(
+        DisplayText = QFunc.Function_GetFileDialog(
             Mode = Mode,
             FileType = FileType,
             Directory = os.path.expanduser('~/Documents' if platform.system() == "Windows" else '~/') if Directory is None else Directory
@@ -236,7 +238,7 @@ def Function_ParamsHandler(
     '''
     if Mode == "Get":
         if isinstance(UI, (QLineEdit, LineEditBase, TextEditBase, QPlainTextEdit)):
-            return Function_GetText(UI)
+            return QFunc.Function_GetText(UI)
         if isinstance(UI, QComboBox):
             return UI.currentText()
         if isinstance(UI, (QSlider, QAbstractSpinBox)):
@@ -277,10 +279,10 @@ def Function_ParamsSynchronizer(
         for UI_Get, UI_Set in FromTo.items():
             Param_Get = Function_ParamsHandler(UI_Get, "Get")
             Param_Get = Param_Get * Times if isinstance(Param_Get, (int, float, complex)) else Param_Get
-            for UI_Set in ToIterable(UI_Set):
+            for UI_Set in QFunc.ToIterable(UI_Set):
                 Function_ParamsHandler(UI_Set, Param_Get, "Set")
     
-    TriggerList = ToIterable(Trigger)
+    TriggerList = QFunc.ToIterable(Trigger)
 
     for Trigger in TriggerList:
         if isinstance(Trigger, QAbstractButton):
@@ -306,7 +308,7 @@ def Function_ParamsChecker(
         Param = Function_ParamsHandler(UI, "Get") if isinstance(UI, QWidget) else UI
         if isinstance(Param, str):
             if Param.strip() == "None" or Param.strip() == "":
-                if UI in ToIterable(EmptyAllowed):
+                if UI in QFunc.ToIterable(EmptyAllowed):
                     Param = None
                 else:
                     Function_ShowMessageBox(
@@ -326,7 +328,7 @@ def Function_ParamsChecker(
                 '''
         if isinstance(Param, dict):
             if "None" in list(Param.keys()&Param.values()) or "" in list(Param.keys()&Param.values()):
-                if UI in ToIterable(EmptyAllowed):
+                if UI in QFunc.ToIterable(EmptyAllowed):
                     Param = None
                 else:
                     Function_ShowMessageBox(
@@ -358,7 +360,7 @@ def Function_AnimateStackedWidget(
     OriginalWidget = StackedWidget.currentWidget()
     OriginalGeometry = OriginalWidget.geometry()
 
-    WidgetAnimation = Function_SetWidgetPosAnimation(OriginalWidget, Duration)
+    WidgetAnimation = QFunc.Function_SetWidgetPosAnimation(OriginalWidget, Duration)
     WidgetAnimation.finished.connect(
         lambda: StackedWidget.setCurrentIndex(TargetIndex),
         type = Qt.QueuedConnection
@@ -384,12 +386,12 @@ def Function_AnimateFrame(
     Function to animate frame
     '''
     def ExtendFrame():
-        Function_SetWidgetSizeAnimation(Frame, MaxWidth, None, Duration, SupportSplitter).start() if MaxWidth not in (None, Frame.width()) else None
-        Function_SetWidgetSizeAnimation(Frame, None, MaxHeight, Duration, SupportSplitter).start() if MaxHeight not in (None, Frame.height()) else None
+        QFunc.Function_SetWidgetSizeAnimation(Frame, MaxWidth, None, Duration, SupportSplitter).start() if MaxWidth not in (None, Frame.width()) else None
+        QFunc.Function_SetWidgetSizeAnimation(Frame, None, MaxHeight, Duration, SupportSplitter).start() if MaxHeight not in (None, Frame.height()) else None
 
     def ReduceFrame():
-        Function_SetWidgetSizeAnimation(Frame, MinWidth, None, Duration, SupportSplitter).start() if MinWidth not in (None, Frame.width()) else None
-        Function_SetWidgetSizeAnimation(Frame, None, MinHeight, Duration, SupportSplitter).start() if MinHeight not in (None, Frame.height()) else None
+        QFunc.Function_SetWidgetSizeAnimation(Frame, MinWidth, None, Duration, SupportSplitter).start() if MinWidth not in (None, Frame.width()) else None
+        QFunc.Function_SetWidgetSizeAnimation(Frame, None, MinHeight, Duration, SupportSplitter).start() if MinHeight not in (None, Frame.height()) else None
 
     if Mode == "Extend":
         ExtendFrame()
@@ -424,7 +426,7 @@ def Function_AnimateProgressBar(
 
 def Function_SetWidgetValue(
     Widget: QWidget,
-    Config: ManageConfig,
+    Config: QFunc.ManageConfig,
     Section: str = ...,
     Option: str = ...,
     Value = ...,
@@ -433,7 +435,7 @@ def Function_SetWidgetValue(
     PlaceholderText: Optional[str] = None
 ):
     if isinstance(Widget, (QLineEdit, LineEditBase, TextEditBase, QPlainTextEdit)):
-        Function_SetText(Widget, Value, SetPlaceholderText = SetPlaceholderText, PlaceholderText = PlaceholderText)
+        QFunc.Function_SetText(Widget, Value, SetPlaceholderText = SetPlaceholderText, PlaceholderText = PlaceholderText)
         def EditConfig(Value):
             Config.EditConfig(Section, Option, str(Value))
         if Config is not None:
@@ -486,7 +488,7 @@ class ParamsManager:
         ConfigPath: str,
     ):
         self.ConfigPath = ConfigPath
-        self.Config = ManageConfig(ConfigPath)
+        self.Config = QFunc.ManageConfig(ConfigPath)
 
         self.RegistratedWidgets = {}
 
@@ -514,7 +516,7 @@ class ParamsManager:
     def ClearSettings(self):
         with open(self.ConfigPath, 'w'):
             pass
-        self.Config = ManageConfig(self.ConfigPath)
+        self.Config = QFunc.ManageConfig(self.ConfigPath)
 
     def ResetSettings(self):
         self.ClearSettings()
@@ -522,7 +524,7 @@ class ParamsManager:
             self.ResetParam(Widget)
 
     def ImportSettings(self, ReadPath: str):
-        ConfigParser = ManageConfig(ReadPath).Parser()
+        ConfigParser = QFunc.ManageConfig(ReadPath).Parser()
         with open(self.ConfigPath, 'w', encoding = 'utf-8') as Config:
             ConfigParser.write(Config)
         for Widget, value in list(self.RegistratedWidgets.items()):
@@ -557,7 +559,7 @@ class Execute_Task(QObject):
         self.finished.emit(str(Error))
 
     def Terminate(self):
-        ProcessTerminator(self.Process.pid) if hasattr(self, 'Process') else None
+        QFunc.ProcessTerminator(self.Process.pid) if hasattr(self, 'Process') else None
 
 
 def Function_SetMethodExecutor(
@@ -579,11 +581,11 @@ def Function_SetMethodExecutor(
     QualName = str(Method.__qualname__)
     MethodName = QualName.split('.')[1]
 
-    ClassInstance = GetClassFromMethod(Method)()
+    ClassInstance = QFunc.GetClassFromMethod(Method)()
     ClassInstance.started.connect(lambda: FunctionSignals.Signal_TaskStatus.emit(QualName, 'Started')) if hasattr(ClassInstance, 'started') else None
-    #ClassInstance.started.connect(lambda: RunEvents(StartEvents)) if hasattr(ClassInstance, 'started') else None
+    #ClassInstance.started.connect(lambda: QFunc.RunEvents(StartEvents)) if hasattr(ClassInstance, 'started') else None
     ClassInstance.finished.connect(lambda Error: FunctionSignals.Signal_TaskStatus.emit(QualName, 'Finished') if Error == str(None) else None) if hasattr(ClassInstance, 'finished') else None
-    ClassInstance.finished.connect(lambda Error: RunEvents(FinishEvents) if Error == str(None) else None) if hasattr(ClassInstance, 'finished') else None
+    ClassInstance.finished.connect(lambda Error: QFunc.RunEvents(FinishEvents) if Error == str(None) else None) if hasattr(ClassInstance, 'finished') else None
     ClassInstance.finished.connect(lambda Error: FunctionSignals.Signal_TaskStatus.emit(QualName, 'Failed') if Error != str(None) else None) if hasattr(ClassInstance, 'finished') else None
     ClassInstance.finished.connect(lambda Error: Function_ShowMessageBox(ParentWindow, QMessageBox.Warning, 'Failure', f'发生错误：\n{Error}') if Error != str(None) else None) if hasattr(ClassInstance, 'finished') else None
 
@@ -612,10 +614,10 @@ def Function_SetMethodExecutor(
 
         WorkerThread.started.connect(lambda: Function_AnimateFrame(ConsoleWidget, MinHeight = 0, MaxHeight = 210, Mode = "Extend")) if ConsoleWidget else None
         WorkerThread.started.connect(lambda: Function_AnimateProgressBar(ProgressBar, IsTaskAlive = True)) if ProgressBar else None
-        WorkerThread.started.connect(lambda: Function_AnimateStackedWidget(Function_FindParentUI(ExecuteButton, QStackedWidget), TargetIndex = 1)) if TerminateButton else None
+        WorkerThread.started.connect(lambda: Function_AnimateStackedWidget(QFunc.Function_FindParentUI(ExecuteButton, QStackedWidget), TargetIndex = 1)) if TerminateButton else None
         WorkerThread.finished.connect(lambda: Function_AnimateFrame(ConsoleWidget, MinHeight = 0, MaxHeight = 210, Mode = "Reduce")) if ConsoleWidget else None
         WorkerThread.finished.connect(lambda: Function_AnimateProgressBar(ProgressBar, IsTaskAlive = False)) if ProgressBar else None
-        WorkerThread.finished.connect(lambda: Function_AnimateStackedWidget(Function_FindParentUI(ExecuteButton, QStackedWidget), TargetIndex = 0)) if TerminateButton else None
+        WorkerThread.finished.connect(lambda: Function_AnimateStackedWidget(QFunc.Function_FindParentUI(ExecuteButton, QStackedWidget), TargetIndex = 0)) if TerminateButton else None
         #WorkerThread.finished.connect(lambda: FunctionSignals.Signal_ExecuteTask.disconnect(getattr(ClassInstance, MethodName)))
 
         FunctionSignals.Signal_ExecuteTask.emit(Args)
@@ -643,7 +645,7 @@ def Function_SetMethodExecutor(
             except:
                 WorkerThread.quit()
 
-        ClassInstance.Terminate() if hasattr(ClassInstance, 'Terminate') else ProcessTerminator('python.exe', SearchKeyword = True)
+        ClassInstance.Terminate() if hasattr(ClassInstance, 'Terminate') else QFunc.ProcessTerminator('python.exe', SearchKeyword = True)
 
         FunctionSignals.Signal_TaskStatus.emit(QualName, 'Failed') if hasattr(ClassInstance, 'finished') else None
 

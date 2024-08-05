@@ -1,21 +1,21 @@
 from PySide6.QtCore import (QCoreApplication, QMetaObject, QSize)
 from PySide6.QtWidgets import *
 
-from .Components import Table_DATResult
-from . import Sources
+from ...components.Components import MediaPlayerBase
+from ...assets import Sources
 
 
-class Ui_ChildWindow_DAT_GPTSoVITS(object):
-    def setupUi(self, ChildWindow_DAT_GPTSoVITS):
-        if not ChildWindow_DAT_GPTSoVITS.objectName():
-            ChildWindow_DAT_GPTSoVITS.setObjectName(u"ChildWindow_DAT_GPTSoVITS")
-        ChildWindow_DAT_GPTSoVITS.resize(630, 420)
-        ChildWindow_DAT_GPTSoVITS.setMinimumSize(QSize(630, 420))
-        self.verticalLayout = QVBoxLayout(ChildWindow_DAT_GPTSoVITS)
+class Ui_ChildWindow_TTS_VITS(object):
+    def setupUi(self, ChildWindow_TTS_VITS):
+        if not ChildWindow_TTS_VITS.objectName():
+            ChildWindow_TTS_VITS.setObjectName(u"ChildWindow_TTS_VITS")
+        ChildWindow_TTS_VITS.resize(611, 300)
+        ChildWindow_TTS_VITS.setMinimumSize(QSize(450, 300))
+        self.verticalLayout = QVBoxLayout(ChildWindow_TTS_VITS)
         self.verticalLayout.setSpacing(0)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
-        self.TitleBar = QWidget(ChildWindow_DAT_GPTSoVITS)
+        self.TitleBar = QWidget(ChildWindow_TTS_VITS)
         self.TitleBar.setObjectName(u"TitleBar")
         self.TitleBar.setMinimumSize(QSize(0, 30))
         self.TitleBar.setMaximumSize(QSize(16777215, 30))
@@ -30,7 +30,7 @@ class Ui_ChildWindow_DAT_GPTSoVITS(object):
         self.Button_Maximize = QPushButton(self.TitleBar)
         self.Button_Maximize.setObjectName(u"Button_Maximize")
         self.Button_Maximize.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/FullScreen.png);\n"
+"	image: url(:/Button_Icon/images/FullScreen.png);\n"
 "	background-color: transparent;\n"
 "	padding: 6.6px;\n"
 "	border-width: 0px;\n"
@@ -55,7 +55,7 @@ class Ui_ChildWindow_DAT_GPTSoVITS(object):
         self.Button_Close = QPushButton(self.TitleBar)
         self.Button_Close.setObjectName(u"Button_Close")
         self.Button_Close.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/Sources/X.png);\n"
+"	image: url(:/Button_Icon/images/X.png);\n"
 "	background-color: transparent;\n"
 "	padding: 6.6px;\n"
 "	border-width: 0px;\n"
@@ -80,7 +80,7 @@ class Ui_ChildWindow_DAT_GPTSoVITS(object):
 
         self.verticalLayout.addWidget(self.TitleBar)
 
-        self.CentralWidget = QWidget(ChildWindow_DAT_GPTSoVITS)
+        self.CentralWidget = QWidget(ChildWindow_TTS_VITS)
         self.CentralWidget.setObjectName(u"CentralWidget")
         self.gridLayout = QGridLayout(self.CentralWidget)
         self.gridLayout.setSpacing(12)
@@ -103,7 +103,7 @@ class Ui_ChildWindow_DAT_GPTSoVITS(object):
 "	border-style: solid;\n"
 "}")
 
-        self.gridLayout.addWidget(self.Label_Title, 0, 0, 1, 1)
+        self.gridLayout.addWidget(self.Label_Title, 0, 0, 1, 2)
 
         self.Label_Text = QLabel(self.CentralWidget)
         self.Label_Text.setObjectName(u"Label_Text")
@@ -119,12 +119,12 @@ class Ui_ChildWindow_DAT_GPTSoVITS(object):
 "	border-style: solid;\n"
 "}")
 
-        self.gridLayout.addWidget(self.Label_Text, 1, 0, 1, 1)
+        self.gridLayout.addWidget(self.Label_Text, 1, 0, 1, 2)
 
-        self.Table = Table_DATResult(self.CentralWidget)
-        self.Table.setObjectName(u"Table")
+        self.Widget = MediaPlayerBase(self.CentralWidget)
+        self.Widget.setObjectName(u"Widget")
 
-        self.gridLayout.addWidget(self.Table, 2, 0, 1, 1)
+        self.gridLayout.addWidget(self.Widget, 2, 0, 1, 1)
 
 
         self.verticalLayout.addWidget(self.CentralWidget)
@@ -133,7 +133,7 @@ class Ui_ChildWindow_DAT_GPTSoVITS(object):
         self.horizontalLayout.setSpacing(12)
         self.horizontalLayout.setObjectName(u"horizontalLayout")
         self.horizontalLayout.setContentsMargins(21, 12, 21, 12)
-        self.Button_Cancel = QPushButton(ChildWindow_DAT_GPTSoVITS)
+        self.Button_Cancel = QPushButton(ChildWindow_TTS_VITS)
         self.Button_Cancel.setObjectName(u"Button_Cancel")
         self.Button_Cancel.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
@@ -159,7 +159,7 @@ class Ui_ChildWindow_DAT_GPTSoVITS(object):
 
         self.horizontalLayout.addWidget(self.Button_Cancel)
 
-        self.Button_Confirm = QPushButton(ChildWindow_DAT_GPTSoVITS)
+        self.Button_Confirm = QPushButton(ChildWindow_TTS_VITS)
         self.Button_Confirm.setObjectName(u"Button_Confirm")
         self.Button_Confirm.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
@@ -189,14 +189,14 @@ class Ui_ChildWindow_DAT_GPTSoVITS(object):
         self.verticalLayout.addLayout(self.horizontalLayout)
 
 
-        self.retranslateUi(ChildWindow_DAT_GPTSoVITS)
+        self.retranslateUi(ChildWindow_TTS_VITS)
 
-        QMetaObject.connectSlotsByName(ChildWindow_DAT_GPTSoVITS)
+        QMetaObject.connectSlotsByName(ChildWindow_TTS_VITS)
     # setupUi
 
-    def retranslateUi(self, ChildWindow_DAT_GPTSoVITS):
-        ChildWindow_DAT_GPTSoVITS.setWindowTitle(QCoreApplication.translate("ChildWindow_DAT_GPTSoVITS", u"Form", None))
-        self.Label_Title.setText(QCoreApplication.translate("ChildWindow_DAT_GPTSoVITS", u"Title", None))
-        self.Label_Text.setText(QCoreApplication.translate("ChildWindow_DAT_GPTSoVITS", u"Text", None))
-        self.Button_Cancel.setText(QCoreApplication.translate("ChildWindow_DAT_GPTSoVITS", u"PushButton", None))
-        self.Button_Confirm.setText(QCoreApplication.translate("ChildWindow_DAT_GPTSoVITS", u"PushButton", None))
+    def retranslateUi(self, ChildWindow_TTS_VITS):
+        ChildWindow_TTS_VITS.setWindowTitle(QCoreApplication.translate("ChildWindow_TTS_VITS", u"Form", None))
+        self.Label_Title.setText(QCoreApplication.translate("ChildWindow_TTS_VITS", u"Title", None))
+        self.Label_Text.setText(QCoreApplication.translate("ChildWindow_TTS_VITS", u"Text", None))
+        self.Button_Cancel.setText(QCoreApplication.translate("ChildWindow_TTS_VITS", u"PushButton", None))
+        self.Button_Confirm.setText(QCoreApplication.translate("ChildWindow_TTS_VITS", u"PushButton", None))
