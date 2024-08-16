@@ -20,12 +20,14 @@
 **/GPT_SoVITS/config.py
 **/GPT_SoVITS/GPT_SoVITS/AR/
 **/GPT_SoVITS/GPT_SoVITS/configs/
+**/GPT_SoVITS/GPT_SoVITS/feature_extractor/cnhubert.py
 **/GPT_SoVITS/GPT_SoVITS/module/
 **/GPT_SoVITS/GPT_SoVITS/pretrained_models/
 **/GPT_SoVITS/GPT_SoVITS/text/
+**/GPT_SoVITS/GPT_SoVITS/tools/__init__.py
+**/GPT_SoVITS/GPT_SoVITS/tools/my_utils.py
 **/GPT_SoVITS/GPT_SoVITS/tools/i18n/locale/
 **/GPT_SoVITS/GPT_SoVITS/inference_webui.py
-**/GPT_SoVITS/GPT_SoVITS/my_utils.py
 **/GPT_SoVITS/GPT_SoVITS/onnx_export.py
 **/GPT_SoVITS/GPT_SoVITS/process_ckpt.py
 **/GPT_SoVITS/GPT_SoVITS/s1_train.py

@@ -8,18 +8,20 @@ inp_wav_dir=                        os.environ.get("inp_wav_dir")
 exp_name=                           os.environ.get("exp_name")
 i_part=                             os.environ.get("i_part")
 all_parts=                          os.environ.get("all_parts")
-os.environ["CUDA_VISIBLE_DEVICES"]= os.environ.get("_CUDA_VISIBLE_DEVICES")
+if "_CUDA_VISIBLE_DEVICES" in os.environ:
+     os.environ["CUDA_VISIBLE_DEVICES"] = os.environ["_CUDA_VISIBLE_DEVICES"]
 opt_dir=                            os.environ.get("opt_dir")
 from GPT_SoVITS.feature_extractor import cnhubert
 cnhubert.cnhubert_base_path=        os.environ.get("cnhubert_base_dir")
-is_half=eval(os.environ.get("is_half","True"))
+import torch
+is_half = eval(os.environ.get("is_half", "True")) and torch.cuda.is_available()
 import traceback, numpy as np
 import shutil
-import librosa,torch
+import librosa
 from scipy.io import wavfile
 from time import time as ttime
 
-from my_utils import load_audio
+from tools.my_utils import load_audio,clean_path
 
 
 def my_save(fea,path):#####fix issue: torch.save doesn't support chinese path
@@ -89,6 +91,7 @@ for line in lines[int(i_part)::int(all_parts)]:
     try:
         # wav_name,text=line.split("\t")
         wav_name, spk_name, language, text = line.split("|")
+        wav_name=clean_path(wav_name)
         if (inp_wav_dir != "" and inp_wav_dir != None):
             wav_name = os.path.basename(wav_name)
             wav_path = "%s/%s"%(inp_wav_dir, wav_name)

@@ -128,7 +128,6 @@ class Ui_ChildWindow_DAT_VITS(object):
 "	min-height: 42px;\n"
 "	font-size: 21px;\n"
 "	/*text-align: center;*/\n"
-"	color: rgba(201, 210, 222, 210);\n"
 "	padding-left: 12px;\n"
 "	padding-right: 12px;\n"
 "	background-color: transparent;\n"
@@ -137,8 +136,7 @@ class Ui_ChildWindow_DAT_VITS(object):
 "	border-color: rgba(123, 123, 123, 123);\n"
 "}\n"
 "QTabBar::tab:hover, QTabBar::tab:selected {\n"
-"	color: rgba(210, 222, 234, 234);\n"
-"	background-color: rgba(36, 36, 36, 123);\n"
+"	background-color: rgba(36, 36, 36, 36);\n"
 "}\n"
 "\n"
 "\n"
@@ -146,7 +144,7 @@ class Ui_ChildWindow_DAT_VITS(object):
 "    alignment: left;\n"
 "}\n"
 "QTabWidget::pane {\n"
-"	background: rgba(36, 36, 36, 123);;\n"
+"	background: transparent;\n"
 "    border-width: 1.2px;\n"
 "	border-style: solid;\n"
 "	border-color: rgba(123, 123, 123, 123);\n"
@@ -254,3 +252,4 @@ class Ui_ChildWindow_DAT_VITS(object):
         self.TabWidget.setTabText(self.TabWidget.indexOf(self.Tab_Val), QCoreApplication.translate("ChildWindow_DAT_VITS", u"Tab 1", None))
         self.Button_Cancel.setText(QCoreApplication.translate("ChildWindow_DAT_VITS", u"PushButton", None))
         self.Button_Confirm.setText(QCoreApplication.translate("ChildWindow_DAT_VITS", u"PushButton", None))
+    # retranslateUi

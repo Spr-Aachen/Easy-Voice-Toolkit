@@ -215,16 +215,14 @@ def Function_ShowMessageBox(
     '''
     Function to pop up a msgbox
     '''
-    MsgBox = MessageBoxBase(WindowToMask)
-
-    MsgBox.setIcon(MessageType)
-    MsgBox.setWindowTitle(WindowTitle)
-    MsgBox.setText(Text)
-    MsgBox.setStandardButtons(Buttons)
-
-    Result = MsgBox.exec()
-
-    ButtonEvents[Result]() if Result in list(ButtonEvents.keys()) else None
+    return MessageBoxBase.pop(
+        WindowToMask = WindowToMask,
+        MessageType = MessageType,
+        WindowTitle = WindowTitle,
+        Text = Text,
+        Buttons = Buttons,
+        ButtonEvents = ButtonEvents
+    )
 
 ##############################################################################################################################
 
@@ -434,7 +432,7 @@ def Function_SetWidgetValue(
     SetPlaceholderText: bool = False,
     PlaceholderText: Optional[str] = None
 ):
-    if isinstance(Widget, (QLineEdit, LineEditBase, TextEditBase, QPlainTextEdit)):
+    if isinstance(Widget, (QLineEdit, LineEditBase, QTextEdit, TextEditBase, QPlainTextEdit)):
         QFunc.Function_SetText(Widget, Value, SetPlaceholderText = SetPlaceholderText, PlaceholderText = PlaceholderText)
         def EditConfig(Value):
             Config.EditConfig(Section, Option, str(Value))
@@ -442,7 +440,7 @@ def Function_SetWidgetValue(
             Widget.textChanged.connect(EditConfig)
             EditConfig(Value)
 
-    if isinstance(Widget, QComboBox):
+    if isinstance(Widget, (QComboBox, ComboBoxBase)):
         Widget.setCurrentText(str(Value))
         def EditConfig(Value):
             Config.EditConfig(Section, Option, str(Value))
@@ -450,7 +448,7 @@ def Function_SetWidgetValue(
             Widget.currentTextChanged.connect(EditConfig)
             EditConfig(Value)
 
-    if isinstance(Widget, (QSlider, QSpinBox)):
+    if isinstance(Widget, (QSlider, QSpinBox, SpinBoxBase)):
         Widget.setValue(int(eval(str(Value)) * Times))
         def EditConfig(Value):
             Config.EditConfig(Section, Option, str(eval(str(Value)) / Times))
@@ -458,7 +456,7 @@ def Function_SetWidgetValue(
             Widget.valueChanged.connect(EditConfig)
             EditConfig(Value)
 
-    if isinstance(Widget, QDoubleSpinBox):
+    if isinstance(Widget, (QDoubleSpinBox, DoubleSpinBoxBase)):
         Widget.setValue(float(eval(str(Value)) * Times))
         def EditConfig(Value):
             Config.EditConfig(Section, Option, str(eval(str(Value)) / Times))

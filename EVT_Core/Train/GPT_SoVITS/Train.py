@@ -1,25 +1,24 @@
-import os
-import sys
-import logging
-logger = logging.getLogger(__name__)
-import torch
-torch.manual_seed(233333)
+import os,sys
+if len(sys.argv)==1:sys.argv.append('v2')
+version="v1"if sys.argv[1]=="v1" else"v2"
+os.environ["version"]=version
+now_dir = os.getcwd()
+#sys.path.insert(0, now_dir)
 import warnings
 warnings.filterwarnings("ignore")
-import json, yaml
-import traceback
-import shutil
+import json,yaml,torch,pdb,re,shutil
 import platform
 import psutil
 import signal
+import traceback
 from subprocess import Popen
-from typing import Optional
 from pathlib import Path
 
 from .config import python_exec#, exp_root
+#from .GPT_SoVITS.tools.my_utils import load_audio, check_for_existance, check_details
 
 
-now_dir = os.getcwd()
+torch.manual_seed(233333)
 tmp = Path(now_dir).joinpath("TEMP").as_posix()
 os.makedirs(tmp, exist_ok=True)
 if(Path(tmp).exists()):
@@ -83,6 +82,12 @@ def open1abc(
     pretrained_s2G_path
 ):
     global ps1abc
+    '''
+    inp_text = my_utils.clean_path(inp_text)
+    inp_wav_dir = my_utils.clean_path(inp_wav_dir)
+    if check_for_existance([inp_text,inp_wav_dir], is_dataset_processing=True):
+        check_details([inp_text,inp_wav_dir], is_dataset_processing=True)
+    '''
     if (ps1abc == []):
         opt_dir="%s/%s"%(exp_root,exp_name)
         try:
@@ -104,7 +109,7 @@ def open1abc(
                         {
                             "i_part": str(i_part),
                             "all_parts": str(all_parts),
-                            "_CUDA_VISIBLE_DEVICES": gpu_names[i_part],
+                            "_CUDA_VISIBLE_DEVICES": fix_gpu_number(gpu_names[i_part]),
                         }
                     )
                     os.environ.update(config)
@@ -122,6 +127,7 @@ def open1abc(
                     os.remove(txt_path)
                 with open(path_text, "w",encoding="utf8") as f:
                     f.write("\n".join(opt) + "\n")
+                assert len("".join(opt)) > 0, "1Aa-文本获取进程失败"
             print("进度：1a-done") #yield "进度：1a-done", {"__type__": "update", "visible": False}, {"__type__": "update", "visible": True}
             ps1abc=[]
             #############################1b
@@ -139,7 +145,7 @@ def open1abc(
                     {
                         "i_part": str(i_part),
                         "all_parts": str(all_parts),
-                        "_CUDA_VISIBLE_DEVICES": gpu_names[i_part],
+                        "_CUDA_VISIBLE_DEVICES": fix_gpu_number(gpu_names[i_part]),
                     }
                 )
                 os.environ.update(config)
@@ -168,7 +174,7 @@ def open1abc(
                         {
                             "i_part": str(i_part),
                             "all_parts": str(all_parts),
-                            "_CUDA_VISIBLE_DEVICES": gpu_names[i_part],
+                            "_CUDA_VISIBLE_DEVICES": fix_gpu_number(gpu_names[i_part]),
                         }
                     )
                     os.environ.update(config)
@@ -202,13 +208,16 @@ if_gpu_ok = False
 
 # 判断是否有能用来训练和加速推理的N卡
 ngpu = torch.cuda.device_count()
+ok_gpu_keywords={"10","16","20","30","40","A2","A3","A4","P4","A50","500","A60","70","80","90","M4","T4","TITAN","L4","4060","H"}
+set_gpu_numbers=set()
 if torch.cuda.is_available() or ngpu != 0:
     for i in range(ngpu):
         gpu_name = torch.cuda.get_device_name(i)
-        if any(value in gpu_name.upper()for value in ["10","16","20","30","40","A2","A3","A4","P4","A50","500","A60","70","80","90","M4","T4","TITAN","L4","4060"]):
+        if any(value in gpu_name.upper()for value in ok_gpu_keywords):
             # A10#A100#V100#A40#P40#M40#K80#A4500
             if_gpu_ok = True  # 至少有一张能用的N卡
             gpu_infos.append("%s\t%s" % (i, gpu_name))
+            set_gpu_numbers.add(i)
             mem.append(int(torch.cuda.get_device_properties(i).total_memory/ 1024/ 1024/ 1024+ 0.4))
 '''
 # 判断是否支持mps加速
@@ -225,8 +234,22 @@ if if_gpu_ok and len(gpu_infos) > 0:
 else:
     gpu_info = ("%s\t%s" % ("0", "CPU"))
     gpu_infos.append("%s\t%s" % ("0", "CPU"))
+    set_gpu_numbers.add(0)
     default_batch_size = int(psutil.virtual_memory().total/ 1024 / 1024 / 1024 / 2)
 gpus = "-".join([i[0] for i in gpu_infos])
+default_gpu_numbers=str(sorted(list(set_gpu_numbers))[0])
+def fix_gpu_number(input):#将越界的number强制改到界内
+    try:
+        if(int(input)not in set_gpu_numbers):return default_gpu_numbers
+    except:return input
+    return input
+def fix_gpu_numbers(inputs):
+    output=[]
+    try:
+        for input in inputs.split(","):output.append(str(fix_gpu_number(input)))
+        return ",".join(output)
+    except:
+        return inputs
 
 
 p_train_SoVITS=None
@@ -319,7 +342,7 @@ def open1Bb(
         data["train_phoneme_path"]="%s/2-name2text.txt"%s1_dir
         data["output_dir"]="%s/logs_s1"%s1_dir
 
-        os.environ["_CUDA_VISIBLE_DEVICES"]=gpu_numbers.replace("-",",")
+        os.environ["_CUDA_VISIBLE_DEVICES"]=fix_gpu_numbers(gpu_numbers.replace("-",","))
         os.environ["hz"]="25hz"
         tmp_config_path="%s/tmp_s1.yaml"%tmp
         with open(tmp_config_path, "w") as f:f.write(yaml.dump(data, default_flow_style=False))

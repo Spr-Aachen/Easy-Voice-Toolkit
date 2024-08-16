@@ -3,31 +3,9 @@ from PySide6.QtCore import Qt, Signal
 from PySide6.QtWidgets import *
 from QEasyWidgets import QFunctions as QFunc
 from QEasyWidgets.Components import *
+from QEasyWidgets.Windows import MessageBoxBase
 
 from ..assets.Sources import *
-
-##############################################################################################################################
-
-def Function_ShowMessageBox(
-    MessageType: object = QMessageBox.Information,
-    WindowTitle: str = ...,
-    Text: str = ...,
-    Buttons: object = QMessageBox.Ok,
-    ButtonEvents: dict = {}
-):
-    '''
-    Function to pop up a msgbox
-    '''
-    MsgBox = QMessageBox()
-
-    MsgBox.setIcon(MessageType)
-    MsgBox.setWindowTitle(WindowTitle)
-    MsgBox.setText(Text)
-    MsgBox.setStandardButtons(Buttons)
-
-    Result = MsgBox.exec()
-
-    ButtonEvents[Result]() if Result in list(ButtonEvents.keys()) else None
 
 ##############################################################################################################################
 
@@ -124,7 +102,7 @@ class Table_ViewModels(TableBase):
         CopyButton = QPushButton()
         CopyButton.setStyleSheet(ButtonStyle + "QPushButton {image: url(:/Button_Icon/images/Clipboard.png);}")
         CopyButton.clicked.connect(lambda: self.Clipboard.setText(DownloadParam[0]) if isinstance(DownloadParam, tuple) else None)
-        CopyButton.clicked.connect(lambda: Function_ShowMessageBox(WindowTitle = "Tip", Text = "已复制链接到剪切板"))
+        CopyButton.clicked.connect(lambda: MessageBoxBase.pop(WindowTitle = "Tip", Text = "已复制链接到剪切板"))
         QFunc.Function_SetRetainSizeWhenHidden(CopyButton)
         CopyButton.hide() if StackedWidget.currentWidget() == OpenButton else None
         StackedWidget.currentChanged.connect(lambda: CopyButton.hide() if StackedWidget.currentWidget() == OpenButton else None)
@@ -333,7 +311,7 @@ class Table_ASRResult(TableBase):
         DelButton.setStyleSheet(ButtonStyle)
         DelButton.setText("删除")
         DelButton.clicked.connect(
-            lambda: Function_ShowMessageBox(
+            lambda: MessageBoxBase.pop(None,
                 QMessageBox.Question, "Ask",
                 "确认删除该行？",
                 QMessageBox.Yes|QMessageBox.No,

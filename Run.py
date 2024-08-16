@@ -15,6 +15,7 @@ from PySide6.QtGui import *
 from PySide6.QtWidgets import *
 from QEasyWidgets import QFunctions as QFunc
 from QEasyWidgets import QTasks
+from QEasyWidgets import ComponentsSignals, Theme, EasyTheme, Language, EasyLanguage, TranslationBase, IconBase
 
 from EVT_GUI.windows.Windows import *
 from EVT_GUI.Functions import *
@@ -845,21 +846,21 @@ class MainWindow(Window_MainWindow):
         ########################## TitleBar #########################
         #############################################################
 
-        # QFunc.Theme toggler
-        QFunc.ComponentsSignals.Signal_SetTheme.connect(
+        # Theme toggler
+        ComponentsSignals.Signal_SetTheme.connect(
             lambda: self.ui.CheckBox_SwitchTheme.setChecked(
-                {QFunc.Theme.Light: True, QFunc.Theme.Dark: False}.get(QFunc.EasyTheme.THEME)
+                {Theme.Light: True, Theme.Dark: False}.get(EasyTheme.THEME)
             )
         )
         Function_ConfigureCheckBox(
             CheckBox = self.ui.CheckBox_SwitchTheme,
             CheckedEvents = [
-                lambda: Config.EditConfig('Settings', 'QFunc.Theme', QFunc.Theme.Light),
-                lambda: QFunc.ComponentsSignals.Signal_SetTheme.emit(QFunc.Theme.Light) if QFunc.EasyTheme.THEME != QFunc.Theme.Light else None
+                lambda: Config.EditConfig('Settings', 'Theme', Theme.Light),
+                lambda: ComponentsSignals.Signal_SetTheme.emit(Theme.Light) if EasyTheme.THEME != Theme.Light else None
             ],
             UncheckedEvents = [
-                lambda: Config.EditConfig('Settings', 'QFunc.Theme', QFunc.Theme.Dark),
-                lambda: QFunc.ComponentsSignals.Signal_SetTheme.emit(QFunc.Theme.Dark) if QFunc.EasyTheme.THEME != QFunc.Theme.Dark else None
+                lambda: Config.EditConfig('Settings', 'Theme', Theme.Dark),
+                lambda: ComponentsSignals.Signal_SetTheme.emit(Theme.Dark) if EasyTheme.THEME != Theme.Dark else None
             ],
             TakeEffect = False
         )
@@ -873,8 +874,28 @@ class MainWindow(Window_MainWindow):
             )
         )
         self.ui.Button_Close_Window.clicked.connect(self.close)
+        self.ui.Button_Close_Window.ClearDefaultStyleSheet()
+        self.ui.Button_Close_Window.setStyleSheet(
+            "ButtonBase {background-color: transparent; border: none;}"
+            "ButtonBase:hover {background-color: rgba(210, 123, 123, 210);}"
+        )
+        self.ui.Button_Close_Window.setIcon(IconBase.X)
+
         self.ui.Button_Maximize_Window.clicked.connect(lambda: self.showNormal() if self.isMaximized() else self.showMaximized())
+        self.ui.Button_Maximize_Window.ClearDefaultStyleSheet()
+        self.ui.Button_Maximize_Window.setStyleSheet(
+            "ButtonBase {background-color: transparent; border: none;}"
+            "ButtonBase:hover {background-color: rgba(123, 123, 123, 123);}"
+        )
+        self.ui.Button_Maximize_Window.setIcon(IconBase.FullScreen)
+
         self.ui.Button_Minimize_Window.clicked.connect(self.showMinimized)
+        self.ui.Button_Minimize_Window.ClearDefaultStyleSheet()
+        self.ui.Button_Minimize_Window.setStyleSheet(
+            "ButtonBase {background-color: transparent; border: none;}"
+            "ButtonBase:hover {background-color: rgba(123, 123, 123, 123);}"
+        )
+        self.ui.Button_Minimize_Window.setIcon(IconBase.Dash)
 
         # Menu toggling button
         self.ui.Button_Toggle_Menu.clicked.connect(
@@ -6175,11 +6196,11 @@ class MainWindow(Window_MainWindow):
         self.ui.Label_Setting_Theme.setText(QCA.translate("Label", "主题"))
         self.ui.ComboBox_Setting_Theme.addItems([QCA.translate("ComboBox", '跟随系统'), QCA.translate("ComboBox", '亮色'), QCA.translate("ComboBox", '暗色')])
         ThemeDict = {
-            '跟随系统': QFunc.Theme.Auto,
-            '亮色': QFunc.Theme.Light,
-            '暗色': QFunc.Theme.Dark
+            '跟随系统': Theme.Auto,
+            '亮色': Theme.Light,
+            '暗色': Theme.Dark
         }
-        QFunc.ComponentsSignals.Signal_SetTheme.connect(
+        ComponentsSignals.Signal_SetTheme.connect(
             lambda Theme: self.ui.ComboBox_Setting_Theme.setCurrentText(
                 QCA.translate("ComboBox", QFunc.FindKey(ThemeDict, Theme))
             )
@@ -6187,22 +6208,22 @@ class MainWindow(Window_MainWindow):
         self.ui.ComboBox_Setting_Theme.currentIndexChanged.connect(
             lambda: (
                 Config.EditConfig(
-                    'Settings', 'QFunc.Theme', ThemeDict.get(self.ui.ComboBox_Setting_Theme.currentText())
+                    'Settings', 'Theme', ThemeDict.get(self.ui.ComboBox_Setting_Theme.currentText())
                 ),
-                QFunc.ComponentsSignals.Signal_SetTheme.emit(
+                ComponentsSignals.Signal_SetTheme.emit(
                     ThemeDict.get(self.ui.ComboBox_Setting_Theme.currentText())
-                ) if QFunc.EasyTheme.THEME != ThemeDict.get(self.ui.ComboBox_Setting_Theme.currentText()) else None
+                ) if EasyTheme.THEME != ThemeDict.get(self.ui.ComboBox_Setting_Theme.currentText()) else None
             )
         )
 
         self.ui.Label_Setting_Language.setText(QCA.translate("Label", "语言"))
         self.ui.ComboBox_Setting_Language.addItems([QCA.translate("ComboBox", '跟随系统')])
         LanguageDict = {
-            '跟随系统': QFunc.Language.Auto,
-            #'中文': QFunc.Language.ZH,
-            #'英文': QFunc.Language.EN
+            '跟随系统': Language.Auto,
+            #'中文': Language.ZH,
+            #'英文': Language.EN
         }
-        QFunc.ComponentsSignals.Signal_SetLanguage.connect(
+        ComponentsSignals.Signal_SetLanguage.connect(
             lambda Language: self.ui.ComboBox_Setting_Language.setCurrentText(
                 QCA.translate("ComboBox", QFunc.FindKey(LanguageDict, Language))
             )
@@ -6602,8 +6623,8 @@ class MainWindow(Window_MainWindow):
         # Display Version
         self.ui.Label_Version.setText(CurrentVersion)
 
-        # Set QFunc.Theme
-        QFunc.ComponentsSignals.Signal_SetTheme.emit(Config.GetValue('Settings', 'QFunc.Theme', QFunc.Theme.Auto))
+        # Set Theme
+        ComponentsSignals.Signal_SetTheme.emit(Config.GetValue('Settings', 'Theme', Theme.Auto))
 
         # Show MainWindow (and emit signal)
         self.show()
@@ -6623,8 +6644,8 @@ if __name__ == "__main__":
     SC.show()
 
     # Set Language
-    Translator = QFunc.TranslationBase()
-    Translator.load(QFunc.Language.Auto)
+    Translator = TranslationBase()
+    Translator.load(Language.Auto)
     App.installTranslator(Translator)
 
     # Init&Show MainWindow

@@ -1,12 +1,16 @@
-import os
-import sys
+import os,sys
+if len(sys.argv)==1:sys.argv.append('v2')
+version="v1"if sys.argv[1]=="v1" else"v2"
+os.environ["version"]=version
+now_dir = os.getcwd()
+#sys.path.insert(0, now_dir)
+import warnings
+warnings.filterwarnings("ignore")
+import torch
 import platform
-import logging
-logger = logging.getLogger(__name__)
 import psutil
 import signal
 import subprocess
-import torch
 from pathlib import Path
 from scipy.io.wavfile import write
 
@@ -78,28 +82,48 @@ if_gpu_ok = False
 
 # 判断是否有能用来训练和加速推理的N卡
 ngpu = torch.cuda.device_count()
+ok_gpu_keywords={"10","16","20","30","40","A2","A3","A4","P4","A50","500","A60","70","80","90","M4","T4","TITAN","L4","4060","H"}
+set_gpu_numbers=set()
 if torch.cuda.is_available() or ngpu != 0:
     for i in range(ngpu):
         gpu_name = torch.cuda.get_device_name(i)
-        if any(value in gpu_name.upper()for value in ["10","16","20","30","40","A2","A3","A4","P4","A50","500","A60","70","80","90","M4","T4","TITAN","L4","4060"]):
+        if any(value in gpu_name.upper()for value in ok_gpu_keywords):
             # A10#A100#V100#A40#P40#M40#K80#A4500
             if_gpu_ok = True  # 至少有一张能用的N卡
             gpu_infos.append("%s\t%s" % (i, gpu_name))
+            set_gpu_numbers.add(i)
             mem.append(int(torch.cuda.get_device_properties(i).total_memory/ 1024/ 1024/ 1024+ 0.4))
+'''
 # 判断是否支持mps加速
 if torch.backends.mps.is_available():
     if_gpu_ok = True
     gpu_infos.append("%s\t%s" % ("0", "Apple GPU"))
     mem.append(psutil.virtual_memory().total/ 1024 / 1024 / 1024) # 实测使用系统内存作为显存不会爆显存
 os.environ['PYTORCH_ENABLE_MPS_FALLBACK'] = '1' # 当遇到mps不支持的步骤时使用cpu
+'''
 
 if if_gpu_ok and len(gpu_infos) > 0:
     gpu_info = "\n".join(gpu_infos)
     default_batch_size = min(mem) // 2
 else:
-    gpu_info = "很遗憾您这没有能用的显卡来支持您训练"
-    default_batch_size = 1
+    gpu_info = ("%s\t%s" % ("0", "CPU"))
+    gpu_infos.append("%s\t%s" % ("0", "CPU"))
+    set_gpu_numbers.add(0)
+    default_batch_size = int(psutil.virtual_memory().total/ 1024 / 1024 / 1024 / 2)
 gpus = "-".join([i[0] for i in gpu_infos])
+default_gpu_numbers=str(sorted(list(set_gpu_numbers))[0])
+def fix_gpu_number(input):#将越界的number强制改到界内
+    try:
+        if(int(input)not in set_gpu_numbers):return default_gpu_numbers
+    except:return input
+    return input
+def fix_gpu_numbers(inputs):
+    output=[]
+    try:
+        for input in inputs.split(","):output.append(str(fix_gpu_number(input)))
+        return ",".join(output)
+    except:
+        return inputs
 
 
 p_tts_inference=None
@@ -119,7 +143,7 @@ def change_tts_inference(
         os.environ["sovits_path"]=sovits_path #if "/"in sovits_path else "%s/%s"%(SoVITS_weight_root,sovits_path)
         os.environ["cnhubert_base_path"]=cnhubert_base_path
         os.environ["bert_path"]=bert_path
-        os.environ["_CUDA_VISIBLE_DEVICES"]=gpu_number
+        os.environ["_CUDA_VISIBLE_DEVICES"]=fix_gpu_number(gpu_number)
         os.environ["is_half"]=str(is_half)
         os.environ["infer_ttswebui"]=str(webui_port_infer_tts)
         os.environ["is_share"]=str(is_share)

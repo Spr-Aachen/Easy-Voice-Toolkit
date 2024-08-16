@@ -1,7 +1,7 @@
 from PySide6.QtCore import (QCoreApplication, QMetaObject, QRect, QSize, Qt)
 from PySide6.QtWidgets import *
 
-from ...components.Components import WidgetBase, MenuButton, LabelBase, LineEditBase, TextEditBase, ComboBoxBase, SpinBoxBase, DoubleSpinBoxBase, ToolBoxBase, ScrollAreaBase, TreeWidgetBase, Table_ViewModels, Table_EditAudioSpeaker
+from ...components.Components import WidgetBase, ButtonBase, MenuButton, LabelBase, LineEditBase, TextEditBase, ComboBoxBase, SpinBoxBase, DoubleSpinBoxBase, ToolBoxBase, ScrollAreaBase, TreeWidgetBase, Table_ViewModels, Table_EditAudioSpeaker
 from ...assets import Sources
 
 
@@ -118,60 +118,24 @@ class Ui_MainWindow(object):
         self.horizontalLayout_12.setSpacing(0)
         self.horizontalLayout_12.setObjectName(u"horizontalLayout_12")
         self.horizontalLayout_12.setContentsMargins(0, 0, 0, 0)
-        self.Button_Minimize_Window = QPushButton(self.Frame_Top_Control_Window)
+        self.Button_Minimize_Window = ButtonBase(self.Frame_Top_Control_Window)
         self.Button_Minimize_Window.setObjectName(u"Button_Minimize_Window")
         sizePolicy.setHeightForWidth(self.Button_Minimize_Window.sizePolicy().hasHeightForWidth())
         self.Button_Minimize_Window.setSizePolicy(sizePolicy)
-        self.Button_Minimize_Window.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/images/Dash.png);\n"
-"	background-color: transparent;\n"
-"	padding: 6.6px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"	border-color: transparent;\n"
-"}\n"
-"QPushButton:hover {\n"
-"	background-color: rgba(123, 123, 123, 123);\n"
-"}")
 
         self.horizontalLayout_12.addWidget(self.Button_Minimize_Window)
 
-        self.Button_Maximize_Window = QPushButton(self.Frame_Top_Control_Window)
+        self.Button_Maximize_Window = ButtonBase(self.Frame_Top_Control_Window)
         self.Button_Maximize_Window.setObjectName(u"Button_Maximize_Window")
         sizePolicy.setHeightForWidth(self.Button_Maximize_Window.sizePolicy().hasHeightForWidth())
         self.Button_Maximize_Window.setSizePolicy(sizePolicy)
-        self.Button_Maximize_Window.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/images/FullScreen.png);\n"
-"	background-color: transparent;\n"
-"	padding: 6.6px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"	border-color: transparent;\n"
-"}\n"
-"QPushButton:hover {\n"
-"	background-color: rgba(123, 123, 123, 123);\n"
-"}")
 
         self.horizontalLayout_12.addWidget(self.Button_Maximize_Window)
 
-        self.Button_Close_Window = QPushButton(self.Frame_Top_Control_Window)
+        self.Button_Close_Window = ButtonBase(self.Frame_Top_Control_Window)
         self.Button_Close_Window.setObjectName(u"Button_Close_Window")
         sizePolicy.setHeightForWidth(self.Button_Close_Window.sizePolicy().hasHeightForWidth())
         self.Button_Close_Window.setSizePolicy(sizePolicy)
-        self.Button_Close_Window.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/images/X.png);\n"
-"	background-color: transparent;\n"
-"	padding: 6.6px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"	border-color: transparent;\n"
-"}\n"
-"QPushButton:hover {\n"
-"	background-color: rgba(210, 123, 123, 210);\n"
-"}")
 
         self.horizontalLayout_12.addWidget(self.Button_Close_Window)
 
@@ -13962,3 +13926,4 @@ class Ui_MainWindow(object):
         self.Label_Usage_GPU.setText(QCoreApplication.translate("MainWindow", u"--", None))
         self.Label_Version.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         pass
+    # retranslateUi
