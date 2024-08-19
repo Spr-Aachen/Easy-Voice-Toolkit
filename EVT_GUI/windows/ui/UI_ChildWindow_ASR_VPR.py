@@ -1,8 +1,8 @@
 from PySide6.QtCore import (QCoreApplication, QMetaObject, QSize)
 from PySide6.QtWidgets import *
 
-from ...components.Components import Table_ASRResult, LineEditBase
-from ...assets import Sources
+from components.Components import Table_ASRResult, LineEditBase
+from assets import Sources
 
 
 class Ui_ChildWindow_ASR_VPR(object):
@@ -30,7 +30,7 @@ class Ui_ChildWindow_ASR_VPR(object):
         self.Button_Maximize = QPushButton(self.TitleBar)
         self.Button_Maximize.setObjectName(u"Button_Maximize")
         self.Button_Maximize.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/images/FullScreen.png);\n"
+"	image: url(:/Button_Icon/images/icons/FullScreen.png);\n"
 "	background-color: transparent;\n"
 "	padding: 6.6px;\n"
 "	border-width: 0px;\n"
@@ -55,7 +55,7 @@ class Ui_ChildWindow_ASR_VPR(object):
         self.Button_Close = QPushButton(self.TitleBar)
         self.Button_Close.setObjectName(u"Button_Close")
         self.Button_Close.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/images/X.png);\n"
+"	image: url(:/Button_Icon/images/icons/X.png);\n"
 "	background-color: transparent;\n"
 "	padding: 6.6px;\n"
 "	border-width: 0px;\n"
@@ -127,7 +127,7 @@ class Ui_ChildWindow_ASR_VPR(object):
         self.CheckBox.setSizePolicy(sizePolicy)
         self.CheckBox.setStyleSheet(u"QCheckBox::indicator {\n"
 "	background-color: transparent;\n"
-"	border-image: url(:/CheckBox_Icon/images/Square.png);\n"
+"	border-image: url(:/CheckBox_Icon/images/icons/Square.png);\n"
 "	border-width: 0px;\n"
 "	border-style: solid;\n"
 "}\n"
@@ -135,7 +135,7 @@ class Ui_ChildWindow_ASR_VPR(object):
 "	border-color: rgb(120, 120, 120);\n"
 "}\n"
 "QCheckBox::indicator:checked {\n"
-"	border-image: url(:/CheckBox_Icon/images/CheckedSquare.png);\n"
+"	border-image: url(:/CheckBox_Icon/images/icons/CheckedSquare.png);\n"
 "}")
 
         self.gridLayout.addWidget(self.CheckBox, 3, 0, 1, 1)

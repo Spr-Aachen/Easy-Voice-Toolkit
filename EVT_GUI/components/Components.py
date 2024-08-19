@@ -5,7 +5,7 @@ from QEasyWidgets import QFunctions as QFunc
 from QEasyWidgets.Components import *
 from QEasyWidgets.Windows import MessageBoxBase
 
-from ..assets.Sources import *
+from assets.Sources import *
 
 ##############################################################################################################################
 
@@ -90,17 +90,17 @@ class Table_ViewModels(TableBase):
         StackedWidget = QStackedWidget()
         StackedWidget.setContentsMargins(0, 0, 0, 0)
         OpenButton = QPushButton()
-        OpenButton.setStyleSheet(ButtonStyle + "QPushButton {image: url(:/Button_Icon/images/OpenedFolder.png);}")
+        OpenButton.setStyleSheet(ButtonStyle + "QPushButton {image: url(:/Button_Icon/images/icons/OpenedFolder.png);}")
         OpenButton.clicked.connect(lambda: QFunc.Function_OpenURL(DownloadParam if isinstance(DownloadParam, str) else DownloadParam[1]))
         DownloadButton = QPushButton()
-        DownloadButton.setStyleSheet(ButtonStyle + "QPushButton {image: url(:/Button_Icon/images/Download.png);}")
+        DownloadButton.setStyleSheet(ButtonStyle + "QPushButton {image: url(:/Button_Icon/images/icons/Download.png);}")
         DownloadButton.clicked.connect(lambda: self.Download.emit(DownloadParam) if isinstance(DownloadParam, tuple) else None)
         DownloadButton.clicked.connect(lambda: StackedWidget.setCurrentWidget(OpenButton))
         StackedWidget.addWidget(OpenButton)
         StackedWidget.addWidget(DownloadButton)
         StackedWidget.setCurrentWidget(OpenButton) if isinstance(DownloadParam, str) else StackedWidget.setCurrentWidget(DownloadButton)
         CopyButton = QPushButton()
-        CopyButton.setStyleSheet(ButtonStyle + "QPushButton {image: url(:/Button_Icon/images/Clipboard.png);}")
+        CopyButton.setStyleSheet(ButtonStyle + "QPushButton {image: url(:/Button_Icon/images/icons/Clipboard.png);}")
         CopyButton.clicked.connect(lambda: self.Clipboard.setText(DownloadParam[0]) if isinstance(DownloadParam, tuple) else None)
         CopyButton.clicked.connect(lambda: MessageBoxBase.pop(WindowTitle = "Tip", Text = "已复制链接到剪切板"))
         QFunc.Function_SetRetainSizeWhenHidden(CopyButton)

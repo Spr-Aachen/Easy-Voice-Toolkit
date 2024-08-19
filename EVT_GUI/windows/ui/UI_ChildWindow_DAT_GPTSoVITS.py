@@ -1,8 +1,8 @@
 from PySide6.QtCore import (QCoreApplication, QMetaObject, QSize)
 from PySide6.QtWidgets import *
 
-from ...components.Components import Table_DATResult
-from ...assets import Sources
+from components.Components import Table_DATResult
+from assets import Sources
 
 
 class Ui_ChildWindow_DAT_GPTSoVITS(object):
@@ -30,7 +30,7 @@ class Ui_ChildWindow_DAT_GPTSoVITS(object):
         self.Button_Maximize = QPushButton(self.TitleBar)
         self.Button_Maximize.setObjectName(u"Button_Maximize")
         self.Button_Maximize.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/images/FullScreen.png);\n"
+"	image: url(:/Button_Icon/images/icons/FullScreen.png);\n"
 "	background-color: transparent;\n"
 "	padding: 6.6px;\n"
 "	border-width: 0px;\n"
@@ -55,7 +55,7 @@ class Ui_ChildWindow_DAT_GPTSoVITS(object):
         self.Button_Close = QPushButton(self.TitleBar)
         self.Button_Close.setObjectName(u"Button_Close")
         self.Button_Close.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/images/X.png);\n"
+"	image: url(:/Button_Icon/images/icons/X.png);\n"
 "	background-color: transparent;\n"
 "	padding: 6.6px;\n"
 "	border-width: 0px;\n"

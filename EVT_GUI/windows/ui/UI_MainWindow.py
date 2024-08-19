@@ -1,8 +1,8 @@
 from PySide6.QtCore import (QCoreApplication, QMetaObject, QRect, QSize, Qt)
 from PySide6.QtWidgets import *
 
-from ...components.Components import WidgetBase, ButtonBase, MenuButton, LabelBase, LineEditBase, TextEditBase, ComboBoxBase, SpinBoxBase, DoubleSpinBoxBase, ToolBoxBase, ScrollAreaBase, TreeWidgetBase, Table_ViewModels, Table_EditAudioSpeaker
-from ...assets import Sources
+from components.Components import WidgetBase, ButtonBase, MenuButton, LabelBase, LineEditBase, TextEditBase, ComboBoxBase, SpinBoxBase, DoubleSpinBoxBase, ToolBoxBase, ScrollAreaBase, TreeWidgetBase, Table_ViewModels, Table_EditAudioSpeaker
+from assets import Sources
 
 
 class Ui_MainWindow(object):
@@ -43,7 +43,7 @@ class Ui_MainWindow(object):
         self.Button_Toggle_Menu.setStyleSheet(u"QPushButton {\n"
 "	/*text-align: center;\n"
 "	font-size: 15px;*/\n"
-"	image: url(:/Button_Icon/images/Menu.png);\n"
+"	image: url(:/Button_Icon/images/icons/Menu.png);\n"
 "	/*background-repeat: no-repeat;\n"
 "	background-origin: content;\n"
 "	background-position: center;*/\n"
@@ -102,10 +102,10 @@ class Ui_MainWindow(object):
 "	background-color: rgba(255, 255, 255, 24);\n"
 "}\n"
 "QCheckBox::indicator:unchecked {\n"
-"	border-image: url(:/CheckBox_Icon/images/Moon.png);\n"
+"	border-image: url(:/CheckBox_Icon/images/icons/Moon.png);\n"
 "}\n"
 "QCheckBox::indicator:checked {\n"
-"	border-image: url(:/CheckBox_Icon/images/Sun.png);\n"
+"	border-image: url(:/CheckBox_Icon/images/icons/Sun.png);\n"
 "}")
 
         self.horizontalLayout_11.addWidget(self.CheckBox_SwitchTheme)
@@ -199,7 +199,7 @@ class Ui_MainWindow(object):
 "	/*text-align: center;\n"
 "	font-size: 15px;*/\n"
 "	margin: 12px;\n"
-"	border-image: url(:/Button_Icon/images/Home.png);\n"
+"	border-image: url(:/Button_Icon/images/icons/Home.png);\n"
 "	/*background-repeat: no-repeat;\n"
 "	background-origin: content;\n"
 "	background-position: center;*/\n"
@@ -270,7 +270,7 @@ class Ui_MainWindow(object):
 "	/*text-align: center;\n"
 "	font-size: 15px;*/\n"
 "	margin: 12px;\n"
-"	border-image: url(:/Button_Icon/images/Box.png);\n"
+"	border-image: url(:/Button_Icon/images/icons/Box.png);\n"
 "	/*background-repeat: no-repeat;\n"
 "	background-origin: content;\n"
 "	background-position: center;*/\n"
@@ -337,7 +337,7 @@ class Ui_MainWindow(object):
 "	/*text-align: center;\n"
 "	font-size: 15px;*/\n"
 "	margin: 12px;\n"
-"	border-image: url(:/Button_Icon/images/Boxes.png);\n"
+"	border-image: url(:/Button_Icon/images/icons/Boxes.png);\n"
 "	/*background-repeat: no-repeat;\n"
 "	background-origin: content;\n"
 "	background-position: center;*/\n"
@@ -404,7 +404,7 @@ class Ui_MainWindow(object):
 "	/*text-align: center;\n"
 "	font-size: 15px;*/\n"
 "	margin: 12px;\n"
-"	border-image: url(:/Button_Icon/images/Audio.png);\n"
+"	border-image: url(:/Button_Icon/images/icons/Audio.png);\n"
 "	/*background-repeat: no-repeat;\n"
 "	background-origin: content;\n"
 "	background-position: center;*/\n"
@@ -471,7 +471,7 @@ class Ui_MainWindow(object):
 "	/*text-align: center;\n"
 "	font-size: 15px;*/\n"
 "	margin: 12px;\n"
-"	border-image: url(:/Button_Icon/images/ASR.png);\n"
+"	border-image: url(:/Button_Icon/images/icons/ASR.png);\n"
 "	/*background-repeat: no-repeat;\n"
 "	background-origin: content;\n"
 "	background-position: center;*/\n"
@@ -538,7 +538,7 @@ class Ui_MainWindow(object):
 "	/*text-align: center;\n"
 "	font-size: 15px;*/\n"
 "	margin: 12px;\n"
-"	border-image: url(:/Button_Icon/images/STT.png);\n"
+"	border-image: url(:/Button_Icon/images/icons/STT.png);\n"
 "	/*background-repeat: no-repeat;\n"
 "	background-origin: content;\n"
 "	background-position: center;*/\n"
@@ -605,7 +605,7 @@ class Ui_MainWindow(object):
 "	/*text-align: center;\n"
 "	font-size: 15px;*/\n"
 "	margin: 12px;\n"
-"	border-image: url(:/Button_Icon/images/Dataset.png);\n"
+"	border-image: url(:/Button_Icon/images/icons/Dataset.png);\n"
 "	/*background-repeat: no-repeat;\n"
 "	background-origin: content;\n"
 "	background-position: center;*/\n"
@@ -672,7 +672,7 @@ class Ui_MainWindow(object):
 "	/*text-align: center;\n"
 "	font-size: 15px;*/\n"
 "	margin: 12px;\n"
-"	border-image: url(:/Button_Icon/images/HDD.png);\n"
+"	border-image: url(:/Button_Icon/images/icons/HDD.png);\n"
 "	/*background-repeat: no-repeat;\n"
 "	background-origin: content;\n"
 "	background-position: center;*/\n"
@@ -739,7 +739,7 @@ class Ui_MainWindow(object):
 "	/*text-align: center;\n"
 "	font-size: 15px;*/\n"
 "	margin: 12px;\n"
-"	border-image: url(:/Button_Icon/images/TTS.png);\n"
+"	border-image: url(:/Button_Icon/images/icons/TTS.png);\n"
 "	/*background-repeat: no-repeat;\n"
 "	background-origin: content;\n"
 "	background-position: center;*/\n"
@@ -810,7 +810,7 @@ class Ui_MainWindow(object):
 "	/*text-align: center;\n"
 "	font-size: 15px;*/\n"
 "	margin: 12px;\n"
-"	border-image: url(:/Button_Icon/images/Settings.png);\n"
+"	border-image: url(:/Button_Icon/images/icons/Settings.png);\n"
 "	/*background-repeat: no-repeat;\n"
 "	background-origin: content;\n"
 "	background-position: center;*/\n"
@@ -877,7 +877,7 @@ class Ui_MainWindow(object):
 "	/*text-align: center;\n"
 "	font-size: 15px;*/\n"
 "	margin: 12px;\n"
-"	border-image: url(:/Button_Icon/images/Info.png);\n"
+"	border-image: url(:/Button_Icon/images/icons/Info.png);\n"
 "	/*background-repeat: no-repeat;\n"
 "	background-origin: content;\n"
 "	background-position: center;*/\n"
@@ -1119,7 +1119,7 @@ class Ui_MainWindow(object):
 "	/*text-align: center;\n"
 "	font-size: 15px;*/\n"
 "	margin: 12px;\n"
-"	image: url(:/Button_Icon/images/Play.png);\n"
+"	image: url(:/Button_Icon/images/icons/Play.png);\n"
 "	/*background-repeat: no-repeat;\n"
 "	background-origin: content;\n"
 "	background-position: center;*/\n"
@@ -1182,7 +1182,7 @@ class Ui_MainWindow(object):
 "	/*text-align: center;\n"
 "	font-size: 15px;*/\n"
 "	margin: 12px;\n"
-"	image: url(:/Button_Icon/images/Server.png);\n"
+"	image: url(:/Button_Icon/images/icons/Server.png);\n"
 "	/*background-repeat: no-repeat;\n"
 "	background-origin: content;\n"
 "	background-position: center;*/\n"
@@ -1245,7 +1245,7 @@ class Ui_MainWindow(object):
 "	/*text-align: center;\n"
 "	font-size: 15px;*/\n"
 "	margin: 12px;\n"
-"	image: url(:/Button_Icon/images/GitHub.png);\n"
+"	image: url(:/Button_Icon/images/icons/GitHub.png);\n"
 "	/*background-repeat: no-repeat;\n"
 "	background-origin: content;\n"
 "	background-position: center;*/\n"
@@ -1308,7 +1308,7 @@ class Ui_MainWindow(object):
 "	/*text-align: center;\n"
 "	font-size: 15px;*/\n"
 "	margin: 12px;\n"
-"	image: url(:/Button_Icon/images/Heart.png);\n"
+"	image: url(:/Button_Icon/images/icons/Heart.png);\n"
 "	/*background-repeat: no-repeat;\n"
 "	background-origin: content;\n"
 "	background-position: center;*/\n"
@@ -1516,7 +1516,7 @@ class Ui_MainWindow(object):
         self.Button_Install_Aria2.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
 "	font-size: 15px;\n"
-"	image: url(:/Button_Icon/images/Refresh.png);\n"
+"	image: url(:/Button_Icon/images/icons/Refresh.png);\n"
 "	background-color: transparent;\n"
 "	padding: 4.5px;\n"
 "	border-width: 1.2px;\n"
@@ -1606,7 +1606,7 @@ class Ui_MainWindow(object):
         self.Button_Install_FFmpeg.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
 "	font-size: 15px;\n"
-"	image: url(:/Button_Icon/images/Refresh.png);\n"
+"	image: url(:/Button_Icon/images/icons/Refresh.png);\n"
 "	background-color: transparent;\n"
 "	padding: 4.5px;\n"
 "	border-width: 1.2px;\n"
@@ -1696,7 +1696,7 @@ class Ui_MainWindow(object):
         self.Button_Install_Python.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
 "	font-size: 15px;\n"
-"	image: url(:/Button_Icon/images/Refresh.png);\n"
+"	image: url(:/Button_Icon/images/icons/Refresh.png);\n"
 "	background-color: transparent;\n"
 "	padding: 4.5px;\n"
 "	border-width: 1.2px;\n"
@@ -1786,7 +1786,7 @@ class Ui_MainWindow(object):
         self.Button_Install_PyReqs.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
 "	font-size: 15px;\n"
-"	image: url(:/Button_Icon/images/Refresh.png);\n"
+"	image: url(:/Button_Icon/images/icons/Refresh.png);\n"
 "	background-color: transparent;\n"
 "	padding: 4.5px;\n"
 "	border-width: 1.2px;\n"
@@ -1876,7 +1876,7 @@ class Ui_MainWindow(object):
         self.Button_Install_Pytorch.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
 "	font-size: 15px;\n"
-"	image: url(:/Button_Icon/images/Refresh.png);\n"
+"	image: url(:/Button_Icon/images/icons/Refresh.png);\n"
 "	background-color: transparent;\n"
 "	padding: 4.5px;\n"
 "	border-width: 1.2px;\n"
@@ -2285,7 +2285,7 @@ class Ui_MainWindow(object):
 "	font-size: 12pt;\n"
 "	text-align: right;\n"
 "	image-position: left;\n"
-"	image: url(:/Button_Icon/images/Refresh.png);\n"
+"	image: url(:/Button_Icon/images/icons/Refresh.png);\n"
 "	padding: 12px;\n"
 "	background-color: transparent;\n"
 "	border-width: 0px;\n"
@@ -2306,7 +2306,7 @@ class Ui_MainWindow(object):
 "	font-size: 12pt;\n"
 "	text-align: right;\n"
 "	image-position: left;\n"
-"	image: url(:/Button_Icon/images/Plus.png);\n"
+"	image: url(:/Button_Icon/images/icons/Plus.png);\n"
 "	padding: 12px;\n"
 "	background-color: transparent;\n"
 "	border-width: 0px;\n"
@@ -2628,7 +2628,7 @@ class Ui_MainWindow(object):
         self.Button_AudioProcessor_Help.setMinimumSize(QSize(45, 45))
         self.Button_AudioProcessor_Help.setStyleSheet(u"QPushButton {\n"
 "	image-position: center;\n"
-"	image: url(:/Button_Icon/images/Question.png);\n"
+"	image: url(:/Button_Icon/images/icons/Question.png);\n"
 "	padding: 12px;\n"
 "	background-color: transparent;\n"
 "	border-width: 0px;\n"
@@ -2882,10 +2882,10 @@ class Ui_MainWindow(object):
 "	background-color: rgba(255, 255, 255, 21);\n"
 "}\n"
 "QCheckBox::indicator:unchecked {\n"
-"	border-image: url(:/CheckBox_Icon/images/ToggleOff.png);\n"
+"	border-image: url(:/CheckBox_Icon/images/icons/ToggleOff.png);\n"
 "}\n"
 "QCheckBox::indicator:checked {\n"
-"	border-image: url(:/CheckBox_Icon/images/ToggleOn.png);\n"
+"	border-image: url(:/CheckBox_Icon/images/icons/ToggleOn.png);\n"
 "}")
 
         self.gridLayout_90.addWidget(self.CheckBox_Process_DenoiseAudio, 1, 0, 1, 3)
@@ -3110,10 +3110,10 @@ class Ui_MainWindow(object):
 "	background-color: rgba(255, 255, 255, 21);\n"
 "}\n"
 "QCheckBox::indicator:unchecked {\n"
-"	border-image: url(:/CheckBox_Icon/images/ToggleOff.png);\n"
+"	border-image: url(:/CheckBox_Icon/images/icons/ToggleOff.png);\n"
 "}\n"
 "QCheckBox::indicator:checked {\n"
-"	border-image: url(:/CheckBox_Icon/images/ToggleOn.png);\n"
+"	border-image: url(:/CheckBox_Icon/images/icons/ToggleOn.png);\n"
 "}")
 
         self.gridLayout_13.addWidget(self.CheckBox_Process_SliceAudio, 1, 0, 1, 3)
@@ -3759,10 +3759,10 @@ class Ui_MainWindow(object):
 "	background-color: rgba(255, 255, 255, 21);\n"
 "}\n"
 "QCheckBox::indicator:unchecked {\n"
-"	border-image: url(:/CheckBox_Icon/images/ToggleOff.png);\n"
+"	border-image: url(:/CheckBox_Icon/images/icons/ToggleOff.png);\n"
 "}\n"
 "QCheckBox::indicator:checked {\n"
-"	border-image: url(:/CheckBox_Icon/images/ToggleOn.png);\n"
+"	border-image: url(:/CheckBox_Icon/images/icons/ToggleOn.png);\n"
 "}")
 
         self.gridLayout_31.addWidget(self.CheckBox_Process_ToMono, 1, 0, 1, 3)
@@ -4112,7 +4112,7 @@ class Ui_MainWindow(object):
         self.Button_VoiceIdentifier_Help.setMinimumSize(QSize(45, 45))
         self.Button_VoiceIdentifier_Help.setStyleSheet(u"QPushButton {\n"
 "	image-position: center;\n"
-"	image: url(:/Button_Icon/images/Question.png);\n"
+"	image: url(:/Button_Icon/images/icons/Question.png);\n"
 "	padding: 12px;\n"
 "	background-color: transparent;\n"
 "	border-width: 0px;\n"
@@ -5135,7 +5135,7 @@ class Ui_MainWindow(object):
         self.Button_VoiceTranscriber_Help.setMinimumSize(QSize(45, 45))
         self.Button_VoiceTranscriber_Help.setStyleSheet(u"QPushButton {\n"
 "	image-position: center;\n"
-"	image: url(:/Button_Icon/images/Question.png);\n"
+"	image: url(:/Button_Icon/images/icons/Question.png);\n"
 "	padding: 12px;\n"
 "	background-color: transparent;\n"
 "	border-width: 0px;\n"
@@ -5389,10 +5389,10 @@ class Ui_MainWindow(object):
 "	background-color: rgba(255, 255, 255, 21);\n"
 "}\n"
 "QCheckBox::indicator:unchecked {\n"
-"	border-image: url(:/CheckBox_Icon/images/ToggleOff.png);\n"
+"	border-image: url(:/CheckBox_Icon/images/icons/ToggleOff.png);\n"
 "}\n"
 "QCheckBox::indicator:checked {\n"
-"	border-image: url(:/CheckBox_Icon/images/ToggleOn.png);\n"
+"	border-image: url(:/CheckBox_Icon/images/icons/ToggleOn.png);\n"
 "}")
 
         self.gridLayout_40.addWidget(self.CheckBox_STT_Whisper_AddLanguageInfo, 1, 0, 1, 3)
@@ -5529,10 +5529,10 @@ class Ui_MainWindow(object):
 "	background-color: rgba(255, 255, 255, 21);\n"
 "}\n"
 "QCheckBox::indicator:unchecked {\n"
-"	border-image: url(:/CheckBox_Icon/images/ToggleOff.png);\n"
+"	border-image: url(:/CheckBox_Icon/images/icons/ToggleOff.png);\n"
 "}\n"
 "QCheckBox::indicator:checked {\n"
-"	border-image: url(:/CheckBox_Icon/images/ToggleOn.png);\n"
+"	border-image: url(:/CheckBox_Icon/images/icons/ToggleOn.png);\n"
 "}")
 
         self.gridLayout_44.addWidget(self.CheckBox_STT_Whisper_fp16, 1, 0, 1, 3)
@@ -5595,10 +5595,10 @@ class Ui_MainWindow(object):
 "	background-color: rgba(255, 255, 255, 21);\n"
 "}\n"
 "QCheckBox::indicator:unchecked {\n"
-"	border-image: url(:/CheckBox_Icon/images/ToggleOff.png);\n"
+"	border-image: url(:/CheckBox_Icon/images/icons/ToggleOff.png);\n"
 "}\n"
 "QCheckBox::indicator:checked {\n"
-"	border-image: url(:/CheckBox_Icon/images/ToggleOn.png);\n"
+"	border-image: url(:/CheckBox_Icon/images/icons/ToggleOn.png);\n"
 "}")
 
         self.gridLayout_43.addWidget(self.CheckBox_STT_Whisper_ConditionOnPreviousText, 1, 0, 1, 3)
@@ -5699,10 +5699,10 @@ class Ui_MainWindow(object):
 "	background-color: rgba(255, 255, 255, 21);\n"
 "}\n"
 "QCheckBox::indicator:unchecked {\n"
-"	border-image: url(:/CheckBox_Icon/images/ToggleOff.png);\n"
+"	border-image: url(:/CheckBox_Icon/images/icons/ToggleOff.png);\n"
 "}\n"
 "QCheckBox::indicator:checked {\n"
-"	border-image: url(:/CheckBox_Icon/images/ToggleOn.png);\n"
+"	border-image: url(:/CheckBox_Icon/images/icons/ToggleOn.png);\n"
 "}")
 
         self.gridLayout_42.addWidget(self.CheckBox_STT_Whisper_Verbose, 1, 0, 1, 3)
@@ -6190,7 +6190,7 @@ class Ui_MainWindow(object):
         self.Button_DatasetCreator_Help.setMinimumSize(QSize(45, 45))
         self.Button_DatasetCreator_Help.setStyleSheet(u"QPushButton {\n"
 "	image-position: center;\n"
-"	image: url(:/Button_Icon/images/Question.png);\n"
+"	image: url(:/Button_Icon/images/icons/Question.png);\n"
 "	padding: 12px;\n"
 "	background-color: transparent;\n"
 "	border-width: 0px;\n"
@@ -7231,10 +7231,10 @@ class Ui_MainWindow(object):
 "	background-color: rgba(255, 255, 255, 21);\n"
 "}\n"
 "QCheckBox::indicator:unchecked {\n"
-"	border-image: url(:/CheckBox_Icon/images/ToggleOff.png);\n"
+"	border-image: url(:/CheckBox_Icon/images/icons/ToggleOff.png);\n"
 "}\n"
 "QCheckBox::indicator:checked {\n"
-"	border-image: url(:/CheckBox_Icon/images/ToggleOn.png);\n"
+"	border-image: url(:/CheckBox_Icon/images/icons/ToggleOn.png);\n"
 "}")
 
         self.gridLayout_48.addWidget(self.CheckBox_DAT_VITS_AddAuxiliaryData, 1, 0, 1, 3)
@@ -7553,10 +7553,10 @@ class Ui_MainWindow(object):
 "	background-color: rgba(255, 255, 255, 21);\n"
 "}\n"
 "QCheckBox::indicator:unchecked {\n"
-"	border-image: url(:/CheckBox_Icon/images/ToggleOff.png);\n"
+"	border-image: url(:/CheckBox_Icon/images/icons/ToggleOff.png);\n"
 "}\n"
 "QCheckBox::indicator:checked {\n"
-"	border-image: url(:/CheckBox_Icon/images/ToggleOn.png);\n"
+"	border-image: url(:/CheckBox_Icon/images/icons/ToggleOn.png);\n"
 "}")
 
         self.gridLayout_52.addWidget(self.CheckBox_DAT_VITS_ToMono, 1, 0, 1, 3)
@@ -8155,7 +8155,7 @@ class Ui_MainWindow(object):
         self.Button_VoiceTrainer_Help.setMinimumSize(QSize(45, 45))
         self.Button_VoiceTrainer_Help.setStyleSheet(u"QPushButton {\n"
 "	image-position: center;\n"
-"	image: url(:/Button_Icon/images/Question.png);\n"
+"	image: url(:/Button_Icon/images/icons/Question.png);\n"
 "	padding: 12px;\n"
 "	background-color: transparent;\n"
 "	border-width: 0px;\n"
@@ -8698,10 +8698,10 @@ class Ui_MainWindow(object):
 "	background-color: rgba(255, 255, 255, 21);\n"
 "}\n"
 "QCheckBox::indicator:unchecked {\n"
-"	border-image: url(:/CheckBox_Icon/images/ToggleOff.png);\n"
+"	border-image: url(:/CheckBox_Icon/images/icons/ToggleOff.png);\n"
 "}\n"
 "QCheckBox::indicator:checked {\n"
-"	border-image: url(:/CheckBox_Icon/images/ToggleOn.png);\n"
+"	border-image: url(:/CheckBox_Icon/images/icons/ToggleOn.png);\n"
 "}")
 
         self.gridLayout_91.addWidget(self.CheckBox_Train_GPTSoVITS_FP16Run, 1, 0, 1, 3)
@@ -9788,10 +9788,10 @@ class Ui_MainWindow(object):
 "	background-color: rgba(255, 255, 255, 21);\n"
 "}\n"
 "QCheckBox::indicator:unchecked {\n"
-"	border-image: url(:/CheckBox_Icon/images/ToggleOff.png);\n"
+"	border-image: url(:/CheckBox_Icon/images/icons/ToggleOff.png);\n"
 "}\n"
 "QCheckBox::indicator:checked {\n"
-"	border-image: url(:/CheckBox_Icon/images/ToggleOn.png);\n"
+"	border-image: url(:/CheckBox_Icon/images/icons/ToggleOn.png);\n"
 "}")
 
         self.gridLayout_61.addWidget(self.CheckBox_Train_VITS_UsePretrainedModels, 1, 0, 1, 3)
@@ -9983,10 +9983,10 @@ class Ui_MainWindow(object):
 "	background-color: rgba(255, 255, 255, 21);\n"
 "}\n"
 "QCheckBox::indicator:unchecked {\n"
-"	border-image: url(:/CheckBox_Icon/images/ToggleOff.png);\n"
+"	border-image: url(:/CheckBox_Icon/images/icons/ToggleOff.png);\n"
 "}\n"
 "QCheckBox::indicator:checked {\n"
-"	border-image: url(:/CheckBox_Icon/images/ToggleOn.png);\n"
+"	border-image: url(:/CheckBox_Icon/images/icons/ToggleOn.png);\n"
 "}")
 
         self.gridLayout_67.addWidget(self.CheckBox_Train_VITS_KeepOriginalSpeakers, 1, 0, 1, 3)
@@ -10194,10 +10194,10 @@ class Ui_MainWindow(object):
 "	background-color: rgba(255, 255, 255, 21);\n"
 "}\n"
 "QCheckBox::indicator:unchecked {\n"
-"	border-image: url(:/CheckBox_Icon/images/ToggleOff.png);\n"
+"	border-image: url(:/CheckBox_Icon/images/icons/ToggleOff.png);\n"
 "}\n"
 "QCheckBox::indicator:checked {\n"
-"	border-image: url(:/CheckBox_Icon/images/ToggleOn.png);\n"
+"	border-image: url(:/CheckBox_Icon/images/icons/ToggleOn.png);\n"
 "}")
 
         self.gridLayout_64.addWidget(self.CheckBox_Train_VITS_FP16Run, 1, 0, 1, 3)
@@ -10560,7 +10560,7 @@ class Ui_MainWindow(object):
         self.Button_VoiceConverter_Help.setMinimumSize(QSize(45, 45))
         self.Button_VoiceConverter_Help.setStyleSheet(u"QPushButton {\n"
 "	image-position: center;\n"
-"	image: url(:/Button_Icon/images/Question.png);\n"
+"	image: url(:/Button_Icon/images/icons/Question.png);\n"
 "	padding: 12px;\n"
 "	background-color: transparent;\n"
 "	border-width: 0px;\n"
@@ -12365,10 +12365,10 @@ class Ui_MainWindow(object):
 "	background-color: rgba(255, 255, 255, 21);\n"
 "}\n"
 "QCheckBox::indicator:unchecked {\n"
-"	border-image: url(:/CheckBox_Icon/images/ToggleOff.png);\n"
+"	border-image: url(:/CheckBox_Icon/images/icons/ToggleOff.png);\n"
 "}\n"
 "QCheckBox::indicator:checked {\n"
-"	border-image: url(:/CheckBox_Icon/images/ToggleOn.png);\n"
+"	border-image: url(:/CheckBox_Icon/images/icons/ToggleOn.png);\n"
 "}")
 
         self.horizontalLayout_65.addWidget(self.CheckBox_Setting_AutoUpdate)
@@ -12572,10 +12572,10 @@ class Ui_MainWindow(object):
 "	background-color: rgba(255, 255, 255, 21);\n"
 "}\n"
 "QCheckBox::indicator:unchecked {\n"
-"	border-image: url(:/CheckBox_Icon/images/ToggleOff.png);\n"
+"	border-image: url(:/CheckBox_Icon/images/icons/ToggleOff.png);\n"
 "}\n"
 "QCheckBox::indicator:checked {\n"
-"	border-image: url(:/CheckBox_Icon/images/ToggleOn.png);\n"
+"	border-image: url(:/CheckBox_Icon/images/icons/ToggleOn.png);\n"
 "}")
 
         self.horizontalLayout_75.addWidget(self.CheckBox_Setting_AutoReset)
@@ -12644,10 +12644,10 @@ class Ui_MainWindow(object):
 "	background-color: rgba(255, 255, 255, 21);\n"
 "}\n"
 "QCheckBox::indicator:unchecked {\n"
-"	border-image: url(:/CheckBox_Icon/images/ToggleOff.png);\n"
+"	border-image: url(:/CheckBox_Icon/images/icons/ToggleOff.png);\n"
 "}\n"
 "QCheckBox::indicator:checked {\n"
-"	border-image: url(:/CheckBox_Icon/images/ToggleOn.png);\n"
+"	border-image: url(:/CheckBox_Icon/images/icons/ToggleOn.png);\n"
 "}")
 
         self.horizontalLayout_74.addWidget(self.CheckBox_Setting_Synchronizer)
@@ -13310,7 +13310,7 @@ class Ui_MainWindow(object):
         self.Button_Console_Copy.setObjectName(u"Button_Console_Copy")
         self.Button_Console_Copy.setMaximumSize(QSize(24, 24))
         self.Button_Console_Copy.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/images/Clipboard.png);\n"
+"	image: url(:/Button_Icon/images/icons/Clipboard.png);\n"
 "	background-color: transparent;\n"
 "	padding: 4.5px;\n"
 "	border-width: 0px;\n"
@@ -13328,7 +13328,7 @@ class Ui_MainWindow(object):
         self.Button_Console_Clear.setObjectName(u"Button_Console_Clear")
         self.Button_Console_Clear.setMaximumSize(QSize(24, 24))
         self.Button_Console_Clear.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/Button_Icon/images/TrashCan.png);\n"
+"	image: url(:/Button_Icon/images/icons/TrashCan.png);\n"
 "	background-color: transparent;\n"
 "	padding: 4.5px;\n"
 "	border-width: 0px;\n"
@@ -13346,7 +13346,7 @@ class Ui_MainWindow(object):
         self.Button_Console_Fold.setObjectName(u"Button_Console_Fold")
         self.Button_Console_Fold.setMaximumSize(QSize(24, 24))
         self.Button_Console_Fold.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/ComboBox_Icon/images/DownArrow.png);\n"
+"	image: url(:/ComboBox_Icon/images/icons/DownArrow.png);\n"
 "	background-color: transparent;\n"
 "	padding: 4.5px;\n"
 "	border-width: 0px;\n"
@@ -13468,7 +13468,7 @@ class Ui_MainWindow(object):
         self.Button_Toggle_Console.setStyleSheet(u"QPushButton {\n"
 "	/*text-align: center;\n"
 "	font-size: 15px;*/\n"
-"	image: url(:/Button_Icon/images/Console.png);\n"
+"	image: url(:/Button_Icon/images/icons/Console.png);\n"
 "	/*background-repeat: no-repeat;\n"
 "	background-origin: content;\n"
 "	background-position: center;*/\n"

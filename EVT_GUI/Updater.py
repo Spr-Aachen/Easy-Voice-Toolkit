@@ -1,5 +1,6 @@
 import os
 import sys
+import platform
 import shutil
 from pathlib import Path
 from typing import Optional
@@ -8,7 +9,7 @@ from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import QApplication, QVBoxLayout, QSizePolicy, QWidget, QMessageBox, QPushButton, QProgressBar, QLabel
 from QEasyWidgets import QFunctions as QFunc
 
-from EVT_GUI.Functions import Function_SetMethodExecutor, Function_ShowMessageBox
+from Functions import Function_SetMethodExecutor, Function_ShowMessageBox
 from Config import *
 
 ##############################################################################################################################
@@ -19,17 +20,7 @@ Config = QFunc.ManageConfig(ConfigPath)
 
 # Set path of executer
 ExecuterName = str(Config.GetValue('Info', 'ExecuterName'))
-ExecuterPath = QFunc.NormPath(Path(TargetDir).joinpath(ExecuterName))
-
-
-# Set folders to be excluded
-FoldersToKeep = [ConfigDir]
-if Path(TargetDir).joinpath('FFmpeg').exists():
-    FoldersToKeep.append(QFunc.NormPath(Path(TargetDir).joinpath('FFmpeg')))
-if Path(TargetDir).joinpath('Python').exists():
-    FoldersToKeep.append(QFunc.NormPath(Path(TargetDir).joinpath('Python')))
-if Path(TargetDir).joinpath('Download').exists():
-    FoldersToKeep.append(QFunc.NormPath(Path(TargetDir).joinpath('Download')))
+ExecuterPath = QFunc.NormPath(Path(CurrentDir).joinpath(ExecuterName))
 
 ##############################################################################################################################
 
@@ -51,27 +42,29 @@ UpdaterSignals = CustomSignals_Updater()
 
 
 def RebootIfFailed():
-    QFunc.BootWithBat(
-        ProgramPath = ExecuterPath,
-        DelayTime = 0,
-        BatFilePath = Path(QFunc.NormPath(TargetDir)).joinpath('Booter.bat')
-    )
+    if platform.system() == 'Windows':
+        QFunc.BootWithBat(
+            ProgramPath = ExecuterPath,
+            DelayTime = 0,
+            BatFilePath = Path(QFunc.NormPath(CurrentDir)).joinpath('Booter.bat')
+        )
 
 
 def RebootIfSucceeded():
-    QFunc.RunBat(
-        CommandList = [
-            '@echo off',
-            'echo Ready to move files and reboot',
-            #f'taskkill /pid {os.getpid()} /f /t',
-            'timeout /t 2 /nobreak',
-            'echo Moving files...',
-            f'robocopy "{ExtractDir}" "{TargetDir}" /E /MOVE /R:3 /W:1 /NP',
-            f'start "Programm Running" "{ExecuterPath}"',
-            'del "%~f0"'
-        ],
-        BatFilePath = QFunc.NormPath(Path(TargetDir).joinpath('Updater.bat'))
-    )
+    if platform.system() == 'Windows':
+        QFunc.RunBat(
+            CommandList = [
+                '@echo off',
+                'echo Ready to move files and reboot',
+                #f'taskkill /pid {os.getpid()} /f /t',
+                'timeout /t 2 /nobreak',
+                'echo Moving files...',
+                f'robocopy "{ExtractDir}" "{CurrentDir}" /E /MOVE /R:3 /W:1 /NP',
+                f'start "Programm Running" "{ExecuterPath}"',
+                'del "%~f0"'
+            ],
+            BatFilePath = QFunc.NormPath(Path(CurrentDir).joinpath('Updater.bat'))
+        )
 
 
 def UpdateChecker(
@@ -174,7 +167,7 @@ class Execute_Update_Downloading(QObject):
             DownloadDir = DownloadDir,
             Name = "EVT Update",
             ExtractDir = ExtractDir,
-            TargetDir = TargetDir
+            TargetDir = CurrentDir
         )
 
         self.finished.emit()
@@ -198,7 +191,7 @@ class Widget_Updater(QWidget):
             self.height()
         )
 
-        self.setWindowIcon(QIcon(QFunc.NormPath(Path(ResourceDir).joinpath('Icon.ico'))))
+        self.setWindowIcon(QIcon(QFunc.NormPath(Path(ResourceDir).joinpath('assets/images/Logo.ico'))))
 
         self.Label = QLabel()
         self.Label.setVisible(True)

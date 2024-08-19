@@ -5,12 +5,12 @@ from QEasyWidgets import QFunctions as QFunc
 from QEasyWidgets.Windows import *
 from QEasyWidgets.Components import *
 
-from .ui.UI_MainWindow import Ui_MainWindow
-from .ui.UI_ChildWindow_ASR_VPR import Ui_ChildWindow_ASR_VPR
-from .ui.UI_ChildWindow_STT_Whisper import Ui_ChildWindow_STT_Whisper
-from .ui.UI_ChildWindow_DAT_GPTSoVITS import Ui_ChildWindow_DAT_GPTSoVITS
-from .ui.UI_ChildWindow_DAT_VITS import Ui_ChildWindow_DAT_VITS
-from .ui.UI_ChildWindow_TTS_VITS import Ui_ChildWindow_TTS_VITS
+from windows.ui.UI_MainWindow import Ui_MainWindow
+from windows.ui.UI_ChildWindow_ASR_VPR import Ui_ChildWindow_ASR_VPR
+from windows.ui.UI_ChildWindow_STT_Whisper import Ui_ChildWindow_STT_Whisper
+from windows.ui.UI_ChildWindow_DAT_GPTSoVITS import Ui_ChildWindow_DAT_GPTSoVITS
+from windows.ui.UI_ChildWindow_DAT_VITS import Ui_ChildWindow_DAT_VITS
+from windows.ui.UI_ChildWindow_TTS_VITS import Ui_ChildWindow_TTS_VITS
 
 ##############################################################################################################################
 
@@ -115,7 +115,7 @@ class MessageBox_Stacked(MessageBoxBase):
             "QPushButton {"
             "   background-color: transparent;"
             "   padding: 12px;"
-            "   border-image: url(:/Button_Icon/images/LeftArrow.png);"
+            "   border-image: url(:/Button_Icon/images/icons/LeftArrow.png);"
             "}"
             "QPushButton:hover {"
             "   background-color: rgba(210, 222, 234, 12);"
@@ -132,7 +132,7 @@ class MessageBox_Stacked(MessageBoxBase):
             "QPushButton {"
             "   background-color: transparent;"
             "   padding: 12px;"
-            "   border-image: url(:/Button_Icon/images/RightArrow.png);"
+            "   border-image: url(:/Button_Icon/images/icons/RightArrow.png);"
             "}"
             "QPushButton:hover {"
             "   background-color: rgba(210, 222, 234, 12);"

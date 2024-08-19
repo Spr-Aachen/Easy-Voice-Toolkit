@@ -9,8 +9,8 @@ from QEasyWidgets import QFunctions as QFunc
 from QEasyWidgets.Windows import *
 from QEasyWidgets.Components import *
 
-from .components.Components import *
-from .windows.Windows import *
+from components.Components import *
+from windows.Windows import *
 
 ##############################################################################################################################
 

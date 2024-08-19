@@ -3,6 +3,7 @@ import sys
 import time
 import json
 import hashlib
+import argparse
 import subprocess
 from pathlib import Path
 from glob import glob
@@ -17,15 +18,33 @@ from QEasyWidgets import QFunctions as QFunc
 from QEasyWidgets import QTasks
 from QEasyWidgets import ComponentsSignals, Theme, EasyTheme, Language, EasyLanguage, TranslationBase, IconBase
 
-from EVT_GUI.windows.Windows import *
-from EVT_GUI.Functions import *
-from EVT_GUI.EnvConfigurator import *
+from windows.Windows import *
+from Functions import *
+from EnvConfigurator import *
 from Config import *
 
 ##############################################################################################################################
 
 # Change working directory to current directory
 os.chdir(CurrentDir)
+
+
+# Parse path settings
+parser = argparse.ArgumentParser()
+parser.add_argument("--core",         help = "dir of core files",        default = Path(ResourceDir).joinpath('EVT_Core'))
+parser.add_argument("--manifest",     help = "path to manifest.json",    default = Path(ResourceDir).joinpath('manifest.json'))
+parser.add_argument("--requirements", help = "path to requirements.txt", default = Path(ResourceDir).joinpath('requirements.txt'))
+parser.add_argument("--dependencies", help = "dir of dependencies",      default = Path(CurrentDir).joinpath(''))
+parser.add_argument("--models",       help = "dir of models",            default = Path(CurrentDir).joinpath('Models'))
+parser.add_argument("--output",       help = "dir of output",            default = Path(CurrentDir).joinpath(''))
+args = parser.parse_args()
+
+CoreDir = args.core
+ManifestPath = args.manifest
+RequirementsPath = args.requirements
+DependencyDir = args.dependencies
+ModelDir = args.models
+OutputDir = args.output
 
 
 # Set up client config
@@ -41,17 +60,17 @@ if IsFileCompiled == False:
         Value = QFunc.NormPath(Path(QFunc.GetBaseDir(PySide6_File)).joinpath('plugins', 'platforms'))
     )
 # Set up environment variables while environment is configured
-if Path(CurrentDir).joinpath('Aria2').exists():
+if Path(DependencyDir).joinpath('Aria2').exists():
     QFunc.SetEnvVar(
         Variable = 'PATH',
-        Value = QFunc.NormPath(Path(CurrentDir).joinpath('Aria2'))
+        Value = QFunc.NormPath(Path(DependencyDir).joinpath('Aria2'))
     )
-if Path(CurrentDir).joinpath('FFmpeg').exists():
+if Path(DependencyDir).joinpath('FFmpeg').exists():
     QFunc.SetEnvVar(
         Variable = 'PATH',
-        Value = QFunc.NormPath(Path(CurrentDir).joinpath('FFmpeg', 'bin'))
+        Value = QFunc.NormPath(Path(DependencyDir).joinpath('FFmpeg', 'bin'))
     )
-if Path(CurrentDir).joinpath('Python').exists():
+if Path(DependencyDir).joinpath('Python').exists():
     '''
     for PythonPath in QFunc.RunCMD('where python', DecodeResult = True)[0].split():
         PATH = os.environ.get('PATH')
@@ -61,11 +80,11 @@ if Path(CurrentDir).joinpath('Python').exists():
     '''
     QFunc.SetEnvVar(
         Variable = 'PATH',
-        Value = QFunc.NormPath(Path(CurrentDir).joinpath('Python'), TrailingSlash = True)
+        Value = QFunc.NormPath(Path(DependencyDir).joinpath('Python'), TrailingSlash = True)
     )
     QFunc.SetEnvVar(
         Variable = 'PATH',
-        Value = QFunc.NormPath(Path(CurrentDir).joinpath('Python', 'Scripts'), TrailingSlash = True)
+        Value = QFunc.NormPath(Path(DependencyDir).joinpath('Python', 'Scripts'), TrailingSlash = True)
     )
 
 ##############################################################################################################################
@@ -103,9 +122,9 @@ class Execute_Audio_Processing(QObject):
         CMD = QFunc.SubprocessManager(CommunicateThroughConsole = True)
         self.Process = CMD.create(
             Args = [
-                f'cd "{ResourceDir}"',
+                f'cd "{CoreDir}"',
                 'python -c "'
-                'from EVT_Core.Process.Process import Audio_Processing; '
+                'from Process.Process import Audio_Processing; '
                 f"AudioConvertandSlice = Audio_Processing{str(Params)}; "
                 'AudioConvertandSlice.Process_Audio()"'
             ]
@@ -146,9 +165,9 @@ class Execute_Voice_Identifying_VPR(QObject):
         CMD = QFunc.SubprocessManager(CommunicateThroughConsole = True)
         self.Process = CMD.create(
             Args = [
-                f'cd "{ResourceDir}"',
+                f'cd "{CoreDir}"',
                 'python -c "'
-                'from EVT_Core.ASR.VPR.Identify import Voice_Identifying; '
+                'from ASR.VPR.Identify import Voice_Identifying; '
                 f"AudioContrastInference = Voice_Identifying{str(Params)}; "
                 'AudioContrastInference.GetModel(); '
                 'AudioContrastInference.Inference()"'
@@ -198,9 +217,9 @@ class Execute_Voice_Transcribing_Whisper(QObject):
         CMD = QFunc.SubprocessManager(CommunicateThroughConsole = True)
         self.Process = CMD.create(
             Args = [
-                f'cd "{ResourceDir}"',
+                f'cd "{CoreDir}"',
                 'python -c "'
-                'from EVT_Core.STT.Whisper.Transcribe import Voice_Transcribing; '
+                'from STT.Whisper.Transcribe import Voice_Transcribing; '
                 f"WAVtoSRT = Voice_Transcribing{str(QFunc.ItemReplacer(LANGUAGES, Params))}; "
                 'WAVtoSRT.Transcriber()"'
             ]
@@ -241,9 +260,9 @@ class Execute_Dataset_Creating_GPTSoVITS(QObject):
         CMD = QFunc.SubprocessManager(CommunicateThroughConsole = True)
         self.Process = CMD.create(
             Args = [
-                f'cd "{ResourceDir}"',
+                f'cd "{CoreDir}"',
                 'python -c "'
-                'from EVT_Core.Dataset.GPT_SoVITS.Create import Dataset_Creating; '
+                'from Dataset.GPT_SoVITS.Create import Dataset_Creating; '
                 f"SRTtoCSVandSplitAudio = Dataset_Creating{str(Params)}; "
                 'SRTtoCSVandSplitAudio.CallingFunctions()"'
             ]
@@ -283,9 +302,9 @@ class Execute_Dataset_Creating_VITS(QObject):
         CMD = QFunc.SubprocessManager(CommunicateThroughConsole = True)
         self.Process = CMD.create(
             Args = [
-                f'cd "{ResourceDir}"',
+                f'cd "{CoreDir}"',
                 'python -c "'
-                'from EVT_Core.Dataset.VITS.Create import Dataset_Creating; '
+                'from Dataset.VITS.Create import Dataset_Creating; '
                 f"SRTtoCSVandSplitAudio = Dataset_Creating{str(Params)}; "
                 'SRTtoCSVandSplitAudio.CallingFunctions()"'
             ]
@@ -326,9 +345,9 @@ class Execute_Voice_Training_GPTSoVITS(QObject):
         CMD = QFunc.SubprocessManager(CommunicateThroughConsole = True)
         self.Process = CMD.create(
             Args = [
-                f'cd "{ResourceDir}"',
+                f'cd "{CoreDir}"',
                 'python -c "'
-                'from EVT_Core.Train.GPT_SoVITS.Train import Train; '
+                'from Train.GPT_SoVITS.Train import Train; '
                 f'Train{str(Params)}"'
             ]
         )
@@ -367,9 +386,9 @@ class Execute_Voice_Training_VITS(QObject):
         CMD = QFunc.SubprocessManager(CommunicateThroughConsole = True)
         self.Process = CMD.create(
             Args = [
-                f'cd "{ResourceDir}"',
+                f'cd "{CoreDir}"',
                 'python -c "'
-                'from EVT_Core.Train.VITS.Train import Train; '
+                'from Train.VITS.Train import Train; '
                 f'Train{str(Params)}"'
             ]
         )
@@ -409,9 +428,9 @@ class Execute_Voice_Converting_GPTSoVITS(QObject):
         CMD = QFunc.SubprocessManager(CommunicateThroughConsole = True)
         self.Process = CMD.create(
             Args = [
-                f'cd "{ResourceDir}"',
+                f'cd "{CoreDir}"',
                 'python -c "'
-                'from EVT_Core.TTS.GPT_SoVITS.Convert import Convert; '
+                'from TTS.GPT_SoVITS.Convert import Convert; '
                 f'Convert{str(Params)}"'
             ]
         )
@@ -467,9 +486,9 @@ class Execute_Voice_Converting_VITS(QObject):
         CMD = QFunc.SubprocessManager(CommunicateThroughConsole = True)
         self.Process = CMD.create(
             Args = [
-                f'cd "{ResourceDir}"',
+                f'cd "{CoreDir}"',
                 'python -c "'
-                'from EVT_Core.TTS.VITS.Convert import Convert; '
+                'from TTS.VITS.Convert import Convert; '
                 f'Convert{str(QFunc.ItemReplacer(LANGUAGES, Params))}"'
             ]
         )
@@ -523,7 +542,7 @@ class Model_View(QObject):
 
         ModelDicts_Cloud = []
         Tags = [Path(ModelsDir).parts[-2], Path(ModelsDir).parts[-1]]
-        with open(Path(ResourceDir).joinpath('manifest.json'), 'r', encoding = 'utf-8') as File:
+        with open(QFunc.NormPath(ManifestPath), 'r', encoding = 'utf-8') as File:
             Param = json.load(File)
         for ModelDict in Param["models"]:
             if ModelDict["tags"] == Tags:
@@ -586,31 +605,31 @@ class Model_View(QObject):
     def Execute(self):
         ModelViewSignals.Signal_Process_UVR.emit(
             self.GetModelsInfo(
-                QFunc.NormPath(Path(ModelsDir).joinpath('Process', 'UVR')),
+                QFunc.NormPath(Path(ModelDir).joinpath('Process', 'UVR')),
                 ['pth', 'onnx']
             )
         )
         ModelViewSignals.Signal_ASR_VPR.emit(
             self.GetModelsInfo(
-                QFunc.NormPath(Path(ModelsDir).joinpath('ASR', 'VPR')),
+                QFunc.NormPath(Path(ModelDir).joinpath('ASR', 'VPR')),
                 ['pth']
             )
         )
         ModelViewSignals.Signal_STT_Whisper.emit(
             self.GetModelsInfo(
-                QFunc.NormPath(Path(ModelsDir).joinpath('STT', 'Whisper')),
+                QFunc.NormPath(Path(ModelDir).joinpath('STT', 'Whisper')),
                 ['pt']
             )
         )
         ModelViewSignals.Signal_TTS_GPTSoVITS.emit(
             self.GetModelsInfo(
-                QFunc.NormPath(Path(ModelsDir).joinpath('TTS', 'GPT-SoVITS')),
+                QFunc.NormPath(Path(ModelDir).joinpath('TTS', 'GPT-SoVITS')),
                 ['pth', 'ckpt', 'bin', 'json']
             )
         )
         ModelViewSignals.Signal_TTS_VITS.emit(
             self.GetModelsInfo(
-                QFunc.NormPath(Path(ModelsDir).joinpath('TTS', 'VITS')),
+                QFunc.NormPath(Path(ModelDir).joinpath('TTS', 'VITS')),
                 ['pth', 'json']
             )
         )
@@ -645,7 +664,7 @@ class Model_Downloader(QObject):
 
 # ClientFunc: AddLocalModel
 def AddLocalModel(ModelPath: str, Sector: list[str] = ['Tool', 'Type']):
-    MoveToDst = QFunc.NormPath(Path(ModelsDir).joinpath(*Sector))
+    MoveToDst = QFunc.NormPath(Path(ModelDir).joinpath(*Sector))
     shutil.move(ModelPath, MoveToDst)
 
 
@@ -752,14 +771,14 @@ class Integrity_Checker(QObject):
         ]:
             Error = QFunc.RunCMD(
                 Args = [
-                    f'cd "{ResourceDir}"',
+                    f'cd "{CoreDir}"',
                     'python -c "'
-                    'from EVT_Core.Process.Process import Audio_Processing; '
-                    'from EVT_Core.ASR.VPR.Identify import Voice_Identifying; '
-                    'from EVT_Core.STT.Whisper.Transcribe import Voice_Transcribing; '
-                    'from EVT_Core.Dataset.VITS.Create import Dataset_Creating; '
-                    'from EVT_Core.Train.VITS.Train import Voice_Training; '
-                    'from EVT_Core.TTS.VITS.Convert import Voice_Converting"'
+                    'from Process.Process import Audio_Processing; '
+                    'from ASR.VPR.Identify import Voice_Identifying; '
+                    'from STT.Whisper.Transcribe import Voice_Transcribing; '
+                    'from Dataset.VITS.Create import Dataset_Creating; '
+                    'from Train.VITS.Train import Voice_Training; '
+                    'from TTS.VITS.Convert import Voice_Converting"'
                 ],
                 CommunicateThroughConsole = True,
                 DecodeResult = True,
@@ -840,7 +859,8 @@ class MainWindow(Window_MainWindow):
         '''
         Main funtion to orgnize all the subfunctions
         '''
-        self.setWindowIcon(QIcon(QFunc.NormPath(Path(ResourceDir).joinpath('Icon.ico'))))
+        # Logo
+        self.setWindowIcon(QIcon(QFunc.NormPath(Path(ResourceDir).joinpath('assets/images/Logo.ico'))))
 
         #############################################################
         ########################## TitleBar #########################
@@ -1053,7 +1073,7 @@ class MainWindow(Window_MainWindow):
         #self.ui.ToolButton_Home_Title.setText(QCA.translate("Label", "主页"))
         Function_SetImage(
             Widget = self.ui.Label_Cover_Home,
-            ImagePath = Path(ResourceDir).joinpath('Sources/Cover.png')
+            ImagePath = Path(ResourceDir).joinpath('assets/images/others/Cover.png')
         )
 
         QFunc.Function_SetText(
@@ -1095,7 +1115,7 @@ class MainWindow(Window_MainWindow):
         self.ui.Label_Server_Text.setText(QCA.translate("Button", "云端版本"))
         Function_SetURL(
             Button = self.ui.Button_Server,
-            URL = "https://colab.research.google.com/github/Spr-Aachen/EVT-Resources/blob/main/Easy_Voice_Toolkit_for_Colab.ipynb",
+            URL = "https://colab.research.google.com/github/Spr-Aachen/EVT-Reassets/images/others/blob/main/Easy_Voice_Toolkit_for_Colab.ipynb",
             ButtonTooltip = "Click to run on server"
         )
         self.ui.Label_Repo_Text.setText(QCA.translate("Button", "项目仓库"))
@@ -1264,7 +1284,7 @@ class MainWindow(Window_MainWindow):
             ExecuteButton = self.ui.Button_Install_PyReqs,
             ProgressBar = self.ui.ProgressBar_Env_Install_PyReqs,
             Method = PyReqs_Installer.Execute,
-            Params = (QFunc.NormPath(Path(ResourceDir).joinpath('requirements.txt')), )
+            Params = (QFunc.NormPath(RequirementsPath), )
         )
         EnvConfiguratorSignals.Signal_PythonDetected.connect(
             self.ui.Button_Install_PyReqs.click #if Config.GetValue('Env', 'PyReqs', 'Undetected') == 'Undetected' else EnvConfiguratorSignals.Signal_PyReqsDetected.emit
@@ -1551,8 +1571,8 @@ class MainWindow(Window_MainWindow):
         DialogBox_Process.setWindowTitle(QCA.translate("MsgBox", "引导（仅出现一次）"))
         DialogBox_Process.SetContent(
             [
-                QFunc.NormPath(Path(ResourceDir).joinpath('Sources/Guidance_Process.png')),
-                QFunc.NormPath(Path(ResourceDir).joinpath('Sources/Guidance_Layout.png'))
+                QFunc.NormPath(Path(ResourceDir).joinpath('assets/images/others/Guidance_Process.png')),
+                QFunc.NormPath(Path(ResourceDir).joinpath('assets/images/others/Guidance_Layout.png'))
             ],
             [
                 '欢迎来到音频处理工具界面\n该工具用于将媒体文件批量转换为音频文件并进行降噪、静音切除等操作',
@@ -1690,7 +1710,7 @@ class MainWindow(Window_MainWindow):
                 Body = QCA.translate("Label", "uvr5模型路径\n用于uvr5降噪的模型文件的路径。")
             )
         )
-        Process_DenoiseModelPath_Default = Path(ModelsDir).joinpath('Process', 'UVR', 'Downloaded', 'HP5_only_main_vocal.pth').as_posix()
+        Process_DenoiseModelPath_Default = Path(ModelDir).joinpath('Process', 'UVR', 'Downloaded', 'HP5_only_main_vocal.pth').as_posix()
         ParamsManager_Process.SetParam(
             Widget = self.ui.LineEdit_Process_DenoiseModelPath,
             Section = 'Denoiser Params',
@@ -1701,7 +1721,7 @@ class MainWindow(Window_MainWindow):
         self.ui.LineEdit_Process_DenoiseModelPath.SetFileDialog(
             Mode = "SelectFile",
             FileType = "pth类型/onnx类型 (*.pth *.onnx)",
-            Directory = QFunc.NormPath(Path(ModelsDir).joinpath('Process', 'UVR', 'Downloaded'))
+            Directory = QFunc.NormPath(Path(ModelDir).joinpath('Process', 'UVR', 'Downloaded'))
         )
         self.ui.Button_Process_DenoiseModelPath_MoreActions.SetMenu(
             ActionEvents = {
@@ -2195,8 +2215,8 @@ class MainWindow(Window_MainWindow):
         DialogBox_ASR.setWindowTitle(QCA.translate("MsgBox", "引导（仅出现一次）"))
         DialogBox_ASR.SetContent(
             [
-                QFunc.NormPath(Path(ResourceDir).joinpath('Sources/Guidance_ASR.png')),
-                QFunc.NormPath(Path(ResourceDir).joinpath('Sources/Guidance_Layout.png'))
+                QFunc.NormPath(Path(ResourceDir).joinpath('assets/images/others/Guidance_ASR.png')),
+                QFunc.NormPath(Path(ResourceDir).joinpath('assets/images/others/Guidance_Layout.png'))
             ],
             [
                 '欢迎来到语音识别工具界面\n该工具用于从不同说话人的音频中批量筛选出属于同一说话人的音频',
@@ -2334,7 +2354,7 @@ class MainWindow(Window_MainWindow):
                 Body = QCA.translate("Label", "模型加载路径\n用于加载的声纹识别模型的路径。")
             )
         )
-        ASR_VPR_ModelPath_Default = Path(ModelsDir).joinpath('ASR', 'VPR', 'Downloaded', 'Ecapa-Tdnn_spectrogram.pth').as_posix()
+        ASR_VPR_ModelPath_Default = Path(ModelDir).joinpath('ASR', 'VPR', 'Downloaded', 'Ecapa-Tdnn_spectrogram.pth').as_posix()
         ParamsManager_ASR_VPR.SetParam(
             Widget = self.ui.LineEdit_ASR_VPR_ModelPath,
             Section = 'VPR Params',
@@ -2346,7 +2366,7 @@ class MainWindow(Window_MainWindow):
         self.ui.LineEdit_ASR_VPR_ModelPath.SetFileDialog(
             Mode = "SelectFile",
             FileType = "pth类型 (*.pth)",
-            Directory = QFunc.NormPath(Path(ModelsDir).joinpath('ASR', 'VPR', 'Downloaded'))
+            Directory = QFunc.NormPath(Path(ModelDir).joinpath('ASR', 'VPR', 'Downloaded'))
         )
         self.ui.Button_ASR_VPR_ModelPath_MoreActions.SetMenu(
             ActionEvents = {
@@ -2750,8 +2770,8 @@ class MainWindow(Window_MainWindow):
         DialogBox_STT.setWindowTitle(QCA.translate("MsgBox", "引导（仅出现一次）"))
         DialogBox_STT.SetContent(
             [
-                QFunc.NormPath(Path(ResourceDir).joinpath('Sources/Guidance_STT.png')),
-                QFunc.NormPath(Path(ResourceDir).joinpath('Sources/Guidance_Layout.png'))
+                QFunc.NormPath(Path(ResourceDir).joinpath('assets/images/others/Guidance_STT.png')),
+                QFunc.NormPath(Path(ResourceDir).joinpath('assets/images/others/Guidance_Layout.png'))
             ],
             [
                 '欢迎来到语音转录工具界面\n该工具用于将语音文件批量转换为字幕文件并进行语言标注等操作',
@@ -2873,7 +2893,7 @@ class MainWindow(Window_MainWindow):
                 Body = QCA.translate("Label", "模型加载路径\n用于加载的Whisper模型的路径。")
             )
         )
-        STT_Whisper_ModelPath_Default = Path(ModelsDir).joinpath('STT', 'Whisper', 'Downloaded', 'small.pt').as_posix()
+        STT_Whisper_ModelPath_Default = Path(ModelDir).joinpath('STT', 'Whisper', 'Downloaded', 'small.pt').as_posix()
         ParamsManager_STT_Whisper.SetParam(
             Widget = self.ui.LineEdit_STT_Whisper_ModelPath,
             Section = 'Whisper Params',
@@ -2885,7 +2905,7 @@ class MainWindow(Window_MainWindow):
         self.ui.LineEdit_STT_Whisper_ModelPath.SetFileDialog(
             Mode = "SelectFile",
             FileType = "pt类型 (*.pt)",
-            Directory = QFunc.NormPath(Path(ModelsDir).joinpath('STT', 'Whisper', 'Downloaded'))
+            Directory = QFunc.NormPath(Path(ModelDir).joinpath('STT', 'Whisper', 'Downloaded'))
         )
         self.ui.Button_STT_Whisper_ModelPath_MoreActions.SetMenu(
             ActionEvents = {
@@ -3190,8 +3210,8 @@ class MainWindow(Window_MainWindow):
         DialogBox_Dataset.setWindowTitle(QCA.translate("MsgBox", "引导（仅出现一次）"))
         DialogBox_Dataset.SetContent(
             [
-                QFunc.NormPath(Path(ResourceDir).joinpath('Sources/Guidance_Dataset.png')),
-                QFunc.NormPath(Path(ResourceDir).joinpath('Sources/Guidance_Layout.png'))
+                QFunc.NormPath(Path(ResourceDir).joinpath('assets/images/others/Guidance_Dataset.png')),
+                QFunc.NormPath(Path(ResourceDir).joinpath('assets/images/others/Guidance_Layout.png'))
             ],
             [
                 '欢迎来到数据集工具界面\n该工具用于生成适用于语音模型训练的数据集',
@@ -4239,8 +4259,8 @@ class MainWindow(Window_MainWindow):
         DialogBox_Train.setWindowTitle(QCA.translate("MsgBox", "引导（仅出现一次）"))
         DialogBox_Train.SetContent(
             [
-                QFunc.NormPath(Path(ResourceDir).joinpath('Sources/Guidance_Train.png')),
-                QFunc.NormPath(Path(ResourceDir).joinpath('Sources/Guidance_Layout.png'))
+                QFunc.NormPath(Path(ResourceDir).joinpath('assets/images/others/Guidance_Train.png')),
+                QFunc.NormPath(Path(ResourceDir).joinpath('assets/images/others/Guidance_Layout.png'))
             ],
             [
                 '欢迎来到语音训练工具界面\n该工具用于训练出适用于语音合成的模型文件',
@@ -4384,7 +4404,7 @@ class MainWindow(Window_MainWindow):
                 Body = QCA.translate("Label", "预训练s1模型路径\n预训练s1模型的路径。")
             )
         )
-        Train_GPTSoVITS_ModelPathPretrainedS1_Default = Path(ModelsDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's1bert25hz-2kh-longer-epoch=68e-step=50232.ckpt').as_posix()
+        Train_GPTSoVITS_ModelPathPretrainedS1_Default = Path(ModelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's1bert25hz-2kh-longer-epoch=68e-step=50232.ckpt').as_posix()
         ParamsManager_Train_GPTSoVITS.SetParam(
             Widget = self.ui.LineEdit_Train_GPTSoVITS_ModelPathPretrainedS1,
             Section = 'GPT-SoVITS Params',
@@ -4396,7 +4416,7 @@ class MainWindow(Window_MainWindow):
         self.ui.LineEdit_Train_GPTSoVITS_ModelPathPretrainedS1.SetFileDialog(
             Mode = "SelectFile",
             FileType = "ckpt类型 (*.ckpt)",
-            Directory = QFunc.NormPath(Path(ModelsDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2'))
+            Directory = QFunc.NormPath(Path(ModelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2'))
         )
         self.ui.Button_Train_GPTSoVITS_ModelPathPretrainedS1_MoreActions.SetMenu(
             ActionEvents = {
@@ -4417,7 +4437,7 @@ class MainWindow(Window_MainWindow):
                 Body = QCA.translate("Label", "预训练s2G模型路径\n预训练s2G模型的路径。")
             )
         )
-        Train_GPTSoVITS_ModelPathPretrainedS2G_Default = Path(ModelsDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's2G488k.pth').as_posix()
+        Train_GPTSoVITS_ModelPathPretrainedS2G_Default = Path(ModelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's2G488k.pth').as_posix()
         ParamsManager_Train_GPTSoVITS.SetParam(
             Widget = self.ui.LineEdit_Train_GPTSoVITS_ModelPathPretrainedS2G,
             Section = 'GPT-SoVITS Params',
@@ -4429,7 +4449,7 @@ class MainWindow(Window_MainWindow):
         self.ui.LineEdit_Train_GPTSoVITS_ModelPathPretrainedS2G.SetFileDialog(
             Mode = "SelectFile",
             FileType = "pth类型 (*.pth)",
-            Directory = QFunc.NormPath(Path(ModelsDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2'))
+            Directory = QFunc.NormPath(Path(ModelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2'))
         )
         self.ui.Button_Train_GPTSoVITS_ModelPathPretrainedS2G_MoreActions.SetMenu(
             ActionEvents = {
@@ -4450,7 +4470,7 @@ class MainWindow(Window_MainWindow):
                 Body = QCA.translate("Label", "预训练s2D模型路径\n预训练s2D模型的路径。")
             )
         )
-        Train_GPTSoVITS_ModelPathPretrainedS2D_Default = Path(ModelsDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's2D488k.pth').as_posix()
+        Train_GPTSoVITS_ModelPathPretrainedS2D_Default = Path(ModelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's2D488k.pth').as_posix()
         ParamsManager_Train_GPTSoVITS.SetParam(
             Widget = self.ui.LineEdit_Train_GPTSoVITS_ModelPathPretrainedS2D,
             Section = 'GPT-SoVITS Params',
@@ -4462,7 +4482,7 @@ class MainWindow(Window_MainWindow):
         self.ui.LineEdit_Train_GPTSoVITS_ModelPathPretrainedS2D.SetFileDialog(
             Mode = "SelectFile",
             FileType = "pth类型 (*.pth)",
-            Directory = QFunc.NormPath(Path(ModelsDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2'))
+            Directory = QFunc.NormPath(Path(ModelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2'))
         )
         self.ui.Button_Train_GPTSoVITS_ModelPathPretrainedS2D_MoreActions.SetMenu(
             ActionEvents = {
@@ -4483,7 +4503,7 @@ class MainWindow(Window_MainWindow):
                 Body = QCA.translate("Label", "预训练bert模型路径\n预训练bert模型（文件夹）的路径。")
             )
         )
-        Train_GPTSoVITS_ModelDirPretrainedBert_Default = Path(ModelsDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 'chinese-roberta-wwm-ext-large').as_posix()
+        Train_GPTSoVITS_ModelDirPretrainedBert_Default = Path(ModelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 'chinese-roberta-wwm-ext-large').as_posix()
         ParamsManager_Train_GPTSoVITS.SetParam(
             Widget = self.ui.LineEdit_Train_GPTSoVITS_ModelDirPretrainedBert,
             Section = 'GPT-SoVITS Params',
@@ -4494,7 +4514,7 @@ class MainWindow(Window_MainWindow):
         )
         self.ui.LineEdit_Train_GPTSoVITS_ModelDirPretrainedBert.SetFileDialog(
             Mode = "SelectFolder",
-            Directory = QFunc.NormPath(Path(ModelsDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded'))
+            Directory = QFunc.NormPath(Path(ModelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded'))
         )
         self.ui.Button_Train_GPTSoVITS_ModelDirPretrainedBert_MoreActions.SetMenu(
             ActionEvents = {
@@ -4515,7 +4535,7 @@ class MainWindow(Window_MainWindow):
                 Body = QCA.translate("Label", "预训练ssl模型路径\n预训练ssl模型（文件夹）的路径。")
             )
         )
-        Train_GPTSoVITS_ModelDirPretrainedSSL_Default = Path(ModelsDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 'chinese-hubert-base').as_posix()
+        Train_GPTSoVITS_ModelDirPretrainedSSL_Default = Path(ModelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 'chinese-hubert-base').as_posix()
         ParamsManager_Train_GPTSoVITS.SetParam(
             Widget = self.ui.LineEdit_Train_GPTSoVITS_ModelDirPretrainedSSL,
             Section = 'GPT-SoVITS Params',
@@ -4526,7 +4546,7 @@ class MainWindow(Window_MainWindow):
         )
         self.ui.LineEdit_Train_GPTSoVITS_ModelDirPretrainedSSL.SetFileDialog(
             Mode = "SelectFolder",
-            Directory = QFunc.NormPath(Path(ModelsDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded'))
+            Directory = QFunc.NormPath(Path(ModelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded'))
         )
         self.ui.Button_Train_GPTSoVITS_ModelDirPretrainedSSL_MoreActions.SetMenu(
             ActionEvents = {
@@ -4977,7 +4997,7 @@ class MainWindow(Window_MainWindow):
                 Body = QCA.translate("Label", "预训练G模型路径\n预训练生成器（Generator）模型的路径。")
             )
         )
-        Train_VITS_ModelPathPretrainedG_Default = Path(ModelsDir).joinpath('TTS', 'VITS', 'Downloaded', 'standard_G.pth').as_posix()
+        Train_VITS_ModelPathPretrainedG_Default = Path(ModelDir).joinpath('TTS', 'VITS', 'Downloaded', 'standard_G.pth').as_posix()
         ParamsManager_Train_VITS.SetParam(
             Widget = self.ui.LineEdit_Train_VITS_ModelPathPretrainedG,
             Section = 'VITS Params',
@@ -4989,7 +5009,7 @@ class MainWindow(Window_MainWindow):
         self.ui.LineEdit_Train_VITS_ModelPathPretrainedG.SetFileDialog(
             Mode = "SelectFile",
             FileType = "pth类型 (*.pth)",
-            Directory = QFunc.NormPath(Path(ModelsDir).joinpath('TTS', 'VITS', 'Downloaded'))
+            Directory = QFunc.NormPath(Path(ModelDir).joinpath('TTS', 'VITS', 'Downloaded'))
         )
         self.ui.Button_Train_VITS_ModelPathPretrainedG_MoreActions.SetMenu(
             ActionEvents = {
@@ -5010,7 +5030,7 @@ class MainWindow(Window_MainWindow):
                 Body = QCA.translate("Label", "预训练D模型路径\n预训练判别器（Discriminator）模型的路径。")
             )
         )
-        Train_VITS_ModelPathPretrainedD_Default = Path(ModelsDir).joinpath('TTS', 'VITS', 'Downloaded', 'standard_D.pth').as_posix()
+        Train_VITS_ModelPathPretrainedD_Default = Path(ModelDir).joinpath('TTS', 'VITS', 'Downloaded', 'standard_D.pth').as_posix()
         ParamsManager_Train_VITS.SetParam(
             Widget = self.ui.LineEdit_Train_VITS_ModelPathPretrainedD,
             Section = 'VITS Params',
@@ -5022,7 +5042,7 @@ class MainWindow(Window_MainWindow):
         self.ui.LineEdit_Train_VITS_ModelPathPretrainedD.SetFileDialog(
             Mode = "SelectFile",
             FileType = "pth类型 (*.pth)",
-            Directory = QFunc.NormPath(Path(ModelsDir).joinpath('TTS', 'VITS', 'Downloaded'))
+            Directory = QFunc.NormPath(Path(ModelDir).joinpath('TTS', 'VITS', 'Downloaded'))
         )
         self.ui.Button_Train_VITS_ModelPathPretrainedD_MoreActions.SetMenu(
             ActionEvents = {
@@ -5049,7 +5069,7 @@ class MainWindow(Window_MainWindow):
         DialogBox_KeepOriginalSpeakers.LineEdit.SetFileDialog(
             Mode = "SelectFile", 
             FileType = "json类型 (*.json)",
-            Directory = QFunc.NormPath(Path(ModelsDir).joinpath('TTS', 'VITS', 'Downloaded'))
+            Directory = QFunc.NormPath(Path(ModelDir).joinpath('TTS', 'VITS', 'Downloaded'))
         )
         Function_ParamsSynchronizer(
             Trigger = DialogBox_KeepOriginalSpeakers.LineEdit,
@@ -5132,7 +5152,7 @@ class MainWindow(Window_MainWindow):
                 Body = QCA.translate("Label", "配置加载路径\n用于加载底模人物信息的配置文件的路径")
             )
         )
-        Train_VITS_ConfigPathLoad_Default = Path(ModelsDir).joinpath('TTS', 'VITS', 'Downloaded', 'standard_Config.json').as_posix()
+        Train_VITS_ConfigPathLoad_Default = Path(ModelDir).joinpath('TTS', 'VITS', 'Downloaded', 'standard_Config.json').as_posix()
         ParamsManager_Train_VITS.SetParam(
             Widget = self.ui.LineEdit_Train_VITS_ConfigPathLoad,
             Section = 'VITS Params',
@@ -5144,7 +5164,7 @@ class MainWindow(Window_MainWindow):
         self.ui.LineEdit_Train_VITS_ConfigPathLoad.SetFileDialog(
             Mode = "SelectFile",
             FileType = "json类型 (*.json)",
-            Directory = QFunc.NormPath(Path(ModelsDir).joinpath('TTS', 'VITS', 'Downloaded'))
+            Directory = QFunc.NormPath(Path(ModelDir).joinpath('TTS', 'VITS', 'Downloaded'))
         )
         Function_ParamsSynchronizer(
             Trigger = self.ui.LineEdit_Train_VITS_ConfigPathLoad,
@@ -5457,8 +5477,8 @@ class MainWindow(Window_MainWindow):
         DialogBox_TTS.setWindowTitle(QCA.translate("MsgBox", "引导（仅出现一次）"))
         DialogBox_TTS.SetContent(
             [
-                QFunc.NormPath(Path(ResourceDir).joinpath('Sources/Guidance_TTS.png')),
-                QFunc.NormPath(Path(ResourceDir).joinpath('Sources/Guidance_Layout.png'))
+                QFunc.NormPath(Path(ResourceDir).joinpath('assets/images/others/Guidance_TTS.png')),
+                QFunc.NormPath(Path(ResourceDir).joinpath('assets/images/others/Guidance_Layout.png'))
             ],
             [
                 '欢迎来到语音合成工具界面\n该工具用于将文字转为语音，用户需要提供相应的模型和配置文件',
@@ -5510,7 +5530,7 @@ class MainWindow(Window_MainWindow):
                 Body = QCA.translate("Label", "s1模型加载路径\ns1模型的路径。")
             )
         )
-        TTS_GPTSoVITS_ModelPathLoadS1_Default = Path(ModelsDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's1bert25hz-2kh-longer-epoch=68e-step=50232.ckpt').as_posix()
+        TTS_GPTSoVITS_ModelPathLoadS1_Default = Path(ModelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's1bert25hz-2kh-longer-epoch=68e-step=50232.ckpt').as_posix()
         ParamsManager_TTS_GPTSoVITS.SetParam(
             Widget = self.ui.LineEdit_TTS_GPTSoVITS_ModelPathLoadS1,
             Section = 'Input Params',
@@ -5543,7 +5563,7 @@ class MainWindow(Window_MainWindow):
                 Body = QCA.translate("Label", "s2G模型加载路径\ns2G模型的路径。")
             )
         )
-        TTS_GPTSoVITS_ModelPathLoadS2G_Default = Path(ModelsDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's2G488k.pth').as_posix()
+        TTS_GPTSoVITS_ModelPathLoadS2G_Default = Path(ModelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's2G488k.pth').as_posix()
         ParamsManager_TTS_GPTSoVITS.SetParam(
             Widget = self.ui.LineEdit_TTS_GPTSoVITS_ModelPathLoadS2G,
             Section = 'Input Params',
@@ -5576,7 +5596,7 @@ class MainWindow(Window_MainWindow):
                 Body = QCA.translate("Label", "预训练bert模型加载路径\n预训练bert模型（文件夹）的路径。")
             )
         )
-        TTS_GPTSoVITS_ModelDirLoadBert_Default = Path(ModelsDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 'chinese-roberta-wwm-ext-large').as_posix()
+        TTS_GPTSoVITS_ModelDirLoadBert_Default = Path(ModelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 'chinese-roberta-wwm-ext-large').as_posix()
         ParamsManager_TTS_GPTSoVITS.SetParam(
             Widget = self.ui.LineEdit_TTS_GPTSoVITS_ModelDirLoadBert,
             Section = 'Input Params',
@@ -5587,7 +5607,7 @@ class MainWindow(Window_MainWindow):
         )
         self.ui.LineEdit_TTS_GPTSoVITS_ModelDirLoadBert.SetFileDialog(
             Mode = "SelectFolder",
-            Directory = QFunc.NormPath(Path(ModelsDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded'))
+            Directory = QFunc.NormPath(Path(ModelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded'))
         )
         self.ui.Button_TTS_GPTSoVITS_ModelDirLoadBert_MoreActions.SetMenu(
             ActionEvents = {
@@ -5608,7 +5628,7 @@ class MainWindow(Window_MainWindow):
                 Body = QCA.translate("Label", "预训练ssl模型加载路径\n预训练ssl模型的路径。")
             )
         )
-        TTS_GPTSoVITS_ModelDirLoadSSL_Default = Path(ModelsDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 'chinese-hubert-base').as_posix()
+        TTS_GPTSoVITS_ModelDirLoadSSL_Default = Path(ModelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 'chinese-hubert-base').as_posix()
         ParamsManager_TTS_GPTSoVITS.SetParam(
             Widget = self.ui.LineEdit_TTS_GPTSoVITS_ModelDirLoadSSL,
             Section = 'Input Params',
@@ -5619,7 +5639,7 @@ class MainWindow(Window_MainWindow):
         )
         self.ui.LineEdit_TTS_GPTSoVITS_ModelDirLoadSSL.SetFileDialog(
             Mode = "SelectFolder",
-            Directory = QFunc.NormPath(Path(ModelsDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded'))
+            Directory = QFunc.NormPath(Path(ModelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded'))
         )
         self.ui.Button_TTS_GPTSoVITS_ModelDirLoadSSL_MoreActions.SetMenu(
             ActionEvents = {
@@ -5727,7 +5747,7 @@ class MainWindow(Window_MainWindow):
                 Body = QCA.translate("Label", "配置加载路径\n用于推理的配置文件的路径。")
             )
         )
-        TTS_VITS_ConfigPathLoad_Default = Path(ModelsDir).joinpath('TTS', 'VITS', 'Downloaded', 'standard_Config.json').as_posix()
+        TTS_VITS_ConfigPathLoad_Default = Path(ModelDir).joinpath('TTS', 'VITS', 'Downloaded', 'standard_Config.json').as_posix()
         ParamsManager_TTS_VITS.SetParam(
             Widget = self.ui.LineEdit_TTS_VITS_ConfigPathLoad,
             Section = 'Input Params',
@@ -5766,7 +5786,7 @@ class MainWindow(Window_MainWindow):
                 Body = QCA.translate("Label", "G模型加载路径\n用于推理的生成器（Generator）模型的路径。")
             )
         )
-        TTS_VITS_ModelPathLoad_Default = Path(ModelsDir).joinpath('TTS', 'VITS', 'Downloaded', 'standard_G.pth').as_posix()
+        TTS_VITS_ModelPathLoad_Default = Path(ModelDir).joinpath('TTS', 'VITS', 'Downloaded', 'standard_G.pth').as_posix()
         ParamsManager_TTS_VITS.SetParam(
             Widget = self.ui.LineEdit_TTS_VITS_ModelPathLoad,
             Section = 'Input Params',
@@ -6375,7 +6395,7 @@ class MainWindow(Window_MainWindow):
         self.ui.GroupBox_Settings_Tools_Path.setTitle(QCA.translate("GroupBox", "路径设置"))
 
         self.ui.Label_Process_OutputRoot.setText(QCA.translate("Label", "音频处理输出目录"))
-        Process_OutputRoot_Default = Path(CurrentDir).joinpath('音频处理结果').as_posix()
+        Process_OutputRoot_Default = Path(OutputDir).joinpath('音频处理结果').as_posix()
         ParamsManager_Process.SetParam(
             Widget = self.ui.LineEdit_Process_OutputRoot,
             Section = 'Output Params',
@@ -6416,7 +6436,7 @@ class MainWindow(Window_MainWindow):
         )
 
         self.ui.Label_STT_Whisper_OutputRoot.setText(QCA.translate("Label", "Whisper转录输出目录"))
-        STT_Whisper_OutputRoot_Default = Path(CurrentDir).joinpath('语音转录结果', 'Whisper').as_posix()
+        STT_Whisper_OutputRoot_Default = Path(OutputDir).joinpath('语音转录结果', 'Whisper').as_posix()
         ParamsManager_STT_Whisper.SetParam(
             Widget = self.ui.LineEdit_STT_Whisper_OutputRoot,
             Section = 'Output Params',
@@ -6437,7 +6457,7 @@ class MainWindow(Window_MainWindow):
         )
 
         self.ui.Label_DAT_GPTSoVITS_OutputRoot.setText( QCA.translate("Label", "GPTSoVITS数据集输出目录"))
-        DAT_GPTSoVITS_OutputRoot_Default = Path(CurrentDir).joinpath('数据集制作结果', 'GPT-SoVITS').as_posix()
+        DAT_GPTSoVITS_OutputRoot_Default = Path(OutputDir).joinpath('数据集制作结果', 'GPT-SoVITS').as_posix()
         ParamsManager_DAT_GPTSoVITS.SetParam(
             Widget = self.ui.LineEdit_DAT_GPTSoVITS_OutputRoot,
             Section = 'Output Params',
@@ -6458,7 +6478,7 @@ class MainWindow(Window_MainWindow):
         )
 
         self.ui.Label_DAT_VITS_OutputRoot.setText(QCA.translate("Label", "VITS数据集输出目录"))
-        DAT_VITS_OutputRoot_Default = Path(CurrentDir).joinpath('数据集制作结果', 'VITS').as_posix()
+        DAT_VITS_OutputRoot_Default = Path(OutputDir).joinpath('数据集制作结果', 'VITS').as_posix()
         ParamsManager_DAT_VITS.SetParam(
             Widget = self.ui.LineEdit_DAT_VITS_OutputRoot,
             Section = 'Output Params',
@@ -6479,7 +6499,7 @@ class MainWindow(Window_MainWindow):
         )
 
         self.ui.Label_Train_GPTSoVITS_OutputRoot.setText(QCA.translate("Label", "GPTSoVITS训练输出目录"))
-        Train_GPTSoVITS_OutputRoot_Default = Path(CurrentDir).joinpath('模型训练结果', 'GPT-SoVITS').as_posix()
+        Train_GPTSoVITS_OutputRoot_Default = Path(OutputDir).joinpath('模型训练结果', 'GPT-SoVITS').as_posix()
         ParamsManager_Train_GPTSoVITS.SetParam(
             Widget = self.ui.LineEdit_Train_GPTSoVITS_OutputRoot,
             Section = 'Output Params',
@@ -6500,7 +6520,7 @@ class MainWindow(Window_MainWindow):
         )
 
         self.ui.Label_Train_VITS_OutputRoot.setText(QCA.translate("Label", "VITS训练输出目录"))
-        Train_VITS_OutputRoot_Default = Path(CurrentDir).joinpath('模型训练结果', 'VITS').as_posix()
+        Train_VITS_OutputRoot_Default = Path(OutputDir).joinpath('模型训练结果', 'VITS').as_posix()
         ParamsManager_Train_VITS.SetParam(
             Widget = self.ui.LineEdit_Train_VITS_OutputRoot,
             Section = 'Output Params',
@@ -6639,7 +6659,7 @@ if __name__ == "__main__":
     App = QApplication(sys.argv)
 
     # Create&Show SplashScreen
-    SC = QSplashScreen(QPixmap(QFunc.NormPath(Path(ResourceDir).joinpath('Sources/SplashScreen.png'))))
+    SC = QSplashScreen(QPixmap(QFunc.NormPath(Path(ResourceDir).joinpath('assets/images/others/SplashScreen.png'))))
     #SC.showMessage('Loading...', alignment = Qt.AlignmentFlag.AlignCenter)
     SC.show()
 
