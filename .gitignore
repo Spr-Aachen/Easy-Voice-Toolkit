@@ -15,9 +15,7 @@
 **/GPT_SoVITS/GPT_SoVITS/module/
 **/GPT_SoVITS/GPT_SoVITS/pretrained_models/
 **/GPT_SoVITS/GPT_SoVITS/text/
-**/GPT_SoVITS/GPT_SoVITS/tools/__init__.py
-**/GPT_SoVITS/GPT_SoVITS/tools/my_utils.py
-**/GPT_SoVITS/GPT_SoVITS/tools/i18n/locale/
+**/GPT_SoVITS/GPT_SoVITS/tools/
 **/GPT_SoVITS/GPT_SoVITS/inference_webui.py
 **/GPT_SoVITS/GPT_SoVITS/onnx_export.py
 **/GPT_SoVITS/GPT_SoVITS/process_ckpt.py
