@@ -20,7 +20,8 @@ numba
 scipy
 matplotlib
 protobuf
-onnxruntime
+onnxruntime; sys_platform == 'darwin'
+onnxruntime-gpu; sys_platform != 'darwin'
 tensorboard
 inflect
 chardet
@@ -35,10 +36,14 @@ pypinyin
 jieba
 jieba_fast
 cn2an
-#opencc
-pyopenjtalk
+pyjyutping
+opencc; sys_platform != 'linux'
+opencc==1.1.1; sys_platform == 'linux'
+python_mecab_ko; sys_platform != 'win32' 
+g2pk2
+ko_pron
+pyopenjtalk>=0.3.4
 LangSegment>=0.2.0
-gradio==3.38.0
-gradio_client==0.8.1
+gradio>=4.0,<=4.24.0
 modelscope==1.10.0
 PyQt5

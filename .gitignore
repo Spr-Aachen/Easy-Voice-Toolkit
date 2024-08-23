@@ -16,7 +16,9 @@
 **/GPT_SoVITS/GPT_SoVITS/pretrained_models/
 **/GPT_SoVITS/GPT_SoVITS/text/
 **/GPT_SoVITS/GPT_SoVITS/tools/
+**/GPT_SoVITS/GPT_SoVITS/TTS_infer_pack/
 **/GPT_SoVITS/GPT_SoVITS/inference_webui.py
+**/GPT_SoVITS/GPT_SoVITS/inference_webui_fast.py
 **/GPT_SoVITS/GPT_SoVITS/onnx_export.py
 **/GPT_SoVITS/GPT_SoVITS/process_ckpt.py
 **/GPT_SoVITS/GPT_SoVITS/s1_train.py

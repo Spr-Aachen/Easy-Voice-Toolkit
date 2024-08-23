@@ -124,7 +124,7 @@ You have two options：
 
 - Download the [lightweight installer](https://github.com/Spr-Aachen/Easy-Voice-Toolkit/releases/latest): small package comes with installation instructions, but without necessary environmental dependencies and models
 
-- Download the [Ready-to-use portable package](https://pixeldrain.com/api/file/JLUJwfNA?download): huge package with all environmental dependencies and several model presets, need to unpack after download
+- Download the [Ready-to-use portable package](https://huggingface.co/SprAachen/Easy-Voice-Toolkit-Package/resolve/main/EVT_windows_x64.7z?download=true): huge package with all environmental dependencies and several model presets, need to unpack after download
 
 #### Run
 

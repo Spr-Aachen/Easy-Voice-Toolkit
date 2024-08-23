@@ -135,9 +135,14 @@ def change_tts_inference(
     is_half,
     gpt_path,
     sovits_path,
+    batched_infer_enabled,
     use_webui
 ):
     global p_tts_inference
+    if batched_infer_enabled:
+        cmd = '"%s" GPT_SoVITS/inference_webui_fast.py'%(python_exec)
+    else:
+        cmd = '"%s" GPT_SoVITS/inference_webui.py'%(python_exec)
     if(if_tts==True and p_tts_inference==None):
         os.environ["gpt_path"]=gpt_path #if "/" in gpt_path else "%s/%s"%(GPT_weight_root,gpt_path)
         os.environ["sovits_path"]=sovits_path #if "/"in sovits_path else "%s/%s"%(SoVITS_weight_root,sovits_path)
@@ -148,7 +153,6 @@ def change_tts_inference(
         os.environ["infer_ttswebui"]=str(webui_port_infer_tts)
         os.environ["is_share"]=str(is_share)
         os.environ['USE_WEBUI']=str(use_webui)
-        cmd = f'"{python_exec}" "GPT_SoVITS/inference_gui.py"'
         print("TTS推理进程已开启")
         print(cmd)
         p_tts_inference = subprocess.Popen(cmd, shell=True)
@@ -176,6 +180,7 @@ def Convert(
     Temperature: float = 1.,
     Set_FP16_Run: bool = False,
     Audio_Path_Save: str = ...,
+    Enable_Batched_Infer: bool = False,
     Use_WebUI: bool = False
 ):
     # 1C-推理
@@ -187,6 +192,7 @@ def Convert(
         is_half = Set_FP16_Run,
         gpt_path = Model_Path_Load_s1,
         sovits_path = Model_Path_Load_s2G,
+        batched_infer_enabled = Enable_Batched_Infer,
         use_webui = Use_WebUI
     )
     '''

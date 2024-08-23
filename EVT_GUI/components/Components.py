@@ -18,10 +18,14 @@ class Table_ViewModels(TableBase):
         super().__init__(parent)
 
         self.setRowCount(0)
-        self.setColumnCount(4)
+        self.setColumnCount(0)
         self.SetIndexHeaderVisible(False)
 
         self.Clipboard = QApplication.clipboard()
+
+    def setHorizontalHeaderLabels(self, Headers: list):
+        self.HorizontalHeaderLabels = Headers
+        self.ColumnCount = len(Headers)
 
     def setStyleSheet(self, StyleSheet: str):
         super().setStyleSheet(StyleSheet +  '''
@@ -120,6 +124,8 @@ class Table_ViewModels(TableBase):
 
     def SetValue(self, Params: list = [['name', 'type', 'size', 'date', 'url'], ]):
         self.ClearRows()
+        super().setColumnCount(self.columnCount())
+        super().setHorizontalHeaderLabels(self.HorizontalHeaderLabels)
         for Param in Params:
             QApplication.processEvents()
             self.AddRow(Param)
@@ -136,13 +142,17 @@ class Table_EditAudioSpeaker(TableBase):
         super().__init__(parent)
 
         self.setRowCount(0)
-        self.setColumnCount(3)
+        self.setColumnCount(0)
         self.SetIndexHeaderVisible(True)
         self.verticalHeader().setSectionResizeMode(QHeaderView.Fixed)
 
         self.model().dataChanged.connect(
             lambda: self.ValueChanged.emit(self.GetValue())
         )
+
+    def setHorizontalHeaderLabels(self, Headers: list):
+        self.HorizontalHeaderLabels = Headers
+        self.ColumnCount = len(Headers)
 
     def AddRow(self, Param: Optional[tuple] = None):
         RowHeight = 30
@@ -207,6 +217,8 @@ class Table_EditAudioSpeaker(TableBase):
 
     def SetValue(self, Params: dict = {'%Speaker%': '%Path%'}):
         self.ClearRows()
+        super().setColumnCount(self.columnCount())
+        super().setHorizontalHeaderLabels(self.HorizontalHeaderLabels)
         ParamDict = QFunc.ToIterable(Params if Params is None or len(Params) != 0 else {'': ''})
         for Key, Value in ParamDict.items():
             QApplication.processEvents()
@@ -240,9 +252,13 @@ class Table_ASRResult(TableBase):
         super().__init__(parent)
 
         self.setRowCount(0)
-        self.setColumnCount(5)
+        self.setColumnCount(0)
         self.SetIndexHeaderVisible(True)
         self.verticalHeader().setSectionResizeMode(QHeaderView.Fixed)
+
+    def setHorizontalHeaderLabels(self, Headers: list):
+        self.HorizontalHeaderLabels = Headers
+        self.ColumnCount = len(Headers)
 
     def setStyleSheet(self, StyleSheet: str):
         super().setStyleSheet(StyleSheet +  '''
@@ -336,6 +352,8 @@ class Table_ASRResult(TableBase):
 
     def SetValue(self, Params: list = [['%Path%', '%Namex%', '%Sim%'], ], ComboItems: Optional[list] = ['%Name1%', ]):
         self.ClearRows()
+        super().setColumnCount(self.columnCount())
+        super().setHorizontalHeaderLabels(self.HorizontalHeaderLabels)
         if ComboItems is None:
             ComboItems = []
             for Param in Params:
@@ -364,9 +382,13 @@ class Table_STTResult(TableBase):
         super().__init__(parent)
 
         self.setRowCount(0)
-        self.setColumnCount(3)
+        self.setColumnCount(0)
         self.SetIndexHeaderVisible(True)
         self.verticalHeader().setSectionResizeMode(QHeaderView.Fixed)
+
+    def setHorizontalHeaderLabels(self, Headers: list):
+        self.HorizontalHeaderLabels = Headers
+        self.ColumnCount = len(Headers)
 
     def setStyleSheet(self, StyleSheet: str):
         super().setStyleSheet(StyleSheet +  '''
@@ -427,6 +449,8 @@ class Table_STTResult(TableBase):
 
     def SetValue(self, Params: dict = {'%Path%': '%Transcription%'}):
         self.ClearRows()
+        super().setColumnCount(self.columnCount())
+        super().setHorizontalHeaderLabels(self.HorizontalHeaderLabels)
         ParamDict = QFunc.ToIterable(Params)
         for Key, Value in ParamDict.items():
             QApplication.processEvents()
@@ -452,9 +476,13 @@ class Table_DATResult(TableBase):
         super().__init__(parent)
 
         self.setRowCount(0)
-        self.setColumnCount(2)
+        self.setColumnCount(0)
         self.SetIndexHeaderVisible(True)
         self.verticalHeader().setSectionResizeMode(QHeaderView.Fixed)
+
+    def setHorizontalHeaderLabels(self, Headers: list):
+        self.HorizontalHeaderLabels = Headers
+        self.ColumnCount = len(Headers)
 
     def setStyleSheet(self, StyleSheet: str):
         super().setStyleSheet(StyleSheet +  '''
@@ -497,6 +525,8 @@ class Table_DATResult(TableBase):
 
     def SetValue(self, Params: dict = {'%Path%': '%Data%'}):
         self.ClearRows()
+        super().setColumnCount(self.columnCount())
+        super().setHorizontalHeaderLabels(self.HorizontalHeaderLabels)
         ParamDict = QFunc.ToIterable(Params)
         for Key, Value in ParamDict.items():
             QApplication.processEvents()

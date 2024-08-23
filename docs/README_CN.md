@@ -124,7 +124,7 @@
 
 - 下载[轻量化的安装程序](https://github.com/Spr-Aachen/Easy-Voice-Toolkit/releases/latest)：包体小且拥有安装引导，但是未配置环境依赖且不带模型
 
-- 下载[解压即用的懒人包](https://pixeldrain.com/api/file/JLUJwfNA?download)：配置了所有环境依赖并附带有预设模型，但是包体较大且需要解压
+- 下载[解压即用的懒人包](https://huggingface.co/SprAachen/Easy-Voice-Toolkit-Package/resolve/main/EVT_windows_x64.7z?download=true)：配置了所有环境依赖并附带有预设模型，但是包体较大且需要解压
 
 #### 运行
 
@@ -150,7 +150,7 @@
 
 #### 安装依赖
 
-- 安装pytorch（需从[官网](https://pytorch.org/get-started/locally/)复制命令）
+- 安装pytorch（可从[官网](https://pytorch.org/get-started/locally/)复制命令）
     ```shell
     # e.g. (注意自己的cuda版本，这里以11.8为例)
     pip3 install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu118
@@ -179,6 +179,17 @@
 
 [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Spr-Aachen/EVT-Resources/blob/main/Easy_Voice_Toolkit_for_Colab.ipynb)
 <br>点击以使用上面的demo，或者在Colab中上传[Run.ipynb](https://github.com/Spr-Aachen/Easy-Voice-Toolkit/blob/main/Run.ipynb)
+
+
+## 迭代计划
+
+### To Do
+- 兼容Linux系统
+- 添加LLM联动功能
+
+### 开发中
+- 前后端分离
+- 语言国际化
 
 
 ## 测试平台

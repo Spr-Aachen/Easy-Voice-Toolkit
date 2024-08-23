@@ -1420,7 +1420,7 @@ class MainWindow(Window_MainWindow):
         )
 
         self.ui.TabWidget_Models_Process.setTabText(0, 'UVR（人声分离）')
-        self.ui.Table_Models_Process_UVR.SetHorizontalHeaders(['名字', '类型', '大小', '日期', '操作'])
+        self.ui.Table_Models_Process_UVR.setHorizontalHeaderLabels(['名字', '类型', '大小', '日期', '操作'])
         ModelViewSignals.Signal_Process_UVR.connect(self.ui.Table_Models_Process_UVR.SetValue)
         self.ui.Table_Models_Process_UVR.Download.connect(
             lambda Params: Function_SetMethodExecutor(self,
@@ -1444,7 +1444,7 @@ class MainWindow(Window_MainWindow):
         )
 
         self.ui.TabWidget_Models_ASR.setTabText(0, 'VPR（声纹识别）')
-        self.ui.Table_Models_ASR_VPR.SetHorizontalHeaders(['名字', '类型', '大小', '日期', '操作'])
+        self.ui.Table_Models_ASR_VPR.setHorizontalHeaderLabels(['名字', '类型', '大小', '日期', '操作'])
         ModelViewSignals.Signal_ASR_VPR.connect(self.ui.Table_Models_ASR_VPR.SetValue)
         self.ui.Table_Models_ASR_VPR.Download.connect(
             lambda Params: Function_SetMethodExecutor(self,
@@ -1468,7 +1468,7 @@ class MainWindow(Window_MainWindow):
         )
 
         self.ui.TabWidget_Models_STT.setTabText(0, 'Whisper')
-        self.ui.Table_Models_STT_Whisper.SetHorizontalHeaders(['名字', '类型', '大小', '日期', '操作'])
+        self.ui.Table_Models_STT_Whisper.setHorizontalHeaderLabels(['名字', '类型', '大小', '日期', '操作'])
         ModelViewSignals.Signal_STT_Whisper.connect(self.ui.Table_Models_STT_Whisper.SetValue)
         self.ui.Table_Models_STT_Whisper.Download.connect(
             lambda Params: Function_SetMethodExecutor(self,
@@ -1492,7 +1492,7 @@ class MainWindow(Window_MainWindow):
         )
 
         self.ui.TabWidget_Models_TTS.setTabText(0, 'GPT-SoVITS')
-        self.ui.Table_Models_TTS_GPTSoVITS.SetHorizontalHeaders(['名字', '类型', '大小', '日期', '操作'])
+        self.ui.Table_Models_TTS_GPTSoVITS.setHorizontalHeaderLabels(['名字', '类型', '大小', '日期', '操作'])
         ModelViewSignals.Signal_TTS_GPTSoVITS.connect(self.ui.Table_Models_TTS_GPTSoVITS.SetValue)
         self.ui.Table_Models_TTS_GPTSoVITS.Download.connect(
             lambda Params: Function_SetMethodExecutor(self,
@@ -1502,7 +1502,7 @@ class MainWindow(Window_MainWindow):
         )
 
         self.ui.TabWidget_Models_TTS.setTabText(1, 'VITS')
-        self.ui.Table_Models_TTS_VITS.SetHorizontalHeaders(['名字', '类型', '大小', '日期', '操作'])
+        self.ui.Table_Models_TTS_VITS.setHorizontalHeaderLabels(['名字', '类型', '大小', '日期', '操作'])
         ModelViewSignals.Signal_TTS_VITS.connect(self.ui.Table_Models_TTS_VITS.SetValue)
         self.ui.Table_Models_TTS_VITS.Download.connect(
             lambda Params: Function_SetMethodExecutor(self,
@@ -2298,7 +2298,7 @@ class MainWindow(Window_MainWindow):
                 Body = QCA.translate("Label", "目标人物与音频\n目标人物的名字及其语音文件的路径。")
             )
         )
-        self.ui.Table_ASR_VPR_StdAudioSpeaker.SetHorizontalHeaders(['人物姓名', '音频路径', '增删'])
+        self.ui.Table_ASR_VPR_StdAudioSpeaker.setHorizontalHeaderLabels(['人物姓名', '音频路径', '增删'])
         ParamsManager_ASR_VPR.SetParam(
             Widget = self.ui.Table_ASR_VPR_StdAudioSpeaker,
             Section = 'Input Params',
@@ -2622,7 +2622,7 @@ class MainWindow(Window_MainWindow):
             )
         )
 
-        ChildWindow_ASR.ui.Table.SetHorizontalHeaders(['音频路径', '人物姓名', '相似度', '播放', '操作'])
+        ChildWindow_ASR.ui.Table.setHorizontalHeaderLabels(['音频路径', '人物姓名', '相似度', '播放', '操作'])
 
         ChildWindow_ASR.ui.CheckBox.setText(QCA.translate("CheckBox", "结束编辑时将拥有匹配人物的音频保存到:"))
         ChildWindow_ASR.ui.CheckBox.setChecked(True)
@@ -3105,7 +3105,7 @@ class MainWindow(Window_MainWindow):
             )
         )
 
-        ChildWindow_STT.ui.Table.SetHorizontalHeaders(['音频路径', '音频内容', '播放'])
+        ChildWindow_STT.ui.Table.setHorizontalHeaderLabels(['音频路径', '音频内容', '播放'])
 
         ChildWindow_STT.ui.Button_Cancel.setText(QCA.translate("Button", "取消"))
         ChildWindow_STT.ui.Button_Cancel.clicked.connect(ChildWindow_STT.ui.Button_Close.click)
@@ -3516,7 +3516,7 @@ class MainWindow(Window_MainWindow):
             )
         )
 
-        ChildWindow_DAT_GPTSoVITS.ui.Table.SetHorizontalHeaders(['数据文本', '播放'])
+        ChildWindow_DAT_GPTSoVITS.ui.Table.setHorizontalHeaderLabels(['数据文本', '播放'])
 
         ChildWindow_DAT_GPTSoVITS.ui.Button_Cancel.setText(QCA.translate("Button", "取消"))
         ChildWindow_DAT_GPTSoVITS.ui.Button_Cancel.clicked.connect(ChildWindow_DAT_GPTSoVITS.ui.Button_Close.click)
@@ -4136,8 +4136,8 @@ class MainWindow(Window_MainWindow):
             )
         )
 
-        ChildWindow_DAT_VITS.ui.Table_Train.SetHorizontalHeaders(['数据文本', '播放'])
-        ChildWindow_DAT_VITS.ui.Table_Val.SetHorizontalHeaders(['数据文本', '播放'])
+        ChildWindow_DAT_VITS.ui.Table_Train.setHorizontalHeaderLabels(['数据文本', '播放'])
+        ChildWindow_DAT_VITS.ui.Table_Val.setHorizontalHeaderLabels(['数据文本', '播放'])
 
         ChildWindow_DAT_VITS.ui.Button_Cancel.setText(QCA.translate("Button", "取消"))
         ChildWindow_DAT_VITS.ui.Button_Cancel.clicked.connect(ChildWindow_DAT_VITS.ui.Button_Close.click)
