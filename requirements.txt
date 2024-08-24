@@ -33,7 +33,6 @@ nltk
 eng_to_ipa
 g2p_en
 pypinyin
-jieba
 jieba_fast
 cn2an
 pyjyutping

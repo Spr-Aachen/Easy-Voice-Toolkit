@@ -1,6 +1,6 @@
 import re
 import cn2an
-import jieba
+import jieba_fast as jieba
 from pypinyin import lazy_pinyin, BOPOMOFO
 
 
