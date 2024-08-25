@@ -1,12 +1,12 @@
 import os
 import re
-#import sys
+import sys
 import platform
 import shutil
 import pynvml
 #import subprocess
 #import pkg_resources
-#from packaging import version
+from packaging import version
 from pathlib import Path
 from typing import Optional
 from PySide6.QtCore import QObject, Signal
@@ -396,7 +396,7 @@ class PyReqs_Installer(QObject):
 
         self.EmitFlag = True
 
-    def Check_PyReq(self, Package: str):
+    def Check_PyReq(self, PackageName: str, PackageVersionReqs: str, SystemReqs: str):
         '''
         try:
             Version_Current = pkg_resources.get_distribution(Package).version #exec("import {0}".format(Package))
@@ -406,9 +406,45 @@ class PyReqs_Installer(QObject):
             return False
         '''
         try:
-            PackageInfo = str(QFunc.RunCMD([['pip', 'show', Package]], DecodeResult = True)[0])
-            if PackageInfo != 'None':
-                return PackageInfo
+            PackageInfos = str(QFunc.RunCMD([['pip', 'show', PackageName]], DecodeResult = True)[0])
+            if PackageInfos != 'None':
+                def IsVersionSatisfied(CurrentVersion, VersionReqs):
+                    if VersionReqs is None:
+                        return True
+                    VersionReqs = VersionReqs.split(',') if isinstance(VersionReqs, str) else list(VersionReqs)
+                    Results = []
+                    for VersionReq in VersionReqs:
+                        SplitVersionReq = re.split('=|>|<', VersionReq)
+                        RequiredVersion = SplitVersionReq[-1]
+                        Req = VersionReq[:len(VersionReq) - len(RequiredVersion)]
+                        if Req == "==":
+                            Results.append(version.parse(CurrentVersion) == version.parse(RequiredVersion))
+                        if Req == ">=":
+                            Results.append(version.parse(CurrentVersion) >= version.parse(RequiredVersion))
+                        if Req == "<=":
+                            Results.append(version.parse(CurrentVersion) <= version.parse(RequiredVersion))
+                        return True if False not in Results else False
+                def IsSystemSatisfied(SystemReqs):
+                    if SystemReqs is None:
+                        return True
+                    SystemReqs = SystemReqs.split(';') if isinstance(SystemReqs, str) else list(SystemReqs)
+                    Results = []
+                    for SystemReq in SystemReqs:
+                        SplitSystemReq = re.split('=|>|<', SystemReq)
+                        RequiredSystem = SplitSystemReq[-1]
+                        Req = SystemReq[:len(SystemReq) - len(RequiredSystem)]
+                        if Req == "==":
+                            Results.append(sys.platform == RequiredSystem)
+                        if Req == "!=":
+                            Results.append(sys.platform != RequiredSystem)
+                        return True if False not in Results else False
+                CurrentVersion = None
+                for PackageInfo in PackageInfos.splitlines():
+                    if PackageInfo.startswith('Version:'):
+                        CurrentVersion = PackageInfo[len('Version:'):].strip()
+                        continue
+                CurrentVersion = PackageInfos if CurrentVersion is None else CurrentVersion
+                return CurrentVersion if IsVersionSatisfied(CurrentVersion, PackageVersionReqs) or not IsSystemSatisfied(SystemReqs) else False
             else:
                 return False
         except OSError:
@@ -427,7 +463,7 @@ class PyReqs_Installer(QObject):
             else:
                 exit(-1)
             '''
-            _, _, ReturnCode = QFunc.RunCMD([f'pip3 install {Package} -y --index-url {Mirror}'])
+            _, _, ReturnCode = QFunc.RunCMD([f'pip3 install {Package} --index-url {Mirror}'])
             if ReturnCode == 0:
                 break
 
@@ -437,16 +473,21 @@ class PyReqs_Installer(QObject):
             Requirements = f.read().splitlines() #Requirements = f.readlines()
         for Index, Requirement in enumerate(Requirements):
             if not (Requirement.startswith('#') or Requirement.strip() == ''):
-                Package = re.split('=|>|<|#', Requirement)[0].strip()
-                Result = self.Check_PyReq(Package)
+                SplitRequirement = re.split(';', Requirement, 1)
+                Package = SplitRequirement[0]
+                SystemReqs = SplitRequirement[1] if len(SplitRequirement) == 2 else None
+                SplitPackage = re.split('=|>|<', Package, 1)
+                PackageName = SplitPackage[0]
+                PackageVersionReqs = Package[len(PackageName):] if len(SplitPackage) == 2 else None
+                Result = self.Check_PyReq(PackageName, PackageVersionReqs, SystemReqs)
                 if Result == False:
                     if self.EmitFlag == True:
                         EnvConfiguratorSignals.Signal_PyReqsUndetected.emit()
                         self.EmitFlag = False
-                    MissingRequirementList.append(Requirement)
+                    MissingRequirementList.append(Package)
                 else:
                     EnvConfiguratorSignals.Signal_PyReqsDetected.emit() if Index + 1 == len(Requirements) and MissingRequirementList == [] else None
-                    EnvConfiguratorSignals.Signal_PyReqsStatus.emit(f"{Package} detected. Version: {Result}")
+                    EnvConfiguratorSignals.Signal_PyReqsStatus.emit(f"{PackageName} detected. Version: {Result}")
             else:
                 continue
         for Index, MissingRequirement in enumerate(MissingRequirementList):
@@ -492,9 +533,9 @@ class Pytorch_Installer(QObject):
             return False
         '''
         try:
-            PackageInfo = str(QFunc.RunCMD([['pip', 'show', Package]], DecodeResult = True)[0])
-            if PackageInfo != 'None':
-                return PackageInfo
+            PackageInfos = str(QFunc.RunCMD([['pip', 'show', Package]], DecodeResult = True)[0])
+            if PackageInfos != 'None':
+                return PackageInfos
             else:
                 return False
         except OSError:
@@ -512,7 +553,7 @@ class Pytorch_Installer(QObject):
             MirrorList = [f'https://download.pytorch.org/whl/cu{CudaVersion}', '']
             for Mirror in MirrorList:
                 Result = QFunc.RunCMD([
-                    DisplayCommand if Reinstall else '' + f'pip3 install {Package} -y --index-url {Mirror}' + '--force-reinstall' if Reinstall else ''
+                    DisplayCommand if Reinstall else '' + f'pip3 install {Package} --index-url {Mirror}' + '--force-reinstall' if Reinstall else ''
                 ])
                 if Result.returncode == 0:
                     break
