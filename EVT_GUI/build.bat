@@ -1,5 +1,5 @@
 @echo off
 windres icon.rc -o icon.o
-gcc main.c icon.o -o main.exe -mwindows -s
-upx main.exe
+g++ main.cpp icon.o -o Main.exe -mwindows -s
+upx Main.exe
 pause

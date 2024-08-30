@@ -43,16 +43,20 @@ UpdaterSignals = CustomSignals_Updater()
 
 def RebootIfFailed():
     if platform.system() == 'Windows':
-        QFunc.BootWithBat(
+        ScriptName = 'Booter.bat'
+    if platform.system() == 'Linux':
+        ScriptName = 'Booter.sh'
+    if ScriptName:
+        QFunc.BootWithScript(
             ProgramPath = ExecuterPath,
             DelayTime = 0,
-            BatFilePath = Path(QFunc.NormPath(CurrentDir)).joinpath('Booter.bat')
+            ScriptPath = Path(QFunc.NormPath(CurrentDir)).joinpath(ScriptName)
         )
 
 
 def RebootIfSucceeded():
     if platform.system() == 'Windows':
-        QFunc.RunBat(
+        QFunc.RunScript(
             CommandList = [
                 '@echo off',
                 'echo Ready to move files and reboot',
@@ -63,7 +67,20 @@ def RebootIfSucceeded():
                 f'start "Programm Running" "{ExecuterPath}"',
                 'del "%~f0"'
             ],
-            BatFilePath = QFunc.NormPath(Path(CurrentDir).joinpath('Updater.bat'))
+            ScriptPath = QFunc.NormPath(Path(CurrentDir).joinpath('Updater.bat'))
+        )
+    if platform.system() == 'Linux':
+        QFunc.RunScript(
+            CommandList = [
+                'echo Ready to move files and reboot',
+                #f'kill -9 {os.getpid()}',
+                'sleep 2',
+                'echo Moving files...',
+                f'rsync -a --delete "{ExtractDir}" "{CurrentDir}"',
+                f'./{ExecuterName}', #f'nohup ./{ExecuterName} &',
+                'rm -rf Updater.sh'
+            ],
+            ScriptPath = QFunc.NormPath(Path(CurrentDir).joinpath('Updater.sh'))
         )
 
 
@@ -74,10 +91,10 @@ def UpdateChecker(
     '''
     try:
         UpdaterSignals.Signal_Message.emit("正在检查更新，请稍等...\nChecking for updates, please wait...")
-        IsUpdateNeeded, DownloadURL = QFunc.CheckUpdate(
+        IsUpdateNeeded, DownloadURL = QFunc.CheckUpdateFromGithub(
             RepoOwner = 'Spr-Aachen',
             RepoName = 'Easy-Voice-Toolkit',
-            FileName = 'EVT',
+            FileName = 'EVT_windows_x64',
             FileFormat = 'zip',
             Version_Current = CurrentVersion
         )

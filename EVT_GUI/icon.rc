@@ -1,1 +1,1 @@
-IDI_ICON_MAIN    ICON    ".\\src\\assets\\images\\Logo.ico"    //ICON RESOURCE
+IDI_ICON_MAIN    ICON    "./src/assets/images/Logo.ico"    //ICON RESOURCE

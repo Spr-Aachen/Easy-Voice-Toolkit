@@ -1,0 +1,31 @@
+# Enable all line ending conversions
+*            text=auto
+
+
+# These files are text and should be normalized (convert crlf => lf)
+**/*.md      text
+**/*.txt     text
+**/*.json    text
+**/*.xml     text
+**/*.sh      text
+**/*.bat     text
+**/*.ts      text
+
+
+# Images should be treated as binary (binary is a macro for -text -diff)
+**/*.svg     binary
+**/*.ico     binary
+**/*.png     binary
+**/*.jpg     binary
+**/*.gif     binary
+**/*.webp    binary
+
+
+# Make GitHub language detection more accurate
+**/*.bat                                    linguist-language=Batchfile
+**/*.cpp                                    linguist-language=C++
+**/*.rc                                     linguist-language=C++
+EVT_GUI/*.h                                 linguist-language=C++
+EVT_GUI/src/**/*.qss                        linguist-language=CSS
+
+build/**                                    linguist-vendored
