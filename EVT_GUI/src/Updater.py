@@ -29,8 +29,6 @@ class CustomSignals_Updater(QObject):
     '''
     Set up signals for updater
     '''
-    Signal_ExecuteTask = Signal(tuple)
-
     Signal_Message = Signal(str)
 
     Signal_IsUpdateSucceeded = Signal(bool, str)
@@ -266,7 +264,6 @@ class Widget_Updater(QWidget):
         )
         UpdaterSignals.Signal_IsUpdateSucceeded.connect(
             lambda Succeeded, Info: (
-                Config.EditConfig('Updater', 'Status', 'Executed'),
                 Function_ShowMessageBox(
                     MessageType = QMessageBox.Warning,
                     WindowTitle = 'Warning',

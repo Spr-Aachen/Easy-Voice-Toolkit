@@ -71,13 +71,6 @@ if Path(DependencyDir).joinpath('FFmpeg').exists():
         Value = QFunc.NormPath(Path(DependencyDir).joinpath('FFmpeg', 'bin'))
     )
 if Path(DependencyDir).joinpath('Python').exists():
-    '''
-    for PythonPath in QFunc.RunCMD('where python', DecodeResult = True)[0].split():
-        PATH = os.environ.get('PATH')
-        PATH = PATH.replace(QFunc.NormPath(Path(PythonPath).parent, TrailingSlash = True) + os.pathsep, '')
-        PATH = PATH.replace(QFunc.NormPath(Path(PythonPath).parent.joinpath('Scripts'), TrailingSlash = True) + os.pathsep, '')
-        os.environ['PATH'] = PATH
-    '''
     QFunc.SetEnvVar(
         Variable = 'PATH',
         Value = QFunc.NormPath(Path(DependencyDir).joinpath('Python'), TrailingSlash = True)
@@ -94,13 +87,9 @@ def UpdaterExecuter():
     Execute updater
     '''
     if Config.GetValue('Settings', 'AutoUpdate', 'Enabled') == 'Enabled':
-        if Config.GetValue('Updater', 'Status', 'Checking') != 'Executed':
-            subprocess.Popen(['python.exe', QFunc.NormPath(Path(CurrentDir).joinpath('Updater.py'))] if IsFileCompiled == False else [QFunc.NormPath(Path(CurrentDir).joinpath('Updater.exe'))], env = os.environ)
-            #Config.EditConfig('Updater', 'Status', 'Executed')
-            QApplication.exit()
-            os._exit(0) if IsFileCompiled == True else None
-        else:
-            Config.EditConfig('Updater', 'Status', 'Unexecuted')
+        subprocess.Popen(['python.exe', QFunc.NormPath(Path(CurrentDir).joinpath('Updater.py'))] if IsFileCompiled == False else [QFunc.NormPath(Path(CurrentDir).joinpath('Updater.exe'))], env = os.environ)
+        QApplication.exit()
+        os._exit(0) if IsFileCompiled == True else None
 
 ##############################################################################################################################
 
@@ -763,30 +752,21 @@ class Integrity_Checker(QObject):
 
     @Slot()
     def Execute(self):
-        if 'Undetected' not in [
-            Config.GetValue('Env', 'FFmpeg'),
-            Config.GetValue('Env', 'Python'),
-            Config.GetValue('Env', 'PyReqs'),
-            Config.GetValue('Env', 'Pytorch')
-        ]:
-            Error = QFunc.RunCMD(
-                Args = [
-                    f'cd "{CoreDir}"',
-                    'python -c "'
-                    'from Process.Process import Audio_Processing; '
-                    'from ASR.VPR.Identify import Voice_Identifying; '
-                    'from STT.Whisper.Transcribe import Voice_Transcribing; '
-                    'from Dataset.VITS.Create import Dataset_Creating; '
-                    'from Train.VITS.Train import Voice_Training; '
-                    'from TTS.VITS.Convert import Voice_Converting"'
-                ],
-                CommunicateThroughConsole = True,
-                DecodeResult = True,
-                LogPath = LogPath
-            )[1]
-
-        else:
-            Error = 'Missing evironment dependencies!'
+        Error = QFunc.RunCMD(
+            Args = [
+                f'cd "{CoreDir}"',
+                'python -c "'
+                'from Process.Process import Audio_Processing; '
+                'from ASR.VPR.Identify import Voice_Identifying; '
+                'from STT.Whisper.Transcribe import Voice_Transcribing; '
+                'from Dataset.VITS.Create import Dataset_Creating; '
+                'from Train.VITS.Train import Voice_Training; '
+                'from TTS.VITS.Convert import Voice_Converting"'
+            ],
+            CommunicateThroughConsole = True,
+            DecodeResult = True,
+            LogPath = LogPath
+        )[1]
 
         self.finished.emit(str(Error))
 
@@ -811,13 +791,8 @@ class Tensorboard_Runner(QObject):
                 InitialWaitTime += 3
                 if InitialWaitTime >= MaximumWaitTime:
                     break
-            '''
-            Output = QFunc.RunCMD([['tensorboard', '--logdir', LogDir]])
-            URL = FindURL(Output) #URL = Output[Output.find('http'):Output.find(' (', Output.find('http'))]
-            QFunc.Function_OpenURL(URL)
-            '''
             subprocess.Popen(['python', '-m', 'tensorboard.main', '--logdir', LogDir], env = os.environ)
-            time.sleep(9) #await asyncio.sleep(9)
+            time.sleep(9)
             QFunc.Function_OpenURL('http://localhost:6006/')
         except Exception as e:
             Error = e
@@ -1155,13 +1130,10 @@ class MainWindow(Window_MainWindow):
             Params = ()
         )
         MainWindowSignals.Signal_MainWindowShown.connect(
-            self.ui.Button_Install_Aria2.click #if Config.GetValue('Env', 'Aria2', 'Undetected') == 'Undetected' else EnvConfiguratorSignals.Signal_Aria2Detected.emit
+            self.ui.Button_Install_Aria2.click
         )
         self.ui.Button_Install_Aria2.setText('')
         self.ui.Button_Install_Aria2.setToolTip(QCA.translate("ToolTip", "重新检测安装"))
-        EnvConfiguratorSignals.Signal_Aria2Undetected.connect(
-            lambda: Config.EditConfig('Env', 'Aria2', 'Undetected'),
-        )
         EnvConfiguratorSignals.Signal_Aria2Undetected.connect(
             lambda: Function_ShowMessageBox(self,
                 WindowTitle = "Tip",
@@ -1180,10 +1152,6 @@ class MainWindow(Window_MainWindow):
             )
         )
         EnvConfiguratorSignals.Signal_Aria2Detected.connect(
-            lambda: Config.EditConfig('Env', 'Aria2', 'Detected'),
-            type = Qt.QueuedConnection
-        )
-        EnvConfiguratorSignals.Signal_Aria2Detected.connect(
             lambda: self.ui.ProgressBar_Env_Install_Aria2.setValue(100),
             type = Qt.QueuedConnection
         )
@@ -1199,13 +1167,10 @@ class MainWindow(Window_MainWindow):
             Params = ()
         )
         MainWindowSignals.Signal_MainWindowShown.connect(
-            self.ui.Button_Install_FFmpeg.click #if Config.GetValue('Env', 'FFmpeg', 'Undetected') == 'Undetected' else EnvConfiguratorSignals.Signal_FFmpegDetected.emit
+            self.ui.Button_Install_FFmpeg.click
         )
         self.ui.Button_Install_FFmpeg.setText('')
         self.ui.Button_Install_FFmpeg.setToolTip(QCA.translate("ToolTip", "重新检测安装"))
-        EnvConfiguratorSignals.Signal_FFmpegUndetected.connect(
-            lambda: Config.EditConfig('Env', 'FFmpeg', 'Undetected'),
-        )
         EnvConfiguratorSignals.Signal_FFmpegUndetected.connect(
             lambda: Function_ShowMessageBox(self,
                 WindowTitle = "Tip",
@@ -1224,10 +1189,6 @@ class MainWindow(Window_MainWindow):
             )
         )
         EnvConfiguratorSignals.Signal_FFmpegDetected.connect(
-            lambda: Config.EditConfig('Env', 'FFmpeg', 'Detected'),
-            type = Qt.QueuedConnection
-        )
-        EnvConfiguratorSignals.Signal_FFmpegDetected.connect(
             lambda: self.ui.ProgressBar_Env_Install_FFmpeg.setValue(100),
             type = Qt.QueuedConnection
         )
@@ -1243,13 +1204,10 @@ class MainWindow(Window_MainWindow):
             Params = ('3.9.0', )
         )
         MainWindowSignals.Signal_MainWindowShown.connect( #EnvConfiguratorSignals.Signal_CMakeDetected.connect(
-            self.ui.Button_Install_Python.click #if Config.GetValue('Env', 'Python', 'Undetected') == 'Undetected' else EnvConfiguratorSignals.Signal_PythonDetected.emit
+            self.ui.Button_Install_Python.click
         )
         self.ui.Button_Install_Python.setText('')
         self.ui.Button_Install_Python.setToolTip(QCA.translate("ToolTip", "重新检测安装"))
-        EnvConfiguratorSignals.Signal_PythonUndetected.connect(
-            lambda: Config.EditConfig('Env', 'Python', 'Undetected'),
-        )
         EnvConfiguratorSignals.Signal_PythonUndetected.connect(
             lambda: Function_ShowMessageBox(self,
                 WindowTitle = "Tip",
@@ -1268,10 +1226,6 @@ class MainWindow(Window_MainWindow):
             )
         )
         EnvConfiguratorSignals.Signal_PythonDetected.connect(
-            lambda: Config.EditConfig('Env', 'Python', 'Detected'),
-            type = Qt.QueuedConnection
-        )
-        EnvConfiguratorSignals.Signal_PythonDetected.connect(
             lambda: self.ui.ProgressBar_Env_Install_Python.setValue(100),
             type = Qt.QueuedConnection
         )
@@ -1287,13 +1241,10 @@ class MainWindow(Window_MainWindow):
             Params = (QFunc.NormPath(RequirementsPath), )
         )
         EnvConfiguratorSignals.Signal_PythonDetected.connect(
-            self.ui.Button_Install_PyReqs.click #if Config.GetValue('Env', 'PyReqs', 'Undetected') == 'Undetected' else EnvConfiguratorSignals.Signal_PyReqsDetected.emit
+            self.ui.Button_Install_PyReqs.click
         )
         self.ui.Button_Install_PyReqs.setText('')
         self.ui.Button_Install_PyReqs.setToolTip(QCA.translate("ToolTip", "重新检测安装"))
-        EnvConfiguratorSignals.Signal_PyReqsUndetected.connect(
-            lambda: Config.EditConfig('Env', 'PyReqs', 'Undetected'),
-        )
         EnvConfiguratorSignals.Signal_PyReqsUndetected.connect(
             lambda: Function_ShowMessageBox(self,
                 WindowTitle = "Tip",
@@ -1312,10 +1263,6 @@ class MainWindow(Window_MainWindow):
             )
         )
         EnvConfiguratorSignals.Signal_PyReqsDetected.connect(
-            lambda: Config.EditConfig('Env', 'PyReqs', 'Detected'),
-            type = Qt.QueuedConnection
-        )
-        EnvConfiguratorSignals.Signal_PyReqsDetected.connect(
             lambda: self.ui.ProgressBar_Env_Install_PyReqs.setValue(100),
             type = Qt.QueuedConnection
         )
@@ -1331,13 +1278,10 @@ class MainWindow(Window_MainWindow):
             Params = ()
         )
         EnvConfiguratorSignals.Signal_PyReqsDetected.connect(
-            self.ui.Button_Install_Pytorch.click #if Config.GetValue('Env', 'Pytorch', 'Undetected') == 'Undetected' else EnvConfiguratorSignals.Signal_PytorchDetected.emit
+            self.ui.Button_Install_Pytorch.click
         )
         self.ui.Button_Install_Pytorch.setText('')
         self.ui.Button_Install_Pytorch.setToolTip(QCA.translate("ToolTip", "重新检测安装"))
-        EnvConfiguratorSignals.Signal_PytorchUndetected.connect(
-            lambda: Config.EditConfig('Env', 'Pytorch', 'Undetected'),
-        )
         EnvConfiguratorSignals.Signal_PytorchUndetected.connect(
             lambda: Function_ShowMessageBox(self,
                 WindowTitle = "Tip",
@@ -1354,10 +1298,6 @@ class MainWindow(Window_MainWindow):
                 WindowTitle = "Warning",
                 Text = f"安装Pytorch出错：\n{Exception}",
             )
-        )
-        EnvConfiguratorSignals.Signal_PytorchDetected.connect(
-            lambda: Config.EditConfig('Env', 'Pytorch', 'Detected'),
-            type = Qt.QueuedConnection
         )
         EnvConfiguratorSignals.Signal_PytorchDetected.connect(
             lambda: self.ui.ProgressBar_Env_Install_Pytorch.setValue(100),
@@ -2466,42 +2406,6 @@ class MainWindow(Window_MainWindow):
             TreeWidget = self.ui.TreeWidget_Catalogue_ASR_VPR,
             RootItemText = QCA.translate("Tree", "输出参数")
         )
-
-        '''
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_ASR_VPR_FilterResult,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate("Label", "按阈值过滤结果\n令结果编辑表单仅显示高于阈值的识别结果，当数据量过大时建议启用该项。")
-            )
-        )
-        ParamsManager_ASR_VPR.SetParam(
-            Widget = self.ui.CheckBox_ASR_VPR_FilterResult,
-            Section = 'Output Params',
-            Option = 'FilterResult',
-            DefaultValue = False
-        )
-        Function_ConfigureCheckBox(
-            CheckBox = self.ui.CheckBox_ASR_VPR_FilterResult,
-            CheckedText = "已启用",
-            CheckedEvents = [
-            ],
-            UncheckedText = "未启用",
-            UncheckedEvents = [
-            ],
-            TakeEffect = True
-        )
-        self.ui.Button_ASR_VPR_FilterResult_MoreActions.SetMenu(
-            ActionEvents = {
-                "重置": lambda: ParamsManager_ASR_VPR.ResetParam(self.ui.CheckBox_ASR_VPR_FilterResult)
-            }
-        )
-        Function_AddToTreeWidget(
-            Widget = self.ui.Label_ASR_VPR_FilterResult,
-            TreeWidget = self.ui.TreeWidget_Catalogue_ASR_VPR,
-            RootItemText = QCA.translate("Tree", "输出参数"),
-            ChildItemText = QCA.translate("Tree", "按阈值过滤结果")
-        )
-        '''
 
         QFunc.Function_SetText(
             Widget = self.ui.Label_ASR_VPR_OutputDirName,
