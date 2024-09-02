@@ -441,12 +441,15 @@ def Function_SetWidgetValue(
             EditConfig(Value)
 
     if isinstance(Widget, (QComboBox, ComboBoxBase)):
-        Widget.setCurrentText(str(Value))
+        itemTexts = []
+        for index in Widget.count():
+            itemTexts.append(Widget.itemText(index))
+        Widget.setCurrentText(str(Value)) if str(Value) in itemTexts else None
         def EditConfig(Value):
             Config.EditConfig(Section, Option, str(Value))
         if Config is not None:
             Widget.currentTextChanged.connect(EditConfig)
-            EditConfig(Value)
+            EditConfig(Value) if str(Value) in itemTexts else None
 
     if isinstance(Widget, (QSlider, QSpinBox, SpinBoxBase)):
         Widget.setValue(int(eval(str(Value)) * Times))

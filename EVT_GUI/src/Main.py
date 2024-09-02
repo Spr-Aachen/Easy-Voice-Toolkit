@@ -5779,14 +5779,12 @@ class MainWindow(Window_MainWindow):
         self.ui.ComboBox_TTS_VITS_Speaker.addItems(
             Get_Speakers(self.ui.LineEdit_TTS_VITS_ConfigPathLoad.text())
         )
-        '''
         ParamsManager_TTS_VITS.SetParam(
             Widget = self.ui.ComboBox_TTS_VITS_Speaker,
             Section = 'VITS Params',
             Option = 'Speaker',
             DefaultValue = ''
         )
-        '''
         self.ui.ComboBox_TTS_VITS_Speaker.setCurrentIndex(0)
         Function_AddToTreeWidget(
             Widget = self.ui.Label_TTS_VITS_Speaker,
