@@ -421,7 +421,7 @@ def Function_SetWidgetValue(
 
     if isinstance(Widget, (QComboBox, ComboBoxBase)):
         itemTexts = []
-        for index in Widget.count():
+        for index in range(Widget.count()):
             itemTexts.append(Widget.itemText(index))
         Widget.setCurrentText(str(Value)) if str(Value) in itemTexts else None
         def EditConfig(Value):
