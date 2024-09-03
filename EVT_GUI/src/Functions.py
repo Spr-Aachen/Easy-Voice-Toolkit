@@ -203,27 +203,6 @@ def Function_SetFileDialog(
     Button.setToolTipDuration(-1)
     Button.setToolTip(ButtonTooltip)
 
-
-def Function_ShowMessageBox(
-    WindowToMask: Optional[WindowBase] = None,
-    MessageType: object = QMessageBox.Information,
-    WindowTitle: str = ...,
-    Text: str = ...,
-    Buttons: object = QMessageBox.Ok,
-    ButtonEvents: dict = {}
-):
-    '''
-    Function to pop up a msgbox
-    '''
-    return MessageBoxBase.pop(
-        WindowToMask = WindowToMask,
-        MessageType = MessageType,
-        WindowTitle = WindowTitle,
-        Text = Text,
-        Buttons = Buttons,
-        ButtonEvents = ButtonEvents
-    )
-
 ##############################################################################################################################
 
 def Function_ParamsHandler(
@@ -309,7 +288,7 @@ def Function_ParamsChecker(
                 if UI in QFunc.ToIterable(EmptyAllowed):
                     Param = None
                 else:
-                    Function_ShowMessageBox(
+                    MessageBoxBase.pop(
                         MessageType = QMessageBox.Warning,
                         WindowTitle = "Warning",
                         Text = "Empty param detected!\n检测到参数空缺！"
@@ -329,7 +308,7 @@ def Function_ParamsChecker(
                 if UI in QFunc.ToIterable(EmptyAllowed):
                     Param = None
                 else:
-                    Function_ShowMessageBox(
+                    MessageBoxBase.pop(
                         MessageType = QMessageBox.Warning,
                         WindowTitle = "Warning",
                         Text = "Empty param detected!\n检测到参数空缺！"
@@ -588,7 +567,7 @@ def Function_SetMethodExecutor(
     ClassInstance.finished.connect(lambda Error: FunctionSignals.Signal_TaskStatus.emit(QualName, 'Finished') if Error == str(None) else None) if hasattr(ClassInstance, 'finished') else None
     ClassInstance.finished.connect(lambda Error: QFunc.RunEvents(FinishEvents) if Error == str(None) else None) if hasattr(ClassInstance, 'finished') else None
     ClassInstance.finished.connect(lambda Error: FunctionSignals.Signal_TaskStatus.emit(QualName, 'Failed') if Error != str(None) else None) if hasattr(ClassInstance, 'finished') else None
-    ClassInstance.finished.connect(lambda Error: Function_ShowMessageBox(ParentWindow, QMessageBox.Warning, 'Failure', f'发生错误：\n{Error}') if Error != str(None) else None) if hasattr(ClassInstance, 'finished') else None
+    ClassInstance.finished.connect(lambda Error: MessageBoxBase.pop(ParentWindow, QMessageBox.Warning, 'Failure', f'发生错误：\n{Error}') if Error != str(None) else None) if hasattr(ClassInstance, 'finished') else None
 
     if not isinstance(ClassInstance, QThread):
         WorkerThread = QThread()
@@ -654,7 +633,7 @@ def Function_SetMethodExecutor(
 
     if TerminateButton is not None:
         TerminateButton.clicked.connect(
-            lambda: Function_ShowMessageBox(ParentWindow,
+            lambda: MessageBoxBase.pop(ParentWindow,
                 MessageType = QMessageBox.Question,
                 WindowTitle = "Ask",
                 Text = "当前任务仍在执行中，是否确认终止？",

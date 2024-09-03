@@ -17,6 +17,7 @@ from PySide6.QtWidgets import *
 from QEasyWidgets import QFunctions as QFunc
 from QEasyWidgets import QTasks
 from QEasyWidgets import ComponentsSignals, Theme, EasyTheme, Language, EasyLanguage, TranslationBase, IconBase
+from QEasyWidgets.Windows import MessageBoxBase
 
 from windows.Windows import *
 from Functions import *
@@ -1135,7 +1136,7 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_Install_Aria2.setText('')
         self.ui.Button_Install_Aria2.setToolTip(QCA.translate("ToolTip", "重新检测安装"))
         EnvConfiguratorSignals.Signal_Aria2Undetected.connect(
-            lambda: Function_ShowMessageBox(self,
+            lambda: MessageBoxBase.pop(self,
                 WindowTitle = "Tip",
                 Text = "未检测到Aria2，已开始下载",
                 ButtonEvents = {QMessageBox.Ok: lambda: self.ui.Button_Menu_Env.click()}
@@ -1145,7 +1146,7 @@ class MainWindow(Window_MainWindow):
             lambda: EnvConfiguratorSignals.Signal_Aria2Detected.emit()
         )
         EnvConfiguratorSignals.Signal_Aria2InstallFailed.connect(
-            lambda Exception: Function_ShowMessageBox(self,
+            lambda Exception: MessageBoxBase.pop(self,
                 MessageType = QMessageBox.Warning,
                 WindowTitle = "Warning",
                 Text = f"安装Aria2出错：\n{Exception}",
@@ -1172,7 +1173,7 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_Install_FFmpeg.setText('')
         self.ui.Button_Install_FFmpeg.setToolTip(QCA.translate("ToolTip", "重新检测安装"))
         EnvConfiguratorSignals.Signal_FFmpegUndetected.connect(
-            lambda: Function_ShowMessageBox(self,
+            lambda: MessageBoxBase.pop(self,
                 WindowTitle = "Tip",
                 Text = "未检测到FFmpeg，已开始下载",
                 ButtonEvents = {QMessageBox.Ok: lambda: self.ui.Button_Menu_Env.click()}
@@ -1182,7 +1183,7 @@ class MainWindow(Window_MainWindow):
             lambda: EnvConfiguratorSignals.Signal_FFmpegDetected.emit()
         )
         EnvConfiguratorSignals.Signal_FFmpegInstallFailed.connect(
-            lambda Exception: Function_ShowMessageBox(self,
+            lambda Exception: MessageBoxBase.pop(self,
                 MessageType = QMessageBox.Warning,
                 WindowTitle = "Warning",
                 Text = f"安装FFmpeg出错：\n{Exception}",
@@ -1209,7 +1210,7 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_Install_Python.setText('')
         self.ui.Button_Install_Python.setToolTip(QCA.translate("ToolTip", "重新检测安装"))
         EnvConfiguratorSignals.Signal_PythonUndetected.connect(
-            lambda: Function_ShowMessageBox(self,
+            lambda: MessageBoxBase.pop(self,
                 WindowTitle = "Tip",
                 Text = "未检测到3.8版本以上的Python，已开始下载",
                 ButtonEvents = {QMessageBox.Ok: lambda: self.ui.Button_Menu_Env.click()}
@@ -1219,7 +1220,7 @@ class MainWindow(Window_MainWindow):
             lambda: EnvConfiguratorSignals.Signal_PythonDetected.emit()
         )
         EnvConfiguratorSignals.Signal_PythonInstallFailed.connect(
-            lambda Exception: Function_ShowMessageBox(self,
+            lambda Exception: MessageBoxBase.pop(self,
                 MessageType = QMessageBox.Warning,
                 WindowTitle = "Warning",
                 Text = f"安装Python出错：\n{Exception}",
@@ -1246,7 +1247,7 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_Install_PyReqs.setText('')
         self.ui.Button_Install_PyReqs.setToolTip(QCA.translate("ToolTip", "重新检测安装"))
         EnvConfiguratorSignals.Signal_PyReqsUndetected.connect(
-            lambda: Function_ShowMessageBox(self,
+            lambda: MessageBoxBase.pop(self,
                 WindowTitle = "Tip",
                 Text = "缺失Python依赖库，已开始下载",
                 ButtonEvents = {QMessageBox.Ok: lambda: self.ui.Button_Menu_Env.click()}
@@ -1256,7 +1257,7 @@ class MainWindow(Window_MainWindow):
             lambda: EnvConfiguratorSignals.Signal_PyReqsDetected.emit()
         )
         EnvConfiguratorSignals.Signal_PythonInstallFailed.connect(
-            lambda Exception: Function_ShowMessageBox(self,
+            lambda Exception: MessageBoxBase.pop(self,
                 MessageType = QMessageBox.Warning,
                 WindowTitle = "Warning",
                 Text = f"安装Python依赖库出错：\n{Exception}"
@@ -1283,7 +1284,7 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_Install_Pytorch.setText('')
         self.ui.Button_Install_Pytorch.setToolTip(QCA.translate("ToolTip", "重新检测安装"))
         EnvConfiguratorSignals.Signal_PytorchUndetected.connect(
-            lambda: Function_ShowMessageBox(self,
+            lambda: MessageBoxBase.pop(self,
                 WindowTitle = "Tip",
                 Text = "缺失Pytorch相关库，已开始下载",
                 ButtonEvents = {QMessageBox.Ok: lambda: self.ui.Button_Menu_Env.click()}
@@ -1293,7 +1294,7 @@ class MainWindow(Window_MainWindow):
             lambda: EnvConfiguratorSignals.Signal_PytorchDetected.emit()
         )
         EnvConfiguratorSignals.Signal_PytorchInstallFailed.connect(
-            lambda Exception: Function_ShowMessageBox(self,
+            lambda Exception: MessageBoxBase.pop(self,
                 MessageType = QMessageBox.Warning,
                 WindowTitle = "Warning",
                 Text = f"安装Pytorch出错：\n{Exception}",
@@ -2139,7 +2140,7 @@ class MainWindow(Window_MainWindow):
                 self.ui.ComboBox_Process_SampleWidth
             ],
             FinishEvents = [
-                lambda: Function_ShowMessageBox(self,
+                lambda: MessageBoxBase.pop(self,
                     QMessageBox.Information, "Tip",
                     "当前任务已执行结束。"
                 )
@@ -2500,7 +2501,7 @@ class MainWindow(Window_MainWindow):
         ChildWindow_ASR = Window_ChildWindow_ASR(self)
 
         ChildWindow_ASR.ui.Button_Close.clicked.connect(
-            lambda: Function_ShowMessageBox(self,
+            lambda: MessageBoxBase.pop(self,
                 QMessageBox.Question, "Ask",
                 "确认放弃编辑？",
                 QMessageBox.Yes|QMessageBox.No,
@@ -2546,7 +2547,7 @@ class MainWindow(Window_MainWindow):
                     LineEdit_ASR_VPR_AudioSpeakersDataPath.text(),
                     False
                 ),
-                Function_ShowMessageBox(self,
+                MessageBoxBase.pop(self,
                     QMessageBox.Information, "Tip",
                     "已保存当前结果。"
                 )
@@ -2554,7 +2555,7 @@ class MainWindow(Window_MainWindow):
         )
         ChildWindow_ASR.ui.Button_Confirm.setText(QCA.translate("Button", "确认"))
         ChildWindow_ASR.ui.Button_Confirm.clicked.connect(
-            lambda: Function_ShowMessageBox(self,
+            lambda: MessageBoxBase.pop(self,
                 QMessageBox.Question, "Ask",
                 "确认结束并应用编辑？",
                 QMessageBox.Yes|QMessageBox.No,
@@ -2658,7 +2659,7 @@ class MainWindow(Window_MainWindow):
                     list(self.ui.Table_ASR_VPR_StdAudioSpeaker.GetValue().keys()) + ['']
                 ),
                 ChildWindow_ASR.exec,
-                lambda: Function_ShowMessageBox(self,
+                lambda: MessageBoxBase.pop(self,
                     QMessageBox.Information, "Tip",
                     "当前任务已执行结束。"
                 )
@@ -2983,7 +2984,7 @@ class MainWindow(Window_MainWindow):
         ChildWindow_STT = Window_ChildWindow_STT(self)
 
         ChildWindow_STT.ui.Button_Close.clicked.connect(
-            lambda: Function_ShowMessageBox(self,
+            lambda: MessageBoxBase.pop(self,
                 QMessageBox.Question, "Ask",
                 "确认放弃编辑？",
                 QMessageBox.Yes|QMessageBox.No,
@@ -3015,7 +3016,7 @@ class MainWindow(Window_MainWindow):
         ChildWindow_STT.ui.Button_Cancel.clicked.connect(ChildWindow_STT.ui.Button_Close.click)
         ChildWindow_STT.ui.Button_Confirm.setText(QCA.translate("Button", "确认"))
         ChildWindow_STT.ui.Button_Confirm.clicked.connect(
-            lambda: Function_ShowMessageBox(self,
+            lambda: MessageBoxBase.pop(self,
                 QMessageBox.Question, "Ask",
                 "确认应用编辑？",
                 QMessageBox.Yes|QMessageBox.No,
@@ -3098,7 +3099,7 @@ class MainWindow(Window_MainWindow):
                     STTResult_Get(LineEdit_STT_Whisper_OutputDir.text(), self.ui.LineEdit_STT_Whisper_AudioDir.text())
                 ),
                 ChildWindow_STT.exec,
-                lambda: Function_ShowMessageBox(self,
+                lambda: MessageBoxBase.pop(self,
                     QMessageBox.Information, "Tip",
                     "当前任务已执行结束。"
                 )
@@ -3272,7 +3273,7 @@ class MainWindow(Window_MainWindow):
         )
         self.ui.LineEdit_DAT_GPTSoVITS_DataFormat.textChanged.connect(
             lambda Value: (
-                Function_ShowMessageBox(self,
+                MessageBoxBase.pop(self,
                     MessageType = QMessageBox.Warning,
                     WindowTitle = "Warning",
                     Text = "请保留关键词：'路径'，'人名'，'语言'，'文本'",
@@ -3394,7 +3395,7 @@ class MainWindow(Window_MainWindow):
         ChildWindow_DAT_GPTSoVITS = Window_ChildWindow_DAT_GPTSoVITS(self)
 
         ChildWindow_DAT_GPTSoVITS.ui.Button_Close.clicked.connect(
-            lambda: Function_ShowMessageBox(self,
+            lambda: MessageBoxBase.pop(self,
                 QMessageBox.Question, "Ask",
                 "确认放弃编辑？",
                 QMessageBox.Yes|QMessageBox.No,
@@ -3426,7 +3427,7 @@ class MainWindow(Window_MainWindow):
         ChildWindow_DAT_GPTSoVITS.ui.Button_Cancel.clicked.connect(ChildWindow_DAT_GPTSoVITS.ui.Button_Close.click)
         ChildWindow_DAT_GPTSoVITS.ui.Button_Confirm.setText(QCA.translate("Button", "确认"))
         ChildWindow_DAT_GPTSoVITS.ui.Button_Confirm.clicked.connect(
-            lambda: Function_ShowMessageBox(self,
+            lambda: MessageBoxBase.pop(self,
                 QMessageBox.Question, "Ask",
                 "确认应用编辑？",
                 QMessageBox.Yes|QMessageBox.No,
@@ -3509,7 +3510,7 @@ class MainWindow(Window_MainWindow):
                     DATResult_Get(LineEdit_DAT_GPTSoVITS_FileListPath.text())
                 ),
                 ChildWindow_DAT_GPTSoVITS.exec,
-                lambda: Function_ShowMessageBox(self,
+                lambda: MessageBoxBase.pop(self,
                     QMessageBox.Information, "Tip",
                     "当前任务已执行结束。"
                 )
@@ -3655,7 +3656,7 @@ class MainWindow(Window_MainWindow):
         )
         self.ui.LineEdit_DAT_VITS_DataFormat.textChanged.connect(
             lambda Value: (
-                Function_ShowMessageBox(self,
+                MessageBoxBase.pop(self,
                     MessageType = QMessageBox.Warning,
                     WindowTitle = "Warning",
                     Text = "请保留关键词：'路径'，'人名'，'语言'，'文本'",
@@ -4014,7 +4015,7 @@ class MainWindow(Window_MainWindow):
         ChildWindow_DAT_VITS = Window_ChildWindow_DAT_VITS(self)
 
         ChildWindow_DAT_VITS.ui.Button_Close.clicked.connect(
-            lambda: Function_ShowMessageBox(self,
+            lambda: MessageBoxBase.pop(self,
                 QMessageBox.Question, "Ask",
                 "确认放弃编辑？",
                 QMessageBox.Yes|QMessageBox.No,
@@ -4047,7 +4048,7 @@ class MainWindow(Window_MainWindow):
         ChildWindow_DAT_VITS.ui.Button_Cancel.clicked.connect(ChildWindow_DAT_VITS.ui.Button_Close.click)
         ChildWindow_DAT_VITS.ui.Button_Confirm.setText(QCA.translate("Button", "确认"))
         ChildWindow_DAT_VITS.ui.Button_Confirm.clicked.connect(
-            lambda: Function_ShowMessageBox(self,
+            lambda: MessageBoxBase.pop(self,
                 QMessageBox.Question, "Ask",
                 "确认应用编辑？",
                 QMessageBox.Yes|QMessageBox.No,
@@ -4147,7 +4148,7 @@ class MainWindow(Window_MainWindow):
                     DATResult_Get(LineEdit_DAT_VITS_FileListPathValidation.text())
                 ),
                 ChildWindow_DAT_VITS.exec,
-                lambda: Function_ShowMessageBox(self,
+                lambda: MessageBoxBase.pop(self,
                     QMessageBox.Information, "Tip",
                     "当前任务已执行结束。"
                 )
@@ -4558,7 +4559,7 @@ class MainWindow(Window_MainWindow):
         )
         self.ui.LineEdit_Train_GPTSoVITS_LogDir.textChanged.connect(
             lambda Value: (
-                Function_ShowMessageBox(self,
+                MessageBoxBase.pop(self,
                     MessageType = QMessageBox.Warning,
                     WindowTitle = "Warning",
                     Text = "保存路径不支持非ASCII字符，请使用英文路径以避免训练报错",
@@ -4675,14 +4676,14 @@ class MainWindow(Window_MainWindow):
                 self.ui.LineEdit_Train_GPTSoVITS_LogDir
             ],
             FinishEvents = [
-                lambda: Function_ShowMessageBox(self,
+                lambda: MessageBoxBase.pop(self,
                     QMessageBox.Information, "Tip",
                     "当前任务已执行结束。"
                 )
             ]
         )
         FunctionSignals.Signal_TaskStatus.connect(
-            lambda Task, Status: Function_ShowMessageBox(self,
+            lambda Task, Status: MessageBoxBase.pop(self,
                 MessageType = QMessageBox.Question,
                 WindowTitle = "Ask",
                 Text = "是否稍后启用tensorboard？",
@@ -4981,7 +4982,7 @@ class MainWindow(Window_MainWindow):
         )
         DialogBox_KeepOriginalSpeakers.Button_Confirm.setText(QCA.translate("Button", "确认"))
         DialogBox_KeepOriginalSpeakers.Button_Confirm.clicked.connect(
-            lambda: Function_ShowMessageBox(self,
+            lambda: MessageBoxBase.pop(self,
                 MessageType = QMessageBox.Warning,
                 WindowTitle = "Warning",
                 Text = "配置文件路径不存在！",
@@ -5247,7 +5248,7 @@ class MainWindow(Window_MainWindow):
         )
         self.ui.LineEdit_Train_VITS_LogDir.textChanged.connect(
             lambda Value: (
-                Function_ShowMessageBox(self,
+                MessageBoxBase.pop(self,
                     MessageType = QMessageBox.Warning,
                     WindowTitle = "Warning",
                     Text = "保存路径不支持非ASCII字符，请使用英文路径以避免训练报错",
@@ -5356,14 +5357,14 @@ class MainWindow(Window_MainWindow):
                 self.ui.LineEdit_Train_VITS_ModelPathPretrainedD
             ],
             FinishEvents = [
-                lambda: Function_ShowMessageBox(self,
+                lambda: MessageBoxBase.pop(self,
                     QMessageBox.Information, "Tip",
                     "当前任务已执行结束。"
                 )
             ]
         )
         FunctionSignals.Signal_TaskStatus.connect(
-            lambda Task, Status: Function_ShowMessageBox(self,
+            lambda Task, Status: MessageBoxBase.pop(self,
                 MessageType = QMessageBox.Question,
                 WindowTitle = "Ask",
                 Text = "是否稍后启用tensorboard？",
@@ -5610,7 +5611,7 @@ class MainWindow(Window_MainWindow):
             EmptyAllowed = [
             ],
             FinishEvents = [
-                lambda: Function_ShowMessageBox(self,
+                lambda: MessageBoxBase.pop(self,
                     QMessageBox.Information, "Tip",
                     "当前任务已执行结束。"
                 )
@@ -5954,7 +5955,7 @@ class MainWindow(Window_MainWindow):
         ChildWindow_TTS_VITS = Window_ChildWindow_TTS_VITS(self)
 
         ChildWindow_TTS_VITS.ui.Button_Close.clicked.connect(
-            lambda: Function_ShowMessageBox(self,
+            lambda: MessageBoxBase.pop(self,
                 QMessageBox.Question, "Ask",
                 "确认退出试听？",
                 QMessageBox.Yes|QMessageBox.No,
@@ -5983,7 +5984,7 @@ class MainWindow(Window_MainWindow):
 
         ChildWindow_TTS_VITS.ui.Button_Cancel.setText(QCA.translate("Button", "丢弃"))
         ChildWindow_TTS_VITS.ui.Button_Cancel.clicked.connect(
-            lambda: Function_ShowMessageBox(self,
+            lambda: MessageBoxBase.pop(self,
                 QMessageBox.Question, "Ask",
                 "确认丢弃音频？",
                 QMessageBox.Yes|QMessageBox.No,
@@ -5998,7 +5999,7 @@ class MainWindow(Window_MainWindow):
         )
         ChildWindow_TTS_VITS.ui.Button_Confirm.setText(QCA.translate("Button", "保留"))
         ChildWindow_TTS_VITS.ui.Button_Confirm.clicked.connect(
-            lambda: Function_ShowMessageBox(self,
+            lambda: MessageBoxBase.pop(self,
                 QMessageBox.Question, "Ask",
                 "确认保留音频？",
                 QMessageBox.Yes|QMessageBox.No,
@@ -6090,7 +6091,7 @@ class MainWindow(Window_MainWindow):
                     TTS_VITS_AudioPathSave
                 ),
                 ChildWindow_TTS_VITS.exec,
-                lambda: Function_ShowMessageBox(self,
+                lambda: MessageBoxBase.pop(self,
                     QMessageBox.Information, "Tip",
                     "当前任务已执行结束。"
                 )
@@ -6286,7 +6287,7 @@ class MainWindow(Window_MainWindow):
         Function_ConfigureCheckBox(
             CheckBox = self.ui.CheckBox_Setting_Synchronizer,
             UncheckedEvents = [
-                lambda: Function_ShowMessageBox(self,
+                lambda: MessageBoxBase.pop(self,
                     QMessageBox.Information, "Tip",
                     "该设置将于重启之后生效"
                 )
@@ -6493,7 +6494,7 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_Console_Copy.clicked.connect(
             lambda: (
                 self.Clipboard.setText(self.ui.PlainTextEdit_Console.toPlainText()),
-                Function_ShowMessageBox(self, WindowTitle = "Tip", Text = "已复制输出日志到剪切板")
+                MessageBoxBase.pop(self, WindowTitle = "Tip", Text = "已复制输出日志到剪切板")
             )
         )
 

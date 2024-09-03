@@ -408,43 +408,13 @@ class PyReqs_Installer(QObject):
         try:
             PackageInfos = str(QFunc.RunCMD([['pip', 'show', PackageName]], DecodeResult = True)[0])
             if PackageInfos != 'None':
-                def IsVersionSatisfied(CurrentVersion, VersionReqs):
-                    if VersionReqs is None:
-                        return True
-                    VersionReqs = VersionReqs.split(',') if isinstance(VersionReqs, str) else list(VersionReqs)
-                    Results = []
-                    for VersionReq in VersionReqs:
-                        SplitVersionReq = re.split('=|>|<', VersionReq)
-                        RequiredVersion = SplitVersionReq[-1]
-                        Req = VersionReq[:len(VersionReq) - len(RequiredVersion)]
-                        if Req == "==":
-                            Results.append(version.parse(CurrentVersion) == version.parse(RequiredVersion))
-                        if Req == ">=":
-                            Results.append(version.parse(CurrentVersion) >= version.parse(RequiredVersion))
-                        if Req == "<=":
-                            Results.append(version.parse(CurrentVersion) <= version.parse(RequiredVersion))
-                        return True if False not in Results else False
-                def IsSystemSatisfied(SystemReqs):
-                    if SystemReqs is None:
-                        return True
-                    SystemReqs = SystemReqs.split(';') if isinstance(SystemReqs, str) else list(SystemReqs)
-                    Results = []
-                    for SystemReq in SystemReqs:
-                        SplitSystemReq = re.split('=|>|<', SystemReq)
-                        RequiredSystem = SplitSystemReq[-1]
-                        Req = SystemReq[:len(SystemReq) - len(RequiredSystem)]
-                        if Req == "==":
-                            Results.append(sys.platform == RequiredSystem)
-                        if Req == "!=":
-                            Results.append(sys.platform != RequiredSystem)
-                        return True if False not in Results else False
                 CurrentVersion = None
                 for PackageInfo in PackageInfos.splitlines():
                     if PackageInfo.startswith('Version:'):
                         CurrentVersion = PackageInfo[len('Version:'):].strip()
                         continue
                 CurrentVersion = PackageInfos if CurrentVersion is None else CurrentVersion
-                return CurrentVersion if IsVersionSatisfied(CurrentVersion, PackageVersionReqs) or not IsSystemSatisfied(SystemReqs) else False
+                return CurrentVersion if QFunc.IsVersionSatisfied(CurrentVersion, PackageVersionReqs) or not QFunc.IsSystemSatisfied(SystemReqs) else False
             else:
                 return False
         except OSError:
