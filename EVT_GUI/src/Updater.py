@@ -8,8 +8,9 @@ from PySide6.QtCore import Qt, QObject, QThread, Signal
 from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import QApplication, QVBoxLayout, QSizePolicy, QWidget, QMessageBox, QPushButton, QProgressBar, QLabel
 from QEasyWidgets import QFunctions as QFunc
+from QEasyWidgets.Windows import MessageBoxBase
 
-from Functions import Function_SetMethodExecutor, Function_ShowMessageBox
+from Functions import Function_SetMethodExecutor
 from Config import *
 
 ##############################################################################################################################
@@ -246,7 +247,7 @@ class Widget_Updater(QWidget):
         UpdaterSignals.Signal_ReadyToUpdate.connect(
             lambda DownloadURL: (
                 UpdateDownloadURL(DownloadURL),
-                Function_ShowMessageBox(
+                MessageBoxBase.pop(
                     MessageType = QMessageBox.Question,
                     WindowTitle = 'Ask',
                     Text = '检测到可用的新版本，是否更新？\nNew version available, wanna update?',
@@ -264,7 +265,7 @@ class Widget_Updater(QWidget):
         )
         UpdaterSignals.Signal_IsUpdateSucceeded.connect(
             lambda Succeeded, Info: (
-                Function_ShowMessageBox(
+                MessageBoxBase.pop(
                     MessageType = QMessageBox.Warning,
                     WindowTitle = 'Warning',
                     Text = Info
