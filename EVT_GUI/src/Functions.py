@@ -516,32 +516,6 @@ class ParamsManager:
 
 ##############################################################################################################################
 
-class Execute_Task(QObject):
-    '''
-    A example class to excute tasks
-    '''
-    started = Signal()
-    finished = Signal(str)
-
-    def __init__(self):
-        super().__init__()
-
-    @Slot(tuple)
-    def Execute(self, Params: tuple):
-        self.started.emit()
-
-        def _run(self, Params: tuple):
-            '''
-            Should put your task here and need to return an error info
-            '''
-        Error = self._run(Params)
-
-        self.finished.emit(str(Error))
-
-    def Terminate(self):
-        QFunc.ProcessTerminator(self.Process.pid) if hasattr(self, 'Process') else None
-
-
 def Function_SetMethodExecutor(
     ParentWindow: Optional[QWidget] = None,
     ExecuteButton: Optional[QAbstractButton] = None,
@@ -552,8 +526,7 @@ def Function_SetMethodExecutor(
     Params: Optional[tuple] = None,
     ParamsFrom: Optional[list[QObject]] = None,
     EmptyAllowed: Optional[list[QObject]] = None,
-    #StartEvents: Optional[list] = None,
-    FinishEvents: Optional[list] = None
+    SuccessEvents: Optional[list] = None
 ):
     '''
     Function to execute outer class methods
@@ -563,11 +536,14 @@ def Function_SetMethodExecutor(
 
     ClassInstance = QFunc.GetClassFromMethod(Method)()
     ClassInstance.started.connect(lambda: FunctionSignals.Signal_TaskStatus.emit(QualName, 'Started')) if hasattr(ClassInstance, 'started') else None
-    #ClassInstance.started.connect(lambda: QFunc.RunEvents(StartEvents)) if hasattr(ClassInstance, 'started') else None
-    ClassInstance.finished.connect(lambda Error: FunctionSignals.Signal_TaskStatus.emit(QualName, 'Finished') if Error == str(None) else None) if hasattr(ClassInstance, 'finished') else None
-    ClassInstance.finished.connect(lambda Error: QFunc.RunEvents(FinishEvents) if Error == str(None) else None) if hasattr(ClassInstance, 'finished') else None
-    ClassInstance.finished.connect(lambda Error: FunctionSignals.Signal_TaskStatus.emit(QualName, 'Failed') if Error != str(None) else None) if hasattr(ClassInstance, 'finished') else None
-    ClassInstance.finished.connect(lambda Error: MessageBoxBase.pop(ParentWindow, QMessageBox.Warning, 'Failure', f'发生错误：\n{Error}') if Error != str(None) else None) if hasattr(ClassInstance, 'finished') else None
+    ClassInstance.errChk.connect(
+        lambda Err: (
+            QFunc.RunEvents(SuccessEvents) if Err == str(None) else None,
+            MessageBoxBase.pop(ParentWindow, QMessageBox.Warning, 'Failure', f'发生错误：\n{Err}') if Err != str(None) else None,
+            FunctionSignals.Signal_TaskStatus.emit(QualName, 'Failed') if Err != str(None) else None
+        )
+    ) if hasattr(ClassInstance, 'errChk') else None
+    ClassInstance.finished.connect(lambda: FunctionSignals.Signal_TaskStatus.emit(QualName, 'Finished')) if hasattr(ClassInstance, 'finished') else None
 
     if not isinstance(ClassInstance, QThread):
         WorkerThread = QThread()
@@ -627,7 +603,7 @@ def Function_SetMethodExecutor(
 
         ClassInstance.Terminate() if hasattr(ClassInstance, 'Terminate') else QFunc.ProcessTerminator('python.exe', SearchKeyword = True)
 
-        FunctionSignals.Signal_TaskStatus.emit(QualName, 'Failed') if hasattr(ClassInstance, 'finished') else None
+        FunctionSignals.Signal_TaskStatus.emit(QualName, 'Failed') if hasattr(ClassInstance, 'errChk') else None
 
         ProgressBar.setValue(0) if ProgressBar else None
 

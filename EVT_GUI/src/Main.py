@@ -100,7 +100,9 @@ class Execute_Audio_Processing(QObject):
     Change media format to WAV (and denoise) and cut off the silent parts
     '''
     started = Signal()
-    finished = Signal(str)
+    finished = Signal()
+
+    errChk = Signal(str)
 
     def __init__(self):
         super().__init__()
@@ -130,8 +132,9 @@ class Execute_Audio_Processing(QObject):
             Error = "出错了，详情请见终端输出信息"
         else:
             Error = None
+        self.errChk.emit(str(Error))
 
-        self.finished.emit(str(Error))
+        self.finished.emit()
 
     def Terminate(self):
         QFunc.ProcessTerminator(self.Process.pid) if hasattr(self, 'Process') else None
@@ -143,7 +146,9 @@ class Execute_Voice_Identifying_VPR(QObject):
     Contrast the voice and filter out the similar ones
     '''
     started = Signal()
-    finished = Signal(str)
+    finished = Signal()
+
+    errChk = Signal(str)
 
     def __init__(self):
         super().__init__()
@@ -174,8 +179,9 @@ class Execute_Voice_Identifying_VPR(QObject):
             Error = "出错了，详情请见终端输出信息"
         else:
             Error = None
+        self.errChk.emit(str(Error))
 
-        self.finished.emit(str(Error))
+        self.finished.emit()
 
     def Terminate(self):
         QFunc.ProcessTerminator(self.Process.pid) if hasattr(self, 'Process') else None
@@ -187,7 +193,9 @@ class Execute_Voice_Transcribing_Whisper(QObject):
     Transcribe WAV content to SRT
     '''
     started = Signal()
-    finished = Signal(str)
+    finished = Signal()
+
+    errChk = Signal(str)
 
     def __init__(self):
         super().__init__()
@@ -225,8 +233,9 @@ class Execute_Voice_Transcribing_Whisper(QObject):
             Error = "出错了，详情请见终端输出信息"
         else:
             Error = None
+        self.errChk.emit(str(Error))
 
-        self.finished.emit(str(Error))
+        self.finished.emit()
 
     def Terminate(self):
         QFunc.ProcessTerminator(self.Process.pid) if hasattr(self, 'Process') else None
@@ -238,7 +247,9 @@ class Execute_Dataset_Creating_GPTSoVITS(QObject):
     Convert the whisper-generated SRT to CSV and split the WAV
     '''
     started = Signal()
-    finished = Signal(str)
+    finished = Signal()
+
+    errChk = Signal(str)
 
     def __init__(self):
         super().__init__()
@@ -268,8 +279,9 @@ class Execute_Dataset_Creating_GPTSoVITS(QObject):
             Error = "出错了，详情请见终端输出信息"
         else:
             Error = None
+        self.errChk.emit(str(Error))
 
-        self.finished.emit(str(Error))
+        self.finished.emit()
 
     def Terminate(self):
         QFunc.ProcessTerminator(self.Process.pid) if hasattr(self, 'Process') else None
@@ -280,7 +292,9 @@ class Execute_Dataset_Creating_VITS(QObject):
     Convert the whisper-generated SRT to CSV and split the WAV
     '''
     started = Signal()
-    finished = Signal(str)
+    finished = Signal()
+
+    errChk = Signal(str)
 
     def __init__(self):
         super().__init__()
@@ -310,8 +324,9 @@ class Execute_Dataset_Creating_VITS(QObject):
             Error = "出错了，详情请见终端输出信息"
         else:
             Error = None
+        self.errChk.emit(str(Error))
 
-        self.finished.emit(str(Error))
+        self.finished.emit()
 
     def Terminate(self):
         QFunc.ProcessTerminator(self.Process.pid) if hasattr(self, 'Process') else None
@@ -323,7 +338,9 @@ class Execute_Voice_Training_GPTSoVITS(QObject):
     Preprocess and then start training
     '''
     started = Signal()
-    finished = Signal(str)
+    finished = Signal()
+
+    errChk = Signal(str)
 
     def __init__(self):
         super().__init__()
@@ -352,8 +369,9 @@ class Execute_Voice_Training_GPTSoVITS(QObject):
             Error = "出错了，详情请见终端输出信息"
         else:
             Error = None
+        self.errChk.emit(str(Error))
 
-        self.finished.emit(str(Error))
+        self.finished.emit()
 
     def Terminate(self):
         QFunc.ProcessTerminator(self.Process.pid) if hasattr(self, 'Process') else None
@@ -364,7 +382,9 @@ class Execute_Voice_Training_VITS(QObject):
     Preprocess and then start training
     '''
     started = Signal()
-    finished = Signal(str)
+    finished = Signal()
+
+    errChk = Signal(str)
 
     def __init__(self):
         super().__init__()
@@ -393,8 +413,9 @@ class Execute_Voice_Training_VITS(QObject):
             Error = "出错了，详情请见终端输出信息"
         else:
             Error = None
+        self.errChk.emit(str(Error))
 
-        self.finished.emit(str(Error))
+        self.finished.emit()
 
     def Terminate(self):
         QFunc.ProcessTerminator(self.Process.pid) if hasattr(self, 'Process') else None
@@ -406,7 +427,9 @@ class Execute_Voice_Converting_GPTSoVITS(QObject):
     Inference model
     '''
     started = Signal()
-    finished = Signal(str)
+    finished = Signal()
+
+    errChk = Signal(str)
 
     def __init__(self):
         super().__init__()
@@ -435,8 +458,9 @@ class Execute_Voice_Converting_GPTSoVITS(QObject):
             Error = "出错了，详情请见终端输出信息"
         else:
             Error = None
+        self.errChk.emit(str(Error))
 
-        self.finished.emit(str(Error))
+        self.finished.emit()
 
     def Terminate(self):
         QFunc.ProcessTerminator(self.Process.pid) if hasattr(self, 'Process') else None
@@ -456,7 +480,9 @@ class Execute_Voice_Converting_VITS(QObject):
     Inference model
     '''
     started = Signal()
-    finished = Signal(str)
+    finished = Signal()
+
+    errChk = Signal(str)
 
     def __init__(self):
         super().__init__()
@@ -493,8 +519,9 @@ class Execute_Voice_Converting_VITS(QObject):
             Error = "出错了，详情请见终端输出信息"
         else:
             Error = None
+        self.errChk.emit(str(Error))
 
-        self.finished.emit(str(Error))
+        self.finished.emit()
 
     def Terminate(self):
         QFunc.ProcessTerminator(self.Process.pid) if hasattr(self, 'Process') else None
@@ -521,7 +548,9 @@ class Model_View(QObject):
     '''
     View model
     '''
-    finished = Signal(str)
+    finished = Signal()
+
+    errChk = Signal(str)
 
     def __init__(self):
         super().__init__()
@@ -623,7 +652,7 @@ class Model_View(QObject):
                 ['pth', 'json']
             )
         )
-        self.finished.emit(str(None))
+        self.finished.emit()
 
 
 # ClientFunc: ModelDownloader
@@ -631,7 +660,9 @@ class Model_Downloader(QObject):
     '''
     Download model
     '''
-    finished = Signal(str)
+    finished = Signal()
+
+    errChk = Signal(str)
 
     def __init__(self):
         super().__init__()
@@ -648,8 +679,9 @@ class Model_Downloader(QObject):
     @Slot(tuple)
     def Execute(self, Params: tuple):
         Error = self.DownloadModel(Params)
+        self.errChk.emit(str(Error))
 
-        self.finished.emit(str(Error))
+        self.finished.emit()
 
 
 # ClientFunc: AddLocalModel
@@ -746,7 +778,9 @@ class Integrity_Checker(QObject):
     '''
     Check File integrity
     '''
-    finished = Signal(str)
+    finished = Signal()
+
+    errChk = Signal(str)
 
     def __init__(self):
         super().__init__()
@@ -768,8 +802,9 @@ class Integrity_Checker(QObject):
             DecodeResult = True,
             LogPath = LogPath
         )[1]
+        self.errChk.emit(str(Error))
 
-        self.finished.emit(str(Error))
+        self.finished.emit()
 
 
 # ClientFunc: TensorboardRunner
@@ -777,7 +812,9 @@ class Tensorboard_Runner(QObject):
     '''
     Check File integrity
     '''
-    finished = Signal(str)
+    finished = Signal()
+
+    errChk = Signal(str)
 
     def __init__(self):
         super().__init__()
@@ -803,8 +840,9 @@ class Tensorboard_Runner(QObject):
     @Slot(tuple)
     def Execute(self, Params: tuple):
         Error = self.RunTensorboard(*Params)
+        self.errChk.emit(str(Error))
 
-        self.finished.emit(str(Error))
+        self.finished.emit()
 
 ##############################################################################################################################
 
@@ -2139,7 +2177,7 @@ class MainWindow(Window_MainWindow):
                 self.ui.ComboBox_Process_SampleRate,
                 self.ui.ComboBox_Process_SampleWidth
             ],
-            FinishEvents = [
+            SuccessEvents = [
                 lambda: MessageBoxBase.pop(self,
                     QMessageBox.Information, "Tip",
                     "当前任务已执行结束。"
@@ -2652,7 +2690,7 @@ class MainWindow(Window_MainWindow):
                 self.ui.LineEdit_ASR_VPR_OutputDirName,
                 self.ui.LineEdit_ASR_VPR_AudioSpeakersDataName
             ],
-            FinishEvents = [
+            SuccessEvents = [
                 lambda: self.ShowMask(True, "正在加载表单"),
                 lambda: ChildWindow_ASR.ui.Table.SetValue(
                     ASRResult_Get(LineEdit_ASR_VPR_AudioSpeakersDataPath.text()),
@@ -3093,7 +3131,7 @@ class MainWindow(Window_MainWindow):
                 self.ui.LineEdit_STT_Whisper_OutputRoot,
                 self.ui.LineEdit_STT_Whisper_OutputDirName
             ],
-            FinishEvents = [
+            SuccessEvents = [
                 lambda: self.ShowMask(True, "正在加载表单"),
                 lambda: ChildWindow_STT.ui.Table.SetValue(
                     STTResult_Get(LineEdit_STT_Whisper_OutputDir.text(), self.ui.LineEdit_STT_Whisper_AudioDir.text())
@@ -3504,7 +3542,7 @@ class MainWindow(Window_MainWindow):
             ],
             EmptyAllowed = [
             ],
-            FinishEvents = [
+            SuccessEvents = [
                 lambda: self.ShowMask(True, "正在加载表单"),
                 lambda: ChildWindow_DAT_GPTSoVITS.ui.Table.SetValue(
                     DATResult_Get(LineEdit_DAT_GPTSoVITS_FileListPath.text())
@@ -4139,7 +4177,7 @@ class MainWindow(Window_MainWindow):
                 self.ui.ComboBox_DAT_VITS_SampleWidth,
                 self.ui.LineEdit_DAT_VITS_AuxiliaryDataPath
             ],
-            FinishEvents = [
+            SuccessEvents = [
                 lambda: self.ShowMask(True, "正在加载表单"),
                 lambda: ChildWindow_DAT_VITS.ui.Table_Train.SetValue(
                     DATResult_Get(LineEdit_DAT_VITS_FileListPathTraining.text())
@@ -4675,7 +4713,7 @@ class MainWindow(Window_MainWindow):
                 self.ui.LineEdit_Train_GPTSoVITS_OutputDirName,
                 self.ui.LineEdit_Train_GPTSoVITS_LogDir
             ],
-            FinishEvents = [
+            SuccessEvents = [
                 lambda: MessageBoxBase.pop(self,
                     QMessageBox.Information, "Tip",
                     "当前任务已执行结束。"
@@ -5356,7 +5394,7 @@ class MainWindow(Window_MainWindow):
                 self.ui.LineEdit_Train_VITS_ModelPathPretrainedG,
                 self.ui.LineEdit_Train_VITS_ModelPathPretrainedD
             ],
-            FinishEvents = [
+            SuccessEvents = [
                 lambda: MessageBoxBase.pop(self,
                     QMessageBox.Information, "Tip",
                     "当前任务已执行结束。"
@@ -5610,7 +5648,7 @@ class MainWindow(Window_MainWindow):
             ],
             EmptyAllowed = [
             ],
-            FinishEvents = [
+            SuccessEvents = [
                 lambda: MessageBoxBase.pop(self,
                     QMessageBox.Information, "Tip",
                     "当前任务已执行结束。"
@@ -6085,7 +6123,7 @@ class MainWindow(Window_MainWindow):
                 self.ui.ComboBox_TTS_VITS_Language,
                 self.ui.ComboBox_TTS_VITS_Speaker
             ],
-            FinishEvents = [
+            SuccessEvents = [
                 lambda: self.ShowMask(True, "正在加载播放器"),
                 lambda: ChildWindow_TTS_VITS.ui.Widget.SetMediaPlayer(
                     TTS_VITS_AudioPathSave
