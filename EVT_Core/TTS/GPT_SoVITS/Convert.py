@@ -139,10 +139,10 @@ def change_tts_inference(
     use_webui
 ):
     global p_tts_inference
-    if batched_infer_enabled:
-        cmd = '"%s" GPT_SoVITS/inference_webui_fast.py'%(python_exec)
+    if use_webui:
+        cmd = '"%s" GPT_SoVITS/inference_webui_fast.py'%(python_exec) if batched_infer_enabled else '"%s" GPT_SoVITS/inference_webui.py'%(python_exec)
     else:
-        cmd = '"%s" GPT_SoVITS/inference_webui.py'%(python_exec)
+        cmd = f'"{python_exec}" "GPT_SoVITS/inference_gui.py"'
     if(if_tts==True and p_tts_inference==None):
         os.environ["gpt_path"]=gpt_path #if "/" in gpt_path else "%s/%s"%(GPT_weight_root,gpt_path)
         os.environ["sovits_path"]=sovits_path #if "/"in sovits_path else "%s/%s"%(SoVITS_weight_root,sovits_path)
@@ -152,7 +152,6 @@ def change_tts_inference(
         os.environ["is_half"]=str(is_half)
         os.environ["infer_ttswebui"]=str(webui_port_infer_tts)
         os.environ["is_share"]=str(is_share)
-        os.environ['USE_WEBUI']=str(use_webui)
         print("TTS推理进程已开启")
         print(cmd)
         p_tts_inference = subprocess.Popen(cmd, shell=True)
@@ -195,38 +194,5 @@ def Convert(
         batched_infer_enabled = Enable_Batched_Infer,
         use_webui = Use_WebUI
     )
-    '''
-    else:
-        os.environ["gpt_path"] = Model_Path_Load_s1
-        os.environ["sovits_path"] = Model_Path_Load_s2G
-        os.environ["cnhubert_base_path"] = Model_Dir_Load_ssl
-        os.environ["bert_path"] = Model_Dir_Load_bert
-        os.environ["_CUDA_VISIBLE_DEVICES"] = gpus
-        os.environ["is_half"] = str(Set_FP16_Run)
-        os.environ["infer_ttswebui"] = str(webui_port_infer_tts)
-        os.environ["is_share"] = str(is_share)
-
-        from .GPT_SoVITS.inference_webui import gpt_path, sovits_path, change_gpt_weights, change_sovits_weights, get_tts_wav
-
-        change_gpt_weights(gpt_path)
-
-        change_sovits_weights(sovits_path)
-
-        TTS_Result = get_tts_wav(
-            ref_wav_path = Ref_Audio,
-            prompt_text = Ref_Text,
-            prompt_language = Ref_Language,
-            text = Text,
-            text_language = Language,
-            how_to_cut = How_To_Cut,
-            top_k = Top_K,
-            top_p = Top_P,
-            temperature = Temperature,
-            ref_free = Ref_Text_Free
-        )
-        SR, Audio = list(TTS_Result)[-1]
-
-        write(Audio_Path_Save, SR, Audio)
-    '''
 
     # 2-GPT-SoVITS-变声
