@@ -116,7 +116,7 @@ class Execute_Audio_Processing(QObject):
             Args = [
                 f'cd "{CoreDir}"',
                 'python -c "'
-                'from Process.Process import Audio_Processing; '
+                'from AudioProcessor.Process import Audio_Processing; '
                 f"AudioConvertandSlice = Audio_Processing{str(Params)}; "
                 'AudioConvertandSlice.Process_Audio()"'
             ]
@@ -162,7 +162,7 @@ class Execute_Voice_Identifying_VPR(QObject):
             Args = [
                 f'cd "{CoreDir}"',
                 'python -c "'
-                'from ASR.VPR.Identify import Voice_Identifying; '
+                'from VPR.Identify import Voice_Identifying; '
                 f"AudioContrastInference = Voice_Identifying{str(Params)}; "
                 'AudioContrastInference.GetModel(); '
                 'AudioContrastInference.Inference()"'
@@ -217,7 +217,7 @@ class Execute_Voice_Transcribing_Whisper(QObject):
             Args = [
                 f'cd "{CoreDir}"',
                 'python -c "'
-                'from STT.Whisper.Transcribe import Voice_Transcribing; '
+                'from Whisper.Transcribe import Voice_Transcribing; '
                 f"WAVtoSRT = Voice_Transcribing{str(QFunc.ItemReplacer(LANGUAGES, Params))}; "
                 'WAVtoSRT.Transcriber()"'
             ]
@@ -263,7 +263,7 @@ class Execute_Dataset_Creating_GPTSoVITS(QObject):
             Args = [
                 f'cd "{CoreDir}"',
                 'python -c "'
-                'from Dataset.GPT_SoVITS.Create import Dataset_Creating; '
+                'from GPT_SoVITS.Create import Dataset_Creating; '
                 f"SRTtoCSVandSplitAudio = Dataset_Creating{str(Params)}; "
                 'SRTtoCSVandSplitAudio.CallingFunctions()"'
             ]
@@ -308,7 +308,7 @@ class Execute_Dataset_Creating_VITS(QObject):
             Args = [
                 f'cd "{CoreDir}"',
                 'python -c "'
-                'from Dataset.VITS.Create import Dataset_Creating; '
+                'from VITS.Create import Dataset_Creating; '
                 f"SRTtoCSVandSplitAudio = Dataset_Creating{str(Params)}; "
                 'SRTtoCSVandSplitAudio.CallingFunctions()"'
             ]
@@ -354,7 +354,7 @@ class Execute_Voice_Training_GPTSoVITS(QObject):
             Args = [
                 f'cd "{CoreDir}"',
                 'python -c "'
-                'from Train.GPT_SoVITS.Train import Train; '
+                'from GPT_SoVITS.Train import Train; '
                 f'Train{str(Params)}"'
             ]
         )
@@ -398,7 +398,7 @@ class Execute_Voice_Training_VITS(QObject):
             Args = [
                 f'cd "{CoreDir}"',
                 'python -c "'
-                'from Train.VITS.Train import Train; '
+                'from VITS.Train import Train; '
                 f'Train{str(Params)}"'
             ]
         )
@@ -443,7 +443,7 @@ class Execute_Voice_Converting_GPTSoVITS(QObject):
             Args = [
                 f'cd "{CoreDir}"',
                 'python -c "'
-                'from TTS.GPT_SoVITS.Convert import Convert; '
+                'from GPT_SoVITS.Convert import Convert; '
                 f'Convert{str(Params)}"'
             ]
         )
@@ -504,7 +504,7 @@ class Execute_Voice_Converting_VITS(QObject):
             Args = [
                 f'cd "{CoreDir}"',
                 'python -c "'
-                'from TTS.VITS.Convert import Convert; '
+                'from VITS.Convert import Convert; '
                 f'Convert{str(QFunc.ItemReplacer(LANGUAGES, Params))}"'
             ]
         )
@@ -791,12 +791,15 @@ class Integrity_Checker(QObject):
             Args = [
                 f'cd "{CoreDir}"',
                 'python -c "'
-                'from Process.Process import Audio_Processing; '
-                'from ASR.VPR.Identify import Voice_Identifying; '
-                'from STT.Whisper.Transcribe import Voice_Transcribing; '
-                'from Dataset.VITS.Create import Dataset_Creating; '
-                'from Train.VITS.Train import Voice_Training; '
-                'from TTS.VITS.Convert import Voice_Converting"'
+                'from AudioProcessor.Process import Audio_Processing; '
+                'from VPR.Identify import Voice_Identifying; '
+                'from Whisper.Transcribe import Voice_Transcribing; '
+                'from GPT_SoVITS.Create import Dataset_Creating; '
+                'from GPT_SoVITS.Train import Train; '
+                'from GPT_SoVITS.Convert import Convert; '
+                'from VITS.Create import Dataset_Creating; '
+                'from VITS.Train import Train; '
+                'from VITS.Convert import Convert"'
             ],
             CommunicateThroughConsole = True,
             DecodeResult = True,
