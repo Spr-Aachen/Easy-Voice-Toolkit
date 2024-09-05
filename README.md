@@ -140,7 +140,7 @@ Please make sure that you've installed [Python](https://www.python.org/downloads
 
 - Clone Repository
     ```shell
-    git clone https://github.com/Spr-Aachen/Easy-Voice-Toolkit.git
+    git clone --recurse-submodules https://github.com/Spr-Aachen/Easy-Voice-Toolkit.git
     ```
 
 - Change directory
@@ -177,19 +177,19 @@ Please make sure that you've installed [Python](https://www.python.org/downloads
 
 #### Google Colab
 
-[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Spr-Aachen/EVT-Resources/blob/main/Easy_Voice_Toolkit_for_Colab.ipynb)
+[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Spr-Aachen/Easy-Voice-Toolkit/blob/main/Run.ipynb)
 <br>Click to use the demo above, or access to Colab and upload [Run.ipynb](https://github.com/Spr-Aachen/Easy-Voice-Toolkit/blob/main/Run.ipynb)
 
 
 ## Future Features
 
 ### To Do
-- Add support for Linux OS
 - Add chatbot (LLM) integration
 
 ### WIP
 - Frontend-Backend Separation
 - Internationalization
+- Add support for Linux OS
 
 
 ## Tested Devices

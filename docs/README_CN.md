@@ -140,7 +140,7 @@
 
 - 克隆项目仓库
     ```shell
-    git clone https://github.com/Spr-Aachen/Easy-Voice-Toolkit.git
+    git clone --recurse-submodules https://github.com/Spr-Aachen/Easy-Voice-Toolkit.git
     ```
 
 - 切至项目目录
@@ -177,19 +177,19 @@
 
 #### Google Colab
 
-[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Spr-Aachen/EVT-Resources/blob/main/Easy_Voice_Toolkit_for_Colab.ipynb)
+[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Spr-Aachen/Easy-Voice-Toolkit/blob/main/Run.ipynb)
 <br>点击以使用上面的demo，或者在Colab中上传[Run.ipynb](https://github.com/Spr-Aachen/Easy-Voice-Toolkit/blob/main/Run.ipynb)
 
 
 ## 迭代计划
 
 ### To Do
-- 兼容Linux系统
 - 添加LLM联动功能
 
 ### 开发中
 - 前后端分离
 - 语言国际化
+- 兼容Linux系统
 
 
 ## 测试平台

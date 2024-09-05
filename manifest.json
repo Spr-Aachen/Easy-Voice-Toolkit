@@ -54,7 +54,7 @@
             "size": "35.0MB",
             "date": "2022-08-11 08:03:36",
             "SHA": "a7c689599e616f03a339bfd11a27ae7cf7a975ac1713c5b85564a70a2e0c469f",
-            "downloadurl": "https://github.com/Spr-Aachen/EVT-Resources/raw/main/Voiceprint%20Model/Ecapa-Tdnn_spectrogram.pth",
+            "downloadurl": "https://huggingface.co/SprAachen/VPR/resolve/main/Ecapa-Tdnn_spectrogram.pth?download=true",
             "link": ""
         },
         {
@@ -66,7 +66,7 @@
             "size": "33.8MB",
             "date": "2022-08-09 22:21:25",
             "SHA": "812c2758805dc7e9d7c2a5b0cd87b342a081f4d9a20513e246a3281ccd8f9bb7",
-            "downloadurl": "https://github.com/Spr-Aachen/EVT-Resources/raw/main/Voiceprint%20Model/Ecapa-Tdnn_melspectrogram.pth",
+            "downloadurl": "https://huggingface.co/SprAachen/VPR/resolve/main/Ecapa-Tdnn_melspectrogram.pth?download=true",
             "link": ""
         },
         {

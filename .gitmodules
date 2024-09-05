@@ -1,19 +1,24 @@
 [submodule "EVT_Core/AudioProcessor"]
 	path = EVT_Core/AudioProcessor
 	url = https://github.com/Spr-Aachen/EVT-Core-AudioProcessor
+	ignore = dirty
 
 [submodule "EVT_Core/VPR"]
 	path = EVT_Core/VPR
 	url = https://github.com/Spr-Aachen/EVT-Core-VPR
+	ignore = dirty
 
 [submodule "EVT_Core/Whisper"]
 	path = EVT_Core/Whisper
 	url = https://github.com/Spr-Aachen/EVT-Core-Whisper
+	ignore = dirty
 
 [submodule "EVT_Core/GPT-SoVITS"]
 	path = EVT_Core/GPT_SoVITS
 	url = https://github.com/Spr-Aachen/EVT-Core-GPT-SoVITS
+	ignore = dirty
 
 [submodule "EVT_Core/VITS"]
 	path = EVT_Core/VITS
 	url = https://github.com/Spr-Aachen/EVT-Core-VITS
+	ignore = dirty
