@@ -872,6 +872,84 @@ class MainWindow(Window_MainWindow):
         self.MonitorUsage = QTasks.MonitorUsage()
         self.MonitorUsage.start()
 
+    def showGuidance(self, WindowTitle: str, Images: list, Texts: list):
+        DialogBox = MessageBox_Stacked(self)
+        DialogBox.setWindowTitle(WindowTitle)
+        DialogBox.SetContent(Images, Texts)
+        DialogBox.exec()
+
+    def appendModels(self):
+        LineEdit_Models_Append = QLineEdit()
+        DialogBox_Models_Append = MessageBox_Buttons(self)
+        DialogBox_Models_Append.setText(QCA.translate("MsgBox", "请选择添加方式"))
+        DialogBox_Models_Append.Button1.setText(QCA.translate("Button", "模型文件目录（多文件）"))
+        DialogBox_Models_Append.Button1.clicked.connect(
+            lambda: (
+                LineEdit_Models_Append.setText(
+                    QFunc.Function_GetFileDialog(
+                        Mode = "SelectFolder"
+                    )
+                ),
+                DialogBox_Models_Append.close(),
+            )
+        )
+        DialogBox_Models_Append.Button2.setText(QCA.translate("Button", "模型文件路径（单文件）"))
+        DialogBox_Models_Append.Button2.clicked.connect(
+            lambda: (
+                LineEdit_Models_Append.setText(
+                    QFunc.Function_GetFileDialog(
+                        Mode = "SelectFile",
+                        FileType = "模型文件 (*.pt *.pth *.ckpt *.bin *.json')"
+                    )
+                ),
+                DialogBox_Models_Append.close(),
+            )
+        )
+        DialogBox_Models_Append.exec()
+        ModelPath = LineEdit_Models_Append.text()
+        if QFunc.NormPath(ModelPath) is None:
+            return
+        ToolIndexList = ['Process', 'ASR', 'STT', 'TTS']
+        ToolIndex = self.ui.StackedWidget_Pages_Models.currentIndex()
+        TabWidget = QFunc.Function_FindChildUI(self.ui.StackedWidget_Pages_Models.currentWidget(), QTabWidget)
+        TypeIndex = TabWidget.currentIndex()
+        Sector = [
+            ToolIndexList[ToolIndex],
+            TabWidget.tabText(TypeIndex).rsplit('（')[0],
+        ]
+        AddLocalModel(ModelPath, Sector)
+        self.ui.Button_Models_Refresh.click()
+
+    def setAudioSpeakersDataPath(self):
+        DialogBox_AudioSpeakersDataPath = MessageBox_Buttons(self)
+        DialogBox_AudioSpeakersDataPath.setText(QCA.translate("MsgBox", "请选择参数类型"))
+        DialogBox_AudioSpeakersDataPath.Button1.setText(QCA.translate("Button", "音频文件目录"))
+        DialogBox_AudioSpeakersDataPath.Button1.clicked.connect(
+            lambda: (
+                self.ui.LineEdit_DAT_GPTSoVITS_AudioSpeakersDataPath.setText(
+                    QFunc.Function_GetFileDialog(
+                        Mode = "SelectFolder",
+                        #Directory = QFunc.NormPath(Path(ChildWindow_ASR.ui.LineEdit.text()))
+                    )
+                ),
+                DialogBox_AudioSpeakersDataPath.close(),
+            )
+        )
+        DialogBox_AudioSpeakersDataPath.Button2.setText(QCA.translate("Button", "语音识别结果文本路径"))
+        DialogBox_AudioSpeakersDataPath.Button2.clicked.connect(
+            lambda: (
+                self.ui.LineEdit_DAT_GPTSoVITS_AudioSpeakersDataPath.setText(
+                    QFunc.Function_GetFileDialog(
+                        Mode = "SelectFile",
+                        FileType = "txt类型 (*.txt)",
+                        Directory = Path(CurrentDir).joinpath('语音识别结果', 'VPR').as_posix()
+                    )
+                ),
+                DialogBox_AudioSpeakersDataPath.close(),
+            )
+        )
+        DialogBox_AudioSpeakersDataPath.exec()
+
     def Main(self):
         '''
         Main funtion to orgnize all the subfunctions
@@ -1501,75 +1579,32 @@ class MainWindow(Window_MainWindow):
         )
 
         self.ui.Button_Models_Append.setText(QCA.translate("ToolButton", '添加'))
-        LineEdit_Models_Append = QLineEdit()
-        DialogBox_Models_Append = MessageBox_Buttons(self)
-        DialogBox_Models_Append.setText(QCA.translate("MsgBox", "请选择添加方式"))
-        DialogBox_Models_Append.Button1.setText(QCA.translate("Button", "模型文件目录（多文件）"))
-        DialogBox_Models_Append.Button1.clicked.connect(
-            lambda: (
-                LineEdit_Models_Append.setText(
-                    QFunc.Function_GetFileDialog(
-                        Mode = "SelectFolder"
-                    )
-                ),
-                DialogBox_Models_Append.close(),
-            )
-        )
-        DialogBox_Models_Append.Button2.setText(QCA.translate("Button", "模型文件路径（单文件）"))
-        DialogBox_Models_Append.Button2.clicked.connect(
-            lambda: (
-                LineEdit_Models_Append.setText(
-                    QFunc.Function_GetFileDialog(
-                        Mode = "SelectFile",
-                        FileType = "模型文件 (*.pt *.pth *.ckpt *.bin *.json')"
-                    )
-                ),
-                DialogBox_Models_Append.close(),
-            )
-        )
-        def AppendModel():
-            DialogBox_Models_Append.exec()
-            ModelPath = LineEdit_Models_Append.text()
-            if QFunc.NormPath(ModelPath) is None:
-                return
-            ToolIndexList = ['Process', 'ASR', 'STT', 'TTS']
-            ToolIndex = self.ui.StackedWidget_Pages_Models.currentIndex()
-            TabWidget = QFunc.Function_FindChildUI(self.ui.StackedWidget_Pages_Models.currentWidget(), QTabWidget)
-            TypeIndex = TabWidget.currentIndex()
-            Sector = [
-                ToolIndexList[ToolIndex],
-                TabWidget.tabText(TypeIndex).rsplit('（')[0],
-            ]
-            AddLocalModel(ModelPath, Sector)
-            self.ui.Button_Models_Refresh.click()
-        self.ui.Button_Models_Append.clicked.connect(AppendModel)
+        self.ui.Button_Models_Append.clicked.connect(self.appendModels)
 
         #############################################################
         ###################### Content: Process #####################
         #############################################################
 
         # Guidance
-        DialogBox_Process = MessageBox_Stacked(self)
-        DialogBox_Process.setWindowTitle(QCA.translate("MsgBox", "引导（仅出现一次）"))
-        DialogBox_Process.SetContent(
-            [
-                QFunc.NormPath(Path(ResourceDir).joinpath('assets/images/others/Guidance_Process.png')),
-                QFunc.NormPath(Path(ResourceDir).joinpath('assets/images/others/Guidance_Layout.png'))
-            ],
-            [
-                '欢迎来到音频处理工具界面\n该工具用于将媒体文件批量转换为音频文件并进行降噪、静音切除等操作',
-                '顶部区域用于切换当前工具类型（目前仅有一种）\n中间区域用于设置当前工具的各项参数；设置完毕后点击底部区域的按钮即可执行当前工具'
-            ]
-        )
-        self.ui.Button_Menu_Process.clicked.connect(
-            lambda: (
-                DialogBox_Process.exec(),
-                Config.EditConfig('Dialog', 'GuidanceShown_Process', 'True')
-            ) if eval(Config.GetValue('Dialog', 'GuidanceShown_Process', 'False')) is False else None
+        self.ui.Button_AudioProcessor_Help.clicked.connect(
+            lambda: self.showGuidance(
+                QCA.translate("MsgBox", "引导（仅出现一次）"),
+                [
+                    QFunc.NormPath(Path(ResourceDir).joinpath('assets/images/others/Guidance_Process.png')),
+                    QFunc.NormPath(Path(ResourceDir).joinpath('assets/images/others/Guidance_Layout.png'))
+                ],
+                [
+                    '欢迎来到音频处理工具界面\n该工具用于将媒体文件批量转换为音频文件并进行降噪、静音切除等操作',
+                    '顶部区域用于切换当前工具类型（目前仅有一种）\n中间区域用于设置当前工具的各项参数；设置完毕后点击底部区域的按钮即可执行当前工具'
+                ]
+            )
         )
 
-        self.ui.Button_AudioProcessor_Help.clicked.connect(
-            lambda: DialogBox_Process.exec()
+        self.ui.Button_Menu_Process.clicked.connect(
+            lambda: (
+                self.ui.Button_AudioProcessor_Help.click(),
+                Config.EditConfig('Dialog', 'GuidanceShown_Process', 'True')
+            ) if eval(Config.GetValue('Dialog', 'GuidanceShown_Process', 'False')) is False else None
         )
 
         # ParamsManager
@@ -2193,27 +2228,25 @@ class MainWindow(Window_MainWindow):
         #############################################################
 
         # Guidance
-        DialogBox_ASR = MessageBox_Stacked(self)
-        DialogBox_ASR.setWindowTitle(QCA.translate("MsgBox", "引导（仅出现一次）"))
-        DialogBox_ASR.SetContent(
-            [
-                QFunc.NormPath(Path(ResourceDir).joinpath('assets/images/others/Guidance_ASR.png')),
-                QFunc.NormPath(Path(ResourceDir).joinpath('assets/images/others/Guidance_Layout.png'))
-            ],
-            [
-                '欢迎来到语音识别工具界面\n该工具用于从不同说话人的音频中批量筛选出属于同一说话人的音频',
-                '顶部区域用于切换当前工具类型（目前仅有一种）\n中间区域用于设置当前工具的各项参数；设置完毕后点击底部区域的按钮即可执行当前工具'
-            ]
-        )
-        self.ui.Button_Menu_ASR.clicked.connect(
-            lambda: (
-                DialogBox_ASR.exec(),
-                Config.EditConfig('Dialog', 'GuidanceShown_ASR', 'True')
-            ) if eval(Config.GetValue('Dialog', 'GuidanceShown_ASR', 'False')) is False else None
+        self.ui.Button_VoiceIdentifier_Help.clicked.connect(
+            lambda: self.showGuidance(
+                QCA.translate("MsgBox", "引导（仅出现一次）"),
+                [
+                    QFunc.NormPath(Path(ResourceDir).joinpath('assets/images/others/Guidance_ASR.png')),
+                    QFunc.NormPath(Path(ResourceDir).joinpath('assets/images/others/Guidance_Layout.png'))
+                ],
+                [
+                    '欢迎来到语音识别工具界面\n该工具用于从不同说话人的音频中批量筛选出属于同一说话人的音频',
+                    '顶部区域用于切换当前工具类型（目前仅有一种）\n中间区域用于设置当前工具的各项参数；设置完毕后点击底部区域的按钮即可执行当前工具'
+                ]
+            )
         )
 
-        self.ui.Button_VoiceIdentifier_Help.clicked.connect(
-            lambda: DialogBox_ASR.exec()
+        self.ui.Button_Menu_ASR.clicked.connect(
+            lambda: (
+                self.ui.Button_VoiceIdentifier_Help.click(),
+                Config.EditConfig('Dialog', 'GuidanceShown_ASR', 'True')
+            ) if eval(Config.GetValue('Dialog', 'GuidanceShown_ASR', 'False')) is False else None
         )
 
         # ParamsManager
@@ -2712,27 +2745,25 @@ class MainWindow(Window_MainWindow):
         #############################################################
 
         # Guidance
-        DialogBox_STT = MessageBox_Stacked(self)
-        DialogBox_STT.setWindowTitle(QCA.translate("MsgBox", "引导（仅出现一次）"))
-        DialogBox_STT.SetContent(
-            [
-                QFunc.NormPath(Path(ResourceDir).joinpath('assets/images/others/Guidance_STT.png')),
-                QFunc.NormPath(Path(ResourceDir).joinpath('assets/images/others/Guidance_Layout.png'))
-            ],
-            [
-                '欢迎来到语音转录工具界面\n该工具用于将语音文件批量转换为字幕文件并进行语言标注等操作',
-                '顶部区域用于切换当前工具类型\n中间区域用于设置当前工具的各项参数；设置完毕后点击底部区域的按钮即可执行当前工具'
-            ]
-        )
-        self.ui.Button_Menu_STT.clicked.connect(
-            lambda: (
-                DialogBox_STT.exec(),
-                Config.EditConfig('Dialog', 'GuidanceShown_STT', 'True')
-            ) if eval(Config.GetValue('Dialog', 'GuidanceShown_STT', 'False')) is False else None
+        self.ui.Button_VoiceTranscriber_Help.clicked.connect(
+            lambda: self.showGuidance(
+                QCA.translate("MsgBox", "引导（仅出现一次）"),
+                [
+                    QFunc.NormPath(Path(ResourceDir).joinpath('assets/images/others/Guidance_STT.png')),
+                    QFunc.NormPath(Path(ResourceDir).joinpath('assets/images/others/Guidance_Layout.png'))
+                ],
+                [
+                    '欢迎来到语音转录工具界面\n该工具用于将语音文件批量转换为字幕文件并进行语言标注等操作',
+                    '顶部区域用于切换当前工具类型\n中间区域用于设置当前工具的各项参数；设置完毕后点击底部区域的按钮即可执行当前工具'
+                ]
+            )
         )
 
-        self.ui.Button_VoiceTranscriber_Help.clicked.connect(
-            lambda: DialogBox_STT.exec()
+        self.ui.Button_Menu_STT.clicked.connect(
+            lambda: (
+                self.ui.Button_VoiceTranscriber_Help.click(),
+                Config.EditConfig('Dialog', 'GuidanceShown_STT', 'True')
+            ) if eval(Config.GetValue('Dialog', 'GuidanceShown_STT', 'False')) is False else None
         )
 
         # ParamsManager
@@ -3152,27 +3183,25 @@ class MainWindow(Window_MainWindow):
         #############################################################
 
         # Guidance
-        DialogBox_Dataset = MessageBox_Stacked(self)
-        DialogBox_Dataset.setWindowTitle(QCA.translate("MsgBox", "引导（仅出现一次）"))
-        DialogBox_Dataset.SetContent(
-            [
-                QFunc.NormPath(Path(ResourceDir).joinpath('assets/images/others/Guidance_Dataset.png')),
-                QFunc.NormPath(Path(ResourceDir).joinpath('assets/images/others/Guidance_Layout.png'))
-            ],
-            [
-                '欢迎来到数据集工具界面\n该工具用于生成适用于语音模型训练的数据集',
-                '顶部区域用于切换当前工具类型\n中间区域用于设置当前工具的各项参数；设置完毕后点击底部区域的按钮即可执行当前工具'
-            ]
-        )
-        self.ui.Button_Menu_Dataset.clicked.connect(
-            lambda: (
-                DialogBox_Dataset.exec(),
-                Config.EditConfig('Dialog', 'GuidanceShown_Dataset', 'True')
-            ) if eval(Config.GetValue('Dialog', 'GuidanceShown_Dataset', 'False')) is False else None
+        self.ui.Button_DatasetCreator_Help.clicked.connect(
+            lambda: self.showGuidance(
+                QCA.translate("MsgBox", "引导（仅出现一次）"),
+                [
+                    QFunc.NormPath(Path(ResourceDir).joinpath('assets/images/others/Guidance_Dataset.png')),
+                    QFunc.NormPath(Path(ResourceDir).joinpath('assets/images/others/Guidance_Layout.png'))
+                ],
+                [
+                    '欢迎来到数据集工具界面\n该工具用于生成适用于语音模型训练的数据集',
+                    '顶部区域用于切换当前工具类型\n中间区域用于设置当前工具的各项参数；设置完毕后点击底部区域的按钮即可执行当前工具'
+                ]
+            )
         )
 
-        self.ui.Button_DatasetCreator_Help.clicked.connect(
-            lambda: DialogBox_Dataset.exec()
+        self.ui.Button_Menu_Dataset.clicked.connect(
+            lambda: (
+                self.ui.Button_DatasetCreator_Help.click(),
+                Config.EditConfig('Dialog', 'GuidanceShown_Dataset', 'True')
+            ) if eval(Config.GetValue('Dialog', 'GuidanceShown_Dataset', 'False')) is False else None
         )
 
         # GPT-SoVITS - ParamsManager
@@ -3203,34 +3232,6 @@ class MainWindow(Window_MainWindow):
             RootItemText = QCA.translate("Tree", "输入参数")
         )
 
-        DialogBox_GPTSoVITS_AudioSpeakersDataPath = MessageBox_Buttons(self)
-        DialogBox_GPTSoVITS_AudioSpeakersDataPath.setText(QCA.translate("MsgBox", "请选择参数类型"))
-        DialogBox_GPTSoVITS_AudioSpeakersDataPath.Button1.setText(QCA.translate("Button", "音频文件目录"))
-        DialogBox_GPTSoVITS_AudioSpeakersDataPath.Button1.clicked.connect(
-            lambda: (
-                self.ui.LineEdit_DAT_GPTSoVITS_AudioSpeakersDataPath.setText(
-                    QFunc.Function_GetFileDialog(
-                        Mode = "SelectFolder",
-                        Directory = QFunc.NormPath(Path(ChildWindow_ASR.ui.LineEdit.text()))
-                    )
-                ),
-                DialogBox_GPTSoVITS_AudioSpeakersDataPath.close(),
-            )
-        )
-        DialogBox_GPTSoVITS_AudioSpeakersDataPath.Button2.setText(QCA.translate("Button", "语音识别结果文本路径"))
-        DialogBox_GPTSoVITS_AudioSpeakersDataPath.Button2.clicked.connect(
-            lambda: (
-                self.ui.LineEdit_DAT_GPTSoVITS_AudioSpeakersDataPath.setText(
-                    QFunc.Function_GetFileDialog(
-                        Mode = "SelectFile",
-                        FileType = "txt类型 (*.txt)",
-                        Directory = Path(CurrentDir).joinpath('语音识别结果', 'VPR').as_posix()
-                    )
-                ),
-                DialogBox_GPTSoVITS_AudioSpeakersDataPath.close(),
-            )
-        )
-
         QFunc.Function_SetText(
             Widget = self.ui.Label_DAT_GPTSoVITS_AudioSpeakersDataPath,
             Text = QFunc.SetRichText(
@@ -3244,9 +3245,7 @@ class MainWindow(Window_MainWindow):
             DefaultValue = '',
             SetPlaceholderText = True
         )
-        self.ui.LineEdit_DAT_GPTSoVITS_AudioSpeakersDataPath.Button.clicked.connect(
-            lambda: DialogBox_GPTSoVITS_AudioSpeakersDataPath.exec()
-        )
+        self.ui.LineEdit_DAT_GPTSoVITS_AudioSpeakersDataPath.Button.clicked.connect(self.setAudioSpeakersDataPath)
         self.ui.Button_DAT_GPTSoVITS_AudioSpeakersDataPath_MoreActions.SetMenu(
             ActionEvents = {
                 "重置": lambda: ParamsManager_DAT_GPTSoVITS.ResetParam(self.ui.LineEdit_DAT_GPTSoVITS_AudioSpeakersDataPath),
@@ -3586,34 +3585,6 @@ class MainWindow(Window_MainWindow):
             RootItemText = QCA.translate("Tree", "输入参数")
         )
 
-        DialogBox_VITS_AudioSpeakersDataPath = MessageBox_Buttons(self)
-        DialogBox_VITS_AudioSpeakersDataPath.setText(QCA.translate("MsgBox", "请选择参数类型"))
-        DialogBox_VITS_AudioSpeakersDataPath.Button1.setText(QCA.translate("Button", "音频文件目录"))
-        DialogBox_VITS_AudioSpeakersDataPath.Button1.clicked.connect(
-            lambda: (
-                self.ui.LineEdit_DAT_VITS_AudioSpeakersDataPath.setText(
-                    QFunc.Function_GetFileDialog(
-                        Mode = "SelectFolder",
-                        Directory = QFunc.NormPath(Path(ChildWindow_ASR.ui.LineEdit.text()))
-                    )
-                ),
-                DialogBox_VITS_AudioSpeakersDataPath.close(),
-            )
-        )
-        DialogBox_VITS_AudioSpeakersDataPath.Button2.setText(QCA.translate("Button", "语音识别结果文本路径"))
-        DialogBox_VITS_AudioSpeakersDataPath.Button2.clicked.connect(
-            lambda: (
-                self.ui.LineEdit_DAT_VITS_AudioSpeakersDataPath.setText(
-                    QFunc.Function_GetFileDialog(
-                        Mode = "SelectFile",
-                        FileType = "txt类型 (*.txt)",
-                        Directory = Path(CurrentDir).joinpath('语音识别结果', 'VPR').as_posix()
-                    )
-                ),
-                DialogBox_VITS_AudioSpeakersDataPath.close(),
-            )
-        )
-
         QFunc.Function_SetText(
             Widget = self.ui.Label_DAT_VITS_AudioSpeakersDataPath,
             Text = QFunc.SetRichText(
@@ -3627,9 +3598,7 @@ class MainWindow(Window_MainWindow):
             DefaultValue = '',
             SetPlaceholderText = True
         )
-        self.ui.LineEdit_DAT_VITS_AudioSpeakersDataPath.Button.clicked.connect(
-            lambda: DialogBox_VITS_AudioSpeakersDataPath.exec()
-        )
+        self.ui.LineEdit_DAT_VITS_AudioSpeakersDataPath.Button.clicked.connect(self.setAudioSpeakersDataPath)
         self.ui.Button_DAT_VITS_AudioSpeakersDataPath_MoreActions.SetMenu(
             ActionEvents = {
                 "重置": lambda: ParamsManager_DAT_VITS.ResetParam(self.ui.LineEdit_DAT_VITS_AudioSpeakersDataPath),
@@ -4201,27 +4170,25 @@ class MainWindow(Window_MainWindow):
         #############################################################
 
         # Guidance
-        DialogBox_Train = MessageBox_Stacked(self)
-        DialogBox_Train.setWindowTitle(QCA.translate("MsgBox", "引导（仅出现一次）"))
-        DialogBox_Train.SetContent(
-            [
-                QFunc.NormPath(Path(ResourceDir).joinpath('assets/images/others/Guidance_Train.png')),
-                QFunc.NormPath(Path(ResourceDir).joinpath('assets/images/others/Guidance_Layout.png'))
-            ],
-            [
-                '欢迎来到语音训练工具界面\n该工具用于训练出适用于语音合成的模型文件',
-                '顶部区域用于切换当前工具类型（目前仅有一种）\n中间区域用于设置当前工具的各项参数；设置完毕后点击底部区域的按钮即可执行当前工具'
-            ]
-        )
-        self.ui.Button_Menu_Train.clicked.connect(
-            lambda: (
-                DialogBox_Train.exec(),
-                Config.EditConfig('Dialog', 'GuidanceShown_Train', 'True')
-            ) if eval(Config.GetValue('Dialog', 'GuidanceShown_Train', 'False')) is False else None
+        self.ui.Button_VoiceTrainer_Help.clicked.connect(
+            lambda: self.showGuidance(
+                QCA.translate("MsgBox", "引导（仅出现一次）"),
+                [
+                    QFunc.NormPath(Path(ResourceDir).joinpath('assets/images/others/Guidance_Train.png')),
+                    QFunc.NormPath(Path(ResourceDir).joinpath('assets/images/others/Guidance_Layout.png'))
+                ],
+                [
+                    '欢迎来到语音训练工具界面\n该工具用于训练出适用于语音合成的模型文件',
+                    '顶部区域用于切换当前工具类型（目前仅有一种）\n中间区域用于设置当前工具的各项参数；设置完毕后点击底部区域的按钮即可执行当前工具'
+                ]
+            )
         )
 
-        self.ui.Button_VoiceTrainer_Help.clicked.connect(
-            lambda: DialogBox_Train.exec()
+        self.ui.Button_Menu_Train.clicked.connect(
+            lambda: (
+                self.ui.Button_VoiceTrainer_Help.click(),
+                Config.EditConfig('Dialog', 'GuidanceShown_Train', 'True')
+            ) if eval(Config.GetValue('Dialog', 'GuidanceShown_Train', 'False')) is False else None
         )
 
         # GPT-SoVITS - ParamsManager
@@ -5003,40 +4970,6 @@ class MainWindow(Window_MainWindow):
             ChildItemText = QCA.translate("Tree", "预训练D模型路径")
         )
 
-        DialogBox_KeepOriginalSpeakers = MessageBox_LineEdit(self)
-        DialogBox_KeepOriginalSpeakers.setWindowTitle('Tip')
-        DialogBox_KeepOriginalSpeakers.SetContent(
-            Title = "开启该实验性功能需要注意以下几点：",
-            Body = """
-                1. 为防止老角色的音色在训练过程中被逐渐遗忘，请保证每个原角色至少有一两条音频参与训练。\n
-                2. 为防止老角色的顺序被重组（导致音色混乱），请在下方设置包含了底模角色信息的配置文件路径。
-            """
-        )
-        DialogBox_KeepOriginalSpeakers.LineEdit.SetFileDialog(
-            Mode = "SelectFile", 
-            FileType = "json类型 (*.json)",
-            Directory = QFunc.NormPath(Path(ModelDir).joinpath('TTS', 'VITS', 'Downloaded'))
-        )
-        Function_ParamsSynchronizer(
-            Trigger = DialogBox_KeepOriginalSpeakers.LineEdit,
-            FromTo = {DialogBox_KeepOriginalSpeakers.LineEdit: self.ui.LineEdit_Train_VITS_ConfigPathLoad}
-        )
-        DialogBox_KeepOriginalSpeakers.Button_Confirm.setText(QCA.translate("Button", "确认"))
-        DialogBox_KeepOriginalSpeakers.Button_Confirm.clicked.connect(
-            lambda: MessageBoxBase.pop(self,
-                MessageType = QMessageBox.Warning,
-                WindowTitle = "Warning",
-                Text = "配置文件路径不存在！",
-            ) if Path(DialogBox_KeepOriginalSpeakers.LineEdit.text()).is_file() == False else DialogBox_KeepOriginalSpeakers.close()
-        )
-        DialogBox_KeepOriginalSpeakers.Button_Cancel.setText(QCA.translate("Button", "取消"))
-        DialogBox_KeepOriginalSpeakers.Button_Cancel.clicked.connect(
-            lambda: (
-                self.ui.CheckBox_Train_VITS_KeepOriginalSpeakers.setChecked(False),
-                DialogBox_KeepOriginalSpeakers.close()
-            )
-        )
-
         QFunc.Function_SetText(
             Widget = self.ui.Label_Train_VITS_KeepOriginalSpeakers,
             Text = QFunc.SetRichText(
@@ -5076,7 +5009,17 @@ class MainWindow(Window_MainWindow):
         Function_ConfigureCheckBox(
             CheckBox = self.ui.CheckBox_Train_VITS_KeepOriginalSpeakers,
             CheckedEvents = [
-                lambda: DialogBox_KeepOriginalSpeakers.exec()
+                lambda: MessageBoxBase.pop(self,
+                    MessageType = QMessageBox.Question,
+                    WindowTitle = "Tip",
+                    Text = """
+                        开启该实验性功能需要注意以下几点：
+                        1. 为防止老角色的音色在训练过程中被逐渐遗忘，请保证每个原角色至少有一两条音频参与训练。\n
+                        2. 为防止老角色的顺序被重组（导致音色混乱），请在下方设置包含了底模角色信息的配置文件路径。
+                    """,
+                    Buttons = QMessageBox.Yes|QMessageBox.No,
+                    ButtonEvents = {QMessageBox.No: lambda: self.ui.CheckBox_Train_VITS_KeepOriginalSpeakers.setChecked(False)}
+                )
             ],
             TakeEffect = False
         )
@@ -5111,10 +5054,6 @@ class MainWindow(Window_MainWindow):
             Mode = "SelectFile",
             FileType = "json类型 (*.json)",
             Directory = QFunc.NormPath(Path(ModelDir).joinpath('TTS', 'VITS', 'Downloaded'))
-        )
-        Function_ParamsSynchronizer(
-            Trigger = self.ui.LineEdit_Train_VITS_ConfigPathLoad,
-            FromTo = {self.ui.LineEdit_Train_VITS_ConfigPathLoad: DialogBox_KeepOriginalSpeakers.LineEdit}
         )
         self.ui.Button_Train_VITS_ConfigPathLoad_MoreActions.SetMenu(
             ActionEvents = {
@@ -5419,27 +5358,25 @@ class MainWindow(Window_MainWindow):
         #############################################################
 
         # Guidance
-        DialogBox_TTS = MessageBox_Stacked(self)
-        DialogBox_TTS.setWindowTitle(QCA.translate("MsgBox", "引导（仅出现一次）"))
-        DialogBox_TTS.SetContent(
-            [
-                QFunc.NormPath(Path(ResourceDir).joinpath('assets/images/others/Guidance_TTS.png')),
-                QFunc.NormPath(Path(ResourceDir).joinpath('assets/images/others/Guidance_Layout.png'))
-            ],
-            [
-                '欢迎来到语音合成工具界面\n该工具用于将文字转为语音，用户需要提供相应的模型和配置文件',
-                '顶部区域用于切换当前工具类型（目前仅有一种）\n中间区域用于设置当前工具的各项参数；设置完毕后点击底部区域的按钮即可执行当前工具'
-            ]
-        )
-        self.ui.Button_Menu_TTS.clicked.connect(
-            lambda: (
-                DialogBox_TTS.exec(),
-                Config.EditConfig('Dialog', 'GuidanceShown_TTS', 'True')
-            ) if eval(Config.GetValue('Dialog', 'GuidanceShown_TTS', 'False')) is False else None
+        self.ui.Button_VoiceConverter_Help.clicked.connect(
+            lambda: self.showGuidance(
+                QCA.translate("MsgBox", "引导（仅出现一次）"),
+                [
+                    QFunc.NormPath(Path(ResourceDir).joinpath('assets/images/others/Guidance_TTS.png')),
+                    QFunc.NormPath(Path(ResourceDir).joinpath('assets/images/others/Guidance_Layout.png'))
+                ],
+                [
+                    '欢迎来到语音合成工具界面\n该工具用于将文字转为语音，用户需要提供相应的模型和配置文件',
+                    '顶部区域用于切换当前工具类型（目前仅有一种）\n中间区域用于设置当前工具的各项参数；设置完毕后点击底部区域的按钮即可执行当前工具'
+                ]
+            )
         )
 
-        self.ui.Button_VoiceConverter_Help.clicked.connect(
-            lambda: DialogBox_TTS.exec()
+        self.ui.Button_Menu_TTS.clicked.connect(
+            lambda: (
+                self.ui.Button_VoiceConverter_Help.click(),
+                Config.EditConfig('Dialog', 'GuidanceShown_TTS', 'True')
+            ) if eval(Config.GetValue('Dialog', 'GuidanceShown_TTS', 'False')) is False else None
         )
 
         # GPT-SoVITS - ParamsManager
