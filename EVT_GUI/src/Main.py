@@ -32,6 +32,7 @@ os.chdir(CurrentDir)
 
 # Parse path settings
 parser = argparse.ArgumentParser()
+parser.add_argument("--updater",      help = "path to updater",          default = Path(CurrentDir).joinpath('Updater.py' if IsFileCompiled == False else 'Updater.exe'))
 parser.add_argument("--core",         help = "dir of core files",        default = Path(ResourceDir).joinpath('EVT_Core'))
 parser.add_argument("--manifest",     help = "path to manifest.json",    default = Path(ResourceDir).joinpath('manifest.json'))
 parser.add_argument("--requirements", help = "path to requirements.txt", default = Path(ResourceDir).joinpath('requirements.txt'))
@@ -40,6 +41,7 @@ parser.add_argument("--models",       help = "dir of models",            default
 parser.add_argument("--output",       help = "dir of output",            default = Path(CurrentDir).joinpath(''))
 args = parser.parse_args()
 
+UpdaterPath = args.updater
 CoreDir = args.core
 ManifestPath = args.manifest
 RequirementsPath = args.requirements
@@ -83,14 +85,24 @@ if Path(DependencyDir).joinpath('Python').exists():
 
 ##############################################################################################################################
 
-def UpdaterExecuter():
+class Execute_Update_Checking(QObject):
     '''
-    Execute updater
     '''
-    if Config.GetValue('Settings', 'AutoUpdate', 'Enabled') == 'Enabled':
-        subprocess.Popen(['python.exe', QFunc.NormPath(Path(CurrentDir).joinpath('Updater.py'))] if IsFileCompiled == False else [QFunc.NormPath(Path(CurrentDir).joinpath('Updater.exe'))], env = os.environ)
-        QApplication.exit()
-        os._exit(0) if IsFileCompiled == True else None
+    finished = Signal()
+
+    def __init__(self):
+        super().__init__()
+
+    def Execute(self):
+        Function_UpdateChecker(
+            RepoOwner = RepoOwner,
+            RepoName = RepoName,
+            FileName = FileName,
+            FileFormat = FileFormat,
+            CurrentVersion = CurrentVersion
+        )
+
+        self.finished.emit()
 
 ##############################################################################################################################
 
@@ -770,7 +782,6 @@ def ClientRebooter():
     '''
     Reboot EVT client
     '''
-    UpdaterExecuter() #os.execl(sys.executable, 'python', __file__, *sys.argv[1:]) else os.execl(sys.executable, sys.executable, *sys.argv)
 
 
 # ClientFunc: IntegrityChecker
@@ -950,10 +961,37 @@ class MainWindow(Window_MainWindow):
         )
         DialogBox_AudioSpeakersDataPath.exec()
 
+    def chkUpdate(self):
+        FunctionSignals.Signal_ReadyToUpdate.connect(
+            lambda: (
+                MessageBoxBase.pop(
+                    MessageType = QMessageBox.Question,
+                    WindowTitle = 'Ask',
+                    Text = '检测到可用的新版本，是否更新？\nNew version available, wanna update?',
+                    Buttons = QMessageBox.Yes|QMessageBox.No,
+                    ButtonEvents = {
+                        QMessageBox.Yes: lambda: (
+                            subprocess.Popen(['python.exe', UpdaterPath] if IsFileCompiled == False else [UpdaterPath], env = os.environ),
+                            QApplication.exit(),
+                            os._exit(0) if IsFileCompiled == True else None,
+                        )
+                    }
+                )
+            )
+        )
+
+        Function_SetMethodExecutor(self,
+            Method = Execute_Update_Checking.Execute,
+            Params = ()
+        )
+
     def Main(self):
         '''
         Main funtion to orgnize all the subfunctions
         '''
+        # Check for updates
+        self.chkUpdate() if Config.GetValue('Settings', 'AutoUpdate', 'Enabled') == 'Enabled' else None
+
         # Logo
         self.setWindowIcon(QIcon(QFunc.NormPath(Path(ResourceDir).joinpath('assets/images/Logo.ico'))))
 
@@ -6534,9 +6572,6 @@ class MainWindow(Window_MainWindow):
 ##############################################################################################################################
 
 if __name__ == "__main__":
-    # Check for updates
-    UpdaterExecuter()
-
     App = QApplication(sys.argv)
 
     # Create&Show SplashScreen

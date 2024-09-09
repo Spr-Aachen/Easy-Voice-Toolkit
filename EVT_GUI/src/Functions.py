@@ -29,6 +29,13 @@ class CustomSignals_Functions(QObject):
     Signal_ForceQuit = Signal()
 
 
+    Signal_UpdateMessage = Signal(str)
+
+    Signal_IsUpdateSucceeded = Signal(bool, str)
+
+    Signal_ReadyToUpdate = Signal(str)
+
+
 FunctionSignals = CustomSignals_Functions()
 
 ##############################################################################################################################
@@ -621,5 +628,37 @@ def Function_SetMethodExecutor(
         FunctionSignals.Signal_ForceQuit.connect(TerminateMethod)
     else:
         pass
+
+##############################################################################################################################
+
+def Function_UpdateChecker(
+    RepoOwner: str,
+    RepoName: str,
+    FileName: str,
+    FileFormat: str,
+    CurrentVersion: str = ...,
+):
+    '''
+    '''
+    try:
+        FunctionSignals.Signal_UpdateMessage.emit("正在检查更新，请稍等...\nChecking for updates, please wait...")
+        IsUpdateNeeded, DownloadURL = QFunc.CheckUpdateFromGithub(
+            RepoOwner = RepoOwner,
+            RepoName = RepoName,
+            FileName = FileName,
+            FileFormat = FileFormat,
+            Version_Current = CurrentVersion
+        )
+
+    except:
+        #FunctionSignals.Signal_Message.emit("更新检查失败！\nFailed to check for updates!")
+        FunctionSignals.Signal_IsUpdateSucceeded.emit(False, "更新检查失败！\nFailed to check for updates!")
+
+    else:
+        if IsUpdateNeeded:
+            FunctionSignals.Signal_ReadyToUpdate.emit(DownloadURL)
+        else:
+            FunctionSignals.Signal_UpdateMessage.emit("已是最新版本！\nAlready up to date!")
+            FunctionSignals.Signal_IsUpdateSucceeded.emit(False, "")
 
 ##############################################################################################################################

@@ -10,35 +10,28 @@ from PySide6.QtWidgets import QApplication, QVBoxLayout, QSizePolicy, QWidget, Q
 from QEasyWidgets import QFunctions as QFunc
 from QEasyWidgets.Windows import MessageBoxBase
 
-from Functions import Function_SetMethodExecutor
+from Functions import FunctionSignals, Function_SetMethodExecutor, Function_UpdateChecker
 from Config import *
 
 ##############################################################################################################################
 
+# Set DownloadDir&ExtractDir
+DownloadDir = CurrentDir
+ExtractDir = QFunc.NormPath(Path(CurrentDir).joinpath('Temp'))
+
 # Set up client config
 Config = QFunc.ManageConfig(ConfigPath)
 
-
 # Set path of executer
-ExecuterName = str(Config.GetValue('Info', 'ExecuterName'))
-ExecuterPath = QFunc.NormPath(Path(CurrentDir).joinpath(ExecuterName))
+try:
+    ExecuterName = str(Config.GetValue('Info', 'ExecuterName'))
+    ExecuterPath = QFunc.NormPath(Path(CurrentDir).joinpath(ExecuterName))
+except:
+    BootExecuter = False
+else:
+    BootExecuter = True
 
 ##############################################################################################################################
-
-# Where to store custom signals
-class CustomSignals_Updater(QObject):
-    '''
-    Set up signals for updater
-    '''
-    Signal_Message = Signal(str)
-
-    Signal_IsUpdateSucceeded = Signal(bool, str)
-
-    Signal_ReadyToUpdate = Signal(str)
-
-
-UpdaterSignals = CustomSignals_Updater()
-
 
 def RebootIfFailed():
     if platform.system() == 'Windows':
@@ -83,33 +76,6 @@ def RebootIfSucceeded():
         )
 
 
-def UpdateChecker(
-    CurrentVersion: str = ...,
-):
-    '''
-    '''
-    try:
-        UpdaterSignals.Signal_Message.emit("正在检查更新，请稍等...\nChecking for updates, please wait...")
-        IsUpdateNeeded, DownloadURL = QFunc.CheckUpdateFromGithub(
-            RepoOwner = 'Spr-Aachen',
-            RepoName = 'Easy-Voice-Toolkit',
-            FileName = 'EVT_windows_x64',
-            FileFormat = 'zip',
-            Version_Current = CurrentVersion
-        )
-
-    except:
-        #UpdaterSignals.Signal_Message.emit("更新检查失败！\nFailed to check for updates!")
-        UpdaterSignals.Signal_IsUpdateSucceeded.emit(False, "更新检查失败！\nFailed to check for updates!")
-
-    else:
-        if IsUpdateNeeded:
-            UpdaterSignals.Signal_ReadyToUpdate.emit(DownloadURL)
-        else:
-            UpdaterSignals.Signal_Message.emit("已是最新版本！\nAlready up to date!")
-            UpdaterSignals.Signal_IsUpdateSucceeded.emit(False, "")
-
-
 def UpdateDownloader(
     DownloadURL: str = ...,
     DownloadDir: str = ...,
@@ -120,7 +86,7 @@ def UpdateDownloader(
 ):
     try:
         # Download
-        UpdaterSignals.Signal_Message.emit("正在下载文件...\nDownloading files...")
+        FunctionSignals.Signal_UpdateMessage.emit("正在下载文件...\nDownloading files...")
         FileInfo = QFunc.DownloadFile(
             DownloadURL = DownloadURL,
             DownloadDir = DownloadDir,
@@ -129,11 +95,11 @@ def UpdateDownloader(
             SHA_Expected = None
         )
     except Exception as e:
-        #UpdaterSignals.Signal_Message.emit("文件下载失败！\nFailed to download files!")
-        UpdaterSignals.Signal_IsUpdateSucceeded.emit(False, "文件下载失败！\nFailed to download files!")
+        #FunctionSignals.Signal_UpdateMessage.emit("文件下载失败！\nFailed to download files!")
+        FunctionSignals.Signal_IsUpdateSucceeded.emit(False, "文件下载失败！\nFailed to download files!")
     else:
         # Unpack
-        UpdaterSignals.Signal_Message.emit("正在解压文件...\nUnpacking files...")
+        FunctionSignals.Signal_UpdateMessage.emit("正在解压文件...\nUnpacking files...")
         ExtractDir = QFunc.NormPath(Path(TargetDir).joinpath('Temp')) if ExtractDir == TargetDir else ExtractDir
         shutil.unpack_archive(
             filename = FileInfo[1],
@@ -141,7 +107,7 @@ def UpdateDownloader(
         )
         os.remove(FileInfo[1])
         # Cover old files (About to finish)
-        UpdaterSignals.Signal_Message.emit("即将重启客户端...\nRebooting client...")
+        FunctionSignals.Signal_UpdateMessage.emit("即将重启客户端...\nRebooting client...")
         '''
         CleanDirectory(
             Directory = TargetDir,
@@ -150,7 +116,7 @@ def UpdateDownloader(
         shutil.copytree(ExtractDir, TargetDir, dirs_exist_ok = True)
         shutil.rmtree(ExtractDir)
         '''
-        UpdaterSignals.Signal_IsUpdateSucceeded.emit(True, "")
+        FunctionSignals.Signal_IsUpdateSucceeded.emit(True, "")
 
 
 class Execute_Update_Checking(QObject):
@@ -162,7 +128,11 @@ class Execute_Update_Checking(QObject):
         super().__init__()
 
     def Execute(self):
-        UpdateChecker(
+        Function_UpdateChecker(
+            RepoOwner = RepoOwner,
+            RepoName = RepoName,
+            FileName = FileName,
+            FileFormat = FileFormat,
             CurrentVersion = CurrentVersion
         )
 
@@ -238,13 +208,13 @@ class Widget_Updater(QWidget):
         def UpdateDownloadURL(DownloadURL):
             self.DownloadURL = DownloadURL
 
-        UpdaterSignals.Signal_Message.connect(
+        FunctionSignals.Signal_UpdateMessage.connect(
             lambda Message: QFunc.Function_SetText(
                 self.Label,
                 QFunc.SetRichText(Message, 'center', 9, 420, 0.3, 12)
             )
         )
-        UpdaterSignals.Signal_ReadyToUpdate.connect(
+        FunctionSignals.Signal_ReadyToUpdate.connect(
             lambda DownloadURL: (
                 UpdateDownloadURL(DownloadURL),
                 MessageBoxBase.pop(
@@ -258,19 +228,19 @@ class Widget_Updater(QWidget):
                             Method = Execute_Update_Downloading.Execute,
                             Params = (self.DownloadURL)
                         ),
-                        QMessageBox.No: lambda: UpdaterSignals.Signal_IsUpdateSucceeded.emit(False, "已取消下载更新！\nDownload canceled!")
+                        QMessageBox.No: lambda: FunctionSignals.Signal_IsUpdateSucceeded.emit(False, "已取消下载更新！\nDownload canceled!")
                     }
                 )
             )
         )
-        UpdaterSignals.Signal_IsUpdateSucceeded.connect(
+        FunctionSignals.Signal_IsUpdateSucceeded.connect(
             lambda Succeeded, Info: (
                 MessageBoxBase.pop(
                     MessageType = QMessageBox.Warning,
                     WindowTitle = 'Warning',
                     Text = Info
                 ) if not Succeeded and len(Info) > 0 else None,
-                RebootIfSucceeded() if Succeeded else RebootIfFailed(),
+                (RebootIfSucceeded() if Succeeded else RebootIfFailed()) if BootExecuter else None,
                 QApplication.exit(),
                 os._exit(0)
             )
@@ -284,7 +254,7 @@ class Widget_Updater(QWidget):
 
         self.SkipButton.setText("跳过")
         self.SkipButton.clicked.connect(
-            lambda: UpdaterSignals.Signal_IsUpdateSucceeded.emit(False, "")
+            lambda: FunctionSignals.Signal_IsUpdateSucceeded.emit(False, "")
         )
 
         self.show()
