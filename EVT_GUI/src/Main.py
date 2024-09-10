@@ -139,9 +139,9 @@ class Execute_Audio_Processing(QObject):
             LogPath = LogPath
         )[:2]
         if 'error' in str(Error).lower():
-            pass
+            Error += "（详情请见终端输出信息）"
         elif 'traceback' in str(Output).lower():
-            Error = "出错了，详情请见终端输出信息"
+            Error = "执行完成，但疑似中途出错\n（详情请见终端输出信息）"
         else:
             Error = None
         self.errChk.emit(str(Error))
@@ -186,9 +186,9 @@ class Execute_Voice_Identifying_VPR(QObject):
             LogPath = LogPath
         )[:2]
         if 'error' in str(Error).lower():
-            pass
+            Error += "（详情请见终端输出信息）"
         elif 'traceback' in str(Output).lower():
-            Error = "出错了，详情请见终端输出信息"
+            Error = "执行完成，但疑似中途出错\n（详情请见终端输出信息）"
         else:
             Error = None
         self.errChk.emit(str(Error))
@@ -240,9 +240,9 @@ class Execute_Voice_Transcribing_Whisper(QObject):
             LogPath = LogPath
         )[:2]
         if 'error' in str(Error).lower():
-            pass
+            Error += "（详情请见终端输出信息）"
         elif 'traceback' in str(Output).lower():
-            Error = "出错了，详情请见终端输出信息"
+            Error = "执行完成，但疑似中途出错\n（详情请见终端输出信息）"
         else:
             Error = None
         self.errChk.emit(str(Error))
@@ -286,9 +286,9 @@ class Execute_Dataset_Creating_GPTSoVITS(QObject):
             LogPath = LogPath
         )[:2]
         if 'error' in str(Error).lower():
-            pass
+            Error += "（详情请见终端输出信息）"
         elif 'traceback' in str(Output).lower():
-            Error = "出错了，详情请见终端输出信息"
+            Error = "执行完成，但疑似中途出错\n（详情请见终端输出信息）"
         else:
             Error = None
         self.errChk.emit(str(Error))
@@ -331,9 +331,9 @@ class Execute_Dataset_Creating_VITS(QObject):
             LogPath = LogPath
         )[:2]
         if 'error' in str(Error).lower():
-            pass
+            Error += "（详情请见终端输出信息）"
         elif 'traceback' in str(Output).lower():
-            Error = "出错了，详情请见终端输出信息"
+            Error = "执行完成，但疑似中途出错\n（详情请见终端输出信息）"
         else:
             Error = None
         self.errChk.emit(str(Error))
@@ -376,9 +376,9 @@ class Execute_Voice_Training_GPTSoVITS(QObject):
             LogPath = LogPath
         )[:2]
         if 'error' in str(Error).lower():
-            pass
+            Error += "（详情请见终端输出信息）"
         elif 'traceback' in str(Output).lower():
-            Error = "出错了，详情请见终端输出信息"
+            Error = "执行完成，但疑似中途出错\n（详情请见终端输出信息）"
         else:
             Error = None
         self.errChk.emit(str(Error))
@@ -420,9 +420,9 @@ class Execute_Voice_Training_VITS(QObject):
             LogPath = LogPath
         )[:2]
         if 'error' in str(Error).lower():
-            pass
+            Error += "（详情请见终端输出信息）"
         elif 'traceback' in str(Output).lower():
-            Error = "出错了，详情请见终端输出信息"
+            Error = "执行完成，但疑似中途出错\n（详情请见终端输出信息）"
         else:
             Error = None
         self.errChk.emit(str(Error))
@@ -465,9 +465,9 @@ class Execute_Voice_Converting_GPTSoVITS(QObject):
             LogPath = LogPath
         )[:2]
         if 'error' in str(Error).lower():
-            pass
+            Error += "（详情请见终端输出信息）"
         elif 'traceback' in str(Output).lower():
-            Error = "出错了，详情请见终端输出信息"
+            Error = "执行完成，但疑似中途出错\n（详情请见终端输出信息）"
         else:
             Error = None
         self.errChk.emit(str(Error))
@@ -526,9 +526,9 @@ class Execute_Voice_Converting_VITS(QObject):
             LogPath = LogPath
         )[:2]
         if 'error' in str(Error).lower():
-            pass
+            Error += "（详情请见终端输出信息）"
         elif 'traceback' in str(Output).lower():
-            Error = "出错了，详情请见终端输出信息"
+            Error = "执行完成，但疑似中途出错\n（详情请见终端输出信息）"
         else:
             Error = None
         self.errChk.emit(str(Error))
@@ -573,6 +573,8 @@ class Model_View(QObject):
 
         ModelDicts_Cloud = []
         Tags = [Path(ModelsDir).parts[-2], Path(ModelsDir).parts[-1]]
+        if not Path(ManifestPath).exists():
+            return []
         with open(QFunc.NormPath(ManifestPath), 'r', encoding = 'utf-8') as File:
             Param = json.load(File)
         for ModelDict in Param["models"]:
@@ -1397,7 +1399,7 @@ class MainWindow(Window_MainWindow):
             ProgressBar = self.ui.ProgressBar_Env_Install_PyReqs,
             Method = PyReqs_Installer.Execute,
             Params = (QFunc.NormPath(RequirementsPath), )
-        )
+        ) if Path(RequirementsPath).exists() else None
         EnvConfiguratorSignals.Signal_PythonDetected.connect(
             self.ui.Button_Install_PyReqs.click
         )
@@ -1413,7 +1415,7 @@ class MainWindow(Window_MainWindow):
         EnvConfiguratorSignals.Signal_PyReqsInstalled.connect(#self.ui.Button_Install_PyReqs.click)
             lambda: EnvConfiguratorSignals.Signal_PyReqsDetected.emit()
         )
-        EnvConfiguratorSignals.Signal_PythonInstallFailed.connect(
+        EnvConfiguratorSignals.Signal_PyReqsInstallFailed.connect(
             lambda Exception: MessageBoxBase.pop(self,
                 MessageType = QMessageBox.Warning,
                 WindowTitle = "Warning",
