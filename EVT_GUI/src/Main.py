@@ -6158,15 +6158,28 @@ class MainWindow(Window_MainWindow):
         )
 
         self.ui.Label_Setting_Language.setText(QCA.translate("Label", "语言"))
-        self.ui.ComboBox_Setting_Language.addItems([QCA.translate("ComboBox", '跟随系统')])
+        self.ui.ComboBox_Setting_Language.addItems([QCA.translate("ComboBox", '跟随系统'), QCA.translate("ComboBox", '中文'), QCA.translate("ComboBox", '英文')])
         LanguageDict = {
             '跟随系统': Language.Auto,
-            #'中文': Language.ZH,
-            #'英文': Language.EN
+            '中文': Language.ZH,
+            '英文': Language.EN
         }
         ComponentsSignals.Signal_SetLanguage.connect(
             lambda Language: self.ui.ComboBox_Setting_Language.setCurrentText(
                 QCA.translate("ComboBox", QFunc.FindKey(LanguageDict, Language))
+            )
+        )
+        self.ui.ComboBox_Setting_Language.currentIndexChanged.connect(
+            lambda: (
+                Config.EditConfig(
+                    'Settings', 'Language', LanguageDict.get(self.ui.ComboBox_Setting_Language.currentText())
+                ),
+            )
+        )
+        self.ui.ComboBox_Setting_Language.activated.connect(
+            lambda: MessageBoxBase.pop(self,
+                QMessageBox.Information, "Tip",
+                "该设置将于重启之后生效"
             )
         )
 
@@ -6184,7 +6197,6 @@ class MainWindow(Window_MainWindow):
             CheckedText = "已启用",
             CheckedEvents = [
                 lambda: Config.EditConfig('Settings', 'AutoUpdate', 'Enabled'),
-                #lambda: Updater(CurrentVersion, IsFileCompiled, CurrentDir, f'Easy Voice Toolkit {CurrentVersion}', CurrentDir)
             ],
             UncheckedText = "未启用",
             UncheckedEvents = [
@@ -6567,6 +6579,9 @@ class MainWindow(Window_MainWindow):
         # Set Theme
         ComponentsSignals.Signal_SetTheme.emit(Config.GetValue('Settings', 'Theme', Theme.Auto))
 
+        # Set Language
+        ComponentsSignals.Signal_SetLanguage.emit(Config.GetValue('Settings', 'Language', Language.Auto))
+
         # Show MainWindow (and emit signal)
         self.show()
         MainWindowSignals.Signal_MainWindowShown.emit()
@@ -6583,7 +6598,7 @@ if __name__ == "__main__":
 
     # Set Language
     Translator = TranslationBase()
-    Translator.load(Language.Auto)
+    Translator.load(Config.GetValue('Settings', 'Language', Language.Auto))
     App.installTranslator(Translator)
 
     # Init&Show MainWindow
