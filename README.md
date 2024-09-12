@@ -63,7 +63,7 @@ I'd like to express my sincere gratitude to the authors of the following project
 
 ### System
 
-Currently the UI interface only supports Windows system
+Currently the released versions only support Windows system
 
 ### Language
 
@@ -163,7 +163,7 @@ Please make sure that you've installed [Python](https://www.python.org/downloads
 
 - Install GUI dependency
     ```shell
-    pip install pyside6 QEasyWidgets pywin32==300 psutil pynvml darkdetect PyGithub
+    pip install QEasyWidgets
     ```
 
 #### Run Programm

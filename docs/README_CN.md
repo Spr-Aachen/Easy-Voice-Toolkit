@@ -63,7 +63,7 @@
 
 ### 系统
 
-目前UI界面仅支持Windows系统
+目前发布的版本仅支持Windows系统
 
 ### 语言
 
@@ -163,7 +163,7 @@
 
 - 安装GUI依赖
     ```shell
-    pip install pyside6 QEasyWidgets pywin32==300 psutil pynvml darkdetect PyGithub
+    pip install QEasyWidgets
     ```
 
 #### 运行程序
