@@ -26,6 +26,8 @@ class Window_MainWindow(MainWindowBase):
 
         self.setCentralWidget(self.ui.CentralWidget)
 
+        self.langChanged.connect(self.ui.retranslateUi)
+
 ##############################################################################################################################
 
 class Window_ChildWindow_ASR(ChildWindowBase):

@@ -6177,12 +6177,9 @@ class MainWindow(Window_MainWindow):
                 Config.EditConfig(
                     'Settings', 'Language', LanguageDict.get(self.ui.ComboBox_Setting_Language.currentText())
                 ),
-            )
-        )
-        self.ui.ComboBox_Setting_Language.activated.connect(
-            lambda: MessageBoxBase.pop(self,
-                QMessageBox.Information, "Tip",
-                "该设置将于重启之后生效"
+                ComponentsSignals.Signal_SetLanguage.emit(
+                    LanguageDict.get(self.ui.ComboBox_Setting_Language.currentText())
+                ) if EasyLanguage.LANG != LanguageDict.get(self.ui.ComboBox_Setting_Language.currentText()) else None
             )
         )
 
@@ -6598,11 +6595,6 @@ if __name__ == "__main__":
     SC = QSplashScreen(QPixmap(QFunc.NormPath(Path(ResourceDir).joinpath('assets/images/others/SplashScreen.png'))))
     #SC.showMessage('Loading...', alignment = Qt.AlignmentFlag.AlignCenter)
     SC.show()
-
-    # Set Language
-    Translator = TranslationBase()
-    Translator.load(Config.GetValue('Settings', 'Language', Language.Auto))
-    App.installTranslator(Translator)
 
     # Init&Show MainWindow
     MW = MainWindow()
