@@ -973,9 +973,13 @@ class MainWindow(Window_MainWindow):
                     Buttons = QMessageBox.Yes|QMessageBox.No,
                     ButtonEvents = {
                         QMessageBox.Yes: lambda: (
+                            Config.EditConfig('Updater', 'Asked', 'True'),
                             subprocess.Popen(['python.exe', UpdaterPath] if IsFileCompiled == False else [UpdaterPath], env = os.environ),
                             QApplication.exit(),
                             os._exit(0) if IsFileCompiled == True else None,
+                        ),
+                        QMessageBox.No: lambda: (
+                            Config.EditConfig('Updater', 'Asked', 'False'),
                         )
                     }
                 )
@@ -1205,7 +1209,6 @@ class MainWindow(Window_MainWindow):
         ####################### Content: Home #######################
         #############################################################
 
-        #self.ui.ToolButton_Home_Title.setText(QCA.translate("Label", "主页"))
         Function_SetImage(
             Widget = self.ui.Label_Cover_Home,
             ImagePath = Path(ResourceDir).joinpath('assets/images/others/Cover.png')

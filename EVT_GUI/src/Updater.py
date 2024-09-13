@@ -231,6 +231,13 @@ class Widget_Updater(QWidget):
                         QMessageBox.No: lambda: FunctionSignals.Signal_IsUpdateSucceeded.emit(False, "已取消下载更新！\nDownload canceled!")
                     }
                 )
+            ) if eval(Config.GetValue('Updater', 'Asked', 'False')) is False else (
+                Function_SetMethodExecutor(self,
+                    ProgressBar = self.ProgressBar,
+                    Method = Execute_Update_Downloading.Execute,
+                    Params = (self.DownloadURL)
+                ),
+                Config.EditConfig('Updater', 'Asked', 'False')
             )
         )
         FunctionSignals.Signal_IsUpdateSucceeded.connect(
