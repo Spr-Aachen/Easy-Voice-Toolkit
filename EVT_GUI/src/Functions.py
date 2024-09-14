@@ -129,19 +129,6 @@ def Function_SetChildWidgetsVisibility(
         )
 
 
-def Function_SetImage(Widget: QWidget, ImagePath: str):
-    '''
-    '''
-    Image = QImage()
-    Image.load(QFunc.NormPath(ImagePath))
-    Pixmap = QPixmap.fromImage(Image)
-    def SetPic():
-        Length = max(Widget.width(), Widget.height())
-        ScaledPixmap = Pixmap.scaled(Length, Length, Qt.KeepAspectRatio, Qt.SmoothTransformation)
-        Widget.setPixmap(ScaledPixmap)
-    Widget.resized.connect(SetPic) if hasattr(Widget, 'resized') else SetPic()
-
-
 def Function_ConfigureCheckBox(
     CheckBox: QCheckBox,
     CheckedText: Optional[str] = None,

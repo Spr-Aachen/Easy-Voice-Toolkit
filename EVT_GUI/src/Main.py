@@ -1209,10 +1209,7 @@ class MainWindow(Window_MainWindow):
         ####################### Content: Home #######################
         #############################################################
 
-        Function_SetImage(
-            Widget = self.ui.Label_Cover_Home,
-            ImagePath = Path(ResourceDir).joinpath('assets/images/others/Cover.png')
-        )
+        self.ui.Label_Cover_Home.setPixmap(QPixmap(Path(ResourceDir).joinpath('assets/images/others/Cover.png')))
 
         QFunc.Function_SetText(
             Widget = self.ui.TextBrowser_Text_Home,
