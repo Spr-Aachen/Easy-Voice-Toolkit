@@ -4357,7 +4357,7 @@ class MainWindow(Window_MainWindow):
                 Body = QCA.translate("Label", "预训练s1模型路径\n预训练s1模型的路径。")
             )
         )
-        Train_GPTSoVITS_ModelPathPretrainedS1_Default = Path(ModelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's1bert25hz-2kh-longer-epoch=68e-step=50232.ckpt').as_posix()
+        Train_GPTSoVITS_ModelPathPretrainedS1_Default = Path(ModelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's1bert25hz-5kh-longer-epoch=12-step=369668.ckpt').as_posix()
         ParamsManager_Train_GPTSoVITS.SetParam(
             Widget = self.ui.LineEdit_Train_GPTSoVITS_ModelPathPretrainedS1,
             Section = 'GPT-SoVITS Params',
@@ -4390,7 +4390,7 @@ class MainWindow(Window_MainWindow):
                 Body = QCA.translate("Label", "预训练s2G模型路径\n预训练s2G模型的路径。")
             )
         )
-        Train_GPTSoVITS_ModelPathPretrainedS2G_Default = Path(ModelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's2G488k.pth').as_posix()
+        Train_GPTSoVITS_ModelPathPretrainedS2G_Default = Path(ModelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's2G2333k.pth').as_posix()
         ParamsManager_Train_GPTSoVITS.SetParam(
             Widget = self.ui.LineEdit_Train_GPTSoVITS_ModelPathPretrainedS2G,
             Section = 'GPT-SoVITS Params',
@@ -4423,7 +4423,7 @@ class MainWindow(Window_MainWindow):
                 Body = QCA.translate("Label", "预训练s2D模型路径\n预训练s2D模型的路径。")
             )
         )
-        Train_GPTSoVITS_ModelPathPretrainedS2D_Default = Path(ModelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's2D488k.pth').as_posix()
+        Train_GPTSoVITS_ModelPathPretrainedS2D_Default = Path(ModelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's2D2333k.pth').as_posix()
         ParamsManager_Train_GPTSoVITS.SetParam(
             Widget = self.ui.LineEdit_Train_GPTSoVITS_ModelPathPretrainedS2D,
             Section = 'GPT-SoVITS Params',
@@ -5453,7 +5453,7 @@ class MainWindow(Window_MainWindow):
                 Body = QCA.translate("Label", "s1模型加载路径\ns1模型的路径。")
             )
         )
-        TTS_GPTSoVITS_ModelPathLoadS1_Default = Path(ModelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's1bert25hz-2kh-longer-epoch=68e-step=50232.ckpt').as_posix()
+        TTS_GPTSoVITS_ModelPathLoadS1_Default = Path(ModelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's1bert25hz-5kh-longer-epoch=12-step=369668.ckpt').as_posix()
         ParamsManager_TTS_GPTSoVITS.SetParam(
             Widget = self.ui.LineEdit_TTS_GPTSoVITS_ModelPathLoadS1,
             Section = 'Input Params',
@@ -5486,7 +5486,7 @@ class MainWindow(Window_MainWindow):
                 Body = QCA.translate("Label", "s2G模型加载路径\ns2G模型的路径。")
             )
         )
-        TTS_GPTSoVITS_ModelPathLoadS2G_Default = Path(ModelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's2G488k.pth').as_posix()
+        TTS_GPTSoVITS_ModelPathLoadS2G_Default = Path(ModelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's2G2333k.pth').as_posix()
         ParamsManager_TTS_GPTSoVITS.SetParam(
             Widget = self.ui.LineEdit_TTS_GPTSoVITS_ModelPathLoadS2G,
             Section = 'Input Params',
