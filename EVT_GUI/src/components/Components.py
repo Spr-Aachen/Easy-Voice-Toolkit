@@ -2,6 +2,7 @@ from typing import Optional
 from PySide6.QtCore import Qt, Signal
 from PySide6.QtWidgets import *
 from QEasyWidgets import QFunctions as QFunc
+from QEasyWidgets import IconBase
 from QEasyWidgets.Components import *
 from QEasyWidgets.Windows import MessageBoxBase
 
@@ -20,22 +21,14 @@ class Table_ViewModels(TableBase):
         self.setRowCount(0)
         self.setColumnCount(0)
         self.SetIndexHeaderVisible(False)
+        self.verticalHeader().setSectionResizeMode(QHeaderView.Fixed)
 
         self.Clipboard = QApplication.clipboard()
 
     def setHorizontalHeaderLabels(self, Headers: list):
         self.HorizontalHeaderLabels = Headers
         self.ColumnCount = len(Headers)
-
-    def setStyleSheet(self, StyleSheet: str):
-        super().setStyleSheet(StyleSheet +  '''
-            QHeaderView::section, QTableView, QTableView::item {
-                gridline-color:rgba(201, 210, 222, 123);
-                border-radius:0px;
-                border-color:rgba(201, 210, 222, 123);
-            }
-        '''
-        )
+        self.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
 
     def AddRow(self, Param: tuple):
         ModelName, ModelType, ModelSize, ModelDate, DownloadParam = Param
@@ -44,19 +37,7 @@ class Table_ViewModels(TableBase):
         LabelStyle = '''
         QLabel {
             background-color: transparent;
-            padding: 6px;
-            border-width: 1px;
-            border-style: solid;
-            border-color: rgba(201, 210, 222, 123);
-        }
-        '''
-        ButtonStyle = '''
-        QPushButton {
-            background-color: transparent;
-            padding: 6px;
-            border-width: 1px;
-            border-style: solid;
-            border-color: rgba(201, 210, 222, 123);
+            border: none;
         }
         '''
         def SetColumnLayout(ColumnLayout):
@@ -93,18 +74,18 @@ class Table_ViewModels(TableBase):
 
         StackedWidget = QStackedWidget()
         StackedWidget.setContentsMargins(0, 0, 0, 0)
-        OpenButton = QPushButton()
-        OpenButton.setStyleSheet(ButtonStyle + "QPushButton {image: url(:/Button_Icon/images/icons/OpenedFolder.png);}")
+        OpenButton = EmbeddedButton()
+        OpenButton.setIcon(IconBase.OpenedFolder)
         OpenButton.clicked.connect(lambda: QFunc.Function_OpenURL(DownloadParam if isinstance(DownloadParam, str) else DownloadParam[1]))
-        DownloadButton = QPushButton()
-        DownloadButton.setStyleSheet(ButtonStyle + "QPushButton {image: url(:/Button_Icon/images/icons/Download.png);}")
+        DownloadButton = EmbeddedButton()
+        DownloadButton.setIcon(IconBase.Download)
         DownloadButton.clicked.connect(lambda: self.Download.emit(DownloadParam) if isinstance(DownloadParam, tuple) else None)
         DownloadButton.clicked.connect(lambda: StackedWidget.setCurrentWidget(OpenButton))
         StackedWidget.addWidget(OpenButton)
         StackedWidget.addWidget(DownloadButton)
         StackedWidget.setCurrentWidget(OpenButton) if isinstance(DownloadParam, str) else StackedWidget.setCurrentWidget(DownloadButton)
-        CopyButton = QPushButton()
-        CopyButton.setStyleSheet(ButtonStyle + "QPushButton {image: url(:/Button_Icon/images/icons/Clipboard.png);}")
+        CopyButton = EmbeddedButton()
+        CopyButton.setIcon(IconBase.Clipboard)
         CopyButton.clicked.connect(lambda: self.Clipboard.setText(DownloadParam[0]) if isinstance(DownloadParam, tuple) else None)
         CopyButton.clicked.connect(lambda: MessageBoxBase.pop(WindowTitle = "Tip", Text = "已复制链接到剪切板"))
         QFunc.Function_SetRetainSizeWhenHidden(CopyButton)
@@ -153,25 +134,21 @@ class Table_EditAudioSpeaker(TableBase):
     def setHorizontalHeaderLabels(self, Headers: list):
         self.HorizontalHeaderLabels = Headers
         self.ColumnCount = len(Headers)
+        self.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+
+    def setStyleSheet(self, StyleSheet: str):
+        super().setStyleSheet(StyleSheet + '''
+            QHeaderView::section, QTableView::item {padding: 0px;}
+        '''
+        )
 
     def AddRow(self, Param: Optional[tuple] = None):
         RowHeight = 30
-        ButtonStyle = '''
-        QPushButton {
-            background-color: transparent;
-            padding: 6px;
-            border-width: 1px;
-            border-style: solid;
-            border-color: rgba(201, 210, 222, 123);
-        }
-        '''
         def SetColumnLayout(ColumnLayout):
             ColumnLayout.setContentsMargins(0, 0, 0, 0)
             ColumnLayout.setSpacing(0)
 
-        LineEdit0 = LineEditBase()
-        LineEdit0.ClearDefaultStyleSheet()
-        LineEdit0.setStyleSheet(LineEdit0.styleSheet() + 'LineEditBase {border-radius: 0px;}')
+        LineEdit0 = EmbeddedLineEdit()
         LineEdit0.RemoveFileDialogButton()
         QFunc.Function_SetText(LineEdit0, Param[0] if Param else '', SetPlaceholderText = True)
         LineEdit0.textChanged.connect(
@@ -181,9 +158,7 @@ class Table_EditAudioSpeaker(TableBase):
         SetColumnLayout(Column0Layout)
         Column0Layout.addWidget(LineEdit0)
 
-        LineEdit1 = LineEditBase()
-        LineEdit1.ClearDefaultStyleSheet()
-        LineEdit1.setStyleSheet(LineEdit1.styleSheet() + 'LineEditBase {border-radius: 0px;}')
+        LineEdit1 = EmbeddedLineEdit()
         LineEdit1.SetFileDialog("SelectFile", self.FileType)
         QFunc.Function_SetText(LineEdit1, Param[1] if Param else '', SetPlaceholderText = True)
         LineEdit1.textChanged.connect(
@@ -193,13 +168,11 @@ class Table_EditAudioSpeaker(TableBase):
         SetColumnLayout(Column1Layout)
         Column1Layout.addWidget(LineEdit1)
 
-        AddButton = QPushButton()
-        AddButton.setStyleSheet(ButtonStyle)
+        AddButton = EmbeddedButton()
         AddButton.setText("+")
         AddButton.clicked.connect(lambda: self.SelectOuterRow(AddButton), Qt.QueuedConnection)
         AddButton.clicked.connect(self.AddRow, Qt.QueuedConnection)
-        DelButton = QPushButton()
-        DelButton.setStyleSheet(ButtonStyle)
+        DelButton = EmbeddedButton()
         DelButton.setText("-")
         DelButton.clicked.connect(lambda: self.SelectOuterRow(DelButton), Qt.QueuedConnection)
         DelButton.clicked.connect(self.DelRow, Qt.QueuedConnection)
@@ -259,14 +232,11 @@ class Table_ASRResult(TableBase):
     def setHorizontalHeaderLabels(self, Headers: list):
         self.HorizontalHeaderLabels = Headers
         self.ColumnCount = len(Headers)
+        self.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
 
     def setStyleSheet(self, StyleSheet: str):
-        super().setStyleSheet(StyleSheet +  '''
-        QHeaderView::section, QTableView, QTableView::item {
-            gridline-color:rgba(201, 210, 222, 123);
-            border-radius:0px;
-            border-color:rgba(201, 210, 222, 123);
-        }
+        super().setStyleSheet(StyleSheet + '''
+            QHeaderView::section, QTableView::item {padding: 0px;}
         '''
         )
 
@@ -275,19 +245,7 @@ class Table_ASRResult(TableBase):
         LabelStyle = '''
         QLabel {
             background-color: transparent;
-            padding: 6px;
-            border-width: 1px;
-            border-style: solid;
-            border-color: rgba(201, 210, 222, 123);
-        }
-        '''
-        ButtonStyle = '''
-        QPushButton {
-            background-color: transparent;
-            padding: 6px;
-            border-width: 1px;
-            border-style: solid;
-            border-color: rgba(201, 210, 222, 123);
+            border: none;
         }
         '''
         def SetColumnLayout(ColumnLayout):
@@ -301,7 +259,7 @@ class Table_ASRResult(TableBase):
         SetColumnLayout(Column0Layout)
         Column0Layout.addWidget(Label0)
 
-        ComboBox = ComboBoxBase()
+        ComboBox = EmbeddedComboBox()
         ComboBox.addItems(ComboItems)
         ComboBox.setCurrentText(Param[1])
         Column1Layout = QHBoxLayout()
@@ -315,7 +273,7 @@ class Table_ASRResult(TableBase):
         SetColumnLayout(Column2Layout)
         Column2Layout.addWidget(Label2)
 
-        PlayerWidget = MediaPlayerBase()
+        PlayerWidget = EmbeddedMediaPlayer()
         PlayerWidget.SetMediaPlayer(Param[0])
         PlayerWidget.layout().setContentsMargins(6, 6, 6, 6)
         PlayerWidget.Slider.hide()
@@ -323,8 +281,7 @@ class Table_ASRResult(TableBase):
         SetColumnLayout(Column3Layout)
         Column3Layout.addWidget(PlayerWidget)
 
-        DelButton = QPushButton()
-        DelButton.setStyleSheet(ButtonStyle)
+        DelButton = EmbeddedButton()
         DelButton.setText("删除")
         DelButton.clicked.connect(
             lambda: MessageBoxBase.pop(None,
@@ -389,14 +346,11 @@ class Table_STTResult(TableBase):
     def setHorizontalHeaderLabels(self, Headers: list):
         self.HorizontalHeaderLabels = Headers
         self.ColumnCount = len(Headers)
+        self.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
 
     def setStyleSheet(self, StyleSheet: str):
-        super().setStyleSheet(StyleSheet +  '''
-        QHeaderView::section, QTableView, QTableView::item {
-            gridline-color:rgba(201, 210, 222, 123);
-            border-radius:0px;
-            border-color:rgba(201, 210, 222, 123);
-        }
+        super().setStyleSheet(StyleSheet + '''
+            QHeaderView::section, QTableView::item {padding: 0px;}
         '''
         )
 
@@ -405,10 +359,7 @@ class Table_STTResult(TableBase):
         LabelStyle = '''
         QLabel {
             background-color: transparent;
-            padding: 6px;
-            border-width: 1px;
-            border-style: solid;
-            border-color: rgba(201, 210, 222, 123);
+            border: none;
         }
         '''
         def SetColumnLayout(ColumnLayout):
@@ -422,17 +373,14 @@ class Table_STTResult(TableBase):
         SetColumnLayout(Column0Layout)
         Column0Layout.addWidget(Label0)
 
-        LineEdit = LineEditBase()
-        LineEdit.ClearDefaultStyleSheet()
-        LineEdit.setStyleSheet(LineEdit.styleSheet() + 'LineEditBase {border-radius: 0px;}')
+        LineEdit = EmbeddedLineEdit()
         LineEdit.RemoveFileDialogButton()
         QFunc.Function_SetText(LineEdit, Param[1], SetPlaceholderText = True)
         Column1Layout = QHBoxLayout()
         SetColumnLayout(Column1Layout)
         Column1Layout.addWidget(LineEdit)
 
-        PlayerWidget = MediaPlayerBase()
-        PlayerWidget.setStyleSheet(PlayerWidget.styleSheet() + 'border-radius: 0px;')
+        PlayerWidget = EmbeddedMediaPlayer()
         PlayerWidget.SetMediaPlayer(Param[0])
         PlayerWidget.layout().setContentsMargins(6, 6, 6, 6)
         PlayerWidget.Slider.hide()
@@ -483,12 +431,11 @@ class Table_DATResult(TableBase):
     def setHorizontalHeaderLabels(self, Headers: list):
         self.HorizontalHeaderLabels = Headers
         self.ColumnCount = len(Headers)
+        self.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
 
     def setStyleSheet(self, StyleSheet: str):
-        super().setStyleSheet(StyleSheet +  '''
-        QHeaderView::section, QTableView, QTableView::item {
-            border-radius:0px;
-        }
+        super().setStyleSheet(StyleSheet + '''
+            QHeaderView::section, QTableView::item {padding: 0px;}
         '''
         )
 
@@ -498,17 +445,14 @@ class Table_DATResult(TableBase):
             ColumnLayout.setContentsMargins(0, 0, 0, 0)
             ColumnLayout.setSpacing(0)
 
-        LineEdit = LineEditBase()
-        LineEdit.ClearDefaultStyleSheet()
-        LineEdit.setStyleSheet(LineEdit.styleSheet() + 'LineEditBase {border-radius: 0px;}')
+        LineEdit = EmbeddedLineEdit()
         LineEdit.RemoveFileDialogButton()
         QFunc.Function_SetText(LineEdit, Param[1], SetPlaceholderText = True)
         Column0Layout = QHBoxLayout()
         SetColumnLayout(Column0Layout)
         Column0Layout.addWidget(LineEdit)
 
-        PlayerWidget = MediaPlayerBase()
-        PlayerWidget.setStyleSheet(PlayerWidget.styleSheet() + 'border-radius: 0px;')
+        PlayerWidget = EmbeddedMediaPlayer()
         PlayerWidget.SetMediaPlayer(Param[0])
         PlayerWidget.layout().setContentsMargins(6, 6, 6, 6)
         PlayerWidget.Slider.hide()
