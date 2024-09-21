@@ -1033,27 +1033,21 @@ class MainWindow(Window_MainWindow):
             )
         )
         self.ui.Button_Close_Window.clicked.connect(self.close)
-        self.ui.Button_Close_Window.ClearDefaultStyleSheet()
-        self.ui.Button_Close_Window.setStyleSheet(
-            "ButtonBase {background-color: transparent; border: none;}"
-            "ButtonBase:hover {background-color: rgba(210, 123, 123, 210);}"
-        )
+        self.ui.Button_Close_Window.setBorderless(True)
+        self.ui.Button_Close_Window.setTransparent(True)
+        self.ui.Button_Close_Window.setHoverBackgroundColor(QColor(210, 123, 123, 210))
         self.ui.Button_Close_Window.setIcon(IconBase.X)
 
         self.ui.Button_Maximize_Window.clicked.connect(lambda: self.showNormal() if self.isMaximized() else self.showMaximized())
-        self.ui.Button_Maximize_Window.ClearDefaultStyleSheet()
-        self.ui.Button_Maximize_Window.setStyleSheet(
-            "ButtonBase {background-color: transparent; border: none;}"
-            "ButtonBase:hover {background-color: rgba(123, 123, 123, 123);}"
-        )
+        self.ui.Button_Maximize_Window.setBorderless(True)
+        self.ui.Button_Maximize_Window.setTransparent(True)
+        self.ui.Button_Maximize_Window.setHoverBackgroundColor(QColor(123, 123, 123, 123))
         self.ui.Button_Maximize_Window.setIcon(IconBase.FullScreen)
 
         self.ui.Button_Minimize_Window.clicked.connect(self.showMinimized)
-        self.ui.Button_Minimize_Window.ClearDefaultStyleSheet()
-        self.ui.Button_Minimize_Window.setStyleSheet(
-            "ButtonBase {background-color: transparent; border: none;}"
-            "ButtonBase:hover {background-color: rgba(123, 123, 123, 123);}"
-        )
+        self.ui.Button_Minimize_Window.setBorderless(True)
+        self.ui.Button_Minimize_Window.setTransparent(True)
+        self.ui.Button_Minimize_Window.setHoverBackgroundColor(QColor(123, 123, 123, 123))
         self.ui.Button_Minimize_Window.setIcon(IconBase.Dash)
 
         # Menu toggling button
@@ -1077,7 +1071,7 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_Menu_Home.clicked.connect(
             lambda: Function_AnimateStackedWidget(
                 StackedWidget = self.ui.StackedWidget_Pages,
-                TargetIndex = 0
+                Target = 0
             )
         )
         self.ui.Button_Menu_Home.setCheckable(True)
@@ -1089,7 +1083,7 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_Menu_Env.clicked.connect(
             lambda: Function_AnimateStackedWidget(
                 StackedWidget = self.ui.StackedWidget_Pages,
-                TargetIndex = 1
+                Target = 1
             )
         )
         self.ui.Button_Menu_Env.setCheckable(True)
@@ -1101,7 +1095,7 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_Menu_Models.clicked.connect(
             lambda: Function_AnimateStackedWidget(
                 StackedWidget = self.ui.StackedWidget_Pages,
-                TargetIndex = 2
+                Target = 2
             )
         )
         self.ui.Button_Menu_Models.setCheckable(True)
@@ -1113,7 +1107,7 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_Menu_Process.clicked.connect(
             lambda: Function_AnimateStackedWidget(
                 StackedWidget = self.ui.StackedWidget_Pages,
-                TargetIndex = 3
+                Target = 3
             )
         )
         self.ui.Button_Menu_Process.setCheckable(True)
@@ -1125,7 +1119,7 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_Menu_ASR.clicked.connect(
             lambda: Function_AnimateStackedWidget(
                 StackedWidget = self.ui.StackedWidget_Pages,
-                TargetIndex = 4
+                Target = 4
             )
         )
         self.ui.Button_Menu_ASR.setCheckable(True)
@@ -1137,7 +1131,7 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_Menu_STT.clicked.connect(
             lambda: Function_AnimateStackedWidget(
                 StackedWidget = self.ui.StackedWidget_Pages,
-                TargetIndex = 5
+                Target = 5
             )
         )
         self.ui.Button_Menu_STT.setCheckable(True)
@@ -1149,7 +1143,7 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_Menu_Dataset.clicked.connect(
             lambda: Function_AnimateStackedWidget(
                 StackedWidget = self.ui.StackedWidget_Pages,
-                TargetIndex = 6
+                Target = 6
             )
         )
         self.ui.Button_Menu_Dataset.setCheckable(True)
@@ -1161,7 +1155,7 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_Menu_Train.clicked.connect(
             lambda: Function_AnimateStackedWidget(
                 StackedWidget = self.ui.StackedWidget_Pages,
-                TargetIndex = 7
+                Target = 7
             )
         )
         self.ui.Button_Menu_Train.setCheckable(True)
@@ -1173,7 +1167,7 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_Menu_TTS.clicked.connect(
             lambda: Function_AnimateStackedWidget(
                 StackedWidget = self.ui.StackedWidget_Pages,
-                TargetIndex = 8
+                Target = 8
             )
         )
         self.ui.Button_Menu_TTS.setCheckable(True)
@@ -1185,7 +1179,7 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_Menu_Settings.clicked.connect(
             lambda: Function_AnimateStackedWidget(
                 StackedWidget = self.ui.StackedWidget_Pages,
-                TargetIndex = 9
+                Target = 9
             )
         )
         self.ui.Button_Menu_Settings.setCheckable(True)
@@ -1197,7 +1191,7 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_Menu_Info.clicked.connect(
             lambda: Function_AnimateStackedWidget(
                 StackedWidget = self.ui.StackedWidget_Pages,
-                TargetIndex = 10
+                Target = 10
             )
         )
         self.ui.Button_Menu_Info.setCheckable(True)
@@ -1278,7 +1272,7 @@ class MainWindow(Window_MainWindow):
         self.ui.ToolButton_Env_Install_Title.clicked.connect(
             lambda: Function_AnimateStackedWidget(
                 StackedWidget = self.ui.StackedWidget_Pages_Env,
-                TargetIndex = 0
+                Target = 0
             )
         )
 
@@ -1475,7 +1469,7 @@ class MainWindow(Window_MainWindow):
         self.ui.ToolButton_Env_Manage_Title.clicked.connect(
             lambda: Function_AnimateStackedWidget(
                 StackedWidget = self.ui.StackedWidget_Pages_Env,
-                TargetIndex = 1
+                Target = 1
             )
         )
 
@@ -1512,7 +1506,7 @@ class MainWindow(Window_MainWindow):
         self.ui.ToolButton_Models_Process_Title.clicked.connect(
             lambda: Function_AnimateStackedWidget(
                 StackedWidget = self.ui.StackedWidget_Pages_Models,
-                TargetIndex = 0
+                Target = 0
             )
         )
         self.ui.ToolButton_Models_Process_Title.setToolTip(
@@ -1536,7 +1530,7 @@ class MainWindow(Window_MainWindow):
         self.ui.ToolButton_Models_ASR_Title.clicked.connect(
             lambda: Function_AnimateStackedWidget(
                 StackedWidget = self.ui.StackedWidget_Pages_Models,
-                TargetIndex = 1
+                Target = 1
             )
         )
         self.ui.ToolButton_Models_ASR_Title.setToolTip(
@@ -1560,7 +1554,7 @@ class MainWindow(Window_MainWindow):
         self.ui.ToolButton_Models_STT_Title.clicked.connect(
             lambda: Function_AnimateStackedWidget(
                 StackedWidget = self.ui.StackedWidget_Pages_Models,
-                TargetIndex = 2
+                Target = 2
             )
         )
         self.ui.ToolButton_Models_STT_Title.setToolTip(
@@ -1584,7 +1578,7 @@ class MainWindow(Window_MainWindow):
         self.ui.ToolButton_Models_TTS_Title.clicked.connect(
             lambda: Function_AnimateStackedWidget(
                 StackedWidget = self.ui.StackedWidget_Pages_Models,
-                TargetIndex = 3
+                Target = 3
             )
         )
         self.ui.ToolButton_Models_TTS_Title.setToolTip(
@@ -1659,7 +1653,7 @@ class MainWindow(Window_MainWindow):
         self.ui.ToolButton_AudioProcessor_Title.clicked.connect(
             lambda: Function_AnimateStackedWidget(
                 StackedWidget = self.ui.StackedWidget_Pages_Process,
-                TargetIndex = 0
+                Target = 0
             )
         )
 
@@ -2066,7 +2060,6 @@ class MainWindow(Window_MainWindow):
             SetPlaceholderText = True,
             PlaceholderText = Process_OutputDirName_Default
         )
-        self.ui.LineEdit_Process_OutputDirName.RemoveFileDialogButton()
         self.ui.Button_Process_OutputDirName_MoreActions.SetMenu(
             ActionEvents = {
                 "重置": lambda: ParamsManager_Process.ResetParam(self.ui.LineEdit_Process_OutputDirName),
@@ -2301,7 +2294,7 @@ class MainWindow(Window_MainWindow):
         self.ui.ToolButton_VoiceIdentifier_Title.clicked.connect(
             lambda: Function_AnimateStackedWidget(
                 StackedWidget = self.ui.StackedWidget_Pages_ASR,
-                TargetIndex = 0
+                Target = 0
             )
         )
 
@@ -2537,7 +2530,6 @@ class MainWindow(Window_MainWindow):
             SetPlaceholderText = True,
             PlaceholderText = ASR_VPR_OutputDirName_Default
         )
-        self.ui.LineEdit_ASR_VPR_OutputDirName.RemoveFileDialogButton()
         self.ui.Button_ASR_VPR_OutputDirName_MoreActions.SetMenu(
             ActionEvents = {
                 "重置": lambda: ParamsManager_ASR_VPR.ResetParam(self.ui.LineEdit_ASR_VPR_OutputDirName),
@@ -2569,7 +2561,6 @@ class MainWindow(Window_MainWindow):
             SetPlaceholderText = True,
             PlaceholderText = ASR_VPR_AudioSpeakersDataName_Default
         )
-        self.ui.LineEdit_ASR_VPR_AudioSpeakersDataName.RemoveFileDialogButton()
         self.ui.Button_ASR_VPR_AudioSpeakersDataName_MoreActions.SetMenu(
             ActionEvents = {
                 "重置": lambda: ParamsManager_ASR_VPR.ResetParam(self.ui.LineEdit_ASR_VPR_AudioSpeakersDataName),
@@ -2648,7 +2639,6 @@ class MainWindow(Window_MainWindow):
         ChildWindow_ASR.ui.LineEdit.ClearDefaultStyleSheet()
         ChildWindow_ASR.ui.LineEdit.setStyleSheet(ChildWindow_ASR.ui.LineEdit.styleSheet() + 'LineEditBase {border-width: 0px 0px 1px 0px; border-radius: 0px;}')
         LineEdit_ASR_VPR_OutputDir.textChanged.connect(ChildWindow_ASR.ui.LineEdit.setText)
-        ChildWindow_ASR.ui.LineEdit.RemoveFileDialogButton()
         ChildWindow_ASR.ui.LineEdit.setReadOnly(True)
 
         ChildWindow_ASR.ui.Button_Cancel.setText(QCA.translate("Button", "取消"))
@@ -2818,7 +2808,7 @@ class MainWindow(Window_MainWindow):
         self.ui.ToolButton_VoiceTranscriber_Title.clicked.connect(
             lambda: Function_AnimateStackedWidget(
                 StackedWidget = self.ui.StackedWidget_Pages_STT,
-                TargetIndex = 0
+                Target = 0
             )
         )
 
@@ -3064,7 +3054,6 @@ class MainWindow(Window_MainWindow):
             SetPlaceholderText = True,
             PlaceholderText = STT_Whisper_OutputDirName_Default
         )
-        self.ui.LineEdit_STT_Whisper_OutputDirName.RemoveFileDialogButton()
         self.ui.Button_STT_Whisper_OutputDirName_MoreActions.SetMenu(
             ActionEvents = {
                 "重置": lambda: ParamsManager_STT_Whisper.ResetParam(self.ui.LineEdit_STT_Whisper_OutputDirName),
@@ -3256,7 +3245,7 @@ class MainWindow(Window_MainWindow):
         self.ui.ToolButton_DatasetCreator_Title_GPTSoVITS.clicked.connect(
             lambda: Function_AnimateStackedWidget(
                 StackedWidget = self.ui.StackedWidget_Pages_Dataset,
-                TargetIndex = 0
+                Target = 0
             )
         )
 
@@ -3361,7 +3350,6 @@ class MainWindow(Window_MainWindow):
                 ParamsManager_DAT_GPTSoVITS.ResetParam(self.ui.LineEdit_DAT_GPTSoVITS_DataFormat),
             ) if not all(Keyword in Value for Keyword in ['路径', '人名', '语言', '文本']) else None
         )
-        self.ui.LineEdit_DAT_GPTSoVITS_DataFormat.RemoveFileDialogButton()
         self.ui.Button_DAT_GPTSoVITS_DataFormat_MoreActions.SetMenu(
             ActionEvents = {
                 "重置": lambda: ParamsManager_DAT_GPTSoVITS.ResetParam(self.ui.LineEdit_DAT_GPTSoVITS_DataFormat),
@@ -3397,7 +3385,6 @@ class MainWindow(Window_MainWindow):
             SetPlaceholderText = True,
             PlaceholderText = DAT_GPTSoVITS_OutputDirName_Default
         )
-        self.ui.LineEdit_DAT_GPTSoVITS_OutputDirName.RemoveFileDialogButton()
         self.ui.Button_DAT_GPTSoVITS_OutputDirName_MoreActions.SetMenu(
             ActionEvents = {
                 "重置": lambda: ParamsManager_DAT_GPTSoVITS.ResetParam(self.ui.LineEdit_DAT_GPTSoVITS_OutputDirName),
@@ -3429,7 +3416,6 @@ class MainWindow(Window_MainWindow):
             SetPlaceholderText = True,
             PlaceholderText = DAT_GPTSoVITS_FileListName_Default
         )
-        self.ui.LineEdit_DAT_GPTSoVITS_FileListName.RemoveFileDialogButton()
         self.ui.Button_DAT_GPTSoVITS_FileListName_MoreActions.SetMenu(
             ActionEvents = {
                 "重置": lambda: ParamsManager_DAT_GPTSoVITS.ResetParam(self.ui.LineEdit_DAT_GPTSoVITS_FileListName),
@@ -3609,7 +3595,7 @@ class MainWindow(Window_MainWindow):
         self.ui.ToolButton_DatasetCreator_Title_VITS.clicked.connect(
             lambda: Function_AnimateStackedWidget(
                 StackedWidget = self.ui.StackedWidget_Pages_Dataset,
-                TargetIndex = 1
+                Target = 1
             )
         )
 
@@ -3714,7 +3700,6 @@ class MainWindow(Window_MainWindow):
                 ParamsManager_DAT_VITS.ResetParam(self.ui.LineEdit_DAT_VITS_DataFormat),
             ) if not all(Keyword in Value for Keyword in ['路径', '人名', '语言', '文本']) else None
         )
-        self.ui.LineEdit_DAT_VITS_DataFormat.RemoveFileDialogButton()
         self.ui.Button_DAT_VITS_DataFormat_MoreActions.SetMenu(
             ActionEvents = {
                 "重置": lambda: ParamsManager_DAT_VITS.ResetParam(self.ui.LineEdit_DAT_VITS_DataFormat),
@@ -3944,7 +3929,6 @@ class MainWindow(Window_MainWindow):
             SetPlaceholderText = True,
             PlaceholderText = DAT_VITS_OutputDirName_Default
         )
-        self.ui.LineEdit_DAT_VITS_OutputDirName.RemoveFileDialogButton()
         self.ui.Button_DAT_VITS_OutputDirName_MoreActions.SetMenu(
             ActionEvents = {
                 "重置": lambda: ParamsManager_DAT_VITS.ResetParam(self.ui.LineEdit_DAT_VITS_OutputDirName),
@@ -3976,7 +3960,6 @@ class MainWindow(Window_MainWindow):
             SetPlaceholderText = True,
             PlaceholderText = DAT_VITS_FileListNameTraining_Default
         )
-        self.ui.LineEdit_DAT_VITS_FileListNameTraining.RemoveFileDialogButton()
         self.ui.Button_DAT_VITS_FileListNameTraining_MoreActions.SetMenu(
             ActionEvents = {
                 "重置": lambda: ParamsManager_DAT_VITS.ResetParam(self.ui.LineEdit_DAT_VITS_FileListNameTraining),
@@ -4005,7 +3988,6 @@ class MainWindow(Window_MainWindow):
             SetPlaceholderText = True,
             PlaceholderText = DAT_VITS_FileListNameValidation_Default
         )
-        self.ui.LineEdit_DAT_VITS_FileListNameValidation.RemoveFileDialogButton()
         self.ui.Button_DAT_VITS_FileListNameValidation_MoreActions.SetMenu(
             ActionEvents = {
                 "重置": lambda: ParamsManager_DAT_VITS.ResetParam(self.ui.LineEdit_DAT_VITS_FileListNameValidation),
@@ -4243,7 +4225,7 @@ class MainWindow(Window_MainWindow):
         self.ui.ToolButton_VoiceTrainer_Title_GPTSoVITS.clicked.connect(
             lambda: Function_AnimateStackedWidget(
                 StackedWidget = self.ui.StackedWidget_Pages_Train,
-                TargetIndex = 0
+                Target = 0
             )
         )
 
@@ -4573,7 +4555,6 @@ class MainWindow(Window_MainWindow):
             SetPlaceholderText = True,
             PlaceholderText = Train_GPTSoVITS_OutputDirName_Default
         )
-        self.ui.LineEdit_Train_GPTSoVITS_OutputDirName.RemoveFileDialogButton()
         self.ui.Button_Train_GPTSoVITS_OutputDirName_MoreActions.SetMenu(
             ActionEvents = {
                 "重置": lambda: ParamsManager_Train_GPTSoVITS.ResetParam(self.ui.LineEdit_Train_GPTSoVITS_OutputDirName),
@@ -4752,7 +4733,7 @@ class MainWindow(Window_MainWindow):
         self.ui.ToolButton_VoiceTrainer_Title_VITS.clicked.connect(
             lambda: Function_AnimateStackedWidget(
                 StackedWidget = self.ui.StackedWidget_Pages_Train,
-                TargetIndex = 1
+                Target = 1
             )
         )
 
@@ -5223,7 +5204,6 @@ class MainWindow(Window_MainWindow):
             SetPlaceholderText = True,
             PlaceholderText = Train_VITS_OutputDirName_Default
         )
-        self.ui.LineEdit_Train_VITS_OutputDirName.RemoveFileDialogButton()
         self.ui.Button_Train_VITS_OutputDirName_MoreActions.SetMenu(
             ActionEvents = {
                 "重置": lambda: ParamsManager_Train_VITS.ResetParam(self.ui.LineEdit_Train_VITS_OutputDirName),
@@ -5431,7 +5411,7 @@ class MainWindow(Window_MainWindow):
         self.ui.ToolButton_VoiceConverter_Title_GPTSoVITS.clicked.connect(
             lambda: Function_AnimateStackedWidget(
                 StackedWidget = self.ui.StackedWidget_Pages_TTS,
-                TargetIndex = 0
+                Target = 0
             )
         )
 
@@ -5648,7 +5628,7 @@ class MainWindow(Window_MainWindow):
         self.ui.ToolButton_VoiceConverter_Title_VITS.clicked.connect(
             lambda: Function_AnimateStackedWidget(
                 StackedWidget = self.ui.StackedWidget_Pages_TTS,
-                TargetIndex = 1
+                Target = 1
             )
         )
 
@@ -6128,7 +6108,7 @@ class MainWindow(Window_MainWindow):
         self.ui.ToolButton_Settings_Title_Client.clicked.connect(
             lambda: Function_AnimateStackedWidget(
                 StackedWidget = self.ui.StackedWidget_Pages_Settings,
-                TargetIndex = 0
+                Target = 0
             )
         )
 
@@ -6229,7 +6209,7 @@ class MainWindow(Window_MainWindow):
         self.ui.ToolButton_Settings_Title_Tools.clicked.connect(
             lambda: Function_AnimateStackedWidget(
                 StackedWidget = self.ui.StackedWidget_Pages_Settings,
-                TargetIndex = 1
+                Target = 1
             )
         )
 

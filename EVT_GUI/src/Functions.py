@@ -322,7 +322,7 @@ def Function_ParamsChecker(
 
 def Function_AnimateStackedWidget(
     StackedWidget: QStackedWidget,
-    TargetIndex: int = 0,
+    Target: Union[int, QWidget] = 0,
     Duration: int = 99
 ):
     '''
@@ -330,6 +330,11 @@ def Function_AnimateStackedWidget(
     '''
     OriginalWidget = StackedWidget.currentWidget()
     OriginalGeometry = OriginalWidget.geometry()
+
+    if isinstance(Target, int):
+        TargetIndex = Target
+    if isinstance(Target, QWidget):
+        TargetIndex = StackedWidget.indexOf(Target)
 
     WidgetAnimation = QFunc.Function_SetWidgetPosAnimation(OriginalWidget, Duration)
     WidgetAnimation.finished.connect(
@@ -564,10 +569,10 @@ def Function_SetMethodExecutor(
 
         WorkerThread.started.connect(lambda: Function_AnimateFrame(ConsoleWidget, MinHeight = 0, MaxHeight = 210, Mode = "Extend")) if ConsoleWidget else None
         WorkerThread.started.connect(lambda: Function_AnimateProgressBar(ProgressBar, IsTaskAlive = True)) if ProgressBar else None
-        WorkerThread.started.connect(lambda: Function_AnimateStackedWidget(QFunc.Function_FindParentUI(ExecuteButton, QStackedWidget), TargetIndex = 1)) if TerminateButton else None
+        WorkerThread.started.connect(lambda: Function_AnimateStackedWidget(QFunc.Function_FindParentUI(ExecuteButton, QStackedWidget), Target = 1)) if TerminateButton else None
         WorkerThread.finished.connect(lambda: Function_AnimateFrame(ConsoleWidget, MinHeight = 0, MaxHeight = 210, Mode = "Reduce")) if ConsoleWidget else None
         WorkerThread.finished.connect(lambda: Function_AnimateProgressBar(ProgressBar, IsTaskAlive = False)) if ProgressBar else None
-        WorkerThread.finished.connect(lambda: Function_AnimateStackedWidget(QFunc.Function_FindParentUI(ExecuteButton, QStackedWidget), TargetIndex = 0)) if TerminateButton else None
+        WorkerThread.finished.connect(lambda: Function_AnimateStackedWidget(QFunc.Function_FindParentUI(ExecuteButton, QStackedWidget), Target = 0)) if TerminateButton else None
         #WorkerThread.finished.connect(lambda: FunctionSignals.Signal_ExecuteTask.disconnect(getattr(ClassInstance, MethodName)))
 
         FunctionSignals.Signal_ExecuteTask.emit(Args)

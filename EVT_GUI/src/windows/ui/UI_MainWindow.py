@@ -1,7 +1,7 @@
 from PySide6.QtCore import (QCoreApplication, QMetaObject, QRect, QSize, Qt)
 from PySide6.QtWidgets import *
 
-from components.Components import WidgetBase, ButtonBase, MenuButton, LabelBase, LineEditBase, TextEditBase, ComboBoxBase, SpinBoxBase, DoubleSpinBoxBase, ToolBoxBase, ScrollAreaBase, TreeWidgetBase, Table_ViewModels, Table_EditAudioSpeaker
+from components.Components import WidgetBase, ButtonBase, HollowButton, MenuButton, LabelBase, LineEditBase, TextEditBase, TextBrowserBase, ComboBoxBase, SpinBoxBase, DoubleSpinBoxBase, ToolBoxBase, ScrollAreaBase, TreeWidgetBase, Table_ViewModels, Table_EditAudioSpeaker
 from assets import Sources
 
 
@@ -214,22 +214,13 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_8.addWidget(self.Label_Menu_Home_Icon)
 
-        self.Label_Menu_Home_Text = QLabel(self.Button_Menu_Home)
+        self.Label_Menu_Home_Text = LabelBase(self.Button_Menu_Home)
         self.Label_Menu_Home_Text.setObjectName(u"Label_Menu_Home_Text")
         sizePolicy2 = QSizePolicy(QSizePolicy.Policy.Ignored, QSizePolicy.Policy.Preferred)
         sizePolicy2.setHorizontalStretch(0)
         sizePolicy2.setVerticalStretch(0)
         sizePolicy2.setHeightForWidth(self.Label_Menu_Home_Text.sizePolicy().hasHeightForWidth())
         self.Label_Menu_Home_Text.setSizePolicy(sizePolicy2)
-        self.Label_Menu_Home_Text.setStyleSheet(u"QLabel {\n"
-"	font-size: 15px;\n"
-"	text-align: center;\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}")
 
         self.horizontalLayout_8.addWidget(self.Label_Menu_Home_Text)
 
@@ -284,19 +275,10 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_7.addWidget(self.Label_Menu_Env_Install_Icon)
 
-        self.Label_Menu_Env_Install_Text = QLabel(self.Button_Menu_Env)
+        self.Label_Menu_Env_Install_Text = LabelBase(self.Button_Menu_Env)
         self.Label_Menu_Env_Install_Text.setObjectName(u"Label_Menu_Env_Install_Text")
         sizePolicy2.setHeightForWidth(self.Label_Menu_Env_Install_Text.sizePolicy().hasHeightForWidth())
         self.Label_Menu_Env_Install_Text.setSizePolicy(sizePolicy2)
-        self.Label_Menu_Env_Install_Text.setStyleSheet(u"QLabel {\n"
-"	font-size: 15px;\n"
-"	text-align: center;\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}")
 
         self.horizontalLayout_7.addWidget(self.Label_Menu_Env_Install_Text)
 
@@ -351,19 +333,10 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_34.addWidget(self.Label_Menu_Models_Icon)
 
-        self.Label_Menu_Models_Text = QLabel(self.Button_Menu_Models)
+        self.Label_Menu_Models_Text = LabelBase(self.Button_Menu_Models)
         self.Label_Menu_Models_Text.setObjectName(u"Label_Menu_Models_Text")
         sizePolicy2.setHeightForWidth(self.Label_Menu_Models_Text.sizePolicy().hasHeightForWidth())
         self.Label_Menu_Models_Text.setSizePolicy(sizePolicy2)
-        self.Label_Menu_Models_Text.setStyleSheet(u"QLabel {\n"
-"	font-size: 15px;\n"
-"	text-align: center;\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}")
 
         self.horizontalLayout_34.addWidget(self.Label_Menu_Models_Text)
 
@@ -422,15 +395,6 @@ class Ui_MainWindow(object):
         self.Label_Menu_Process_Text.setObjectName(u"Label_Menu_Process_Text")
         sizePolicy2.setHeightForWidth(self.Label_Menu_Process_Text.sizePolicy().hasHeightForWidth())
         self.Label_Menu_Process_Text.setSizePolicy(sizePolicy2)
-        self.Label_Menu_Process_Text.setStyleSheet(u"QLabel {\n"
-"	font-size: 15px;\n"
-"	text-align: center;\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}")
 
         self.horizontalLayout_33.addWidget(self.Label_Menu_Process_Text)
 
@@ -485,19 +449,10 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_10.addWidget(self.Label_Menu_ASR_Icon)
 
-        self.Label_Menu_ASR_Text = QLabel(self.Button_Menu_ASR)
+        self.Label_Menu_ASR_Text = LabelBase(self.Button_Menu_ASR)
         self.Label_Menu_ASR_Text.setObjectName(u"Label_Menu_ASR_Text")
         sizePolicy2.setHeightForWidth(self.Label_Menu_ASR_Text.sizePolicy().hasHeightForWidth())
         self.Label_Menu_ASR_Text.setSizePolicy(sizePolicy2)
-        self.Label_Menu_ASR_Text.setStyleSheet(u"QLabel {\n"
-"	font-size: 15px;\n"
-"	text-align: center;\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}")
 
         self.horizontalLayout_10.addWidget(self.Label_Menu_ASR_Text)
 
@@ -552,19 +507,10 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_36.addWidget(self.Label_Menu_STT_Icon)
 
-        self.Label_Menu_STT_Text = QLabel(self.Button_Menu_STT)
+        self.Label_Menu_STT_Text = LabelBase(self.Button_Menu_STT)
         self.Label_Menu_STT_Text.setObjectName(u"Label_Menu_STT_Text")
         sizePolicy2.setHeightForWidth(self.Label_Menu_STT_Text.sizePolicy().hasHeightForWidth())
         self.Label_Menu_STT_Text.setSizePolicy(sizePolicy2)
-        self.Label_Menu_STT_Text.setStyleSheet(u"QLabel {\n"
-"	font-size: 15px;\n"
-"	text-align: center;\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}")
 
         self.horizontalLayout_36.addWidget(self.Label_Menu_STT_Text)
 
@@ -619,19 +565,10 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_38.addWidget(self.Label_Menu_Dataset_Icon)
 
-        self.Label_Menu_Dataset_Text = QLabel(self.Button_Menu_Dataset)
+        self.Label_Menu_Dataset_Text = LabelBase(self.Button_Menu_Dataset)
         self.Label_Menu_Dataset_Text.setObjectName(u"Label_Menu_Dataset_Text")
         sizePolicy2.setHeightForWidth(self.Label_Menu_Dataset_Text.sizePolicy().hasHeightForWidth())
         self.Label_Menu_Dataset_Text.setSizePolicy(sizePolicy2)
-        self.Label_Menu_Dataset_Text.setStyleSheet(u"QLabel {\n"
-"	font-size: 15px;\n"
-"	text-align: center;\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}")
 
         self.horizontalLayout_38.addWidget(self.Label_Menu_Dataset_Text)
 
@@ -686,19 +623,10 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_40.addWidget(self.Label_Menu_Train_Icon)
 
-        self.Label_Menu_Train_Text = QLabel(self.Button_Menu_Train)
+        self.Label_Menu_Train_Text = LabelBase(self.Button_Menu_Train)
         self.Label_Menu_Train_Text.setObjectName(u"Label_Menu_Train_Text")
         sizePolicy2.setHeightForWidth(self.Label_Menu_Train_Text.sizePolicy().hasHeightForWidth())
         self.Label_Menu_Train_Text.setSizePolicy(sizePolicy2)
-        self.Label_Menu_Train_Text.setStyleSheet(u"QLabel {\n"
-"	font-size: 15px;\n"
-"	text-align: center;\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}")
 
         self.horizontalLayout_40.addWidget(self.Label_Menu_Train_Text)
 
@@ -753,19 +681,10 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_47.addWidget(self.Label_Menu_TTS_Icon)
 
-        self.Label_Menu_TTS_Text = QLabel(self.Button_Menu_TTS)
+        self.Label_Menu_TTS_Text = LabelBase(self.Button_Menu_TTS)
         self.Label_Menu_TTS_Text.setObjectName(u"Label_Menu_TTS_Text")
         sizePolicy2.setHeightForWidth(self.Label_Menu_TTS_Text.sizePolicy().hasHeightForWidth())
         self.Label_Menu_TTS_Text.setSizePolicy(sizePolicy2)
-        self.Label_Menu_TTS_Text.setStyleSheet(u"QLabel {\n"
-"	font-size: 15px;\n"
-"	text-align: center;\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}")
 
         self.horizontalLayout_47.addWidget(self.Label_Menu_TTS_Text)
 
@@ -824,19 +743,10 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_9.addWidget(self.Label_Menu_Settings_Icon)
 
-        self.Label_Menu_Settings_Text = QLabel(self.Button_Menu_Settings)
+        self.Label_Menu_Settings_Text = LabelBase(self.Button_Menu_Settings)
         self.Label_Menu_Settings_Text.setObjectName(u"Label_Menu_Settings_Text")
         sizePolicy2.setHeightForWidth(self.Label_Menu_Settings_Text.sizePolicy().hasHeightForWidth())
         self.Label_Menu_Settings_Text.setSizePolicy(sizePolicy2)
-        self.Label_Menu_Settings_Text.setStyleSheet(u"QLabel {\n"
-"	font-size: 15px;\n"
-"	text-align: center;\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}")
 
         self.horizontalLayout_9.addWidget(self.Label_Menu_Settings_Text)
 
@@ -891,19 +801,10 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_13.addWidget(self.Label_Menu_Info_Icon)
 
-        self.Label_Menu_Info_Text = QLabel(self.Button_Menu_Info)
+        self.Label_Menu_Info_Text = LabelBase(self.Button_Menu_Info)
         self.Label_Menu_Info_Text.setObjectName(u"Label_Menu_Info_Text")
         sizePolicy2.setHeightForWidth(self.Label_Menu_Info_Text.sizePolicy().hasHeightForWidth())
         self.Label_Menu_Info_Text.setSizePolicy(sizePolicy2)
-        self.Label_Menu_Info_Text.setStyleSheet(u"QLabel {\n"
-"	font-size: 15px;\n"
-"	text-align: center;\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}")
 
         self.horizontalLayout_13.addWidget(self.Label_Menu_Info_Text)
 
@@ -960,119 +861,8 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_100.addWidget(self.Label_Cover_Home)
 
-        self.TextBrowser_Text_Home = QTextBrowser(self.Frame_High_Home)
+        self.TextBrowser_Text_Home = TextBrowserBase(self.Frame_High_Home)
         self.TextBrowser_Text_Home.setObjectName(u"TextBrowser_Text_Home")
-        self.TextBrowser_Text_Home.setStyleSheet(u"QTextBrowser {\n"
-"	/*text-align: center;*/\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"	border-radius: 6px;\n"
-"}\n"
-"QTextBrowser:hover {\n"
-"}\n"
-"\n"
-"\n"
-"QScrollBar::vertical {\n"
-"	width: 9px;\n"
-"	background-color: transparent;\n"
-"	border-width: 1px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: transparent;\n"
-"	margin: 0px;\n"
-"}\n"
-"QScrollBar::vertical:hover {\n"
-"	background-color: transparent;\n"
-"}\n"
-"\n"
-"QScrollBar::add-line:vertical {\n"
-"	height: 0px;\n"
-"	background-color: transparent;\n"
-"	subcontrol-position: bottom;\n"
-"	subcontrol-origin: margin;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"\n"
-"QScrollBar::sub-line:vertical {\n"
-"	height: 0px;\n"
-"	background-color: transparent;\n"
-"	subcontrol-position: top;\n"
-"	subcontrol-origin: margin;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"\n"
-"QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {\n"
-""
-                        "	width: 0px;\n"
-"	height: 0px;\n"
-"	background-color: transparent;\n"
-"}\n"
-"\n"
-"QScrollBar::handle:vertical {\n"
-"	background-color: rgba(120, 120, 120, 120);\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QScrollBar::handle:vertical:hover {\n"
-"	background-color: rgba(120, 120, 120, 210);\n"
-"}\n"
-"\n"
-"\n"
-"QScrollBar::horizontal {\n"
-"	height: 9px;\n"
-"	background-color: transparent;\n"
-"	border-width: 1px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: transparent;\n"
-"	margin: 0px;\n"
-"}\n"
-"QScrollBar::horizontal:hover {\n"
-"	background-color: transparent;\n"
-"}\n"
-"\n"
-"QScrollBar::add-line:horizontal {\n"
-"	width: 0px;\n"
-"	background-color: transparent;\n"
-"	subcontrol-position: left;\n"
-"	subcontrol-origin: margin;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"\n"
-"QScrollBar::sub-line:horizontal {\n"
-"	width: 0px;\n"
-"	background-color: transparent;\n"
-"	subcontrol-position: right;\n"
-"	subcontrol-o"
-                        "rigin: margin;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"\n"
-"QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {\n"
-"	width: 0px;\n"
-"	height: 0px;\n"
-"	background-color: transparent;\n"
-"}\n"
-"\n"
-"QScrollBar::handle:horizontal {\n"
-"	background-color: rgba(120, 120, 120, 120);\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QScrollBar::handle:horizontal:hover {\n"
-"	background-color: rgba(120, 120, 120, 210);\n"
-"}")
 
         self.verticalLayout_100.addWidget(self.TextBrowser_Text_Home)
 
@@ -1090,7 +880,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_5.setSpacing(0)
         self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
         self.horizontalLayout_5.setContentsMargins(12, 0, 12, 0)
-        self.Button_Demo = QToolButton(self.Frame_Low_Home)
+        self.Button_Demo = HollowButton(self.Frame_Low_Home)
         self.Button_Demo.setObjectName(u"Button_Demo")
         sizePolicy3 = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
         sizePolicy3.setHorizontalStretch(0)
@@ -1098,17 +888,6 @@ class Ui_MainWindow(object):
         sizePolicy3.setHeightForWidth(self.Button_Demo.sizePolicy().hasHeightForWidth())
         self.Button_Demo.setSizePolicy(sizePolicy3)
         self.Button_Demo.setMinimumSize(QSize(210, 75))
-        self.Button_Demo.setStyleSheet(u"QToolButton {\n"
-"	background-color: transparent;\n"
-"	/*padding: 12px 60px;*/\n"
-"	border-width: 1.5px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QToolButton:hover {\n"
-"	border-color: rgb(120, 120, 120);\n"
-"}")
         self.horizontalLayout_70 = QHBoxLayout(self.Button_Demo)
         self.horizontalLayout_70.setSpacing(12)
         self.horizontalLayout_70.setObjectName(u"horizontalLayout_70")
@@ -1133,17 +912,8 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_70.addWidget(self.Label_Demo_Icon)
 
-        self.Label_Demo_Text = QLabel(self.Button_Demo)
+        self.Label_Demo_Text = LabelBase(self.Button_Demo)
         self.Label_Demo_Text.setObjectName(u"Label_Demo_Text")
-        self.Label_Demo_Text.setStyleSheet(u"QLabel {\n"
-"	font-size: 15px;\n"
-"	text-align: center;\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}")
 
         self.horizontalLayout_70.addWidget(self.Label_Demo_Text)
 
@@ -1156,22 +926,11 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_5.addItem(self.HorizontalSpacer_Low_Home_1)
 
-        self.Button_Server = QToolButton(self.Frame_Low_Home)
+        self.Button_Server = HollowButton(self.Frame_Low_Home)
         self.Button_Server.setObjectName(u"Button_Server")
         sizePolicy3.setHeightForWidth(self.Button_Server.sizePolicy().hasHeightForWidth())
         self.Button_Server.setSizePolicy(sizePolicy3)
         self.Button_Server.setMinimumSize(QSize(210, 75))
-        self.Button_Server.setStyleSheet(u"QToolButton {\n"
-"	background-color: transparent;\n"
-"	/*padding: 12px 60px;*/\n"
-"	border-width: 1.5px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QToolButton:hover {\n"
-"	border-color: rgb(120, 120, 120);\n"
-"}")
         self.horizontalLayout_71 = QHBoxLayout(self.Button_Server)
         self.horizontalLayout_71.setSpacing(12)
         self.horizontalLayout_71.setObjectName(u"horizontalLayout_71")
@@ -1196,17 +955,8 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_71.addWidget(self.Label_Server_Icon)
 
-        self.Label_Server_Text = QLabel(self.Button_Server)
+        self.Label_Server_Text = LabelBase(self.Button_Server)
         self.Label_Server_Text.setObjectName(u"Label_Server_Text")
-        self.Label_Server_Text.setStyleSheet(u"QLabel {\n"
-"	font-size: 15px;\n"
-"	text-align: center;\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}")
 
         self.horizontalLayout_71.addWidget(self.Label_Server_Text)
 
@@ -1219,22 +969,11 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_5.addItem(self.HorizontalSpacer_Low_Home_2)
 
-        self.Button_Repo = QToolButton(self.Frame_Low_Home)
+        self.Button_Repo = HollowButton(self.Frame_Low_Home)
         self.Button_Repo.setObjectName(u"Button_Repo")
         sizePolicy3.setHeightForWidth(self.Button_Repo.sizePolicy().hasHeightForWidth())
         self.Button_Repo.setSizePolicy(sizePolicy3)
         self.Button_Repo.setMinimumSize(QSize(210, 75))
-        self.Button_Repo.setStyleSheet(u"QToolButton {\n"
-"	background-color: transparent;\n"
-"	/*padding: 12px 60px;*/\n"
-"	border-width: 1.5px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QToolButton:hover {\n"
-"	border-color: rgb(120, 120, 120);\n"
-"}")
         self.horizontalLayout_76 = QHBoxLayout(self.Button_Repo)
         self.horizontalLayout_76.setSpacing(12)
         self.horizontalLayout_76.setObjectName(u"horizontalLayout_76")
@@ -1259,17 +998,8 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_76.addWidget(self.Label_Repo_Icon)
 
-        self.Label_Repo_Text = QLabel(self.Button_Repo)
+        self.Label_Repo_Text = LabelBase(self.Button_Repo)
         self.Label_Repo_Text.setObjectName(u"Label_Repo_Text")
-        self.Label_Repo_Text.setStyleSheet(u"QLabel {\n"
-"	font-size: 15px;\n"
-"	text-align: center;\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}")
 
         self.horizontalLayout_76.addWidget(self.Label_Repo_Text)
 
@@ -1282,22 +1012,11 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_5.addItem(self.HorizontalSpacer_Low_Home_3)
 
-        self.Button_Donate = QToolButton(self.Frame_Low_Home)
+        self.Button_Donate = HollowButton(self.Frame_Low_Home)
         self.Button_Donate.setObjectName(u"Button_Donate")
         sizePolicy3.setHeightForWidth(self.Button_Donate.sizePolicy().hasHeightForWidth())
         self.Button_Donate.setSizePolicy(sizePolicy3)
         self.Button_Donate.setMinimumSize(QSize(210, 75))
-        self.Button_Donate.setStyleSheet(u"QToolButton {\n"
-"	background-color: transparent;\n"
-"	/*padding: 12px 60px;*/\n"
-"	border-width: 1.5px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QToolButton:hover {\n"
-"	border-color: rgb(120, 120, 120);\n"
-"}")
         self.horizontalLayout_79 = QHBoxLayout(self.Button_Donate)
         self.horizontalLayout_79.setSpacing(12)
         self.horizontalLayout_79.setObjectName(u"horizontalLayout_79")
@@ -1322,17 +1041,8 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_79.addWidget(self.Label_Donate_Icon)
 
-        self.Label_Donate_Text = QLabel(self.Button_Donate)
+        self.Label_Donate_Text = LabelBase(self.Button_Donate)
         self.Label_Donate_Text.setObjectName(u"Label_Donate_Text")
-        self.Label_Donate_Text.setStyleSheet(u"QLabel {\n"
-"	font-size: 15px;\n"
-"	text-align: center;\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}")
 
         self.horizontalLayout_79.addWidget(self.Label_Donate_Text)
 
@@ -13289,16 +12999,8 @@ class Ui_MainWindow(object):
         self.horizontalLayout_14.setSpacing(21)
         self.horizontalLayout_14.setObjectName(u"horizontalLayout_14")
         self.horizontalLayout_14.setContentsMargins(21, 0, 21, 0)
-        self.Button_Console_Title = QPushButton(self.Frame_Console_Top)
+        self.Button_Console_Title = ButtonBase(self.Frame_Console_Top)
         self.Button_Console_Title.setObjectName(u"Button_Console_Title")
-        self.Button_Console_Title.setStyleSheet(u"QPushButton {\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"	border-color: transparent;\n"
-"}")
 
         self.horizontalLayout_14.addWidget(self.Button_Console_Title)
 
@@ -13420,14 +13122,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_50.setSpacing(21)
         self.verticalLayout_50.setObjectName(u"verticalLayout_50")
         self.verticalLayout_50.setContentsMargins(21, 0, 21, 0)
-        self.PlainTextEdit_Console = QPlainTextEdit(self.ScrollAreaWidgetContents_Console)
+        self.PlainTextEdit_Console = TextEditBase(self.ScrollAreaWidgetContents_Console)
         self.PlainTextEdit_Console.setObjectName(u"PlainTextEdit_Console")
-        self.PlainTextEdit_Console.setStyleSheet(u"QPlainTextEdit {\n"
-"	padding: 1.5px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}")
 
         self.verticalLayout_50.addWidget(self.PlainTextEdit_Console)
 
@@ -13496,17 +13192,8 @@ class Ui_MainWindow(object):
         self.horizontalLayout.setSpacing(21)
         self.horizontalLayout.setObjectName(u"horizontalLayout")
         self.horizontalLayout.setContentsMargins(30, 0, 0, 0)
-        self.Label_ToolsStatus = QLabel(self.Frame_Bottom_Left)
+        self.Label_ToolsStatus = LabelBase(self.Frame_Bottom_Left)
         self.Label_ToolsStatus.setObjectName(u"Label_ToolsStatus")
-        self.Label_ToolsStatus.setStyleSheet(u"QLabel {\n"
-"	font-size: 12px;\n"
-"	/*text-align: center;*/\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}")
         self.horizontalLayout_49 = QHBoxLayout(self.Label_ToolsStatus)
         self.horizontalLayout_49.setSpacing(0)
         self.horizontalLayout_49.setObjectName(u"horizontalLayout_49")
@@ -13569,17 +13256,8 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_50.addWidget(self.Label_Usage_GPU)
 
-        self.Label_Version = QLabel(self.Frame_Bottom_Right)
+        self.Label_Version = LabelBase(self.Frame_Bottom_Right)
         self.Label_Version.setObjectName(u"Label_Version")
-        self.Label_Version.setStyleSheet(u"QLabel {\n"
-"	font-size: 12px;\n"
-"	/*text-align: center;*/\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}")
         self.horizontalLayout_51 = QHBoxLayout(self.Label_Version)
         self.horizontalLayout_51.setSpacing(0)
         self.horizontalLayout_51.setObjectName(u"horizontalLayout_51")
