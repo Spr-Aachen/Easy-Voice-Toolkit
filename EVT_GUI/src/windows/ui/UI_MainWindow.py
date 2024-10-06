@@ -162,7 +162,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_3.setSpacing(0)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
         self.verticalLayout_3.setContentsMargins(0, 3, 0, 3)
-        self.Button_Menu_Home = QToolButton(self.Frame_Menu)
+        self.Button_Menu_Home = ButtonBase(self.Frame_Menu)
         self.Button_Menu_Home.setObjectName(u"Button_Menu_Home")
         sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
         sizePolicy1.setHorizontalStretch(0)
@@ -170,15 +170,15 @@ class Ui_MainWindow(object):
         sizePolicy1.setHeightForWidth(self.Button_Menu_Home.sizePolicy().hasHeightForWidth())
         self.Button_Menu_Home.setSizePolicy(sizePolicy1)
         self.Button_Menu_Home.setMinimumSize(QSize(0, 48))
-        self.Button_Menu_Home.setStyleSheet(u"QToolButton {\n"
+        self.Button_Menu_Home.setStyleSheet(u"ButtonBase {\n"
 "	background-color: transparent;\n"
 "	border-width: 0px;\n"
 "	border-style: solid;\n"
 "}\n"
-"QToolButton:hover {\n"
+"ButtonBase:hover {\n"
 "	background-color: qlineargradient(spread: pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(66, 66, 66, 123), stop:1 transparent);\n"
 "}\n"
-"QToolButton:checked {\n"
+"ButtonBase:checked {\n"
 "	background-color: transparent;\n"
 "	border-left-width: 3px;\n"
 "	border-left-color: rgb(120, 180, 240);\n"
@@ -227,20 +227,20 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_3.addWidget(self.Button_Menu_Home)
 
-        self.Button_Menu_Env = QToolButton(self.Frame_Menu)
+        self.Button_Menu_Env = ButtonBase(self.Frame_Menu)
         self.Button_Menu_Env.setObjectName(u"Button_Menu_Env")
         sizePolicy1.setHeightForWidth(self.Button_Menu_Env.sizePolicy().hasHeightForWidth())
         self.Button_Menu_Env.setSizePolicy(sizePolicy1)
         self.Button_Menu_Env.setMinimumSize(QSize(0, 48))
-        self.Button_Menu_Env.setStyleSheet(u"QToolButton {\n"
+        self.Button_Menu_Env.setStyleSheet(u"ButtonBase {\n"
 "	background-color: transparent;\n"
 "	border-width: 0px;\n"
 "	border-style: solid;\n"
 "}\n"
-"QToolButton:hover {\n"
+"ButtonBase:hover {\n"
 "	background-color: qlineargradient(spread: pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(66, 66, 66, 123), stop:1 transparent);\n"
 "}\n"
-"QToolButton:checked {\n"
+"ButtonBase:checked {\n"
 "	background-color: transparent;\n"
 "	border-left-width: 3px;\n"
 "	border-left-color: rgb(120, 180, 240);\n"
@@ -285,20 +285,20 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_3.addWidget(self.Button_Menu_Env)
 
-        self.Button_Menu_Models = QToolButton(self.Frame_Menu)
+        self.Button_Menu_Models = ButtonBase(self.Frame_Menu)
         self.Button_Menu_Models.setObjectName(u"Button_Menu_Models")
         sizePolicy1.setHeightForWidth(self.Button_Menu_Models.sizePolicy().hasHeightForWidth())
         self.Button_Menu_Models.setSizePolicy(sizePolicy1)
         self.Button_Menu_Models.setMinimumSize(QSize(0, 48))
-        self.Button_Menu_Models.setStyleSheet(u"QToolButton {\n"
+        self.Button_Menu_Models.setStyleSheet(u"ButtonBase {\n"
 "	background-color: transparent;\n"
 "	border-width: 0px;\n"
 "	border-style: solid;\n"
 "}\n"
-"QToolButton:hover {\n"
+"ButtonBase:hover {\n"
 "	background-color: qlineargradient(spread: pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(66, 66, 66, 123), stop:1 transparent);\n"
 "}\n"
-"QToolButton:checked {\n"
+"ButtonBase:checked {\n"
 "	background-color: transparent;\n"
 "	border-left-width: 3px;\n"
 "	border-left-color: rgb(120, 180, 240);\n"
@@ -343,20 +343,20 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_3.addWidget(self.Button_Menu_Models)
 
-        self.Button_Menu_Process = QToolButton(self.Frame_Menu)
+        self.Button_Menu_Process = ButtonBase(self.Frame_Menu)
         self.Button_Menu_Process.setObjectName(u"Button_Menu_Process")
         sizePolicy1.setHeightForWidth(self.Button_Menu_Process.sizePolicy().hasHeightForWidth())
         self.Button_Menu_Process.setSizePolicy(sizePolicy1)
         self.Button_Menu_Process.setMinimumSize(QSize(0, 48))
-        self.Button_Menu_Process.setStyleSheet(u"QToolButton {\n"
+        self.Button_Menu_Process.setStyleSheet(u"ButtonBase {\n"
 "	background-color: transparent;\n"
 "	border-width: 0px;\n"
 "	border-style: solid;\n"
 "}\n"
-"QToolButton:hover {\n"
+"ButtonBase:hover {\n"
 "	background-color: qlineargradient(spread: pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(66, 66, 66, 123), stop:1 transparent);\n"
 "}\n"
-"QToolButton:checked {\n"
+"ButtonBase:checked {\n"
 "	background-color: transparent;\n"
 "	border-left-width: 3px;\n"
 "	border-left-color: rgb(120, 180, 240);\n"
@@ -391,7 +391,7 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_33.addWidget(self.Label_Menu_Process_Icon)
 
-        self.Label_Menu_Process_Text = QLabel(self.Button_Menu_Process)
+        self.Label_Menu_Process_Text = LabelBase(self.Button_Menu_Process)
         self.Label_Menu_Process_Text.setObjectName(u"Label_Menu_Process_Text")
         sizePolicy2.setHeightForWidth(self.Label_Menu_Process_Text.sizePolicy().hasHeightForWidth())
         self.Label_Menu_Process_Text.setSizePolicy(sizePolicy2)
@@ -401,20 +401,20 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_3.addWidget(self.Button_Menu_Process)
 
-        self.Button_Menu_ASR = QToolButton(self.Frame_Menu)
+        self.Button_Menu_ASR = ButtonBase(self.Frame_Menu)
         self.Button_Menu_ASR.setObjectName(u"Button_Menu_ASR")
         sizePolicy1.setHeightForWidth(self.Button_Menu_ASR.sizePolicy().hasHeightForWidth())
         self.Button_Menu_ASR.setSizePolicy(sizePolicy1)
         self.Button_Menu_ASR.setMinimumSize(QSize(0, 48))
-        self.Button_Menu_ASR.setStyleSheet(u"QToolButton {\n"
+        self.Button_Menu_ASR.setStyleSheet(u"ButtonBase {\n"
 "	background-color: transparent;\n"
 "	border-width: 0px;\n"
 "	border-style: solid;\n"
 "}\n"
-"QToolButton:hover {\n"
+"ButtonBase:hover {\n"
 "	background-color: qlineargradient(spread: pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(66, 66, 66, 123), stop:1 transparent);\n"
 "}\n"
-"QToolButton:checked {\n"
+"ButtonBase:checked {\n"
 "	background-color: transparent;\n"
 "	border-left-width: 3px;\n"
 "	border-left-color: rgb(120, 180, 240);\n"
@@ -459,20 +459,20 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_3.addWidget(self.Button_Menu_ASR)
 
-        self.Button_Menu_STT = QToolButton(self.Frame_Menu)
+        self.Button_Menu_STT = ButtonBase(self.Frame_Menu)
         self.Button_Menu_STT.setObjectName(u"Button_Menu_STT")
         sizePolicy1.setHeightForWidth(self.Button_Menu_STT.sizePolicy().hasHeightForWidth())
         self.Button_Menu_STT.setSizePolicy(sizePolicy1)
         self.Button_Menu_STT.setMinimumSize(QSize(0, 48))
-        self.Button_Menu_STT.setStyleSheet(u"QToolButton {\n"
+        self.Button_Menu_STT.setStyleSheet(u"ButtonBase {\n"
 "	background-color: transparent;\n"
 "	border-width: 0px;\n"
 "	border-style: solid;\n"
 "}\n"
-"QToolButton:hover {\n"
+"ButtonBase:hover {\n"
 "	background-color: qlineargradient(spread: pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(66, 66, 66, 123), stop:1 transparent);\n"
 "}\n"
-"QToolButton:checked {\n"
+"ButtonBase:checked {\n"
 "	background-color: transparent;\n"
 "	border-left-width: 3px;\n"
 "	border-left-color: rgb(120, 180, 240);\n"
@@ -517,20 +517,20 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_3.addWidget(self.Button_Menu_STT)
 
-        self.Button_Menu_Dataset = QToolButton(self.Frame_Menu)
+        self.Button_Menu_Dataset = ButtonBase(self.Frame_Menu)
         self.Button_Menu_Dataset.setObjectName(u"Button_Menu_Dataset")
         sizePolicy1.setHeightForWidth(self.Button_Menu_Dataset.sizePolicy().hasHeightForWidth())
         self.Button_Menu_Dataset.setSizePolicy(sizePolicy1)
         self.Button_Menu_Dataset.setMinimumSize(QSize(0, 48))
-        self.Button_Menu_Dataset.setStyleSheet(u"QToolButton {\n"
+        self.Button_Menu_Dataset.setStyleSheet(u"ButtonBase {\n"
 "	background-color: transparent;\n"
 "	border-width: 0px;\n"
 "	border-style: solid;\n"
 "}\n"
-"QToolButton:hover {\n"
+"ButtonBase:hover {\n"
 "	background-color: qlineargradient(spread: pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(66, 66, 66, 123), stop:1 transparent);\n"
 "}\n"
-"QToolButton:checked {\n"
+"ButtonBase:checked {\n"
 "	background-color: transparent;\n"
 "	border-left-width: 3px;\n"
 "	border-left-color: rgb(120, 180, 240);\n"
@@ -575,20 +575,20 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_3.addWidget(self.Button_Menu_Dataset)
 
-        self.Button_Menu_Train = QToolButton(self.Frame_Menu)
+        self.Button_Menu_Train = ButtonBase(self.Frame_Menu)
         self.Button_Menu_Train.setObjectName(u"Button_Menu_Train")
         sizePolicy1.setHeightForWidth(self.Button_Menu_Train.sizePolicy().hasHeightForWidth())
         self.Button_Menu_Train.setSizePolicy(sizePolicy1)
         self.Button_Menu_Train.setMinimumSize(QSize(0, 48))
-        self.Button_Menu_Train.setStyleSheet(u"QToolButton {\n"
+        self.Button_Menu_Train.setStyleSheet(u"ButtonBase {\n"
 "	background-color: transparent;\n"
 "	border-width: 0px;\n"
 "	border-style: solid;\n"
 "}\n"
-"QToolButton:hover {\n"
+"ButtonBase:hover {\n"
 "	background-color: qlineargradient(spread: pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(66, 66, 66, 123), stop:1 transparent);\n"
 "}\n"
-"QToolButton:checked {\n"
+"ButtonBase:checked {\n"
 "	background-color: transparent;\n"
 "	border-left-width: 3px;\n"
 "	border-left-color: rgb(120, 180, 240);\n"
@@ -633,20 +633,20 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_3.addWidget(self.Button_Menu_Train)
 
-        self.Button_Menu_TTS = QToolButton(self.Frame_Menu)
+        self.Button_Menu_TTS = ButtonBase(self.Frame_Menu)
         self.Button_Menu_TTS.setObjectName(u"Button_Menu_TTS")
         sizePolicy1.setHeightForWidth(self.Button_Menu_TTS.sizePolicy().hasHeightForWidth())
         self.Button_Menu_TTS.setSizePolicy(sizePolicy1)
         self.Button_Menu_TTS.setMinimumSize(QSize(0, 48))
-        self.Button_Menu_TTS.setStyleSheet(u"QToolButton {\n"
+        self.Button_Menu_TTS.setStyleSheet(u"ButtonBase {\n"
 "	background-color: transparent;\n"
 "	border-width: 0px;\n"
 "	border-style: solid;\n"
 "}\n"
-"QToolButton:hover {\n"
+"ButtonBase:hover {\n"
 "	background-color: qlineargradient(spread: pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(66, 66, 66, 123), stop:1 transparent);\n"
 "}\n"
-"QToolButton:checked {\n"
+"ButtonBase:checked {\n"
 "	background-color: transparent;\n"
 "	border-left-width: 3px;\n"
 "	border-left-color: rgb(120, 180, 240);\n"
@@ -695,20 +695,20 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_3.addItem(self.VerticalSpacer_Menu)
 
-        self.Button_Menu_Settings = QToolButton(self.Frame_Menu)
+        self.Button_Menu_Settings = ButtonBase(self.Frame_Menu)
         self.Button_Menu_Settings.setObjectName(u"Button_Menu_Settings")
         sizePolicy1.setHeightForWidth(self.Button_Menu_Settings.sizePolicy().hasHeightForWidth())
         self.Button_Menu_Settings.setSizePolicy(sizePolicy1)
         self.Button_Menu_Settings.setMinimumSize(QSize(0, 48))
-        self.Button_Menu_Settings.setStyleSheet(u"QToolButton {\n"
+        self.Button_Menu_Settings.setStyleSheet(u"ButtonBase {\n"
 "	background-color: transparent;\n"
 "	border-width: 0px;\n"
 "	border-style: solid;\n"
 "}\n"
-"QToolButton:hover {\n"
+"ButtonBase:hover {\n"
 "	background-color: qlineargradient(spread: pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(66, 66, 66, 123), stop:1 transparent);\n"
 "}\n"
-"QToolButton:checked {\n"
+"ButtonBase:checked {\n"
 "	background-color: transparent;\n"
 "	border-left-width: 3px;\n"
 "	border-left-color: rgb(120, 180, 240);\n"
@@ -753,20 +753,20 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_3.addWidget(self.Button_Menu_Settings)
 
-        self.Button_Menu_Info = QToolButton(self.Frame_Menu)
+        self.Button_Menu_Info = ButtonBase(self.Frame_Menu)
         self.Button_Menu_Info.setObjectName(u"Button_Menu_Info")
         sizePolicy1.setHeightForWidth(self.Button_Menu_Info.sizePolicy().hasHeightForWidth())
         self.Button_Menu_Info.setSizePolicy(sizePolicy1)
         self.Button_Menu_Info.setMinimumSize(QSize(0, 48))
-        self.Button_Menu_Info.setStyleSheet(u"QToolButton {\n"
+        self.Button_Menu_Info.setStyleSheet(u"ButtonBase {\n"
 "	background-color: transparent;\n"
 "	border-width: 0px;\n"
 "	border-style: solid;\n"
 "}\n"
-"QToolButton:hover {\n"
+"ButtonBase:hover {\n"
 "	background-color: qlineargradient(spread: pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(66, 66, 66, 123), stop:1 transparent);\n"
 "}\n"
-"QToolButton:checked {\n"
+"ButtonBase:checked {\n"
 "	background-color: transparent;\n"
 "	border-left-width: 3px;\n"
 "	border-left-color: rgb(120, 180, 240);\n"
@@ -1076,11 +1076,11 @@ class Ui_MainWindow(object):
         self.horizontalLayout_3.setSpacing(0)
         self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
         self.horizontalLayout_3.setContentsMargins(0, 0, 0, 0)
-        self.ToolButton_Env_Install_Title = QToolButton(self.Frame_Env_Install_Top)
-        self.ToolButton_Env_Install_Title.setObjectName(u"ToolButton_Env_Install_Title")
-        sizePolicy1.setHeightForWidth(self.ToolButton_Env_Install_Title.sizePolicy().hasHeightForWidth())
-        self.ToolButton_Env_Install_Title.setSizePolicy(sizePolicy1)
-        self.ToolButton_Env_Install_Title.setStyleSheet(u"QToolButton {\n"
+        self.Button_Env_Install_Title = ButtonBase(self.Frame_Env_Install_Top)
+        self.Button_Env_Install_Title.setObjectName(u"Button_Env_Install_Title")
+        sizePolicy1.setHeightForWidth(self.Button_Env_Install_Title.sizePolicy().hasHeightForWidth())
+        self.Button_Env_Install_Title.setSizePolicy(sizePolicy1)
+        self.Button_Env_Install_Title.setStyleSheet(u"QPushButton {\n"
 "	font-size: 24px;\n"
 "	/*text-align: center;*/\n"
 "	padding-left: 12px;\n"
@@ -1093,7 +1093,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "	border-bottom-color: rgba(123, 123, 123, 123);\n"
 "}\n"
-"QToolButton:hover {\n"
+"QPushButton:hover {\n"
 "	background-color: transparent;\n"
 "	border-top-width: 0px;\n"
 "	border-right-width: 0px;\n"
@@ -1102,7 +1102,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "	border-bottom-color: rgba(120, 180, 240, 123);\n"
 "}\n"
-"QToolButton:checked {\n"
+"QPushButton:checked {\n"
 "	background-color: transparent;\n"
 "	border-top-width: 0px;\n"
 "	border-right-width: 0px;\n"
@@ -1112,13 +1112,13 @@ class Ui_MainWindow(object):
 "	border-bottom-color: rgba(120, 180, 240, 210);\n"
 "}")
 
-        self.horizontalLayout_3.addWidget(self.ToolButton_Env_Install_Title)
+        self.horizontalLayout_3.addWidget(self.Button_Env_Install_Title)
 
-        self.ToolButton_Env_Manage_Title = QToolButton(self.Frame_Env_Install_Top)
-        self.ToolButton_Env_Manage_Title.setObjectName(u"ToolButton_Env_Manage_Title")
-        sizePolicy1.setHeightForWidth(self.ToolButton_Env_Manage_Title.sizePolicy().hasHeightForWidth())
-        self.ToolButton_Env_Manage_Title.setSizePolicy(sizePolicy1)
-        self.ToolButton_Env_Manage_Title.setStyleSheet(u"QToolButton {\n"
+        self.Button_Env_Manage_Title = ButtonBase(self.Frame_Env_Install_Top)
+        self.Button_Env_Manage_Title.setObjectName(u"Button_Env_Manage_Title")
+        sizePolicy1.setHeightForWidth(self.Button_Env_Manage_Title.sizePolicy().hasHeightForWidth())
+        self.Button_Env_Manage_Title.setSizePolicy(sizePolicy1)
+        self.Button_Env_Manage_Title.setStyleSheet(u"QPushButton {\n"
 "	font-size: 24px;\n"
 "	/*text-align: center;*/\n"
 "	padding-left: 12px;\n"
@@ -1131,7 +1131,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "	border-bottom-color: rgba(123, 123, 123, 123);\n"
 "}\n"
-"QToolButton:hover {\n"
+"QPushButton:hover {\n"
 "	background-color: transparent;\n"
 "	border-top-width: 0px;\n"
 "	border-right-width: 0px;\n"
@@ -1140,7 +1140,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "	border-bottom-color: rgba(120, 180, 240, 123);\n"
 "}\n"
-"QToolButton:checked {\n"
+"QPushButton:checked {\n"
 "	background-color: transparent;\n"
 "	border-top-width: 0px;\n"
 "	border-right-width: 0px;\n"
@@ -1150,7 +1150,7 @@ class Ui_MainWindow(object):
 "	border-bottom-color: rgba(120, 180, 240, 210);\n"
 "}")
 
-        self.horizontalLayout_3.addWidget(self.ToolButton_Env_Manage_Title)
+        self.horizontalLayout_3.addWidget(self.Button_Env_Manage_Title)
 
         self.Frame_Env_Install_Title_Spacer = QLabel(self.Frame_Env_Install_Top)
         self.Frame_Env_Install_Title_Spacer.setObjectName(u"Frame_Env_Install_Title_Spacer")
@@ -1189,7 +1189,7 @@ class Ui_MainWindow(object):
         self.ScrollArea_Env_Install.setWidgetResizable(True)
         self.ScrollAreaWidgetContents_Env_Install = QWidget()
         self.ScrollAreaWidgetContents_Env_Install.setObjectName(u"ScrollAreaWidgetContents_Env_Install")
-        self.ScrollAreaWidgetContents_Env_Install.setGeometry(QRect(0, 0, 185, 495))
+        self.ScrollAreaWidgetContents_Env_Install.setGeometry(QRect(0, 0, 242, 495))
         self.verticalLayout_130 = QVBoxLayout(self.ScrollAreaWidgetContents_Env_Install)
         self.verticalLayout_130.setSpacing(0)
         self.verticalLayout_130.setObjectName(u"verticalLayout_130")
@@ -1686,7 +1686,7 @@ class Ui_MainWindow(object):
         self.ToolBox_Env_Manage_Pytorch.setObjectName(u"ToolBox_Env_Manage_Pytorch")
         self.ToolBox_Env_Manage_Pytorch_Page1Content = WidgetBase()
         self.ToolBox_Env_Manage_Pytorch_Page1Content.setObjectName(u"ToolBox_Env_Manage_Pytorch_Page1Content")
-        self.ToolBox_Env_Manage_Pytorch_Page1Content.setGeometry(QRect(0, 0, 244, 204))
+        self.ToolBox_Env_Manage_Pytorch_Page1Content.setGeometry(QRect(0, 0, 292, 204))
         self.verticalLayout_105 = QVBoxLayout(self.ToolBox_Env_Manage_Pytorch_Page1Content)
         self.verticalLayout_105.setSpacing(0)
         self.verticalLayout_105.setObjectName(u"verticalLayout_105")
@@ -1755,7 +1755,7 @@ class Ui_MainWindow(object):
         self.Button_Env_Manage_Pytorch_Install.setMinimumSize(QSize(123, 0))
         self.Button_Env_Manage_Pytorch_Install.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
-"	font-size: 12px;\n"
+"	font-size: 15px;\n"
 "	background-color: transparent;\n"
 "	padding: 12px;\n"
 "	border-width: 1.5px;\n"
@@ -1806,11 +1806,11 @@ class Ui_MainWindow(object):
         self.horizontalLayout_18.setSpacing(0)
         self.horizontalLayout_18.setObjectName(u"horizontalLayout_18")
         self.horizontalLayout_18.setContentsMargins(0, 0, 0, 0)
-        self.ToolButton_Models_Process_Title = QToolButton(self.Frame_Models_Top)
-        self.ToolButton_Models_Process_Title.setObjectName(u"ToolButton_Models_Process_Title")
-        sizePolicy1.setHeightForWidth(self.ToolButton_Models_Process_Title.sizePolicy().hasHeightForWidth())
-        self.ToolButton_Models_Process_Title.setSizePolicy(sizePolicy1)
-        self.ToolButton_Models_Process_Title.setStyleSheet(u"QToolButton {\n"
+        self.Button_Models_Process_Title = ButtonBase(self.Frame_Models_Top)
+        self.Button_Models_Process_Title.setObjectName(u"Button_Models_Process_Title")
+        sizePolicy1.setHeightForWidth(self.Button_Models_Process_Title.sizePolicy().hasHeightForWidth())
+        self.Button_Models_Process_Title.setSizePolicy(sizePolicy1)
+        self.Button_Models_Process_Title.setStyleSheet(u"QPushButton {\n"
 "	font-size: 24px;\n"
 "	/*text-align: center;*/\n"
 "	padding-left: 12px;\n"
@@ -1823,7 +1823,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "	border-bottom-color: rgba(123, 123, 123, 123);\n"
 "}\n"
-"QToolButton:hover {\n"
+"QPushButton:hover {\n"
 "	background-color: transparent;\n"
 "	border-top-width: 0px;\n"
 "	border-right-width: 0px;\n"
@@ -1832,7 +1832,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "	border-bottom-color: rgba(120, 180, 240, 123);\n"
 "}\n"
-"QToolButton:checked {\n"
+"QPushButton:checked {\n"
 "	background-color: transparent;\n"
 "	border-top-width: 0px;\n"
 "	border-right-width: 0px;\n"
@@ -1842,13 +1842,13 @@ class Ui_MainWindow(object):
 "	border-bottom-color: rgba(120, 180, 240, 210);\n"
 "}")
 
-        self.horizontalLayout_18.addWidget(self.ToolButton_Models_Process_Title)
+        self.horizontalLayout_18.addWidget(self.Button_Models_Process_Title)
 
-        self.ToolButton_Models_ASR_Title = QToolButton(self.Frame_Models_Top)
-        self.ToolButton_Models_ASR_Title.setObjectName(u"ToolButton_Models_ASR_Title")
-        sizePolicy1.setHeightForWidth(self.ToolButton_Models_ASR_Title.sizePolicy().hasHeightForWidth())
-        self.ToolButton_Models_ASR_Title.setSizePolicy(sizePolicy1)
-        self.ToolButton_Models_ASR_Title.setStyleSheet(u"QToolButton {\n"
+        self.Button_Models_ASR_Title = ButtonBase(self.Frame_Models_Top)
+        self.Button_Models_ASR_Title.setObjectName(u"Button_Models_ASR_Title")
+        sizePolicy1.setHeightForWidth(self.Button_Models_ASR_Title.sizePolicy().hasHeightForWidth())
+        self.Button_Models_ASR_Title.setSizePolicy(sizePolicy1)
+        self.Button_Models_ASR_Title.setStyleSheet(u"QPushButton {\n"
 "	font-size: 24px;\n"
 "	/*text-align: center;*/\n"
 "	padding-left: 12px;\n"
@@ -1861,7 +1861,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "	border-bottom-color: rgba(123, 123, 123, 123);\n"
 "}\n"
-"QToolButton:hover {\n"
+"QPushButton:hover {\n"
 "	background-color: transparent;\n"
 "	border-top-width: 0px;\n"
 "	border-right-width: 0px;\n"
@@ -1870,7 +1870,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "	border-bottom-color: rgba(120, 180, 240, 123);\n"
 "}\n"
-"QToolButton:checked {\n"
+"QPushButton:checked {\n"
 "	background-color: transparent;\n"
 "	border-top-width: 0px;\n"
 "	border-right-width: 0px;\n"
@@ -1880,13 +1880,13 @@ class Ui_MainWindow(object):
 "	border-bottom-color: rgba(120, 180, 240, 210);\n"
 "}")
 
-        self.horizontalLayout_18.addWidget(self.ToolButton_Models_ASR_Title)
+        self.horizontalLayout_18.addWidget(self.Button_Models_ASR_Title)
 
-        self.ToolButton_Models_STT_Title = QToolButton(self.Frame_Models_Top)
-        self.ToolButton_Models_STT_Title.setObjectName(u"ToolButton_Models_STT_Title")
-        sizePolicy1.setHeightForWidth(self.ToolButton_Models_STT_Title.sizePolicy().hasHeightForWidth())
-        self.ToolButton_Models_STT_Title.setSizePolicy(sizePolicy1)
-        self.ToolButton_Models_STT_Title.setStyleSheet(u"QToolButton {\n"
+        self.Button_Models_STT_Title = ButtonBase(self.Frame_Models_Top)
+        self.Button_Models_STT_Title.setObjectName(u"Button_Models_STT_Title")
+        sizePolicy1.setHeightForWidth(self.Button_Models_STT_Title.sizePolicy().hasHeightForWidth())
+        self.Button_Models_STT_Title.setSizePolicy(sizePolicy1)
+        self.Button_Models_STT_Title.setStyleSheet(u"QPushButton {\n"
 "	font-size: 24px;\n"
 "	/*text-align: center;*/\n"
 "	padding-left: 12px;\n"
@@ -1899,7 +1899,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "	border-bottom-color: rgba(123, 123, 123, 123);\n"
 "}\n"
-"QToolButton:hover {\n"
+"QPushButton:hover {\n"
 "	background-color: transparent;\n"
 "	border-top-width: 0px;\n"
 "	border-right-width: 0px;\n"
@@ -1908,7 +1908,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "	border-bottom-color: rgba(120, 180, 240, 123);\n"
 "}\n"
-"QToolButton:checked {\n"
+"QPushButton:checked {\n"
 "	background-color: transparent;\n"
 "	border-top-width: 0px;\n"
 "	border-right-width: 0px;\n"
@@ -1918,13 +1918,13 @@ class Ui_MainWindow(object):
 "	border-bottom-color: rgba(120, 180, 240, 210);\n"
 "}")
 
-        self.horizontalLayout_18.addWidget(self.ToolButton_Models_STT_Title)
+        self.horizontalLayout_18.addWidget(self.Button_Models_STT_Title)
 
-        self.ToolButton_Models_TTS_Title = QToolButton(self.Frame_Models_Top)
-        self.ToolButton_Models_TTS_Title.setObjectName(u"ToolButton_Models_TTS_Title")
-        sizePolicy1.setHeightForWidth(self.ToolButton_Models_TTS_Title.sizePolicy().hasHeightForWidth())
-        self.ToolButton_Models_TTS_Title.setSizePolicy(sizePolicy1)
-        self.ToolButton_Models_TTS_Title.setStyleSheet(u"QToolButton {\n"
+        self.Button_Models_TTS_Title = ButtonBase(self.Frame_Models_Top)
+        self.Button_Models_TTS_Title.setObjectName(u"Button_Models_TTS_Title")
+        sizePolicy1.setHeightForWidth(self.Button_Models_TTS_Title.sizePolicy().hasHeightForWidth())
+        self.Button_Models_TTS_Title.setSizePolicy(sizePolicy1)
+        self.Button_Models_TTS_Title.setStyleSheet(u"QPushButton {\n"
 "	font-size: 24px;\n"
 "	/*text-align: center;*/\n"
 "	padding-left: 12px;\n"
@@ -1937,7 +1937,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "	border-bottom-color: rgba(123, 123, 123, 123);\n"
 "}\n"
-"QToolButton:hover {\n"
+"QPushButton:hover {\n"
 "	background-color: transparent;\n"
 "	border-top-width: 0px;\n"
 "	border-right-width: 0px;\n"
@@ -1946,7 +1946,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "	border-bottom-color: rgba(120, 180, 240, 123);\n"
 "}\n"
-"QToolButton:checked {\n"
+"QPushButton:checked {\n"
 "	background-color: transparent;\n"
 "	border-top-width: 0px;\n"
 "	border-right-width: 0px;\n"
@@ -1956,7 +1956,7 @@ class Ui_MainWindow(object):
 "	border-bottom-color: rgba(120, 180, 240, 210);\n"
 "}")
 
-        self.horizontalLayout_18.addWidget(self.ToolButton_Models_TTS_Title)
+        self.horizontalLayout_18.addWidget(self.Button_Models_TTS_Title)
 
         self.Frame_Models_Title_Spacer = QFrame(self.Frame_Models_Top)
         self.Frame_Models_Title_Spacer.setObjectName(u"Frame_Models_Title_Spacer")
@@ -2272,11 +2272,11 @@ class Ui_MainWindow(object):
         self.horizontalLayout_32.setSpacing(0)
         self.horizontalLayout_32.setObjectName(u"horizontalLayout_32")
         self.horizontalLayout_32.setContentsMargins(0, 0, 0, 0)
-        self.ToolButton_AudioProcessor_Title = QToolButton(self.Frame_Process_Top)
-        self.ToolButton_AudioProcessor_Title.setObjectName(u"ToolButton_AudioProcessor_Title")
-        sizePolicy1.setHeightForWidth(self.ToolButton_AudioProcessor_Title.sizePolicy().hasHeightForWidth())
-        self.ToolButton_AudioProcessor_Title.setSizePolicy(sizePolicy1)
-        self.ToolButton_AudioProcessor_Title.setStyleSheet(u"QToolButton {\n"
+        self.Button_AudioProcessor_Title = ButtonBase(self.Frame_Process_Top)
+        self.Button_AudioProcessor_Title.setObjectName(u"Button_AudioProcessor_Title")
+        sizePolicy1.setHeightForWidth(self.Button_AudioProcessor_Title.sizePolicy().hasHeightForWidth())
+        self.Button_AudioProcessor_Title.setSizePolicy(sizePolicy1)
+        self.Button_AudioProcessor_Title.setStyleSheet(u"QPushButton {\n"
 "	font-size: 24px;\n"
 "	/*text-align: center;*/\n"
 "	padding-left: 12px;\n"
@@ -2289,7 +2289,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "	border-bottom-color: rgba(123, 123, 123, 123);\n"
 "}\n"
-"QToolButton:hover {\n"
+"QPushButton:hover {\n"
 "	background-color: transparent;\n"
 "	border-top-width: 0px;\n"
 "	border-right-width: 0px;\n"
@@ -2298,7 +2298,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "	border-bottom-color: rgba(120, 180, 240, 123);\n"
 "}\n"
-"QToolButton:checked {\n"
+"QPushButton:checked {\n"
 "	background-color: transparent;\n"
 "	border-top-width: 0px;\n"
 "	border-right-width: 0px;\n"
@@ -2308,7 +2308,7 @@ class Ui_MainWindow(object):
 "	border-bottom-color: rgba(120, 180, 240, 210);\n"
 "}")
 
-        self.horizontalLayout_32.addWidget(self.ToolButton_AudioProcessor_Title)
+        self.horizontalLayout_32.addWidget(self.Button_AudioProcessor_Title)
 
         self.Frame_AudioProcessor_Title = QFrame(self.Frame_Process_Top)
         self.Frame_AudioProcessor_Title.setObjectName(u"Frame_AudioProcessor_Title")
@@ -3756,11 +3756,11 @@ class Ui_MainWindow(object):
         self.horizontalLayout_53.setSpacing(0)
         self.horizontalLayout_53.setObjectName(u"horizontalLayout_53")
         self.horizontalLayout_53.setContentsMargins(0, 0, 0, 0)
-        self.ToolButton_VoiceIdentifier_Title = QToolButton(self.Frame_ASR_Top)
-        self.ToolButton_VoiceIdentifier_Title.setObjectName(u"ToolButton_VoiceIdentifier_Title")
-        sizePolicy1.setHeightForWidth(self.ToolButton_VoiceIdentifier_Title.sizePolicy().hasHeightForWidth())
-        self.ToolButton_VoiceIdentifier_Title.setSizePolicy(sizePolicy1)
-        self.ToolButton_VoiceIdentifier_Title.setStyleSheet(u"QToolButton {\n"
+        self.Button_VoiceIdentifier_Title = ButtonBase(self.Frame_ASR_Top)
+        self.Button_VoiceIdentifier_Title.setObjectName(u"Button_VoiceIdentifier_Title")
+        sizePolicy1.setHeightForWidth(self.Button_VoiceIdentifier_Title.sizePolicy().hasHeightForWidth())
+        self.Button_VoiceIdentifier_Title.setSizePolicy(sizePolicy1)
+        self.Button_VoiceIdentifier_Title.setStyleSheet(u"QPushButton {\n"
 "	font-size: 24px;\n"
 "	/*text-align: center;*/\n"
 "	padding-left: 12px;\n"
@@ -3773,7 +3773,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "	border-bottom-color: rgba(123, 123, 123, 123);\n"
 "}\n"
-"QToolButton:hover {\n"
+"QPushButton:hover {\n"
 "	background-color: transparent;\n"
 "	border-top-width: 0px;\n"
 "	border-right-width: 0px;\n"
@@ -3782,7 +3782,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "	border-bottom-color: rgba(120, 180, 240, 123);\n"
 "}\n"
-"QToolButton:checked {\n"
+"QPushButton:checked {\n"
 "	background-color: transparent;\n"
 "	border-top-width: 0px;\n"
 "	border-right-width: 0px;\n"
@@ -3792,7 +3792,7 @@ class Ui_MainWindow(object):
 "	border-bottom-color: rgba(120, 180, 240, 210);\n"
 "}")
 
-        self.horizontalLayout_53.addWidget(self.ToolButton_VoiceIdentifier_Title)
+        self.horizontalLayout_53.addWidget(self.Button_VoiceIdentifier_Title)
 
         self.Frame_VoiceIdentifier_Title = QFrame(self.Frame_ASR_Top)
         self.Frame_VoiceIdentifier_Title.setObjectName(u"Frame_VoiceIdentifier_Title")
@@ -4779,11 +4779,11 @@ class Ui_MainWindow(object):
         self.horizontalLayout_55.setSpacing(0)
         self.horizontalLayout_55.setObjectName(u"horizontalLayout_55")
         self.horizontalLayout_55.setContentsMargins(0, 0, 0, 0)
-        self.ToolButton_VoiceTranscriber_Title = QToolButton(self.Frame_STT_Top)
-        self.ToolButton_VoiceTranscriber_Title.setObjectName(u"ToolButton_VoiceTranscriber_Title")
-        sizePolicy1.setHeightForWidth(self.ToolButton_VoiceTranscriber_Title.sizePolicy().hasHeightForWidth())
-        self.ToolButton_VoiceTranscriber_Title.setSizePolicy(sizePolicy1)
-        self.ToolButton_VoiceTranscriber_Title.setStyleSheet(u"QToolButton {\n"
+        self.Button_VoiceTranscriber_Title = ButtonBase(self.Frame_STT_Top)
+        self.Button_VoiceTranscriber_Title.setObjectName(u"Button_VoiceTranscriber_Title")
+        sizePolicy1.setHeightForWidth(self.Button_VoiceTranscriber_Title.sizePolicy().hasHeightForWidth())
+        self.Button_VoiceTranscriber_Title.setSizePolicy(sizePolicy1)
+        self.Button_VoiceTranscriber_Title.setStyleSheet(u"QPushButton {\n"
 "	font-size: 24px;\n"
 "	/*text-align: center;*/\n"
 "	padding-left: 12px;\n"
@@ -4796,7 +4796,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "	border-bottom-color: rgba(123, 123, 123, 123);\n"
 "}\n"
-"QToolButton:hover {\n"
+"QPushButton:hover {\n"
 "	background-color: transparent;\n"
 "	border-top-width: 0px;\n"
 "	border-right-width: 0px;\n"
@@ -4805,7 +4805,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "	border-bottom-color: rgba(120, 180, 240, 123);\n"
 "}\n"
-"QToolButton:checked {\n"
+"QPushButton:checked {\n"
 "	background-color: transparent;\n"
 "	border-top-width: 0px;\n"
 "	border-right-width: 0px;\n"
@@ -4815,7 +4815,7 @@ class Ui_MainWindow(object):
 "	border-bottom-color: rgba(120, 180, 240, 210);\n"
 "}")
 
-        self.horizontalLayout_55.addWidget(self.ToolButton_VoiceTranscriber_Title)
+        self.horizontalLayout_55.addWidget(self.Button_VoiceTranscriber_Title)
 
         self.Frame_VoiceTranscriber_Title = QFrame(self.Frame_STT_Top)
         self.Frame_VoiceTranscriber_Title.setObjectName(u"Frame_VoiceTranscriber_Title")
@@ -5796,11 +5796,11 @@ class Ui_MainWindow(object):
         self.horizontalLayout_17.setSpacing(0)
         self.horizontalLayout_17.setObjectName(u"horizontalLayout_17")
         self.horizontalLayout_17.setContentsMargins(0, 0, 0, 0)
-        self.ToolButton_DatasetCreator_Title_GPTSoVITS = QToolButton(self.Frame_Dataset_Top)
-        self.ToolButton_DatasetCreator_Title_GPTSoVITS.setObjectName(u"ToolButton_DatasetCreator_Title_GPTSoVITS")
-        sizePolicy1.setHeightForWidth(self.ToolButton_DatasetCreator_Title_GPTSoVITS.sizePolicy().hasHeightForWidth())
-        self.ToolButton_DatasetCreator_Title_GPTSoVITS.setSizePolicy(sizePolicy1)
-        self.ToolButton_DatasetCreator_Title_GPTSoVITS.setStyleSheet(u"QToolButton {\n"
+        self.Button_DatasetCreator_Title_GPTSoVITS = ButtonBase(self.Frame_Dataset_Top)
+        self.Button_DatasetCreator_Title_GPTSoVITS.setObjectName(u"Button_DatasetCreator_Title_GPTSoVITS")
+        sizePolicy1.setHeightForWidth(self.Button_DatasetCreator_Title_GPTSoVITS.sizePolicy().hasHeightForWidth())
+        self.Button_DatasetCreator_Title_GPTSoVITS.setSizePolicy(sizePolicy1)
+        self.Button_DatasetCreator_Title_GPTSoVITS.setStyleSheet(u"QPushButton {\n"
 "	font-size: 24px;\n"
 "	/*text-align: center;*/\n"
 "	padding-left: 12px;\n"
@@ -5813,7 +5813,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "	border-bottom-color: rgba(123, 123, 123, 123);\n"
 "}\n"
-"QToolButton:hover {\n"
+"QPushButton:hover {\n"
 "	background-color: transparent;\n"
 "	border-top-width: 0px;\n"
 "	border-right-width: 0px;\n"
@@ -5822,7 +5822,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "	border-bottom-color: rgba(120, 180, 240, 123);\n"
 "}\n"
-"QToolButton:checked {\n"
+"QPushButton:checked {\n"
 "	background-color: transparent;\n"
 "	border-top-width: 0px;\n"
 "	border-right-width: 0px;\n"
@@ -5832,13 +5832,13 @@ class Ui_MainWindow(object):
 "	border-bottom-color: rgba(120, 180, 240, 210);\n"
 "}")
 
-        self.horizontalLayout_17.addWidget(self.ToolButton_DatasetCreator_Title_GPTSoVITS)
+        self.horizontalLayout_17.addWidget(self.Button_DatasetCreator_Title_GPTSoVITS)
 
-        self.ToolButton_DatasetCreator_Title_VITS = QToolButton(self.Frame_Dataset_Top)
-        self.ToolButton_DatasetCreator_Title_VITS.setObjectName(u"ToolButton_DatasetCreator_Title_VITS")
-        sizePolicy1.setHeightForWidth(self.ToolButton_DatasetCreator_Title_VITS.sizePolicy().hasHeightForWidth())
-        self.ToolButton_DatasetCreator_Title_VITS.setSizePolicy(sizePolicy1)
-        self.ToolButton_DatasetCreator_Title_VITS.setStyleSheet(u"QToolButton {\n"
+        self.Button_DatasetCreator_Title_VITS = ButtonBase(self.Frame_Dataset_Top)
+        self.Button_DatasetCreator_Title_VITS.setObjectName(u"Button_DatasetCreator_Title_VITS")
+        sizePolicy1.setHeightForWidth(self.Button_DatasetCreator_Title_VITS.sizePolicy().hasHeightForWidth())
+        self.Button_DatasetCreator_Title_VITS.setSizePolicy(sizePolicy1)
+        self.Button_DatasetCreator_Title_VITS.setStyleSheet(u"QPushButton {\n"
 "	font-size: 24px;\n"
 "	/*text-align: center;*/\n"
 "	padding-left: 12px;\n"
@@ -5851,7 +5851,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "	border-bottom-color: rgba(123, 123, 123, 123);\n"
 "}\n"
-"QToolButton:hover {\n"
+"QPushButton:hover {\n"
 "	background-color: transparent;\n"
 "	border-top-width: 0px;\n"
 "	border-right-width: 0px;\n"
@@ -5860,7 +5860,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "	border-bottom-color: rgba(120, 180, 240, 123);\n"
 "}\n"
-"QToolButton:checked {\n"
+"QPushButton:checked {\n"
 "	background-color: transparent;\n"
 "	border-top-width: 0px;\n"
 "	border-right-width: 0px;\n"
@@ -5870,7 +5870,7 @@ class Ui_MainWindow(object):
 "	border-bottom-color: rgba(120, 180, 240, 210);\n"
 "}")
 
-        self.horizontalLayout_17.addWidget(self.ToolButton_DatasetCreator_Title_VITS)
+        self.horizontalLayout_17.addWidget(self.Button_DatasetCreator_Title_VITS)
 
         self.Frame_DatasetCreator_Title = QFrame(self.Frame_Dataset_Top)
         self.Frame_DatasetCreator_Title.setObjectName(u"Frame_DatasetCreator_Title")
@@ -7761,11 +7761,11 @@ class Ui_MainWindow(object):
         self.horizontalLayout_15.setSpacing(0)
         self.horizontalLayout_15.setObjectName(u"horizontalLayout_15")
         self.horizontalLayout_15.setContentsMargins(0, 0, 0, 0)
-        self.ToolButton_VoiceTrainer_Title_GPTSoVITS = QToolButton(self.Frame_Train_Top)
-        self.ToolButton_VoiceTrainer_Title_GPTSoVITS.setObjectName(u"ToolButton_VoiceTrainer_Title_GPTSoVITS")
-        sizePolicy1.setHeightForWidth(self.ToolButton_VoiceTrainer_Title_GPTSoVITS.sizePolicy().hasHeightForWidth())
-        self.ToolButton_VoiceTrainer_Title_GPTSoVITS.setSizePolicy(sizePolicy1)
-        self.ToolButton_VoiceTrainer_Title_GPTSoVITS.setStyleSheet(u"QToolButton {\n"
+        self.Button_VoiceTrainer_Title_GPTSoVITS = ButtonBase(self.Frame_Train_Top)
+        self.Button_VoiceTrainer_Title_GPTSoVITS.setObjectName(u"Button_VoiceTrainer_Title_GPTSoVITS")
+        sizePolicy1.setHeightForWidth(self.Button_VoiceTrainer_Title_GPTSoVITS.sizePolicy().hasHeightForWidth())
+        self.Button_VoiceTrainer_Title_GPTSoVITS.setSizePolicy(sizePolicy1)
+        self.Button_VoiceTrainer_Title_GPTSoVITS.setStyleSheet(u"QPushButton {\n"
 "	font-size: 24px;\n"
 "	/*text-align: center;*/\n"
 "	padding-left: 12px;\n"
@@ -7778,7 +7778,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "	border-bottom-color: rgba(123, 123, 123, 123);\n"
 "}\n"
-"QToolButton:hover {\n"
+"QPushButton:hover {\n"
 "	background-color: transparent;\n"
 "	border-top-width: 0px;\n"
 "	border-right-width: 0px;\n"
@@ -7787,7 +7787,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "	border-bottom-color: rgba(120, 180, 240, 123);\n"
 "}\n"
-"QToolButton:checked {\n"
+"QPushButton:checked {\n"
 "	background-color: transparent;\n"
 "	border-top-width: 0px;\n"
 "	border-right-width: 0px;\n"
@@ -7797,13 +7797,13 @@ class Ui_MainWindow(object):
 "	border-bottom-color: rgba(120, 180, 240, 210);\n"
 "}")
 
-        self.horizontalLayout_15.addWidget(self.ToolButton_VoiceTrainer_Title_GPTSoVITS)
+        self.horizontalLayout_15.addWidget(self.Button_VoiceTrainer_Title_GPTSoVITS)
 
-        self.ToolButton_VoiceTrainer_Title_VITS = QToolButton(self.Frame_Train_Top)
-        self.ToolButton_VoiceTrainer_Title_VITS.setObjectName(u"ToolButton_VoiceTrainer_Title_VITS")
-        sizePolicy1.setHeightForWidth(self.ToolButton_VoiceTrainer_Title_VITS.sizePolicy().hasHeightForWidth())
-        self.ToolButton_VoiceTrainer_Title_VITS.setSizePolicy(sizePolicy1)
-        self.ToolButton_VoiceTrainer_Title_VITS.setStyleSheet(u"QToolButton {\n"
+        self.Button_VoiceTrainer_Title_VITS = ButtonBase(self.Frame_Train_Top)
+        self.Button_VoiceTrainer_Title_VITS.setObjectName(u"Button_VoiceTrainer_Title_VITS")
+        sizePolicy1.setHeightForWidth(self.Button_VoiceTrainer_Title_VITS.sizePolicy().hasHeightForWidth())
+        self.Button_VoiceTrainer_Title_VITS.setSizePolicy(sizePolicy1)
+        self.Button_VoiceTrainer_Title_VITS.setStyleSheet(u"QPushButton {\n"
 "	font-size: 24px;\n"
 "	/*text-align: center;*/\n"
 "	padding-left: 12px;\n"
@@ -7816,7 +7816,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "	border-bottom-color: rgba(123, 123, 123, 123);\n"
 "}\n"
-"QToolButton:hover {\n"
+"QPushButton:hover {\n"
 "	background-color: transparent;\n"
 "	border-top-width: 0px;\n"
 "	border-right-width: 0px;\n"
@@ -7825,7 +7825,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "	border-bottom-color: rgba(120, 180, 240, 123);\n"
 "}\n"
-"QToolButton:checked {\n"
+"QPushButton:checked {\n"
 "	background-color: transparent;\n"
 "	border-top-width: 0px;\n"
 "	border-right-width: 0px;\n"
@@ -7835,7 +7835,7 @@ class Ui_MainWindow(object):
 "	border-bottom-color: rgba(120, 180, 240, 210);\n"
 "}")
 
-        self.horizontalLayout_15.addWidget(self.ToolButton_VoiceTrainer_Title_VITS)
+        self.horizontalLayout_15.addWidget(self.Button_VoiceTrainer_Title_VITS)
 
         self.Frame_VoiceTrainer_Title = QFrame(self.Frame_Train_Top)
         self.Frame_VoiceTrainer_Title.setObjectName(u"Frame_VoiceTrainer_Title")
@@ -10166,11 +10166,11 @@ class Ui_MainWindow(object):
         self.horizontalLayout_16.setSpacing(0)
         self.horizontalLayout_16.setObjectName(u"horizontalLayout_16")
         self.horizontalLayout_16.setContentsMargins(0, 0, 0, 0)
-        self.ToolButton_VoiceConverter_Title_GPTSoVITS = QToolButton(self.Frame_TTS_Top)
-        self.ToolButton_VoiceConverter_Title_GPTSoVITS.setObjectName(u"ToolButton_VoiceConverter_Title_GPTSoVITS")
-        sizePolicy1.setHeightForWidth(self.ToolButton_VoiceConverter_Title_GPTSoVITS.sizePolicy().hasHeightForWidth())
-        self.ToolButton_VoiceConverter_Title_GPTSoVITS.setSizePolicy(sizePolicy1)
-        self.ToolButton_VoiceConverter_Title_GPTSoVITS.setStyleSheet(u"QToolButton {\n"
+        self.Button_VoiceConverter_Title_GPTSoVITS = ButtonBase(self.Frame_TTS_Top)
+        self.Button_VoiceConverter_Title_GPTSoVITS.setObjectName(u"Button_VoiceConverter_Title_GPTSoVITS")
+        sizePolicy1.setHeightForWidth(self.Button_VoiceConverter_Title_GPTSoVITS.sizePolicy().hasHeightForWidth())
+        self.Button_VoiceConverter_Title_GPTSoVITS.setSizePolicy(sizePolicy1)
+        self.Button_VoiceConverter_Title_GPTSoVITS.setStyleSheet(u"QPushButton {\n"
 "	font-size: 24px;\n"
 "	/*text-align: center;*/\n"
 "	padding-left: 12px;\n"
@@ -10183,7 +10183,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "	border-bottom-color: rgba(123, 123, 123, 123);\n"
 "}\n"
-"QToolButton:hover {\n"
+"QPushButton:hover {\n"
 "	background-color: transparent;\n"
 "	border-top-width: 0px;\n"
 "	border-right-width: 0px;\n"
@@ -10192,7 +10192,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "	border-bottom-color: rgba(120, 180, 240, 123);\n"
 "}\n"
-"QToolButton:checked {\n"
+"QPushButton:checked {\n"
 "	background-color: transparent;\n"
 "	border-top-width: 0px;\n"
 "	border-right-width: 0px;\n"
@@ -10202,13 +10202,13 @@ class Ui_MainWindow(object):
 "	border-bottom-color: rgba(120, 180, 240, 210);\n"
 "}")
 
-        self.horizontalLayout_16.addWidget(self.ToolButton_VoiceConverter_Title_GPTSoVITS)
+        self.horizontalLayout_16.addWidget(self.Button_VoiceConverter_Title_GPTSoVITS)
 
-        self.ToolButton_VoiceConverter_Title_VITS = QToolButton(self.Frame_TTS_Top)
-        self.ToolButton_VoiceConverter_Title_VITS.setObjectName(u"ToolButton_VoiceConverter_Title_VITS")
-        sizePolicy1.setHeightForWidth(self.ToolButton_VoiceConverter_Title_VITS.sizePolicy().hasHeightForWidth())
-        self.ToolButton_VoiceConverter_Title_VITS.setSizePolicy(sizePolicy1)
-        self.ToolButton_VoiceConverter_Title_VITS.setStyleSheet(u"QToolButton {\n"
+        self.Button_VoiceConverter_Title_VITS = ButtonBase(self.Frame_TTS_Top)
+        self.Button_VoiceConverter_Title_VITS.setObjectName(u"Button_VoiceConverter_Title_VITS")
+        sizePolicy1.setHeightForWidth(self.Button_VoiceConverter_Title_VITS.sizePolicy().hasHeightForWidth())
+        self.Button_VoiceConverter_Title_VITS.setSizePolicy(sizePolicy1)
+        self.Button_VoiceConverter_Title_VITS.setStyleSheet(u"QPushButton {\n"
 "	font-size: 24px;\n"
 "	/*text-align: center;*/\n"
 "	padding-left: 12px;\n"
@@ -10221,7 +10221,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "	border-bottom-color: rgba(123, 123, 123, 123);\n"
 "}\n"
-"QToolButton:hover {\n"
+"QPushButton:hover {\n"
 "	background-color: transparent;\n"
 "	border-top-width: 0px;\n"
 "	border-right-width: 0px;\n"
@@ -10230,7 +10230,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "	border-bottom-color: rgba(120, 180, 240, 123);\n"
 "}\n"
-"QToolButton:checked {\n"
+"QPushButton:checked {\n"
 "	background-color: transparent;\n"
 "	border-top-width: 0px;\n"
 "	border-right-width: 0px;\n"
@@ -10240,7 +10240,7 @@ class Ui_MainWindow(object):
 "	border-bottom-color: rgba(120, 180, 240, 210);\n"
 "}")
 
-        self.horizontalLayout_16.addWidget(self.ToolButton_VoiceConverter_Title_VITS)
+        self.horizontalLayout_16.addWidget(self.Button_VoiceConverter_Title_VITS)
 
         self.Frame_VoiceConverter_Title = QFrame(self.Frame_TTS_Top)
         self.Frame_VoiceConverter_Title.setObjectName(u"Frame_VoiceConverter_Title")
@@ -11769,11 +11769,11 @@ class Ui_MainWindow(object):
         self.horizontalLayout_4.setSpacing(0)
         self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
         self.horizontalLayout_4.setContentsMargins(0, 0, 0, 0)
-        self.ToolButton_Settings_Title_Client = QToolButton(self.Frame_Settings_Top)
-        self.ToolButton_Settings_Title_Client.setObjectName(u"ToolButton_Settings_Title_Client")
-        sizePolicy1.setHeightForWidth(self.ToolButton_Settings_Title_Client.sizePolicy().hasHeightForWidth())
-        self.ToolButton_Settings_Title_Client.setSizePolicy(sizePolicy1)
-        self.ToolButton_Settings_Title_Client.setStyleSheet(u"QToolButton {\n"
+        self.Button_Settings_Title_Client = ButtonBase(self.Frame_Settings_Top)
+        self.Button_Settings_Title_Client.setObjectName(u"Button_Settings_Title_Client")
+        sizePolicy1.setHeightForWidth(self.Button_Settings_Title_Client.sizePolicy().hasHeightForWidth())
+        self.Button_Settings_Title_Client.setSizePolicy(sizePolicy1)
+        self.Button_Settings_Title_Client.setStyleSheet(u"QPushButton {\n"
 "	font-size: 24px;\n"
 "	/*text-align: center;*/\n"
 "	padding-left: 12px;\n"
@@ -11786,7 +11786,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "	border-bottom-color: rgba(123, 123, 123, 123);\n"
 "}\n"
-"QToolButton:hover {\n"
+"QPushButton:hover {\n"
 "	background-color: transparent;\n"
 "	border-top-width: 0px;\n"
 "	border-right-width: 0px;\n"
@@ -11795,7 +11795,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "	border-bottom-color: rgba(120, 180, 240, 123);\n"
 "}\n"
-"QToolButton:checked {\n"
+"QPushButton:checked {\n"
 "	background-color: transparent;\n"
 "	border-top-width: 0px;\n"
 "	border-right-width: 0px;\n"
@@ -11805,13 +11805,13 @@ class Ui_MainWindow(object):
 "	border-bottom-color: rgba(120, 180, 240, 210);\n"
 "}")
 
-        self.horizontalLayout_4.addWidget(self.ToolButton_Settings_Title_Client)
+        self.horizontalLayout_4.addWidget(self.Button_Settings_Title_Client)
 
-        self.ToolButton_Settings_Title_Tools = QToolButton(self.Frame_Settings_Top)
-        self.ToolButton_Settings_Title_Tools.setObjectName(u"ToolButton_Settings_Title_Tools")
-        sizePolicy1.setHeightForWidth(self.ToolButton_Settings_Title_Tools.sizePolicy().hasHeightForWidth())
-        self.ToolButton_Settings_Title_Tools.setSizePolicy(sizePolicy1)
-        self.ToolButton_Settings_Title_Tools.setStyleSheet(u"QToolButton {\n"
+        self.Button_Settings_Title_Tools = ButtonBase(self.Frame_Settings_Top)
+        self.Button_Settings_Title_Tools.setObjectName(u"Button_Settings_Title_Tools")
+        sizePolicy1.setHeightForWidth(self.Button_Settings_Title_Tools.sizePolicy().hasHeightForWidth())
+        self.Button_Settings_Title_Tools.setSizePolicy(sizePolicy1)
+        self.Button_Settings_Title_Tools.setStyleSheet(u"QPushButton {\n"
 "	font-size: 24px;\n"
 "	/*text-align: center;*/\n"
 "	padding-left: 12px;\n"
@@ -11824,7 +11824,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "	border-bottom-color: rgba(123, 123, 123, 123);\n"
 "}\n"
-"QToolButton:hover {\n"
+"QPushButton:hover {\n"
 "	background-color: transparent;\n"
 "	border-top-width: 0px;\n"
 "	border-right-width: 0px;\n"
@@ -11833,7 +11833,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "	border-bottom-color: rgba(120, 180, 240, 123);\n"
 "}\n"
-"QToolButton:checked {\n"
+"QPushButton:checked {\n"
 "	background-color: transparent;\n"
 "	border-top-width: 0px;\n"
 "	border-right-width: 0px;\n"
@@ -11843,7 +11843,7 @@ class Ui_MainWindow(object):
 "	border-bottom-color: rgba(120, 180, 240, 210);\n"
 "}")
 
-        self.horizontalLayout_4.addWidget(self.ToolButton_Settings_Title_Tools)
+        self.horizontalLayout_4.addWidget(self.Button_Settings_Title_Tools)
 
         self.Frame_Settings_Title_Spacer = QLabel(self.Frame_Settings_Top)
         self.Frame_Settings_Title_Spacer.setObjectName(u"Frame_Settings_Title_Spacer")
@@ -12779,11 +12779,11 @@ class Ui_MainWindow(object):
         self.horizontalLayout_29.setSpacing(0)
         self.horizontalLayout_29.setObjectName(u"horizontalLayout_29")
         self.horizontalLayout_29.setContentsMargins(0, 0, 0, 0)
-        self.ToolButton_Info_Title = QToolButton(self.Frame_Info_Top)
-        self.ToolButton_Info_Title.setObjectName(u"ToolButton_Info_Title")
-        sizePolicy1.setHeightForWidth(self.ToolButton_Info_Title.sizePolicy().hasHeightForWidth())
-        self.ToolButton_Info_Title.setSizePolicy(sizePolicy1)
-        self.ToolButton_Info_Title.setStyleSheet(u"QToolButton {\n"
+        self.Button_Info_Title = ButtonBase(self.Frame_Info_Top)
+        self.Button_Info_Title.setObjectName(u"Button_Info_Title")
+        sizePolicy1.setHeightForWidth(self.Button_Info_Title.sizePolicy().hasHeightForWidth())
+        self.Button_Info_Title.setSizePolicy(sizePolicy1)
+        self.Button_Info_Title.setStyleSheet(u"QPushButton {\n"
 "	font-size: 24px;\n"
 "	/*text-align: center;*/\n"
 "	padding-left: 12px;\n"
@@ -12796,7 +12796,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "	border-bottom-color: rgba(123, 123, 123, 123);\n"
 "}\n"
-"QToolButton:hover {\n"
+"QPushButton:hover {\n"
 "	background-color: transparent;\n"
 "	border-top-width: 0px;\n"
 "	border-right-width: 0px;\n"
@@ -12805,7 +12805,7 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "	border-bottom-color: rgba(120, 180, 240, 123);\n"
 "}\n"
-"QToolButton:checked {\n"
+"QPushButton:checked {\n"
 "	background-color: transparent;\n"
 "	border-top-width: 0px;\n"
 "	border-right-width: 0px;\n"
@@ -12815,7 +12815,7 @@ class Ui_MainWindow(object):
 "	border-bottom-color: rgba(120, 180, 240, 210);\n"
 "}")
 
-        self.horizontalLayout_29.addWidget(self.ToolButton_Info_Title)
+        self.horizontalLayout_29.addWidget(self.Button_Info_Title)
 
         self.Frame_Info_Title_Spacer = QLabel(self.Frame_Info_Top)
         self.Frame_Info_Title_Spacer.setObjectName(u"Frame_Info_Title_Spacer")
@@ -13295,45 +13295,110 @@ class Ui_MainWindow(object):
     # setupUi
 
     def retranslateUi(self, MainWindow):
-        self.Label_Menu_Home_Text.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.Label_Menu_Env_Install_Text.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.Label_Menu_Models_Text.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.Label_Menu_Process_Text.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.Label_Menu_ASR_Text.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.Label_Menu_STT_Text.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.Label_Menu_Dataset_Text.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.Label_Menu_Train_Text.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.Label_Menu_TTS_Text.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.Label_Menu_Settings_Text.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.Label_Menu_Info_Text.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.Label_Demo_Text.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.Label_Server_Text.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.Label_Repo_Text.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.Label_Donate_Text.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.ToolButton_Env_Install_Title.setText(QCoreApplication.translate("MainWindow", u"Label", None))
-        self.ToolButton_Env_Manage_Title.setText(QCoreApplication.translate("MainWindow", u"Label", None))
+#if QT_CONFIG(tooltip)
+        self.Button_Toggle_Menu.setToolTip(QCoreApplication.translate("MainWindow", u"\u70b9\u51fb\u4ee5\u5c55\u5f00/\u6298\u53e0\u83dc\u5355", None))
+#endif // QT_CONFIG(tooltip)
+#if QT_CONFIG(tooltip)
+        self.Button_Menu_Home.setToolTip(QCoreApplication.translate("MainWindow", u"\u4e3b\u9875", None))
+#endif // QT_CONFIG(tooltip)
+#if QT_CONFIG(tooltip)
+        self.Label_Menu_Home_Text.setToolTip(QCoreApplication.translate("MainWindow", u"\u4e3b\u9875", None))
+#endif // QT_CONFIG(tooltip)
+        self.Label_Menu_Home_Text.setText(QCoreApplication.translate("MainWindow", u"<font size=4>\u4e3b\u9875</font>", None))
+#if QT_CONFIG(tooltip)
+        self.Button_Menu_Env.setToolTip(QCoreApplication.translate("MainWindow", u"\u73af\u5883\u914d\u7f6e", None))
+#endif // QT_CONFIG(tooltip)
+        self.Label_Menu_Env_Install_Text.setText(QCoreApplication.translate("MainWindow", u"<font size=4>\u73af\u5883</font>", None))
+#if QT_CONFIG(tooltip)
+        self.Button_Menu_Models.setToolTip(QCoreApplication.translate("MainWindow", u"\u6a21\u578b\u7ba1\u7406", None))
+#endif // QT_CONFIG(tooltip)
+        self.Label_Menu_Models_Text.setText(QCoreApplication.translate("MainWindow", u"<font size=4>\u6a21\u578b</font>", None))
+#if QT_CONFIG(tooltip)
+        self.Button_Menu_Process.setToolTip(QCoreApplication.translate("MainWindow", u"\u5de5\u5177\uff1a\u97f3\u9891\u5904\u7406", None))
+#endif // QT_CONFIG(tooltip)
+        self.Label_Menu_Process_Text.setText(QCoreApplication.translate("MainWindow", u"<font size=4>\u5904\u7406</font>", None))
+#if QT_CONFIG(tooltip)
+        self.Button_Menu_ASR.setToolTip(QCoreApplication.translate("MainWindow", u"\u5de5\u5177\uff1a\u8bed\u97f3\u8bc6\u522b", None))
+#endif // QT_CONFIG(tooltip)
+        self.Label_Menu_ASR_Text.setText(QCoreApplication.translate("MainWindow", u"<font size=4>\u8bc6\u522b</font>", None))
+#if QT_CONFIG(tooltip)
+        self.Button_Menu_STT.setToolTip(QCoreApplication.translate("MainWindow", u"\u5de5\u5177\uff1a\u8bed\u97f3\u8f6c\u6587\u5b57", None))
+#endif // QT_CONFIG(tooltip)
+        self.Label_Menu_STT_Text.setText(QCoreApplication.translate("MainWindow", u"<font size=4>\u8f6c\u5f55</font>", None))
+#if QT_CONFIG(tooltip)
+        self.Button_Menu_Dataset.setToolTip(QCoreApplication.translate("MainWindow", u"\u5de5\u5177\uff1a\u6570\u636e\u96c6\u5236\u4f5c", None))
+#endif // QT_CONFIG(tooltip)
+        self.Label_Menu_Dataset_Text.setText(QCoreApplication.translate("MainWindow", u"<font size=4>\u6570\u636e</font>", None))
+#if QT_CONFIG(tooltip)
+        self.Button_Menu_Train.setToolTip(QCoreApplication.translate("MainWindow", u"\u5de5\u5177\uff1a\u6a21\u578b\u8bad\u7ec3", None))
+#endif // QT_CONFIG(tooltip)
+        self.Label_Menu_Train_Text.setText(QCoreApplication.translate("MainWindow", u"<font size=4>\u8bad\u7ec3</font>", None))
+#if QT_CONFIG(tooltip)
+        self.Button_Menu_TTS.setToolTip(QCoreApplication.translate("MainWindow", u"\u5de5\u5177\uff1a\u8bed\u97f3\u5408\u6210", None))
+#endif // QT_CONFIG(tooltip)
+        self.Label_Menu_TTS_Text.setText(QCoreApplication.translate("MainWindow", u"<font size=4>\u5408\u6210</font>", None))
+#if QT_CONFIG(tooltip)
+        self.Button_Menu_Settings.setToolTip(QCoreApplication.translate("MainWindow", u"\u5ba2\u6237\u7aef\u8bbe\u7f6e", None))
+#endif // QT_CONFIG(tooltip)
+        self.Label_Menu_Settings_Text.setText(QCoreApplication.translate("MainWindow", u"<font size=4>\u8bbe\u7f6e</font>", None))
+#if QT_CONFIG(tooltip)
+        self.Button_Menu_Info.setToolTip(QCoreApplication.translate("MainWindow", u"\u5173\u4e8e\u672c\u8f6f\u4ef6", None))
+#endif // QT_CONFIG(tooltip)
+        self.Label_Menu_Info_Text.setText(QCoreApplication.translate("MainWindow", u"<font size=4>\u5173\u4e8e</font>", None))
+        self.TextBrowser_Text_Home.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"hr { height: 1px; border-width: 0; }\n"
+"li.unchecked::marker { content: \"\\2610\"; }\n"
+"li.checked::marker { content: \"\\2612\"; }\n"
+"</style></head><body style=\" font-family:'Microsoft YaHei UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:24pt; font-weight:840;\">\u4ecb\u7ecd</span></p>\n"
+"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:12pt; font-weight:420;\"><br />\u4e00\u4e2a\u57fa\u4e8eWhisper\u3001VITS\u7b49\u9879\u76ee\u5b9e\u73b0\u7684\u7b80\u6613\u8bed\u97f3\u5de5\u5177\u7bb1\uff0c\u63d0\u4f9b"
+                        "\u4e86\u5305\u62ec\u8bed\u97f3\u6a21\u578b\u8bad\u7ec3\u5728\u5185\u7684\u591a\u79cd\u81ea\u52a8\u5316\u97f3\u9891\u5de5\u5177<br /><br />\u5de5\u5177\u7bb1\u76ee\u524d\u5305 \u542b\u4ee5\u4e0b\u529f\u80fd\uff1a<br />\u97f3\u9891\u5904\u7406<br />\u8bed\u97f3\u8bc6\u522b<br />\u8bed\u97f3\u8f6c\u5f55<br />\u6570\u636e\u96c6\u5236\u4f5c<br />\u6a21\u578b\u8bad\u7ec3<br />\u8bed\u97f3\u5408\u6210<br /><br />\u8fd9\u4e9b\u529f\u80fd\u5f7c\u6b64\u4e4b\u95f4\u76f8\u4e92\u72ec\u7acb\uff0c\u4f46\u53c8\u80fd\u65e0\u7f1d\u8854\u63a5\u5730\u5f62\u6210\u4e00\u5957\u5b8c\u6574\u7684\u5de5\u4f5c\u6d41<br />\u7528\u6237\u53ef\u4ee5\u6839\u636e\u81ea\u5df1\u7684\u9700\u6c42\u6709\u9009\u62e9\u6027\u5730\u4f7f\u7528\uff0c\u4ea6\u6216\u8005\u4f9d\u6b21\u901a\u8fc7\u8fd9\u4e9b\u5de5\u5177\u5c06\u672a\u7ecf\u5904\u7406\u7684\u8bed\u97f3\u6587\u4ef6\u9010\u6b65\u53d8\u4e3a\u7406\u60f3\u7684\u8bed\u97f3\u6a21\u578b<br /></span></p></body></html>", None))
+        self.Label_Demo_Text.setText(QCoreApplication.translate("MainWindow", u"<font size=4>\u89c6\u9891\u6f14\u793a</font>", None))
+        self.Label_Server_Text.setText(QCoreApplication.translate("MainWindow", u"<font size=4>\u4e91\u7aef\u7248\u672c</font>", None))
+        self.Label_Repo_Text.setText(QCoreApplication.translate("MainWindow", u"<font size=4>\u9879\u76ee\u4ed3\u5e93</font>", None))
+        self.Label_Donate_Text.setText(QCoreApplication.translate("MainWindow", u"<font size=4>\u8d5e\u52a9\u4f5c\u8005</font>", None))
+        self.Button_Env_Install_Title.setText(QCoreApplication.translate("MainWindow", u"\u81ea\u52a8\u914d\u7f6e", None))
+        self.Button_Env_Manage_Title.setText(QCoreApplication.translate("MainWindow", u"\u5b89\u88c5\u7ba1\u7406", None))
+#if QT_CONFIG(tooltip)
+        self.Button_Install_Aria2.setToolTip(QCoreApplication.translate("MainWindow", u"\u91cd\u65b0\u68c0\u6d4b\u5b89\u88c5", None))
+#endif // QT_CONFIG(tooltip)
         self.Label_Env_Install_Aria2_Status.setText(QCoreApplication.translate("MainWindow", u"--", None))
-        self.Label_Env_Install_Aria2.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.Label_Env_Install_Aria2.setText(QCoreApplication.translate("MainWindow", u"Aria2", None))
+#if QT_CONFIG(tooltip)
+        self.Button_Install_FFmpeg.setToolTip(QCoreApplication.translate("MainWindow", u"\u91cd\u65b0\u68c0\u6d4b\u5b89\u88c5", None))
+#endif // QT_CONFIG(tooltip)
         self.Label_Env_Install_FFmpeg_Status.setText(QCoreApplication.translate("MainWindow", u"--", None))
-        self.Label_Env_Install_FFmpeg.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.Label_Env_Install_FFmpeg.setText(QCoreApplication.translate("MainWindow", u"FFmpeg", None))
+#if QT_CONFIG(tooltip)
+        self.Button_Install_Python.setToolTip(QCoreApplication.translate("MainWindow", u"\u91cd\u65b0\u68c0\u6d4b\u5b89\u88c5", None))
+#endif // QT_CONFIG(tooltip)
         self.Label_Env_Install_Python_Status.setText(QCoreApplication.translate("MainWindow", u"--", None))
-        self.Label_Env_Install_Python.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.Label_Env_Install_Python.setText(QCoreApplication.translate("MainWindow", u"Python", None))
+#if QT_CONFIG(tooltip)
+        self.Button_Install_PyReqs.setToolTip(QCoreApplication.translate("MainWindow", u"\u91cd\u65b0\u68c0\u6d4b\u5b89\u88c5", None))
+#endif // QT_CONFIG(tooltip)
         self.Label_Env_Install_PyReqs_Status.setText(QCoreApplication.translate("MainWindow", u"--", None))
-        self.Label_Env_Install_PyReqs.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.Label_Env_Install_PyReqs.setText(QCoreApplication.translate("MainWindow", u"Python Requirements", None))
+#if QT_CONFIG(tooltip)
+        self.Button_Install_Pytorch.setToolTip(QCoreApplication.translate("MainWindow", u"\u91cd\u65b0\u68c0\u6d4b\u5b89\u88c5", None))
+#endif // QT_CONFIG(tooltip)
         self.Label_Env_Install_Pytorch_Status.setText(QCoreApplication.translate("MainWindow", u"--", None))
-        self.Label_Env_Install_Pytorch.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.Label_Env_Manage_Pytorch_Version.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.Label_Env_Install_Pytorch.setText(QCoreApplication.translate("MainWindow", u"Pytorch", None))
+        self.Label_Env_Manage_Pytorch_Version.setText(QCoreApplication.translate("MainWindow", u"\u9009\u62e9Pytorch\u7248\u672c", None))
+        self.Button_Env_Manage_Pytorch_Install.setText(QCoreApplication.translate("MainWindow", u"\u91cd\u88c5", None))
         self.ToolBox_Env_Manage_Pytorch.setItemText(self.ToolBox_Env_Manage_Pytorch.indexOf(self.ToolBox_Env_Manage_Pytorch_Page1Content), "")
-        self.ToolButton_Models_Process_Title.setText(QCoreApplication.translate("MainWindow", u"Label", None))
-        self.ToolButton_Models_ASR_Title.setText(QCoreApplication.translate("MainWindow", u"Label", None))
-        self.ToolButton_Models_STT_Title.setText(QCoreApplication.translate("MainWindow", u"Label", None))
-        self.ToolButton_Models_TTS_Title.setText(QCoreApplication.translate("MainWindow", u"Label", None))
+        self.Button_Models_Process_Title.setText(QCoreApplication.translate("MainWindow", u"Label", None))
+        self.Button_Models_ASR_Title.setText(QCoreApplication.translate("MainWindow", u"Label", None))
+        self.Button_Models_STT_Title.setText(QCoreApplication.translate("MainWindow", u"Label", None))
+        self.Button_Models_TTS_Title.setText(QCoreApplication.translate("MainWindow", u"Label", None))
         self.TabWidget_Models_Process.setTabText(self.TabWidget_Models_Process.indexOf(self.Tab_Models_Process_UVR), QCoreApplication.translate("MainWindow", u"Tab 1", None))
         self.TabWidget_Models_ASR.setTabText(self.TabWidget_Models_ASR.indexOf(self.Tab_Models_ASR_VPR), QCoreApplication.translate("MainWindow", u"Tab 1", None))
         self.TabWidget_Models_STT.setTabText(self.TabWidget_Models_STT.indexOf(self.Tab_Models_STT_Whisper), QCoreApplication.translate("MainWindow", u"Tab 1", None))
         self.TabWidget_Models_TTS.setTabText(self.TabWidget_Models_TTS.indexOf(self.Tab_Models_TTS_GPTSoVITS), QCoreApplication.translate("MainWindow", u"\u9875", None))
         self.TabWidget_Models_TTS.setTabText(self.TabWidget_Models_TTS.indexOf(self.Tab_Models_TTS_VITS), QCoreApplication.translate("MainWindow", u"Tab 1", None))
-        self.ToolButton_AudioProcessor_Title.setText(QCoreApplication.translate("MainWindow", u"Label", None))
+        self.Button_AudioProcessor_Title.setText(QCoreApplication.translate("MainWindow", u"Label", None))
         ___qtreewidgetitem = self.TreeWidget_Catalogue_Process.headerItem()
         ___qtreewidgetitem.setText(0, QCoreApplication.translate("MainWindow", u"HeaderView", None));
 
@@ -13369,7 +13434,7 @@ class Ui_MainWindow(object):
         self.Label_Process_ToMono.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.CheckBox_Process_ToMono.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
         self.ToolBox_Process_OutputParams_AdvanceSettings.setItemText(self.ToolBox_Process_OutputParams_AdvanceSettings.indexOf(self.ToolBox_Process_OutputParams_AdvanceSettings_Page1Content), "")
-        self.ToolButton_VoiceIdentifier_Title.setText(QCoreApplication.translate("MainWindow", u"Label", None))
+        self.Button_VoiceIdentifier_Title.setText(QCoreApplication.translate("MainWindow", u"Label", None))
         ___qtreewidgetitem3 = self.TreeWidget_Catalogue_ASR_VPR.headerItem()
         ___qtreewidgetitem3.setText(0, QCoreApplication.translate("MainWindow", u"HeaderView", None));
 
@@ -13395,7 +13460,7 @@ class Ui_MainWindow(object):
         self.Label_ASR_VPR_OutputDirName.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_ASR_VPR_AudioSpeakersDataName.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.ToolBox_ASR_VPR_OutputParams_AdvanceSettings.setItemText(self.ToolBox_ASR_VPR_OutputParams_AdvanceSettings.indexOf(self.ToolBox_ASR_VPR_OutputParams_AdvanceSettings_Page1Content), "")
-        self.ToolButton_VoiceTranscriber_Title.setText(QCoreApplication.translate("MainWindow", u"Label", None))
+        self.Button_VoiceTranscriber_Title.setText(QCoreApplication.translate("MainWindow", u"Label", None))
         ___qtreewidgetitem6 = self.TreeWidget_Catalogue_STT_Whisper.headerItem()
         ___qtreewidgetitem6.setText(0, QCoreApplication.translate("MainWindow", u"HeaderView", None));
 
@@ -13422,8 +13487,8 @@ class Ui_MainWindow(object):
         self.ToolBox_STT_Whisper_WhisperParams_AdvanceSettings.setItemText(self.ToolBox_STT_Whisper_WhisperParams_AdvanceSettings.indexOf(self.ToolBox_STT_Whisper_WhisperParams_AdvanceSettings_Page1Content), "")
         self.GroupBox_STT_Whisper_OutputParams.setTitle(QCoreApplication.translate("MainWindow", u"GroupBox3", None))
         self.Label_STT_Whisper_OutputDirName.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.ToolButton_DatasetCreator_Title_GPTSoVITS.setText(QCoreApplication.translate("MainWindow", u"Label", None))
-        self.ToolButton_DatasetCreator_Title_VITS.setText(QCoreApplication.translate("MainWindow", u"Label", None))
+        self.Button_DatasetCreator_Title_GPTSoVITS.setText(QCoreApplication.translate("MainWindow", u"Label", None))
+        self.Button_DatasetCreator_Title_VITS.setText(QCoreApplication.translate("MainWindow", u"Label", None))
         ___qtreewidgetitem9 = self.TreeWidget_Catalogue_DAT_GPTSoVITS.headerItem()
         ___qtreewidgetitem9.setText(0, QCoreApplication.translate("MainWindow", u"HeaderView", None));
 
@@ -13474,8 +13539,8 @@ class Ui_MainWindow(object):
         self.Label_DAT_VITS_FileListNameTraining.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_DAT_VITS_FileListNameValidation.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.ToolBox_DAT_VITS_OutputParams_AdvanceSettings.setItemText(self.ToolBox_DAT_VITS_OutputParams_AdvanceSettings.indexOf(self.ToolBox_DAT_VITS_OutputParams_AdvanceSettings_Page1Content), "")
-        self.ToolButton_VoiceTrainer_Title_GPTSoVITS.setText(QCoreApplication.translate("MainWindow", u"Label", None))
-        self.ToolButton_VoiceTrainer_Title_VITS.setText(QCoreApplication.translate("MainWindow", u"Label", None))
+        self.Button_VoiceTrainer_Title_GPTSoVITS.setText(QCoreApplication.translate("MainWindow", u"Label", None))
+        self.Button_VoiceTrainer_Title_VITS.setText(QCoreApplication.translate("MainWindow", u"Label", None))
         ___qtreewidgetitem15 = self.TreeWidget_Catalogue_Train_GPTSoVITS.headerItem()
         ___qtreewidgetitem15.setText(0, QCoreApplication.translate("MainWindow", u"HeaderView", None));
 
@@ -13535,8 +13600,8 @@ class Ui_MainWindow(object):
         self.Label_Train_VITS_OutputDirName.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Train_VITS_LogDir.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.ToolBox_Train_VITS_OutputParams_AdvanceSettings.setItemText(self.ToolBox_Train_VITS_OutputParams_AdvanceSettings.indexOf(self.ToolBox_Train_VITS_OutputParams_AdvanceSettings_Page1Content), "")
-        self.ToolButton_VoiceConverter_Title_GPTSoVITS.setText(QCoreApplication.translate("MainWindow", u"Label", None))
-        self.ToolButton_VoiceConverter_Title_VITS.setText(QCoreApplication.translate("MainWindow", u"Label", None))
+        self.Button_VoiceConverter_Title_GPTSoVITS.setText(QCoreApplication.translate("MainWindow", u"Label", None))
+        self.Button_VoiceConverter_Title_VITS.setText(QCoreApplication.translate("MainWindow", u"Label", None))
         ___qtreewidgetitem21 = self.TreeWidget_Catalogue_TTS_GPTSoVITS.headerItem()
         ___qtreewidgetitem21.setText(0, QCoreApplication.translate("MainWindow", u"HeaderView", None));
 
@@ -13575,8 +13640,8 @@ class Ui_MainWindow(object):
         self.Label_TTS_VITS_PhonemeDuration.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_TTS_VITS_SpeechRate.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.ToolBox_TTS_VITS_VITSParams_AdvanceSettings.setItemText(self.ToolBox_TTS_VITS_VITSParams_AdvanceSettings.indexOf(self.ToolBox_TTS_VITS_VITSParams_AdvanceSettings_Page1Content), "")
-        self.ToolButton_Settings_Title_Client.setText(QCoreApplication.translate("MainWindow", u"Label", None))
-        self.ToolButton_Settings_Title_Tools.setText(QCoreApplication.translate("MainWindow", u"Label", None))
+        self.Button_Settings_Title_Client.setText(QCoreApplication.translate("MainWindow", u"Label", None))
+        self.Button_Settings_Title_Tools.setText(QCoreApplication.translate("MainWindow", u"Label", None))
         self.GroupBox_Settings_Client_Outlook.setTitle(QCoreApplication.translate("MainWindow", u"GroupBox", None))
         self.Label_Setting_Theme.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Setting_Language.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
@@ -13597,7 +13662,7 @@ class Ui_MainWindow(object):
         self.Label_DAT_VITS_OutputRoot.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Train_GPTSoVITS_OutputRoot.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Train_VITS_OutputRoot.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.ToolButton_Info_Title.setText(QCoreApplication.translate("MainWindow", u"Label", None))
+        self.Button_Info_Title.setText(QCoreApplication.translate("MainWindow", u"Label", None))
         self.Button_Console_Title.setText(QCoreApplication.translate("MainWindow", u"Label", None))
         self.Label_ToolsStatus.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Usage_CPU.setText(QCoreApplication.translate("MainWindow", u"--", None))

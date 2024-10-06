@@ -1,16 +1,16 @@
 from typing import Optional
-from PySide6.QtCore import Qt, QObject
+from PySide6.QtCore import Qt
 from PySide6.QtWidgets import *
 from QEasyWidgets import QFunctions as QFunc
 from QEasyWidgets.Windows import *
 from QEasyWidgets.Components import *
 
 from windows.ui.UI_MainWindow import Ui_MainWindow
-from windows.ui.UI_ChildWindow_ASR_VPR import Ui_ChildWindow_ASR_VPR
-from windows.ui.UI_ChildWindow_STT_Whisper import Ui_ChildWindow_STT_Whisper
-from windows.ui.UI_ChildWindow_DAT_GPTSoVITS import Ui_ChildWindow_DAT_GPTSoVITS
-from windows.ui.UI_ChildWindow_DAT_VITS import Ui_ChildWindow_DAT_VITS
-from windows.ui.UI_ChildWindow_TTS_VITS import Ui_ChildWindow_TTS_VITS
+from windows.ui.UI_ChildWindow_ASR import Ui_ChildWindow_ASR
+from windows.ui.UI_ChildWindow_STT import Ui_ChildWindow_STT
+from windows.ui.UI_ChildWindow_DAT import Ui_ChildWindow_DAT
+from windows.ui.UI_ChildWindow_DAT import Ui_ChildWindow_DAT
+from windows.ui.UI_ChildWindow_TTS import Ui_ChildWindow_TTS
 
 ##############################################################################################################################
 
@@ -26,12 +26,12 @@ class Window_MainWindow(MainWindowBase):
 
         self.setCentralWidget(self.ui.CentralWidget)
 
-        self.langChanged.connect(self.ui.retranslateUi)
+        self.langChanged.connect(lambda: self.ui.retranslateUi(self))
 
 ##############################################################################################################################
 
 class Window_ChildWindow_ASR(ChildWindowBase):
-    ui = Ui_ChildWindow_ASR_VPR()
+    ui = Ui_ChildWindow_ASR()
 
     def __init__(self, parent = None):
         super().__init__(parent, min_width = 960, min_height = 540)
@@ -42,7 +42,7 @@ class Window_ChildWindow_ASR(ChildWindowBase):
 
 
 class Window_ChildWindow_STT(ChildWindowBase):
-    ui = Ui_ChildWindow_STT_Whisper()
+    ui = Ui_ChildWindow_STT()
 
     def __init__(self, parent = None):
         super().__init__(parent, min_width = 960, min_height = 540)
@@ -52,8 +52,8 @@ class Window_ChildWindow_STT(ChildWindowBase):
         self.setTitleBar(self.ui.TitleBar)
 
 
-class Window_ChildWindow_DAT_GPTSoVITS(ChildWindowBase):
-    ui = Ui_ChildWindow_DAT_GPTSoVITS()
+class Window_ChildWindow_DAT(ChildWindowBase):
+    ui = Ui_ChildWindow_DAT()
 
     def __init__(self, parent = None):
         super().__init__(parent, min_width = 960, min_height = 540)
@@ -63,30 +63,8 @@ class Window_ChildWindow_DAT_GPTSoVITS(ChildWindowBase):
         self.setTitleBar(self.ui.TitleBar)
 
 
-class Window_ChildWindow_DAT_VITS(ChildWindowBase):
-    ui = Ui_ChildWindow_DAT_VITS()
-
-    def __init__(self, parent = None):
-        super().__init__(parent, min_width = 960, min_height = 540)
-
-        self.ui.setupUi(self)
-
-        self.setTitleBar(self.ui.TitleBar)
-
-
-class Window_ChildWindow_TTS_GPTSoVITS(ChildWindowBase):
-    ui = Ui_ChildWindow_TTS_VITS()
-
-    def __init__(self, parent = None):
-        super().__init__(parent, min_width = 450, min_height = 300)
-
-        self.ui.setupUi(self)
-
-        self.setTitleBar(self.ui.TitleBar)
-
-
-class Window_ChildWindow_TTS_VITS(ChildWindowBase):
-    ui = Ui_ChildWindow_TTS_VITS()
+class Window_ChildWindow_TTS(ChildWindowBase):
+    ui = Ui_ChildWindow_TTS()
 
     def __init__(self, parent = None):
         super().__init__(parent, min_width = 450, min_height = 300)

@@ -3,10 +3,9 @@ import platform
 from typing import Union, Optional
 from PySide6.QtCore import Qt, QObject, Signal, Slot, QThread, QPoint
 from PySide6.QtCore import QCoreApplication as QCA
-from PySide6.QtGui import *
-from PySide6.QtWidgets import *
+from PySide6.QtGui import QFont
+from PySide6.QtWidgets import QMessageBox
 from QEasyWidgets import QFunctions as QFunc
-from QEasyWidgets.Windows import *
 from QEasyWidgets.Components import *
 
 from components.Components import *
