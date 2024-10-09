@@ -248,8 +248,7 @@ class Widget_Updater(QWidget):
                     Text = Info
                 ) if not Succeeded and len(Info) > 0 else None,
                 (RebootIfSucceeded() if Succeeded else RebootIfFailed()) if BootExecuter else None,
-                QApplication.exit(),
-                os._exit(0)
+                QApplication.instance().exit()
             )
         )
 

@@ -778,13 +778,6 @@ def DATResult_Save(DATResult: list, DATPath: str):
         DAT.write(DATLines)
 
 
-# ClientFunc: ClientRebooter
-def ClientRebooter():
-    '''
-    Reboot EVT client
-    '''
-
-
 # ClientFunc: IntegrityChecker
 class Integrity_Checker(QObject):
     '''
@@ -1249,8 +1242,7 @@ class MainWindow(Window_MainWindow):
                         QMessageBox.Yes: lambda: (
                             Config.EditConfig('Updater', 'Asked', 'True'),
                             subprocess.Popen(['python.exe', UpdaterPath] if IsFileCompiled == False else [UpdaterPath], env = os.environ),
-                            QApplication.exit(),
-                            os._exit(0) if IsFileCompiled == True else None,
+                            QApplication.instance().exit()
                         ),
                         QMessageBox.No: lambda: (
                             Config.EditConfig('Updater', 'Asked', 'False'),
@@ -1302,8 +1294,7 @@ class MainWindow(Window_MainWindow):
         self.closed.connect(
             lambda: (
                 FunctionSignals.Signal_ForceQuit.emit(),
-                FunctionSignals.Signal_TaskStatus.connect(QApplication.exit),
-                #os._exit(0)
+                FunctionSignals.Signal_TaskStatus.connect(QApplication.instance().exit)
             )
         )
         self.ui.Button_Close_Window.clicked.connect(self.close)
@@ -6135,10 +6126,6 @@ class MainWindow(Window_MainWindow):
         )
 
         self.ui.GroupBox_Settings_Client_Operation.setTitle(QCA.translate('MainWindow', "操作"))
-
-        self.ui.Button_Setting_ClientRebooter.clicked.connect(ClientRebooter)
-        self.ui.Button_Setting_ClientRebooter.setText(QCA.translate('MainWindow', "重启客户端"))
-        self.ui.Button_Setting_ClientRebooter.setToolTip(QCA.translate('MainWindow', "重启EVT客户端"))
 
         Function_SetMethodExecutor(self,
             ExecuteButton = self.ui.Button_Setting_IntegrityChecker,
