@@ -167,35 +167,6 @@ def Function_SetURL(
     Button.setToolTipDuration(-1)
     Button.setToolTip(ButtonTooltip)
 
-
-def Function_SetFileDialog(
-    Button: QAbstractButton,
-    LineEdit: QLineEdit,
-    Mode: str,
-    FileType: Optional[str] = None,
-    Directory: Optional[str] = None,
-    #DisplayText: str = "None",
-    ButtonTooltip: str = "Browse"
-):
-    '''
-    Function to select/save file path (through button)
-    '''
-    #LineEdit.setText(DisplayText)
-
-    @Slot()
-    def SetFileDialog():
-        DisplayText = QFunc.Function_GetFileDialog(
-            Mode = Mode,
-            FileType = FileType,
-            Directory = os.path.expanduser('~/Documents' if platform.system() == "Windows" else '~/') if Directory is None else Directory
-        )
-        LineEdit.setText(DisplayText)
-        LineEdit.setStatusTip(DisplayText)
-
-    Button.clicked.connect(SetFileDialog)
-    Button.setToolTipDuration(-1)
-    Button.setToolTip(ButtonTooltip)
-
 ##############################################################################################################################
 
 def Function_ParamsHandler(
@@ -207,7 +178,7 @@ def Function_ParamsHandler(
     Function to get/set the param of UI
     '''
     if Mode == "Get":
-        if isinstance(UI, (QLineEdit, LineEditBase, TextEditBase, QPlainTextEdit)):
+        if isinstance(UI, (QLineEdit, QTextEdit, QPlainTextEdit)):
             return QFunc.Function_GetText(UI)
         if isinstance(UI, QComboBox):
             return UI.currentText()
@@ -220,7 +191,7 @@ def Function_ParamsHandler(
             return UI.GetValue()
 
     if Mode == "Set":
-        if isinstance(UI, (QLineEdit, LineEditBase, TextEditBase)):
+        if isinstance(UI, (QLineEdit, QTextEdit)):
             UI.setText(Param)
         if isinstance(UI, QPlainTextEdit):
             UI.setPlainText(Param)
@@ -261,7 +232,7 @@ def Function_ParamsSynchronizer(
             Trigger.sliderMoved.connect(ParamsSynchronizer) if Connection == "Connect" else Trigger.sliderMoved.disconnect(ParamsSynchronizer)
         if isinstance(Trigger, QAbstractSpinBox):
             Trigger.valueChanged.connect(ParamsSynchronizer) if Connection == "Connect" else Trigger.valueChanged.disconnect(ParamsSynchronizer)
-        if isinstance(Trigger, (QLineEdit, LineEditBase)):
+        if isinstance(Trigger, (QLineEdit)):
             Trigger.textChanged.connect(ParamsSynchronizer) if Connection == "Connect" else Trigger.textChanged.disconnect(ParamsSynchronizer)
 
 
@@ -409,15 +380,15 @@ def Function_SetWidgetValue(
     SetPlaceholderText: bool = False,
     PlaceholderText: Optional[str] = None
 ):
-    if isinstance(Widget, (QLineEdit, LineEditBase, QTextEdit, TextEditBase, QPlainTextEdit)):
+    if isinstance(Widget, (QLineEdit, QTextEdit, QPlainTextEdit)):
         QFunc.Function_SetText(Widget, Value, SetPlaceholderText = SetPlaceholderText, PlaceholderText = PlaceholderText)
         def EditConfig(Value):
             Config.EditConfig(Section, Option, str(Value))
         if Config is not None:
-            Widget.textChanged.connect(EditConfig)
+            Widget.textChanged.connect(lambda: EditConfig(Widget.text() if isinstance(Widget, (QLineEdit)) else Widget.toPlainText()))
             EditConfig(Value)
 
-    if isinstance(Widget, (QComboBox, ComboBoxBase)):
+    if isinstance(Widget, (QComboBox)):
         itemTexts = []
         for index in range(Widget.count()):
             itemTexts.append(Widget.itemText(index))
@@ -428,7 +399,7 @@ def Function_SetWidgetValue(
             Widget.currentTextChanged.connect(EditConfig)
             EditConfig(Value) if str(Value) in itemTexts else None
 
-    if isinstance(Widget, (QSlider, QSpinBox, SpinBoxBase)):
+    if isinstance(Widget, (QSlider, QSpinBox)):
         Widget.setValue(int(eval(str(Value)) * Times))
         def EditConfig(Value):
             Config.EditConfig(Section, Option, str(eval(str(Value)) / Times))
@@ -436,7 +407,7 @@ def Function_SetWidgetValue(
             Widget.valueChanged.connect(EditConfig)
             EditConfig(Value)
 
-    if isinstance(Widget, (QDoubleSpinBox, DoubleSpinBoxBase)):
+    if isinstance(Widget, (QDoubleSpinBox)):
         Widget.setValue(float(eval(str(Value)) * Times))
         def EditConfig(Value):
             Config.EditConfig(Section, Option, str(eval(str(Value)) / Times))
@@ -580,7 +551,6 @@ def Function_SetMethodExecutor(
 
     if ExecuteButton is not None:
         ExecuteButton.clicked.connect(ExecuteMethod)
-        ExecuteButton.setText(QCA.translate("Button", "执行")) if len(ExecuteButton.text().strip()) == 0 else None
     else:
         TempButton = QPushButton(ParentWindow)
         TempButton.clicked.connect(ExecuteMethod)
@@ -615,7 +585,6 @@ def Function_SetMethodExecutor(
                 ButtonEvents = {QMessageBox.Yes: lambda: TerminateMethod()}
             )
         )
-        TerminateButton.setText(QCA.translate("Button", "终止")) if len(TerminateButton.text().strip()) == 0 else None
         FunctionSignals.Signal_ForceQuit.connect(TerminateMethod)
     else:
         pass
