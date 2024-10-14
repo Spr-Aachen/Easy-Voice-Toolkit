@@ -1,7 +1,7 @@
 from PySide6.QtCore import (QCoreApplication, QMetaObject, QSize)
 from PySide6.QtWidgets import *
 
-from components.Components import Table_ASRResult, LineEditBase
+from components.Components import LabelBase, Table_ASRResult, LineEditBase
 from assets import Sources
 
 
@@ -86,38 +86,20 @@ class Ui_ChildWindow_ASR(object):
         self.gridLayout.setSpacing(12)
         self.gridLayout.setObjectName(u"gridLayout")
         self.gridLayout.setContentsMargins(21, 12, 21, 12)
-        self.Label_Title = QLabel(self.CentralWidget)
+        self.Label_Title = LabelBase(self.CentralWidget)
         self.Label_Title.setObjectName(u"Label_Title")
         sizePolicy = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.Label_Title.sizePolicy().hasHeightForWidth())
         self.Label_Title.setSizePolicy(sizePolicy)
-        self.Label_Title.setStyleSheet(u"QLabel {\n"
-"	/*text-align: center;*/\n"
-"	/*color: rgb(255, 255, 255);*/\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}")
 
         self.gridLayout.addWidget(self.Label_Title, 0, 0, 1, 4)
 
-        self.Label_Text = QLabel(self.CentralWidget)
+        self.Label_Text = LabelBase(self.CentralWidget)
         self.Label_Text.setObjectName(u"Label_Text")
         sizePolicy.setHeightForWidth(self.Label_Text.sizePolicy().hasHeightForWidth())
         self.Label_Text.setSizePolicy(sizePolicy)
-        self.Label_Text.setStyleSheet(u"QLabel {\n"
-"	/*text-align: center;*/\n"
-"	/*color: rgb(255, 255, 255);*/\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}")
 
         self.gridLayout.addWidget(self.Label_Text, 1, 0, 1, 4)
 
@@ -254,3 +236,4 @@ class Ui_ChildWindow_ASR(object):
         self.Button_Cancel.setText(QCoreApplication.translate("ChildWindow_ASR", u"PushButton", None))
         self.Button_Save.setText(QCoreApplication.translate("ChildWindow_ASR", u"PushButton", None))
         self.Button_Confirm.setText(QCoreApplication.translate("ChildWindow_ASR", u"PushButton", None))
+    # retranslateUi

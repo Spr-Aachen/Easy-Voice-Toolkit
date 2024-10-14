@@ -133,7 +133,7 @@ class MessageBox_Stacked(MessageBoxBase):
         QFunc.Function_SetNoContents(self.StackedWidget)
 
         for Index, Image in enumerate(QFunc.ToIterable(Images)):
-            Label = QLabel()
+            Label = LabelBase()
             QFunc.Function_SetText(Label, QFunc.SetRichText(QFunc.ToIterable(Texts)[Index], 'left', 9.9, 420))
 
             TextBrowser = QTextBrowser()
@@ -143,9 +143,8 @@ class MessageBox_Stacked(MessageBoxBase):
                 "    background-repeat: no-repeat;"
                 "    background-position: center 0px;"
                 "    padding: 0px;"
-                "    border-width: 0px;"
+                "    border: none;"
                 "    border-radius: 6px;"
-                "    border-style: solid;"
                 "}"
             ) if Image is not None else None
 
@@ -178,26 +177,11 @@ class MessageBox_Buttons(MessageBoxBase):
         self.layout().setContentsMargins(6, 12, 6, 12)
         self.layout().setSpacing(6)
 
-        ButtonStyle = '''
-        QPushButton {
-            background-color: transparent;
-            padding: 6px;
-            border-width: 1px;
-            border-style: solid;
-            border-color: rgb(90, 90, 90);
-        }
-        QPushButton:hover {
-            border-color: rgb(120, 120, 120);
-        }
-        '''
-
-        self.Button1 = QPushButton()
+        self.Button1 = HollowButton()
         #self.Button1.setFixedHeight(33)
-        self.Button1.setStyleSheet(ButtonStyle)
 
-        self.Button2 = QPushButton()
+        self.Button2 = HollowButton()
         #self.Button2.setFixedHeight(33)
-        self.Button2.setStyleSheet(ButtonStyle)
 
         Layout = QGridLayout()
         Layout.setAlignment(Qt.AlignCenter)

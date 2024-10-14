@@ -34,39 +34,29 @@ class Table_ViewModels(TableBase):
         ModelName, ModelType, ModelSize, ModelDate, DownloadParam = Param
 
         RowHeight = 36
-        LabelStyle = '''
-        QLabel {
-            background-color: transparent;
-            border: none;
-        }
-        '''
         def SetColumnLayout(ColumnLayout):
             ColumnLayout.setContentsMargins(0, 0, 0, 0)
             ColumnLayout.setSpacing(0)
 
-        Label_ModelName = QLabel()
-        Label_ModelName.setStyleSheet(LabelStyle)
+        Label_ModelName = LabelBase()
         QFunc.Function_SetText(Label_ModelName, ModelName)
         ColumnLayout_ModelName = QHBoxLayout()
         SetColumnLayout(ColumnLayout_ModelName)
         ColumnLayout_ModelName.addWidget(Label_ModelName)
 
-        Label_ModelType = QLabel()
-        Label_ModelType.setStyleSheet(LabelStyle)
+        Label_ModelType = LabelBase()
         QFunc.Function_SetText(Label_ModelType, ModelType)
         ColumnLayout_ModelType = QHBoxLayout()
         SetColumnLayout(ColumnLayout_ModelType)
         ColumnLayout_ModelType.addWidget(Label_ModelType)
 
-        Label_ModelSize = QLabel()
-        Label_ModelSize.setStyleSheet(LabelStyle)
+        Label_ModelSize = LabelBase()
         QFunc.Function_SetText(Label_ModelSize, ModelSize)
         ColumnLayout_ModelSize = QHBoxLayout()
         SetColumnLayout(ColumnLayout_ModelSize)
         ColumnLayout_ModelSize.addWidget(Label_ModelSize)
 
-        Label_ModelDate = QLabel()
-        Label_ModelDate.setStyleSheet(LabelStyle)
+        Label_ModelDate = LabelBase()
         QFunc.Function_SetText(Label_ModelDate, ModelDate)
         ColumnLayout_ModelDate = QHBoxLayout()
         SetColumnLayout(ColumnLayout_ModelDate)
@@ -140,7 +130,6 @@ class Table_EditAudioSpeaker(TableBase):
     def setHorizontalHeaderLabels(self, Headers: list):
         self.HorizontalHeaderLabels = Headers
         self.ColumnCount = len(Headers)
-        self.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
 
     def setStyleSheet(self, StyleSheet: str):
         super().setStyleSheet(StyleSheet + '''
@@ -255,18 +244,11 @@ class Table_ASRResult(TableBase):
 
     def AddRow(self, Param: tuple, ComboItems: list):
         RowHeight = 30
-        LabelStyle = '''
-        QLabel {
-            background-color: transparent;
-            border: none;
-        }
-        '''
         def SetColumnLayout(ColumnLayout):
             ColumnLayout.setContentsMargins(0, 0, 0, 0)
             ColumnLayout.setSpacing(0)
 
-        Label0 = QLabel()
-        Label0.setStyleSheet(LabelStyle)
+        Label0 = LabelBase()
         QFunc.Function_SetText(Label0, Param[0])
         Column0Layout = QHBoxLayout()
         SetColumnLayout(Column0Layout)
@@ -281,8 +263,7 @@ class Table_ASRResult(TableBase):
         SetColumnLayout(Column1Layout)
         Column1Layout.addWidget(ComboBox)
 
-        Label2 = QLabel()
-        Label2.setStyleSheet(LabelStyle)
+        Label2 = LabelBase()
         QFunc.Function_SetText(Label2, Param[2])
         Column2Layout = QHBoxLayout()
         SetColumnLayout(Column2Layout)
@@ -343,7 +324,7 @@ class Table_ASRResult(TableBase):
         ValueDict = {}
         for RowCount in range(self.rowCount()):
             try:
-                Key = QFunc.Function_GetText(self.cellWidget(RowCount, 0).findChild(QLabel))
+                Key = QFunc.Function_GetText(self.cellWidget(RowCount, 0).findChild(LabelBase))
                 Value = self.cellWidget(RowCount, 1).findChild(ComboBoxBase).currentText()
                 ValueDict[Key] = Value
             except:
@@ -375,18 +356,11 @@ class Table_STTResult(TableBase):
 
     def AddRow(self, Param: tuple):
         RowHeight = 30
-        LabelStyle = '''
-        QLabel {
-            background-color: transparent;
-            border: none;
-        }
-        '''
         def SetColumnLayout(ColumnLayout):
             ColumnLayout.setContentsMargins(0, 0, 0, 0)
             ColumnLayout.setSpacing(0)
 
-        Label0 = QLabel()
-        Label0.setStyleSheet(LabelStyle)
+        Label0 = LabelBase()
         QFunc.Function_SetText(Label0, Param[0])
         Column0Layout = QHBoxLayout()
         SetColumnLayout(Column0Layout)
@@ -431,7 +405,7 @@ class Table_STTResult(TableBase):
         ValueDict = {}
         for RowCount in range(self.rowCount()):
             try:
-                Key = QFunc.Function_GetText(self.cellWidget(RowCount, 0).findChild(QLabel))
+                Key = QFunc.Function_GetText(self.cellWidget(RowCount, 0).findChild(LabelBase))
                 Value = QFunc.Function_GetText(self.cellWidget(RowCount, 1).findChild(QLineEdit))
                 ValueDict[Key] = Value
             except:

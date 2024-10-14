@@ -1,7 +1,7 @@
 from PySide6.QtCore import (QCoreApplication, QMetaObject, QSize)
 from PySide6.QtWidgets import *
 
-from components.Components import Table_DATResult
+from components.Components import LabelBase, Table_DATResult, TabWidgetBase
 from assets import Sources
 
 
@@ -86,69 +86,25 @@ class Ui_ChildWindow_DAT(object):
         self.gridLayout.setSpacing(12)
         self.gridLayout.setObjectName(u"gridLayout")
         self.gridLayout.setContentsMargins(21, 12, 21, 12)
-        self.Label_Title = QLabel(self.CentralWidget)
+        self.Label_Title = LabelBase(self.CentralWidget)
         self.Label_Title.setObjectName(u"Label_Title")
         sizePolicy = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.Label_Title.sizePolicy().hasHeightForWidth())
         self.Label_Title.setSizePolicy(sizePolicy)
-        self.Label_Title.setStyleSheet(u"QLabel {\n"
-"	/*text-align: center;*/\n"
-"	/*color: rgb(255, 255, 255);*/\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}")
 
         self.gridLayout.addWidget(self.Label_Title, 0, 0, 1, 1)
 
-        self.Label_Text = QLabel(self.CentralWidget)
+        self.Label_Text = LabelBase(self.CentralWidget)
         self.Label_Text.setObjectName(u"Label_Text")
         sizePolicy.setHeightForWidth(self.Label_Text.sizePolicy().hasHeightForWidth())
         self.Label_Text.setSizePolicy(sizePolicy)
-        self.Label_Text.setStyleSheet(u"QLabel {\n"
-"	/*text-align: center;*/\n"
-"	/*color: rgb(255, 255, 255);*/\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}")
 
         self.gridLayout.addWidget(self.Label_Text, 1, 0, 1, 1)
 
-        self.TabWidget = QTabWidget(self.CentralWidget)
+        self.TabWidget = TabWidgetBase(self.CentralWidget)
         self.TabWidget.setObjectName(u"TabWidget")
-        self.TabWidget.setStyleSheet(u"QTabBar::tab {\n"
-"    min-width: 84px;\n"
-"	min-height: 42px;\n"
-"	font-size: 21px;\n"
-"	/*text-align: center;*/\n"
-"	padding-left: 12px;\n"
-"	padding-right: 12px;\n"
-"	background-color: transparent;\n"
-"    border-width: 1.2px;\n"
-"	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QTabBar::tab:hover, QTabBar::tab:selected {\n"
-"	background-color: rgba(36, 36, 36, 36);\n"
-"}\n"
-"\n"
-"\n"
-"QTabWidget::tab-bar {\n"
-"    alignment: left;\n"
-"}\n"
-"QTabWidget::pane {\n"
-"	background: transparent;\n"
-"    border-width: 1.2px;\n"
-"	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}")
         self.Tab_Train = QWidget()
         self.Tab_Train.setObjectName(u"Tab_Train")
         self.verticalLayout_72 = QVBoxLayout(self.Tab_Train)

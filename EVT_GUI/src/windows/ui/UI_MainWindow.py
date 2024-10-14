@@ -1,7 +1,8 @@
-from PySide6.QtCore import (QCoreApplication, QMetaObject, QRect, QSize, Qt)
+from PySide6.QtCore import (QCoreApplication, QMetaObject, Qt, QRect, QSize)
+from PySide6.QtGui import (QIcon, QFont)
 from PySide6.QtWidgets import *
 
-from components.Components import WidgetBase, ButtonBase, HollowButton, MenuButton, LabelBase, LineEditBase, TextEditBase, TextBrowserBase, ComboBoxBase, SpinBoxBase, DoubleSpinBoxBase, ToolBoxBase, ScrollAreaBase, TreeWidgetBase, Table_ViewModels, Table_EditAudioSpeaker
+from components.Components import WidgetBase, ButtonBase, NavigationButton, HollowButton, MenuButton, LabelBase, LineEditBase, TextEditBase, TextBrowserBase, ComboBoxBase, SpinBoxBase, DoubleSpinBoxBase, ToolBoxBase, GroupBoxBase, ScrollAreaBase, TreeWidgetBase, TabWidgetBase, Table_ViewModels, Table_EditAudioSpeaker
 from assets import Sources
 
 
@@ -162,7 +163,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_3.setSpacing(0)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
         self.verticalLayout_3.setContentsMargins(0, 3, 0, 3)
-        self.Button_Menu_Home = ButtonBase(self.Frame_Menu)
+        self.Button_Menu_Home = NavigationButton(self.Frame_Menu)
         self.Button_Menu_Home.setObjectName(u"Button_Menu_Home")
         sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
         sizePolicy1.setHorizontalStretch(0)
@@ -170,524 +171,142 @@ class Ui_MainWindow(object):
         sizePolicy1.setHeightForWidth(self.Button_Menu_Home.sizePolicy().hasHeightForWidth())
         self.Button_Menu_Home.setSizePolicy(sizePolicy1)
         self.Button_Menu_Home.setMinimumSize(QSize(0, 48))
-        self.Button_Menu_Home.setStyleSheet(u"ButtonBase {\n"
-"	background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"ButtonBase:hover {\n"
-"	background-color: qlineargradient(spread: pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(66, 66, 66, 123), stop:1 transparent);\n"
-"}\n"
-"ButtonBase:checked {\n"
-"	background-color: transparent;\n"
-"	border-left-width: 3px;\n"
-"	border-left-color: rgb(120, 180, 240);\n"
-"	border-right-color: transparent;\n"
-"	border-top-color: transparent;\n"
-"	border-bottom-color: transparent;\n"
-"	/*padding-left: 0.6px;*/\n"
-"}")
+        icon = QIcon()
+        icon.addFile(u":/Button_Icon/images/icons/Home.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.Button_Menu_Home.setIcon(icon)
+        self.Button_Menu_Home.setIconSize(QSize(24, 24))
         self.horizontalLayout_8 = QHBoxLayout(self.Button_Menu_Home)
         self.horizontalLayout_8.setSpacing(0)
         self.horizontalLayout_8.setObjectName(u"horizontalLayout_8")
         self.horizontalLayout_8.setContentsMargins(0, 0, 0, 0)
-        self.Label_Menu_Home_Icon = QLabel(self.Button_Menu_Home)
-        self.Label_Menu_Home_Icon.setObjectName(u"Label_Menu_Home_Icon")
-        self.Label_Menu_Home_Icon.setMinimumSize(QSize(48, 48))
-        self.Label_Menu_Home_Icon.setMaximumSize(QSize(48, 48))
-        self.Label_Menu_Home_Icon.setStyleSheet(u"QLabel {\n"
-"	/*text-align: center;\n"
-"	font-size: 15px;*/\n"
-"	margin: 12px;\n"
-"	border-image: url(:/Button_Icon/images/icons/Home.png);\n"
-"	/*background-repeat: no-repeat;\n"
-"	background-origin: content;\n"
-"	background-position: center;*/\n"
-"	background-color: transparent;\n"
-"	/*padding: 11.1px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"	border-color: transparent;*/\n"
-"}")
-        self.Label_Menu_Home_Icon.setProperty("flat", False)
-
-        self.horizontalLayout_8.addWidget(self.Label_Menu_Home_Icon)
-
-        self.Label_Menu_Home_Text = LabelBase(self.Button_Menu_Home)
-        self.Label_Menu_Home_Text.setObjectName(u"Label_Menu_Home_Text")
-        sizePolicy2 = QSizePolicy(QSizePolicy.Policy.Ignored, QSizePolicy.Policy.Preferred)
-        sizePolicy2.setHorizontalStretch(0)
-        sizePolicy2.setVerticalStretch(0)
-        sizePolicy2.setHeightForWidth(self.Label_Menu_Home_Text.sizePolicy().hasHeightForWidth())
-        self.Label_Menu_Home_Text.setSizePolicy(sizePolicy2)
-
-        self.horizontalLayout_8.addWidget(self.Label_Menu_Home_Text)
-
 
         self.verticalLayout_3.addWidget(self.Button_Menu_Home)
 
-        self.Button_Menu_Env = ButtonBase(self.Frame_Menu)
+        self.Button_Menu_Env = NavigationButton(self.Frame_Menu)
         self.Button_Menu_Env.setObjectName(u"Button_Menu_Env")
         sizePolicy1.setHeightForWidth(self.Button_Menu_Env.sizePolicy().hasHeightForWidth())
         self.Button_Menu_Env.setSizePolicy(sizePolicy1)
         self.Button_Menu_Env.setMinimumSize(QSize(0, 48))
-        self.Button_Menu_Env.setStyleSheet(u"ButtonBase {\n"
-"	background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"ButtonBase:hover {\n"
-"	background-color: qlineargradient(spread: pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(66, 66, 66, 123), stop:1 transparent);\n"
-"}\n"
-"ButtonBase:checked {\n"
-"	background-color: transparent;\n"
-"	border-left-width: 3px;\n"
-"	border-left-color: rgb(120, 180, 240);\n"
-"	border-right-color: transparent;\n"
-"	border-top-color: transparent;\n"
-"	border-bottom-color: transparent;\n"
-"	/*padding-left: 0.6px;*/\n"
-"}")
+        icon1 = QIcon()
+        icon1.addFile(u":/Button_Icon/images/icons/Box.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.Button_Menu_Env.setIcon(icon1)
+        self.Button_Menu_Env.setIconSize(QSize(24, 24))
         self.horizontalLayout_7 = QHBoxLayout(self.Button_Menu_Env)
         self.horizontalLayout_7.setSpacing(0)
         self.horizontalLayout_7.setObjectName(u"horizontalLayout_7")
         self.horizontalLayout_7.setContentsMargins(0, 0, 0, 0)
-        self.Label_Menu_Env_Install_Icon = QLabel(self.Button_Menu_Env)
-        self.Label_Menu_Env_Install_Icon.setObjectName(u"Label_Menu_Env_Install_Icon")
-        self.Label_Menu_Env_Install_Icon.setMinimumSize(QSize(48, 48))
-        self.Label_Menu_Env_Install_Icon.setMaximumSize(QSize(48, 48))
-        self.Label_Menu_Env_Install_Icon.setStyleSheet(u"QLabel {\n"
-"	/*text-align: center;\n"
-"	font-size: 15px;*/\n"
-"	margin: 12px;\n"
-"	border-image: url(:/Button_Icon/images/icons/Box.png);\n"
-"	/*background-repeat: no-repeat;\n"
-"	background-origin: content;\n"
-"	background-position: center;*/\n"
-"	background-color: transparent;\n"
-"	/*padding: 11.1px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"	border-color: transparent;*/\n"
-"}")
-
-        self.horizontalLayout_7.addWidget(self.Label_Menu_Env_Install_Icon)
-
-        self.Label_Menu_Env_Install_Text = LabelBase(self.Button_Menu_Env)
-        self.Label_Menu_Env_Install_Text.setObjectName(u"Label_Menu_Env_Install_Text")
-        sizePolicy2.setHeightForWidth(self.Label_Menu_Env_Install_Text.sizePolicy().hasHeightForWidth())
-        self.Label_Menu_Env_Install_Text.setSizePolicy(sizePolicy2)
-
-        self.horizontalLayout_7.addWidget(self.Label_Menu_Env_Install_Text)
-
 
         self.verticalLayout_3.addWidget(self.Button_Menu_Env)
 
-        self.Button_Menu_Models = ButtonBase(self.Frame_Menu)
+        self.Button_Menu_Models = NavigationButton(self.Frame_Menu)
         self.Button_Menu_Models.setObjectName(u"Button_Menu_Models")
         sizePolicy1.setHeightForWidth(self.Button_Menu_Models.sizePolicy().hasHeightForWidth())
         self.Button_Menu_Models.setSizePolicy(sizePolicy1)
         self.Button_Menu_Models.setMinimumSize(QSize(0, 48))
-        self.Button_Menu_Models.setStyleSheet(u"ButtonBase {\n"
-"	background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"ButtonBase:hover {\n"
-"	background-color: qlineargradient(spread: pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(66, 66, 66, 123), stop:1 transparent);\n"
-"}\n"
-"ButtonBase:checked {\n"
-"	background-color: transparent;\n"
-"	border-left-width: 3px;\n"
-"	border-left-color: rgb(120, 180, 240);\n"
-"	border-right-color: transparent;\n"
-"	border-top-color: transparent;\n"
-"	border-bottom-color: transparent;\n"
-"	/*padding-left: 0.6px;*/\n"
-"}")
+        icon2 = QIcon()
+        icon2.addFile(u":/Button_Icon/images/icons/Boxes.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.Button_Menu_Models.setIcon(icon2)
+        self.Button_Menu_Models.setIconSize(QSize(24, 24))
         self.horizontalLayout_34 = QHBoxLayout(self.Button_Menu_Models)
         self.horizontalLayout_34.setSpacing(0)
         self.horizontalLayout_34.setObjectName(u"horizontalLayout_34")
         self.horizontalLayout_34.setContentsMargins(0, 0, 0, 0)
-        self.Label_Menu_Models_Icon = QLabel(self.Button_Menu_Models)
-        self.Label_Menu_Models_Icon.setObjectName(u"Label_Menu_Models_Icon")
-        self.Label_Menu_Models_Icon.setMinimumSize(QSize(48, 48))
-        self.Label_Menu_Models_Icon.setMaximumSize(QSize(48, 48))
-        self.Label_Menu_Models_Icon.setStyleSheet(u"QLabel {\n"
-"	/*text-align: center;\n"
-"	font-size: 15px;*/\n"
-"	margin: 12px;\n"
-"	border-image: url(:/Button_Icon/images/icons/Boxes.png);\n"
-"	/*background-repeat: no-repeat;\n"
-"	background-origin: content;\n"
-"	background-position: center;*/\n"
-"	background-color: transparent;\n"
-"	/*padding: 11.1px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"	border-color: transparent;*/\n"
-"}")
-
-        self.horizontalLayout_34.addWidget(self.Label_Menu_Models_Icon)
-
-        self.Label_Menu_Models_Text = LabelBase(self.Button_Menu_Models)
-        self.Label_Menu_Models_Text.setObjectName(u"Label_Menu_Models_Text")
-        sizePolicy2.setHeightForWidth(self.Label_Menu_Models_Text.sizePolicy().hasHeightForWidth())
-        self.Label_Menu_Models_Text.setSizePolicy(sizePolicy2)
-
-        self.horizontalLayout_34.addWidget(self.Label_Menu_Models_Text)
-
 
         self.verticalLayout_3.addWidget(self.Button_Menu_Models)
 
-        self.Button_Menu_Process = ButtonBase(self.Frame_Menu)
+        self.Button_Menu_Process = NavigationButton(self.Frame_Menu)
         self.Button_Menu_Process.setObjectName(u"Button_Menu_Process")
         sizePolicy1.setHeightForWidth(self.Button_Menu_Process.sizePolicy().hasHeightForWidth())
         self.Button_Menu_Process.setSizePolicy(sizePolicy1)
         self.Button_Menu_Process.setMinimumSize(QSize(0, 48))
-        self.Button_Menu_Process.setStyleSheet(u"ButtonBase {\n"
-"	background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"ButtonBase:hover {\n"
-"	background-color: qlineargradient(spread: pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(66, 66, 66, 123), stop:1 transparent);\n"
-"}\n"
-"ButtonBase:checked {\n"
-"	background-color: transparent;\n"
-"	border-left-width: 3px;\n"
-"	border-left-color: rgb(120, 180, 240);\n"
-"	border-right-color: transparent;\n"
-"	border-top-color: transparent;\n"
-"	border-bottom-color: transparent;\n"
-"	/*padding-left: 0.6px;*/\n"
-"}")
+        icon3 = QIcon()
+        icon3.addFile(u":/Button_Icon/images/icons/Audio.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.Button_Menu_Process.setIcon(icon3)
+        self.Button_Menu_Process.setIconSize(QSize(24, 24))
         self.horizontalLayout_33 = QHBoxLayout(self.Button_Menu_Process)
         self.horizontalLayout_33.setSpacing(0)
         self.horizontalLayout_33.setObjectName(u"horizontalLayout_33")
         self.horizontalLayout_33.setContentsMargins(0, 0, 0, 0)
-        self.Label_Menu_Process_Icon = QLabel(self.Button_Menu_Process)
-        self.Label_Menu_Process_Icon.setObjectName(u"Label_Menu_Process_Icon")
-        self.Label_Menu_Process_Icon.setMinimumSize(QSize(48, 48))
-        self.Label_Menu_Process_Icon.setMaximumSize(QSize(48, 48))
-        self.Label_Menu_Process_Icon.setStyleSheet(u"QLabel {\n"
-"	/*text-align: center;\n"
-"	font-size: 15px;*/\n"
-"	margin: 12px;\n"
-"	border-image: url(:/Button_Icon/images/icons/Audio.png);\n"
-"	/*background-repeat: no-repeat;\n"
-"	background-origin: content;\n"
-"	background-position: center;*/\n"
-"	background-color: transparent;\n"
-"	/*padding: 11.1px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"	border-color: transparent;*/\n"
-"}")
-
-        self.horizontalLayout_33.addWidget(self.Label_Menu_Process_Icon)
-
-        self.Label_Menu_Process_Text = LabelBase(self.Button_Menu_Process)
-        self.Label_Menu_Process_Text.setObjectName(u"Label_Menu_Process_Text")
-        sizePolicy2.setHeightForWidth(self.Label_Menu_Process_Text.sizePolicy().hasHeightForWidth())
-        self.Label_Menu_Process_Text.setSizePolicy(sizePolicy2)
-
-        self.horizontalLayout_33.addWidget(self.Label_Menu_Process_Text)
-
 
         self.verticalLayout_3.addWidget(self.Button_Menu_Process)
 
-        self.Button_Menu_ASR = ButtonBase(self.Frame_Menu)
+        self.Button_Menu_ASR = NavigationButton(self.Frame_Menu)
         self.Button_Menu_ASR.setObjectName(u"Button_Menu_ASR")
         sizePolicy1.setHeightForWidth(self.Button_Menu_ASR.sizePolicy().hasHeightForWidth())
         self.Button_Menu_ASR.setSizePolicy(sizePolicy1)
         self.Button_Menu_ASR.setMinimumSize(QSize(0, 48))
-        self.Button_Menu_ASR.setStyleSheet(u"ButtonBase {\n"
-"	background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"ButtonBase:hover {\n"
-"	background-color: qlineargradient(spread: pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(66, 66, 66, 123), stop:1 transparent);\n"
-"}\n"
-"ButtonBase:checked {\n"
-"	background-color: transparent;\n"
-"	border-left-width: 3px;\n"
-"	border-left-color: rgb(120, 180, 240);\n"
-"	border-right-color: transparent;\n"
-"	border-top-color: transparent;\n"
-"	border-bottom-color: transparent;\n"
-"	/*padding-left: 0.6px;*/\n"
-"}")
+        icon4 = QIcon()
+        icon4.addFile(u":/Button_Icon/images/icons/ASR.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.Button_Menu_ASR.setIcon(icon4)
+        self.Button_Menu_ASR.setIconSize(QSize(24, 24))
         self.horizontalLayout_10 = QHBoxLayout(self.Button_Menu_ASR)
         self.horizontalLayout_10.setSpacing(0)
         self.horizontalLayout_10.setObjectName(u"horizontalLayout_10")
         self.horizontalLayout_10.setContentsMargins(0, 0, 0, 0)
-        self.Label_Menu_ASR_Icon = QLabel(self.Button_Menu_ASR)
-        self.Label_Menu_ASR_Icon.setObjectName(u"Label_Menu_ASR_Icon")
-        self.Label_Menu_ASR_Icon.setMinimumSize(QSize(48, 48))
-        self.Label_Menu_ASR_Icon.setMaximumSize(QSize(48, 48))
-        self.Label_Menu_ASR_Icon.setStyleSheet(u"QLabel {\n"
-"	/*text-align: center;\n"
-"	font-size: 15px;*/\n"
-"	margin: 12px;\n"
-"	border-image: url(:/Button_Icon/images/icons/ASR.png);\n"
-"	/*background-repeat: no-repeat;\n"
-"	background-origin: content;\n"
-"	background-position: center;*/\n"
-"	background-color: transparent;\n"
-"	/*padding: 11.1px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"	border-color: transparent;*/\n"
-"}")
-
-        self.horizontalLayout_10.addWidget(self.Label_Menu_ASR_Icon)
-
-        self.Label_Menu_ASR_Text = LabelBase(self.Button_Menu_ASR)
-        self.Label_Menu_ASR_Text.setObjectName(u"Label_Menu_ASR_Text")
-        sizePolicy2.setHeightForWidth(self.Label_Menu_ASR_Text.sizePolicy().hasHeightForWidth())
-        self.Label_Menu_ASR_Text.setSizePolicy(sizePolicy2)
-
-        self.horizontalLayout_10.addWidget(self.Label_Menu_ASR_Text)
-
 
         self.verticalLayout_3.addWidget(self.Button_Menu_ASR)
 
-        self.Button_Menu_STT = ButtonBase(self.Frame_Menu)
+        self.Button_Menu_STT = NavigationButton(self.Frame_Menu)
         self.Button_Menu_STT.setObjectName(u"Button_Menu_STT")
         sizePolicy1.setHeightForWidth(self.Button_Menu_STT.sizePolicy().hasHeightForWidth())
         self.Button_Menu_STT.setSizePolicy(sizePolicy1)
         self.Button_Menu_STT.setMinimumSize(QSize(0, 48))
-        self.Button_Menu_STT.setStyleSheet(u"ButtonBase {\n"
-"	background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"ButtonBase:hover {\n"
-"	background-color: qlineargradient(spread: pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(66, 66, 66, 123), stop:1 transparent);\n"
-"}\n"
-"ButtonBase:checked {\n"
-"	background-color: transparent;\n"
-"	border-left-width: 3px;\n"
-"	border-left-color: rgb(120, 180, 240);\n"
-"	border-right-color: transparent;\n"
-"	border-top-color: transparent;\n"
-"	border-bottom-color: transparent;\n"
-"	/*padding-left: 0.6px;*/\n"
-"}")
+        icon5 = QIcon()
+        icon5.addFile(u":/Button_Icon/images/icons/STT.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.Button_Menu_STT.setIcon(icon5)
+        self.Button_Menu_STT.setIconSize(QSize(24, 24))
         self.horizontalLayout_36 = QHBoxLayout(self.Button_Menu_STT)
         self.horizontalLayout_36.setSpacing(0)
         self.horizontalLayout_36.setObjectName(u"horizontalLayout_36")
         self.horizontalLayout_36.setContentsMargins(0, 0, 0, 0)
-        self.Label_Menu_STT_Icon = QLabel(self.Button_Menu_STT)
-        self.Label_Menu_STT_Icon.setObjectName(u"Label_Menu_STT_Icon")
-        self.Label_Menu_STT_Icon.setMinimumSize(QSize(48, 48))
-        self.Label_Menu_STT_Icon.setMaximumSize(QSize(48, 48))
-        self.Label_Menu_STT_Icon.setStyleSheet(u"QLabel {\n"
-"	/*text-align: center;\n"
-"	font-size: 15px;*/\n"
-"	margin: 12px;\n"
-"	border-image: url(:/Button_Icon/images/icons/STT.png);\n"
-"	/*background-repeat: no-repeat;\n"
-"	background-origin: content;\n"
-"	background-position: center;*/\n"
-"	background-color: transparent;\n"
-"	/*padding: 11.1px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"	border-color: transparent;*/\n"
-"}")
-
-        self.horizontalLayout_36.addWidget(self.Label_Menu_STT_Icon)
-
-        self.Label_Menu_STT_Text = LabelBase(self.Button_Menu_STT)
-        self.Label_Menu_STT_Text.setObjectName(u"Label_Menu_STT_Text")
-        sizePolicy2.setHeightForWidth(self.Label_Menu_STT_Text.sizePolicy().hasHeightForWidth())
-        self.Label_Menu_STT_Text.setSizePolicy(sizePolicy2)
-
-        self.horizontalLayout_36.addWidget(self.Label_Menu_STT_Text)
-
 
         self.verticalLayout_3.addWidget(self.Button_Menu_STT)
 
-        self.Button_Menu_Dataset = ButtonBase(self.Frame_Menu)
+        self.Button_Menu_Dataset = NavigationButton(self.Frame_Menu)
         self.Button_Menu_Dataset.setObjectName(u"Button_Menu_Dataset")
         sizePolicy1.setHeightForWidth(self.Button_Menu_Dataset.sizePolicy().hasHeightForWidth())
         self.Button_Menu_Dataset.setSizePolicy(sizePolicy1)
         self.Button_Menu_Dataset.setMinimumSize(QSize(0, 48))
-        self.Button_Menu_Dataset.setStyleSheet(u"ButtonBase {\n"
-"	background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"ButtonBase:hover {\n"
-"	background-color: qlineargradient(spread: pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(66, 66, 66, 123), stop:1 transparent);\n"
-"}\n"
-"ButtonBase:checked {\n"
-"	background-color: transparent;\n"
-"	border-left-width: 3px;\n"
-"	border-left-color: rgb(120, 180, 240);\n"
-"	border-right-color: transparent;\n"
-"	border-top-color: transparent;\n"
-"	border-bottom-color: transparent;\n"
-"	/*padding-left: 0.6px;*/\n"
-"}")
+        icon6 = QIcon()
+        icon6.addFile(u":/Button_Icon/images/icons/Dataset.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.Button_Menu_Dataset.setIcon(icon6)
+        self.Button_Menu_Dataset.setIconSize(QSize(24, 24))
         self.horizontalLayout_38 = QHBoxLayout(self.Button_Menu_Dataset)
         self.horizontalLayout_38.setSpacing(0)
         self.horizontalLayout_38.setObjectName(u"horizontalLayout_38")
         self.horizontalLayout_38.setContentsMargins(0, 0, 0, 0)
-        self.Label_Menu_Dataset_Icon = QLabel(self.Button_Menu_Dataset)
-        self.Label_Menu_Dataset_Icon.setObjectName(u"Label_Menu_Dataset_Icon")
-        self.Label_Menu_Dataset_Icon.setMinimumSize(QSize(48, 48))
-        self.Label_Menu_Dataset_Icon.setMaximumSize(QSize(48, 48))
-        self.Label_Menu_Dataset_Icon.setStyleSheet(u"QLabel {\n"
-"	/*text-align: center;\n"
-"	font-size: 15px;*/\n"
-"	margin: 12px;\n"
-"	border-image: url(:/Button_Icon/images/icons/Dataset.png);\n"
-"	/*background-repeat: no-repeat;\n"
-"	background-origin: content;\n"
-"	background-position: center;*/\n"
-"	background-color: transparent;\n"
-"	/*padding: 11.1px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"	border-color: transparent;*/\n"
-"}")
-
-        self.horizontalLayout_38.addWidget(self.Label_Menu_Dataset_Icon)
-
-        self.Label_Menu_Dataset_Text = LabelBase(self.Button_Menu_Dataset)
-        self.Label_Menu_Dataset_Text.setObjectName(u"Label_Menu_Dataset_Text")
-        sizePolicy2.setHeightForWidth(self.Label_Menu_Dataset_Text.sizePolicy().hasHeightForWidth())
-        self.Label_Menu_Dataset_Text.setSizePolicy(sizePolicy2)
-
-        self.horizontalLayout_38.addWidget(self.Label_Menu_Dataset_Text)
-
 
         self.verticalLayout_3.addWidget(self.Button_Menu_Dataset)
 
-        self.Button_Menu_Train = ButtonBase(self.Frame_Menu)
+        self.Button_Menu_Train = NavigationButton(self.Frame_Menu)
         self.Button_Menu_Train.setObjectName(u"Button_Menu_Train")
         sizePolicy1.setHeightForWidth(self.Button_Menu_Train.sizePolicy().hasHeightForWidth())
         self.Button_Menu_Train.setSizePolicy(sizePolicy1)
         self.Button_Menu_Train.setMinimumSize(QSize(0, 48))
-        self.Button_Menu_Train.setStyleSheet(u"ButtonBase {\n"
-"	background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"ButtonBase:hover {\n"
-"	background-color: qlineargradient(spread: pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(66, 66, 66, 123), stop:1 transparent);\n"
-"}\n"
-"ButtonBase:checked {\n"
-"	background-color: transparent;\n"
-"	border-left-width: 3px;\n"
-"	border-left-color: rgb(120, 180, 240);\n"
-"	border-right-color: transparent;\n"
-"	border-top-color: transparent;\n"
-"	border-bottom-color: transparent;\n"
-"	/*padding-left: 0.6px;*/\n"
-"}")
+        icon7 = QIcon()
+        icon7.addFile(u":/Button_Icon/images/icons/HDD.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.Button_Menu_Train.setIcon(icon7)
+        self.Button_Menu_Train.setIconSize(QSize(24, 24))
         self.horizontalLayout_40 = QHBoxLayout(self.Button_Menu_Train)
         self.horizontalLayout_40.setSpacing(0)
         self.horizontalLayout_40.setObjectName(u"horizontalLayout_40")
         self.horizontalLayout_40.setContentsMargins(0, 0, 0, 0)
-        self.Label_Menu_Train_Icon = QLabel(self.Button_Menu_Train)
-        self.Label_Menu_Train_Icon.setObjectName(u"Label_Menu_Train_Icon")
-        self.Label_Menu_Train_Icon.setMinimumSize(QSize(48, 48))
-        self.Label_Menu_Train_Icon.setMaximumSize(QSize(48, 48))
-        self.Label_Menu_Train_Icon.setStyleSheet(u"QLabel {\n"
-"	/*text-align: center;\n"
-"	font-size: 15px;*/\n"
-"	margin: 12px;\n"
-"	border-image: url(:/Button_Icon/images/icons/HDD.png);\n"
-"	/*background-repeat: no-repeat;\n"
-"	background-origin: content;\n"
-"	background-position: center;*/\n"
-"	background-color: transparent;\n"
-"	/*padding: 11.1px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"	border-color: transparent;*/\n"
-"}")
-
-        self.horizontalLayout_40.addWidget(self.Label_Menu_Train_Icon)
-
-        self.Label_Menu_Train_Text = LabelBase(self.Button_Menu_Train)
-        self.Label_Menu_Train_Text.setObjectName(u"Label_Menu_Train_Text")
-        sizePolicy2.setHeightForWidth(self.Label_Menu_Train_Text.sizePolicy().hasHeightForWidth())
-        self.Label_Menu_Train_Text.setSizePolicy(sizePolicy2)
-
-        self.horizontalLayout_40.addWidget(self.Label_Menu_Train_Text)
-
 
         self.verticalLayout_3.addWidget(self.Button_Menu_Train)
 
-        self.Button_Menu_TTS = ButtonBase(self.Frame_Menu)
+        self.Button_Menu_TTS = NavigationButton(self.Frame_Menu)
         self.Button_Menu_TTS.setObjectName(u"Button_Menu_TTS")
         sizePolicy1.setHeightForWidth(self.Button_Menu_TTS.sizePolicy().hasHeightForWidth())
         self.Button_Menu_TTS.setSizePolicy(sizePolicy1)
         self.Button_Menu_TTS.setMinimumSize(QSize(0, 48))
-        self.Button_Menu_TTS.setStyleSheet(u"ButtonBase {\n"
-"	background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"ButtonBase:hover {\n"
-"	background-color: qlineargradient(spread: pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(66, 66, 66, 123), stop:1 transparent);\n"
-"}\n"
-"ButtonBase:checked {\n"
-"	background-color: transparent;\n"
-"	border-left-width: 3px;\n"
-"	border-left-color: rgb(120, 180, 240);\n"
-"	border-right-color: transparent;\n"
-"	border-top-color: transparent;\n"
-"	border-bottom-color: transparent;\n"
-"	/*padding-left: 0.6px;*/\n"
-"}")
+        icon8 = QIcon()
+        icon8.addFile(u":/Button_Icon/images/icons/TTS.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.Button_Menu_TTS.setIcon(icon8)
+        self.Button_Menu_TTS.setIconSize(QSize(24, 24))
         self.horizontalLayout_47 = QHBoxLayout(self.Button_Menu_TTS)
         self.horizontalLayout_47.setSpacing(0)
         self.horizontalLayout_47.setObjectName(u"horizontalLayout_47")
         self.horizontalLayout_47.setContentsMargins(0, 0, 0, 0)
-        self.Label_Menu_TTS_Icon = QLabel(self.Button_Menu_TTS)
-        self.Label_Menu_TTS_Icon.setObjectName(u"Label_Menu_TTS_Icon")
-        self.Label_Menu_TTS_Icon.setMinimumSize(QSize(48, 48))
-        self.Label_Menu_TTS_Icon.setMaximumSize(QSize(48, 48))
-        self.Label_Menu_TTS_Icon.setStyleSheet(u"QLabel {\n"
-"	/*text-align: center;\n"
-"	font-size: 15px;*/\n"
-"	margin: 12px;\n"
-"	border-image: url(:/Button_Icon/images/icons/TTS.png);\n"
-"	/*background-repeat: no-repeat;\n"
-"	background-origin: content;\n"
-"	background-position: center;*/\n"
-"	background-color: transparent;\n"
-"	/*padding: 11.1px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"	border-color: transparent;*/\n"
-"}")
-
-        self.horizontalLayout_47.addWidget(self.Label_Menu_TTS_Icon)
-
-        self.Label_Menu_TTS_Text = LabelBase(self.Button_Menu_TTS)
-        self.Label_Menu_TTS_Text.setObjectName(u"Label_Menu_TTS_Text")
-        sizePolicy2.setHeightForWidth(self.Label_Menu_TTS_Text.sizePolicy().hasHeightForWidth())
-        self.Label_Menu_TTS_Text.setSizePolicy(sizePolicy2)
-
-        self.horizontalLayout_47.addWidget(self.Label_Menu_TTS_Text)
-
 
         self.verticalLayout_3.addWidget(self.Button_Menu_TTS)
 
@@ -695,119 +314,35 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_3.addItem(self.VerticalSpacer_Menu)
 
-        self.Button_Menu_Settings = ButtonBase(self.Frame_Menu)
+        self.Button_Menu_Settings = NavigationButton(self.Frame_Menu)
         self.Button_Menu_Settings.setObjectName(u"Button_Menu_Settings")
         sizePolicy1.setHeightForWidth(self.Button_Menu_Settings.sizePolicy().hasHeightForWidth())
         self.Button_Menu_Settings.setSizePolicy(sizePolicy1)
         self.Button_Menu_Settings.setMinimumSize(QSize(0, 48))
-        self.Button_Menu_Settings.setStyleSheet(u"ButtonBase {\n"
-"	background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"ButtonBase:hover {\n"
-"	background-color: qlineargradient(spread: pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(66, 66, 66, 123), stop:1 transparent);\n"
-"}\n"
-"ButtonBase:checked {\n"
-"	background-color: transparent;\n"
-"	border-left-width: 3px;\n"
-"	border-left-color: rgb(120, 180, 240);\n"
-"	border-right-color: transparent;\n"
-"	border-top-color: transparent;\n"
-"	border-bottom-color: transparent;\n"
-"	/*padding-left: 0.6px;*/\n"
-"}")
+        icon9 = QIcon()
+        icon9.addFile(u":/Button_Icon/images/icons/Settings.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.Button_Menu_Settings.setIcon(icon9)
+        self.Button_Menu_Settings.setIconSize(QSize(24, 24))
         self.horizontalLayout_9 = QHBoxLayout(self.Button_Menu_Settings)
         self.horizontalLayout_9.setSpacing(0)
         self.horizontalLayout_9.setObjectName(u"horizontalLayout_9")
         self.horizontalLayout_9.setContentsMargins(0, 0, 0, 0)
-        self.Label_Menu_Settings_Icon = QLabel(self.Button_Menu_Settings)
-        self.Label_Menu_Settings_Icon.setObjectName(u"Label_Menu_Settings_Icon")
-        self.Label_Menu_Settings_Icon.setMinimumSize(QSize(48, 48))
-        self.Label_Menu_Settings_Icon.setMaximumSize(QSize(48, 48))
-        self.Label_Menu_Settings_Icon.setStyleSheet(u"QLabel {\n"
-"	/*text-align: center;\n"
-"	font-size: 15px;*/\n"
-"	margin: 12px;\n"
-"	border-image: url(:/Button_Icon/images/icons/Settings.png);\n"
-"	/*background-repeat: no-repeat;\n"
-"	background-origin: content;\n"
-"	background-position: center;*/\n"
-"	background-color: transparent;\n"
-"	/*padding: 11.1px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"	border-color: transparent;*/\n"
-"}")
-
-        self.horizontalLayout_9.addWidget(self.Label_Menu_Settings_Icon)
-
-        self.Label_Menu_Settings_Text = LabelBase(self.Button_Menu_Settings)
-        self.Label_Menu_Settings_Text.setObjectName(u"Label_Menu_Settings_Text")
-        sizePolicy2.setHeightForWidth(self.Label_Menu_Settings_Text.sizePolicy().hasHeightForWidth())
-        self.Label_Menu_Settings_Text.setSizePolicy(sizePolicy2)
-
-        self.horizontalLayout_9.addWidget(self.Label_Menu_Settings_Text)
-
 
         self.verticalLayout_3.addWidget(self.Button_Menu_Settings)
 
-        self.Button_Menu_Info = ButtonBase(self.Frame_Menu)
+        self.Button_Menu_Info = NavigationButton(self.Frame_Menu)
         self.Button_Menu_Info.setObjectName(u"Button_Menu_Info")
         sizePolicy1.setHeightForWidth(self.Button_Menu_Info.sizePolicy().hasHeightForWidth())
         self.Button_Menu_Info.setSizePolicy(sizePolicy1)
         self.Button_Menu_Info.setMinimumSize(QSize(0, 48))
-        self.Button_Menu_Info.setStyleSheet(u"ButtonBase {\n"
-"	background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"ButtonBase:hover {\n"
-"	background-color: qlineargradient(spread: pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(66, 66, 66, 123), stop:1 transparent);\n"
-"}\n"
-"ButtonBase:checked {\n"
-"	background-color: transparent;\n"
-"	border-left-width: 3px;\n"
-"	border-left-color: rgb(120, 180, 240);\n"
-"	border-right-color: transparent;\n"
-"	border-top-color: transparent;\n"
-"	border-bottom-color: transparent;\n"
-"	/*padding-left: 0.6px;*/\n"
-"}")
+        icon10 = QIcon()
+        icon10.addFile(u":/Button_Icon/images/icons/Info.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.Button_Menu_Info.setIcon(icon10)
+        self.Button_Menu_Info.setIconSize(QSize(24, 24))
         self.horizontalLayout_13 = QHBoxLayout(self.Button_Menu_Info)
         self.horizontalLayout_13.setSpacing(0)
         self.horizontalLayout_13.setObjectName(u"horizontalLayout_13")
         self.horizontalLayout_13.setContentsMargins(0, 0, 0, 0)
-        self.Label_Menu_Info_Icon = QLabel(self.Button_Menu_Info)
-        self.Label_Menu_Info_Icon.setObjectName(u"Label_Menu_Info_Icon")
-        self.Label_Menu_Info_Icon.setMinimumSize(QSize(48, 48))
-        self.Label_Menu_Info_Icon.setMaximumSize(QSize(48, 48))
-        self.Label_Menu_Info_Icon.setStyleSheet(u"QLabel {\n"
-"	/*text-align: center;\n"
-"	font-size: 15px;*/\n"
-"	margin: 12px;\n"
-"	border-image: url(:/Button_Icon/images/icons/Info.png);\n"
-"	/*background-repeat: no-repeat;\n"
-"	background-origin: content;\n"
-"	background-position: center;*/\n"
-"	background-color: transparent;\n"
-"	/*padding: 11.1px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"	border-color: transparent;*/\n"
-"}")
-
-        self.horizontalLayout_13.addWidget(self.Label_Menu_Info_Icon)
-
-        self.Label_Menu_Info_Text = LabelBase(self.Button_Menu_Info)
-        self.Label_Menu_Info_Text.setObjectName(u"Label_Menu_Info_Text")
-        sizePolicy2.setHeightForWidth(self.Label_Menu_Info_Text.sizePolicy().hasHeightForWidth())
-        self.Label_Menu_Info_Text.setSizePolicy(sizePolicy2)
-
-        self.horizontalLayout_13.addWidget(self.Label_Menu_Info_Text)
-
 
         self.verticalLayout_3.addWidget(self.Button_Menu_Info)
 
@@ -882,11 +417,11 @@ class Ui_MainWindow(object):
         self.horizontalLayout_5.setContentsMargins(12, 0, 12, 0)
         self.Button_Demo = HollowButton(self.Frame_Low_Home)
         self.Button_Demo.setObjectName(u"Button_Demo")
-        sizePolicy3 = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
-        sizePolicy3.setHorizontalStretch(0)
-        sizePolicy3.setVerticalStretch(0)
-        sizePolicy3.setHeightForWidth(self.Button_Demo.sizePolicy().hasHeightForWidth())
-        self.Button_Demo.setSizePolicy(sizePolicy3)
+        sizePolicy2 = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
+        sizePolicy2.setHorizontalStretch(0)
+        sizePolicy2.setVerticalStretch(0)
+        sizePolicy2.setHeightForWidth(self.Button_Demo.sizePolicy().hasHeightForWidth())
+        self.Button_Demo.setSizePolicy(sizePolicy2)
         self.Button_Demo.setMinimumSize(QSize(210, 75))
         self.horizontalLayout_70 = QHBoxLayout(self.Button_Demo)
         self.horizontalLayout_70.setSpacing(12)
@@ -928,8 +463,8 @@ class Ui_MainWindow(object):
 
         self.Button_Server = HollowButton(self.Frame_Low_Home)
         self.Button_Server.setObjectName(u"Button_Server")
-        sizePolicy3.setHeightForWidth(self.Button_Server.sizePolicy().hasHeightForWidth())
-        self.Button_Server.setSizePolicy(sizePolicy3)
+        sizePolicy2.setHeightForWidth(self.Button_Server.sizePolicy().hasHeightForWidth())
+        self.Button_Server.setSizePolicy(sizePolicy2)
         self.Button_Server.setMinimumSize(QSize(210, 75))
         self.horizontalLayout_71 = QHBoxLayout(self.Button_Server)
         self.horizontalLayout_71.setSpacing(12)
@@ -971,8 +506,8 @@ class Ui_MainWindow(object):
 
         self.Button_Repo = HollowButton(self.Frame_Low_Home)
         self.Button_Repo.setObjectName(u"Button_Repo")
-        sizePolicy3.setHeightForWidth(self.Button_Repo.sizePolicy().hasHeightForWidth())
-        self.Button_Repo.setSizePolicy(sizePolicy3)
+        sizePolicy2.setHeightForWidth(self.Button_Repo.sizePolicy().hasHeightForWidth())
+        self.Button_Repo.setSizePolicy(sizePolicy2)
         self.Button_Repo.setMinimumSize(QSize(210, 75))
         self.horizontalLayout_76 = QHBoxLayout(self.Button_Repo)
         self.horizontalLayout_76.setSpacing(12)
@@ -1014,8 +549,8 @@ class Ui_MainWindow(object):
 
         self.Button_Donate = HollowButton(self.Frame_Low_Home)
         self.Button_Donate.setObjectName(u"Button_Donate")
-        sizePolicy3.setHeightForWidth(self.Button_Donate.sizePolicy().hasHeightForWidth())
-        self.Button_Donate.setSizePolicy(sizePolicy3)
+        sizePolicy2.setHeightForWidth(self.Button_Donate.sizePolicy().hasHeightForWidth())
+        self.Button_Donate.setSizePolicy(sizePolicy2)
         self.Button_Donate.setMinimumSize(QSize(210, 75))
         self.horizontalLayout_79 = QHBoxLayout(self.Button_Donate)
         self.horizontalLayout_79.setSpacing(12)
@@ -1069,106 +604,34 @@ class Ui_MainWindow(object):
         self.Frame_Env_Install_Top.setObjectName(u"Frame_Env_Install_Top")
         self.Frame_Env_Install_Top.setMinimumSize(QSize(0, 60))
         self.Frame_Env_Install_Top.setStyleSheet(u"QFrame {\n"
-"	border-width: 0px;\n"
+"	border-top-width: 0px;\n"
+"	border-right-width: 0px;\n"
+"	border-bottom-width: 3px;\n"
+"	border-left-width: 0px;\n"
 "	border-style: solid;\n"
+"	border-bottom-color: rgba(123, 123, 123, 123);\n"
 "}")
         self.horizontalLayout_3 = QHBoxLayout(self.Frame_Env_Install_Top)
         self.horizontalLayout_3.setSpacing(0)
         self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
         self.horizontalLayout_3.setContentsMargins(0, 0, 0, 0)
-        self.Button_Env_Install_Title = ButtonBase(self.Frame_Env_Install_Top)
+        self.Button_Env_Install_Title = NavigationButton(self.Frame_Env_Install_Top)
         self.Button_Env_Install_Title.setObjectName(u"Button_Env_Install_Title")
         sizePolicy1.setHeightForWidth(self.Button_Env_Install_Title.sizePolicy().hasHeightForWidth())
         self.Button_Env_Install_Title.setSizePolicy(sizePolicy1)
-        self.Button_Env_Install_Title.setStyleSheet(u"QPushButton {\n"
-"	font-size: 24px;\n"
-"	/*text-align: center;*/\n"
-"	padding-left: 12px;\n"
-"	padding-right: 12px;\n"
-"	background-color: transparent;\n"
-"	border-top-width: 0px;\n"
-"	border-right-width: 0px;\n"
-"	border-bottom-width: 3px;\n"
-"	border-left-width: 0px;\n"
-"	border-style: solid;\n"
-"	border-bottom-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	background-color: transparent;\n"
-"	border-top-width: 0px;\n"
-"	border-right-width: 0px;\n"
-"	border-bottom-width: 3px;\n"
-"	border-left-width: 0px;\n"
-"	border-style: solid;\n"
-"	border-bottom-color: rgba(120, 180, 240, 123);\n"
-"}\n"
-"QPushButton:checked {\n"
-"	background-color: transparent;\n"
-"	border-top-width: 0px;\n"
-"	border-right-width: 0px;\n"
-"	border-bottom-width: 3px;\n"
-"	border-left-width: 0px;\n"
-"	border-style: solid;\n"
-"	border-bottom-color: rgba(120, 180, 240, 210);\n"
-"}")
 
         self.horizontalLayout_3.addWidget(self.Button_Env_Install_Title)
 
-        self.Button_Env_Manage_Title = ButtonBase(self.Frame_Env_Install_Top)
+        self.Button_Env_Manage_Title = NavigationButton(self.Frame_Env_Install_Top)
         self.Button_Env_Manage_Title.setObjectName(u"Button_Env_Manage_Title")
         sizePolicy1.setHeightForWidth(self.Button_Env_Manage_Title.sizePolicy().hasHeightForWidth())
         self.Button_Env_Manage_Title.setSizePolicy(sizePolicy1)
-        self.Button_Env_Manage_Title.setStyleSheet(u"QPushButton {\n"
-"	font-size: 24px;\n"
-"	/*text-align: center;*/\n"
-"	padding-left: 12px;\n"
-"	padding-right: 12px;\n"
-"	background-color: transparent;\n"
-"	border-top-width: 0px;\n"
-"	border-right-width: 0px;\n"
-"	border-bottom-width: 3px;\n"
-"	border-left-width: 0px;\n"
-"	border-style: solid;\n"
-"	border-bottom-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	background-color: transparent;\n"
-"	border-top-width: 0px;\n"
-"	border-right-width: 0px;\n"
-"	border-bottom-width: 3px;\n"
-"	border-left-width: 0px;\n"
-"	border-style: solid;\n"
-"	border-bottom-color: rgba(120, 180, 240, 123);\n"
-"}\n"
-"QPushButton:checked {\n"
-"	background-color: transparent;\n"
-"	border-top-width: 0px;\n"
-"	border-right-width: 0px;\n"
-"	border-bottom-width: 3px;\n"
-"	border-left-width: 0px;\n"
-"	border-style: solid;\n"
-"	border-bottom-color: rgba(120, 180, 240, 210);\n"
-"}")
 
         self.horizontalLayout_3.addWidget(self.Button_Env_Manage_Title)
 
-        self.Frame_Env_Install_Title_Spacer = QLabel(self.Frame_Env_Install_Top)
-        self.Frame_Env_Install_Title_Spacer.setObjectName(u"Frame_Env_Install_Title_Spacer")
-        sizePolicy4 = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Preferred)
-        sizePolicy4.setHorizontalStretch(0)
-        sizePolicy4.setVerticalStretch(0)
-        sizePolicy4.setHeightForWidth(self.Frame_Env_Install_Title_Spacer.sizePolicy().hasHeightForWidth())
-        self.Frame_Env_Install_Title_Spacer.setSizePolicy(sizePolicy4)
-        self.Frame_Env_Install_Title_Spacer.setStyleSheet(u"QLabel {\n"
-"	border-top-width: 0px;\n"
-"	border-right-width: 0px;\n"
-"	border-bottom-width: 3px;\n"
-"	border-left-width: 0px;\n"
-"	border-style: solid;\n"
-"	border-bottom-color: rgba(123, 123, 123, 123);\n"
-"}")
+        self.HorizontalSpacer_Env_Title = QSpacerItem(0, 0, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
-        self.horizontalLayout_3.addWidget(self.Frame_Env_Install_Title_Spacer)
+        self.horizontalLayout_3.addItem(self.HorizontalSpacer_Env_Title)
 
 
         self.verticalLayout_128.addWidget(self.Frame_Env_Install_Top)
@@ -1261,10 +724,13 @@ class Ui_MainWindow(object):
 
         self.gridLayout_118.addWidget(self.ProgressBar_Env_Install_Aria2, 1, 0, 1, 2)
 
-        self.Label_Env_Install_Aria2_Status = QLabel(self.Frame_Env_Install_Aria2)
+        self.Label_Env_Install_Aria2_Status = LabelBase(self.Frame_Env_Install_Aria2)
         self.Label_Env_Install_Aria2_Status.setObjectName(u"Label_Env_Install_Aria2_Status")
-        sizePolicy2.setHeightForWidth(self.Label_Env_Install_Aria2_Status.sizePolicy().hasHeightForWidth())
-        self.Label_Env_Install_Aria2_Status.setSizePolicy(sizePolicy2)
+        sizePolicy3 = QSizePolicy(QSizePolicy.Policy.Ignored, QSizePolicy.Policy.Preferred)
+        sizePolicy3.setHorizontalStretch(0)
+        sizePolicy3.setVerticalStretch(0)
+        sizePolicy3.setHeightForWidth(self.Label_Env_Install_Aria2_Status.sizePolicy().hasHeightForWidth())
+        self.Label_Env_Install_Aria2_Status.setSizePolicy(sizePolicy3)
         self.Label_Env_Install_Aria2_Status.setStyleSheet(u"QLabel {\n"
 "	font-size: 9.9px;\n"
 "	/*text-align: center;*/\n"
@@ -1277,7 +743,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout_118.addWidget(self.Label_Env_Install_Aria2_Status, 2, 0, 1, 2)
 
-        self.Label_Env_Install_Aria2 = QLabel(self.Frame_Env_Install_Aria2)
+        self.Label_Env_Install_Aria2 = LabelBase(self.Frame_Env_Install_Aria2)
         self.Label_Env_Install_Aria2.setObjectName(u"Label_Env_Install_Aria2")
         self.Label_Env_Install_Aria2.setStyleSheet(u"QLabel {\n"
 "	font-size: 15px;\n"
@@ -1351,10 +817,10 @@ class Ui_MainWindow(object):
 
         self.gridLayout_119.addWidget(self.ProgressBar_Env_Install_FFmpeg, 1, 0, 1, 2)
 
-        self.Label_Env_Install_FFmpeg_Status = QLabel(self.Frame_Env_Install_FFmpeg)
+        self.Label_Env_Install_FFmpeg_Status = LabelBase(self.Frame_Env_Install_FFmpeg)
         self.Label_Env_Install_FFmpeg_Status.setObjectName(u"Label_Env_Install_FFmpeg_Status")
-        sizePolicy2.setHeightForWidth(self.Label_Env_Install_FFmpeg_Status.sizePolicy().hasHeightForWidth())
-        self.Label_Env_Install_FFmpeg_Status.setSizePolicy(sizePolicy2)
+        sizePolicy3.setHeightForWidth(self.Label_Env_Install_FFmpeg_Status.sizePolicy().hasHeightForWidth())
+        self.Label_Env_Install_FFmpeg_Status.setSizePolicy(sizePolicy3)
         self.Label_Env_Install_FFmpeg_Status.setStyleSheet(u"QLabel {\n"
 "	font-size: 9.9px;\n"
 "	/*text-align: center;*/\n"
@@ -1367,7 +833,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout_119.addWidget(self.Label_Env_Install_FFmpeg_Status, 2, 0, 1, 2)
 
-        self.Label_Env_Install_FFmpeg = QLabel(self.Frame_Env_Install_FFmpeg)
+        self.Label_Env_Install_FFmpeg = LabelBase(self.Frame_Env_Install_FFmpeg)
         self.Label_Env_Install_FFmpeg.setObjectName(u"Label_Env_Install_FFmpeg")
         self.Label_Env_Install_FFmpeg.setStyleSheet(u"QLabel {\n"
 "	font-size: 15px;\n"
@@ -1441,10 +907,10 @@ class Ui_MainWindow(object):
 
         self.gridLayout_120.addWidget(self.ProgressBar_Env_Install_Python, 1, 0, 1, 2)
 
-        self.Label_Env_Install_Python_Status = QLabel(self.Frame_Env_Install_Python)
+        self.Label_Env_Install_Python_Status = LabelBase(self.Frame_Env_Install_Python)
         self.Label_Env_Install_Python_Status.setObjectName(u"Label_Env_Install_Python_Status")
-        sizePolicy2.setHeightForWidth(self.Label_Env_Install_Python_Status.sizePolicy().hasHeightForWidth())
-        self.Label_Env_Install_Python_Status.setSizePolicy(sizePolicy2)
+        sizePolicy3.setHeightForWidth(self.Label_Env_Install_Python_Status.sizePolicy().hasHeightForWidth())
+        self.Label_Env_Install_Python_Status.setSizePolicy(sizePolicy3)
         self.Label_Env_Install_Python_Status.setStyleSheet(u"QLabel {\n"
 "	font-size: 9.9px;\n"
 "	/*text-align: center;*/\n"
@@ -1457,7 +923,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout_120.addWidget(self.Label_Env_Install_Python_Status, 2, 0, 1, 2)
 
-        self.Label_Env_Install_Python = QLabel(self.Frame_Env_Install_Python)
+        self.Label_Env_Install_Python = LabelBase(self.Frame_Env_Install_Python)
         self.Label_Env_Install_Python.setObjectName(u"Label_Env_Install_Python")
         self.Label_Env_Install_Python.setStyleSheet(u"QLabel {\n"
 "	font-size: 15px;\n"
@@ -1531,10 +997,10 @@ class Ui_MainWindow(object):
 
         self.gridLayout_121.addWidget(self.ProgressBar_Env_Install_PyReqs, 1, 0, 1, 2)
 
-        self.Label_Env_Install_PyReqs_Status = QLabel(self.Frame_Env_Install_PyReqs)
+        self.Label_Env_Install_PyReqs_Status = LabelBase(self.Frame_Env_Install_PyReqs)
         self.Label_Env_Install_PyReqs_Status.setObjectName(u"Label_Env_Install_PyReqs_Status")
-        sizePolicy2.setHeightForWidth(self.Label_Env_Install_PyReqs_Status.sizePolicy().hasHeightForWidth())
-        self.Label_Env_Install_PyReqs_Status.setSizePolicy(sizePolicy2)
+        sizePolicy3.setHeightForWidth(self.Label_Env_Install_PyReqs_Status.sizePolicy().hasHeightForWidth())
+        self.Label_Env_Install_PyReqs_Status.setSizePolicy(sizePolicy3)
         self.Label_Env_Install_PyReqs_Status.setStyleSheet(u"QLabel {\n"
 "	font-size: 9.9px;\n"
 "	/*text-align: center;*/\n"
@@ -1547,7 +1013,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout_121.addWidget(self.Label_Env_Install_PyReqs_Status, 2, 0, 1, 2)
 
-        self.Label_Env_Install_PyReqs = QLabel(self.Frame_Env_Install_PyReqs)
+        self.Label_Env_Install_PyReqs = LabelBase(self.Frame_Env_Install_PyReqs)
         self.Label_Env_Install_PyReqs.setObjectName(u"Label_Env_Install_PyReqs")
         self.Label_Env_Install_PyReqs.setStyleSheet(u"QLabel {\n"
 "	font-size: 15px;\n"
@@ -1621,10 +1087,10 @@ class Ui_MainWindow(object):
 
         self.gridLayout_122.addWidget(self.ProgressBar_Env_Install_Pytorch, 1, 0, 1, 2)
 
-        self.Label_Env_Install_Pytorch_Status = QLabel(self.Frame_Env_Install_Pytorch)
+        self.Label_Env_Install_Pytorch_Status = LabelBase(self.Frame_Env_Install_Pytorch)
         self.Label_Env_Install_Pytorch_Status.setObjectName(u"Label_Env_Install_Pytorch_Status")
-        sizePolicy2.setHeightForWidth(self.Label_Env_Install_Pytorch_Status.sizePolicy().hasHeightForWidth())
-        self.Label_Env_Install_Pytorch_Status.setSizePolicy(sizePolicy2)
+        sizePolicy3.setHeightForWidth(self.Label_Env_Install_Pytorch_Status.sizePolicy().hasHeightForWidth())
+        self.Label_Env_Install_Pytorch_Status.setSizePolicy(sizePolicy3)
         self.Label_Env_Install_Pytorch_Status.setStyleSheet(u"QLabel {\n"
 "	font-size: 9.9px;\n"
 "	/*text-align: center;*/\n"
@@ -1637,7 +1103,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout_122.addWidget(self.Label_Env_Install_Pytorch_Status, 2, 0, 1, 2)
 
-        self.Label_Env_Install_Pytorch = QLabel(self.Frame_Env_Install_Pytorch)
+        self.Label_Env_Install_Pytorch = LabelBase(self.Frame_Env_Install_Pytorch)
         self.Label_Env_Install_Pytorch.setObjectName(u"Label_Env_Install_Pytorch")
         self.Label_Env_Install_Pytorch.setStyleSheet(u"QLabel {\n"
 "	font-size: 15px;\n"
@@ -1706,8 +1172,11 @@ class Ui_MainWindow(object):
         self.horizontalLayout_67.setSpacing(12)
         self.horizontalLayout_67.setObjectName(u"horizontalLayout_67")
         self.horizontalLayout_67.setContentsMargins(21, 12, 21, 12)
-        self.Label_Env_Manage_Pytorch_Version = QLabel(self.Frame_Env_Manage_Pytorch_Version)
+        self.Label_Env_Manage_Pytorch_Version = LabelBase(self.Frame_Env_Manage_Pytorch_Version)
         self.Label_Env_Manage_Pytorch_Version.setObjectName(u"Label_Env_Manage_Pytorch_Version")
+        sizePolicy4 = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Preferred)
+        sizePolicy4.setHorizontalStretch(0)
+        sizePolicy4.setVerticalStretch(0)
         sizePolicy4.setHeightForWidth(self.Label_Env_Manage_Pytorch_Version.sizePolicy().hasHeightForWidth())
         self.Label_Env_Manage_Pytorch_Version.setSizePolicy(sizePolicy4)
         self.Label_Env_Manage_Pytorch_Version.setStyleSheet(u"QLabel {\n"
@@ -1799,191 +1268,50 @@ class Ui_MainWindow(object):
         self.Frame_Models_Top.setObjectName(u"Frame_Models_Top")
         self.Frame_Models_Top.setMinimumSize(QSize(0, 60))
         self.Frame_Models_Top.setStyleSheet(u"QFrame {\n"
-"	border-width: 0px;\n"
+"	border-top-width: 0px;\n"
+"	border-right-width: 0px;\n"
+"	border-bottom-width: 3px;\n"
+"	border-left-width: 0px;\n"
 "	border-style: solid;\n"
+"	border-bottom-color: rgba(123, 123, 123, 123);\n"
 "}")
         self.horizontalLayout_18 = QHBoxLayout(self.Frame_Models_Top)
         self.horizontalLayout_18.setSpacing(0)
         self.horizontalLayout_18.setObjectName(u"horizontalLayout_18")
         self.horizontalLayout_18.setContentsMargins(0, 0, 0, 0)
-        self.Button_Models_Process_Title = ButtonBase(self.Frame_Models_Top)
+        self.Button_Models_Process_Title = NavigationButton(self.Frame_Models_Top)
         self.Button_Models_Process_Title.setObjectName(u"Button_Models_Process_Title")
         sizePolicy1.setHeightForWidth(self.Button_Models_Process_Title.sizePolicy().hasHeightForWidth())
         self.Button_Models_Process_Title.setSizePolicy(sizePolicy1)
-        self.Button_Models_Process_Title.setStyleSheet(u"QPushButton {\n"
-"	font-size: 24px;\n"
-"	/*text-align: center;*/\n"
-"	padding-left: 12px;\n"
-"	padding-right: 12px;\n"
-"	background-color: transparent;\n"
-"	border-top-width: 0px;\n"
-"	border-right-width: 0px;\n"
-"	border-bottom-width: 3px;\n"
-"	border-left-width: 0px;\n"
-"	border-style: solid;\n"
-"	border-bottom-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	background-color: transparent;\n"
-"	border-top-width: 0px;\n"
-"	border-right-width: 0px;\n"
-"	border-bottom-width: 3px;\n"
-"	border-left-width: 0px;\n"
-"	border-style: solid;\n"
-"	border-bottom-color: rgba(120, 180, 240, 123);\n"
-"}\n"
-"QPushButton:checked {\n"
-"	background-color: transparent;\n"
-"	border-top-width: 0px;\n"
-"	border-right-width: 0px;\n"
-"	border-bottom-width: 3px;\n"
-"	border-left-width: 0px;\n"
-"	border-style: solid;\n"
-"	border-bottom-color: rgba(120, 180, 240, 210);\n"
-"}")
 
         self.horizontalLayout_18.addWidget(self.Button_Models_Process_Title)
 
-        self.Button_Models_ASR_Title = ButtonBase(self.Frame_Models_Top)
+        self.Button_Models_ASR_Title = NavigationButton(self.Frame_Models_Top)
         self.Button_Models_ASR_Title.setObjectName(u"Button_Models_ASR_Title")
         sizePolicy1.setHeightForWidth(self.Button_Models_ASR_Title.sizePolicy().hasHeightForWidth())
         self.Button_Models_ASR_Title.setSizePolicy(sizePolicy1)
-        self.Button_Models_ASR_Title.setStyleSheet(u"QPushButton {\n"
-"	font-size: 24px;\n"
-"	/*text-align: center;*/\n"
-"	padding-left: 12px;\n"
-"	padding-right: 12px;\n"
-"	background-color: transparent;\n"
-"	border-top-width: 0px;\n"
-"	border-right-width: 0px;\n"
-"	border-bottom-width: 3px;\n"
-"	border-left-width: 0px;\n"
-"	border-style: solid;\n"
-"	border-bottom-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	background-color: transparent;\n"
-"	border-top-width: 0px;\n"
-"	border-right-width: 0px;\n"
-"	border-bottom-width: 3px;\n"
-"	border-left-width: 0px;\n"
-"	border-style: solid;\n"
-"	border-bottom-color: rgba(120, 180, 240, 123);\n"
-"}\n"
-"QPushButton:checked {\n"
-"	background-color: transparent;\n"
-"	border-top-width: 0px;\n"
-"	border-right-width: 0px;\n"
-"	border-bottom-width: 3px;\n"
-"	border-left-width: 0px;\n"
-"	border-style: solid;\n"
-"	border-bottom-color: rgba(120, 180, 240, 210);\n"
-"}")
 
         self.horizontalLayout_18.addWidget(self.Button_Models_ASR_Title)
 
-        self.Button_Models_STT_Title = ButtonBase(self.Frame_Models_Top)
+        self.Button_Models_STT_Title = NavigationButton(self.Frame_Models_Top)
         self.Button_Models_STT_Title.setObjectName(u"Button_Models_STT_Title")
         sizePolicy1.setHeightForWidth(self.Button_Models_STT_Title.sizePolicy().hasHeightForWidth())
         self.Button_Models_STT_Title.setSizePolicy(sizePolicy1)
-        self.Button_Models_STT_Title.setStyleSheet(u"QPushButton {\n"
-"	font-size: 24px;\n"
-"	/*text-align: center;*/\n"
-"	padding-left: 12px;\n"
-"	padding-right: 12px;\n"
-"	background-color: transparent;\n"
-"	border-top-width: 0px;\n"
-"	border-right-width: 0px;\n"
-"	border-bottom-width: 3px;\n"
-"	border-left-width: 0px;\n"
-"	border-style: solid;\n"
-"	border-bottom-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	background-color: transparent;\n"
-"	border-top-width: 0px;\n"
-"	border-right-width: 0px;\n"
-"	border-bottom-width: 3px;\n"
-"	border-left-width: 0px;\n"
-"	border-style: solid;\n"
-"	border-bottom-color: rgba(120, 180, 240, 123);\n"
-"}\n"
-"QPushButton:checked {\n"
-"	background-color: transparent;\n"
-"	border-top-width: 0px;\n"
-"	border-right-width: 0px;\n"
-"	border-bottom-width: 3px;\n"
-"	border-left-width: 0px;\n"
-"	border-style: solid;\n"
-"	border-bottom-color: rgba(120, 180, 240, 210);\n"
-"}")
 
         self.horizontalLayout_18.addWidget(self.Button_Models_STT_Title)
 
-        self.Button_Models_TTS_Title = ButtonBase(self.Frame_Models_Top)
+        self.Button_Models_TTS_Title = NavigationButton(self.Frame_Models_Top)
         self.Button_Models_TTS_Title.setObjectName(u"Button_Models_TTS_Title")
         sizePolicy1.setHeightForWidth(self.Button_Models_TTS_Title.sizePolicy().hasHeightForWidth())
         self.Button_Models_TTS_Title.setSizePolicy(sizePolicy1)
-        self.Button_Models_TTS_Title.setStyleSheet(u"QPushButton {\n"
-"	font-size: 24px;\n"
-"	/*text-align: center;*/\n"
-"	padding-left: 12px;\n"
-"	padding-right: 12px;\n"
-"	background-color: transparent;\n"
-"	border-top-width: 0px;\n"
-"	border-right-width: 0px;\n"
-"	border-bottom-width: 3px;\n"
-"	border-left-width: 0px;\n"
-"	border-style: solid;\n"
-"	border-bottom-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	background-color: transparent;\n"
-"	border-top-width: 0px;\n"
-"	border-right-width: 0px;\n"
-"	border-bottom-width: 3px;\n"
-"	border-left-width: 0px;\n"
-"	border-style: solid;\n"
-"	border-bottom-color: rgba(120, 180, 240, 123);\n"
-"}\n"
-"QPushButton:checked {\n"
-"	background-color: transparent;\n"
-"	border-top-width: 0px;\n"
-"	border-right-width: 0px;\n"
-"	border-bottom-width: 3px;\n"
-"	border-left-width: 0px;\n"
-"	border-style: solid;\n"
-"	border-bottom-color: rgba(120, 180, 240, 210);\n"
-"}")
 
         self.horizontalLayout_18.addWidget(self.Button_Models_TTS_Title)
 
-        self.Frame_Models_Title_Spacer = QFrame(self.Frame_Models_Top)
-        self.Frame_Models_Title_Spacer.setObjectName(u"Frame_Models_Title_Spacer")
-        sizePolicy4.setHeightForWidth(self.Frame_Models_Title_Spacer.sizePolicy().hasHeightForWidth())
-        self.Frame_Models_Title_Spacer.setSizePolicy(sizePolicy4)
-        self.Frame_Models_Title_Spacer.setStyleSheet(u"QFrame {\n"
-"	/*font-size: 24px;\n"
-"	text-align: center;\n"
-"	padding-left: 12px;\n"
-"	padding-right: 12px;*/\n"
-"	background-color: transparent;\n"
-"	border-top-width: 0px;\n"
-"	border-right-width: 0px;\n"
-"	border-bottom-width: 3px;\n"
-"	border-left-width: 0px;\n"
-"	border-style: solid;\n"
-"	border-bottom-color: rgba(123, 123, 123, 123);\n"
-"}")
-        self.horizontalLayout_27 = QHBoxLayout(self.Frame_Models_Title_Spacer)
-        self.horizontalLayout_27.setSpacing(12)
-        self.horizontalLayout_27.setObjectName(u"horizontalLayout_27")
-        self.horizontalLayout_27.setContentsMargins(0, 0, 0, 0)
-        self.HorizontalSpacer_Models_Title_Spacer = QSpacerItem(549, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+        self.HorizontalSpacer_Models_Title = QSpacerItem(0, 0, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
-        self.horizontalLayout_27.addItem(self.HorizontalSpacer_Models_Title_Spacer)
+        self.horizontalLayout_18.addItem(self.HorizontalSpacer_Models_Title)
 
-        self.Button_Models_Refresh = QPushButton(self.Frame_Models_Title_Spacer)
+        self.Button_Models_Refresh = QPushButton(self.Frame_Models_Top)
         self.Button_Models_Refresh.setObjectName(u"Button_Models_Refresh")
         sizePolicy5 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
         sizePolicy5.setHorizontalStretch(0)
@@ -2005,9 +1333,9 @@ class Ui_MainWindow(object):
 "	background-color: rgba(201, 210, 222, 33);\n"
 "}")
 
-        self.horizontalLayout_27.addWidget(self.Button_Models_Refresh)
+        self.horizontalLayout_18.addWidget(self.Button_Models_Refresh)
 
-        self.Button_Models_Append = QPushButton(self.Frame_Models_Title_Spacer)
+        self.Button_Models_Append = QPushButton(self.Frame_Models_Top)
         self.Button_Models_Append.setObjectName(u"Button_Models_Append")
         sizePolicy5.setHeightForWidth(self.Button_Models_Append.sizePolicy().hasHeightForWidth())
         self.Button_Models_Append.setSizePolicy(sizePolicy5)
@@ -2026,10 +1354,7 @@ class Ui_MainWindow(object):
 "	background-color: rgba(201, 210, 222, 33);\n"
 "}")
 
-        self.horizontalLayout_27.addWidget(self.Button_Models_Append)
-
-
-        self.horizontalLayout_18.addWidget(self.Frame_Models_Title_Spacer)
+        self.horizontalLayout_18.addWidget(self.Button_Models_Append)
 
 
         self.verticalLayout_244.addWidget(self.Frame_Models_Top)
@@ -2045,34 +1370,8 @@ class Ui_MainWindow(object):
         self.gridLayout_102.setSpacing(12)
         self.gridLayout_102.setObjectName(u"gridLayout_102")
         self.gridLayout_102.setContentsMargins(0, 0, 0, 0)
-        self.TabWidget_Models_Process = QTabWidget(self.SubPage_Models_Process)
+        self.TabWidget_Models_Process = TabWidgetBase(self.SubPage_Models_Process)
         self.TabWidget_Models_Process.setObjectName(u"TabWidget_Models_Process")
-        self.TabWidget_Models_Process.setStyleSheet(u"QTabBar::tab {\n"
-"    min-width: 84px;\n"
-"	min-height: 42px;\n"
-"	font-size: 21px;\n"
-"	/*text-align: center;*/\n"
-"	padding-left: 12px;\n"
-"	padding-right: 12px;\n"
-"	background-color: transparent;\n"
-"    border-width: 1.2px;\n"
-"	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QTabBar::tab:hover, QTabBar::tab:selected {\n"
-"	background-color: rgba(36, 36, 36, 36);\n"
-"}\n"
-"\n"
-"\n"
-"QTabWidget::tab-bar {\n"
-"    alignment: left;\n"
-"}\n"
-"QTabWidget::pane {\n"
-"	background: transparent;\n"
-"    border-width: 1.2px;\n"
-"	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}")
         self.Tab_Models_Process_UVR = QWidget()
         self.Tab_Models_Process_UVR.setObjectName(u"Tab_Models_Process_UVR")
         self.verticalLayout_75 = QVBoxLayout(self.Tab_Models_Process_UVR)
@@ -2095,34 +1394,8 @@ class Ui_MainWindow(object):
         self.gridLayout_7.setSpacing(12)
         self.gridLayout_7.setObjectName(u"gridLayout_7")
         self.gridLayout_7.setContentsMargins(0, 0, 0, 0)
-        self.TabWidget_Models_ASR = QTabWidget(self.SubPage_Models_ASR)
+        self.TabWidget_Models_ASR = TabWidgetBase(self.SubPage_Models_ASR)
         self.TabWidget_Models_ASR.setObjectName(u"TabWidget_Models_ASR")
-        self.TabWidget_Models_ASR.setStyleSheet(u"QTabBar::tab {\n"
-"    min-width: 84px;\n"
-"	min-height: 42px;\n"
-"	font-size: 21px;\n"
-"	/*text-align: center;*/\n"
-"	padding-left: 12px;\n"
-"	padding-right: 12px;\n"
-"	background-color: transparent;\n"
-"    border-width: 1.2px;\n"
-"	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QTabBar::tab:hover, QTabBar::tab:selected {\n"
-"	background-color: rgba(36, 36, 36, 36);\n"
-"}\n"
-"\n"
-"\n"
-"QTabWidget::tab-bar {\n"
-"    alignment: left;\n"
-"}\n"
-"QTabWidget::pane {\n"
-"	background: transparent;\n"
-"    border-width: 1.2px;\n"
-"	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}")
         self.Tab_Models_ASR_VPR = QWidget()
         self.Tab_Models_ASR_VPR.setObjectName(u"Tab_Models_ASR_VPR")
         self.verticalLayout_27 = QVBoxLayout(self.Tab_Models_ASR_VPR)
@@ -2145,34 +1418,8 @@ class Ui_MainWindow(object):
         self.gridLayout_11.setSpacing(12)
         self.gridLayout_11.setObjectName(u"gridLayout_11")
         self.gridLayout_11.setContentsMargins(0, 0, 0, 0)
-        self.TabWidget_Models_STT = QTabWidget(self.SubPage_Models_STT)
+        self.TabWidget_Models_STT = TabWidgetBase(self.SubPage_Models_STT)
         self.TabWidget_Models_STT.setObjectName(u"TabWidget_Models_STT")
-        self.TabWidget_Models_STT.setStyleSheet(u"QTabBar::tab {\n"
-"    min-width: 84px;\n"
-"	min-height: 42px;\n"
-"	font-size: 21px;\n"
-"	/*text-align: center;*/\n"
-"	padding-left: 12px;\n"
-"	padding-right: 12px;\n"
-"	background-color: transparent;\n"
-"    border-width: 1.2px;\n"
-"	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QTabBar::tab:hover, QTabBar::tab:selected {\n"
-"	background-color: rgba(36, 36, 36, 36);\n"
-"}\n"
-"\n"
-"\n"
-"QTabWidget::tab-bar {\n"
-"    alignment: left;\n"
-"}\n"
-"QTabWidget::pane {\n"
-"	background: transparent;\n"
-"    border-width: 1.2px;\n"
-"	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}")
         self.Tab_Models_STT_Whisper = QWidget()
         self.Tab_Models_STT_Whisper.setObjectName(u"Tab_Models_STT_Whisper")
         self.verticalLayout_46 = QVBoxLayout(self.Tab_Models_STT_Whisper)
@@ -2195,34 +1442,8 @@ class Ui_MainWindow(object):
         self.gridLayout_10.setSpacing(12)
         self.gridLayout_10.setObjectName(u"gridLayout_10")
         self.gridLayout_10.setContentsMargins(0, 0, 0, 0)
-        self.TabWidget_Models_TTS = QTabWidget(self.SubPage_Models_TTS)
+        self.TabWidget_Models_TTS = TabWidgetBase(self.SubPage_Models_TTS)
         self.TabWidget_Models_TTS.setObjectName(u"TabWidget_Models_TTS")
-        self.TabWidget_Models_TTS.setStyleSheet(u"QTabBar::tab {\n"
-"    min-width: 84px;\n"
-"	min-height: 42px;\n"
-"	font-size: 21px;\n"
-"	/*text-align: center;*/\n"
-"	padding-left: 12px;\n"
-"	padding-right: 12px;\n"
-"	background-color: transparent;\n"
-"    border-width: 1.2px;\n"
-"	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QTabBar::tab:hover, QTabBar::tab:selected {\n"
-"	background-color: rgba(36, 36, 36, 36);\n"
-"}\n"
-"\n"
-"\n"
-"QTabWidget::tab-bar {\n"
-"    alignment: left;\n"
-"}\n"
-"QTabWidget::pane {\n"
-"	background: transparent;\n"
-"    border-width: 1.2px;\n"
-"	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}")
         self.Tab_Models_TTS_GPTSoVITS = QWidget()
         self.Tab_Models_TTS_GPTSoVITS.setObjectName(u"Tab_Models_TTS_GPTSoVITS")
         self.verticalLayout_72 = QVBoxLayout(self.Tab_Models_TTS_GPTSoVITS)
@@ -2265,75 +1486,29 @@ class Ui_MainWindow(object):
         self.Frame_Process_Top.setObjectName(u"Frame_Process_Top")
         self.Frame_Process_Top.setMinimumSize(QSize(0, 60))
         self.Frame_Process_Top.setStyleSheet(u"QFrame {\n"
-"	border-width: 0px;\n"
+"	border-top-width: 0px;\n"
+"	border-right-width: 0px;\n"
+"	border-bottom-width: 3px;\n"
+"	border-left-width: 0px;\n"
 "	border-style: solid;\n"
+"	border-bottom-color: rgba(123, 123, 123, 123);\n"
 "}")
         self.horizontalLayout_32 = QHBoxLayout(self.Frame_Process_Top)
         self.horizontalLayout_32.setSpacing(0)
         self.horizontalLayout_32.setObjectName(u"horizontalLayout_32")
         self.horizontalLayout_32.setContentsMargins(0, 0, 0, 0)
-        self.Button_AudioProcessor_Title = ButtonBase(self.Frame_Process_Top)
+        self.Button_AudioProcessor_Title = NavigationButton(self.Frame_Process_Top)
         self.Button_AudioProcessor_Title.setObjectName(u"Button_AudioProcessor_Title")
         sizePolicy1.setHeightForWidth(self.Button_AudioProcessor_Title.sizePolicy().hasHeightForWidth())
         self.Button_AudioProcessor_Title.setSizePolicy(sizePolicy1)
-        self.Button_AudioProcessor_Title.setStyleSheet(u"QPushButton {\n"
-"	font-size: 24px;\n"
-"	/*text-align: center;*/\n"
-"	padding-left: 12px;\n"
-"	padding-right: 12px;\n"
-"	background-color: transparent;\n"
-"	border-top-width: 0px;\n"
-"	border-right-width: 0px;\n"
-"	border-bottom-width: 3px;\n"
-"	border-left-width: 0px;\n"
-"	border-style: solid;\n"
-"	border-bottom-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	background-color: transparent;\n"
-"	border-top-width: 0px;\n"
-"	border-right-width: 0px;\n"
-"	border-bottom-width: 3px;\n"
-"	border-left-width: 0px;\n"
-"	border-style: solid;\n"
-"	border-bottom-color: rgba(120, 180, 240, 123);\n"
-"}\n"
-"QPushButton:checked {\n"
-"	background-color: transparent;\n"
-"	border-top-width: 0px;\n"
-"	border-right-width: 0px;\n"
-"	border-bottom-width: 3px;\n"
-"	border-left-width: 0px;\n"
-"	border-style: solid;\n"
-"	border-bottom-color: rgba(120, 180, 240, 210);\n"
-"}")
 
         self.horizontalLayout_32.addWidget(self.Button_AudioProcessor_Title)
 
-        self.Frame_AudioProcessor_Title = QFrame(self.Frame_Process_Top)
-        self.Frame_AudioProcessor_Title.setObjectName(u"Frame_AudioProcessor_Title")
-        self.Frame_AudioProcessor_Title.setStyleSheet(u"QFrame {\n"
-"	/*font-size: 24px;\n"
-"	text-align: center;\n"
-"	padding-left: 12px;\n"
-"	padding-right: 12px;*/\n"
-"	background-color: transparent;\n"
-"	border-top-width: 0px;\n"
-"	border-right-width: 0px;\n"
-"	border-bottom-width: 3px;\n"
-"	border-left-width: 0px;\n"
-"	border-style: solid;\n"
-"	border-bottom-color: rgba(123, 123, 123, 123);\n"
-"}")
-        self.horizontalLayout_31 = QHBoxLayout(self.Frame_AudioProcessor_Title)
-        self.horizontalLayout_31.setSpacing(12)
-        self.horizontalLayout_31.setObjectName(u"horizontalLayout_31")
-        self.horizontalLayout_31.setContentsMargins(0, 0, 0, 0)
-        self.HorizontalSpacer_AudioProcessor_Title = QSpacerItem(549, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+        self.HorizontalSpacer_AudioProcessor_Title = QSpacerItem(0, 0, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
-        self.horizontalLayout_31.addItem(self.HorizontalSpacer_AudioProcessor_Title)
+        self.horizontalLayout_32.addItem(self.HorizontalSpacer_AudioProcessor_Title)
 
-        self.Button_AudioProcessor_Help = QPushButton(self.Frame_AudioProcessor_Title)
+        self.Button_AudioProcessor_Help = QPushButton(self.Frame_Process_Top)
         self.Button_AudioProcessor_Help.setObjectName(u"Button_AudioProcessor_Help")
         self.Button_AudioProcessor_Help.setMinimumSize(QSize(45, 45))
         self.Button_AudioProcessor_Help.setStyleSheet(u"QPushButton {\n"
@@ -2348,10 +1523,7 @@ class Ui_MainWindow(object):
 "	background-color: rgba(201, 210, 222, 33);\n"
 "}")
 
-        self.horizontalLayout_31.addWidget(self.Button_AudioProcessor_Help)
-
-
-        self.horizontalLayout_32.addWidget(self.Frame_AudioProcessor_Title)
+        self.horizontalLayout_32.addWidget(self.Button_AudioProcessor_Help)
 
 
         self.verticalLayout_40.addWidget(self.Frame_Process_Top)
@@ -2398,28 +1570,13 @@ class Ui_MainWindow(object):
         self.ScrollArea_Middle_Process.setWidgetResizable(True)
         self.ScrollArea_Middle_WidgetContents_Process = QWidget()
         self.ScrollArea_Middle_WidgetContents_Process.setObjectName(u"ScrollArea_Middle_WidgetContents_Process")
-        self.ScrollArea_Middle_WidgetContents_Process.setGeometry(QRect(0, 0, 586, 1127))
+        self.ScrollArea_Middle_WidgetContents_Process.setGeometry(QRect(0, 0, 586, 1139))
         self.verticalLayout_14 = QVBoxLayout(self.ScrollArea_Middle_WidgetContents_Process)
         self.verticalLayout_14.setSpacing(12)
         self.verticalLayout_14.setObjectName(u"verticalLayout_14")
         self.verticalLayout_14.setContentsMargins(12, 12, 12, 12)
-        self.GroupBox_Process_InputParams = QGroupBox(self.ScrollArea_Middle_WidgetContents_Process)
+        self.GroupBox_Process_InputParams = GroupBoxBase(self.ScrollArea_Middle_WidgetContents_Process)
         self.GroupBox_Process_InputParams.setObjectName(u"GroupBox_Process_InputParams")
-        self.GroupBox_Process_InputParams.setStyleSheet(u"QGroupBox {\n"
-"	font-size: 15px;\n"
-"	margin-top: 1.5ex;\n"
-"	background-color: transparent;\n"
-"	border-width: 1px;\n"
-"	border-style: solid;\n"
-"	border-color: transparent;\n"
-"}\n"
-"QGroupBox::title {\n"
-"	left: 9px;\n"
-"	margin-left: 0px;\n"
-"	subcontrol-origin: margin;\n"
-"	subcontrol-position: top left;\n"
-"	padding: 3px;\n"
-"}")
         self.verticalLayout_150 = QVBoxLayout(self.GroupBox_Process_InputParams)
         self.verticalLayout_150.setSpacing(0)
         self.verticalLayout_150.setObjectName(u"verticalLayout_150")
@@ -2445,7 +1602,7 @@ class Ui_MainWindow(object):
         self.gridLayout_12.setSpacing(12)
         self.gridLayout_12.setObjectName(u"gridLayout_12")
         self.gridLayout_12.setContentsMargins(21, 12, 21, 12)
-        self.Label_Process_MediaDirInput = QLabel(self.Frame_Process_MediaDirInput)
+        self.Label_Process_MediaDirInput = LabelBase(self.Frame_Process_MediaDirInput)
         self.Label_Process_MediaDirInput.setObjectName(u"Label_Process_MediaDirInput")
         sizePolicy5.setHeightForWidth(self.Label_Process_MediaDirInput.sizePolicy().hasHeightForWidth())
         self.Label_Process_MediaDirInput.setSizePolicy(sizePolicy5)
@@ -2491,23 +1648,8 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_14.addWidget(self.GroupBox_Process_InputParams)
 
-        self.GroupBox_Process_DenoiserParams = QGroupBox(self.ScrollArea_Middle_WidgetContents_Process)
+        self.GroupBox_Process_DenoiserParams = GroupBoxBase(self.ScrollArea_Middle_WidgetContents_Process)
         self.GroupBox_Process_DenoiserParams.setObjectName(u"GroupBox_Process_DenoiserParams")
-        self.GroupBox_Process_DenoiserParams.setStyleSheet(u"QGroupBox {\n"
-"	font-size: 15px;\n"
-"	margin-top: 1.5ex;\n"
-"	background-color: transparent;\n"
-"	border-width: 1px;\n"
-"	border-style: solid;\n"
-"	border-color: transparent;\n"
-"}\n"
-"QGroupBox::title {\n"
-"	left: 9px;\n"
-"	margin-left: 0px;\n"
-"	subcontrol-origin: margin;\n"
-"	subcontrol-position: top left;\n"
-"	padding: 3px;\n"
-"}")
         self.verticalLayout_74 = QVBoxLayout(self.GroupBox_Process_DenoiserParams)
         self.verticalLayout_74.setSpacing(0)
         self.verticalLayout_74.setObjectName(u"verticalLayout_74")
@@ -2533,7 +1675,7 @@ class Ui_MainWindow(object):
         self.gridLayout_90.setSpacing(12)
         self.gridLayout_90.setObjectName(u"gridLayout_90")
         self.gridLayout_90.setContentsMargins(21, 12, 21, 12)
-        self.Label_Process_DenoiseAudio = QLabel(self.Frame_Process_DenoiseAudio)
+        self.Label_Process_DenoiseAudio = LabelBase(self.Frame_Process_DenoiseAudio)
         self.Label_Process_DenoiseAudio.setObjectName(u"Label_Process_DenoiseAudio")
         sizePolicy5.setHeightForWidth(self.Label_Process_DenoiseAudio.sizePolicy().hasHeightForWidth())
         self.Label_Process_DenoiseAudio.setSizePolicy(sizePolicy5)
@@ -2618,7 +1760,7 @@ class Ui_MainWindow(object):
         self.gridLayout_92.setSpacing(12)
         self.gridLayout_92.setObjectName(u"gridLayout_92")
         self.gridLayout_92.setContentsMargins(21, 12, 21, 12)
-        self.Label_Process_DenoiseModelPath = QLabel(self.Frame_Process_DenoiseModelPath)
+        self.Label_Process_DenoiseModelPath = LabelBase(self.Frame_Process_DenoiseModelPath)
         self.Label_Process_DenoiseModelPath.setObjectName(u"Label_Process_DenoiseModelPath")
         sizePolicy5.setHeightForWidth(self.Label_Process_DenoiseModelPath.sizePolicy().hasHeightForWidth())
         self.Label_Process_DenoiseModelPath.setSizePolicy(sizePolicy5)
@@ -2673,7 +1815,7 @@ class Ui_MainWindow(object):
         self.gridLayout_94.setSpacing(12)
         self.gridLayout_94.setObjectName(u"gridLayout_94")
         self.gridLayout_94.setContentsMargins(21, 12, 21, 12)
-        self.Label_Process_DenoiseTarget = QLabel(self.Frame_Process_DenoiseTarget)
+        self.Label_Process_DenoiseTarget = LabelBase(self.Frame_Process_DenoiseTarget)
         self.Label_Process_DenoiseTarget.setObjectName(u"Label_Process_DenoiseTarget")
         sizePolicy5.setHeightForWidth(self.Label_Process_DenoiseTarget.sizePolicy().hasHeightForWidth())
         self.Label_Process_DenoiseTarget.setSizePolicy(sizePolicy5)
@@ -2719,23 +1861,8 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_14.addWidget(self.GroupBox_Process_DenoiserParams)
 
-        self.GroupBox_Process_SlicerParams = QGroupBox(self.ScrollArea_Middle_WidgetContents_Process)
+        self.GroupBox_Process_SlicerParams = GroupBoxBase(self.ScrollArea_Middle_WidgetContents_Process)
         self.GroupBox_Process_SlicerParams.setObjectName(u"GroupBox_Process_SlicerParams")
-        self.GroupBox_Process_SlicerParams.setStyleSheet(u"QGroupBox {\n"
-"	font-size: 15px;\n"
-"	margin-top: 1.5ex;\n"
-"	background-color: transparent;\n"
-"	border-width: 1px;\n"
-"	border-style: solid;\n"
-"	border-color: transparent;\n"
-"}\n"
-"QGroupBox::title {\n"
-"	left: 9px;\n"
-"	margin-left: 0px;\n"
-"	subcontrol-origin: margin;\n"
-"	subcontrol-position: top left;\n"
-"	padding: 3px;\n"
-"}")
         self.verticalLayout_186 = QVBoxLayout(self.GroupBox_Process_SlicerParams)
         self.verticalLayout_186.setSpacing(0)
         self.verticalLayout_186.setObjectName(u"verticalLayout_186")
@@ -2761,7 +1888,7 @@ class Ui_MainWindow(object):
         self.gridLayout_13.setSpacing(12)
         self.gridLayout_13.setObjectName(u"gridLayout_13")
         self.gridLayout_13.setContentsMargins(21, 12, 21, 12)
-        self.Label_Process_SliceAudio = QLabel(self.Frame_Process_SliceAudio)
+        self.Label_Process_SliceAudio = LabelBase(self.Frame_Process_SliceAudio)
         self.Label_Process_SliceAudio.setObjectName(u"Label_Process_SliceAudio")
         sizePolicy5.setHeightForWidth(self.Label_Process_SliceAudio.sizePolicy().hasHeightForWidth())
         self.Label_Process_SliceAudio.setSizePolicy(sizePolicy5)
@@ -2858,7 +1985,7 @@ class Ui_MainWindow(object):
         self.gridLayout_17.setSpacing(12)
         self.gridLayout_17.setObjectName(u"gridLayout_17")
         self.gridLayout_17.setContentsMargins(21, 12, 21, 12)
-        self.Label_Process_RMSThreshold = QLabel(self.Frame_Process_RMSThreshold)
+        self.Label_Process_RMSThreshold = LabelBase(self.Frame_Process_RMSThreshold)
         self.Label_Process_RMSThreshold.setObjectName(u"Label_Process_RMSThreshold")
         sizePolicy5.setHeightForWidth(self.Label_Process_RMSThreshold.sizePolicy().hasHeightForWidth())
         self.Label_Process_RMSThreshold.setSizePolicy(sizePolicy5)
@@ -2916,7 +2043,7 @@ class Ui_MainWindow(object):
         self.gridLayout_23.setSpacing(12)
         self.gridLayout_23.setObjectName(u"gridLayout_23")
         self.gridLayout_23.setContentsMargins(21, 12, 21, 12)
-        self.Label_Process_AudioLengthMin = QLabel(self.Frame_Process_AudioLengthMin)
+        self.Label_Process_AudioLengthMin = LabelBase(self.Frame_Process_AudioLengthMin)
         self.Label_Process_AudioLengthMin.setObjectName(u"Label_Process_AudioLengthMin")
         sizePolicy5.setHeightForWidth(self.Label_Process_AudioLengthMin.sizePolicy().hasHeightForWidth())
         self.Label_Process_AudioLengthMin.setSizePolicy(sizePolicy5)
@@ -2973,7 +2100,7 @@ class Ui_MainWindow(object):
         self.gridLayout_24.setSpacing(12)
         self.gridLayout_24.setObjectName(u"gridLayout_24")
         self.gridLayout_24.setContentsMargins(21, 12, 21, 12)
-        self.Label_Process_SilentIntervalMin = QLabel(self.Frame_Process_SilentIntervalMin)
+        self.Label_Process_SilentIntervalMin = LabelBase(self.Frame_Process_SilentIntervalMin)
         self.Label_Process_SilentIntervalMin.setObjectName(u"Label_Process_SilentIntervalMin")
         sizePolicy5.setHeightForWidth(self.Label_Process_SilentIntervalMin.sizePolicy().hasHeightForWidth())
         self.Label_Process_SilentIntervalMin.setSizePolicy(sizePolicy5)
@@ -3030,7 +2157,7 @@ class Ui_MainWindow(object):
         self.gridLayout_25.setSpacing(12)
         self.gridLayout_25.setObjectName(u"gridLayout_25")
         self.gridLayout_25.setContentsMargins(21, 12, 21, 12)
-        self.Label_Process_HopSize = QLabel(self.Frame_Process_HopSize)
+        self.Label_Process_HopSize = LabelBase(self.Frame_Process_HopSize)
         self.Label_Process_HopSize.setObjectName(u"Label_Process_HopSize")
         sizePolicy5.setHeightForWidth(self.Label_Process_HopSize.sizePolicy().hasHeightForWidth())
         self.Label_Process_HopSize.setSizePolicy(sizePolicy5)
@@ -3087,7 +2214,7 @@ class Ui_MainWindow(object):
         self.gridLayout_26.setSpacing(12)
         self.gridLayout_26.setObjectName(u"gridLayout_26")
         self.gridLayout_26.setContentsMargins(21, 12, 21, 12)
-        self.Label_Process_SilenceKeptMax = QLabel(self.Frame_Process_SilenceKeptMax)
+        self.Label_Process_SilenceKeptMax = LabelBase(self.Frame_Process_SilenceKeptMax)
         self.Label_Process_SilenceKeptMax.setObjectName(u"Label_Process_SilenceKeptMax")
         sizePolicy5.setHeightForWidth(self.Label_Process_SilenceKeptMax.sizePolicy().hasHeightForWidth())
         self.Label_Process_SilenceKeptMax.setSizePolicy(sizePolicy5)
@@ -3136,23 +2263,8 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_14.addWidget(self.GroupBox_Process_SlicerParams)
 
-        self.GroupBox_Process_OutputParams = QGroupBox(self.ScrollArea_Middle_WidgetContents_Process)
+        self.GroupBox_Process_OutputParams = GroupBoxBase(self.ScrollArea_Middle_WidgetContents_Process)
         self.GroupBox_Process_OutputParams.setObjectName(u"GroupBox_Process_OutputParams")
-        self.GroupBox_Process_OutputParams.setStyleSheet(u"QGroupBox {\n"
-"	font-size: 15px;\n"
-"	margin-top: 1.5ex;\n"
-"	background-color: transparent;\n"
-"	border-width: 1px;\n"
-"	border-style: solid;\n"
-"	border-color: transparent;\n"
-"}\n"
-"QGroupBox::title {\n"
-"	left: 9px;\n"
-"	margin-left: 0px;\n"
-"	subcontrol-origin: margin;\n"
-"	subcontrol-position: top left;\n"
-"	padding: 3px;\n"
-"}")
         self.verticalLayout_197 = QVBoxLayout(self.GroupBox_Process_OutputParams)
         self.verticalLayout_197.setSpacing(0)
         self.verticalLayout_197.setObjectName(u"verticalLayout_197")
@@ -3178,7 +2290,7 @@ class Ui_MainWindow(object):
         self.gridLayout_27.setSpacing(12)
         self.gridLayout_27.setObjectName(u"gridLayout_27")
         self.gridLayout_27.setContentsMargins(21, 12, 21, 12)
-        self.Label_Process_MediaFormatOutput = QLabel(self.Frame_Process_MediaFormatOutput)
+        self.Label_Process_MediaFormatOutput = LabelBase(self.Frame_Process_MediaFormatOutput)
         self.Label_Process_MediaFormatOutput.setObjectName(u"Label_Process_MediaFormatOutput")
         sizePolicy5.setHeightForWidth(self.Label_Process_MediaFormatOutput.sizePolicy().hasHeightForWidth())
         self.Label_Process_MediaFormatOutput.setSizePolicy(sizePolicy5)
@@ -3233,7 +2345,7 @@ class Ui_MainWindow(object):
         self.gridLayout_28.setSpacing(12)
         self.gridLayout_28.setObjectName(u"gridLayout_28")
         self.gridLayout_28.setContentsMargins(21, 12, 21, 12)
-        self.Label_Process_OutputDirName = QLabel(self.Frame_Process_OutputDirName)
+        self.Label_Process_OutputDirName = LabelBase(self.Frame_Process_OutputDirName)
         self.Label_Process_OutputDirName.setObjectName(u"Label_Process_OutputDirName")
         sizePolicy5.setHeightForWidth(self.Label_Process_OutputDirName.sizePolicy().hasHeightForWidth())
         self.Label_Process_OutputDirName.setSizePolicy(sizePolicy5)
@@ -3300,7 +2412,7 @@ class Ui_MainWindow(object):
         self.gridLayout_29.setSpacing(12)
         self.gridLayout_29.setObjectName(u"gridLayout_29")
         self.gridLayout_29.setContentsMargins(21, 12, 21, 12)
-        self.Label_Process_SampleRate = QLabel(self.Frame_Process_SampleRate)
+        self.Label_Process_SampleRate = LabelBase(self.Frame_Process_SampleRate)
         self.Label_Process_SampleRate.setObjectName(u"Label_Process_SampleRate")
         sizePolicy5.setHeightForWidth(self.Label_Process_SampleRate.sizePolicy().hasHeightForWidth())
         self.Label_Process_SampleRate.setSizePolicy(sizePolicy5)
@@ -3355,7 +2467,7 @@ class Ui_MainWindow(object):
         self.gridLayout_30.setSpacing(12)
         self.gridLayout_30.setObjectName(u"gridLayout_30")
         self.gridLayout_30.setContentsMargins(21, 12, 21, 12)
-        self.Label_Process_SampleWidth = QLabel(self.Frame_Process_SampleWidth)
+        self.Label_Process_SampleWidth = LabelBase(self.Frame_Process_SampleWidth)
         self.Label_Process_SampleWidth.setObjectName(u"Label_Process_SampleWidth")
         sizePolicy5.setHeightForWidth(self.Label_Process_SampleWidth.sizePolicy().hasHeightForWidth())
         self.Label_Process_SampleWidth.setSizePolicy(sizePolicy5)
@@ -3410,7 +2522,7 @@ class Ui_MainWindow(object):
         self.gridLayout_31.setSpacing(12)
         self.gridLayout_31.setObjectName(u"gridLayout_31")
         self.gridLayout_31.setContentsMargins(21, 12, 21, 12)
-        self.Label_Process_ToMono = QLabel(self.Frame_Process_ToMono)
+        self.Label_Process_ToMono = LabelBase(self.Frame_Process_ToMono)
         self.Label_Process_ToMono.setObjectName(u"Label_Process_ToMono")
         sizePolicy5.setHeightForWidth(self.Label_Process_ToMono.sizePolicy().hasHeightForWidth())
         self.Label_Process_ToMono.setSizePolicy(sizePolicy5)
@@ -3497,18 +2609,14 @@ class Ui_MainWindow(object):
 
         self.Widget_Right_Process = QWidget(self.Subpage_Process)
         self.Widget_Right_Process.setObjectName(u"Widget_Right_Process")
-        self.Widget_Right_Process.setStyleSheet(u"QWidget {\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QWidget:hover {\n"
+        self.Widget_Right_Process.setStyleSheet(u"QWidget:hover {\n"
 "	background-color: rgba(36, 36, 36, 3);\n"
 "}")
         self.gridLayout_3 = QGridLayout(self.Widget_Right_Process)
         self.gridLayout_3.setSpacing(12)
         self.gridLayout_3.setObjectName(u"gridLayout_3")
         self.gridLayout_3.setContentsMargins(12, 12, 12, 12)
-        self.TextBrowser_Params_Process = QTextBrowser(self.Widget_Right_Process)
+        self.TextBrowser_Params_Process = TextBrowserBase(self.Widget_Right_Process)
         self.TextBrowser_Params_Process.setObjectName(u"TextBrowser_Params_Process")
         sizePolicy1.setHeightForWidth(self.TextBrowser_Params_Process.sizePolicy().hasHeightForWidth())
         self.TextBrowser_Params_Process.setSizePolicy(sizePolicy1)
@@ -3565,75 +2673,23 @@ class Ui_MainWindow(object):
 
         self.gridLayout_3.addWidget(self.TextBrowser_Params_Process, 0, 0, 1, 3)
 
-        self.Button_ResetSettings_Process = QPushButton(self.Widget_Right_Process)
+        self.Button_ResetSettings_Process = HollowButton(self.Widget_Right_Process)
         self.Button_ResetSettings_Process.setObjectName(u"Button_ResetSettings_Process")
-        self.Button_ResetSettings_Process.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	font-size: 12px;\n"
-"	background-color: transparent;\n"
-"	padding: 6.6px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgb(120, 120, 120);\n"
-"}")
 
         self.gridLayout_3.addWidget(self.Button_ResetSettings_Process, 1, 0, 1, 1)
 
-        self.Button_ImportSettings_Process = QPushButton(self.Widget_Right_Process)
+        self.Button_ImportSettings_Process = HollowButton(self.Widget_Right_Process)
         self.Button_ImportSettings_Process.setObjectName(u"Button_ImportSettings_Process")
-        self.Button_ImportSettings_Process.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	font-size: 12px;\n"
-"	background-color: transparent;\n"
-"	padding: 6.6px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgb(120, 120, 120);\n"
-"}")
 
         self.gridLayout_3.addWidget(self.Button_ImportSettings_Process, 1, 1, 1, 1)
 
-        self.Button_ExportSettings_Process = QPushButton(self.Widget_Right_Process)
+        self.Button_ExportSettings_Process = HollowButton(self.Widget_Right_Process)
         self.Button_ExportSettings_Process.setObjectName(u"Button_ExportSettings_Process")
-        self.Button_ExportSettings_Process.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	font-size: 12px;\n"
-"	background-color: transparent;\n"
-"	padding: 6.6px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgb(120, 120, 120);\n"
-"}")
 
         self.gridLayout_3.addWidget(self.Button_ExportSettings_Process, 1, 2, 1, 1)
 
-        self.Button_CheckOutput_Process = QPushButton(self.Widget_Right_Process)
+        self.Button_CheckOutput_Process = HollowButton(self.Widget_Right_Process)
         self.Button_CheckOutput_Process.setObjectName(u"Button_CheckOutput_Process")
-        self.Button_CheckOutput_Process.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	font-size: 12px;\n"
-"	background-color: transparent;\n"
-"	padding: 6.6px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgb(120, 120, 120);\n"
-"}")
 
         self.gridLayout_3.addWidget(self.Button_CheckOutput_Process, 2, 0, 1, 3)
 
@@ -3682,8 +2738,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_86.setContentsMargins(0, 0, 0, 0)
         self.Button_Process_Execute = QPushButton(self.Page_Process_Execute)
         self.Button_Process_Execute.setObjectName(u"Button_Process_Execute")
-        sizePolicy3.setHeightForWidth(self.Button_Process_Execute.sizePolicy().hasHeightForWidth())
-        self.Button_Process_Execute.setSizePolicy(sizePolicy3)
+        sizePolicy2.setHeightForWidth(self.Button_Process_Execute.sizePolicy().hasHeightForWidth())
+        self.Button_Process_Execute.setSizePolicy(sizePolicy2)
         self.Button_Process_Execute.setMinimumSize(QSize(0, 30))
         self.Button_Process_Execute.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
@@ -3707,8 +2763,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_87.setContentsMargins(0, 0, 0, 0)
         self.Button_Process_Terminate = QPushButton(self.Page_Process_Terminate)
         self.Button_Process_Terminate.setObjectName(u"Button_Process_Terminate")
-        sizePolicy3.setHeightForWidth(self.Button_Process_Terminate.sizePolicy().hasHeightForWidth())
-        self.Button_Process_Terminate.setSizePolicy(sizePolicy3)
+        sizePolicy2.setHeightForWidth(self.Button_Process_Terminate.sizePolicy().hasHeightForWidth())
+        self.Button_Process_Terminate.setSizePolicy(sizePolicy2)
         self.Button_Process_Terminate.setMinimumSize(QSize(0, 30))
         self.Button_Process_Terminate.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
@@ -3749,75 +2805,29 @@ class Ui_MainWindow(object):
         self.Frame_ASR_Top.setObjectName(u"Frame_ASR_Top")
         self.Frame_ASR_Top.setMinimumSize(QSize(0, 60))
         self.Frame_ASR_Top.setStyleSheet(u"QFrame {\n"
-"	border-width: 0px;\n"
+"	border-top-width: 0px;\n"
+"	border-right-width: 0px;\n"
+"	border-bottom-width: 3px;\n"
+"	border-left-width: 0px;\n"
 "	border-style: solid;\n"
+"	border-bottom-color: rgba(123, 123, 123, 123);\n"
 "}")
         self.horizontalLayout_53 = QHBoxLayout(self.Frame_ASR_Top)
         self.horizontalLayout_53.setSpacing(0)
         self.horizontalLayout_53.setObjectName(u"horizontalLayout_53")
         self.horizontalLayout_53.setContentsMargins(0, 0, 0, 0)
-        self.Button_VoiceIdentifier_Title = ButtonBase(self.Frame_ASR_Top)
+        self.Button_VoiceIdentifier_Title = NavigationButton(self.Frame_ASR_Top)
         self.Button_VoiceIdentifier_Title.setObjectName(u"Button_VoiceIdentifier_Title")
         sizePolicy1.setHeightForWidth(self.Button_VoiceIdentifier_Title.sizePolicy().hasHeightForWidth())
         self.Button_VoiceIdentifier_Title.setSizePolicy(sizePolicy1)
-        self.Button_VoiceIdentifier_Title.setStyleSheet(u"QPushButton {\n"
-"	font-size: 24px;\n"
-"	/*text-align: center;*/\n"
-"	padding-left: 12px;\n"
-"	padding-right: 12px;\n"
-"	background-color: transparent;\n"
-"	border-top-width: 0px;\n"
-"	border-right-width: 0px;\n"
-"	border-bottom-width: 3px;\n"
-"	border-left-width: 0px;\n"
-"	border-style: solid;\n"
-"	border-bottom-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	background-color: transparent;\n"
-"	border-top-width: 0px;\n"
-"	border-right-width: 0px;\n"
-"	border-bottom-width: 3px;\n"
-"	border-left-width: 0px;\n"
-"	border-style: solid;\n"
-"	border-bottom-color: rgba(120, 180, 240, 123);\n"
-"}\n"
-"QPushButton:checked {\n"
-"	background-color: transparent;\n"
-"	border-top-width: 0px;\n"
-"	border-right-width: 0px;\n"
-"	border-bottom-width: 3px;\n"
-"	border-left-width: 0px;\n"
-"	border-style: solid;\n"
-"	border-bottom-color: rgba(120, 180, 240, 210);\n"
-"}")
 
         self.horizontalLayout_53.addWidget(self.Button_VoiceIdentifier_Title)
 
-        self.Frame_VoiceIdentifier_Title = QFrame(self.Frame_ASR_Top)
-        self.Frame_VoiceIdentifier_Title.setObjectName(u"Frame_VoiceIdentifier_Title")
-        self.Frame_VoiceIdentifier_Title.setStyleSheet(u"QFrame {\n"
-"	/*font-size: 24px;\n"
-"	text-align: center;\n"
-"	padding-left: 12px;\n"
-"	padding-right: 12px;*/\n"
-"	background-color: transparent;\n"
-"	border-top-width: 0px;\n"
-"	border-right-width: 0px;\n"
-"	border-bottom-width: 3px;\n"
-"	border-left-width: 0px;\n"
-"	border-style: solid;\n"
-"	border-bottom-color: rgba(123, 123, 123, 123);\n"
-"}")
-        self.horizontalLayout_46 = QHBoxLayout(self.Frame_VoiceIdentifier_Title)
-        self.horizontalLayout_46.setSpacing(12)
-        self.horizontalLayout_46.setObjectName(u"horizontalLayout_46")
-        self.horizontalLayout_46.setContentsMargins(0, 0, 0, 0)
-        self.HorizontalSpacer_VoiceIdentifier_Title = QSpacerItem(549, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+        self.HorizontalSpacer_VoiceIdentifier_Title = QSpacerItem(0, 0, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
-        self.horizontalLayout_46.addItem(self.HorizontalSpacer_VoiceIdentifier_Title)
+        self.horizontalLayout_53.addItem(self.HorizontalSpacer_VoiceIdentifier_Title)
 
-        self.Button_VoiceIdentifier_Help = QPushButton(self.Frame_VoiceIdentifier_Title)
+        self.Button_VoiceIdentifier_Help = QPushButton(self.Frame_ASR_Top)
         self.Button_VoiceIdentifier_Help.setObjectName(u"Button_VoiceIdentifier_Help")
         self.Button_VoiceIdentifier_Help.setMinimumSize(QSize(45, 45))
         self.Button_VoiceIdentifier_Help.setStyleSheet(u"QPushButton {\n"
@@ -3832,10 +2842,7 @@ class Ui_MainWindow(object):
 "	background-color: rgba(201, 210, 222, 33);\n"
 "}")
 
-        self.horizontalLayout_46.addWidget(self.Button_VoiceIdentifier_Help)
-
-
-        self.horizontalLayout_53.addWidget(self.Frame_VoiceIdentifier_Title)
+        self.horizontalLayout_53.addWidget(self.Button_VoiceIdentifier_Help)
 
 
         self.verticalLayout_44.addWidget(self.Frame_ASR_Top)
@@ -3882,28 +2889,13 @@ class Ui_MainWindow(object):
         self.ScrollArea_Middle_ASR_VPR.setWidgetResizable(True)
         self.ScrollArea_Middle_WidgetContents_ASR_VPR = QWidget()
         self.ScrollArea_Middle_WidgetContents_ASR_VPR.setObjectName(u"ScrollArea_Middle_WidgetContents_ASR_VPR")
-        self.ScrollArea_Middle_WidgetContents_ASR_VPR.setGeometry(QRect(0, 0, 586, 974))
+        self.ScrollArea_Middle_WidgetContents_ASR_VPR.setGeometry(QRect(0, 0, 586, 983))
         self.verticalLayout_7 = QVBoxLayout(self.ScrollArea_Middle_WidgetContents_ASR_VPR)
         self.verticalLayout_7.setSpacing(12)
         self.verticalLayout_7.setObjectName(u"verticalLayout_7")
         self.verticalLayout_7.setContentsMargins(12, 12, 12, 12)
-        self.GroupBox_ASR_VPR_InputParams = QGroupBox(self.ScrollArea_Middle_WidgetContents_ASR_VPR)
+        self.GroupBox_ASR_VPR_InputParams = GroupBoxBase(self.ScrollArea_Middle_WidgetContents_ASR_VPR)
         self.GroupBox_ASR_VPR_InputParams.setObjectName(u"GroupBox_ASR_VPR_InputParams")
-        self.GroupBox_ASR_VPR_InputParams.setStyleSheet(u"QGroupBox {\n"
-"	font-size: 15px;\n"
-"	margin-top: 1.5ex;\n"
-"	background-color: transparent;\n"
-"	border-width: 1px;\n"
-"	border-style: solid;\n"
-"	border-color: transparent;\n"
-"}\n"
-"QGroupBox::title {\n"
-"	left: 9px;\n"
-"	margin-left: 0px;\n"
-"	subcontrol-origin: margin;\n"
-"	subcontrol-position: top left;\n"
-"	padding: 3px;\n"
-"}")
         self.verticalLayout_33 = QVBoxLayout(self.GroupBox_ASR_VPR_InputParams)
         self.verticalLayout_33.setSpacing(0)
         self.verticalLayout_33.setObjectName(u"verticalLayout_33")
@@ -3929,7 +2921,7 @@ class Ui_MainWindow(object):
         self.gridLayout_32.setSpacing(12)
         self.gridLayout_32.setObjectName(u"gridLayout_32")
         self.gridLayout_32.setContentsMargins(21, 12, 21, 12)
-        self.Label_ASR_VPR_AudioDirInput = QLabel(self.Frame_ASR_VPR_AudioDirInput)
+        self.Label_ASR_VPR_AudioDirInput = LabelBase(self.Frame_ASR_VPR_AudioDirInput)
         self.Label_ASR_VPR_AudioDirInput.setObjectName(u"Label_ASR_VPR_AudioDirInput")
         sizePolicy5.setHeightForWidth(self.Label_ASR_VPR_AudioDirInput.sizePolicy().hasHeightForWidth())
         self.Label_ASR_VPR_AudioDirInput.setSizePolicy(sizePolicy5)
@@ -3984,7 +2976,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_12.setSpacing(12)
         self.verticalLayout_12.setObjectName(u"verticalLayout_12")
         self.verticalLayout_12.setContentsMargins(21, 12, 21, 12)
-        self.Label_ASR_VPR_StdAudioSpeaker = QLabel(self.Frame_ASR_VPR_StdAudioSpeaker)
+        self.Label_ASR_VPR_StdAudioSpeaker = LabelBase(self.Frame_ASR_VPR_StdAudioSpeaker)
         self.Label_ASR_VPR_StdAudioSpeaker.setObjectName(u"Label_ASR_VPR_StdAudioSpeaker")
         sizePolicy5.setHeightForWidth(self.Label_ASR_VPR_StdAudioSpeaker.sizePolicy().hasHeightForWidth())
         self.Label_ASR_VPR_StdAudioSpeaker.setSizePolicy(sizePolicy5)
@@ -4013,23 +3005,8 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_7.addWidget(self.GroupBox_ASR_VPR_InputParams)
 
-        self.GroupBox_ASR_VPR_VPRParams = QGroupBox(self.ScrollArea_Middle_WidgetContents_ASR_VPR)
+        self.GroupBox_ASR_VPR_VPRParams = GroupBoxBase(self.ScrollArea_Middle_WidgetContents_ASR_VPR)
         self.GroupBox_ASR_VPR_VPRParams.setObjectName(u"GroupBox_ASR_VPR_VPRParams")
-        self.GroupBox_ASR_VPR_VPRParams.setStyleSheet(u"QGroupBox {\n"
-"	font-size: 15px;\n"
-"	margin-top: 1.5ex;\n"
-"	background-color: transparent;\n"
-"	border-width: 1px;\n"
-"	border-style: solid;\n"
-"	border-color: transparent;\n"
-"}\n"
-"QGroupBox::title {\n"
-"	left: 9px;\n"
-"	margin-left: 0px;\n"
-"	subcontrol-origin: margin;\n"
-"	subcontrol-position: top left;\n"
-"	padding: 3px;\n"
-"}")
         self.verticalLayout_47 = QVBoxLayout(self.GroupBox_ASR_VPR_VPRParams)
         self.verticalLayout_47.setSpacing(0)
         self.verticalLayout_47.setObjectName(u"verticalLayout_47")
@@ -4055,7 +3032,7 @@ class Ui_MainWindow(object):
         self.gridLayout_33.setSpacing(12)
         self.gridLayout_33.setObjectName(u"gridLayout_33")
         self.gridLayout_33.setContentsMargins(21, 12, 21, 12)
-        self.Label_ASR_VPR_DecisionThreshold = QLabel(self.Frame_ASR_VPR_DecisionThreshold)
+        self.Label_ASR_VPR_DecisionThreshold = LabelBase(self.Frame_ASR_VPR_DecisionThreshold)
         self.Label_ASR_VPR_DecisionThreshold.setObjectName(u"Label_ASR_VPR_DecisionThreshold")
         sizePolicy5.setHeightForWidth(self.Label_ASR_VPR_DecisionThreshold.sizePolicy().hasHeightForWidth())
         self.Label_ASR_VPR_DecisionThreshold.setSizePolicy(sizePolicy5)
@@ -4113,7 +3090,7 @@ class Ui_MainWindow(object):
         self.gridLayout_34.setSpacing(12)
         self.gridLayout_34.setObjectName(u"gridLayout_34")
         self.gridLayout_34.setContentsMargins(21, 12, 21, 12)
-        self.Label_ASR_VPR_ModelPath = QLabel(self.Frame_ASR_VPR_ModelPath)
+        self.Label_ASR_VPR_ModelPath = LabelBase(self.Frame_ASR_VPR_ModelPath)
         self.Label_ASR_VPR_ModelPath.setObjectName(u"Label_ASR_VPR_ModelPath")
         sizePolicy5.setHeightForWidth(self.Label_ASR_VPR_ModelPath.sizePolicy().hasHeightForWidth())
         self.Label_ASR_VPR_ModelPath.setSizePolicy(sizePolicy5)
@@ -4180,7 +3157,7 @@ class Ui_MainWindow(object):
         self.gridLayout_35.setSpacing(12)
         self.gridLayout_35.setObjectName(u"gridLayout_35")
         self.gridLayout_35.setContentsMargins(21, 12, 21, 12)
-        self.Label_ASR_VPR_ModelType = QLabel(self.Frame_ASR_VPR_ModelType)
+        self.Label_ASR_VPR_ModelType = LabelBase(self.Frame_ASR_VPR_ModelType)
         self.Label_ASR_VPR_ModelType.setObjectName(u"Label_ASR_VPR_ModelType")
         sizePolicy5.setHeightForWidth(self.Label_ASR_VPR_ModelType.sizePolicy().hasHeightForWidth())
         self.Label_ASR_VPR_ModelType.setSizePolicy(sizePolicy5)
@@ -4235,7 +3212,7 @@ class Ui_MainWindow(object):
         self.gridLayout_36.setSpacing(12)
         self.gridLayout_36.setObjectName(u"gridLayout_36")
         self.gridLayout_36.setContentsMargins(21, 12, 21, 12)
-        self.Label_ASR_VPR_FeatureMethod = QLabel(self.Frame_ASR_VPR_FeatureMethod)
+        self.Label_ASR_VPR_FeatureMethod = LabelBase(self.Frame_ASR_VPR_FeatureMethod)
         self.Label_ASR_VPR_FeatureMethod.setObjectName(u"Label_ASR_VPR_FeatureMethod")
         sizePolicy5.setHeightForWidth(self.Label_ASR_VPR_FeatureMethod.sizePolicy().hasHeightForWidth())
         self.Label_ASR_VPR_FeatureMethod.setSizePolicy(sizePolicy5)
@@ -4290,7 +3267,7 @@ class Ui_MainWindow(object):
         self.gridLayout_37.setSpacing(12)
         self.gridLayout_37.setObjectName(u"gridLayout_37")
         self.gridLayout_37.setContentsMargins(21, 12, 21, 12)
-        self.Label_ASR_VPR_DurationOfAudio = QLabel(self.Frame_ASR_VPR_DurationOfAudio)
+        self.Label_ASR_VPR_DurationOfAudio = LabelBase(self.Frame_ASR_VPR_DurationOfAudio)
         self.Label_ASR_VPR_DurationOfAudio.setObjectName(u"Label_ASR_VPR_DurationOfAudio")
         sizePolicy5.setHeightForWidth(self.Label_ASR_VPR_DurationOfAudio.sizePolicy().hasHeightForWidth())
         self.Label_ASR_VPR_DurationOfAudio.setSizePolicy(sizePolicy5)
@@ -4340,23 +3317,8 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_7.addWidget(self.GroupBox_ASR_VPR_VPRParams)
 
-        self.GroupBox_ASR_VPR_OutputParams = QGroupBox(self.ScrollArea_Middle_WidgetContents_ASR_VPR)
+        self.GroupBox_ASR_VPR_OutputParams = GroupBoxBase(self.ScrollArea_Middle_WidgetContents_ASR_VPR)
         self.GroupBox_ASR_VPR_OutputParams.setObjectName(u"GroupBox_ASR_VPR_OutputParams")
-        self.GroupBox_ASR_VPR_OutputParams.setStyleSheet(u"QGroupBox {\n"
-"	font-size: 15px;\n"
-"	margin-top: 1.5ex;\n"
-"	background-color: transparent;\n"
-"	border-width: 1px;\n"
-"	border-style: solid;\n"
-"	border-color: transparent;\n"
-"}\n"
-"QGroupBox::title {\n"
-"	left: 9px;\n"
-"	margin-left: 0px;\n"
-"	subcontrol-origin: margin;\n"
-"	subcontrol-position: top left;\n"
-"	padding: 3px;\n"
-"}")
         self.verticalLayout_48 = QVBoxLayout(self.GroupBox_ASR_VPR_OutputParams)
         self.verticalLayout_48.setSpacing(0)
         self.verticalLayout_48.setObjectName(u"verticalLayout_48")
@@ -4382,7 +3344,7 @@ class Ui_MainWindow(object):
         self.gridLayout_38.setSpacing(12)
         self.gridLayout_38.setObjectName(u"gridLayout_38")
         self.gridLayout_38.setContentsMargins(21, 12, 21, 12)
-        self.Label_ASR_VPR_OutputDirName = QLabel(self.Frame_ASR_VPR_OutputDirName)
+        self.Label_ASR_VPR_OutputDirName = LabelBase(self.Frame_ASR_VPR_OutputDirName)
         self.Label_ASR_VPR_OutputDirName.setObjectName(u"Label_ASR_VPR_OutputDirName")
         sizePolicy5.setHeightForWidth(self.Label_ASR_VPR_OutputDirName.sizePolicy().hasHeightForWidth())
         self.Label_ASR_VPR_OutputDirName.setSizePolicy(sizePolicy5)
@@ -4463,7 +3425,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout_112.addWidget(self.Button_ASR_VPR_AudioSpeakersDataName_MoreActions, 0, 2, 1, 1)
 
-        self.Label_ASR_VPR_AudioSpeakersDataName = QLabel(self.Frame_ASR_VPR_AudioSpeakersDataName)
+        self.Label_ASR_VPR_AudioSpeakersDataName = LabelBase(self.Frame_ASR_VPR_AudioSpeakersDataName)
         self.Label_ASR_VPR_AudioSpeakersDataName.setObjectName(u"Label_ASR_VPR_AudioSpeakersDataName")
         sizePolicy5.setHeightForWidth(self.Label_ASR_VPR_AudioSpeakersDataName.sizePolicy().hasHeightForWidth())
         self.Label_ASR_VPR_AudioSpeakersDataName.setSizePolicy(sizePolicy5)
@@ -4504,18 +3466,14 @@ class Ui_MainWindow(object):
 
         self.Widget_Right_ASR_VPR = QWidget(self.Subpage_ASR_VPR)
         self.Widget_Right_ASR_VPR.setObjectName(u"Widget_Right_ASR_VPR")
-        self.Widget_Right_ASR_VPR.setStyleSheet(u"QWidget {\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QWidget:hover {\n"
+        self.Widget_Right_ASR_VPR.setStyleSheet(u"QWidget:hover {\n"
 "	background-color: rgba(36, 36, 36, 3);\n"
 "}")
         self.gridLayout_2 = QGridLayout(self.Widget_Right_ASR_VPR)
         self.gridLayout_2.setSpacing(12)
         self.gridLayout_2.setObjectName(u"gridLayout_2")
         self.gridLayout_2.setContentsMargins(12, 12, 12, 12)
-        self.TextBrowser_Params_ASR_VPR = QTextBrowser(self.Widget_Right_ASR_VPR)
+        self.TextBrowser_Params_ASR_VPR = TextBrowserBase(self.Widget_Right_ASR_VPR)
         self.TextBrowser_Params_ASR_VPR.setObjectName(u"TextBrowser_Params_ASR_VPR")
         sizePolicy1.setHeightForWidth(self.TextBrowser_Params_ASR_VPR.sizePolicy().hasHeightForWidth())
         self.TextBrowser_Params_ASR_VPR.setSizePolicy(sizePolicy1)
@@ -4572,93 +3530,28 @@ class Ui_MainWindow(object):
 
         self.gridLayout_2.addWidget(self.TextBrowser_Params_ASR_VPR, 0, 0, 1, 3)
 
-        self.Button_ResetSettings_ASR_VPR = QPushButton(self.Widget_Right_ASR_VPR)
+        self.Button_ResetSettings_ASR_VPR = HollowButton(self.Widget_Right_ASR_VPR)
         self.Button_ResetSettings_ASR_VPR.setObjectName(u"Button_ResetSettings_ASR_VPR")
-        self.Button_ResetSettings_ASR_VPR.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	font-size: 12px;\n"
-"	background-color: transparent;\n"
-"	padding: 6.6px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgb(120, 120, 120);\n"
-"}")
 
         self.gridLayout_2.addWidget(self.Button_ResetSettings_ASR_VPR, 1, 0, 1, 1)
 
-        self.Button_ImportSettings_ASR_VPR = QPushButton(self.Widget_Right_ASR_VPR)
+        self.Button_ImportSettings_ASR_VPR = HollowButton(self.Widget_Right_ASR_VPR)
         self.Button_ImportSettings_ASR_VPR.setObjectName(u"Button_ImportSettings_ASR_VPR")
-        self.Button_ImportSettings_ASR_VPR.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	font-size: 12px;\n"
-"	background-color: transparent;\n"
-"	padding: 6.6px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgb(120, 120, 120);\n"
-"}")
 
         self.gridLayout_2.addWidget(self.Button_ImportSettings_ASR_VPR, 1, 1, 1, 1)
 
-        self.Button_ExportSettings_ASR_VPR = QPushButton(self.Widget_Right_ASR_VPR)
+        self.Button_ExportSettings_ASR_VPR = HollowButton(self.Widget_Right_ASR_VPR)
         self.Button_ExportSettings_ASR_VPR.setObjectName(u"Button_ExportSettings_ASR_VPR")
-        self.Button_ExportSettings_ASR_VPR.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	font-size: 12px;\n"
-"	background-color: transparent;\n"
-"	padding: 6.6px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgb(120, 120, 120);\n"
-"}")
 
         self.gridLayout_2.addWidget(self.Button_ExportSettings_ASR_VPR, 1, 2, 1, 1)
 
-        self.Button_EditResult_ASR_VPR = QPushButton(self.Widget_Right_ASR_VPR)
+        self.Button_EditResult_ASR_VPR = HollowButton(self.Widget_Right_ASR_VPR)
         self.Button_EditResult_ASR_VPR.setObjectName(u"Button_EditResult_ASR_VPR")
-        self.Button_EditResult_ASR_VPR.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	font-size: 12px;\n"
-"	background-color: transparent;\n"
-"	padding: 6.6px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgb(120, 120, 120);\n"
-"}")
 
         self.gridLayout_2.addWidget(self.Button_EditResult_ASR_VPR, 2, 0, 1, 3)
 
-        self.Button_CheckOutput_ASR_VPR = QPushButton(self.Widget_Right_ASR_VPR)
+        self.Button_CheckOutput_ASR_VPR = HollowButton(self.Widget_Right_ASR_VPR)
         self.Button_CheckOutput_ASR_VPR.setObjectName(u"Button_CheckOutput_ASR_VPR")
-        self.Button_CheckOutput_ASR_VPR.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	font-size: 12px;\n"
-"	background-color: transparent;\n"
-"	padding: 6.6px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgb(120, 120, 120);\n"
-"}")
 
         self.gridLayout_2.addWidget(self.Button_CheckOutput_ASR_VPR, 3, 0, 1, 3)
 
@@ -4706,8 +3599,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_102.setContentsMargins(0, 0, 0, 0)
         self.Button_ASR_VPR_Execute = QPushButton(self.Page_ASR_VPR_Execute)
         self.Button_ASR_VPR_Execute.setObjectName(u"Button_ASR_VPR_Execute")
-        sizePolicy3.setHeightForWidth(self.Button_ASR_VPR_Execute.sizePolicy().hasHeightForWidth())
-        self.Button_ASR_VPR_Execute.setSizePolicy(sizePolicy3)
+        sizePolicy2.setHeightForWidth(self.Button_ASR_VPR_Execute.sizePolicy().hasHeightForWidth())
+        self.Button_ASR_VPR_Execute.setSizePolicy(sizePolicy2)
         self.Button_ASR_VPR_Execute.setMinimumSize(QSize(0, 30))
         self.Button_ASR_VPR_Execute.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
@@ -4731,8 +3624,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_119.setContentsMargins(0, 0, 0, 0)
         self.Button_ASR_VPR_Terminate = QPushButton(self.Page_ASR_VPR_Terminate)
         self.Button_ASR_VPR_Terminate.setObjectName(u"Button_ASR_VPR_Terminate")
-        sizePolicy3.setHeightForWidth(self.Button_ASR_VPR_Terminate.sizePolicy().hasHeightForWidth())
-        self.Button_ASR_VPR_Terminate.setSizePolicy(sizePolicy3)
+        sizePolicy2.setHeightForWidth(self.Button_ASR_VPR_Terminate.sizePolicy().hasHeightForWidth())
+        self.Button_ASR_VPR_Terminate.setSizePolicy(sizePolicy2)
         self.Button_ASR_VPR_Terminate.setMinimumSize(QSize(0, 30))
         self.Button_ASR_VPR_Terminate.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
@@ -4772,75 +3665,29 @@ class Ui_MainWindow(object):
         self.Frame_STT_Top.setObjectName(u"Frame_STT_Top")
         self.Frame_STT_Top.setMinimumSize(QSize(0, 60))
         self.Frame_STT_Top.setStyleSheet(u"QFrame {\n"
-"	border-width: 0px;\n"
+"	border-top-width: 0px;\n"
+"	border-right-width: 0px;\n"
+"	border-bottom-width: 3px;\n"
+"	border-left-width: 0px;\n"
 "	border-style: solid;\n"
+"	border-bottom-color: rgba(123, 123, 123, 123);\n"
 "}")
         self.horizontalLayout_55 = QHBoxLayout(self.Frame_STT_Top)
         self.horizontalLayout_55.setSpacing(0)
         self.horizontalLayout_55.setObjectName(u"horizontalLayout_55")
         self.horizontalLayout_55.setContentsMargins(0, 0, 0, 0)
-        self.Button_VoiceTranscriber_Title = ButtonBase(self.Frame_STT_Top)
+        self.Button_VoiceTranscriber_Title = NavigationButton(self.Frame_STT_Top)
         self.Button_VoiceTranscriber_Title.setObjectName(u"Button_VoiceTranscriber_Title")
         sizePolicy1.setHeightForWidth(self.Button_VoiceTranscriber_Title.sizePolicy().hasHeightForWidth())
         self.Button_VoiceTranscriber_Title.setSizePolicy(sizePolicy1)
-        self.Button_VoiceTranscriber_Title.setStyleSheet(u"QPushButton {\n"
-"	font-size: 24px;\n"
-"	/*text-align: center;*/\n"
-"	padding-left: 12px;\n"
-"	padding-right: 12px;\n"
-"	background-color: transparent;\n"
-"	border-top-width: 0px;\n"
-"	border-right-width: 0px;\n"
-"	border-bottom-width: 3px;\n"
-"	border-left-width: 0px;\n"
-"	border-style: solid;\n"
-"	border-bottom-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	background-color: transparent;\n"
-"	border-top-width: 0px;\n"
-"	border-right-width: 0px;\n"
-"	border-bottom-width: 3px;\n"
-"	border-left-width: 0px;\n"
-"	border-style: solid;\n"
-"	border-bottom-color: rgba(120, 180, 240, 123);\n"
-"}\n"
-"QPushButton:checked {\n"
-"	background-color: transparent;\n"
-"	border-top-width: 0px;\n"
-"	border-right-width: 0px;\n"
-"	border-bottom-width: 3px;\n"
-"	border-left-width: 0px;\n"
-"	border-style: solid;\n"
-"	border-bottom-color: rgba(120, 180, 240, 210);\n"
-"}")
 
         self.horizontalLayout_55.addWidget(self.Button_VoiceTranscriber_Title)
 
-        self.Frame_VoiceTranscriber_Title = QFrame(self.Frame_STT_Top)
-        self.Frame_VoiceTranscriber_Title.setObjectName(u"Frame_VoiceTranscriber_Title")
-        self.Frame_VoiceTranscriber_Title.setStyleSheet(u"QFrame {\n"
-"	/*font-size: 24px;\n"
-"	text-align: center;\n"
-"	padding-left: 12px;\n"
-"	padding-right: 12px;*/\n"
-"	background-color: transparent;\n"
-"	border-top-width: 0px;\n"
-"	border-right-width: 0px;\n"
-"	border-bottom-width: 3px;\n"
-"	border-left-width: 0px;\n"
-"	border-style: solid;\n"
-"	border-bottom-color: rgba(123, 123, 123, 123);\n"
-"}")
-        self.horizontalLayout_54 = QHBoxLayout(self.Frame_VoiceTranscriber_Title)
-        self.horizontalLayout_54.setSpacing(12)
-        self.horizontalLayout_54.setObjectName(u"horizontalLayout_54")
-        self.horizontalLayout_54.setContentsMargins(0, 0, 0, 0)
-        self.HorizontalSpacer_VoiceTranscriber_Title = QSpacerItem(549, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+        self.HorizontalSpacer_VoiceTranscriber_Title = QSpacerItem(0, 0, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
-        self.horizontalLayout_54.addItem(self.HorizontalSpacer_VoiceTranscriber_Title)
+        self.horizontalLayout_55.addItem(self.HorizontalSpacer_VoiceTranscriber_Title)
 
-        self.Button_VoiceTranscriber_Help = QPushButton(self.Frame_VoiceTranscriber_Title)
+        self.Button_VoiceTranscriber_Help = QPushButton(self.Frame_STT_Top)
         self.Button_VoiceTranscriber_Help.setObjectName(u"Button_VoiceTranscriber_Help")
         self.Button_VoiceTranscriber_Help.setMinimumSize(QSize(45, 45))
         self.Button_VoiceTranscriber_Help.setStyleSheet(u"QPushButton {\n"
@@ -4855,10 +3702,7 @@ class Ui_MainWindow(object):
 "	background-color: rgba(201, 210, 222, 33);\n"
 "}")
 
-        self.horizontalLayout_54.addWidget(self.Button_VoiceTranscriber_Help)
-
-
-        self.horizontalLayout_55.addWidget(self.Frame_VoiceTranscriber_Title)
+        self.horizontalLayout_55.addWidget(self.Button_VoiceTranscriber_Help)
 
 
         self.verticalLayout_41.addWidget(self.Frame_STT_Top)
@@ -4905,28 +3749,13 @@ class Ui_MainWindow(object):
         self.ScrollArea_Middle_STT_Whisper.setWidgetResizable(True)
         self.ScrollArea_Middle_WidgetContents_STT_Whisper = QWidget()
         self.ScrollArea_Middle_WidgetContents_STT_Whisper.setObjectName(u"ScrollArea_Middle_WidgetContents_STT_Whisper")
-        self.ScrollArea_Middle_WidgetContents_STT_Whisper.setGeometry(QRect(0, 0, 586, 678))
+        self.ScrollArea_Middle_WidgetContents_STT_Whisper.setGeometry(QRect(0, 0, 586, 687))
         self.verticalLayout_16 = QVBoxLayout(self.ScrollArea_Middle_WidgetContents_STT_Whisper)
         self.verticalLayout_16.setSpacing(12)
         self.verticalLayout_16.setObjectName(u"verticalLayout_16")
         self.verticalLayout_16.setContentsMargins(12, 12, 12, 12)
-        self.GroupBox_STT_Whisper_InputParams = QGroupBox(self.ScrollArea_Middle_WidgetContents_STT_Whisper)
+        self.GroupBox_STT_Whisper_InputParams = GroupBoxBase(self.ScrollArea_Middle_WidgetContents_STT_Whisper)
         self.GroupBox_STT_Whisper_InputParams.setObjectName(u"GroupBox_STT_Whisper_InputParams")
-        self.GroupBox_STT_Whisper_InputParams.setStyleSheet(u"QGroupBox {\n"
-"	font-size: 15px;\n"
-"	margin-top: 1.5ex;\n"
-"	background-color: transparent;\n"
-"	border-width: 1px;\n"
-"	border-style: solid;\n"
-"	border-color: transparent;\n"
-"}\n"
-"QGroupBox::title {\n"
-"	left: 9px;\n"
-"	margin-left: 0px;\n"
-"	subcontrol-origin: margin;\n"
-"	subcontrol-position: top left;\n"
-"	padding: 3px;\n"
-"}")
         self.verticalLayout_32 = QVBoxLayout(self.GroupBox_STT_Whisper_InputParams)
         self.verticalLayout_32.setSpacing(0)
         self.verticalLayout_32.setObjectName(u"verticalLayout_32")
@@ -4952,7 +3781,7 @@ class Ui_MainWindow(object):
         self.gridLayout_39.setSpacing(12)
         self.gridLayout_39.setObjectName(u"gridLayout_39")
         self.gridLayout_39.setContentsMargins(21, 12, 21, 12)
-        self.Label_STT_Whisper_AudioDir = QLabel(self.Frame_STT_Whisper_AudioDir)
+        self.Label_STT_Whisper_AudioDir = LabelBase(self.Frame_STT_Whisper_AudioDir)
         self.Label_STT_Whisper_AudioDir.setObjectName(u"Label_STT_Whisper_AudioDir")
         sizePolicy5.setHeightForWidth(self.Label_STT_Whisper_AudioDir.sizePolicy().hasHeightForWidth())
         self.Label_STT_Whisper_AudioDir.setSizePolicy(sizePolicy5)
@@ -4998,23 +3827,8 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_16.addWidget(self.GroupBox_STT_Whisper_InputParams)
 
-        self.GroupBox_STT_Whisper_WhisperParams = QGroupBox(self.ScrollArea_Middle_WidgetContents_STT_Whisper)
+        self.GroupBox_STT_Whisper_WhisperParams = GroupBoxBase(self.ScrollArea_Middle_WidgetContents_STT_Whisper)
         self.GroupBox_STT_Whisper_WhisperParams.setObjectName(u"GroupBox_STT_Whisper_WhisperParams")
-        self.GroupBox_STT_Whisper_WhisperParams.setStyleSheet(u"QGroupBox {\n"
-"	font-size: 15px;\n"
-"	margin-top: 1.5ex;\n"
-"	background-color: transparent;\n"
-"	border-width: 1px;\n"
-"	border-style: solid;\n"
-"	border-color: transparent;\n"
-"}\n"
-"QGroupBox::title {\n"
-"	left: 9px;\n"
-"	margin-left: 0px;\n"
-"	subcontrol-origin: margin;\n"
-"	subcontrol-position: top left;\n"
-"	padding: 3px;\n"
-"}")
         self.verticalLayout_49 = QVBoxLayout(self.GroupBox_STT_Whisper_WhisperParams)
         self.verticalLayout_49.setSpacing(0)
         self.verticalLayout_49.setObjectName(u"verticalLayout_49")
@@ -5040,7 +3854,7 @@ class Ui_MainWindow(object):
         self.gridLayout_40.setSpacing(12)
         self.gridLayout_40.setObjectName(u"gridLayout_40")
         self.gridLayout_40.setContentsMargins(21, 12, 21, 12)
-        self.Label_STT_Whisper_AddLanguageInfo = QLabel(self.Frame_STT_Whisper_AddLanguageInfo)
+        self.Label_STT_Whisper_AddLanguageInfo = LabelBase(self.Frame_STT_Whisper_AddLanguageInfo)
         self.Label_STT_Whisper_AddLanguageInfo.setObjectName(u"Label_STT_Whisper_AddLanguageInfo")
         sizePolicy5.setHeightForWidth(self.Label_STT_Whisper_AddLanguageInfo.sizePolicy().hasHeightForWidth())
         self.Label_STT_Whisper_AddLanguageInfo.setSizePolicy(sizePolicy5)
@@ -5125,7 +3939,7 @@ class Ui_MainWindow(object):
         self.gridLayout_41.setSpacing(12)
         self.gridLayout_41.setObjectName(u"gridLayout_41")
         self.gridLayout_41.setContentsMargins(21, 12, 21, 12)
-        self.Label_STT_Whisper_ModelPath = QLabel(self.Frame_STT_Whisper_ModelPath)
+        self.Label_STT_Whisper_ModelPath = LabelBase(self.Frame_STT_Whisper_ModelPath)
         self.Label_STT_Whisper_ModelPath.setObjectName(u"Label_STT_Whisper_ModelPath")
         sizePolicy5.setHeightForWidth(self.Label_STT_Whisper_ModelPath.sizePolicy().hasHeightForWidth())
         self.Label_STT_Whisper_ModelPath.setSizePolicy(sizePolicy5)
@@ -5192,7 +4006,7 @@ class Ui_MainWindow(object):
         self.gridLayout_44.setSpacing(12)
         self.gridLayout_44.setObjectName(u"gridLayout_44")
         self.gridLayout_44.setContentsMargins(21, 12, 21, 12)
-        self.Label_STT_Whisper_fp16 = QLabel(self.Frame_STT_Whisper_fp16)
+        self.Label_STT_Whisper_fp16 = LabelBase(self.Frame_STT_Whisper_fp16)
         self.Label_STT_Whisper_fp16.setObjectName(u"Label_STT_Whisper_fp16")
         sizePolicy5.setHeightForWidth(self.Label_STT_Whisper_fp16.sizePolicy().hasHeightForWidth())
         self.Label_STT_Whisper_fp16.setSizePolicy(sizePolicy5)
@@ -5329,7 +4143,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout_43.addWidget(self.Button_STT_Whisper_ConditionOnPreviousText_MoreActions, 0, 2, 1, 1)
 
-        self.Label_STT_Whisper_ConditionOnPreviousText = QLabel(self.Frame_STT_Whisper_ConditionOnPreviousText)
+        self.Label_STT_Whisper_ConditionOnPreviousText = LabelBase(self.Frame_STT_Whisper_ConditionOnPreviousText)
         self.Label_STT_Whisper_ConditionOnPreviousText.setObjectName(u"Label_STT_Whisper_ConditionOnPreviousText")
         sizePolicy5.setHeightForWidth(self.Label_STT_Whisper_ConditionOnPreviousText.sizePolicy().hasHeightForWidth())
         self.Label_STT_Whisper_ConditionOnPreviousText.setSizePolicy(sizePolicy5)
@@ -5362,7 +4176,7 @@ class Ui_MainWindow(object):
         self.gridLayout_42.setSpacing(12)
         self.gridLayout_42.setObjectName(u"gridLayout_42")
         self.gridLayout_42.setContentsMargins(21, 12, 21, 12)
-        self.Label_STT_Whisper_Verbose = QLabel(self.Frame_STT_Whisper_Verbose)
+        self.Label_STT_Whisper_Verbose = LabelBase(self.Frame_STT_Whisper_Verbose)
         self.Label_STT_Whisper_Verbose.setObjectName(u"Label_STT_Whisper_Verbose")
         sizePolicy5.setHeightForWidth(self.Label_STT_Whisper_Verbose.sizePolicy().hasHeightForWidth())
         self.Label_STT_Whisper_Verbose.setSizePolicy(sizePolicy5)
@@ -5439,23 +4253,8 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_16.addWidget(self.GroupBox_STT_Whisper_WhisperParams)
 
-        self.GroupBox_STT_Whisper_OutputParams = QGroupBox(self.ScrollArea_Middle_WidgetContents_STT_Whisper)
+        self.GroupBox_STT_Whisper_OutputParams = GroupBoxBase(self.ScrollArea_Middle_WidgetContents_STT_Whisper)
         self.GroupBox_STT_Whisper_OutputParams.setObjectName(u"GroupBox_STT_Whisper_OutputParams")
-        self.GroupBox_STT_Whisper_OutputParams.setStyleSheet(u"QGroupBox {\n"
-"	font-size: 15px;\n"
-"	margin-top: 1.5ex;\n"
-"	background-color: transparent;\n"
-"	border-width: 1px;\n"
-"	border-style: solid;\n"
-"	border-color: transparent;\n"
-"}\n"
-"QGroupBox::title {\n"
-"	left: 9px;\n"
-"	margin-left: 0px;\n"
-"	subcontrol-origin: margin;\n"
-"	subcontrol-position: top left;\n"
-"	padding: 3px;\n"
-"}")
         self.verticalLayout_89 = QVBoxLayout(self.GroupBox_STT_Whisper_OutputParams)
         self.verticalLayout_89.setSpacing(0)
         self.verticalLayout_89.setObjectName(u"verticalLayout_89")
@@ -5481,7 +4280,7 @@ class Ui_MainWindow(object):
         self.gridLayout_45.setSpacing(12)
         self.gridLayout_45.setObjectName(u"gridLayout_45")
         self.gridLayout_45.setContentsMargins(21, 12, 21, 12)
-        self.Label_STT_Whisper_OutputDirName = QLabel(self.Frame_STT_Whisper_OutputDirName)
+        self.Label_STT_Whisper_OutputDirName = LabelBase(self.Frame_STT_Whisper_OutputDirName)
         self.Label_STT_Whisper_OutputDirName.setObjectName(u"Label_STT_Whisper_OutputDirName")
         sizePolicy5.setHeightForWidth(self.Label_STT_Whisper_OutputDirName.sizePolicy().hasHeightForWidth())
         self.Label_STT_Whisper_OutputDirName.setSizePolicy(sizePolicy5)
@@ -5537,18 +4336,14 @@ class Ui_MainWindow(object):
 
         self.Widget_Right_STT_Whisper = QWidget(self.Subpage_STT_Whisper)
         self.Widget_Right_STT_Whisper.setObjectName(u"Widget_Right_STT_Whisper")
-        self.Widget_Right_STT_Whisper.setStyleSheet(u"QWidget {\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QWidget:hover {\n"
+        self.Widget_Right_STT_Whisper.setStyleSheet(u"QWidget:hover {\n"
 "	background-color: rgba(36, 36, 36, 3);\n"
 "}")
         self.gridLayout_4 = QGridLayout(self.Widget_Right_STT_Whisper)
         self.gridLayout_4.setSpacing(12)
         self.gridLayout_4.setObjectName(u"gridLayout_4")
         self.gridLayout_4.setContentsMargins(12, 12, 12, 12)
-        self.TextBrowser_Params_STT_Whisper = QTextBrowser(self.Widget_Right_STT_Whisper)
+        self.TextBrowser_Params_STT_Whisper = TextBrowserBase(self.Widget_Right_STT_Whisper)
         self.TextBrowser_Params_STT_Whisper.setObjectName(u"TextBrowser_Params_STT_Whisper")
         sizePolicy1.setHeightForWidth(self.TextBrowser_Params_STT_Whisper.sizePolicy().hasHeightForWidth())
         self.TextBrowser_Params_STT_Whisper.setSizePolicy(sizePolicy1)
@@ -5605,75 +4400,23 @@ class Ui_MainWindow(object):
 
         self.gridLayout_4.addWidget(self.TextBrowser_Params_STT_Whisper, 0, 0, 1, 3)
 
-        self.Button_ResetSettings_STT_Whisper = QPushButton(self.Widget_Right_STT_Whisper)
+        self.Button_ResetSettings_STT_Whisper = HollowButton(self.Widget_Right_STT_Whisper)
         self.Button_ResetSettings_STT_Whisper.setObjectName(u"Button_ResetSettings_STT_Whisper")
-        self.Button_ResetSettings_STT_Whisper.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	font-size: 12px;\n"
-"	background-color: transparent;\n"
-"	padding: 6.6px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgb(120, 120, 120);\n"
-"}")
 
         self.gridLayout_4.addWidget(self.Button_ResetSettings_STT_Whisper, 1, 0, 1, 1)
 
-        self.Button_ImportSettings_STT_Whisper = QPushButton(self.Widget_Right_STT_Whisper)
+        self.Button_ImportSettings_STT_Whisper = HollowButton(self.Widget_Right_STT_Whisper)
         self.Button_ImportSettings_STT_Whisper.setObjectName(u"Button_ImportSettings_STT_Whisper")
-        self.Button_ImportSettings_STT_Whisper.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	font-size: 12px;\n"
-"	background-color: transparent;\n"
-"	padding: 6.6px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgb(120, 120, 120);\n"
-"}")
 
         self.gridLayout_4.addWidget(self.Button_ImportSettings_STT_Whisper, 1, 1, 1, 1)
 
-        self.Button_ExportSettings_STT_Whisper = QPushButton(self.Widget_Right_STT_Whisper)
+        self.Button_ExportSettings_STT_Whisper = HollowButton(self.Widget_Right_STT_Whisper)
         self.Button_ExportSettings_STT_Whisper.setObjectName(u"Button_ExportSettings_STT_Whisper")
-        self.Button_ExportSettings_STT_Whisper.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	font-size: 12px;\n"
-"	background-color: transparent;\n"
-"	padding: 6.6px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgb(120, 120, 120);\n"
-"}")
 
         self.gridLayout_4.addWidget(self.Button_ExportSettings_STT_Whisper, 1, 2, 1, 1)
 
-        self.Button_CheckOutput_STT_Whisper = QPushButton(self.Widget_Right_STT_Whisper)
+        self.Button_CheckOutput_STT_Whisper = HollowButton(self.Widget_Right_STT_Whisper)
         self.Button_CheckOutput_STT_Whisper.setObjectName(u"Button_CheckOutput_STT_Whisper")
-        self.Button_CheckOutput_STT_Whisper.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	font-size: 12px;\n"
-"	background-color: transparent;\n"
-"	padding: 6.6px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgb(120, 120, 120);\n"
-"}")
 
         self.gridLayout_4.addWidget(self.Button_CheckOutput_STT_Whisper, 2, 0, 1, 3)
 
@@ -5721,8 +4464,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_90.setContentsMargins(0, 0, 0, 0)
         self.Button_STT_Whisper_Execute = QPushButton(self.Page_STT_Whisper_Execute)
         self.Button_STT_Whisper_Execute.setObjectName(u"Button_STT_Whisper_Execute")
-        sizePolicy3.setHeightForWidth(self.Button_STT_Whisper_Execute.sizePolicy().hasHeightForWidth())
-        self.Button_STT_Whisper_Execute.setSizePolicy(sizePolicy3)
+        sizePolicy2.setHeightForWidth(self.Button_STT_Whisper_Execute.sizePolicy().hasHeightForWidth())
+        self.Button_STT_Whisper_Execute.setSizePolicy(sizePolicy2)
         self.Button_STT_Whisper_Execute.setMinimumSize(QSize(0, 30))
         self.Button_STT_Whisper_Execute.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
@@ -5746,8 +4489,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_91.setContentsMargins(0, 0, 0, 0)
         self.Button_STT_Whisper_Terminate = QPushButton(self.Page_STT_Whisper_Terminate)
         self.Button_STT_Whisper_Terminate.setObjectName(u"Button_STT_Whisper_Terminate")
-        sizePolicy3.setHeightForWidth(self.Button_STT_Whisper_Terminate.sizePolicy().hasHeightForWidth())
-        self.Button_STT_Whisper_Terminate.setSizePolicy(sizePolicy3)
+        sizePolicy2.setHeightForWidth(self.Button_STT_Whisper_Terminate.sizePolicy().hasHeightForWidth())
+        self.Button_STT_Whisper_Terminate.setSizePolicy(sizePolicy2)
         self.Button_STT_Whisper_Terminate.setMinimumSize(QSize(0, 30))
         self.Button_STT_Whisper_Terminate.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
@@ -5789,113 +4532,36 @@ class Ui_MainWindow(object):
         self.Frame_Dataset_Top.setObjectName(u"Frame_Dataset_Top")
         self.Frame_Dataset_Top.setMinimumSize(QSize(0, 60))
         self.Frame_Dataset_Top.setStyleSheet(u"QFrame {\n"
-"	border-width: 0px;\n"
+"	border-top-width: 0px;\n"
+"	border-right-width: 0px;\n"
+"	border-bottom-width: 3px;\n"
+"	border-left-width: 0px;\n"
 "	border-style: solid;\n"
+"	border-bottom-color: rgba(123, 123, 123, 123);\n"
 "}")
         self.horizontalLayout_17 = QHBoxLayout(self.Frame_Dataset_Top)
         self.horizontalLayout_17.setSpacing(0)
         self.horizontalLayout_17.setObjectName(u"horizontalLayout_17")
         self.horizontalLayout_17.setContentsMargins(0, 0, 0, 0)
-        self.Button_DatasetCreator_Title_GPTSoVITS = ButtonBase(self.Frame_Dataset_Top)
+        self.Button_DatasetCreator_Title_GPTSoVITS = NavigationButton(self.Frame_Dataset_Top)
         self.Button_DatasetCreator_Title_GPTSoVITS.setObjectName(u"Button_DatasetCreator_Title_GPTSoVITS")
         sizePolicy1.setHeightForWidth(self.Button_DatasetCreator_Title_GPTSoVITS.sizePolicy().hasHeightForWidth())
         self.Button_DatasetCreator_Title_GPTSoVITS.setSizePolicy(sizePolicy1)
-        self.Button_DatasetCreator_Title_GPTSoVITS.setStyleSheet(u"QPushButton {\n"
-"	font-size: 24px;\n"
-"	/*text-align: center;*/\n"
-"	padding-left: 12px;\n"
-"	padding-right: 12px;\n"
-"	background-color: transparent;\n"
-"	border-top-width: 0px;\n"
-"	border-right-width: 0px;\n"
-"	border-bottom-width: 3px;\n"
-"	border-left-width: 0px;\n"
-"	border-style: solid;\n"
-"	border-bottom-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	background-color: transparent;\n"
-"	border-top-width: 0px;\n"
-"	border-right-width: 0px;\n"
-"	border-bottom-width: 3px;\n"
-"	border-left-width: 0px;\n"
-"	border-style: solid;\n"
-"	border-bottom-color: rgba(120, 180, 240, 123);\n"
-"}\n"
-"QPushButton:checked {\n"
-"	background-color: transparent;\n"
-"	border-top-width: 0px;\n"
-"	border-right-width: 0px;\n"
-"	border-bottom-width: 3px;\n"
-"	border-left-width: 0px;\n"
-"	border-style: solid;\n"
-"	border-bottom-color: rgba(120, 180, 240, 210);\n"
-"}")
 
         self.horizontalLayout_17.addWidget(self.Button_DatasetCreator_Title_GPTSoVITS)
 
-        self.Button_DatasetCreator_Title_VITS = ButtonBase(self.Frame_Dataset_Top)
+        self.Button_DatasetCreator_Title_VITS = NavigationButton(self.Frame_Dataset_Top)
         self.Button_DatasetCreator_Title_VITS.setObjectName(u"Button_DatasetCreator_Title_VITS")
         sizePolicy1.setHeightForWidth(self.Button_DatasetCreator_Title_VITS.sizePolicy().hasHeightForWidth())
         self.Button_DatasetCreator_Title_VITS.setSizePolicy(sizePolicy1)
-        self.Button_DatasetCreator_Title_VITS.setStyleSheet(u"QPushButton {\n"
-"	font-size: 24px;\n"
-"	/*text-align: center;*/\n"
-"	padding-left: 12px;\n"
-"	padding-right: 12px;\n"
-"	background-color: transparent;\n"
-"	border-top-width: 0px;\n"
-"	border-right-width: 0px;\n"
-"	border-bottom-width: 3px;\n"
-"	border-left-width: 0px;\n"
-"	border-style: solid;\n"
-"	border-bottom-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	background-color: transparent;\n"
-"	border-top-width: 0px;\n"
-"	border-right-width: 0px;\n"
-"	border-bottom-width: 3px;\n"
-"	border-left-width: 0px;\n"
-"	border-style: solid;\n"
-"	border-bottom-color: rgba(120, 180, 240, 123);\n"
-"}\n"
-"QPushButton:checked {\n"
-"	background-color: transparent;\n"
-"	border-top-width: 0px;\n"
-"	border-right-width: 0px;\n"
-"	border-bottom-width: 3px;\n"
-"	border-left-width: 0px;\n"
-"	border-style: solid;\n"
-"	border-bottom-color: rgba(120, 180, 240, 210);\n"
-"}")
 
         self.horizontalLayout_17.addWidget(self.Button_DatasetCreator_Title_VITS)
 
-        self.Frame_DatasetCreator_Title = QFrame(self.Frame_Dataset_Top)
-        self.Frame_DatasetCreator_Title.setObjectName(u"Frame_DatasetCreator_Title")
-        self.Frame_DatasetCreator_Title.setStyleSheet(u"QFrame {\n"
-"	/*font-size: 24px;\n"
-"	text-align: center;\n"
-"	padding-left: 12px;\n"
-"	padding-right: 12px;*/\n"
-"	background-color: transparent;\n"
-"	border-top-width: 0px;\n"
-"	border-right-width: 0px;\n"
-"	border-bottom-width: 3px;\n"
-"	border-left-width: 0px;\n"
-"	border-style: solid;\n"
-"	border-bottom-color: rgba(123, 123, 123, 123);\n"
-"}")
-        self.horizontalLayout_57 = QHBoxLayout(self.Frame_DatasetCreator_Title)
-        self.horizontalLayout_57.setSpacing(12)
-        self.horizontalLayout_57.setObjectName(u"horizontalLayout_57")
-        self.horizontalLayout_57.setContentsMargins(0, 0, 0, 0)
-        self.HorizontalSpacer_DatasetCreator_Title = QSpacerItem(549, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+        self.HorizontalSpacer_DatasetCreator_Title = QSpacerItem(0, 0, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
-        self.horizontalLayout_57.addItem(self.HorizontalSpacer_DatasetCreator_Title)
+        self.horizontalLayout_17.addItem(self.HorizontalSpacer_DatasetCreator_Title)
 
-        self.Button_DatasetCreator_Help = QPushButton(self.Frame_DatasetCreator_Title)
+        self.Button_DatasetCreator_Help = QPushButton(self.Frame_Dataset_Top)
         self.Button_DatasetCreator_Help.setObjectName(u"Button_DatasetCreator_Help")
         self.Button_DatasetCreator_Help.setMinimumSize(QSize(45, 45))
         self.Button_DatasetCreator_Help.setStyleSheet(u"QPushButton {\n"
@@ -5910,10 +4576,7 @@ class Ui_MainWindow(object):
 "	background-color: rgba(201, 210, 222, 33);\n"
 "}")
 
-        self.horizontalLayout_57.addWidget(self.Button_DatasetCreator_Help)
-
-
-        self.horizontalLayout_17.addWidget(self.Frame_DatasetCreator_Title)
+        self.horizontalLayout_17.addWidget(self.Button_DatasetCreator_Help)
 
 
         self.verticalLayout_39.addWidget(self.Frame_Dataset_Top)
@@ -5960,28 +4623,13 @@ class Ui_MainWindow(object):
         self.ScrollArea_Middle_DAT_GPTSoVITS.setWidgetResizable(True)
         self.ScrollArea_Middle_WidgetContents_DAT_GPTSoVITS = QWidget()
         self.ScrollArea_Middle_WidgetContents_DAT_GPTSoVITS.setObjectName(u"ScrollArea_Middle_WidgetContents_DAT_GPTSoVITS")
-        self.ScrollArea_Middle_WidgetContents_DAT_GPTSoVITS.setGeometry(QRect(0, 0, 586, 680))
+        self.ScrollArea_Middle_WidgetContents_DAT_GPTSoVITS.setGeometry(QRect(0, 0, 586, 689))
         self.verticalLayout_63 = QVBoxLayout(self.ScrollArea_Middle_WidgetContents_DAT_GPTSoVITS)
         self.verticalLayout_63.setSpacing(12)
         self.verticalLayout_63.setObjectName(u"verticalLayout_63")
         self.verticalLayout_63.setContentsMargins(12, 12, 12, 12)
-        self.GroupBox_DAT_GPTSoVITS_InputParams = QGroupBox(self.ScrollArea_Middle_WidgetContents_DAT_GPTSoVITS)
+        self.GroupBox_DAT_GPTSoVITS_InputParams = GroupBoxBase(self.ScrollArea_Middle_WidgetContents_DAT_GPTSoVITS)
         self.GroupBox_DAT_GPTSoVITS_InputParams.setObjectName(u"GroupBox_DAT_GPTSoVITS_InputParams")
-        self.GroupBox_DAT_GPTSoVITS_InputParams.setStyleSheet(u"QGroupBox {\n"
-"	font-size: 15px;\n"
-"	margin-top: 1.5ex;\n"
-"	background-color: transparent;\n"
-"	border-width: 1px;\n"
-"	border-style: solid;\n"
-"	border-color: transparent;\n"
-"}\n"
-"QGroupBox::title {\n"
-"	left: 9px;\n"
-"	margin-left: 0px;\n"
-"	subcontrol-origin: margin;\n"
-"	subcontrol-position: top left;\n"
-"	padding: 3px;\n"
-"}")
         self.verticalLayout_123 = QVBoxLayout(self.GroupBox_DAT_GPTSoVITS_InputParams)
         self.verticalLayout_123.setSpacing(0)
         self.verticalLayout_123.setObjectName(u"verticalLayout_123")
@@ -6007,7 +4655,7 @@ class Ui_MainWindow(object):
         self.gridLayout_82.setSpacing(12)
         self.gridLayout_82.setObjectName(u"gridLayout_82")
         self.gridLayout_82.setContentsMargins(21, 12, 21, 12)
-        self.Label_DAT_GPTSoVITS_AudioSpeakersDataPath = QLabel(self.Frame_DAT_GPTSoVITS_AudioSpeakersDataPath)
+        self.Label_DAT_GPTSoVITS_AudioSpeakersDataPath = LabelBase(self.Frame_DAT_GPTSoVITS_AudioSpeakersDataPath)
         self.Label_DAT_GPTSoVITS_AudioSpeakersDataPath.setObjectName(u"Label_DAT_GPTSoVITS_AudioSpeakersDataPath")
         sizePolicy5.setHeightForWidth(self.Label_DAT_GPTSoVITS_AudioSpeakersDataPath.sizePolicy().hasHeightForWidth())
         self.Label_DAT_GPTSoVITS_AudioSpeakersDataPath.setSizePolicy(sizePolicy5)
@@ -6062,7 +4710,7 @@ class Ui_MainWindow(object):
         self.gridLayout_83.setSpacing(12)
         self.gridLayout_83.setObjectName(u"gridLayout_83")
         self.gridLayout_83.setContentsMargins(21, 12, 21, 12)
-        self.Label_DAT_GPTSoVITS_SRTDir = QLabel(self.Frame_DAT_GPTSoVITS_SRTDir)
+        self.Label_DAT_GPTSoVITS_SRTDir = LabelBase(self.Frame_DAT_GPTSoVITS_SRTDir)
         self.Label_DAT_GPTSoVITS_SRTDir.setObjectName(u"Label_DAT_GPTSoVITS_SRTDir")
         sizePolicy5.setHeightForWidth(self.Label_DAT_GPTSoVITS_SRTDir.sizePolicy().hasHeightForWidth())
         self.Label_DAT_GPTSoVITS_SRTDir.setSizePolicy(sizePolicy5)
@@ -6108,23 +4756,8 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_63.addWidget(self.GroupBox_DAT_GPTSoVITS_InputParams)
 
-        self.GroupBox_DAT_GPTSoVITS_GPTSoVITSParams = QGroupBox(self.ScrollArea_Middle_WidgetContents_DAT_GPTSoVITS)
+        self.GroupBox_DAT_GPTSoVITS_GPTSoVITSParams = GroupBoxBase(self.ScrollArea_Middle_WidgetContents_DAT_GPTSoVITS)
         self.GroupBox_DAT_GPTSoVITS_GPTSoVITSParams.setObjectName(u"GroupBox_DAT_GPTSoVITS_GPTSoVITSParams")
-        self.GroupBox_DAT_GPTSoVITS_GPTSoVITSParams.setStyleSheet(u"QGroupBox {\n"
-"	font-size: 15px;\n"
-"	margin-top: 1.5ex;\n"
-"	background-color: transparent;\n"
-"	border-width: 1px;\n"
-"	border-style: solid;\n"
-"	border-color: transparent;\n"
-"}\n"
-"QGroupBox::title {\n"
-"	left: 9px;\n"
-"	margin-left: 0px;\n"
-"	subcontrol-origin: margin;\n"
-"	subcontrol-position: top left;\n"
-"	padding: 3px;\n"
-"}")
         self.verticalLayout_124 = QVBoxLayout(self.GroupBox_DAT_GPTSoVITS_GPTSoVITSParams)
         self.verticalLayout_124.setSpacing(0)
         self.verticalLayout_124.setObjectName(u"verticalLayout_124")
@@ -6150,7 +4783,7 @@ class Ui_MainWindow(object):
         self.gridLayout_84.setSpacing(12)
         self.gridLayout_84.setObjectName(u"gridLayout_84")
         self.gridLayout_84.setContentsMargins(21, 12, 21, 12)
-        self.Label_DAT_GPTSoVITS_DataFormat = QLabel(self.Frame_DAT_GPTSoVITS_DataFormat)
+        self.Label_DAT_GPTSoVITS_DataFormat = LabelBase(self.Frame_DAT_GPTSoVITS_DataFormat)
         self.Label_DAT_GPTSoVITS_DataFormat.setObjectName(u"Label_DAT_GPTSoVITS_DataFormat")
         sizePolicy5.setHeightForWidth(self.Label_DAT_GPTSoVITS_DataFormat.sizePolicy().hasHeightForWidth())
         self.Label_DAT_GPTSoVITS_DataFormat.setSizePolicy(sizePolicy5)
@@ -6196,23 +4829,8 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_63.addWidget(self.GroupBox_DAT_GPTSoVITS_GPTSoVITSParams)
 
-        self.GroupBox_DAT_GPTSoVITS_OutputParams = QGroupBox(self.ScrollArea_Middle_WidgetContents_DAT_GPTSoVITS)
+        self.GroupBox_DAT_GPTSoVITS_OutputParams = GroupBoxBase(self.ScrollArea_Middle_WidgetContents_DAT_GPTSoVITS)
         self.GroupBox_DAT_GPTSoVITS_OutputParams.setObjectName(u"GroupBox_DAT_GPTSoVITS_OutputParams")
-        self.GroupBox_DAT_GPTSoVITS_OutputParams.setStyleSheet(u"QGroupBox {\n"
-"	font-size: 15px;\n"
-"	margin-top: 1.5ex;\n"
-"	background-color: transparent;\n"
-"	border-width: 1px;\n"
-"	border-style: solid;\n"
-"	border-color: transparent;\n"
-"}\n"
-"QGroupBox::title {\n"
-"	left: 9px;\n"
-"	margin-left: 0px;\n"
-"	subcontrol-origin: margin;\n"
-"	subcontrol-position: top left;\n"
-"	padding: 3px;\n"
-"}")
         self.verticalLayout_109 = QVBoxLayout(self.GroupBox_DAT_GPTSoVITS_OutputParams)
         self.verticalLayout_109.setSpacing(0)
         self.verticalLayout_109.setObjectName(u"verticalLayout_109")
@@ -6238,7 +4856,7 @@ class Ui_MainWindow(object):
         self.gridLayout_104.setSpacing(12)
         self.gridLayout_104.setObjectName(u"gridLayout_104")
         self.gridLayout_104.setContentsMargins(21, 12, 21, 12)
-        self.Label_DAT_GPTSoVITS_OutputDirName = QLabel(self.Frame_DAT_GPTSoVITS_OutputDirName)
+        self.Label_DAT_GPTSoVITS_OutputDirName = LabelBase(self.Frame_DAT_GPTSoVITS_OutputDirName)
         self.Label_DAT_GPTSoVITS_OutputDirName.setObjectName(u"Label_DAT_GPTSoVITS_OutputDirName")
         sizePolicy5.setHeightForWidth(self.Label_DAT_GPTSoVITS_OutputDirName.sizePolicy().hasHeightForWidth())
         self.Label_DAT_GPTSoVITS_OutputDirName.setSizePolicy(sizePolicy5)
@@ -6319,7 +4937,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout_105.addWidget(self.Button_DAT_GPTSoVITS_FileListName_MoreActions, 0, 2, 1, 1)
 
-        self.Label_DAT_GPTSoVITS_FileListName = QLabel(self.Frame_DAT_GPTSoVITS_FileListName)
+        self.Label_DAT_GPTSoVITS_FileListName = LabelBase(self.Frame_DAT_GPTSoVITS_FileListName)
         self.Label_DAT_GPTSoVITS_FileListName.setObjectName(u"Label_DAT_GPTSoVITS_FileListName")
         sizePolicy5.setHeightForWidth(self.Label_DAT_GPTSoVITS_FileListName.sizePolicy().hasHeightForWidth())
         self.Label_DAT_GPTSoVITS_FileListName.setSizePolicy(sizePolicy5)
@@ -6364,18 +4982,14 @@ class Ui_MainWindow(object):
 
         self.Widget_Right_DAT_GPTSoVITS = QWidget(self.Subpage_DAT_GPTSoVITS)
         self.Widget_Right_DAT_GPTSoVITS.setObjectName(u"Widget_Right_DAT_GPTSoVITS")
-        self.Widget_Right_DAT_GPTSoVITS.setStyleSheet(u"QWidget {\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QWidget:hover {\n"
+        self.Widget_Right_DAT_GPTSoVITS.setStyleSheet(u"QWidget:hover {\n"
 "	background-color: rgba(36, 36, 36, 3);\n"
 "}")
         self.gridLayout_5 = QGridLayout(self.Widget_Right_DAT_GPTSoVITS)
         self.gridLayout_5.setSpacing(12)
         self.gridLayout_5.setObjectName(u"gridLayout_5")
         self.gridLayout_5.setContentsMargins(12, 12, 12, 12)
-        self.TextBrowser_Params_DAT_GPTSoVITS = QTextBrowser(self.Widget_Right_DAT_GPTSoVITS)
+        self.TextBrowser_Params_DAT_GPTSoVITS = TextBrowserBase(self.Widget_Right_DAT_GPTSoVITS)
         self.TextBrowser_Params_DAT_GPTSoVITS.setObjectName(u"TextBrowser_Params_DAT_GPTSoVITS")
         sizePolicy1.setHeightForWidth(self.TextBrowser_Params_DAT_GPTSoVITS.sizePolicy().hasHeightForWidth())
         self.TextBrowser_Params_DAT_GPTSoVITS.setSizePolicy(sizePolicy1)
@@ -6432,75 +5046,23 @@ class Ui_MainWindow(object):
 
         self.gridLayout_5.addWidget(self.TextBrowser_Params_DAT_GPTSoVITS, 0, 0, 1, 3)
 
-        self.Button_ResetSettings_DAT_GPTSoVITS = QPushButton(self.Widget_Right_DAT_GPTSoVITS)
+        self.Button_ResetSettings_DAT_GPTSoVITS = HollowButton(self.Widget_Right_DAT_GPTSoVITS)
         self.Button_ResetSettings_DAT_GPTSoVITS.setObjectName(u"Button_ResetSettings_DAT_GPTSoVITS")
-        self.Button_ResetSettings_DAT_GPTSoVITS.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	font-size: 12px;\n"
-"	background-color: transparent;\n"
-"	padding: 6.6px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgb(120, 120, 120);\n"
-"}")
 
         self.gridLayout_5.addWidget(self.Button_ResetSettings_DAT_GPTSoVITS, 1, 0, 1, 1)
 
-        self.Button_ImportSettings_DAT_GPTSoVITS = QPushButton(self.Widget_Right_DAT_GPTSoVITS)
+        self.Button_ImportSettings_DAT_GPTSoVITS = HollowButton(self.Widget_Right_DAT_GPTSoVITS)
         self.Button_ImportSettings_DAT_GPTSoVITS.setObjectName(u"Button_ImportSettings_DAT_GPTSoVITS")
-        self.Button_ImportSettings_DAT_GPTSoVITS.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	font-size: 12px;\n"
-"	background-color: transparent;\n"
-"	padding: 6.6px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgb(120, 120, 120);\n"
-"}")
 
         self.gridLayout_5.addWidget(self.Button_ImportSettings_DAT_GPTSoVITS, 1, 1, 1, 1)
 
-        self.Button_ExportSettings_DAT_GPTSoVITS = QPushButton(self.Widget_Right_DAT_GPTSoVITS)
+        self.Button_ExportSettings_DAT_GPTSoVITS = HollowButton(self.Widget_Right_DAT_GPTSoVITS)
         self.Button_ExportSettings_DAT_GPTSoVITS.setObjectName(u"Button_ExportSettings_DAT_GPTSoVITS")
-        self.Button_ExportSettings_DAT_GPTSoVITS.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	font-size: 12px;\n"
-"	background-color: transparent;\n"
-"	padding: 6.6px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgb(120, 120, 120);\n"
-"}")
 
         self.gridLayout_5.addWidget(self.Button_ExportSettings_DAT_GPTSoVITS, 1, 2, 1, 1)
 
-        self.Button_CheckOutput_DAT_GPTSoVITS = QPushButton(self.Widget_Right_DAT_GPTSoVITS)
+        self.Button_CheckOutput_DAT_GPTSoVITS = HollowButton(self.Widget_Right_DAT_GPTSoVITS)
         self.Button_CheckOutput_DAT_GPTSoVITS.setObjectName(u"Button_CheckOutput_DAT_GPTSoVITS")
-        self.Button_CheckOutput_DAT_GPTSoVITS.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	font-size: 12px;\n"
-"	background-color: transparent;\n"
-"	padding: 6.6px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgb(120, 120, 120);\n"
-"}")
 
         self.gridLayout_5.addWidget(self.Button_CheckOutput_DAT_GPTSoVITS, 2, 0, 1, 3)
 
@@ -6548,8 +5110,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_101.setContentsMargins(0, 0, 0, 0)
         self.Button_DAT_GPTSoVITS_Execute = QPushButton(self.Page_DAT_GPTSoVITS_Execute)
         self.Button_DAT_GPTSoVITS_Execute.setObjectName(u"Button_DAT_GPTSoVITS_Execute")
-        sizePolicy3.setHeightForWidth(self.Button_DAT_GPTSoVITS_Execute.sizePolicy().hasHeightForWidth())
-        self.Button_DAT_GPTSoVITS_Execute.setSizePolicy(sizePolicy3)
+        sizePolicy2.setHeightForWidth(self.Button_DAT_GPTSoVITS_Execute.sizePolicy().hasHeightForWidth())
+        self.Button_DAT_GPTSoVITS_Execute.setSizePolicy(sizePolicy2)
         self.Button_DAT_GPTSoVITS_Execute.setMinimumSize(QSize(0, 30))
         self.Button_DAT_GPTSoVITS_Execute.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
@@ -6573,8 +5135,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_103.setContentsMargins(0, 0, 0, 0)
         self.Button_DAT_GPTSoVITS_Terminate = QPushButton(self.Page_DAT_GPTSoVITS_Terminate)
         self.Button_DAT_GPTSoVITS_Terminate.setObjectName(u"Button_DAT_GPTSoVITS_Terminate")
-        sizePolicy3.setHeightForWidth(self.Button_DAT_GPTSoVITS_Terminate.sizePolicy().hasHeightForWidth())
-        self.Button_DAT_GPTSoVITS_Terminate.setSizePolicy(sizePolicy3)
+        sizePolicy2.setHeightForWidth(self.Button_DAT_GPTSoVITS_Terminate.sizePolicy().hasHeightForWidth())
+        self.Button_DAT_GPTSoVITS_Terminate.setSizePolicy(sizePolicy2)
         self.Button_DAT_GPTSoVITS_Terminate.setMinimumSize(QSize(0, 30))
         self.Button_DAT_GPTSoVITS_Terminate.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
@@ -6637,28 +5199,13 @@ class Ui_MainWindow(object):
         self.ScrollArea_Middle_DAT_VITS.setWidgetResizable(True)
         self.ScrollArea_Middle_WidgetContents_DAT_VITS = QWidget()
         self.ScrollArea_Middle_WidgetContents_DAT_VITS.setObjectName(u"ScrollArea_Middle_WidgetContents_DAT_VITS")
-        self.ScrollArea_Middle_WidgetContents_DAT_VITS.setGeometry(QRect(0, 0, 586, 976))
+        self.ScrollArea_Middle_WidgetContents_DAT_VITS.setGeometry(QRect(0, 0, 586, 985))
         self.verticalLayout_36 = QVBoxLayout(self.ScrollArea_Middle_WidgetContents_DAT_VITS)
         self.verticalLayout_36.setSpacing(12)
         self.verticalLayout_36.setObjectName(u"verticalLayout_36")
         self.verticalLayout_36.setContentsMargins(12, 12, 12, 12)
-        self.GroupBox_DAT_VITS_InputParams = QGroupBox(self.ScrollArea_Middle_WidgetContents_DAT_VITS)
+        self.GroupBox_DAT_VITS_InputParams = GroupBoxBase(self.ScrollArea_Middle_WidgetContents_DAT_VITS)
         self.GroupBox_DAT_VITS_InputParams.setObjectName(u"GroupBox_DAT_VITS_InputParams")
-        self.GroupBox_DAT_VITS_InputParams.setStyleSheet(u"QGroupBox {\n"
-"	font-size: 15px;\n"
-"	margin-top: 1.5ex;\n"
-"	background-color: transparent;\n"
-"	border-width: 1px;\n"
-"	border-style: solid;\n"
-"	border-color: transparent;\n"
-"}\n"
-"QGroupBox::title {\n"
-"	left: 9px;\n"
-"	margin-left: 0px;\n"
-"	subcontrol-origin: margin;\n"
-"	subcontrol-position: top left;\n"
-"	padding: 3px;\n"
-"}")
         self.verticalLayout_111 = QVBoxLayout(self.GroupBox_DAT_VITS_InputParams)
         self.verticalLayout_111.setSpacing(0)
         self.verticalLayout_111.setObjectName(u"verticalLayout_111")
@@ -6684,7 +5231,7 @@ class Ui_MainWindow(object):
         self.gridLayout_46.setSpacing(12)
         self.gridLayout_46.setObjectName(u"gridLayout_46")
         self.gridLayout_46.setContentsMargins(21, 12, 21, 12)
-        self.Label_DAT_VITS_AudioSpeakersDataPath = QLabel(self.Frame_DAT_VITS_AudioSpeakersDataPath)
+        self.Label_DAT_VITS_AudioSpeakersDataPath = LabelBase(self.Frame_DAT_VITS_AudioSpeakersDataPath)
         self.Label_DAT_VITS_AudioSpeakersDataPath.setObjectName(u"Label_DAT_VITS_AudioSpeakersDataPath")
         sizePolicy5.setHeightForWidth(self.Label_DAT_VITS_AudioSpeakersDataPath.sizePolicy().hasHeightForWidth())
         self.Label_DAT_VITS_AudioSpeakersDataPath.setSizePolicy(sizePolicy5)
@@ -6739,7 +5286,7 @@ class Ui_MainWindow(object):
         self.gridLayout_47.setSpacing(12)
         self.gridLayout_47.setObjectName(u"gridLayout_47")
         self.gridLayout_47.setContentsMargins(21, 12, 21, 12)
-        self.Label_DAT_VITS_SRTDir = QLabel(self.Frame_DAT_VITS_SRTDir)
+        self.Label_DAT_VITS_SRTDir = LabelBase(self.Frame_DAT_VITS_SRTDir)
         self.Label_DAT_VITS_SRTDir.setObjectName(u"Label_DAT_VITS_SRTDir")
         sizePolicy5.setHeightForWidth(self.Label_DAT_VITS_SRTDir.sizePolicy().hasHeightForWidth())
         self.Label_DAT_VITS_SRTDir.setSizePolicy(sizePolicy5)
@@ -6785,23 +5332,8 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_36.addWidget(self.GroupBox_DAT_VITS_InputParams)
 
-        self.GroupBox_DAT_VITS_VITSParams = QGroupBox(self.ScrollArea_Middle_WidgetContents_DAT_VITS)
+        self.GroupBox_DAT_VITS_VITSParams = GroupBoxBase(self.ScrollArea_Middle_WidgetContents_DAT_VITS)
         self.GroupBox_DAT_VITS_VITSParams.setObjectName(u"GroupBox_DAT_VITS_VITSParams")
-        self.GroupBox_DAT_VITS_VITSParams.setStyleSheet(u"QGroupBox {\n"
-"	font-size: 15px;\n"
-"	margin-top: 1.5ex;\n"
-"	background-color: transparent;\n"
-"	border-width: 1px;\n"
-"	border-style: solid;\n"
-"	border-color: transparent;\n"
-"}\n"
-"QGroupBox::title {\n"
-"	left: 9px;\n"
-"	margin-left: 0px;\n"
-"	subcontrol-origin: margin;\n"
-"	subcontrol-position: top left;\n"
-"	padding: 3px;\n"
-"}")
         self.verticalLayout_115 = QVBoxLayout(self.GroupBox_DAT_VITS_VITSParams)
         self.verticalLayout_115.setSpacing(0)
         self.verticalLayout_115.setObjectName(u"verticalLayout_115")
@@ -6827,7 +5359,7 @@ class Ui_MainWindow(object):
         self.gridLayout_76.setSpacing(12)
         self.gridLayout_76.setObjectName(u"gridLayout_76")
         self.gridLayout_76.setContentsMargins(21, 12, 21, 12)
-        self.Label_DAT_VITS_DataFormat = QLabel(self.Frame_DAT_VITS_DataFormat)
+        self.Label_DAT_VITS_DataFormat = LabelBase(self.Frame_DAT_VITS_DataFormat)
         self.Label_DAT_VITS_DataFormat.setObjectName(u"Label_DAT_VITS_DataFormat")
         sizePolicy5.setHeightForWidth(self.Label_DAT_VITS_DataFormat.sizePolicy().hasHeightForWidth())
         self.Label_DAT_VITS_DataFormat.setSizePolicy(sizePolicy5)
@@ -6882,7 +5414,7 @@ class Ui_MainWindow(object):
         self.gridLayout_48.setSpacing(12)
         self.gridLayout_48.setObjectName(u"gridLayout_48")
         self.gridLayout_48.setContentsMargins(21, 12, 21, 12)
-        self.Label_DAT_VITS_AddAuxiliaryData = QLabel(self.Frame_DAT_VITS_AddAuxiliaryData)
+        self.Label_DAT_VITS_AddAuxiliaryData = LabelBase(self.Frame_DAT_VITS_AddAuxiliaryData)
         self.Label_DAT_VITS_AddAuxiliaryData.setObjectName(u"Label_DAT_VITS_AddAuxiliaryData")
         sizePolicy5.setHeightForWidth(self.Label_DAT_VITS_AddAuxiliaryData.sizePolicy().hasHeightForWidth())
         self.Label_DAT_VITS_AddAuxiliaryData.setSizePolicy(sizePolicy5)
@@ -6967,7 +5499,7 @@ class Ui_MainWindow(object):
         self.gridLayout_53.setSpacing(12)
         self.gridLayout_53.setObjectName(u"gridLayout_53")
         self.gridLayout_53.setContentsMargins(21, 12, 21, 12)
-        self.Label_DAT_VITS_AuxiliaryDataPath = QLabel(self.Frame_DAT_VITS_AuxiliaryDataPath)
+        self.Label_DAT_VITS_AuxiliaryDataPath = LabelBase(self.Frame_DAT_VITS_AuxiliaryDataPath)
         self.Label_DAT_VITS_AuxiliaryDataPath.setObjectName(u"Label_DAT_VITS_AuxiliaryDataPath")
         sizePolicy5.setHeightForWidth(self.Label_DAT_VITS_AuxiliaryDataPath.sizePolicy().hasHeightForWidth())
         self.Label_DAT_VITS_AuxiliaryDataPath.setSizePolicy(sizePolicy5)
@@ -7036,7 +5568,7 @@ class Ui_MainWindow(object):
         self.gridLayout_49.setSpacing(12)
         self.gridLayout_49.setObjectName(u"gridLayout_49")
         self.gridLayout_49.setContentsMargins(21, 12, 21, 12)
-        self.Label_DAT_VITS_TrainRatio = QLabel(self.Frame_DAT_VITS_TrainRatio)
+        self.Label_DAT_VITS_TrainRatio = LabelBase(self.Frame_DAT_VITS_TrainRatio)
         self.Label_DAT_VITS_TrainRatio.setObjectName(u"Label_DAT_VITS_TrainRatio")
         sizePolicy5.setHeightForWidth(self.Label_DAT_VITS_TrainRatio.sizePolicy().hasHeightForWidth())
         self.Label_DAT_VITS_TrainRatio.setSizePolicy(sizePolicy5)
@@ -7094,7 +5626,7 @@ class Ui_MainWindow(object):
         self.gridLayout_50.setSpacing(12)
         self.gridLayout_50.setObjectName(u"gridLayout_50")
         self.gridLayout_50.setContentsMargins(21, 12, 21, 12)
-        self.Label_DAT_VITS_SampleRate = QLabel(self.Frame_DAT_VITS_SampleRate)
+        self.Label_DAT_VITS_SampleRate = LabelBase(self.Frame_DAT_VITS_SampleRate)
         self.Label_DAT_VITS_SampleRate.setObjectName(u"Label_DAT_VITS_SampleRate")
         sizePolicy5.setHeightForWidth(self.Label_DAT_VITS_SampleRate.sizePolicy().hasHeightForWidth())
         self.Label_DAT_VITS_SampleRate.setSizePolicy(sizePolicy5)
@@ -7149,7 +5681,7 @@ class Ui_MainWindow(object):
         self.gridLayout_51.setSpacing(12)
         self.gridLayout_51.setObjectName(u"gridLayout_51")
         self.gridLayout_51.setContentsMargins(21, 12, 21, 12)
-        self.Label_DAT_VITS_SampleWidth = QLabel(self.Frame_DAT_VITS_SampleWidth)
+        self.Label_DAT_VITS_SampleWidth = LabelBase(self.Frame_DAT_VITS_SampleWidth)
         self.Label_DAT_VITS_SampleWidth.setObjectName(u"Label_DAT_VITS_SampleWidth")
         sizePolicy5.setHeightForWidth(self.Label_DAT_VITS_SampleWidth.sizePolicy().hasHeightForWidth())
         self.Label_DAT_VITS_SampleWidth.setSizePolicy(sizePolicy5)
@@ -7204,7 +5736,7 @@ class Ui_MainWindow(object):
         self.gridLayout_52.setSpacing(12)
         self.gridLayout_52.setObjectName(u"gridLayout_52")
         self.gridLayout_52.setContentsMargins(21, 12, 21, 12)
-        self.Label_DAT_VITS_ToMono = QLabel(self.Frame_DAT_VITS_ToMono)
+        self.Label_DAT_VITS_ToMono = LabelBase(self.Frame_DAT_VITS_ToMono)
         self.Label_DAT_VITS_ToMono.setObjectName(u"Label_DAT_VITS_ToMono")
         sizePolicy5.setHeightForWidth(self.Label_DAT_VITS_ToMono.sizePolicy().hasHeightForWidth())
         self.Label_DAT_VITS_ToMono.setSizePolicy(sizePolicy5)
@@ -7281,23 +5813,8 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_36.addWidget(self.GroupBox_DAT_VITS_VITSParams)
 
-        self.GroupBox_DAT_VITS_OutputParams = QGroupBox(self.ScrollArea_Middle_WidgetContents_DAT_VITS)
+        self.GroupBox_DAT_VITS_OutputParams = GroupBoxBase(self.ScrollArea_Middle_WidgetContents_DAT_VITS)
         self.GroupBox_DAT_VITS_OutputParams.setObjectName(u"GroupBox_DAT_VITS_OutputParams")
-        self.GroupBox_DAT_VITS_OutputParams.setStyleSheet(u"QGroupBox {\n"
-"	font-size: 15px;\n"
-"	margin-top: 1.5ex;\n"
-"	background-color: transparent;\n"
-"	border-width: 1px;\n"
-"	border-style: solid;\n"
-"	border-color: transparent;\n"
-"}\n"
-"QGroupBox::title {\n"
-"	left: 9px;\n"
-"	margin-left: 0px;\n"
-"	subcontrol-origin: margin;\n"
-"	subcontrol-position: top left;\n"
-"	padding: 3px;\n"
-"}")
         self.verticalLayout_107 = QVBoxLayout(self.GroupBox_DAT_VITS_OutputParams)
         self.verticalLayout_107.setSpacing(0)
         self.verticalLayout_107.setObjectName(u"verticalLayout_107")
@@ -7323,7 +5840,7 @@ class Ui_MainWindow(object):
         self.gridLayout_54.setSpacing(12)
         self.gridLayout_54.setObjectName(u"gridLayout_54")
         self.gridLayout_54.setContentsMargins(21, 12, 21, 12)
-        self.Label_DAT_VITS_OutputDirName = QLabel(self.Frame_DAT_VITS_OutputDirName)
+        self.Label_DAT_VITS_OutputDirName = LabelBase(self.Frame_DAT_VITS_OutputDirName)
         self.Label_DAT_VITS_OutputDirName.setObjectName(u"Label_DAT_VITS_OutputDirName")
         sizePolicy5.setHeightForWidth(self.Label_DAT_VITS_OutputDirName.sizePolicy().hasHeightForWidth())
         self.Label_DAT_VITS_OutputDirName.setSizePolicy(sizePolicy5)
@@ -7404,7 +5921,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout_55.addWidget(self.Button_DAT_VITS_FileListNameTraining_MoreActions, 0, 2, 1, 1)
 
-        self.Label_DAT_VITS_FileListNameTraining = QLabel(self.Frame_DAT_VITS_FileListNameTraining)
+        self.Label_DAT_VITS_FileListNameTraining = LabelBase(self.Frame_DAT_VITS_FileListNameTraining)
         self.Label_DAT_VITS_FileListNameTraining.setObjectName(u"Label_DAT_VITS_FileListNameTraining")
         sizePolicy5.setHeightForWidth(self.Label_DAT_VITS_FileListNameTraining.sizePolicy().hasHeightForWidth())
         self.Label_DAT_VITS_FileListNameTraining.setSizePolicy(sizePolicy5)
@@ -7447,7 +5964,7 @@ class Ui_MainWindow(object):
         self.gridLayout_56.setSpacing(12)
         self.gridLayout_56.setObjectName(u"gridLayout_56")
         self.gridLayout_56.setContentsMargins(21, 12, 21, 12)
-        self.Label_DAT_VITS_FileListNameValidation = QLabel(self.Frame_DAT_VITS_FileListNameValidation)
+        self.Label_DAT_VITS_FileListNameValidation = LabelBase(self.Frame_DAT_VITS_FileListNameValidation)
         self.Label_DAT_VITS_FileListNameValidation.setObjectName(u"Label_DAT_VITS_FileListNameValidation")
         sizePolicy5.setHeightForWidth(self.Label_DAT_VITS_FileListNameValidation.sizePolicy().hasHeightForWidth())
         self.Label_DAT_VITS_FileListNameValidation.setSizePolicy(sizePolicy5)
@@ -7504,18 +6021,14 @@ class Ui_MainWindow(object):
 
         self.Widget_Right_DAT_VITS = QWidget(self.Subpage_DAT_VITS)
         self.Widget_Right_DAT_VITS.setObjectName(u"Widget_Right_DAT_VITS")
-        self.Widget_Right_DAT_VITS.setStyleSheet(u"QWidget {\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QWidget:hover {\n"
+        self.Widget_Right_DAT_VITS.setStyleSheet(u"QWidget:hover {\n"
 "	background-color: rgba(36, 36, 36, 3);\n"
 "}")
         self.gridLayout_9 = QGridLayout(self.Widget_Right_DAT_VITS)
         self.gridLayout_9.setSpacing(12)
         self.gridLayout_9.setObjectName(u"gridLayout_9")
         self.gridLayout_9.setContentsMargins(12, 12, 12, 12)
-        self.TextBrowser_Params_DAT_VITS = QTextBrowser(self.Widget_Right_DAT_VITS)
+        self.TextBrowser_Params_DAT_VITS = TextBrowserBase(self.Widget_Right_DAT_VITS)
         self.TextBrowser_Params_DAT_VITS.setObjectName(u"TextBrowser_Params_DAT_VITS")
         sizePolicy1.setHeightForWidth(self.TextBrowser_Params_DAT_VITS.sizePolicy().hasHeightForWidth())
         self.TextBrowser_Params_DAT_VITS.setSizePolicy(sizePolicy1)
@@ -7572,75 +6085,23 @@ class Ui_MainWindow(object):
 
         self.gridLayout_9.addWidget(self.TextBrowser_Params_DAT_VITS, 0, 0, 1, 3)
 
-        self.Button_ResetSettings_DAT_VITS = QPushButton(self.Widget_Right_DAT_VITS)
+        self.Button_ResetSettings_DAT_VITS = HollowButton(self.Widget_Right_DAT_VITS)
         self.Button_ResetSettings_DAT_VITS.setObjectName(u"Button_ResetSettings_DAT_VITS")
-        self.Button_ResetSettings_DAT_VITS.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	font-size: 12px;\n"
-"	background-color: transparent;\n"
-"	padding: 6.6px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgb(120, 120, 120);\n"
-"}")
 
         self.gridLayout_9.addWidget(self.Button_ResetSettings_DAT_VITS, 1, 0, 1, 1)
 
-        self.Button_ImportSettings_DAT_VITS = QPushButton(self.Widget_Right_DAT_VITS)
+        self.Button_ImportSettings_DAT_VITS = HollowButton(self.Widget_Right_DAT_VITS)
         self.Button_ImportSettings_DAT_VITS.setObjectName(u"Button_ImportSettings_DAT_VITS")
-        self.Button_ImportSettings_DAT_VITS.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	font-size: 12px;\n"
-"	background-color: transparent;\n"
-"	padding: 6.6px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgb(120, 120, 120);\n"
-"}")
 
         self.gridLayout_9.addWidget(self.Button_ImportSettings_DAT_VITS, 1, 1, 1, 1)
 
-        self.Button_ExportSettings_DAT_VITS = QPushButton(self.Widget_Right_DAT_VITS)
+        self.Button_ExportSettings_DAT_VITS = HollowButton(self.Widget_Right_DAT_VITS)
         self.Button_ExportSettings_DAT_VITS.setObjectName(u"Button_ExportSettings_DAT_VITS")
-        self.Button_ExportSettings_DAT_VITS.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	font-size: 12px;\n"
-"	background-color: transparent;\n"
-"	padding: 6.6px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgb(120, 120, 120);\n"
-"}")
 
         self.gridLayout_9.addWidget(self.Button_ExportSettings_DAT_VITS, 1, 2, 1, 1)
 
-        self.Button_CheckOutput_DAT_VITS = QPushButton(self.Widget_Right_DAT_VITS)
+        self.Button_CheckOutput_DAT_VITS = HollowButton(self.Widget_Right_DAT_VITS)
         self.Button_CheckOutput_DAT_VITS.setObjectName(u"Button_CheckOutput_DAT_VITS")
-        self.Button_CheckOutput_DAT_VITS.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	font-size: 12px;\n"
-"	background-color: transparent;\n"
-"	padding: 6.6px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgb(120, 120, 120);\n"
-"}")
 
         self.gridLayout_9.addWidget(self.Button_CheckOutput_DAT_VITS, 2, 0, 1, 3)
 
@@ -7688,8 +6149,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_92.setContentsMargins(0, 0, 0, 0)
         self.Button_DAT_VITS_Execute = QPushButton(self.Page_DAT_VITS_Execute)
         self.Button_DAT_VITS_Execute.setObjectName(u"Button_DAT_VITS_Execute")
-        sizePolicy3.setHeightForWidth(self.Button_DAT_VITS_Execute.sizePolicy().hasHeightForWidth())
-        self.Button_DAT_VITS_Execute.setSizePolicy(sizePolicy3)
+        sizePolicy2.setHeightForWidth(self.Button_DAT_VITS_Execute.sizePolicy().hasHeightForWidth())
+        self.Button_DAT_VITS_Execute.setSizePolicy(sizePolicy2)
         self.Button_DAT_VITS_Execute.setMinimumSize(QSize(0, 30))
         self.Button_DAT_VITS_Execute.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
@@ -7713,8 +6174,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_93.setContentsMargins(0, 0, 0, 0)
         self.Button_DAT_VITS_Terminate = QPushButton(self.Page_DAT_VITS_Terminate)
         self.Button_DAT_VITS_Terminate.setObjectName(u"Button_DAT_VITS_Terminate")
-        sizePolicy3.setHeightForWidth(self.Button_DAT_VITS_Terminate.sizePolicy().hasHeightForWidth())
-        self.Button_DAT_VITS_Terminate.setSizePolicy(sizePolicy3)
+        sizePolicy2.setHeightForWidth(self.Button_DAT_VITS_Terminate.sizePolicy().hasHeightForWidth())
+        self.Button_DAT_VITS_Terminate.setSizePolicy(sizePolicy2)
         self.Button_DAT_VITS_Terminate.setMinimumSize(QSize(0, 30))
         self.Button_DAT_VITS_Terminate.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
@@ -7754,113 +6215,36 @@ class Ui_MainWindow(object):
         self.Frame_Train_Top.setObjectName(u"Frame_Train_Top")
         self.Frame_Train_Top.setMinimumSize(QSize(0, 60))
         self.Frame_Train_Top.setStyleSheet(u"QFrame {\n"
-"	border-width: 0px;\n"
+"	border-top-width: 0px;\n"
+"	border-right-width: 0px;\n"
+"	border-bottom-width: 3px;\n"
+"	border-left-width: 0px;\n"
 "	border-style: solid;\n"
+"	border-bottom-color: rgba(123, 123, 123, 123);\n"
 "}")
         self.horizontalLayout_15 = QHBoxLayout(self.Frame_Train_Top)
         self.horizontalLayout_15.setSpacing(0)
         self.horizontalLayout_15.setObjectName(u"horizontalLayout_15")
         self.horizontalLayout_15.setContentsMargins(0, 0, 0, 0)
-        self.Button_VoiceTrainer_Title_GPTSoVITS = ButtonBase(self.Frame_Train_Top)
+        self.Button_VoiceTrainer_Title_GPTSoVITS = NavigationButton(self.Frame_Train_Top)
         self.Button_VoiceTrainer_Title_GPTSoVITS.setObjectName(u"Button_VoiceTrainer_Title_GPTSoVITS")
         sizePolicy1.setHeightForWidth(self.Button_VoiceTrainer_Title_GPTSoVITS.sizePolicy().hasHeightForWidth())
         self.Button_VoiceTrainer_Title_GPTSoVITS.setSizePolicy(sizePolicy1)
-        self.Button_VoiceTrainer_Title_GPTSoVITS.setStyleSheet(u"QPushButton {\n"
-"	font-size: 24px;\n"
-"	/*text-align: center;*/\n"
-"	padding-left: 12px;\n"
-"	padding-right: 12px;\n"
-"	background-color: transparent;\n"
-"	border-top-width: 0px;\n"
-"	border-right-width: 0px;\n"
-"	border-bottom-width: 3px;\n"
-"	border-left-width: 0px;\n"
-"	border-style: solid;\n"
-"	border-bottom-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	background-color: transparent;\n"
-"	border-top-width: 0px;\n"
-"	border-right-width: 0px;\n"
-"	border-bottom-width: 3px;\n"
-"	border-left-width: 0px;\n"
-"	border-style: solid;\n"
-"	border-bottom-color: rgba(120, 180, 240, 123);\n"
-"}\n"
-"QPushButton:checked {\n"
-"	background-color: transparent;\n"
-"	border-top-width: 0px;\n"
-"	border-right-width: 0px;\n"
-"	border-bottom-width: 3px;\n"
-"	border-left-width: 0px;\n"
-"	border-style: solid;\n"
-"	border-bottom-color: rgba(120, 180, 240, 210);\n"
-"}")
 
         self.horizontalLayout_15.addWidget(self.Button_VoiceTrainer_Title_GPTSoVITS)
 
-        self.Button_VoiceTrainer_Title_VITS = ButtonBase(self.Frame_Train_Top)
+        self.Button_VoiceTrainer_Title_VITS = NavigationButton(self.Frame_Train_Top)
         self.Button_VoiceTrainer_Title_VITS.setObjectName(u"Button_VoiceTrainer_Title_VITS")
         sizePolicy1.setHeightForWidth(self.Button_VoiceTrainer_Title_VITS.sizePolicy().hasHeightForWidth())
         self.Button_VoiceTrainer_Title_VITS.setSizePolicy(sizePolicy1)
-        self.Button_VoiceTrainer_Title_VITS.setStyleSheet(u"QPushButton {\n"
-"	font-size: 24px;\n"
-"	/*text-align: center;*/\n"
-"	padding-left: 12px;\n"
-"	padding-right: 12px;\n"
-"	background-color: transparent;\n"
-"	border-top-width: 0px;\n"
-"	border-right-width: 0px;\n"
-"	border-bottom-width: 3px;\n"
-"	border-left-width: 0px;\n"
-"	border-style: solid;\n"
-"	border-bottom-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	background-color: transparent;\n"
-"	border-top-width: 0px;\n"
-"	border-right-width: 0px;\n"
-"	border-bottom-width: 3px;\n"
-"	border-left-width: 0px;\n"
-"	border-style: solid;\n"
-"	border-bottom-color: rgba(120, 180, 240, 123);\n"
-"}\n"
-"QPushButton:checked {\n"
-"	background-color: transparent;\n"
-"	border-top-width: 0px;\n"
-"	border-right-width: 0px;\n"
-"	border-bottom-width: 3px;\n"
-"	border-left-width: 0px;\n"
-"	border-style: solid;\n"
-"	border-bottom-color: rgba(120, 180, 240, 210);\n"
-"}")
 
         self.horizontalLayout_15.addWidget(self.Button_VoiceTrainer_Title_VITS)
 
-        self.Frame_VoiceTrainer_Title = QFrame(self.Frame_Train_Top)
-        self.Frame_VoiceTrainer_Title.setObjectName(u"Frame_VoiceTrainer_Title")
-        self.Frame_VoiceTrainer_Title.setStyleSheet(u"QFrame {\n"
-"	/*font-size: 24px;\n"
-"	text-align: center;\n"
-"	padding-left: 12px;\n"
-"	padding-right: 12px;*/\n"
-"	background-color: transparent;\n"
-"	border-top-width: 0px;\n"
-"	border-right-width: 0px;\n"
-"	border-bottom-width: 3px;\n"
-"	border-left-width: 0px;\n"
-"	border-style: solid;\n"
-"	border-bottom-color: rgba(123, 123, 123, 123);\n"
-"}")
-        self.horizontalLayout_58 = QHBoxLayout(self.Frame_VoiceTrainer_Title)
-        self.horizontalLayout_58.setSpacing(12)
-        self.horizontalLayout_58.setObjectName(u"horizontalLayout_58")
-        self.horizontalLayout_58.setContentsMargins(0, 0, 0, 0)
-        self.HorizontalSpacer_VoiceTrainer_Title = QSpacerItem(549, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+        self.HorizontalSpacer_VoiceTrainer_Title = QSpacerItem(0, 0, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
-        self.horizontalLayout_58.addItem(self.HorizontalSpacer_VoiceTrainer_Title)
+        self.horizontalLayout_15.addItem(self.HorizontalSpacer_VoiceTrainer_Title)
 
-        self.Button_VoiceTrainer_Help = QPushButton(self.Frame_VoiceTrainer_Title)
+        self.Button_VoiceTrainer_Help = QPushButton(self.Frame_Train_Top)
         self.Button_VoiceTrainer_Help.setObjectName(u"Button_VoiceTrainer_Help")
         self.Button_VoiceTrainer_Help.setMinimumSize(QSize(45, 45))
         self.Button_VoiceTrainer_Help.setStyleSheet(u"QPushButton {\n"
@@ -7875,10 +6259,7 @@ class Ui_MainWindow(object):
 "	background-color: rgba(201, 210, 222, 33);\n"
 "}")
 
-        self.horizontalLayout_58.addWidget(self.Button_VoiceTrainer_Help)
-
-
-        self.horizontalLayout_15.addWidget(self.Frame_VoiceTrainer_Title)
+        self.horizontalLayout_15.addWidget(self.Button_VoiceTrainer_Help)
 
 
         self.verticalLayout_43.addWidget(self.Frame_Train_Top)
@@ -7925,28 +6306,13 @@ class Ui_MainWindow(object):
         self.ScrollArea_Middle_Train_GPTSoVITS.setWidgetResizable(True)
         self.ScrollArea_Middle_WidgetContents_Train_GPTSoVITS = QWidget()
         self.ScrollArea_Middle_WidgetContents_Train_GPTSoVITS.setObjectName(u"ScrollArea_Middle_WidgetContents_Train_GPTSoVITS")
-        self.ScrollArea_Middle_WidgetContents_Train_GPTSoVITS.setGeometry(QRect(0, 0, 586, 1079))
+        self.ScrollArea_Middle_WidgetContents_Train_GPTSoVITS.setGeometry(QRect(0, 0, 586, 1088))
         self.verticalLayout_52 = QVBoxLayout(self.ScrollArea_Middle_WidgetContents_Train_GPTSoVITS)
         self.verticalLayout_52.setSpacing(12)
         self.verticalLayout_52.setObjectName(u"verticalLayout_52")
         self.verticalLayout_52.setContentsMargins(12, 12, 12, 12)
-        self.GroupBox_Train_GPTSoVITS_InputParams = QGroupBox(self.ScrollArea_Middle_WidgetContents_Train_GPTSoVITS)
+        self.GroupBox_Train_GPTSoVITS_InputParams = GroupBoxBase(self.ScrollArea_Middle_WidgetContents_Train_GPTSoVITS)
         self.GroupBox_Train_GPTSoVITS_InputParams.setObjectName(u"GroupBox_Train_GPTSoVITS_InputParams")
-        self.GroupBox_Train_GPTSoVITS_InputParams.setStyleSheet(u"QGroupBox {\n"
-"	font-size: 15px;\n"
-"	margin-top: 1.5ex;\n"
-"	background-color: transparent;\n"
-"	border-width: 1px;\n"
-"	border-style: solid;\n"
-"	border-color: transparent;\n"
-"}\n"
-"QGroupBox::title {\n"
-"	left: 9px;\n"
-"	margin-left: 0px;\n"
-"	subcontrol-origin: margin;\n"
-"	subcontrol-position: top left;\n"
-"	padding: 3px;\n"
-"}")
         self.verticalLayout_121 = QVBoxLayout(self.GroupBox_Train_GPTSoVITS_InputParams)
         self.verticalLayout_121.setSpacing(0)
         self.verticalLayout_121.setObjectName(u"verticalLayout_121")
@@ -7972,7 +6338,7 @@ class Ui_MainWindow(object):
         self.gridLayout_81.setSpacing(12)
         self.gridLayout_81.setObjectName(u"gridLayout_81")
         self.gridLayout_81.setContentsMargins(21, 12, 21, 12)
-        self.Label_Train_GPTSoVITS_FileListPath = QLabel(self.Frame_Train_GPTSoVITS_FileListPath)
+        self.Label_Train_GPTSoVITS_FileListPath = LabelBase(self.Frame_Train_GPTSoVITS_FileListPath)
         self.Label_Train_GPTSoVITS_FileListPath.setObjectName(u"Label_Train_GPTSoVITS_FileListPath")
         sizePolicy5.setHeightForWidth(self.Label_Train_GPTSoVITS_FileListPath.sizePolicy().hasHeightForWidth())
         self.Label_Train_GPTSoVITS_FileListPath.setSizePolicy(sizePolicy5)
@@ -8018,23 +6384,8 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_52.addWidget(self.GroupBox_Train_GPTSoVITS_InputParams)
 
-        self.GroupBox_Train_GPTSoVITS_GPTSoVITSParams = QGroupBox(self.ScrollArea_Middle_WidgetContents_Train_GPTSoVITS)
+        self.GroupBox_Train_GPTSoVITS_GPTSoVITSParams = GroupBoxBase(self.ScrollArea_Middle_WidgetContents_Train_GPTSoVITS)
         self.GroupBox_Train_GPTSoVITS_GPTSoVITSParams.setObjectName(u"GroupBox_Train_GPTSoVITS_GPTSoVITSParams")
-        self.GroupBox_Train_GPTSoVITS_GPTSoVITSParams.setStyleSheet(u"QGroupBox {\n"
-"	font-size: 15px;\n"
-"	margin-top: 1.5ex;\n"
-"	background-color: transparent;\n"
-"	border-width: 1px;\n"
-"	border-style: solid;\n"
-"	border-color: transparent;\n"
-"}\n"
-"QGroupBox::title {\n"
-"	left: 9px;\n"
-"	margin-left: 0px;\n"
-"	subcontrol-origin: margin;\n"
-"	subcontrol-position: top left;\n"
-"	padding: 3px;\n"
-"}")
         self.verticalLayout_122 = QVBoxLayout(self.GroupBox_Train_GPTSoVITS_GPTSoVITSParams)
         self.verticalLayout_122.setSpacing(0)
         self.verticalLayout_122.setObjectName(u"verticalLayout_122")
@@ -8060,7 +6411,7 @@ class Ui_MainWindow(object):
         self.gridLayout_88.setSpacing(12)
         self.gridLayout_88.setObjectName(u"gridLayout_88")
         self.gridLayout_88.setContentsMargins(21, 12, 21, 12)
-        self.Label_Train_GPTSoVITS_ModelPathPretrainedS1 = QLabel(self.Frame_Train_GPTSoVITS_ModelPathPretrainedS1)
+        self.Label_Train_GPTSoVITS_ModelPathPretrainedS1 = LabelBase(self.Frame_Train_GPTSoVITS_ModelPathPretrainedS1)
         self.Label_Train_GPTSoVITS_ModelPathPretrainedS1.setObjectName(u"Label_Train_GPTSoVITS_ModelPathPretrainedS1")
         sizePolicy5.setHeightForWidth(self.Label_Train_GPTSoVITS_ModelPathPretrainedS1.sizePolicy().hasHeightForWidth())
         self.Label_Train_GPTSoVITS_ModelPathPretrainedS1.setSizePolicy(sizePolicy5)
@@ -8115,7 +6466,7 @@ class Ui_MainWindow(object):
         self.gridLayout_86.setSpacing(12)
         self.gridLayout_86.setObjectName(u"gridLayout_86")
         self.gridLayout_86.setContentsMargins(21, 12, 21, 12)
-        self.Label_Train_GPTSoVITS_ModelPathPretrainedS2G = QLabel(self.Frame_Train_GPTSoVITS_ModelPathPretrainedS2G)
+        self.Label_Train_GPTSoVITS_ModelPathPretrainedS2G = LabelBase(self.Frame_Train_GPTSoVITS_ModelPathPretrainedS2G)
         self.Label_Train_GPTSoVITS_ModelPathPretrainedS2G.setObjectName(u"Label_Train_GPTSoVITS_ModelPathPretrainedS2G")
         sizePolicy5.setHeightForWidth(self.Label_Train_GPTSoVITS_ModelPathPretrainedS2G.sizePolicy().hasHeightForWidth())
         self.Label_Train_GPTSoVITS_ModelPathPretrainedS2G.setSizePolicy(sizePolicy5)
@@ -8170,7 +6521,7 @@ class Ui_MainWindow(object):
         self.gridLayout_89.setSpacing(12)
         self.gridLayout_89.setObjectName(u"gridLayout_89")
         self.gridLayout_89.setContentsMargins(21, 12, 21, 12)
-        self.Label_Train_GPTSoVITS_ModelDirPretrainedBert = QLabel(self.Frame_Train_GPTSoVITS_ModelDirPretrainedBert)
+        self.Label_Train_GPTSoVITS_ModelDirPretrainedBert = LabelBase(self.Frame_Train_GPTSoVITS_ModelDirPretrainedBert)
         self.Label_Train_GPTSoVITS_ModelDirPretrainedBert.setObjectName(u"Label_Train_GPTSoVITS_ModelDirPretrainedBert")
         sizePolicy5.setHeightForWidth(self.Label_Train_GPTSoVITS_ModelDirPretrainedBert.sizePolicy().hasHeightForWidth())
         self.Label_Train_GPTSoVITS_ModelDirPretrainedBert.setSizePolicy(sizePolicy5)
@@ -8225,7 +6576,7 @@ class Ui_MainWindow(object):
         self.gridLayout_95.setSpacing(12)
         self.gridLayout_95.setObjectName(u"gridLayout_95")
         self.gridLayout_95.setContentsMargins(21, 12, 21, 12)
-        self.Label_Train_GPTSoVITS_ModelDirPretrainedSSL = QLabel(self.Frame_Train_GPTSoVITS_ModelDirPretrainedSSL)
+        self.Label_Train_GPTSoVITS_ModelDirPretrainedSSL = LabelBase(self.Frame_Train_GPTSoVITS_ModelDirPretrainedSSL)
         self.Label_Train_GPTSoVITS_ModelDirPretrainedSSL.setObjectName(u"Label_Train_GPTSoVITS_ModelDirPretrainedSSL")
         sizePolicy5.setHeightForWidth(self.Label_Train_GPTSoVITS_ModelDirPretrainedSSL.sizePolicy().hasHeightForWidth())
         self.Label_Train_GPTSoVITS_ModelDirPretrainedSSL.setSizePolicy(sizePolicy5)
@@ -8280,7 +6631,7 @@ class Ui_MainWindow(object):
         self.gridLayout_87.setSpacing(12)
         self.gridLayout_87.setObjectName(u"gridLayout_87")
         self.gridLayout_87.setContentsMargins(21, 12, 21, 12)
-        self.Label_Train_GPTSoVITS_ModelPathPretrainedS2D = QLabel(self.Frame_Train_GPTSoVITS_ModelPathPretrainedS2D)
+        self.Label_Train_GPTSoVITS_ModelPathPretrainedS2D = LabelBase(self.Frame_Train_GPTSoVITS_ModelPathPretrainedS2D)
         self.Label_Train_GPTSoVITS_ModelPathPretrainedS2D.setObjectName(u"Label_Train_GPTSoVITS_ModelPathPretrainedS2D")
         sizePolicy5.setHeightForWidth(self.Label_Train_GPTSoVITS_ModelPathPretrainedS2D.sizePolicy().hasHeightForWidth())
         self.Label_Train_GPTSoVITS_ModelPathPretrainedS2D.setSizePolicy(sizePolicy5)
@@ -8349,7 +6700,7 @@ class Ui_MainWindow(object):
         self.gridLayout_91.setSpacing(12)
         self.gridLayout_91.setObjectName(u"gridLayout_91")
         self.gridLayout_91.setContentsMargins(21, 12, 21, 12)
-        self.Label_Train_GPTSoVITS_FP16Run = QLabel(self.Frame_Train_GPTSoVITS_FP16Run)
+        self.Label_Train_GPTSoVITS_FP16Run = LabelBase(self.Frame_Train_GPTSoVITS_FP16Run)
         self.Label_Train_GPTSoVITS_FP16Run.setObjectName(u"Label_Train_GPTSoVITS_FP16Run")
         sizePolicy5.setHeightForWidth(self.Label_Train_GPTSoVITS_FP16Run.sizePolicy().hasHeightForWidth())
         self.Label_Train_GPTSoVITS_FP16Run.setSizePolicy(sizePolicy5)
@@ -8426,23 +6777,8 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_52.addWidget(self.GroupBox_Train_GPTSoVITS_GPTSoVITSParams)
 
-        self.GroupBox_Train_GPTSoVITS_OutputParams = QGroupBox(self.ScrollArea_Middle_WidgetContents_Train_GPTSoVITS)
+        self.GroupBox_Train_GPTSoVITS_OutputParams = GroupBoxBase(self.ScrollArea_Middle_WidgetContents_Train_GPTSoVITS)
         self.GroupBox_Train_GPTSoVITS_OutputParams.setObjectName(u"GroupBox_Train_GPTSoVITS_OutputParams")
-        self.GroupBox_Train_GPTSoVITS_OutputParams.setStyleSheet(u"QGroupBox {\n"
-"	font-size: 15px;\n"
-"	margin-top: 1.5ex;\n"
-"	background-color: transparent;\n"
-"	border-width: 1px;\n"
-"	border-style: solid;\n"
-"	border-color: transparent;\n"
-"}\n"
-"QGroupBox::title {\n"
-"	left: 9px;\n"
-"	margin-left: 0px;\n"
-"	subcontrol-origin: margin;\n"
-"	subcontrol-position: top left;\n"
-"	padding: 3px;\n"
-"}")
         self.verticalLayout_77 = QVBoxLayout(self.GroupBox_Train_GPTSoVITS_OutputParams)
         self.verticalLayout_77.setSpacing(0)
         self.verticalLayout_77.setObjectName(u"verticalLayout_77")
@@ -8468,7 +6804,7 @@ class Ui_MainWindow(object):
         self.gridLayout_98.setSpacing(12)
         self.gridLayout_98.setObjectName(u"gridLayout_98")
         self.gridLayout_98.setContentsMargins(21, 12, 21, 12)
-        self.Label_Train_GPTSoVITS_OutputDirName = QLabel(self.Frame_Train_GPTSoVITS_OutputDirName)
+        self.Label_Train_GPTSoVITS_OutputDirName = LabelBase(self.Frame_Train_GPTSoVITS_OutputDirName)
         self.Label_Train_GPTSoVITS_OutputDirName.setObjectName(u"Label_Train_GPTSoVITS_OutputDirName")
         sizePolicy5.setHeightForWidth(self.Label_Train_GPTSoVITS_OutputDirName.sizePolicy().hasHeightForWidth())
         self.Label_Train_GPTSoVITS_OutputDirName.setSizePolicy(sizePolicy5)
@@ -8535,7 +6871,7 @@ class Ui_MainWindow(object):
         self.gridLayout_110.setSpacing(12)
         self.gridLayout_110.setObjectName(u"gridLayout_110")
         self.gridLayout_110.setContentsMargins(21, 12, 21, 12)
-        self.Label_Train_GPTSoVITS_LogDir = QLabel(self.Frame_Train_GPTSoVITS_LogDir)
+        self.Label_Train_GPTSoVITS_LogDir = LabelBase(self.Frame_Train_GPTSoVITS_LogDir)
         self.Label_Train_GPTSoVITS_LogDir.setObjectName(u"Label_Train_GPTSoVITS_LogDir")
         sizePolicy5.setHeightForWidth(self.Label_Train_GPTSoVITS_LogDir.sizePolicy().hasHeightForWidth())
         self.Label_Train_GPTSoVITS_LogDir.setSizePolicy(sizePolicy5)
@@ -8592,18 +6928,14 @@ class Ui_MainWindow(object):
 
         self.Widget_Right_Train_GPTSoVITS = QWidget(self.Subpage_Train_GPTSoVITS)
         self.Widget_Right_Train_GPTSoVITS.setObjectName(u"Widget_Right_Train_GPTSoVITS")
-        self.Widget_Right_Train_GPTSoVITS.setStyleSheet(u"QWidget {\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QWidget:hover {\n"
+        self.Widget_Right_Train_GPTSoVITS.setStyleSheet(u"QWidget:hover {\n"
 "	background-color: rgba(36, 36, 36, 3);\n"
 "}")
         self.gridLayout_14 = QGridLayout(self.Widget_Right_Train_GPTSoVITS)
         self.gridLayout_14.setSpacing(12)
         self.gridLayout_14.setObjectName(u"gridLayout_14")
         self.gridLayout_14.setContentsMargins(12, 12, 12, 12)
-        self.TextBrowser_Params_Train_GPTSoVITS = QTextBrowser(self.Widget_Right_Train_GPTSoVITS)
+        self.TextBrowser_Params_Train_GPTSoVITS = TextBrowserBase(self.Widget_Right_Train_GPTSoVITS)
         self.TextBrowser_Params_Train_GPTSoVITS.setObjectName(u"TextBrowser_Params_Train_GPTSoVITS")
         sizePolicy1.setHeightForWidth(self.TextBrowser_Params_Train_GPTSoVITS.sizePolicy().hasHeightForWidth())
         self.TextBrowser_Params_Train_GPTSoVITS.setSizePolicy(sizePolicy1)
@@ -8660,93 +6992,28 @@ class Ui_MainWindow(object):
 
         self.gridLayout_14.addWidget(self.TextBrowser_Params_Train_GPTSoVITS, 0, 0, 1, 3)
 
-        self.Button_ResetSettings_Train_GPTSoVITS = QPushButton(self.Widget_Right_Train_GPTSoVITS)
+        self.Button_ResetSettings_Train_GPTSoVITS = HollowButton(self.Widget_Right_Train_GPTSoVITS)
         self.Button_ResetSettings_Train_GPTSoVITS.setObjectName(u"Button_ResetSettings_Train_GPTSoVITS")
-        self.Button_ResetSettings_Train_GPTSoVITS.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	font-size: 12px;\n"
-"	background-color: transparent;\n"
-"	padding: 6.6px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgb(120, 120, 120);\n"
-"}")
 
         self.gridLayout_14.addWidget(self.Button_ResetSettings_Train_GPTSoVITS, 1, 0, 1, 1)
 
-        self.Button_ImportSettings_Train_GPTSoVITS = QPushButton(self.Widget_Right_Train_GPTSoVITS)
+        self.Button_ImportSettings_Train_GPTSoVITS = HollowButton(self.Widget_Right_Train_GPTSoVITS)
         self.Button_ImportSettings_Train_GPTSoVITS.setObjectName(u"Button_ImportSettings_Train_GPTSoVITS")
-        self.Button_ImportSettings_Train_GPTSoVITS.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	font-size: 12px;\n"
-"	background-color: transparent;\n"
-"	padding: 6.6px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgb(120, 120, 120);\n"
-"}")
 
         self.gridLayout_14.addWidget(self.Button_ImportSettings_Train_GPTSoVITS, 1, 1, 1, 1)
 
-        self.Button_ExportSettings_Train_GPTSoVITS = QPushButton(self.Widget_Right_Train_GPTSoVITS)
+        self.Button_ExportSettings_Train_GPTSoVITS = HollowButton(self.Widget_Right_Train_GPTSoVITS)
         self.Button_ExportSettings_Train_GPTSoVITS.setObjectName(u"Button_ExportSettings_Train_GPTSoVITS")
-        self.Button_ExportSettings_Train_GPTSoVITS.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	font-size: 12px;\n"
-"	background-color: transparent;\n"
-"	padding: 6.6px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgb(120, 120, 120);\n"
-"}")
 
         self.gridLayout_14.addWidget(self.Button_ExportSettings_Train_GPTSoVITS, 1, 2, 1, 1)
 
-        self.Button_RunTensorboard_Train_GPTSoVITS = QPushButton(self.Widget_Right_Train_GPTSoVITS)
+        self.Button_RunTensorboard_Train_GPTSoVITS = HollowButton(self.Widget_Right_Train_GPTSoVITS)
         self.Button_RunTensorboard_Train_GPTSoVITS.setObjectName(u"Button_RunTensorboard_Train_GPTSoVITS")
-        self.Button_RunTensorboard_Train_GPTSoVITS.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	font-size: 12px;\n"
-"	background-color: transparent;\n"
-"	padding: 6.6px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgb(120, 120, 120);\n"
-"}")
 
         self.gridLayout_14.addWidget(self.Button_RunTensorboard_Train_GPTSoVITS, 2, 0, 1, 3)
 
-        self.Button_CheckOutput_Train_GPTSoVITS = QPushButton(self.Widget_Right_Train_GPTSoVITS)
+        self.Button_CheckOutput_Train_GPTSoVITS = HollowButton(self.Widget_Right_Train_GPTSoVITS)
         self.Button_CheckOutput_Train_GPTSoVITS.setObjectName(u"Button_CheckOutput_Train_GPTSoVITS")
-        self.Button_CheckOutput_Train_GPTSoVITS.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	font-size: 12px;\n"
-"	background-color: transparent;\n"
-"	padding: 6.6px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgb(120, 120, 120);\n"
-"}")
 
         self.gridLayout_14.addWidget(self.Button_CheckOutput_Train_GPTSoVITS, 3, 0, 1, 3)
 
@@ -8794,8 +7061,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_96.setContentsMargins(0, 0, 0, 0)
         self.Button_Train_GPTSoVITS_Execute = QPushButton(self.Page_Train_GPTSoVITS_Execute)
         self.Button_Train_GPTSoVITS_Execute.setObjectName(u"Button_Train_GPTSoVITS_Execute")
-        sizePolicy3.setHeightForWidth(self.Button_Train_GPTSoVITS_Execute.sizePolicy().hasHeightForWidth())
-        self.Button_Train_GPTSoVITS_Execute.setSizePolicy(sizePolicy3)
+        sizePolicy2.setHeightForWidth(self.Button_Train_GPTSoVITS_Execute.sizePolicy().hasHeightForWidth())
+        self.Button_Train_GPTSoVITS_Execute.setSizePolicy(sizePolicy2)
         self.Button_Train_GPTSoVITS_Execute.setMinimumSize(QSize(0, 30))
         self.Button_Train_GPTSoVITS_Execute.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
@@ -8819,8 +7086,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_97.setContentsMargins(0, 0, 0, 0)
         self.Button_Train_GPTSoVITS_Terminate = QPushButton(self.Page_Train_GPTSoVITS_Terminate)
         self.Button_Train_GPTSoVITS_Terminate.setObjectName(u"Button_Train_GPTSoVITS_Terminate")
-        sizePolicy3.setHeightForWidth(self.Button_Train_GPTSoVITS_Terminate.sizePolicy().hasHeightForWidth())
-        self.Button_Train_GPTSoVITS_Terminate.setSizePolicy(sizePolicy3)
+        sizePolicy2.setHeightForWidth(self.Button_Train_GPTSoVITS_Terminate.sizePolicy().hasHeightForWidth())
+        self.Button_Train_GPTSoVITS_Terminate.setSizePolicy(sizePolicy2)
         self.Button_Train_GPTSoVITS_Terminate.setMinimumSize(QSize(0, 30))
         self.Button_Train_GPTSoVITS_Terminate.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
@@ -8854,18 +7121,14 @@ class Ui_MainWindow(object):
         self.gridLayout_22.setContentsMargins(0, 0, 0, 0)
         self.Widget_Right_Train_VITS = QWidget(self.Subpage_Train_VITS)
         self.Widget_Right_Train_VITS.setObjectName(u"Widget_Right_Train_VITS")
-        self.Widget_Right_Train_VITS.setStyleSheet(u"QWidget {\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QWidget:hover {\n"
+        self.Widget_Right_Train_VITS.setStyleSheet(u"QWidget:hover {\n"
 "	background-color: rgba(36, 36, 36, 3);\n"
 "}")
         self.gridLayout = QGridLayout(self.Widget_Right_Train_VITS)
         self.gridLayout.setSpacing(12)
         self.gridLayout.setObjectName(u"gridLayout")
         self.gridLayout.setContentsMargins(12, 12, 12, 12)
-        self.TextBrowser_Params_Train_VITS = QTextBrowser(self.Widget_Right_Train_VITS)
+        self.TextBrowser_Params_Train_VITS = TextBrowserBase(self.Widget_Right_Train_VITS)
         self.TextBrowser_Params_Train_VITS.setObjectName(u"TextBrowser_Params_Train_VITS")
         sizePolicy1.setHeightForWidth(self.TextBrowser_Params_Train_VITS.sizePolicy().hasHeightForWidth())
         self.TextBrowser_Params_Train_VITS.setSizePolicy(sizePolicy1)
@@ -8922,93 +7185,28 @@ class Ui_MainWindow(object):
 
         self.gridLayout.addWidget(self.TextBrowser_Params_Train_VITS, 0, 0, 1, 3)
 
-        self.Button_ResetSettings_Train_VITS = QPushButton(self.Widget_Right_Train_VITS)
+        self.Button_ResetSettings_Train_VITS = HollowButton(self.Widget_Right_Train_VITS)
         self.Button_ResetSettings_Train_VITS.setObjectName(u"Button_ResetSettings_Train_VITS")
-        self.Button_ResetSettings_Train_VITS.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	font-size: 12px;\n"
-"	background-color: transparent;\n"
-"	padding: 6.6px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgb(120, 120, 120);\n"
-"}")
 
         self.gridLayout.addWidget(self.Button_ResetSettings_Train_VITS, 1, 0, 1, 1)
 
-        self.Button_ImportSettings_Train_VITS = QPushButton(self.Widget_Right_Train_VITS)
+        self.Button_ImportSettings_Train_VITS = HollowButton(self.Widget_Right_Train_VITS)
         self.Button_ImportSettings_Train_VITS.setObjectName(u"Button_ImportSettings_Train_VITS")
-        self.Button_ImportSettings_Train_VITS.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	font-size: 12px;\n"
-"	background-color: transparent;\n"
-"	padding: 6.6px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgb(120, 120, 120);\n"
-"}")
 
         self.gridLayout.addWidget(self.Button_ImportSettings_Train_VITS, 1, 1, 1, 1)
 
-        self.Button_ExportSettings_Train_VITS = QPushButton(self.Widget_Right_Train_VITS)
+        self.Button_ExportSettings_Train_VITS = HollowButton(self.Widget_Right_Train_VITS)
         self.Button_ExportSettings_Train_VITS.setObjectName(u"Button_ExportSettings_Train_VITS")
-        self.Button_ExportSettings_Train_VITS.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	font-size: 12px;\n"
-"	background-color: transparent;\n"
-"	padding: 6.6px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgb(120, 120, 120);\n"
-"}")
 
         self.gridLayout.addWidget(self.Button_ExportSettings_Train_VITS, 1, 2, 1, 1)
 
-        self.Button_RunTensorboard_Train_VITS = QPushButton(self.Widget_Right_Train_VITS)
+        self.Button_RunTensorboard_Train_VITS = HollowButton(self.Widget_Right_Train_VITS)
         self.Button_RunTensorboard_Train_VITS.setObjectName(u"Button_RunTensorboard_Train_VITS")
-        self.Button_RunTensorboard_Train_VITS.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	font-size: 12px;\n"
-"	background-color: transparent;\n"
-"	padding: 6.6px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgb(120, 120, 120);\n"
-"}")
 
         self.gridLayout.addWidget(self.Button_RunTensorboard_Train_VITS, 2, 0, 1, 3)
 
-        self.Button_CheckOutput_Train_VITS = QPushButton(self.Widget_Right_Train_VITS)
+        self.Button_CheckOutput_Train_VITS = HollowButton(self.Widget_Right_Train_VITS)
         self.Button_CheckOutput_Train_VITS.setObjectName(u"Button_CheckOutput_Train_VITS")
-        self.Button_CheckOutput_Train_VITS.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	font-size: 12px;\n"
-"	background-color: transparent;\n"
-"	padding: 6.6px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgb(120, 120, 120);\n"
-"}")
 
         self.gridLayout.addWidget(self.Button_CheckOutput_Train_VITS, 3, 0, 1, 3)
 
@@ -9080,8 +7278,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_94.setContentsMargins(0, 0, 0, 0)
         self.Button_Train_VITS_Execute = QPushButton(self.Page_Train_VITS_Execute)
         self.Button_Train_VITS_Execute.setObjectName(u"Button_Train_VITS_Execute")
-        sizePolicy3.setHeightForWidth(self.Button_Train_VITS_Execute.sizePolicy().hasHeightForWidth())
-        self.Button_Train_VITS_Execute.setSizePolicy(sizePolicy3)
+        sizePolicy2.setHeightForWidth(self.Button_Train_VITS_Execute.sizePolicy().hasHeightForWidth())
+        self.Button_Train_VITS_Execute.setSizePolicy(sizePolicy2)
         self.Button_Train_VITS_Execute.setMinimumSize(QSize(0, 30))
         self.Button_Train_VITS_Execute.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
@@ -9105,8 +7303,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_95.setContentsMargins(0, 0, 0, 0)
         self.Button_Train_VITS_Terminate = QPushButton(self.Page_Train_VITS_Terminate)
         self.Button_Train_VITS_Terminate.setObjectName(u"Button_Train_VITS_Terminate")
-        sizePolicy3.setHeightForWidth(self.Button_Train_VITS_Terminate.sizePolicy().hasHeightForWidth())
-        self.Button_Train_VITS_Terminate.setSizePolicy(sizePolicy3)
+        sizePolicy2.setHeightForWidth(self.Button_Train_VITS_Terminate.sizePolicy().hasHeightForWidth())
+        self.Button_Train_VITS_Terminate.setSizePolicy(sizePolicy2)
         self.Button_Train_VITS_Terminate.setMinimumSize(QSize(0, 30))
         self.Button_Train_VITS_Terminate.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
@@ -9135,28 +7333,13 @@ class Ui_MainWindow(object):
         self.ScrollArea_Middle_Train_VITS.setWidgetResizable(True)
         self.ScrollArea_Middle_WidgetContents_Train_VITS = QWidget()
         self.ScrollArea_Middle_WidgetContents_Train_VITS.setObjectName(u"ScrollArea_Middle_WidgetContents_Train_VITS")
-        self.ScrollArea_Middle_WidgetContents_Train_VITS.setGeometry(QRect(0, 0, 586, 1499))
+        self.ScrollArea_Middle_WidgetContents_Train_VITS.setGeometry(QRect(0, 0, 586, 1508))
         self.verticalLayout_28 = QVBoxLayout(self.ScrollArea_Middle_WidgetContents_Train_VITS)
         self.verticalLayout_28.setSpacing(12)
         self.verticalLayout_28.setObjectName(u"verticalLayout_28")
         self.verticalLayout_28.setContentsMargins(12, 12, 12, 12)
-        self.GroupBox_Train_VITS_InputParams = QGroupBox(self.ScrollArea_Middle_WidgetContents_Train_VITS)
+        self.GroupBox_Train_VITS_InputParams = GroupBoxBase(self.ScrollArea_Middle_WidgetContents_Train_VITS)
         self.GroupBox_Train_VITS_InputParams.setObjectName(u"GroupBox_Train_VITS_InputParams")
-        self.GroupBox_Train_VITS_InputParams.setStyleSheet(u"QGroupBox {\n"
-"	font-size: 15px;\n"
-"	margin-top: 1.5ex;\n"
-"	background-color: transparent;\n"
-"	border-width: 1px;\n"
-"	border-style: solid;\n"
-"	border-color: transparent;\n"
-"}\n"
-"QGroupBox::title {\n"
-"	left: 9px;\n"
-"	margin-left: 0px;\n"
-"	subcontrol-origin: margin;\n"
-"	subcontrol-position: top left;\n"
-"	padding: 3px;\n"
-"}")
         self.verticalLayout_116 = QVBoxLayout(self.GroupBox_Train_VITS_InputParams)
         self.verticalLayout_116.setSpacing(0)
         self.verticalLayout_116.setObjectName(u"verticalLayout_116")
@@ -9182,7 +7365,7 @@ class Ui_MainWindow(object):
         self.gridLayout_57.setSpacing(12)
         self.gridLayout_57.setObjectName(u"gridLayout_57")
         self.gridLayout_57.setContentsMargins(21, 12, 21, 12)
-        self.Label_Train_VITS_FileListPathTraining = QLabel(self.Frame_Train_VITS_FileListPathTraining)
+        self.Label_Train_VITS_FileListPathTraining = LabelBase(self.Frame_Train_VITS_FileListPathTraining)
         self.Label_Train_VITS_FileListPathTraining.setObjectName(u"Label_Train_VITS_FileListPathTraining")
         sizePolicy5.setHeightForWidth(self.Label_Train_VITS_FileListPathTraining.sizePolicy().hasHeightForWidth())
         self.Label_Train_VITS_FileListPathTraining.setSizePolicy(sizePolicy5)
@@ -9237,7 +7420,7 @@ class Ui_MainWindow(object):
         self.gridLayout_58.setSpacing(12)
         self.gridLayout_58.setObjectName(u"gridLayout_58")
         self.gridLayout_58.setContentsMargins(21, 12, 21, 12)
-        self.Label_Train_VITS_FileListPathValidation = QLabel(self.Frame_Train_VITS_FileListPathValidation)
+        self.Label_Train_VITS_FileListPathValidation = LabelBase(self.Frame_Train_VITS_FileListPathValidation)
         self.Label_Train_VITS_FileListPathValidation.setObjectName(u"Label_Train_VITS_FileListPathValidation")
         sizePolicy5.setHeightForWidth(self.Label_Train_VITS_FileListPathValidation.sizePolicy().hasHeightForWidth())
         self.Label_Train_VITS_FileListPathValidation.setSizePolicy(sizePolicy5)
@@ -9283,23 +7466,8 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_28.addWidget(self.GroupBox_Train_VITS_InputParams)
 
-        self.GroupBox_Train_VITS_VITSParams = QGroupBox(self.ScrollArea_Middle_WidgetContents_Train_VITS)
+        self.GroupBox_Train_VITS_VITSParams = GroupBoxBase(self.ScrollArea_Middle_WidgetContents_Train_VITS)
         self.GroupBox_Train_VITS_VITSParams.setObjectName(u"GroupBox_Train_VITS_VITSParams")
-        self.GroupBox_Train_VITS_VITSParams.setStyleSheet(u"QGroupBox {\n"
-"	font-size: 15px;\n"
-"	margin-top: 1.5ex;\n"
-"	background-color: transparent;\n"
-"	border-width: 1px;\n"
-"	border-style: solid;\n"
-"	border-color: transparent;\n"
-"}\n"
-"QGroupBox::title {\n"
-"	left: 9px;\n"
-"	margin-left: 0px;\n"
-"	subcontrol-origin: margin;\n"
-"	subcontrol-position: top left;\n"
-"	padding: 3px;\n"
-"}")
         self.verticalLayout_114 = QVBoxLayout(self.GroupBox_Train_VITS_VITSParams)
         self.verticalLayout_114.setSpacing(0)
         self.verticalLayout_114.setObjectName(u"verticalLayout_114")
@@ -9325,7 +7493,7 @@ class Ui_MainWindow(object):
         self.gridLayout_59.setSpacing(12)
         self.gridLayout_59.setObjectName(u"gridLayout_59")
         self.gridLayout_59.setContentsMargins(21, 12, 21, 12)
-        self.Label_Train_VITS_Epochs = QLabel(self.Frame_Train_VITS_Epochs)
+        self.Label_Train_VITS_Epochs = LabelBase(self.Frame_Train_VITS_Epochs)
         self.Label_Train_VITS_Epochs.setObjectName(u"Label_Train_VITS_Epochs")
         sizePolicy5.setHeightForWidth(self.Label_Train_VITS_Epochs.sizePolicy().hasHeightForWidth())
         self.Label_Train_VITS_Epochs.setSizePolicy(sizePolicy5)
@@ -9382,7 +7550,7 @@ class Ui_MainWindow(object):
         self.gridLayout_60.setSpacing(12)
         self.gridLayout_60.setObjectName(u"gridLayout_60")
         self.gridLayout_60.setContentsMargins(21, 12, 21, 12)
-        self.Label_Train_VITS_BatchSize = QLabel(self.Frame_Train_VITS_BatchSize)
+        self.Label_Train_VITS_BatchSize = LabelBase(self.Frame_Train_VITS_BatchSize)
         self.Label_Train_VITS_BatchSize.setObjectName(u"Label_Train_VITS_BatchSize")
         sizePolicy5.setHeightForWidth(self.Label_Train_VITS_BatchSize.sizePolicy().hasHeightForWidth())
         self.Label_Train_VITS_BatchSize.setSizePolicy(sizePolicy5)
@@ -9439,7 +7607,7 @@ class Ui_MainWindow(object):
         self.gridLayout_61.setSpacing(12)
         self.gridLayout_61.setObjectName(u"gridLayout_61")
         self.gridLayout_61.setContentsMargins(21, 12, 21, 12)
-        self.Label_Train_VITS_UsePretrainedModels = QLabel(self.Frame_Train_VITS_UsePretrainedModels)
+        self.Label_Train_VITS_UsePretrainedModels = LabelBase(self.Frame_Train_VITS_UsePretrainedModels)
         self.Label_Train_VITS_UsePretrainedModels.setObjectName(u"Label_Train_VITS_UsePretrainedModels")
         sizePolicy5.setHeightForWidth(self.Label_Train_VITS_UsePretrainedModels.sizePolicy().hasHeightForWidth())
         self.Label_Train_VITS_UsePretrainedModels.setSizePolicy(sizePolicy5)
@@ -9524,7 +7692,7 @@ class Ui_MainWindow(object):
         self.gridLayout_65.setSpacing(12)
         self.gridLayout_65.setObjectName(u"gridLayout_65")
         self.gridLayout_65.setContentsMargins(21, 12, 21, 12)
-        self.Label_Train_VITS_ModelPathPretrainedG = QLabel(self.Frame_Train_VITS_ModelPathPretrainedG)
+        self.Label_Train_VITS_ModelPathPretrainedG = LabelBase(self.Frame_Train_VITS_ModelPathPretrainedG)
         self.Label_Train_VITS_ModelPathPretrainedG.setObjectName(u"Label_Train_VITS_ModelPathPretrainedG")
         sizePolicy5.setHeightForWidth(self.Label_Train_VITS_ModelPathPretrainedG.sizePolicy().hasHeightForWidth())
         self.Label_Train_VITS_ModelPathPretrainedG.setSizePolicy(sizePolicy5)
@@ -9579,7 +7747,7 @@ class Ui_MainWindow(object):
         self.gridLayout_66.setSpacing(12)
         self.gridLayout_66.setObjectName(u"gridLayout_66")
         self.gridLayout_66.setContentsMargins(21, 12, 21, 12)
-        self.Label_Train_VITS_ModelPathPretrainedD = QLabel(self.Frame_Train_VITS_ModelPathPretrainedD)
+        self.Label_Train_VITS_ModelPathPretrainedD = LabelBase(self.Frame_Train_VITS_ModelPathPretrainedD)
         self.Label_Train_VITS_ModelPathPretrainedD.setObjectName(u"Label_Train_VITS_ModelPathPretrainedD")
         sizePolicy5.setHeightForWidth(self.Label_Train_VITS_ModelPathPretrainedD.sizePolicy().hasHeightForWidth())
         self.Label_Train_VITS_ModelPathPretrainedD.setSizePolicy(sizePolicy5)
@@ -9634,7 +7802,7 @@ class Ui_MainWindow(object):
         self.gridLayout_67.setSpacing(12)
         self.gridLayout_67.setObjectName(u"gridLayout_67")
         self.gridLayout_67.setContentsMargins(21, 12, 21, 12)
-        self.Label_Train_VITS_KeepOriginalSpeakers = QLabel(self.Frame_Train_VITS_KeepOriginalSpeakers)
+        self.Label_Train_VITS_KeepOriginalSpeakers = LabelBase(self.Frame_Train_VITS_KeepOriginalSpeakers)
         self.Label_Train_VITS_KeepOriginalSpeakers.setObjectName(u"Label_Train_VITS_KeepOriginalSpeakers")
         sizePolicy5.setHeightForWidth(self.Label_Train_VITS_KeepOriginalSpeakers.sizePolicy().hasHeightForWidth())
         self.Label_Train_VITS_KeepOriginalSpeakers.setSizePolicy(sizePolicy5)
@@ -9719,7 +7887,7 @@ class Ui_MainWindow(object):
         self.gridLayout_77.setSpacing(12)
         self.gridLayout_77.setObjectName(u"gridLayout_77")
         self.gridLayout_77.setContentsMargins(21, 12, 21, 12)
-        self.Label_Train_VITS_ConfigPathLoad = QLabel(self.Frame_Train_VITS_ConfigPathLoad)
+        self.Label_Train_VITS_ConfigPathLoad = LabelBase(self.Frame_Train_VITS_ConfigPathLoad)
         self.Label_Train_VITS_ConfigPathLoad.setObjectName(u"Label_Train_VITS_ConfigPathLoad")
         sizePolicy5.setHeightForWidth(self.Label_Train_VITS_ConfigPathLoad.sizePolicy().hasHeightForWidth())
         self.Label_Train_VITS_ConfigPathLoad.setSizePolicy(sizePolicy5)
@@ -9788,7 +7956,7 @@ class Ui_MainWindow(object):
         self.gridLayout_63.setSpacing(12)
         self.gridLayout_63.setObjectName(u"gridLayout_63")
         self.gridLayout_63.setContentsMargins(21, 12, 21, 12)
-        self.Label_Train_VITS_NumWorkers = QLabel(self.Frame_Train_VITS_NumWorkers)
+        self.Label_Train_VITS_NumWorkers = LabelBase(self.Frame_Train_VITS_NumWorkers)
         self.Label_Train_VITS_NumWorkers.setObjectName(u"Label_Train_VITS_NumWorkers")
         sizePolicy5.setHeightForWidth(self.Label_Train_VITS_NumWorkers.sizePolicy().hasHeightForWidth())
         self.Label_Train_VITS_NumWorkers.setSizePolicy(sizePolicy5)
@@ -9845,7 +8013,7 @@ class Ui_MainWindow(object):
         self.gridLayout_64.setSpacing(12)
         self.gridLayout_64.setObjectName(u"gridLayout_64")
         self.gridLayout_64.setContentsMargins(21, 12, 21, 12)
-        self.Label_Train_VITS_FP16Run = QLabel(self.Frame_Train_VITS_FP16Run)
+        self.Label_Train_VITS_FP16Run = LabelBase(self.Frame_Train_VITS_FP16Run)
         self.Label_Train_VITS_FP16Run.setObjectName(u"Label_Train_VITS_FP16Run")
         sizePolicy5.setHeightForWidth(self.Label_Train_VITS_FP16Run.sizePolicy().hasHeightForWidth())
         self.Label_Train_VITS_FP16Run.setSizePolicy(sizePolicy5)
@@ -9922,23 +8090,8 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_28.addWidget(self.GroupBox_Train_VITS_VITSParams)
 
-        self.GroupBox_Train_VITS_OutputParams = QGroupBox(self.ScrollArea_Middle_WidgetContents_Train_VITS)
+        self.GroupBox_Train_VITS_OutputParams = GroupBoxBase(self.ScrollArea_Middle_WidgetContents_Train_VITS)
         self.GroupBox_Train_VITS_OutputParams.setObjectName(u"GroupBox_Train_VITS_OutputParams")
-        self.GroupBox_Train_VITS_OutputParams.setStyleSheet(u"QGroupBox {\n"
-"	font-size: 15px;\n"
-"	margin-top: 1.5ex;\n"
-"	background-color: transparent;\n"
-"	border-width: 1px;\n"
-"	border-style: solid;\n"
-"	border-color: transparent;\n"
-"}\n"
-"QGroupBox::title {\n"
-"	left: 9px;\n"
-"	margin-left: 0px;\n"
-"	subcontrol-origin: margin;\n"
-"	subcontrol-position: top left;\n"
-"	padding: 3px;\n"
-"}")
         self.verticalLayout_80 = QVBoxLayout(self.GroupBox_Train_VITS_OutputParams)
         self.verticalLayout_80.setObjectName(u"verticalLayout_80")
         self.Frame_Train_VITS_OutputParams_BasicSettings = QFrame(self.GroupBox_Train_VITS_OutputParams)
@@ -9962,7 +8115,7 @@ class Ui_MainWindow(object):
         self.gridLayout_62.setSpacing(12)
         self.gridLayout_62.setObjectName(u"gridLayout_62")
         self.gridLayout_62.setContentsMargins(21, 12, 21, 12)
-        self.Label_Train_VITS_EvalInterval = QLabel(self.Frame_Train_VITS_EvalInterval)
+        self.Label_Train_VITS_EvalInterval = LabelBase(self.Frame_Train_VITS_EvalInterval)
         self.Label_Train_VITS_EvalInterval.setObjectName(u"Label_Train_VITS_EvalInterval")
         sizePolicy5.setHeightForWidth(self.Label_Train_VITS_EvalInterval.sizePolicy().hasHeightForWidth())
         self.Label_Train_VITS_EvalInterval.setSizePolicy(sizePolicy5)
@@ -10019,7 +8172,7 @@ class Ui_MainWindow(object):
         self.gridLayout_68.setSpacing(12)
         self.gridLayout_68.setObjectName(u"gridLayout_68")
         self.gridLayout_68.setContentsMargins(21, 12, 21, 12)
-        self.Label_Train_VITS_OutputDirName = QLabel(self.Frame_Train_VITS_OutputDirName)
+        self.Label_Train_VITS_OutputDirName = LabelBase(self.Frame_Train_VITS_OutputDirName)
         self.Label_Train_VITS_OutputDirName.setObjectName(u"Label_Train_VITS_OutputDirName")
         sizePolicy5.setHeightForWidth(self.Label_Train_VITS_OutputDirName.sizePolicy().hasHeightForWidth())
         self.Label_Train_VITS_OutputDirName.setSizePolicy(sizePolicy5)
@@ -10086,7 +8239,7 @@ class Ui_MainWindow(object):
         self.gridLayout_111.setSpacing(12)
         self.gridLayout_111.setObjectName(u"gridLayout_111")
         self.gridLayout_111.setContentsMargins(21, 12, 21, 12)
-        self.Label_Train_VITS_LogDir = QLabel(self.Frame_Train_VITS_LogDir)
+        self.Label_Train_VITS_LogDir = LabelBase(self.Frame_Train_VITS_LogDir)
         self.Label_Train_VITS_LogDir.setObjectName(u"Label_Train_VITS_LogDir")
         sizePolicy5.setHeightForWidth(self.Label_Train_VITS_LogDir.sizePolicy().hasHeightForWidth())
         self.Label_Train_VITS_LogDir.setSizePolicy(sizePolicy5)
@@ -10159,113 +8312,36 @@ class Ui_MainWindow(object):
         self.Frame_TTS_Top.setObjectName(u"Frame_TTS_Top")
         self.Frame_TTS_Top.setMinimumSize(QSize(0, 60))
         self.Frame_TTS_Top.setStyleSheet(u"QFrame {\n"
-"	border-width: 0px;\n"
+"	border-top-width: 0px;\n"
+"	border-right-width: 0px;\n"
+"	border-bottom-width: 3px;\n"
+"	border-left-width: 0px;\n"
 "	border-style: solid;\n"
+"	border-bottom-color: rgba(123, 123, 123, 123);\n"
 "}")
         self.horizontalLayout_16 = QHBoxLayout(self.Frame_TTS_Top)
         self.horizontalLayout_16.setSpacing(0)
         self.horizontalLayout_16.setObjectName(u"horizontalLayout_16")
         self.horizontalLayout_16.setContentsMargins(0, 0, 0, 0)
-        self.Button_VoiceConverter_Title_GPTSoVITS = ButtonBase(self.Frame_TTS_Top)
+        self.Button_VoiceConverter_Title_GPTSoVITS = NavigationButton(self.Frame_TTS_Top)
         self.Button_VoiceConverter_Title_GPTSoVITS.setObjectName(u"Button_VoiceConverter_Title_GPTSoVITS")
         sizePolicy1.setHeightForWidth(self.Button_VoiceConverter_Title_GPTSoVITS.sizePolicy().hasHeightForWidth())
         self.Button_VoiceConverter_Title_GPTSoVITS.setSizePolicy(sizePolicy1)
-        self.Button_VoiceConverter_Title_GPTSoVITS.setStyleSheet(u"QPushButton {\n"
-"	font-size: 24px;\n"
-"	/*text-align: center;*/\n"
-"	padding-left: 12px;\n"
-"	padding-right: 12px;\n"
-"	background-color: transparent;\n"
-"	border-top-width: 0px;\n"
-"	border-right-width: 0px;\n"
-"	border-bottom-width: 3px;\n"
-"	border-left-width: 0px;\n"
-"	border-style: solid;\n"
-"	border-bottom-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	background-color: transparent;\n"
-"	border-top-width: 0px;\n"
-"	border-right-width: 0px;\n"
-"	border-bottom-width: 3px;\n"
-"	border-left-width: 0px;\n"
-"	border-style: solid;\n"
-"	border-bottom-color: rgba(120, 180, 240, 123);\n"
-"}\n"
-"QPushButton:checked {\n"
-"	background-color: transparent;\n"
-"	border-top-width: 0px;\n"
-"	border-right-width: 0px;\n"
-"	border-bottom-width: 3px;\n"
-"	border-left-width: 0px;\n"
-"	border-style: solid;\n"
-"	border-bottom-color: rgba(120, 180, 240, 210);\n"
-"}")
 
         self.horizontalLayout_16.addWidget(self.Button_VoiceConverter_Title_GPTSoVITS)
 
-        self.Button_VoiceConverter_Title_VITS = ButtonBase(self.Frame_TTS_Top)
+        self.Button_VoiceConverter_Title_VITS = NavigationButton(self.Frame_TTS_Top)
         self.Button_VoiceConverter_Title_VITS.setObjectName(u"Button_VoiceConverter_Title_VITS")
         sizePolicy1.setHeightForWidth(self.Button_VoiceConverter_Title_VITS.sizePolicy().hasHeightForWidth())
         self.Button_VoiceConverter_Title_VITS.setSizePolicy(sizePolicy1)
-        self.Button_VoiceConverter_Title_VITS.setStyleSheet(u"QPushButton {\n"
-"	font-size: 24px;\n"
-"	/*text-align: center;*/\n"
-"	padding-left: 12px;\n"
-"	padding-right: 12px;\n"
-"	background-color: transparent;\n"
-"	border-top-width: 0px;\n"
-"	border-right-width: 0px;\n"
-"	border-bottom-width: 3px;\n"
-"	border-left-width: 0px;\n"
-"	border-style: solid;\n"
-"	border-bottom-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	background-color: transparent;\n"
-"	border-top-width: 0px;\n"
-"	border-right-width: 0px;\n"
-"	border-bottom-width: 3px;\n"
-"	border-left-width: 0px;\n"
-"	border-style: solid;\n"
-"	border-bottom-color: rgba(120, 180, 240, 123);\n"
-"}\n"
-"QPushButton:checked {\n"
-"	background-color: transparent;\n"
-"	border-top-width: 0px;\n"
-"	border-right-width: 0px;\n"
-"	border-bottom-width: 3px;\n"
-"	border-left-width: 0px;\n"
-"	border-style: solid;\n"
-"	border-bottom-color: rgba(120, 180, 240, 210);\n"
-"}")
 
         self.horizontalLayout_16.addWidget(self.Button_VoiceConverter_Title_VITS)
 
-        self.Frame_VoiceConverter_Title = QFrame(self.Frame_TTS_Top)
-        self.Frame_VoiceConverter_Title.setObjectName(u"Frame_VoiceConverter_Title")
-        self.Frame_VoiceConverter_Title.setStyleSheet(u"QFrame {\n"
-"	/*font-size: 24px;\n"
-"	text-align: center;\n"
-"	padding-left: 12px;\n"
-"	padding-right: 12px;*/\n"
-"	background-color: transparent;\n"
-"	border-top-width: 0px;\n"
-"	border-right-width: 0px;\n"
-"	border-bottom-width: 3px;\n"
-"	border-left-width: 0px;\n"
-"	border-style: solid;\n"
-"	border-bottom-color: rgba(123, 123, 123, 123);\n"
-"}")
-        self.horizontalLayout_59 = QHBoxLayout(self.Frame_VoiceConverter_Title)
-        self.horizontalLayout_59.setSpacing(12)
-        self.horizontalLayout_59.setObjectName(u"horizontalLayout_59")
-        self.horizontalLayout_59.setContentsMargins(0, 0, 0, 0)
-        self.HorizontalSpacer_VoiceConverter_Title = QSpacerItem(549, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+        self.HorizontalSpacer_VoiceConverter_Title = QSpacerItem(0, 0, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
-        self.horizontalLayout_59.addItem(self.HorizontalSpacer_VoiceConverter_Title)
+        self.horizontalLayout_16.addItem(self.HorizontalSpacer_VoiceConverter_Title)
 
-        self.Button_VoiceConverter_Help = QPushButton(self.Frame_VoiceConverter_Title)
+        self.Button_VoiceConverter_Help = QPushButton(self.Frame_TTS_Top)
         self.Button_VoiceConverter_Help.setObjectName(u"Button_VoiceConverter_Help")
         self.Button_VoiceConverter_Help.setMinimumSize(QSize(45, 45))
         self.Button_VoiceConverter_Help.setStyleSheet(u"QPushButton {\n"
@@ -10280,10 +8356,7 @@ class Ui_MainWindow(object):
 "	background-color: rgba(201, 210, 222, 33);\n"
 "}")
 
-        self.horizontalLayout_59.addWidget(self.Button_VoiceConverter_Help)
-
-
-        self.horizontalLayout_16.addWidget(self.Frame_VoiceConverter_Title)
+        self.horizontalLayout_16.addWidget(self.Button_VoiceConverter_Help)
 
 
         self.verticalLayout_42.addWidget(self.Frame_TTS_Top)
@@ -10330,28 +8403,13 @@ class Ui_MainWindow(object):
         self.ScrollArea_Middle_TTS_GPTSoVITS.setWidgetResizable(True)
         self.ScrollArea_Middle_WidgetContents_TTS_GPTSoVITS = QWidget()
         self.ScrollArea_Middle_WidgetContents_TTS_GPTSoVITS.setObjectName(u"ScrollArea_Middle_WidgetContents_TTS_GPTSoVITS")
-        self.ScrollArea_Middle_WidgetContents_TTS_GPTSoVITS.setGeometry(QRect(0, 0, 586, 494))
+        self.ScrollArea_Middle_WidgetContents_TTS_GPTSoVITS.setGeometry(QRect(0, 0, 586, 497))
         self.verticalLayout_66 = QVBoxLayout(self.ScrollArea_Middle_WidgetContents_TTS_GPTSoVITS)
         self.verticalLayout_66.setSpacing(12)
         self.verticalLayout_66.setObjectName(u"verticalLayout_66")
         self.verticalLayout_66.setContentsMargins(12, 12, 12, 12)
-        self.GroupBox_TTS_GPTSoVITS_InputParams = QGroupBox(self.ScrollArea_Middle_WidgetContents_TTS_GPTSoVITS)
+        self.GroupBox_TTS_GPTSoVITS_InputParams = GroupBoxBase(self.ScrollArea_Middle_WidgetContents_TTS_GPTSoVITS)
         self.GroupBox_TTS_GPTSoVITS_InputParams.setObjectName(u"GroupBox_TTS_GPTSoVITS_InputParams")
-        self.GroupBox_TTS_GPTSoVITS_InputParams.setStyleSheet(u"QGroupBox {\n"
-"	font-size: 15px;\n"
-"	margin-top: 1.5ex;\n"
-"	background-color: transparent;\n"
-"	border-width: 1px;\n"
-"	border-style: solid;\n"
-"	border-color: transparent;\n"
-"}\n"
-"QGroupBox::title {\n"
-"	left: 9px;\n"
-"	margin-left: 0px;\n"
-"	subcontrol-origin: margin;\n"
-"	subcontrol-position: top left;\n"
-"	padding: 3px;\n"
-"}")
         self.verticalLayout_125 = QVBoxLayout(self.GroupBox_TTS_GPTSoVITS_InputParams)
         self.verticalLayout_125.setSpacing(0)
         self.verticalLayout_125.setObjectName(u"verticalLayout_125")
@@ -10377,7 +8435,7 @@ class Ui_MainWindow(object):
         self.gridLayout_97.setSpacing(12)
         self.gridLayout_97.setObjectName(u"gridLayout_97")
         self.gridLayout_97.setContentsMargins(21, 12, 21, 12)
-        self.Label_TTS_GPTSoVITS_ModelPathLoadS1 = QLabel(self.Frame_TTS_GPTSoVITS_ModelPathLoadS1)
+        self.Label_TTS_GPTSoVITS_ModelPathLoadS1 = LabelBase(self.Frame_TTS_GPTSoVITS_ModelPathLoadS1)
         self.Label_TTS_GPTSoVITS_ModelPathLoadS1.setObjectName(u"Label_TTS_GPTSoVITS_ModelPathLoadS1")
         sizePolicy5.setHeightForWidth(self.Label_TTS_GPTSoVITS_ModelPathLoadS1.sizePolicy().hasHeightForWidth())
         self.Label_TTS_GPTSoVITS_ModelPathLoadS1.setSizePolicy(sizePolicy5)
@@ -10432,7 +8490,7 @@ class Ui_MainWindow(object):
         self.gridLayout_99.setSpacing(12)
         self.gridLayout_99.setObjectName(u"gridLayout_99")
         self.gridLayout_99.setContentsMargins(21, 12, 21, 12)
-        self.Label_TTS_GPTSoVITS_ModelPathLoadS2G = QLabel(self.Frame_TTS_GPTSoVITS_ModelPathLoadS2G)
+        self.Label_TTS_GPTSoVITS_ModelPathLoadS2G = LabelBase(self.Frame_TTS_GPTSoVITS_ModelPathLoadS2G)
         self.Label_TTS_GPTSoVITS_ModelPathLoadS2G.setObjectName(u"Label_TTS_GPTSoVITS_ModelPathLoadS2G")
         sizePolicy5.setHeightForWidth(self.Label_TTS_GPTSoVITS_ModelPathLoadS2G.sizePolicy().hasHeightForWidth())
         self.Label_TTS_GPTSoVITS_ModelPathLoadS2G.setSizePolicy(sizePolicy5)
@@ -10487,7 +8545,7 @@ class Ui_MainWindow(object):
         self.gridLayout_100.setSpacing(12)
         self.gridLayout_100.setObjectName(u"gridLayout_100")
         self.gridLayout_100.setContentsMargins(21, 12, 21, 12)
-        self.Label_TTS_GPTSoVITS_ModelDirLoadBert = QLabel(self.Frame_TTS_GPTSoVITS_ModelDirLoadBert)
+        self.Label_TTS_GPTSoVITS_ModelDirLoadBert = LabelBase(self.Frame_TTS_GPTSoVITS_ModelDirLoadBert)
         self.Label_TTS_GPTSoVITS_ModelDirLoadBert.setObjectName(u"Label_TTS_GPTSoVITS_ModelDirLoadBert")
         sizePolicy5.setHeightForWidth(self.Label_TTS_GPTSoVITS_ModelDirLoadBert.sizePolicy().hasHeightForWidth())
         self.Label_TTS_GPTSoVITS_ModelDirLoadBert.setSizePolicy(sizePolicy5)
@@ -10542,7 +8600,7 @@ class Ui_MainWindow(object):
         self.gridLayout_101.setSpacing(12)
         self.gridLayout_101.setObjectName(u"gridLayout_101")
         self.gridLayout_101.setContentsMargins(21, 12, 21, 12)
-        self.Label_TTS_GPTSoVITS_ModelDirLoadSSL = QLabel(self.Frame_TTS_GPTSoVITS_ModelDirLoadSSL)
+        self.Label_TTS_GPTSoVITS_ModelDirLoadSSL = LabelBase(self.Frame_TTS_GPTSoVITS_ModelDirLoadSSL)
         self.Label_TTS_GPTSoVITS_ModelDirLoadSSL.setObjectName(u"Label_TTS_GPTSoVITS_ModelDirLoadSSL")
         sizePolicy5.setHeightForWidth(self.Label_TTS_GPTSoVITS_ModelDirLoadSSL.sizePolicy().hasHeightForWidth())
         self.Label_TTS_GPTSoVITS_ModelDirLoadSSL.setSizePolicy(sizePolicy5)
@@ -10598,36 +8656,19 @@ class Ui_MainWindow(object):
 
         self.Widget_Right_TTS_GPTSoVITS = QWidget(self.Subpage_TTS_GPTSoVITS)
         self.Widget_Right_TTS_GPTSoVITS.setObjectName(u"Widget_Right_TTS_GPTSoVITS")
-        self.Widget_Right_TTS_GPTSoVITS.setStyleSheet(u"QWidget {\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QWidget:hover {\n"
+        self.Widget_Right_TTS_GPTSoVITS.setStyleSheet(u"QWidget:hover {\n"
 "	background-color: rgba(36, 36, 36, 3);\n"
 "}")
         self.gridLayout_15 = QGridLayout(self.Widget_Right_TTS_GPTSoVITS)
         self.gridLayout_15.setSpacing(12)
         self.gridLayout_15.setObjectName(u"gridLayout_15")
         self.gridLayout_15.setContentsMargins(12, 12, 12, 12)
-        self.Button_ResetSettings_TTS_GPTSoVITS = QPushButton(self.Widget_Right_TTS_GPTSoVITS)
+        self.Button_ResetSettings_TTS_GPTSoVITS = HollowButton(self.Widget_Right_TTS_GPTSoVITS)
         self.Button_ResetSettings_TTS_GPTSoVITS.setObjectName(u"Button_ResetSettings_TTS_GPTSoVITS")
-        self.Button_ResetSettings_TTS_GPTSoVITS.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	font-size: 12px;\n"
-"	background-color: transparent;\n"
-"	padding: 6.6px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgb(120, 120, 120);\n"
-"}")
 
         self.gridLayout_15.addWidget(self.Button_ResetSettings_TTS_GPTSoVITS, 1, 0, 1, 1)
 
-        self.TextBrowser_Params_TTS_GPTSoVITS = QTextBrowser(self.Widget_Right_TTS_GPTSoVITS)
+        self.TextBrowser_Params_TTS_GPTSoVITS = TextBrowserBase(self.Widget_Right_TTS_GPTSoVITS)
         self.TextBrowser_Params_TTS_GPTSoVITS.setObjectName(u"TextBrowser_Params_TTS_GPTSoVITS")
         sizePolicy1.setHeightForWidth(self.TextBrowser_Params_TTS_GPTSoVITS.sizePolicy().hasHeightForWidth())
         self.TextBrowser_Params_TTS_GPTSoVITS.setSizePolicy(sizePolicy1)
@@ -10684,39 +8725,13 @@ class Ui_MainWindow(object):
 
         self.gridLayout_15.addWidget(self.TextBrowser_Params_TTS_GPTSoVITS, 0, 0, 1, 3)
 
-        self.Button_ExportSettings_TTS_GPTSoVITS = QPushButton(self.Widget_Right_TTS_GPTSoVITS)
+        self.Button_ExportSettings_TTS_GPTSoVITS = HollowButton(self.Widget_Right_TTS_GPTSoVITS)
         self.Button_ExportSettings_TTS_GPTSoVITS.setObjectName(u"Button_ExportSettings_TTS_GPTSoVITS")
-        self.Button_ExportSettings_TTS_GPTSoVITS.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	font-size: 12px;\n"
-"	background-color: transparent;\n"
-"	padding: 6.6px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgb(120, 120, 120);\n"
-"}")
 
         self.gridLayout_15.addWidget(self.Button_ExportSettings_TTS_GPTSoVITS, 1, 2, 1, 1)
 
-        self.Button_ImportSettings_TTS_GPTSoVITS = QPushButton(self.Widget_Right_TTS_GPTSoVITS)
+        self.Button_ImportSettings_TTS_GPTSoVITS = HollowButton(self.Widget_Right_TTS_GPTSoVITS)
         self.Button_ImportSettings_TTS_GPTSoVITS.setObjectName(u"Button_ImportSettings_TTS_GPTSoVITS")
-        self.Button_ImportSettings_TTS_GPTSoVITS.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	font-size: 12px;\n"
-"	background-color: transparent;\n"
-"	padding: 6.6px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgb(120, 120, 120);\n"
-"}")
 
         self.gridLayout_15.addWidget(self.Button_ImportSettings_TTS_GPTSoVITS, 1, 1, 1, 1)
 
@@ -10764,8 +8779,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_136.setContentsMargins(0, 0, 0, 0)
         self.Button_TTS_GPTSoVITS_Execute = QPushButton(self.Page_TTS_GPTSoVITS_Execute)
         self.Button_TTS_GPTSoVITS_Execute.setObjectName(u"Button_TTS_GPTSoVITS_Execute")
-        sizePolicy3.setHeightForWidth(self.Button_TTS_GPTSoVITS_Execute.sizePolicy().hasHeightForWidth())
-        self.Button_TTS_GPTSoVITS_Execute.setSizePolicy(sizePolicy3)
+        sizePolicy2.setHeightForWidth(self.Button_TTS_GPTSoVITS_Execute.sizePolicy().hasHeightForWidth())
+        self.Button_TTS_GPTSoVITS_Execute.setSizePolicy(sizePolicy2)
         self.Button_TTS_GPTSoVITS_Execute.setMinimumSize(QSize(0, 30))
         self.Button_TTS_GPTSoVITS_Execute.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
@@ -10789,8 +8804,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_138.setContentsMargins(0, 0, 0, 0)
         self.Button_TTS_GPTSoVITS_Terminate = QPushButton(self.Page_TTS_GPTSoVITS_Terminate)
         self.Button_TTS_GPTSoVITS_Terminate.setObjectName(u"Button_TTS_GPTSoVITS_Terminate")
-        sizePolicy3.setHeightForWidth(self.Button_TTS_GPTSoVITS_Terminate.sizePolicy().hasHeightForWidth())
-        self.Button_TTS_GPTSoVITS_Terminate.setSizePolicy(sizePolicy3)
+        sizePolicy2.setHeightForWidth(self.Button_TTS_GPTSoVITS_Terminate.sizePolicy().hasHeightForWidth())
+        self.Button_TTS_GPTSoVITS_Terminate.setSizePolicy(sizePolicy2)
         self.Button_TTS_GPTSoVITS_Terminate.setMinimumSize(QSize(0, 30))
         self.Button_TTS_GPTSoVITS_Terminate.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
@@ -10853,28 +8868,13 @@ class Ui_MainWindow(object):
         self.ScrollArea_Middle_TTS_VITS.setWidgetResizable(True)
         self.ScrollArea_Middle_WidgetContents_TTS_VITS = QWidget()
         self.ScrollArea_Middle_WidgetContents_TTS_VITS.setObjectName(u"ScrollArea_Middle_WidgetContents_TTS_VITS")
-        self.ScrollArea_Middle_WidgetContents_TTS_VITS.setGeometry(QRect(0, 0, 586, 850))
+        self.ScrollArea_Middle_WidgetContents_TTS_VITS.setGeometry(QRect(0, 0, 586, 856))
         self.verticalLayout_19 = QVBoxLayout(self.ScrollArea_Middle_WidgetContents_TTS_VITS)
         self.verticalLayout_19.setSpacing(12)
         self.verticalLayout_19.setObjectName(u"verticalLayout_19")
         self.verticalLayout_19.setContentsMargins(12, 12, 12, 12)
-        self.GroupBox_TTS_VITS_InputParams = QGroupBox(self.ScrollArea_Middle_WidgetContents_TTS_VITS)
+        self.GroupBox_TTS_VITS_InputParams = GroupBoxBase(self.ScrollArea_Middle_WidgetContents_TTS_VITS)
         self.GroupBox_TTS_VITS_InputParams.setObjectName(u"GroupBox_TTS_VITS_InputParams")
-        self.GroupBox_TTS_VITS_InputParams.setStyleSheet(u"QGroupBox {\n"
-"	font-size: 15px;\n"
-"	margin-top: 1.5ex;\n"
-"	background-color: transparent;\n"
-"	border-width: 1px;\n"
-"	border-style: solid;\n"
-"	border-color: transparent;\n"
-"}\n"
-"QGroupBox::title {\n"
-"	left: 9px;\n"
-"	margin-left: 0px;\n"
-"	subcontrol-origin: margin;\n"
-"	subcontrol-position: top left;\n"
-"	padding: 3px;\n"
-"}")
         self.verticalLayout_120 = QVBoxLayout(self.GroupBox_TTS_VITS_InputParams)
         self.verticalLayout_120.setSpacing(0)
         self.verticalLayout_120.setObjectName(u"verticalLayout_120")
@@ -10900,7 +8900,7 @@ class Ui_MainWindow(object):
         self.gridLayout_69.setSpacing(12)
         self.gridLayout_69.setObjectName(u"gridLayout_69")
         self.gridLayout_69.setContentsMargins(21, 12, 21, 12)
-        self.Label_TTS_VITS_ConfigPathLoad = QLabel(self.Frame_TTS_VITS_ConfigPathLoad)
+        self.Label_TTS_VITS_ConfigPathLoad = LabelBase(self.Frame_TTS_VITS_ConfigPathLoad)
         self.Label_TTS_VITS_ConfigPathLoad.setObjectName(u"Label_TTS_VITS_ConfigPathLoad")
         sizePolicy5.setHeightForWidth(self.Label_TTS_VITS_ConfigPathLoad.sizePolicy().hasHeightForWidth())
         self.Label_TTS_VITS_ConfigPathLoad.setSizePolicy(sizePolicy5)
@@ -10955,7 +8955,7 @@ class Ui_MainWindow(object):
         self.gridLayout_70.setSpacing(12)
         self.gridLayout_70.setObjectName(u"gridLayout_70")
         self.gridLayout_70.setContentsMargins(21, 12, 21, 12)
-        self.Label_TTS_VITS_ModelPathLoad = QLabel(self.Frame_TTS_VITS_ModelPathLoad)
+        self.Label_TTS_VITS_ModelPathLoad = LabelBase(self.Frame_TTS_VITS_ModelPathLoad)
         self.Label_TTS_VITS_ModelPathLoad.setObjectName(u"Label_TTS_VITS_ModelPathLoad")
         sizePolicy5.setHeightForWidth(self.Label_TTS_VITS_ModelPathLoad.sizePolicy().hasHeightForWidth())
         self.Label_TTS_VITS_ModelPathLoad.setSizePolicy(sizePolicy5)
@@ -11001,23 +9001,8 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_19.addWidget(self.GroupBox_TTS_VITS_InputParams)
 
-        self.GroupBox_TTS_VITS_VITSParams = QGroupBox(self.ScrollArea_Middle_WidgetContents_TTS_VITS)
+        self.GroupBox_TTS_VITS_VITSParams = GroupBoxBase(self.ScrollArea_Middle_WidgetContents_TTS_VITS)
         self.GroupBox_TTS_VITS_VITSParams.setObjectName(u"GroupBox_TTS_VITS_VITSParams")
-        self.GroupBox_TTS_VITS_VITSParams.setStyleSheet(u"QGroupBox {\n"
-"	font-size: 15px;\n"
-"	margin-top: 1.5ex;\n"
-"	background-color: transparent;\n"
-"	border-width: 1px;\n"
-"	border-style: solid;\n"
-"	border-color: transparent;\n"
-"}\n"
-"QGroupBox::title {\n"
-"	left: 9px;\n"
-"	margin-left: 0px;\n"
-"	subcontrol-origin: margin;\n"
-"	subcontrol-position: top left;\n"
-"	padding: 3px;\n"
-"}")
         self.verticalLayout_117 = QVBoxLayout(self.GroupBox_TTS_VITS_VITSParams)
         self.verticalLayout_117.setSpacing(0)
         self.verticalLayout_117.setObjectName(u"verticalLayout_117")
@@ -11043,7 +9028,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_98.setSpacing(12)
         self.verticalLayout_98.setObjectName(u"verticalLayout_98")
         self.verticalLayout_98.setContentsMargins(21, 12, 21, 12)
-        self.Label_TTS_VITS_Text = QLabel(self.Frame_TTS_VITS_Text)
+        self.Label_TTS_VITS_Text = LabelBase(self.Frame_TTS_VITS_Text)
         self.Label_TTS_VITS_Text.setObjectName(u"Label_TTS_VITS_Text")
         sizePolicy5.setHeightForWidth(self.Label_TTS_VITS_Text.sizePolicy().hasHeightForWidth())
         self.Label_TTS_VITS_Text.setSizePolicy(sizePolicy5)
@@ -11060,8 +9045,8 @@ class Ui_MainWindow(object):
 
         self.PlainTextEdit_TTS_VITS_Text = TextEditBase(self.Frame_TTS_VITS_Text)
         self.PlainTextEdit_TTS_VITS_Text.setObjectName(u"PlainTextEdit_TTS_VITS_Text")
-        sizePolicy3.setHeightForWidth(self.PlainTextEdit_TTS_VITS_Text.sizePolicy().hasHeightForWidth())
-        self.PlainTextEdit_TTS_VITS_Text.setSizePolicy(sizePolicy3)
+        sizePolicy2.setHeightForWidth(self.PlainTextEdit_TTS_VITS_Text.sizePolicy().hasHeightForWidth())
+        self.PlainTextEdit_TTS_VITS_Text.setSizePolicy(sizePolicy2)
 
         self.verticalLayout_98.addWidget(self.PlainTextEdit_TTS_VITS_Text)
 
@@ -11083,7 +9068,7 @@ class Ui_MainWindow(object):
         self.gridLayout_79.setSpacing(12)
         self.gridLayout_79.setObjectName(u"gridLayout_79")
         self.gridLayout_79.setContentsMargins(21, 12, 21, 12)
-        self.Label_TTS_VITS_Language = QLabel(self.Frame_TTS_VITS_Language)
+        self.Label_TTS_VITS_Language = LabelBase(self.Frame_TTS_VITS_Language)
         self.Label_TTS_VITS_Language.setObjectName(u"Label_TTS_VITS_Language")
         sizePolicy5.setHeightForWidth(self.Label_TTS_VITS_Language.sizePolicy().hasHeightForWidth())
         self.Label_TTS_VITS_Language.setSizePolicy(sizePolicy5)
@@ -11138,7 +9123,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_104.setSpacing(12)
         self.verticalLayout_104.setObjectName(u"verticalLayout_104")
         self.verticalLayout_104.setContentsMargins(21, 12, 21, 12)
-        self.Label_TTS_VITS_Speaker = QLabel(self.Frame_TTS_VITS_Speaker)
+        self.Label_TTS_VITS_Speaker = LabelBase(self.Frame_TTS_VITS_Speaker)
         self.Label_TTS_VITS_Speaker.setObjectName(u"Label_TTS_VITS_Speaker")
         sizePolicy5.setHeightForWidth(self.Label_TTS_VITS_Speaker.sizePolicy().hasHeightForWidth())
         self.Label_TTS_VITS_Speaker.setSizePolicy(sizePolicy5)
@@ -11189,7 +9174,7 @@ class Ui_MainWindow(object):
         self.gridLayout_71.setSpacing(12)
         self.gridLayout_71.setObjectName(u"gridLayout_71")
         self.gridLayout_71.setContentsMargins(21, 12, 21, 12)
-        self.Label_TTS_VITS_EmotionStrength = QLabel(self.Frame_TTS_VITS_EmotionStrength)
+        self.Label_TTS_VITS_EmotionStrength = LabelBase(self.Frame_TTS_VITS_EmotionStrength)
         self.Label_TTS_VITS_EmotionStrength.setObjectName(u"Label_TTS_VITS_EmotionStrength")
         sizePolicy5.setHeightForWidth(self.Label_TTS_VITS_EmotionStrength.sizePolicy().hasHeightForWidth())
         self.Label_TTS_VITS_EmotionStrength.setSizePolicy(sizePolicy5)
@@ -11296,7 +9281,7 @@ class Ui_MainWindow(object):
         self.gridLayout_72.setSpacing(12)
         self.gridLayout_72.setObjectName(u"gridLayout_72")
         self.gridLayout_72.setContentsMargins(21, 12, 21, 12)
-        self.Label_TTS_VITS_PhonemeDuration = QLabel(self.Frame_TTS_VITS_PhonemeDuration)
+        self.Label_TTS_VITS_PhonemeDuration = LabelBase(self.Frame_TTS_VITS_PhonemeDuration)
         self.Label_TTS_VITS_PhonemeDuration.setObjectName(u"Label_TTS_VITS_PhonemeDuration")
         sizePolicy5.setHeightForWidth(self.Label_TTS_VITS_PhonemeDuration.sizePolicy().hasHeightForWidth())
         self.Label_TTS_VITS_PhonemeDuration.setSizePolicy(sizePolicy5)
@@ -11403,7 +9388,7 @@ class Ui_MainWindow(object):
         self.gridLayout_73.setSpacing(12)
         self.gridLayout_73.setObjectName(u"gridLayout_73")
         self.gridLayout_73.setContentsMargins(21, 12, 21, 12)
-        self.Label_TTS_VITS_SpeechRate = QLabel(self.Frame_TTS_VITS_SpeechRate)
+        self.Label_TTS_VITS_SpeechRate = LabelBase(self.Frame_TTS_VITS_SpeechRate)
         self.Label_TTS_VITS_SpeechRate.setObjectName(u"Label_TTS_VITS_SpeechRate")
         sizePolicy5.setHeightForWidth(self.Label_TTS_VITS_SpeechRate.sizePolicy().hasHeightForWidth())
         self.Label_TTS_VITS_SpeechRate.setSizePolicy(sizePolicy5)
@@ -11512,18 +9497,14 @@ class Ui_MainWindow(object):
 
         self.Widget_Right_TTS_VITS = QWidget(self.Subpage_TTS_VITS)
         self.Widget_Right_TTS_VITS.setObjectName(u"Widget_Right_TTS_VITS")
-        self.Widget_Right_TTS_VITS.setStyleSheet(u"QWidget {\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QWidget:hover {\n"
+        self.Widget_Right_TTS_VITS.setStyleSheet(u"QWidget:hover {\n"
 "	background-color: rgba(36, 36, 36, 3);\n"
 "}")
         self.gridLayout_16 = QGridLayout(self.Widget_Right_TTS_VITS)
         self.gridLayout_16.setSpacing(12)
         self.gridLayout_16.setObjectName(u"gridLayout_16")
         self.gridLayout_16.setContentsMargins(12, 12, 12, 12)
-        self.TextBrowser_Params_TTS_VITS = QTextBrowser(self.Widget_Right_TTS_VITS)
+        self.TextBrowser_Params_TTS_VITS = TextBrowserBase(self.Widget_Right_TTS_VITS)
         self.TextBrowser_Params_TTS_VITS.setObjectName(u"TextBrowser_Params_TTS_VITS")
         sizePolicy1.setHeightForWidth(self.TextBrowser_Params_TTS_VITS.sizePolicy().hasHeightForWidth())
         self.TextBrowser_Params_TTS_VITS.setSizePolicy(sizePolicy1)
@@ -11580,75 +9561,23 @@ class Ui_MainWindow(object):
 
         self.gridLayout_16.addWidget(self.TextBrowser_Params_TTS_VITS, 0, 0, 1, 3)
 
-        self.Button_ResetSettings_TTS_VITS = QPushButton(self.Widget_Right_TTS_VITS)
+        self.Button_ResetSettings_TTS_VITS = HollowButton(self.Widget_Right_TTS_VITS)
         self.Button_ResetSettings_TTS_VITS.setObjectName(u"Button_ResetSettings_TTS_VITS")
-        self.Button_ResetSettings_TTS_VITS.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	font-size: 12px;\n"
-"	background-color: transparent;\n"
-"	padding: 6.6px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgb(120, 120, 120);\n"
-"}")
 
         self.gridLayout_16.addWidget(self.Button_ResetSettings_TTS_VITS, 1, 0, 1, 1)
 
-        self.Button_ImportSettings_TTS_VITS = QPushButton(self.Widget_Right_TTS_VITS)
+        self.Button_ImportSettings_TTS_VITS = HollowButton(self.Widget_Right_TTS_VITS)
         self.Button_ImportSettings_TTS_VITS.setObjectName(u"Button_ImportSettings_TTS_VITS")
-        self.Button_ImportSettings_TTS_VITS.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	font-size: 12px;\n"
-"	background-color: transparent;\n"
-"	padding: 6.6px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgb(120, 120, 120);\n"
-"}")
 
         self.gridLayout_16.addWidget(self.Button_ImportSettings_TTS_VITS, 1, 1, 1, 1)
 
-        self.Button_ExportSettings_TTS_VITS = QPushButton(self.Widget_Right_TTS_VITS)
+        self.Button_ExportSettings_TTS_VITS = HollowButton(self.Widget_Right_TTS_VITS)
         self.Button_ExportSettings_TTS_VITS.setObjectName(u"Button_ExportSettings_TTS_VITS")
-        self.Button_ExportSettings_TTS_VITS.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	font-size: 12px;\n"
-"	background-color: transparent;\n"
-"	padding: 6.6px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgb(120, 120, 120);\n"
-"}")
 
         self.gridLayout_16.addWidget(self.Button_ExportSettings_TTS_VITS, 1, 2, 1, 1)
 
-        self.Button_CheckOutput_TTS_VITS = QPushButton(self.Widget_Right_TTS_VITS)
+        self.Button_CheckOutput_TTS_VITS = HollowButton(self.Widget_Right_TTS_VITS)
         self.Button_CheckOutput_TTS_VITS.setObjectName(u"Button_CheckOutput_TTS_VITS")
-        self.Button_CheckOutput_TTS_VITS.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	font-size: 12px;\n"
-"	background-color: transparent;\n"
-"	padding: 6.6px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgb(120, 120, 120);\n"
-"}")
 
         self.gridLayout_16.addWidget(self.Button_CheckOutput_TTS_VITS, 2, 0, 1, 3)
 
@@ -11696,8 +9625,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_112.setContentsMargins(0, 0, 0, 0)
         self.Button_TTS_VITS_Execute = QPushButton(self.Page_TTS_VITS_Execute)
         self.Button_TTS_VITS_Execute.setObjectName(u"Button_TTS_VITS_Execute")
-        sizePolicy3.setHeightForWidth(self.Button_TTS_VITS_Execute.sizePolicy().hasHeightForWidth())
-        self.Button_TTS_VITS_Execute.setSizePolicy(sizePolicy3)
+        sizePolicy2.setHeightForWidth(self.Button_TTS_VITS_Execute.sizePolicy().hasHeightForWidth())
+        self.Button_TTS_VITS_Execute.setSizePolicy(sizePolicy2)
         self.Button_TTS_VITS_Execute.setMinimumSize(QSize(0, 30))
         self.Button_TTS_VITS_Execute.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
@@ -11721,8 +9650,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_113.setContentsMargins(0, 0, 0, 0)
         self.Button_TTS_VITS_Terminate = QPushButton(self.Page_TTS_VITS_Terminate)
         self.Button_TTS_VITS_Terminate.setObjectName(u"Button_TTS_VITS_Terminate")
-        sizePolicy3.setHeightForWidth(self.Button_TTS_VITS_Terminate.sizePolicy().hasHeightForWidth())
-        self.Button_TTS_VITS_Terminate.setSizePolicy(sizePolicy3)
+        sizePolicy2.setHeightForWidth(self.Button_TTS_VITS_Terminate.sizePolicy().hasHeightForWidth())
+        self.Button_TTS_VITS_Terminate.setSizePolicy(sizePolicy2)
         self.Button_TTS_VITS_Terminate.setMinimumSize(QSize(0, 30))
         self.Button_TTS_VITS_Terminate.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
@@ -11762,108 +9691,34 @@ class Ui_MainWindow(object):
         self.Frame_Settings_Top.setObjectName(u"Frame_Settings_Top")
         self.Frame_Settings_Top.setMinimumSize(QSize(0, 60))
         self.Frame_Settings_Top.setStyleSheet(u"QFrame {\n"
-"	border-width: 0px;\n"
+"	border-top-width: 0px;\n"
+"	border-right-width: 0px;\n"
+"	border-bottom-width: 3px;\n"
+"	border-left-width: 0px;\n"
 "	border-style: solid;\n"
+"	border-bottom-color: rgba(123, 123, 123, 123);\n"
 "}")
         self.horizontalLayout_4 = QHBoxLayout(self.Frame_Settings_Top)
         self.horizontalLayout_4.setSpacing(0)
         self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
         self.horizontalLayout_4.setContentsMargins(0, 0, 0, 0)
-        self.Button_Settings_Title_Client = ButtonBase(self.Frame_Settings_Top)
+        self.Button_Settings_Title_Client = NavigationButton(self.Frame_Settings_Top)
         self.Button_Settings_Title_Client.setObjectName(u"Button_Settings_Title_Client")
         sizePolicy1.setHeightForWidth(self.Button_Settings_Title_Client.sizePolicy().hasHeightForWidth())
         self.Button_Settings_Title_Client.setSizePolicy(sizePolicy1)
-        self.Button_Settings_Title_Client.setStyleSheet(u"QPushButton {\n"
-"	font-size: 24px;\n"
-"	/*text-align: center;*/\n"
-"	padding-left: 12px;\n"
-"	padding-right: 12px;\n"
-"	background-color: transparent;\n"
-"	border-top-width: 0px;\n"
-"	border-right-width: 0px;\n"
-"	border-bottom-width: 3px;\n"
-"	border-left-width: 0px;\n"
-"	border-style: solid;\n"
-"	border-bottom-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	background-color: transparent;\n"
-"	border-top-width: 0px;\n"
-"	border-right-width: 0px;\n"
-"	border-bottom-width: 3px;\n"
-"	border-left-width: 0px;\n"
-"	border-style: solid;\n"
-"	border-bottom-color: rgba(120, 180, 240, 123);\n"
-"}\n"
-"QPushButton:checked {\n"
-"	background-color: transparent;\n"
-"	border-top-width: 0px;\n"
-"	border-right-width: 0px;\n"
-"	border-bottom-width: 3px;\n"
-"	border-left-width: 0px;\n"
-"	border-style: solid;\n"
-"	border-bottom-color: rgba(120, 180, 240, 210);\n"
-"}")
 
         self.horizontalLayout_4.addWidget(self.Button_Settings_Title_Client)
 
-        self.Button_Settings_Title_Tools = ButtonBase(self.Frame_Settings_Top)
+        self.Button_Settings_Title_Tools = NavigationButton(self.Frame_Settings_Top)
         self.Button_Settings_Title_Tools.setObjectName(u"Button_Settings_Title_Tools")
         sizePolicy1.setHeightForWidth(self.Button_Settings_Title_Tools.sizePolicy().hasHeightForWidth())
         self.Button_Settings_Title_Tools.setSizePolicy(sizePolicy1)
-        self.Button_Settings_Title_Tools.setStyleSheet(u"QPushButton {\n"
-"	font-size: 24px;\n"
-"	/*text-align: center;*/\n"
-"	padding-left: 12px;\n"
-"	padding-right: 12px;\n"
-"	background-color: transparent;\n"
-"	border-top-width: 0px;\n"
-"	border-right-width: 0px;\n"
-"	border-bottom-width: 3px;\n"
-"	border-left-width: 0px;\n"
-"	border-style: solid;\n"
-"	border-bottom-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	background-color: transparent;\n"
-"	border-top-width: 0px;\n"
-"	border-right-width: 0px;\n"
-"	border-bottom-width: 3px;\n"
-"	border-left-width: 0px;\n"
-"	border-style: solid;\n"
-"	border-bottom-color: rgba(120, 180, 240, 123);\n"
-"}\n"
-"QPushButton:checked {\n"
-"	background-color: transparent;\n"
-"	border-top-width: 0px;\n"
-"	border-right-width: 0px;\n"
-"	border-bottom-width: 3px;\n"
-"	border-left-width: 0px;\n"
-"	border-style: solid;\n"
-"	border-bottom-color: rgba(120, 180, 240, 210);\n"
-"}")
 
         self.horizontalLayout_4.addWidget(self.Button_Settings_Title_Tools)
 
-        self.Frame_Settings_Title_Spacer = QLabel(self.Frame_Settings_Top)
-        self.Frame_Settings_Title_Spacer.setObjectName(u"Frame_Settings_Title_Spacer")
-        sizePolicy4.setHeightForWidth(self.Frame_Settings_Title_Spacer.sizePolicy().hasHeightForWidth())
-        self.Frame_Settings_Title_Spacer.setSizePolicy(sizePolicy4)
-        self.Frame_Settings_Title_Spacer.setStyleSheet(u"QLabel {\n"
-"	font-size: 24px;\n"
-"	/*text-align: center;\n"
-"	padding-left: 12px;\n"
-"	padding-right: 12px;*/\n"
-"	background-color: transparent;\n"
-"	border-top-width: 0px;\n"
-"	border-right-width: 0px;\n"
-"	border-bottom-width: 3px;\n"
-"	border-left-width: 0px;\n"
-"	border-style: solid;\n"
-"	border-bottom-color: rgba(123, 123, 123, 123);\n"
-"}")
+        self.Frame_Settings_Title_Spacer = QSpacerItem(0, 0, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
-        self.horizontalLayout_4.addWidget(self.Frame_Settings_Title_Spacer)
+        self.horizontalLayout_4.addItem(self.Frame_Settings_Title_Spacer)
 
 
         self.verticalLayout_78.addWidget(self.Frame_Settings_Top)
@@ -11884,28 +9739,13 @@ class Ui_MainWindow(object):
         self.ScrollArea_Settings_Client.setWidgetResizable(True)
         self.ScrollAreaWidgetContents_Settings_Client = QWidget()
         self.ScrollAreaWidgetContents_Settings_Client.setObjectName(u"ScrollAreaWidgetContents_Settings_Client")
-        self.ScrollAreaWidgetContents_Settings_Client.setGeometry(QRect(0, 0, 310, 474))
+        self.ScrollAreaWidgetContents_Settings_Client.setGeometry(QRect(0, 0, 246, 483))
         self.verticalLayout_106 = QVBoxLayout(self.ScrollAreaWidgetContents_Settings_Client)
         self.verticalLayout_106.setSpacing(0)
         self.verticalLayout_106.setObjectName(u"verticalLayout_106")
         self.verticalLayout_106.setContentsMargins(0, 0, 0, 0)
-        self.GroupBox_Settings_Client_Outlook = QGroupBox(self.ScrollAreaWidgetContents_Settings_Client)
+        self.GroupBox_Settings_Client_Outlook = GroupBoxBase(self.ScrollAreaWidgetContents_Settings_Client)
         self.GroupBox_Settings_Client_Outlook.setObjectName(u"GroupBox_Settings_Client_Outlook")
-        self.GroupBox_Settings_Client_Outlook.setStyleSheet(u"QGroupBox {\n"
-"	font-size: 15px;\n"
-"	margin-top: 1.5ex;\n"
-"	background-color: transparent;\n"
-"	border-width: 1px;\n"
-"	border-style: solid;\n"
-"	border-color: transparent;\n"
-"}\n"
-"QGroupBox::title {\n"
-"	left: 9px;\n"
-"	margin-left: 0px;\n"
-"	subcontrol-origin: margin;\n"
-"	subcontrol-position: top left;\n"
-"	padding: 3px;\n"
-"}")
         self.verticalLayout_13 = QVBoxLayout(self.GroupBox_Settings_Client_Outlook)
         self.verticalLayout_13.setSpacing(0)
         self.verticalLayout_13.setObjectName(u"verticalLayout_13")
@@ -11925,7 +9765,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_72.setSpacing(12)
         self.horizontalLayout_72.setObjectName(u"horizontalLayout_72")
         self.horizontalLayout_72.setContentsMargins(21, 12, 21, 12)
-        self.Label_Setting_Theme = QLabel(self.Frame_Setting_Theme)
+        self.Label_Setting_Theme = LabelBase(self.Frame_Setting_Theme)
         self.Label_Setting_Theme.setObjectName(u"Label_Setting_Theme")
         sizePolicy4.setHeightForWidth(self.Label_Setting_Theme.sizePolicy().hasHeightForWidth())
         self.Label_Setting_Theme.setSizePolicy(sizePolicy4)
@@ -11965,7 +9805,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_66.setSpacing(12)
         self.horizontalLayout_66.setObjectName(u"horizontalLayout_66")
         self.horizontalLayout_66.setContentsMargins(21, 12, 21, 12)
-        self.Label_Setting_Language = QLabel(self.Frame_Setting_Language)
+        self.Label_Setting_Language = LabelBase(self.Frame_Setting_Language)
         self.Label_Setting_Language.setObjectName(u"Label_Setting_Language")
         sizePolicy4.setHeightForWidth(self.Label_Setting_Language.sizePolicy().hasHeightForWidth())
         self.Label_Setting_Language.setSizePolicy(sizePolicy4)
@@ -11993,23 +9833,8 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_106.addWidget(self.GroupBox_Settings_Client_Outlook)
 
-        self.GroupBox_Settings_Client_Function = QGroupBox(self.ScrollAreaWidgetContents_Settings_Client)
+        self.GroupBox_Settings_Client_Function = GroupBoxBase(self.ScrollAreaWidgetContents_Settings_Client)
         self.GroupBox_Settings_Client_Function.setObjectName(u"GroupBox_Settings_Client_Function")
-        self.GroupBox_Settings_Client_Function.setStyleSheet(u"QGroupBox {\n"
-"	font-size: 15px;\n"
-"	margin-top: 1.5ex;\n"
-"	background-color: transparent;\n"
-"	border-width: 1px;\n"
-"	border-style: solid;\n"
-"	border-color: transparent;\n"
-"}\n"
-"QGroupBox::title {\n"
-"	left: 9px;\n"
-"	margin-left: 0px;\n"
-"	subcontrol-origin: margin;\n"
-"	subcontrol-position: top left;\n"
-"	padding: 3px;\n"
-"}")
         self.verticalLayout_84 = QVBoxLayout(self.GroupBox_Settings_Client_Function)
         self.verticalLayout_84.setSpacing(0)
         self.verticalLayout_84.setObjectName(u"verticalLayout_84")
@@ -12029,7 +9854,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_65.setSpacing(12)
         self.horizontalLayout_65.setObjectName(u"horizontalLayout_65")
         self.horizontalLayout_65.setContentsMargins(21, 12, 21, 12)
-        self.Label_Setting_AutoUpdate = QLabel(self.Frame_Setting_AutoUpdate)
+        self.Label_Setting_AutoUpdate = LabelBase(self.Frame_Setting_AutoUpdate)
         self.Label_Setting_AutoUpdate.setObjectName(u"Label_Setting_AutoUpdate")
         sizePolicy4.setHeightForWidth(self.Label_Setting_AutoUpdate.sizePolicy().hasHeightForWidth())
         self.Label_Setting_AutoUpdate.setSizePolicy(sizePolicy4)
@@ -12089,23 +9914,8 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_106.addWidget(self.GroupBox_Settings_Client_Function)
 
-        self.GroupBox_Settings_Client_Operation = QGroupBox(self.ScrollAreaWidgetContents_Settings_Client)
+        self.GroupBox_Settings_Client_Operation = GroupBoxBase(self.ScrollAreaWidgetContents_Settings_Client)
         self.GroupBox_Settings_Client_Operation.setObjectName(u"GroupBox_Settings_Client_Operation")
-        self.GroupBox_Settings_Client_Operation.setStyleSheet(u"QGroupBox {\n"
-"	font-size: 15px;\n"
-"	margin-top: 1.5ex;\n"
-"	background-color: transparent;\n"
-"	border-width: 1px;\n"
-"	border-style: solid;\n"
-"	border-color: transparent;\n"
-"}\n"
-"QGroupBox::title {\n"
-"	left: 9px;\n"
-"	margin-left: 0px;\n"
-"	subcontrol-origin: margin;\n"
-"	subcontrol-position: top left;\n"
-"	padding: 3px;\n"
-"}")
         self.verticalLayout_85 = QVBoxLayout(self.GroupBox_Settings_Client_Operation)
         self.verticalLayout_85.setSpacing(0)
         self.verticalLayout_85.setObjectName(u"verticalLayout_85")
@@ -12125,27 +9935,8 @@ class Ui_MainWindow(object):
         self.horizontalLayout_6.setSpacing(42)
         self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
         self.horizontalLayout_6.setContentsMargins(21, 12, 21, 12)
-        self.Button_Setting_ClientRebooter = QPushButton(self.Frame_Setting_Operation)
-        self.Button_Setting_ClientRebooter.setObjectName(u"Button_Setting_ClientRebooter")
-        self.Button_Setting_ClientRebooter.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	font-size: 12px;\n"
-"	background-color: transparent;\n"
-"	padding: 12px;\n"
-"	border-width: 1.5px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgb(120, 120, 120);\n"
-"}")
-
-        self.horizontalLayout_6.addWidget(self.Button_Setting_ClientRebooter)
-
         self.Button_Setting_IntegrityChecker = QPushButton(self.Frame_Setting_Operation)
         self.Button_Setting_IntegrityChecker.setObjectName(u"Button_Setting_IntegrityChecker")
-        self.Button_Setting_IntegrityChecker.setMinimumSize(QSize(123, 0))
         self.Button_Setting_IntegrityChecker.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
 "	font-size: 12px;\n"
@@ -12167,8 +9958,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_6.addItem(self.HorizontalSpacer_Setting_Operation)
 
         self.horizontalLayout_6.setStretch(0, 2)
-        self.horizontalLayout_6.setStretch(1, 2)
-        self.horizontalLayout_6.setStretch(2, 6)
+        self.horizontalLayout_6.setStretch(1, 6)
 
         self.verticalLayout_85.addWidget(self.Frame_Setting_Operation)
 
@@ -12195,28 +9985,13 @@ class Ui_MainWindow(object):
         self.ScrollArea_Settings_Tools.setWidgetResizable(True)
         self.ScrollAreaWidgetContents_Settings_Tools = QWidget()
         self.ScrollAreaWidgetContents_Settings_Tools.setObjectName(u"ScrollAreaWidgetContents_Settings_Tools")
-        self.ScrollAreaWidgetContents_Settings_Tools.setGeometry(QRect(0, 0, 235, 901))
+        self.ScrollAreaWidgetContents_Settings_Tools.setGeometry(QRect(0, 0, 235, 907))
         self.verticalLayout_34 = QVBoxLayout(self.ScrollAreaWidgetContents_Settings_Tools)
         self.verticalLayout_34.setSpacing(0)
         self.verticalLayout_34.setObjectName(u"verticalLayout_34")
         self.verticalLayout_34.setContentsMargins(0, 0, 0, 0)
-        self.GroupBox_Settings_Tools_Function = QGroupBox(self.ScrollAreaWidgetContents_Settings_Tools)
+        self.GroupBox_Settings_Tools_Function = GroupBoxBase(self.ScrollAreaWidgetContents_Settings_Tools)
         self.GroupBox_Settings_Tools_Function.setObjectName(u"GroupBox_Settings_Tools_Function")
-        self.GroupBox_Settings_Tools_Function.setStyleSheet(u"QGroupBox {\n"
-"	font-size: 15px;\n"
-"	margin-top: 1.5ex;\n"
-"	background-color: transparent;\n"
-"	border-width: 1px;\n"
-"	border-style: solid;\n"
-"	border-color: transparent;\n"
-"}\n"
-"QGroupBox::title {\n"
-"	left: 9px;\n"
-"	margin-left: 0px;\n"
-"	subcontrol-origin: margin;\n"
-"	subcontrol-position: top left;\n"
-"	padding: 3px;\n"
-"}")
         self.verticalLayout_76 = QVBoxLayout(self.GroupBox_Settings_Tools_Function)
         self.verticalLayout_76.setSpacing(0)
         self.verticalLayout_76.setObjectName(u"verticalLayout_76")
@@ -12236,7 +10011,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_75.setSpacing(12)
         self.horizontalLayout_75.setObjectName(u"horizontalLayout_75")
         self.horizontalLayout_75.setContentsMargins(21, 12, 21, 12)
-        self.Label_Setting_AutoReset = QLabel(self.Frame_Setting_AutoReset)
+        self.Label_Setting_AutoReset = LabelBase(self.Frame_Setting_AutoReset)
         self.Label_Setting_AutoReset.setObjectName(u"Label_Setting_AutoReset")
         sizePolicy4.setHeightForWidth(self.Label_Setting_AutoReset.sizePolicy().hasHeightForWidth())
         self.Label_Setting_AutoReset.setSizePolicy(sizePolicy4)
@@ -12308,7 +10083,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_74.setSpacing(12)
         self.horizontalLayout_74.setObjectName(u"horizontalLayout_74")
         self.horizontalLayout_74.setContentsMargins(21, 12, 21, 12)
-        self.Label_Setting_Synchronizer = QLabel(self.Frame_Setting_Synchronizer)
+        self.Label_Setting_Synchronizer = LabelBase(self.Frame_Setting_Synchronizer)
         self.Label_Setting_Synchronizer.setObjectName(u"Label_Setting_Synchronizer")
         sizePolicy4.setHeightForWidth(self.Label_Setting_Synchronizer.sizePolicy().hasHeightForWidth())
         self.Label_Setting_Synchronizer.setSizePolicy(sizePolicy4)
@@ -12368,23 +10143,8 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_34.addWidget(self.GroupBox_Settings_Tools_Function)
 
-        self.GroupBox_Settings_Tools_Path = QGroupBox(self.ScrollAreaWidgetContents_Settings_Tools)
+        self.GroupBox_Settings_Tools_Path = GroupBoxBase(self.ScrollAreaWidgetContents_Settings_Tools)
         self.GroupBox_Settings_Tools_Path.setObjectName(u"GroupBox_Settings_Tools_Path")
-        self.GroupBox_Settings_Tools_Path.setStyleSheet(u"QGroupBox {\n"
-"	font-size: 15px;\n"
-"	margin-top: 1.5ex;\n"
-"	background-color: transparent;\n"
-"	border-width: 1px;\n"
-"	border-style: solid;\n"
-"	border-color: transparent;\n"
-"}\n"
-"QGroupBox::title {\n"
-"	left: 9px;\n"
-"	margin-left: 0px;\n"
-"	subcontrol-origin: margin;\n"
-"	subcontrol-position: top left;\n"
-"	padding: 3px;\n"
-"}")
         self.verticalLayout_83 = QVBoxLayout(self.GroupBox_Settings_Tools_Path)
         self.verticalLayout_83.setSpacing(0)
         self.verticalLayout_83.setObjectName(u"verticalLayout_83")
@@ -12404,7 +10164,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_19.setSpacing(12)
         self.horizontalLayout_19.setObjectName(u"horizontalLayout_19")
         self.horizontalLayout_19.setContentsMargins(21, 12, 21, 12)
-        self.Label_Process_OutputRoot = QLabel(self.Frame_Process_OutputRoot)
+        self.Label_Process_OutputRoot = LabelBase(self.Frame_Process_OutputRoot)
         self.Label_Process_OutputRoot.setObjectName(u"Label_Process_OutputRoot")
         sizePolicy4.setHeightForWidth(self.Label_Process_OutputRoot.sizePolicy().hasHeightForWidth())
         self.Label_Process_OutputRoot.setSizePolicy(sizePolicy4)
@@ -12455,7 +10215,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_25.setSpacing(12)
         self.horizontalLayout_25.setObjectName(u"horizontalLayout_25")
         self.horizontalLayout_25.setContentsMargins(21, 12, 21, 12)
-        self.Label_ASR_VPR_OutputRoot = QLabel(self.Frame_ASR_VPR_OutputRoot)
+        self.Label_ASR_VPR_OutputRoot = LabelBase(self.Frame_ASR_VPR_OutputRoot)
         self.Label_ASR_VPR_OutputRoot.setObjectName(u"Label_ASR_VPR_OutputRoot")
         sizePolicy4.setHeightForWidth(self.Label_ASR_VPR_OutputRoot.sizePolicy().hasHeightForWidth())
         self.Label_ASR_VPR_OutputRoot.setSizePolicy(sizePolicy4)
@@ -12506,7 +10266,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_20.setSpacing(12)
         self.horizontalLayout_20.setObjectName(u"horizontalLayout_20")
         self.horizontalLayout_20.setContentsMargins(21, 12, 21, 12)
-        self.Label_STT_Whisper_OutputRoot = QLabel(self.Frame_STT_Whisper_OutputRoot)
+        self.Label_STT_Whisper_OutputRoot = LabelBase(self.Frame_STT_Whisper_OutputRoot)
         self.Label_STT_Whisper_OutputRoot.setObjectName(u"Label_STT_Whisper_OutputRoot")
         sizePolicy4.setHeightForWidth(self.Label_STT_Whisper_OutputRoot.sizePolicy().hasHeightForWidth())
         self.Label_STT_Whisper_OutputRoot.setSizePolicy(sizePolicy4)
@@ -12557,7 +10317,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_21.setSpacing(12)
         self.horizontalLayout_21.setObjectName(u"horizontalLayout_21")
         self.horizontalLayout_21.setContentsMargins(21, 12, 21, 12)
-        self.Label_DAT_GPTSoVITS_OutputRoot = QLabel(self.Frame_DAT_GPTSoVITS_OutputRoot)
+        self.Label_DAT_GPTSoVITS_OutputRoot = LabelBase(self.Frame_DAT_GPTSoVITS_OutputRoot)
         self.Label_DAT_GPTSoVITS_OutputRoot.setObjectName(u"Label_DAT_GPTSoVITS_OutputRoot")
         sizePolicy4.setHeightForWidth(self.Label_DAT_GPTSoVITS_OutputRoot.sizePolicy().hasHeightForWidth())
         self.Label_DAT_GPTSoVITS_OutputRoot.setSizePolicy(sizePolicy4)
@@ -12608,7 +10368,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_22.setSpacing(12)
         self.horizontalLayout_22.setObjectName(u"horizontalLayout_22")
         self.horizontalLayout_22.setContentsMargins(21, 12, 21, 12)
-        self.Label_DAT_VITS_OutputRoot = QLabel(self.Frame_DAT_VITS_OutputRoot)
+        self.Label_DAT_VITS_OutputRoot = LabelBase(self.Frame_DAT_VITS_OutputRoot)
         self.Label_DAT_VITS_OutputRoot.setObjectName(u"Label_DAT_VITS_OutputRoot")
         sizePolicy4.setHeightForWidth(self.Label_DAT_VITS_OutputRoot.sizePolicy().hasHeightForWidth())
         self.Label_DAT_VITS_OutputRoot.setSizePolicy(sizePolicy4)
@@ -12659,7 +10419,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_23.setSpacing(12)
         self.horizontalLayout_23.setObjectName(u"horizontalLayout_23")
         self.horizontalLayout_23.setContentsMargins(21, 12, 21, 12)
-        self.Label_Train_GPTSoVITS_OutputRoot = QLabel(self.Frame_Train_GPTSoVITS_OutputRoot)
+        self.Label_Train_GPTSoVITS_OutputRoot = LabelBase(self.Frame_Train_GPTSoVITS_OutputRoot)
         self.Label_Train_GPTSoVITS_OutputRoot.setObjectName(u"Label_Train_GPTSoVITS_OutputRoot")
         sizePolicy4.setHeightForWidth(self.Label_Train_GPTSoVITS_OutputRoot.sizePolicy().hasHeightForWidth())
         self.Label_Train_GPTSoVITS_OutputRoot.setSizePolicy(sizePolicy4)
@@ -12710,7 +10470,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_24.setSpacing(12)
         self.horizontalLayout_24.setObjectName(u"horizontalLayout_24")
         self.horizontalLayout_24.setContentsMargins(21, 12, 21, 12)
-        self.Label_Train_VITS_OutputRoot = QLabel(self.Frame_Train_VITS_OutputRoot)
+        self.Label_Train_VITS_OutputRoot = LabelBase(self.Frame_Train_VITS_OutputRoot)
         self.Label_Train_VITS_OutputRoot.setObjectName(u"Label_Train_VITS_OutputRoot")
         sizePolicy4.setHeightForWidth(self.Label_Train_VITS_OutputRoot.sizePolicy().hasHeightForWidth())
         self.Label_Train_VITS_OutputRoot.setSizePolicy(sizePolicy4)
@@ -12772,70 +10532,27 @@ class Ui_MainWindow(object):
         self.Frame_Info_Top.setObjectName(u"Frame_Info_Top")
         self.Frame_Info_Top.setMinimumSize(QSize(0, 60))
         self.Frame_Info_Top.setStyleSheet(u"QFrame {\n"
-"	border-width: 0px;\n"
+"	border-top-width: 0px;\n"
+"	border-right-width: 0px;\n"
+"	border-bottom-width: 3px;\n"
+"	border-left-width: 0px;\n"
 "	border-style: solid;\n"
+"	border-bottom-color: rgba(123, 123, 123, 123);\n"
 "}")
         self.horizontalLayout_29 = QHBoxLayout(self.Frame_Info_Top)
         self.horizontalLayout_29.setSpacing(0)
         self.horizontalLayout_29.setObjectName(u"horizontalLayout_29")
         self.horizontalLayout_29.setContentsMargins(0, 0, 0, 0)
-        self.Button_Info_Title = ButtonBase(self.Frame_Info_Top)
+        self.Button_Info_Title = NavigationButton(self.Frame_Info_Top)
         self.Button_Info_Title.setObjectName(u"Button_Info_Title")
         sizePolicy1.setHeightForWidth(self.Button_Info_Title.sizePolicy().hasHeightForWidth())
         self.Button_Info_Title.setSizePolicy(sizePolicy1)
-        self.Button_Info_Title.setStyleSheet(u"QPushButton {\n"
-"	font-size: 24px;\n"
-"	/*text-align: center;*/\n"
-"	padding-left: 12px;\n"
-"	padding-right: 12px;\n"
-"	background-color: transparent;\n"
-"	border-top-width: 0px;\n"
-"	border-right-width: 0px;\n"
-"	border-bottom-width: 3px;\n"
-"	border-left-width: 0px;\n"
-"	border-style: solid;\n"
-"	border-bottom-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	background-color: transparent;\n"
-"	border-top-width: 0px;\n"
-"	border-right-width: 0px;\n"
-"	border-bottom-width: 3px;\n"
-"	border-left-width: 0px;\n"
-"	border-style: solid;\n"
-"	border-bottom-color: rgba(120, 180, 240, 123);\n"
-"}\n"
-"QPushButton:checked {\n"
-"	background-color: transparent;\n"
-"	border-top-width: 0px;\n"
-"	border-right-width: 0px;\n"
-"	border-bottom-width: 3px;\n"
-"	border-left-width: 0px;\n"
-"	border-style: solid;\n"
-"	border-bottom-color: rgba(120, 180, 240, 210);\n"
-"}")
 
         self.horizontalLayout_29.addWidget(self.Button_Info_Title)
 
-        self.Frame_Info_Title_Spacer = QLabel(self.Frame_Info_Top)
-        self.Frame_Info_Title_Spacer.setObjectName(u"Frame_Info_Title_Spacer")
-        sizePolicy4.setHeightForWidth(self.Frame_Info_Title_Spacer.sizePolicy().hasHeightForWidth())
-        self.Frame_Info_Title_Spacer.setSizePolicy(sizePolicy4)
-        self.Frame_Info_Title_Spacer.setStyleSheet(u"QLabel {\n"
-"	font-size: 24px;\n"
-"	/*text-align: center;\n"
-"	padding-left: 12px;\n"
-"	padding-right: 12px;*/\n"
-"	background-color: transparent;\n"
-"	border-top-width: 0px;\n"
-"	border-right-width: 0px;\n"
-"	border-bottom-width: 3px;\n"
-"	border-left-width: 0px;\n"
-"	border-style: solid;\n"
-"	border-bottom-color: rgba(123, 123, 123, 123);\n"
-"}")
+        self.Frame_Info_Title_Spacer = QSpacerItem(0, 0, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
-        self.horizontalLayout_29.addWidget(self.Frame_Info_Title_Spacer)
+        self.horizontalLayout_29.addItem(self.Frame_Info_Title_Spacer)
 
 
         self.verticalLayout_25.addWidget(self.Frame_Info_Top)
@@ -12850,7 +10567,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_22.setSpacing(21)
         self.verticalLayout_22.setObjectName(u"verticalLayout_22")
         self.verticalLayout_22.setContentsMargins(12, 0, 12, 0)
-        self.TextBrowser_Text_Info = QTextBrowser(self.Frame_Info_Middle)
+        self.TextBrowser_Text_Info = TextBrowserBase(self.Frame_Info_Middle)
         self.TextBrowser_Text_Info.setObjectName(u"TextBrowser_Text_Info")
         self.TextBrowser_Text_Info.setStyleSheet(u"QTextBrowser {\n"
 "	/*text-align: center;*/\n"
@@ -12990,11 +10707,6 @@ class Ui_MainWindow(object):
         self.Frame_Console_Top.setObjectName(u"Frame_Console_Top")
         self.Frame_Console_Top.setMinimumSize(QSize(0, 24))
         self.Frame_Console_Top.setMaximumSize(QSize(16777215, 24))
-        self.Frame_Console_Top.setStyleSheet(u"QFrame {\n"
-"	background-color: rgba(36, 36, 36, 12);\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
         self.horizontalLayout_14 = QHBoxLayout(self.Frame_Console_Top)
         self.horizontalLayout_14.setSpacing(21)
         self.horizontalLayout_14.setObjectName(u"horizontalLayout_14")
@@ -13119,9 +10831,9 @@ class Ui_MainWindow(object):
         self.ScrollAreaWidgetContents_Console.setObjectName(u"ScrollAreaWidgetContents_Console")
         self.ScrollAreaWidgetContents_Console.setGeometry(QRect(0, 0, 1070, 175))
         self.verticalLayout_50 = QVBoxLayout(self.ScrollAreaWidgetContents_Console)
-        self.verticalLayout_50.setSpacing(21)
+        self.verticalLayout_50.setSpacing(0)
         self.verticalLayout_50.setObjectName(u"verticalLayout_50")
-        self.verticalLayout_50.setContentsMargins(21, 0, 21, 0)
+        self.verticalLayout_50.setContentsMargins(0, 0, 0, 0)
         self.PlainTextEdit_Console = TextEditBase(self.ScrollAreaWidgetContents_Console)
         self.PlainTextEdit_Console.setObjectName(u"PlainTextEdit_Console")
 
@@ -13220,7 +10932,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_50.setSpacing(21)
         self.horizontalLayout_50.setObjectName(u"horizontalLayout_50")
         self.horizontalLayout_50.setContentsMargins(0, 0, 30, 0)
-        self.Label_Usage_CPU = QLabel(self.Frame_Bottom_Right)
+        self.Label_Usage_CPU = LabelBase(self.Frame_Bottom_Right)
         self.Label_Usage_CPU.setObjectName(u"Label_Usage_CPU")
         self.Label_Usage_CPU.setStyleSheet(u"QLabel {\n"
 "	font-size: 12px;\n"
@@ -13238,7 +10950,7 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_50.addWidget(self.Label_Usage_CPU)
 
-        self.Label_Usage_GPU = QLabel(self.Frame_Bottom_Right)
+        self.Label_Usage_GPU = LabelBase(self.Frame_Bottom_Right)
         self.Label_Usage_GPU.setObjectName(u"Label_Usage_GPU")
         self.Label_Usage_GPU.setStyleSheet(u"QLabel {\n"
 "	font-size: 12px;\n"
@@ -13301,50 +11013,47 @@ class Ui_MainWindow(object):
 #if QT_CONFIG(tooltip)
         self.Button_Menu_Home.setToolTip(QCoreApplication.translate("MainWindow", u"\u4e3b\u9875", None))
 #endif // QT_CONFIG(tooltip)
-#if QT_CONFIG(tooltip)
-        self.Label_Menu_Home_Text.setToolTip(QCoreApplication.translate("MainWindow", u"\u4e3b\u9875", None))
-#endif // QT_CONFIG(tooltip)
-        self.Label_Menu_Home_Text.setText(QCoreApplication.translate("MainWindow", u"<font size=4>\u4e3b\u9875</font>", None))
+        self.Button_Menu_Home.setText(QCoreApplication.translate("MainWindow", u"\u4e3b\u9875", None))
 #if QT_CONFIG(tooltip)
         self.Button_Menu_Env.setToolTip(QCoreApplication.translate("MainWindow", u"\u73af\u5883\u914d\u7f6e", None))
 #endif // QT_CONFIG(tooltip)
-        self.Label_Menu_Env_Install_Text.setText(QCoreApplication.translate("MainWindow", u"<font size=4>\u73af\u5883</font>", None))
+        self.Button_Menu_Env.setText(QCoreApplication.translate("MainWindow", u"\u73af\u5883", None))
 #if QT_CONFIG(tooltip)
         self.Button_Menu_Models.setToolTip(QCoreApplication.translate("MainWindow", u"\u6a21\u578b\u7ba1\u7406", None))
 #endif // QT_CONFIG(tooltip)
-        self.Label_Menu_Models_Text.setText(QCoreApplication.translate("MainWindow", u"<font size=4>\u6a21\u578b</font>", None))
+        self.Button_Menu_Models.setText(QCoreApplication.translate("MainWindow", u"\u6a21\u578b", None))
 #if QT_CONFIG(tooltip)
         self.Button_Menu_Process.setToolTip(QCoreApplication.translate("MainWindow", u"\u5de5\u5177\uff1a\u97f3\u9891\u5904\u7406", None))
 #endif // QT_CONFIG(tooltip)
-        self.Label_Menu_Process_Text.setText(QCoreApplication.translate("MainWindow", u"<font size=4>\u5904\u7406</font>", None))
+        self.Button_Menu_Process.setText(QCoreApplication.translate("MainWindow", u"\u5904\u7406", None))
 #if QT_CONFIG(tooltip)
         self.Button_Menu_ASR.setToolTip(QCoreApplication.translate("MainWindow", u"\u5de5\u5177\uff1a\u8bed\u97f3\u8bc6\u522b", None))
 #endif // QT_CONFIG(tooltip)
-        self.Label_Menu_ASR_Text.setText(QCoreApplication.translate("MainWindow", u"<font size=4>\u8bc6\u522b</font>", None))
+        self.Button_Menu_ASR.setText(QCoreApplication.translate("MainWindow", u"\u8bc6\u522b", None))
 #if QT_CONFIG(tooltip)
         self.Button_Menu_STT.setToolTip(QCoreApplication.translate("MainWindow", u"\u5de5\u5177\uff1a\u8bed\u97f3\u8f6c\u6587\u5b57", None))
 #endif // QT_CONFIG(tooltip)
-        self.Label_Menu_STT_Text.setText(QCoreApplication.translate("MainWindow", u"<font size=4>\u8f6c\u5f55</font>", None))
+        self.Button_Menu_STT.setText(QCoreApplication.translate("MainWindow", u"\u8f6c\u5f55", None))
 #if QT_CONFIG(tooltip)
         self.Button_Menu_Dataset.setToolTip(QCoreApplication.translate("MainWindow", u"\u5de5\u5177\uff1a\u6570\u636e\u96c6\u5236\u4f5c", None))
 #endif // QT_CONFIG(tooltip)
-        self.Label_Menu_Dataset_Text.setText(QCoreApplication.translate("MainWindow", u"<font size=4>\u6570\u636e</font>", None))
+        self.Button_Menu_Dataset.setText(QCoreApplication.translate("MainWindow", u"\u6570\u636e", None))
 #if QT_CONFIG(tooltip)
         self.Button_Menu_Train.setToolTip(QCoreApplication.translate("MainWindow", u"\u5de5\u5177\uff1a\u6a21\u578b\u8bad\u7ec3", None))
 #endif // QT_CONFIG(tooltip)
-        self.Label_Menu_Train_Text.setText(QCoreApplication.translate("MainWindow", u"<font size=4>\u8bad\u7ec3</font>", None))
+        self.Button_Menu_Train.setText(QCoreApplication.translate("MainWindow", u"\u8bad\u7ec3", None))
 #if QT_CONFIG(tooltip)
         self.Button_Menu_TTS.setToolTip(QCoreApplication.translate("MainWindow", u"\u5de5\u5177\uff1a\u8bed\u97f3\u5408\u6210", None))
 #endif // QT_CONFIG(tooltip)
-        self.Label_Menu_TTS_Text.setText(QCoreApplication.translate("MainWindow", u"<font size=4>\u5408\u6210</font>", None))
+        self.Button_Menu_TTS.setText(QCoreApplication.translate("MainWindow", u"\u5408\u6210", None))
 #if QT_CONFIG(tooltip)
         self.Button_Menu_Settings.setToolTip(QCoreApplication.translate("MainWindow", u"\u5ba2\u6237\u7aef\u8bbe\u7f6e", None))
 #endif // QT_CONFIG(tooltip)
-        self.Label_Menu_Settings_Text.setText(QCoreApplication.translate("MainWindow", u"<font size=4>\u8bbe\u7f6e</font>", None))
+        self.Button_Menu_Settings.setText(QCoreApplication.translate("MainWindow", u"\u8bbe\u7f6e", None))
 #if QT_CONFIG(tooltip)
         self.Button_Menu_Info.setToolTip(QCoreApplication.translate("MainWindow", u"\u5173\u4e8e\u672c\u8f6f\u4ef6", None))
 #endif // QT_CONFIG(tooltip)
-        self.Label_Menu_Info_Text.setText(QCoreApplication.translate("MainWindow", u"<font size=4>\u5173\u4e8e</font>", None))
+        self.Button_Menu_Info.setText(QCoreApplication.translate("MainWindow", u"\u5173\u4e8e", None))
         self.TextBrowser_Text_Home.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"

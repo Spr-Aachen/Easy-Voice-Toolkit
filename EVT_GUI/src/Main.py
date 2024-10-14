@@ -1323,145 +1323,121 @@ class MainWindow(Window_MainWindow):
                 MaxWidth = 210
             )
         )
-        self.ui.Button_Toggle_Menu.setCheckable(True)
         self.ui.Button_Toggle_Menu.setChecked(False)
-        self.ui.Button_Toggle_Menu.setAutoExclusive(False)
         self.ui.Button_Toggle_Menu.setToolTip(QCA.translate('MainWindow', "点击以展开/折叠菜单"))
 
         #############################################################
         ############################ Menu ###########################
         #############################################################
 
-        self.ui.Label_Menu_Home_Text.setText(QCA.translate('MainWindow', "主页"))
+        self.ui.Button_Menu_Home.setText(QCA.translate('MainWindow', "主页"))
         self.ui.Button_Menu_Home.clicked.connect(
             lambda: Function_AnimateStackedWidget(
                 StackedWidget = self.ui.StackedWidget_Pages,
                 Target = 0
             )
         )
-        self.ui.Button_Menu_Home.setCheckable(True)
         self.ui.Button_Menu_Home.setChecked(True)
-        self.ui.Button_Menu_Home.setAutoExclusive(True)
         self.ui.Button_Menu_Home.setToolTip(QCA.translate('MainWindow', "主页"))
 
-        self.ui.Label_Menu_Env_Install_Text.setText(QCA.translate('MainWindow', "环境"))
+        self.ui.Button_Menu_Env.setText(QCA.translate('MainWindow', "环境"))
         self.ui.Button_Menu_Env.clicked.connect(
             lambda: Function_AnimateStackedWidget(
                 StackedWidget = self.ui.StackedWidget_Pages,
                 Target = 1
             )
         )
-        self.ui.Button_Menu_Env.setCheckable(True)
         self.ui.Button_Menu_Env.setChecked(False)
-        self.ui.Button_Menu_Env.setAutoExclusive(True)
         self.ui.Button_Menu_Env.setToolTip(QCA.translate('MainWindow', "环境配置"))
 
-        self.ui.Label_Menu_Models_Text.setText(QCA.translate('MainWindow', "模型"))
+        self.ui.Button_Menu_Models.setText(QCA.translate('MainWindow', "模型"))
         self.ui.Button_Menu_Models.clicked.connect(
             lambda: Function_AnimateStackedWidget(
                 StackedWidget = self.ui.StackedWidget_Pages,
                 Target = 2
             )
         )
-        self.ui.Button_Menu_Models.setCheckable(True)
         self.ui.Button_Menu_Models.setChecked(False)
-        self.ui.Button_Menu_Models.setAutoExclusive(True)
         self.ui.Button_Menu_Models.setToolTip(QCA.translate('MainWindow', "模型管理"))
 
-        self.ui.Label_Menu_Process_Text.setText(QCA.translate('MainWindow', "处理"))
+        self.ui.Button_Menu_Process.setText(QCA.translate('MainWindow', "处理"))
         self.ui.Button_Menu_Process.clicked.connect(
             lambda: Function_AnimateStackedWidget(
                 StackedWidget = self.ui.StackedWidget_Pages,
                 Target = 3
             )
         )
-        self.ui.Button_Menu_Process.setCheckable(True)
         self.ui.Button_Menu_Process.setChecked(False)
-        self.ui.Button_Menu_Process.setAutoExclusive(True)
         self.ui.Button_Menu_Process.setToolTip(QCA.translate('MainWindow', "工具：音频处理"))
 
-        self.ui.Label_Menu_ASR_Text.setText(QCA.translate('MainWindow', "识别"))
+        self.ui.Button_Menu_ASR.setText(QCA.translate('MainWindow', "识别"))
         self.ui.Button_Menu_ASR.clicked.connect(
             lambda: Function_AnimateStackedWidget(
                 StackedWidget = self.ui.StackedWidget_Pages,
                 Target = 4
             )
         )
-        self.ui.Button_Menu_ASR.setCheckable(True)
         self.ui.Button_Menu_ASR.setChecked(False)
-        self.ui.Button_Menu_ASR.setAutoExclusive(True)
         self.ui.Button_Menu_ASR.setToolTip(QCA.translate('MainWindow', "工具：语音识别"))
 
-        self.ui.Label_Menu_STT_Text.setText(QCA.translate('MainWindow', "转录"))
+        self.ui.Button_Menu_STT.setText(QCA.translate('MainWindow', "转录"))
         self.ui.Button_Menu_STT.clicked.connect(
             lambda: Function_AnimateStackedWidget(
                 StackedWidget = self.ui.StackedWidget_Pages,
                 Target = 5
             )
         )
-        self.ui.Button_Menu_STT.setCheckable(True)
         self.ui.Button_Menu_STT.setChecked(False)
-        self.ui.Button_Menu_STT.setAutoExclusive(True)
         self.ui.Button_Menu_STT.setToolTip(QCA.translate('MainWindow', "工具：语音转文字"))
 
-        self.ui.Label_Menu_Dataset_Text.setText(QCA.translate('MainWindow', "数据"))
+        self.ui.Button_Menu_Dataset.setText(QCA.translate('MainWindow', "数据"))
         self.ui.Button_Menu_Dataset.clicked.connect(
             lambda: Function_AnimateStackedWidget(
                 StackedWidget = self.ui.StackedWidget_Pages,
                 Target = 6
             )
         )
-        self.ui.Button_Menu_Dataset.setCheckable(True)
         self.ui.Button_Menu_Dataset.setChecked(False)
-        self.ui.Button_Menu_Dataset.setAutoExclusive(True)
         self.ui.Button_Menu_Dataset.setToolTip(QCA.translate('MainWindow', "工具：数据集制作"))
 
-        self.ui.Label_Menu_Train_Text.setText(QCA.translate('MainWindow', "训练"))
+        self.ui.Button_Menu_Train.setText(QCA.translate('MainWindow', "训练"))
         self.ui.Button_Menu_Train.clicked.connect(
             lambda: Function_AnimateStackedWidget(
                 StackedWidget = self.ui.StackedWidget_Pages,
                 Target = 7
             )
         )
-        self.ui.Button_Menu_Train.setCheckable(True)
         self.ui.Button_Menu_Train.setChecked(False)
-        self.ui.Button_Menu_Train.setAutoExclusive(True)
         self.ui.Button_Menu_Train.setToolTip(QCA.translate('MainWindow', "工具：模型训练"))
 
-        self.ui.Label_Menu_TTS_Text.setText(QCA.translate('MainWindow', "合成"))
+        self.ui.Button_Menu_TTS.setText(QCA.translate('MainWindow', "合成"))
         self.ui.Button_Menu_TTS.clicked.connect(
             lambda: Function_AnimateStackedWidget(
                 StackedWidget = self.ui.StackedWidget_Pages,
                 Target = 8
             )
         )
-        self.ui.Button_Menu_TTS.setCheckable(True)
         self.ui.Button_Menu_TTS.setChecked(False)
-        self.ui.Button_Menu_TTS.setAutoExclusive(True)
         self.ui.Button_Menu_TTS.setToolTip(QCA.translate('MainWindow', "工具：语音合成"))
 
-        self.ui.Label_Menu_Settings_Text.setText(QCA.translate('MainWindow', "设置"))
+        self.ui.Button_Menu_Settings.setText(QCA.translate('MainWindow', "设置"))
         self.ui.Button_Menu_Settings.clicked.connect(
             lambda: Function_AnimateStackedWidget(
                 StackedWidget = self.ui.StackedWidget_Pages,
                 Target = 9
             )
         )
-        self.ui.Button_Menu_Settings.setCheckable(True)
         self.ui.Button_Menu_Settings.setChecked(False)
-        self.ui.Button_Menu_Settings.setAutoExclusive(True)
         self.ui.Button_Menu_Settings.setToolTip(QCA.translate('MainWindow', "客户端设置"))
 
-        self.ui.Label_Menu_Info_Text.setText(QCA.translate('MainWindow', "关于"))
+        self.ui.Button_Menu_Info.setText(QCA.translate('MainWindow', "关于"))
         self.ui.Button_Menu_Info.clicked.connect(
             lambda: Function_AnimateStackedWidget(
                 StackedWidget = self.ui.StackedWidget_Pages,
                 Target = 10
             )
         )
-        self.ui.Button_Menu_Info.setCheckable(True)
         self.ui.Button_Menu_Info.setChecked(False)
-        self.ui.Button_Menu_Info.setAutoExclusive(True)
         self.ui.Button_Menu_Info.setToolTip(QCA.translate('MainWindow', "关于本软件"))
 
         #############################################################
@@ -1531,9 +1507,8 @@ class MainWindow(Window_MainWindow):
 
         # EnvInstallation
         self.ui.Button_Env_Install_Title.setText(QCA.translate('MainWindow', "自动配置"))
-        self.ui.Button_Env_Install_Title.setCheckable(True)
+        self.ui.Button_Env_Install_Title.setHorizontal(True)
         self.ui.Button_Env_Install_Title.setChecked(True)
-        self.ui.Button_Env_Install_Title.setAutoExclusive(True)
         self.ui.Button_Env_Install_Title.clicked.connect(
             lambda: Function_AnimateStackedWidget(
                 StackedWidget = self.ui.StackedWidget_Pages_Env,
@@ -1723,9 +1698,8 @@ class MainWindow(Window_MainWindow):
 
         # EnvManagement
         self.ui.Button_Env_Manage_Title.setText(QCA.translate('MainWindow', "安装管理"))
-        self.ui.Button_Env_Manage_Title.setCheckable(True)
+        self.ui.Button_Env_Manage_Title.setHorizontal(True)
         self.ui.Button_Env_Manage_Title.setChecked(False)
-        self.ui.Button_Env_Manage_Title.setAutoExclusive(True)
         self.ui.Button_Env_Manage_Title.clicked.connect(
             lambda: Function_AnimateStackedWidget(
                 StackedWidget = self.ui.StackedWidget_Pages_Env,
@@ -1760,9 +1734,8 @@ class MainWindow(Window_MainWindow):
         )
 
         self.ui.Button_Models_Process_Title.setText(QCA.translate('MainWindow', '基本处理'))
-        self.ui.Button_Models_Process_Title.setCheckable(True)
+        self.ui.Button_Models_Process_Title.setHorizontal(True)
         self.ui.Button_Models_Process_Title.setChecked(True)
-        self.ui.Button_Models_Process_Title.setAutoExclusive(True)
         self.ui.Button_Models_Process_Title.clicked.connect(
             lambda: Function_AnimateStackedWidget(
                 StackedWidget = self.ui.StackedWidget_Pages_Models,
@@ -1782,9 +1755,8 @@ class MainWindow(Window_MainWindow):
         )
 
         self.ui.Button_Models_ASR_Title.setText(QCA.translate('MainWindow', 'ASR（识别）'))
-        self.ui.Button_Models_ASR_Title.setCheckable(True)
+        self.ui.Button_Models_ASR_Title.setHorizontal(True)
         self.ui.Button_Models_ASR_Title.setChecked(False)
-        self.ui.Button_Models_ASR_Title.setAutoExclusive(True)
         self.ui.Button_Models_ASR_Title.clicked.connect(
             lambda: Function_AnimateStackedWidget(
                 StackedWidget = self.ui.StackedWidget_Pages_Models,
@@ -1804,9 +1776,8 @@ class MainWindow(Window_MainWindow):
         )
 
         self.ui.Button_Models_STT_Title.setText(QCA.translate('MainWindow', 'STT（转录）'))
-        self.ui.Button_Models_STT_Title.setCheckable(True)
+        self.ui.Button_Models_STT_Title.setHorizontal(True)
         self.ui.Button_Models_STT_Title.setChecked(False)
-        self.ui.Button_Models_STT_Title.setAutoExclusive(True)
         self.ui.Button_Models_STT_Title.clicked.connect(
             lambda: Function_AnimateStackedWidget(
                 StackedWidget = self.ui.StackedWidget_Pages_Models,
@@ -1826,9 +1797,8 @@ class MainWindow(Window_MainWindow):
         )
 
         self.ui.Button_Models_TTS_Title.setText(QCA.translate('MainWindow', 'TTS（合成）'))
-        self.ui.Button_Models_TTS_Title.setCheckable(True)
+        self.ui.Button_Models_TTS_Title.setHorizontal(True)
         self.ui.Button_Models_TTS_Title.setChecked(False)
-        self.ui.Button_Models_TTS_Title.setAutoExclusive(True)
         self.ui.Button_Models_TTS_Title.clicked.connect(
             lambda: Function_AnimateStackedWidget(
                 StackedWidget = self.ui.StackedWidget_Pages_Models,
@@ -1899,9 +1869,8 @@ class MainWindow(Window_MainWindow):
 
         # Top
         self.ui.Button_AudioProcessor_Title.setText(QCA.translate('MainWindow', '音频基本处理'))
-        self.ui.Button_AudioProcessor_Title.setCheckable(True)
+        self.ui.Button_AudioProcessor_Title.setHorizontal(True)
         self.ui.Button_AudioProcessor_Title.setChecked(True)
-        self.ui.Button_AudioProcessor_Title.setAutoExclusive(True)
         self.ui.Button_AudioProcessor_Title.clicked.connect(
             lambda: Function_AnimateStackedWidget(
                 StackedWidget = self.ui.StackedWidget_Pages_Process,
@@ -2469,8 +2438,8 @@ class MainWindow(Window_MainWindow):
         )
 
         # Bottom
-        self.ui.Button_Process_Execute.setToolTip(QCA.translate('MainWindow', "执行音频处理"))
-        self.ui.Button_Process_Terminate.setToolTip(QCA.translate('MainWindow', "终止音频处理"))
+        self.ui.Button_Process_Execute.setText(QCA.translate('MainWindow', "执行音频处理"))
+        self.ui.Button_Process_Terminate.setText(QCA.translate('MainWindow', "终止音频处理"))
         Function_SetMethodExecutor(self,
             ExecuteButton = self.ui.Button_Process_Execute,
             TerminateButton = self.ui.Button_Process_Terminate,
@@ -2540,9 +2509,8 @@ class MainWindow(Window_MainWindow):
 
         # Top
         self.ui.Button_VoiceIdentifier_Title.setText(QCA.translate('MainWindow', "VPR（声纹识别）"))
-        self.ui.Button_VoiceIdentifier_Title.setCheckable(True)
+        self.ui.Button_VoiceIdentifier_Title.setHorizontal(True)
         self.ui.Button_VoiceIdentifier_Title.setChecked(True)
-        self.ui.Button_VoiceIdentifier_Title.setAutoExclusive(True)
         self.ui.Button_VoiceIdentifier_Title.clicked.connect(
             lambda: Function_AnimateStackedWidget(
                 StackedWidget = self.ui.StackedWidget_Pages_ASR,
@@ -2913,8 +2881,8 @@ class MainWindow(Window_MainWindow):
         )
 
         # Bottom
-        self.ui.Button_ASR_VPR_Execute.setToolTip("执行语音识别")
-        self.ui.Button_ASR_VPR_Terminate.setToolTip("终止语音识别")
+        self.ui.Button_ASR_VPR_Execute.setText(QCA.translate('MainWindow', "执行语音识别"))
+        self.ui.Button_ASR_VPR_Terminate.setText(QCA.translate('MainWindow', "终止语音识别"))
         Function_SetMethodExecutor(self,
             ExecuteButton = self.ui.Button_ASR_VPR_Execute,
             TerminateButton = self.ui.Button_ASR_VPR_Terminate,
@@ -2979,9 +2947,8 @@ class MainWindow(Window_MainWindow):
 
         # Top
         self.ui.Button_VoiceTranscriber_Title.setText(QCA.translate('MainWindow', "Whisper"))
-        self.ui.Button_VoiceTranscriber_Title.setCheckable(True)
+        self.ui.Button_VoiceTranscriber_Title.setHorizontal(True)
         self.ui.Button_VoiceTranscriber_Title.setChecked(True)
-        self.ui.Button_VoiceTranscriber_Title.setAutoExclusive(True)
         self.ui.Button_VoiceTranscriber_Title.clicked.connect(
             lambda: Function_AnimateStackedWidget(
                 StackedWidget = self.ui.StackedWidget_Pages_STT,
@@ -3301,8 +3268,8 @@ class MainWindow(Window_MainWindow):
         )
 
         # Bottom
-        self.ui.Button_STT_Whisper_Execute.setToolTip("执行语音转录")
-        self.ui.Button_STT_Whisper_Terminate.setToolTip("终止语音转录")
+        self.ui.Button_STT_Whisper_Execute.setText(QCA.translate('MainWindow', "执行语音转录"))
+        self.ui.Button_STT_Whisper_Terminate.setText(QCA.translate('MainWindow', "终止语音转录"))
         Function_SetMethodExecutor(self,
             ExecuteButton = self.ui.Button_STT_Whisper_Execute,
             TerminateButton = self.ui.Button_STT_Whisper_Terminate,
@@ -3363,9 +3330,8 @@ class MainWindow(Window_MainWindow):
 
         # GPT-SoVITS - Top
         self.ui.Button_DatasetCreator_Title_GPTSoVITS.setText(QCA.translate('MainWindow', "GPT-SoVITS"))
-        self.ui.Button_DatasetCreator_Title_GPTSoVITS.setCheckable(True)
+        self.ui.Button_DatasetCreator_Title_GPTSoVITS.setHorizontal(True)
         self.ui.Button_DatasetCreator_Title_GPTSoVITS.setChecked(True)
-        self.ui.Button_DatasetCreator_Title_GPTSoVITS.setAutoExclusive(True)
         self.ui.Button_DatasetCreator_Title_GPTSoVITS.clicked.connect(
             lambda: Function_AnimateStackedWidget(
                 StackedWidget = self.ui.StackedWidget_Pages_Dataset,
@@ -3624,8 +3590,8 @@ class MainWindow(Window_MainWindow):
         )
 
         # GPT-SoVITS - Bottom
-        self.ui.Button_DAT_GPTSoVITS_Execute.setToolTip("执行数据集制作")
-        self.ui.Button_DAT_GPTSoVITS_Terminate.setToolTip("终止数据集制作")
+        self.ui.Button_DAT_GPTSoVITS_Execute.setText(QCA.translate('MainWindow', "执行数据集制作"))
+        self.ui.Button_DAT_GPTSoVITS_Terminate.setText(QCA.translate('MainWindow', "终止数据集制作"))
         Function_SetMethodExecutor(self,
             ExecuteButton = self.ui.Button_DAT_GPTSoVITS_Execute,
             TerminateButton = self.ui.Button_DAT_GPTSoVITS_Terminate,
@@ -3661,9 +3627,8 @@ class MainWindow(Window_MainWindow):
 
         # VITS - Top
         self.ui.Button_DatasetCreator_Title_VITS.setText(QCA.translate('MainWindow', "VITS2"))
-        self.ui.Button_DatasetCreator_Title_VITS.setCheckable(True)
+        self.ui.Button_DatasetCreator_Title_VITS.setHorizontal(True)
         self.ui.Button_DatasetCreator_Title_VITS.setChecked(False)
-        self.ui.Button_DatasetCreator_Title_VITS.setAutoExclusive(True)
         self.ui.Button_DatasetCreator_Title_VITS.clicked.connect(
             lambda: Function_AnimateStackedWidget(
                 StackedWidget = self.ui.StackedWidget_Pages_Dataset,
@@ -4158,8 +4123,8 @@ class MainWindow(Window_MainWindow):
         )
 
         # VITS - Bottom
-        self.ui.Button_DAT_VITS_Execute.setToolTip("执行数据集制作")
-        self.ui.Button_DAT_VITS_Terminate.setToolTip("终止数据集制作")
+        self.ui.Button_DAT_VITS_Execute.setText(QCA.translate('MainWindow', "执行数据集制作"))
+        self.ui.Button_DAT_VITS_Terminate.setText(QCA.translate('MainWindow', "终止数据集制作"))
         Function_SetMethodExecutor(self,
             ExecuteButton = self.ui.Button_DAT_VITS_Execute,
             TerminateButton = self.ui.Button_DAT_VITS_Terminate,
@@ -4231,9 +4196,8 @@ class MainWindow(Window_MainWindow):
 
         # GPT-SoVITS - Top
         self.ui.Button_VoiceTrainer_Title_GPTSoVITS.setText(QCA.translate('MainWindow', "GPT-SoVITS"))
-        self.ui.Button_VoiceTrainer_Title_GPTSoVITS.setCheckable(True)
+        self.ui.Button_VoiceTrainer_Title_GPTSoVITS.setHorizontal(True)
         self.ui.Button_VoiceTrainer_Title_GPTSoVITS.setChecked(True)
-        self.ui.Button_VoiceTrainer_Title_GPTSoVITS.setAutoExclusive(True)
         self.ui.Button_VoiceTrainer_Title_GPTSoVITS.clicked.connect(
             lambda: Function_AnimateStackedWidget(
                 StackedWidget = self.ui.StackedWidget_Pages_Train,
@@ -4691,8 +4655,8 @@ class MainWindow(Window_MainWindow):
         )
 
         # GPT-SoVITS - Bottom
-        self.ui.Button_Train_GPTSoVITS_Execute.setToolTip("执行模型训练")
-        self.ui.Button_Train_GPTSoVITS_Terminate.setToolTip("终止模型训练")
+        self.ui.Button_Train_GPTSoVITS_Execute.setText(QCA.translate('MainWindow', "执行模型训练"))
+        self.ui.Button_Train_GPTSoVITS_Terminate.setText(QCA.translate('MainWindow', "终止模型训练"))
         Function_SetMethodExecutor(self,
             ExecuteButton = self.ui.Button_Train_GPTSoVITS_Execute,
             TerminateButton = self.ui.Button_Train_GPTSoVITS_Terminate,
@@ -4739,9 +4703,8 @@ class MainWindow(Window_MainWindow):
 
         # VITS - Top
         self.ui.Button_VoiceTrainer_Title_VITS.setText(QCA.translate('MainWindow', "VITS2"))
-        self.ui.Button_VoiceTrainer_Title_VITS.setCheckable(True)
+        self.ui.Button_VoiceTrainer_Title_VITS.setHorizontal(True)
         self.ui.Button_VoiceTrainer_Title_VITS.setChecked(False)
-        self.ui.Button_VoiceTrainer_Title_VITS.setAutoExclusive(True)
         self.ui.Button_VoiceTrainer_Title_VITS.clicked.connect(
             lambda: Function_AnimateStackedWidget(
                 StackedWidget = self.ui.StackedWidget_Pages_Train,
@@ -5337,8 +5300,8 @@ class MainWindow(Window_MainWindow):
         )
 
         # VITS - Bottom
-        self.ui.Button_Train_VITS_Execute.setToolTip("执行模型训练")
-        self.ui.Button_Train_VITS_Terminate.setToolTip("终止模型训练")
+        self.ui.Button_Train_VITS_Execute.setText(QCA.translate('MainWindow', "执行模型训练"))
+        self.ui.Button_Train_VITS_Terminate.setText(QCA.translate('MainWindow', "终止模型训练"))
         Function_SetMethodExecutor(self,
             ExecuteButton = self.ui.Button_Train_VITS_Execute,
             TerminateButton = self.ui.Button_Train_VITS_Terminate,
@@ -5417,9 +5380,8 @@ class MainWindow(Window_MainWindow):
 
         # GPT-SoVITS - Top
         self.ui.Button_VoiceConverter_Title_GPTSoVITS.setText(QCA.translate('MainWindow', "GPT-SoVITS"))
-        self.ui.Button_VoiceConverter_Title_GPTSoVITS.setCheckable(True)
+        self.ui.Button_VoiceConverter_Title_GPTSoVITS.setHorizontal(True)
         self.ui.Button_VoiceConverter_Title_GPTSoVITS.setChecked(True)
-        self.ui.Button_VoiceConverter_Title_GPTSoVITS.setAutoExclusive(True)
         self.ui.Button_VoiceConverter_Title_GPTSoVITS.clicked.connect(
             lambda: Function_AnimateStackedWidget(
                 StackedWidget = self.ui.StackedWidget_Pages_TTS,
@@ -5604,8 +5566,8 @@ class MainWindow(Window_MainWindow):
         )
 
         # GPT-SoVITS - Bottom
-        self.ui.Button_TTS_GPTSoVITS_Execute.setToolTip("执行语音合成")
-        self.ui.Button_TTS_GPTSoVITS_Terminate.setToolTip("终止语音合成")
+        self.ui.Button_TTS_GPTSoVITS_Execute.setText(QCA.translate('MainWindow', "执行语音合成"))
+        self.ui.Button_TTS_GPTSoVITS_Terminate.setText(QCA.translate('MainWindow', "终止语音合成"))
         Function_SetMethodExecutor(self,
             ExecuteButton = self.ui.Button_TTS_GPTSoVITS_Execute,
             TerminateButton = self.ui.Button_TTS_GPTSoVITS_Terminate,
@@ -5634,9 +5596,8 @@ class MainWindow(Window_MainWindow):
 
         # VITS - Top
         self.ui.Button_VoiceConverter_Title_VITS.setText(QCA.translate('MainWindow', "VITS2"))
-        self.ui.Button_VoiceConverter_Title_VITS.setCheckable(True)
+        self.ui.Button_VoiceConverter_Title_VITS.setHorizontal(True)
         self.ui.Button_VoiceConverter_Title_VITS.setChecked(False)
-        self.ui.Button_VoiceConverter_Title_VITS.setAutoExclusive(True)
         self.ui.Button_VoiceConverter_Title_VITS.clicked.connect(
             lambda: Function_AnimateStackedWidget(
                 StackedWidget = self.ui.StackedWidget_Pages_TTS,
@@ -6004,8 +5965,8 @@ class MainWindow(Window_MainWindow):
         )
 
         # VITS - Bottom
-        self.ui.Button_TTS_VITS_Execute.setToolTip("执行语音合成")
-        self.ui.Button_TTS_VITS_Terminate.setToolTip("终止语音合成")
+        self.ui.Button_TTS_VITS_Execute.setText(QCA.translate('MainWindow', "执行语音合成"))
+        self.ui.Button_TTS_VITS_Terminate.setText(QCA.translate('MainWindow', "终止语音合成"))
         Function_SetMethodExecutor(self,
             ExecuteButton = self.ui.Button_TTS_VITS_Execute,
             TerminateButton = self.ui.Button_TTS_VITS_Terminate,
@@ -6045,9 +6006,8 @@ class MainWindow(Window_MainWindow):
 
         # Client
         self.ui.Button_Settings_Title_Client.setText(QCA.translate('MainWindow', "系统选项"))
-        self.ui.Button_Settings_Title_Client.setCheckable(True)
+        self.ui.Button_Settings_Title_Client.setHorizontal(True)
         self.ui.Button_Settings_Title_Client.setChecked(True)
-        self.ui.Button_Settings_Title_Client.setAutoExclusive(True)
         self.ui.Button_Settings_Title_Client.clicked.connect(
             lambda: Function_AnimateStackedWidget(
                 StackedWidget = self.ui.StackedWidget_Pages_Settings,
@@ -6142,9 +6102,8 @@ class MainWindow(Window_MainWindow):
 
         # Tools
         self.ui.Button_Settings_Title_Tools.setText(QCA.translate('MainWindow', "工具选项"))
-        self.ui.Button_Settings_Title_Tools.setCheckable(True)
+        self.ui.Button_Settings_Title_Tools.setHorizontal(True)
         self.ui.Button_Settings_Title_Tools.setChecked(False)
-        self.ui.Button_Settings_Title_Tools.setAutoExclusive(True)
         self.ui.Button_Settings_Title_Tools.clicked.connect(
             lambda: Function_AnimateStackedWidget(
                 StackedWidget = self.ui.StackedWidget_Pages_Settings,
@@ -6453,8 +6412,6 @@ class MainWindow(Window_MainWindow):
         #############################################################
 
         # Toggle Console
-        self.ui.Button_Toggle_Console.setChecked(False)
-        self.ui.Button_Toggle_Console.setAutoExclusive(False)
         self.ui.Button_Toggle_Console.setToolTip(QCA.translate('MainWindow', "点击以展开/折叠终端"))
         self.ui.Button_Toggle_Console.clicked.connect(
             lambda: Function_AnimateFrame(
