@@ -2736,21 +2736,11 @@ class Ui_MainWindow(object):
         self.verticalLayout_86.setSpacing(0)
         self.verticalLayout_86.setObjectName(u"verticalLayout_86")
         self.verticalLayout_86.setContentsMargins(0, 0, 0, 0)
-        self.Button_Process_Execute = QPushButton(self.Page_Process_Execute)
+        self.Button_Process_Execute = HollowButton(self.Page_Process_Execute)
         self.Button_Process_Execute.setObjectName(u"Button_Process_Execute")
         sizePolicy2.setHeightForWidth(self.Button_Process_Execute.sizePolicy().hasHeightForWidth())
         self.Button_Process_Execute.setSizePolicy(sizePolicy2)
         self.Button_Process_Execute.setMinimumSize(QSize(0, 30))
-        self.Button_Process_Execute.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"}")
 
         self.verticalLayout_86.addWidget(self.Button_Process_Execute)
 
@@ -2761,22 +2751,11 @@ class Ui_MainWindow(object):
         self.verticalLayout_87.setSpacing(0)
         self.verticalLayout_87.setObjectName(u"verticalLayout_87")
         self.verticalLayout_87.setContentsMargins(0, 0, 0, 0)
-        self.Button_Process_Terminate = QPushButton(self.Page_Process_Terminate)
+        self.Button_Process_Terminate = HollowButton(self.Page_Process_Terminate)
         self.Button_Process_Terminate.setObjectName(u"Button_Process_Terminate")
         sizePolicy2.setHeightForWidth(self.Button_Process_Terminate.sizePolicy().hasHeightForWidth())
         self.Button_Process_Terminate.setSizePolicy(sizePolicy2)
         self.Button_Process_Terminate.setMinimumSize(QSize(0, 30))
-        self.Button_Process_Terminate.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	/*background-color: rgba(90, 90, 90, 45);*/\n"
-"	padding: 6px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"}")
 
         self.verticalLayout_87.addWidget(self.Button_Process_Terminate)
 
@@ -3597,21 +3576,11 @@ class Ui_MainWindow(object):
         self.verticalLayout_102.setSpacing(0)
         self.verticalLayout_102.setObjectName(u"verticalLayout_102")
         self.verticalLayout_102.setContentsMargins(0, 0, 0, 0)
-        self.Button_ASR_VPR_Execute = QPushButton(self.Page_ASR_VPR_Execute)
+        self.Button_ASR_VPR_Execute = HollowButton(self.Page_ASR_VPR_Execute)
         self.Button_ASR_VPR_Execute.setObjectName(u"Button_ASR_VPR_Execute")
         sizePolicy2.setHeightForWidth(self.Button_ASR_VPR_Execute.sizePolicy().hasHeightForWidth())
         self.Button_ASR_VPR_Execute.setSizePolicy(sizePolicy2)
         self.Button_ASR_VPR_Execute.setMinimumSize(QSize(0, 30))
-        self.Button_ASR_VPR_Execute.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"}")
 
         self.verticalLayout_102.addWidget(self.Button_ASR_VPR_Execute)
 
@@ -3622,21 +3591,11 @@ class Ui_MainWindow(object):
         self.verticalLayout_119.setSpacing(0)
         self.verticalLayout_119.setObjectName(u"verticalLayout_119")
         self.verticalLayout_119.setContentsMargins(0, 0, 0, 0)
-        self.Button_ASR_VPR_Terminate = QPushButton(self.Page_ASR_VPR_Terminate)
+        self.Button_ASR_VPR_Terminate = HollowButton(self.Page_ASR_VPR_Terminate)
         self.Button_ASR_VPR_Terminate.setObjectName(u"Button_ASR_VPR_Terminate")
         sizePolicy2.setHeightForWidth(self.Button_ASR_VPR_Terminate.sizePolicy().hasHeightForWidth())
         self.Button_ASR_VPR_Terminate.setSizePolicy(sizePolicy2)
         self.Button_ASR_VPR_Terminate.setMinimumSize(QSize(0, 30))
-        self.Button_ASR_VPR_Terminate.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"}")
 
         self.verticalLayout_119.addWidget(self.Button_ASR_VPR_Terminate)
 
@@ -4462,21 +4421,11 @@ class Ui_MainWindow(object):
         self.verticalLayout_90.setSpacing(0)
         self.verticalLayout_90.setObjectName(u"verticalLayout_90")
         self.verticalLayout_90.setContentsMargins(0, 0, 0, 0)
-        self.Button_STT_Whisper_Execute = QPushButton(self.Page_STT_Whisper_Execute)
+        self.Button_STT_Whisper_Execute = HollowButton(self.Page_STT_Whisper_Execute)
         self.Button_STT_Whisper_Execute.setObjectName(u"Button_STT_Whisper_Execute")
         sizePolicy2.setHeightForWidth(self.Button_STT_Whisper_Execute.sizePolicy().hasHeightForWidth())
         self.Button_STT_Whisper_Execute.setSizePolicy(sizePolicy2)
         self.Button_STT_Whisper_Execute.setMinimumSize(QSize(0, 30))
-        self.Button_STT_Whisper_Execute.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"}")
 
         self.verticalLayout_90.addWidget(self.Button_STT_Whisper_Execute)
 
@@ -4487,23 +4436,11 @@ class Ui_MainWindow(object):
         self.verticalLayout_91.setSpacing(0)
         self.verticalLayout_91.setObjectName(u"verticalLayout_91")
         self.verticalLayout_91.setContentsMargins(0, 0, 0, 0)
-        self.Button_STT_Whisper_Terminate = QPushButton(self.Page_STT_Whisper_Terminate)
+        self.Button_STT_Whisper_Terminate = HollowButton(self.Page_STT_Whisper_Terminate)
         self.Button_STT_Whisper_Terminate.setObjectName(u"Button_STT_Whisper_Terminate")
         sizePolicy2.setHeightForWidth(self.Button_STT_Whisper_Terminate.sizePolicy().hasHeightForWidth())
         self.Button_STT_Whisper_Terminate.setSizePolicy(sizePolicy2)
         self.Button_STT_Whisper_Terminate.setMinimumSize(QSize(0, 30))
-        self.Button_STT_Whisper_Terminate.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	/*background-color: rgba(90, 90, 90, 45);*/\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	/*background-color: rgba(120, 120, 120, 60);*/\n"
-"}")
 
         self.verticalLayout_91.addWidget(self.Button_STT_Whisper_Terminate)
 
@@ -5108,21 +5045,11 @@ class Ui_MainWindow(object):
         self.verticalLayout_101.setSpacing(0)
         self.verticalLayout_101.setObjectName(u"verticalLayout_101")
         self.verticalLayout_101.setContentsMargins(0, 0, 0, 0)
-        self.Button_DAT_GPTSoVITS_Execute = QPushButton(self.Page_DAT_GPTSoVITS_Execute)
+        self.Button_DAT_GPTSoVITS_Execute = HollowButton(self.Page_DAT_GPTSoVITS_Execute)
         self.Button_DAT_GPTSoVITS_Execute.setObjectName(u"Button_DAT_GPTSoVITS_Execute")
         sizePolicy2.setHeightForWidth(self.Button_DAT_GPTSoVITS_Execute.sizePolicy().hasHeightForWidth())
         self.Button_DAT_GPTSoVITS_Execute.setSizePolicy(sizePolicy2)
         self.Button_DAT_GPTSoVITS_Execute.setMinimumSize(QSize(0, 30))
-        self.Button_DAT_GPTSoVITS_Execute.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"}")
 
         self.verticalLayout_101.addWidget(self.Button_DAT_GPTSoVITS_Execute)
 
@@ -5133,21 +5060,11 @@ class Ui_MainWindow(object):
         self.verticalLayout_103.setSpacing(0)
         self.verticalLayout_103.setObjectName(u"verticalLayout_103")
         self.verticalLayout_103.setContentsMargins(0, 0, 0, 0)
-        self.Button_DAT_GPTSoVITS_Terminate = QPushButton(self.Page_DAT_GPTSoVITS_Terminate)
+        self.Button_DAT_GPTSoVITS_Terminate = HollowButton(self.Page_DAT_GPTSoVITS_Terminate)
         self.Button_DAT_GPTSoVITS_Terminate.setObjectName(u"Button_DAT_GPTSoVITS_Terminate")
         sizePolicy2.setHeightForWidth(self.Button_DAT_GPTSoVITS_Terminate.sizePolicy().hasHeightForWidth())
         self.Button_DAT_GPTSoVITS_Terminate.setSizePolicy(sizePolicy2)
         self.Button_DAT_GPTSoVITS_Terminate.setMinimumSize(QSize(0, 30))
-        self.Button_DAT_GPTSoVITS_Terminate.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"}")
 
         self.verticalLayout_103.addWidget(self.Button_DAT_GPTSoVITS_Terminate)
 
@@ -6147,21 +6064,11 @@ class Ui_MainWindow(object):
         self.verticalLayout_92.setSpacing(0)
         self.verticalLayout_92.setObjectName(u"verticalLayout_92")
         self.verticalLayout_92.setContentsMargins(0, 0, 0, 0)
-        self.Button_DAT_VITS_Execute = QPushButton(self.Page_DAT_VITS_Execute)
+        self.Button_DAT_VITS_Execute = HollowButton(self.Page_DAT_VITS_Execute)
         self.Button_DAT_VITS_Execute.setObjectName(u"Button_DAT_VITS_Execute")
         sizePolicy2.setHeightForWidth(self.Button_DAT_VITS_Execute.sizePolicy().hasHeightForWidth())
         self.Button_DAT_VITS_Execute.setSizePolicy(sizePolicy2)
         self.Button_DAT_VITS_Execute.setMinimumSize(QSize(0, 30))
-        self.Button_DAT_VITS_Execute.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"}")
 
         self.verticalLayout_92.addWidget(self.Button_DAT_VITS_Execute)
 
@@ -6172,21 +6079,11 @@ class Ui_MainWindow(object):
         self.verticalLayout_93.setSpacing(0)
         self.verticalLayout_93.setObjectName(u"verticalLayout_93")
         self.verticalLayout_93.setContentsMargins(0, 0, 0, 0)
-        self.Button_DAT_VITS_Terminate = QPushButton(self.Page_DAT_VITS_Terminate)
+        self.Button_DAT_VITS_Terminate = HollowButton(self.Page_DAT_VITS_Terminate)
         self.Button_DAT_VITS_Terminate.setObjectName(u"Button_DAT_VITS_Terminate")
         sizePolicy2.setHeightForWidth(self.Button_DAT_VITS_Terminate.sizePolicy().hasHeightForWidth())
         self.Button_DAT_VITS_Terminate.setSizePolicy(sizePolicy2)
         self.Button_DAT_VITS_Terminate.setMinimumSize(QSize(0, 30))
-        self.Button_DAT_VITS_Terminate.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"}")
 
         self.verticalLayout_93.addWidget(self.Button_DAT_VITS_Terminate)
 
@@ -7059,21 +6956,11 @@ class Ui_MainWindow(object):
         self.verticalLayout_96.setSpacing(0)
         self.verticalLayout_96.setObjectName(u"verticalLayout_96")
         self.verticalLayout_96.setContentsMargins(0, 0, 0, 0)
-        self.Button_Train_GPTSoVITS_Execute = QPushButton(self.Page_Train_GPTSoVITS_Execute)
+        self.Button_Train_GPTSoVITS_Execute = HollowButton(self.Page_Train_GPTSoVITS_Execute)
         self.Button_Train_GPTSoVITS_Execute.setObjectName(u"Button_Train_GPTSoVITS_Execute")
         sizePolicy2.setHeightForWidth(self.Button_Train_GPTSoVITS_Execute.sizePolicy().hasHeightForWidth())
         self.Button_Train_GPTSoVITS_Execute.setSizePolicy(sizePolicy2)
         self.Button_Train_GPTSoVITS_Execute.setMinimumSize(QSize(0, 30))
-        self.Button_Train_GPTSoVITS_Execute.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"}")
 
         self.verticalLayout_96.addWidget(self.Button_Train_GPTSoVITS_Execute)
 
@@ -7084,21 +6971,11 @@ class Ui_MainWindow(object):
         self.verticalLayout_97.setSpacing(0)
         self.verticalLayout_97.setObjectName(u"verticalLayout_97")
         self.verticalLayout_97.setContentsMargins(0, 0, 0, 0)
-        self.Button_Train_GPTSoVITS_Terminate = QPushButton(self.Page_Train_GPTSoVITS_Terminate)
+        self.Button_Train_GPTSoVITS_Terminate = HollowButton(self.Page_Train_GPTSoVITS_Terminate)
         self.Button_Train_GPTSoVITS_Terminate.setObjectName(u"Button_Train_GPTSoVITS_Terminate")
         sizePolicy2.setHeightForWidth(self.Button_Train_GPTSoVITS_Terminate.sizePolicy().hasHeightForWidth())
         self.Button_Train_GPTSoVITS_Terminate.setSizePolicy(sizePolicy2)
         self.Button_Train_GPTSoVITS_Terminate.setMinimumSize(QSize(0, 30))
-        self.Button_Train_GPTSoVITS_Terminate.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"}")
 
         self.verticalLayout_97.addWidget(self.Button_Train_GPTSoVITS_Terminate)
 
@@ -7276,21 +7153,11 @@ class Ui_MainWindow(object):
         self.verticalLayout_94.setSpacing(0)
         self.verticalLayout_94.setObjectName(u"verticalLayout_94")
         self.verticalLayout_94.setContentsMargins(0, 0, 0, 0)
-        self.Button_Train_VITS_Execute = QPushButton(self.Page_Train_VITS_Execute)
+        self.Button_Train_VITS_Execute = HollowButton(self.Page_Train_VITS_Execute)
         self.Button_Train_VITS_Execute.setObjectName(u"Button_Train_VITS_Execute")
         sizePolicy2.setHeightForWidth(self.Button_Train_VITS_Execute.sizePolicy().hasHeightForWidth())
         self.Button_Train_VITS_Execute.setSizePolicy(sizePolicy2)
         self.Button_Train_VITS_Execute.setMinimumSize(QSize(0, 30))
-        self.Button_Train_VITS_Execute.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"}")
 
         self.verticalLayout_94.addWidget(self.Button_Train_VITS_Execute)
 
@@ -7301,21 +7168,11 @@ class Ui_MainWindow(object):
         self.verticalLayout_95.setSpacing(0)
         self.verticalLayout_95.setObjectName(u"verticalLayout_95")
         self.verticalLayout_95.setContentsMargins(0, 0, 0, 0)
-        self.Button_Train_VITS_Terminate = QPushButton(self.Page_Train_VITS_Terminate)
+        self.Button_Train_VITS_Terminate = HollowButton(self.Page_Train_VITS_Terminate)
         self.Button_Train_VITS_Terminate.setObjectName(u"Button_Train_VITS_Terminate")
         sizePolicy2.setHeightForWidth(self.Button_Train_VITS_Terminate.sizePolicy().hasHeightForWidth())
         self.Button_Train_VITS_Terminate.setSizePolicy(sizePolicy2)
         self.Button_Train_VITS_Terminate.setMinimumSize(QSize(0, 30))
-        self.Button_Train_VITS_Terminate.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"}")
 
         self.verticalLayout_95.addWidget(self.Button_Train_VITS_Terminate)
 
@@ -8403,7 +8260,7 @@ class Ui_MainWindow(object):
         self.ScrollArea_Middle_TTS_GPTSoVITS.setWidgetResizable(True)
         self.ScrollArea_Middle_WidgetContents_TTS_GPTSoVITS = QWidget()
         self.ScrollArea_Middle_WidgetContents_TTS_GPTSoVITS.setObjectName(u"ScrollArea_Middle_WidgetContents_TTS_GPTSoVITS")
-        self.ScrollArea_Middle_WidgetContents_TTS_GPTSoVITS.setGeometry(QRect(0, 0, 586, 497))
+        self.ScrollArea_Middle_WidgetContents_TTS_GPTSoVITS.setGeometry(QRect(0, 0, 586, 602))
         self.verticalLayout_66 = QVBoxLayout(self.ScrollArea_Middle_WidgetContents_TTS_GPTSoVITS)
         self.verticalLayout_66.setSpacing(12)
         self.verticalLayout_66.setObjectName(u"verticalLayout_66")
@@ -8416,10 +8273,10 @@ class Ui_MainWindow(object):
         self.verticalLayout_125.setContentsMargins(0, 12, 0, 12)
         self.Frame_TTS_GPTSoVITS_InputParams_BasicSettings = QFrame(self.GroupBox_TTS_GPTSoVITS_InputParams)
         self.Frame_TTS_GPTSoVITS_InputParams_BasicSettings.setObjectName(u"Frame_TTS_GPTSoVITS_InputParams_BasicSettings")
-        self.verticalLayout_71 = QVBoxLayout(self.Frame_TTS_GPTSoVITS_InputParams_BasicSettings)
-        self.verticalLayout_71.setSpacing(0)
-        self.verticalLayout_71.setObjectName(u"verticalLayout_71")
-        self.verticalLayout_71.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_70 = QVBoxLayout(self.Frame_TTS_GPTSoVITS_InputParams_BasicSettings)
+        self.verticalLayout_70.setSpacing(0)
+        self.verticalLayout_70.setObjectName(u"verticalLayout_70")
+        self.verticalLayout_70.setContentsMargins(0, 0, 0, 0)
         self.Frame_TTS_GPTSoVITS_ModelPathLoadS1 = QFrame(self.Frame_TTS_GPTSoVITS_InputParams_BasicSettings)
         self.Frame_TTS_GPTSoVITS_ModelPathLoadS1.setObjectName(u"Frame_TTS_GPTSoVITS_ModelPathLoadS1")
         self.Frame_TTS_GPTSoVITS_ModelPathLoadS1.setMinimumSize(QSize(0, 105))
@@ -8473,7 +8330,7 @@ class Ui_MainWindow(object):
         self.gridLayout_97.addWidget(self.LineEdit_TTS_GPTSoVITS_ModelPathLoadS1, 1, 0, 1, 3)
 
 
-        self.verticalLayout_71.addWidget(self.Frame_TTS_GPTSoVITS_ModelPathLoadS1)
+        self.verticalLayout_70.addWidget(self.Frame_TTS_GPTSoVITS_ModelPathLoadS1)
 
         self.Frame_TTS_GPTSoVITS_ModelPathLoadS2G = QFrame(self.Frame_TTS_GPTSoVITS_InputParams_BasicSettings)
         self.Frame_TTS_GPTSoVITS_ModelPathLoadS2G.setObjectName(u"Frame_TTS_GPTSoVITS_ModelPathLoadS2G")
@@ -8528,7 +8385,7 @@ class Ui_MainWindow(object):
         self.gridLayout_99.addWidget(self.LineEdit_TTS_GPTSoVITS_ModelPathLoadS2G, 1, 0, 1, 3)
 
 
-        self.verticalLayout_71.addWidget(self.Frame_TTS_GPTSoVITS_ModelPathLoadS2G)
+        self.verticalLayout_70.addWidget(self.Frame_TTS_GPTSoVITS_ModelPathLoadS2G)
 
         self.Frame_TTS_GPTSoVITS_ModelDirLoadBert = QFrame(self.Frame_TTS_GPTSoVITS_InputParams_BasicSettings)
         self.Frame_TTS_GPTSoVITS_ModelDirLoadBert.setObjectName(u"Frame_TTS_GPTSoVITS_ModelDirLoadBert")
@@ -8583,7 +8440,7 @@ class Ui_MainWindow(object):
         self.gridLayout_100.addWidget(self.LineEdit_TTS_GPTSoVITS_ModelDirLoadBert, 1, 0, 1, 3)
 
 
-        self.verticalLayout_71.addWidget(self.Frame_TTS_GPTSoVITS_ModelDirLoadBert)
+        self.verticalLayout_70.addWidget(self.Frame_TTS_GPTSoVITS_ModelDirLoadBert)
 
         self.Frame_TTS_GPTSoVITS_ModelDirLoadSSL = QFrame(self.Frame_TTS_GPTSoVITS_InputParams_BasicSettings)
         self.Frame_TTS_GPTSoVITS_ModelDirLoadSSL.setObjectName(u"Frame_TTS_GPTSoVITS_ModelDirLoadSSL")
@@ -8638,7 +8495,92 @@ class Ui_MainWindow(object):
         self.gridLayout_101.addWidget(self.LineEdit_TTS_GPTSoVITS_ModelDirLoadSSL, 1, 0, 1, 3)
 
 
-        self.verticalLayout_71.addWidget(self.Frame_TTS_GPTSoVITS_ModelDirLoadSSL)
+        self.verticalLayout_70.addWidget(self.Frame_TTS_GPTSoVITS_ModelDirLoadSSL)
+
+        self.Frame_TTS_GPTSoVITS_UseWebUI = QFrame(self.Frame_TTS_GPTSoVITS_InputParams_BasicSettings)
+        self.Frame_TTS_GPTSoVITS_UseWebUI.setObjectName(u"Frame_TTS_GPTSoVITS_UseWebUI")
+        self.Frame_TTS_GPTSoVITS_UseWebUI.setMinimumSize(QSize(0, 105))
+        self.Frame_TTS_GPTSoVITS_UseWebUI.setStyleSheet(u"QFrame {\n"
+"	background-color: transparent;\n"
+"	border-width: 0px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QFrame:hover {\n"
+"	background-color: rgba(36, 36, 36, 12);\n"
+"}")
+        self.gridLayout_18 = QGridLayout(self.Frame_TTS_GPTSoVITS_UseWebUI)
+        self.gridLayout_18.setSpacing(12)
+        self.gridLayout_18.setObjectName(u"gridLayout_18")
+        self.gridLayout_18.setContentsMargins(21, 12, 21, 12)
+        self.Label_TTS_GPTSoVITS_UseWebUI = LabelBase(self.Frame_TTS_GPTSoVITS_UseWebUI)
+        self.Label_TTS_GPTSoVITS_UseWebUI.setObjectName(u"Label_TTS_GPTSoVITS_UseWebUI")
+        sizePolicy5.setHeightForWidth(self.Label_TTS_GPTSoVITS_UseWebUI.sizePolicy().hasHeightForWidth())
+        self.Label_TTS_GPTSoVITS_UseWebUI.setSizePolicy(sizePolicy5)
+        self.Label_TTS_GPTSoVITS_UseWebUI.setStyleSheet(u"QLabel {\n"
+"	/*text-align: center;*/\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 0px;\n"
+"	border-style: solid;\n"
+"}")
+
+        self.gridLayout_18.addWidget(self.Label_TTS_GPTSoVITS_UseWebUI, 0, 0, 1, 1)
+
+        self.HorizontalSpacer_TTS_GPTSoVITS_UseWebUI = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.gridLayout_18.addItem(self.HorizontalSpacer_TTS_GPTSoVITS_UseWebUI, 0, 1, 1, 1)
+
+        self.Button_TTS_GPTSoVITS_UseWebUI_MoreActions = MenuButton(self.Frame_TTS_GPTSoVITS_UseWebUI)
+        self.Button_TTS_GPTSoVITS_UseWebUI_MoreActions.setObjectName(u"Button_TTS_GPTSoVITS_UseWebUI_MoreActions")
+        self.Button_TTS_GPTSoVITS_UseWebUI_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_TTS_GPTSoVITS_UseWebUI_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_TTS_GPTSoVITS_UseWebUI_MoreActions.setStyleSheet(u"QPushButton {\n"
+"	border-width: 1px;\n"
+"	border-style: solid;\n"
+"	border-color: rgb(123, 123, 123);\n"
+"}")
+
+        self.gridLayout_18.addWidget(self.Button_TTS_GPTSoVITS_UseWebUI_MoreActions, 0, 2, 1, 1)
+
+        self.CheckBox_TTS_GPTSoVITS_UseWebUI = QCheckBox(self.Frame_TTS_GPTSoVITS_UseWebUI)
+        self.CheckBox_TTS_GPTSoVITS_UseWebUI.setObjectName(u"CheckBox_TTS_GPTSoVITS_UseWebUI")
+        self.CheckBox_TTS_GPTSoVITS_UseWebUI.setMinimumSize(QSize(0, 27))
+        self.CheckBox_TTS_GPTSoVITS_UseWebUI.setStyleSheet(u"QCheckBox {\n"
+"	font-size: 12px;\n"
+"	spacing: 12.3px;\n"
+"	background-color: transparent;\n"
+"	padding: 0px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QCheckBox:hover {\n"
+"}\n"
+"\n"
+"QCheckBox::indicator {\n"
+"	width: 24px;\n"
+"	height: 24px;\n"
+"    background-color: transparent;\n"
+"	padding: 1.2px;\n"
+"	border-width: 0px;\n"
+"	border-radius: 6px;\n"
+"	border-style: solid;\n"
+"}\n"
+"QCheckBox::indicator:hover {\n"
+"	background-color: rgba(255, 255, 255, 21);\n"
+"}\n"
+"QCheckBox::indicator:unchecked {\n"
+"	border-image: url(:/CheckBox_Icon/images/icons/ToggleOff.png);\n"
+"}\n"
+"QCheckBox::indicator:checked {\n"
+"	border-image: url(:/CheckBox_Icon/images/icons/ToggleOn.png);\n"
+"}")
+
+        self.gridLayout_18.addWidget(self.CheckBox_TTS_GPTSoVITS_UseWebUI, 1, 0, 1, 3)
+
+
+        self.verticalLayout_70.addWidget(self.Frame_TTS_GPTSoVITS_UseWebUI)
 
 
         self.verticalLayout_125.addWidget(self.Frame_TTS_GPTSoVITS_InputParams_BasicSettings)
@@ -8777,21 +8719,11 @@ class Ui_MainWindow(object):
         self.verticalLayout_136.setSpacing(0)
         self.verticalLayout_136.setObjectName(u"verticalLayout_136")
         self.verticalLayout_136.setContentsMargins(0, 0, 0, 0)
-        self.Button_TTS_GPTSoVITS_Execute = QPushButton(self.Page_TTS_GPTSoVITS_Execute)
+        self.Button_TTS_GPTSoVITS_Execute = HollowButton(self.Page_TTS_GPTSoVITS_Execute)
         self.Button_TTS_GPTSoVITS_Execute.setObjectName(u"Button_TTS_GPTSoVITS_Execute")
         sizePolicy2.setHeightForWidth(self.Button_TTS_GPTSoVITS_Execute.sizePolicy().hasHeightForWidth())
         self.Button_TTS_GPTSoVITS_Execute.setSizePolicy(sizePolicy2)
         self.Button_TTS_GPTSoVITS_Execute.setMinimumSize(QSize(0, 30))
-        self.Button_TTS_GPTSoVITS_Execute.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"}")
 
         self.verticalLayout_136.addWidget(self.Button_TTS_GPTSoVITS_Execute)
 
@@ -8802,21 +8734,11 @@ class Ui_MainWindow(object):
         self.verticalLayout_138.setSpacing(0)
         self.verticalLayout_138.setObjectName(u"verticalLayout_138")
         self.verticalLayout_138.setContentsMargins(0, 0, 0, 0)
-        self.Button_TTS_GPTSoVITS_Terminate = QPushButton(self.Page_TTS_GPTSoVITS_Terminate)
+        self.Button_TTS_GPTSoVITS_Terminate = HollowButton(self.Page_TTS_GPTSoVITS_Terminate)
         self.Button_TTS_GPTSoVITS_Terminate.setObjectName(u"Button_TTS_GPTSoVITS_Terminate")
         sizePolicy2.setHeightForWidth(self.Button_TTS_GPTSoVITS_Terminate.sizePolicy().hasHeightForWidth())
         self.Button_TTS_GPTSoVITS_Terminate.setSizePolicy(sizePolicy2)
         self.Button_TTS_GPTSoVITS_Terminate.setMinimumSize(QSize(0, 30))
-        self.Button_TTS_GPTSoVITS_Terminate.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"}")
 
         self.verticalLayout_138.addWidget(self.Button_TTS_GPTSoVITS_Terminate)
 
@@ -9623,21 +9545,11 @@ class Ui_MainWindow(object):
         self.verticalLayout_112.setSpacing(0)
         self.verticalLayout_112.setObjectName(u"verticalLayout_112")
         self.verticalLayout_112.setContentsMargins(0, 0, 0, 0)
-        self.Button_TTS_VITS_Execute = QPushButton(self.Page_TTS_VITS_Execute)
+        self.Button_TTS_VITS_Execute = HollowButton(self.Page_TTS_VITS_Execute)
         self.Button_TTS_VITS_Execute.setObjectName(u"Button_TTS_VITS_Execute")
         sizePolicy2.setHeightForWidth(self.Button_TTS_VITS_Execute.sizePolicy().hasHeightForWidth())
         self.Button_TTS_VITS_Execute.setSizePolicy(sizePolicy2)
         self.Button_TTS_VITS_Execute.setMinimumSize(QSize(0, 30))
-        self.Button_TTS_VITS_Execute.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"}")
 
         self.verticalLayout_112.addWidget(self.Button_TTS_VITS_Execute)
 
@@ -9648,21 +9560,11 @@ class Ui_MainWindow(object):
         self.verticalLayout_113.setSpacing(0)
         self.verticalLayout_113.setObjectName(u"verticalLayout_113")
         self.verticalLayout_113.setContentsMargins(0, 0, 0, 0)
-        self.Button_TTS_VITS_Terminate = QPushButton(self.Page_TTS_VITS_Terminate)
+        self.Button_TTS_VITS_Terminate = HollowButton(self.Page_TTS_VITS_Terminate)
         self.Button_TTS_VITS_Terminate.setObjectName(u"Button_TTS_VITS_Terminate")
         sizePolicy2.setHeightForWidth(self.Button_TTS_VITS_Terminate.sizePolicy().hasHeightForWidth())
         self.Button_TTS_VITS_Terminate.setSizePolicy(sizePolicy2)
         self.Button_TTS_VITS_Terminate.setMinimumSize(QSize(0, 30))
-        self.Button_TTS_VITS_Terminate.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"}")
 
         self.verticalLayout_113.addWidget(self.Button_TTS_VITS_Terminate)
 
@@ -11327,6 +11229,8 @@ class Ui_MainWindow(object):
         self.Label_TTS_GPTSoVITS_ModelPathLoadS2G.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_TTS_GPTSoVITS_ModelDirLoadBert.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_TTS_GPTSoVITS_ModelDirLoadSSL.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.Label_TTS_GPTSoVITS_UseWebUI.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.CheckBox_TTS_GPTSoVITS_UseWebUI.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
         ___qtreewidgetitem24 = self.TreeWidget_Catalogue_TTS_VITS.headerItem()
         ___qtreewidgetitem24.setText(0, QCoreApplication.translate("MainWindow", u"HeaderView", None));
 

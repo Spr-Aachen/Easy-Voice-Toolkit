@@ -5531,6 +5531,40 @@ class MainWindow(Window_MainWindow):
             ChildItemText = QCA.translate('MainWindow', "预训练ssl模型加载路径")
         )
 
+        QFunc.Function_SetText(
+            Widget = self.ui.Label_TTS_GPTSoVITS_UseWebUI,
+            Text = QFunc.SetRichText(
+                Body = QCA.translate('MainWindow', "使用WebUI界面\n开启后会使用WebUI界面而非GUI窗口。")
+            )
+        )
+        ParamsManager_TTS_GPTSoVITS.SetParam(
+            Widget = self.ui.CheckBox_TTS_GPTSoVITS_UseWebUI,
+            Section = 'Input Params',
+            Option = 'Use_WebUI',
+            DefaultValue = True
+        )
+        Function_ConfigureCheckBox(
+            CheckBox = self.ui.CheckBox_TTS_GPTSoVITS_UseWebUI,
+            CheckedText = "已启用",
+            CheckedEvents = [
+            ],
+            UncheckedText = "未启用",
+            UncheckedEvents = [
+            ],
+            TakeEffect = True
+        )
+        self.ui.Button_TTS_GPTSoVITS_UseWebUI_MoreActions.SetMenu(
+            ActionEvents = {
+                "重置": lambda: ParamsManager_TTS_GPTSoVITS.ResetParam(self.ui.CheckBox_TTS_GPTSoVITS_UseWebUI)
+            }
+        )
+        Function_AddToTreeWidget(
+            Widget = self.ui.Label_TTS_GPTSoVITS_UseWebUI,
+            TreeWidget = self.ui.TreeWidget_Catalogue_TTS_GPTSoVITS,
+            RootItemText = QCA.translate('MainWindow', "输入参数"),
+            ChildItemText = QCA.translate('MainWindow', "使用WebUI界面")
+        )
+
         # GPT-SoVITS - Right
         MonitorFile_Config_VoiceConverter_GPTSoVITS = QTasks.MonitorFile(Path_Config_TTS_GPTSoVITS)
         MonitorFile_Config_VoiceConverter_GPTSoVITS.start()
@@ -5579,6 +5613,9 @@ class MainWindow(Window_MainWindow):
                 self.ui.LineEdit_TTS_GPTSoVITS_ModelPathLoadS2G,
                 self.ui.LineEdit_TTS_GPTSoVITS_ModelDirLoadBert,
                 self.ui.LineEdit_TTS_GPTSoVITS_ModelDirLoadSSL,
+                False, # Set_FP16_Run
+                False, # Enable_Batched_Infer
+                self.ui.CheckBox_TTS_GPTSoVITS_UseWebUI,
             ],
             EmptyAllowed = [
             ],
