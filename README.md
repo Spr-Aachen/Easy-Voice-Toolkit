@@ -47,6 +47,10 @@ Functions that are currently included in the toolkit are as follows:
 <br>These functions can be seamlessly integrated to form a complete workflow
 <br>Users can use these tools selectively according to their own needs, or use them in sequence to gradually transform raw audio files into ideal speech models
 
+### Frame
+
+[![Pytorch](https://img.shields.io/badge/PYtorch-test?style=for-the-badge&logo=pytorch&logoColor=white&color=orange)](https://pytorch.org/)[![Static Badge](https://img.shields.io/badge/Pyside6-test?style=for-the-badge&logo=qt&logoColor=white)](https://doc.qt.io/qtforpython-6/PySide6/QtWidgets/index.html)
+
 ### Acknowledgement
 
 I'd like to express my sincere gratitude to the authors of the following projects, as their excellent work has contributed to the implementation of this toolkit

@@ -11,6 +11,8 @@
 
 # Generated contents
 **/__pycache__/
+**/*.build/
+**/*.dist/
 **/build/
 **/dist/
 **/Config/
@@ -18,5 +20,5 @@
 **/log.txt
 
 # Others
-**/*venv/
+**/venv/
 **/*.ipynb

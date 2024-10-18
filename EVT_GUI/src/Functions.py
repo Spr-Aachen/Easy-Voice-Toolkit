@@ -162,48 +162,52 @@ def Function_SetURL(
     Function to open URL (through button)
     '''
     Button.clicked.connect(
-        lambda: QFunc.Function_OpenURL([(Function_ParamsHandler(URL, None) if isinstance(URL, QWidget) else URL) for URL in QFunc.ToIterable(URL)], CreateIfNotExist)
+        lambda: QFunc.Function_OpenURL([(Function_GetParam(URL) if isinstance(URL, QWidget) else URL) for URL in QFunc.ToIterable(URL)], CreateIfNotExist)
     )
     Button.setToolTipDuration(-1)
     Button.setToolTip(ButtonTooltip)
 
 ##############################################################################################################################
 
-def Function_ParamsHandler(
-    UI: QObject,
-    Param: Optional[str],
-    Mode: str = "Get",
+def Function_GetParam(
+    UI: QObject
 ):
     '''
-    Function to get/set the param of UI
+    Function to get the param of UI
     '''
-    if Mode == "Get":
-        if isinstance(UI, (QLineEdit, QTextEdit, QPlainTextEdit)):
-            return QFunc.Function_GetText(UI)
-        if isinstance(UI, QComboBox):
-            return UI.currentText()
-        if isinstance(UI, (QSlider, QAbstractSpinBox)):
-            return UI.value()
-        if isinstance(UI, (QCheckBox, QRadioButton)):
-            return UI.isChecked()
+    if isinstance(UI, (QLineEdit, QTextEdit, QPlainTextEdit)):
+        return QFunc.Function_GetText(UI)
+    if isinstance(UI, QComboBox):
+        return UI.currentText()
+    if isinstance(UI, (QAbstractSpinBox, QSlider, Frame_RangeSetting)):
+        return UI.value()
+    if isinstance(UI, (QCheckBox, QRadioButton)):
+        return UI.isChecked()
 
-        if isinstance(UI, Table_EditAudioSpeaker):
-            return UI.GetValue()
+    if isinstance(UI, Table_EditAudioSpeaker):
+        return UI.GetValue()
 
-    if Mode == "Set":
-        if isinstance(UI, (QLineEdit, QTextEdit)):
-            UI.setText(Param)
-        if isinstance(UI, QPlainTextEdit):
-            UI.setPlainText(Param)
-        if isinstance(UI, QComboBox):
-            UI.setCurrentText(Param)
-        if isinstance(UI, (QSlider, QAbstractSpinBox)):
-            UI.setValue(Param)
-        if isinstance(UI, (QCheckBox, QRadioButton)):
-            UI.setChecked(Param)
 
-        if isinstance(UI, Table_EditAudioSpeaker):
-            UI.SetValue(Param)
+def Function_SetParam(
+    UI: QObject,
+    Param: Optional[str]
+):
+    '''
+    Function to set the param of UI
+    '''
+    if isinstance(UI, (QLineEdit, QTextEdit)):
+        UI.setText(Param)
+    if isinstance(UI, QPlainTextEdit):
+        UI.setPlainText(Param)
+    if isinstance(UI, QComboBox):
+        UI.setCurrentText(Param)
+    if isinstance(UI, (QAbstractSpinBox, QSlider, Frame_RangeSetting)):
+        UI.setValue(Param)
+    if isinstance(UI, (QCheckBox, QRadioButton)):
+        UI.setChecked(Param)
+
+    if isinstance(UI, Table_EditAudioSpeaker):
+        UI.SetValue(Param)
 
 
 def Function_ParamsSynchronizer(
@@ -218,11 +222,11 @@ def Function_ParamsSynchronizer(
     @Slot()
     def ParamsSynchronizer():
         for UI_Get, UI_Set in FromTo.items():
-            Param_Get = Function_ParamsHandler(UI_Get, "Get")
+            Param_Get = Function_GetParam(UI_Get)
             Param_Get = Param_Get * Times if isinstance(Param_Get, (int, float, complex)) else Param_Get
             for UI_Set in QFunc.ToIterable(UI_Set):
-                Function_ParamsHandler(UI_Set, Param_Get, "Set")
-    
+                Function_SetParam(UI_Set, Param_Get)
+
     TriggerList = QFunc.ToIterable(Trigger)
 
     for Trigger in TriggerList:
@@ -246,7 +250,7 @@ def Function_ParamsChecker(
     Params = []
 
     for UI in ParamsFrom:
-        Param = Function_ParamsHandler(UI, "Get") if isinstance(UI, QWidget) else UI
+        Param = Function_GetParam(UI) if isinstance(UI, QWidget) else UI
         if isinstance(Param, str):
             if Param.strip() == "None" or Param.strip() == "":
                 if UI in QFunc.ToIterable(EmptyAllowed):
@@ -283,7 +287,7 @@ def Function_ParamsChecker(
         else:
             pass
         Params.append(Param)
-    
+
     Args = tuple(Params)#if Params != [] else None
 
     return Args
@@ -399,7 +403,7 @@ def Function_SetWidgetValue(
             Widget.currentTextChanged.connect(EditConfig)
             EditConfig(Value) if str(Value) in itemTexts else None
 
-    if isinstance(Widget, (QSlider, QSpinBox)):
+    if isinstance(Widget, (QSpinBox, QSlider)):
         Widget.setValue(int(eval(str(Value)) * Times))
         def EditConfig(Value):
             Config.EditConfig(Section, Option, str(eval(str(Value)) / Times))
@@ -407,7 +411,7 @@ def Function_SetWidgetValue(
             Widget.valueChanged.connect(EditConfig)
             EditConfig(Value)
 
-    if isinstance(Widget, (QDoubleSpinBox)):
+    if isinstance(Widget, (QDoubleSpinBox, SliderBase, Frame_RangeSetting)):
         Widget.setValue(float(eval(str(Value)) * Times))
         def EditConfig(Value):
             Config.EditConfig(Section, Option, str(eval(str(Value)) / Times))

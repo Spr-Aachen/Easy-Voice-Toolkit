@@ -2,7 +2,7 @@ from PySide6.QtCore import (QCoreApplication, QMetaObject, Qt, QRect, QSize)
 from PySide6.QtGui import (QIcon, QFont)
 from PySide6.QtWidgets import *
 
-from components.Components import WidgetBase, ButtonBase, NavigationButton, HollowButton, MenuButton, LabelBase, LineEditBase, TextEditBase, TextBrowserBase, ComboBoxBase, SpinBoxBase, DoubleSpinBoxBase, ToolBoxBase, GroupBoxBase, ScrollAreaBase, TreeWidgetBase, TabWidgetBase, Table_ViewModels, Table_EditAudioSpeaker
+from components.Components import WidgetBase, ButtonBase, NavigationButton, HollowButton, MenuButton, LabelBase, LineEditBase, TextEditBase, TextBrowserBase, ComboBoxBase, Frame_RangeSetting, SpinBoxBase, DoubleSpinBoxBase, ToolBoxBase, GroupBoxBase, ScrollAreaBase, TreeWidgetBase, TabWidgetBase, Table_ViewModels, Table_EditAudioSpeaker
 from assets import Sources
 
 
@@ -6577,7 +6577,7 @@ class Ui_MainWindow(object):
         self.ToolBox_Train_GPTSoVITS_GPTSoVITSParams_AdvanceSettings.setFrameShadow(QFrame.Shadow.Raised)
         self.ToolBox_Train_GPTSoVITS_GPTSoVITSParams_AdvanceSettings_Page1Content = WidgetBase()
         self.ToolBox_Train_GPTSoVITS_GPTSoVITSParams_AdvanceSettings_Page1Content.setObjectName(u"ToolBox_Train_GPTSoVITS_GPTSoVITSParams_AdvanceSettings_Page1Content")
-        self.ToolBox_Train_GPTSoVITS_GPTSoVITSParams_AdvanceSettings_Page1Content.setGeometry(QRect(0, 0, 147, 105))
+        self.ToolBox_Train_GPTSoVITS_GPTSoVITSParams_AdvanceSettings_Page1Content.setGeometry(QRect(0, 0, 546, 105))
         self.verticalLayout_57 = QVBoxLayout(self.ToolBox_Train_GPTSoVITS_GPTSoVITSParams_AdvanceSettings_Page1Content)
         self.verticalLayout_57.setSpacing(0)
         self.verticalLayout_57.setObjectName(u"verticalLayout_57")
@@ -6748,7 +6748,7 @@ class Ui_MainWindow(object):
         self.ToolBox_Train_GPTSoVITS_OutputParams_AdvanceSettings.setObjectName(u"ToolBox_Train_GPTSoVITS_OutputParams_AdvanceSettings")
         self.ToolBox_Train_GPTSoVITS_OutputParams_AdvanceSettings_Page1Content = WidgetBase()
         self.ToolBox_Train_GPTSoVITS_OutputParams_AdvanceSettings_Page1Content.setObjectName(u"ToolBox_Train_GPTSoVITS_OutputParams_AdvanceSettings_Page1Content")
-        self.ToolBox_Train_GPTSoVITS_OutputParams_AdvanceSettings_Page1Content.setGeometry(QRect(0, 0, 147, 105))
+        self.ToolBox_Train_GPTSoVITS_OutputParams_AdvanceSettings_Page1Content.setGeometry(QRect(0, 0, 548, 105))
         self.verticalLayout_60 = QVBoxLayout(self.ToolBox_Train_GPTSoVITS_OutputParams_AdvanceSettings_Page1Content)
         self.verticalLayout_60.setSpacing(0)
         self.verticalLayout_60.setObjectName(u"verticalLayout_60")
@@ -8260,7 +8260,7 @@ class Ui_MainWindow(object):
         self.ScrollArea_Middle_TTS_GPTSoVITS.setWidgetResizable(True)
         self.ScrollArea_Middle_WidgetContents_TTS_GPTSoVITS = QWidget()
         self.ScrollArea_Middle_WidgetContents_TTS_GPTSoVITS.setObjectName(u"ScrollArea_Middle_WidgetContents_TTS_GPTSoVITS")
-        self.ScrollArea_Middle_WidgetContents_TTS_GPTSoVITS.setGeometry(QRect(0, 0, 586, 602))
+        self.ScrollArea_Middle_WidgetContents_TTS_GPTSoVITS.setGeometry(QRect(0, -285, 586, 602))
         self.verticalLayout_66 = QVBoxLayout(self.ScrollArea_Middle_WidgetContents_TTS_GPTSoVITS)
         self.verticalLayout_66.setSpacing(12)
         self.verticalLayout_66.setObjectName(u"verticalLayout_66")
@@ -8790,7 +8790,7 @@ class Ui_MainWindow(object):
         self.ScrollArea_Middle_TTS_VITS.setWidgetResizable(True)
         self.ScrollArea_Middle_WidgetContents_TTS_VITS = QWidget()
         self.ScrollArea_Middle_WidgetContents_TTS_VITS.setObjectName(u"ScrollArea_Middle_WidgetContents_TTS_VITS")
-        self.ScrollArea_Middle_WidgetContents_TTS_VITS.setGeometry(QRect(0, 0, 586, 856))
+        self.ScrollArea_Middle_WidgetContents_TTS_VITS.setGeometry(QRect(0, -539, 586, 856))
         self.verticalLayout_19 = QVBoxLayout(self.ScrollArea_Middle_WidgetContents_TTS_VITS)
         self.verticalLayout_19.setSpacing(12)
         self.verticalLayout_19.setObjectName(u"verticalLayout_19")
@@ -9076,7 +9076,7 @@ class Ui_MainWindow(object):
         self.ToolBox_TTS_VITS_VITSParams_AdvanceSettings.setObjectName(u"ToolBox_TTS_VITS_VITSParams_AdvanceSettings")
         self.ToolBox_TTS_VITS_VITSParams_AdvanceSettings_Page1Content = WidgetBase()
         self.ToolBox_TTS_VITS_VITSParams_AdvanceSettings_Page1Content.setObjectName(u"ToolBox_TTS_VITS_VITSParams_AdvanceSettings_Page1Content")
-        self.ToolBox_TTS_VITS_VITSParams_AdvanceSettings_Page1Content.setGeometry(QRect(0, 0, 147, 315))
+        self.ToolBox_TTS_VITS_VITSParams_AdvanceSettings_Page1Content.setGeometry(QRect(0, 0, 548, 315))
         self.verticalLayout_118 = QVBoxLayout(self.ToolBox_TTS_VITS_VITSParams_AdvanceSettings_Page1Content)
         self.verticalLayout_118.setSpacing(0)
         self.verticalLayout_118.setObjectName(u"verticalLayout_118")
@@ -9111,10 +9111,6 @@ class Ui_MainWindow(object):
 
         self.gridLayout_71.addWidget(self.Label_TTS_VITS_EmotionStrength, 0, 0, 1, 1)
 
-        self.HorizontalSpacer_TTS_VITS_EmotionStrength = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
-
-        self.gridLayout_71.addItem(self.HorizontalSpacer_TTS_VITS_EmotionStrength, 0, 1, 1, 1)
-
         self.Button_TTS_VITS_EmotionStrength_MoreActions = MenuButton(self.Frame_TTS_VITS_EmotionStrength)
         self.Button_TTS_VITS_EmotionStrength_MoreActions.setObjectName(u"Button_TTS_VITS_EmotionStrength_MoreActions")
         self.Button_TTS_VITS_EmotionStrength_MoreActions.setMinimumSize(QSize(27, 27))
@@ -9126,6 +9122,10 @@ class Ui_MainWindow(object):
 "}")
 
         self.gridLayout_71.addWidget(self.Button_TTS_VITS_EmotionStrength_MoreActions, 0, 2, 1, 1)
+
+        self.HorizontalSpacer_TTS_VITS_EmotionStrength = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.gridLayout_71.addItem(self.HorizontalSpacer_TTS_VITS_EmotionStrength, 0, 1, 1, 1)
 
         self.ChildFrame_TTS_VITS_EmotionStrength = QFrame(self.Frame_TTS_VITS_EmotionStrength)
         self.ChildFrame_TTS_VITS_EmotionStrength.setObjectName(u"ChildFrame_TTS_VITS_EmotionStrength")
@@ -9143,44 +9143,12 @@ class Ui_MainWindow(object):
         self.horizontalLayout_43.setSpacing(12)
         self.horizontalLayout_43.setObjectName(u"horizontalLayout_43")
         self.horizontalLayout_43.setContentsMargins(0, 0, 0, 0)
-        self.HorizontalSlider_TTS_VITS_EmotionStrength = QSlider(self.ChildFrame_TTS_VITS_EmotionStrength)
+        self.HorizontalSlider_TTS_VITS_EmotionStrength = Frame_RangeSetting(self.ChildFrame_TTS_VITS_EmotionStrength)
         self.HorizontalSlider_TTS_VITS_EmotionStrength.setObjectName(u"HorizontalSlider_TTS_VITS_EmotionStrength")
         self.HorizontalSlider_TTS_VITS_EmotionStrength.setMinimumSize(QSize(0, 27))
-        self.HorizontalSlider_TTS_VITS_EmotionStrength.setStyleSheet(u"QSlider::groove:horizontal {\n"
-"	height: 1.2px;\n"
-"	background-color: rgba(201, 210, 222, 123);\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QSlider::groove:horizontal:hover {\n"
-"	background-color: rgba(201, 210, 222, 210);\n"
-"}\n"
-"\n"
-"QSlider::handle:horizontal {\n"
-"	width: 12px;\n"
-"	height: 12px;\n"
-"	background-color: rgba(201, 210, 222, 210);\n"
-"	margin-top: -6px;\n"
-"	margin-bottom: -6px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	/*border-color: rgba(201, 210, 222, 123);*/\n"
-"}\n"
-"QSlider::handle:horizontal:hover {\n"
-"	background-color: rgba(210, 222, 234, 234);\n"
-"	/*border-color: rgba(201, 210, 222, 210);*/\n"
-"}")
         self.HorizontalSlider_TTS_VITS_EmotionStrength.setOrientation(Qt.Orientation.Horizontal)
 
         self.horizontalLayout_43.addWidget(self.HorizontalSlider_TTS_VITS_EmotionStrength)
-
-        self.DoubleSpinBox_TTS_VITS_EmotionStrength = DoubleSpinBoxBase(self.ChildFrame_TTS_VITS_EmotionStrength)
-        self.DoubleSpinBox_TTS_VITS_EmotionStrength.setObjectName(u"DoubleSpinBox_TTS_VITS_EmotionStrength")
-        self.DoubleSpinBox_TTS_VITS_EmotionStrength.setMinimumSize(QSize(0, 27))
-
-        self.horizontalLayout_43.addWidget(self.DoubleSpinBox_TTS_VITS_EmotionStrength)
 
 
         self.gridLayout_71.addWidget(self.ChildFrame_TTS_VITS_EmotionStrength, 1, 0, 1, 3)
@@ -9250,44 +9218,12 @@ class Ui_MainWindow(object):
         self.horizontalLayout_44.setSpacing(12)
         self.horizontalLayout_44.setObjectName(u"horizontalLayout_44")
         self.horizontalLayout_44.setContentsMargins(0, 0, 0, 0)
-        self.HorizontalSlider_TTS_VITS_PhonemeDuration = QSlider(self.ChildFrame_TTS_VITS_PhonemeDuration)
+        self.HorizontalSlider_TTS_VITS_PhonemeDuration = Frame_RangeSetting(self.ChildFrame_TTS_VITS_PhonemeDuration)
         self.HorizontalSlider_TTS_VITS_PhonemeDuration.setObjectName(u"HorizontalSlider_TTS_VITS_PhonemeDuration")
         self.HorizontalSlider_TTS_VITS_PhonemeDuration.setMinimumSize(QSize(0, 27))
-        self.HorizontalSlider_TTS_VITS_PhonemeDuration.setStyleSheet(u"QSlider::groove:horizontal {\n"
-"	height: 1.2px;\n"
-"	background-color: rgba(201, 210, 222, 123);\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QSlider::groove:horizontal:hover {\n"
-"	background-color: rgba(201, 210, 222, 210);\n"
-"}\n"
-"\n"
-"QSlider::handle:horizontal {\n"
-"	width: 12px;\n"
-"	height: 12px;\n"
-"	background-color: rgba(201, 210, 222, 210);\n"
-"	margin-top: -6px;\n"
-"	margin-bottom: -6px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	/*border-color: rgba(201, 210, 222, 123);*/\n"
-"}\n"
-"QSlider::handle:horizontal:hover {\n"
-"	background-color: rgba(210, 222, 234, 234);\n"
-"	/*border-color: rgba(201, 210, 222, 210);*/\n"
-"}")
         self.HorizontalSlider_TTS_VITS_PhonemeDuration.setOrientation(Qt.Orientation.Horizontal)
 
         self.horizontalLayout_44.addWidget(self.HorizontalSlider_TTS_VITS_PhonemeDuration)
-
-        self.DoubleSpinBox_TTS_VITS_PhonemeDuration = DoubleSpinBoxBase(self.ChildFrame_TTS_VITS_PhonemeDuration)
-        self.DoubleSpinBox_TTS_VITS_PhonemeDuration.setObjectName(u"DoubleSpinBox_TTS_VITS_PhonemeDuration")
-        self.DoubleSpinBox_TTS_VITS_PhonemeDuration.setMinimumSize(QSize(0, 27))
-
-        self.horizontalLayout_44.addWidget(self.DoubleSpinBox_TTS_VITS_PhonemeDuration)
 
 
         self.gridLayout_72.addWidget(self.ChildFrame_TTS_VITS_PhonemeDuration, 1, 0, 1, 3)
@@ -9357,44 +9293,12 @@ class Ui_MainWindow(object):
         self.horizontalLayout_45.setSpacing(12)
         self.horizontalLayout_45.setObjectName(u"horizontalLayout_45")
         self.horizontalLayout_45.setContentsMargins(0, 0, 0, 0)
-        self.HorizontalSlider_TTS_VITS_SpeechRate = QSlider(self.ChildFrame_TTS_VITS_SpeechRate)
+        self.HorizontalSlider_TTS_VITS_SpeechRate = Frame_RangeSetting(self.ChildFrame_TTS_VITS_SpeechRate)
         self.HorizontalSlider_TTS_VITS_SpeechRate.setObjectName(u"HorizontalSlider_TTS_VITS_SpeechRate")
         self.HorizontalSlider_TTS_VITS_SpeechRate.setMinimumSize(QSize(0, 27))
-        self.HorizontalSlider_TTS_VITS_SpeechRate.setStyleSheet(u"QSlider::groove:horizontal {\n"
-"	height: 1.2px;\n"
-"	background-color: rgba(201, 210, 222, 123);\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QSlider::groove:horizontal:hover {\n"
-"	background-color: rgba(201, 210, 222, 210);\n"
-"}\n"
-"\n"
-"QSlider::handle:horizontal {\n"
-"	width: 12px;\n"
-"	height: 12px;\n"
-"	background-color: rgba(201, 210, 222, 210);\n"
-"	margin-top: -6px;\n"
-"	margin-bottom: -6px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	/*border-color: rgba(201, 210, 222, 123);*/\n"
-"}\n"
-"QSlider::handle:horizontal:hover {\n"
-"	background-color: rgba(210, 222, 234, 234);\n"
-"	/*border-color: rgba(201, 210, 222, 210);*/\n"
-"}")
         self.HorizontalSlider_TTS_VITS_SpeechRate.setOrientation(Qt.Orientation.Horizontal)
 
         self.horizontalLayout_45.addWidget(self.HorizontalSlider_TTS_VITS_SpeechRate)
-
-        self.DoubleSpinBox_TTS_VITS_SpeechRate = DoubleSpinBoxBase(self.ChildFrame_TTS_VITS_SpeechRate)
-        self.DoubleSpinBox_TTS_VITS_SpeechRate.setObjectName(u"DoubleSpinBox_TTS_VITS_SpeechRate")
-        self.DoubleSpinBox_TTS_VITS_SpeechRate.setMinimumSize(QSize(0, 27))
-
-        self.horizontalLayout_45.addWidget(self.DoubleSpinBox_TTS_VITS_SpeechRate)
 
 
         self.gridLayout_73.addWidget(self.ChildFrame_TTS_VITS_SpeechRate, 1, 0, 1, 3)
@@ -9641,7 +9545,7 @@ class Ui_MainWindow(object):
         self.ScrollArea_Settings_Client.setWidgetResizable(True)
         self.ScrollAreaWidgetContents_Settings_Client = QWidget()
         self.ScrollAreaWidgetContents_Settings_Client.setObjectName(u"ScrollAreaWidgetContents_Settings_Client")
-        self.ScrollAreaWidgetContents_Settings_Client.setGeometry(QRect(0, 0, 246, 483))
+        self.ScrollAreaWidgetContents_Settings_Client.setGeometry(QRect(0, 0, 1014, 483))
         self.verticalLayout_106 = QVBoxLayout(self.ScrollAreaWidgetContents_Settings_Client)
         self.verticalLayout_106.setSpacing(0)
         self.verticalLayout_106.setObjectName(u"verticalLayout_106")

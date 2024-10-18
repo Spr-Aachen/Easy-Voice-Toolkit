@@ -5811,41 +5811,17 @@ class MainWindow(Window_MainWindow):
                 Body = QCA.translate('MainWindow', "情感强度\n情感的变化程度。")
             )
         )
-        self.ui.HorizontalSlider_TTS_VITS_EmotionStrength.setMinimum(0)
-        self.ui.HorizontalSlider_TTS_VITS_EmotionStrength.setMaximum(100)
-        self.ui.HorizontalSlider_TTS_VITS_EmotionStrength.setTickInterval(1)
+        self.ui.HorizontalSlider_TTS_VITS_EmotionStrength.setRange(0, 1)
+        self.ui.HorizontalSlider_TTS_VITS_EmotionStrength.setSingleStep(0.01)
         ParamsManager_TTS_VITS.SetParam(
             Widget = self.ui.HorizontalSlider_TTS_VITS_EmotionStrength,
             Section = 'VITS Params',
             Option = 'EmotionStrength',
-            DefaultValue = 0.67,
-            Times = 100
-        )
-        Function_ParamsSynchronizer(
-            Trigger = self.ui.HorizontalSlider_TTS_VITS_EmotionStrength,
-            FromTo = {
-                self.ui.HorizontalSlider_TTS_VITS_EmotionStrength: self.ui.DoubleSpinBox_TTS_VITS_EmotionStrength
-            },
-            Times = 0.01
-        )
-        self.ui.DoubleSpinBox_TTS_VITS_EmotionStrength.setRange(0, 1)
-        self.ui.DoubleSpinBox_TTS_VITS_EmotionStrength.setSingleStep(0.01)
-        ParamsManager_TTS_VITS.SetParam(
-            Widget = self.ui.DoubleSpinBox_TTS_VITS_EmotionStrength,
-            Section = 'VITS Params',
-            Option = 'EmotionStrength',
             DefaultValue = 0.67
-        )
-        Function_ParamsSynchronizer(
-            Trigger = self.ui.DoubleSpinBox_TTS_VITS_EmotionStrength,
-            FromTo = {
-                self.ui.DoubleSpinBox_TTS_VITS_EmotionStrength: self.ui.HorizontalSlider_TTS_VITS_EmotionStrength
-            },
-            Times = 100
         )
         self.ui.Button_TTS_VITS_EmotionStrength_MoreActions.SetMenu(
             ActionEvents = {
-                "重置": lambda: ParamsManager_TTS_VITS.ResetParam(self.ui.DoubleSpinBox_TTS_VITS_EmotionStrength)
+                "重置": lambda: ParamsManager_TTS_VITS.ResetParam(self.ui.HorizontalSlider_TTS_VITS_EmotionStrength)
             }
         )
         Function_AddToTreeWidget(
@@ -5861,41 +5837,17 @@ class MainWindow(Window_MainWindow):
                 Body = QCA.translate('MainWindow', "音素音长\n音素的发音长度。")
             )
         )
-        self.ui.HorizontalSlider_TTS_VITS_PhonemeDuration.setMinimum(0)
-        self.ui.HorizontalSlider_TTS_VITS_PhonemeDuration.setMaximum(10)
-        self.ui.HorizontalSlider_TTS_VITS_PhonemeDuration.setTickInterval(1)
+        self.ui.HorizontalSlider_TTS_VITS_PhonemeDuration.setRange(0, 1)
+        self.ui.HorizontalSlider_TTS_VITS_PhonemeDuration.setSingleStep(0.1)
         ParamsManager_TTS_VITS.SetParam(
             Widget = self.ui.HorizontalSlider_TTS_VITS_PhonemeDuration,
             Section = 'VITS Params',
             Option = 'PhonemeDuration',
-            DefaultValue = 0.8,
-            Times = 10
-        )
-        Function_ParamsSynchronizer(
-            Trigger = self.ui.HorizontalSlider_TTS_VITS_PhonemeDuration,
-            FromTo = {
-                self.ui.HorizontalSlider_TTS_VITS_PhonemeDuration: self.ui.DoubleSpinBox_TTS_VITS_PhonemeDuration
-            },
-            Times = 0.1
-        )
-        self.ui.DoubleSpinBox_TTS_VITS_PhonemeDuration.setRange(0, 1)
-        self.ui.DoubleSpinBox_TTS_VITS_PhonemeDuration.setSingleStep(0.1)
-        ParamsManager_TTS_VITS.SetParam(
-            Widget = self.ui.DoubleSpinBox_TTS_VITS_PhonemeDuration,
-            Section = 'VITS Params',
-            Option = 'PhonemeDuration',
             DefaultValue = 0.8
-        )
-        Function_ParamsSynchronizer(
-            Trigger = self.ui.DoubleSpinBox_TTS_VITS_PhonemeDuration,
-            FromTo = {
-                self.ui.DoubleSpinBox_TTS_VITS_PhonemeDuration: self.ui.HorizontalSlider_TTS_VITS_PhonemeDuration
-            },
-            Times = 10
         )
         self.ui.Button_TTS_VITS_PhonemeDuration_MoreActions.SetMenu(
             ActionEvents = {
-                "重置": lambda: ParamsManager_TTS_VITS.ResetParam(self.ui.DoubleSpinBox_TTS_VITS_PhonemeDuration)
+                "重置": lambda: ParamsManager_TTS_VITS.ResetParam(self.ui.HorizontalSlider_TTS_VITS_PhonemeDuration)
             }
         )
         Function_AddToTreeWidget(
@@ -5911,41 +5863,17 @@ class MainWindow(Window_MainWindow):
                 Body = QCA.translate('MainWindow', "整体语速\n整体的说话速度。")
             )
         )
-        self.ui.HorizontalSlider_TTS_VITS_SpeechRate.setMinimum(0)
-        self.ui.HorizontalSlider_TTS_VITS_SpeechRate.setMaximum(20)
-        self.ui.HorizontalSlider_TTS_VITS_SpeechRate.setTickInterval(1)
+        self.ui.HorizontalSlider_TTS_VITS_SpeechRate.setRange(0, 20)
+        self.ui.HorizontalSlider_TTS_VITS_SpeechRate.setSingleStep(1)
         ParamsManager_TTS_VITS.SetParam(
             Widget = self.ui.HorizontalSlider_TTS_VITS_SpeechRate,
             Section = 'VITS Params',
             Option = 'SpeechRate',
-            DefaultValue = 1.,
-            Times = 10
-        )
-        Function_ParamsSynchronizer(
-            Trigger = self.ui.HorizontalSlider_TTS_VITS_SpeechRate,
-            FromTo = {
-                self.ui.HorizontalSlider_TTS_VITS_SpeechRate: self.ui.DoubleSpinBox_TTS_VITS_SpeechRate
-            },
-            Times = 0.1
-        )
-        self.ui.DoubleSpinBox_TTS_VITS_SpeechRate.setRange(0, 2)
-        self.ui.DoubleSpinBox_TTS_VITS_SpeechRate.setSingleStep(0.1)
-        ParamsManager_TTS_VITS.SetParam(
-            Widget = self.ui.DoubleSpinBox_TTS_VITS_SpeechRate,
-            Section = 'VITS Params',
-            Option = 'SpeechRate',
             DefaultValue = 1.
-        )
-        Function_ParamsSynchronizer(
-            Trigger = self.ui.DoubleSpinBox_TTS_VITS_SpeechRate,
-            FromTo = {
-                self.ui.DoubleSpinBox_TTS_VITS_SpeechRate: self.ui.HorizontalSlider_TTS_VITS_SpeechRate
-            },
-            Times = 10
         )
         self.ui.Button_TTS_VITS_SpeechRate_MoreActions.SetMenu(
             ActionEvents = {
-                "重置": lambda: ParamsManager_TTS_VITS.ResetParam(self.ui.DoubleSpinBox_TTS_VITS_SpeechRate)
+                "重置": lambda: ParamsManager_TTS_VITS.ResetParam(self.ui.HorizontalSlider_TTS_VITS_SpeechRate)
             }
         )
         Function_AddToTreeWidget(
@@ -6016,9 +5944,9 @@ class MainWindow(Window_MainWindow):
                 self.ui.PlainTextEdit_TTS_VITS_Text,
                 self.ui.ComboBox_TTS_VITS_Language,
                 self.ui.ComboBox_TTS_VITS_Speaker,
-                self.ui.DoubleSpinBox_TTS_VITS_EmotionStrength,
-                self.ui.DoubleSpinBox_TTS_VITS_PhonemeDuration,
-                self.ui.DoubleSpinBox_TTS_VITS_SpeechRate,
+                self.ui.HorizontalSlider_TTS_VITS_EmotionStrength,
+                self.ui.HorizontalSlider_TTS_VITS_PhonemeDuration,
+                self.ui.HorizontalSlider_TTS_VITS_SpeechRate,
                 TTS_VITS_AudioPathSave
             ],
             EmptyAllowed = [
