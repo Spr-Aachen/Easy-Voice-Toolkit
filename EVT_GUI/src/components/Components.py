@@ -220,7 +220,7 @@ class Table_EditAudioSpeaker(TableBase):
         return ValueDict
 
 
-class Table_ASRResult(TableBase):
+class Table_VPRResult(TableBase):
     '''
     '''
     def __init__(self, parent: QWidget = None):

@@ -1,21 +1,21 @@
 from PySide6.QtCore import (QCoreApplication, QMetaObject, QSize)
 from PySide6.QtWidgets import *
 
-from components.Components import LabelBase, Table_ASRResult, LineEditBase
+from components.Components import LabelBase, Table_VPRResult, LineEditBase
 from assets import Sources
 
 
-class Ui_ChildWindow_ASR(object):
-    def setupUi(self, ChildWindow_ASR):
-        if not ChildWindow_ASR.objectName():
-            ChildWindow_ASR.setObjectName(u"ChildWindow_ASR")
-        ChildWindow_ASR.resize(630, 420)
-        ChildWindow_ASR.setMinimumSize(QSize(630, 420))
-        self.verticalLayout = QVBoxLayout(ChildWindow_ASR)
+class Ui_ChildWindow_VPR(object):
+    def setupUi(self, ChildWindow_VPR):
+        if not ChildWindow_VPR.objectName():
+            ChildWindow_VPR.setObjectName(u"ChildWindow_VPR")
+        ChildWindow_VPR.resize(630, 420)
+        ChildWindow_VPR.setMinimumSize(QSize(630, 420))
+        self.verticalLayout = QVBoxLayout(ChildWindow_VPR)
         self.verticalLayout.setSpacing(0)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
-        self.TitleBar = QWidget(ChildWindow_ASR)
+        self.TitleBar = QWidget(ChildWindow_VPR)
         self.TitleBar.setObjectName(u"TitleBar")
         self.TitleBar.setMinimumSize(QSize(0, 30))
         self.TitleBar.setMaximumSize(QSize(16777215, 30))
@@ -80,7 +80,7 @@ class Ui_ChildWindow_ASR(object):
 
         self.verticalLayout.addWidget(self.TitleBar)
 
-        self.CentralWidget = QWidget(ChildWindow_ASR)
+        self.CentralWidget = QWidget(ChildWindow_VPR)
         self.CentralWidget.setObjectName(u"CentralWidget")
         self.gridLayout = QGridLayout(self.CentralWidget)
         self.gridLayout.setSpacing(12)
@@ -122,7 +122,7 @@ class Ui_ChildWindow_ASR(object):
 
         self.gridLayout.addWidget(self.CheckBox, 3, 0, 1, 1)
 
-        self.Table = Table_ASRResult(self.CentralWidget)
+        self.Table = Table_VPRResult(self.CentralWidget)
         self.Table.setObjectName(u"Table")
 
         self.gridLayout.addWidget(self.Table, 2, 0, 1, 4)
@@ -141,7 +141,7 @@ class Ui_ChildWindow_ASR(object):
         self.horizontalLayout.setSpacing(12)
         self.horizontalLayout.setObjectName(u"horizontalLayout")
         self.horizontalLayout.setContentsMargins(21, 12, 21, 12)
-        self.Button_Cancel = QPushButton(ChildWindow_ASR)
+        self.Button_Cancel = QPushButton(ChildWindow_VPR)
         self.Button_Cancel.setObjectName(u"Button_Cancel")
         self.Button_Cancel.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
@@ -167,7 +167,7 @@ class Ui_ChildWindow_ASR(object):
 
         self.horizontalLayout.addWidget(self.Button_Cancel)
 
-        self.Button_Save = QPushButton(ChildWindow_ASR)
+        self.Button_Save = QPushButton(ChildWindow_VPR)
         self.Button_Save.setObjectName(u"Button_Save")
         self.Button_Save.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
@@ -193,7 +193,7 @@ class Ui_ChildWindow_ASR(object):
 
         self.horizontalLayout.addWidget(self.Button_Save)
 
-        self.Button_Confirm = QPushButton(ChildWindow_ASR)
+        self.Button_Confirm = QPushButton(ChildWindow_VPR)
         self.Button_Confirm.setObjectName(u"Button_Confirm")
         self.Button_Confirm.setStyleSheet(u"QPushButton {\n"
 "	text-align: center;\n"
@@ -223,17 +223,17 @@ class Ui_ChildWindow_ASR(object):
         self.verticalLayout.addLayout(self.horizontalLayout)
 
 
-        self.retranslateUi(ChildWindow_ASR)
+        self.retranslateUi(ChildWindow_VPR)
 
-        QMetaObject.connectSlotsByName(ChildWindow_ASR)
+        QMetaObject.connectSlotsByName(ChildWindow_VPR)
     # setupUi
 
-    def retranslateUi(self, ChildWindow_ASR):
-        ChildWindow_ASR.setWindowTitle(QCoreApplication.translate("ChildWindow_ASR", u"Form", None))
-        self.Label_Title.setText(QCoreApplication.translate("ChildWindow_ASR", u"Title", None))
-        self.Label_Text.setText(QCoreApplication.translate("ChildWindow_ASR", u"Text", None))
-        self.CheckBox.setText(QCoreApplication.translate("ChildWindow_ASR", u"CheckBox", None))
-        self.Button_Cancel.setText(QCoreApplication.translate("ChildWindow_ASR", u"PushButton", None))
-        self.Button_Save.setText(QCoreApplication.translate("ChildWindow_ASR", u"PushButton", None))
-        self.Button_Confirm.setText(QCoreApplication.translate("ChildWindow_ASR", u"PushButton", None))
+    def retranslateUi(self, ChildWindow_VPR):
+        ChildWindow_VPR.setWindowTitle(QCoreApplication.translate("ChildWindow_VPR", u"Form", None))
+        self.Label_Title.setText(QCoreApplication.translate("ChildWindow_VPR", u"Title", None))
+        self.Label_Text.setText(QCoreApplication.translate("ChildWindow_VPR", u"Text", None))
+        self.CheckBox.setText(QCoreApplication.translate("ChildWindow_VPR", u"CheckBox", None))
+        self.Button_Cancel.setText(QCoreApplication.translate("ChildWindow_VPR", u"PushButton", None))
+        self.Button_Save.setText(QCoreApplication.translate("ChildWindow_VPR", u"PushButton", None))
+        self.Button_Confirm.setText(QCoreApplication.translate("ChildWindow_VPR", u"PushButton", None))
     # retranslateUi

@@ -6,7 +6,7 @@ from QEasyWidgets.Windows import *
 from QEasyWidgets.Components import *
 
 from windows.ui.UI_MainWindow import Ui_MainWindow
-from windows.ui.UI_ChildWindow_ASR import Ui_ChildWindow_ASR
+from windows.ui.UI_ChildWindow_VPR import Ui_ChildWindow_VPR
 from windows.ui.UI_ChildWindow_STT import Ui_ChildWindow_STT
 from windows.ui.UI_ChildWindow_DAT import Ui_ChildWindow_DAT
 from windows.ui.UI_ChildWindow_DAT import Ui_ChildWindow_DAT
@@ -30,8 +30,8 @@ class Window_MainWindow(MainWindowBase):
 
 ##############################################################################################################################
 
-class Window_ChildWindow_ASR(ChildWindowBase):
-    ui = Ui_ChildWindow_ASR()
+class Window_ChildWindow_VPR(ChildWindowBase):
+    ui = Ui_ChildWindow_VPR()
 
     def __init__(self, parent = None):
         super().__init__(parent, min_width = 960, min_height = 540)

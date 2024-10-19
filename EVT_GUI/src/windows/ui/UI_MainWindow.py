@@ -230,21 +230,21 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_3.addWidget(self.Button_Menu_Process)
 
-        self.Button_Menu_ASR = NavigationButton(self.Frame_Menu)
-        self.Button_Menu_ASR.setObjectName(u"Button_Menu_ASR")
-        sizePolicy1.setHeightForWidth(self.Button_Menu_ASR.sizePolicy().hasHeightForWidth())
-        self.Button_Menu_ASR.setSizePolicy(sizePolicy1)
-        self.Button_Menu_ASR.setMinimumSize(QSize(0, 48))
+        self.Button_Menu_VPR = NavigationButton(self.Frame_Menu)
+        self.Button_Menu_VPR.setObjectName(u"Button_Menu_VPR")
+        sizePolicy1.setHeightForWidth(self.Button_Menu_VPR.sizePolicy().hasHeightForWidth())
+        self.Button_Menu_VPR.setSizePolicy(sizePolicy1)
+        self.Button_Menu_VPR.setMinimumSize(QSize(0, 48))
         icon4 = QIcon()
-        icon4.addFile(u":/Button_Icon/images/icons/ASR.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
-        self.Button_Menu_ASR.setIcon(icon4)
-        self.Button_Menu_ASR.setIconSize(QSize(24, 24))
-        self.horizontalLayout_10 = QHBoxLayout(self.Button_Menu_ASR)
+        icon4.addFile(u":/Button_Icon/images/icons/VPR.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.Button_Menu_VPR.setIcon(icon4)
+        self.Button_Menu_VPR.setIconSize(QSize(24, 24))
+        self.horizontalLayout_10 = QHBoxLayout(self.Button_Menu_VPR)
         self.horizontalLayout_10.setSpacing(0)
         self.horizontalLayout_10.setObjectName(u"horizontalLayout_10")
         self.horizontalLayout_10.setContentsMargins(0, 0, 0, 0)
 
-        self.verticalLayout_3.addWidget(self.Button_Menu_ASR)
+        self.verticalLayout_3.addWidget(self.Button_Menu_VPR)
 
         self.Button_Menu_STT = NavigationButton(self.Frame_Menu)
         self.Button_Menu_STT.setObjectName(u"Button_Menu_STT")
@@ -1286,12 +1286,12 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_18.addWidget(self.Button_Models_Process_Title)
 
-        self.Button_Models_ASR_Title = NavigationButton(self.Frame_Models_Top)
-        self.Button_Models_ASR_Title.setObjectName(u"Button_Models_ASR_Title")
-        sizePolicy1.setHeightForWidth(self.Button_Models_ASR_Title.sizePolicy().hasHeightForWidth())
-        self.Button_Models_ASR_Title.setSizePolicy(sizePolicy1)
+        self.Button_Models_VPR_Title = NavigationButton(self.Frame_Models_Top)
+        self.Button_Models_VPR_Title.setObjectName(u"Button_Models_VPR_Title")
+        sizePolicy1.setHeightForWidth(self.Button_Models_VPR_Title.sizePolicy().hasHeightForWidth())
+        self.Button_Models_VPR_Title.setSizePolicy(sizePolicy1)
 
-        self.horizontalLayout_18.addWidget(self.Button_Models_ASR_Title)
+        self.horizontalLayout_18.addWidget(self.Button_Models_VPR_Title)
 
         self.Button_Models_STT_Title = NavigationButton(self.Frame_Models_Top)
         self.Button_Models_STT_Title.setObjectName(u"Button_Models_STT_Title")
@@ -1388,30 +1388,30 @@ class Ui_MainWindow(object):
         self.gridLayout_102.addWidget(self.TabWidget_Models_Process, 0, 0, 1, 1)
 
         self.StackedWidget_Pages_Models.addWidget(self.SubPage_Models_Process)
-        self.SubPage_Models_ASR = QWidget()
-        self.SubPage_Models_ASR.setObjectName(u"SubPage_Models_ASR")
-        self.gridLayout_7 = QGridLayout(self.SubPage_Models_ASR)
+        self.SubPage_Models_VPR = QWidget()
+        self.SubPage_Models_VPR.setObjectName(u"SubPage_Models_VPR")
+        self.gridLayout_7 = QGridLayout(self.SubPage_Models_VPR)
         self.gridLayout_7.setSpacing(12)
         self.gridLayout_7.setObjectName(u"gridLayout_7")
         self.gridLayout_7.setContentsMargins(0, 0, 0, 0)
-        self.TabWidget_Models_ASR = TabWidgetBase(self.SubPage_Models_ASR)
-        self.TabWidget_Models_ASR.setObjectName(u"TabWidget_Models_ASR")
-        self.Tab_Models_ASR_VPR = QWidget()
-        self.Tab_Models_ASR_VPR.setObjectName(u"Tab_Models_ASR_VPR")
-        self.verticalLayout_27 = QVBoxLayout(self.Tab_Models_ASR_VPR)
+        self.TabWidget_Models_VPR = TabWidgetBase(self.SubPage_Models_VPR)
+        self.TabWidget_Models_VPR.setObjectName(u"TabWidget_Models_VPR")
+        self.Tab_Models_VPR_TDNN = QWidget()
+        self.Tab_Models_VPR_TDNN.setObjectName(u"Tab_Models_VPR_TDNN")
+        self.verticalLayout_27 = QVBoxLayout(self.Tab_Models_VPR_TDNN)
         self.verticalLayout_27.setSpacing(0)
         self.verticalLayout_27.setObjectName(u"verticalLayout_27")
         self.verticalLayout_27.setContentsMargins(0, 0, 0, 0)
-        self.Table_Models_ASR_VPR = Table_ViewModels(self.Tab_Models_ASR_VPR)
-        self.Table_Models_ASR_VPR.setObjectName(u"Table_Models_ASR_VPR")
+        self.Table_Models_VPR_TDNN = Table_ViewModels(self.Tab_Models_VPR_TDNN)
+        self.Table_Models_VPR_TDNN.setObjectName(u"Table_Models_VPR_TDNN")
 
-        self.verticalLayout_27.addWidget(self.Table_Models_ASR_VPR)
+        self.verticalLayout_27.addWidget(self.Table_Models_VPR_TDNN)
 
-        self.TabWidget_Models_ASR.addTab(self.Tab_Models_ASR_VPR, "")
+        self.TabWidget_Models_VPR.addTab(self.Tab_Models_VPR_TDNN, "")
 
-        self.gridLayout_7.addWidget(self.TabWidget_Models_ASR, 0, 0, 1, 1)
+        self.gridLayout_7.addWidget(self.TabWidget_Models_VPR, 0, 0, 1, 1)
 
-        self.StackedWidget_Pages_Models.addWidget(self.SubPage_Models_ASR)
+        self.StackedWidget_Pages_Models.addWidget(self.SubPage_Models_VPR)
         self.SubPage_Models_STT = QWidget()
         self.SubPage_Models_STT.setObjectName(u"SubPage_Models_STT")
         self.gridLayout_11 = QGridLayout(self.SubPage_Models_STT)
@@ -2774,16 +2774,16 @@ class Ui_MainWindow(object):
         self.verticalLayout_40.addWidget(self.StackedWidget_Pages_Process)
 
         self.StackedWidget_Pages.addWidget(self.Page_Process)
-        self.Page_ASR = QWidget()
-        self.Page_ASR.setObjectName(u"Page_ASR")
-        self.verticalLayout_44 = QVBoxLayout(self.Page_ASR)
+        self.Page_VPR = QWidget()
+        self.Page_VPR.setObjectName(u"Page_VPR")
+        self.verticalLayout_44 = QVBoxLayout(self.Page_VPR)
         self.verticalLayout_44.setSpacing(21)
         self.verticalLayout_44.setObjectName(u"verticalLayout_44")
         self.verticalLayout_44.setContentsMargins(21, 12, 21, 12)
-        self.Frame_ASR_Top = QFrame(self.Page_ASR)
-        self.Frame_ASR_Top.setObjectName(u"Frame_ASR_Top")
-        self.Frame_ASR_Top.setMinimumSize(QSize(0, 60))
-        self.Frame_ASR_Top.setStyleSheet(u"QFrame {\n"
+        self.Frame_VPR_Top = QFrame(self.Page_VPR)
+        self.Frame_VPR_Top.setObjectName(u"Frame_VPR_Top")
+        self.Frame_VPR_Top.setMinimumSize(QSize(0, 60))
+        self.Frame_VPR_Top.setStyleSheet(u"QFrame {\n"
 "	border-top-width: 0px;\n"
 "	border-right-width: 0px;\n"
 "	border-bottom-width: 3px;\n"
@@ -2791,11 +2791,11 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "	border-bottom-color: rgba(123, 123, 123, 123);\n"
 "}")
-        self.horizontalLayout_53 = QHBoxLayout(self.Frame_ASR_Top)
+        self.horizontalLayout_53 = QHBoxLayout(self.Frame_VPR_Top)
         self.horizontalLayout_53.setSpacing(0)
         self.horizontalLayout_53.setObjectName(u"horizontalLayout_53")
         self.horizontalLayout_53.setContentsMargins(0, 0, 0, 0)
-        self.Button_VoiceIdentifier_Title = NavigationButton(self.Frame_ASR_Top)
+        self.Button_VoiceIdentifier_Title = NavigationButton(self.Frame_VPR_Top)
         self.Button_VoiceIdentifier_Title.setObjectName(u"Button_VoiceIdentifier_Title")
         sizePolicy1.setHeightForWidth(self.Button_VoiceIdentifier_Title.sizePolicy().hasHeightForWidth())
         self.Button_VoiceIdentifier_Title.setSizePolicy(sizePolicy1)
@@ -2806,7 +2806,7 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_53.addItem(self.HorizontalSpacer_VoiceIdentifier_Title)
 
-        self.Button_VoiceIdentifier_Help = QPushButton(self.Frame_ASR_Top)
+        self.Button_VoiceIdentifier_Help = QPushButton(self.Frame_VPR_Top)
         self.Button_VoiceIdentifier_Help.setObjectName(u"Button_VoiceIdentifier_Help")
         self.Button_VoiceIdentifier_Help.setMinimumSize(QSize(45, 45))
         self.Button_VoiceIdentifier_Help.setStyleSheet(u"QPushButton {\n"
@@ -2824,71 +2824,71 @@ class Ui_MainWindow(object):
         self.horizontalLayout_53.addWidget(self.Button_VoiceIdentifier_Help)
 
 
-        self.verticalLayout_44.addWidget(self.Frame_ASR_Top)
+        self.verticalLayout_44.addWidget(self.Frame_VPR_Top)
 
-        self.StackedWidget_Pages_ASR = QStackedWidget(self.Page_ASR)
-        self.StackedWidget_Pages_ASR.setObjectName(u"StackedWidget_Pages_ASR")
-        self.StackedWidget_Pages_ASR.setStyleSheet(u"QWidget {\n"
+        self.StackedWidget_Pages_VPR = QStackedWidget(self.Page_VPR)
+        self.StackedWidget_Pages_VPR.setObjectName(u"StackedWidget_Pages_VPR")
+        self.StackedWidget_Pages_VPR.setStyleSheet(u"QWidget {\n"
 "	background-color: transparent;\n"
 "}")
-        self.Subpage_ASR_VPR = QWidget()
-        self.Subpage_ASR_VPR.setObjectName(u"Subpage_ASR_VPR")
-        self.gridLayout_21 = QGridLayout(self.Subpage_ASR_VPR)
+        self.Subpage_VPR_TDNN = QWidget()
+        self.Subpage_VPR_TDNN.setObjectName(u"Subpage_VPR_TDNN")
+        self.gridLayout_21 = QGridLayout(self.Subpage_VPR_TDNN)
         self.gridLayout_21.setSpacing(12)
         self.gridLayout_21.setObjectName(u"gridLayout_21")
         self.gridLayout_21.setContentsMargins(0, 0, 0, 0)
-        self.Widget_Left_ASR_VPR = QWidget(self.Subpage_ASR_VPR)
-        self.Widget_Left_ASR_VPR.setObjectName(u"Widget_Left_ASR_VPR")
-        self.Widget_Left_ASR_VPR.setMinimumSize(QSize(150, 0))
-        self.Widget_Left_ASR_VPR.setStyleSheet(u"QWidget {\n"
+        self.Widget_Left_VPR_TDNN = QWidget(self.Subpage_VPR_TDNN)
+        self.Widget_Left_VPR_TDNN.setObjectName(u"Widget_Left_VPR_TDNN")
+        self.Widget_Left_VPR_TDNN.setMinimumSize(QSize(150, 0))
+        self.Widget_Left_VPR_TDNN.setStyleSheet(u"QWidget {\n"
 "	border-width: 0px;\n"
 "	border-style: solid;\n"
 "}\n"
 "QWidget:hover {\n"
 "	background-color: rgba(36, 36, 36, 3);\n"
 "}")
-        self.verticalLayout_4 = QVBoxLayout(self.Widget_Left_ASR_VPR)
+        self.verticalLayout_4 = QVBoxLayout(self.Widget_Left_VPR_TDNN)
         self.verticalLayout_4.setSpacing(12)
         self.verticalLayout_4.setObjectName(u"verticalLayout_4")
         self.verticalLayout_4.setContentsMargins(12, 12, 12, 12)
-        self.TreeWidget_Catalogue_ASR_VPR = TreeWidgetBase(self.Widget_Left_ASR_VPR)
-        __qtreewidgetitem1 = QTreeWidgetItem(self.TreeWidget_Catalogue_ASR_VPR)
+        self.TreeWidget_Catalogue_VPR_TDNN = TreeWidgetBase(self.Widget_Left_VPR_TDNN)
+        __qtreewidgetitem1 = QTreeWidgetItem(self.TreeWidget_Catalogue_VPR_TDNN)
         QTreeWidgetItem(__qtreewidgetitem1)
-        self.TreeWidget_Catalogue_ASR_VPR.setObjectName(u"TreeWidget_Catalogue_ASR_VPR")
+        self.TreeWidget_Catalogue_VPR_TDNN.setObjectName(u"TreeWidget_Catalogue_VPR_TDNN")
 
-        self.verticalLayout_4.addWidget(self.TreeWidget_Catalogue_ASR_VPR)
+        self.verticalLayout_4.addWidget(self.TreeWidget_Catalogue_VPR_TDNN)
 
 
-        self.gridLayout_21.addWidget(self.Widget_Left_ASR_VPR, 0, 0, 1, 1)
+        self.gridLayout_21.addWidget(self.Widget_Left_VPR_TDNN, 0, 0, 1, 1)
 
-        self.ScrollArea_Middle_ASR_VPR = ScrollAreaBase(self.Subpage_ASR_VPR)
-        self.ScrollArea_Middle_ASR_VPR.setObjectName(u"ScrollArea_Middle_ASR_VPR")
-        self.ScrollArea_Middle_ASR_VPR.setMinimumSize(QSize(600, 0))
-        self.ScrollArea_Middle_ASR_VPR.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOn)
-        self.ScrollArea_Middle_ASR_VPR.setWidgetResizable(True)
-        self.ScrollArea_Middle_WidgetContents_ASR_VPR = QWidget()
-        self.ScrollArea_Middle_WidgetContents_ASR_VPR.setObjectName(u"ScrollArea_Middle_WidgetContents_ASR_VPR")
-        self.ScrollArea_Middle_WidgetContents_ASR_VPR.setGeometry(QRect(0, 0, 586, 983))
-        self.verticalLayout_7 = QVBoxLayout(self.ScrollArea_Middle_WidgetContents_ASR_VPR)
+        self.ScrollArea_Middle_VPR_TDNN = ScrollAreaBase(self.Subpage_VPR_TDNN)
+        self.ScrollArea_Middle_VPR_TDNN.setObjectName(u"ScrollArea_Middle_VPR_TDNN")
+        self.ScrollArea_Middle_VPR_TDNN.setMinimumSize(QSize(600, 0))
+        self.ScrollArea_Middle_VPR_TDNN.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOn)
+        self.ScrollArea_Middle_VPR_TDNN.setWidgetResizable(True)
+        self.ScrollArea_Middle_WidgetContents_VPR_TDNN = QWidget()
+        self.ScrollArea_Middle_WidgetContents_VPR_TDNN.setObjectName(u"ScrollArea_Middle_WidgetContents_VPR_TDNN")
+        self.ScrollArea_Middle_WidgetContents_VPR_TDNN.setGeometry(QRect(0, 0, 586, 983))
+        self.verticalLayout_7 = QVBoxLayout(self.ScrollArea_Middle_WidgetContents_VPR_TDNN)
         self.verticalLayout_7.setSpacing(12)
         self.verticalLayout_7.setObjectName(u"verticalLayout_7")
         self.verticalLayout_7.setContentsMargins(12, 12, 12, 12)
-        self.GroupBox_ASR_VPR_InputParams = GroupBoxBase(self.ScrollArea_Middle_WidgetContents_ASR_VPR)
-        self.GroupBox_ASR_VPR_InputParams.setObjectName(u"GroupBox_ASR_VPR_InputParams")
-        self.verticalLayout_33 = QVBoxLayout(self.GroupBox_ASR_VPR_InputParams)
+        self.GroupBox_VPR_TDNN_InputParams = GroupBoxBase(self.ScrollArea_Middle_WidgetContents_VPR_TDNN)
+        self.GroupBox_VPR_TDNN_InputParams.setObjectName(u"GroupBox_VPR_TDNN_InputParams")
+        self.verticalLayout_33 = QVBoxLayout(self.GroupBox_VPR_TDNN_InputParams)
         self.verticalLayout_33.setSpacing(0)
         self.verticalLayout_33.setObjectName(u"verticalLayout_33")
         self.verticalLayout_33.setContentsMargins(0, 12, 0, 12)
-        self.Frame_ASR_VPR_InputParams_BasicSettings = QFrame(self.GroupBox_ASR_VPR_InputParams)
-        self.Frame_ASR_VPR_InputParams_BasicSettings.setObjectName(u"Frame_ASR_VPR_InputParams_BasicSettings")
-        self.verticalLayout_137 = QVBoxLayout(self.Frame_ASR_VPR_InputParams_BasicSettings)
+        self.Frame_VPR_TDNN_InputParams_BasicSettings = QFrame(self.GroupBox_VPR_TDNN_InputParams)
+        self.Frame_VPR_TDNN_InputParams_BasicSettings.setObjectName(u"Frame_VPR_TDNN_InputParams_BasicSettings")
+        self.verticalLayout_137 = QVBoxLayout(self.Frame_VPR_TDNN_InputParams_BasicSettings)
         self.verticalLayout_137.setSpacing(0)
         self.verticalLayout_137.setObjectName(u"verticalLayout_137")
         self.verticalLayout_137.setContentsMargins(0, 0, 0, 0)
-        self.Frame_ASR_VPR_AudioDirInput = QFrame(self.Frame_ASR_VPR_InputParams_BasicSettings)
-        self.Frame_ASR_VPR_AudioDirInput.setObjectName(u"Frame_ASR_VPR_AudioDirInput")
-        self.Frame_ASR_VPR_AudioDirInput.setMinimumSize(QSize(0, 105))
-        self.Frame_ASR_VPR_AudioDirInput.setStyleSheet(u"QFrame {\n"
+        self.Frame_VPR_TDNN_AudioDirInput = QFrame(self.Frame_VPR_TDNN_InputParams_BasicSettings)
+        self.Frame_VPR_TDNN_AudioDirInput.setObjectName(u"Frame_VPR_TDNN_AudioDirInput")
+        self.Frame_VPR_TDNN_AudioDirInput.setMinimumSize(QSize(0, 105))
+        self.Frame_VPR_TDNN_AudioDirInput.setStyleSheet(u"QFrame {\n"
 "	background-color: transparent;\n"
 "	border-width: 0px;\n"
 "	border-style: solid;\n"
@@ -2896,15 +2896,15 @@ class Ui_MainWindow(object):
 "QFrame:hover {\n"
 "	background-color: rgba(36, 36, 36, 12);\n"
 "}")
-        self.gridLayout_32 = QGridLayout(self.Frame_ASR_VPR_AudioDirInput)
+        self.gridLayout_32 = QGridLayout(self.Frame_VPR_TDNN_AudioDirInput)
         self.gridLayout_32.setSpacing(12)
         self.gridLayout_32.setObjectName(u"gridLayout_32")
         self.gridLayout_32.setContentsMargins(21, 12, 21, 12)
-        self.Label_ASR_VPR_AudioDirInput = LabelBase(self.Frame_ASR_VPR_AudioDirInput)
-        self.Label_ASR_VPR_AudioDirInput.setObjectName(u"Label_ASR_VPR_AudioDirInput")
-        sizePolicy5.setHeightForWidth(self.Label_ASR_VPR_AudioDirInput.sizePolicy().hasHeightForWidth())
-        self.Label_ASR_VPR_AudioDirInput.setSizePolicy(sizePolicy5)
-        self.Label_ASR_VPR_AudioDirInput.setStyleSheet(u"QLabel {\n"
+        self.Label_VPR_TDNN_AudioDirInput = LabelBase(self.Frame_VPR_TDNN_AudioDirInput)
+        self.Label_VPR_TDNN_AudioDirInput.setObjectName(u"Label_VPR_TDNN_AudioDirInput")
+        sizePolicy5.setHeightForWidth(self.Label_VPR_TDNN_AudioDirInput.sizePolicy().hasHeightForWidth())
+        self.Label_VPR_TDNN_AudioDirInput.setSizePolicy(sizePolicy5)
+        self.Label_VPR_TDNN_AudioDirInput.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	background-color: transparent;\n"
 "	padding: 0px;\n"
@@ -2913,37 +2913,37 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}")
 
-        self.gridLayout_32.addWidget(self.Label_ASR_VPR_AudioDirInput, 0, 0, 1, 1)
+        self.gridLayout_32.addWidget(self.Label_VPR_TDNN_AudioDirInput, 0, 0, 1, 1)
 
-        self.HorizontalSpacer_ASR_VPR_AudioDirInput = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+        self.HorizontalSpacer_VPR_TDNN_AudioDirInput = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
-        self.gridLayout_32.addItem(self.HorizontalSpacer_ASR_VPR_AudioDirInput, 0, 1, 1, 1)
+        self.gridLayout_32.addItem(self.HorizontalSpacer_VPR_TDNN_AudioDirInput, 0, 1, 1, 1)
 
-        self.Button_ASR_VPR_AudioDirInput_MoreActions = MenuButton(self.Frame_ASR_VPR_AudioDirInput)
-        self.Button_ASR_VPR_AudioDirInput_MoreActions.setObjectName(u"Button_ASR_VPR_AudioDirInput_MoreActions")
-        self.Button_ASR_VPR_AudioDirInput_MoreActions.setMinimumSize(QSize(27, 27))
-        self.Button_ASR_VPR_AudioDirInput_MoreActions.setMaximumSize(QSize(27, 27))
-        self.Button_ASR_VPR_AudioDirInput_MoreActions.setStyleSheet(u"QPushButton {\n"
+        self.Button_VPR_TDNN_AudioDirInput_MoreActions = MenuButton(self.Frame_VPR_TDNN_AudioDirInput)
+        self.Button_VPR_TDNN_AudioDirInput_MoreActions.setObjectName(u"Button_VPR_TDNN_AudioDirInput_MoreActions")
+        self.Button_VPR_TDNN_AudioDirInput_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_VPR_TDNN_AudioDirInput_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_VPR_TDNN_AudioDirInput_MoreActions.setStyleSheet(u"QPushButton {\n"
 "	border-width: 1px;\n"
 "	border-style: solid;\n"
 "	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_32.addWidget(self.Button_ASR_VPR_AudioDirInput_MoreActions, 0, 2, 1, 1)
+        self.gridLayout_32.addWidget(self.Button_VPR_TDNN_AudioDirInput_MoreActions, 0, 2, 1, 1)
 
-        self.LineEdit_ASR_VPR_AudioDirInput = LineEditBase(self.Frame_ASR_VPR_AudioDirInput)
-        self.LineEdit_ASR_VPR_AudioDirInput.setObjectName(u"LineEdit_ASR_VPR_AudioDirInput")
-        self.LineEdit_ASR_VPR_AudioDirInput.setMinimumSize(QSize(0, 27))
+        self.LineEdit_VPR_TDNN_AudioDirInput = LineEditBase(self.Frame_VPR_TDNN_AudioDirInput)
+        self.LineEdit_VPR_TDNN_AudioDirInput.setObjectName(u"LineEdit_VPR_TDNN_AudioDirInput")
+        self.LineEdit_VPR_TDNN_AudioDirInput.setMinimumSize(QSize(0, 27))
 
-        self.gridLayout_32.addWidget(self.LineEdit_ASR_VPR_AudioDirInput, 1, 0, 1, 3)
+        self.gridLayout_32.addWidget(self.LineEdit_VPR_TDNN_AudioDirInput, 1, 0, 1, 3)
 
 
-        self.verticalLayout_137.addWidget(self.Frame_ASR_VPR_AudioDirInput)
+        self.verticalLayout_137.addWidget(self.Frame_VPR_TDNN_AudioDirInput)
 
-        self.Frame_ASR_VPR_StdAudioSpeaker = QFrame(self.Frame_ASR_VPR_InputParams_BasicSettings)
-        self.Frame_ASR_VPR_StdAudioSpeaker.setObjectName(u"Frame_ASR_VPR_StdAudioSpeaker")
-        self.Frame_ASR_VPR_StdAudioSpeaker.setMinimumSize(QSize(0, 222))
-        self.Frame_ASR_VPR_StdAudioSpeaker.setStyleSheet(u"QFrame {\n"
+        self.Frame_VPR_TDNN_StdAudioSpeaker = QFrame(self.Frame_VPR_TDNN_InputParams_BasicSettings)
+        self.Frame_VPR_TDNN_StdAudioSpeaker.setObjectName(u"Frame_VPR_TDNN_StdAudioSpeaker")
+        self.Frame_VPR_TDNN_StdAudioSpeaker.setMinimumSize(QSize(0, 222))
+        self.Frame_VPR_TDNN_StdAudioSpeaker.setStyleSheet(u"QFrame {\n"
 "	background-color: transparent;\n"
 "	border-width: 0px;\n"
 "	border-style: solid;\n"
@@ -2951,15 +2951,15 @@ class Ui_MainWindow(object):
 "QFrame:hover {\n"
 "	background-color: rgba(36, 36, 36, 12);\n"
 "}")
-        self.verticalLayout_12 = QVBoxLayout(self.Frame_ASR_VPR_StdAudioSpeaker)
+        self.verticalLayout_12 = QVBoxLayout(self.Frame_VPR_TDNN_StdAudioSpeaker)
         self.verticalLayout_12.setSpacing(12)
         self.verticalLayout_12.setObjectName(u"verticalLayout_12")
         self.verticalLayout_12.setContentsMargins(21, 12, 21, 12)
-        self.Label_ASR_VPR_StdAudioSpeaker = LabelBase(self.Frame_ASR_VPR_StdAudioSpeaker)
-        self.Label_ASR_VPR_StdAudioSpeaker.setObjectName(u"Label_ASR_VPR_StdAudioSpeaker")
-        sizePolicy5.setHeightForWidth(self.Label_ASR_VPR_StdAudioSpeaker.sizePolicy().hasHeightForWidth())
-        self.Label_ASR_VPR_StdAudioSpeaker.setSizePolicy(sizePolicy5)
-        self.Label_ASR_VPR_StdAudioSpeaker.setStyleSheet(u"QLabel {\n"
+        self.Label_VPR_TDNN_StdAudioSpeaker = LabelBase(self.Frame_VPR_TDNN_StdAudioSpeaker)
+        self.Label_VPR_TDNN_StdAudioSpeaker.setObjectName(u"Label_VPR_TDNN_StdAudioSpeaker")
+        sizePolicy5.setHeightForWidth(self.Label_VPR_TDNN_StdAudioSpeaker.sizePolicy().hasHeightForWidth())
+        self.Label_VPR_TDNN_StdAudioSpeaker.setSizePolicy(sizePolicy5)
+        self.Label_VPR_TDNN_StdAudioSpeaker.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	background-color: transparent;\n"
 "	padding: 0px;\n"
@@ -2968,38 +2968,38 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}")
 
-        self.verticalLayout_12.addWidget(self.Label_ASR_VPR_StdAudioSpeaker)
+        self.verticalLayout_12.addWidget(self.Label_VPR_TDNN_StdAudioSpeaker)
 
-        self.Table_ASR_VPR_StdAudioSpeaker = Table_EditAudioSpeaker(self.Frame_ASR_VPR_StdAudioSpeaker)
-        self.Table_ASR_VPR_StdAudioSpeaker.setObjectName(u"Table_ASR_VPR_StdAudioSpeaker")
+        self.Table_VPR_TDNN_StdAudioSpeaker = Table_EditAudioSpeaker(self.Frame_VPR_TDNN_StdAudioSpeaker)
+        self.Table_VPR_TDNN_StdAudioSpeaker.setObjectName(u"Table_VPR_TDNN_StdAudioSpeaker")
 
-        self.verticalLayout_12.addWidget(self.Table_ASR_VPR_StdAudioSpeaker)
-
-
-        self.verticalLayout_137.addWidget(self.Frame_ASR_VPR_StdAudioSpeaker)
+        self.verticalLayout_12.addWidget(self.Table_VPR_TDNN_StdAudioSpeaker)
 
 
-        self.verticalLayout_33.addWidget(self.Frame_ASR_VPR_InputParams_BasicSettings)
+        self.verticalLayout_137.addWidget(self.Frame_VPR_TDNN_StdAudioSpeaker)
 
 
-        self.verticalLayout_7.addWidget(self.GroupBox_ASR_VPR_InputParams)
+        self.verticalLayout_33.addWidget(self.Frame_VPR_TDNN_InputParams_BasicSettings)
 
-        self.GroupBox_ASR_VPR_VPRParams = GroupBoxBase(self.ScrollArea_Middle_WidgetContents_ASR_VPR)
-        self.GroupBox_ASR_VPR_VPRParams.setObjectName(u"GroupBox_ASR_VPR_VPRParams")
-        self.verticalLayout_47 = QVBoxLayout(self.GroupBox_ASR_VPR_VPRParams)
+
+        self.verticalLayout_7.addWidget(self.GroupBox_VPR_TDNN_InputParams)
+
+        self.GroupBox_VPR_TDNN_VPRParams = GroupBoxBase(self.ScrollArea_Middle_WidgetContents_VPR_TDNN)
+        self.GroupBox_VPR_TDNN_VPRParams.setObjectName(u"GroupBox_VPR_TDNN_VPRParams")
+        self.verticalLayout_47 = QVBoxLayout(self.GroupBox_VPR_TDNN_VPRParams)
         self.verticalLayout_47.setSpacing(0)
         self.verticalLayout_47.setObjectName(u"verticalLayout_47")
         self.verticalLayout_47.setContentsMargins(0, 12, 0, 12)
-        self.Frame_ASR_VPR_VPRParams_BasicSettings = QFrame(self.GroupBox_ASR_VPR_VPRParams)
-        self.Frame_ASR_VPR_VPRParams_BasicSettings.setObjectName(u"Frame_ASR_VPR_VPRParams_BasicSettings")
-        self.verticalLayout_45 = QVBoxLayout(self.Frame_ASR_VPR_VPRParams_BasicSettings)
+        self.Frame_VPR_TDNN_VPRParams_BasicSettings = QFrame(self.GroupBox_VPR_TDNN_VPRParams)
+        self.Frame_VPR_TDNN_VPRParams_BasicSettings.setObjectName(u"Frame_VPR_TDNN_VPRParams_BasicSettings")
+        self.verticalLayout_45 = QVBoxLayout(self.Frame_VPR_TDNN_VPRParams_BasicSettings)
         self.verticalLayout_45.setSpacing(0)
         self.verticalLayout_45.setObjectName(u"verticalLayout_45")
         self.verticalLayout_45.setContentsMargins(0, 0, 0, 0)
-        self.Frame_ASR_VPR_DecisionThreshold = QFrame(self.Frame_ASR_VPR_VPRParams_BasicSettings)
-        self.Frame_ASR_VPR_DecisionThreshold.setObjectName(u"Frame_ASR_VPR_DecisionThreshold")
-        self.Frame_ASR_VPR_DecisionThreshold.setMinimumSize(QSize(0, 105))
-        self.Frame_ASR_VPR_DecisionThreshold.setStyleSheet(u"QFrame {\n"
+        self.Frame_VPR_TDNN_DecisionThreshold = QFrame(self.Frame_VPR_TDNN_VPRParams_BasicSettings)
+        self.Frame_VPR_TDNN_DecisionThreshold.setObjectName(u"Frame_VPR_TDNN_DecisionThreshold")
+        self.Frame_VPR_TDNN_DecisionThreshold.setMinimumSize(QSize(0, 105))
+        self.Frame_VPR_TDNN_DecisionThreshold.setStyleSheet(u"QFrame {\n"
 "	background-color: transparent;\n"
 "	border-width: 0px;\n"
 "	border-style: solid;\n"
@@ -3007,15 +3007,15 @@ class Ui_MainWindow(object):
 "QFrame:hover {\n"
 "	background-color: rgba(36, 36, 36, 12);\n"
 "}")
-        self.gridLayout_33 = QGridLayout(self.Frame_ASR_VPR_DecisionThreshold)
+        self.gridLayout_33 = QGridLayout(self.Frame_VPR_TDNN_DecisionThreshold)
         self.gridLayout_33.setSpacing(12)
         self.gridLayout_33.setObjectName(u"gridLayout_33")
         self.gridLayout_33.setContentsMargins(21, 12, 21, 12)
-        self.Label_ASR_VPR_DecisionThreshold = LabelBase(self.Frame_ASR_VPR_DecisionThreshold)
-        self.Label_ASR_VPR_DecisionThreshold.setObjectName(u"Label_ASR_VPR_DecisionThreshold")
-        sizePolicy5.setHeightForWidth(self.Label_ASR_VPR_DecisionThreshold.sizePolicy().hasHeightForWidth())
-        self.Label_ASR_VPR_DecisionThreshold.setSizePolicy(sizePolicy5)
-        self.Label_ASR_VPR_DecisionThreshold.setStyleSheet(u"QLabel {\n"
+        self.Label_VPR_TDNN_DecisionThreshold = LabelBase(self.Frame_VPR_TDNN_DecisionThreshold)
+        self.Label_VPR_TDNN_DecisionThreshold.setObjectName(u"Label_VPR_TDNN_DecisionThreshold")
+        sizePolicy5.setHeightForWidth(self.Label_VPR_TDNN_DecisionThreshold.sizePolicy().hasHeightForWidth())
+        self.Label_VPR_TDNN_DecisionThreshold.setSizePolicy(sizePolicy5)
+        self.Label_VPR_TDNN_DecisionThreshold.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	background-color: transparent;\n"
 "	padding: 0px;\n"
@@ -3024,40 +3024,40 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}")
 
-        self.gridLayout_33.addWidget(self.Label_ASR_VPR_DecisionThreshold, 0, 0, 1, 1)
+        self.gridLayout_33.addWidget(self.Label_VPR_TDNN_DecisionThreshold, 0, 0, 1, 1)
 
-        self.DoubleSpinBox_ASR_VPR_DecisionThreshold = DoubleSpinBoxBase(self.Frame_ASR_VPR_DecisionThreshold)
-        self.DoubleSpinBox_ASR_VPR_DecisionThreshold.setObjectName(u"DoubleSpinBox_ASR_VPR_DecisionThreshold")
-        self.DoubleSpinBox_ASR_VPR_DecisionThreshold.setEnabled(True)
-        self.DoubleSpinBox_ASR_VPR_DecisionThreshold.setMinimumSize(QSize(0, 27))
-        self.DoubleSpinBox_ASR_VPR_DecisionThreshold.setMinimum(-999999.000000000000000)
-        self.DoubleSpinBox_ASR_VPR_DecisionThreshold.setMaximum(999999.000000000000000)
+        self.DoubleSpinBox_VPR_TDNN_DecisionThreshold = DoubleSpinBoxBase(self.Frame_VPR_TDNN_DecisionThreshold)
+        self.DoubleSpinBox_VPR_TDNN_DecisionThreshold.setObjectName(u"DoubleSpinBox_VPR_TDNN_DecisionThreshold")
+        self.DoubleSpinBox_VPR_TDNN_DecisionThreshold.setEnabled(True)
+        self.DoubleSpinBox_VPR_TDNN_DecisionThreshold.setMinimumSize(QSize(0, 27))
+        self.DoubleSpinBox_VPR_TDNN_DecisionThreshold.setMinimum(-999999.000000000000000)
+        self.DoubleSpinBox_VPR_TDNN_DecisionThreshold.setMaximum(999999.000000000000000)
 
-        self.gridLayout_33.addWidget(self.DoubleSpinBox_ASR_VPR_DecisionThreshold, 1, 0, 1, 3)
+        self.gridLayout_33.addWidget(self.DoubleSpinBox_VPR_TDNN_DecisionThreshold, 1, 0, 1, 3)
 
-        self.Button_ASR_VPR_DecisionThreshold_MoreActions = MenuButton(self.Frame_ASR_VPR_DecisionThreshold)
-        self.Button_ASR_VPR_DecisionThreshold_MoreActions.setObjectName(u"Button_ASR_VPR_DecisionThreshold_MoreActions")
-        self.Button_ASR_VPR_DecisionThreshold_MoreActions.setMinimumSize(QSize(27, 27))
-        self.Button_ASR_VPR_DecisionThreshold_MoreActions.setMaximumSize(QSize(27, 27))
-        self.Button_ASR_VPR_DecisionThreshold_MoreActions.setStyleSheet(u"QPushButton {\n"
+        self.Button_VPR_TDNN_DecisionThreshold_MoreActions = MenuButton(self.Frame_VPR_TDNN_DecisionThreshold)
+        self.Button_VPR_TDNN_DecisionThreshold_MoreActions.setObjectName(u"Button_VPR_TDNN_DecisionThreshold_MoreActions")
+        self.Button_VPR_TDNN_DecisionThreshold_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_VPR_TDNN_DecisionThreshold_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_VPR_TDNN_DecisionThreshold_MoreActions.setStyleSheet(u"QPushButton {\n"
 "	border-width: 1px;\n"
 "	border-style: solid;\n"
 "	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_33.addWidget(self.Button_ASR_VPR_DecisionThreshold_MoreActions, 0, 2, 1, 1)
+        self.gridLayout_33.addWidget(self.Button_VPR_TDNN_DecisionThreshold_MoreActions, 0, 2, 1, 1)
 
-        self.HorizontalSpacer_ASR_VPR_DecisionThreshold = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+        self.HorizontalSpacer_VPR_TDNN_DecisionThreshold = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
-        self.gridLayout_33.addItem(self.HorizontalSpacer_ASR_VPR_DecisionThreshold, 0, 1, 1, 1)
+        self.gridLayout_33.addItem(self.HorizontalSpacer_VPR_TDNN_DecisionThreshold, 0, 1, 1, 1)
 
 
-        self.verticalLayout_45.addWidget(self.Frame_ASR_VPR_DecisionThreshold)
+        self.verticalLayout_45.addWidget(self.Frame_VPR_TDNN_DecisionThreshold)
 
-        self.Frame_ASR_VPR_ModelPath = QFrame(self.Frame_ASR_VPR_VPRParams_BasicSettings)
-        self.Frame_ASR_VPR_ModelPath.setObjectName(u"Frame_ASR_VPR_ModelPath")
-        self.Frame_ASR_VPR_ModelPath.setMinimumSize(QSize(0, 105))
-        self.Frame_ASR_VPR_ModelPath.setStyleSheet(u"QFrame {\n"
+        self.Frame_VPR_TDNN_ModelPath = QFrame(self.Frame_VPR_TDNN_VPRParams_BasicSettings)
+        self.Frame_VPR_TDNN_ModelPath.setObjectName(u"Frame_VPR_TDNN_ModelPath")
+        self.Frame_VPR_TDNN_ModelPath.setMinimumSize(QSize(0, 105))
+        self.Frame_VPR_TDNN_ModelPath.setStyleSheet(u"QFrame {\n"
 "	background-color: transparent;\n"
 "	border-width: 0px;\n"
 "	border-style: solid;\n"
@@ -3065,15 +3065,15 @@ class Ui_MainWindow(object):
 "QFrame:hover {\n"
 "	background-color: rgba(36, 36, 36, 12);\n"
 "}")
-        self.gridLayout_34 = QGridLayout(self.Frame_ASR_VPR_ModelPath)
+        self.gridLayout_34 = QGridLayout(self.Frame_VPR_TDNN_ModelPath)
         self.gridLayout_34.setSpacing(12)
         self.gridLayout_34.setObjectName(u"gridLayout_34")
         self.gridLayout_34.setContentsMargins(21, 12, 21, 12)
-        self.Label_ASR_VPR_ModelPath = LabelBase(self.Frame_ASR_VPR_ModelPath)
-        self.Label_ASR_VPR_ModelPath.setObjectName(u"Label_ASR_VPR_ModelPath")
-        sizePolicy5.setHeightForWidth(self.Label_ASR_VPR_ModelPath.sizePolicy().hasHeightForWidth())
-        self.Label_ASR_VPR_ModelPath.setSizePolicy(sizePolicy5)
-        self.Label_ASR_VPR_ModelPath.setStyleSheet(u"QLabel {\n"
+        self.Label_VPR_TDNN_ModelPath = LabelBase(self.Frame_VPR_TDNN_ModelPath)
+        self.Label_VPR_TDNN_ModelPath.setObjectName(u"Label_VPR_TDNN_ModelPath")
+        sizePolicy5.setHeightForWidth(self.Label_VPR_TDNN_ModelPath.sizePolicy().hasHeightForWidth())
+        self.Label_VPR_TDNN_ModelPath.setSizePolicy(sizePolicy5)
+        self.Label_VPR_TDNN_ModelPath.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	background-color: transparent;\n"
 "	padding: 0px;\n"
@@ -3082,49 +3082,49 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}")
 
-        self.gridLayout_34.addWidget(self.Label_ASR_VPR_ModelPath, 0, 0, 1, 1)
+        self.gridLayout_34.addWidget(self.Label_VPR_TDNN_ModelPath, 0, 0, 1, 1)
 
-        self.HorizontalSpacer_ASR_VPR_ModelPath = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+        self.HorizontalSpacer_VPR_TDNN_ModelPath = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
-        self.gridLayout_34.addItem(self.HorizontalSpacer_ASR_VPR_ModelPath, 0, 1, 1, 1)
+        self.gridLayout_34.addItem(self.HorizontalSpacer_VPR_TDNN_ModelPath, 0, 1, 1, 1)
 
-        self.Button_ASR_VPR_ModelPath_MoreActions = MenuButton(self.Frame_ASR_VPR_ModelPath)
-        self.Button_ASR_VPR_ModelPath_MoreActions.setObjectName(u"Button_ASR_VPR_ModelPath_MoreActions")
-        self.Button_ASR_VPR_ModelPath_MoreActions.setMinimumSize(QSize(27, 27))
-        self.Button_ASR_VPR_ModelPath_MoreActions.setMaximumSize(QSize(27, 27))
-        self.Button_ASR_VPR_ModelPath_MoreActions.setStyleSheet(u"QPushButton {\n"
+        self.Button_VPR_TDNN_ModelPath_MoreActions = MenuButton(self.Frame_VPR_TDNN_ModelPath)
+        self.Button_VPR_TDNN_ModelPath_MoreActions.setObjectName(u"Button_VPR_TDNN_ModelPath_MoreActions")
+        self.Button_VPR_TDNN_ModelPath_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_VPR_TDNN_ModelPath_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_VPR_TDNN_ModelPath_MoreActions.setStyleSheet(u"QPushButton {\n"
 "	border-width: 1px;\n"
 "	border-style: solid;\n"
 "	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_34.addWidget(self.Button_ASR_VPR_ModelPath_MoreActions, 0, 2, 1, 1)
+        self.gridLayout_34.addWidget(self.Button_VPR_TDNN_ModelPath_MoreActions, 0, 2, 1, 1)
 
-        self.LineEdit_ASR_VPR_ModelPath = LineEditBase(self.Frame_ASR_VPR_ModelPath)
-        self.LineEdit_ASR_VPR_ModelPath.setObjectName(u"LineEdit_ASR_VPR_ModelPath")
-        self.LineEdit_ASR_VPR_ModelPath.setMinimumSize(QSize(0, 27))
+        self.LineEdit_VPR_TDNN_ModelPath = LineEditBase(self.Frame_VPR_TDNN_ModelPath)
+        self.LineEdit_VPR_TDNN_ModelPath.setObjectName(u"LineEdit_VPR_TDNN_ModelPath")
+        self.LineEdit_VPR_TDNN_ModelPath.setMinimumSize(QSize(0, 27))
 
-        self.gridLayout_34.addWidget(self.LineEdit_ASR_VPR_ModelPath, 1, 0, 1, 3)
-
-
-        self.verticalLayout_45.addWidget(self.Frame_ASR_VPR_ModelPath)
+        self.gridLayout_34.addWidget(self.LineEdit_VPR_TDNN_ModelPath, 1, 0, 1, 3)
 
 
-        self.verticalLayout_47.addWidget(self.Frame_ASR_VPR_VPRParams_BasicSettings)
+        self.verticalLayout_45.addWidget(self.Frame_VPR_TDNN_ModelPath)
 
-        self.ToolBox_ASR_VPR_VPRParams_AdvanceSettings = ToolBoxBase(self.GroupBox_ASR_VPR_VPRParams)
-        self.ToolBox_ASR_VPR_VPRParams_AdvanceSettings.setObjectName(u"ToolBox_ASR_VPR_VPRParams_AdvanceSettings")
-        self.ToolBox_ASR_VPR_VPRParams_AdvanceSettings_Page1Content = WidgetBase()
-        self.ToolBox_ASR_VPR_VPRParams_AdvanceSettings_Page1Content.setObjectName(u"ToolBox_ASR_VPR_VPRParams_AdvanceSettings_Page1Content")
-        self.ToolBox_ASR_VPR_VPRParams_AdvanceSettings_Page1Content.setGeometry(QRect(0, 0, 147, 315))
-        self.verticalLayout_21 = QVBoxLayout(self.ToolBox_ASR_VPR_VPRParams_AdvanceSettings_Page1Content)
+
+        self.verticalLayout_47.addWidget(self.Frame_VPR_TDNN_VPRParams_BasicSettings)
+
+        self.ToolBox_VPR_TDNN_VPRParams_AdvanceSettings = ToolBoxBase(self.GroupBox_VPR_TDNN_VPRParams)
+        self.ToolBox_VPR_TDNN_VPRParams_AdvanceSettings.setObjectName(u"ToolBox_VPR_TDNN_VPRParams_AdvanceSettings")
+        self.ToolBox_VPR_TDNN_VPRParams_AdvanceSettings_Page1Content = WidgetBase()
+        self.ToolBox_VPR_TDNN_VPRParams_AdvanceSettings_Page1Content.setObjectName(u"ToolBox_VPR_TDNN_VPRParams_AdvanceSettings_Page1Content")
+        self.ToolBox_VPR_TDNN_VPRParams_AdvanceSettings_Page1Content.setGeometry(QRect(0, 0, 147, 315))
+        self.verticalLayout_21 = QVBoxLayout(self.ToolBox_VPR_TDNN_VPRParams_AdvanceSettings_Page1Content)
         self.verticalLayout_21.setSpacing(0)
         self.verticalLayout_21.setObjectName(u"verticalLayout_21")
         self.verticalLayout_21.setContentsMargins(0, 0, 0, 0)
-        self.Frame_ASR_VPR_ModelType = QFrame(self.ToolBox_ASR_VPR_VPRParams_AdvanceSettings_Page1Content)
-        self.Frame_ASR_VPR_ModelType.setObjectName(u"Frame_ASR_VPR_ModelType")
-        self.Frame_ASR_VPR_ModelType.setMinimumSize(QSize(0, 105))
-        self.Frame_ASR_VPR_ModelType.setStyleSheet(u"QFrame {\n"
+        self.Frame_VPR_TDNN_ModelType = QFrame(self.ToolBox_VPR_TDNN_VPRParams_AdvanceSettings_Page1Content)
+        self.Frame_VPR_TDNN_ModelType.setObjectName(u"Frame_VPR_TDNN_ModelType")
+        self.Frame_VPR_TDNN_ModelType.setMinimumSize(QSize(0, 105))
+        self.Frame_VPR_TDNN_ModelType.setStyleSheet(u"QFrame {\n"
 "	background-color: transparent;\n"
 "	border-width: 0px;\n"
 "	border-style: solid;\n"
@@ -3132,15 +3132,15 @@ class Ui_MainWindow(object):
 "QFrame:hover {\n"
 "	background-color: rgba(36, 36, 36, 12);\n"
 "}")
-        self.gridLayout_35 = QGridLayout(self.Frame_ASR_VPR_ModelType)
+        self.gridLayout_35 = QGridLayout(self.Frame_VPR_TDNN_ModelType)
         self.gridLayout_35.setSpacing(12)
         self.gridLayout_35.setObjectName(u"gridLayout_35")
         self.gridLayout_35.setContentsMargins(21, 12, 21, 12)
-        self.Label_ASR_VPR_ModelType = LabelBase(self.Frame_ASR_VPR_ModelType)
-        self.Label_ASR_VPR_ModelType.setObjectName(u"Label_ASR_VPR_ModelType")
-        sizePolicy5.setHeightForWidth(self.Label_ASR_VPR_ModelType.sizePolicy().hasHeightForWidth())
-        self.Label_ASR_VPR_ModelType.setSizePolicy(sizePolicy5)
-        self.Label_ASR_VPR_ModelType.setStyleSheet(u"QLabel {\n"
+        self.Label_VPR_TDNN_ModelType = LabelBase(self.Frame_VPR_TDNN_ModelType)
+        self.Label_VPR_TDNN_ModelType.setObjectName(u"Label_VPR_TDNN_ModelType")
+        sizePolicy5.setHeightForWidth(self.Label_VPR_TDNN_ModelType.sizePolicy().hasHeightForWidth())
+        self.Label_VPR_TDNN_ModelType.setSizePolicy(sizePolicy5)
+        self.Label_VPR_TDNN_ModelType.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	background-color: transparent;\n"
 "	padding: 0px;\n"
@@ -3149,37 +3149,37 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}")
 
-        self.gridLayout_35.addWidget(self.Label_ASR_VPR_ModelType, 0, 0, 1, 1)
+        self.gridLayout_35.addWidget(self.Label_VPR_TDNN_ModelType, 0, 0, 1, 1)
 
-        self.HorizontalSpacer_ASR_VPR_ModelType = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+        self.HorizontalSpacer_VPR_TDNN_ModelType = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
-        self.gridLayout_35.addItem(self.HorizontalSpacer_ASR_VPR_ModelType, 0, 1, 1, 1)
+        self.gridLayout_35.addItem(self.HorizontalSpacer_VPR_TDNN_ModelType, 0, 1, 1, 1)
 
-        self.Button_ASR_VPR_ModelType_MoreActions = MenuButton(self.Frame_ASR_VPR_ModelType)
-        self.Button_ASR_VPR_ModelType_MoreActions.setObjectName(u"Button_ASR_VPR_ModelType_MoreActions")
-        self.Button_ASR_VPR_ModelType_MoreActions.setMinimumSize(QSize(27, 27))
-        self.Button_ASR_VPR_ModelType_MoreActions.setMaximumSize(QSize(27, 27))
-        self.Button_ASR_VPR_ModelType_MoreActions.setStyleSheet(u"QPushButton {\n"
+        self.Button_VPR_TDNN_ModelType_MoreActions = MenuButton(self.Frame_VPR_TDNN_ModelType)
+        self.Button_VPR_TDNN_ModelType_MoreActions.setObjectName(u"Button_VPR_TDNN_ModelType_MoreActions")
+        self.Button_VPR_TDNN_ModelType_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_VPR_TDNN_ModelType_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_VPR_TDNN_ModelType_MoreActions.setStyleSheet(u"QPushButton {\n"
 "	border-width: 1px;\n"
 "	border-style: solid;\n"
 "	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_35.addWidget(self.Button_ASR_VPR_ModelType_MoreActions, 0, 2, 1, 1)
+        self.gridLayout_35.addWidget(self.Button_VPR_TDNN_ModelType_MoreActions, 0, 2, 1, 1)
 
-        self.ComboBox_ASR_VPR_ModelType = ComboBoxBase(self.Frame_ASR_VPR_ModelType)
-        self.ComboBox_ASR_VPR_ModelType.setObjectName(u"ComboBox_ASR_VPR_ModelType")
-        self.ComboBox_ASR_VPR_ModelType.setMinimumSize(QSize(0, 27))
+        self.ComboBox_VPR_TDNN_ModelType = ComboBoxBase(self.Frame_VPR_TDNN_ModelType)
+        self.ComboBox_VPR_TDNN_ModelType.setObjectName(u"ComboBox_VPR_TDNN_ModelType")
+        self.ComboBox_VPR_TDNN_ModelType.setMinimumSize(QSize(0, 27))
 
-        self.gridLayout_35.addWidget(self.ComboBox_ASR_VPR_ModelType, 1, 0, 1, 3)
+        self.gridLayout_35.addWidget(self.ComboBox_VPR_TDNN_ModelType, 1, 0, 1, 3)
 
 
-        self.verticalLayout_21.addWidget(self.Frame_ASR_VPR_ModelType)
+        self.verticalLayout_21.addWidget(self.Frame_VPR_TDNN_ModelType)
 
-        self.Frame_ASR_VPR_FeatureMethod = QFrame(self.ToolBox_ASR_VPR_VPRParams_AdvanceSettings_Page1Content)
-        self.Frame_ASR_VPR_FeatureMethod.setObjectName(u"Frame_ASR_VPR_FeatureMethod")
-        self.Frame_ASR_VPR_FeatureMethod.setMinimumSize(QSize(0, 105))
-        self.Frame_ASR_VPR_FeatureMethod.setStyleSheet(u"QFrame {\n"
+        self.Frame_VPR_TDNN_FeatureMethod = QFrame(self.ToolBox_VPR_TDNN_VPRParams_AdvanceSettings_Page1Content)
+        self.Frame_VPR_TDNN_FeatureMethod.setObjectName(u"Frame_VPR_TDNN_FeatureMethod")
+        self.Frame_VPR_TDNN_FeatureMethod.setMinimumSize(QSize(0, 105))
+        self.Frame_VPR_TDNN_FeatureMethod.setStyleSheet(u"QFrame {\n"
 "	background-color: transparent;\n"
 "	border-width: 0px;\n"
 "	border-style: solid;\n"
@@ -3187,15 +3187,15 @@ class Ui_MainWindow(object):
 "QFrame:hover {\n"
 "	background-color: rgba(36, 36, 36, 12);\n"
 "}")
-        self.gridLayout_36 = QGridLayout(self.Frame_ASR_VPR_FeatureMethod)
+        self.gridLayout_36 = QGridLayout(self.Frame_VPR_TDNN_FeatureMethod)
         self.gridLayout_36.setSpacing(12)
         self.gridLayout_36.setObjectName(u"gridLayout_36")
         self.gridLayout_36.setContentsMargins(21, 12, 21, 12)
-        self.Label_ASR_VPR_FeatureMethod = LabelBase(self.Frame_ASR_VPR_FeatureMethod)
-        self.Label_ASR_VPR_FeatureMethod.setObjectName(u"Label_ASR_VPR_FeatureMethod")
-        sizePolicy5.setHeightForWidth(self.Label_ASR_VPR_FeatureMethod.sizePolicy().hasHeightForWidth())
-        self.Label_ASR_VPR_FeatureMethod.setSizePolicy(sizePolicy5)
-        self.Label_ASR_VPR_FeatureMethod.setStyleSheet(u"QLabel {\n"
+        self.Label_VPR_TDNN_FeatureMethod = LabelBase(self.Frame_VPR_TDNN_FeatureMethod)
+        self.Label_VPR_TDNN_FeatureMethod.setObjectName(u"Label_VPR_TDNN_FeatureMethod")
+        sizePolicy5.setHeightForWidth(self.Label_VPR_TDNN_FeatureMethod.sizePolicy().hasHeightForWidth())
+        self.Label_VPR_TDNN_FeatureMethod.setSizePolicy(sizePolicy5)
+        self.Label_VPR_TDNN_FeatureMethod.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	background-color: transparent;\n"
 "	padding: 0px;\n"
@@ -3204,37 +3204,37 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}")
 
-        self.gridLayout_36.addWidget(self.Label_ASR_VPR_FeatureMethod, 0, 0, 1, 1)
+        self.gridLayout_36.addWidget(self.Label_VPR_TDNN_FeatureMethod, 0, 0, 1, 1)
 
-        self.HorizontalSpacer_ASR_VPR_FeatureMethod = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+        self.HorizontalSpacer_VPR_TDNN_FeatureMethod = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
-        self.gridLayout_36.addItem(self.HorizontalSpacer_ASR_VPR_FeatureMethod, 0, 1, 1, 1)
+        self.gridLayout_36.addItem(self.HorizontalSpacer_VPR_TDNN_FeatureMethod, 0, 1, 1, 1)
 
-        self.Button_ASR_VPR_FeatureMethod_MoreActions = MenuButton(self.Frame_ASR_VPR_FeatureMethod)
-        self.Button_ASR_VPR_FeatureMethod_MoreActions.setObjectName(u"Button_ASR_VPR_FeatureMethod_MoreActions")
-        self.Button_ASR_VPR_FeatureMethod_MoreActions.setMinimumSize(QSize(27, 27))
-        self.Button_ASR_VPR_FeatureMethod_MoreActions.setMaximumSize(QSize(27, 27))
-        self.Button_ASR_VPR_FeatureMethod_MoreActions.setStyleSheet(u"QPushButton {\n"
+        self.Button_VPR_TDNN_FeatureMethod_MoreActions = MenuButton(self.Frame_VPR_TDNN_FeatureMethod)
+        self.Button_VPR_TDNN_FeatureMethod_MoreActions.setObjectName(u"Button_VPR_TDNN_FeatureMethod_MoreActions")
+        self.Button_VPR_TDNN_FeatureMethod_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_VPR_TDNN_FeatureMethod_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_VPR_TDNN_FeatureMethod_MoreActions.setStyleSheet(u"QPushButton {\n"
 "	border-width: 1px;\n"
 "	border-style: solid;\n"
 "	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_36.addWidget(self.Button_ASR_VPR_FeatureMethod_MoreActions, 0, 2, 1, 1)
+        self.gridLayout_36.addWidget(self.Button_VPR_TDNN_FeatureMethod_MoreActions, 0, 2, 1, 1)
 
-        self.ComboBox_ASR_VPR_FeatureMethod = ComboBoxBase(self.Frame_ASR_VPR_FeatureMethod)
-        self.ComboBox_ASR_VPR_FeatureMethod.setObjectName(u"ComboBox_ASR_VPR_FeatureMethod")
-        self.ComboBox_ASR_VPR_FeatureMethod.setMinimumSize(QSize(0, 27))
+        self.ComboBox_VPR_TDNN_FeatureMethod = ComboBoxBase(self.Frame_VPR_TDNN_FeatureMethod)
+        self.ComboBox_VPR_TDNN_FeatureMethod.setObjectName(u"ComboBox_VPR_TDNN_FeatureMethod")
+        self.ComboBox_VPR_TDNN_FeatureMethod.setMinimumSize(QSize(0, 27))
 
-        self.gridLayout_36.addWidget(self.ComboBox_ASR_VPR_FeatureMethod, 1, 0, 1, 3)
+        self.gridLayout_36.addWidget(self.ComboBox_VPR_TDNN_FeatureMethod, 1, 0, 1, 3)
 
 
-        self.verticalLayout_21.addWidget(self.Frame_ASR_VPR_FeatureMethod)
+        self.verticalLayout_21.addWidget(self.Frame_VPR_TDNN_FeatureMethod)
 
-        self.Frame_ASR_VPR_DurationOfAudio = QFrame(self.ToolBox_ASR_VPR_VPRParams_AdvanceSettings_Page1Content)
-        self.Frame_ASR_VPR_DurationOfAudio.setObjectName(u"Frame_ASR_VPR_DurationOfAudio")
-        self.Frame_ASR_VPR_DurationOfAudio.setMinimumSize(QSize(0, 105))
-        self.Frame_ASR_VPR_DurationOfAudio.setStyleSheet(u"QFrame {\n"
+        self.Frame_VPR_TDNN_DurationOfAudio = QFrame(self.ToolBox_VPR_TDNN_VPRParams_AdvanceSettings_Page1Content)
+        self.Frame_VPR_TDNN_DurationOfAudio.setObjectName(u"Frame_VPR_TDNN_DurationOfAudio")
+        self.Frame_VPR_TDNN_DurationOfAudio.setMinimumSize(QSize(0, 105))
+        self.Frame_VPR_TDNN_DurationOfAudio.setStyleSheet(u"QFrame {\n"
 "	background-color: transparent;\n"
 "	border-width: 0px;\n"
 "	border-style: solid;\n"
@@ -3242,15 +3242,15 @@ class Ui_MainWindow(object):
 "QFrame:hover {\n"
 "	background-color: rgba(36, 36, 36, 12);\n"
 "}")
-        self.gridLayout_37 = QGridLayout(self.Frame_ASR_VPR_DurationOfAudio)
+        self.gridLayout_37 = QGridLayout(self.Frame_VPR_TDNN_DurationOfAudio)
         self.gridLayout_37.setSpacing(12)
         self.gridLayout_37.setObjectName(u"gridLayout_37")
         self.gridLayout_37.setContentsMargins(21, 12, 21, 12)
-        self.Label_ASR_VPR_DurationOfAudio = LabelBase(self.Frame_ASR_VPR_DurationOfAudio)
-        self.Label_ASR_VPR_DurationOfAudio.setObjectName(u"Label_ASR_VPR_DurationOfAudio")
-        sizePolicy5.setHeightForWidth(self.Label_ASR_VPR_DurationOfAudio.sizePolicy().hasHeightForWidth())
-        self.Label_ASR_VPR_DurationOfAudio.setSizePolicy(sizePolicy5)
-        self.Label_ASR_VPR_DurationOfAudio.setStyleSheet(u"QLabel {\n"
+        self.Label_VPR_TDNN_DurationOfAudio = LabelBase(self.Frame_VPR_TDNN_DurationOfAudio)
+        self.Label_VPR_TDNN_DurationOfAudio.setObjectName(u"Label_VPR_TDNN_DurationOfAudio")
+        sizePolicy5.setHeightForWidth(self.Label_VPR_TDNN_DurationOfAudio.sizePolicy().hasHeightForWidth())
+        self.Label_VPR_TDNN_DurationOfAudio.setSizePolicy(sizePolicy5)
+        self.Label_VPR_TDNN_DurationOfAudio.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	background-color: transparent;\n"
 "	padding: 0px;\n"
@@ -3259,59 +3259,59 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}")
 
-        self.gridLayout_37.addWidget(self.Label_ASR_VPR_DurationOfAudio, 0, 0, 1, 1)
+        self.gridLayout_37.addWidget(self.Label_VPR_TDNN_DurationOfAudio, 0, 0, 1, 1)
 
-        self.HorizontalSpacer_ASR_VPR_DurationOfAudio = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+        self.HorizontalSpacer_VPR_TDNN_DurationOfAudio = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
-        self.gridLayout_37.addItem(self.HorizontalSpacer_ASR_VPR_DurationOfAudio, 0, 1, 1, 1)
+        self.gridLayout_37.addItem(self.HorizontalSpacer_VPR_TDNN_DurationOfAudio, 0, 1, 1, 1)
 
-        self.Button_ASR_VPR_DurationOfAudio_MoreActions = MenuButton(self.Frame_ASR_VPR_DurationOfAudio)
-        self.Button_ASR_VPR_DurationOfAudio_MoreActions.setObjectName(u"Button_ASR_VPR_DurationOfAudio_MoreActions")
-        self.Button_ASR_VPR_DurationOfAudio_MoreActions.setMinimumSize(QSize(27, 27))
-        self.Button_ASR_VPR_DurationOfAudio_MoreActions.setMaximumSize(QSize(27, 27))
-        self.Button_ASR_VPR_DurationOfAudio_MoreActions.setStyleSheet(u"QPushButton {\n"
+        self.Button_VPR_TDNN_DurationOfAudio_MoreActions = MenuButton(self.Frame_VPR_TDNN_DurationOfAudio)
+        self.Button_VPR_TDNN_DurationOfAudio_MoreActions.setObjectName(u"Button_VPR_TDNN_DurationOfAudio_MoreActions")
+        self.Button_VPR_TDNN_DurationOfAudio_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_VPR_TDNN_DurationOfAudio_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_VPR_TDNN_DurationOfAudio_MoreActions.setStyleSheet(u"QPushButton {\n"
 "	border-width: 1px;\n"
 "	border-style: solid;\n"
 "	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_37.addWidget(self.Button_ASR_VPR_DurationOfAudio_MoreActions, 0, 2, 1, 1)
+        self.gridLayout_37.addWidget(self.Button_VPR_TDNN_DurationOfAudio_MoreActions, 0, 2, 1, 1)
 
-        self.DoubleSpinBox_ASR_VPR_DurationOfAudio = DoubleSpinBoxBase(self.Frame_ASR_VPR_DurationOfAudio)
-        self.DoubleSpinBox_ASR_VPR_DurationOfAudio.setObjectName(u"DoubleSpinBox_ASR_VPR_DurationOfAudio")
-        self.DoubleSpinBox_ASR_VPR_DurationOfAudio.setEnabled(True)
-        self.DoubleSpinBox_ASR_VPR_DurationOfAudio.setMinimumSize(QSize(0, 27))
-        self.DoubleSpinBox_ASR_VPR_DurationOfAudio.setMinimum(-999999.000000000000000)
-        self.DoubleSpinBox_ASR_VPR_DurationOfAudio.setMaximum(999999.000000000000000)
+        self.DoubleSpinBox_VPR_TDNN_DurationOfAudio = DoubleSpinBoxBase(self.Frame_VPR_TDNN_DurationOfAudio)
+        self.DoubleSpinBox_VPR_TDNN_DurationOfAudio.setObjectName(u"DoubleSpinBox_VPR_TDNN_DurationOfAudio")
+        self.DoubleSpinBox_VPR_TDNN_DurationOfAudio.setEnabled(True)
+        self.DoubleSpinBox_VPR_TDNN_DurationOfAudio.setMinimumSize(QSize(0, 27))
+        self.DoubleSpinBox_VPR_TDNN_DurationOfAudio.setMinimum(-999999.000000000000000)
+        self.DoubleSpinBox_VPR_TDNN_DurationOfAudio.setMaximum(999999.000000000000000)
 
-        self.gridLayout_37.addWidget(self.DoubleSpinBox_ASR_VPR_DurationOfAudio, 1, 0, 1, 3)
-
-
-        self.verticalLayout_21.addWidget(self.Frame_ASR_VPR_DurationOfAudio)
-
-        self.ToolBox_ASR_VPR_VPRParams_AdvanceSettings.addItem(self.ToolBox_ASR_VPR_VPRParams_AdvanceSettings_Page1Content, u"")
-
-        self.verticalLayout_47.addWidget(self.ToolBox_ASR_VPR_VPRParams_AdvanceSettings)
+        self.gridLayout_37.addWidget(self.DoubleSpinBox_VPR_TDNN_DurationOfAudio, 1, 0, 1, 3)
 
 
-        self.verticalLayout_7.addWidget(self.GroupBox_ASR_VPR_VPRParams)
+        self.verticalLayout_21.addWidget(self.Frame_VPR_TDNN_DurationOfAudio)
 
-        self.GroupBox_ASR_VPR_OutputParams = GroupBoxBase(self.ScrollArea_Middle_WidgetContents_ASR_VPR)
-        self.GroupBox_ASR_VPR_OutputParams.setObjectName(u"GroupBox_ASR_VPR_OutputParams")
-        self.verticalLayout_48 = QVBoxLayout(self.GroupBox_ASR_VPR_OutputParams)
+        self.ToolBox_VPR_TDNN_VPRParams_AdvanceSettings.addItem(self.ToolBox_VPR_TDNN_VPRParams_AdvanceSettings_Page1Content, u"")
+
+        self.verticalLayout_47.addWidget(self.ToolBox_VPR_TDNN_VPRParams_AdvanceSettings)
+
+
+        self.verticalLayout_7.addWidget(self.GroupBox_VPR_TDNN_VPRParams)
+
+        self.GroupBox_VPR_TDNN_OutputParams = GroupBoxBase(self.ScrollArea_Middle_WidgetContents_VPR_TDNN)
+        self.GroupBox_VPR_TDNN_OutputParams.setObjectName(u"GroupBox_VPR_TDNN_OutputParams")
+        self.verticalLayout_48 = QVBoxLayout(self.GroupBox_VPR_TDNN_OutputParams)
         self.verticalLayout_48.setSpacing(0)
         self.verticalLayout_48.setObjectName(u"verticalLayout_48")
         self.verticalLayout_48.setContentsMargins(0, 12, 0, 12)
-        self.Frame_ASR_VPR_OutputParams_BasicSettings = QFrame(self.GroupBox_ASR_VPR_OutputParams)
-        self.Frame_ASR_VPR_OutputParams_BasicSettings.setObjectName(u"Frame_ASR_VPR_OutputParams_BasicSettings")
-        self.verticalLayout_139 = QVBoxLayout(self.Frame_ASR_VPR_OutputParams_BasicSettings)
+        self.Frame_VPR_TDNN_OutputParams_BasicSettings = QFrame(self.GroupBox_VPR_TDNN_OutputParams)
+        self.Frame_VPR_TDNN_OutputParams_BasicSettings.setObjectName(u"Frame_VPR_TDNN_OutputParams_BasicSettings")
+        self.verticalLayout_139 = QVBoxLayout(self.Frame_VPR_TDNN_OutputParams_BasicSettings)
         self.verticalLayout_139.setSpacing(0)
         self.verticalLayout_139.setObjectName(u"verticalLayout_139")
         self.verticalLayout_139.setContentsMargins(0, 0, 0, 0)
-        self.Frame_ASR_VPR_OutputDirName = QFrame(self.Frame_ASR_VPR_OutputParams_BasicSettings)
-        self.Frame_ASR_VPR_OutputDirName.setObjectName(u"Frame_ASR_VPR_OutputDirName")
-        self.Frame_ASR_VPR_OutputDirName.setMinimumSize(QSize(0, 105))
-        self.Frame_ASR_VPR_OutputDirName.setStyleSheet(u"QFrame {\n"
+        self.Frame_VPR_TDNN_OutputDirName = QFrame(self.Frame_VPR_TDNN_OutputParams_BasicSettings)
+        self.Frame_VPR_TDNN_OutputDirName.setObjectName(u"Frame_VPR_TDNN_OutputDirName")
+        self.Frame_VPR_TDNN_OutputDirName.setMinimumSize(QSize(0, 105))
+        self.Frame_VPR_TDNN_OutputDirName.setStyleSheet(u"QFrame {\n"
 "	background-color: transparent;\n"
 "	border-width: 0px;\n"
 "	border-style: solid;\n"
@@ -3319,15 +3319,15 @@ class Ui_MainWindow(object):
 "QFrame:hover {\n"
 "	background-color: rgba(36, 36, 36, 12);\n"
 "}")
-        self.gridLayout_38 = QGridLayout(self.Frame_ASR_VPR_OutputDirName)
+        self.gridLayout_38 = QGridLayout(self.Frame_VPR_TDNN_OutputDirName)
         self.gridLayout_38.setSpacing(12)
         self.gridLayout_38.setObjectName(u"gridLayout_38")
         self.gridLayout_38.setContentsMargins(21, 12, 21, 12)
-        self.Label_ASR_VPR_OutputDirName = LabelBase(self.Frame_ASR_VPR_OutputDirName)
-        self.Label_ASR_VPR_OutputDirName.setObjectName(u"Label_ASR_VPR_OutputDirName")
-        sizePolicy5.setHeightForWidth(self.Label_ASR_VPR_OutputDirName.sizePolicy().hasHeightForWidth())
-        self.Label_ASR_VPR_OutputDirName.setSizePolicy(sizePolicy5)
-        self.Label_ASR_VPR_OutputDirName.setStyleSheet(u"QLabel {\n"
+        self.Label_VPR_TDNN_OutputDirName = LabelBase(self.Frame_VPR_TDNN_OutputDirName)
+        self.Label_VPR_TDNN_OutputDirName.setObjectName(u"Label_VPR_TDNN_OutputDirName")
+        sizePolicy5.setHeightForWidth(self.Label_VPR_TDNN_OutputDirName.sizePolicy().hasHeightForWidth())
+        self.Label_VPR_TDNN_OutputDirName.setSizePolicy(sizePolicy5)
+        self.Label_VPR_TDNN_OutputDirName.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	background-color: transparent;\n"
 "	padding: 0px;\n"
@@ -3336,51 +3336,51 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}")
 
-        self.gridLayout_38.addWidget(self.Label_ASR_VPR_OutputDirName, 0, 0, 1, 1)
+        self.gridLayout_38.addWidget(self.Label_VPR_TDNN_OutputDirName, 0, 0, 1, 1)
 
-        self.HorizontalSpacer_ASR_VPR_OutputDirName = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+        self.HorizontalSpacer_VPR_TDNN_OutputDirName = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
-        self.gridLayout_38.addItem(self.HorizontalSpacer_ASR_VPR_OutputDirName, 0, 1, 1, 1)
+        self.gridLayout_38.addItem(self.HorizontalSpacer_VPR_TDNN_OutputDirName, 0, 1, 1, 1)
 
-        self.Button_ASR_VPR_OutputDirName_MoreActions = MenuButton(self.Frame_ASR_VPR_OutputDirName)
-        self.Button_ASR_VPR_OutputDirName_MoreActions.setObjectName(u"Button_ASR_VPR_OutputDirName_MoreActions")
-        self.Button_ASR_VPR_OutputDirName_MoreActions.setMinimumSize(QSize(27, 27))
-        self.Button_ASR_VPR_OutputDirName_MoreActions.setMaximumSize(QSize(27, 27))
-        self.Button_ASR_VPR_OutputDirName_MoreActions.setStyleSheet(u"QPushButton {\n"
+        self.Button_VPR_TDNN_OutputDirName_MoreActions = MenuButton(self.Frame_VPR_TDNN_OutputDirName)
+        self.Button_VPR_TDNN_OutputDirName_MoreActions.setObjectName(u"Button_VPR_TDNN_OutputDirName_MoreActions")
+        self.Button_VPR_TDNN_OutputDirName_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_VPR_TDNN_OutputDirName_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_VPR_TDNN_OutputDirName_MoreActions.setStyleSheet(u"QPushButton {\n"
 "	border-width: 1px;\n"
 "	border-style: solid;\n"
 "	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_38.addWidget(self.Button_ASR_VPR_OutputDirName_MoreActions, 0, 2, 1, 1)
+        self.gridLayout_38.addWidget(self.Button_VPR_TDNN_OutputDirName_MoreActions, 0, 2, 1, 1)
 
-        self.LineEdit_ASR_VPR_OutputDirName = LineEditBase(self.Frame_ASR_VPR_OutputDirName)
-        self.LineEdit_ASR_VPR_OutputDirName.setObjectName(u"LineEdit_ASR_VPR_OutputDirName")
-        self.LineEdit_ASR_VPR_OutputDirName.setMinimumSize(QSize(0, 27))
+        self.LineEdit_VPR_TDNN_OutputDirName = LineEditBase(self.Frame_VPR_TDNN_OutputDirName)
+        self.LineEdit_VPR_TDNN_OutputDirName.setObjectName(u"LineEdit_VPR_TDNN_OutputDirName")
+        self.LineEdit_VPR_TDNN_OutputDirName.setMinimumSize(QSize(0, 27))
 
-        self.gridLayout_38.addWidget(self.LineEdit_ASR_VPR_OutputDirName, 1, 0, 1, 3)
-
-
-        self.verticalLayout_139.addWidget(self.Frame_ASR_VPR_OutputDirName)
+        self.gridLayout_38.addWidget(self.LineEdit_VPR_TDNN_OutputDirName, 1, 0, 1, 3)
 
 
-        self.verticalLayout_48.addWidget(self.Frame_ASR_VPR_OutputParams_BasicSettings)
+        self.verticalLayout_139.addWidget(self.Frame_VPR_TDNN_OutputDirName)
 
-        self.ToolBox_ASR_VPR_OutputParams_AdvanceSettings = ToolBoxBase(self.GroupBox_ASR_VPR_OutputParams)
-        self.ToolBox_ASR_VPR_OutputParams_AdvanceSettings.setObjectName(u"ToolBox_ASR_VPR_OutputParams_AdvanceSettings")
-        self.ToolBox_ASR_VPR_OutputParams_AdvanceSettings.setFrameShape(QFrame.Shape.StyledPanel)
-        self.ToolBox_ASR_VPR_OutputParams_AdvanceSettings.setFrameShadow(QFrame.Shadow.Raised)
-        self.ToolBox_ASR_VPR_OutputParams_AdvanceSettings_Page1Content = WidgetBase()
-        self.ToolBox_ASR_VPR_OutputParams_AdvanceSettings_Page1Content.setObjectName(u"ToolBox_ASR_VPR_OutputParams_AdvanceSettings_Page1Content")
-        self.ToolBox_ASR_VPR_OutputParams_AdvanceSettings_Page1Content.setGeometry(QRect(0, 0, 147, 105))
-        self.verticalLayout_110 = QVBoxLayout(self.ToolBox_ASR_VPR_OutputParams_AdvanceSettings_Page1Content)
+
+        self.verticalLayout_48.addWidget(self.Frame_VPR_TDNN_OutputParams_BasicSettings)
+
+        self.ToolBox_VPR_TDNN_OutputParams_AdvanceSettings = ToolBoxBase(self.GroupBox_VPR_TDNN_OutputParams)
+        self.ToolBox_VPR_TDNN_OutputParams_AdvanceSettings.setObjectName(u"ToolBox_VPR_TDNN_OutputParams_AdvanceSettings")
+        self.ToolBox_VPR_TDNN_OutputParams_AdvanceSettings.setFrameShape(QFrame.Shape.StyledPanel)
+        self.ToolBox_VPR_TDNN_OutputParams_AdvanceSettings.setFrameShadow(QFrame.Shadow.Raised)
+        self.ToolBox_VPR_TDNN_OutputParams_AdvanceSettings_Page1Content = WidgetBase()
+        self.ToolBox_VPR_TDNN_OutputParams_AdvanceSettings_Page1Content.setObjectName(u"ToolBox_VPR_TDNN_OutputParams_AdvanceSettings_Page1Content")
+        self.ToolBox_VPR_TDNN_OutputParams_AdvanceSettings_Page1Content.setGeometry(QRect(0, 0, 147, 105))
+        self.verticalLayout_110 = QVBoxLayout(self.ToolBox_VPR_TDNN_OutputParams_AdvanceSettings_Page1Content)
         self.verticalLayout_110.setSpacing(0)
         self.verticalLayout_110.setObjectName(u"verticalLayout_110")
         self.verticalLayout_110.setContentsMargins(0, 0, 0, 0)
-        self.Frame_ASR_VPR_AudioSpeakersDataName = QFrame(self.ToolBox_ASR_VPR_OutputParams_AdvanceSettings_Page1Content)
-        self.Frame_ASR_VPR_AudioSpeakersDataName.setObjectName(u"Frame_ASR_VPR_AudioSpeakersDataName")
-        self.Frame_ASR_VPR_AudioSpeakersDataName.setMinimumSize(QSize(0, 105))
-        self.Frame_ASR_VPR_AudioSpeakersDataName.setStyleSheet(u"QFrame {\n"
+        self.Frame_VPR_TDNN_AudioSpeakersDataName = QFrame(self.ToolBox_VPR_TDNN_OutputParams_AdvanceSettings_Page1Content)
+        self.Frame_VPR_TDNN_AudioSpeakersDataName.setObjectName(u"Frame_VPR_TDNN_AudioSpeakersDataName")
+        self.Frame_VPR_TDNN_AudioSpeakersDataName.setMinimumSize(QSize(0, 105))
+        self.Frame_VPR_TDNN_AudioSpeakersDataName.setStyleSheet(u"QFrame {\n"
 "	background-color: transparent;\n"
 "	border-width: 0px;\n"
 "	border-style: solid;\n"
@@ -3388,27 +3388,27 @@ class Ui_MainWindow(object):
 "QFrame:hover {\n"
 "	background-color: rgba(36, 36, 36, 12);\n"
 "}")
-        self.gridLayout_112 = QGridLayout(self.Frame_ASR_VPR_AudioSpeakersDataName)
+        self.gridLayout_112 = QGridLayout(self.Frame_VPR_TDNN_AudioSpeakersDataName)
         self.gridLayout_112.setSpacing(12)
         self.gridLayout_112.setObjectName(u"gridLayout_112")
         self.gridLayout_112.setContentsMargins(21, 12, 21, 12)
-        self.Button_ASR_VPR_AudioSpeakersDataName_MoreActions = MenuButton(self.Frame_ASR_VPR_AudioSpeakersDataName)
-        self.Button_ASR_VPR_AudioSpeakersDataName_MoreActions.setObjectName(u"Button_ASR_VPR_AudioSpeakersDataName_MoreActions")
-        self.Button_ASR_VPR_AudioSpeakersDataName_MoreActions.setMinimumSize(QSize(27, 27))
-        self.Button_ASR_VPR_AudioSpeakersDataName_MoreActions.setMaximumSize(QSize(27, 27))
-        self.Button_ASR_VPR_AudioSpeakersDataName_MoreActions.setStyleSheet(u"QPushButton {\n"
+        self.Button_VPR_TDNN_AudioSpeakersDataName_MoreActions = MenuButton(self.Frame_VPR_TDNN_AudioSpeakersDataName)
+        self.Button_VPR_TDNN_AudioSpeakersDataName_MoreActions.setObjectName(u"Button_VPR_TDNN_AudioSpeakersDataName_MoreActions")
+        self.Button_VPR_TDNN_AudioSpeakersDataName_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_VPR_TDNN_AudioSpeakersDataName_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_VPR_TDNN_AudioSpeakersDataName_MoreActions.setStyleSheet(u"QPushButton {\n"
 "	border-width: 1px;\n"
 "	border-style: solid;\n"
 "	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_112.addWidget(self.Button_ASR_VPR_AudioSpeakersDataName_MoreActions, 0, 2, 1, 1)
+        self.gridLayout_112.addWidget(self.Button_VPR_TDNN_AudioSpeakersDataName_MoreActions, 0, 2, 1, 1)
 
-        self.Label_ASR_VPR_AudioSpeakersDataName = LabelBase(self.Frame_ASR_VPR_AudioSpeakersDataName)
-        self.Label_ASR_VPR_AudioSpeakersDataName.setObjectName(u"Label_ASR_VPR_AudioSpeakersDataName")
-        sizePolicy5.setHeightForWidth(self.Label_ASR_VPR_AudioSpeakersDataName.sizePolicy().hasHeightForWidth())
-        self.Label_ASR_VPR_AudioSpeakersDataName.setSizePolicy(sizePolicy5)
-        self.Label_ASR_VPR_AudioSpeakersDataName.setStyleSheet(u"QLabel {\n"
+        self.Label_VPR_TDNN_AudioSpeakersDataName = LabelBase(self.Frame_VPR_TDNN_AudioSpeakersDataName)
+        self.Label_VPR_TDNN_AudioSpeakersDataName.setObjectName(u"Label_VPR_TDNN_AudioSpeakersDataName")
+        sizePolicy5.setHeightForWidth(self.Label_VPR_TDNN_AudioSpeakersDataName.sizePolicy().hasHeightForWidth())
+        self.Label_VPR_TDNN_AudioSpeakersDataName.setSizePolicy(sizePolicy5)
+        self.Label_VPR_TDNN_AudioSpeakersDataName.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	background-color: transparent;\n"
 "	padding: 0px;\n"
@@ -3417,46 +3417,46 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}")
 
-        self.gridLayout_112.addWidget(self.Label_ASR_VPR_AudioSpeakersDataName, 0, 0, 1, 1)
+        self.gridLayout_112.addWidget(self.Label_VPR_TDNN_AudioSpeakersDataName, 0, 0, 1, 1)
 
-        self.LineEdit_ASR_VPR_AudioSpeakersDataName = LineEditBase(self.Frame_ASR_VPR_AudioSpeakersDataName)
-        self.LineEdit_ASR_VPR_AudioSpeakersDataName.setObjectName(u"LineEdit_ASR_VPR_AudioSpeakersDataName")
-        self.LineEdit_ASR_VPR_AudioSpeakersDataName.setMinimumSize(QSize(0, 27))
+        self.LineEdit_VPR_TDNN_AudioSpeakersDataName = LineEditBase(self.Frame_VPR_TDNN_AudioSpeakersDataName)
+        self.LineEdit_VPR_TDNN_AudioSpeakersDataName.setObjectName(u"LineEdit_VPR_TDNN_AudioSpeakersDataName")
+        self.LineEdit_VPR_TDNN_AudioSpeakersDataName.setMinimumSize(QSize(0, 27))
 
-        self.gridLayout_112.addWidget(self.LineEdit_ASR_VPR_AudioSpeakersDataName, 1, 0, 1, 3)
+        self.gridLayout_112.addWidget(self.LineEdit_VPR_TDNN_AudioSpeakersDataName, 1, 0, 1, 3)
 
-        self.HorizontalSpacer_ASR_VPR_AudioSpeakersDataName = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+        self.HorizontalSpacer_VPR_TDNN_AudioSpeakersDataName = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
-        self.gridLayout_112.addItem(self.HorizontalSpacer_ASR_VPR_AudioSpeakersDataName, 0, 1, 1, 1)
-
-
-        self.verticalLayout_110.addWidget(self.Frame_ASR_VPR_AudioSpeakersDataName)
-
-        self.ToolBox_ASR_VPR_OutputParams_AdvanceSettings.addItem(self.ToolBox_ASR_VPR_OutputParams_AdvanceSettings_Page1Content, u"")
-
-        self.verticalLayout_48.addWidget(self.ToolBox_ASR_VPR_OutputParams_AdvanceSettings)
+        self.gridLayout_112.addItem(self.HorizontalSpacer_VPR_TDNN_AudioSpeakersDataName, 0, 1, 1, 1)
 
 
-        self.verticalLayout_7.addWidget(self.GroupBox_ASR_VPR_OutputParams)
+        self.verticalLayout_110.addWidget(self.Frame_VPR_TDNN_AudioSpeakersDataName)
 
-        self.ScrollArea_Middle_ASR_VPR.setWidget(self.ScrollArea_Middle_WidgetContents_ASR_VPR)
+        self.ToolBox_VPR_TDNN_OutputParams_AdvanceSettings.addItem(self.ToolBox_VPR_TDNN_OutputParams_AdvanceSettings_Page1Content, u"")
 
-        self.gridLayout_21.addWidget(self.ScrollArea_Middle_ASR_VPR, 0, 1, 1, 1)
+        self.verticalLayout_48.addWidget(self.ToolBox_VPR_TDNN_OutputParams_AdvanceSettings)
 
-        self.Widget_Right_ASR_VPR = QWidget(self.Subpage_ASR_VPR)
-        self.Widget_Right_ASR_VPR.setObjectName(u"Widget_Right_ASR_VPR")
-        self.Widget_Right_ASR_VPR.setStyleSheet(u"QWidget:hover {\n"
+
+        self.verticalLayout_7.addWidget(self.GroupBox_VPR_TDNN_OutputParams)
+
+        self.ScrollArea_Middle_VPR_TDNN.setWidget(self.ScrollArea_Middle_WidgetContents_VPR_TDNN)
+
+        self.gridLayout_21.addWidget(self.ScrollArea_Middle_VPR_TDNN, 0, 1, 1, 1)
+
+        self.Widget_Right_VPR_TDNN = QWidget(self.Subpage_VPR_TDNN)
+        self.Widget_Right_VPR_TDNN.setObjectName(u"Widget_Right_VPR_TDNN")
+        self.Widget_Right_VPR_TDNN.setStyleSheet(u"QWidget:hover {\n"
 "	background-color: rgba(36, 36, 36, 3);\n"
 "}")
-        self.gridLayout_2 = QGridLayout(self.Widget_Right_ASR_VPR)
+        self.gridLayout_2 = QGridLayout(self.Widget_Right_VPR_TDNN)
         self.gridLayout_2.setSpacing(12)
         self.gridLayout_2.setObjectName(u"gridLayout_2")
         self.gridLayout_2.setContentsMargins(12, 12, 12, 12)
-        self.TextBrowser_Params_ASR_VPR = TextBrowserBase(self.Widget_Right_ASR_VPR)
-        self.TextBrowser_Params_ASR_VPR.setObjectName(u"TextBrowser_Params_ASR_VPR")
-        sizePolicy1.setHeightForWidth(self.TextBrowser_Params_ASR_VPR.sizePolicy().hasHeightForWidth())
-        self.TextBrowser_Params_ASR_VPR.setSizePolicy(sizePolicy1)
-        self.TextBrowser_Params_ASR_VPR.setStyleSheet(u"QTextBrowser {\n"
+        self.TextBrowser_Params_VPR_TDNN = TextBrowserBase(self.Widget_Right_VPR_TDNN)
+        self.TextBrowser_Params_VPR_TDNN.setObjectName(u"TextBrowser_Params_VPR_TDNN")
+        sizePolicy1.setHeightForWidth(self.TextBrowser_Params_VPR_TDNN.sizePolicy().hasHeightForWidth())
+        self.TextBrowser_Params_VPR_TDNN.setSizePolicy(sizePolicy1)
+        self.TextBrowser_Params_VPR_TDNN.setStyleSheet(u"QTextBrowser {\n"
 "	/*padding-top: 1.5px;*/\n"
 "	/*padding-bottom: 1.5px;*/\n"
 "	padding-left: 15px;\n"
@@ -3507,40 +3507,40 @@ class Ui_MainWindow(object):
                         ": rgba(123, 123, 123, 210);\n"
 "}")
 
-        self.gridLayout_2.addWidget(self.TextBrowser_Params_ASR_VPR, 0, 0, 1, 3)
+        self.gridLayout_2.addWidget(self.TextBrowser_Params_VPR_TDNN, 0, 0, 1, 3)
 
-        self.Button_ResetSettings_ASR_VPR = HollowButton(self.Widget_Right_ASR_VPR)
-        self.Button_ResetSettings_ASR_VPR.setObjectName(u"Button_ResetSettings_ASR_VPR")
+        self.Button_ResetSettings_VPR_TDNN = HollowButton(self.Widget_Right_VPR_TDNN)
+        self.Button_ResetSettings_VPR_TDNN.setObjectName(u"Button_ResetSettings_VPR_TDNN")
 
-        self.gridLayout_2.addWidget(self.Button_ResetSettings_ASR_VPR, 1, 0, 1, 1)
+        self.gridLayout_2.addWidget(self.Button_ResetSettings_VPR_TDNN, 1, 0, 1, 1)
 
-        self.Button_ImportSettings_ASR_VPR = HollowButton(self.Widget_Right_ASR_VPR)
-        self.Button_ImportSettings_ASR_VPR.setObjectName(u"Button_ImportSettings_ASR_VPR")
+        self.Button_ImportSettings_VPR_TDNN = HollowButton(self.Widget_Right_VPR_TDNN)
+        self.Button_ImportSettings_VPR_TDNN.setObjectName(u"Button_ImportSettings_VPR_TDNN")
 
-        self.gridLayout_2.addWidget(self.Button_ImportSettings_ASR_VPR, 1, 1, 1, 1)
+        self.gridLayout_2.addWidget(self.Button_ImportSettings_VPR_TDNN, 1, 1, 1, 1)
 
-        self.Button_ExportSettings_ASR_VPR = HollowButton(self.Widget_Right_ASR_VPR)
-        self.Button_ExportSettings_ASR_VPR.setObjectName(u"Button_ExportSettings_ASR_VPR")
+        self.Button_ExportSettings_VPR_TDNN = HollowButton(self.Widget_Right_VPR_TDNN)
+        self.Button_ExportSettings_VPR_TDNN.setObjectName(u"Button_ExportSettings_VPR_TDNN")
 
-        self.gridLayout_2.addWidget(self.Button_ExportSettings_ASR_VPR, 1, 2, 1, 1)
+        self.gridLayout_2.addWidget(self.Button_ExportSettings_VPR_TDNN, 1, 2, 1, 1)
 
-        self.Button_EditResult_ASR_VPR = HollowButton(self.Widget_Right_ASR_VPR)
-        self.Button_EditResult_ASR_VPR.setObjectName(u"Button_EditResult_ASR_VPR")
+        self.Button_EditResult_VPR_TDNN = HollowButton(self.Widget_Right_VPR_TDNN)
+        self.Button_EditResult_VPR_TDNN.setObjectName(u"Button_EditResult_VPR_TDNN")
 
-        self.gridLayout_2.addWidget(self.Button_EditResult_ASR_VPR, 2, 0, 1, 3)
+        self.gridLayout_2.addWidget(self.Button_EditResult_VPR_TDNN, 2, 0, 1, 3)
 
-        self.Button_CheckOutput_ASR_VPR = HollowButton(self.Widget_Right_ASR_VPR)
-        self.Button_CheckOutput_ASR_VPR.setObjectName(u"Button_CheckOutput_ASR_VPR")
+        self.Button_CheckOutput_VPR_TDNN = HollowButton(self.Widget_Right_VPR_TDNN)
+        self.Button_CheckOutput_VPR_TDNN.setObjectName(u"Button_CheckOutput_VPR_TDNN")
 
-        self.gridLayout_2.addWidget(self.Button_CheckOutput_ASR_VPR, 3, 0, 1, 3)
+        self.gridLayout_2.addWidget(self.Button_CheckOutput_VPR_TDNN, 3, 0, 1, 3)
 
 
-        self.gridLayout_21.addWidget(self.Widget_Right_ASR_VPR, 0, 2, 1, 1)
+        self.gridLayout_21.addWidget(self.Widget_Right_VPR_TDNN, 0, 2, 1, 1)
 
-        self.ProgressBar_ASR_VPR = QProgressBar(self.Subpage_ASR_VPR)
-        self.ProgressBar_ASR_VPR.setObjectName(u"ProgressBar_ASR_VPR")
-        self.ProgressBar_ASR_VPR.setMinimumSize(QSize(0, 30))
-        self.ProgressBar_ASR_VPR.setStyleSheet(u"QProgressBar {\n"
+        self.ProgressBar_VPR_TDNN = QProgressBar(self.Subpage_VPR_TDNN)
+        self.ProgressBar_VPR_TDNN.setObjectName(u"ProgressBar_VPR_TDNN")
+        self.ProgressBar_VPR_TDNN.setMinimumSize(QSize(0, 30))
+        self.ProgressBar_VPR_TDNN.setStyleSheet(u"QProgressBar {\n"
 "	text-align: center;\n"
 "	background-color: transparent;\n"
 "	padding: 0px;\n"
@@ -3555,65 +3555,65 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "	background-color: qlineargradient(spread: pad, x1:0, y1:0, x2:1, y2:0, stop:0 transparent, stop:1 rgba(123, 123, 123, 123));\n"
 "}")
-        self.ProgressBar_ASR_VPR.setValue(0)
-        self.ProgressBar_ASR_VPR.setTextVisible(False)
-        self.horizontalLayout_73 = QHBoxLayout(self.ProgressBar_ASR_VPR)
+        self.ProgressBar_VPR_TDNN.setValue(0)
+        self.ProgressBar_VPR_TDNN.setTextVisible(False)
+        self.horizontalLayout_73 = QHBoxLayout(self.ProgressBar_VPR_TDNN)
         self.horizontalLayout_73.setSpacing(0)
         self.horizontalLayout_73.setObjectName(u"horizontalLayout_73")
         self.horizontalLayout_73.setContentsMargins(0, 0, 0, 0)
-        self.StackedWidget_ASR_VPR = QStackedWidget(self.ProgressBar_ASR_VPR)
-        self.StackedWidget_ASR_VPR.setObjectName(u"StackedWidget_ASR_VPR")
-        self.StackedWidget_ASR_VPR.setMaximumSize(QSize(16777215, 30))
-        self.StackedWidget_ASR_VPR.setStyleSheet(u"QWidget {\n"
+        self.StackedWidget_VPR_TDNN = QStackedWidget(self.ProgressBar_VPR_TDNN)
+        self.StackedWidget_VPR_TDNN.setObjectName(u"StackedWidget_VPR_TDNN")
+        self.StackedWidget_VPR_TDNN.setMaximumSize(QSize(16777215, 30))
+        self.StackedWidget_VPR_TDNN.setStyleSheet(u"QWidget {\n"
 "	background-color: rgba(123, 123, 123, 24);\n"
 "}\n"
 "QWidget:hover {\n"
 "	background-color: rgba(123, 123, 123, 48);\n"
 "}")
-        self.Page_ASR_VPR_Execute = QWidget()
-        self.Page_ASR_VPR_Execute.setObjectName(u"Page_ASR_VPR_Execute")
-        self.verticalLayout_102 = QVBoxLayout(self.Page_ASR_VPR_Execute)
+        self.Page_VPR_TDNN_Execute = QWidget()
+        self.Page_VPR_TDNN_Execute.setObjectName(u"Page_VPR_TDNN_Execute")
+        self.verticalLayout_102 = QVBoxLayout(self.Page_VPR_TDNN_Execute)
         self.verticalLayout_102.setSpacing(0)
         self.verticalLayout_102.setObjectName(u"verticalLayout_102")
         self.verticalLayout_102.setContentsMargins(0, 0, 0, 0)
-        self.Button_ASR_VPR_Execute = HollowButton(self.Page_ASR_VPR_Execute)
-        self.Button_ASR_VPR_Execute.setObjectName(u"Button_ASR_VPR_Execute")
-        sizePolicy2.setHeightForWidth(self.Button_ASR_VPR_Execute.sizePolicy().hasHeightForWidth())
-        self.Button_ASR_VPR_Execute.setSizePolicy(sizePolicy2)
-        self.Button_ASR_VPR_Execute.setMinimumSize(QSize(0, 30))
+        self.Button_VPR_TDNN_Execute = HollowButton(self.Page_VPR_TDNN_Execute)
+        self.Button_VPR_TDNN_Execute.setObjectName(u"Button_VPR_TDNN_Execute")
+        sizePolicy2.setHeightForWidth(self.Button_VPR_TDNN_Execute.sizePolicy().hasHeightForWidth())
+        self.Button_VPR_TDNN_Execute.setSizePolicy(sizePolicy2)
+        self.Button_VPR_TDNN_Execute.setMinimumSize(QSize(0, 30))
 
-        self.verticalLayout_102.addWidget(self.Button_ASR_VPR_Execute)
+        self.verticalLayout_102.addWidget(self.Button_VPR_TDNN_Execute)
 
-        self.StackedWidget_ASR_VPR.addWidget(self.Page_ASR_VPR_Execute)
-        self.Page_ASR_VPR_Terminate = QWidget()
-        self.Page_ASR_VPR_Terminate.setObjectName(u"Page_ASR_VPR_Terminate")
-        self.verticalLayout_119 = QVBoxLayout(self.Page_ASR_VPR_Terminate)
+        self.StackedWidget_VPR_TDNN.addWidget(self.Page_VPR_TDNN_Execute)
+        self.Page_VPR_TDNN_Terminate = QWidget()
+        self.Page_VPR_TDNN_Terminate.setObjectName(u"Page_VPR_TDNN_Terminate")
+        self.verticalLayout_119 = QVBoxLayout(self.Page_VPR_TDNN_Terminate)
         self.verticalLayout_119.setSpacing(0)
         self.verticalLayout_119.setObjectName(u"verticalLayout_119")
         self.verticalLayout_119.setContentsMargins(0, 0, 0, 0)
-        self.Button_ASR_VPR_Terminate = HollowButton(self.Page_ASR_VPR_Terminate)
-        self.Button_ASR_VPR_Terminate.setObjectName(u"Button_ASR_VPR_Terminate")
-        sizePolicy2.setHeightForWidth(self.Button_ASR_VPR_Terminate.sizePolicy().hasHeightForWidth())
-        self.Button_ASR_VPR_Terminate.setSizePolicy(sizePolicy2)
-        self.Button_ASR_VPR_Terminate.setMinimumSize(QSize(0, 30))
+        self.Button_VPR_TDNN_Terminate = HollowButton(self.Page_VPR_TDNN_Terminate)
+        self.Button_VPR_TDNN_Terminate.setObjectName(u"Button_VPR_TDNN_Terminate")
+        sizePolicy2.setHeightForWidth(self.Button_VPR_TDNN_Terminate.sizePolicy().hasHeightForWidth())
+        self.Button_VPR_TDNN_Terminate.setSizePolicy(sizePolicy2)
+        self.Button_VPR_TDNN_Terminate.setMinimumSize(QSize(0, 30))
 
-        self.verticalLayout_119.addWidget(self.Button_ASR_VPR_Terminate)
+        self.verticalLayout_119.addWidget(self.Button_VPR_TDNN_Terminate)
 
-        self.StackedWidget_ASR_VPR.addWidget(self.Page_ASR_VPR_Terminate)
+        self.StackedWidget_VPR_TDNN.addWidget(self.Page_VPR_TDNN_Terminate)
 
-        self.horizontalLayout_73.addWidget(self.StackedWidget_ASR_VPR)
+        self.horizontalLayout_73.addWidget(self.StackedWidget_VPR_TDNN)
 
 
-        self.gridLayout_21.addWidget(self.ProgressBar_ASR_VPR, 1, 0, 1, 3)
+        self.gridLayout_21.addWidget(self.ProgressBar_VPR_TDNN, 1, 0, 1, 3)
 
         self.gridLayout_21.setColumnStretch(0, 3)
         self.gridLayout_21.setColumnStretch(1, 10)
         self.gridLayout_21.setColumnStretch(2, 7)
-        self.StackedWidget_Pages_ASR.addWidget(self.Subpage_ASR_VPR)
+        self.StackedWidget_Pages_VPR.addWidget(self.Subpage_VPR_TDNN)
 
-        self.verticalLayout_44.addWidget(self.StackedWidget_Pages_ASR)
+        self.verticalLayout_44.addWidget(self.StackedWidget_Pages_VPR)
 
-        self.StackedWidget_Pages.addWidget(self.Page_ASR)
+        self.StackedWidget_Pages.addWidget(self.Page_VPR)
         self.Page_STT = QWidget()
         self.Page_STT.setObjectName(u"Page_STT")
         self.verticalLayout_41 = QVBoxLayout(self.Page_STT)
@@ -10006,10 +10006,10 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_83.addWidget(self.Frame_Process_OutputRoot)
 
-        self.Frame_ASR_VPR_OutputRoot = QFrame(self.GroupBox_Settings_Tools_Path)
-        self.Frame_ASR_VPR_OutputRoot.setObjectName(u"Frame_ASR_VPR_OutputRoot")
-        self.Frame_ASR_VPR_OutputRoot.setMinimumSize(QSize(0, 105))
-        self.Frame_ASR_VPR_OutputRoot.setStyleSheet(u"QFrame {\n"
+        self.Frame_VPR_TDNN_OutputRoot = QFrame(self.GroupBox_Settings_Tools_Path)
+        self.Frame_VPR_TDNN_OutputRoot.setObjectName(u"Frame_VPR_TDNN_OutputRoot")
+        self.Frame_VPR_TDNN_OutputRoot.setMinimumSize(QSize(0, 105))
+        self.Frame_VPR_TDNN_OutputRoot.setStyleSheet(u"QFrame {\n"
 "	background-color: transparent;\n"
 "	border-width: 0px;\n"
 "	border-style: solid;\n"
@@ -10017,15 +10017,15 @@ class Ui_MainWindow(object):
 "QFrame:hover {\n"
 "	background-color: rgba(36, 36, 36, 12);\n"
 "}")
-        self.horizontalLayout_25 = QHBoxLayout(self.Frame_ASR_VPR_OutputRoot)
+        self.horizontalLayout_25 = QHBoxLayout(self.Frame_VPR_TDNN_OutputRoot)
         self.horizontalLayout_25.setSpacing(12)
         self.horizontalLayout_25.setObjectName(u"horizontalLayout_25")
         self.horizontalLayout_25.setContentsMargins(21, 12, 21, 12)
-        self.Label_ASR_VPR_OutputRoot = LabelBase(self.Frame_ASR_VPR_OutputRoot)
-        self.Label_ASR_VPR_OutputRoot.setObjectName(u"Label_ASR_VPR_OutputRoot")
-        sizePolicy4.setHeightForWidth(self.Label_ASR_VPR_OutputRoot.sizePolicy().hasHeightForWidth())
-        self.Label_ASR_VPR_OutputRoot.setSizePolicy(sizePolicy4)
-        self.Label_ASR_VPR_OutputRoot.setStyleSheet(u"QLabel {\n"
+        self.Label_VPR_TDNN_OutputRoot = LabelBase(self.Frame_VPR_TDNN_OutputRoot)
+        self.Label_VPR_TDNN_OutputRoot.setObjectName(u"Label_VPR_TDNN_OutputRoot")
+        sizePolicy4.setHeightForWidth(self.Label_VPR_TDNN_OutputRoot.sizePolicy().hasHeightForWidth())
+        self.Label_VPR_TDNN_OutputRoot.setSizePolicy(sizePolicy4)
+        self.Label_VPR_TDNN_OutputRoot.setStyleSheet(u"QLabel {\n"
 "	font-size: 15px;\n"
 "	/*text-align: center;*/\n"
 "	background-color: transparent;\n"
@@ -10035,27 +10035,27 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}")
 
-        self.horizontalLayout_25.addWidget(self.Label_ASR_VPR_OutputRoot)
+        self.horizontalLayout_25.addWidget(self.Label_VPR_TDNN_OutputRoot)
 
-        self.LineEdit_ASR_VPR_OutputRoot = LineEditBase(self.Frame_ASR_VPR_OutputRoot)
-        self.LineEdit_ASR_VPR_OutputRoot.setObjectName(u"LineEdit_ASR_VPR_OutputRoot")
-        self.LineEdit_ASR_VPR_OutputRoot.setMaximumSize(QSize(16777215, 30))
+        self.LineEdit_VPR_TDNN_OutputRoot = LineEditBase(self.Frame_VPR_TDNN_OutputRoot)
+        self.LineEdit_VPR_TDNN_OutputRoot.setObjectName(u"LineEdit_VPR_TDNN_OutputRoot")
+        self.LineEdit_VPR_TDNN_OutputRoot.setMaximumSize(QSize(16777215, 30))
 
-        self.horizontalLayout_25.addWidget(self.LineEdit_ASR_VPR_OutputRoot)
+        self.horizontalLayout_25.addWidget(self.LineEdit_VPR_TDNN_OutputRoot)
 
-        self.Button_ASR_VPR_OutputRoot_MoreActions = MenuButton(self.Frame_ASR_VPR_OutputRoot)
-        self.Button_ASR_VPR_OutputRoot_MoreActions.setObjectName(u"Button_ASR_VPR_OutputRoot_MoreActions")
-        self.Button_ASR_VPR_OutputRoot_MoreActions.setMaximumSize(QSize(30, 30))
-        self.Button_ASR_VPR_OutputRoot_MoreActions.setStyleSheet(u"QPushButton {\n"
+        self.Button_VPR_TDNN_OutputRoot_MoreActions = MenuButton(self.Frame_VPR_TDNN_OutputRoot)
+        self.Button_VPR_TDNN_OutputRoot_MoreActions.setObjectName(u"Button_VPR_TDNN_OutputRoot_MoreActions")
+        self.Button_VPR_TDNN_OutputRoot_MoreActions.setMaximumSize(QSize(30, 30))
+        self.Button_VPR_TDNN_OutputRoot_MoreActions.setStyleSheet(u"QPushButton {\n"
 "	border-width: 1px;\n"
 "	border-style: solid;\n"
 "	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.horizontalLayout_25.addWidget(self.Button_ASR_VPR_OutputRoot_MoreActions)
+        self.horizontalLayout_25.addWidget(self.Button_VPR_TDNN_OutputRoot_MoreActions)
 
 
-        self.verticalLayout_83.addWidget(self.Frame_ASR_VPR_OutputRoot)
+        self.verticalLayout_83.addWidget(self.Frame_VPR_TDNN_OutputRoot)
 
         self.Frame_STT_Whisper_OutputRoot = QFrame(self.GroupBox_Settings_Tools_Path)
         self.Frame_STT_Whisper_OutputRoot.setObjectName(u"Frame_STT_Whisper_OutputRoot")
@@ -10797,7 +10797,7 @@ class Ui_MainWindow(object):
         self.StackedWidget_Pages_Env.setCurrentIndex(0)
         self.StackedWidget_Pages_Models.setCurrentIndex(0)
         self.StackedWidget_Pages_Process.setCurrentIndex(0)
-        self.StackedWidget_Pages_ASR.setCurrentIndex(0)
+        self.StackedWidget_Pages_VPR.setCurrentIndex(0)
         self.StackedWidget_Pages_STT.setCurrentIndex(0)
         self.StackedWidget_Pages_Dataset.setCurrentIndex(0)
         self.StackedWidget_DAT_GPTSoVITS.setCurrentIndex(0)
@@ -10833,9 +10833,9 @@ class Ui_MainWindow(object):
 #endif // QT_CONFIG(tooltip)
         self.Button_Menu_Process.setText(QCoreApplication.translate("MainWindow", u"\u5904\u7406", None))
 #if QT_CONFIG(tooltip)
-        self.Button_Menu_ASR.setToolTip(QCoreApplication.translate("MainWindow", u"\u5de5\u5177\uff1a\u8bed\u97f3\u8bc6\u522b", None))
+        self.Button_Menu_VPR.setToolTip(QCoreApplication.translate("MainWindow", u"\u5de5\u5177\uff1a\u8bed\u97f3\u8bc6\u522b", None))
 #endif // QT_CONFIG(tooltip)
-        self.Button_Menu_ASR.setText(QCoreApplication.translate("MainWindow", u"\u8bc6\u522b", None))
+        self.Button_Menu_VPR.setText(QCoreApplication.translate("MainWindow", u"\u8bc6\u522b", None))
 #if QT_CONFIG(tooltip)
         self.Button_Menu_STT.setToolTip(QCoreApplication.translate("MainWindow", u"\u5de5\u5177\uff1a\u8bed\u97f3\u8f6c\u6587\u5b57", None))
 #endif // QT_CONFIG(tooltip)
@@ -10905,11 +10905,11 @@ class Ui_MainWindow(object):
         self.Button_Env_Manage_Pytorch_Install.setText(QCoreApplication.translate("MainWindow", u"\u91cd\u88c5", None))
         self.ToolBox_Env_Manage_Pytorch.setItemText(self.ToolBox_Env_Manage_Pytorch.indexOf(self.ToolBox_Env_Manage_Pytorch_Page1Content), "")
         self.Button_Models_Process_Title.setText(QCoreApplication.translate("MainWindow", u"Label", None))
-        self.Button_Models_ASR_Title.setText(QCoreApplication.translate("MainWindow", u"Label", None))
+        self.Button_Models_VPR_Title.setText(QCoreApplication.translate("MainWindow", u"Label", None))
         self.Button_Models_STT_Title.setText(QCoreApplication.translate("MainWindow", u"Label", None))
         self.Button_Models_TTS_Title.setText(QCoreApplication.translate("MainWindow", u"Label", None))
         self.TabWidget_Models_Process.setTabText(self.TabWidget_Models_Process.indexOf(self.Tab_Models_Process_UVR), QCoreApplication.translate("MainWindow", u"Tab 1", None))
-        self.TabWidget_Models_ASR.setTabText(self.TabWidget_Models_ASR.indexOf(self.Tab_Models_ASR_VPR), QCoreApplication.translate("MainWindow", u"Tab 1", None))
+        self.TabWidget_Models_VPR.setTabText(self.TabWidget_Models_VPR.indexOf(self.Tab_Models_VPR_TDNN), QCoreApplication.translate("MainWindow", u"Tab 1", None))
         self.TabWidget_Models_STT.setTabText(self.TabWidget_Models_STT.indexOf(self.Tab_Models_STT_Whisper), QCoreApplication.translate("MainWindow", u"Tab 1", None))
         self.TabWidget_Models_TTS.setTabText(self.TabWidget_Models_TTS.indexOf(self.Tab_Models_TTS_GPTSoVITS), QCoreApplication.translate("MainWindow", u"\u9875", None))
         self.TabWidget_Models_TTS.setTabText(self.TabWidget_Models_TTS.indexOf(self.Tab_Models_TTS_VITS), QCoreApplication.translate("MainWindow", u"Tab 1", None))
@@ -10950,31 +10950,31 @@ class Ui_MainWindow(object):
         self.CheckBox_Process_ToMono.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
         self.ToolBox_Process_OutputParams_AdvanceSettings.setItemText(self.ToolBox_Process_OutputParams_AdvanceSettings.indexOf(self.ToolBox_Process_OutputParams_AdvanceSettings_Page1Content), "")
         self.Button_VoiceIdentifier_Title.setText(QCoreApplication.translate("MainWindow", u"Label", None))
-        ___qtreewidgetitem3 = self.TreeWidget_Catalogue_ASR_VPR.headerItem()
+        ___qtreewidgetitem3 = self.TreeWidget_Catalogue_VPR_TDNN.headerItem()
         ___qtreewidgetitem3.setText(0, QCoreApplication.translate("MainWindow", u"HeaderView", None));
 
-        __sortingEnabled1 = self.TreeWidget_Catalogue_ASR_VPR.isSortingEnabled()
-        self.TreeWidget_Catalogue_ASR_VPR.setSortingEnabled(False)
-        ___qtreewidgetitem4 = self.TreeWidget_Catalogue_ASR_VPR.topLevelItem(0)
+        __sortingEnabled1 = self.TreeWidget_Catalogue_VPR_TDNN.isSortingEnabled()
+        self.TreeWidget_Catalogue_VPR_TDNN.setSortingEnabled(False)
+        ___qtreewidgetitem4 = self.TreeWidget_Catalogue_VPR_TDNN.topLevelItem(0)
         ___qtreewidgetitem4.setText(0, QCoreApplication.translate("MainWindow", u"RootItem", None));
         ___qtreewidgetitem5 = ___qtreewidgetitem4.child(0)
         ___qtreewidgetitem5.setText(0, QCoreApplication.translate("MainWindow", u"ChildItem", None));
-        self.TreeWidget_Catalogue_ASR_VPR.setSortingEnabled(__sortingEnabled1)
+        self.TreeWidget_Catalogue_VPR_TDNN.setSortingEnabled(__sortingEnabled1)
 
-        self.GroupBox_ASR_VPR_InputParams.setTitle(QCoreApplication.translate("MainWindow", u"GroupBox1", None))
-        self.Label_ASR_VPR_AudioDirInput.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.Label_ASR_VPR_StdAudioSpeaker.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.GroupBox_ASR_VPR_VPRParams.setTitle(QCoreApplication.translate("MainWindow", u"GroupBox2", None))
-        self.Label_ASR_VPR_DecisionThreshold.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.Label_ASR_VPR_ModelPath.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.Label_ASR_VPR_ModelType.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.Label_ASR_VPR_FeatureMethod.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.Label_ASR_VPR_DurationOfAudio.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.ToolBox_ASR_VPR_VPRParams_AdvanceSettings.setItemText(self.ToolBox_ASR_VPR_VPRParams_AdvanceSettings.indexOf(self.ToolBox_ASR_VPR_VPRParams_AdvanceSettings_Page1Content), "")
-        self.GroupBox_ASR_VPR_OutputParams.setTitle(QCoreApplication.translate("MainWindow", u"GroupBox3", None))
-        self.Label_ASR_VPR_OutputDirName.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.Label_ASR_VPR_AudioSpeakersDataName.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.ToolBox_ASR_VPR_OutputParams_AdvanceSettings.setItemText(self.ToolBox_ASR_VPR_OutputParams_AdvanceSettings.indexOf(self.ToolBox_ASR_VPR_OutputParams_AdvanceSettings_Page1Content), "")
+        self.GroupBox_VPR_TDNN_InputParams.setTitle(QCoreApplication.translate("MainWindow", u"GroupBox1", None))
+        self.Label_VPR_TDNN_AudioDirInput.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.Label_VPR_TDNN_StdAudioSpeaker.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.GroupBox_VPR_TDNN_VPRParams.setTitle(QCoreApplication.translate("MainWindow", u"GroupBox2", None))
+        self.Label_VPR_TDNN_DecisionThreshold.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.Label_VPR_TDNN_ModelPath.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.Label_VPR_TDNN_ModelType.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.Label_VPR_TDNN_FeatureMethod.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.Label_VPR_TDNN_DurationOfAudio.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.ToolBox_VPR_TDNN_VPRParams_AdvanceSettings.setItemText(self.ToolBox_VPR_TDNN_VPRParams_AdvanceSettings.indexOf(self.ToolBox_VPR_TDNN_VPRParams_AdvanceSettings_Page1Content), "")
+        self.GroupBox_VPR_TDNN_OutputParams.setTitle(QCoreApplication.translate("MainWindow", u"GroupBox3", None))
+        self.Label_VPR_TDNN_OutputDirName.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.Label_VPR_TDNN_AudioSpeakersDataName.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.ToolBox_VPR_TDNN_OutputParams_AdvanceSettings.setItemText(self.ToolBox_VPR_TDNN_OutputParams_AdvanceSettings.indexOf(self.ToolBox_VPR_TDNN_OutputParams_AdvanceSettings_Page1Content), "")
         self.Button_VoiceTranscriber_Title.setText(QCoreApplication.translate("MainWindow", u"Label", None))
         ___qtreewidgetitem6 = self.TreeWidget_Catalogue_STT_Whisper.headerItem()
         ___qtreewidgetitem6.setText(0, QCoreApplication.translate("MainWindow", u"HeaderView", None));
@@ -11173,7 +11173,7 @@ class Ui_MainWindow(object):
         self.CheckBox_Setting_Synchronizer.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
         self.GroupBox_Settings_Tools_Path.setTitle(QCoreApplication.translate("MainWindow", u"GroupBox", None))
         self.Label_Process_OutputRoot.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.Label_ASR_VPR_OutputRoot.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.Label_VPR_TDNN_OutputRoot.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_STT_Whisper_OutputRoot.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_DAT_GPTSoVITS_OutputRoot.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_DAT_VITS_OutputRoot.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))

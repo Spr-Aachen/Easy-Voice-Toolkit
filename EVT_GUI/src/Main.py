@@ -545,7 +545,7 @@ class CustomSignals_ModelView(QObject):
     '''
     Signal_Process_UVR = Signal(list)
 
-    Signal_ASR_VPR = Signal(list)
+    Signal_VPR_TDNN = Signal(list)
 
     Signal_STT_Whisper = Signal(list)
 
@@ -641,9 +641,9 @@ class Model_View(QObject):
                 ['pth', 'onnx']
             )
         )
-        ModelViewSignals.Signal_ASR_VPR.emit(
+        ModelViewSignals.Signal_VPR_TDNN.emit(
             self.GetModelsInfo(
-                QFunc.NormPath(Path(ModelDir).joinpath('ASR', 'VPR')),
+                QFunc.NormPath(Path(ModelDir).joinpath('VPR', 'TDNN')),
                 ['pth']
             )
         )
@@ -703,8 +703,8 @@ def AddLocalModel(ModelPath: str, Sector: list[str] = ['Tool', 'Type']):
     shutil.move(ModelPath, MoveToDst)
 
 
-# ClientFunc: GetASRResult
-def ASRResult_Get(AudioSpeakersData_Path: str):
+# ClientFunc: GetVPRResult
+def VPRResult_Get(AudioSpeakersData_Path: str):
     AudioSpeakerSimList = []
     with open(AudioSpeakersData_Path, mode = 'r', encoding = 'utf-8') as AudioSpeakersData:
         AudioSpeakerSimLines = AudioSpeakersData.readlines()
@@ -716,8 +716,8 @@ def ASRResult_Get(AudioSpeakersData_Path: str):
     return AudioSpeakerSimList
 
 
-# ClientFunc: SaveASRResult
-def ASRResult_Save(AudioSpeakers: dict, AudioSpeakersData_Path: str, MoveAudio: bool, MoveToDst: Optional[str] = None):
+# ClientFunc: SaveVPRResult
+def VPRResult_Save(AudioSpeakers: dict, AudioSpeakersData_Path: str, MoveAudio: bool, MoveToDst: Optional[str] = None):
     with open(AudioSpeakersData_Path, mode = 'w', encoding = 'utf-8') as AudioSpeakersData:
         Lines = []
         for Audio, Speaker in AudioSpeakers.items():
@@ -914,7 +914,7 @@ class MainWindow(Window_MainWindow):
         ModelPath = LineEdit_Models_Append.text()
         if QFunc.NormPath(ModelPath) is None:
             return
-        ToolIndexList = ['Process', 'ASR', 'STT', 'TTS']
+        ToolIndexList = ['Process', 'VPR', 'STT', 'TTS']
         ToolIndex = self.ui.StackedWidget_Pages_Models.currentIndex()
         TabWidget = QFunc.Function_FindChildUI(self.ui.StackedWidget_Pages_Models.currentWidget(), QTabWidget)
         TypeIndex = TabWidget.currentIndex()
@@ -954,52 +954,52 @@ class MainWindow(Window_MainWindow):
         )
         DialogBox_AudioSpeakersDataPath.exec()
 
-    def showASRResult(self, AudioSaveDir, AudioSpeakersData_Path, ComboItems):
-        ChildWindow_ASR = Window_ChildWindow_ASR(self)
+    def showVPRResult(self, AudioSaveDir, AudioSpeakersData_Path, ComboItems):
+        ChildWindow_VPR = Window_ChildWindow_VPR(self)
 
-        ChildWindow_ASR.ui.Button_Close.clicked.connect(
+        ChildWindow_VPR.ui.Button_Close.clicked.connect(
             lambda: MessageBoxBase.pop(self,
                 QMessageBox.Question, "Ask",
                 "确认放弃编辑？",
                 QMessageBox.Yes|QMessageBox.No,
                 {
                     QMessageBox.Yes: lambda: (
-                        ChildWindow_ASR.close()
+                        ChildWindow_VPR.close()
                     )
                 }
             )
         )
-        ChildWindow_ASR.ui.Button_Maximize.clicked.connect(lambda: ChildWindow_ASR.showNormal() if ChildWindow_ASR.isMaximized() else ChildWindow_ASR.showMaximized())
+        ChildWindow_VPR.ui.Button_Maximize.clicked.connect(lambda: ChildWindow_VPR.showNormal() if ChildWindow_VPR.isMaximized() else ChildWindow_VPR.showMaximized())
 
         QFunc.Function_SetText(
-            Widget = ChildWindow_ASR.ui.Label_Title,
+            Widget = ChildWindow_VPR.ui.Label_Title,
             Text = QFunc.SetRichText(
-                Title = QCA.translate('ChildWindow_ASR', "语音识别结果")
+                Title = QCA.translate('ChildWindow_VPR', "语音识别结果")
             )
         )
         QFunc.Function_SetText(
-            Widget = ChildWindow_ASR.ui.Label_Text,
+            Widget = ChildWindow_VPR.ui.Label_Text,
             Text = QFunc.SetRichText(
-                Body = QCA.translate('ChildWindow_ASR', "这里记录了每个语音文件与其对应的人物名（留空表示无匹配人物且最终不会被保留）\n你可以对这些人物名进行更改并在表格下方设置音频的保存路径")
+                Body = QCA.translate('ChildWindow_VPR', "这里记录了每个语音文件与其对应的人物名（留空表示无匹配人物且最终不会被保留）\n你可以对这些人物名进行更改并在表格下方设置音频的保存路径")
             )
         )
 
-        ChildWindow_ASR.ui.Table.setHorizontalHeaderLabels(['音频路径', '人物姓名', '相似度', '播放', '操作'])
+        ChildWindow_VPR.ui.Table.setHorizontalHeaderLabels(['音频路径', '人物姓名', '相似度', '播放', '操作'])
 
-        ChildWindow_ASR.ui.CheckBox.setText(QCA.translate('ChildWindow_ASR', "结束编辑时将拥有匹配人物的音频保存到:"))
-        ChildWindow_ASR.ui.CheckBox.setChecked(True)
-        ChildWindow_ASR.ui.LineEdit.ClearDefaultStyleSheet()
-        ChildWindow_ASR.ui.LineEdit.setStyleSheet(ChildWindow_ASR.ui.LineEdit.styleSheet() + 'LineEditBase {border-width: 0px 0px 1px 0px; border-radius: 0px;}')
-        ChildWindow_ASR.ui.LineEdit.setText(AudioSaveDir)
-        ChildWindow_ASR.ui.LineEdit.setReadOnly(True)
+        ChildWindow_VPR.ui.CheckBox.setText(QCA.translate('ChildWindow_VPR', "结束编辑时将拥有匹配人物的音频保存到:"))
+        ChildWindow_VPR.ui.CheckBox.setChecked(True)
+        ChildWindow_VPR.ui.LineEdit.ClearDefaultStyleSheet()
+        ChildWindow_VPR.ui.LineEdit.setStyleSheet(ChildWindow_VPR.ui.LineEdit.styleSheet() + 'LineEditBase {border-width: 0px 0px 1px 0px; border-radius: 0px;}')
+        ChildWindow_VPR.ui.LineEdit.setText(AudioSaveDir)
+        ChildWindow_VPR.ui.LineEdit.setReadOnly(True)
 
-        ChildWindow_ASR.ui.Button_Cancel.setText(QCA.translate('ChildWindow_ASR', "取消"))
-        ChildWindow_ASR.ui.Button_Cancel.clicked.connect(ChildWindow_ASR.ui.Button_Close.click)
-        ChildWindow_ASR.ui.Button_Save.setText(QCA.translate('ChildWindow_ASR', "保存"))
-        ChildWindow_ASR.ui.Button_Save.clicked.connect(
+        ChildWindow_VPR.ui.Button_Cancel.setText(QCA.translate('ChildWindow_VPR', "取消"))
+        ChildWindow_VPR.ui.Button_Cancel.clicked.connect(ChildWindow_VPR.ui.Button_Close.click)
+        ChildWindow_VPR.ui.Button_Save.setText(QCA.translate('ChildWindow_VPR', "保存"))
+        ChildWindow_VPR.ui.Button_Save.clicked.connect(
             lambda: (
-                ASRResult_Save(
-                    ChildWindow_ASR.ui.Table.GetValue(),
+                VPRResult_Save(
+                    ChildWindow_VPR.ui.Table.GetValue(),
                     AudioSpeakersData_Path,
                     False
                 ),
@@ -1009,31 +1009,31 @@ class MainWindow(Window_MainWindow):
                 )
             )
         )
-        ChildWindow_ASR.ui.Button_Confirm.setText(QCA.translate('ChildWindow_ASR', "确认"))
-        ChildWindow_ASR.ui.Button_Confirm.clicked.connect(
+        ChildWindow_VPR.ui.Button_Confirm.setText(QCA.translate('ChildWindow_VPR', "确认"))
+        ChildWindow_VPR.ui.Button_Confirm.clicked.connect(
             lambda: MessageBoxBase.pop(self,
                 QMessageBox.Question, "Ask",
                 "确认结束并应用编辑？",
                 QMessageBox.Yes|QMessageBox.No,
                 {
                     QMessageBox.Yes: lambda: (
-                        ASRResult_Save(
-                            ChildWindow_ASR.ui.Table.GetValue(),
+                        VPRResult_Save(
+                            ChildWindow_VPR.ui.Table.GetValue(),
                             AudioSpeakersData_Path,
-                            ChildWindow_ASR.ui.CheckBox.isChecked(),
+                            ChildWindow_VPR.ui.CheckBox.isChecked(),
                             AudioSaveDir
                         ),
-                        ChildWindow_ASR.close()
+                        ChildWindow_VPR.close()
                     )
                 }
             )
         )
 
-        ChildWindow_ASR.ui.Table.SetValue(
-            ASRResult_Get(AudioSpeakersData_Path),
+        ChildWindow_VPR.ui.Table.SetValue(
+            VPRResult_Get(AudioSpeakersData_Path),
             ComboItems
         )
-        ChildWindow_ASR.exec()
+        ChildWindow_VPR.exec()
 
     def showSTTResult(self, SRTDir, AudioDir):
         ChildWindow_STT = Window_ChildWindow_STT(self)
@@ -1370,15 +1370,15 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_Menu_Process.setChecked(False)
         self.ui.Button_Menu_Process.setToolTip(QCA.translate('MainWindow', "工具：音频处理"))
 
-        self.ui.Button_Menu_ASR.setText(QCA.translate('MainWindow', "识别"))
-        self.ui.Button_Menu_ASR.clicked.connect(
+        self.ui.Button_Menu_VPR.setText(QCA.translate('MainWindow', "识别"))
+        self.ui.Button_Menu_VPR.clicked.connect(
             lambda: Function_AnimateStackedWidget(
                 StackedWidget = self.ui.StackedWidget_Pages,
                 Target = 4
             )
         )
-        self.ui.Button_Menu_ASR.setChecked(False)
-        self.ui.Button_Menu_ASR.setToolTip(QCA.translate('MainWindow', "工具：语音识别"))
+        self.ui.Button_Menu_VPR.setChecked(False)
+        self.ui.Button_Menu_VPR.setToolTip(QCA.translate('MainWindow', "工具：语音识别"))
 
         self.ui.Button_Menu_STT.setText(QCA.translate('MainWindow', "转录"))
         self.ui.Button_Menu_STT.clicked.connect(
@@ -1754,21 +1754,21 @@ class MainWindow(Window_MainWindow):
             )
         )
 
-        self.ui.Button_Models_ASR_Title.setText(QCA.translate('MainWindow', 'ASR（识别）'))
-        self.ui.Button_Models_ASR_Title.setHorizontal(True)
-        self.ui.Button_Models_ASR_Title.setChecked(False)
-        self.ui.Button_Models_ASR_Title.clicked.connect(
+        self.ui.Button_Models_VPR_Title.setText(QCA.translate('MainWindow', 'VPR（识别）'))
+        self.ui.Button_Models_VPR_Title.setHorizontal(True)
+        self.ui.Button_Models_VPR_Title.setChecked(False)
+        self.ui.Button_Models_VPR_Title.clicked.connect(
             lambda: Function_AnimateStackedWidget(
                 StackedWidget = self.ui.StackedWidget_Pages_Models,
                 Target = 1
             )
         )
-        self.ui.Button_Models_ASR_Title.setToolTip(QCA.translate('MainWindow', "语音识别模型"))
+        self.ui.Button_Models_VPR_Title.setToolTip(QCA.translate('MainWindow', "语音识别模型"))
 
-        self.ui.TabWidget_Models_ASR.setTabText(0, 'VPR（声纹识别）')
-        self.ui.Table_Models_ASR_VPR.setHorizontalHeaderLabels(['名字', '类型', '大小', '日期', '操作'])
-        ModelViewSignals.Signal_ASR_VPR.connect(self.ui.Table_Models_ASR_VPR.SetValue)
-        self.ui.Table_Models_ASR_VPR.Download.connect(
+        self.ui.TabWidget_Models_VPR.setTabText(0, 'VPR（声纹识别）')
+        self.ui.Table_Models_VPR_TDNN.setHorizontalHeaderLabels(['名字', '类型', '大小', '日期', '操作'])
+        ModelViewSignals.Signal_VPR_TDNN.connect(self.ui.Table_Models_VPR_TDNN.SetValue)
+        self.ui.Table_Models_VPR_TDNN.Download.connect(
             lambda Params: Function_SetMethodExecutor(self,
                 Method = Model_Downloader.Execute,
                 Params = Params
@@ -2478,7 +2478,7 @@ class MainWindow(Window_MainWindow):
         )
 
         #############################################################
-        ######################## Content: ASR #######################
+        ######################## Content: VPR #######################
         #############################################################
 
         # Guidance
@@ -2486,7 +2486,7 @@ class MainWindow(Window_MainWindow):
             lambda: self.showGuidance(
                 QCA.translate('MainWindow', "引导（仅出现一次）"),
                 [
-                    QFunc.NormPath(Path(ResourceDir).joinpath('assets/images/others/Guidance_ASR.png')),
+                    QFunc.NormPath(Path(ResourceDir).joinpath('assets/images/others/Guidance_VPR.png')),
                     QFunc.NormPath(Path(ResourceDir).joinpath('assets/images/others/Guidance_Layout.png'))
                 ],
                 [
@@ -2496,16 +2496,16 @@ class MainWindow(Window_MainWindow):
             )
         )
 
-        self.ui.Button_Menu_ASR.clicked.connect(
+        self.ui.Button_Menu_VPR.clicked.connect(
             lambda: (
                 self.ui.Button_VoiceIdentifier_Help.click(),
-                Config.EditConfig('Dialog', 'GuidanceShown_ASR', 'True')
-            ) if eval(Config.GetValue('Dialog', 'GuidanceShown_ASR', 'False')) is False else None
+                Config.EditConfig('Dialog', 'GuidanceShown_VPR', 'True')
+            ) if eval(Config.GetValue('Dialog', 'GuidanceShown_VPR', 'False')) is False else None
         )
 
         # ParamsManager
-        Path_Config_ASR_VPR = QFunc.NormPath(Path(ConfigDir).joinpath('Config_ASR_VPR.ini'))
-        ParamsManager_ASR_VPR = ParamsManager(Path_Config_ASR_VPR)
+        Path_Config_VPR_TDNN = QFunc.NormPath(Path(ConfigDir).joinpath('Config_VPR_TDNN.ini'))
+        ParamsManager_VPR_TDNN = ParamsManager(Path_Config_VPR_TDNN)
 
         # Top
         self.ui.Button_VoiceIdentifier_Title.setText(QCA.translate('MainWindow', "VPR（声纹识别）"))
@@ -2513,332 +2513,332 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_VoiceIdentifier_Title.setChecked(True)
         self.ui.Button_VoiceIdentifier_Title.clicked.connect(
             lambda: Function_AnimateStackedWidget(
-                StackedWidget = self.ui.StackedWidget_Pages_ASR,
+                StackedWidget = self.ui.StackedWidget_Pages_VPR,
                 Target = 0
             )
         )
 
         # Left
-        self.ui.TreeWidget_Catalogue_ASR_VPR.clear()
-        self.ui.TreeWidget_Catalogue_ASR_VPR.setHeaderHidden(True)
+        self.ui.TreeWidget_Catalogue_VPR_TDNN.clear()
+        self.ui.TreeWidget_Catalogue_VPR_TDNN.setHeaderHidden(True)
 
         # Middle
-        self.ui.GroupBox_ASR_VPR_InputParams.setTitle(QCA.translate('MainWindow', "输入参数"))
+        self.ui.GroupBox_VPR_TDNN_InputParams.setTitle(QCA.translate('MainWindow', "输入参数"))
         Function_AddToTreeWidget(
-            Widget = self.ui.GroupBox_ASR_VPR_InputParams,
-            TreeWidget = self.ui.TreeWidget_Catalogue_ASR_VPR,
+            Widget = self.ui.GroupBox_VPR_TDNN_InputParams,
+            TreeWidget = self.ui.TreeWidget_Catalogue_VPR_TDNN,
             RootItemText = QCA.translate('MainWindow', "输入参数")
         )
 
         QFunc.Function_SetText(
-            Widget = self.ui.Label_ASR_VPR_AudioDirInput,
+            Widget = self.ui.Label_VPR_TDNN_AudioDirInput,
             Text = QFunc.SetRichText(
                 Body = QCA.translate('MainWindow', "音频输入目录\n需要进行语音识别筛选的音频文件的所在目录。")
             )
         )
-        ParamsManager_ASR_VPR.SetParam(
-            Widget = self.ui.LineEdit_ASR_VPR_AudioDirInput,
+        ParamsManager_VPR_TDNN.SetParam(
+            Widget = self.ui.LineEdit_VPR_TDNN_AudioDirInput,
             Section = 'Input Params',
             Option = 'Audio_Dir_Input',
             DefaultValue = '',
             SetPlaceholderText = True
         )
-        self.ui.LineEdit_ASR_VPR_AudioDirInput.SetFileDialog(
+        self.ui.LineEdit_VPR_TDNN_AudioDirInput.SetFileDialog(
             Mode = "SelectFolder",
             Directory = Path(CurrentDir).joinpath('音频处理结果').as_posix()
         )
-        self.ui.Button_ASR_VPR_AudioDirInput_MoreActions.SetMenu(
+        self.ui.Button_VPR_TDNN_AudioDirInput_MoreActions.SetMenu(
             ActionEvents = {
-                "重置": lambda: ParamsManager_ASR_VPR.ResetParam(self.ui.LineEdit_ASR_VPR_AudioDirInput),
-                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_ASR_VPR_AudioDirInput.text())
+                "重置": lambda: ParamsManager_VPR_TDNN.ResetParam(self.ui.LineEdit_VPR_TDNN_AudioDirInput),
+                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_VPR_TDNN_AudioDirInput.text())
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_ASR_VPR_AudioDirInput,
-            TreeWidget = self.ui.TreeWidget_Catalogue_ASR_VPR,
+            Widget = self.ui.Label_VPR_TDNN_AudioDirInput,
+            TreeWidget = self.ui.TreeWidget_Catalogue_VPR_TDNN,
             RootItemText = QCA.translate('MainWindow', "输入参数"),
             ChildItemText = QCA.translate('MainWindow', "音频输入目录")
         )
 
         QFunc.Function_SetText(
-            Widget = self.ui.Label_ASR_VPR_StdAudioSpeaker,
+            Widget = self.ui.Label_VPR_TDNN_StdAudioSpeaker,
             Text = QFunc.SetRichText(
                 Body = QCA.translate('MainWindow', "目标人物与音频\n目标人物的名字及其语音文件的路径。")
             )
         )
-        self.ui.Table_ASR_VPR_StdAudioSpeaker.setHorizontalHeaderLabels(['人物姓名', '音频路径', '增删'])
-        ParamsManager_ASR_VPR.SetParam(
-            Widget = self.ui.Table_ASR_VPR_StdAudioSpeaker,
+        self.ui.Table_VPR_TDNN_StdAudioSpeaker.setHorizontalHeaderLabels(['人物姓名', '音频路径', '增删'])
+        ParamsManager_VPR_TDNN.SetParam(
+            Widget = self.ui.Table_VPR_TDNN_StdAudioSpeaker,
             Section = 'Input Params',
             Option = 'StdAudioSpeaker',
             DefaultValue = {"": ""}
         )
-        self.ui.Table_ASR_VPR_StdAudioSpeaker.SetFileDialog(
+        self.ui.Table_VPR_TDNN_StdAudioSpeaker.SetFileDialog(
             FileType = "音频类型 (*.flac *.wav *.mp3 *.aac *.m4a *.wma *.aiff *.au *.ogg)"
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_ASR_VPR_StdAudioSpeaker,
-            TreeWidget = self.ui.TreeWidget_Catalogue_ASR_VPR,
+            Widget = self.ui.Label_VPR_TDNN_StdAudioSpeaker,
+            TreeWidget = self.ui.TreeWidget_Catalogue_VPR_TDNN,
             RootItemText = QCA.translate('MainWindow', "输入参数"),
             ChildItemText = QCA.translate('MainWindow', "目标人物与音频")
         )
 
-        self.ui.GroupBox_ASR_VPR_VPRParams.setTitle(QCA.translate('MainWindow', "语音识别参数"))
+        self.ui.GroupBox_VPR_TDNN_VPRParams.setTitle(QCA.translate('MainWindow', "语音识别参数"))
         Function_AddToTreeWidget(
-            Widget = self.ui.GroupBox_ASR_VPR_VPRParams,
-            TreeWidget = self.ui.TreeWidget_Catalogue_ASR_VPR,
+            Widget = self.ui.GroupBox_VPR_TDNN_VPRParams,
+            TreeWidget = self.ui.TreeWidget_Catalogue_VPR_TDNN,
             RootItemText = QCA.translate('MainWindow', "语音识别参数")
         )
 
         QFunc.Function_SetText(
-            Widget = self.ui.Label_ASR_VPR_DecisionThreshold,
+            Widget = self.ui.Label_VPR_TDNN_DecisionThreshold,
             Text = QFunc.SetRichText(
                 Body = QCA.translate('MainWindow', "判断阈值\n判断相似度的阈值，若参与比对的说话人声音相似度较高可以增加该值。")
             )
         )
-        self.ui.DoubleSpinBox_ASR_VPR_DecisionThreshold.setRange(0.5, 1)
-        self.ui.DoubleSpinBox_ASR_VPR_DecisionThreshold.setSingleStep(0.01)
-        ParamsManager_ASR_VPR.SetParam(
-            Widget = self.ui.DoubleSpinBox_ASR_VPR_DecisionThreshold,
+        self.ui.DoubleSpinBox_VPR_TDNN_DecisionThreshold.setRange(0.5, 1)
+        self.ui.DoubleSpinBox_VPR_TDNN_DecisionThreshold.setSingleStep(0.01)
+        ParamsManager_VPR_TDNN.SetParam(
+            Widget = self.ui.DoubleSpinBox_VPR_TDNN_DecisionThreshold,
             Section = 'VPR Params',
             Option = 'DecisionThreshold',
             DefaultValue = 0.75
         )
-        self.ui.Button_ASR_VPR_DecisionThreshold_MoreActions.SetMenu(
+        self.ui.Button_VPR_TDNN_DecisionThreshold_MoreActions.SetMenu(
             ActionEvents = {
-                "重置": lambda: ParamsManager_ASR_VPR.ResetParam(self.ui.DoubleSpinBox_ASR_VPR_DecisionThreshold)
+                "重置": lambda: ParamsManager_VPR_TDNN.ResetParam(self.ui.DoubleSpinBox_VPR_TDNN_DecisionThreshold)
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_ASR_VPR_DecisionThreshold,
-            TreeWidget = self.ui.TreeWidget_Catalogue_ASR_VPR,
+            Widget = self.ui.Label_VPR_TDNN_DecisionThreshold,
+            TreeWidget = self.ui.TreeWidget_Catalogue_VPR_TDNN,
             RootItemText = QCA.translate('MainWindow', "语音识别参数"),
             ChildItemText = QCA.translate('MainWindow', "判断阈值")
         )
 
         QFunc.Function_SetText(
-            Widget = self.ui.Label_ASR_VPR_ModelPath,
+            Widget = self.ui.Label_VPR_TDNN_ModelPath,
             Text = QFunc.SetRichText(
                 Body = QCA.translate('MainWindow', "模型加载路径\n用于加载的声纹识别模型的路径。")
             )
         )
-        ASR_VPR_ModelPath_Default = Path(ModelDir).joinpath('ASR', 'VPR', 'Downloaded', 'Ecapa-Tdnn_spectrogram.pth').as_posix()
-        ParamsManager_ASR_VPR.SetParam(
-            Widget = self.ui.LineEdit_ASR_VPR_ModelPath,
+        VPR_TDNN_ModelPath_Default = Path(ModelDir).joinpath('VPR', 'TDNN', 'Downloaded', 'Ecapa-Tdnn_spectrogram.pth').as_posix()
+        ParamsManager_VPR_TDNN.SetParam(
+            Widget = self.ui.LineEdit_VPR_TDNN_ModelPath,
             Section = 'VPR Params',
             Option = 'Model_Path',
-            DefaultValue = ASR_VPR_ModelPath_Default,
+            DefaultValue = VPR_TDNN_ModelPath_Default,
             SetPlaceholderText = True,
-            PlaceholderText = ASR_VPR_ModelPath_Default
+            PlaceholderText = VPR_TDNN_ModelPath_Default
         )
-        self.ui.LineEdit_ASR_VPR_ModelPath.SetFileDialog(
+        self.ui.LineEdit_VPR_TDNN_ModelPath.SetFileDialog(
             Mode = "SelectFile",
             FileType = "pth类型 (*.pth)",
-            Directory = QFunc.NormPath(Path(ModelDir).joinpath('ASR', 'VPR', 'Downloaded'))
+            Directory = QFunc.NormPath(Path(ModelDir).joinpath('VPR', 'TDNN', 'Downloaded'))
         )
-        self.ui.Button_ASR_VPR_ModelPath_MoreActions.SetMenu(
+        self.ui.Button_VPR_TDNN_ModelPath_MoreActions.SetMenu(
             ActionEvents = {
-                "重置": lambda: ParamsManager_ASR_VPR.ResetParam(self.ui.LineEdit_ASR_VPR_ModelPath),
-                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_ASR_VPR_ModelPath.text())
+                "重置": lambda: ParamsManager_VPR_TDNN.ResetParam(self.ui.LineEdit_VPR_TDNN_ModelPath),
+                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_VPR_TDNN_ModelPath.text())
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_ASR_VPR_ModelPath,
-            TreeWidget = self.ui.TreeWidget_Catalogue_ASR_VPR,
+            Widget = self.ui.Label_VPR_TDNN_ModelPath,
+            TreeWidget = self.ui.TreeWidget_Catalogue_VPR_TDNN,
             RootItemText = QCA.translate('MainWindow', "语音识别参数"),
             ChildItemText = QCA.translate('MainWindow', "模型加载路径")
         )
 
-        self.ui.ToolBox_ASR_VPR_VPRParams_AdvanceSettings.widget(0).setText(QCA.translate('MainWindow', "高级设置"))
-        self.ui.ToolBox_ASR_VPR_VPRParams_AdvanceSettings.widget(0).collapse()
+        self.ui.ToolBox_VPR_TDNN_VPRParams_AdvanceSettings.widget(0).setText(QCA.translate('MainWindow', "高级设置"))
+        self.ui.ToolBox_VPR_TDNN_VPRParams_AdvanceSettings.widget(0).collapse()
 
         QFunc.Function_SetText(
-            Widget = self.ui.Label_ASR_VPR_ModelType,
+            Widget = self.ui.Label_VPR_TDNN_ModelType,
             Text = QFunc.SetRichText(
                 Body = QCA.translate('MainWindow', "模型类型\n声纹识别模型的类型。")
             )
         )
-        self.ui.ComboBox_ASR_VPR_ModelType.addItems(['Ecapa-Tdnn'])
-        ParamsManager_ASR_VPR.SetParam(
-            Widget = self.ui.ComboBox_ASR_VPR_ModelType,
+        self.ui.ComboBox_VPR_TDNN_ModelType.addItems(['Ecapa-Tdnn'])
+        ParamsManager_VPR_TDNN.SetParam(
+            Widget = self.ui.ComboBox_VPR_TDNN_ModelType,
             Section = 'VPR Params',
             Option = 'Model_Type',
             DefaultValue = 'Ecapa-Tdnn'
         )
-        self.ui.Button_ASR_VPR_ModelPath_MoreActions.SetMenu(
+        self.ui.Button_VPR_TDNN_ModelPath_MoreActions.SetMenu(
             ActionEvents = {
-                "重置": lambda: ParamsManager_ASR_VPR.ResetParam(self.ui.ComboBox_ASR_VPR_ModelType)
+                "重置": lambda: ParamsManager_VPR_TDNN.ResetParam(self.ui.ComboBox_VPR_TDNN_ModelType)
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_ASR_VPR_ModelType,
-            TreeWidget = self.ui.TreeWidget_Catalogue_ASR_VPR,
+            Widget = self.ui.Label_VPR_TDNN_ModelType,
+            TreeWidget = self.ui.TreeWidget_Catalogue_VPR_TDNN,
             RootItemText = QCA.translate('MainWindow', "语音识别参数"),
             ChildItemText = QCA.translate('MainWindow', "模型类型")
         )
 
         QFunc.Function_SetText(
-            Widget = self.ui.Label_ASR_VPR_FeatureMethod,
+            Widget = self.ui.Label_VPR_TDNN_FeatureMethod,
             Text = QFunc.SetRichText(
                 Body = QCA.translate('MainWindow', "预处理方法\n音频的预处理方法。")
             )
         )
-        self.ui.ComboBox_ASR_VPR_FeatureMethod.addItems(['spectrogram', 'melspectrogram'])
-        ParamsManager_ASR_VPR.SetParam(
-            Widget = self.ui.ComboBox_ASR_VPR_FeatureMethod,
+        self.ui.ComboBox_VPR_TDNN_FeatureMethod.addItems(['spectrogram', 'melspectrogram'])
+        ParamsManager_VPR_TDNN.SetParam(
+            Widget = self.ui.ComboBox_VPR_TDNN_FeatureMethod,
             Section = 'VPR Params',
             Option = 'Feature_Method',
             DefaultValue = 'spectrogram'
         )
-        self.ui.Button_ASR_VPR_FeatureMethod_MoreActions.SetMenu(
+        self.ui.Button_VPR_TDNN_FeatureMethod_MoreActions.SetMenu(
             ActionEvents = {
-                "重置": lambda: ParamsManager_ASR_VPR.ResetParam(self.ui.ComboBox_ASR_VPR_FeatureMethod)
+                "重置": lambda: ParamsManager_VPR_TDNN.ResetParam(self.ui.ComboBox_VPR_TDNN_FeatureMethod)
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_ASR_VPR_FeatureMethod,
-            TreeWidget = self.ui.TreeWidget_Catalogue_ASR_VPR,
+            Widget = self.ui.Label_VPR_TDNN_FeatureMethod,
+            TreeWidget = self.ui.TreeWidget_Catalogue_VPR_TDNN,
             RootItemText = QCA.translate('MainWindow', "语音识别参数"),
             ChildItemText = QCA.translate('MainWindow', "预处理方法")
         )
 
         QFunc.Function_SetText(
-            Widget = self.ui.Label_ASR_VPR_DurationOfAudio,
+            Widget = self.ui.Label_VPR_TDNN_DurationOfAudio,
             Text = QFunc.SetRichText(
                 Body = QCA.translate('MainWindow', "音频长度\n用于预测的音频长度。")
             )
         )
-        self.ui.DoubleSpinBox_ASR_VPR_DurationOfAudio.setRange(0, 30)
-        #self.ui.DoubleSpinBox_ASR_VPR_DurationOfAudio.setSingleStep(0.01)
-        ParamsManager_ASR_VPR.SetParam(
-            Widget = self.ui.DoubleSpinBox_ASR_VPR_DurationOfAudio,
+        self.ui.DoubleSpinBox_VPR_TDNN_DurationOfAudio.setRange(0, 30)
+        #self.ui.DoubleSpinBox_VPR_TDNN_DurationOfAudio.setSingleStep(0.01)
+        ParamsManager_VPR_TDNN.SetParam(
+            Widget = self.ui.DoubleSpinBox_VPR_TDNN_DurationOfAudio,
             Section = 'VPR Params',
             Option = 'Duration_of_Audio',
             DefaultValue = 3.00
         )
-        self.ui.Button_ASR_VPR_DurationOfAudio_MoreActions.SetMenu(
+        self.ui.Button_VPR_TDNN_DurationOfAudio_MoreActions.SetMenu(
             ActionEvents = {
-                "重置": lambda: ParamsManager_ASR_VPR.ResetParam(self.ui.DoubleSpinBox_ASR_VPR_DurationOfAudio)
+                "重置": lambda: ParamsManager_VPR_TDNN.ResetParam(self.ui.DoubleSpinBox_VPR_TDNN_DurationOfAudio)
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_ASR_VPR_DurationOfAudio,
-            TreeWidget = self.ui.TreeWidget_Catalogue_ASR_VPR,
+            Widget = self.ui.Label_VPR_TDNN_DurationOfAudio,
+            TreeWidget = self.ui.TreeWidget_Catalogue_VPR_TDNN,
             RootItemText = QCA.translate('MainWindow', "语音识别参数"),
             ChildItemText = QCA.translate('MainWindow', "音频长度")
         )
 
-        self.ui.GroupBox_ASR_VPR_OutputParams.setTitle(QCA.translate('MainWindow', "输出参数"))
+        self.ui.GroupBox_VPR_TDNN_OutputParams.setTitle(QCA.translate('MainWindow', "输出参数"))
         Function_AddToTreeWidget(
-            Widget = self.ui.GroupBox_ASR_VPR_OutputParams,
-            TreeWidget = self.ui.TreeWidget_Catalogue_ASR_VPR,
+            Widget = self.ui.GroupBox_VPR_TDNN_OutputParams,
+            TreeWidget = self.ui.TreeWidget_Catalogue_VPR_TDNN,
             RootItemText = QCA.translate('MainWindow', "输出参数")
         )
 
         QFunc.Function_SetText(
-            Widget = self.ui.Label_ASR_VPR_OutputDirName,
+            Widget = self.ui.Label_VPR_TDNN_OutputDirName,
             Text = QFunc.SetRichText(
                 Body = QCA.translate('MainWindow', "输出目录名\n用于保存最后生成的结果文件的目录的名字。")
             )
         )
-        ASR_VPR_OutputDirName_Default = str(date.today())
-        ParamsManager_ASR_VPR.SetParam(
-            Widget = self.ui.LineEdit_ASR_VPR_OutputDirName,
+        VPR_TDNN_OutputDirName_Default = str(date.today())
+        ParamsManager_VPR_TDNN.SetParam(
+            Widget = self.ui.LineEdit_VPR_TDNN_OutputDirName,
             Section = 'Output Params',
             Option = 'Audio_Dir_Output',
             DefaultValue = '',
             SetPlaceholderText = True,
-            PlaceholderText = ASR_VPR_OutputDirName_Default
+            PlaceholderText = VPR_TDNN_OutputDirName_Default
         )
-        self.ui.Button_ASR_VPR_OutputDirName_MoreActions.SetMenu(
+        self.ui.Button_VPR_TDNN_OutputDirName_MoreActions.SetMenu(
             ActionEvents = {
-                "重置": lambda: ParamsManager_ASR_VPR.ResetParam(self.ui.LineEdit_ASR_VPR_OutputDirName),
-                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_ASR_VPR_OutputDirName.text())
+                "重置": lambda: ParamsManager_VPR_TDNN.ResetParam(self.ui.LineEdit_VPR_TDNN_OutputDirName),
+                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_VPR_TDNN_OutputDirName.text())
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_ASR_VPR_OutputDirName,
-            TreeWidget = self.ui.TreeWidget_Catalogue_ASR_VPR,
+            Widget = self.ui.Label_VPR_TDNN_OutputDirName,
+            TreeWidget = self.ui.TreeWidget_Catalogue_VPR_TDNN,
             RootItemText = QCA.translate('MainWindow', "输出参数"),
             ChildItemText = QCA.translate('MainWindow', "输出目录名")
         )
 
-        self.ui.ToolBox_ASR_VPR_OutputParams_AdvanceSettings.widget(0).setText(QCA.translate('MainWindow', "高级设置"))
-        self.ui.ToolBox_ASR_VPR_OutputParams_AdvanceSettings.widget(0).collapse()
+        self.ui.ToolBox_VPR_TDNN_OutputParams_AdvanceSettings.widget(0).setText(QCA.translate('MainWindow', "高级设置"))
+        self.ui.ToolBox_VPR_TDNN_OutputParams_AdvanceSettings.widget(0).collapse()
 
         QFunc.Function_SetText(
-            Widget = self.ui.Label_ASR_VPR_AudioSpeakersDataName,
+            Widget = self.ui.Label_VPR_TDNN_AudioSpeakersDataName,
             Text = QFunc.SetRichText(
                 Body = QCA.translate('MainWindow', "识别结果文本名\n用于保存最后生成的记录音频文件与对应说话人的txt文件的名字。")
             )
         )
-        ASR_VPR_AudioSpeakersDataName_Default = "Recgonition_" + str(date.today())
-        ParamsManager_ASR_VPR.SetParam(
-            Widget = self.ui.LineEdit_ASR_VPR_AudioSpeakersDataName,
+        VPR_TDNN_AudioSpeakersDataName_Default = "Recgonition_" + str(date.today())
+        ParamsManager_VPR_TDNN.SetParam(
+            Widget = self.ui.LineEdit_VPR_TDNN_AudioSpeakersDataName,
             Section = 'Output Params',
             Option = 'FileList_Name',
-            DefaultValue = ASR_VPR_AudioSpeakersDataName_Default,
+            DefaultValue = VPR_TDNN_AudioSpeakersDataName_Default,
             SetPlaceholderText = True,
-            PlaceholderText = ASR_VPR_AudioSpeakersDataName_Default
+            PlaceholderText = VPR_TDNN_AudioSpeakersDataName_Default
         )
-        self.ui.Button_ASR_VPR_AudioSpeakersDataName_MoreActions.SetMenu(
+        self.ui.Button_VPR_TDNN_AudioSpeakersDataName_MoreActions.SetMenu(
             ActionEvents = {
-                "重置": lambda: ParamsManager_ASR_VPR.ResetParam(self.ui.LineEdit_ASR_VPR_AudioSpeakersDataName),
-                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_ASR_VPR_AudioSpeakersDataName.text())
+                "重置": lambda: ParamsManager_VPR_TDNN.ResetParam(self.ui.LineEdit_VPR_TDNN_AudioSpeakersDataName),
+                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_VPR_TDNN_AudioSpeakersDataName.text())
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_ASR_VPR_AudioSpeakersDataName,
-            TreeWidget = self.ui.TreeWidget_Catalogue_ASR_VPR,
+            Widget = self.ui.Label_VPR_TDNN_AudioSpeakersDataName,
+            TreeWidget = self.ui.TreeWidget_Catalogue_VPR_TDNN,
             RootItemText = QCA.translate('MainWindow', "输出参数"),
             ChildItemText = QCA.translate('MainWindow', "识别结果文本名")
         )
 
-        LineEdit_ASR_VPR_OutputDir = QLineEdit()
-        def SetText_LineEdit_ASR_VPR_OutputDir():
-            DirName = self.ui.LineEdit_ASR_VPR_OutputDirName.text()
+        LineEdit_VPR_TDNN_OutputDir = QLineEdit()
+        def SetText_LineEdit_VPR_TDNN_OutputDir():
+            DirName = self.ui.LineEdit_VPR_TDNN_OutputDirName.text()
             if len(DirName.strip()) == 0:
                 Alert = False
             else:
-                DirText = Path(self.ui.LineEdit_ASR_VPR_OutputRoot.text()).joinpath(DirName).as_posix()
-                LineEdit_ASR_VPR_OutputDir.setText(DirText)
+                DirText = Path(self.ui.LineEdit_VPR_TDNN_OutputRoot.text()).joinpath(DirName).as_posix()
+                LineEdit_VPR_TDNN_OutputDir.setText(DirText)
                 Alert = Path(DirText).exists() and list(Path(DirText).iterdir()) != []
-            self.ui.LineEdit_ASR_VPR_OutputDirName.Alert(True if Alert else False, "注意：目录已包含文件")
-        self.ui.LineEdit_ASR_VPR_OutputDirName.interacted.connect(SetText_LineEdit_ASR_VPR_OutputDir)
-        self.ui.LineEdit_ASR_VPR_OutputRoot.interacted.connect(SetText_LineEdit_ASR_VPR_OutputDir)
-        #SetText_LineEdit_ASR_VPR_OutputDir()
+            self.ui.LineEdit_VPR_TDNN_OutputDirName.Alert(True if Alert else False, "注意：目录已包含文件")
+        self.ui.LineEdit_VPR_TDNN_OutputDirName.interacted.connect(SetText_LineEdit_VPR_TDNN_OutputDir)
+        self.ui.LineEdit_VPR_TDNN_OutputRoot.interacted.connect(SetText_LineEdit_VPR_TDNN_OutputDir)
+        #SetText_LineEdit_VPR_TDNN_OutputDir()
 
-        LineEdit_ASR_VPR_AudioSpeakersDataPath = QLineEdit()
-        def SetText_LineEdit_ASR_VPR_AudioSpeakersDataPath():
-            FileName = self.ui.LineEdit_ASR_VPR_AudioSpeakersDataName.text()
+        LineEdit_VPR_TDNN_AudioSpeakersDataPath = QLineEdit()
+        def SetText_LineEdit_VPR_TDNN_AudioSpeakersDataPath():
+            FileName = self.ui.LineEdit_VPR_TDNN_AudioSpeakersDataName.text()
             if len(FileName.strip()) == 0:
                 Alert = False
             else:
-                PathText = Path(LineEdit_ASR_VPR_OutputDir.text()).joinpath(FileName).as_posix() + ".txt"
-                LineEdit_ASR_VPR_AudioSpeakersDataPath.setText(PathText)
+                PathText = Path(LineEdit_VPR_TDNN_OutputDir.text()).joinpath(FileName).as_posix() + ".txt"
+                LineEdit_VPR_TDNN_AudioSpeakersDataPath.setText(PathText)
                 Alert = Path(PathText).exists()
-            self.ui.LineEdit_ASR_VPR_AudioSpeakersDataName.Alert(True if Alert else False, "注意：路径已存在")
-        self.ui.LineEdit_ASR_VPR_AudioSpeakersDataName.interacted.connect(SetText_LineEdit_ASR_VPR_AudioSpeakersDataPath)
-        LineEdit_ASR_VPR_OutputDir.textChanged.connect(SetText_LineEdit_ASR_VPR_AudioSpeakersDataPath)
-        #SetText_LineEdit_ASR_VPR_AudioSpeakersDataPath()
+            self.ui.LineEdit_VPR_TDNN_AudioSpeakersDataName.Alert(True if Alert else False, "注意：路径已存在")
+        self.ui.LineEdit_VPR_TDNN_AudioSpeakersDataName.interacted.connect(SetText_LineEdit_VPR_TDNN_AudioSpeakersDataPath)
+        LineEdit_VPR_TDNN_OutputDir.textChanged.connect(SetText_LineEdit_VPR_TDNN_AudioSpeakersDataPath)
+        #SetText_LineEdit_VPR_TDNN_AudioSpeakersDataPath()
 
         # Right
-        MonitorFile_Config_VoiceIdentifier = QTasks.MonitorFile(Path_Config_ASR_VPR)
+        MonitorFile_Config_VoiceIdentifier = QTasks.MonitorFile(Path_Config_VPR_TDNN)
         MonitorFile_Config_VoiceIdentifier.start()
         MonitorFile_Config_VoiceIdentifier.Signal_FileContent.connect(
-            lambda FileContent: self.ui.TextBrowser_Params_ASR_VPR.setText(
+            lambda FileContent: self.ui.TextBrowser_Params_VPR_TDNN.setText(
                 FileContent
             )
         )
 
-        self.ui.Button_ResetSettings_ASR_VPR.setText(QCA.translate('MainWindow', "全部重置"))
-        self.ui.Button_ResetSettings_ASR_VPR.clicked.connect(
-            lambda: ParamsManager_ASR_VPR.ResetSettings()
+        self.ui.Button_ResetSettings_VPR_TDNN.setText(QCA.translate('MainWindow', "全部重置"))
+        self.ui.Button_ResetSettings_VPR_TDNN.clicked.connect(
+            lambda: ParamsManager_VPR_TDNN.ResetSettings()
         )
 
-        self.ui.Button_ImportSettings_ASR_VPR.setText(QCA.translate('MainWindow', "导入配置"))
-        self.ui.Button_ImportSettings_ASR_VPR.clicked.connect(
-            lambda: ParamsManager_ASR_VPR.ImportSettings(
+        self.ui.Button_ImportSettings_VPR_TDNN.setText(QCA.translate('MainWindow', "导入配置"))
+        self.ui.Button_ImportSettings_VPR_TDNN.clicked.connect(
+            lambda: ParamsManager_VPR_TDNN.ImportSettings(
                 QFunc.Function_GetFileDialog(
                     Mode = "SelectFile",
                     FileType = "ini类型 (*.ini)"
@@ -2846,9 +2846,9 @@ class MainWindow(Window_MainWindow):
             )
         )
 
-        self.ui.Button_ExportSettings_ASR_VPR.setText(QCA.translate('MainWindow', "导出配置"))
-        self.ui.Button_ExportSettings_ASR_VPR.clicked.connect(
-            lambda: ParamsManager_ASR_VPR.ExportSettings(
+        self.ui.Button_ExportSettings_VPR_TDNN.setText(QCA.translate('MainWindow', "导出配置"))
+        self.ui.Button_ExportSettings_VPR_TDNN.clicked.connect(
+            lambda: ParamsManager_VPR_TDNN.ExportSettings(
                 QFunc.Function_GetFileDialog(
                     Mode = "SaveFile",
                     FileType = "ini类型 (*.ini)"
@@ -2856,57 +2856,57 @@ class MainWindow(Window_MainWindow):
             )
         )
 
-        self.ui.Button_EditResult_ASR_VPR.setText(QCA.translate('MainWindow', "编辑识别结果"))
-        def EditASRResult():
-            ASRResultPath = QFunc.Function_GetFileDialog(
+        self.ui.Button_EditResult_VPR_TDNN.setText(QCA.translate('MainWindow', "编辑识别结果"))
+        def EditVPRResult():
+            VPRResultPath = QFunc.Function_GetFileDialog(
                 Mode = "SelectFile",
                 FileType = "txt类型 (*.txt)",
                 Directory = Path(CurrentDir).joinpath('语音识别结果', 'VPR').as_posix()
             )
-            if QFunc.NormPath(ASRResultPath) is not None:
+            if QFunc.NormPath(VPRResultPath) is not None:
                 self.ShowMask(True, "正在加载表单")
-                self.showASRResult(
-                    LineEdit_ASR_VPR_OutputDir.text(),
-                    ASRResultPath,
+                self.showVPRResult(
+                    LineEdit_VPR_TDNN_OutputDir.text(),
+                    VPRResultPath,
                     None
                 )
-        self.ui.Button_EditResult_ASR_VPR.clicked.connect(EditASRResult)
+        self.ui.Button_EditResult_VPR_TDNN.clicked.connect(EditVPRResult)
 
-        self.ui.Button_CheckOutput_ASR_VPR.setText(QCA.translate('MainWindow', "打开输出目录"))
+        self.ui.Button_CheckOutput_VPR_TDNN.setText(QCA.translate('MainWindow', "打开输出目录"))
         Function_SetURL(
-            Button = self.ui.Button_CheckOutput_ASR_VPR,
-            URL = self.ui.LineEdit_ASR_VPR_OutputRoot,
+            Button = self.ui.Button_CheckOutput_VPR_TDNN,
+            URL = self.ui.LineEdit_VPR_TDNN_OutputRoot,
             ButtonTooltip = "Click to open",
             CreateIfNotExist = True
         )
 
         # Bottom
-        self.ui.Button_ASR_VPR_Execute.setText(QCA.translate('MainWindow', "执行语音识别"))
-        self.ui.Button_ASR_VPR_Terminate.setText(QCA.translate('MainWindow', "终止语音识别"))
+        self.ui.Button_VPR_TDNN_Execute.setText(QCA.translate('MainWindow', "执行语音识别"))
+        self.ui.Button_VPR_TDNN_Terminate.setText(QCA.translate('MainWindow', "终止语音识别"))
         Function_SetMethodExecutor(self,
-            ExecuteButton = self.ui.Button_ASR_VPR_Execute,
-            TerminateButton = self.ui.Button_ASR_VPR_Terminate,
-            ProgressBar = self.ui.ProgressBar_ASR_VPR,
+            ExecuteButton = self.ui.Button_VPR_TDNN_Execute,
+            TerminateButton = self.ui.Button_VPR_TDNN_Terminate,
+            ProgressBar = self.ui.ProgressBar_VPR_TDNN,
             ConsoleWidget = self.ui.Frame_Console,
             Method = Execute_Voice_Identifying_VPR.Execute,
             ParamsFrom = [
-                self.ui.Table_ASR_VPR_StdAudioSpeaker,
-                self.ui.LineEdit_ASR_VPR_AudioDirInput,
-                self.ui.LineEdit_ASR_VPR_ModelPath,
-                self.ui.ComboBox_ASR_VPR_ModelType,
-                self.ui.ComboBox_ASR_VPR_FeatureMethod,
-                self.ui.DoubleSpinBox_ASR_VPR_DecisionThreshold,
-                self.ui.DoubleSpinBox_ASR_VPR_DurationOfAudio,
-                self.ui.LineEdit_ASR_VPR_OutputRoot,
-                self.ui.LineEdit_ASR_VPR_OutputDirName,
-                self.ui.LineEdit_ASR_VPR_AudioSpeakersDataName
+                self.ui.Table_VPR_TDNN_StdAudioSpeaker,
+                self.ui.LineEdit_VPR_TDNN_AudioDirInput,
+                self.ui.LineEdit_VPR_TDNN_ModelPath,
+                self.ui.ComboBox_VPR_TDNN_ModelType,
+                self.ui.ComboBox_VPR_TDNN_FeatureMethod,
+                self.ui.DoubleSpinBox_VPR_TDNN_DecisionThreshold,
+                self.ui.DoubleSpinBox_VPR_TDNN_DurationOfAudio,
+                self.ui.LineEdit_VPR_TDNN_OutputRoot,
+                self.ui.LineEdit_VPR_TDNN_OutputDirName,
+                self.ui.LineEdit_VPR_TDNN_AudioSpeakersDataName
             ],
             SuccessEvents = [
                 lambda: self.ShowMask(True, "正在加载表单"),
-                lambda: self.showASRResult(
-                    LineEdit_ASR_VPR_OutputDir.text(),
-                    LineEdit_ASR_VPR_AudioSpeakersDataPath.text(),
-                    list(self.ui.Table_ASR_VPR_StdAudioSpeaker.GetValue().keys()) + ['']
+                lambda: self.showVPRResult(
+                    LineEdit_VPR_TDNN_OutputDir.text(),
+                    LineEdit_VPR_TDNN_AudioSpeakersDataPath.text(),
+                    list(self.ui.Table_VPR_TDNN_StdAudioSpeaker.GetValue().keys()) + ['']
                 ),
                 lambda: MessageBoxBase.pop(self,
                     QMessageBox.Information, "Tip",
@@ -6093,7 +6093,7 @@ class MainWindow(Window_MainWindow):
                 lambda: MainWindowSignals.Signal_MainWindowShown.connect(
                     lambda: (
                         ParamsManager_Process.ResetSettings(),
-                        ParamsManager_ASR_VPR.ResetSettings(),
+                        ParamsManager_VPR_TDNN.ResetSettings(),
                         ParamsManager_STT_Whisper.ResetSettings(),
                         ParamsManager_DAT_GPTSoVITS.ResetSettings(),
                         ParamsManager_DAT_VITS.ResetSettings(),
@@ -6125,15 +6125,15 @@ class MainWindow(Window_MainWindow):
                 lambda: Config.EditConfig('Tools', 'Synchronizer', 'Enabled'),
                 lambda: Function_ParamsSynchronizer(
                     LineEdit_Process_OutputDir,
-                    {LineEdit_Process_OutputDir: self.ui.LineEdit_ASR_VPR_AudioDirInput}
+                    {LineEdit_Process_OutputDir: self.ui.LineEdit_VPR_TDNN_AudioDirInput}
                 ),
                 lambda: Function_ParamsSynchronizer(
-                    LineEdit_ASR_VPR_AudioSpeakersDataPath,
-                    {LineEdit_ASR_VPR_AudioSpeakersDataPath: [self.ui.LineEdit_DAT_GPTSoVITS_AudioSpeakersDataPath, self.ui.LineEdit_DAT_VITS_AudioSpeakersDataPath]}
+                    LineEdit_VPR_TDNN_AudioSpeakersDataPath,
+                    {LineEdit_VPR_TDNN_AudioSpeakersDataPath: [self.ui.LineEdit_DAT_GPTSoVITS_AudioSpeakersDataPath, self.ui.LineEdit_DAT_VITS_AudioSpeakersDataPath]}
                 ),
                 lambda: Function_ParamsSynchronizer(
-                    LineEdit_ASR_VPR_OutputDir,
-                    {LineEdit_ASR_VPR_OutputDir: self.ui.LineEdit_STT_Whisper_AudioDir}
+                    LineEdit_VPR_TDNN_OutputDir,
+                    {LineEdit_VPR_TDNN_OutputDir: self.ui.LineEdit_STT_Whisper_AudioDir}
                 ),
                 lambda: Function_ParamsSynchronizer(
                     LineEdit_STT_Whisper_OutputDir,
@@ -6187,24 +6187,24 @@ class MainWindow(Window_MainWindow):
             }
         )
 
-        self.ui.Label_ASR_VPR_OutputRoot.setText(QCA.translate('MainWindow', "声纹识别结果输出目录"))
-        ASR_VPR_AudioSpeakersDataRoot_Default = Path(CurrentDir).joinpath('语音识别结果', 'VPR').as_posix()
-        ParamsManager_ASR_VPR.SetParam(
-            Widget = self.ui.LineEdit_ASR_VPR_OutputRoot,
+        self.ui.Label_VPR_TDNN_OutputRoot.setText(QCA.translate('MainWindow', "声纹识别结果输出目录"))
+        VPR_TDNN_AudioSpeakersDataRoot_Default = Path(CurrentDir).joinpath('语音识别结果', 'VPR').as_posix()
+        ParamsManager_VPR_TDNN.SetParam(
+            Widget = self.ui.LineEdit_VPR_TDNN_OutputRoot,
             Section = 'Output Params',
             Option = 'Audio_Root_Output',
-            DefaultValue = ASR_VPR_AudioSpeakersDataRoot_Default,
+            DefaultValue = VPR_TDNN_AudioSpeakersDataRoot_Default,
             SetPlaceholderText = True,
-            PlaceholderText = ASR_VPR_AudioSpeakersDataRoot_Default
+            PlaceholderText = VPR_TDNN_AudioSpeakersDataRoot_Default
         )
-        self.ui.LineEdit_ASR_VPR_OutputRoot.SetFileDialog(
+        self.ui.LineEdit_VPR_TDNN_OutputRoot.SetFileDialog(
             Mode = "SelectFolder",
-            Directory = QFunc.NormPath(Path(ASR_VPR_AudioSpeakersDataRoot_Default).parent)
+            Directory = QFunc.NormPath(Path(VPR_TDNN_AudioSpeakersDataRoot_Default).parent)
         )
-        self.ui.Button_ASR_VPR_OutputRoot_MoreActions.SetMenu(
+        self.ui.Button_VPR_TDNN_OutputRoot_MoreActions.SetMenu(
             ActionEvents = {
-                "重置": lambda: ParamsManager_ASR_VPR.ResetParam(self.ui.LineEdit_ASR_VPR_OutputRoot),
-                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_ASR_VPR_OutputRoot.text())
+                "重置": lambda: ParamsManager_VPR_TDNN.ResetParam(self.ui.LineEdit_VPR_TDNN_OutputRoot),
+                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_VPR_TDNN_OutputRoot.text())
             }
         )
 
