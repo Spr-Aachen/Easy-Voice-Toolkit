@@ -234,7 +234,6 @@ class Table_VPRResult(TableBase):
     def setHorizontalHeaderLabels(self, Headers: list):
         self.HorizontalHeaderLabels = Headers
         self.ColumnCount = len(Headers)
-        self.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
 
     def setStyleSheet(self, StyleSheet: str):
         super().setStyleSheet(StyleSheet + '''
@@ -346,7 +345,6 @@ class Table_ASRResult(TableBase):
     def setHorizontalHeaderLabels(self, Headers: list):
         self.HorizontalHeaderLabels = Headers
         self.ColumnCount = len(Headers)
-        self.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
 
     def setStyleSheet(self, StyleSheet: str):
         super().setStyleSheet(StyleSheet + '''
@@ -427,7 +425,6 @@ class Table_DATResult(TableBase):
     def setHorizontalHeaderLabels(self, Headers: list):
         self.HorizontalHeaderLabels = Headers
         self.ColumnCount = len(Headers)
-        self.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
 
     def setStyleSheet(self, StyleSheet: str):
         super().setStyleSheet(StyleSheet + '''

@@ -3364,6 +3364,7 @@ class MainWindow(Window_MainWindow):
             DefaultValue = '',
             SetPlaceholderText = True
         )
+        self.ui.LineEdit_DAT_GPTSoVITS_AudioSpeakersDataPath.Button.setIcon(IconBase.OpenedFolder)
         self.ui.LineEdit_DAT_GPTSoVITS_AudioSpeakersDataPath.Button.clicked.connect(self.setAudioSpeakersDataPath)
         self.ui.Button_DAT_GPTSoVITS_AudioSpeakersDataPath_MoreActions.SetMenu(
             ActionEvents = {
@@ -3661,6 +3662,7 @@ class MainWindow(Window_MainWindow):
             DefaultValue = '',
             SetPlaceholderText = True
         )
+        self.ui.LineEdit_DAT_VITS_AudioSpeakersDataPath.Button.setIcon(IconBase.OpenedFolder)
         self.ui.LineEdit_DAT_VITS_AudioSpeakersDataPath.Button.clicked.connect(self.setAudioSpeakersDataPath)
         self.ui.Button_DAT_VITS_AudioSpeakersDataPath_MoreActions.SetMenu(
             ActionEvents = {
