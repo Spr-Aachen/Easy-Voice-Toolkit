@@ -547,7 +547,7 @@ class CustomSignals_ModelView(QObject):
 
     Signal_VPR_TDNN = Signal(list)
 
-    Signal_STT_Whisper = Signal(list)
+    Signal_ASR_Whisper = Signal(list)
 
     Signal_TTS_GPTSoVITS = Signal(list)
 
@@ -647,9 +647,9 @@ class Model_View(QObject):
                 ['pth']
             )
         )
-        ModelViewSignals.Signal_STT_Whisper.emit(
+        ModelViewSignals.Signal_ASR_Whisper.emit(
             self.GetModelsInfo(
-                QFunc.NormPath(Path(ModelDir).joinpath('STT', 'Whisper')),
+                QFunc.NormPath(Path(ModelDir).joinpath('ASR', 'Whisper')),
                 ['pt']
             )
         )
@@ -737,27 +737,27 @@ def VPRResult_Save(AudioSpeakers: dict, AudioSpeakersData_Path: str, MoveAudio: 
         AudioSpeakersData.writelines(Lines)
 
 
-# ClientFunc: GetSTTResult
-def STTResult_Get(SRTDir: str, AudioDir: str):
-    STTResult = {}
+# ClientFunc: GetASRResult
+def ASRResult_Get(SRTDir: str, AudioDir: str):
+    ASRResult = {}
     for SRTFile in glob(QFunc.NormPath(Path(SRTDir).joinpath('*.srt'))):
         AudioFiles = glob(QFunc.NormPath(Path(AudioDir).joinpath('**', f'{Path(SRTFile).stem}.*')), recursive = True)
         if len(AudioFiles) == 0:
             continue
         with open(SRTFile, mode = 'r', encoding = 'utf-8') as SRT:
             SRTContent = SRT.read()
-        STTResult[AudioFiles[0]] = SRTContent
-    return STTResult
+        ASRResult[AudioFiles[0]] = SRTContent
+    return ASRResult
 
 
-# ClientFunc: SaveSTTResult
-def STTResult_Save(STTResult: dict, SRTDir: str):
-    for AudioFile in STTResult.keys():
+# ClientFunc: SaveASRResult
+def ASRResult_Save(ASRResult: dict, SRTDir: str):
+    for AudioFile in ASRResult.keys():
         SRTFiles = glob(QFunc.NormPath(Path(SRTDir).joinpath(f'{Path(AudioFile).stem}.*')))
         if len(SRTFiles) == 0:
             continue
         with open(SRTFiles[0], mode = 'w', encoding = 'utf-8') as SRT:
-            SRT.write(STTResult[AudioFile])
+            SRT.write(ASRResult[AudioFile])
 
 
 # ClientFunc: GetDATResult
@@ -914,7 +914,7 @@ class MainWindow(Window_MainWindow):
         ModelPath = LineEdit_Models_Append.text()
         if QFunc.NormPath(ModelPath) is None:
             return
-        ToolIndexList = ['Process', 'VPR', 'STT', 'TTS']
+        ToolIndexList = ['Process', 'VPR', 'ASR', 'TTS']
         ToolIndex = self.ui.StackedWidget_Pages_Models.currentIndex()
         TabWidget = QFunc.Function_FindChildUI(self.ui.StackedWidget_Pages_Models.currentWidget(), QTabWidget)
         TypeIndex = TabWidget.currentIndex()
@@ -1035,62 +1035,62 @@ class MainWindow(Window_MainWindow):
         )
         ChildWindow_VPR.exec()
 
-    def showSTTResult(self, SRTDir, AudioDir):
-        ChildWindow_STT = Window_ChildWindow_STT(self)
+    def showASRResult(self, SRTDir, AudioDir):
+        ChildWindow_ASR = Window_ChildWindow_ASR(self)
 
-        ChildWindow_STT.ui.Button_Close.clicked.connect(
+        ChildWindow_ASR.ui.Button_Close.clicked.connect(
             lambda: MessageBoxBase.pop(self,
                 QMessageBox.Question, "Ask",
                 "确认放弃编辑？",
                 QMessageBox.Yes|QMessageBox.No,
                 {
                     QMessageBox.Yes: lambda: (
-                        ChildWindow_STT.close()
+                        ChildWindow_ASR.close()
                     )
                 }
             )
         )
-        ChildWindow_STT.ui.Button_Maximize.clicked.connect(lambda: ChildWindow_STT.showNormal() if ChildWindow_STT.isMaximized() else ChildWindow_STT.showMaximized())
+        ChildWindow_ASR.ui.Button_Maximize.clicked.connect(lambda: ChildWindow_ASR.showNormal() if ChildWindow_ASR.isMaximized() else ChildWindow_ASR.showMaximized())
 
         QFunc.Function_SetText(
-            Widget = ChildWindow_STT.ui.Label_Title,
+            Widget = ChildWindow_ASR.ui.Label_Title,
             Text = QFunc.SetRichText(
-                Title = QCA.translate('ChildWindow_STT', "语音转录结果")
+                Title = QCA.translate('ChildWindow_ASR', "语音转录结果")
             )
         )
         QFunc.Function_SetText(
-            Widget = ChildWindow_STT.ui.Label_Text,
+            Widget = ChildWindow_ASR.ui.Label_Text,
             Text = QFunc.SetRichText(
-                Body = QCA.translate('ChildWindow_STT', "这里记录了每个语音文件与其对应的字幕文本（包含了时间戳）\n你可以对这些文本进行更改，若启用了语种标注则小心不要误删")
+                Body = QCA.translate('ChildWindow_ASR', "这里记录了每个语音文件与其对应的字幕文本（包含了时间戳）\n你可以对这些文本进行更改，若启用了语种标注则小心不要误删")
             )
         )
 
-        ChildWindow_STT.ui.Table.setHorizontalHeaderLabels(['音频路径', '音频内容', '播放'])
+        ChildWindow_ASR.ui.Table.setHorizontalHeaderLabels(['音频路径', '音频内容', '播放'])
 
-        ChildWindow_STT.ui.Button_Cancel.setText(QCA.translate('ChildWindow_STT', "取消"))
-        ChildWindow_STT.ui.Button_Cancel.clicked.connect(ChildWindow_STT.ui.Button_Close.click)
-        ChildWindow_STT.ui.Button_Confirm.setText(QCA.translate('ChildWindow_STT', "确认"))
-        ChildWindow_STT.ui.Button_Confirm.clicked.connect(
+        ChildWindow_ASR.ui.Button_Cancel.setText(QCA.translate('ChildWindow_ASR', "取消"))
+        ChildWindow_ASR.ui.Button_Cancel.clicked.connect(ChildWindow_ASR.ui.Button_Close.click)
+        ChildWindow_ASR.ui.Button_Confirm.setText(QCA.translate('ChildWindow_ASR', "确认"))
+        ChildWindow_ASR.ui.Button_Confirm.clicked.connect(
             lambda: MessageBoxBase.pop(self,
                 QMessageBox.Question, "Ask",
                 "确认应用编辑？",
                 QMessageBox.Yes|QMessageBox.No,
                 {
                     QMessageBox.Yes: lambda: (
-                        STTResult_Save(
-                            ChildWindow_STT.ui.Table.GetValue(),
+                        ASRResult_Save(
+                            ChildWindow_ASR.ui.Table.GetValue(),
                             SRTDir
                         ),
-                        ChildWindow_STT.close()
+                        ChildWindow_ASR.close()
                     )
                 }
             )
         )
 
-        ChildWindow_STT.ui.Table.SetValue(
-            STTResult_Get(SRTDir, AudioDir)
+        ChildWindow_ASR.ui.Table.SetValue(
+            ASRResult_Get(SRTDir, AudioDir)
         )
-        ChildWindow_STT.exec()
+        ChildWindow_ASR.exec()
 
     def showDATResult(self, DATPath_Training, DATPath_Validation):
         ChildWindow_DAT = Window_ChildWindow_DAT(self)
@@ -1380,15 +1380,15 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_Menu_VPR.setChecked(False)
         self.ui.Button_Menu_VPR.setToolTip(QCA.translate('MainWindow', "工具：语音识别"))
 
-        self.ui.Button_Menu_STT.setText(QCA.translate('MainWindow', "转录"))
-        self.ui.Button_Menu_STT.clicked.connect(
+        self.ui.Button_Menu_ASR.setText(QCA.translate('MainWindow', "转录"))
+        self.ui.Button_Menu_ASR.clicked.connect(
             lambda: Function_AnimateStackedWidget(
                 StackedWidget = self.ui.StackedWidget_Pages,
                 Target = 5
             )
         )
-        self.ui.Button_Menu_STT.setChecked(False)
-        self.ui.Button_Menu_STT.setToolTip(QCA.translate('MainWindow', "工具：语音转文字"))
+        self.ui.Button_Menu_ASR.setChecked(False)
+        self.ui.Button_Menu_ASR.setToolTip(QCA.translate('MainWindow', "工具：语音转文字"))
 
         self.ui.Button_Menu_Dataset.setText(QCA.translate('MainWindow', "数据"))
         self.ui.Button_Menu_Dataset.clicked.connect(
@@ -1775,21 +1775,21 @@ class MainWindow(Window_MainWindow):
             )
         )
 
-        self.ui.Button_Models_STT_Title.setText(QCA.translate('MainWindow', 'STT（转录）'))
-        self.ui.Button_Models_STT_Title.setHorizontal(True)
-        self.ui.Button_Models_STT_Title.setChecked(False)
-        self.ui.Button_Models_STT_Title.clicked.connect(
+        self.ui.Button_Models_ASR_Title.setText(QCA.translate('MainWindow', 'ASR（转录）'))
+        self.ui.Button_Models_ASR_Title.setHorizontal(True)
+        self.ui.Button_Models_ASR_Title.setChecked(False)
+        self.ui.Button_Models_ASR_Title.clicked.connect(
             lambda: Function_AnimateStackedWidget(
                 StackedWidget = self.ui.StackedWidget_Pages_Models,
                 Target = 2
             )
         )
-        self.ui.Button_Models_STT_Title.setToolTip(QCA.translate('MainWindow', "语音转录模型"))
+        self.ui.Button_Models_ASR_Title.setToolTip(QCA.translate('MainWindow', "语音转录模型"))
 
-        self.ui.TabWidget_Models_STT.setTabText(0, 'Whisper')
-        self.ui.Table_Models_STT_Whisper.setHorizontalHeaderLabels(['名字', '类型', '大小', '日期', '操作'])
-        ModelViewSignals.Signal_STT_Whisper.connect(self.ui.Table_Models_STT_Whisper.SetValue)
-        self.ui.Table_Models_STT_Whisper.Download.connect(
+        self.ui.TabWidget_Models_ASR.setTabText(0, 'Whisper')
+        self.ui.Table_Models_ASR_Whisper.setHorizontalHeaderLabels(['名字', '类型', '大小', '日期', '操作'])
+        ModelViewSignals.Signal_ASR_Whisper.connect(self.ui.Table_Models_ASR_Whisper.SetValue)
+        self.ui.Table_Models_ASR_Whisper.Download.connect(
             lambda Params: Function_SetMethodExecutor(self,
                 Method = Model_Downloader.Execute,
                 Params = Params
@@ -2916,7 +2916,7 @@ class MainWindow(Window_MainWindow):
         )
 
         #############################################################
-        ######################## Content: STT #######################
+        ######################## Content: ASR #######################
         #############################################################
 
         # Guidance
@@ -2924,7 +2924,7 @@ class MainWindow(Window_MainWindow):
             lambda: self.showGuidance(
                 QCA.translate('MainWindow', "引导（仅出现一次）"),
                 [
-                    QFunc.NormPath(Path(ResourceDir).joinpath('assets/images/others/Guidance_STT.png')),
+                    QFunc.NormPath(Path(ResourceDir).joinpath('assets/images/others/Guidance_ASR.png')),
                     QFunc.NormPath(Path(ResourceDir).joinpath('assets/images/others/Guidance_Layout.png'))
                 ],
                 [
@@ -2934,16 +2934,16 @@ class MainWindow(Window_MainWindow):
             )
         )
 
-        self.ui.Button_Menu_STT.clicked.connect(
+        self.ui.Button_Menu_ASR.clicked.connect(
             lambda: (
                 self.ui.Button_VoiceTranscriber_Help.click(),
-                Config.EditConfig('Dialog', 'GuidanceShown_STT', 'True')
-            ) if eval(Config.GetValue('Dialog', 'GuidanceShown_STT', 'False')) is False else None
+                Config.EditConfig('Dialog', 'GuidanceShown_ASR', 'True')
+            ) if eval(Config.GetValue('Dialog', 'GuidanceShown_ASR', 'False')) is False else None
         )
 
         # ParamsManager
-        Path_Config_STT_Whisper = QFunc.NormPath(Path(ConfigDir).joinpath('Config_STT_Whisper.ini'))
-        ParamsManager_STT_Whisper = ParamsManager(Path_Config_STT_Whisper)
+        Path_Config_ASR_Whisper = QFunc.NormPath(Path(ConfigDir).joinpath('Config_ASR_Whisper.ini'))
+        ParamsManager_ASR_Whisper = ParamsManager(Path_Config_ASR_Whisper)
 
         # Top
         self.ui.Button_VoiceTranscriber_Title.setText(QCA.translate('MainWindow', "Whisper"))
@@ -2951,73 +2951,73 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_VoiceTranscriber_Title.setChecked(True)
         self.ui.Button_VoiceTranscriber_Title.clicked.connect(
             lambda: Function_AnimateStackedWidget(
-                StackedWidget = self.ui.StackedWidget_Pages_STT,
+                StackedWidget = self.ui.StackedWidget_Pages_ASR,
                 Target = 0
             )
         )
 
         # Left
-        self.ui.TreeWidget_Catalogue_STT_Whisper.clear()
-        self.ui.TreeWidget_Catalogue_STT_Whisper.setHeaderHidden(True)
+        self.ui.TreeWidget_Catalogue_ASR_Whisper.clear()
+        self.ui.TreeWidget_Catalogue_ASR_Whisper.setHeaderHidden(True)
 
         # Middle
-        self.ui.GroupBox_STT_Whisper_InputParams.setTitle(QCA.translate('MainWindow', "输入参数"))
+        self.ui.GroupBox_ASR_Whisper_InputParams.setTitle(QCA.translate('MainWindow', "输入参数"))
         Function_AddToTreeWidget(
-            Widget = self.ui.GroupBox_STT_Whisper_InputParams,
-            TreeWidget = self.ui.TreeWidget_Catalogue_STT_Whisper,
+            Widget = self.ui.GroupBox_ASR_Whisper_InputParams,
+            TreeWidget = self.ui.TreeWidget_Catalogue_ASR_Whisper,
             RootItemText = QCA.translate('MainWindow', "输入参数")
         )
 
         QFunc.Function_SetText(
-            Widget = self.ui.Label_STT_Whisper_AudioDir,
+            Widget = self.ui.Label_ASR_Whisper_AudioDir,
             Text = QFunc.SetRichText(
                 Body = QCA.translate('MainWindow', "音频输入目录\n需要将语音内容转为文字的音频文件的所在目录。")
             )
         )
-        ParamsManager_STT_Whisper.SetParam(
-            Widget = self.ui.LineEdit_STT_Whisper_AudioDir,
+        ParamsManager_ASR_Whisper.SetParam(
+            Widget = self.ui.LineEdit_ASR_Whisper_AudioDir,
             Section = 'Input Params',
             Option = 'Audio_Dir',
             DefaultValue = '',
             SetPlaceholderText = True
         )
-        self.ui.LineEdit_STT_Whisper_AudioDir.SetFileDialog(
+        self.ui.LineEdit_ASR_Whisper_AudioDir.SetFileDialog(
             Mode = "SelectFolder"
         )
-        self.ui.Button_STT_Whisper_AudioDir_MoreActions.SetMenu(
+        self.ui.Button_ASR_Whisper_AudioDir_MoreActions.SetMenu(
             ActionEvents = {
-                "重置": lambda: ParamsManager_STT_Whisper.ResetParam(self.ui.LineEdit_STT_Whisper_AudioDir),
-                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_STT_Whisper_AudioDir.text())
+                "重置": lambda: ParamsManager_ASR_Whisper.ResetParam(self.ui.LineEdit_ASR_Whisper_AudioDir),
+                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_ASR_Whisper_AudioDir.text())
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_STT_Whisper_AudioDir,
-            TreeWidget = self.ui.TreeWidget_Catalogue_STT_Whisper,
+            Widget = self.ui.Label_ASR_Whisper_AudioDir,
+            TreeWidget = self.ui.TreeWidget_Catalogue_ASR_Whisper,
             RootItemText = QCA.translate('MainWindow', "输入参数"),
             ChildItemText = QCA.translate('MainWindow', "音频输入目录")
         )
 
-        self.ui.GroupBox_STT_Whisper_WhisperParams.setTitle(QCA.translate('MainWindow', "语音转录参数"))
+        self.ui.GroupBox_ASR_Whisper_WhisperParams.setTitle(QCA.translate('MainWindow', "语音转录参数"))
         Function_AddToTreeWidget(
-            Widget = self.ui.GroupBox_STT_Whisper_WhisperParams,
-            TreeWidget = self.ui.TreeWidget_Catalogue_STT_Whisper,
+            Widget = self.ui.GroupBox_ASR_Whisper_WhisperParams,
+            TreeWidget = self.ui.TreeWidget_Catalogue_ASR_Whisper,
             RootItemText = QCA.translate('MainWindow', "语音转录参数")
         )
 
         QFunc.Function_SetText(
-            Widget = self.ui.Label_STT_Whisper_AddLanguageInfo,
+            Widget = self.ui.Label_ASR_Whisper_AddLanguageInfo,
             Text = QFunc.SetRichText(
                 Body = QCA.translate('MainWindow', "语种标注\n标注音频中说话人所使用的语言，若用于数据集制作则建议启用。")
             )
         )
-        ParamsManager_STT_Whisper.SetParam(
-            Widget = self.ui.CheckBox_STT_Whisper_AddLanguageInfo,
+        ParamsManager_ASR_Whisper.SetParam(
+            Widget = self.ui.CheckBox_ASR_Whisper_AddLanguageInfo,
             Section = 'Whisper Params',
             Option = 'Add_LanguageInfo',
             DefaultValue = True
         )
         Function_ConfigureCheckBox(
-            CheckBox = self.ui.CheckBox_STT_Whisper_AddLanguageInfo,
+            CheckBox = self.ui.CheckBox_ASR_Whisper_AddLanguageInfo,
             CheckedText = "已启用",
             CheckedEvents = [
             ],
@@ -3026,68 +3026,68 @@ class MainWindow(Window_MainWindow):
             ],
             TakeEffect = True
         )
-        self.ui.Button_STT_Whisper_AddLanguageInfo_MoreActions.SetMenu(
+        self.ui.Button_ASR_Whisper_AddLanguageInfo_MoreActions.SetMenu(
             ActionEvents = {
-                "重置": lambda: ParamsManager_STT_Whisper.ResetParam(self.ui.CheckBox_STT_Whisper_AddLanguageInfo)
+                "重置": lambda: ParamsManager_ASR_Whisper.ResetParam(self.ui.CheckBox_ASR_Whisper_AddLanguageInfo)
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_STT_Whisper_AddLanguageInfo,
-            TreeWidget = self.ui.TreeWidget_Catalogue_STT_Whisper,
+            Widget = self.ui.Label_ASR_Whisper_AddLanguageInfo,
+            TreeWidget = self.ui.TreeWidget_Catalogue_ASR_Whisper,
             RootItemText = QCA.translate('MainWindow', "语音转录参数"),
             ChildItemText = QCA.translate('MainWindow', "语种标注")
         )
 
         QFunc.Function_SetText(
-            Widget = self.ui.Label_STT_Whisper_ModelPath,
+            Widget = self.ui.Label_ASR_Whisper_ModelPath,
             Text = QFunc.SetRichText(
                 Body = QCA.translate('MainWindow', "模型加载路径\n用于加载的Whisper模型的路径。")
             )
         )
-        STT_Whisper_ModelPath_Default = Path(ModelDir).joinpath('STT', 'Whisper', 'Downloaded', 'small.pt').as_posix()
-        ParamsManager_STT_Whisper.SetParam(
-            Widget = self.ui.LineEdit_STT_Whisper_ModelPath,
+        ASR_Whisper_ModelPath_Default = Path(ModelDir).joinpath('ASR', 'Whisper', 'Downloaded', 'small.pt').as_posix()
+        ParamsManager_ASR_Whisper.SetParam(
+            Widget = self.ui.LineEdit_ASR_Whisper_ModelPath,
             Section = 'Whisper Params',
             Option = 'Model_Path',
-            DefaultValue = STT_Whisper_ModelPath_Default,
+            DefaultValue = ASR_Whisper_ModelPath_Default,
             SetPlaceholderText = True,
-            PlaceholderText = STT_Whisper_ModelPath_Default
+            PlaceholderText = ASR_Whisper_ModelPath_Default
         )
-        self.ui.LineEdit_STT_Whisper_ModelPath.SetFileDialog(
+        self.ui.LineEdit_ASR_Whisper_ModelPath.SetFileDialog(
             Mode = "SelectFile",
             FileType = "pt类型 (*.pt)",
-            Directory = QFunc.NormPath(Path(ModelDir).joinpath('STT', 'Whisper', 'Downloaded'))
+            Directory = QFunc.NormPath(Path(ModelDir).joinpath('ASR', 'Whisper', 'Downloaded'))
         )
-        self.ui.Button_STT_Whisper_ModelPath_MoreActions.SetMenu(
+        self.ui.Button_ASR_Whisper_ModelPath_MoreActions.SetMenu(
             ActionEvents = {
-                "重置": lambda: ParamsManager_STT_Whisper.ResetParam(self.ui.LineEdit_STT_Whisper_ModelPath),
-                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_STT_Whisper_ModelPath.text())
+                "重置": lambda: ParamsManager_ASR_Whisper.ResetParam(self.ui.LineEdit_ASR_Whisper_ModelPath),
+                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_ASR_Whisper_ModelPath.text())
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_STT_Whisper_ModelPath,
-            TreeWidget = self.ui.TreeWidget_Catalogue_STT_Whisper,
+            Widget = self.ui.Label_ASR_Whisper_ModelPath,
+            TreeWidget = self.ui.TreeWidget_Catalogue_ASR_Whisper,
             RootItemText = QCA.translate('MainWindow', "语音转录参数"),
             ChildItemText = QCA.translate('MainWindow', "模型加载路径")
         )
 
-        self.ui.ToolBox_STT_Whisper_WhisperParams_AdvanceSettings.widget(0).setText(QCA.translate('MainWindow', "高级设置"))
-        self.ui.ToolBox_STT_Whisper_WhisperParams_AdvanceSettings.widget(0).collapse()
+        self.ui.ToolBox_ASR_Whisper_WhisperParams_AdvanceSettings.widget(0).setText(QCA.translate('MainWindow', "高级设置"))
+        self.ui.ToolBox_ASR_Whisper_WhisperParams_AdvanceSettings.widget(0).collapse()
 
         QFunc.Function_SetText(
-            Widget = self.ui.Label_STT_Whisper_Verbose,
+            Widget = self.ui.Label_ASR_Whisper_Verbose,
             Text = QFunc.SetRichText(
                 Body = QCA.translate('MainWindow', "显示转录内容\n启用该项后会在运行过程中显示转录的内容，否则只显示进度。")
             )
         )
-        ParamsManager_STT_Whisper.SetParam(
-            Widget = self.ui.CheckBox_STT_Whisper_Verbose,
+        ParamsManager_ASR_Whisper.SetParam(
+            Widget = self.ui.CheckBox_ASR_Whisper_Verbose,
             Section = 'Whisper Params',
             Option = 'Verbose',
             DefaultValue = True
         )
         Function_ConfigureCheckBox(
-            CheckBox = self.ui.CheckBox_STT_Whisper_Verbose,
+            CheckBox = self.ui.CheckBox_ASR_Whisper_Verbose,
             CheckedText = "已启用",
             CheckedEvents = [
             ],
@@ -3096,32 +3096,32 @@ class MainWindow(Window_MainWindow):
             ],
             TakeEffect = True
         )
-        self.ui.Button_STT_Whisper_Verbose_MoreActions.SetMenu(
+        self.ui.Button_ASR_Whisper_Verbose_MoreActions.SetMenu(
             ActionEvents = {
-                "重置": lambda: ParamsManager_STT_Whisper.ResetParam(self.ui.CheckBox_STT_Whisper_Verbose)
+                "重置": lambda: ParamsManager_ASR_Whisper.ResetParam(self.ui.CheckBox_ASR_Whisper_Verbose)
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_STT_Whisper_Verbose,
-            TreeWidget = self.ui.TreeWidget_Catalogue_STT_Whisper,
+            Widget = self.ui.Label_ASR_Whisper_Verbose,
+            TreeWidget = self.ui.TreeWidget_Catalogue_ASR_Whisper,
             RootItemText = QCA.translate('MainWindow', "语音转录参数"),
             ChildItemText = QCA.translate('MainWindow', "显示转录内容")
         )
 
         QFunc.Function_SetText(
-            Widget = self.ui.Label_STT_Whisper_fp16,
+            Widget = self.ui.Label_ASR_Whisper_fp16,
             Text = QFunc.SetRichText(
                 Body = QCA.translate('MainWindow', "半精度计算\n主要使用半精度浮点数进行计算，若GPU不可用则忽略或禁用此项。")
             )
         )
-        ParamsManager_STT_Whisper.SetParam(
-            Widget = self.ui.CheckBox_STT_Whisper_fp16,
+        ParamsManager_ASR_Whisper.SetParam(
+            Widget = self.ui.CheckBox_ASR_Whisper_fp16,
             Section = 'Whisper Params',
             Option = 'fp16',
             DefaultValue = True
         )
         Function_ConfigureCheckBox(
-            CheckBox = self.ui.CheckBox_STT_Whisper_fp16,
+            CheckBox = self.ui.CheckBox_ASR_Whisper_fp16,
             CheckedText = "已启用",
             CheckedEvents = [
             ],
@@ -3130,32 +3130,32 @@ class MainWindow(Window_MainWindow):
             ],
             TakeEffect = True
         )
-        self.ui.Button_STT_Whisper_fp16_MoreActions.SetMenu(
+        self.ui.Button_ASR_Whisper_fp16_MoreActions.SetMenu(
             ActionEvents = {
-                "重置": lambda: ParamsManager_STT_Whisper.ResetParam(self.ui.CheckBox_STT_Whisper_fp16)
+                "重置": lambda: ParamsManager_ASR_Whisper.ResetParam(self.ui.CheckBox_ASR_Whisper_fp16)
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_STT_Whisper_fp16,
-            TreeWidget = self.ui.TreeWidget_Catalogue_STT_Whisper,
+            Widget = self.ui.Label_ASR_Whisper_fp16,
+            TreeWidget = self.ui.TreeWidget_Catalogue_ASR_Whisper,
             RootItemText = QCA.translate('MainWindow', "语音转录参数"),
             ChildItemText = QCA.translate('MainWindow', "半精度计算")
         )
 
         QFunc.Function_SetText(
-            Widget = self.ui.Label_STT_Whisper_ConditionOnPreviousText,
+            Widget = self.ui.Label_ASR_Whisper_ConditionOnPreviousText,
             Text = QFunc.SetRichText(
                 Body = QCA.translate('MainWindow', "关联上下文\n在音频之间的内容具有关联性时启用该项可以获得更好的效果。")
             )
         )
-        ParamsManager_STT_Whisper.SetParam(
-            Widget = self.ui.CheckBox_STT_Whisper_ConditionOnPreviousText,
+        ParamsManager_ASR_Whisper.SetParam(
+            Widget = self.ui.CheckBox_ASR_Whisper_ConditionOnPreviousText,
             Section = 'Whisper Params',
             Option = 'Condition_on_Previous_Text',
             DefaultValue = False
         )
         Function_ConfigureCheckBox(
-            CheckBox = self.ui.CheckBox_STT_Whisper_ConditionOnPreviousText,
+            CheckBox = self.ui.CheckBox_ASR_Whisper_ConditionOnPreviousText,
             CheckedText = "已启用",
             CheckedEvents = [
             ],
@@ -3164,84 +3164,84 @@ class MainWindow(Window_MainWindow):
             ],
             TakeEffect = True
         )
-        self.ui.Button_STT_Whisper_ConditionOnPreviousText_MoreActions.SetMenu(
+        self.ui.Button_ASR_Whisper_ConditionOnPreviousText_MoreActions.SetMenu(
             ActionEvents = {
-                "重置": lambda: ParamsManager_STT_Whisper.ResetParam(self.ui.CheckBox_STT_Whisper_ConditionOnPreviousText)
+                "重置": lambda: ParamsManager_ASR_Whisper.ResetParam(self.ui.CheckBox_ASR_Whisper_ConditionOnPreviousText)
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_STT_Whisper_ConditionOnPreviousText,
-            TreeWidget = self.ui.TreeWidget_Catalogue_STT_Whisper,
+            Widget = self.ui.Label_ASR_Whisper_ConditionOnPreviousText,
+            TreeWidget = self.ui.TreeWidget_Catalogue_ASR_Whisper,
             RootItemText = QCA.translate('MainWindow', "语音转录参数"),
             ChildItemText = QCA.translate('MainWindow', "关联上下文")
         )
 
-        self.ui.GroupBox_STT_Whisper_OutputParams.setTitle(QCA.translate('MainWindow', "输出参数"))
+        self.ui.GroupBox_ASR_Whisper_OutputParams.setTitle(QCA.translate('MainWindow', "输出参数"))
         Function_AddToTreeWidget(
-            Widget = self.ui.GroupBox_STT_Whisper_OutputParams,
-            TreeWidget = self.ui.TreeWidget_Catalogue_STT_Whisper,
+            Widget = self.ui.GroupBox_ASR_Whisper_OutputParams,
+            TreeWidget = self.ui.TreeWidget_Catalogue_ASR_Whisper,
             RootItemText = QCA.translate('MainWindow', "输出参数")
         )
 
         QFunc.Function_SetText(
-            Widget = self.ui.Label_STT_Whisper_OutputDirName,
+            Widget = self.ui.Label_ASR_Whisper_OutputDirName,
             Text = QFunc.SetRichText(
                 Body = QCA.translate('MainWindow', "输出目录名\n用于保存最后生成的字幕文件的目录的名字。")
             )
         )
-        STT_Whisper_OutputDirName_Default = str(date.today())
-        ParamsManager_STT_Whisper.SetParam(
-            Widget = self.ui.LineEdit_STT_Whisper_OutputDirName,
+        ASR_Whisper_OutputDirName_Default = str(date.today())
+        ParamsManager_ASR_Whisper.SetParam(
+            Widget = self.ui.LineEdit_ASR_Whisper_OutputDirName,
             Section = 'Output Params',
             Option = 'SRT_Dir_Name',
             DefaultValue = '',
             SetPlaceholderText = True,
-            PlaceholderText = STT_Whisper_OutputDirName_Default
+            PlaceholderText = ASR_Whisper_OutputDirName_Default
         )
-        self.ui.Button_STT_Whisper_OutputDirName_MoreActions.SetMenu(
+        self.ui.Button_ASR_Whisper_OutputDirName_MoreActions.SetMenu(
             ActionEvents = {
-                "重置": lambda: ParamsManager_STT_Whisper.ResetParam(self.ui.LineEdit_STT_Whisper_OutputDirName),
-                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_STT_Whisper_OutputDirName.text())
+                "重置": lambda: ParamsManager_ASR_Whisper.ResetParam(self.ui.LineEdit_ASR_Whisper_OutputDirName),
+                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_ASR_Whisper_OutputDirName.text())
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_STT_Whisper_OutputDirName,
-            TreeWidget = self.ui.TreeWidget_Catalogue_STT_Whisper,
+            Widget = self.ui.Label_ASR_Whisper_OutputDirName,
+            TreeWidget = self.ui.TreeWidget_Catalogue_ASR_Whisper,
             RootItemText = QCA.translate('MainWindow', "输出参数"),
             ChildItemText = QCA.translate('MainWindow', "输出目录名")
         )
 
-        LineEdit_STT_Whisper_OutputDir = QLineEdit()
-        def SetText_LineEdit_STT_Whisper_OutputDir():
-            DirName = self.ui.LineEdit_STT_Whisper_OutputDirName.text()
+        LineEdit_ASR_Whisper_OutputDir = QLineEdit()
+        def SetText_LineEdit_ASR_Whisper_OutputDir():
+            DirName = self.ui.LineEdit_ASR_Whisper_OutputDirName.text()
             if len(DirName.strip()) == 0:
                 Alert = False
             else:
-                DirText = Path(self.ui.LineEdit_STT_Whisper_OutputRoot.text()).joinpath(DirName).as_posix()
-                LineEdit_STT_Whisper_OutputDir.setText(DirText)
+                DirText = Path(self.ui.LineEdit_ASR_Whisper_OutputRoot.text()).joinpath(DirName).as_posix()
+                LineEdit_ASR_Whisper_OutputDir.setText(DirText)
                 Alert = Path(DirText).exists() and list(Path(DirText).iterdir()) != []
-            self.ui.LineEdit_STT_Whisper_OutputDirName.Alert(True if Alert else False, "注意：目录已包含文件")
-        self.ui.LineEdit_STT_Whisper_OutputDirName.interacted.connect(SetText_LineEdit_STT_Whisper_OutputDir)
-        self.ui.LineEdit_STT_Whisper_OutputRoot.interacted.connect(SetText_LineEdit_STT_Whisper_OutputDir)
-        #SetText_LineEdit_STT_Whisper_OutputDir()
+            self.ui.LineEdit_ASR_Whisper_OutputDirName.Alert(True if Alert else False, "注意：目录已包含文件")
+        self.ui.LineEdit_ASR_Whisper_OutputDirName.interacted.connect(SetText_LineEdit_ASR_Whisper_OutputDir)
+        self.ui.LineEdit_ASR_Whisper_OutputRoot.interacted.connect(SetText_LineEdit_ASR_Whisper_OutputDir)
+        #SetText_LineEdit_ASR_Whisper_OutputDir()
 
         # Right
-        MonitorFile_Config_VoiceTranscriber = QTasks.MonitorFile(Path_Config_STT_Whisper)
+        MonitorFile_Config_VoiceTranscriber = QTasks.MonitorFile(Path_Config_ASR_Whisper)
         MonitorFile_Config_VoiceTranscriber.start()
         MonitorFile_Config_VoiceTranscriber.Signal_FileContent.connect(
-            lambda FileContent: self.ui.TextBrowser_Params_STT_Whisper.setText(
+            lambda FileContent: self.ui.TextBrowser_Params_ASR_Whisper.setText(
                 FileContent
             )
         )
 
-        self.ui.Button_ResetSettings_STT_Whisper.setText(QCA.translate('MainWindow', "全部重置"))
-        self.ui.Button_ResetSettings_STT_Whisper.clicked.connect(
-            lambda: ParamsManager_STT_Whisper.ResetSettings()
+        self.ui.Button_ResetSettings_ASR_Whisper.setText(QCA.translate('MainWindow', "全部重置"))
+        self.ui.Button_ResetSettings_ASR_Whisper.clicked.connect(
+            lambda: ParamsManager_ASR_Whisper.ResetSettings()
         )
 
-        self.ui.Button_ImportSettings_STT_Whisper.setText(QCA.translate('MainWindow', "导入配置"))
-        self.ui.Button_ImportSettings_STT_Whisper.clicked.connect(
-            lambda: ParamsManager_STT_Whisper.ImportSettings(
+        self.ui.Button_ImportSettings_ASR_Whisper.setText(QCA.translate('MainWindow', "导入配置"))
+        self.ui.Button_ImportSettings_ASR_Whisper.clicked.connect(
+            lambda: ParamsManager_ASR_Whisper.ImportSettings(
                 QFunc.Function_GetFileDialog(
                     Mode = "SelectFile",
                     FileType = "ini类型 (*.ini)"
@@ -3249,9 +3249,9 @@ class MainWindow(Window_MainWindow):
             )
         )
 
-        self.ui.Button_ExportSettings_STT_Whisper.setText(QCA.translate('MainWindow', "导出配置"))
-        self.ui.Button_ExportSettings_STT_Whisper.clicked.connect(
-            lambda: ParamsManager_STT_Whisper.ExportSettings(
+        self.ui.Button_ExportSettings_ASR_Whisper.setText(QCA.translate('MainWindow', "导出配置"))
+        self.ui.Button_ExportSettings_ASR_Whisper.clicked.connect(
+            lambda: ParamsManager_ASR_Whisper.ExportSettings(
                 QFunc.Function_GetFileDialog(
                     Mode = "SaveFile",
                     FileType = "ini类型 (*.ini)"
@@ -3259,37 +3259,37 @@ class MainWindow(Window_MainWindow):
             )
         )
 
-        self.ui.Button_CheckOutput_STT_Whisper.setText(QCA.translate('MainWindow', "打开输出目录"))
+        self.ui.Button_CheckOutput_ASR_Whisper.setText(QCA.translate('MainWindow', "打开输出目录"))
         Function_SetURL(
-            Button = self.ui.Button_CheckOutput_STT_Whisper,
-            URL = self.ui.LineEdit_STT_Whisper_OutputRoot,
+            Button = self.ui.Button_CheckOutput_ASR_Whisper,
+            URL = self.ui.LineEdit_ASR_Whisper_OutputRoot,
             ButtonTooltip = "Click to open",
             CreateIfNotExist = True
         )
 
         # Bottom
-        self.ui.Button_STT_Whisper_Execute.setText(QCA.translate('MainWindow', "执行语音转录"))
-        self.ui.Button_STT_Whisper_Terminate.setText(QCA.translate('MainWindow', "终止语音转录"))
+        self.ui.Button_ASR_Whisper_Execute.setText(QCA.translate('MainWindow', "执行语音转录"))
+        self.ui.Button_ASR_Whisper_Terminate.setText(QCA.translate('MainWindow', "终止语音转录"))
         Function_SetMethodExecutor(self,
-            ExecuteButton = self.ui.Button_STT_Whisper_Execute,
-            TerminateButton = self.ui.Button_STT_Whisper_Terminate,
-            ProgressBar = self.ui.ProgressBar_STT_Whisper,
+            ExecuteButton = self.ui.Button_ASR_Whisper_Execute,
+            TerminateButton = self.ui.Button_ASR_Whisper_Terminate,
+            ProgressBar = self.ui.ProgressBar_ASR_Whisper,
             ConsoleWidget = self.ui.Frame_Console,
             Method = Execute_Voice_Transcribing_Whisper.Execute,
             ParamsFrom = [
-                self.ui.LineEdit_STT_Whisper_ModelPath,
-                self.ui.LineEdit_STT_Whisper_AudioDir,
-                self.ui.CheckBox_STT_Whisper_Verbose,
-                self.ui.CheckBox_STT_Whisper_AddLanguageInfo,
-                self.ui.CheckBox_STT_Whisper_ConditionOnPreviousText,
-                self.ui.CheckBox_STT_Whisper_fp16,
-                self.ui.LineEdit_STT_Whisper_OutputRoot,
-                self.ui.LineEdit_STT_Whisper_OutputDirName
+                self.ui.LineEdit_ASR_Whisper_ModelPath,
+                self.ui.LineEdit_ASR_Whisper_AudioDir,
+                self.ui.CheckBox_ASR_Whisper_Verbose,
+                self.ui.CheckBox_ASR_Whisper_AddLanguageInfo,
+                self.ui.CheckBox_ASR_Whisper_ConditionOnPreviousText,
+                self.ui.CheckBox_ASR_Whisper_fp16,
+                self.ui.LineEdit_ASR_Whisper_OutputRoot,
+                self.ui.LineEdit_ASR_Whisper_OutputDirName
             ],
             SuccessEvents = [
                 lambda: self.ShowMask(True, "正在加载表单"),
-                lambda: self.showSTTResult(
-                    LineEdit_STT_Whisper_OutputDir.text(), self.ui.LineEdit_STT_Whisper_AudioDir.text()
+                lambda: self.showASRResult(
+                    LineEdit_ASR_Whisper_OutputDir.text(), self.ui.LineEdit_ASR_Whisper_AudioDir.text()
                 ),
                 lambda: MessageBoxBase.pop(self,
                     QMessageBox.Information, "Tip",
@@ -6094,7 +6094,7 @@ class MainWindow(Window_MainWindow):
                     lambda: (
                         ParamsManager_Process.ResetSettings(),
                         ParamsManager_VPR_TDNN.ResetSettings(),
-                        ParamsManager_STT_Whisper.ResetSettings(),
+                        ParamsManager_ASR_Whisper.ResetSettings(),
                         ParamsManager_DAT_GPTSoVITS.ResetSettings(),
                         ParamsManager_DAT_VITS.ResetSettings(),
                         ParamsManager_Train_GPTSoVITS.ResetSettings(),
@@ -6133,11 +6133,11 @@ class MainWindow(Window_MainWindow):
                 ),
                 lambda: Function_ParamsSynchronizer(
                     LineEdit_VPR_TDNN_OutputDir,
-                    {LineEdit_VPR_TDNN_OutputDir: self.ui.LineEdit_STT_Whisper_AudioDir}
+                    {LineEdit_VPR_TDNN_OutputDir: self.ui.LineEdit_ASR_Whisper_AudioDir}
                 ),
                 lambda: Function_ParamsSynchronizer(
-                    LineEdit_STT_Whisper_OutputDir,
-                    {LineEdit_STT_Whisper_OutputDir: [self.ui.LineEdit_DAT_GPTSoVITS_SRTDir, self.ui.LineEdit_DAT_VITS_SRTDir]}
+                    LineEdit_ASR_Whisper_OutputDir,
+                    {LineEdit_ASR_Whisper_OutputDir: [self.ui.LineEdit_DAT_GPTSoVITS_SRTDir, self.ui.LineEdit_DAT_VITS_SRTDir]}
                 ),
                 lambda: Function_ParamsSynchronizer(
                     LineEdit_DAT_GPTSoVITS_FileListPath,
@@ -6208,24 +6208,24 @@ class MainWindow(Window_MainWindow):
             }
         )
 
-        self.ui.Label_STT_Whisper_OutputRoot.setText(QCA.translate('MainWindow', "Whisper转录输出目录"))
-        STT_Whisper_OutputRoot_Default = Path(OutputDir).joinpath('语音转录结果', 'Whisper').as_posix()
-        ParamsManager_STT_Whisper.SetParam(
-            Widget = self.ui.LineEdit_STT_Whisper_OutputRoot,
+        self.ui.Label_ASR_Whisper_OutputRoot.setText(QCA.translate('MainWindow', "Whisper转录输出目录"))
+        ASR_Whisper_OutputRoot_Default = Path(OutputDir).joinpath('语音转录结果', 'Whisper').as_posix()
+        ParamsManager_ASR_Whisper.SetParam(
+            Widget = self.ui.LineEdit_ASR_Whisper_OutputRoot,
             Section = 'Output Params',
             Option = 'Output_Root',
-            DefaultValue = STT_Whisper_OutputRoot_Default,
+            DefaultValue = ASR_Whisper_OutputRoot_Default,
             SetPlaceholderText = True,
-            PlaceholderText = STT_Whisper_OutputRoot_Default
+            PlaceholderText = ASR_Whisper_OutputRoot_Default
         )
-        self.ui.LineEdit_STT_Whisper_OutputRoot.SetFileDialog(
+        self.ui.LineEdit_ASR_Whisper_OutputRoot.SetFileDialog(
             Mode = "SelectFolder",
-            Directory = QFunc.NormPath(Path(STT_Whisper_OutputRoot_Default).parent)
+            Directory = QFunc.NormPath(Path(ASR_Whisper_OutputRoot_Default).parent)
         )
-        self.ui.Button_STT_Whisper_OutputRoot_MoreActions.SetMenu(
+        self.ui.Button_ASR_Whisper_OutputRoot_MoreActions.SetMenu(
             ActionEvents = {
-                "重置": lambda: ParamsManager_STT_Whisper.ResetParam(self.ui.LineEdit_STT_Whisper_OutputRoot),
-                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_STT_Whisper_OutputRoot.text())
+                "重置": lambda: ParamsManager_ASR_Whisper.ResetParam(self.ui.LineEdit_ASR_Whisper_OutputRoot),
+                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_ASR_Whisper_OutputRoot.text())
             }
         )
 

@@ -332,7 +332,7 @@ class Table_VPRResult(TableBase):
         return ValueDict
 
 
-class Table_STTResult(TableBase):
+class Table_ASRResult(TableBase):
     '''
     '''
     def __init__(self, parent: QWidget = None):

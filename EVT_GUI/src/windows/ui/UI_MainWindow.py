@@ -246,21 +246,21 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_3.addWidget(self.Button_Menu_VPR)
 
-        self.Button_Menu_STT = NavigationButton(self.Frame_Menu)
-        self.Button_Menu_STT.setObjectName(u"Button_Menu_STT")
-        sizePolicy1.setHeightForWidth(self.Button_Menu_STT.sizePolicy().hasHeightForWidth())
-        self.Button_Menu_STT.setSizePolicy(sizePolicy1)
-        self.Button_Menu_STT.setMinimumSize(QSize(0, 48))
+        self.Button_Menu_ASR = NavigationButton(self.Frame_Menu)
+        self.Button_Menu_ASR.setObjectName(u"Button_Menu_ASR")
+        sizePolicy1.setHeightForWidth(self.Button_Menu_ASR.sizePolicy().hasHeightForWidth())
+        self.Button_Menu_ASR.setSizePolicy(sizePolicy1)
+        self.Button_Menu_ASR.setMinimumSize(QSize(0, 48))
         icon5 = QIcon()
-        icon5.addFile(u":/Button_Icon/images/icons/STT.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
-        self.Button_Menu_STT.setIcon(icon5)
-        self.Button_Menu_STT.setIconSize(QSize(24, 24))
-        self.horizontalLayout_36 = QHBoxLayout(self.Button_Menu_STT)
+        icon5.addFile(u":/Button_Icon/images/icons/ASR.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.Button_Menu_ASR.setIcon(icon5)
+        self.Button_Menu_ASR.setIconSize(QSize(24, 24))
+        self.horizontalLayout_36 = QHBoxLayout(self.Button_Menu_ASR)
         self.horizontalLayout_36.setSpacing(0)
         self.horizontalLayout_36.setObjectName(u"horizontalLayout_36")
         self.horizontalLayout_36.setContentsMargins(0, 0, 0, 0)
 
-        self.verticalLayout_3.addWidget(self.Button_Menu_STT)
+        self.verticalLayout_3.addWidget(self.Button_Menu_ASR)
 
         self.Button_Menu_Dataset = NavigationButton(self.Frame_Menu)
         self.Button_Menu_Dataset.setObjectName(u"Button_Menu_Dataset")
@@ -1293,12 +1293,12 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_18.addWidget(self.Button_Models_VPR_Title)
 
-        self.Button_Models_STT_Title = NavigationButton(self.Frame_Models_Top)
-        self.Button_Models_STT_Title.setObjectName(u"Button_Models_STT_Title")
-        sizePolicy1.setHeightForWidth(self.Button_Models_STT_Title.sizePolicy().hasHeightForWidth())
-        self.Button_Models_STT_Title.setSizePolicy(sizePolicy1)
+        self.Button_Models_ASR_Title = NavigationButton(self.Frame_Models_Top)
+        self.Button_Models_ASR_Title.setObjectName(u"Button_Models_ASR_Title")
+        sizePolicy1.setHeightForWidth(self.Button_Models_ASR_Title.sizePolicy().hasHeightForWidth())
+        self.Button_Models_ASR_Title.setSizePolicy(sizePolicy1)
 
-        self.horizontalLayout_18.addWidget(self.Button_Models_STT_Title)
+        self.horizontalLayout_18.addWidget(self.Button_Models_ASR_Title)
 
         self.Button_Models_TTS_Title = NavigationButton(self.Frame_Models_Top)
         self.Button_Models_TTS_Title.setObjectName(u"Button_Models_TTS_Title")
@@ -1412,30 +1412,30 @@ class Ui_MainWindow(object):
         self.gridLayout_7.addWidget(self.TabWidget_Models_VPR, 0, 0, 1, 1)
 
         self.StackedWidget_Pages_Models.addWidget(self.SubPage_Models_VPR)
-        self.SubPage_Models_STT = QWidget()
-        self.SubPage_Models_STT.setObjectName(u"SubPage_Models_STT")
-        self.gridLayout_11 = QGridLayout(self.SubPage_Models_STT)
+        self.SubPage_Models_ASR = QWidget()
+        self.SubPage_Models_ASR.setObjectName(u"SubPage_Models_ASR")
+        self.gridLayout_11 = QGridLayout(self.SubPage_Models_ASR)
         self.gridLayout_11.setSpacing(12)
         self.gridLayout_11.setObjectName(u"gridLayout_11")
         self.gridLayout_11.setContentsMargins(0, 0, 0, 0)
-        self.TabWidget_Models_STT = TabWidgetBase(self.SubPage_Models_STT)
-        self.TabWidget_Models_STT.setObjectName(u"TabWidget_Models_STT")
-        self.Tab_Models_STT_Whisper = QWidget()
-        self.Tab_Models_STT_Whisper.setObjectName(u"Tab_Models_STT_Whisper")
-        self.verticalLayout_46 = QVBoxLayout(self.Tab_Models_STT_Whisper)
+        self.TabWidget_Models_ASR = TabWidgetBase(self.SubPage_Models_ASR)
+        self.TabWidget_Models_ASR.setObjectName(u"TabWidget_Models_ASR")
+        self.Tab_Models_ASR_Whisper = QWidget()
+        self.Tab_Models_ASR_Whisper.setObjectName(u"Tab_Models_ASR_Whisper")
+        self.verticalLayout_46 = QVBoxLayout(self.Tab_Models_ASR_Whisper)
         self.verticalLayout_46.setSpacing(0)
         self.verticalLayout_46.setObjectName(u"verticalLayout_46")
         self.verticalLayout_46.setContentsMargins(0, 0, 0, 0)
-        self.Table_Models_STT_Whisper = Table_ViewModels(self.Tab_Models_STT_Whisper)
-        self.Table_Models_STT_Whisper.setObjectName(u"Table_Models_STT_Whisper")
+        self.Table_Models_ASR_Whisper = Table_ViewModels(self.Tab_Models_ASR_Whisper)
+        self.Table_Models_ASR_Whisper.setObjectName(u"Table_Models_ASR_Whisper")
 
-        self.verticalLayout_46.addWidget(self.Table_Models_STT_Whisper)
+        self.verticalLayout_46.addWidget(self.Table_Models_ASR_Whisper)
 
-        self.TabWidget_Models_STT.addTab(self.Tab_Models_STT_Whisper, "")
+        self.TabWidget_Models_ASR.addTab(self.Tab_Models_ASR_Whisper, "")
 
-        self.gridLayout_11.addWidget(self.TabWidget_Models_STT, 0, 0, 1, 1)
+        self.gridLayout_11.addWidget(self.TabWidget_Models_ASR, 0, 0, 1, 1)
 
-        self.StackedWidget_Pages_Models.addWidget(self.SubPage_Models_STT)
+        self.StackedWidget_Pages_Models.addWidget(self.SubPage_Models_ASR)
         self.SubPage_Models_TTS = QWidget()
         self.SubPage_Models_TTS.setObjectName(u"SubPage_Models_TTS")
         self.gridLayout_10 = QGridLayout(self.SubPage_Models_TTS)
@@ -3614,16 +3614,16 @@ class Ui_MainWindow(object):
         self.verticalLayout_44.addWidget(self.StackedWidget_Pages_VPR)
 
         self.StackedWidget_Pages.addWidget(self.Page_VPR)
-        self.Page_STT = QWidget()
-        self.Page_STT.setObjectName(u"Page_STT")
-        self.verticalLayout_41 = QVBoxLayout(self.Page_STT)
+        self.Page_ASR = QWidget()
+        self.Page_ASR.setObjectName(u"Page_ASR")
+        self.verticalLayout_41 = QVBoxLayout(self.Page_ASR)
         self.verticalLayout_41.setSpacing(21)
         self.verticalLayout_41.setObjectName(u"verticalLayout_41")
         self.verticalLayout_41.setContentsMargins(21, 12, 21, 12)
-        self.Frame_STT_Top = QFrame(self.Page_STT)
-        self.Frame_STT_Top.setObjectName(u"Frame_STT_Top")
-        self.Frame_STT_Top.setMinimumSize(QSize(0, 60))
-        self.Frame_STT_Top.setStyleSheet(u"QFrame {\n"
+        self.Frame_ASR_Top = QFrame(self.Page_ASR)
+        self.Frame_ASR_Top.setObjectName(u"Frame_ASR_Top")
+        self.Frame_ASR_Top.setMinimumSize(QSize(0, 60))
+        self.Frame_ASR_Top.setStyleSheet(u"QFrame {\n"
 "	border-top-width: 0px;\n"
 "	border-right-width: 0px;\n"
 "	border-bottom-width: 3px;\n"
@@ -3631,11 +3631,11 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "	border-bottom-color: rgba(123, 123, 123, 123);\n"
 "}")
-        self.horizontalLayout_55 = QHBoxLayout(self.Frame_STT_Top)
+        self.horizontalLayout_55 = QHBoxLayout(self.Frame_ASR_Top)
         self.horizontalLayout_55.setSpacing(0)
         self.horizontalLayout_55.setObjectName(u"horizontalLayout_55")
         self.horizontalLayout_55.setContentsMargins(0, 0, 0, 0)
-        self.Button_VoiceTranscriber_Title = NavigationButton(self.Frame_STT_Top)
+        self.Button_VoiceTranscriber_Title = NavigationButton(self.Frame_ASR_Top)
         self.Button_VoiceTranscriber_Title.setObjectName(u"Button_VoiceTranscriber_Title")
         sizePolicy1.setHeightForWidth(self.Button_VoiceTranscriber_Title.sizePolicy().hasHeightForWidth())
         self.Button_VoiceTranscriber_Title.setSizePolicy(sizePolicy1)
@@ -3646,7 +3646,7 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_55.addItem(self.HorizontalSpacer_VoiceTranscriber_Title)
 
-        self.Button_VoiceTranscriber_Help = QPushButton(self.Frame_STT_Top)
+        self.Button_VoiceTranscriber_Help = QPushButton(self.Frame_ASR_Top)
         self.Button_VoiceTranscriber_Help.setObjectName(u"Button_VoiceTranscriber_Help")
         self.Button_VoiceTranscriber_Help.setMinimumSize(QSize(45, 45))
         self.Button_VoiceTranscriber_Help.setStyleSheet(u"QPushButton {\n"
@@ -3664,71 +3664,71 @@ class Ui_MainWindow(object):
         self.horizontalLayout_55.addWidget(self.Button_VoiceTranscriber_Help)
 
 
-        self.verticalLayout_41.addWidget(self.Frame_STT_Top)
+        self.verticalLayout_41.addWidget(self.Frame_ASR_Top)
 
-        self.StackedWidget_Pages_STT = QStackedWidget(self.Page_STT)
-        self.StackedWidget_Pages_STT.setObjectName(u"StackedWidget_Pages_STT")
-        self.StackedWidget_Pages_STT.setStyleSheet(u"QWidget {\n"
+        self.StackedWidget_Pages_ASR = QStackedWidget(self.Page_ASR)
+        self.StackedWidget_Pages_ASR.setObjectName(u"StackedWidget_Pages_ASR")
+        self.StackedWidget_Pages_ASR.setStyleSheet(u"QWidget {\n"
 "	background-color: transparent;\n"
 "}")
-        self.Subpage_STT_Whisper = QWidget()
-        self.Subpage_STT_Whisper.setObjectName(u"Subpage_STT_Whisper")
-        self.gridLayout_19 = QGridLayout(self.Subpage_STT_Whisper)
+        self.Subpage_ASR_Whisper = QWidget()
+        self.Subpage_ASR_Whisper.setObjectName(u"Subpage_ASR_Whisper")
+        self.gridLayout_19 = QGridLayout(self.Subpage_ASR_Whisper)
         self.gridLayout_19.setSpacing(12)
         self.gridLayout_19.setObjectName(u"gridLayout_19")
         self.gridLayout_19.setContentsMargins(0, 0, 0, 0)
-        self.Widget_Left_STT_Whisper = QWidget(self.Subpage_STT_Whisper)
-        self.Widget_Left_STT_Whisper.setObjectName(u"Widget_Left_STT_Whisper")
-        self.Widget_Left_STT_Whisper.setMinimumSize(QSize(150, 0))
-        self.Widget_Left_STT_Whisper.setStyleSheet(u"QWidget {\n"
+        self.Widget_Left_ASR_Whisper = QWidget(self.Subpage_ASR_Whisper)
+        self.Widget_Left_ASR_Whisper.setObjectName(u"Widget_Left_ASR_Whisper")
+        self.Widget_Left_ASR_Whisper.setMinimumSize(QSize(150, 0))
+        self.Widget_Left_ASR_Whisper.setStyleSheet(u"QWidget {\n"
 "	border-width: 0px;\n"
 "	border-style: solid;\n"
 "}\n"
 "QWidget:hover {\n"
 "	background-color: rgba(36, 36, 36, 3);\n"
 "}")
-        self.verticalLayout_8 = QVBoxLayout(self.Widget_Left_STT_Whisper)
+        self.verticalLayout_8 = QVBoxLayout(self.Widget_Left_ASR_Whisper)
         self.verticalLayout_8.setSpacing(12)
         self.verticalLayout_8.setObjectName(u"verticalLayout_8")
         self.verticalLayout_8.setContentsMargins(12, 12, 12, 12)
-        self.TreeWidget_Catalogue_STT_Whisper = TreeWidgetBase(self.Widget_Left_STT_Whisper)
-        __qtreewidgetitem2 = QTreeWidgetItem(self.TreeWidget_Catalogue_STT_Whisper)
+        self.TreeWidget_Catalogue_ASR_Whisper = TreeWidgetBase(self.Widget_Left_ASR_Whisper)
+        __qtreewidgetitem2 = QTreeWidgetItem(self.TreeWidget_Catalogue_ASR_Whisper)
         QTreeWidgetItem(__qtreewidgetitem2)
-        self.TreeWidget_Catalogue_STT_Whisper.setObjectName(u"TreeWidget_Catalogue_STT_Whisper")
+        self.TreeWidget_Catalogue_ASR_Whisper.setObjectName(u"TreeWidget_Catalogue_ASR_Whisper")
 
-        self.verticalLayout_8.addWidget(self.TreeWidget_Catalogue_STT_Whisper)
+        self.verticalLayout_8.addWidget(self.TreeWidget_Catalogue_ASR_Whisper)
 
 
-        self.gridLayout_19.addWidget(self.Widget_Left_STT_Whisper, 0, 0, 1, 1)
+        self.gridLayout_19.addWidget(self.Widget_Left_ASR_Whisper, 0, 0, 1, 1)
 
-        self.ScrollArea_Middle_STT_Whisper = ScrollAreaBase(self.Subpage_STT_Whisper)
-        self.ScrollArea_Middle_STT_Whisper.setObjectName(u"ScrollArea_Middle_STT_Whisper")
-        self.ScrollArea_Middle_STT_Whisper.setMinimumSize(QSize(600, 0))
-        self.ScrollArea_Middle_STT_Whisper.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOn)
-        self.ScrollArea_Middle_STT_Whisper.setWidgetResizable(True)
-        self.ScrollArea_Middle_WidgetContents_STT_Whisper = QWidget()
-        self.ScrollArea_Middle_WidgetContents_STT_Whisper.setObjectName(u"ScrollArea_Middle_WidgetContents_STT_Whisper")
-        self.ScrollArea_Middle_WidgetContents_STT_Whisper.setGeometry(QRect(0, 0, 586, 687))
-        self.verticalLayout_16 = QVBoxLayout(self.ScrollArea_Middle_WidgetContents_STT_Whisper)
+        self.ScrollArea_Middle_ASR_Whisper = ScrollAreaBase(self.Subpage_ASR_Whisper)
+        self.ScrollArea_Middle_ASR_Whisper.setObjectName(u"ScrollArea_Middle_ASR_Whisper")
+        self.ScrollArea_Middle_ASR_Whisper.setMinimumSize(QSize(600, 0))
+        self.ScrollArea_Middle_ASR_Whisper.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOn)
+        self.ScrollArea_Middle_ASR_Whisper.setWidgetResizable(True)
+        self.ScrollArea_Middle_WidgetContents_ASR_Whisper = QWidget()
+        self.ScrollArea_Middle_WidgetContents_ASR_Whisper.setObjectName(u"ScrollArea_Middle_WidgetContents_ASR_Whisper")
+        self.ScrollArea_Middle_WidgetContents_ASR_Whisper.setGeometry(QRect(0, 0, 586, 687))
+        self.verticalLayout_16 = QVBoxLayout(self.ScrollArea_Middle_WidgetContents_ASR_Whisper)
         self.verticalLayout_16.setSpacing(12)
         self.verticalLayout_16.setObjectName(u"verticalLayout_16")
         self.verticalLayout_16.setContentsMargins(12, 12, 12, 12)
-        self.GroupBox_STT_Whisper_InputParams = GroupBoxBase(self.ScrollArea_Middle_WidgetContents_STT_Whisper)
-        self.GroupBox_STT_Whisper_InputParams.setObjectName(u"GroupBox_STT_Whisper_InputParams")
-        self.verticalLayout_32 = QVBoxLayout(self.GroupBox_STT_Whisper_InputParams)
+        self.GroupBox_ASR_Whisper_InputParams = GroupBoxBase(self.ScrollArea_Middle_WidgetContents_ASR_Whisper)
+        self.GroupBox_ASR_Whisper_InputParams.setObjectName(u"GroupBox_ASR_Whisper_InputParams")
+        self.verticalLayout_32 = QVBoxLayout(self.GroupBox_ASR_Whisper_InputParams)
         self.verticalLayout_32.setSpacing(0)
         self.verticalLayout_32.setObjectName(u"verticalLayout_32")
         self.verticalLayout_32.setContentsMargins(0, 12, 0, 12)
-        self.Frame_STT_Whisper_InputParams_BasicSettings = QFrame(self.GroupBox_STT_Whisper_InputParams)
-        self.Frame_STT_Whisper_InputParams_BasicSettings.setObjectName(u"Frame_STT_Whisper_InputParams_BasicSettings")
-        self.verticalLayout_129 = QVBoxLayout(self.Frame_STT_Whisper_InputParams_BasicSettings)
+        self.Frame_ASR_Whisper_InputParams_BasicSettings = QFrame(self.GroupBox_ASR_Whisper_InputParams)
+        self.Frame_ASR_Whisper_InputParams_BasicSettings.setObjectName(u"Frame_ASR_Whisper_InputParams_BasicSettings")
+        self.verticalLayout_129 = QVBoxLayout(self.Frame_ASR_Whisper_InputParams_BasicSettings)
         self.verticalLayout_129.setSpacing(0)
         self.verticalLayout_129.setObjectName(u"verticalLayout_129")
         self.verticalLayout_129.setContentsMargins(0, 0, 0, 0)
-        self.Frame_STT_Whisper_AudioDir = QFrame(self.Frame_STT_Whisper_InputParams_BasicSettings)
-        self.Frame_STT_Whisper_AudioDir.setObjectName(u"Frame_STT_Whisper_AudioDir")
-        self.Frame_STT_Whisper_AudioDir.setMinimumSize(QSize(0, 105))
-        self.Frame_STT_Whisper_AudioDir.setStyleSheet(u"QFrame {\n"
+        self.Frame_ASR_Whisper_AudioDir = QFrame(self.Frame_ASR_Whisper_InputParams_BasicSettings)
+        self.Frame_ASR_Whisper_AudioDir.setObjectName(u"Frame_ASR_Whisper_AudioDir")
+        self.Frame_ASR_Whisper_AudioDir.setMinimumSize(QSize(0, 105))
+        self.Frame_ASR_Whisper_AudioDir.setStyleSheet(u"QFrame {\n"
 "	background-color: transparent;\n"
 "	border-width: 0px;\n"
 "	border-style: solid;\n"
@@ -3736,15 +3736,15 @@ class Ui_MainWindow(object):
 "QFrame:hover {\n"
 "	background-color: rgba(36, 36, 36, 12);\n"
 "}")
-        self.gridLayout_39 = QGridLayout(self.Frame_STT_Whisper_AudioDir)
+        self.gridLayout_39 = QGridLayout(self.Frame_ASR_Whisper_AudioDir)
         self.gridLayout_39.setSpacing(12)
         self.gridLayout_39.setObjectName(u"gridLayout_39")
         self.gridLayout_39.setContentsMargins(21, 12, 21, 12)
-        self.Label_STT_Whisper_AudioDir = LabelBase(self.Frame_STT_Whisper_AudioDir)
-        self.Label_STT_Whisper_AudioDir.setObjectName(u"Label_STT_Whisper_AudioDir")
-        sizePolicy5.setHeightForWidth(self.Label_STT_Whisper_AudioDir.sizePolicy().hasHeightForWidth())
-        self.Label_STT_Whisper_AudioDir.setSizePolicy(sizePolicy5)
-        self.Label_STT_Whisper_AudioDir.setStyleSheet(u"QLabel {\n"
+        self.Label_ASR_Whisper_AudioDir = LabelBase(self.Frame_ASR_Whisper_AudioDir)
+        self.Label_ASR_Whisper_AudioDir.setObjectName(u"Label_ASR_Whisper_AudioDir")
+        sizePolicy5.setHeightForWidth(self.Label_ASR_Whisper_AudioDir.sizePolicy().hasHeightForWidth())
+        self.Label_ASR_Whisper_AudioDir.setSizePolicy(sizePolicy5)
+        self.Label_ASR_Whisper_AudioDir.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	background-color: transparent;\n"
 "	padding: 0px;\n"
@@ -3753,55 +3753,55 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}")
 
-        self.gridLayout_39.addWidget(self.Label_STT_Whisper_AudioDir, 0, 0, 1, 1)
+        self.gridLayout_39.addWidget(self.Label_ASR_Whisper_AudioDir, 0, 0, 1, 1)
 
-        self.HorizontalSpacer_STT_Whisper_AudioDir = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+        self.HorizontalSpacer_ASR_Whisper_AudioDir = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
-        self.gridLayout_39.addItem(self.HorizontalSpacer_STT_Whisper_AudioDir, 0, 1, 1, 1)
+        self.gridLayout_39.addItem(self.HorizontalSpacer_ASR_Whisper_AudioDir, 0, 1, 1, 1)
 
-        self.Button_STT_Whisper_AudioDir_MoreActions = MenuButton(self.Frame_STT_Whisper_AudioDir)
-        self.Button_STT_Whisper_AudioDir_MoreActions.setObjectName(u"Button_STT_Whisper_AudioDir_MoreActions")
-        self.Button_STT_Whisper_AudioDir_MoreActions.setMinimumSize(QSize(27, 27))
-        self.Button_STT_Whisper_AudioDir_MoreActions.setMaximumSize(QSize(27, 27))
-        self.Button_STT_Whisper_AudioDir_MoreActions.setStyleSheet(u"QPushButton {\n"
+        self.Button_ASR_Whisper_AudioDir_MoreActions = MenuButton(self.Frame_ASR_Whisper_AudioDir)
+        self.Button_ASR_Whisper_AudioDir_MoreActions.setObjectName(u"Button_ASR_Whisper_AudioDir_MoreActions")
+        self.Button_ASR_Whisper_AudioDir_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_ASR_Whisper_AudioDir_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_ASR_Whisper_AudioDir_MoreActions.setStyleSheet(u"QPushButton {\n"
 "	border-width: 1px;\n"
 "	border-style: solid;\n"
 "	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_39.addWidget(self.Button_STT_Whisper_AudioDir_MoreActions, 0, 2, 1, 1)
+        self.gridLayout_39.addWidget(self.Button_ASR_Whisper_AudioDir_MoreActions, 0, 2, 1, 1)
 
-        self.LineEdit_STT_Whisper_AudioDir = LineEditBase(self.Frame_STT_Whisper_AudioDir)
-        self.LineEdit_STT_Whisper_AudioDir.setObjectName(u"LineEdit_STT_Whisper_AudioDir")
-        self.LineEdit_STT_Whisper_AudioDir.setMinimumSize(QSize(0, 27))
+        self.LineEdit_ASR_Whisper_AudioDir = LineEditBase(self.Frame_ASR_Whisper_AudioDir)
+        self.LineEdit_ASR_Whisper_AudioDir.setObjectName(u"LineEdit_ASR_Whisper_AudioDir")
+        self.LineEdit_ASR_Whisper_AudioDir.setMinimumSize(QSize(0, 27))
 
-        self.gridLayout_39.addWidget(self.LineEdit_STT_Whisper_AudioDir, 1, 0, 1, 3)
-
-
-        self.verticalLayout_129.addWidget(self.Frame_STT_Whisper_AudioDir)
+        self.gridLayout_39.addWidget(self.LineEdit_ASR_Whisper_AudioDir, 1, 0, 1, 3)
 
 
-        self.verticalLayout_32.addWidget(self.Frame_STT_Whisper_InputParams_BasicSettings)
+        self.verticalLayout_129.addWidget(self.Frame_ASR_Whisper_AudioDir)
 
 
-        self.verticalLayout_16.addWidget(self.GroupBox_STT_Whisper_InputParams)
+        self.verticalLayout_32.addWidget(self.Frame_ASR_Whisper_InputParams_BasicSettings)
 
-        self.GroupBox_STT_Whisper_WhisperParams = GroupBoxBase(self.ScrollArea_Middle_WidgetContents_STT_Whisper)
-        self.GroupBox_STT_Whisper_WhisperParams.setObjectName(u"GroupBox_STT_Whisper_WhisperParams")
-        self.verticalLayout_49 = QVBoxLayout(self.GroupBox_STT_Whisper_WhisperParams)
+
+        self.verticalLayout_16.addWidget(self.GroupBox_ASR_Whisper_InputParams)
+
+        self.GroupBox_ASR_Whisper_WhisperParams = GroupBoxBase(self.ScrollArea_Middle_WidgetContents_ASR_Whisper)
+        self.GroupBox_ASR_Whisper_WhisperParams.setObjectName(u"GroupBox_ASR_Whisper_WhisperParams")
+        self.verticalLayout_49 = QVBoxLayout(self.GroupBox_ASR_Whisper_WhisperParams)
         self.verticalLayout_49.setSpacing(0)
         self.verticalLayout_49.setObjectName(u"verticalLayout_49")
         self.verticalLayout_49.setContentsMargins(0, 12, 0, 12)
-        self.Frame_STT_Whisper_WhisperParams_BasicSettings = QFrame(self.GroupBox_STT_Whisper_WhisperParams)
-        self.Frame_STT_Whisper_WhisperParams_BasicSettings.setObjectName(u"Frame_STT_Whisper_WhisperParams_BasicSettings")
-        self.verticalLayout_37 = QVBoxLayout(self.Frame_STT_Whisper_WhisperParams_BasicSettings)
+        self.Frame_ASR_Whisper_WhisperParams_BasicSettings = QFrame(self.GroupBox_ASR_Whisper_WhisperParams)
+        self.Frame_ASR_Whisper_WhisperParams_BasicSettings.setObjectName(u"Frame_ASR_Whisper_WhisperParams_BasicSettings")
+        self.verticalLayout_37 = QVBoxLayout(self.Frame_ASR_Whisper_WhisperParams_BasicSettings)
         self.verticalLayout_37.setSpacing(0)
         self.verticalLayout_37.setObjectName(u"verticalLayout_37")
         self.verticalLayout_37.setContentsMargins(0, 0, 0, 0)
-        self.Frame_STT_Whisper_AddLanguageInfo = QFrame(self.Frame_STT_Whisper_WhisperParams_BasicSettings)
-        self.Frame_STT_Whisper_AddLanguageInfo.setObjectName(u"Frame_STT_Whisper_AddLanguageInfo")
-        self.Frame_STT_Whisper_AddLanguageInfo.setMinimumSize(QSize(0, 105))
-        self.Frame_STT_Whisper_AddLanguageInfo.setStyleSheet(u"QFrame {\n"
+        self.Frame_ASR_Whisper_AddLanguageInfo = QFrame(self.Frame_ASR_Whisper_WhisperParams_BasicSettings)
+        self.Frame_ASR_Whisper_AddLanguageInfo.setObjectName(u"Frame_ASR_Whisper_AddLanguageInfo")
+        self.Frame_ASR_Whisper_AddLanguageInfo.setMinimumSize(QSize(0, 105))
+        self.Frame_ASR_Whisper_AddLanguageInfo.setStyleSheet(u"QFrame {\n"
 "	background-color: transparent;\n"
 "	border-width: 0px;\n"
 "	border-style: solid;\n"
@@ -3809,15 +3809,15 @@ class Ui_MainWindow(object):
 "QFrame:hover {\n"
 "	background-color: rgba(36, 36, 36, 12);\n"
 "}")
-        self.gridLayout_40 = QGridLayout(self.Frame_STT_Whisper_AddLanguageInfo)
+        self.gridLayout_40 = QGridLayout(self.Frame_ASR_Whisper_AddLanguageInfo)
         self.gridLayout_40.setSpacing(12)
         self.gridLayout_40.setObjectName(u"gridLayout_40")
         self.gridLayout_40.setContentsMargins(21, 12, 21, 12)
-        self.Label_STT_Whisper_AddLanguageInfo = LabelBase(self.Frame_STT_Whisper_AddLanguageInfo)
-        self.Label_STT_Whisper_AddLanguageInfo.setObjectName(u"Label_STT_Whisper_AddLanguageInfo")
-        sizePolicy5.setHeightForWidth(self.Label_STT_Whisper_AddLanguageInfo.sizePolicy().hasHeightForWidth())
-        self.Label_STT_Whisper_AddLanguageInfo.setSizePolicy(sizePolicy5)
-        self.Label_STT_Whisper_AddLanguageInfo.setStyleSheet(u"QLabel {\n"
+        self.Label_ASR_Whisper_AddLanguageInfo = LabelBase(self.Frame_ASR_Whisper_AddLanguageInfo)
+        self.Label_ASR_Whisper_AddLanguageInfo.setObjectName(u"Label_ASR_Whisper_AddLanguageInfo")
+        sizePolicy5.setHeightForWidth(self.Label_ASR_Whisper_AddLanguageInfo.sizePolicy().hasHeightForWidth())
+        self.Label_ASR_Whisper_AddLanguageInfo.setSizePolicy(sizePolicy5)
+        self.Label_ASR_Whisper_AddLanguageInfo.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	background-color: transparent;\n"
 "	padding: 0px;\n"
@@ -3826,28 +3826,28 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}")
 
-        self.gridLayout_40.addWidget(self.Label_STT_Whisper_AddLanguageInfo, 0, 0, 1, 1)
+        self.gridLayout_40.addWidget(self.Label_ASR_Whisper_AddLanguageInfo, 0, 0, 1, 1)
 
-        self.HorizontalSpacer_STT_Whisper_AddLanguageInfo = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+        self.HorizontalSpacer_ASR_Whisper_AddLanguageInfo = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
-        self.gridLayout_40.addItem(self.HorizontalSpacer_STT_Whisper_AddLanguageInfo, 0, 1, 1, 1)
+        self.gridLayout_40.addItem(self.HorizontalSpacer_ASR_Whisper_AddLanguageInfo, 0, 1, 1, 1)
 
-        self.Button_STT_Whisper_AddLanguageInfo_MoreActions = MenuButton(self.Frame_STT_Whisper_AddLanguageInfo)
-        self.Button_STT_Whisper_AddLanguageInfo_MoreActions.setObjectName(u"Button_STT_Whisper_AddLanguageInfo_MoreActions")
-        self.Button_STT_Whisper_AddLanguageInfo_MoreActions.setMinimumSize(QSize(27, 27))
-        self.Button_STT_Whisper_AddLanguageInfo_MoreActions.setMaximumSize(QSize(27, 27))
-        self.Button_STT_Whisper_AddLanguageInfo_MoreActions.setStyleSheet(u"QPushButton {\n"
+        self.Button_ASR_Whisper_AddLanguageInfo_MoreActions = MenuButton(self.Frame_ASR_Whisper_AddLanguageInfo)
+        self.Button_ASR_Whisper_AddLanguageInfo_MoreActions.setObjectName(u"Button_ASR_Whisper_AddLanguageInfo_MoreActions")
+        self.Button_ASR_Whisper_AddLanguageInfo_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_ASR_Whisper_AddLanguageInfo_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_ASR_Whisper_AddLanguageInfo_MoreActions.setStyleSheet(u"QPushButton {\n"
 "	border-width: 1px;\n"
 "	border-style: solid;\n"
 "	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_40.addWidget(self.Button_STT_Whisper_AddLanguageInfo_MoreActions, 0, 2, 1, 1)
+        self.gridLayout_40.addWidget(self.Button_ASR_Whisper_AddLanguageInfo_MoreActions, 0, 2, 1, 1)
 
-        self.CheckBox_STT_Whisper_AddLanguageInfo = QCheckBox(self.Frame_STT_Whisper_AddLanguageInfo)
-        self.CheckBox_STT_Whisper_AddLanguageInfo.setObjectName(u"CheckBox_STT_Whisper_AddLanguageInfo")
-        self.CheckBox_STT_Whisper_AddLanguageInfo.setMinimumSize(QSize(0, 27))
-        self.CheckBox_STT_Whisper_AddLanguageInfo.setStyleSheet(u"QCheckBox {\n"
+        self.CheckBox_ASR_Whisper_AddLanguageInfo = QCheckBox(self.Frame_ASR_Whisper_AddLanguageInfo)
+        self.CheckBox_ASR_Whisper_AddLanguageInfo.setObjectName(u"CheckBox_ASR_Whisper_AddLanguageInfo")
+        self.CheckBox_ASR_Whisper_AddLanguageInfo.setMinimumSize(QSize(0, 27))
+        self.CheckBox_ASR_Whisper_AddLanguageInfo.setStyleSheet(u"QCheckBox {\n"
 "	font-size: 12px;\n"
 "	spacing: 12.3px;\n"
 "	background-color: transparent;\n"
@@ -3878,15 +3878,15 @@ class Ui_MainWindow(object):
 "	border-image: url(:/CheckBox_Icon/images/icons/ToggleOn.png);\n"
 "}")
 
-        self.gridLayout_40.addWidget(self.CheckBox_STT_Whisper_AddLanguageInfo, 1, 0, 1, 3)
+        self.gridLayout_40.addWidget(self.CheckBox_ASR_Whisper_AddLanguageInfo, 1, 0, 1, 3)
 
 
-        self.verticalLayout_37.addWidget(self.Frame_STT_Whisper_AddLanguageInfo)
+        self.verticalLayout_37.addWidget(self.Frame_ASR_Whisper_AddLanguageInfo)
 
-        self.Frame_STT_Whisper_ModelPath = QFrame(self.Frame_STT_Whisper_WhisperParams_BasicSettings)
-        self.Frame_STT_Whisper_ModelPath.setObjectName(u"Frame_STT_Whisper_ModelPath")
-        self.Frame_STT_Whisper_ModelPath.setMinimumSize(QSize(0, 105))
-        self.Frame_STT_Whisper_ModelPath.setStyleSheet(u"QFrame {\n"
+        self.Frame_ASR_Whisper_ModelPath = QFrame(self.Frame_ASR_Whisper_WhisperParams_BasicSettings)
+        self.Frame_ASR_Whisper_ModelPath.setObjectName(u"Frame_ASR_Whisper_ModelPath")
+        self.Frame_ASR_Whisper_ModelPath.setMinimumSize(QSize(0, 105))
+        self.Frame_ASR_Whisper_ModelPath.setStyleSheet(u"QFrame {\n"
 "	background-color: transparent;\n"
 "	border-width: 0px;\n"
 "	border-style: solid;\n"
@@ -3894,15 +3894,15 @@ class Ui_MainWindow(object):
 "QFrame:hover {\n"
 "	background-color: rgba(36, 36, 36, 12);\n"
 "}")
-        self.gridLayout_41 = QGridLayout(self.Frame_STT_Whisper_ModelPath)
+        self.gridLayout_41 = QGridLayout(self.Frame_ASR_Whisper_ModelPath)
         self.gridLayout_41.setSpacing(12)
         self.gridLayout_41.setObjectName(u"gridLayout_41")
         self.gridLayout_41.setContentsMargins(21, 12, 21, 12)
-        self.Label_STT_Whisper_ModelPath = LabelBase(self.Frame_STT_Whisper_ModelPath)
-        self.Label_STT_Whisper_ModelPath.setObjectName(u"Label_STT_Whisper_ModelPath")
-        sizePolicy5.setHeightForWidth(self.Label_STT_Whisper_ModelPath.sizePolicy().hasHeightForWidth())
-        self.Label_STT_Whisper_ModelPath.setSizePolicy(sizePolicy5)
-        self.Label_STT_Whisper_ModelPath.setStyleSheet(u"QLabel {\n"
+        self.Label_ASR_Whisper_ModelPath = LabelBase(self.Frame_ASR_Whisper_ModelPath)
+        self.Label_ASR_Whisper_ModelPath.setObjectName(u"Label_ASR_Whisper_ModelPath")
+        sizePolicy5.setHeightForWidth(self.Label_ASR_Whisper_ModelPath.sizePolicy().hasHeightForWidth())
+        self.Label_ASR_Whisper_ModelPath.setSizePolicy(sizePolicy5)
+        self.Label_ASR_Whisper_ModelPath.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	background-color: transparent;\n"
 "	padding: 0px;\n"
@@ -3911,49 +3911,49 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}")
 
-        self.gridLayout_41.addWidget(self.Label_STT_Whisper_ModelPath, 0, 0, 1, 1)
+        self.gridLayout_41.addWidget(self.Label_ASR_Whisper_ModelPath, 0, 0, 1, 1)
 
-        self.HorizontalSpacer_STT_Whisper_ModelPath = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+        self.HorizontalSpacer_ASR_Whisper_ModelPath = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
-        self.gridLayout_41.addItem(self.HorizontalSpacer_STT_Whisper_ModelPath, 0, 1, 1, 1)
+        self.gridLayout_41.addItem(self.HorizontalSpacer_ASR_Whisper_ModelPath, 0, 1, 1, 1)
 
-        self.Button_STT_Whisper_ModelPath_MoreActions = MenuButton(self.Frame_STT_Whisper_ModelPath)
-        self.Button_STT_Whisper_ModelPath_MoreActions.setObjectName(u"Button_STT_Whisper_ModelPath_MoreActions")
-        self.Button_STT_Whisper_ModelPath_MoreActions.setMinimumSize(QSize(27, 27))
-        self.Button_STT_Whisper_ModelPath_MoreActions.setMaximumSize(QSize(27, 27))
-        self.Button_STT_Whisper_ModelPath_MoreActions.setStyleSheet(u"QPushButton {\n"
+        self.Button_ASR_Whisper_ModelPath_MoreActions = MenuButton(self.Frame_ASR_Whisper_ModelPath)
+        self.Button_ASR_Whisper_ModelPath_MoreActions.setObjectName(u"Button_ASR_Whisper_ModelPath_MoreActions")
+        self.Button_ASR_Whisper_ModelPath_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_ASR_Whisper_ModelPath_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_ASR_Whisper_ModelPath_MoreActions.setStyleSheet(u"QPushButton {\n"
 "	border-width: 1px;\n"
 "	border-style: solid;\n"
 "	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_41.addWidget(self.Button_STT_Whisper_ModelPath_MoreActions, 0, 2, 1, 1)
+        self.gridLayout_41.addWidget(self.Button_ASR_Whisper_ModelPath_MoreActions, 0, 2, 1, 1)
 
-        self.LineEdit_STT_Whisper_ModelPath = LineEditBase(self.Frame_STT_Whisper_ModelPath)
-        self.LineEdit_STT_Whisper_ModelPath.setObjectName(u"LineEdit_STT_Whisper_ModelPath")
-        self.LineEdit_STT_Whisper_ModelPath.setMinimumSize(QSize(0, 27))
+        self.LineEdit_ASR_Whisper_ModelPath = LineEditBase(self.Frame_ASR_Whisper_ModelPath)
+        self.LineEdit_ASR_Whisper_ModelPath.setObjectName(u"LineEdit_ASR_Whisper_ModelPath")
+        self.LineEdit_ASR_Whisper_ModelPath.setMinimumSize(QSize(0, 27))
 
-        self.gridLayout_41.addWidget(self.LineEdit_STT_Whisper_ModelPath, 1, 0, 1, 3)
-
-
-        self.verticalLayout_37.addWidget(self.Frame_STT_Whisper_ModelPath)
+        self.gridLayout_41.addWidget(self.LineEdit_ASR_Whisper_ModelPath, 1, 0, 1, 3)
 
 
-        self.verticalLayout_49.addWidget(self.Frame_STT_Whisper_WhisperParams_BasicSettings)
+        self.verticalLayout_37.addWidget(self.Frame_ASR_Whisper_ModelPath)
 
-        self.ToolBox_STT_Whisper_WhisperParams_AdvanceSettings = ToolBoxBase(self.GroupBox_STT_Whisper_WhisperParams)
-        self.ToolBox_STT_Whisper_WhisperParams_AdvanceSettings.setObjectName(u"ToolBox_STT_Whisper_WhisperParams_AdvanceSettings")
-        self.ToolBox_STT_Whisper_WhisperParams_AdvanceSettings_Page1Content = WidgetBase()
-        self.ToolBox_STT_Whisper_WhisperParams_AdvanceSettings_Page1Content.setObjectName(u"ToolBox_STT_Whisper_WhisperParams_AdvanceSettings_Page1Content")
-        self.ToolBox_STT_Whisper_WhisperParams_AdvanceSettings_Page1Content.setGeometry(QRect(0, 0, 147, 315))
-        self.verticalLayout_15 = QVBoxLayout(self.ToolBox_STT_Whisper_WhisperParams_AdvanceSettings_Page1Content)
+
+        self.verticalLayout_49.addWidget(self.Frame_ASR_Whisper_WhisperParams_BasicSettings)
+
+        self.ToolBox_ASR_Whisper_WhisperParams_AdvanceSettings = ToolBoxBase(self.GroupBox_ASR_Whisper_WhisperParams)
+        self.ToolBox_ASR_Whisper_WhisperParams_AdvanceSettings.setObjectName(u"ToolBox_ASR_Whisper_WhisperParams_AdvanceSettings")
+        self.ToolBox_ASR_Whisper_WhisperParams_AdvanceSettings_Page1Content = WidgetBase()
+        self.ToolBox_ASR_Whisper_WhisperParams_AdvanceSettings_Page1Content.setObjectName(u"ToolBox_ASR_Whisper_WhisperParams_AdvanceSettings_Page1Content")
+        self.ToolBox_ASR_Whisper_WhisperParams_AdvanceSettings_Page1Content.setGeometry(QRect(0, 0, 147, 315))
+        self.verticalLayout_15 = QVBoxLayout(self.ToolBox_ASR_Whisper_WhisperParams_AdvanceSettings_Page1Content)
         self.verticalLayout_15.setSpacing(0)
         self.verticalLayout_15.setObjectName(u"verticalLayout_15")
         self.verticalLayout_15.setContentsMargins(0, 0, 0, 0)
-        self.Frame_STT_Whisper_fp16 = QFrame(self.ToolBox_STT_Whisper_WhisperParams_AdvanceSettings_Page1Content)
-        self.Frame_STT_Whisper_fp16.setObjectName(u"Frame_STT_Whisper_fp16")
-        self.Frame_STT_Whisper_fp16.setMinimumSize(QSize(0, 105))
-        self.Frame_STT_Whisper_fp16.setStyleSheet(u"QFrame {\n"
+        self.Frame_ASR_Whisper_fp16 = QFrame(self.ToolBox_ASR_Whisper_WhisperParams_AdvanceSettings_Page1Content)
+        self.Frame_ASR_Whisper_fp16.setObjectName(u"Frame_ASR_Whisper_fp16")
+        self.Frame_ASR_Whisper_fp16.setMinimumSize(QSize(0, 105))
+        self.Frame_ASR_Whisper_fp16.setStyleSheet(u"QFrame {\n"
 "	background-color: transparent;\n"
 "	border-width: 0px;\n"
 "	border-style: solid;\n"
@@ -3961,15 +3961,15 @@ class Ui_MainWindow(object):
 "QFrame:hover {\n"
 "	background-color: rgba(36, 36, 36, 12);\n"
 "}")
-        self.gridLayout_44 = QGridLayout(self.Frame_STT_Whisper_fp16)
+        self.gridLayout_44 = QGridLayout(self.Frame_ASR_Whisper_fp16)
         self.gridLayout_44.setSpacing(12)
         self.gridLayout_44.setObjectName(u"gridLayout_44")
         self.gridLayout_44.setContentsMargins(21, 12, 21, 12)
-        self.Label_STT_Whisper_fp16 = LabelBase(self.Frame_STT_Whisper_fp16)
-        self.Label_STT_Whisper_fp16.setObjectName(u"Label_STT_Whisper_fp16")
-        sizePolicy5.setHeightForWidth(self.Label_STT_Whisper_fp16.sizePolicy().hasHeightForWidth())
-        self.Label_STT_Whisper_fp16.setSizePolicy(sizePolicy5)
-        self.Label_STT_Whisper_fp16.setStyleSheet(u"QLabel {\n"
+        self.Label_ASR_Whisper_fp16 = LabelBase(self.Frame_ASR_Whisper_fp16)
+        self.Label_ASR_Whisper_fp16.setObjectName(u"Label_ASR_Whisper_fp16")
+        sizePolicy5.setHeightForWidth(self.Label_ASR_Whisper_fp16.sizePolicy().hasHeightForWidth())
+        self.Label_ASR_Whisper_fp16.setSizePolicy(sizePolicy5)
+        self.Label_ASR_Whisper_fp16.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	background-color: transparent;\n"
 "	padding: 0px;\n"
@@ -3978,16 +3978,16 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}")
 
-        self.gridLayout_44.addWidget(self.Label_STT_Whisper_fp16, 0, 0, 1, 1)
+        self.gridLayout_44.addWidget(self.Label_ASR_Whisper_fp16, 0, 0, 1, 1)
 
-        self.HorizontalSpacer_STT_Whisper_fp16 = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+        self.HorizontalSpacer_ASR_Whisper_fp16 = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
-        self.gridLayout_44.addItem(self.HorizontalSpacer_STT_Whisper_fp16, 0, 1, 1, 1)
+        self.gridLayout_44.addItem(self.HorizontalSpacer_ASR_Whisper_fp16, 0, 1, 1, 1)
 
-        self.CheckBox_STT_Whisper_fp16 = QCheckBox(self.Frame_STT_Whisper_fp16)
-        self.CheckBox_STT_Whisper_fp16.setObjectName(u"CheckBox_STT_Whisper_fp16")
-        self.CheckBox_STT_Whisper_fp16.setMinimumSize(QSize(0, 27))
-        self.CheckBox_STT_Whisper_fp16.setStyleSheet(u"QCheckBox {\n"
+        self.CheckBox_ASR_Whisper_fp16 = QCheckBox(self.Frame_ASR_Whisper_fp16)
+        self.CheckBox_ASR_Whisper_fp16.setObjectName(u"CheckBox_ASR_Whisper_fp16")
+        self.CheckBox_ASR_Whisper_fp16.setMinimumSize(QSize(0, 27))
+        self.CheckBox_ASR_Whisper_fp16.setStyleSheet(u"QCheckBox {\n"
 "	font-size: 12px;\n"
 "	spacing: 12.3px;\n"
 "	background-color: transparent;\n"
@@ -4018,27 +4018,27 @@ class Ui_MainWindow(object):
 "	border-image: url(:/CheckBox_Icon/images/icons/ToggleOn.png);\n"
 "}")
 
-        self.gridLayout_44.addWidget(self.CheckBox_STT_Whisper_fp16, 1, 0, 1, 3)
+        self.gridLayout_44.addWidget(self.CheckBox_ASR_Whisper_fp16, 1, 0, 1, 3)
 
-        self.Button_STT_Whisper_fp16_MoreActions = MenuButton(self.Frame_STT_Whisper_fp16)
-        self.Button_STT_Whisper_fp16_MoreActions.setObjectName(u"Button_STT_Whisper_fp16_MoreActions")
-        self.Button_STT_Whisper_fp16_MoreActions.setMinimumSize(QSize(27, 27))
-        self.Button_STT_Whisper_fp16_MoreActions.setMaximumSize(QSize(27, 27))
-        self.Button_STT_Whisper_fp16_MoreActions.setStyleSheet(u"QPushButton {\n"
+        self.Button_ASR_Whisper_fp16_MoreActions = MenuButton(self.Frame_ASR_Whisper_fp16)
+        self.Button_ASR_Whisper_fp16_MoreActions.setObjectName(u"Button_ASR_Whisper_fp16_MoreActions")
+        self.Button_ASR_Whisper_fp16_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_ASR_Whisper_fp16_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_ASR_Whisper_fp16_MoreActions.setStyleSheet(u"QPushButton {\n"
 "	border-width: 1px;\n"
 "	border-style: solid;\n"
 "	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_44.addWidget(self.Button_STT_Whisper_fp16_MoreActions, 0, 2, 1, 1)
+        self.gridLayout_44.addWidget(self.Button_ASR_Whisper_fp16_MoreActions, 0, 2, 1, 1)
 
 
-        self.verticalLayout_15.addWidget(self.Frame_STT_Whisper_fp16)
+        self.verticalLayout_15.addWidget(self.Frame_ASR_Whisper_fp16)
 
-        self.Frame_STT_Whisper_ConditionOnPreviousText = QFrame(self.ToolBox_STT_Whisper_WhisperParams_AdvanceSettings_Page1Content)
-        self.Frame_STT_Whisper_ConditionOnPreviousText.setObjectName(u"Frame_STT_Whisper_ConditionOnPreviousText")
-        self.Frame_STT_Whisper_ConditionOnPreviousText.setMinimumSize(QSize(0, 105))
-        self.Frame_STT_Whisper_ConditionOnPreviousText.setStyleSheet(u"QFrame {\n"
+        self.Frame_ASR_Whisper_ConditionOnPreviousText = QFrame(self.ToolBox_ASR_Whisper_WhisperParams_AdvanceSettings_Page1Content)
+        self.Frame_ASR_Whisper_ConditionOnPreviousText.setObjectName(u"Frame_ASR_Whisper_ConditionOnPreviousText")
+        self.Frame_ASR_Whisper_ConditionOnPreviousText.setMinimumSize(QSize(0, 105))
+        self.Frame_ASR_Whisper_ConditionOnPreviousText.setStyleSheet(u"QFrame {\n"
 "	background-color: transparent;\n"
 "	border-width: 0px;\n"
 "	border-style: solid;\n"
@@ -4046,14 +4046,14 @@ class Ui_MainWindow(object):
 "QFrame:hover {\n"
 "	background-color: rgba(36, 36, 36, 12);\n"
 "}")
-        self.gridLayout_43 = QGridLayout(self.Frame_STT_Whisper_ConditionOnPreviousText)
+        self.gridLayout_43 = QGridLayout(self.Frame_ASR_Whisper_ConditionOnPreviousText)
         self.gridLayout_43.setSpacing(12)
         self.gridLayout_43.setObjectName(u"gridLayout_43")
         self.gridLayout_43.setContentsMargins(21, 12, 21, 12)
-        self.CheckBox_STT_Whisper_ConditionOnPreviousText = QCheckBox(self.Frame_STT_Whisper_ConditionOnPreviousText)
-        self.CheckBox_STT_Whisper_ConditionOnPreviousText.setObjectName(u"CheckBox_STT_Whisper_ConditionOnPreviousText")
-        self.CheckBox_STT_Whisper_ConditionOnPreviousText.setMinimumSize(QSize(0, 27))
-        self.CheckBox_STT_Whisper_ConditionOnPreviousText.setStyleSheet(u"QCheckBox {\n"
+        self.CheckBox_ASR_Whisper_ConditionOnPreviousText = QCheckBox(self.Frame_ASR_Whisper_ConditionOnPreviousText)
+        self.CheckBox_ASR_Whisper_ConditionOnPreviousText.setObjectName(u"CheckBox_ASR_Whisper_ConditionOnPreviousText")
+        self.CheckBox_ASR_Whisper_ConditionOnPreviousText.setMinimumSize(QSize(0, 27))
+        self.CheckBox_ASR_Whisper_ConditionOnPreviousText.setStyleSheet(u"QCheckBox {\n"
 "	font-size: 12px;\n"
 "	spacing: 12.3px;\n"
 "	background-color: transparent;\n"
@@ -4084,29 +4084,29 @@ class Ui_MainWindow(object):
 "	border-image: url(:/CheckBox_Icon/images/icons/ToggleOn.png);\n"
 "}")
 
-        self.gridLayout_43.addWidget(self.CheckBox_STT_Whisper_ConditionOnPreviousText, 1, 0, 1, 3)
+        self.gridLayout_43.addWidget(self.CheckBox_ASR_Whisper_ConditionOnPreviousText, 1, 0, 1, 3)
 
-        self.HorizontalSpacer_STT_Whisper_ConditionOnPreviousText = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+        self.HorizontalSpacer_ASR_Whisper_ConditionOnPreviousText = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
-        self.gridLayout_43.addItem(self.HorizontalSpacer_STT_Whisper_ConditionOnPreviousText, 0, 1, 1, 1)
+        self.gridLayout_43.addItem(self.HorizontalSpacer_ASR_Whisper_ConditionOnPreviousText, 0, 1, 1, 1)
 
-        self.Button_STT_Whisper_ConditionOnPreviousText_MoreActions = MenuButton(self.Frame_STT_Whisper_ConditionOnPreviousText)
-        self.Button_STT_Whisper_ConditionOnPreviousText_MoreActions.setObjectName(u"Button_STT_Whisper_ConditionOnPreviousText_MoreActions")
-        self.Button_STT_Whisper_ConditionOnPreviousText_MoreActions.setMinimumSize(QSize(27, 27))
-        self.Button_STT_Whisper_ConditionOnPreviousText_MoreActions.setMaximumSize(QSize(27, 27))
-        self.Button_STT_Whisper_ConditionOnPreviousText_MoreActions.setStyleSheet(u"QPushButton {\n"
+        self.Button_ASR_Whisper_ConditionOnPreviousText_MoreActions = MenuButton(self.Frame_ASR_Whisper_ConditionOnPreviousText)
+        self.Button_ASR_Whisper_ConditionOnPreviousText_MoreActions.setObjectName(u"Button_ASR_Whisper_ConditionOnPreviousText_MoreActions")
+        self.Button_ASR_Whisper_ConditionOnPreviousText_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_ASR_Whisper_ConditionOnPreviousText_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_ASR_Whisper_ConditionOnPreviousText_MoreActions.setStyleSheet(u"QPushButton {\n"
 "	border-width: 1px;\n"
 "	border-style: solid;\n"
 "	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_43.addWidget(self.Button_STT_Whisper_ConditionOnPreviousText_MoreActions, 0, 2, 1, 1)
+        self.gridLayout_43.addWidget(self.Button_ASR_Whisper_ConditionOnPreviousText_MoreActions, 0, 2, 1, 1)
 
-        self.Label_STT_Whisper_ConditionOnPreviousText = LabelBase(self.Frame_STT_Whisper_ConditionOnPreviousText)
-        self.Label_STT_Whisper_ConditionOnPreviousText.setObjectName(u"Label_STT_Whisper_ConditionOnPreviousText")
-        sizePolicy5.setHeightForWidth(self.Label_STT_Whisper_ConditionOnPreviousText.sizePolicy().hasHeightForWidth())
-        self.Label_STT_Whisper_ConditionOnPreviousText.setSizePolicy(sizePolicy5)
-        self.Label_STT_Whisper_ConditionOnPreviousText.setStyleSheet(u"QLabel {\n"
+        self.Label_ASR_Whisper_ConditionOnPreviousText = LabelBase(self.Frame_ASR_Whisper_ConditionOnPreviousText)
+        self.Label_ASR_Whisper_ConditionOnPreviousText.setObjectName(u"Label_ASR_Whisper_ConditionOnPreviousText")
+        sizePolicy5.setHeightForWidth(self.Label_ASR_Whisper_ConditionOnPreviousText.sizePolicy().hasHeightForWidth())
+        self.Label_ASR_Whisper_ConditionOnPreviousText.setSizePolicy(sizePolicy5)
+        self.Label_ASR_Whisper_ConditionOnPreviousText.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	background-color: transparent;\n"
 "	padding: 0px;\n"
@@ -4115,15 +4115,15 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}")
 
-        self.gridLayout_43.addWidget(self.Label_STT_Whisper_ConditionOnPreviousText, 0, 0, 1, 1)
+        self.gridLayout_43.addWidget(self.Label_ASR_Whisper_ConditionOnPreviousText, 0, 0, 1, 1)
 
 
-        self.verticalLayout_15.addWidget(self.Frame_STT_Whisper_ConditionOnPreviousText)
+        self.verticalLayout_15.addWidget(self.Frame_ASR_Whisper_ConditionOnPreviousText)
 
-        self.Frame_STT_Whisper_Verbose = QFrame(self.ToolBox_STT_Whisper_WhisperParams_AdvanceSettings_Page1Content)
-        self.Frame_STT_Whisper_Verbose.setObjectName(u"Frame_STT_Whisper_Verbose")
-        self.Frame_STT_Whisper_Verbose.setMinimumSize(QSize(0, 105))
-        self.Frame_STT_Whisper_Verbose.setStyleSheet(u"QFrame {\n"
+        self.Frame_ASR_Whisper_Verbose = QFrame(self.ToolBox_ASR_Whisper_WhisperParams_AdvanceSettings_Page1Content)
+        self.Frame_ASR_Whisper_Verbose.setObjectName(u"Frame_ASR_Whisper_Verbose")
+        self.Frame_ASR_Whisper_Verbose.setMinimumSize(QSize(0, 105))
+        self.Frame_ASR_Whisper_Verbose.setStyleSheet(u"QFrame {\n"
 "	background-color: transparent;\n"
 "	border-width: 0px;\n"
 "	border-style: solid;\n"
@@ -4131,15 +4131,15 @@ class Ui_MainWindow(object):
 "QFrame:hover {\n"
 "	background-color: rgba(36, 36, 36, 12);\n"
 "}")
-        self.gridLayout_42 = QGridLayout(self.Frame_STT_Whisper_Verbose)
+        self.gridLayout_42 = QGridLayout(self.Frame_ASR_Whisper_Verbose)
         self.gridLayout_42.setSpacing(12)
         self.gridLayout_42.setObjectName(u"gridLayout_42")
         self.gridLayout_42.setContentsMargins(21, 12, 21, 12)
-        self.Label_STT_Whisper_Verbose = LabelBase(self.Frame_STT_Whisper_Verbose)
-        self.Label_STT_Whisper_Verbose.setObjectName(u"Label_STT_Whisper_Verbose")
-        sizePolicy5.setHeightForWidth(self.Label_STT_Whisper_Verbose.sizePolicy().hasHeightForWidth())
-        self.Label_STT_Whisper_Verbose.setSizePolicy(sizePolicy5)
-        self.Label_STT_Whisper_Verbose.setStyleSheet(u"QLabel {\n"
+        self.Label_ASR_Whisper_Verbose = LabelBase(self.Frame_ASR_Whisper_Verbose)
+        self.Label_ASR_Whisper_Verbose.setObjectName(u"Label_ASR_Whisper_Verbose")
+        sizePolicy5.setHeightForWidth(self.Label_ASR_Whisper_Verbose.sizePolicy().hasHeightForWidth())
+        self.Label_ASR_Whisper_Verbose.setSizePolicy(sizePolicy5)
+        self.Label_ASR_Whisper_Verbose.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	background-color: transparent;\n"
 "	padding: 0px;\n"
@@ -4148,16 +4148,16 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}")
 
-        self.gridLayout_42.addWidget(self.Label_STT_Whisper_Verbose, 0, 0, 1, 1)
+        self.gridLayout_42.addWidget(self.Label_ASR_Whisper_Verbose, 0, 0, 1, 1)
 
-        self.HorizontalSpacer_STT_Whisper_Verbose = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+        self.HorizontalSpacer_ASR_Whisper_Verbose = QSpacerItem(445, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
-        self.gridLayout_42.addItem(self.HorizontalSpacer_STT_Whisper_Verbose, 0, 1, 1, 1)
+        self.gridLayout_42.addItem(self.HorizontalSpacer_ASR_Whisper_Verbose, 0, 1, 1, 1)
 
-        self.CheckBox_STT_Whisper_Verbose = QCheckBox(self.Frame_STT_Whisper_Verbose)
-        self.CheckBox_STT_Whisper_Verbose.setObjectName(u"CheckBox_STT_Whisper_Verbose")
-        self.CheckBox_STT_Whisper_Verbose.setMinimumSize(QSize(0, 27))
-        self.CheckBox_STT_Whisper_Verbose.setStyleSheet(u"QCheckBox {\n"
+        self.CheckBox_ASR_Whisper_Verbose = QCheckBox(self.Frame_ASR_Whisper_Verbose)
+        self.CheckBox_ASR_Whisper_Verbose.setObjectName(u"CheckBox_ASR_Whisper_Verbose")
+        self.CheckBox_ASR_Whisper_Verbose.setMinimumSize(QSize(0, 27))
+        self.CheckBox_ASR_Whisper_Verbose.setStyleSheet(u"QCheckBox {\n"
 "	font-size: 12px;\n"
 "	spacing: 12.3px;\n"
 "	background-color: transparent;\n"
@@ -4188,46 +4188,46 @@ class Ui_MainWindow(object):
 "	border-image: url(:/CheckBox_Icon/images/icons/ToggleOn.png);\n"
 "}")
 
-        self.gridLayout_42.addWidget(self.CheckBox_STT_Whisper_Verbose, 1, 0, 1, 3)
+        self.gridLayout_42.addWidget(self.CheckBox_ASR_Whisper_Verbose, 1, 0, 1, 3)
 
-        self.Button_STT_Whisper_Verbose_MoreActions = MenuButton(self.Frame_STT_Whisper_Verbose)
-        self.Button_STT_Whisper_Verbose_MoreActions.setObjectName(u"Button_STT_Whisper_Verbose_MoreActions")
-        self.Button_STT_Whisper_Verbose_MoreActions.setMinimumSize(QSize(27, 27))
-        self.Button_STT_Whisper_Verbose_MoreActions.setMaximumSize(QSize(27, 27))
-        self.Button_STT_Whisper_Verbose_MoreActions.setStyleSheet(u"QPushButton {\n"
+        self.Button_ASR_Whisper_Verbose_MoreActions = MenuButton(self.Frame_ASR_Whisper_Verbose)
+        self.Button_ASR_Whisper_Verbose_MoreActions.setObjectName(u"Button_ASR_Whisper_Verbose_MoreActions")
+        self.Button_ASR_Whisper_Verbose_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_ASR_Whisper_Verbose_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_ASR_Whisper_Verbose_MoreActions.setStyleSheet(u"QPushButton {\n"
 "	border-width: 1px;\n"
 "	border-style: solid;\n"
 "	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_42.addWidget(self.Button_STT_Whisper_Verbose_MoreActions, 0, 2, 1, 1)
+        self.gridLayout_42.addWidget(self.Button_ASR_Whisper_Verbose_MoreActions, 0, 2, 1, 1)
 
 
-        self.verticalLayout_15.addWidget(self.Frame_STT_Whisper_Verbose)
+        self.verticalLayout_15.addWidget(self.Frame_ASR_Whisper_Verbose)
 
-        self.ToolBox_STT_Whisper_WhisperParams_AdvanceSettings.addItem(self.ToolBox_STT_Whisper_WhisperParams_AdvanceSettings_Page1Content, u"")
+        self.ToolBox_ASR_Whisper_WhisperParams_AdvanceSettings.addItem(self.ToolBox_ASR_Whisper_WhisperParams_AdvanceSettings_Page1Content, u"")
 
-        self.verticalLayout_49.addWidget(self.ToolBox_STT_Whisper_WhisperParams_AdvanceSettings)
+        self.verticalLayout_49.addWidget(self.ToolBox_ASR_Whisper_WhisperParams_AdvanceSettings)
 
 
-        self.verticalLayout_16.addWidget(self.GroupBox_STT_Whisper_WhisperParams)
+        self.verticalLayout_16.addWidget(self.GroupBox_ASR_Whisper_WhisperParams)
 
-        self.GroupBox_STT_Whisper_OutputParams = GroupBoxBase(self.ScrollArea_Middle_WidgetContents_STT_Whisper)
-        self.GroupBox_STT_Whisper_OutputParams.setObjectName(u"GroupBox_STT_Whisper_OutputParams")
-        self.verticalLayout_89 = QVBoxLayout(self.GroupBox_STT_Whisper_OutputParams)
+        self.GroupBox_ASR_Whisper_OutputParams = GroupBoxBase(self.ScrollArea_Middle_WidgetContents_ASR_Whisper)
+        self.GroupBox_ASR_Whisper_OutputParams.setObjectName(u"GroupBox_ASR_Whisper_OutputParams")
+        self.verticalLayout_89 = QVBoxLayout(self.GroupBox_ASR_Whisper_OutputParams)
         self.verticalLayout_89.setSpacing(0)
         self.verticalLayout_89.setObjectName(u"verticalLayout_89")
         self.verticalLayout_89.setContentsMargins(0, 12, 0, 12)
-        self.Frame_STT_Whisper_OutputParams_BasicSettings = QFrame(self.GroupBox_STT_Whisper_OutputParams)
-        self.Frame_STT_Whisper_OutputParams_BasicSettings.setObjectName(u"Frame_STT_Whisper_OutputParams_BasicSettings")
-        self.verticalLayout_135 = QVBoxLayout(self.Frame_STT_Whisper_OutputParams_BasicSettings)
+        self.Frame_ASR_Whisper_OutputParams_BasicSettings = QFrame(self.GroupBox_ASR_Whisper_OutputParams)
+        self.Frame_ASR_Whisper_OutputParams_BasicSettings.setObjectName(u"Frame_ASR_Whisper_OutputParams_BasicSettings")
+        self.verticalLayout_135 = QVBoxLayout(self.Frame_ASR_Whisper_OutputParams_BasicSettings)
         self.verticalLayout_135.setSpacing(0)
         self.verticalLayout_135.setObjectName(u"verticalLayout_135")
         self.verticalLayout_135.setContentsMargins(0, 0, 0, 0)
-        self.Frame_STT_Whisper_OutputDirName = QFrame(self.Frame_STT_Whisper_OutputParams_BasicSettings)
-        self.Frame_STT_Whisper_OutputDirName.setObjectName(u"Frame_STT_Whisper_OutputDirName")
-        self.Frame_STT_Whisper_OutputDirName.setMinimumSize(QSize(0, 105))
-        self.Frame_STT_Whisper_OutputDirName.setStyleSheet(u"QFrame {\n"
+        self.Frame_ASR_Whisper_OutputDirName = QFrame(self.Frame_ASR_Whisper_OutputParams_BasicSettings)
+        self.Frame_ASR_Whisper_OutputDirName.setObjectName(u"Frame_ASR_Whisper_OutputDirName")
+        self.Frame_ASR_Whisper_OutputDirName.setMinimumSize(QSize(0, 105))
+        self.Frame_ASR_Whisper_OutputDirName.setStyleSheet(u"QFrame {\n"
 "	background-color: transparent;\n"
 "	border-width: 0px;\n"
 "	border-style: solid;\n"
@@ -4235,15 +4235,15 @@ class Ui_MainWindow(object):
 "QFrame:hover {\n"
 "	background-color: rgba(36, 36, 36, 12);\n"
 "}")
-        self.gridLayout_45 = QGridLayout(self.Frame_STT_Whisper_OutputDirName)
+        self.gridLayout_45 = QGridLayout(self.Frame_ASR_Whisper_OutputDirName)
         self.gridLayout_45.setSpacing(12)
         self.gridLayout_45.setObjectName(u"gridLayout_45")
         self.gridLayout_45.setContentsMargins(21, 12, 21, 12)
-        self.Label_STT_Whisper_OutputDirName = LabelBase(self.Frame_STT_Whisper_OutputDirName)
-        self.Label_STT_Whisper_OutputDirName.setObjectName(u"Label_STT_Whisper_OutputDirName")
-        sizePolicy5.setHeightForWidth(self.Label_STT_Whisper_OutputDirName.sizePolicy().hasHeightForWidth())
-        self.Label_STT_Whisper_OutputDirName.setSizePolicy(sizePolicy5)
-        self.Label_STT_Whisper_OutputDirName.setStyleSheet(u"QLabel {\n"
+        self.Label_ASR_Whisper_OutputDirName = LabelBase(self.Frame_ASR_Whisper_OutputDirName)
+        self.Label_ASR_Whisper_OutputDirName.setObjectName(u"Label_ASR_Whisper_OutputDirName")
+        sizePolicy5.setHeightForWidth(self.Label_ASR_Whisper_OutputDirName.sizePolicy().hasHeightForWidth())
+        self.Label_ASR_Whisper_OutputDirName.setSizePolicy(sizePolicy5)
+        self.Label_ASR_Whisper_OutputDirName.setStyleSheet(u"QLabel {\n"
 "	/*text-align: center;*/\n"
 "	background-color: transparent;\n"
 "	padding: 0px;\n"
@@ -4252,61 +4252,61 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}")
 
-        self.gridLayout_45.addWidget(self.Label_STT_Whisper_OutputDirName, 0, 0, 1, 1)
+        self.gridLayout_45.addWidget(self.Label_ASR_Whisper_OutputDirName, 0, 0, 1, 1)
 
-        self.HorizontalSpacer_STT_Whisper_OutputDirName = QSpacerItem(481, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+        self.HorizontalSpacer_ASR_Whisper_OutputDirName = QSpacerItem(481, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
-        self.gridLayout_45.addItem(self.HorizontalSpacer_STT_Whisper_OutputDirName, 0, 1, 1, 1)
+        self.gridLayout_45.addItem(self.HorizontalSpacer_ASR_Whisper_OutputDirName, 0, 1, 1, 1)
 
-        self.Button_STT_Whisper_OutputDirName_MoreActions = MenuButton(self.Frame_STT_Whisper_OutputDirName)
-        self.Button_STT_Whisper_OutputDirName_MoreActions.setObjectName(u"Button_STT_Whisper_OutputDirName_MoreActions")
-        self.Button_STT_Whisper_OutputDirName_MoreActions.setMinimumSize(QSize(27, 27))
-        self.Button_STT_Whisper_OutputDirName_MoreActions.setMaximumSize(QSize(27, 27))
-        self.Button_STT_Whisper_OutputDirName_MoreActions.setStyleSheet(u"QPushButton {\n"
+        self.Button_ASR_Whisper_OutputDirName_MoreActions = MenuButton(self.Frame_ASR_Whisper_OutputDirName)
+        self.Button_ASR_Whisper_OutputDirName_MoreActions.setObjectName(u"Button_ASR_Whisper_OutputDirName_MoreActions")
+        self.Button_ASR_Whisper_OutputDirName_MoreActions.setMinimumSize(QSize(27, 27))
+        self.Button_ASR_Whisper_OutputDirName_MoreActions.setMaximumSize(QSize(27, 27))
+        self.Button_ASR_Whisper_OutputDirName_MoreActions.setStyleSheet(u"QPushButton {\n"
 "	border-width: 1px;\n"
 "	border-style: solid;\n"
 "	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.gridLayout_45.addWidget(self.Button_STT_Whisper_OutputDirName_MoreActions, 0, 2, 1, 1)
+        self.gridLayout_45.addWidget(self.Button_ASR_Whisper_OutputDirName_MoreActions, 0, 2, 1, 1)
 
-        self.LineEdit_STT_Whisper_OutputDirName = LineEditBase(self.Frame_STT_Whisper_OutputDirName)
-        self.LineEdit_STT_Whisper_OutputDirName.setObjectName(u"LineEdit_STT_Whisper_OutputDirName")
-        self.LineEdit_STT_Whisper_OutputDirName.setMinimumSize(QSize(0, 27))
+        self.LineEdit_ASR_Whisper_OutputDirName = LineEditBase(self.Frame_ASR_Whisper_OutputDirName)
+        self.LineEdit_ASR_Whisper_OutputDirName.setObjectName(u"LineEdit_ASR_Whisper_OutputDirName")
+        self.LineEdit_ASR_Whisper_OutputDirName.setMinimumSize(QSize(0, 27))
 
-        self.gridLayout_45.addWidget(self.LineEdit_STT_Whisper_OutputDirName, 1, 0, 1, 3)
-
-
-        self.verticalLayout_135.addWidget(self.Frame_STT_Whisper_OutputDirName)
+        self.gridLayout_45.addWidget(self.LineEdit_ASR_Whisper_OutputDirName, 1, 0, 1, 3)
 
 
-        self.verticalLayout_89.addWidget(self.Frame_STT_Whisper_OutputParams_BasicSettings)
+        self.verticalLayout_135.addWidget(self.Frame_ASR_Whisper_OutputDirName)
 
 
-        self.verticalLayout_16.addWidget(self.GroupBox_STT_Whisper_OutputParams)
+        self.verticalLayout_89.addWidget(self.Frame_ASR_Whisper_OutputParams_BasicSettings)
 
-        self.VerticalSpacer_STT_Whisper = QSpacerItem(0, 0, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
-        self.verticalLayout_16.addItem(self.VerticalSpacer_STT_Whisper)
+        self.verticalLayout_16.addWidget(self.GroupBox_ASR_Whisper_OutputParams)
 
-        self.ScrollArea_Middle_STT_Whisper.setWidget(self.ScrollArea_Middle_WidgetContents_STT_Whisper)
+        self.VerticalSpacer_ASR_Whisper = QSpacerItem(0, 0, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
-        self.gridLayout_19.addWidget(self.ScrollArea_Middle_STT_Whisper, 0, 1, 1, 1)
+        self.verticalLayout_16.addItem(self.VerticalSpacer_ASR_Whisper)
 
-        self.Widget_Right_STT_Whisper = QWidget(self.Subpage_STT_Whisper)
-        self.Widget_Right_STT_Whisper.setObjectName(u"Widget_Right_STT_Whisper")
-        self.Widget_Right_STT_Whisper.setStyleSheet(u"QWidget:hover {\n"
+        self.ScrollArea_Middle_ASR_Whisper.setWidget(self.ScrollArea_Middle_WidgetContents_ASR_Whisper)
+
+        self.gridLayout_19.addWidget(self.ScrollArea_Middle_ASR_Whisper, 0, 1, 1, 1)
+
+        self.Widget_Right_ASR_Whisper = QWidget(self.Subpage_ASR_Whisper)
+        self.Widget_Right_ASR_Whisper.setObjectName(u"Widget_Right_ASR_Whisper")
+        self.Widget_Right_ASR_Whisper.setStyleSheet(u"QWidget:hover {\n"
 "	background-color: rgba(36, 36, 36, 3);\n"
 "}")
-        self.gridLayout_4 = QGridLayout(self.Widget_Right_STT_Whisper)
+        self.gridLayout_4 = QGridLayout(self.Widget_Right_ASR_Whisper)
         self.gridLayout_4.setSpacing(12)
         self.gridLayout_4.setObjectName(u"gridLayout_4")
         self.gridLayout_4.setContentsMargins(12, 12, 12, 12)
-        self.TextBrowser_Params_STT_Whisper = TextBrowserBase(self.Widget_Right_STT_Whisper)
-        self.TextBrowser_Params_STT_Whisper.setObjectName(u"TextBrowser_Params_STT_Whisper")
-        sizePolicy1.setHeightForWidth(self.TextBrowser_Params_STT_Whisper.sizePolicy().hasHeightForWidth())
-        self.TextBrowser_Params_STT_Whisper.setSizePolicy(sizePolicy1)
-        self.TextBrowser_Params_STT_Whisper.setStyleSheet(u"QTextBrowser {\n"
+        self.TextBrowser_Params_ASR_Whisper = TextBrowserBase(self.Widget_Right_ASR_Whisper)
+        self.TextBrowser_Params_ASR_Whisper.setObjectName(u"TextBrowser_Params_ASR_Whisper")
+        sizePolicy1.setHeightForWidth(self.TextBrowser_Params_ASR_Whisper.sizePolicy().hasHeightForWidth())
+        self.TextBrowser_Params_ASR_Whisper.setSizePolicy(sizePolicy1)
+        self.TextBrowser_Params_ASR_Whisper.setStyleSheet(u"QTextBrowser {\n"
 "	/*padding-top: 1.5px;*/\n"
 "	/*padding-bottom: 1.5px;*/\n"
 "	padding-left: 15px;\n"
@@ -4357,35 +4357,35 @@ class Ui_MainWindow(object):
                         ": rgba(123, 123, 123, 210);\n"
 "}")
 
-        self.gridLayout_4.addWidget(self.TextBrowser_Params_STT_Whisper, 0, 0, 1, 3)
+        self.gridLayout_4.addWidget(self.TextBrowser_Params_ASR_Whisper, 0, 0, 1, 3)
 
-        self.Button_ResetSettings_STT_Whisper = HollowButton(self.Widget_Right_STT_Whisper)
-        self.Button_ResetSettings_STT_Whisper.setObjectName(u"Button_ResetSettings_STT_Whisper")
+        self.Button_ResetSettings_ASR_Whisper = HollowButton(self.Widget_Right_ASR_Whisper)
+        self.Button_ResetSettings_ASR_Whisper.setObjectName(u"Button_ResetSettings_ASR_Whisper")
 
-        self.gridLayout_4.addWidget(self.Button_ResetSettings_STT_Whisper, 1, 0, 1, 1)
+        self.gridLayout_4.addWidget(self.Button_ResetSettings_ASR_Whisper, 1, 0, 1, 1)
 
-        self.Button_ImportSettings_STT_Whisper = HollowButton(self.Widget_Right_STT_Whisper)
-        self.Button_ImportSettings_STT_Whisper.setObjectName(u"Button_ImportSettings_STT_Whisper")
+        self.Button_ImportSettings_ASR_Whisper = HollowButton(self.Widget_Right_ASR_Whisper)
+        self.Button_ImportSettings_ASR_Whisper.setObjectName(u"Button_ImportSettings_ASR_Whisper")
 
-        self.gridLayout_4.addWidget(self.Button_ImportSettings_STT_Whisper, 1, 1, 1, 1)
+        self.gridLayout_4.addWidget(self.Button_ImportSettings_ASR_Whisper, 1, 1, 1, 1)
 
-        self.Button_ExportSettings_STT_Whisper = HollowButton(self.Widget_Right_STT_Whisper)
-        self.Button_ExportSettings_STT_Whisper.setObjectName(u"Button_ExportSettings_STT_Whisper")
+        self.Button_ExportSettings_ASR_Whisper = HollowButton(self.Widget_Right_ASR_Whisper)
+        self.Button_ExportSettings_ASR_Whisper.setObjectName(u"Button_ExportSettings_ASR_Whisper")
 
-        self.gridLayout_4.addWidget(self.Button_ExportSettings_STT_Whisper, 1, 2, 1, 1)
+        self.gridLayout_4.addWidget(self.Button_ExportSettings_ASR_Whisper, 1, 2, 1, 1)
 
-        self.Button_CheckOutput_STT_Whisper = HollowButton(self.Widget_Right_STT_Whisper)
-        self.Button_CheckOutput_STT_Whisper.setObjectName(u"Button_CheckOutput_STT_Whisper")
+        self.Button_CheckOutput_ASR_Whisper = HollowButton(self.Widget_Right_ASR_Whisper)
+        self.Button_CheckOutput_ASR_Whisper.setObjectName(u"Button_CheckOutput_ASR_Whisper")
 
-        self.gridLayout_4.addWidget(self.Button_CheckOutput_STT_Whisper, 2, 0, 1, 3)
+        self.gridLayout_4.addWidget(self.Button_CheckOutput_ASR_Whisper, 2, 0, 1, 3)
 
 
-        self.gridLayout_19.addWidget(self.Widget_Right_STT_Whisper, 0, 2, 1, 1)
+        self.gridLayout_19.addWidget(self.Widget_Right_ASR_Whisper, 0, 2, 1, 1)
 
-        self.ProgressBar_STT_Whisper = QProgressBar(self.Subpage_STT_Whisper)
-        self.ProgressBar_STT_Whisper.setObjectName(u"ProgressBar_STT_Whisper")
-        self.ProgressBar_STT_Whisper.setMinimumSize(QSize(0, 30))
-        self.ProgressBar_STT_Whisper.setStyleSheet(u"QProgressBar {\n"
+        self.ProgressBar_ASR_Whisper = QProgressBar(self.Subpage_ASR_Whisper)
+        self.ProgressBar_ASR_Whisper.setObjectName(u"ProgressBar_ASR_Whisper")
+        self.ProgressBar_ASR_Whisper.setMinimumSize(QSize(0, 30))
+        self.ProgressBar_ASR_Whisper.setStyleSheet(u"QProgressBar {\n"
 "	text-align: center;\n"
 "	background-color: transparent;\n"
 "	padding: 0px;\n"
@@ -4400,65 +4400,65 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "	background-color: qlineargradient(spread: pad, x1:0, y1:0, x2:1, y2:0, stop:0 transparent, stop:1 rgba(123, 123, 123, 123));\n"
 "}")
-        self.ProgressBar_STT_Whisper.setValue(0)
-        self.ProgressBar_STT_Whisper.setTextVisible(False)
-        self.horizontalLayout_35 = QHBoxLayout(self.ProgressBar_STT_Whisper)
+        self.ProgressBar_ASR_Whisper.setValue(0)
+        self.ProgressBar_ASR_Whisper.setTextVisible(False)
+        self.horizontalLayout_35 = QHBoxLayout(self.ProgressBar_ASR_Whisper)
         self.horizontalLayout_35.setSpacing(0)
         self.horizontalLayout_35.setObjectName(u"horizontalLayout_35")
         self.horizontalLayout_35.setContentsMargins(0, 0, 0, 0)
-        self.StackedWidget_STT_Whisper = QStackedWidget(self.ProgressBar_STT_Whisper)
-        self.StackedWidget_STT_Whisper.setObjectName(u"StackedWidget_STT_Whisper")
-        self.StackedWidget_STT_Whisper.setMaximumSize(QSize(16777215, 30))
-        self.StackedWidget_STT_Whisper.setStyleSheet(u"QWidget {\n"
+        self.StackedWidget_ASR_Whisper = QStackedWidget(self.ProgressBar_ASR_Whisper)
+        self.StackedWidget_ASR_Whisper.setObjectName(u"StackedWidget_ASR_Whisper")
+        self.StackedWidget_ASR_Whisper.setMaximumSize(QSize(16777215, 30))
+        self.StackedWidget_ASR_Whisper.setStyleSheet(u"QWidget {\n"
 "	background-color: rgba(123, 123, 123, 24);\n"
 "}\n"
 "QWidget:hover {\n"
 "	background-color: rgba(123, 123, 123, 48);\n"
 "}")
-        self.Page_STT_Whisper_Execute = QWidget()
-        self.Page_STT_Whisper_Execute.setObjectName(u"Page_STT_Whisper_Execute")
-        self.verticalLayout_90 = QVBoxLayout(self.Page_STT_Whisper_Execute)
+        self.Page_ASR_Whisper_Execute = QWidget()
+        self.Page_ASR_Whisper_Execute.setObjectName(u"Page_ASR_Whisper_Execute")
+        self.verticalLayout_90 = QVBoxLayout(self.Page_ASR_Whisper_Execute)
         self.verticalLayout_90.setSpacing(0)
         self.verticalLayout_90.setObjectName(u"verticalLayout_90")
         self.verticalLayout_90.setContentsMargins(0, 0, 0, 0)
-        self.Button_STT_Whisper_Execute = HollowButton(self.Page_STT_Whisper_Execute)
-        self.Button_STT_Whisper_Execute.setObjectName(u"Button_STT_Whisper_Execute")
-        sizePolicy2.setHeightForWidth(self.Button_STT_Whisper_Execute.sizePolicy().hasHeightForWidth())
-        self.Button_STT_Whisper_Execute.setSizePolicy(sizePolicy2)
-        self.Button_STT_Whisper_Execute.setMinimumSize(QSize(0, 30))
+        self.Button_ASR_Whisper_Execute = HollowButton(self.Page_ASR_Whisper_Execute)
+        self.Button_ASR_Whisper_Execute.setObjectName(u"Button_ASR_Whisper_Execute")
+        sizePolicy2.setHeightForWidth(self.Button_ASR_Whisper_Execute.sizePolicy().hasHeightForWidth())
+        self.Button_ASR_Whisper_Execute.setSizePolicy(sizePolicy2)
+        self.Button_ASR_Whisper_Execute.setMinimumSize(QSize(0, 30))
 
-        self.verticalLayout_90.addWidget(self.Button_STT_Whisper_Execute)
+        self.verticalLayout_90.addWidget(self.Button_ASR_Whisper_Execute)
 
-        self.StackedWidget_STT_Whisper.addWidget(self.Page_STT_Whisper_Execute)
-        self.Page_STT_Whisper_Terminate = QWidget()
-        self.Page_STT_Whisper_Terminate.setObjectName(u"Page_STT_Whisper_Terminate")
-        self.verticalLayout_91 = QVBoxLayout(self.Page_STT_Whisper_Terminate)
+        self.StackedWidget_ASR_Whisper.addWidget(self.Page_ASR_Whisper_Execute)
+        self.Page_ASR_Whisper_Terminate = QWidget()
+        self.Page_ASR_Whisper_Terminate.setObjectName(u"Page_ASR_Whisper_Terminate")
+        self.verticalLayout_91 = QVBoxLayout(self.Page_ASR_Whisper_Terminate)
         self.verticalLayout_91.setSpacing(0)
         self.verticalLayout_91.setObjectName(u"verticalLayout_91")
         self.verticalLayout_91.setContentsMargins(0, 0, 0, 0)
-        self.Button_STT_Whisper_Terminate = HollowButton(self.Page_STT_Whisper_Terminate)
-        self.Button_STT_Whisper_Terminate.setObjectName(u"Button_STT_Whisper_Terminate")
-        sizePolicy2.setHeightForWidth(self.Button_STT_Whisper_Terminate.sizePolicy().hasHeightForWidth())
-        self.Button_STT_Whisper_Terminate.setSizePolicy(sizePolicy2)
-        self.Button_STT_Whisper_Terminate.setMinimumSize(QSize(0, 30))
+        self.Button_ASR_Whisper_Terminate = HollowButton(self.Page_ASR_Whisper_Terminate)
+        self.Button_ASR_Whisper_Terminate.setObjectName(u"Button_ASR_Whisper_Terminate")
+        sizePolicy2.setHeightForWidth(self.Button_ASR_Whisper_Terminate.sizePolicy().hasHeightForWidth())
+        self.Button_ASR_Whisper_Terminate.setSizePolicy(sizePolicy2)
+        self.Button_ASR_Whisper_Terminate.setMinimumSize(QSize(0, 30))
 
-        self.verticalLayout_91.addWidget(self.Button_STT_Whisper_Terminate)
+        self.verticalLayout_91.addWidget(self.Button_ASR_Whisper_Terminate)
 
-        self.StackedWidget_STT_Whisper.addWidget(self.Page_STT_Whisper_Terminate)
+        self.StackedWidget_ASR_Whisper.addWidget(self.Page_ASR_Whisper_Terminate)
 
-        self.horizontalLayout_35.addWidget(self.StackedWidget_STT_Whisper)
+        self.horizontalLayout_35.addWidget(self.StackedWidget_ASR_Whisper)
 
 
-        self.gridLayout_19.addWidget(self.ProgressBar_STT_Whisper, 1, 0, 1, 3)
+        self.gridLayout_19.addWidget(self.ProgressBar_ASR_Whisper, 1, 0, 1, 3)
 
         self.gridLayout_19.setColumnStretch(0, 3)
         self.gridLayout_19.setColumnStretch(1, 10)
         self.gridLayout_19.setColumnStretch(2, 7)
-        self.StackedWidget_Pages_STT.addWidget(self.Subpage_STT_Whisper)
+        self.StackedWidget_Pages_ASR.addWidget(self.Subpage_ASR_Whisper)
 
-        self.verticalLayout_41.addWidget(self.StackedWidget_Pages_STT)
+        self.verticalLayout_41.addWidget(self.StackedWidget_Pages_ASR)
 
-        self.StackedWidget_Pages.addWidget(self.Page_STT)
+        self.StackedWidget_Pages.addWidget(self.Page_ASR)
         self.Page_Dataset = QWidget()
         self.Page_Dataset.setObjectName(u"Page_Dataset")
         self.verticalLayout_39 = QVBoxLayout(self.Page_Dataset)
@@ -10057,10 +10057,10 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_83.addWidget(self.Frame_VPR_TDNN_OutputRoot)
 
-        self.Frame_STT_Whisper_OutputRoot = QFrame(self.GroupBox_Settings_Tools_Path)
-        self.Frame_STT_Whisper_OutputRoot.setObjectName(u"Frame_STT_Whisper_OutputRoot")
-        self.Frame_STT_Whisper_OutputRoot.setMinimumSize(QSize(0, 90))
-        self.Frame_STT_Whisper_OutputRoot.setStyleSheet(u"QFrame {\n"
+        self.Frame_ASR_Whisper_OutputRoot = QFrame(self.GroupBox_Settings_Tools_Path)
+        self.Frame_ASR_Whisper_OutputRoot.setObjectName(u"Frame_ASR_Whisper_OutputRoot")
+        self.Frame_ASR_Whisper_OutputRoot.setMinimumSize(QSize(0, 90))
+        self.Frame_ASR_Whisper_OutputRoot.setStyleSheet(u"QFrame {\n"
 "	background-color: transparent;\n"
 "	border-width: 0px;\n"
 "	border-style: solid;\n"
@@ -10068,15 +10068,15 @@ class Ui_MainWindow(object):
 "QFrame:hover {\n"
 "	background-color: rgba(36, 36, 36, 12);\n"
 "}")
-        self.horizontalLayout_20 = QHBoxLayout(self.Frame_STT_Whisper_OutputRoot)
+        self.horizontalLayout_20 = QHBoxLayout(self.Frame_ASR_Whisper_OutputRoot)
         self.horizontalLayout_20.setSpacing(12)
         self.horizontalLayout_20.setObjectName(u"horizontalLayout_20")
         self.horizontalLayout_20.setContentsMargins(21, 12, 21, 12)
-        self.Label_STT_Whisper_OutputRoot = LabelBase(self.Frame_STT_Whisper_OutputRoot)
-        self.Label_STT_Whisper_OutputRoot.setObjectName(u"Label_STT_Whisper_OutputRoot")
-        sizePolicy4.setHeightForWidth(self.Label_STT_Whisper_OutputRoot.sizePolicy().hasHeightForWidth())
-        self.Label_STT_Whisper_OutputRoot.setSizePolicy(sizePolicy4)
-        self.Label_STT_Whisper_OutputRoot.setStyleSheet(u"QLabel {\n"
+        self.Label_ASR_Whisper_OutputRoot = LabelBase(self.Frame_ASR_Whisper_OutputRoot)
+        self.Label_ASR_Whisper_OutputRoot.setObjectName(u"Label_ASR_Whisper_OutputRoot")
+        sizePolicy4.setHeightForWidth(self.Label_ASR_Whisper_OutputRoot.sizePolicy().hasHeightForWidth())
+        self.Label_ASR_Whisper_OutputRoot.setSizePolicy(sizePolicy4)
+        self.Label_ASR_Whisper_OutputRoot.setStyleSheet(u"QLabel {\n"
 "	font-size: 15px;\n"
 "	/*text-align: center;*/\n"
 "	background-color: transparent;\n"
@@ -10086,27 +10086,27 @@ class Ui_MainWindow(object):
 "	border-style: solid;\n"
 "}")
 
-        self.horizontalLayout_20.addWidget(self.Label_STT_Whisper_OutputRoot)
+        self.horizontalLayout_20.addWidget(self.Label_ASR_Whisper_OutputRoot)
 
-        self.LineEdit_STT_Whisper_OutputRoot = LineEditBase(self.Frame_STT_Whisper_OutputRoot)
-        self.LineEdit_STT_Whisper_OutputRoot.setObjectName(u"LineEdit_STT_Whisper_OutputRoot")
-        self.LineEdit_STT_Whisper_OutputRoot.setMaximumSize(QSize(16777215, 30))
+        self.LineEdit_ASR_Whisper_OutputRoot = LineEditBase(self.Frame_ASR_Whisper_OutputRoot)
+        self.LineEdit_ASR_Whisper_OutputRoot.setObjectName(u"LineEdit_ASR_Whisper_OutputRoot")
+        self.LineEdit_ASR_Whisper_OutputRoot.setMaximumSize(QSize(16777215, 30))
 
-        self.horizontalLayout_20.addWidget(self.LineEdit_STT_Whisper_OutputRoot)
+        self.horizontalLayout_20.addWidget(self.LineEdit_ASR_Whisper_OutputRoot)
 
-        self.Button_STT_Whisper_OutputRoot_MoreActions = MenuButton(self.Frame_STT_Whisper_OutputRoot)
-        self.Button_STT_Whisper_OutputRoot_MoreActions.setObjectName(u"Button_STT_Whisper_OutputRoot_MoreActions")
-        self.Button_STT_Whisper_OutputRoot_MoreActions.setMaximumSize(QSize(30, 30))
-        self.Button_STT_Whisper_OutputRoot_MoreActions.setStyleSheet(u"QPushButton {\n"
+        self.Button_ASR_Whisper_OutputRoot_MoreActions = MenuButton(self.Frame_ASR_Whisper_OutputRoot)
+        self.Button_ASR_Whisper_OutputRoot_MoreActions.setObjectName(u"Button_ASR_Whisper_OutputRoot_MoreActions")
+        self.Button_ASR_Whisper_OutputRoot_MoreActions.setMaximumSize(QSize(30, 30))
+        self.Button_ASR_Whisper_OutputRoot_MoreActions.setStyleSheet(u"QPushButton {\n"
 "	border-width: 1px;\n"
 "	border-style: solid;\n"
 "	border-color: rgb(123, 123, 123);\n"
 "}")
 
-        self.horizontalLayout_20.addWidget(self.Button_STT_Whisper_OutputRoot_MoreActions)
+        self.horizontalLayout_20.addWidget(self.Button_ASR_Whisper_OutputRoot_MoreActions)
 
 
-        self.verticalLayout_83.addWidget(self.Frame_STT_Whisper_OutputRoot)
+        self.verticalLayout_83.addWidget(self.Frame_ASR_Whisper_OutputRoot)
 
         self.Frame_DAT_GPTSoVITS_OutputRoot = QFrame(self.GroupBox_Settings_Tools_Path)
         self.Frame_DAT_GPTSoVITS_OutputRoot.setObjectName(u"Frame_DAT_GPTSoVITS_OutputRoot")
@@ -10798,7 +10798,7 @@ class Ui_MainWindow(object):
         self.StackedWidget_Pages_Models.setCurrentIndex(0)
         self.StackedWidget_Pages_Process.setCurrentIndex(0)
         self.StackedWidget_Pages_VPR.setCurrentIndex(0)
-        self.StackedWidget_Pages_STT.setCurrentIndex(0)
+        self.StackedWidget_Pages_ASR.setCurrentIndex(0)
         self.StackedWidget_Pages_Dataset.setCurrentIndex(0)
         self.StackedWidget_DAT_GPTSoVITS.setCurrentIndex(0)
         self.StackedWidget_DAT_VITS.setCurrentIndex(0)
@@ -10837,9 +10837,9 @@ class Ui_MainWindow(object):
 #endif // QT_CONFIG(tooltip)
         self.Button_Menu_VPR.setText(QCoreApplication.translate("MainWindow", u"\u8bc6\u522b", None))
 #if QT_CONFIG(tooltip)
-        self.Button_Menu_STT.setToolTip(QCoreApplication.translate("MainWindow", u"\u5de5\u5177\uff1a\u8bed\u97f3\u8f6c\u6587\u5b57", None))
+        self.Button_Menu_ASR.setToolTip(QCoreApplication.translate("MainWindow", u"\u5de5\u5177\uff1a\u8bed\u97f3\u8f6c\u6587\u5b57", None))
 #endif // QT_CONFIG(tooltip)
-        self.Button_Menu_STT.setText(QCoreApplication.translate("MainWindow", u"\u8f6c\u5f55", None))
+        self.Button_Menu_ASR.setText(QCoreApplication.translate("MainWindow", u"\u8f6c\u5f55", None))
 #if QT_CONFIG(tooltip)
         self.Button_Menu_Dataset.setToolTip(QCoreApplication.translate("MainWindow", u"\u5de5\u5177\uff1a\u6570\u636e\u96c6\u5236\u4f5c", None))
 #endif // QT_CONFIG(tooltip)
@@ -10906,11 +10906,11 @@ class Ui_MainWindow(object):
         self.ToolBox_Env_Manage_Pytorch.setItemText(self.ToolBox_Env_Manage_Pytorch.indexOf(self.ToolBox_Env_Manage_Pytorch_Page1Content), "")
         self.Button_Models_Process_Title.setText(QCoreApplication.translate("MainWindow", u"Label", None))
         self.Button_Models_VPR_Title.setText(QCoreApplication.translate("MainWindow", u"Label", None))
-        self.Button_Models_STT_Title.setText(QCoreApplication.translate("MainWindow", u"Label", None))
+        self.Button_Models_ASR_Title.setText(QCoreApplication.translate("MainWindow", u"Label", None))
         self.Button_Models_TTS_Title.setText(QCoreApplication.translate("MainWindow", u"Label", None))
         self.TabWidget_Models_Process.setTabText(self.TabWidget_Models_Process.indexOf(self.Tab_Models_Process_UVR), QCoreApplication.translate("MainWindow", u"Tab 1", None))
         self.TabWidget_Models_VPR.setTabText(self.TabWidget_Models_VPR.indexOf(self.Tab_Models_VPR_TDNN), QCoreApplication.translate("MainWindow", u"Tab 1", None))
-        self.TabWidget_Models_STT.setTabText(self.TabWidget_Models_STT.indexOf(self.Tab_Models_STT_Whisper), QCoreApplication.translate("MainWindow", u"Tab 1", None))
+        self.TabWidget_Models_ASR.setTabText(self.TabWidget_Models_ASR.indexOf(self.Tab_Models_ASR_Whisper), QCoreApplication.translate("MainWindow", u"Tab 1", None))
         self.TabWidget_Models_TTS.setTabText(self.TabWidget_Models_TTS.indexOf(self.Tab_Models_TTS_GPTSoVITS), QCoreApplication.translate("MainWindow", u"\u9875", None))
         self.TabWidget_Models_TTS.setTabText(self.TabWidget_Models_TTS.indexOf(self.Tab_Models_TTS_VITS), QCoreApplication.translate("MainWindow", u"Tab 1", None))
         self.Button_AudioProcessor_Title.setText(QCoreApplication.translate("MainWindow", u"Label", None))
@@ -10976,32 +10976,32 @@ class Ui_MainWindow(object):
         self.Label_VPR_TDNN_AudioSpeakersDataName.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.ToolBox_VPR_TDNN_OutputParams_AdvanceSettings.setItemText(self.ToolBox_VPR_TDNN_OutputParams_AdvanceSettings.indexOf(self.ToolBox_VPR_TDNN_OutputParams_AdvanceSettings_Page1Content), "")
         self.Button_VoiceTranscriber_Title.setText(QCoreApplication.translate("MainWindow", u"Label", None))
-        ___qtreewidgetitem6 = self.TreeWidget_Catalogue_STT_Whisper.headerItem()
+        ___qtreewidgetitem6 = self.TreeWidget_Catalogue_ASR_Whisper.headerItem()
         ___qtreewidgetitem6.setText(0, QCoreApplication.translate("MainWindow", u"HeaderView", None));
 
-        __sortingEnabled2 = self.TreeWidget_Catalogue_STT_Whisper.isSortingEnabled()
-        self.TreeWidget_Catalogue_STT_Whisper.setSortingEnabled(False)
-        ___qtreewidgetitem7 = self.TreeWidget_Catalogue_STT_Whisper.topLevelItem(0)
+        __sortingEnabled2 = self.TreeWidget_Catalogue_ASR_Whisper.isSortingEnabled()
+        self.TreeWidget_Catalogue_ASR_Whisper.setSortingEnabled(False)
+        ___qtreewidgetitem7 = self.TreeWidget_Catalogue_ASR_Whisper.topLevelItem(0)
         ___qtreewidgetitem7.setText(0, QCoreApplication.translate("MainWindow", u"RootItem", None));
         ___qtreewidgetitem8 = ___qtreewidgetitem7.child(0)
         ___qtreewidgetitem8.setText(0, QCoreApplication.translate("MainWindow", u"ChildItem", None));
-        self.TreeWidget_Catalogue_STT_Whisper.setSortingEnabled(__sortingEnabled2)
+        self.TreeWidget_Catalogue_ASR_Whisper.setSortingEnabled(__sortingEnabled2)
 
-        self.GroupBox_STT_Whisper_InputParams.setTitle(QCoreApplication.translate("MainWindow", u"GroupBox1", None))
-        self.Label_STT_Whisper_AudioDir.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.GroupBox_STT_Whisper_WhisperParams.setTitle(QCoreApplication.translate("MainWindow", u"GroupBox2", None))
-        self.Label_STT_Whisper_AddLanguageInfo.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.CheckBox_STT_Whisper_AddLanguageInfo.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
-        self.Label_STT_Whisper_ModelPath.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.Label_STT_Whisper_fp16.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.CheckBox_STT_Whisper_fp16.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
-        self.CheckBox_STT_Whisper_ConditionOnPreviousText.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
-        self.Label_STT_Whisper_ConditionOnPreviousText.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.Label_STT_Whisper_Verbose.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.CheckBox_STT_Whisper_Verbose.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
-        self.ToolBox_STT_Whisper_WhisperParams_AdvanceSettings.setItemText(self.ToolBox_STT_Whisper_WhisperParams_AdvanceSettings.indexOf(self.ToolBox_STT_Whisper_WhisperParams_AdvanceSettings_Page1Content), "")
-        self.GroupBox_STT_Whisper_OutputParams.setTitle(QCoreApplication.translate("MainWindow", u"GroupBox3", None))
-        self.Label_STT_Whisper_OutputDirName.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.GroupBox_ASR_Whisper_InputParams.setTitle(QCoreApplication.translate("MainWindow", u"GroupBox1", None))
+        self.Label_ASR_Whisper_AudioDir.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.GroupBox_ASR_Whisper_WhisperParams.setTitle(QCoreApplication.translate("MainWindow", u"GroupBox2", None))
+        self.Label_ASR_Whisper_AddLanguageInfo.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.CheckBox_ASR_Whisper_AddLanguageInfo.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
+        self.Label_ASR_Whisper_ModelPath.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.Label_ASR_Whisper_fp16.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.CheckBox_ASR_Whisper_fp16.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
+        self.CheckBox_ASR_Whisper_ConditionOnPreviousText.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
+        self.Label_ASR_Whisper_ConditionOnPreviousText.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.Label_ASR_Whisper_Verbose.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.CheckBox_ASR_Whisper_Verbose.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
+        self.ToolBox_ASR_Whisper_WhisperParams_AdvanceSettings.setItemText(self.ToolBox_ASR_Whisper_WhisperParams_AdvanceSettings.indexOf(self.ToolBox_ASR_Whisper_WhisperParams_AdvanceSettings_Page1Content), "")
+        self.GroupBox_ASR_Whisper_OutputParams.setTitle(QCoreApplication.translate("MainWindow", u"GroupBox3", None))
+        self.Label_ASR_Whisper_OutputDirName.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Button_DatasetCreator_Title_GPTSoVITS.setText(QCoreApplication.translate("MainWindow", u"Label", None))
         self.Button_DatasetCreator_Title_VITS.setText(QCoreApplication.translate("MainWindow", u"Label", None))
         ___qtreewidgetitem9 = self.TreeWidget_Catalogue_DAT_GPTSoVITS.headerItem()
@@ -11174,7 +11174,7 @@ class Ui_MainWindow(object):
         self.GroupBox_Settings_Tools_Path.setTitle(QCoreApplication.translate("MainWindow", u"GroupBox", None))
         self.Label_Process_OutputRoot.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_VPR_TDNN_OutputRoot.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.Label_STT_Whisper_OutputRoot.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.Label_ASR_Whisper_OutputRoot.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_DAT_GPTSoVITS_OutputRoot.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_DAT_VITS_OutputRoot.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Train_GPTSoVITS_OutputRoot.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))

@@ -47,8 +47,8 @@
         },
         {
             "tags": [
-                "ASR",
-                "VPR"
+                "VPR",
+                "TDNN"
             ],
             "name": "Ecapa-Tdnn_spectrogram.pth",
             "size": "35.0MB",
@@ -59,8 +59,8 @@
         },
         {
             "tags": [
-                "ASR",
-                "VPR"
+                "VPR",
+                "TDNN"
             ],
             "name": "Ecapa-Tdnn_melspectrogram.pth",
             "size": "33.8MB",
@@ -71,7 +71,7 @@
         },
         {
             "tags": [
-                "STT",
+                "ASR",
                 "Whisper"
             ],
             "name": "base.pt",
@@ -83,7 +83,7 @@
         },
         {
             "tags": [
-                "STT",
+                "ASR",
                 "Whisper"
             ],
             "name": "small.pt",
@@ -95,7 +95,7 @@
         },
         {
             "tags": [
-                "STT",
+                "ASR",
                 "Whisper"
             ],
             "name": "medium.pt",
