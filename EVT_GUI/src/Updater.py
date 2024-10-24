@@ -2,6 +2,7 @@ import os
 import sys
 import platform
 import shutil
+import argparse
 from pathlib import Path
 from typing import Optional
 from PySide6.QtCore import Qt, QObject, QThread, Signal
@@ -15,6 +16,13 @@ from Config import *
 
 ##############################################################################################################################
 
+# Parse path settings
+parser = argparse.ArgumentParser()
+parser.add_argument("--config",    help = "path to config",    default = Path(CurrentDir).joinpath('Config', 'Config.ini'))
+args = parser.parse_args()
+
+ConfigPath = args.config
+
 # Set DownloadDir&ExtractDir
 DownloadDir = CurrentDir
 ExtractDir = QFunc.NormPath(Path(CurrentDir).joinpath('Temp'))
@@ -24,7 +32,7 @@ Config = QFunc.ManageConfig(ConfigPath)
 
 # Set path of executer
 try:
-    ExecuterName = str(Config.GetValue('Info', 'ExecuterName'))
+    ExecuterName = str(Config.getValue('Info', 'ExecuterName'))
     ExecuterPath = QFunc.NormPath(Path(CurrentDir).joinpath(ExecuterName))
 except:
     BootExecuter = False
@@ -231,13 +239,13 @@ class Widget_Updater(QWidget):
                         QMessageBox.No: lambda: FunctionSignals.Signal_IsUpdateSucceeded.emit(False, "已取消下载更新！\nDownload canceled!")
                     }
                 )
-            ) if eval(Config.GetValue('Updater', 'Asked', 'False')) is False else (
+            ) if eval(Config.getValue('Updater', 'Asked', 'False')) is False else (
                 Function_SetMethodExecutor(self,
                     ProgressBar = self.ProgressBar,
                     Method = Execute_Update_Downloading.Execute,
                     Params = (self.DownloadURL)
                 ),
-                Config.EditConfig('Updater', 'Asked', 'False')
+                Config.editConfig('Updater', 'Asked', 'False')
             )
         )
         FunctionSignals.Signal_IsUpdateSucceeded.connect(

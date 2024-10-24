@@ -185,7 +185,7 @@ def Function_GetParam(
         return UI.isChecked()
 
     if isinstance(UI, Table_EditAudioSpeaker):
-        return UI.GetValue()
+        return UI.getValue()
 
 
 def Function_SetParam(
@@ -207,7 +207,7 @@ def Function_SetParam(
         UI.setChecked(Param)
 
     if isinstance(UI, Table_EditAudioSpeaker):
-        UI.SetValue(Param)
+        UI.setValue(Param)
 
 
 def Function_ParamsSynchronizer(
@@ -387,7 +387,7 @@ def Function_SetWidgetValue(
     if isinstance(Widget, (QLineEdit, QTextEdit, QPlainTextEdit)):
         QFunc.Function_SetText(Widget, Value, SetPlaceholderText = SetPlaceholderText, PlaceholderText = PlaceholderText)
         def EditConfig(Value):
-            Config.EditConfig(Section, Option, str(Value))
+            Config.editConfig(Section, Option, str(Value))
         if Config is not None:
             Widget.textChanged.connect(lambda: EditConfig(Widget.text() if isinstance(Widget, (QLineEdit)) else Widget.toPlainText()))
             EditConfig(Value)
@@ -398,7 +398,7 @@ def Function_SetWidgetValue(
             itemTexts.append(Widget.itemText(index))
         Widget.setCurrentText(str(Value)) if str(Value) in itemTexts else None
         def EditConfig(Value):
-            Config.EditConfig(Section, Option, str(Value))
+            Config.editConfig(Section, Option, str(Value))
         if Config is not None:
             Widget.currentTextChanged.connect(EditConfig)
             EditConfig(Value) if str(Value) in itemTexts else None
@@ -406,7 +406,7 @@ def Function_SetWidgetValue(
     if isinstance(Widget, (QSpinBox, QSlider)):
         Widget.setValue(int(eval(str(Value)) * Times))
         def EditConfig(Value):
-            Config.EditConfig(Section, Option, str(eval(str(Value)) / Times))
+            Config.editConfig(Section, Option, str(eval(str(Value)) / Times))
         if Config is not None:
             Widget.valueChanged.connect(EditConfig)
             EditConfig(Value)
@@ -414,7 +414,7 @@ def Function_SetWidgetValue(
     if isinstance(Widget, (QDoubleSpinBox, SliderBase, Frame_RangeSetting)):
         Widget.setValue(float(eval(str(Value)) * Times))
         def EditConfig(Value):
-            Config.EditConfig(Section, Option, str(eval(str(Value)) / Times))
+            Config.editConfig(Section, Option, str(eval(str(Value)) / Times))
         if Config is not None:
             Widget.valueChanged.connect(EditConfig)
             EditConfig(Value)
@@ -422,15 +422,15 @@ def Function_SetWidgetValue(
     if isinstance(Widget, (QCheckBox, QRadioButton)):
         Widget.setChecked(eval(str(Value)))
         def EditConfig(Value):
-            Config.EditConfig(Section, Option, str(Value))
+            Config.editConfig(Section, Option, str(Value))
         if Config is not None:
             Widget.toggled.connect(EditConfig)
             EditConfig(Value)
 
     if isinstance(Widget, Table_EditAudioSpeaker):
-        Widget.SetValue(eval(str(Value)))
+        Widget.setValue(eval(str(Value)))
         def EditConfig(Value):
-            Config.EditConfig(Section, Option, str(Value))
+            Config.editConfig(Section, Option, str(Value))
         if Config is not None:
             Widget.ValueChanged.connect(EditConfig)
             EditConfig(Value)
@@ -458,7 +458,7 @@ class ParamsManager:
         PlaceholderText: Optional[str] = None,
         Registrate: bool = True
     ):
-        Value = self.Config.GetValue(Section, Option, str(DefaultValue))
+        Value = self.Config.getValue(Section, Option, str(DefaultValue))
         Function_SetWidgetValue(Widget, self.Config, Section, Option, Value, Times, SetPlaceholderText, PlaceholderText)
         self.Registrate(Widget, (Section, Option, DefaultValue, Times, SetPlaceholderText, PlaceholderText)) if Registrate else None
 
@@ -477,7 +477,7 @@ class ParamsManager:
             self.ResetParam(Widget)
 
     def ImportSettings(self, ReadPath: str):
-        ConfigParser = QFunc.ManageConfig(ReadPath).Parser()
+        ConfigParser = QFunc.ManageConfig(ReadPath).parser()
         with open(self.ConfigPath, 'w', encoding = 'utf-8') as Config:
             ConfigParser.write(Config)
         for Widget, value in list(self.RegistratedWidgets.items()):
@@ -485,7 +485,7 @@ class ParamsManager:
 
     def ExportSettings(self, SavePath: str):
         with open(SavePath, 'w', encoding = 'utf-8') as Config:
-            self.Config.Parser().write(Config)
+            self.Config.parser().write(Config)
 
 ##############################################################################################################################
 

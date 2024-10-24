@@ -38,6 +38,7 @@ parser.add_argument("--requirements", help = "path to requirements.txt", default
 parser.add_argument("--dependencies", help = "dir of dependencies",      default = Path(CurrentDir).joinpath(''))
 parser.add_argument("--models",       help = "dir of models",            default = Path(CurrentDir).joinpath('Models'))
 parser.add_argument("--output",       help = "dir of output",            default = Path(CurrentDir).joinpath(''))
+parser.add_argument("--profile",      help = "dir of profile",           default = Path(CurrentDir).joinpath(''))
 args = parser.parse_args()
 
 UpdaterPath = args.updater
@@ -47,12 +48,15 @@ RequirementsPath = args.requirements
 DependencyDir = args.dependencies
 ModelDir = args.models
 OutputDir = args.output
+ProfileDir = args.profile
 
 
 # Set up client config
+ConfigDir = QFunc.NormPath(Path(ProfileDir).joinpath('Config'))
+ConfigPath = QFunc.NormPath(Path(ConfigDir).joinpath('Config.ini'))
 Config = QFunc.ManageConfig(ConfigPath)
-Config.EditConfig('Info', 'CurrentVersion', str(CurrentVersion))
-Config.EditConfig('Info', 'ExecuterName', str(QFunc.GetFileInfo()[0]))
+Config.editConfig('Info', 'CurrentVersion', str(CurrentVersion))
+Config.editConfig('Info', 'ExecuterName', str(QFunc.GetFileInfo()[0]))
 
 
 # Set up environment variables while python file is not compiled
@@ -872,8 +876,6 @@ class MainWindow(Window_MainWindow):
     def __init__(self):
         super().__init__()
 
-        self.Clipboard = QApplication.clipboard()
-
         self.MonitorUsage = QTasks.MonitorUsage()
         self.MonitorUsage.start()
 
@@ -999,7 +1001,7 @@ class MainWindow(Window_MainWindow):
         ChildWindow_VPR.ui.Button_Save.clicked.connect(
             lambda: (
                 VPRResult_Save(
-                    ChildWindow_VPR.ui.Table.GetValue(),
+                    ChildWindow_VPR.ui.Table.getValue(),
                     AudioSpeakersData_Path,
                     False
                 ),
@@ -1018,7 +1020,7 @@ class MainWindow(Window_MainWindow):
                 {
                     QMessageBox.Yes: lambda: (
                         VPRResult_Save(
-                            ChildWindow_VPR.ui.Table.GetValue(),
+                            ChildWindow_VPR.ui.Table.getValue(),
                             AudioSpeakersData_Path,
                             ChildWindow_VPR.ui.CheckBox.isChecked(),
                             AudioSaveDir
@@ -1029,7 +1031,7 @@ class MainWindow(Window_MainWindow):
             )
         )
 
-        ChildWindow_VPR.ui.Table.SetValue(
+        ChildWindow_VPR.ui.Table.setValue(
             VPRResult_Get(AudioSpeakersData_Path),
             ComboItems
         )
@@ -1078,7 +1080,7 @@ class MainWindow(Window_MainWindow):
                 {
                     QMessageBox.Yes: lambda: (
                         ASRResult_Save(
-                            ChildWindow_ASR.ui.Table.GetValue(),
+                            ChildWindow_ASR.ui.Table.getValue(),
                             SRTDir
                         ),
                         ChildWindow_ASR.close()
@@ -1087,7 +1089,7 @@ class MainWindow(Window_MainWindow):
             )
         )
 
-        ChildWindow_ASR.ui.Table.SetValue(
+        ChildWindow_ASR.ui.Table.setValue(
             ASRResult_Get(SRTDir, AudioDir)
         )
         ChildWindow_ASR.exec()
@@ -1136,11 +1138,11 @@ class MainWindow(Window_MainWindow):
                 {
                     QMessageBox.Yes: lambda: (
                         DATResult_Save(
-                            ChildWindow_DAT.ui.Table_Train.GetValue(),
+                            ChildWindow_DAT.ui.Table_Train.getValue(),
                             DATPath_Training
                         ),
                         DATResult_Save(
-                            ChildWindow_DAT.ui.Table_Val.GetValue(),
+                            ChildWindow_DAT.ui.Table_Val.getValue(),
                             DATPath_Validation
                         ) if DATPath_Validation is not None else None,
                         ChildWindow_DAT.close()
@@ -1149,10 +1151,10 @@ class MainWindow(Window_MainWindow):
             )
         )
 
-        ChildWindow_DAT.ui.Table_Train.SetValue(
+        ChildWindow_DAT.ui.Table_Train.setValue(
             DATResult_Get(DATPath_Training)
         )
-        ChildWindow_DAT.ui.Table_Val.SetValue(
+        ChildWindow_DAT.ui.Table_Val.setValue(
             DATResult_Get(DATPath_Validation)
         ) if DATPath_Validation is not None else None
         ChildWindow_DAT.exec()
@@ -1240,12 +1242,12 @@ class MainWindow(Window_MainWindow):
                     Buttons = QMessageBox.Yes|QMessageBox.No,
                     ButtonEvents = {
                         QMessageBox.Yes: lambda: (
-                            Config.EditConfig('Updater', 'Asked', 'True'),
-                            subprocess.Popen(['python.exe', UpdaterPath] if IsFileCompiled == False else [UpdaterPath], env = os.environ),
+                            Config.editConfig('Updater', 'Asked', 'True'),
+                            subprocess.Popen((['python.exe', UpdaterPath] if IsFileCompiled == False else [UpdaterPath]) + [f'--config "{ConfigPath}"'], env = os.environ),
                             QApplication.instance().exit()
                         ),
                         QMessageBox.No: lambda: (
-                            Config.EditConfig('Updater', 'Asked', 'False'),
+                            Config.editConfig('Updater', 'Asked', 'False'),
                         )
                     }
                 )
@@ -1262,7 +1264,7 @@ class MainWindow(Window_MainWindow):
         Main funtion to orgnize all the subfunctions
         '''
         # Check for updates
-        self.chkUpdate() if Config.GetValue('Settings', 'AutoUpdate', 'Enabled') == 'Enabled' else None
+        self.chkUpdate() if Config.getValue('Settings', 'AutoUpdate', 'Enabled') == 'Enabled' else None
 
         # Logo
         self.setWindowIcon(QIcon(QFunc.NormPath(Path(ResourceDir).joinpath('assets/images/Logo.ico'))))
@@ -1280,11 +1282,11 @@ class MainWindow(Window_MainWindow):
         Function_ConfigureCheckBox(
             CheckBox = self.ui.CheckBox_SwitchTheme,
             CheckedEvents = [
-                lambda: Config.EditConfig('Settings', 'Theme', Theme.Light),
+                lambda: Config.editConfig('Settings', 'Theme', Theme.Light),
                 lambda: ComponentsSignals.Signal_SetTheme.emit(Theme.Light) if EasyTheme.THEME != Theme.Light else None
             ],
             UncheckedEvents = [
-                lambda: Config.EditConfig('Settings', 'Theme', Theme.Dark),
+                lambda: Config.editConfig('Settings', 'Theme', Theme.Dark),
                 lambda: ComponentsSignals.Signal_SetTheme.emit(Theme.Dark) if EasyTheme.THEME != Theme.Dark else None
             ],
             TakeEffect = False
@@ -1746,7 +1748,7 @@ class MainWindow(Window_MainWindow):
 
         self.ui.TabWidget_Models_Process.setTabText(0, 'UVR（人声分离）')
         self.ui.Table_Models_Process_UVR.setHorizontalHeaderLabels(['名字', '类型', '大小', '日期', '操作'])
-        ModelViewSignals.Signal_Process_UVR.connect(self.ui.Table_Models_Process_UVR.SetValue)
+        ModelViewSignals.Signal_Process_UVR.connect(self.ui.Table_Models_Process_UVR.setValue)
         self.ui.Table_Models_Process_UVR.Download.connect(
             lambda Params: Function_SetMethodExecutor(self,
                 Method = Model_Downloader.Execute,
@@ -1767,7 +1769,7 @@ class MainWindow(Window_MainWindow):
 
         self.ui.TabWidget_Models_VPR.setTabText(0, 'VPR（声纹识别）')
         self.ui.Table_Models_VPR_TDNN.setHorizontalHeaderLabels(['名字', '类型', '大小', '日期', '操作'])
-        ModelViewSignals.Signal_VPR_TDNN.connect(self.ui.Table_Models_VPR_TDNN.SetValue)
+        ModelViewSignals.Signal_VPR_TDNN.connect(self.ui.Table_Models_VPR_TDNN.setValue)
         self.ui.Table_Models_VPR_TDNN.Download.connect(
             lambda Params: Function_SetMethodExecutor(self,
                 Method = Model_Downloader.Execute,
@@ -1788,7 +1790,7 @@ class MainWindow(Window_MainWindow):
 
         self.ui.TabWidget_Models_ASR.setTabText(0, 'Whisper')
         self.ui.Table_Models_ASR_Whisper.setHorizontalHeaderLabels(['名字', '类型', '大小', '日期', '操作'])
-        ModelViewSignals.Signal_ASR_Whisper.connect(self.ui.Table_Models_ASR_Whisper.SetValue)
+        ModelViewSignals.Signal_ASR_Whisper.connect(self.ui.Table_Models_ASR_Whisper.setValue)
         self.ui.Table_Models_ASR_Whisper.Download.connect(
             lambda Params: Function_SetMethodExecutor(self,
                 Method = Model_Downloader.Execute,
@@ -1809,7 +1811,7 @@ class MainWindow(Window_MainWindow):
 
         self.ui.TabWidget_Models_TTS.setTabText(0, 'GPT-SoVITS')
         self.ui.Table_Models_TTS_GPTSoVITS.setHorizontalHeaderLabels(['名字', '类型', '大小', '日期', '操作'])
-        ModelViewSignals.Signal_TTS_GPTSoVITS.connect(self.ui.Table_Models_TTS_GPTSoVITS.SetValue)
+        ModelViewSignals.Signal_TTS_GPTSoVITS.connect(self.ui.Table_Models_TTS_GPTSoVITS.setValue)
         self.ui.Table_Models_TTS_GPTSoVITS.Download.connect(
             lambda Params: Function_SetMethodExecutor(self,
                 Method = Model_Downloader.Execute,
@@ -1819,7 +1821,7 @@ class MainWindow(Window_MainWindow):
 
         self.ui.TabWidget_Models_TTS.setTabText(1, 'VITS')
         self.ui.Table_Models_TTS_VITS.setHorizontalHeaderLabels(['名字', '类型', '大小', '日期', '操作'])
-        ModelViewSignals.Signal_TTS_VITS.connect(self.ui.Table_Models_TTS_VITS.SetValue)
+        ModelViewSignals.Signal_TTS_VITS.connect(self.ui.Table_Models_TTS_VITS.setValue)
         self.ui.Table_Models_TTS_VITS.Download.connect(
             lambda Params: Function_SetMethodExecutor(self,
                 Method = Model_Downloader.Execute,
@@ -1859,8 +1861,8 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_Menu_Process.clicked.connect(
             lambda: (
                 self.ui.Button_AudioProcessor_Help.click(),
-                Config.EditConfig('Dialog', 'GuidanceShown_Process', 'True')
-            ) if eval(Config.GetValue('Dialog', 'GuidanceShown_Process', 'False')) is False else None
+                Config.editConfig('Dialog', 'GuidanceShown_Process', 'True')
+            ) if eval(Config.getValue('Dialog', 'GuidanceShown_Process', 'False')) is False else None
         )
 
         # ParamsManager
@@ -1903,13 +1905,13 @@ class MainWindow(Window_MainWindow):
             DefaultValue = '',
             SetPlaceholderText = True
         )
-        self.ui.LineEdit_Process_MediaDirInput.SetFileDialog(
+        self.ui.LineEdit_Process_MediaDirInput.setFileDialog(
             Mode = "SelectFolder"
         )
         self.ui.Button_Process_MediaDirInput_MoreActions.SetMenu(
             ActionEvents = {
                 "重置": lambda: ParamsManager_Process.ResetParam(self.ui.LineEdit_Process_MediaDirInput),
-                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_Process_MediaDirInput.text())
+                "复制": lambda: QApplication.clipboard().setText(self.ui.LineEdit_Process_MediaDirInput.text())
             }
         )
         Function_AddToTreeWidget(
@@ -1990,7 +1992,7 @@ class MainWindow(Window_MainWindow):
             DefaultValue = Process_DenoiseModelPath_Default,
             SetPlaceholderText = True
         )
-        self.ui.LineEdit_Process_DenoiseModelPath.SetFileDialog(
+        self.ui.LineEdit_Process_DenoiseModelPath.setFileDialog(
             Mode = "SelectFile",
             FileType = "pth类型/onnx类型 (*.pth *.onnx)",
             Directory = QFunc.NormPath(Path(ModelDir).joinpath('Process', 'UVR', 'Downloaded'))
@@ -1998,7 +2000,7 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_Process_DenoiseModelPath_MoreActions.SetMenu(
             ActionEvents = {
                 "重置": lambda: ParamsManager_Process.ResetParam(self.ui.LineEdit_Process_DenoiseModelPath),
-                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_Process_DenoiseModelPath.text())
+                "复制": lambda: QApplication.clipboard().setText(self.ui.LineEdit_Process_DenoiseModelPath.text())
             }
         )
         Function_AddToTreeWidget(
@@ -2284,7 +2286,7 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_Process_OutputDirName_MoreActions.SetMenu(
             ActionEvents = {
                 "重置": lambda: ParamsManager_Process.ResetParam(self.ui.LineEdit_Process_OutputDirName),
-                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_Process_OutputDirName.text())
+                "复制": lambda: QApplication.clipboard().setText(self.ui.LineEdit_Process_OutputDirName.text())
             }
         )
         Function_AddToTreeWidget(
@@ -2499,8 +2501,8 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_Menu_VPR.clicked.connect(
             lambda: (
                 self.ui.Button_VoiceIdentifier_Help.click(),
-                Config.EditConfig('Dialog', 'GuidanceShown_VPR', 'True')
-            ) if eval(Config.GetValue('Dialog', 'GuidanceShown_VPR', 'False')) is False else None
+                Config.editConfig('Dialog', 'GuidanceShown_VPR', 'True')
+            ) if eval(Config.getValue('Dialog', 'GuidanceShown_VPR', 'False')) is False else None
         )
 
         # ParamsManager
@@ -2543,14 +2545,14 @@ class MainWindow(Window_MainWindow):
             DefaultValue = '',
             SetPlaceholderText = True
         )
-        self.ui.LineEdit_VPR_TDNN_AudioDirInput.SetFileDialog(
+        self.ui.LineEdit_VPR_TDNN_AudioDirInput.setFileDialog(
             Mode = "SelectFolder",
             Directory = Path(CurrentDir).joinpath('音频处理结果').as_posix()
         )
         self.ui.Button_VPR_TDNN_AudioDirInput_MoreActions.SetMenu(
             ActionEvents = {
                 "重置": lambda: ParamsManager_VPR_TDNN.ResetParam(self.ui.LineEdit_VPR_TDNN_AudioDirInput),
-                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_VPR_TDNN_AudioDirInput.text())
+                "复制": lambda: QApplication.clipboard().setText(self.ui.LineEdit_VPR_TDNN_AudioDirInput.text())
             }
         )
         Function_AddToTreeWidget(
@@ -2573,7 +2575,7 @@ class MainWindow(Window_MainWindow):
             Option = 'StdAudioSpeaker',
             DefaultValue = {"": ""}
         )
-        self.ui.Table_VPR_TDNN_StdAudioSpeaker.SetFileDialog(
+        self.ui.Table_VPR_TDNN_StdAudioSpeaker.setFileDialog(
             FileType = "音频类型 (*.flac *.wav *.mp3 *.aac *.m4a *.wma *.aiff *.au *.ogg)"
         )
         Function_AddToTreeWidget(
@@ -2631,7 +2633,7 @@ class MainWindow(Window_MainWindow):
             SetPlaceholderText = True,
             PlaceholderText = VPR_TDNN_ModelPath_Default
         )
-        self.ui.LineEdit_VPR_TDNN_ModelPath.SetFileDialog(
+        self.ui.LineEdit_VPR_TDNN_ModelPath.setFileDialog(
             Mode = "SelectFile",
             FileType = "pth类型 (*.pth)",
             Directory = QFunc.NormPath(Path(ModelDir).joinpath('VPR', 'TDNN', 'Downloaded'))
@@ -2639,7 +2641,7 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_VPR_TDNN_ModelPath_MoreActions.SetMenu(
             ActionEvents = {
                 "重置": lambda: ParamsManager_VPR_TDNN.ResetParam(self.ui.LineEdit_VPR_TDNN_ModelPath),
-                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_VPR_TDNN_ModelPath.text())
+                "复制": lambda: QApplication.clipboard().setText(self.ui.LineEdit_VPR_TDNN_ModelPath.text())
             }
         )
         Function_AddToTreeWidget(
@@ -2753,7 +2755,7 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_VPR_TDNN_OutputDirName_MoreActions.SetMenu(
             ActionEvents = {
                 "重置": lambda: ParamsManager_VPR_TDNN.ResetParam(self.ui.LineEdit_VPR_TDNN_OutputDirName),
-                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_VPR_TDNN_OutputDirName.text())
+                "复制": lambda: QApplication.clipboard().setText(self.ui.LineEdit_VPR_TDNN_OutputDirName.text())
             }
         )
         Function_AddToTreeWidget(
@@ -2784,7 +2786,7 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_VPR_TDNN_AudioSpeakersDataName_MoreActions.SetMenu(
             ActionEvents = {
                 "重置": lambda: ParamsManager_VPR_TDNN.ResetParam(self.ui.LineEdit_VPR_TDNN_AudioSpeakersDataName),
-                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_VPR_TDNN_AudioSpeakersDataName.text())
+                "复制": lambda: QApplication.clipboard().setText(self.ui.LineEdit_VPR_TDNN_AudioSpeakersDataName.text())
             }
         )
         Function_AddToTreeWidget(
@@ -2906,7 +2908,7 @@ class MainWindow(Window_MainWindow):
                 lambda: self.showVPRResult(
                     LineEdit_VPR_TDNN_OutputDir.text(),
                     LineEdit_VPR_TDNN_AudioSpeakersDataPath.text(),
-                    list(self.ui.Table_VPR_TDNN_StdAudioSpeaker.GetValue().keys()) + ['']
+                    list(self.ui.Table_VPR_TDNN_StdAudioSpeaker.getValue().keys()) + ['']
                 ),
                 lambda: MessageBoxBase.pop(self,
                     QMessageBox.Information, "Tip",
@@ -2937,8 +2939,8 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_Menu_ASR.clicked.connect(
             lambda: (
                 self.ui.Button_VoiceTranscriber_Help.click(),
-                Config.EditConfig('Dialog', 'GuidanceShown_ASR', 'True')
-            ) if eval(Config.GetValue('Dialog', 'GuidanceShown_ASR', 'False')) is False else None
+                Config.editConfig('Dialog', 'GuidanceShown_ASR', 'True')
+            ) if eval(Config.getValue('Dialog', 'GuidanceShown_ASR', 'False')) is False else None
         )
 
         # ParamsManager
@@ -2981,13 +2983,13 @@ class MainWindow(Window_MainWindow):
             DefaultValue = '',
             SetPlaceholderText = True
         )
-        self.ui.LineEdit_ASR_Whisper_AudioDir.SetFileDialog(
+        self.ui.LineEdit_ASR_Whisper_AudioDir.setFileDialog(
             Mode = "SelectFolder"
         )
         self.ui.Button_ASR_Whisper_AudioDir_MoreActions.SetMenu(
             ActionEvents = {
                 "重置": lambda: ParamsManager_ASR_Whisper.ResetParam(self.ui.LineEdit_ASR_Whisper_AudioDir),
-                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_ASR_Whisper_AudioDir.text())
+                "复制": lambda: QApplication.clipboard().setText(self.ui.LineEdit_ASR_Whisper_AudioDir.text())
             }
         )
         Function_AddToTreeWidget(
@@ -3053,7 +3055,7 @@ class MainWindow(Window_MainWindow):
             SetPlaceholderText = True,
             PlaceholderText = ASR_Whisper_ModelPath_Default
         )
-        self.ui.LineEdit_ASR_Whisper_ModelPath.SetFileDialog(
+        self.ui.LineEdit_ASR_Whisper_ModelPath.setFileDialog(
             Mode = "SelectFile",
             FileType = "pt类型 (*.pt)",
             Directory = QFunc.NormPath(Path(ModelDir).joinpath('ASR', 'Whisper', 'Downloaded'))
@@ -3061,7 +3063,7 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_ASR_Whisper_ModelPath_MoreActions.SetMenu(
             ActionEvents = {
                 "重置": lambda: ParamsManager_ASR_Whisper.ResetParam(self.ui.LineEdit_ASR_Whisper_ModelPath),
-                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_ASR_Whisper_ModelPath.text())
+                "复制": lambda: QApplication.clipboard().setText(self.ui.LineEdit_ASR_Whisper_ModelPath.text())
             }
         )
         Function_AddToTreeWidget(
@@ -3201,7 +3203,7 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_ASR_Whisper_OutputDirName_MoreActions.SetMenu(
             ActionEvents = {
                 "重置": lambda: ParamsManager_ASR_Whisper.ResetParam(self.ui.LineEdit_ASR_Whisper_OutputDirName),
-                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_ASR_Whisper_OutputDirName.text())
+                "复制": lambda: QApplication.clipboard().setText(self.ui.LineEdit_ASR_Whisper_OutputDirName.text())
             }
         )
         Function_AddToTreeWidget(
@@ -3320,8 +3322,8 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_Menu_Dataset.clicked.connect(
             lambda: (
                 self.ui.Button_DatasetCreator_Help.click(),
-                Config.EditConfig('Dialog', 'GuidanceShown_Dataset', 'True')
-            ) if eval(Config.GetValue('Dialog', 'GuidanceShown_Dataset', 'False')) is False else None
+                Config.editConfig('Dialog', 'GuidanceShown_Dataset', 'True')
+            ) if eval(Config.getValue('Dialog', 'GuidanceShown_Dataset', 'False')) is False else None
         )
 
         # GPT-SoVITS - ParamsManager
@@ -3364,12 +3366,11 @@ class MainWindow(Window_MainWindow):
             DefaultValue = '',
             SetPlaceholderText = True
         )
-        self.ui.LineEdit_DAT_GPTSoVITS_AudioSpeakersDataPath.Button.setIcon(IconBase.OpenedFolder)
-        self.ui.LineEdit_DAT_GPTSoVITS_AudioSpeakersDataPath.Button.clicked.connect(self.setAudioSpeakersDataPath)
+        self.ui.LineEdit_DAT_GPTSoVITS_AudioSpeakersDataPath.fileButton.clicked.connect(self.setAudioSpeakersDataPath)
         self.ui.Button_DAT_GPTSoVITS_AudioSpeakersDataPath_MoreActions.SetMenu(
             ActionEvents = {
                 "重置": lambda: ParamsManager_DAT_GPTSoVITS.ResetParam(self.ui.LineEdit_DAT_GPTSoVITS_AudioSpeakersDataPath),
-                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_DAT_GPTSoVITS_AudioSpeakersDataPath.text())
+                "复制": lambda: QApplication.clipboard().setText(self.ui.LineEdit_DAT_GPTSoVITS_AudioSpeakersDataPath.text())
             }
         )
         Function_AddToTreeWidget(
@@ -3392,14 +3393,14 @@ class MainWindow(Window_MainWindow):
             DefaultValue = '',
             SetPlaceholderText = True
         )
-        self.ui.LineEdit_DAT_GPTSoVITS_SRTDir.SetFileDialog(
+        self.ui.LineEdit_DAT_GPTSoVITS_SRTDir.setFileDialog(
             Mode = "SelectFolder",
             Directory = Path(CurrentDir).joinpath('语音转录结果', 'Whisper').as_posix()
         )
         self.ui.Button_DAT_GPTSoVITS_SRTDir_MoreActions.SetMenu(
             ActionEvents = {
                 "重置": lambda: ParamsManager_DAT_GPTSoVITS.ResetParam(self.ui.LineEdit_DAT_GPTSoVITS_SRTDir),
-                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_DAT_GPTSoVITS_SRTDir.text())
+                "复制": lambda: QApplication.clipboard().setText(self.ui.LineEdit_DAT_GPTSoVITS_SRTDir.text())
             }
         )
         Function_AddToTreeWidget(
@@ -3444,7 +3445,7 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_DAT_GPTSoVITS_DataFormat_MoreActions.SetMenu(
             ActionEvents = {
                 "重置": lambda: ParamsManager_DAT_GPTSoVITS.ResetParam(self.ui.LineEdit_DAT_GPTSoVITS_DataFormat),
-                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_DAT_GPTSoVITS_DataFormat.text())
+                "复制": lambda: QApplication.clipboard().setText(self.ui.LineEdit_DAT_GPTSoVITS_DataFormat.text())
             }
         )
         Function_AddToTreeWidget(
@@ -3479,7 +3480,7 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_DAT_GPTSoVITS_OutputDirName_MoreActions.SetMenu(
             ActionEvents = {
                 "重置": lambda: ParamsManager_DAT_GPTSoVITS.ResetParam(self.ui.LineEdit_DAT_GPTSoVITS_OutputDirName),
-                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_DAT_GPTSoVITS_OutputDirName.text())
+                "复制": lambda: QApplication.clipboard().setText(self.ui.LineEdit_DAT_GPTSoVITS_OutputDirName.text())
             }
         )
         Function_AddToTreeWidget(
@@ -3510,7 +3511,7 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_DAT_GPTSoVITS_FileListName_MoreActions.SetMenu(
             ActionEvents = {
                 "重置": lambda: ParamsManager_DAT_GPTSoVITS.ResetParam(self.ui.LineEdit_DAT_GPTSoVITS_FileListName),
-                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_DAT_GPTSoVITS_FileListName.text())
+                "复制": lambda: QApplication.clipboard().setText(self.ui.LineEdit_DAT_GPTSoVITS_FileListName.text())
             }
         )
         Function_AddToTreeWidget(
@@ -3662,12 +3663,11 @@ class MainWindow(Window_MainWindow):
             DefaultValue = '',
             SetPlaceholderText = True
         )
-        self.ui.LineEdit_DAT_VITS_AudioSpeakersDataPath.Button.setIcon(IconBase.OpenedFolder)
-        self.ui.LineEdit_DAT_VITS_AudioSpeakersDataPath.Button.clicked.connect(self.setAudioSpeakersDataPath)
+        self.ui.LineEdit_DAT_VITS_AudioSpeakersDataPath.fileButton.clicked.connect(self.setAudioSpeakersDataPath)
         self.ui.Button_DAT_VITS_AudioSpeakersDataPath_MoreActions.SetMenu(
             ActionEvents = {
                 "重置": lambda: ParamsManager_DAT_VITS.ResetParam(self.ui.LineEdit_DAT_VITS_AudioSpeakersDataPath),
-                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_DAT_VITS_AudioSpeakersDataPath.text())
+                "复制": lambda: QApplication.clipboard().setText(self.ui.LineEdit_DAT_VITS_AudioSpeakersDataPath.text())
             }
         )
         Function_AddToTreeWidget(
@@ -3690,14 +3690,14 @@ class MainWindow(Window_MainWindow):
             DefaultValue = '',
             SetPlaceholderText = True
         )
-        self.ui.LineEdit_DAT_VITS_SRTDir.SetFileDialog(
+        self.ui.LineEdit_DAT_VITS_SRTDir.setFileDialog(
             Mode = "SelectFolder",
             Directory = Path(CurrentDir).joinpath('语音转录结果', 'Whisper').as_posix()
         )
         self.ui.Button_DAT_VITS_SRTDir_MoreActions.SetMenu(
             ActionEvents = {
                 "重置": lambda: ParamsManager_DAT_VITS.ResetParam(self.ui.LineEdit_DAT_VITS_SRTDir),
-                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_DAT_VITS_SRTDir.text())
+                "复制": lambda: QApplication.clipboard().setText(self.ui.LineEdit_DAT_VITS_SRTDir.text())
             }
         )
         Function_AddToTreeWidget(
@@ -3742,7 +3742,7 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_DAT_VITS_DataFormat_MoreActions.SetMenu(
             ActionEvents = {
                 "重置": lambda: ParamsManager_DAT_VITS.ResetParam(self.ui.LineEdit_DAT_VITS_DataFormat),
-                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_DAT_VITS_DataFormat.text())
+                "复制": lambda: QApplication.clipboard().setText(self.ui.LineEdit_DAT_VITS_DataFormat.text())
             }
         )
         Function_AddToTreeWidget(
@@ -3815,7 +3815,7 @@ class MainWindow(Window_MainWindow):
             SetPlaceholderText = True,
             PlaceholderText = DAT_VITS_AuxiliaryDataPath_Default
         )
-        self.ui.LineEdit_DAT_VITS_AuxiliaryDataPath.SetFileDialog(
+        self.ui.LineEdit_DAT_VITS_AuxiliaryDataPath.setFileDialog(
             Mode = "SelectFile",
             FileType = "文本类型 (*.csv *.txt)",
             Directory = QFunc.NormPath(Path(CurrentDir).joinpath('AuxiliaryData', 'VITS'))
@@ -3823,7 +3823,7 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_DAT_VITS_AuxiliaryDataPath_MoreActions.SetMenu(
             ActionEvents = {
                 "重置": lambda: ParamsManager_DAT_VITS.ResetParam(self.ui.LineEdit_DAT_VITS_AuxiliaryDataPath),
-                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_DAT_VITS_AuxiliaryDataPath.text())
+                "复制": lambda: QApplication.clipboard().setText(self.ui.LineEdit_DAT_VITS_AuxiliaryDataPath.text())
             }
         )
         Function_AddToTreeWidget(
@@ -3971,7 +3971,7 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_DAT_VITS_OutputDirName_MoreActions.SetMenu(
             ActionEvents = {
                 "重置": lambda: ParamsManager_DAT_VITS.ResetParam(self.ui.LineEdit_DAT_VITS_OutputDirName),
-                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_DAT_VITS_OutputDirName.text())
+                "复制": lambda: QApplication.clipboard().setText(self.ui.LineEdit_DAT_VITS_OutputDirName.text())
             }
         )
         Function_AddToTreeWidget(
@@ -4002,7 +4002,7 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_DAT_VITS_FileListNameTraining_MoreActions.SetMenu(
             ActionEvents = {
                 "重置": lambda: ParamsManager_DAT_VITS.ResetParam(self.ui.LineEdit_DAT_VITS_FileListNameTraining),
-                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_DAT_VITS_FileListNameTraining.text())
+                "复制": lambda: QApplication.clipboard().setText(self.ui.LineEdit_DAT_VITS_FileListNameTraining.text())
             }
         )
         Function_AddToTreeWidget(
@@ -4030,7 +4030,7 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_DAT_VITS_FileListNameValidation_MoreActions.SetMenu(
             ActionEvents = {
                 "重置": lambda: ParamsManager_DAT_VITS.ResetParam(self.ui.LineEdit_DAT_VITS_FileListNameValidation),
-                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_DAT_VITS_FileListNameValidation.text())
+                "复制": lambda: QApplication.clipboard().setText(self.ui.LineEdit_DAT_VITS_FileListNameValidation.text())
             }
         )
         Function_AddToTreeWidget(
@@ -4188,8 +4188,8 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_Menu_Train.clicked.connect(
             lambda: (
                 self.ui.Button_VoiceTrainer_Help.click(),
-                Config.EditConfig('Dialog', 'GuidanceShown_Train', 'True')
-            ) if eval(Config.GetValue('Dialog', 'GuidanceShown_Train', 'False')) is False else None
+                Config.editConfig('Dialog', 'GuidanceShown_Train', 'True')
+            ) if eval(Config.getValue('Dialog', 'GuidanceShown_Train', 'False')) is False else None
         )
 
         # GPT-SoVITS - ParamsManager
@@ -4232,7 +4232,7 @@ class MainWindow(Window_MainWindow):
             DefaultValue = '',
             SetPlaceholderText = True
         )
-        self.ui.LineEdit_Train_GPTSoVITS_FileListPath.SetFileDialog(
+        self.ui.LineEdit_Train_GPTSoVITS_FileListPath.setFileDialog(
             Mode = "SelectFile",
             FileType = "txt类型 (*.txt)",
             Directory = Path(CurrentDir).joinpath('数据集制作结果', 'GPT-SoVITS').as_posix()
@@ -4240,7 +4240,7 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_Train_GPTSoVITS_FileListPath_MoreActions.SetMenu(
             ActionEvents = {
                 "重置": lambda: ParamsManager_Train_GPTSoVITS.ResetParam(self.ui.LineEdit_Train_GPTSoVITS_FileListPath),
-                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_Train_GPTSoVITS_FileListPath.text())
+                "复制": lambda: QApplication.clipboard().setText(self.ui.LineEdit_Train_GPTSoVITS_FileListPath.text())
             }
         )
         Function_AddToTreeWidget(
@@ -4326,7 +4326,7 @@ class MainWindow(Window_MainWindow):
             SetPlaceholderText = True,
             PlaceholderText = Train_GPTSoVITS_ModelPathPretrainedS1_Default
         )
-        self.ui.LineEdit_Train_GPTSoVITS_ModelPathPretrainedS1.SetFileDialog(
+        self.ui.LineEdit_Train_GPTSoVITS_ModelPathPretrainedS1.setFileDialog(
             Mode = "SelectFile",
             FileType = "ckpt类型 (*.ckpt)",
             Directory = QFunc.NormPath(Path(ModelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2'))
@@ -4334,7 +4334,7 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_Train_GPTSoVITS_ModelPathPretrainedS1_MoreActions.SetMenu(
             ActionEvents = {
                 "重置": lambda: ParamsManager_Train_GPTSoVITS.ResetParam(self.ui.LineEdit_Train_GPTSoVITS_ModelPathPretrainedS1),
-                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_Train_GPTSoVITS_ModelPathPretrainedS1.text())
+                "复制": lambda: QApplication.clipboard().setText(self.ui.LineEdit_Train_GPTSoVITS_ModelPathPretrainedS1.text())
             }
         )
         Function_AddToTreeWidget(
@@ -4359,7 +4359,7 @@ class MainWindow(Window_MainWindow):
             SetPlaceholderText = True,
             PlaceholderText = Train_GPTSoVITS_ModelPathPretrainedS2G_Default
         )
-        self.ui.LineEdit_Train_GPTSoVITS_ModelPathPretrainedS2G.SetFileDialog(
+        self.ui.LineEdit_Train_GPTSoVITS_ModelPathPretrainedS2G.setFileDialog(
             Mode = "SelectFile",
             FileType = "pth类型 (*.pth)",
             Directory = QFunc.NormPath(Path(ModelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2'))
@@ -4367,7 +4367,7 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_Train_GPTSoVITS_ModelPathPretrainedS2G_MoreActions.SetMenu(
             ActionEvents = {
                 "重置": lambda: ParamsManager_Train_GPTSoVITS.ResetParam(self.ui.LineEdit_Train_GPTSoVITS_ModelPathPretrainedS2G),
-                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_Train_GPTSoVITS_ModelPathPretrainedS2G.text())
+                "复制": lambda: QApplication.clipboard().setText(self.ui.LineEdit_Train_GPTSoVITS_ModelPathPretrainedS2G.text())
             }
         )
         Function_AddToTreeWidget(
@@ -4392,7 +4392,7 @@ class MainWindow(Window_MainWindow):
             SetPlaceholderText = True,
             PlaceholderText = Train_GPTSoVITS_ModelPathPretrainedS2D_Default
         )
-        self.ui.LineEdit_Train_GPTSoVITS_ModelPathPretrainedS2D.SetFileDialog(
+        self.ui.LineEdit_Train_GPTSoVITS_ModelPathPretrainedS2D.setFileDialog(
             Mode = "SelectFile",
             FileType = "pth类型 (*.pth)",
             Directory = QFunc.NormPath(Path(ModelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2'))
@@ -4400,7 +4400,7 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_Train_GPTSoVITS_ModelPathPretrainedS2D_MoreActions.SetMenu(
             ActionEvents = {
                 "重置": lambda: ParamsManager_Train_GPTSoVITS.ResetParam(self.ui.LineEdit_Train_GPTSoVITS_ModelPathPretrainedS2D),
-                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_Train_GPTSoVITS_ModelPathPretrainedS2D.text())
+                "复制": lambda: QApplication.clipboard().setText(self.ui.LineEdit_Train_GPTSoVITS_ModelPathPretrainedS2D.text())
             }
         )
         Function_AddToTreeWidget(
@@ -4425,14 +4425,14 @@ class MainWindow(Window_MainWindow):
             SetPlaceholderText = True,
             PlaceholderText = Train_GPTSoVITS_ModelDirPretrainedBert_Default
         )
-        self.ui.LineEdit_Train_GPTSoVITS_ModelDirPretrainedBert.SetFileDialog(
+        self.ui.LineEdit_Train_GPTSoVITS_ModelDirPretrainedBert.setFileDialog(
             Mode = "SelectFolder",
             Directory = QFunc.NormPath(Path(ModelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded'))
         )
         self.ui.Button_Train_GPTSoVITS_ModelDirPretrainedBert_MoreActions.SetMenu(
             ActionEvents = {
                 "重置": lambda: ParamsManager_Train_GPTSoVITS.ResetParam(self.ui.LineEdit_Train_GPTSoVITS_ModelDirPretrainedBert),
-                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_Train_GPTSoVITS_ModelDirPretrainedBert.text())
+                "复制": lambda: QApplication.clipboard().setText(self.ui.LineEdit_Train_GPTSoVITS_ModelDirPretrainedBert.text())
             }
         )
         Function_AddToTreeWidget(
@@ -4457,14 +4457,14 @@ class MainWindow(Window_MainWindow):
             SetPlaceholderText = True,
             PlaceholderText = Train_GPTSoVITS_ModelDirPretrainedSSL_Default
         )
-        self.ui.LineEdit_Train_GPTSoVITS_ModelDirPretrainedSSL.SetFileDialog(
+        self.ui.LineEdit_Train_GPTSoVITS_ModelDirPretrainedSSL.setFileDialog(
             Mode = "SelectFolder",
             Directory = QFunc.NormPath(Path(ModelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded'))
         )
         self.ui.Button_Train_GPTSoVITS_ModelDirPretrainedSSL_MoreActions.SetMenu(
             ActionEvents = {
                 "重置": lambda: ParamsManager_Train_GPTSoVITS.ResetParam(self.ui.LineEdit_Train_GPTSoVITS_ModelDirPretrainedSSL),
-                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_Train_GPTSoVITS_ModelDirPretrainedSSL.text())
+                "复制": lambda: QApplication.clipboard().setText(self.ui.LineEdit_Train_GPTSoVITS_ModelDirPretrainedSSL.text())
             }
         )
         Function_AddToTreeWidget(
@@ -4536,7 +4536,7 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_Train_GPTSoVITS_OutputDirName_MoreActions.SetMenu(
             ActionEvents = {
                 "重置": lambda: ParamsManager_Train_GPTSoVITS.ResetParam(self.ui.LineEdit_Train_GPTSoVITS_OutputDirName),
-                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_Train_GPTSoVITS_OutputDirName.text())
+                "复制": lambda: QApplication.clipboard().setText(self.ui.LineEdit_Train_GPTSoVITS_OutputDirName.text())
             }
         )
         Function_AddToTreeWidget(
@@ -4574,14 +4574,14 @@ class MainWindow(Window_MainWindow):
                 self.ui.LineEdit_Train_GPTSoVITS_LogDir.clear()
             ) if not all(Char.isascii() for Char in Value) else None
         )
-        self.ui.LineEdit_Train_GPTSoVITS_LogDir.SetFileDialog(
+        self.ui.LineEdit_Train_GPTSoVITS_LogDir.setFileDialog(
             Mode = "SelectFolder",
             Directory = QFunc.NormPath(Path(Train_GPTSoVITS_LogDir_Default).parent)
         )
         self.ui.Button_Train_GPTSoVITS_LogDir_MoreActions.SetMenu(
             ActionEvents = {
                 "重置": lambda: ParamsManager_Train_GPTSoVITS.ResetParam(self.ui.LineEdit_Train_GPTSoVITS_LogDir),
-                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_Train_GPTSoVITS_LogDir.text())
+                "复制": lambda: QApplication.clipboard().setText(self.ui.LineEdit_Train_GPTSoVITS_LogDir.text())
             }
         )
         Function_AddToTreeWidget(
@@ -4739,7 +4739,7 @@ class MainWindow(Window_MainWindow):
             DefaultValue = '',
             SetPlaceholderText = True
         )
-        self.ui.LineEdit_Train_VITS_FileListPathTraining.SetFileDialog(
+        self.ui.LineEdit_Train_VITS_FileListPathTraining.setFileDialog(
             Mode = "SelectFile",
             FileType = "txt类型 (*.txt)",
             Directory = Path(CurrentDir).joinpath('数据集制作结果', 'VITS').as_posix()
@@ -4747,7 +4747,7 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_Train_VITS_FileListPathTraining_MoreActions.SetMenu(
             ActionEvents = {
                 "重置": lambda: ParamsManager_Train_VITS.ResetParam(self.ui.LineEdit_Train_VITS_FileListPathTraining),
-                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_Train_VITS_FileListPathTraining.text())
+                "复制": lambda: QApplication.clipboard().setText(self.ui.LineEdit_Train_VITS_FileListPathTraining.text())
             }
         )
         Function_AddToTreeWidget(
@@ -4770,7 +4770,7 @@ class MainWindow(Window_MainWindow):
             DefaultValue = '',
             SetPlaceholderText = True
         )
-        self.ui.LineEdit_Train_VITS_FileListPathValidation.SetFileDialog(
+        self.ui.LineEdit_Train_VITS_FileListPathValidation.setFileDialog(
             Mode = "SelectFile",
             FileType = "txt类型 (*.txt)",
             Directory = Path(CurrentDir).joinpath('数据集制作结果', 'VITS').as_posix()
@@ -4778,7 +4778,7 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_Train_VITS_FileListPathValidation_MoreActions.SetMenu(
             ActionEvents = {
                 "重置": lambda: ParamsManager_Train_VITS.ResetParam(self.ui.LineEdit_Train_VITS_FileListPathValidation),
-                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_Train_VITS_FileListPathValidation.text())
+                "复制": lambda: QApplication.clipboard().setText(self.ui.LineEdit_Train_VITS_FileListPathValidation.text())
             }
         )
         Function_AddToTreeWidget(
@@ -4917,7 +4917,7 @@ class MainWindow(Window_MainWindow):
             SetPlaceholderText = True,
             PlaceholderText = Train_VITS_ModelPathPretrainedG_Default
         )
-        self.ui.LineEdit_Train_VITS_ModelPathPretrainedG.SetFileDialog(
+        self.ui.LineEdit_Train_VITS_ModelPathPretrainedG.setFileDialog(
             Mode = "SelectFile",
             FileType = "pth类型 (*.pth)",
             Directory = QFunc.NormPath(Path(ModelDir).joinpath('TTS', 'VITS', 'Downloaded'))
@@ -4925,7 +4925,7 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_Train_VITS_ModelPathPretrainedG_MoreActions.SetMenu(
             ActionEvents = {
                 "重置": lambda: ParamsManager_Train_VITS.ResetParam(self.ui.LineEdit_Train_VITS_ModelPathPretrainedG),
-                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_Train_VITS_ModelPathPretrainedG.text())
+                "复制": lambda: QApplication.clipboard().setText(self.ui.LineEdit_Train_VITS_ModelPathPretrainedG.text())
             }
         )
         Function_AddToTreeWidget(
@@ -4950,7 +4950,7 @@ class MainWindow(Window_MainWindow):
             SetPlaceholderText = True,
             PlaceholderText = Train_VITS_ModelPathPretrainedD_Default
         )
-        self.ui.LineEdit_Train_VITS_ModelPathPretrainedD.SetFileDialog(
+        self.ui.LineEdit_Train_VITS_ModelPathPretrainedD.setFileDialog(
             Mode = "SelectFile",
             FileType = "pth类型 (*.pth)",
             Directory = QFunc.NormPath(Path(ModelDir).joinpath('TTS', 'VITS', 'Downloaded'))
@@ -4958,7 +4958,7 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_Train_VITS_ModelPathPretrainedD_MoreActions.SetMenu(
             ActionEvents = {
                 "重置": lambda: ParamsManager_Train_VITS.ResetParam(self.ui.LineEdit_Train_VITS_ModelPathPretrainedD),
-                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_Train_VITS_ModelPathPretrainedD.text())
+                "复制": lambda: QApplication.clipboard().setText(self.ui.LineEdit_Train_VITS_ModelPathPretrainedD.text())
             }
         )
         Function_AddToTreeWidget(
@@ -5048,7 +5048,7 @@ class MainWindow(Window_MainWindow):
             SetPlaceholderText = True,
             PlaceholderText = Train_VITS_ConfigPathLoad_Default
         )
-        self.ui.LineEdit_Train_VITS_ConfigPathLoad.SetFileDialog(
+        self.ui.LineEdit_Train_VITS_ConfigPathLoad.setFileDialog(
             Mode = "SelectFile",
             FileType = "json类型 (*.json)",
             Directory = QFunc.NormPath(Path(ModelDir).joinpath('TTS', 'VITS', 'Downloaded'))
@@ -5056,7 +5056,7 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_Train_VITS_ConfigPathLoad_MoreActions.SetMenu(
             ActionEvents = {
                 "重置": lambda: ParamsManager_Train_VITS.ResetParam(self.ui.LineEdit_Train_VITS_ConfigPathLoad),
-                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_Train_VITS_ConfigPathLoad.text())
+                "复制": lambda: QApplication.clipboard().setText(self.ui.LineEdit_Train_VITS_ConfigPathLoad.text())
             }
         )
         Function_AddToTreeWidget(
@@ -5184,7 +5184,7 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_Train_VITS_OutputDirName_MoreActions.SetMenu(
             ActionEvents = {
                 "重置": lambda: ParamsManager_Train_VITS.ResetParam(self.ui.LineEdit_Train_VITS_OutputDirName),
-                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_Train_VITS_OutputDirName.text())
+                "复制": lambda: QApplication.clipboard().setText(self.ui.LineEdit_Train_VITS_OutputDirName.text())
             }
         )
         Function_AddToTreeWidget(
@@ -5233,14 +5233,14 @@ class MainWindow(Window_MainWindow):
                 self.ui.LineEdit_Train_VITS_LogDir.clear()
             ) if not all(Char.isascii() for Char in Value) else None
         )
-        self.ui.LineEdit_Train_VITS_LogDir.SetFileDialog(
+        self.ui.LineEdit_Train_VITS_LogDir.setFileDialog(
             Mode = "SelectFolder",
             Directory = QFunc.NormPath(Path(Train_VITS_LogDir_Default).parent)
         )
         self.ui.Button_Train_VITS_LogDir_MoreActions.SetMenu(
             ActionEvents = {
                 "重置": lambda: ParamsManager_Train_VITS.ResetParam(self.ui.LineEdit_Train_VITS_LogDir),
-                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_Train_VITS_LogDir.text())
+                "复制": lambda: QApplication.clipboard().setText(self.ui.LineEdit_Train_VITS_LogDir.text())
             }
         )
         Function_AddToTreeWidget(
@@ -5372,8 +5372,8 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_Menu_TTS.clicked.connect(
             lambda: (
                 self.ui.Button_VoiceConverter_Help.click(),
-                Config.EditConfig('Dialog', 'GuidanceShown_TTS', 'True')
-            ) if eval(Config.GetValue('Dialog', 'GuidanceShown_TTS', 'False')) is False else None
+                Config.editConfig('Dialog', 'GuidanceShown_TTS', 'True')
+            ) if eval(Config.getValue('Dialog', 'GuidanceShown_TTS', 'False')) is False else None
         )
 
         # GPT-SoVITS - ParamsManager
@@ -5418,7 +5418,7 @@ class MainWindow(Window_MainWindow):
             SetPlaceholderText = True,
             PlaceholderText = TTS_GPTSoVITS_ModelPathLoadS1_Default
         )
-        self.ui.LineEdit_TTS_GPTSoVITS_ModelPathLoadS1.SetFileDialog(
+        self.ui.LineEdit_TTS_GPTSoVITS_ModelPathLoadS1.setFileDialog(
             Mode = "SelectFile",
             FileType = "ckpt类型 (*.ckpt)",
             Directory = Path(CurrentDir).joinpath('模型训练结果', 'GPT-SoVITS').as_posix()
@@ -5426,7 +5426,7 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_TTS_GPTSoVITS_ModelPathLoadS1_MoreActions.SetMenu(
             ActionEvents = {
                 "重置": lambda: ParamsManager_TTS_GPTSoVITS.ResetParam(self.ui.LineEdit_TTS_GPTSoVITS_ModelPathLoadS1),
-                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_TTS_GPTSoVITS_ModelPathLoadS1.text())
+                "复制": lambda: QApplication.clipboard().setText(self.ui.LineEdit_TTS_GPTSoVITS_ModelPathLoadS1.text())
             }
         )
         Function_AddToTreeWidget(
@@ -5451,7 +5451,7 @@ class MainWindow(Window_MainWindow):
             SetPlaceholderText = True,
             PlaceholderText = TTS_GPTSoVITS_ModelPathLoadS2G_Default
         )
-        self.ui.LineEdit_TTS_GPTSoVITS_ModelPathLoadS2G.SetFileDialog(
+        self.ui.LineEdit_TTS_GPTSoVITS_ModelPathLoadS2G.setFileDialog(
             Mode = "SelectFile",
             FileType = "pth类型 (*.pth)",
             Directory = Path(CurrentDir).joinpath('模型训练结果', 'GPT-SoVITS').as_posix()
@@ -5459,7 +5459,7 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_TTS_GPTSoVITS_ModelPathLoadS2G_MoreActions.SetMenu(
             ActionEvents = {
                 "重置": lambda: ParamsManager_TTS_GPTSoVITS.ResetParam(self.ui.LineEdit_TTS_GPTSoVITS_ModelPathLoadS2G),
-                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_TTS_GPTSoVITS_ModelPathLoadS2G.text())
+                "复制": lambda: QApplication.clipboard().setText(self.ui.LineEdit_TTS_GPTSoVITS_ModelPathLoadS2G.text())
             }
         )
         Function_AddToTreeWidget(
@@ -5484,14 +5484,14 @@ class MainWindow(Window_MainWindow):
             SetPlaceholderText = True,
             PlaceholderText = TTS_GPTSoVITS_ModelDirLoadBert_Default
         )
-        self.ui.LineEdit_TTS_GPTSoVITS_ModelDirLoadBert.SetFileDialog(
+        self.ui.LineEdit_TTS_GPTSoVITS_ModelDirLoadBert.setFileDialog(
             Mode = "SelectFolder",
             Directory = QFunc.NormPath(Path(ModelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded'))
         )
         self.ui.Button_TTS_GPTSoVITS_ModelDirLoadBert_MoreActions.SetMenu(
             ActionEvents = {
                 "重置": lambda: ParamsManager_TTS_GPTSoVITS.ResetParam(self.ui.LineEdit_TTS_GPTSoVITS_ModelDirLoadBert),
-                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_TTS_GPTSoVITS_ModelDirLoadBert.text())
+                "复制": lambda: QApplication.clipboard().setText(self.ui.LineEdit_TTS_GPTSoVITS_ModelDirLoadBert.text())
             }
         )
         Function_AddToTreeWidget(
@@ -5516,14 +5516,14 @@ class MainWindow(Window_MainWindow):
             SetPlaceholderText = True,
             PlaceholderText = TTS_GPTSoVITS_ModelDirLoadSSL_Default
         )
-        self.ui.LineEdit_TTS_GPTSoVITS_ModelDirLoadSSL.SetFileDialog(
+        self.ui.LineEdit_TTS_GPTSoVITS_ModelDirLoadSSL.setFileDialog(
             Mode = "SelectFolder",
             Directory = QFunc.NormPath(Path(ModelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded'))
         )
         self.ui.Button_TTS_GPTSoVITS_ModelDirLoadSSL_MoreActions.SetMenu(
             ActionEvents = {
                 "重置": lambda: ParamsManager_TTS_GPTSoVITS.ResetParam(self.ui.LineEdit_TTS_GPTSoVITS_ModelDirLoadSSL),
-                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_TTS_GPTSoVITS_ModelDirLoadSSL.text())
+                "复制": lambda: QApplication.clipboard().setText(self.ui.LineEdit_TTS_GPTSoVITS_ModelDirLoadSSL.text())
             }
         )
         Function_AddToTreeWidget(
@@ -5677,7 +5677,7 @@ class MainWindow(Window_MainWindow):
                 self.ui.ComboBox_TTS_VITS_Speaker.addItems(Get_Speakers(Path))
             )
         )
-        self.ui.LineEdit_TTS_VITS_ConfigPathLoad.SetFileDialog(
+        self.ui.LineEdit_TTS_VITS_ConfigPathLoad.setFileDialog(
             Mode = "SelectFile",
             FileType = "json类型 (*.json)",
             Directory = Path(CurrentDir).joinpath('模型训练结果', 'VITS').as_posix()
@@ -5685,7 +5685,7 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_TTS_VITS_ConfigPathLoad_MoreActions.SetMenu(
             ActionEvents = {
                 "重置": lambda: ParamsManager_TTS_VITS.ResetParam(self.ui.LineEdit_TTS_VITS_ConfigPathLoad),
-                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_TTS_VITS_ConfigPathLoad.text())
+                "复制": lambda: QApplication.clipboard().setText(self.ui.LineEdit_TTS_VITS_ConfigPathLoad.text())
             }
         )
         Function_AddToTreeWidget(
@@ -5710,7 +5710,7 @@ class MainWindow(Window_MainWindow):
             SetPlaceholderText = True,
             PlaceholderText = TTS_VITS_ModelPathLoad_Default
         )
-        self.ui.LineEdit_TTS_VITS_ModelPathLoad.SetFileDialog(
+        self.ui.LineEdit_TTS_VITS_ModelPathLoad.setFileDialog(
             Mode = "SelectFile",
             FileType = "pth类型 (*.pth)",
             Directory = Path(CurrentDir).joinpath('模型训练结果', 'VITS').as_posix()
@@ -5718,7 +5718,7 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_TTS_VITS_ModelPathLoad_MoreActions.SetMenu(
             ActionEvents = {
                 "重置": lambda: ParamsManager_TTS_VITS.ResetParam(self.ui.LineEdit_TTS_VITS_ModelPathLoad),
-                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_TTS_VITS_ModelPathLoad.text())
+                "复制": lambda: QApplication.clipboard().setText(self.ui.LineEdit_TTS_VITS_ModelPathLoad.text())
             }
         )
         Function_AddToTreeWidget(
@@ -5998,7 +5998,7 @@ class MainWindow(Window_MainWindow):
         )
         self.ui.ComboBox_Setting_Theme.currentIndexChanged.connect(
             lambda: (
-                Config.EditConfig(
+                Config.editConfig(
                     'Settings', 'Theme', ThemeDict.get(self.ui.ComboBox_Setting_Theme.currentText())
                 ),
                 ComponentsSignals.Signal_SetTheme.emit(
@@ -6021,7 +6021,7 @@ class MainWindow(Window_MainWindow):
         )
         self.ui.ComboBox_Setting_Language.currentIndexChanged.connect(
             lambda: (
-                Config.EditConfig(
+                Config.editConfig(
                     'Settings', 'Language', LanguageDict.get(self.ui.ComboBox_Setting_Language.currentText())
                 ),
                 ComponentsSignals.Signal_SetLanguage.emit(
@@ -6037,17 +6037,17 @@ class MainWindow(Window_MainWindow):
             {
                 'Enabled': True,
                 'Disabled': False
-            }.get(Config.GetValue('Settings', 'AutoUpdate', 'Enabled'))
+            }.get(Config.getValue('Settings', 'AutoUpdate', 'Enabled'))
         )
         Function_ConfigureCheckBox(
             CheckBox = self.ui.CheckBox_Setting_AutoUpdate,
             CheckedText = "已启用",
             CheckedEvents = [
-                lambda: Config.EditConfig('Settings', 'AutoUpdate', 'Enabled'),
+                lambda: Config.editConfig('Settings', 'AutoUpdate', 'Enabled'),
             ],
             UncheckedText = "未启用",
             UncheckedEvents = [
-                lambda: Config.EditConfig('Settings', 'AutoUpdate', 'Disabled')
+                lambda: Config.editConfig('Settings', 'AutoUpdate', 'Disabled')
             ],
             TakeEffect = True
         )
@@ -6085,13 +6085,13 @@ class MainWindow(Window_MainWindow):
             {
                 'Enabled': True,
                 'Disabled': False
-            }.get(Config.GetValue('Tools', 'AutoReset', 'Enabled'))
+            }.get(Config.getValue('Tools', 'AutoReset', 'Enabled'))
         )
         Function_ConfigureCheckBox(
             CheckBox = self.ui.CheckBox_Setting_AutoReset,
             CheckedText = "已启用",
             CheckedEvents = [
-                lambda: Config.EditConfig('Tools', 'AutoReset', 'Enabled'),
+                lambda: Config.editConfig('Tools', 'AutoReset', 'Enabled'),
                 lambda: MainWindowSignals.Signal_MainWindowShown.connect(
                     lambda: (
                         ParamsManager_Process.ResetSettings(),
@@ -6108,7 +6108,7 @@ class MainWindow(Window_MainWindow):
             ],
             UncheckedText = "未启用",
             UncheckedEvents = [
-                lambda: Config.EditConfig('Tools', 'AutoReset', 'Disabled'),
+                lambda: Config.editConfig('Tools', 'AutoReset', 'Disabled'),
             ],
             TakeEffect = True
         )
@@ -6118,13 +6118,13 @@ class MainWindow(Window_MainWindow):
             {
                 'Enabled': True,
                 'Disabled': False
-            }.get(Config.GetValue('Tools', 'Synchronizer', 'Enabled'))
+            }.get(Config.getValue('Tools', 'Synchronizer', 'Enabled'))
         )
         Function_ConfigureCheckBox(
             CheckBox = self.ui.CheckBox_Setting_Synchronizer,
             CheckedText = "已启用",
             CheckedEvents = [
-                lambda: Config.EditConfig('Tools', 'Synchronizer', 'Enabled'),
+                lambda: Config.editConfig('Tools', 'Synchronizer', 'Enabled'),
                 lambda: Function_ParamsSynchronizer(
                     LineEdit_Process_OutputDir,
                     {LineEdit_Process_OutputDir: self.ui.LineEdit_VPR_TDNN_AudioDirInput}
@@ -6152,7 +6152,7 @@ class MainWindow(Window_MainWindow):
             ],
             UncheckedText = "未启用",
             UncheckedEvents = [
-                lambda: Config.EditConfig('Tools', 'Synchronizer', 'Disabled'),
+                lambda: Config.editConfig('Tools', 'Synchronizer', 'Disabled'),
             ],
             TakeEffect = True
         )
@@ -6179,7 +6179,7 @@ class MainWindow(Window_MainWindow):
             SetPlaceholderText = True,
             PlaceholderText = Process_OutputRoot_Default
         )
-        self.ui.LineEdit_Process_OutputRoot.SetFileDialog(
+        self.ui.LineEdit_Process_OutputRoot.setFileDialog(
             Mode = "SelectFolder",
             Directory = QFunc.NormPath(Path(Process_OutputRoot_Default).parent)
         )
@@ -6199,14 +6199,14 @@ class MainWindow(Window_MainWindow):
             SetPlaceholderText = True,
             PlaceholderText = VPR_TDNN_AudioSpeakersDataRoot_Default
         )
-        self.ui.LineEdit_VPR_TDNN_OutputRoot.SetFileDialog(
+        self.ui.LineEdit_VPR_TDNN_OutputRoot.setFileDialog(
             Mode = "SelectFolder",
             Directory = QFunc.NormPath(Path(VPR_TDNN_AudioSpeakersDataRoot_Default).parent)
         )
         self.ui.Button_VPR_TDNN_OutputRoot_MoreActions.SetMenu(
             ActionEvents = {
                 "重置": lambda: ParamsManager_VPR_TDNN.ResetParam(self.ui.LineEdit_VPR_TDNN_OutputRoot),
-                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_VPR_TDNN_OutputRoot.text())
+                "复制": lambda: QApplication.clipboard().setText(self.ui.LineEdit_VPR_TDNN_OutputRoot.text())
             }
         )
 
@@ -6220,14 +6220,14 @@ class MainWindow(Window_MainWindow):
             SetPlaceholderText = True,
             PlaceholderText = ASR_Whisper_OutputRoot_Default
         )
-        self.ui.LineEdit_ASR_Whisper_OutputRoot.SetFileDialog(
+        self.ui.LineEdit_ASR_Whisper_OutputRoot.setFileDialog(
             Mode = "SelectFolder",
             Directory = QFunc.NormPath(Path(ASR_Whisper_OutputRoot_Default).parent)
         )
         self.ui.Button_ASR_Whisper_OutputRoot_MoreActions.SetMenu(
             ActionEvents = {
                 "重置": lambda: ParamsManager_ASR_Whisper.ResetParam(self.ui.LineEdit_ASR_Whisper_OutputRoot),
-                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_ASR_Whisper_OutputRoot.text())
+                "复制": lambda: QApplication.clipboard().setText(self.ui.LineEdit_ASR_Whisper_OutputRoot.text())
             }
         )
 
@@ -6241,14 +6241,14 @@ class MainWindow(Window_MainWindow):
             SetPlaceholderText = True,
             PlaceholderText = DAT_GPTSoVITS_OutputRoot_Default
         )
-        self.ui.LineEdit_DAT_GPTSoVITS_OutputRoot.SetFileDialog(
+        self.ui.LineEdit_DAT_GPTSoVITS_OutputRoot.setFileDialog(
             Mode = "SelectFolder",
             Directory = QFunc.NormPath(Path(DAT_GPTSoVITS_OutputRoot_Default).parent)
         )
         self.ui.Button_DAT_GPTSoVITS_OutputRoot_MoreActions.SetMenu(
             ActionEvents = {
                 "重置": lambda: ParamsManager_DAT_GPTSoVITS.ResetParam(self.ui.LineEdit_DAT_GPTSoVITS_OutputRoot),
-                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_DAT_GPTSoVITS_OutputRoot.text())
+                "复制": lambda: QApplication.clipboard().setText(self.ui.LineEdit_DAT_GPTSoVITS_OutputRoot.text())
             }
         )
 
@@ -6262,14 +6262,14 @@ class MainWindow(Window_MainWindow):
             SetPlaceholderText = True,
             PlaceholderText = DAT_VITS_OutputRoot_Default
         )
-        self.ui.LineEdit_DAT_VITS_OutputRoot.SetFileDialog(
+        self.ui.LineEdit_DAT_VITS_OutputRoot.setFileDialog(
             Mode = "SelectFolder",
             Directory = QFunc.NormPath(Path(DAT_VITS_OutputRoot_Default).parent)
         )
         self.ui.Button_DAT_VITS_OutputRoot_MoreActions.SetMenu(
             ActionEvents = {
                 "重置": lambda: ParamsManager_DAT_VITS.ResetParam(self.ui.LineEdit_DAT_VITS_OutputRoot),
-                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_DAT_VITS_OutputRoot.text())
+                "复制": lambda: QApplication.clipboard().setText(self.ui.LineEdit_DAT_VITS_OutputRoot.text())
             }
         )
 
@@ -6283,14 +6283,14 @@ class MainWindow(Window_MainWindow):
             SetPlaceholderText = True,
             PlaceholderText = Train_GPTSoVITS_OutputRoot_Default
         )
-        self.ui.LineEdit_Train_GPTSoVITS_OutputRoot.SetFileDialog(
+        self.ui.LineEdit_Train_GPTSoVITS_OutputRoot.setFileDialog(
             Mode = "SelectFolder",
             Directory = QFunc.NormPath(Path(Train_GPTSoVITS_OutputRoot_Default).parent)
         )
         self.ui.Button_Train_GPTSoVITS_OutputRoot_MoreActions.SetMenu(
             ActionEvents = {
                 "重置": lambda: ParamsManager_Train_GPTSoVITS.ResetParam(self.ui.LineEdit_Train_GPTSoVITS_OutputRoot),
-                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_Train_GPTSoVITS_OutputRoot.text())
+                "复制": lambda: QApplication.clipboard().setText(self.ui.LineEdit_Train_GPTSoVITS_OutputRoot.text())
             }
         )
 
@@ -6304,14 +6304,14 @@ class MainWindow(Window_MainWindow):
             SetPlaceholderText = True,
             PlaceholderText = Train_VITS_OutputRoot_Default
         )
-        self.ui.LineEdit_Train_VITS_OutputRoot.SetFileDialog(
+        self.ui.LineEdit_Train_VITS_OutputRoot.setFileDialog(
             Mode = "SelectFolder",
             Directory = QFunc.NormPath(Path(Train_VITS_OutputRoot_Default).parent)
         )
         self.ui.Button_Train_VITS_OutputRoot_MoreActions.SetMenu(
             ActionEvents = {
                 "重置": lambda: ParamsManager_Train_VITS.ResetParam(self.ui.LineEdit_Train_VITS_OutputRoot),
-                "复制": lambda: self.Clipboard.setText(self.ui.LineEdit_Train_VITS_OutputRoot.text())
+                "复制": lambda: QApplication.clipboard().setText(self.ui.LineEdit_Train_VITS_OutputRoot.text())
             }
         )
 
@@ -6365,7 +6365,7 @@ class MainWindow(Window_MainWindow):
 
         self.ui.Button_Console_Copy.clicked.connect(
             lambda: (
-                self.Clipboard.setText(self.ui.PlainTextEdit_Console.toPlainText()),
+                QApplication.clipboard().setText(self.ui.PlainTextEdit_Console.toPlainText()),
                 MessageBoxBase.pop(self, WindowTitle = "Tip", Text = "已复制输出日志到剪切板")
             )
         )
@@ -6417,10 +6417,10 @@ class MainWindow(Window_MainWindow):
         self.ui.Label_Version.setText(CurrentVersion)
 
         # Set Theme
-        ComponentsSignals.Signal_SetTheme.emit(Config.GetValue('Settings', 'Theme', Theme.Auto))
+        ComponentsSignals.Signal_SetTheme.emit(Config.getValue('Settings', 'Theme', Theme.Auto))
 
         # Set Language
-        ComponentsSignals.Signal_SetLanguage.emit(Config.GetValue('Settings', 'Language', Language.Auto))
+        ComponentsSignals.Signal_SetLanguage.emit(Config.getValue('Settings', 'Language', Language.Auto))
 
         # Show MainWindow (and emit signal)
         self.show()

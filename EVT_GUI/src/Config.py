@@ -5,7 +5,7 @@ from QEasyWidgets import QFunctions as QFunc
 ##############################################################################################################################
 
 # Set current version
-CurrentVersion = "v1.2.0"
+CurrentVersion = "v1.2.1"
 
 # Set info for update url
 RepoOwner = 'Spr-Aachen'
@@ -26,11 +26,5 @@ LogPath = QFunc.NormPath(Path(CurrentDir).joinpath('log.txt'))
 
 # Set directory to load static dependencies
 ResourceDir = CurrentDir if QFunc.GetBaseDir(SearchMEIPASS = True) is None else QFunc.GetBaseDir(SearchMEIPASS = True)
-
-# Set directory to store client config
-ConfigDir = QFunc.NormPath(Path(CurrentDir).joinpath('Config'))
-
-# Set path of client config
-ConfigPath = QFunc.NormPath(Path(ConfigDir).joinpath('Config.ini'))
 
 ##############################################################################################################################

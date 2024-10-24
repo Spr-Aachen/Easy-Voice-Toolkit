@@ -20,7 +20,7 @@ class Table_ViewModels(TableBase):
 
         self.setRowCount(0)
         self.setColumnCount(0)
-        self.SetIndexHeaderVisible(False)
+        self.setIndexHeaderVisible(False)
         self.verticalHeader().setSectionResizeMode(QHeaderView.Fixed)
 
         self.Clipboard = QApplication.clipboard()
@@ -30,7 +30,7 @@ class Table_ViewModels(TableBase):
         self.ColumnCount = len(Headers)
         self.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
 
-    def AddRow(self, Param: tuple):
+    def addRow(self, Param: tuple):
         ModelName, ModelType, ModelSize, ModelDate, DownloadParam = Param
 
         RowHeight = 36
@@ -92,20 +92,20 @@ class Table_ViewModels(TableBase):
         ColumnLayout_Management.addWidget(StackedWidget)
         ColumnLayout_Management.addWidget(CopyButton)
 
-        super().AddRow(
+        super().addRow(
             [ColumnLayout_ModelName, ColumnLayout_ModelType, ColumnLayout_ModelSize, ColumnLayout_ModelDate, ColumnLayout_Management],
             [QHeaderView.Stretch, QHeaderView.Interactive, QHeaderView.Interactive, QHeaderView.Stretch, QHeaderView.Fixed],
             [None, None, None, None, 2 * RowHeight],
             RowHeight
         )
 
-    def SetValue(self, Params: list = [['name', 'type', 'size', 'date', 'url'], ]):
-        self.ClearRows()
+    def setValue(self, Params: list = [['name', 'type', 'size', 'date', 'url'], ]):
+        self.clearRows()
         super().setColumnCount(self.columnCount())
         super().setHorizontalHeaderLabels(self.HorizontalHeaderLabels)
         for Param in Params:
             QApplication.processEvents()
-            self.AddRow(Param)
+            self.addRow(Param)
 
 
 class Table_EditAudioSpeaker(TableBase):
@@ -120,11 +120,11 @@ class Table_EditAudioSpeaker(TableBase):
 
         self.setRowCount(0)
         self.setColumnCount(0)
-        self.SetIndexHeaderVisible(True)
+        self.setIndexHeaderVisible(True)
         self.verticalHeader().setSectionResizeMode(QHeaderView.Fixed)
 
         self.model().dataChanged.connect(
-            lambda: self.ValueChanged.emit(self.GetValue())
+            lambda: self.ValueChanged.emit(self.getValue())
         )
 
     def setHorizontalHeaderLabels(self, Headers: list):
@@ -137,7 +137,7 @@ class Table_EditAudioSpeaker(TableBase):
         '''
         )
 
-    def AddRow(self, Param: Optional[tuple] = None):
+    def addRow(self, Param: Optional[tuple] = None):
         RowHeight = 30
         def SetColumnLayout(ColumnLayout):
             ColumnLayout.setContentsMargins(0, 0, 0, 0)
@@ -148,7 +148,7 @@ class Table_EditAudioSpeaker(TableBase):
         LineEdit0.setTransparent(True)
         QFunc.Function_SetText(LineEdit0, Param[0] if Param else '', SetPlaceholderText = True)
         LineEdit0.textChanged.connect(
-            lambda: self.ValueChanged.emit(self.GetValue())
+            lambda: self.ValueChanged.emit(self.getValue())
         )
         Column0Layout = QHBoxLayout()
         SetColumnLayout(Column0Layout)
@@ -157,10 +157,10 @@ class Table_EditAudioSpeaker(TableBase):
         LineEdit1 = LineEditBase()
         LineEdit1.setBorderless(True)
         LineEdit1.setTransparent(True)
-        LineEdit1.SetFileDialog("SelectFile", self.FileType)
+        LineEdit1.setFileDialog("SelectFile", self.FileType)
         QFunc.Function_SetText(LineEdit1, Param[1] if Param else '', SetPlaceholderText = True)
         LineEdit1.textChanged.connect(
-            lambda: self.ValueChanged.emit(self.GetValue())
+            lambda: self.ValueChanged.emit(self.getValue())
         )
         Column1Layout = QHBoxLayout()
         SetColumnLayout(Column1Layout)
@@ -170,28 +170,28 @@ class Table_EditAudioSpeaker(TableBase):
         AddButton.setBorderless(True)
         AddButton.setTransparent(True)
         AddButton.setText("+")
-        AddButton.clicked.connect(lambda: self.SelectOuterRow(AddButton), Qt.QueuedConnection)
-        AddButton.clicked.connect(self.AddRow, Qt.QueuedConnection)
+        AddButton.clicked.connect(lambda: self.selectOuterRow(AddButton), Qt.QueuedConnection)
+        AddButton.clicked.connect(self.addRow, Qt.QueuedConnection)
         DelButton = ButtonBase()
         DelButton.setBorderless(True)
         DelButton.setTransparent(True)
         DelButton.setText("-")
-        DelButton.clicked.connect(lambda: self.SelectOuterRow(DelButton), Qt.QueuedConnection)
-        DelButton.clicked.connect(self.DelRow, Qt.QueuedConnection)
+        DelButton.clicked.connect(lambda: self.selectOuterRow(DelButton), Qt.QueuedConnection)
+        DelButton.clicked.connect(self.delRow, Qt.QueuedConnection)
         Column2Layout = QHBoxLayout()
         SetColumnLayout(Column2Layout)
         Column2Layout.addWidget(AddButton)
         Column2Layout.addWidget(DelButton)
 
-        super().AddRow(
+        super().addRow(
             [Column0Layout, Column1Layout, Column2Layout],
             [QHeaderView.ResizeToContents, QHeaderView.Stretch, QHeaderView.Fixed],
             [None, None, 2 * RowHeight],
             RowHeight
         )
 
-    def SetValue(self, Params: dict = {'%Speaker%': '%Path%'}):
-        self.ClearRows()
+    def setValue(self, Params: dict = {'%Speaker%': '%Path%'}):
+        self.clearRows()
         super().setColumnCount(self.columnCount())
         super().setHorizontalHeaderLabels(self.HorizontalHeaderLabels)
         ParamDict = QFunc.ToIterable(Params if Params is None or len(Params) != 0 else {'': ''})
@@ -199,16 +199,16 @@ class Table_EditAudioSpeaker(TableBase):
             QApplication.processEvents()
             Param = (Key, Value)
             #Index = next((i for i, key in enumerate(ParamDict) if key == Key), None)
-            self.AddRow(Param)
+            self.addRow(Param)
 
-    def SetFileDialog(self, FileType: Optional[str] = None):
+    def setFileDialog(self, FileType: Optional[str] = None):
         '''
         for RowCount in range(self.rowCount()):
-            self.cellWidget(RowCount, 1).findChild(LineEditBase).SetFileDialog("SelectFile", FileType)
+            self.cellWidget(RowCount, 1).findChild(LineEditBase).setFileDialog("SelectFile", FileType)
         '''
         self.FileType = FileType
 
-    def GetValue(self):
+    def getValue(self):
         ValueDict = {}
         for RowCount in range(self.rowCount()):
             try:
@@ -228,7 +228,7 @@ class Table_VPRResult(TableBase):
 
         self.setRowCount(0)
         self.setColumnCount(0)
-        self.SetIndexHeaderVisible(True)
+        self.setIndexHeaderVisible(True)
         self.verticalHeader().setSectionResizeMode(QHeaderView.Fixed)
 
     def setHorizontalHeaderLabels(self, Headers: list):
@@ -241,7 +241,7 @@ class Table_VPRResult(TableBase):
         '''
         )
 
-    def AddRow(self, Param: tuple, ComboItems: list):
+    def addRow(self, Param: tuple, ComboItems: list):
         RowHeight = 30
         def SetColumnLayout(ColumnLayout):
             ColumnLayout.setContentsMargins(0, 0, 0, 0)
@@ -289,8 +289,8 @@ class Table_VPRResult(TableBase):
                 QMessageBox.Yes|QMessageBox.No,
                 {
                     QMessageBox.Yes: lambda: (
-                        self.SelectOuterRow(DelButton),
-                        self.DelRow()
+                        self.selectOuterRow(DelButton),
+                        self.delRow()
                     )
                 }
             )
@@ -299,15 +299,15 @@ class Table_VPRResult(TableBase):
         SetColumnLayout(Column4Layout)
         Column4Layout.addWidget(DelButton)
 
-        super().AddRow(
+        super().addRow(
             [Column0Layout, Column1Layout, Column2Layout, Column3Layout, Column4Layout],
             [QHeaderView.Stretch, QHeaderView.Stretch, QHeaderView.Stretch, QHeaderView.Fixed, QHeaderView.Fixed],
             [None, None, None, RowHeight, 1.5 * RowHeight],
             RowHeight
         )
 
-    def SetValue(self, Params: list = [['%Path%', '%Namex%', '%Sim%'], ], ComboItems: Optional[list] = ['%Name1%', ]):
-        self.ClearRows()
+    def setValue(self, Params: list = [['%Path%', '%Namex%', '%Sim%'], ], ComboItems: Optional[list] = ['%Name1%', ]):
+        self.clearRows()
         super().setColumnCount(self.columnCount())
         super().setHorizontalHeaderLabels(self.HorizontalHeaderLabels)
         if ComboItems is None:
@@ -317,9 +317,9 @@ class Table_VPRResult(TableBase):
                 ComboItems.append(ComboItem) if ComboItem not in ComboItems else None
         for Param in Params:
             QApplication.processEvents()
-            self.AddRow(Param, ComboItems + [''])
+            self.addRow(Param, ComboItems + [''])
 
-    def GetValue(self):
+    def getValue(self):
         ValueDict = {}
         for RowCount in range(self.rowCount()):
             try:
@@ -339,7 +339,7 @@ class Table_ASRResult(TableBase):
 
         self.setRowCount(0)
         self.setColumnCount(0)
-        self.SetIndexHeaderVisible(True)
+        self.setIndexHeaderVisible(True)
         self.verticalHeader().setSectionResizeMode(QHeaderView.Fixed)
 
     def setHorizontalHeaderLabels(self, Headers: list):
@@ -352,7 +352,7 @@ class Table_ASRResult(TableBase):
         '''
         )
 
-    def AddRow(self, Param: tuple):
+    def addRow(self, Param: tuple):
         RowHeight = 30
         def SetColumnLayout(ColumnLayout):
             ColumnLayout.setContentsMargins(0, 0, 0, 0)
@@ -382,24 +382,24 @@ class Table_ASRResult(TableBase):
         SetColumnLayout(Column2Layout)
         Column2Layout.addWidget(PlayerWidget)
 
-        super().AddRow(
+        super().addRow(
             [Column0Layout, Column1Layout, Column2Layout],
             [QHeaderView.Stretch, QHeaderView.Stretch, QHeaderView.Fixed],
             [None, None, RowHeight],
             RowHeight
         )
 
-    def SetValue(self, Params: dict = {'%Path%': '%Transcription%'}):
-        self.ClearRows()
+    def setValue(self, Params: dict = {'%Path%': '%Transcription%'}):
+        self.clearRows()
         super().setColumnCount(self.columnCount())
         super().setHorizontalHeaderLabels(self.HorizontalHeaderLabels)
         ParamDict = QFunc.ToIterable(Params)
         for Key, Value in ParamDict.items():
             QApplication.processEvents()
             Param = (Key, Value)
-            self.AddRow(Param)
+            self.addRow(Param)
 
-    def GetValue(self):
+    def getValue(self):
         ValueDict = {}
         for RowCount in range(self.rowCount()):
             try:
@@ -419,7 +419,7 @@ class Table_DATResult(TableBase):
 
         self.setRowCount(0)
         self.setColumnCount(0)
-        self.SetIndexHeaderVisible(True)
+        self.setIndexHeaderVisible(True)
         self.verticalHeader().setSectionResizeMode(QHeaderView.Fixed)
 
     def setHorizontalHeaderLabels(self, Headers: list):
@@ -432,7 +432,7 @@ class Table_DATResult(TableBase):
         '''
         )
 
-    def AddRow(self, Param: tuple):
+    def addRow(self, Param: tuple):
         RowHeight = 30
         def SetColumnLayout(ColumnLayout):
             ColumnLayout.setContentsMargins(0, 0, 0, 0)
@@ -456,24 +456,24 @@ class Table_DATResult(TableBase):
         SetColumnLayout(Column1Layout)
         Column1Layout.addWidget(PlayerWidget)
 
-        super().AddRow(
+        super().addRow(
             [Column0Layout, Column1Layout],
             [QHeaderView.Stretch, QHeaderView.Fixed],
             [None, RowHeight],
             RowHeight
         )
 
-    def SetValue(self, Params: dict = {'%Path%': '%Data%'}):
-        self.ClearRows()
+    def setValue(self, Params: dict = {'%Path%': '%Data%'}):
+        self.clearRows()
         super().setColumnCount(self.columnCount())
         super().setHorizontalHeaderLabels(self.HorizontalHeaderLabels)
         ParamDict = QFunc.ToIterable(Params)
         for Key, Value in ParamDict.items():
             QApplication.processEvents()
             Param = (Key, Value)
-            self.AddRow(Param)
+            self.addRow(Param)
 
-    def GetValue(self):
+    def getValue(self):
         ValueList = []
         for RowCount in range(self.rowCount()):
             try:
