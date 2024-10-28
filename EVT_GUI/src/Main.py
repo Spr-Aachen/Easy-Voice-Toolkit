@@ -879,6 +879,11 @@ class MainWindow(Window_MainWindow):
         self.MonitorUsage = QTasks.MonitorUsage()
         self.MonitorUsage.start()
 
+    def closeEvent(self, event):
+        FunctionSignals.Signal_ForceQuit.emit()
+        FunctionSignals.Signal_TaskStatus.connect(QApplication.instance().exit)
+        super().closeEvent(event)
+
     def showGuidance(self, WindowTitle: str, Images: list, Texts: list):
         DialogBox = MessageBox_Stacked(self)
         DialogBox.setWindowTitle(WindowTitle)
@@ -926,6 +931,32 @@ class MainWindow(Window_MainWindow):
         ]
         AddLocalModel(ModelPath, Sector)
         self.ui.Button_Models_Refresh.click()
+
+    def setDirAlert(self, DirNameEdit: LineEditBase, RootEdit: LineEditBase, DirEdit: QLineEdit):
+        def SetText_Dir():
+            DirName = DirNameEdit.text()
+            if len(DirName.strip()) == 0:
+                Alert = False
+            else:
+                DirText = Path(RootEdit.text()).joinpath(DirName).as_posix()
+                Alert = Path(DirText).exists() and list(Path(DirText).iterdir()) != []
+                DirEdit.setText(DirText)
+            DirNameEdit.Alert(True if Alert else False, "注意：目录已包含文件")
+        DirNameEdit.interacted.connect(SetText_Dir)
+        RootEdit.interacted.connect(SetText_Dir)
+
+    def setPathAlert(self, FileNameEdit: LineEditBase, DirEdit: LineEditBase, suffix: str, FileEdit: QLineEdit):
+        def SetText_File():
+            FileName = FileNameEdit.text()
+            if len(FileName.strip()) == 0:
+                Alert = False
+            else:
+                FileText = Path(DirEdit.text()).joinpath(FileName).as_posix() + suffix
+                Alert = Path(FileText).exists()
+                FileEdit.setText(FileText)
+            FileNameEdit.Alert(True if Alert else False, "注意：路径已存在")
+        FileNameEdit.interacted.connect(SetText_File)
+        DirEdit.interacted.connect(SetText_File)
 
     def setAudioSpeakersDataPath(self):
         DialogBox_AudioSpeakersDataPath = MessageBox_Buttons(self)
@@ -1293,12 +1324,6 @@ class MainWindow(Window_MainWindow):
         )
 
         # Window controling buttons
-        self.closed.connect(
-            lambda: (
-                FunctionSignals.Signal_ForceQuit.emit(),
-                FunctionSignals.Signal_TaskStatus.connect(QApplication.instance().exit)
-            )
-        )
         self.ui.Button_Close_Window.clicked.connect(self.close)
         self.ui.Button_Close_Window.setBorderless(True)
         self.ui.Button_Close_Window.setTransparent(True)
@@ -2296,19 +2321,12 @@ class MainWindow(Window_MainWindow):
             ChildItemText = QCA.translate('MainWindow', "输出目录名")
         )
 
-        LineEdit_Process_OutputDir = QLineEdit()
-        def SetText_LineEdit_Process_OutputDir():
-            DirName = self.ui.LineEdit_Process_OutputDirName.text()
-            if len(DirName.strip()) == 0:
-                Alert = False
-            else:
-                DirText = Path(self.ui.LineEdit_Process_OutputRoot.text()).joinpath(DirName).as_posix()
-                LineEdit_Process_OutputDir.setText(DirText)
-                Alert = Path(DirText).exists() and list(Path(DirText).iterdir()) != []
-            self.ui.LineEdit_Process_OutputDirName.Alert(True if Alert else False, "注意：目录已包含文件")
-        self.ui.LineEdit_Process_OutputDirName.interacted.connect(SetText_LineEdit_Process_OutputDir)
-        self.ui.LineEdit_Process_OutputRoot.interacted.connect(SetText_LineEdit_Process_OutputDir)
-        #SetText_LineEdit_Process_OutputDir()
+        LineEdit_Process_OutputDir = LineEditBase()
+        self.setDirAlert(
+            DirNameEdit = self.ui.LineEdit_Process_OutputDirName,
+            RootEdit = self.ui.LineEdit_Process_OutputRoot,
+            DirEdit = LineEdit_Process_OutputDir
+        )
 
         self.ui.ToolBox_Process_OutputParams_AdvanceSettings.widget(0).setText(QCA.translate('MainWindow', "高级设置"))
         self.ui.ToolBox_Process_OutputParams_AdvanceSettings.widget(0).collapse()
@@ -2796,33 +2814,20 @@ class MainWindow(Window_MainWindow):
             ChildItemText = QCA.translate('MainWindow', "识别结果文本名")
         )
 
-        LineEdit_VPR_TDNN_OutputDir = QLineEdit()
-        def SetText_LineEdit_VPR_TDNN_OutputDir():
-            DirName = self.ui.LineEdit_VPR_TDNN_OutputDirName.text()
-            if len(DirName.strip()) == 0:
-                Alert = False
-            else:
-                DirText = Path(self.ui.LineEdit_VPR_TDNN_OutputRoot.text()).joinpath(DirName).as_posix()
-                LineEdit_VPR_TDNN_OutputDir.setText(DirText)
-                Alert = Path(DirText).exists() and list(Path(DirText).iterdir()) != []
-            self.ui.LineEdit_VPR_TDNN_OutputDirName.Alert(True if Alert else False, "注意：目录已包含文件")
-        self.ui.LineEdit_VPR_TDNN_OutputDirName.interacted.connect(SetText_LineEdit_VPR_TDNN_OutputDir)
-        self.ui.LineEdit_VPR_TDNN_OutputRoot.interacted.connect(SetText_LineEdit_VPR_TDNN_OutputDir)
-        #SetText_LineEdit_VPR_TDNN_OutputDir()
+        LineEdit_VPR_TDNN_OutputDir = LineEditBase()
+        self.setDirAlert(
+            DirNameEdit = self.ui.LineEdit_VPR_TDNN_OutputDirName,
+            RootEdit = self.ui.LineEdit_VPR_TDNN_OutputRoot,
+            DirEdit = LineEdit_VPR_TDNN_OutputDir
+        )
 
-        LineEdit_VPR_TDNN_AudioSpeakersDataPath = QLineEdit()
-        def SetText_LineEdit_VPR_TDNN_AudioSpeakersDataPath():
-            FileName = self.ui.LineEdit_VPR_TDNN_AudioSpeakersDataName.text()
-            if len(FileName.strip()) == 0:
-                Alert = False
-            else:
-                PathText = Path(LineEdit_VPR_TDNN_OutputDir.text()).joinpath(FileName).as_posix() + ".txt"
-                LineEdit_VPR_TDNN_AudioSpeakersDataPath.setText(PathText)
-                Alert = Path(PathText).exists()
-            self.ui.LineEdit_VPR_TDNN_AudioSpeakersDataName.Alert(True if Alert else False, "注意：路径已存在")
-        self.ui.LineEdit_VPR_TDNN_AudioSpeakersDataName.interacted.connect(SetText_LineEdit_VPR_TDNN_AudioSpeakersDataPath)
-        LineEdit_VPR_TDNN_OutputDir.textChanged.connect(SetText_LineEdit_VPR_TDNN_AudioSpeakersDataPath)
-        #SetText_LineEdit_VPR_TDNN_AudioSpeakersDataPath()
+        LineEdit_VPR_TDNN_AudioSpeakersDataPath = LineEditBase()
+        self.setPathAlert(
+            FileNameEdit = self.ui.LineEdit_VPR_TDNN_AudioSpeakersDataName,
+            DirEdit = LineEdit_VPR_TDNN_OutputDir,
+            suffix = ".txt",
+            FileEdit = LineEdit_VPR_TDNN_AudioSpeakersDataPath
+        )
 
         # Right
         MonitorFile_Config_VoiceIdentifier = QTasks.MonitorFile(Path_Config_VPR_TDNN)
@@ -3213,19 +3218,12 @@ class MainWindow(Window_MainWindow):
             ChildItemText = QCA.translate('MainWindow', "输出目录名")
         )
 
-        LineEdit_ASR_Whisper_OutputDir = QLineEdit()
-        def SetText_LineEdit_ASR_Whisper_OutputDir():
-            DirName = self.ui.LineEdit_ASR_Whisper_OutputDirName.text()
-            if len(DirName.strip()) == 0:
-                Alert = False
-            else:
-                DirText = Path(self.ui.LineEdit_ASR_Whisper_OutputRoot.text()).joinpath(DirName).as_posix()
-                LineEdit_ASR_Whisper_OutputDir.setText(DirText)
-                Alert = Path(DirText).exists() and list(Path(DirText).iterdir()) != []
-            self.ui.LineEdit_ASR_Whisper_OutputDirName.Alert(True if Alert else False, "注意：目录已包含文件")
-        self.ui.LineEdit_ASR_Whisper_OutputDirName.interacted.connect(SetText_LineEdit_ASR_Whisper_OutputDir)
-        self.ui.LineEdit_ASR_Whisper_OutputRoot.interacted.connect(SetText_LineEdit_ASR_Whisper_OutputDir)
-        #SetText_LineEdit_ASR_Whisper_OutputDir()
+        LineEdit_ASR_Whisper_OutputDir = LineEditBase()
+        self.setDirAlert(
+            DirNameEdit = self.ui.LineEdit_ASR_Whisper_OutputDirName,
+            RootEdit = self.ui.LineEdit_ASR_Whisper_OutputRoot,
+            DirEdit = LineEdit_ASR_Whisper_OutputDir
+        )
 
         # Right
         MonitorFile_Config_VoiceTranscriber = QTasks.MonitorFile(Path_Config_ASR_Whisper)
@@ -3521,33 +3519,20 @@ class MainWindow(Window_MainWindow):
             ChildItemText = QCA.translate('MainWindow', "数据集文本名")
         )
 
-        LineEdit_DAT_GPTSoVITS_OutputDir = QLineEdit()
-        def SetText_LineEdit_DAT_GPTSoVITS_OutputDir():
-            DirName = self.ui.LineEdit_DAT_GPTSoVITS_OutputDirName.text()
-            if len(DirName.strip()) == 0:
-                Alert = False
-            else:
-                DirText = Path(self.ui.LineEdit_DAT_GPTSoVITS_OutputRoot.text()).joinpath(DirName).as_posix()
-                LineEdit_DAT_GPTSoVITS_OutputDir.setText(DirText)
-                Alert = Path(DirText).exists() and list(Path(DirText).iterdir()) != []
-            self.ui.LineEdit_DAT_GPTSoVITS_OutputDirName.Alert(True if Alert else False, "注意：目录已包含文件")
-        self.ui.LineEdit_DAT_GPTSoVITS_OutputDirName.interacted.connect(SetText_LineEdit_DAT_GPTSoVITS_OutputDir)
-        self.ui.LineEdit_DAT_GPTSoVITS_OutputRoot.interacted.connect(SetText_LineEdit_DAT_GPTSoVITS_OutputDir)
-        #SetText_LineEdit_DAT_GPTSoVITS_OutputDir()
+        LineEdit_DAT_GPTSoVITS_OutputDir = LineEditBase()
+        self.setDirAlert(
+            DirNameEdit = self.ui.LineEdit_DAT_GPTSoVITS_OutputDirName,
+            RootEdit = self.ui.LineEdit_DAT_GPTSoVITS_OutputRoot,
+            DirEdit = LineEdit_DAT_GPTSoVITS_OutputDir
+        )
 
-        LineEdit_DAT_GPTSoVITS_FileListPath = QLineEdit()
-        def SetText_LineEdit_DAT_GPTSoVITS_FileListPath():
-            FileName = self.ui.LineEdit_DAT_GPTSoVITS_FileListName.text()
-            if len(FileName.strip()) == 0:
-                Alert = False
-            else:
-                PathText = Path(LineEdit_DAT_GPTSoVITS_OutputDir.text()).joinpath(FileName).as_posix() + ".txt"
-                LineEdit_DAT_GPTSoVITS_FileListPath.setText(PathText)
-                Alert = Path(PathText).exists()
-            self.ui.LineEdit_DAT_GPTSoVITS_FileListName.Alert(True if Alert else False, "注意：路径已存在")
-        self.ui.LineEdit_DAT_GPTSoVITS_FileListName.interacted.connect(SetText_LineEdit_DAT_GPTSoVITS_FileListPath)
-        LineEdit_DAT_GPTSoVITS_OutputDir.textChanged.connect(SetText_LineEdit_DAT_GPTSoVITS_FileListPath)
-        #SetText_LineEdit_DAT_GPTSoVITS_FileListPath()
+        LineEdit_DAT_GPTSoVITS_FileListPath = LineEditBase()
+        self.setPathAlert(
+            FileNameEdit = self.ui.LineEdit_DAT_GPTSoVITS_FileListName,
+            DirEdit = LineEdit_DAT_GPTSoVITS_OutputDir,
+            suffix = ".txt",
+            FileEdit = LineEdit_DAT_GPTSoVITS_FileListPath,
+        )
 
         # GPT-SoVITS - Right
         MonitorFile_Config_DatasetCreator_GPTSoVITS = QTasks.MonitorFile(Path_Config_DAT_GPTSoVITS)
@@ -4040,47 +4025,28 @@ class MainWindow(Window_MainWindow):
             ChildItemText = QCA.translate('MainWindow', "验证集文本名")
         )
 
-        LineEdit_DAT_VITS_OutputDir = QLineEdit()
-        def SetText_LineEdit_DAT_VITS_OutputDir():
-            DirName = self.ui.LineEdit_DAT_VITS_OutputDirName.text()
-            if len(DirName.strip()) == 0:
-                Alert = False
-            else:
-                DirText = Path(self.ui.LineEdit_DAT_VITS_OutputRoot.text()).joinpath(DirName).as_posix()
-                LineEdit_DAT_VITS_OutputDir.setText(DirText)
-                Alert = Path(DirText).exists() and list(Path(DirText).iterdir()) != []
-            self.ui.LineEdit_DAT_VITS_OutputDirName.Alert(True if Alert else False, "注意：目录已包含文件")
-        self.ui.LineEdit_DAT_VITS_OutputDirName.interacted.connect(SetText_LineEdit_DAT_VITS_OutputDir)
-        self.ui.LineEdit_DAT_VITS_OutputRoot.interacted.connect(SetText_LineEdit_DAT_VITS_OutputDir)
-        #SetText_LineEdit_DAT_VITS_OutputDir()
+        LineEdit_DAT_VITS_OutputDir = LineEditBase()
+        self.setDirAlert(
+            DirNameEdit = self.ui.LineEdit_DAT_VITS_OutputDirName,
+            RootEdit = self.ui.LineEdit_DAT_VITS_OutputRoot,
+            DirEdit = LineEdit_DAT_VITS_OutputDir
+        )
 
-        LineEdit_DAT_VITS_FileListPathTraining = QLineEdit()
-        def SetText_LineEdit_DAT_VITS_FileListPathTraining():
-            FileName = self.ui.LineEdit_DAT_VITS_FileListNameTraining.text()
-            if len(FileName.strip()) == 0:
-                Alert = False
-            else:
-                PathText = Path(LineEdit_DAT_VITS_OutputDir.text()).joinpath(FileName).as_posix() + ".txt"
-                LineEdit_DAT_VITS_FileListPathTraining.setText(PathText)
-                Alert = Path(PathText).exists()
-            self.ui.LineEdit_DAT_VITS_FileListNameTraining.Alert(True if Alert else False, "注意：路径已存在")
-        self.ui.LineEdit_DAT_VITS_FileListNameTraining.interacted.connect(SetText_LineEdit_DAT_VITS_FileListPathTraining)
-        LineEdit_DAT_VITS_OutputDir.textChanged.connect(SetText_LineEdit_DAT_VITS_FileListPathTraining)
-        #SetText_LineEdit_DAT_VITS_FileListPathTraining()
+        LineEdit_DAT_VITS_FileListPathTraining = LineEditBase()
+        self.setPathAlert(
+            FileNameEdit = self.ui.LineEdit_DAT_VITS_FileListNameTraining,
+            DirEdit = LineEdit_DAT_VITS_OutputDir,
+            suffix = ".txt",
+            FileEdit = LineEdit_DAT_VITS_FileListPathTraining
+        )
 
-        LineEdit_DAT_VITS_FileListPathValidation = QLineEdit()
-        def SetText_LineEdit_DAT_VITS_FileListPathValidation():
-            FileName = self.ui.LineEdit_DAT_VITS_FileListNameValidation.text()
-            if len(FileName.strip()) == 0:
-                Alert = False
-            else:
-                PathText = Path(LineEdit_DAT_VITS_OutputDir.text()).joinpath(FileName).as_posix() + ".txt"
-                LineEdit_DAT_VITS_FileListPathValidation.setText(PathText)
-                Alert = Path(PathText).exists()
-            self.ui.LineEdit_DAT_VITS_FileListNameValidation.Alert(True if Alert else False, "注意：路径已存在")
-        self.ui.LineEdit_DAT_VITS_FileListNameValidation.interacted.connect(SetText_LineEdit_DAT_VITS_FileListPathValidation)
-        LineEdit_DAT_VITS_OutputDir.textChanged.connect(SetText_LineEdit_DAT_VITS_FileListPathValidation)
-        #SetText_LineEdit_DAT_VITS_FileListPathValidation()
+        LineEdit_DAT_VITS_FileListPathValidation = LineEditBase()
+        self.setPathAlert(
+            FileNameEdit = self.ui.LineEdit_DAT_VITS_FileListNameValidation,
+            DirEdit = LineEdit_DAT_VITS_OutputDir,
+            suffix = ".txt",
+            FileEdit = LineEdit_DAT_VITS_FileListPathValidation
+        )
 
         # VITS - Right
         MonitorFile_Config_DatasetCreator_VITS = QTasks.MonitorFile(Path_Config_DAT_VITS)
@@ -4591,19 +4557,12 @@ class MainWindow(Window_MainWindow):
             ChildItemText = QCA.translate('MainWindow', "日志输出目录")
         )
 
-        LineEdit_Train_GPTSoVITS_OutputDir = QLineEdit()
-        def SetText_LineEdit_Train_GPTSoVITS_OutputDir():
-            DirName = self.ui.LineEdit_Train_GPTSoVITS_OutputDirName.text()
-            if len(DirName.strip()) == 0:
-                Alert = False
-            else:
-                DirText = Path(self.ui.LineEdit_Train_GPTSoVITS_OutputRoot.text()).joinpath(DirName).as_posix()
-                LineEdit_Train_GPTSoVITS_OutputDir.setText(DirText)
-                Alert = Path(DirText).exists() and list(Path(DirText).iterdir()) != []
-            self.ui.LineEdit_Train_GPTSoVITS_OutputDirName.Alert(True if Alert else False, "注意：目录已包含文件")
-        self.ui.LineEdit_Train_GPTSoVITS_OutputDirName.interacted.connect(SetText_LineEdit_Train_GPTSoVITS_OutputDir)
-        self.ui.LineEdit_Train_GPTSoVITS_OutputRoot.interacted.connect(SetText_LineEdit_Train_GPTSoVITS_OutputDir)
-        #SetText_LineEdit_Train_GPTSoVITS_OutputDir()
+        LineEdit_Train_GPTSoVITS_OutputDir = LineEditBase()
+        self.setDirAlert(
+            DirNameEdit = self.ui.LineEdit_Train_GPTSoVITS_OutputDirName,
+            RootEdit = self.ui.LineEdit_Train_GPTSoVITS_OutputRoot,
+            DirEdit = LineEdit_Train_GPTSoVITS_OutputDir
+        )
 
         # GPT-SoVITS - Right
         MonitorFile_Config_VoiceTrainer_GPTSoVITS = QTasks.MonitorFile(Path_Config_Train_GPTSoVITS)
@@ -5194,19 +5153,12 @@ class MainWindow(Window_MainWindow):
             ChildItemText = QCA.translate('MainWindow', "输出目录名")
         )
 
-        LineEdit_Train_VITS_OutputDir = QLineEdit()
-        def SetText_LineEdit_Train_VITS_OutputDir():
-            DirName = self.ui.LineEdit_Train_VITS_OutputDirName.text()
-            if len(DirName.strip()) == 0:
-                Alert = False
-            else:
-                DirText = Path(self.ui.LineEdit_Train_VITS_OutputRoot.text()).joinpath(DirName).as_posix()
-                LineEdit_Train_VITS_OutputDir.setText(DirText)
-                Alert = Path(DirText).exists() and list(Path(DirText).iterdir()) != []
-            self.ui.LineEdit_Train_VITS_OutputDirName.Alert(True if Alert else False, "注意：目录已包含文件")
-        self.ui.LineEdit_Train_VITS_OutputDirName.interacted.connect(SetText_LineEdit_Train_VITS_OutputDir)
-        self.ui.LineEdit_Train_VITS_OutputRoot.interacted.connect(SetText_LineEdit_Train_VITS_OutputDir)
-        #SetText_LineEdit_Train_VITS_OutputDir()
+        LineEdit_Train_VITS_OutputDir = LineEditBase()
+        self.setDirAlert(
+            DirNameEdit = self.ui.LineEdit_Train_VITS_OutputDirName,
+            RootEdit = self.ui.LineEdit_Train_VITS_OutputRoot,
+            DirEdit = LineEdit_Train_VITS_OutputDir
+        )
 
         QFunc.Function_SetText(
             Widget = self.ui.Label_Train_VITS_LogDir,
