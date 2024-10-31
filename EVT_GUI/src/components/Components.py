@@ -23,7 +23,7 @@ class Table_ViewModels(TableBase):
         self.setIndexHeaderVisible(False)
         self.verticalHeader().setSectionResizeMode(QHeaderView.Fixed)
 
-        self.Clipboard = QApplication.clipboard()
+        self.Clipboard = QApplication.instance().clipboard()
 
     def setHorizontalHeaderLabels(self, Headers: list):
         self.HorizontalHeaderLabels = Headers
@@ -104,7 +104,7 @@ class Table_ViewModels(TableBase):
         super().setColumnCount(self.columnCount())
         super().setHorizontalHeaderLabels(self.HorizontalHeaderLabels)
         for Param in Params:
-            QApplication.processEvents()
+            QApplication.instance().processEvents()
             self.addRow(Param)
 
 
@@ -196,7 +196,7 @@ class Table_EditAudioSpeaker(TableBase):
         super().setHorizontalHeaderLabels(self.HorizontalHeaderLabels)
         ParamDict = QFunc.ToIterable(Params if Params is None or len(Params) != 0 else {'': ''})
         for Key, Value in ParamDict.items():
-            QApplication.processEvents()
+            QApplication.instance().processEvents()
             Param = (Key, Value)
             #Index = next((i for i, key in enumerate(ParamDict) if key == Key), None)
             self.addRow(Param)
@@ -316,7 +316,7 @@ class Table_VPRResult(TableBase):
                 ComboItem = Param[1]
                 ComboItems.append(ComboItem) if ComboItem not in ComboItems else None
         for Param in Params:
-            QApplication.processEvents()
+            QApplication.instance().processEvents()
             self.addRow(Param, ComboItems + [''])
 
     def getValue(self):
@@ -395,7 +395,7 @@ class Table_ASRResult(TableBase):
         super().setHorizontalHeaderLabels(self.HorizontalHeaderLabels)
         ParamDict = QFunc.ToIterable(Params)
         for Key, Value in ParamDict.items():
-            QApplication.processEvents()
+            QApplication.instance().processEvents()
             Param = (Key, Value)
             self.addRow(Param)
 
@@ -469,7 +469,7 @@ class Table_DATResult(TableBase):
         super().setHorizontalHeaderLabels(self.HorizontalHeaderLabels)
         ParamDict = QFunc.ToIterable(Params)
         for Key, Value in ParamDict.items():
-            QApplication.processEvents()
+            QApplication.instance().processEvents()
             Param = (Key, Value)
             self.addRow(Param)
 
