@@ -8,7 +8,7 @@ from subprocess import Popen
 ##############################################################################################################################
 
 # Get current directory
-CurrentDir = sys.path[0]
+CurrentDir = Path(sys.argv[0]).parent.as_posix()
 
 
 isCompiled = False
