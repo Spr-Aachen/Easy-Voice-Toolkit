@@ -2,7 +2,7 @@ from PySide6.QtCore import (QCoreApplication, QMetaObject, Qt, QRect, QSize)
 from PySide6.QtGui import (QIcon, QFont)
 from PySide6.QtWidgets import *
 
-from components.Components import WidgetBase, ButtonBase, NavigationButton, HollowButton, MenuButton, LabelBase, LineEditBase, TextEditBase, TextBrowserBase, ComboBoxBase, Frame_RangeSetting, SpinBoxBase, DoubleSpinBoxBase, ToolBoxBase, GroupBoxBase, ScrollAreaBase, TreeWidgetBase, TabWidgetBase, Table_ViewModels, Table_EditAudioSpeaker
+from components.Components import WidgetBase, ButtonBase, NavigationButton, HollowButton, MenuButton, CheckBoxBase, LabelBase, LineEditBase, TextEditBase, TextBrowserBase, ComboBoxBase, Frame_RangeSetting, SpinBoxBase, DoubleSpinBoxBase, ProgressBarBase, ToolBoxBase, GroupBoxBase, ScrollAreaBase, TreeWidgetBase, TabWidgetBase, Table_ViewModels, Table_EditAudioSpeaker
 from assets import Sources
 
 
@@ -76,38 +76,8 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_11.addItem(self.HorizontalSpacer_Right_Top)
 
-        self.CheckBox_SwitchTheme = QCheckBox(self.Frame_Top)
+        self.CheckBox_SwitchTheme = CheckBoxBase(self.Frame_Top)
         self.CheckBox_SwitchTheme.setObjectName(u"CheckBox_SwitchTheme")
-        self.CheckBox_SwitchTheme.setStyleSheet(u"QCheckBox {\n"
-"	font-size: 12px;\n"
-"	spacing: 12.3px;\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QCheckBox:hover {\n"
-"}\n"
-"\n"
-"QCheckBox::indicator {\n"
-"	width: 16.8px;\n"
-"	height: 16.8px;\n"
-"    background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QCheckBox::indicator:hover {\n"
-"	background-color: rgba(255, 255, 255, 24);\n"
-"}\n"
-"QCheckBox::indicator:unchecked {\n"
-"	border-image: url(:/CheckBox_Icon/images/icons/Moon.png);\n"
-"}\n"
-"QCheckBox::indicator:checked {\n"
-"	border-image: url(:/CheckBox_Icon/images/icons/Sun.png);\n"
-"}")
 
         self.horizontalLayout_11.addWidget(self.CheckBox_SwitchTheme)
 
@@ -703,24 +673,9 @@ class Ui_MainWindow(object):
 
         self.gridLayout_118.addWidget(self.Button_Install_Aria2, 0, 2, 3, 1)
 
-        self.ProgressBar_Env_Install_Aria2 = QProgressBar(self.Frame_Env_Install_Aria2)
+        self.ProgressBar_Env_Install_Aria2 = ProgressBarBase(self.Frame_Env_Install_Aria2)
         self.ProgressBar_Env_Install_Aria2.setObjectName(u"ProgressBar_Env_Install_Aria2")
         self.ProgressBar_Env_Install_Aria2.setMaximumSize(QSize(16777215, 3))
-        self.ProgressBar_Env_Install_Aria2.setStyleSheet(u"QProgressBar {\n"
-"	text-align: center;\n"
-"	background-color: rgba(123, 123, 123, 210);\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 3px;\n"
-"	border-style: solid;\n"
-"}\n"
-"\n"
-"QProgressBar:chunk {\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	background-color: qlineargradient(spread: pad, x1:0, y1:0, x2:1, y2:0, stop:0 transparent, stop:1 rgb(120, 180, 240));\n"
-"}")
 
         self.gridLayout_118.addWidget(self.ProgressBar_Env_Install_Aria2, 1, 0, 1, 2)
 
@@ -796,24 +751,9 @@ class Ui_MainWindow(object):
 
         self.gridLayout_119.addWidget(self.Button_Install_FFmpeg, 0, 2, 3, 1)
 
-        self.ProgressBar_Env_Install_FFmpeg = QProgressBar(self.Frame_Env_Install_FFmpeg)
+        self.ProgressBar_Env_Install_FFmpeg = ProgressBarBase(self.Frame_Env_Install_FFmpeg)
         self.ProgressBar_Env_Install_FFmpeg.setObjectName(u"ProgressBar_Env_Install_FFmpeg")
         self.ProgressBar_Env_Install_FFmpeg.setMaximumSize(QSize(16777215, 3))
-        self.ProgressBar_Env_Install_FFmpeg.setStyleSheet(u"QProgressBar {\n"
-"	text-align: center;\n"
-"	background-color: rgba(123, 123, 123, 210);\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 3px;\n"
-"	border-style: solid;\n"
-"}\n"
-"\n"
-"QProgressBar:chunk {\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	background-color: qlineargradient(spread: pad, x1:0, y1:0, x2:1, y2:0, stop:0 transparent, stop:1 rgb(120, 180, 240));\n"
-"}")
 
         self.gridLayout_119.addWidget(self.ProgressBar_Env_Install_FFmpeg, 1, 0, 1, 2)
 
@@ -886,24 +826,9 @@ class Ui_MainWindow(object):
 
         self.gridLayout_120.addWidget(self.Button_Install_Python, 0, 2, 3, 1)
 
-        self.ProgressBar_Env_Install_Python = QProgressBar(self.Frame_Env_Install_Python)
+        self.ProgressBar_Env_Install_Python = ProgressBarBase(self.Frame_Env_Install_Python)
         self.ProgressBar_Env_Install_Python.setObjectName(u"ProgressBar_Env_Install_Python")
         self.ProgressBar_Env_Install_Python.setMaximumSize(QSize(16777215, 3))
-        self.ProgressBar_Env_Install_Python.setStyleSheet(u"QProgressBar {\n"
-"	text-align: center;\n"
-"	background-color: rgba(123, 123, 123, 210);\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 3px;\n"
-"	border-style: solid;\n"
-"}\n"
-"\n"
-"QProgressBar:chunk {\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	background-color: qlineargradient(spread: pad, x1:0, y1:0, x2:1, y2:0, stop:0 transparent, stop:1 rgb(120, 180, 240));\n"
-"}")
 
         self.gridLayout_120.addWidget(self.ProgressBar_Env_Install_Python, 1, 0, 1, 2)
 
@@ -976,24 +901,9 @@ class Ui_MainWindow(object):
 
         self.gridLayout_121.addWidget(self.Button_Install_PyReqs, 0, 2, 3, 1)
 
-        self.ProgressBar_Env_Install_PyReqs = QProgressBar(self.Frame_Env_Install_PyReqs)
+        self.ProgressBar_Env_Install_PyReqs = ProgressBarBase(self.Frame_Env_Install_PyReqs)
         self.ProgressBar_Env_Install_PyReqs.setObjectName(u"ProgressBar_Env_Install_PyReqs")
         self.ProgressBar_Env_Install_PyReqs.setMaximumSize(QSize(16777215, 3))
-        self.ProgressBar_Env_Install_PyReqs.setStyleSheet(u"QProgressBar {\n"
-"	text-align: center;\n"
-"	background-color: rgba(123, 123, 123, 210);\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 3px;\n"
-"	border-style: solid;\n"
-"}\n"
-"\n"
-"QProgressBar:chunk {\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	background-color: qlineargradient(spread: pad, x1:0, y1:0, x2:1, y2:0, stop:0 transparent, stop:1 rgb(120, 180, 240));\n"
-"}")
 
         self.gridLayout_121.addWidget(self.ProgressBar_Env_Install_PyReqs, 1, 0, 1, 2)
 
@@ -1066,24 +976,9 @@ class Ui_MainWindow(object):
 
         self.gridLayout_122.addWidget(self.Button_Install_Pytorch, 0, 2, 3, 1)
 
-        self.ProgressBar_Env_Install_Pytorch = QProgressBar(self.Frame_Env_Install_Pytorch)
+        self.ProgressBar_Env_Install_Pytorch = ProgressBarBase(self.Frame_Env_Install_Pytorch)
         self.ProgressBar_Env_Install_Pytorch.setObjectName(u"ProgressBar_Env_Install_Pytorch")
         self.ProgressBar_Env_Install_Pytorch.setMaximumSize(QSize(16777215, 3))
-        self.ProgressBar_Env_Install_Pytorch.setStyleSheet(u"QProgressBar {\n"
-"	text-align: center;\n"
-"	background-color: rgba(123, 123, 123, 210);\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 3px;\n"
-"	border-style: solid;\n"
-"}\n"
-"\n"
-"QProgressBar:chunk {\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	background-color: qlineargradient(spread: pad, x1:0, y1:0, x2:1, y2:0, stop:0 transparent, stop:1 rgb(120, 180, 240));\n"
-"}")
 
         self.gridLayout_122.addWidget(self.ProgressBar_Env_Install_Pytorch, 1, 0, 1, 2)
 
@@ -1311,7 +1206,7 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_18.addItem(self.HorizontalSpacer_Models_Title)
 
-        self.Button_Models_Refresh = QPushButton(self.Frame_Models_Top)
+        self.Button_Models_Refresh = ButtonBase(self.Frame_Models_Top)
         self.Button_Models_Refresh.setObjectName(u"Button_Models_Refresh")
         sizePolicy5 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
         sizePolicy5.setHorizontalStretch(0)
@@ -1319,40 +1214,22 @@ class Ui_MainWindow(object):
         sizePolicy5.setHeightForWidth(self.Button_Models_Refresh.sizePolicy().hasHeightForWidth())
         self.Button_Models_Refresh.setSizePolicy(sizePolicy5)
         self.Button_Models_Refresh.setMinimumSize(QSize(84, 0))
-        self.Button_Models_Refresh.setStyleSheet(u"QPushButton {\n"
-"	font-size: 12pt;\n"
-"	text-align: right;\n"
-"	image-position: left;\n"
-"	image: url(:/Button_Icon/images/icons/Refresh.png);\n"
-"	padding: 12px;\n"
-"	background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QPushButton:hover {\n"
-"	background-color: rgba(201, 210, 222, 33);\n"
-"}")
+        icon11 = QIcon()
+        icon11.addFile(u":/Button_Icon/images/icons/Refresh.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.Button_Models_Refresh.setIcon(icon11)
+        self.Button_Models_Refresh.setIconSize(QSize(21, 21))
 
         self.horizontalLayout_18.addWidget(self.Button_Models_Refresh)
 
-        self.Button_Models_Append = QPushButton(self.Frame_Models_Top)
+        self.Button_Models_Append = ButtonBase(self.Frame_Models_Top)
         self.Button_Models_Append.setObjectName(u"Button_Models_Append")
         sizePolicy5.setHeightForWidth(self.Button_Models_Append.sizePolicy().hasHeightForWidth())
         self.Button_Models_Append.setSizePolicy(sizePolicy5)
         self.Button_Models_Append.setMinimumSize(QSize(84, 0))
-        self.Button_Models_Append.setStyleSheet(u"QPushButton {\n"
-"	font-size: 12pt;\n"
-"	text-align: right;\n"
-"	image-position: left;\n"
-"	image: url(:/Button_Icon/images/icons/Plus.png);\n"
-"	padding: 12px;\n"
-"	background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QPushButton:hover {\n"
-"	background-color: rgba(201, 210, 222, 33);\n"
-"}")
+        icon12 = QIcon()
+        icon12.addFile(u":/Button_Icon/images/icons/Plus.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.Button_Models_Append.setIcon(icon12)
+        self.Button_Models_Append.setIconSize(QSize(21, 21))
 
         self.horizontalLayout_18.addWidget(self.Button_Models_Append)
 
@@ -1706,39 +1583,9 @@ class Ui_MainWindow(object):
 
         self.gridLayout_90.addWidget(self.Button_Process_DenoiseAudio_MoreActions, 0, 2, 1, 1)
 
-        self.CheckBox_Process_DenoiseAudio = QCheckBox(self.Frame_Process_DenoiseAudio)
+        self.CheckBox_Process_DenoiseAudio = CheckBoxBase(self.Frame_Process_DenoiseAudio)
         self.CheckBox_Process_DenoiseAudio.setObjectName(u"CheckBox_Process_DenoiseAudio")
         self.CheckBox_Process_DenoiseAudio.setMinimumSize(QSize(0, 27))
-        self.CheckBox_Process_DenoiseAudio.setStyleSheet(u"QCheckBox {\n"
-"	font-size: 12px;\n"
-"	spacing: 12.3px;\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QCheckBox:hover {\n"
-"}\n"
-"\n"
-"QCheckBox::indicator {\n"
-"	width: 24px;\n"
-"	height: 24px;\n"
-"    background-color: transparent;\n"
-"	padding: 1.2px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QCheckBox::indicator:hover {\n"
-"	background-color: rgba(255, 255, 255, 21);\n"
-"}\n"
-"QCheckBox::indicator:unchecked {\n"
-"	border-image: url(:/CheckBox_Icon/images/icons/ToggleOff.png);\n"
-"}\n"
-"QCheckBox::indicator:checked {\n"
-"	border-image: url(:/CheckBox_Icon/images/icons/ToggleOn.png);\n"
-"}")
 
         self.gridLayout_90.addWidget(self.CheckBox_Process_DenoiseAudio, 1, 0, 1, 3)
 
@@ -1919,39 +1766,9 @@ class Ui_MainWindow(object):
 
         self.gridLayout_13.addWidget(self.Button_Process_SliceAudio_MoreActions, 0, 2, 1, 1)
 
-        self.CheckBox_Process_SliceAudio = QCheckBox(self.Frame_Process_SliceAudio)
+        self.CheckBox_Process_SliceAudio = CheckBoxBase(self.Frame_Process_SliceAudio)
         self.CheckBox_Process_SliceAudio.setObjectName(u"CheckBox_Process_SliceAudio")
         self.CheckBox_Process_SliceAudio.setMinimumSize(QSize(0, 27))
-        self.CheckBox_Process_SliceAudio.setStyleSheet(u"QCheckBox {\n"
-"	font-size: 12px;\n"
-"	spacing: 12.3px;\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QCheckBox:hover {\n"
-"}\n"
-"\n"
-"QCheckBox::indicator {\n"
-"	width: 24px;\n"
-"	height: 24px;\n"
-"    background-color: transparent;\n"
-"	padding: 1.2px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QCheckBox::indicator:hover {\n"
-"	background-color: rgba(255, 255, 255, 21);\n"
-"}\n"
-"QCheckBox::indicator:unchecked {\n"
-"	border-image: url(:/CheckBox_Icon/images/icons/ToggleOff.png);\n"
-"}\n"
-"QCheckBox::indicator:checked {\n"
-"	border-image: url(:/CheckBox_Icon/images/icons/ToggleOn.png);\n"
-"}")
 
         self.gridLayout_13.addWidget(self.CheckBox_Process_SliceAudio, 1, 0, 1, 3)
 
@@ -2553,39 +2370,9 @@ class Ui_MainWindow(object):
 
         self.gridLayout_31.addWidget(self.Button_Process_ToMono_MoreActions, 0, 2, 1, 1)
 
-        self.CheckBox_Process_ToMono = QCheckBox(self.Frame_Process_ToMono)
+        self.CheckBox_Process_ToMono = CheckBoxBase(self.Frame_Process_ToMono)
         self.CheckBox_Process_ToMono.setObjectName(u"CheckBox_Process_ToMono")
         self.CheckBox_Process_ToMono.setMinimumSize(QSize(0, 27))
-        self.CheckBox_Process_ToMono.setStyleSheet(u"QCheckBox {\n"
-"	font-size: 12px;\n"
-"	spacing: 12.3px;\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QCheckBox:hover {\n"
-"}\n"
-"\n"
-"QCheckBox::indicator {\n"
-"	width: 24px;\n"
-"	height: 24px;\n"
-"    background-color: transparent;\n"
-"	padding: 1.2px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QCheckBox::indicator:hover {\n"
-"	background-color: rgba(255, 255, 255, 21);\n"
-"}\n"
-"QCheckBox::indicator:unchecked {\n"
-"	border-image: url(:/CheckBox_Icon/images/icons/ToggleOff.png);\n"
-"}\n"
-"QCheckBox::indicator:checked {\n"
-"	border-image: url(:/CheckBox_Icon/images/icons/ToggleOn.png);\n"
-"}")
 
         self.gridLayout_31.addWidget(self.CheckBox_Process_ToMono, 1, 0, 1, 3)
 
@@ -2696,24 +2483,9 @@ class Ui_MainWindow(object):
 
         self.gridLayout_6.addWidget(self.Widget_Right_Process, 0, 2, 1, 1)
 
-        self.ProgressBar_Process = QProgressBar(self.Subpage_Process)
+        self.ProgressBar_Process = ProgressBarBase(self.Subpage_Process)
         self.ProgressBar_Process.setObjectName(u"ProgressBar_Process")
         self.ProgressBar_Process.setMinimumSize(QSize(0, 30))
-        self.ProgressBar_Process.setStyleSheet(u"QProgressBar {\n"
-"	text-align: center;\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"\n"
-"QProgressBar:chunk {\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	background-color: qlineargradient(spread: pad, x1:0, y1:0, x2:1, y2:0, stop:0 transparent, stop:1 rgba(123, 123, 123, 123));\n"
-"}")
         self.ProgressBar_Process.setValue(0)
         self.ProgressBar_Process.setTextVisible(False)
         self.verticalLayout_24 = QVBoxLayout(self.ProgressBar_Process)
@@ -3537,24 +3309,9 @@ class Ui_MainWindow(object):
 
         self.gridLayout_21.addWidget(self.Widget_Right_VPR_TDNN, 0, 2, 1, 1)
 
-        self.ProgressBar_VPR_TDNN = QProgressBar(self.Subpage_VPR_TDNN)
+        self.ProgressBar_VPR_TDNN = ProgressBarBase(self.Subpage_VPR_TDNN)
         self.ProgressBar_VPR_TDNN.setObjectName(u"ProgressBar_VPR_TDNN")
         self.ProgressBar_VPR_TDNN.setMinimumSize(QSize(0, 30))
-        self.ProgressBar_VPR_TDNN.setStyleSheet(u"QProgressBar {\n"
-"	text-align: center;\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"\n"
-"QProgressBar:chunk {\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	background-color: qlineargradient(spread: pad, x1:0, y1:0, x2:1, y2:0, stop:0 transparent, stop:1 rgba(123, 123, 123, 123));\n"
-"}")
         self.ProgressBar_VPR_TDNN.setValue(0)
         self.ProgressBar_VPR_TDNN.setTextVisible(False)
         self.horizontalLayout_73 = QHBoxLayout(self.ProgressBar_VPR_TDNN)
@@ -3844,39 +3601,9 @@ class Ui_MainWindow(object):
 
         self.gridLayout_40.addWidget(self.Button_ASR_Whisper_AddLanguageInfo_MoreActions, 0, 2, 1, 1)
 
-        self.CheckBox_ASR_Whisper_AddLanguageInfo = QCheckBox(self.Frame_ASR_Whisper_AddLanguageInfo)
+        self.CheckBox_ASR_Whisper_AddLanguageInfo = CheckBoxBase(self.Frame_ASR_Whisper_AddLanguageInfo)
         self.CheckBox_ASR_Whisper_AddLanguageInfo.setObjectName(u"CheckBox_ASR_Whisper_AddLanguageInfo")
         self.CheckBox_ASR_Whisper_AddLanguageInfo.setMinimumSize(QSize(0, 27))
-        self.CheckBox_ASR_Whisper_AddLanguageInfo.setStyleSheet(u"QCheckBox {\n"
-"	font-size: 12px;\n"
-"	spacing: 12.3px;\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QCheckBox:hover {\n"
-"}\n"
-"\n"
-"QCheckBox::indicator {\n"
-"	width: 24px;\n"
-"	height: 24px;\n"
-"    background-color: transparent;\n"
-"	padding: 1.2px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QCheckBox::indicator:hover {\n"
-"	background-color: rgba(255, 255, 255, 21);\n"
-"}\n"
-"QCheckBox::indicator:unchecked {\n"
-"	border-image: url(:/CheckBox_Icon/images/icons/ToggleOff.png);\n"
-"}\n"
-"QCheckBox::indicator:checked {\n"
-"	border-image: url(:/CheckBox_Icon/images/icons/ToggleOn.png);\n"
-"}")
 
         self.gridLayout_40.addWidget(self.CheckBox_ASR_Whisper_AddLanguageInfo, 1, 0, 1, 3)
 
@@ -3984,39 +3711,9 @@ class Ui_MainWindow(object):
 
         self.gridLayout_44.addItem(self.HorizontalSpacer_ASR_Whisper_fp16, 0, 1, 1, 1)
 
-        self.CheckBox_ASR_Whisper_fp16 = QCheckBox(self.Frame_ASR_Whisper_fp16)
+        self.CheckBox_ASR_Whisper_fp16 = CheckBoxBase(self.Frame_ASR_Whisper_fp16)
         self.CheckBox_ASR_Whisper_fp16.setObjectName(u"CheckBox_ASR_Whisper_fp16")
         self.CheckBox_ASR_Whisper_fp16.setMinimumSize(QSize(0, 27))
-        self.CheckBox_ASR_Whisper_fp16.setStyleSheet(u"QCheckBox {\n"
-"	font-size: 12px;\n"
-"	spacing: 12.3px;\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QCheckBox:hover {\n"
-"}\n"
-"\n"
-"QCheckBox::indicator {\n"
-"	width: 24px;\n"
-"	height: 24px;\n"
-"    background-color: transparent;\n"
-"	padding: 1.2px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QCheckBox::indicator:hover {\n"
-"	background-color: rgba(255, 255, 255, 21);\n"
-"}\n"
-"QCheckBox::indicator:unchecked {\n"
-"	border-image: url(:/CheckBox_Icon/images/icons/ToggleOff.png);\n"
-"}\n"
-"QCheckBox::indicator:checked {\n"
-"	border-image: url(:/CheckBox_Icon/images/icons/ToggleOn.png);\n"
-"}")
 
         self.gridLayout_44.addWidget(self.CheckBox_ASR_Whisper_fp16, 1, 0, 1, 3)
 
@@ -4050,39 +3747,9 @@ class Ui_MainWindow(object):
         self.gridLayout_43.setSpacing(12)
         self.gridLayout_43.setObjectName(u"gridLayout_43")
         self.gridLayout_43.setContentsMargins(21, 12, 21, 12)
-        self.CheckBox_ASR_Whisper_ConditionOnPreviousText = QCheckBox(self.Frame_ASR_Whisper_ConditionOnPreviousText)
+        self.CheckBox_ASR_Whisper_ConditionOnPreviousText = CheckBoxBase(self.Frame_ASR_Whisper_ConditionOnPreviousText)
         self.CheckBox_ASR_Whisper_ConditionOnPreviousText.setObjectName(u"CheckBox_ASR_Whisper_ConditionOnPreviousText")
         self.CheckBox_ASR_Whisper_ConditionOnPreviousText.setMinimumSize(QSize(0, 27))
-        self.CheckBox_ASR_Whisper_ConditionOnPreviousText.setStyleSheet(u"QCheckBox {\n"
-"	font-size: 12px;\n"
-"	spacing: 12.3px;\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QCheckBox:hover {\n"
-"}\n"
-"\n"
-"QCheckBox::indicator {\n"
-"	width: 24px;\n"
-"	height: 24px;\n"
-"    background-color: transparent;\n"
-"	padding: 1.2px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QCheckBox::indicator:hover {\n"
-"	background-color: rgba(255, 255, 255, 21);\n"
-"}\n"
-"QCheckBox::indicator:unchecked {\n"
-"	border-image: url(:/CheckBox_Icon/images/icons/ToggleOff.png);\n"
-"}\n"
-"QCheckBox::indicator:checked {\n"
-"	border-image: url(:/CheckBox_Icon/images/icons/ToggleOn.png);\n"
-"}")
 
         self.gridLayout_43.addWidget(self.CheckBox_ASR_Whisper_ConditionOnPreviousText, 1, 0, 1, 3)
 
@@ -4154,39 +3821,9 @@ class Ui_MainWindow(object):
 
         self.gridLayout_42.addItem(self.HorizontalSpacer_ASR_Whisper_Verbose, 0, 1, 1, 1)
 
-        self.CheckBox_ASR_Whisper_Verbose = QCheckBox(self.Frame_ASR_Whisper_Verbose)
+        self.CheckBox_ASR_Whisper_Verbose = CheckBoxBase(self.Frame_ASR_Whisper_Verbose)
         self.CheckBox_ASR_Whisper_Verbose.setObjectName(u"CheckBox_ASR_Whisper_Verbose")
         self.CheckBox_ASR_Whisper_Verbose.setMinimumSize(QSize(0, 27))
-        self.CheckBox_ASR_Whisper_Verbose.setStyleSheet(u"QCheckBox {\n"
-"	font-size: 12px;\n"
-"	spacing: 12.3px;\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QCheckBox:hover {\n"
-"}\n"
-"\n"
-"QCheckBox::indicator {\n"
-"	width: 24px;\n"
-"	height: 24px;\n"
-"    background-color: transparent;\n"
-"	padding: 1.2px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QCheckBox::indicator:hover {\n"
-"	background-color: rgba(255, 255, 255, 21);\n"
-"}\n"
-"QCheckBox::indicator:unchecked {\n"
-"	border-image: url(:/CheckBox_Icon/images/icons/ToggleOff.png);\n"
-"}\n"
-"QCheckBox::indicator:checked {\n"
-"	border-image: url(:/CheckBox_Icon/images/icons/ToggleOn.png);\n"
-"}")
 
         self.gridLayout_42.addWidget(self.CheckBox_ASR_Whisper_Verbose, 1, 0, 1, 3)
 
@@ -4382,24 +4019,9 @@ class Ui_MainWindow(object):
 
         self.gridLayout_19.addWidget(self.Widget_Right_ASR_Whisper, 0, 2, 1, 1)
 
-        self.ProgressBar_ASR_Whisper = QProgressBar(self.Subpage_ASR_Whisper)
+        self.ProgressBar_ASR_Whisper = ProgressBarBase(self.Subpage_ASR_Whisper)
         self.ProgressBar_ASR_Whisper.setObjectName(u"ProgressBar_ASR_Whisper")
         self.ProgressBar_ASR_Whisper.setMinimumSize(QSize(0, 30))
-        self.ProgressBar_ASR_Whisper.setStyleSheet(u"QProgressBar {\n"
-"	text-align: center;\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"\n"
-"QProgressBar:chunk {\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	background-color: qlineargradient(spread: pad, x1:0, y1:0, x2:1, y2:0, stop:0 transparent, stop:1 rgba(123, 123, 123, 123));\n"
-"}")
         self.ProgressBar_ASR_Whisper.setValue(0)
         self.ProgressBar_ASR_Whisper.setTextVisible(False)
         self.horizontalLayout_35 = QHBoxLayout(self.ProgressBar_ASR_Whisper)
@@ -5006,24 +4628,9 @@ class Ui_MainWindow(object):
 
         self.gridLayout_108.addWidget(self.Widget_Right_DAT_GPTSoVITS, 0, 2, 1, 1)
 
-        self.ProgressBar_DAT_GPTSoVITS = QProgressBar(self.Subpage_DAT_GPTSoVITS)
+        self.ProgressBar_DAT_GPTSoVITS = ProgressBarBase(self.Subpage_DAT_GPTSoVITS)
         self.ProgressBar_DAT_GPTSoVITS.setObjectName(u"ProgressBar_DAT_GPTSoVITS")
         self.ProgressBar_DAT_GPTSoVITS.setMinimumSize(QSize(0, 30))
-        self.ProgressBar_DAT_GPTSoVITS.setStyleSheet(u"QProgressBar {\n"
-"	text-align: center;\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"\n"
-"QProgressBar:chunk {\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	background-color: qlineargradient(spread: pad, x1:0, y1:0, x2:1, y2:0, stop:0 transparent, stop:1 rgba(123, 123, 123, 123));\n"
-"}")
         self.ProgressBar_DAT_GPTSoVITS.setValue(0)
         self.ProgressBar_DAT_GPTSoVITS.setTextVisible(False)
         self.horizontalLayout_42 = QHBoxLayout(self.ProgressBar_DAT_GPTSoVITS)
@@ -5362,39 +4969,9 @@ class Ui_MainWindow(object):
 
         self.gridLayout_48.addWidget(self.Button_DAT_VITS_AddAuxiliaryData_MoreActions, 0, 2, 1, 1)
 
-        self.CheckBox_DAT_VITS_AddAuxiliaryData = QCheckBox(self.Frame_DAT_VITS_AddAuxiliaryData)
+        self.CheckBox_DAT_VITS_AddAuxiliaryData = CheckBoxBase(self.Frame_DAT_VITS_AddAuxiliaryData)
         self.CheckBox_DAT_VITS_AddAuxiliaryData.setObjectName(u"CheckBox_DAT_VITS_AddAuxiliaryData")
         self.CheckBox_DAT_VITS_AddAuxiliaryData.setMinimumSize(QSize(0, 27))
-        self.CheckBox_DAT_VITS_AddAuxiliaryData.setStyleSheet(u"QCheckBox {\n"
-"	font-size: 12px;\n"
-"	spacing: 12.3px;\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QCheckBox:hover {\n"
-"}\n"
-"\n"
-"QCheckBox::indicator {\n"
-"	width: 24px;\n"
-"	height: 24px;\n"
-"    background-color: transparent;\n"
-"	padding: 1.2px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QCheckBox::indicator:hover {\n"
-"	background-color: rgba(255, 255, 255, 21);\n"
-"}\n"
-"QCheckBox::indicator:unchecked {\n"
-"	border-image: url(:/CheckBox_Icon/images/icons/ToggleOff.png);\n"
-"}\n"
-"QCheckBox::indicator:checked {\n"
-"	border-image: url(:/CheckBox_Icon/images/icons/ToggleOn.png);\n"
-"}")
 
         self.gridLayout_48.addWidget(self.CheckBox_DAT_VITS_AddAuxiliaryData, 1, 0, 1, 3)
 
@@ -5684,39 +5261,9 @@ class Ui_MainWindow(object):
 
         self.gridLayout_52.addWidget(self.Button_DAT_VITS_ToMono_MoreActions, 0, 2, 1, 1)
 
-        self.CheckBox_DAT_VITS_ToMono = QCheckBox(self.Frame_DAT_VITS_ToMono)
+        self.CheckBox_DAT_VITS_ToMono = CheckBoxBase(self.Frame_DAT_VITS_ToMono)
         self.CheckBox_DAT_VITS_ToMono.setObjectName(u"CheckBox_DAT_VITS_ToMono")
         self.CheckBox_DAT_VITS_ToMono.setMinimumSize(QSize(0, 27))
-        self.CheckBox_DAT_VITS_ToMono.setStyleSheet(u"QCheckBox {\n"
-"	font-size: 12px;\n"
-"	spacing: 12.3px;\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QCheckBox:hover {\n"
-"}\n"
-"\n"
-"QCheckBox::indicator {\n"
-"	width: 24px;\n"
-"	height: 24px;\n"
-"    background-color: transparent;\n"
-"	padding: 1.2px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QCheckBox::indicator:hover {\n"
-"	background-color: rgba(255, 255, 255, 21);\n"
-"}\n"
-"QCheckBox::indicator:unchecked {\n"
-"	border-image: url(:/CheckBox_Icon/images/icons/ToggleOff.png);\n"
-"}\n"
-"QCheckBox::indicator:checked {\n"
-"	border-image: url(:/CheckBox_Icon/images/icons/ToggleOn.png);\n"
-"}")
 
         self.gridLayout_52.addWidget(self.CheckBox_DAT_VITS_ToMono, 1, 0, 1, 3)
 
@@ -6025,24 +5572,9 @@ class Ui_MainWindow(object):
 
         self.gridLayout_8.addWidget(self.Widget_Right_DAT_VITS, 0, 2, 1, 1)
 
-        self.ProgressBar_DAT_VITS = QProgressBar(self.Subpage_DAT_VITS)
+        self.ProgressBar_DAT_VITS = ProgressBarBase(self.Subpage_DAT_VITS)
         self.ProgressBar_DAT_VITS.setObjectName(u"ProgressBar_DAT_VITS")
         self.ProgressBar_DAT_VITS.setMinimumSize(QSize(0, 30))
-        self.ProgressBar_DAT_VITS.setStyleSheet(u"QProgressBar {\n"
-"	text-align: center;\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"\n"
-"QProgressBar:chunk {\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	background-color: qlineargradient(spread: pad, x1:0, y1:0, x2:1, y2:0, stop:0 transparent, stop:1 rgba(123, 123, 123, 123));\n"
-"}")
         self.ProgressBar_DAT_VITS.setValue(0)
         self.ProgressBar_DAT_VITS.setTextVisible(False)
         self.horizontalLayout_37 = QHBoxLayout(self.ProgressBar_DAT_VITS)
@@ -6577,7 +6109,7 @@ class Ui_MainWindow(object):
         self.ToolBox_Train_GPTSoVITS_GPTSoVITSParams_AdvanceSettings.setFrameShadow(QFrame.Shadow.Raised)
         self.ToolBox_Train_GPTSoVITS_GPTSoVITSParams_AdvanceSettings_Page1Content = WidgetBase()
         self.ToolBox_Train_GPTSoVITS_GPTSoVITSParams_AdvanceSettings_Page1Content.setObjectName(u"ToolBox_Train_GPTSoVITS_GPTSoVITSParams_AdvanceSettings_Page1Content")
-        self.ToolBox_Train_GPTSoVITS_GPTSoVITSParams_AdvanceSettings_Page1Content.setGeometry(QRect(0, 0, 546, 105))
+        self.ToolBox_Train_GPTSoVITS_GPTSoVITSParams_AdvanceSettings_Page1Content.setGeometry(QRect(0, 0, 147, 105))
         self.verticalLayout_57 = QVBoxLayout(self.ToolBox_Train_GPTSoVITS_GPTSoVITSParams_AdvanceSettings_Page1Content)
         self.verticalLayout_57.setSpacing(0)
         self.verticalLayout_57.setObjectName(u"verticalLayout_57")
@@ -6628,39 +6160,9 @@ class Ui_MainWindow(object):
 
         self.gridLayout_91.addWidget(self.Button_Train_GPTSoVITS_FP16Run_MoreActions, 0, 2, 1, 1)
 
-        self.CheckBox_Train_GPTSoVITS_FP16Run = QCheckBox(self.Frame_Train_GPTSoVITS_FP16Run)
+        self.CheckBox_Train_GPTSoVITS_FP16Run = CheckBoxBase(self.Frame_Train_GPTSoVITS_FP16Run)
         self.CheckBox_Train_GPTSoVITS_FP16Run.setObjectName(u"CheckBox_Train_GPTSoVITS_FP16Run")
         self.CheckBox_Train_GPTSoVITS_FP16Run.setMinimumSize(QSize(0, 27))
-        self.CheckBox_Train_GPTSoVITS_FP16Run.setStyleSheet(u"QCheckBox {\n"
-"	font-size: 12px;\n"
-"	spacing: 12.3px;\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QCheckBox:hover {\n"
-"}\n"
-"\n"
-"QCheckBox::indicator {\n"
-"	width: 24px;\n"
-"	height: 24px;\n"
-"    background-color: transparent;\n"
-"	padding: 1.2px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QCheckBox::indicator:hover {\n"
-"	background-color: rgba(255, 255, 255, 21);\n"
-"}\n"
-"QCheckBox::indicator:unchecked {\n"
-"	border-image: url(:/CheckBox_Icon/images/icons/ToggleOff.png);\n"
-"}\n"
-"QCheckBox::indicator:checked {\n"
-"	border-image: url(:/CheckBox_Icon/images/icons/ToggleOn.png);\n"
-"}")
 
         self.gridLayout_91.addWidget(self.CheckBox_Train_GPTSoVITS_FP16Run, 1, 0, 1, 3)
 
@@ -6748,7 +6250,7 @@ class Ui_MainWindow(object):
         self.ToolBox_Train_GPTSoVITS_OutputParams_AdvanceSettings.setObjectName(u"ToolBox_Train_GPTSoVITS_OutputParams_AdvanceSettings")
         self.ToolBox_Train_GPTSoVITS_OutputParams_AdvanceSettings_Page1Content = WidgetBase()
         self.ToolBox_Train_GPTSoVITS_OutputParams_AdvanceSettings_Page1Content.setObjectName(u"ToolBox_Train_GPTSoVITS_OutputParams_AdvanceSettings_Page1Content")
-        self.ToolBox_Train_GPTSoVITS_OutputParams_AdvanceSettings_Page1Content.setGeometry(QRect(0, 0, 548, 105))
+        self.ToolBox_Train_GPTSoVITS_OutputParams_AdvanceSettings_Page1Content.setGeometry(QRect(0, 0, 147, 105))
         self.verticalLayout_60 = QVBoxLayout(self.ToolBox_Train_GPTSoVITS_OutputParams_AdvanceSettings_Page1Content)
         self.verticalLayout_60.setSpacing(0)
         self.verticalLayout_60.setObjectName(u"verticalLayout_60")
@@ -6917,24 +6419,9 @@ class Ui_MainWindow(object):
 
         self.gridLayout_85.addWidget(self.Widget_Right_Train_GPTSoVITS, 0, 2, 1, 1)
 
-        self.ProgressBar_Train_GPTSoVITS = QProgressBar(self.Subpage_Train_GPTSoVITS)
+        self.ProgressBar_Train_GPTSoVITS = ProgressBarBase(self.Subpage_Train_GPTSoVITS)
         self.ProgressBar_Train_GPTSoVITS.setObjectName(u"ProgressBar_Train_GPTSoVITS")
         self.ProgressBar_Train_GPTSoVITS.setMinimumSize(QSize(0, 30))
-        self.ProgressBar_Train_GPTSoVITS.setStyleSheet(u"QProgressBar {\n"
-"	text-align: center;\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"\n"
-"QProgressBar:chunk {\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	background-color: qlineargradient(spread: pad, x1:0, y1:0, x2:1, y2:0, stop:0 transparent, stop:1 rgba(123, 123, 123, 123));\n"
-"}")
         self.ProgressBar_Train_GPTSoVITS.setValue(0)
         self.ProgressBar_Train_GPTSoVITS.setTextVisible(False)
         self.horizontalLayout_41 = QHBoxLayout(self.ProgressBar_Train_GPTSoVITS)
@@ -7114,24 +6601,9 @@ class Ui_MainWindow(object):
 
         self.gridLayout_22.addWidget(self.Widget_Left_Train_VITS, 0, 0, 1, 1)
 
-        self.ProgressBar_Train_VITS = QProgressBar(self.Subpage_Train_VITS)
+        self.ProgressBar_Train_VITS = ProgressBarBase(self.Subpage_Train_VITS)
         self.ProgressBar_Train_VITS.setObjectName(u"ProgressBar_Train_VITS")
         self.ProgressBar_Train_VITS.setMinimumSize(QSize(0, 30))
-        self.ProgressBar_Train_VITS.setStyleSheet(u"QProgressBar {\n"
-"	text-align: center;\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"\n"
-"QProgressBar:chunk {\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	background-color: qlineargradient(spread: pad, x1:0, y1:0, x2:1, y2:0, stop:0 transparent, stop:1 rgba(123, 123, 123, 123));\n"
-"}")
         self.ProgressBar_Train_VITS.setValue(0)
         self.ProgressBar_Train_VITS.setTextVisible(False)
         self.horizontalLayout_39 = QHBoxLayout(self.ProgressBar_Train_VITS)
@@ -7495,39 +6967,9 @@ class Ui_MainWindow(object):
 
         self.gridLayout_61.addWidget(self.Button_Train_VITS_UsePretrainedModels_MoreActions, 0, 2, 1, 1)
 
-        self.CheckBox_Train_VITS_UsePretrainedModels = QCheckBox(self.Frame_Train_VITS_UsePretrainedModels)
+        self.CheckBox_Train_VITS_UsePretrainedModels = CheckBoxBase(self.Frame_Train_VITS_UsePretrainedModels)
         self.CheckBox_Train_VITS_UsePretrainedModels.setObjectName(u"CheckBox_Train_VITS_UsePretrainedModels")
         self.CheckBox_Train_VITS_UsePretrainedModels.setMinimumSize(QSize(0, 27))
-        self.CheckBox_Train_VITS_UsePretrainedModels.setStyleSheet(u"QCheckBox {\n"
-"	font-size: 12px;\n"
-"	spacing: 12.3px;\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QCheckBox:hover {\n"
-"}\n"
-"\n"
-"QCheckBox::indicator {\n"
-"	width: 24px;\n"
-"	height: 24px;\n"
-"    background-color: transparent;\n"
-"	padding: 1.2px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QCheckBox::indicator:hover {\n"
-"	background-color: rgba(255, 255, 255, 21);\n"
-"}\n"
-"QCheckBox::indicator:unchecked {\n"
-"	border-image: url(:/CheckBox_Icon/images/icons/ToggleOff.png);\n"
-"}\n"
-"QCheckBox::indicator:checked {\n"
-"	border-image: url(:/CheckBox_Icon/images/icons/ToggleOn.png);\n"
-"}")
 
         self.gridLayout_61.addWidget(self.CheckBox_Train_VITS_UsePretrainedModels, 1, 0, 1, 3)
 
@@ -7690,39 +7132,9 @@ class Ui_MainWindow(object):
 
         self.gridLayout_67.addWidget(self.Button_Train_VITS_KeepOriginalSpeakers_MoreActions, 0, 2, 1, 1)
 
-        self.CheckBox_Train_VITS_KeepOriginalSpeakers = QCheckBox(self.Frame_Train_VITS_KeepOriginalSpeakers)
+        self.CheckBox_Train_VITS_KeepOriginalSpeakers = CheckBoxBase(self.Frame_Train_VITS_KeepOriginalSpeakers)
         self.CheckBox_Train_VITS_KeepOriginalSpeakers.setObjectName(u"CheckBox_Train_VITS_KeepOriginalSpeakers")
         self.CheckBox_Train_VITS_KeepOriginalSpeakers.setMinimumSize(QSize(0, 27))
-        self.CheckBox_Train_VITS_KeepOriginalSpeakers.setStyleSheet(u"QCheckBox {\n"
-"	font-size: 12px;\n"
-"	spacing: 12.3px;\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QCheckBox:hover {\n"
-"}\n"
-"\n"
-"QCheckBox::indicator {\n"
-"	width: 24px;\n"
-"	height: 24px;\n"
-"    background-color: transparent;\n"
-"	padding: 1.2px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QCheckBox::indicator:hover {\n"
-"	background-color: rgba(255, 255, 255, 21);\n"
-"}\n"
-"QCheckBox::indicator:unchecked {\n"
-"	border-image: url(:/CheckBox_Icon/images/icons/ToggleOff.png);\n"
-"}\n"
-"QCheckBox::indicator:checked {\n"
-"	border-image: url(:/CheckBox_Icon/images/icons/ToggleOn.png);\n"
-"}")
 
         self.gridLayout_67.addWidget(self.CheckBox_Train_VITS_KeepOriginalSpeakers, 1, 0, 1, 3)
 
@@ -7901,39 +7313,9 @@ class Ui_MainWindow(object):
 
         self.gridLayout_64.addWidget(self.Button_Train_VITS_FP16Run_MoreActions, 0, 2, 1, 1)
 
-        self.CheckBox_Train_VITS_FP16Run = QCheckBox(self.Frame_Train_VITS_FP16Run)
+        self.CheckBox_Train_VITS_FP16Run = CheckBoxBase(self.Frame_Train_VITS_FP16Run)
         self.CheckBox_Train_VITS_FP16Run.setObjectName(u"CheckBox_Train_VITS_FP16Run")
         self.CheckBox_Train_VITS_FP16Run.setMinimumSize(QSize(0, 27))
-        self.CheckBox_Train_VITS_FP16Run.setStyleSheet(u"QCheckBox {\n"
-"	font-size: 12px;\n"
-"	spacing: 12.3px;\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QCheckBox:hover {\n"
-"}\n"
-"\n"
-"QCheckBox::indicator {\n"
-"	width: 24px;\n"
-"	height: 24px;\n"
-"    background-color: transparent;\n"
-"	padding: 1.2px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QCheckBox::indicator:hover {\n"
-"	background-color: rgba(255, 255, 255, 21);\n"
-"}\n"
-"QCheckBox::indicator:unchecked {\n"
-"	border-image: url(:/CheckBox_Icon/images/icons/ToggleOff.png);\n"
-"}\n"
-"QCheckBox::indicator:checked {\n"
-"	border-image: url(:/CheckBox_Icon/images/icons/ToggleOn.png);\n"
-"}")
 
         self.gridLayout_64.addWidget(self.CheckBox_Train_VITS_FP16Run, 1, 0, 1, 3)
 
@@ -8260,7 +7642,7 @@ class Ui_MainWindow(object):
         self.ScrollArea_Middle_TTS_GPTSoVITS.setWidgetResizable(True)
         self.ScrollArea_Middle_WidgetContents_TTS_GPTSoVITS = QWidget()
         self.ScrollArea_Middle_WidgetContents_TTS_GPTSoVITS.setObjectName(u"ScrollArea_Middle_WidgetContents_TTS_GPTSoVITS")
-        self.ScrollArea_Middle_WidgetContents_TTS_GPTSoVITS.setGeometry(QRect(0, -285, 586, 602))
+        self.ScrollArea_Middle_WidgetContents_TTS_GPTSoVITS.setGeometry(QRect(0, 0, 586, 602))
         self.verticalLayout_66 = QVBoxLayout(self.ScrollArea_Middle_WidgetContents_TTS_GPTSoVITS)
         self.verticalLayout_66.setSpacing(12)
         self.verticalLayout_66.setObjectName(u"verticalLayout_66")
@@ -8543,39 +7925,9 @@ class Ui_MainWindow(object):
 
         self.gridLayout_18.addWidget(self.Button_TTS_GPTSoVITS_UseWebUI_MoreActions, 0, 2, 1, 1)
 
-        self.CheckBox_TTS_GPTSoVITS_UseWebUI = QCheckBox(self.Frame_TTS_GPTSoVITS_UseWebUI)
+        self.CheckBox_TTS_GPTSoVITS_UseWebUI = CheckBoxBase(self.Frame_TTS_GPTSoVITS_UseWebUI)
         self.CheckBox_TTS_GPTSoVITS_UseWebUI.setObjectName(u"CheckBox_TTS_GPTSoVITS_UseWebUI")
         self.CheckBox_TTS_GPTSoVITS_UseWebUI.setMinimumSize(QSize(0, 27))
-        self.CheckBox_TTS_GPTSoVITS_UseWebUI.setStyleSheet(u"QCheckBox {\n"
-"	font-size: 12px;\n"
-"	spacing: 12.3px;\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QCheckBox:hover {\n"
-"}\n"
-"\n"
-"QCheckBox::indicator {\n"
-"	width: 24px;\n"
-"	height: 24px;\n"
-"    background-color: transparent;\n"
-"	padding: 1.2px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QCheckBox::indicator:hover {\n"
-"	background-color: rgba(255, 255, 255, 21);\n"
-"}\n"
-"QCheckBox::indicator:unchecked {\n"
-"	border-image: url(:/CheckBox_Icon/images/icons/ToggleOff.png);\n"
-"}\n"
-"QCheckBox::indicator:checked {\n"
-"	border-image: url(:/CheckBox_Icon/images/icons/ToggleOn.png);\n"
-"}")
 
         self.gridLayout_18.addWidget(self.CheckBox_TTS_GPTSoVITS_UseWebUI, 1, 0, 1, 3)
 
@@ -8680,24 +8032,9 @@ class Ui_MainWindow(object):
 
         self.gridLayout_109.addWidget(self.Widget_Right_TTS_GPTSoVITS, 0, 2, 1, 1)
 
-        self.ProgressBar_TTS_GPTSoVITS = QProgressBar(self.Subpage_TTS_GPTSoVITS)
+        self.ProgressBar_TTS_GPTSoVITS = ProgressBarBase(self.Subpage_TTS_GPTSoVITS)
         self.ProgressBar_TTS_GPTSoVITS.setObjectName(u"ProgressBar_TTS_GPTSoVITS")
         self.ProgressBar_TTS_GPTSoVITS.setMinimumSize(QSize(0, 30))
-        self.ProgressBar_TTS_GPTSoVITS.setStyleSheet(u"QProgressBar {\n"
-"	text-align: center;\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"\n"
-"QProgressBar:chunk {\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	background-color: qlineargradient(spread: pad, x1:0, y1:0, x2:1, y2:0, stop:0 transparent, stop:1 rgba(123, 123, 123, 123));\n"
-"}")
         self.ProgressBar_TTS_GPTSoVITS.setValue(0)
         self.ProgressBar_TTS_GPTSoVITS.setTextVisible(False)
         self.horizontalLayout_56 = QHBoxLayout(self.ProgressBar_TTS_GPTSoVITS)
@@ -8790,7 +8127,7 @@ class Ui_MainWindow(object):
         self.ScrollArea_Middle_TTS_VITS.setWidgetResizable(True)
         self.ScrollArea_Middle_WidgetContents_TTS_VITS = QWidget()
         self.ScrollArea_Middle_WidgetContents_TTS_VITS.setObjectName(u"ScrollArea_Middle_WidgetContents_TTS_VITS")
-        self.ScrollArea_Middle_WidgetContents_TTS_VITS.setGeometry(QRect(0, -539, 586, 856))
+        self.ScrollArea_Middle_WidgetContents_TTS_VITS.setGeometry(QRect(0, 0, 586, 856))
         self.verticalLayout_19 = QVBoxLayout(self.ScrollArea_Middle_WidgetContents_TTS_VITS)
         self.verticalLayout_19.setSpacing(12)
         self.verticalLayout_19.setObjectName(u"verticalLayout_19")
@@ -9076,7 +8413,7 @@ class Ui_MainWindow(object):
         self.ToolBox_TTS_VITS_VITSParams_AdvanceSettings.setObjectName(u"ToolBox_TTS_VITS_VITSParams_AdvanceSettings")
         self.ToolBox_TTS_VITS_VITSParams_AdvanceSettings_Page1Content = WidgetBase()
         self.ToolBox_TTS_VITS_VITSParams_AdvanceSettings_Page1Content.setObjectName(u"ToolBox_TTS_VITS_VITSParams_AdvanceSettings_Page1Content")
-        self.ToolBox_TTS_VITS_VITSParams_AdvanceSettings_Page1Content.setGeometry(QRect(0, 0, 548, 315))
+        self.ToolBox_TTS_VITS_VITSParams_AdvanceSettings_Page1Content.setGeometry(QRect(0, 0, 147, 315))
         self.verticalLayout_118 = QVBoxLayout(self.ToolBox_TTS_VITS_VITSParams_AdvanceSettings_Page1Content)
         self.verticalLayout_118.setSpacing(0)
         self.verticalLayout_118.setObjectName(u"verticalLayout_118")
@@ -9410,24 +8747,9 @@ class Ui_MainWindow(object):
 
         self.gridLayout_20.addWidget(self.Widget_Right_TTS_VITS, 0, 2, 1, 1)
 
-        self.ProgressBar_TTS_VITS = QProgressBar(self.Subpage_TTS_VITS)
+        self.ProgressBar_TTS_VITS = ProgressBarBase(self.Subpage_TTS_VITS)
         self.ProgressBar_TTS_VITS.setObjectName(u"ProgressBar_TTS_VITS")
         self.ProgressBar_TTS_VITS.setMinimumSize(QSize(0, 30))
-        self.ProgressBar_TTS_VITS.setStyleSheet(u"QProgressBar {\n"
-"	text-align: center;\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"\n"
-"QProgressBar:chunk {\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	background-color: qlineargradient(spread: pad, x1:0, y1:0, x2:1, y2:0, stop:0 transparent, stop:1 rgba(123, 123, 123, 123));\n"
-"}")
         self.ProgressBar_TTS_VITS.setValue(0)
         self.ProgressBar_TTS_VITS.setTextVisible(False)
         self.horizontalLayout_48 = QHBoxLayout(self.ProgressBar_TTS_VITS)
@@ -9545,7 +8867,7 @@ class Ui_MainWindow(object):
         self.ScrollArea_Settings_Client.setWidgetResizable(True)
         self.ScrollAreaWidgetContents_Settings_Client = QWidget()
         self.ScrollAreaWidgetContents_Settings_Client.setObjectName(u"ScrollAreaWidgetContents_Settings_Client")
-        self.ScrollAreaWidgetContents_Settings_Client.setGeometry(QRect(0, 0, 1014, 483))
+        self.ScrollAreaWidgetContents_Settings_Client.setGeometry(QRect(0, 0, 246, 483))
         self.verticalLayout_106 = QVBoxLayout(self.ScrollAreaWidgetContents_Settings_Client)
         self.verticalLayout_106.setSpacing(0)
         self.verticalLayout_106.setObjectName(u"verticalLayout_106")
@@ -9676,41 +8998,11 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_65.addWidget(self.Label_Setting_AutoUpdate)
 
-        self.CheckBox_Setting_AutoUpdate = QCheckBox(self.Frame_Setting_AutoUpdate)
+        self.CheckBox_Setting_AutoUpdate = CheckBoxBase(self.Frame_Setting_AutoUpdate)
         self.CheckBox_Setting_AutoUpdate.setObjectName(u"CheckBox_Setting_AutoUpdate")
         sizePolicy5.setHeightForWidth(self.CheckBox_Setting_AutoUpdate.sizePolicy().hasHeightForWidth())
         self.CheckBox_Setting_AutoUpdate.setSizePolicy(sizePolicy5)
         self.CheckBox_Setting_AutoUpdate.setMinimumSize(QSize(0, 30))
-        self.CheckBox_Setting_AutoUpdate.setStyleSheet(u"QCheckBox {\n"
-"	font-size: 15px;\n"
-"	spacing: 12.3px;\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QCheckBox:hover {\n"
-"}\n"
-"\n"
-"QCheckBox::indicator {\n"
-"	width: 30px;\n"
-"	height: 30px;\n"
-"    background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QCheckBox::indicator:hover {\n"
-"	background-color: rgba(255, 255, 255, 21);\n"
-"}\n"
-"QCheckBox::indicator:unchecked {\n"
-"	border-image: url(:/CheckBox_Icon/images/icons/ToggleOff.png);\n"
-"}\n"
-"QCheckBox::indicator:checked {\n"
-"	border-image: url(:/CheckBox_Icon/images/icons/ToggleOn.png);\n"
-"}")
 
         self.horizontalLayout_65.addWidget(self.CheckBox_Setting_AutoUpdate)
 
@@ -9791,7 +9083,7 @@ class Ui_MainWindow(object):
         self.ScrollArea_Settings_Tools.setWidgetResizable(True)
         self.ScrollAreaWidgetContents_Settings_Tools = QWidget()
         self.ScrollAreaWidgetContents_Settings_Tools.setObjectName(u"ScrollAreaWidgetContents_Settings_Tools")
-        self.ScrollAreaWidgetContents_Settings_Tools.setGeometry(QRect(0, 0, 235, 907))
+        self.ScrollAreaWidgetContents_Settings_Tools.setGeometry(QRect(0, 0, 211, 907))
         self.verticalLayout_34 = QVBoxLayout(self.ScrollAreaWidgetContents_Settings_Tools)
         self.verticalLayout_34.setSpacing(0)
         self.verticalLayout_34.setObjectName(u"verticalLayout_34")
@@ -9833,41 +9125,11 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_75.addWidget(self.Label_Setting_AutoReset)
 
-        self.CheckBox_Setting_AutoReset = QCheckBox(self.Frame_Setting_AutoReset)
+        self.CheckBox_Setting_AutoReset = CheckBoxBase(self.Frame_Setting_AutoReset)
         self.CheckBox_Setting_AutoReset.setObjectName(u"CheckBox_Setting_AutoReset")
         sizePolicy5.setHeightForWidth(self.CheckBox_Setting_AutoReset.sizePolicy().hasHeightForWidth())
         self.CheckBox_Setting_AutoReset.setSizePolicy(sizePolicy5)
         self.CheckBox_Setting_AutoReset.setMinimumSize(QSize(0, 30))
-        self.CheckBox_Setting_AutoReset.setStyleSheet(u"QCheckBox {\n"
-"	font-size: 15px;\n"
-"	spacing: 12.3px;\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QCheckBox:hover {\n"
-"}\n"
-"\n"
-"QCheckBox::indicator {\n"
-"	width: 30px;\n"
-"	height: 30px;\n"
-"    background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QCheckBox::indicator:hover {\n"
-"	background-color: rgba(255, 255, 255, 21);\n"
-"}\n"
-"QCheckBox::indicator:unchecked {\n"
-"	border-image: url(:/CheckBox_Icon/images/icons/ToggleOff.png);\n"
-"}\n"
-"QCheckBox::indicator:checked {\n"
-"	border-image: url(:/CheckBox_Icon/images/icons/ToggleOn.png);\n"
-"}")
 
         self.horizontalLayout_75.addWidget(self.CheckBox_Setting_AutoReset)
 
@@ -9905,41 +9167,11 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_74.addWidget(self.Label_Setting_Synchronizer)
 
-        self.CheckBox_Setting_Synchronizer = QCheckBox(self.Frame_Setting_Synchronizer)
+        self.CheckBox_Setting_Synchronizer = CheckBoxBase(self.Frame_Setting_Synchronizer)
         self.CheckBox_Setting_Synchronizer.setObjectName(u"CheckBox_Setting_Synchronizer")
         sizePolicy5.setHeightForWidth(self.CheckBox_Setting_Synchronizer.sizePolicy().hasHeightForWidth())
         self.CheckBox_Setting_Synchronizer.setSizePolicy(sizePolicy5)
         self.CheckBox_Setting_Synchronizer.setMinimumSize(QSize(0, 30))
-        self.CheckBox_Setting_Synchronizer.setStyleSheet(u"QCheckBox {\n"
-"	font-size: 15px;\n"
-"	spacing: 12.3px;\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QCheckBox:hover {\n"
-"}\n"
-"\n"
-"QCheckBox::indicator {\n"
-"	width: 30px;\n"
-"	height: 30px;\n"
-"    background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QCheckBox::indicator:hover {\n"
-"	background-color: rgba(255, 255, 255, 21);\n"
-"}\n"
-"QCheckBox::indicator:unchecked {\n"
-"	border-image: url(:/CheckBox_Icon/images/icons/ToggleOff.png);\n"
-"}\n"
-"QCheckBox::indicator:checked {\n"
-"	border-image: url(:/CheckBox_Icon/images/icons/ToggleOn.png);\n"
-"}")
 
         self.horizontalLayout_74.addWidget(self.CheckBox_Setting_Synchronizer)
 
@@ -10566,7 +9798,7 @@ class Ui_MainWindow(object):
         self.Button_Console_Fold.setObjectName(u"Button_Console_Fold")
         self.Button_Console_Fold.setMaximumSize(QSize(24, 24))
         self.Button_Console_Fold.setStyleSheet(u"QPushButton {\n"
-"	image: url(:/ComboBox_Icon/images/icons/DownArrow.png);\n"
+"	image: url(:/Button_Icon/images/icons/DownArrow.png);\n"
 "	background-color: transparent;\n"
 "	padding: 4.5px;\n"
 "	border-width: 0px;\n"
