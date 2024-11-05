@@ -1274,7 +1274,7 @@ class MainWindow(Window_MainWindow):
                     ButtonEvents = {
                         QMessageBox.Yes: lambda: (
                             Config.editConfig('Updater', 'Asked', 'True'),
-                            subprocess.Popen((['python.exe', UpdaterPath] if IsFileCompiled == False else [UpdaterPath]) + [f'--config "{ConfigPath}"'], env = os.environ),
+                            subprocess.Popen((['python', UpdaterPath] if IsFileCompiled == False else [UpdaterPath]) + [f'--config "{ConfigPath}"'], shell = True, env = os.environ),
                             QApplication.instance().exit()
                         ),
                         QMessageBox.No: lambda: (
