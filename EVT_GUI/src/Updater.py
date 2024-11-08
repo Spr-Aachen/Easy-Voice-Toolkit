@@ -223,12 +223,13 @@ class Widget_Updater(QWidget):
             )
         )
         FunctionSignals.Signal_ReadyToUpdate.connect(
-            lambda DownloadURL: (
+            lambda DownloadURL, VersionInfo: (
                 UpdateDownloadURL(DownloadURL),
                 MessageBoxBase.pop(
                     MessageType = QMessageBox.Question,
                     WindowTitle = 'Ask',
                     Text = '检测到可用的新版本，是否更新？\nNew version available, wanna update?',
+                    DetailedText = VersionInfo,
                     Buttons = QMessageBox.Yes|QMessageBox.No,
                     ButtonEvents = {
                         QMessageBox.Yes: lambda: Function_SetMethodExecutor(self,

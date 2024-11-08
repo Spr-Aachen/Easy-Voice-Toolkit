@@ -1265,11 +1265,12 @@ class MainWindow(Window_MainWindow):
 
     def chkUpdate(self):
         FunctionSignals.Signal_ReadyToUpdate.connect(
-            lambda: (
+            lambda DownloadURL, VersionInfo: (
                 MessageBoxBase.pop(
                     MessageType = QMessageBox.Question,
                     WindowTitle = 'Ask',
                     Text = '检测到可用的新版本，是否更新？\nNew version available, wanna update?',
+                    DetailedText = VersionInfo,
                     Buttons = QMessageBox.Yes|QMessageBox.No,
                     ButtonEvents = {
                         QMessageBox.Yes: lambda: (

@@ -32,7 +32,7 @@ class CustomSignals_Functions(QObject):
 
     Signal_IsUpdateSucceeded = Signal(bool, str)
 
-    Signal_ReadyToUpdate = Signal(str)
+    Signal_ReadyToUpdate = Signal(str, str)
 
 
 FunctionSignals = CustomSignals_Functions()
@@ -606,7 +606,7 @@ def Function_UpdateChecker(
     '''
     try:
         FunctionSignals.Signal_UpdateMessage.emit("正在检查更新，请稍等...\nChecking for updates, please wait...")
-        IsUpdateNeeded, DownloadURL = QFunc.CheckUpdateFromGithub(
+        IsUpdateNeeded, DownloadURL, VersionInfo = QFunc.CheckUpdateFromGithub(
             RepoOwner = RepoOwner,
             RepoName = RepoName,
             FileName = FileName,
@@ -620,7 +620,7 @@ def Function_UpdateChecker(
 
     else:
         if IsUpdateNeeded:
-            FunctionSignals.Signal_ReadyToUpdate.emit(DownloadURL)
+            FunctionSignals.Signal_ReadyToUpdate.emit(DownloadURL, VersionInfo)
         else:
             FunctionSignals.Signal_UpdateMessage.emit("已是最新版本！\nAlready up to date!")
             FunctionSignals.Signal_IsUpdateSucceeded.emit(False, "")
