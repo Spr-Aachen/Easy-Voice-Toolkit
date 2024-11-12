@@ -4,6 +4,7 @@ from PySide6.QtWidgets import *
 from QEasyWidgets import QFunctions as QFunc
 from QEasyWidgets.Windows import *
 from QEasyWidgets.Components import *
+from QEasyWidgets import IconBase
 
 from windows.ui.UI_MainWindow import Ui_MainWindow
 from windows.ui.UI_ChildWindow_VPR import Ui_ChildWindow_VPR
@@ -86,38 +87,18 @@ class MessageBox_Stacked(MessageBoxBase):
 
         self.StackedWidget = QStackedWidget()
 
-        self.ButtonP = QPushButton()
+        self.ButtonP = ButtonBase()
         self.ButtonP.clicked.connect(lambda: self.StackedWidget.setCurrentIndex(self.StackedWidget.currentIndex() - 1))
-        self.ButtonP.setFixedWidth(33)
-        self.ButtonP.setFixedHeight(66)
-        QFunc.Function_SetRetainSizeWhenHidden(self.ButtonP)
-        self.ButtonP.setStyleSheet(
-            "QPushButton {"
-            "   background-color: transparent;"
-            "   padding: 12px;"
-            "   border-image: url(:/Button_Icon/images/icons/LeftArrow.png);"
-            "}"
-            "QPushButton:hover {"
-            "   background-color: rgba(210, 222, 234, 12);"
-            "}"
-        )
+        self.ButtonP.setFixedSize(33, 66)
+        QFunc.setRetainSizeWhenHidden(self.ButtonP)
+        self.ButtonP.setIcon(IconBase.CompactChevron_Left)
         self.ButtonP.setToolTip("Prev Page")
 
-        self.ButtonN = QPushButton()
+        self.ButtonN = ButtonBase()
         self.ButtonN.clicked.connect(lambda: self.StackedWidget.setCurrentIndex(self.StackedWidget.currentIndex() + 1))
-        self.ButtonN.setFixedWidth(33)
-        self.ButtonN.setFixedHeight(66)
-        QFunc.Function_SetRetainSizeWhenHidden(self.ButtonN)
-        self.ButtonN.setStyleSheet(
-            "QPushButton {"
-            "   background-color: transparent;"
-            "   padding: 12px;"
-            "   border-image: url(:/Button_Icon/images/icons/RightArrow.png);"
-            "}"
-            "QPushButton:hover {"
-            "   background-color: rgba(210, 222, 234, 12);"
-            "}"
-        )
+        self.ButtonN.setFixedSize(33, 66)
+        QFunc.setRetainSizeWhenHidden(self.ButtonN)
+        self.ButtonN.setIcon(IconBase.CompactChevron_Right)
         self.ButtonN.setToolTip("Next Page")
 
         Layout = QHBoxLayout()
@@ -127,19 +108,19 @@ class MessageBox_Stacked(MessageBoxBase):
         Layout.addWidget(self.ButtonP)
         Layout.addWidget(self.StackedWidget)
         Layout.addWidget(self.ButtonN)
-        self.Layout.insertLayout(0, Layout)
+        self.layout().insertLayout(0, Layout)
 
     def SetContent(self, Images: list, Texts: list):
-        QFunc.Function_SetNoContents(self.StackedWidget)
+        QFunc.setNoContents(self.StackedWidget)
 
-        for Index, Image in enumerate(QFunc.ToIterable(Images)):
+        for Index, Image in enumerate(QFunc.toIterable(Images)):
             Label = LabelBase()
-            QFunc.Function_SetText(Label, QFunc.SetRichText(QFunc.ToIterable(Texts)[Index], 'left', 9.9, 420))
+            QFunc.setText(Label, QFunc.setRichText(QFunc.toIterable(Texts)[Index], 'left', 9.9, 420))
 
             TextBrowser = QTextBrowser()
             TextBrowser.setStyleSheet(
                 "QTextBrowser {"
-                f"    background-image: url({QFunc.NormPath(Image, 'Posix')});"
+                f"    background-image: url({QFunc.normPath(Image, 'Posix')});"
                 "    background-repeat: no-repeat;"
                 "    background-position: center 0px;"
                 "    padding: 0px;"
@@ -189,6 +170,6 @@ class MessageBox_Buttons(MessageBoxBase):
         Layout.setSpacing(21)
         Layout.addWidget(self.Button1, 1, 0, 1, 2)
         Layout.addWidget(self.Button2, 2, 0, 1, 2)
-        self.Layout.insertLayout(2, Layout)
+        self.layout().insertLayout(2, Layout)
 
 ##############################################################################################################################

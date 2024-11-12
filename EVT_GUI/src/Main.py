@@ -26,19 +26,19 @@ from Config import *
 ##############################################################################################################################
 
 # Change working directory to current directory
-os.chdir(CurrentDir)
+os.chdir(currentDir)
 
 
 # Parse path settings
 parser = argparse.ArgumentParser()
-parser.add_argument("--updater",      help = "path to updater",          default = Path(CurrentDir).joinpath('Updater.py' if IsFileCompiled == False else 'Updater.exe'))
-parser.add_argument("--core",         help = "dir of core files",        default = Path(ResourceDir).joinpath('EVT_Core'))
-parser.add_argument("--manifest",     help = "path to manifest.json",    default = Path(ResourceDir).joinpath('manifest.json'))
-parser.add_argument("--requirements", help = "path to requirements.txt", default = Path(ResourceDir).joinpath('requirements.txt'))
-parser.add_argument("--dependencies", help = "dir of dependencies",      default = Path(CurrentDir).joinpath(''))
-parser.add_argument("--models",       help = "dir of models",            default = Path(CurrentDir).joinpath('Models'))
-parser.add_argument("--output",       help = "dir of output",            default = Path(CurrentDir).joinpath(''))
-parser.add_argument("--profile",      help = "dir of profile",           default = Path(CurrentDir).joinpath(''))
+parser.add_argument("--updater",      help = "path to updater",          default = Path(currentDir).joinpath('Updater.py' if isFileCompiled == False else 'Updater.exe'))
+parser.add_argument("--core",         help = "dir of core files",        default = Path(resourceDir).joinpath('EVT_Core'))
+parser.add_argument("--manifest",     help = "path to manifest.json",    default = Path(resourceDir).joinpath('manifest.json'))
+parser.add_argument("--requirements", help = "path to requirements.txt", default = Path(resourceDir).joinpath('requirements.txt'))
+parser.add_argument("--dependencies", help = "dir of dependencies",      default = Path(currentDir).joinpath(''))
+parser.add_argument("--models",       help = "dir of models",            default = Path(currentDir).joinpath('Models'))
+parser.add_argument("--output",       help = "dir of output",            default = Path(currentDir).joinpath(''))
+parser.add_argument("--profile",      help = "dir of profile",           default = Path(currentDir).joinpath(''))
 args = parser.parse_args()
 
 UpdaterPath = args.updater
@@ -52,38 +52,38 @@ ProfileDir = args.profile
 
 
 # Set up client config
-ConfigDir = QFunc.NormPath(Path(ProfileDir).joinpath('Config'))
-ConfigPath = QFunc.NormPath(Path(ConfigDir).joinpath('Config.ini'))
-Config = QFunc.ManageConfig(ConfigPath)
-Config.editConfig('Info', 'CurrentVersion', str(CurrentVersion))
-Config.editConfig('Info', 'ExecuterName', str(QFunc.GetFileInfo()[0]))
+configDir = QFunc.normPath(Path(ProfileDir).joinpath('config'))
+configPath = QFunc.normPath(Path(configDir).joinpath('config.ini'))
+config = QFunc.configManager(configPath)
+config.editConfig('Info', 'currentVersion', str(currentVersion))
+config.editConfig('Info', 'executerName', str(QFunc.getFileInfo()[0]))
 
 
 # Set up environment variables while python file is not compiled
-if IsFileCompiled == False:
-    QFunc.SetEnvVar( # Redirect PATH variable 'QT_QPA_PLATFORM_PLUGIN_PATH' to Pyside6 '/plugins/platforms' folder's path
-        Variable = 'QT_QPA_PLATFORM_PLUGIN_PATH',
-        Value = QFunc.NormPath(Path(QFunc.GetBaseDir(PySide6_File)).joinpath('plugins', 'platforms'))
+if isFileCompiled == False:
+    QFunc.setEnvVar( # Redirect PATH variable 'QT_QPA_PLATFORM_PLUGIN_PATH' to Pyside6 '/plugins/platforms' folder's path
+        variable = 'QT_QPA_PLATFORM_PLUGIN_PATH',
+        value = QFunc.normPath(Path(QFunc.getBaseDir(PySide6_File)).joinpath('plugins', 'platforms'))
     )
 # Set up environment variables while environment is configured
 if Path(DependencyDir).joinpath('Aria2').exists():
-    QFunc.SetEnvVar(
-        Variable = 'PATH',
-        Value = QFunc.NormPath(Path(DependencyDir).joinpath('Aria2'))
+    QFunc.setEnvVar(
+        variable = 'PATH',
+        value = QFunc.normPath(Path(DependencyDir).joinpath('Aria2'))
     )
 if Path(DependencyDir).joinpath('FFmpeg').exists():
-    QFunc.SetEnvVar(
-        Variable = 'PATH',
-        Value = QFunc.NormPath(Path(DependencyDir).joinpath('FFmpeg', 'bin'))
+    QFunc.setEnvVar(
+        variable = 'PATH',
+        value = QFunc.normPath(Path(DependencyDir).joinpath('FFmpeg', 'bin'))
     )
 if Path(DependencyDir).joinpath('Python').exists():
-    QFunc.SetEnvVar(
-        Variable = 'PATH',
-        Value = QFunc.NormPath(Path(DependencyDir).joinpath('Python'), TrailingSlash = True)
+    QFunc.setEnvVar(
+        variable = 'PATH',
+        value = QFunc.normPath(Path(DependencyDir).joinpath('Python'), trailingSlash = True)
     )
-    QFunc.SetEnvVar(
-        Variable = 'PATH',
-        Value = QFunc.NormPath(Path(DependencyDir).joinpath('Python', 'Scripts'), TrailingSlash = True)
+    QFunc.setEnvVar(
+        variable = 'PATH',
+        value = QFunc.normPath(Path(DependencyDir).joinpath('Python', 'Scripts'), trailingSlash = True)
     )
 
 ##############################################################################################################################
@@ -98,11 +98,11 @@ class Execute_Update_Checking(QObject):
 
     def Execute(self):
         Function_UpdateChecker(
-            RepoOwner = RepoOwner,
-            RepoName = RepoName,
-            FileName = FileName,
-            FileFormat = FileFormat,
-            CurrentVersion = CurrentVersion
+            repoOwner = repoOwner,
+            repoName = repoName,
+            fileName = fileName,
+            fileFormat = fileFormat,
+            currentVersion = currentVersion
         )
 
         self.finished.emit()
@@ -123,23 +123,23 @@ class Execute_Audio_Processing(QObject):
         super().__init__()
 
     @Slot(tuple)
-    def Execute(self, Params: tuple):
+    def Execute(self, params: tuple):
         self.started.emit()
 
-        CMD = QFunc.SubprocessManager(CommunicateThroughConsole = True)
+        CMD = QFunc.subprocessManager(communicateThroughConsole = True)
         self.Process = CMD.create(
-            Args = [
+            args = [
                 f'cd "{CoreDir}"',
                 'python -c "'
                 'from AudioProcessor.Process import Audio_Processing; '
-                f"AudioConvertandSlice = Audio_Processing{str(Params)}; "
+                f"AudioConvertandSlice = Audio_Processing{str(params)}; "
                 'AudioConvertandSlice.Process_Audio()"'
             ]
         )
         Output, Error = CMD.monitor(
-            ShowProgress = True,
-            DecodeResult = True,
-            LogPath = LogPath
+            showProgress = True,
+            decodeResult = True,
+            logPath = logPath
         )[:2]
         if 'error' in str(Error).lower():
             Error += "（详情请见终端输出信息）"
@@ -152,7 +152,7 @@ class Execute_Audio_Processing(QObject):
         self.finished.emit()
 
     def Terminate(self):
-        QFunc.ProcessTerminator(self.Process.pid) if hasattr(self, 'Process') else None
+        QFunc.processTerminator(self.Process.pid) if hasattr(self, 'Process') else None
 
 
 # Tools: VoiceIdentifier
@@ -169,24 +169,24 @@ class Execute_Voice_Identifying_VPR(QObject):
         super().__init__()
 
     @Slot(tuple)
-    def Execute(self, Params: tuple):
+    def Execute(self, params: tuple):
         self.started.emit()
 
-        CMD = QFunc.SubprocessManager(CommunicateThroughConsole = True)
+        CMD = QFunc.subprocessManager(communicateThroughConsole = True)
         self.Process = CMD.create(
-            Args = [
+            args = [
                 f'cd "{CoreDir}"',
                 'python -c "'
                 'from VPR.Identify import Voice_Identifying; '
-                f"AudioContrastInference = Voice_Identifying{str(Params)}; "
+                f"AudioContrastInference = Voice_Identifying{str(params)}; "
                 'AudioContrastInference.GetModel(); '
                 'AudioContrastInference.Inference()"'
             ]
         )
         Output, Error = CMD.monitor(
-            ShowProgress = True,
-            DecodeResult = True,
-            LogPath = LogPath
+            showProgress = True,
+            decodeResult = True,
+            logPath = logPath
         )[:2]
         if 'error' in str(Error).lower():
             Error += "（详情请见终端输出信息）"
@@ -199,7 +199,7 @@ class Execute_Voice_Identifying_VPR(QObject):
         self.finished.emit()
 
     def Terminate(self):
-        QFunc.ProcessTerminator(self.Process.pid) if hasattr(self, 'Process') else None
+        QFunc.processTerminator(self.Process.pid) if hasattr(self, 'Process') else None
 
 
 # Tools: VoiceTranscriber
@@ -216,7 +216,7 @@ class Execute_Voice_Transcribing_Whisper(QObject):
         super().__init__()
 
     @Slot(tuple)
-    def Execute(self, Params: tuple):
+    def Execute(self, params: tuple):
         self.started.emit()
 
         LANGUAGES = {
@@ -227,20 +227,20 @@ class Execute_Voice_Transcribing_Whisper(QObject):
             "日":       "ja",
             "japanese": "ja"
         }
-        CMD = QFunc.SubprocessManager(CommunicateThroughConsole = True)
+        CMD = QFunc.subprocessManager(communicateThroughConsole = True)
         self.Process = CMD.create(
-            Args = [
+            args = [
                 f'cd "{CoreDir}"',
                 'python -c "'
                 'from Whisper.Transcribe import Voice_Transcribing; '
-                f"WAVtoSRT = Voice_Transcribing{str(QFunc.ItemReplacer(LANGUAGES, Params))}; "
+                f"WAVtoSRT = Voice_Transcribing{str(QFunc.itemReplacer(LANGUAGES, params))}; "
                 'WAVtoSRT.Transcriber()"'
             ]
         )
         Output, Error = CMD.monitor(
-            ShowProgress = True,
-            DecodeResult = True,
-            LogPath = LogPath
+            showProgress = True,
+            decodeResult = True,
+            logPath = logPath
         )[:2]
         if 'error' in str(Error).lower():
             Error += "（详情请见终端输出信息）"
@@ -253,7 +253,7 @@ class Execute_Voice_Transcribing_Whisper(QObject):
         self.finished.emit()
 
     def Terminate(self):
-        QFunc.ProcessTerminator(self.Process.pid) if hasattr(self, 'Process') else None
+        QFunc.processTerminator(self.Process.pid) if hasattr(self, 'Process') else None
 
 
 # Tools: DatasetCreator
@@ -270,23 +270,23 @@ class Execute_Dataset_Creating_GPTSoVITS(QObject):
         super().__init__()
 
     @Slot(tuple)
-    def Execute(self, Params: tuple):
+    def Execute(self, params: tuple):
         self.started.emit()
 
-        CMD = QFunc.SubprocessManager(CommunicateThroughConsole = True)
+        CMD = QFunc.subprocessManager(communicateThroughConsole = True)
         self.Process = CMD.create(
-            Args = [
+            args = [
                 f'cd "{CoreDir}"',
                 'python -c "'
                 'from GPT_SoVITS.Create import Dataset_Creating; '
-                f"SRTtoCSVandSplitAudio = Dataset_Creating{str(Params)}; "
+                f"SRTtoCSVandSplitAudio = Dataset_Creating{str(params)}; "
                 'SRTtoCSVandSplitAudio.CallingFunctions()"'
             ]
         )
         Output, Error = CMD.monitor(
-            ShowProgress = True,
-            DecodeResult = True,
-            LogPath = LogPath
+            showProgress = True,
+            decodeResult = True,
+            logPath = logPath
         )[:2]
         if 'error' in str(Error).lower():
             Error += "（详情请见终端输出信息）"
@@ -299,7 +299,7 @@ class Execute_Dataset_Creating_GPTSoVITS(QObject):
         self.finished.emit()
 
     def Terminate(self):
-        QFunc.ProcessTerminator(self.Process.pid) if hasattr(self, 'Process') else None
+        QFunc.processTerminator(self.Process.pid) if hasattr(self, 'Process') else None
 
 
 class Execute_Dataset_Creating_VITS(QObject):
@@ -315,23 +315,23 @@ class Execute_Dataset_Creating_VITS(QObject):
         super().__init__()
 
     @Slot(tuple)
-    def Execute(self, Params: tuple):
+    def Execute(self, params: tuple):
         self.started.emit()
 
-        CMD = QFunc.SubprocessManager(CommunicateThroughConsole = True)
+        CMD = QFunc.subprocessManager(communicateThroughConsole = True)
         self.Process = CMD.create(
-            Args = [
+            args = [
                 f'cd "{CoreDir}"',
                 'python -c "'
                 'from VITS.Create import Dataset_Creating; '
-                f"SRTtoCSVandSplitAudio = Dataset_Creating{str(Params)}; "
+                f"SRTtoCSVandSplitAudio = Dataset_Creating{str(params)}; "
                 'SRTtoCSVandSplitAudio.CallingFunctions()"'
             ]
         )
         Output, Error = CMD.monitor(
-            ShowProgress = True,
-            DecodeResult = True,
-            LogPath = LogPath
+            showProgress = True,
+            decodeResult = True,
+            logPath = logPath
         )[:2]
         if 'error' in str(Error).lower():
             Error += "（详情请见终端输出信息）"
@@ -344,7 +344,7 @@ class Execute_Dataset_Creating_VITS(QObject):
         self.finished.emit()
 
     def Terminate(self):
-        QFunc.ProcessTerminator(self.Process.pid) if hasattr(self, 'Process') else None
+        QFunc.processTerminator(self.Process.pid) if hasattr(self, 'Process') else None
 
 
 # Tools: VoiceTrainer
@@ -361,22 +361,22 @@ class Execute_Voice_Training_GPTSoVITS(QObject):
         super().__init__()
 
     @Slot(tuple)
-    def Execute(self, Params: tuple):
+    def Execute(self, params: tuple):
         self.started.emit()
 
-        CMD = QFunc.SubprocessManager(CommunicateThroughConsole = True)
+        CMD = QFunc.subprocessManager(communicateThroughConsole = True)
         self.Process = CMD.create(
-            Args = [
+            args = [
                 f'cd "{CoreDir}"',
                 'python -c "'
                 'from GPT_SoVITS.Train import Train; '
-                f'Train{str(Params)}"'
+                f'Train{str(params)}"'
             ]
         )
         Output, Error = CMD.monitor(
-            ShowProgress = True,
-            DecodeResult = True,
-            LogPath = LogPath
+            showProgress = True,
+            decodeResult = True,
+            logPath = logPath
         )[:2]
         if 'error' in str(Error).lower():
             Error += "（详情请见终端输出信息）"
@@ -389,7 +389,7 @@ class Execute_Voice_Training_GPTSoVITS(QObject):
         self.finished.emit()
 
     def Terminate(self):
-        QFunc.ProcessTerminator(self.Process.pid) if hasattr(self, 'Process') else None
+        QFunc.processTerminator(self.Process.pid) if hasattr(self, 'Process') else None
 
 
 class Execute_Voice_Training_VITS(QObject):
@@ -405,22 +405,22 @@ class Execute_Voice_Training_VITS(QObject):
         super().__init__()
 
     @Slot(tuple)
-    def Execute(self, Params: tuple):
+    def Execute(self, params: tuple):
         self.started.emit()
 
-        CMD = QFunc.SubprocessManager(CommunicateThroughConsole = True)
+        CMD = QFunc.subprocessManager(communicateThroughConsole = True)
         self.Process = CMD.create(
-            Args = [
+            args = [
                 f'cd "{CoreDir}"',
                 'python -c "'
                 'from VITS.Train import Train; '
-                f'Train{str(Params)}"'
+                f'Train{str(params)}"'
             ]
         )
         Output, Error = CMD.monitor(
-            ShowProgress = True,
-            DecodeResult = True,
-            LogPath = LogPath
+            showProgress = True,
+            decodeResult = True,
+            logPath = logPath
         )[:2]
         if 'error' in str(Error).lower():
             Error += "（详情请见终端输出信息）"
@@ -433,7 +433,7 @@ class Execute_Voice_Training_VITS(QObject):
         self.finished.emit()
 
     def Terminate(self):
-        QFunc.ProcessTerminator(self.Process.pid) if hasattr(self, 'Process') else None
+        QFunc.processTerminator(self.Process.pid) if hasattr(self, 'Process') else None
 
 
 # Tools: VoiceConverter
@@ -450,22 +450,22 @@ class Execute_Voice_Converting_GPTSoVITS(QObject):
         super().__init__()
 
     @Slot(tuple)
-    def Execute(self, Params: tuple):
+    def Execute(self, params: tuple):
         self.started.emit()
 
-        CMD = QFunc.SubprocessManager(CommunicateThroughConsole = True)
+        CMD = QFunc.subprocessManager(communicateThroughConsole = True)
         self.Process = CMD.create(
-            Args = [
+            args = [
                 f'cd "{CoreDir}"',
                 'python -c "'
                 'from GPT_SoVITS.Convert import Convert; '
-                f'Convert{str(Params)}"'
+                f'Convert{str(params)}"'
             ]
         )
         Output, Error = CMD.monitor(
-            ShowProgress = True,
-            DecodeResult = True,
-            LogPath = LogPath
+            showProgress = True,
+            decodeResult = True,
+            logPath = logPath
         )[:2]
         if 'error' in str(Error).lower():
             Error += "（详情请见终端输出信息）"
@@ -478,14 +478,14 @@ class Execute_Voice_Converting_GPTSoVITS(QObject):
         self.finished.emit()
 
     def Terminate(self):
-        QFunc.ProcessTerminator(self.Process.pid) if hasattr(self, 'Process') else None
+        QFunc.processTerminator(self.Process.pid) if hasattr(self, 'Process') else None
 
 
 def Get_Speakers(Config_Path_Load):
     try:
         with open(Config_Path_Load, 'r', encoding = 'utf-8') as File:
-            Params = json.load(File)
-        Speakers = Params["speakers"]
+            params = json.load(File)
+        Speakers = params["speakers"]
         return Speakers
     except:
         return str()
@@ -503,7 +503,7 @@ class Execute_Voice_Converting_VITS(QObject):
         super().__init__()
 
     @Slot(tuple)
-    def Execute(self, Params: tuple):
+    def Execute(self, params: tuple):
         self.started.emit()
 
         LANGUAGES = {
@@ -514,19 +514,19 @@ class Execute_Voice_Converting_VITS(QObject):
             "日":       "JA",
             "Japanese": "JA"
         }
-        CMD = QFunc.SubprocessManager(CommunicateThroughConsole = True)
+        CMD = QFunc.subprocessManager(communicateThroughConsole = True)
         self.Process = CMD.create(
-            Args = [
+            args = [
                 f'cd "{CoreDir}"',
                 'python -c "'
                 'from VITS.Convert import Convert; '
-                f'Convert{str(QFunc.ItemReplacer(LANGUAGES, Params))}"'
+                f'Convert{str(QFunc.itemReplacer(LANGUAGES, params))}"'
             ]
         )
         Output, Error = CMD.monitor(
-            ShowProgress = True,
-            DecodeResult = True,
-            LogPath = LogPath
+            showProgress = True,
+            decodeResult = True,
+            logPath = logPath
         )[:2]
         if 'error' in str(Error).lower():
             Error += "（详情请见终端输出信息）"
@@ -539,7 +539,7 @@ class Execute_Voice_Converting_VITS(QObject):
         self.finished.emit()
 
     def Terminate(self):
-        QFunc.ProcessTerminator(self.Process.pid) if hasattr(self, 'Process') else None
+        QFunc.processTerminator(self.Process.pid) if hasattr(self, 'Process') else None
 
 
 # ClientFunc: GetModelsInfo
@@ -578,9 +578,9 @@ class Model_View(QObject):
         Tags = [Path(ModelsDir).parts[-2], Path(ModelsDir).parts[-1]]
         if not Path(ManifestPath).exists():
             return []
-        with open(QFunc.NormPath(ManifestPath), 'r', encoding = 'utf-8') as File:
-            Param = json.load(File)
-        for ModelDict in Param["models"]:
+        with open(QFunc.normPath(ManifestPath), 'r', encoding = 'utf-8') as File:
+            param = json.load(File)
+        for ModelDict in param["models"]:
             if ModelDict["tags"] == Tags:
                 ModelDicts_Cloud.append(ModelDict)
         def GetModelInfo_Cloud(ModelDict):
@@ -614,7 +614,7 @@ class Model_View(QObject):
 
         ModelPaths_Local = []
         for ModelsFormat in ModelsFormats:
-            ModelPaths_Local_Sep = QFunc.ToIterable(QFunc.GetPaths(ModelsDir, ModelsFormat))
+            ModelPaths_Local_Sep = QFunc.toIterable(QFunc.getPaths(ModelsDir, ModelsFormat))
             ModelPaths_Local_Sep = [ModelPath_Local_Sep for ModelPath_Local_Sep in ModelPaths_Local_Sep if ModelPath_Local_Sep is not None and ModelPath_Local_Sep.endswith(ModelsFormat)]
             ModelPaths_Local.extend(ModelPaths_Local_Sep) if ModelPaths_Local_Sep is not None else None
         ModelPaths_Local = list(set(ModelPaths_Local))
@@ -641,31 +641,31 @@ class Model_View(QObject):
     def Execute(self):
         ModelViewSignals.Signal_Process_UVR.emit(
             self.GetModelsInfo(
-                QFunc.NormPath(Path(ModelDir).joinpath('Process', 'UVR')),
+                QFunc.normPath(Path(ModelDir).joinpath('Process', 'UVR')),
                 ['pth', 'onnx']
             )
         )
         ModelViewSignals.Signal_VPR_TDNN.emit(
             self.GetModelsInfo(
-                QFunc.NormPath(Path(ModelDir).joinpath('VPR', 'TDNN')),
+                QFunc.normPath(Path(ModelDir).joinpath('VPR', 'TDNN')),
                 ['pth']
             )
         )
         ModelViewSignals.Signal_ASR_Whisper.emit(
             self.GetModelsInfo(
-                QFunc.NormPath(Path(ModelDir).joinpath('ASR', 'Whisper')),
+                QFunc.normPath(Path(ModelDir).joinpath('ASR', 'Whisper')),
                 ['pt']
             )
         )
         ModelViewSignals.Signal_TTS_GPTSoVITS.emit(
             self.GetModelsInfo(
-                QFunc.NormPath(Path(ModelDir).joinpath('TTS', 'GPT-SoVITS')),
+                QFunc.normPath(Path(ModelDir).joinpath('TTS', 'GPT-SoVITS')),
                 ['pth', 'ckpt', 'bin', 'json']
             )
         )
         ModelViewSignals.Signal_TTS_VITS.emit(
             self.GetModelsInfo(
-                QFunc.NormPath(Path(ModelDir).joinpath('TTS', 'VITS')),
+                QFunc.normPath(Path(ModelDir).joinpath('TTS', 'VITS')),
                 ['pth', 'json']
             )
         )
@@ -686,7 +686,7 @@ class Model_Downloader(QObject):
 
     def DownloadModel(self, DownloadParams: tuple):
         try:
-            FilePath = QFunc.DownloadFile(*DownloadParams, CreateNewConsole = True)[1]
+            FilePath = QFunc.downloadFile(*DownloadParams, CreateNewConsole = True)[1]
             FileSuffix = Path(FilePath).suffix
             shutil.unpack_archive(FilePath, DownloadParams[1], FileSuffix) if FileSuffix in ('zip', 'tar', 'gztar', 'bztar') else None
             return None
@@ -694,16 +694,16 @@ class Model_Downloader(QObject):
             return e
 
     @Slot(tuple)
-    def Execute(self, Params: tuple):
-        Error = self.DownloadModel(Params)
+    def Execute(self, params: tuple):
+        Error = self.DownloadModel(params)
         self.errChk.emit(str(Error))
 
         self.finished.emit()
 
 
 # ClientFunc: AddLocalModel
-def AddLocalModel(ModelPath: str, Sector: list[str] = ['Tool', 'Type']):
-    MoveToDst = QFunc.NormPath(Path(ModelDir).joinpath(*Sector))
+def AddLocalModel(ModelPath: str, Sector: list[str] = ['Tool', 'type']):
+    MoveToDst = QFunc.normPath(Path(ModelDir).joinpath(*Sector))
     shutil.move(ModelPath, MoveToDst)
 
 
@@ -731,9 +731,9 @@ def VPRResult_Save(AudioSpeakers: dict, AudioSpeakersData_Path: str, MoveAudio: 
             if MoveAudio:
                 if MoveToDst is None:
                     raise Exception("Destination shouldn't be 'None'")
-                MoveToDst_Sub = QFunc.NormPath(Path(MoveToDst).joinpath(Speaker))
+                MoveToDst_Sub = QFunc.normPath(Path(MoveToDst).joinpath(Speaker))
                 os.makedirs(MoveToDst_Sub, exist_ok = True) if Path(MoveToDst_Sub).exists() == False else None
-                Audio_Dst = QFunc.NormPath(Path(MoveToDst_Sub).joinpath(Path(Audio).name).as_posix())
+                Audio_Dst = QFunc.normPath(Path(MoveToDst_Sub).joinpath(Path(Audio).name).as_posix())
                 shutil.copy(Audio, MoveToDst_Sub) if not Path(Audio_Dst).exists() else None
                 Lines.append(f"{Audio_Dst}|{Speaker}\n")
             else:
@@ -744,8 +744,8 @@ def VPRResult_Save(AudioSpeakers: dict, AudioSpeakersData_Path: str, MoveAudio: 
 # ClientFunc: GetASRResult
 def ASRResult_Get(SRTDir: str, AudioDir: str):
     ASRResult = {}
-    for SRTFile in glob(QFunc.NormPath(Path(SRTDir).joinpath('*.srt'))):
-        AudioFiles = glob(QFunc.NormPath(Path(AudioDir).joinpath('**', f'{Path(SRTFile).stem}.*')), recursive = True)
+    for SRTFile in glob(QFunc.normPath(Path(SRTDir).joinpath('*.srt'))):
+        AudioFiles = glob(QFunc.normPath(Path(AudioDir).joinpath('**', f'{Path(SRTFile).stem}.*')), recursive = True)
         if len(AudioFiles) == 0:
             continue
         with open(SRTFile, mode = 'r', encoding = 'utf-8') as SRT:
@@ -757,7 +757,7 @@ def ASRResult_Get(SRTDir: str, AudioDir: str):
 # ClientFunc: SaveASRResult
 def ASRResult_Save(ASRResult: dict, SRTDir: str):
     for AudioFile in ASRResult.keys():
-        SRTFiles = glob(QFunc.NormPath(Path(SRTDir).joinpath(f'{Path(AudioFile).stem}.*')))
+        SRTFiles = glob(QFunc.normPath(Path(SRTDir).joinpath(f'{Path(AudioFile).stem}.*')))
         if len(SRTFiles) == 0:
             continue
         with open(SRTFiles[0], mode = 'w', encoding = 'utf-8') as SRT:
@@ -770,7 +770,7 @@ def DATResult_Get(DATPath: str):
     with open(DATPath, mode = 'r', encoding = 'utf-8') as DAT:
         DATLines = DAT.readlines()
     for DATLine in DATLines:
-        Audio = QFunc.NormPath(Path(DATPath).parent.joinpath(DATLine.split('|')[0]))
+        Audio = QFunc.normPath(Path(DATPath).parent.joinpath(DATLine.split('|')[0]))
         DATResult[Audio] = DATLine.strip()
     return DATResult
 
@@ -796,8 +796,8 @@ class Integrity_Checker(QObject):
 
     @Slot()
     def Execute(self):
-        Error = QFunc.RunCMD(
-            Args = [
+        Error = QFunc.runCMD(
+            args = [
                 f'cd "{CoreDir}"',
                 'python -c "'
                 'from AudioProcessor.Process import Audio_Processing; '
@@ -810,9 +810,9 @@ class Integrity_Checker(QObject):
                 'from VITS.Train import Train; '
                 'from VITS.Convert import Convert"'
             ],
-            CommunicateThroughConsole = True,
-            DecodeResult = True,
-            LogPath = LogPath
+            communicateThroughConsole = True,
+            decodeResult = True,
+            logPath = logPath
         )[1]
         self.errChk.emit(str(Error))
 
@@ -836,22 +836,22 @@ class Tensorboard_Runner(QObject):
             Error = None
             InitialWaitTime = 0
             MaximumWaitTime = 30
-            while QFunc.GetPaths(LogDir, 'events.out.tfevents') == None:
+            while QFunc.getPaths(LogDir, 'events.out.tfevents') == None:
                 time.sleep(3)
                 InitialWaitTime += 3
                 if InitialWaitTime >= MaximumWaitTime:
                     break
             subprocess.Popen(['python', '-m', 'tensorboard.main', '--logdir', LogDir], env = os.environ)
             time.sleep(9)
-            QFunc.Function_OpenURL('http://localhost:6006/')
+            QFunc.openURL('http://localhost:6006/')
         except Exception as e:
             Error = e
         finally:
             return Error
 
     @Slot(tuple)
-    def Execute(self, Params: tuple):
-        Error = self.RunTensorboard(*Params)
+    def Execute(self, params: tuple):
+        Error = self.RunTensorboard(*params)
         self.errChk.emit(str(Error))
 
         self.finished.emit()
@@ -884,9 +884,9 @@ class MainWindow(Window_MainWindow):
         FunctionSignals.Signal_TaskStatus.connect(QApplication.instance().exit)
         super().closeEvent(event)
 
-    def showGuidance(self, WindowTitle: str, Images: list, Texts: list):
+    def showGuidance(self, windowTitle: str, Images: list, Texts: list):
         DialogBox = MessageBox_Stacked(self)
-        DialogBox.setWindowTitle(WindowTitle)
+        DialogBox.setWindowTitle(windowTitle)
         DialogBox.SetContent(Images, Texts)
         DialogBox.exec()
 
@@ -898,8 +898,8 @@ class MainWindow(Window_MainWindow):
         DialogBox_Models_Append.Button1.clicked.connect(
             lambda: (
                 LineEdit_Models_Append.setText(
-                    QFunc.Function_GetFileDialog(
-                        Mode = "SelectFolder"
+                    QFunc.getFileDialog(
+                        mode = "SelectFolder"
                     )
                 ),
                 DialogBox_Models_Append.close(),
@@ -909,9 +909,9 @@ class MainWindow(Window_MainWindow):
         DialogBox_Models_Append.Button2.clicked.connect(
             lambda: (
                 LineEdit_Models_Append.setText(
-                    QFunc.Function_GetFileDialog(
-                        Mode = "SelectFile",
-                        FileType = "模型文件 (*.pt *.pth *.ckpt *.bin *.json')"
+                    QFunc.getFileDialog(
+                        mode = "SelectFile",
+                        fileType = "模型文件 (*.pt *.pth *.ckpt *.bin *.json')"
                     )
                 ),
                 DialogBox_Models_Append.close(),
@@ -919,11 +919,11 @@ class MainWindow(Window_MainWindow):
         )
         DialogBox_Models_Append.exec()
         ModelPath = LineEdit_Models_Append.text()
-        if QFunc.NormPath(ModelPath) is None:
+        if QFunc.normPath(ModelPath) is None:
             return
         ToolIndexList = ['Process', 'VPR', 'ASR', 'TTS']
         ToolIndex = self.ui.StackedWidget_Pages_Models.currentIndex()
-        TabWidget = QFunc.Function_FindChildUI(self.ui.StackedWidget_Pages_Models.currentWidget(), QTabWidget)
+        TabWidget = QFunc.findChildUI(self.ui.StackedWidget_Pages_Models.currentWidget(), QTabWidget)
         TypeIndex = TabWidget.currentIndex()
         Sector = [
             ToolIndexList[ToolIndex],
@@ -936,25 +936,25 @@ class MainWindow(Window_MainWindow):
         def SetText_Dir():
             DirName = DirNameEdit.text()
             if len(DirName.strip()) == 0:
-                Alert = False
+                alert = False
             else:
                 DirText = Path(RootEdit.text()).joinpath(DirName).as_posix()
-                Alert = Path(DirText).exists() and list(Path(DirText).iterdir()) != []
+                alert = Path(DirText).exists() and list(Path(DirText).iterdir()) != []
                 DirEdit.setText(DirText)
-            DirNameEdit.Alert(True if Alert else False, "注意：目录已包含文件")
+            DirNameEdit.alert(True if alert else False, "注意：目录已包含文件")
         DirNameEdit.interacted.connect(SetText_Dir)
         RootEdit.interacted.connect(SetText_Dir)
 
     def setPathAlert(self, FileNameEdit: LineEditBase, DirEdit: LineEditBase, suffix: str, FileEdit: QLineEdit):
         def SetText_File():
-            FileName = FileNameEdit.text()
-            if len(FileName.strip()) == 0:
-                Alert = False
+            fileName = FileNameEdit.text()
+            if len(fileName.strip()) == 0:
+                alert = False
             else:
-                FileText = Path(DirEdit.text()).joinpath(FileName).as_posix() + suffix
-                Alert = Path(FileText).exists()
+                FileText = Path(DirEdit.text()).joinpath(fileName).as_posix() + suffix
+                alert = Path(FileText).exists()
                 FileEdit.setText(FileText)
-            FileNameEdit.Alert(True if Alert else False, "注意：路径已存在")
+            FileNameEdit.alert(True if alert else False, "注意：路径已存在")
         FileNameEdit.interacted.connect(SetText_File)
         DirEdit.interacted.connect(SetText_File)
 
@@ -965,8 +965,8 @@ class MainWindow(Window_MainWindow):
         DialogBox_AudioSpeakersDataPath.Button1.clicked.connect(
             lambda: (
                 self.ui.LineEdit_DAT_GPTSoVITS_AudioSpeakersDataPath.setText(
-                    QFunc.Function_GetFileDialog(
-                        Mode = "SelectFolder",
+                    QFunc.getFileDialog(
+                        mode = "SelectFolder",
                     )
                 ),
                 DialogBox_AudioSpeakersDataPath.close(),
@@ -976,10 +976,10 @@ class MainWindow(Window_MainWindow):
         DialogBox_AudioSpeakersDataPath.Button2.clicked.connect(
             lambda: (
                 self.ui.LineEdit_DAT_GPTSoVITS_AudioSpeakersDataPath.setText(
-                    QFunc.Function_GetFileDialog(
-                        Mode = "SelectFile",
-                        FileType = "txt类型 (*.txt)",
-                        Directory = Path(CurrentDir).joinpath('语音识别结果', 'VPR').as_posix()
+                    QFunc.getFileDialog(
+                        mode = "SelectFile",
+                        fileType = "txt类型 (*.txt)",
+                        directory = Path(currentDir).joinpath('语音识别结果', 'VPR').as_posix()
                     )
                 ),
                 DialogBox_AudioSpeakersDataPath.close(),
@@ -993,9 +993,9 @@ class MainWindow(Window_MainWindow):
         ChildWindow_VPR.ui.Button_Close.clicked.connect(
             lambda: MessageBoxBase.pop(self,
                 QMessageBox.Question, "Ask",
-                "确认放弃编辑？",
-                QMessageBox.Yes|QMessageBox.No,
-                {
+                text = "确认放弃编辑？",
+                buttons = QMessageBox.Yes|QMessageBox.No,
+                buttonEvents = {
                     QMessageBox.Yes: lambda: (
                         ChildWindow_VPR.close()
                     )
@@ -1004,16 +1004,17 @@ class MainWindow(Window_MainWindow):
         )
         ChildWindow_VPR.ui.Button_Maximize.clicked.connect(lambda: ChildWindow_VPR.showNormal() if ChildWindow_VPR.isMaximized() else ChildWindow_VPR.showMaximized())
 
-        QFunc.Function_SetText(
-            Widget = ChildWindow_VPR.ui.Label_Title,
-            Text = QFunc.SetRichText(
-                Title = QCA.translate('ChildWindow_VPR', "语音识别结果")
+        QFunc.setText(
+            widget = ChildWindow_VPR.ui.Label_Title,
+            text = QFunc.setRichText(
+                QCA.translate('ChildWindow_VPR', "语音识别结果"),
+                size = 12
             )
         )
-        QFunc.Function_SetText(
-            Widget = ChildWindow_VPR.ui.Label_Text,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('ChildWindow_VPR', "这里记录了每个语音文件与其对应的人物名（留空表示无匹配人物且最终不会被保留）\n你可以对这些人物名进行更改并在表格下方设置音频的保存路径")
+        QFunc.setText(
+            widget = ChildWindow_VPR.ui.Label_Text,
+            text = QFunc.setRichText(
+                QCA.translate('ChildWindow_VPR', "这里记录了每个语音文件与其对应的人物名（留空表示无匹配人物且最终不会被保留）\n你可以对这些人物名进行更改并在表格下方设置音频的保存路径")
             )
         )
 
@@ -1021,7 +1022,7 @@ class MainWindow(Window_MainWindow):
 
         ChildWindow_VPR.ui.CheckBox.setText(QCA.translate('ChildWindow_VPR', "结束编辑时将拥有匹配人物的音频保存到:"))
         ChildWindow_VPR.ui.CheckBox.setChecked(True)
-        ChildWindow_VPR.ui.LineEdit.ClearDefaultStyleSheet()
+        ChildWindow_VPR.ui.LineEdit.clearDefaultStyleSheet()
         ChildWindow_VPR.ui.LineEdit.setStyleSheet(ChildWindow_VPR.ui.LineEdit.styleSheet() + 'LineEditBase {border-width: 0px 0px 1px 0px; border-radius: 0px;}')
         ChildWindow_VPR.ui.LineEdit.setText(AudioSaveDir)
         ChildWindow_VPR.ui.LineEdit.setReadOnly(True)
@@ -1046,9 +1047,9 @@ class MainWindow(Window_MainWindow):
         ChildWindow_VPR.ui.Button_Confirm.clicked.connect(
             lambda: MessageBoxBase.pop(self,
                 QMessageBox.Question, "Ask",
-                "确认结束并应用编辑？",
-                QMessageBox.Yes|QMessageBox.No,
-                {
+                text = "确认结束并应用编辑？",
+                buttons = QMessageBox.Yes|QMessageBox.No,
+                buttonEvents = {
                     QMessageBox.Yes: lambda: (
                         VPRResult_Save(
                             ChildWindow_VPR.ui.Table.getValue(),
@@ -1074,9 +1075,9 @@ class MainWindow(Window_MainWindow):
         ChildWindow_ASR.ui.Button_Close.clicked.connect(
             lambda: MessageBoxBase.pop(self,
                 QMessageBox.Question, "Ask",
-                "确认放弃编辑？",
-                QMessageBox.Yes|QMessageBox.No,
-                {
+                text = "确认放弃编辑？",
+                buttons = QMessageBox.Yes|QMessageBox.No,
+                buttonEvents = {
                     QMessageBox.Yes: lambda: (
                         ChildWindow_ASR.close()
                     )
@@ -1085,16 +1086,17 @@ class MainWindow(Window_MainWindow):
         )
         ChildWindow_ASR.ui.Button_Maximize.clicked.connect(lambda: ChildWindow_ASR.showNormal() if ChildWindow_ASR.isMaximized() else ChildWindow_ASR.showMaximized())
 
-        QFunc.Function_SetText(
-            Widget = ChildWindow_ASR.ui.Label_Title,
-            Text = QFunc.SetRichText(
-                Title = QCA.translate('ChildWindow_ASR', "语音转录结果")
+        QFunc.setText(
+            widget = ChildWindow_ASR.ui.Label_Title,
+            text = QFunc.setRichText(
+                QCA.translate('ChildWindow_ASR', "语音转录结果"),
+                size = 12
             )
         )
-        QFunc.Function_SetText(
-            Widget = ChildWindow_ASR.ui.Label_Text,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('ChildWindow_ASR', "这里记录了每个语音文件与其对应的字幕文本（包含了时间戳）\n你可以对这些文本进行更改，若启用了语种标注则小心不要误删")
+        QFunc.setText(
+            widget = ChildWindow_ASR.ui.Label_Text,
+            text = QFunc.setRichText(
+                QCA.translate('ChildWindow_ASR', "这里记录了每个语音文件与其对应的字幕文本（包含了时间戳）\n你可以对这些文本进行更改，若启用了语种标注则小心不要误删")
             )
         )
 
@@ -1106,9 +1108,9 @@ class MainWindow(Window_MainWindow):
         ChildWindow_ASR.ui.Button_Confirm.clicked.connect(
             lambda: MessageBoxBase.pop(self,
                 QMessageBox.Question, "Ask",
-                "确认应用编辑？",
-                QMessageBox.Yes|QMessageBox.No,
-                {
+                text = "确认应用编辑？",
+                buttons = QMessageBox.Yes|QMessageBox.No,
+                buttonEvents = {
                     QMessageBox.Yes: lambda: (
                         ASRResult_Save(
                             ChildWindow_ASR.ui.Table.getValue(),
@@ -1131,9 +1133,9 @@ class MainWindow(Window_MainWindow):
         ChildWindow_DAT.ui.Button_Close.clicked.connect(
             lambda: MessageBoxBase.pop(self,
                 QMessageBox.Question, "Ask",
-                "确认放弃编辑？",
-                QMessageBox.Yes|QMessageBox.No,
-                {
+                text = "确认放弃编辑？",
+                buttons = QMessageBox.Yes|QMessageBox.No,
+                buttonEvents = {
                     QMessageBox.Yes: lambda: (
                         ChildWindow_DAT.close()
                     )
@@ -1142,16 +1144,17 @@ class MainWindow(Window_MainWindow):
         )
         ChildWindow_DAT.ui.Button_Maximize.clicked.connect(lambda: ChildWindow_DAT.showNormal() if ChildWindow_DAT.isMaximized() else ChildWindow_DAT.showMaximized())
 
-        QFunc.Function_SetText(
-            Widget = ChildWindow_DAT.ui.Label_Title,
-            Text = QFunc.SetRichText(
-                Title = QCA.translate('ChildWindow_DAT', "数据集制作结果")
+        QFunc.setText(
+            widget = ChildWindow_DAT.ui.Label_Title,
+            text = QFunc.setRichText(
+                QCA.translate('ChildWindow_DAT', "数据集制作结果"),
+                size = 12
             )
         )
-        QFunc.Function_SetText(
-            Widget = ChildWindow_DAT.ui.Label_Text,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('ChildWindow_DAT', "这里记录了每个语音文件与其对应的数据文本\n你可以对这些文本进行更改")
+        QFunc.setText(
+            widget = ChildWindow_DAT.ui.Label_Text,
+            text = QFunc.setRichText(
+                QCA.translate('ChildWindow_DAT', "这里记录了每个语音文件与其对应的数据文本\n你可以对这些文本进行更改")
             )
         )
 
@@ -1164,9 +1167,9 @@ class MainWindow(Window_MainWindow):
         ChildWindow_DAT.ui.Button_Confirm.clicked.connect(
             lambda: MessageBoxBase.pop(self,
                 QMessageBox.Question, "Ask",
-                "确认应用编辑？",
-                QMessageBox.Yes|QMessageBox.No,
-                {
+                text = "确认应用编辑？",
+                buttons = QMessageBox.Yes|QMessageBox.No,
+                buttonEvents = {
                     QMessageBox.Yes: lambda: (
                         DATResult_Save(
                             ChildWindow_DAT.ui.Table_Train.getValue(),
@@ -1196,11 +1199,11 @@ class MainWindow(Window_MainWindow):
         ChildWindow_TTS.ui.Button_Close.clicked.connect(
             lambda: MessageBoxBase.pop(self,
                 QMessageBox.Question, "Ask",
-                "确认退出试听？",
-                QMessageBox.Yes|QMessageBox.No,
-                {
+                text = "确认退出试听？",
+                buttons = QMessageBox.Yes|QMessageBox.No,
+                buttonEvents = {
                     QMessageBox.Yes: lambda: (
-                        ChildWindow_TTS.ui.Widget.ReleaseMediaPlayer(),
+                        ChildWindow_TTS.ui.widget.ReleaseMediaPlayer(),
                         ChildWindow_TTS.close()
                     )
                 } 
@@ -1208,16 +1211,17 @@ class MainWindow(Window_MainWindow):
         )
         ChildWindow_TTS.ui.Button_Maximize.clicked.connect(lambda: ChildWindow_TTS.showNormal() if ChildWindow_TTS.isMaximized() else ChildWindow_TTS.showMaximized())
 
-        QFunc.Function_SetText(
-            Widget = ChildWindow_TTS.ui.Label_Title,
-            Text = QFunc.SetRichText(
-                Title = QCA.translate('ChildWindow_TTS', "语音合成结果")
+        QFunc.setText(
+            widget = ChildWindow_TTS.ui.Label_Title,
+            text = QFunc.setRichText(
+                QCA.translate('ChildWindow_TTS', "语音合成结果"),
+                size = 12
             )
         )
-        QFunc.Function_SetText(
-            Widget = ChildWindow_TTS.ui.Label_Text,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('ChildWindow_TTS', "点击播放按钮以试听合成语音")
+        QFunc.setText(
+            widget = ChildWindow_TTS.ui.Label_Text,
+            text = QFunc.setRichText(
+                QCA.translate('ChildWindow_TTS', "点击播放按钮以试听合成语音")
             )
         )
 
@@ -1225,11 +1229,11 @@ class MainWindow(Window_MainWindow):
         ChildWindow_TTS.ui.Button_Cancel.clicked.connect(
             lambda: MessageBoxBase.pop(self,
                 QMessageBox.Question, "Ask",
-                "确认丢弃音频？",
-                QMessageBox.Yes|QMessageBox.No,
-                {
+                text = "确认丢弃音频？",
+                buttons = QMessageBox.Yes|QMessageBox.No,
+                buttonEvents = {
                     QMessageBox.Yes: lambda: (
-                        ChildWindow_TTS.ui.Widget.ReleaseMediaPlayer(),
+                        ChildWindow_TTS.ui.widget.ReleaseMediaPlayer(),
                         os.remove(MediaPath),
                         ChildWindow_TTS.close()
                     )
@@ -1240,16 +1244,16 @@ class MainWindow(Window_MainWindow):
         ChildWindow_TTS.ui.Button_Confirm.clicked.connect(
             lambda: MessageBoxBase.pop(self,
                 QMessageBox.Question, "Ask",
-                "确认保留音频？",
-                QMessageBox.Yes|QMessageBox.No,
-                {
+                text = "确认保留音频？",
+                buttons = QMessageBox.Yes|QMessageBox.No,
+                buttonEvents = {
                     QMessageBox.Yes: lambda: (
-                        ChildWindow_TTS.ui.Widget.ReleaseMediaPlayer(),
+                        ChildWindow_TTS.ui.widget.ReleaseMediaPlayer(),
                         shutil.move(
                             MediaPath,
-                            QFunc.Function_GetFileDialog(
-                                Mode = "SaveFile",
-                                FileType = "wav类型 (*.wav)"
+                            QFunc.getFileDialog(
+                                mode = "SaveFile",
+                                fileType = "wav类型 (*.wav)"
                             )
                         ),
                         ChildWindow_TTS.close()
@@ -1258,7 +1262,7 @@ class MainWindow(Window_MainWindow):
             )
         )
 
-        ChildWindow_TTS.ui.Widget.SetMediaPlayer(
+        ChildWindow_TTS.ui.widget.SetMediaPlayer(
             MediaPath
         )
         ChildWindow_TTS.exec()
@@ -1266,20 +1270,19 @@ class MainWindow(Window_MainWindow):
     def chkUpdate(self):
         FunctionSignals.Signal_ReadyToUpdate.connect(
             lambda DownloadURL, VersionInfo: (
-                MessageBoxBase.pop(
-                    MessageType = QMessageBox.Question,
-                    WindowTitle = 'Ask',
-                    Text = '检测到可用的新版本，是否更新？\nNew version available, wanna update?',
-                    DetailedText = VersionInfo,
-                    Buttons = QMessageBox.Yes|QMessageBox.No,
-                    ButtonEvents = {
+                MessageBoxBase.pop(None,
+                    QMessageBox.Question, "Ask",
+                    text = "检测到可用的新版本，是否更新？\nNew version available, wanna update?",
+                    detailedText = VersionInfo,
+                    buttons = QMessageBox.Yes|QMessageBox.No,
+                    buttonEvents = {
                         QMessageBox.Yes: lambda: (
-                            Config.editConfig('Updater', 'Asked', 'True'),
-                            subprocess.Popen((['python', UpdaterPath] if IsFileCompiled == False else [UpdaterPath]) + [f'--config "{ConfigPath}"'], shell = True, env = os.environ),
+                            config.editConfig('Updater', 'Asked', 'True'),
+                            subprocess.Popen((['python', UpdaterPath] if isFileCompiled == False else [UpdaterPath]) + [f'--config "{configPath}"'], shell = True, env = os.environ),
                             QApplication.instance().exit()
                         ),
                         QMessageBox.No: lambda: (
-                            Config.editConfig('Updater', 'Asked', 'False'),
+                            config.editConfig('Updater', 'Asked', 'False'),
                         )
                     }
                 )
@@ -1287,19 +1290,19 @@ class MainWindow(Window_MainWindow):
         )
 
         Function_SetMethodExecutor(self,
-            Method = Execute_Update_Checking.Execute,
-            Params = ()
+            method = Execute_Update_Checking.Execute,
+            params = ()
         )
 
-    def Main(self):
+    def main(self):
         '''
         Main funtion to orgnize all the subfunctions
         '''
         # Check for updates
-        self.chkUpdate() if Config.getValue('Settings', 'AutoUpdate', 'Enabled') == 'Enabled' else None
+        self.chkUpdate() if config.getValue('Settings', 'AutoUpdate', 'Enabled') == 'Enabled' else None
 
         # Logo
-        self.setWindowIcon(QIcon(QFunc.NormPath(Path(ResourceDir).joinpath('assets/images/Logo.ico'))))
+        self.setWindowIcon(QIcon(QFunc.normPath(Path(resourceDir).joinpath('assets/images/Logo.ico'))))
 
         #############################################################
         ########################## TitleBar #########################
@@ -1312,16 +1315,16 @@ class MainWindow(Window_MainWindow):
             )
         )
         Function_ConfigureCheckBox(
-            CheckBox = self.ui.CheckBox_SwitchTheme,
-            CheckedEvents = [
-                lambda: Config.editConfig('Settings', 'Theme', Theme.Light),
+            checkBox = self.ui.CheckBox_SwitchTheme,
+            checkedEvents = [
+                lambda: config.editConfig('Settings', 'Theme', Theme.Light),
                 lambda: ComponentsSignals.Signal_SetTheme.emit(Theme.Light) if EasyTheme.THEME != Theme.Light else None
             ],
-            UncheckedEvents = [
-                lambda: Config.editConfig('Settings', 'Theme', Theme.Dark),
+            uncheckedEvents = [
+                lambda: config.editConfig('Settings', 'Theme', Theme.Dark),
                 lambda: ComponentsSignals.Signal_SetTheme.emit(Theme.Dark) if EasyTheme.THEME != Theme.Dark else None
             ],
-            TakeEffect = False
+            takeEffect = False
         )
 
         # Window controling buttons
@@ -1346,9 +1349,9 @@ class MainWindow(Window_MainWindow):
         # Menu toggling button
         self.ui.Button_Toggle_Menu.clicked.connect(
             lambda: Function_AnimateFrame(
-                Frame = self.ui.Frame_Menu,
-                MinWidth = 48,
-                MaxWidth = 210
+                frame = self.ui.Frame_Menu,
+                minWidth = 48,
+                maxWidth = 210
             )
         )
         self.ui.Button_Toggle_Menu.setChecked(False)
@@ -1361,8 +1364,8 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_Menu_Home.setText(QCA.translate('MainWindow', "主页"))
         self.ui.Button_Menu_Home.clicked.connect(
             lambda: Function_AnimateStackedWidget(
-                StackedWidget = self.ui.StackedWidget_Pages,
-                Target = 0
+                stackedWidget = self.ui.StackedWidget_Pages,
+                target = 0
             )
         )
         self.ui.Button_Menu_Home.setChecked(True)
@@ -1371,8 +1374,8 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_Menu_Env.setText(QCA.translate('MainWindow', "环境"))
         self.ui.Button_Menu_Env.clicked.connect(
             lambda: Function_AnimateStackedWidget(
-                StackedWidget = self.ui.StackedWidget_Pages,
-                Target = 1
+                stackedWidget = self.ui.StackedWidget_Pages,
+                target = 1
             )
         )
         self.ui.Button_Menu_Env.setChecked(False)
@@ -1381,8 +1384,8 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_Menu_Models.setText(QCA.translate('MainWindow', "模型"))
         self.ui.Button_Menu_Models.clicked.connect(
             lambda: Function_AnimateStackedWidget(
-                StackedWidget = self.ui.StackedWidget_Pages,
-                Target = 2
+                stackedWidget = self.ui.StackedWidget_Pages,
+                target = 2
             )
         )
         self.ui.Button_Menu_Models.setChecked(False)
@@ -1391,8 +1394,8 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_Menu_Process.setText(QCA.translate('MainWindow', "处理"))
         self.ui.Button_Menu_Process.clicked.connect(
             lambda: Function_AnimateStackedWidget(
-                StackedWidget = self.ui.StackedWidget_Pages,
-                Target = 3
+                stackedWidget = self.ui.StackedWidget_Pages,
+                target = 3
             )
         )
         self.ui.Button_Menu_Process.setChecked(False)
@@ -1401,8 +1404,8 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_Menu_VPR.setText(QCA.translate('MainWindow', "识别"))
         self.ui.Button_Menu_VPR.clicked.connect(
             lambda: Function_AnimateStackedWidget(
-                StackedWidget = self.ui.StackedWidget_Pages,
-                Target = 4
+                stackedWidget = self.ui.StackedWidget_Pages,
+                target = 4
             )
         )
         self.ui.Button_Menu_VPR.setChecked(False)
@@ -1411,8 +1414,8 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_Menu_ASR.setText(QCA.translate('MainWindow', "转录"))
         self.ui.Button_Menu_ASR.clicked.connect(
             lambda: Function_AnimateStackedWidget(
-                StackedWidget = self.ui.StackedWidget_Pages,
-                Target = 5
+                stackedWidget = self.ui.StackedWidget_Pages,
+                target = 5
             )
         )
         self.ui.Button_Menu_ASR.setChecked(False)
@@ -1421,8 +1424,8 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_Menu_Dataset.setText(QCA.translate('MainWindow', "数据"))
         self.ui.Button_Menu_Dataset.clicked.connect(
             lambda: Function_AnimateStackedWidget(
-                StackedWidget = self.ui.StackedWidget_Pages,
-                Target = 6
+                stackedWidget = self.ui.StackedWidget_Pages,
+                target = 6
             )
         )
         self.ui.Button_Menu_Dataset.setChecked(False)
@@ -1431,8 +1434,8 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_Menu_Train.setText(QCA.translate('MainWindow', "训练"))
         self.ui.Button_Menu_Train.clicked.connect(
             lambda: Function_AnimateStackedWidget(
-                StackedWidget = self.ui.StackedWidget_Pages,
-                Target = 7
+                stackedWidget = self.ui.StackedWidget_Pages,
+                target = 7
             )
         )
         self.ui.Button_Menu_Train.setChecked(False)
@@ -1441,8 +1444,8 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_Menu_TTS.setText(QCA.translate('MainWindow', "合成"))
         self.ui.Button_Menu_TTS.clicked.connect(
             lambda: Function_AnimateStackedWidget(
-                StackedWidget = self.ui.StackedWidget_Pages,
-                Target = 8
+                stackedWidget = self.ui.StackedWidget_Pages,
+                target = 8
             )
         )
         self.ui.Button_Menu_TTS.setChecked(False)
@@ -1451,8 +1454,8 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_Menu_Settings.setText(QCA.translate('MainWindow', "设置"))
         self.ui.Button_Menu_Settings.clicked.connect(
             lambda: Function_AnimateStackedWidget(
-                StackedWidget = self.ui.StackedWidget_Pages,
-                Target = 9
+                stackedWidget = self.ui.StackedWidget_Pages,
+                target = 9
             )
         )
         self.ui.Button_Menu_Settings.setChecked(False)
@@ -1461,8 +1464,8 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_Menu_Info.setText(QCA.translate('MainWindow', "关于"))
         self.ui.Button_Menu_Info.clicked.connect(
             lambda: Function_AnimateStackedWidget(
-                StackedWidget = self.ui.StackedWidget_Pages,
-                Target = 10
+                stackedWidget = self.ui.StackedWidget_Pages,
+                target = 10
             )
         )
         self.ui.Button_Menu_Info.setChecked(False)
@@ -1472,16 +1475,17 @@ class MainWindow(Window_MainWindow):
         ####################### Content: Home #######################
         #############################################################
 
-        self.ui.Label_Cover_Home.setPixmap(QPixmap(Path(ResourceDir).joinpath('assets/images/others/Cover.png')))
+        self.ui.Label_Cover_Home.setPixmap(QPixmap(Path(resourceDir).joinpath('assets/images/others/Cover.png')))
 
-        QFunc.Function_SetText(
-            Widget = self.ui.TextBrowser_Text_Home,
-            Text = QFunc.SetRichText(
-                Title = QCA.translate('MainWindow', "介绍"),
-                TitleAlign = "left",
-                TitleSize = 24,
-                TitleWeight = 840,
-                Body = QCA.translate('MainWindow',
+        QFunc.setText(
+            widget = self.ui.TextBrowser_Text_Home,
+            text = QFunc.richTextManager().addTitle(
+                text = QCA.translate('MainWindow', "介绍"),
+                align = "left",
+                size = 24,
+                weight = 840,
+            ).addBody(
+                text = QCA.translate('MainWindow',
                     """
                     一个基于Whisper、VITS等项目实现的简易语音工具箱，提供了包括语音模型训练在内的多种自动化音频工具
 
@@ -1497,36 +1501,36 @@ class MainWindow(Window_MainWindow):
                     用户可以根据自己的需求有选择性地使用，亦或者依次通过这些工具将未经处理的语音文件逐步变为理想的语音模型
                     """
                 ),
-                BodyAlign = "left",
-                BodySize = 12,
-                BodyWeight = 420,
-                BodyLineHeight = 27
-            )
+                align = "left",
+                size = 12,
+                weight = 420,
+                lineHeight = 27
+            ).richText()
         )
 
         self.ui.Label_Demo_Text.setText(QCA.translate('MainWindow', "视频演示"))
         Function_SetURL(
-            Button = self.ui.Button_Demo,
-            URL = "https://www.bilibili.com/video/BV",
-            ButtonTooltip = "Click to view demo video"
+            button = self.ui.Button_Demo,
+            url = "https://www.bilibili.com/video/BV",
+            buttonTooltip = "Click to view demo video"
         )
         self.ui.Label_Server_Text.setText(QCA.translate('MainWindow', "云端版本"))
         Function_SetURL(
-            Button = self.ui.Button_Server,
-            URL = "https://colab.research.google.com/github/Spr-Aachen/EVT-Reassets/images/others/blob/main/Easy_Voice_Toolkit_for_Colab.ipynb",
-            ButtonTooltip = "Click to run on server"
+            button = self.ui.Button_Server,
+            url = "https://colab.research.google.com/github/Spr-Aachen/EVT-Reassets/images/others/blob/main/Easy_Voice_Toolkit_for_Colab.ipynb",
+            buttonTooltip = "Click to run on server"
         )
         self.ui.Label_Repo_Text.setText(QCA.translate('MainWindow', "项目仓库"))
         Function_SetURL(
-            Button = self.ui.Button_Repo,
-            URL = "https://github.com/Spr-Aachen/Easy-Voice-Toolkit",
-            ButtonTooltip = "Click to view github repo"
+            button = self.ui.Button_Repo,
+            url = "https://github.com/Spr-Aachen/Easy-Voice-Toolkit",
+            buttonTooltip = "Click to view github repo"
         )
         self.ui.Label_Donate_Text.setText(QCA.translate('MainWindow', "赞助作者"))
         Function_SetURL(
-            Button = self.ui.Button_Donate,
-            URL = "https://ko-fi.com/spr_aachen",
-            ButtonTooltip = "Click to buy author a coffee"
+            button = self.ui.Button_Donate,
+            url = "https://ko-fi.com/spr_aachen",
+            buttonTooltip = "Click to buy author a coffee"
         )
 
         #############################################################
@@ -1539,17 +1543,17 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_Env_Install_Title.setChecked(True)
         self.ui.Button_Env_Install_Title.clicked.connect(
             lambda: Function_AnimateStackedWidget(
-                StackedWidget = self.ui.StackedWidget_Pages_Env,
-                Target = 0
+                stackedWidget = self.ui.StackedWidget_Pages_Env,
+                target = 0
             )
         )
 
         self.ui.Label_Env_Install_Aria2.setText(QCA.translate('MainWindow', "Aria2"))
         Function_SetMethodExecutor(self,
-            ExecuteButton = self.ui.Button_Install_Aria2,
-            ProgressBar = self.ui.ProgressBar_Env_Install_Aria2,
-            Method = Aria2_Installer.Execute,
-            Params = ()
+            executeButton = self.ui.Button_Install_Aria2,
+            progressBar = self.ui.ProgressBar_Env_Install_Aria2,
+            method = Aria2_Installer.Execute,
+            params = ()
         )
         MainWindowSignals.Signal_MainWindowShown.connect(
             self.ui.Button_Install_Aria2.click
@@ -1557,9 +1561,9 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_Install_Aria2.setToolTip(QCA.translate('MainWindow', "重新检测安装"))
         EnvConfiguratorSignals.Signal_Aria2Undetected.connect(
             lambda: MessageBoxBase.pop(self,
-                WindowTitle = "Tip",
-                Text = "未检测到Aria2，已开始下载",
-                ButtonEvents = {QMessageBox.Ok: lambda: self.ui.Button_Menu_Env.click()}
+                QMessageBox.Information, "Tip",
+                text = "未检测到Aria2，已开始下载",
+                buttonEvents = {QMessageBox.Ok: lambda: self.ui.Button_Menu_Env.click()}
             )
         )
         EnvConfiguratorSignals.Signal_Aria2Installed.connect(#self.ui.Button_Install_Aria2.click)
@@ -1567,9 +1571,8 @@ class MainWindow(Window_MainWindow):
         )
         EnvConfiguratorSignals.Signal_Aria2InstallFailed.connect(
             lambda Exception: MessageBoxBase.pop(self,
-                MessageType = QMessageBox.Warning,
-                WindowTitle = "Warning",
-                Text = f"安装Aria2出错：\n{Exception}",
+                QMessageBox.Warning, "Warning",
+                text = f"安装Aria2出错：\n{Exception}",
             )
         )
         EnvConfiguratorSignals.Signal_Aria2Detected.connect(
@@ -1582,10 +1585,10 @@ class MainWindow(Window_MainWindow):
 
         self.ui.Label_Env_Install_FFmpeg.setText(QCA.translate('MainWindow', "FFmpeg"))
         Function_SetMethodExecutor(self,
-            ExecuteButton = self.ui.Button_Install_FFmpeg,
-            ProgressBar = self.ui.ProgressBar_Env_Install_FFmpeg,
-            Method = FFmpeg_Installer.Execute,
-            Params = ()
+            executeButton = self.ui.Button_Install_FFmpeg,
+            progressBar = self.ui.ProgressBar_Env_Install_FFmpeg,
+            method = FFmpeg_Installer.Execute,
+            params = ()
         )
         MainWindowSignals.Signal_MainWindowShown.connect(
             self.ui.Button_Install_FFmpeg.click
@@ -1593,9 +1596,9 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_Install_FFmpeg.setToolTip(QCA.translate('MainWindow', "重新检测安装"))
         EnvConfiguratorSignals.Signal_FFmpegUndetected.connect(
             lambda: MessageBoxBase.pop(self,
-                WindowTitle = "Tip",
-                Text = "未检测到FFmpeg，已开始下载",
-                ButtonEvents = {QMessageBox.Ok: lambda: self.ui.Button_Menu_Env.click()}
+                QMessageBox.Information, "Tip",
+                text = "未检测到FFmpeg，已开始下载",
+                buttonEvents = {QMessageBox.Ok: lambda: self.ui.Button_Menu_Env.click()}
             )
         )
         EnvConfiguratorSignals.Signal_FFmpegInstalled.connect(#self.ui.Button_Install_FFmpeg.click)
@@ -1603,9 +1606,8 @@ class MainWindow(Window_MainWindow):
         )
         EnvConfiguratorSignals.Signal_FFmpegInstallFailed.connect(
             lambda Exception: MessageBoxBase.pop(self,
-                MessageType = QMessageBox.Warning,
-                WindowTitle = "Warning",
-                Text = f"安装FFmpeg出错：\n{Exception}",
+                QMessageBox.Warning, "Warning",
+                text = f"安装FFmpeg出错：\n{Exception}",
             )
         )
         EnvConfiguratorSignals.Signal_FFmpegDetected.connect(
@@ -1618,10 +1620,10 @@ class MainWindow(Window_MainWindow):
 
         self.ui.Label_Env_Install_Python.setText(QCA.translate('MainWindow', "Python"))
         Function_SetMethodExecutor(self,
-            ExecuteButton = self.ui.Button_Install_Python,
-            ProgressBar = self.ui.ProgressBar_Env_Install_Python,
-            Method = Python_Installer.Execute,
-            Params = ('3.9.0', )
+            executeButton = self.ui.Button_Install_Python,
+            progressBar = self.ui.ProgressBar_Env_Install_Python,
+            method = Python_Installer.Execute,
+            params = ('3.9.0', )
         )
         MainWindowSignals.Signal_MainWindowShown.connect( #EnvConfiguratorSignals.Signal_CMakeDetected.connect(
             self.ui.Button_Install_Python.click
@@ -1629,9 +1631,9 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_Install_Python.setToolTip(QCA.translate('MainWindow', "重新检测安装"))
         EnvConfiguratorSignals.Signal_PythonUndetected.connect(
             lambda: MessageBoxBase.pop(self,
-                WindowTitle = "Tip",
-                Text = "未检测到3.8版本以上的Python，已开始下载",
-                ButtonEvents = {QMessageBox.Ok: lambda: self.ui.Button_Menu_Env.click()}
+                QMessageBox.Information, "Tip",
+                text = "未检测到3.8版本以上的Python，已开始下载",
+                buttonEvents = {QMessageBox.Ok: lambda: self.ui.Button_Menu_Env.click()}
             )
         )
         EnvConfiguratorSignals.Signal_PythonInstalled.connect(#self.ui.Button_Install_Python.click)
@@ -1639,9 +1641,8 @@ class MainWindow(Window_MainWindow):
         )
         EnvConfiguratorSignals.Signal_PythonInstallFailed.connect(
             lambda Exception: MessageBoxBase.pop(self,
-                MessageType = QMessageBox.Warning,
-                WindowTitle = "Warning",
-                Text = f"安装Python出错：\n{Exception}",
+                QMessageBox.Warning, "Warning",
+                text = f"安装Python出错：\n{Exception}",
             )
         )
         EnvConfiguratorSignals.Signal_PythonDetected.connect(
@@ -1654,10 +1655,10 @@ class MainWindow(Window_MainWindow):
 
         self.ui.Label_Env_Install_PyReqs.setText(QCA.translate('MainWindow', "Python Requirements"))
         Function_SetMethodExecutor(self,
-            ExecuteButton = self.ui.Button_Install_PyReqs,
-            ProgressBar = self.ui.ProgressBar_Env_Install_PyReqs,
-            Method = PyReqs_Installer.Execute,
-            Params = (QFunc.NormPath(RequirementsPath), )
+            executeButton = self.ui.Button_Install_PyReqs,
+            progressBar = self.ui.ProgressBar_Env_Install_PyReqs,
+            method = PyReqs_Installer.Execute,
+            params = (QFunc.normPath(RequirementsPath), )
         ) if Path(RequirementsPath).exists() else None
         EnvConfiguratorSignals.Signal_PythonDetected.connect(
             self.ui.Button_Install_PyReqs.click
@@ -1665,9 +1666,9 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_Install_PyReqs.setToolTip(QCA.translate('MainWindow', "重新检测安装"))
         EnvConfiguratorSignals.Signal_PyReqsUndetected.connect(
             lambda: MessageBoxBase.pop(self,
-                WindowTitle = "Tip",
-                Text = "缺失Python依赖库，已开始下载",
-                ButtonEvents = {QMessageBox.Ok: lambda: self.ui.Button_Menu_Env.click()}
+                QMessageBox.Information, "Tip",
+                text = "缺失Python依赖库，已开始下载",
+                buttonEvents = {QMessageBox.Ok: lambda: self.ui.Button_Menu_Env.click()}
             )
         )
         EnvConfiguratorSignals.Signal_PyReqsInstalled.connect(#self.ui.Button_Install_PyReqs.click)
@@ -1675,9 +1676,8 @@ class MainWindow(Window_MainWindow):
         )
         EnvConfiguratorSignals.Signal_PyReqsInstallFailed.connect(
             lambda Exception: MessageBoxBase.pop(self,
-                MessageType = QMessageBox.Warning,
-                WindowTitle = "Warning",
-                Text = f"安装Python依赖库出错：\n{Exception}"
+                QMessageBox.Warning, "Warning",
+                text = f"安装Python依赖库出错：\n{Exception}"
             )
         )
         EnvConfiguratorSignals.Signal_PyReqsDetected.connect(
@@ -1690,10 +1690,10 @@ class MainWindow(Window_MainWindow):
 
         self.ui.Label_Env_Install_Pytorch.setText(QCA.translate('MainWindow', "Pytorch"))
         Function_SetMethodExecutor(self,
-            ExecuteButton = self.ui.Button_Install_Pytorch,
-            ProgressBar = self.ui.ProgressBar_Env_Install_Pytorch,
-            Method = Pytorch_Installer.Execute,
-            Params = ()
+            executeButton = self.ui.Button_Install_Pytorch,
+            progressBar = self.ui.ProgressBar_Env_Install_Pytorch,
+            method = Pytorch_Installer.Execute,
+            params = ()
         )
         EnvConfiguratorSignals.Signal_PyReqsDetected.connect(
             self.ui.Button_Install_Pytorch.click
@@ -1701,9 +1701,9 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_Install_Pytorch.setToolTip(QCA.translate('MainWindow', "重新检测安装"))
         EnvConfiguratorSignals.Signal_PytorchUndetected.connect(
             lambda: MessageBoxBase.pop(self,
-                WindowTitle = "Tip",
-                Text = "缺失Pytorch相关库，已开始下载",
-                ButtonEvents = {QMessageBox.Ok: lambda: self.ui.Button_Menu_Env.click()}
+                QMessageBox.Information, "Tip",
+                text = "缺失Pytorch相关库，已开始下载",
+                buttonEvents = {QMessageBox.Ok: lambda: self.ui.Button_Menu_Env.click()}
             )
         )
         EnvConfiguratorSignals.Signal_PytorchInstalled.connect(#self.ui.Button_Install_Pytorch.click)
@@ -1711,9 +1711,8 @@ class MainWindow(Window_MainWindow):
         )
         EnvConfiguratorSignals.Signal_PytorchInstallFailed.connect(
             lambda Exception: MessageBoxBase.pop(self,
-                MessageType = QMessageBox.Warning,
-                WindowTitle = "Warning",
-                Text = f"安装Pytorch出错：\n{Exception}",
+                QMessageBox.Warning, "Warning",
+                text = f"安装Pytorch出错：\n{Exception}",
             )
         )
         EnvConfiguratorSignals.Signal_PytorchDetected.connect(
@@ -1730,8 +1729,8 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_Env_Manage_Title.setChecked(False)
         self.ui.Button_Env_Manage_Title.clicked.connect(
             lambda: Function_AnimateStackedWidget(
-                StackedWidget = self.ui.StackedWidget_Pages_Env,
-                Target = 1
+                stackedWidget = self.ui.StackedWidget_Pages_Env,
+                target = 1
             )
         )
 
@@ -1743,9 +1742,9 @@ class MainWindow(Window_MainWindow):
 
         self.ui.Button_Env_Manage_Pytorch_Install.setText(QCA.translate('MainWindow', "重装"))
         Function_SetMethodExecutor(self,
-            ExecuteButton = self.ui.Button_Env_Manage_Pytorch_Install,
-            Method = Pytorch_Installer.Execute,
-            ParamsFrom = [
+            executeButton = self.ui.Button_Env_Manage_Pytorch_Install,
+            method = Pytorch_Installer.Execute,
+            paramsFrom = [
                 self.ui.ComboBox_Env_Manage_Pytorch_Version,
                 True
             ]
@@ -1757,7 +1756,7 @@ class MainWindow(Window_MainWindow):
 
         MainWindowSignals.Signal_MainWindowShown.connect(
             lambda: Function_SetMethodExecutor(self,
-                Method = Model_View.Execute
+                method = Model_View.Execute
             )
         )
 
@@ -1766,8 +1765,8 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_Models_Process_Title.setChecked(True)
         self.ui.Button_Models_Process_Title.clicked.connect(
             lambda: Function_AnimateStackedWidget(
-                StackedWidget = self.ui.StackedWidget_Pages_Models,
-                Target = 0
+                stackedWidget = self.ui.StackedWidget_Pages_Models,
+                target = 0
             )
         )
         self.ui.Button_Models_Process_Title.setToolTip(QCA.translate('MainWindow', "基本处理模型"))
@@ -1776,9 +1775,9 @@ class MainWindow(Window_MainWindow):
         self.ui.Table_Models_Process_UVR.setHorizontalHeaderLabels(['名字', '类型', '大小', '日期', '操作'])
         ModelViewSignals.Signal_Process_UVR.connect(self.ui.Table_Models_Process_UVR.setValue)
         self.ui.Table_Models_Process_UVR.Download.connect(
-            lambda Params: Function_SetMethodExecutor(self,
-                Method = Model_Downloader.Execute,
-                Params = Params
+            lambda params: Function_SetMethodExecutor(self,
+                method = Model_Downloader.Execute,
+                params = params
             )
         )
 
@@ -1787,8 +1786,8 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_Models_VPR_Title.setChecked(False)
         self.ui.Button_Models_VPR_Title.clicked.connect(
             lambda: Function_AnimateStackedWidget(
-                StackedWidget = self.ui.StackedWidget_Pages_Models,
-                Target = 1
+                stackedWidget = self.ui.StackedWidget_Pages_Models,
+                target = 1
             )
         )
         self.ui.Button_Models_VPR_Title.setToolTip(QCA.translate('MainWindow', "语音识别模型"))
@@ -1797,9 +1796,9 @@ class MainWindow(Window_MainWindow):
         self.ui.Table_Models_VPR_TDNN.setHorizontalHeaderLabels(['名字', '类型', '大小', '日期', '操作'])
         ModelViewSignals.Signal_VPR_TDNN.connect(self.ui.Table_Models_VPR_TDNN.setValue)
         self.ui.Table_Models_VPR_TDNN.Download.connect(
-            lambda Params: Function_SetMethodExecutor(self,
-                Method = Model_Downloader.Execute,
-                Params = Params
+            lambda params: Function_SetMethodExecutor(self,
+                method = Model_Downloader.Execute,
+                params = params
             )
         )
 
@@ -1808,8 +1807,8 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_Models_ASR_Title.setChecked(False)
         self.ui.Button_Models_ASR_Title.clicked.connect(
             lambda: Function_AnimateStackedWidget(
-                StackedWidget = self.ui.StackedWidget_Pages_Models,
-                Target = 2
+                stackedWidget = self.ui.StackedWidget_Pages_Models,
+                target = 2
             )
         )
         self.ui.Button_Models_ASR_Title.setToolTip(QCA.translate('MainWindow', "语音转录模型"))
@@ -1818,9 +1817,9 @@ class MainWindow(Window_MainWindow):
         self.ui.Table_Models_ASR_Whisper.setHorizontalHeaderLabels(['名字', '类型', '大小', '日期', '操作'])
         ModelViewSignals.Signal_ASR_Whisper.connect(self.ui.Table_Models_ASR_Whisper.setValue)
         self.ui.Table_Models_ASR_Whisper.Download.connect(
-            lambda Params: Function_SetMethodExecutor(self,
-                Method = Model_Downloader.Execute,
-                Params = Params
+            lambda params: Function_SetMethodExecutor(self,
+                method = Model_Downloader.Execute,
+                params = params
             )
         )
 
@@ -1829,8 +1828,8 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_Models_TTS_Title.setChecked(False)
         self.ui.Button_Models_TTS_Title.clicked.connect(
             lambda: Function_AnimateStackedWidget(
-                StackedWidget = self.ui.StackedWidget_Pages_Models,
-                Target = 3
+                stackedWidget = self.ui.StackedWidget_Pages_Models,
+                target = 3
             )
         )
         self.ui.Button_Models_TTS_Title.setToolTip(QCA.translate('MainWindow', "语音合成模型"))
@@ -1839,9 +1838,9 @@ class MainWindow(Window_MainWindow):
         self.ui.Table_Models_TTS_GPTSoVITS.setHorizontalHeaderLabels(['名字', '类型', '大小', '日期', '操作'])
         ModelViewSignals.Signal_TTS_GPTSoVITS.connect(self.ui.Table_Models_TTS_GPTSoVITS.setValue)
         self.ui.Table_Models_TTS_GPTSoVITS.Download.connect(
-            lambda Params: Function_SetMethodExecutor(self,
-                Method = Model_Downloader.Execute,
-                Params = Params
+            lambda params: Function_SetMethodExecutor(self,
+                method = Model_Downloader.Execute,
+                params = params
             )
         )
 
@@ -1849,16 +1848,16 @@ class MainWindow(Window_MainWindow):
         self.ui.Table_Models_TTS_VITS.setHorizontalHeaderLabels(['名字', '类型', '大小', '日期', '操作'])
         ModelViewSignals.Signal_TTS_VITS.connect(self.ui.Table_Models_TTS_VITS.setValue)
         self.ui.Table_Models_TTS_VITS.Download.connect(
-            lambda Params: Function_SetMethodExecutor(self,
-                Method = Model_Downloader.Execute,
-                Params = Params
+            lambda params: Function_SetMethodExecutor(self,
+                method = Model_Downloader.Execute,
+                params = params
             )
         )
 
         self.ui.Button_Models_Refresh.setText(QCA.translate('MainWindow', '刷新'))
         self.ui.Button_Models_Refresh.clicked.connect(
             lambda: Function_SetMethodExecutor(self,
-                Method = Model_View.Execute
+                method = Model_View.Execute
             )
         )
 
@@ -1874,8 +1873,8 @@ class MainWindow(Window_MainWindow):
             lambda: self.showGuidance(
                 QCA.translate('MainWindow', "引导（仅出现一次）"),
                 [
-                    QFunc.NormPath(Path(ResourceDir).joinpath('assets/images/others/Guidance_Process.png')),
-                    QFunc.NormPath(Path(ResourceDir).joinpath('assets/images/others/Guidance_Layout.png'))
+                    QFunc.normPath(Path(resourceDir).joinpath('assets/images/others/Guidance_Process.png')),
+                    QFunc.normPath(Path(resourceDir).joinpath('assets/images/others/Guidance_Layout.png'))
                 ],
                 [
                     '欢迎来到音频处理工具界面\n该工具用于将媒体文件批量转换为音频文件并进行降噪、静音切除等操作',
@@ -1887,12 +1886,12 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_Menu_Process.clicked.connect(
             lambda: (
                 self.ui.Button_AudioProcessor_Help.click(),
-                Config.editConfig('Dialog', 'GuidanceShown_Process', 'True')
-            ) if eval(Config.getValue('Dialog', 'GuidanceShown_Process', 'False')) is False else None
+                config.editConfig('Dialog', 'GuidanceShown_Process', 'True')
+            ) if eval(config.getValue('Dialog', 'GuidanceShown_Process', 'False')) is False else None
         )
 
         # ParamsManager
-        Path_Config_Process = QFunc.NormPath(Path(ConfigDir).joinpath('Config_Process.ini'))
+        Path_Config_Process = QFunc.normPath(Path(configDir).joinpath('Config_Process.ini'))
         ParamsManager_Process = ParamsManager(Path_Config_Process)
 
         # Top
@@ -1901,8 +1900,8 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_AudioProcessor_Title.setChecked(True)
         self.ui.Button_AudioProcessor_Title.clicked.connect(
             lambda: Function_AnimateStackedWidget(
-                StackedWidget = self.ui.StackedWidget_Pages_Process,
-                Target = 0
+                stackedWidget = self.ui.StackedWidget_Pages_Process,
+                target = 0
             )
         )
 
@@ -1913,26 +1912,26 @@ class MainWindow(Window_MainWindow):
         # Middle
         self.ui.GroupBox_Process_InputParams.setTitle(QCA.translate('MainWindow', "输入参数"))
         Function_AddToTreeWidget(
-            Widget = self.ui.GroupBox_Process_InputParams,
-            TreeWidget = self.ui.TreeWidget_Catalogue_Process,
-            RootItemText = QCA.translate('MainWindow', "输入参数")
+            widget = self.ui.GroupBox_Process_InputParams,
+            treeWidget = self.ui.TreeWidget_Catalogue_Process,
+            rootItemText = QCA.translate('MainWindow', "输入参数")
         )
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_Process_MediaDirInput,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "媒体输入目录\n需要处理的音频文件的所在目录。")
+        QFunc.setText(
+            widget = self.ui.Label_Process_MediaDirInput,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "媒体输入目录\n需要处理的音频文件的所在目录。")
             )
         )
         ParamsManager_Process.SetParam(
-            Widget = self.ui.LineEdit_Process_MediaDirInput,
-            Section = 'Input Params',
-            Option = 'Media_Dir_Input',
-            DefaultValue = '',
-            SetPlaceholderText = True
+            widget = self.ui.LineEdit_Process_MediaDirInput,
+            section = 'Input params',
+            option = 'Media_Dir_Input',
+            defaultValue = '',
+            setPlaceholderText = True
         )
         self.ui.LineEdit_Process_MediaDirInput.setFileDialog(
-            Mode = "SelectFolder"
+            mode = "SelectFolder"
         )
         self.ui.Button_Process_MediaDirInput_MoreActions.SetMenu(
             ActionEvents = {
@@ -1941,35 +1940,35 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_Process_MediaDirInput,
-            TreeWidget = self.ui.TreeWidget_Catalogue_Process,
-            RootItemText = QCA.translate('MainWindow', "输入参数"),
-            ChildItemText = QCA.translate('MainWindow', "媒体输入目录")
+            widget = self.ui.Label_Process_MediaDirInput,
+            treeWidget = self.ui.TreeWidget_Catalogue_Process,
+            rootItemText = QCA.translate('MainWindow', "输入参数"),
+            childItemText = QCA.translate('MainWindow', "媒体输入目录")
         )
 
         self.ui.GroupBox_Process_DenoiserParams.setTitle(QCA.translate('MainWindow', "降噪参数"))
         Function_AddToTreeWidget(
-            Widget = self.ui.GroupBox_Process_DenoiserParams,
-            TreeWidget = self.ui.TreeWidget_Catalogue_Process,
-            RootItemText = QCA.translate('MainWindow', "降噪参数")
+            widget = self.ui.GroupBox_Process_DenoiserParams,
+            treeWidget = self.ui.TreeWidget_Catalogue_Process,
+            rootItemText = QCA.translate('MainWindow', "降噪参数")
         )
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_Process_DenoiseAudio,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "启用杂音去除\n弱化音频中的非人声部分。")
+        QFunc.setText(
+            widget = self.ui.Label_Process_DenoiseAudio,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "启用杂音去除\n弱化音频中的非人声部分。")
             )
         )
         ParamsManager_Process.SetParam(
-            Widget = self.ui.CheckBox_Process_DenoiseAudio,
-            Section = 'Denoiser Params',
-            Option = 'Denoise_Audio',
-            DefaultValue = True
+            widget = self.ui.CheckBox_Process_DenoiseAudio,
+            section = 'Denoiser params',
+            option = 'Denoise_Audio',
+            defaultValue = True
         )
         Function_ConfigureCheckBox(
-            CheckBox = self.ui.CheckBox_Process_DenoiseAudio,
-            CheckedText = "已启用",
-            CheckedEvents = [
+            checkBox = self.ui.CheckBox_Process_DenoiseAudio,
+            checkedText = "已启用",
+            checkedEvents = [
                 lambda: Function_SetChildWidgetsVisibility(
                     self.ui.Frame_Process_DenoiserParams_BasicSettings,
                     [
@@ -1979,8 +1978,8 @@ class MainWindow(Window_MainWindow):
                     True
                 )
             ],
-            UncheckedText = "未启用",
-            UncheckedEvents = [
+            uncheckedText = "未启用",
+            uncheckedEvents = [
                 lambda: Function_SetChildWidgetsVisibility(
                     self.ui.Frame_Process_DenoiserParams_BasicSettings,
                     [
@@ -1990,7 +1989,7 @@ class MainWindow(Window_MainWindow):
                     False
                 )
             ],
-            TakeEffect = True
+            takeEffect = True
         )
         self.ui.Button_Process_DenoiseAudio_MoreActions.SetMenu(
             ActionEvents = {
@@ -1998,30 +1997,30 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_Process_DenoiseAudio,
-            TreeWidget = self.ui.TreeWidget_Catalogue_Process,
-            RootItemText = QCA.translate('MainWindow', "降噪参数"),
-            ChildItemText = QCA.translate('MainWindow', "启用杂音去除")
+            widget = self.ui.Label_Process_DenoiseAudio,
+            treeWidget = self.ui.TreeWidget_Catalogue_Process,
+            rootItemText = QCA.translate('MainWindow', "降噪参数"),
+            childItemText = QCA.translate('MainWindow', "启用杂音去除")
         )
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_Process_DenoiseModelPath,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "uvr5模型路径\n用于uvr5降噪的模型文件的路径。")
+        QFunc.setText(
+            widget = self.ui.Label_Process_DenoiseModelPath,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "uvr5模型路径\n用于uvr5降噪的模型文件的路径。")
             )
         )
         Process_DenoiseModelPath_Default = Path(ModelDir).joinpath('Process', 'UVR', 'Downloaded', 'HP5_only_main_vocal.pth').as_posix()
         ParamsManager_Process.SetParam(
-            Widget = self.ui.LineEdit_Process_DenoiseModelPath,
-            Section = 'Denoiser Params',
-            Option = 'Denoise_Model_Path',
-            DefaultValue = Process_DenoiseModelPath_Default,
-            SetPlaceholderText = True
+            widget = self.ui.LineEdit_Process_DenoiseModelPath,
+            section = 'Denoiser params',
+            option = 'Denoise_Model_Path',
+            defaultValue = Process_DenoiseModelPath_Default,
+            setPlaceholderText = True
         )
         self.ui.LineEdit_Process_DenoiseModelPath.setFileDialog(
-            Mode = "SelectFile",
-            FileType = "pth类型/onnx类型 (*.pth *.onnx)",
-            Directory = QFunc.NormPath(Path(ModelDir).joinpath('Process', 'UVR', 'Downloaded'))
+            mode = "SelectFile",
+            fileType = "pth类型/onnx类型 (*.pth *.onnx)",
+            directory = QFunc.normPath(Path(ModelDir).joinpath('Process', 'UVR', 'Downloaded'))
         )
         self.ui.Button_Process_DenoiseModelPath_MoreActions.SetMenu(
             ActionEvents = {
@@ -2030,24 +2029,24 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_Process_DenoiseModelPath,
-            TreeWidget = self.ui.TreeWidget_Catalogue_Process,
-            RootItemText = QCA.translate('MainWindow', "降噪参数"),
-            ChildItemText = QCA.translate('MainWindow', "uvr5模型路径")
+            widget = self.ui.Label_Process_DenoiseModelPath,
+            treeWidget = self.ui.TreeWidget_Catalogue_Process,
+            rootItemText = QCA.translate('MainWindow', "降噪参数"),
+            childItemText = QCA.translate('MainWindow', "uvr5模型路径")
         )
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_Process_DenoiseTarget,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "提取目标\n选择在降噪时要保留的声音对象。")
+        QFunc.setText(
+            widget = self.ui.Label_Process_DenoiseTarget,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "提取目标\n选择在降噪时要保留的声音对象。")
             )
         )
         self.ui.ComboBox_Process_DenoiseTarget.addItems([QCA.translate('MainWindow', '人声'), QCA.translate('MainWindow', '背景声')])
         ParamsManager_Process.SetParam(
-            Widget = self.ui.ComboBox_Process_DenoiseTarget,
-            Section = 'Denoiser Params',
-            Option = 'Denoise_Target',
-            DefaultValue = '人声'
+            widget = self.ui.ComboBox_Process_DenoiseTarget,
+            section = 'Denoiser params',
+            option = 'Denoise_Target',
+            defaultValue = '人声'
         )
         self.ui.Button_Process_DenoiseTarget_MoreActions.SetMenu(
             ActionEvents = {
@@ -2055,35 +2054,35 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_Process_DenoiseTarget,
-            TreeWidget = self.ui.TreeWidget_Catalogue_Process,
-            RootItemText = QCA.translate('MainWindow', "降噪参数"),
-            ChildItemText = QCA.translate('MainWindow', "提取目标")
+            widget = self.ui.Label_Process_DenoiseTarget,
+            treeWidget = self.ui.TreeWidget_Catalogue_Process,
+            rootItemText = QCA.translate('MainWindow', "降噪参数"),
+            childItemText = QCA.translate('MainWindow', "提取目标")
         )
 
         self.ui.GroupBox_Process_SlicerParams.setTitle(QCA.translate('MainWindow', "静音切除参数"))
         Function_AddToTreeWidget(
-            Widget = self.ui.GroupBox_Process_SlicerParams,
-            TreeWidget = self.ui.TreeWidget_Catalogue_Process,
-            RootItemText = QCA.translate('MainWindow', "静音切除参数")
+            widget = self.ui.GroupBox_Process_SlicerParams,
+            treeWidget = self.ui.TreeWidget_Catalogue_Process,
+            rootItemText = QCA.translate('MainWindow', "静音切除参数")
         )
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_Process_SliceAudio,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "启用静音切除\n切除音频中的静音部分。")
+        QFunc.setText(
+            widget = self.ui.Label_Process_SliceAudio,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "启用静音切除\n切除音频中的静音部分。")
             )
         )
         ParamsManager_Process.SetParam(
-            Widget = self.ui.CheckBox_Process_SliceAudio,
-            Section = 'Slicer Params',
-            Option = 'Slice_Audio',
-            DefaultValue = True
+            widget = self.ui.CheckBox_Process_SliceAudio,
+            section = 'Slicer params',
+            option = 'Slice_Audio',
+            defaultValue = True
         )
         Function_ConfigureCheckBox(
-            CheckBox = self.ui.CheckBox_Process_SliceAudio,
-            CheckedText = "已启用",
-            CheckedEvents = [
+            checkBox = self.ui.CheckBox_Process_SliceAudio,
+            checkedText = "已启用",
+            checkedEvents = [
                 lambda: Function_SetChildWidgetsVisibility(
                     self.ui.ToolBox_Process_SlicerParams_AdvanceSettings_Page1Content,
                     [
@@ -2097,8 +2096,8 @@ class MainWindow(Window_MainWindow):
                     True
                 )
             ],
-            UncheckedText = "未启用",
-            UncheckedEvents = [
+            uncheckedText = "未启用",
+            uncheckedEvents = [
                 lambda: Function_SetChildWidgetsVisibility(
                     self.ui.ToolBox_Process_SlicerParams_AdvanceSettings_Page1Content,
                     [
@@ -2112,7 +2111,7 @@ class MainWindow(Window_MainWindow):
                     True
                 )
             ],
-            TakeEffect = True
+            takeEffect = True
         )
         self.ui.Button_Process_SliceAudio_MoreActions.SetMenu(
             ActionEvents = {
@@ -2120,28 +2119,28 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_Process_SliceAudio,
-            TreeWidget = self.ui.TreeWidget_Catalogue_Process,
-            RootItemText = QCA.translate('MainWindow', "静音切除参数"),
-            ChildItemText = QCA.translate('MainWindow', "启用静音切除")
+            widget = self.ui.Label_Process_SliceAudio,
+            treeWidget = self.ui.TreeWidget_Catalogue_Process,
+            rootItemText = QCA.translate('MainWindow', "静音切除参数"),
+            childItemText = QCA.translate('MainWindow', "启用静音切除")
         )
 
         self.ui.ToolBox_Process_SlicerParams_AdvanceSettings.widget(0).setText(QCA.translate('MainWindow', "高级设置"))
         self.ui.ToolBox_Process_SlicerParams_AdvanceSettings.widget(0).collapse()
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_Process_RMSThreshold,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "均方根阈值 (db)\n低于该阈值的片段将被视作静音进行处理，若有降噪需求可以增加该值。")
+        QFunc.setText(
+            widget = self.ui.Label_Process_RMSThreshold,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "均方根阈值 (db)\n低于该阈值的片段将被视作静音进行处理，若有降噪需求可以增加该值。")
             )
         )
         self.ui.DoubleSpinBox_Process_RMSThreshold.setRange(-100, 0)
         #self.ui.DoubleSpinBox_Process_RMSThreshold.setSingleStep(0.01)
         ParamsManager_Process.SetParam(
-            Widget = self.ui.DoubleSpinBox_Process_RMSThreshold,
-            Section = 'Slicer Params',
-            Option = 'RMS_Threshold',
-            DefaultValue = -34.
+            widget = self.ui.DoubleSpinBox_Process_RMSThreshold,
+            section = 'Slicer params',
+            option = 'RMS_Threshold',
+            defaultValue = -34.
         )
         self.ui.Button_Process_RMSThreshold_MoreActions.SetMenu(
             ActionEvents = {
@@ -2150,25 +2149,25 @@ class MainWindow(Window_MainWindow):
             
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_Process_RMSThreshold,
-            TreeWidget = self.ui.TreeWidget_Catalogue_Process,
-            RootItemText = QCA.translate('MainWindow', "静音切除参数"),
-            ChildItemText = QCA.translate('MainWindow', "均方根阈值")
+            widget = self.ui.Label_Process_RMSThreshold,
+            treeWidget = self.ui.TreeWidget_Catalogue_Process,
+            rootItemText = QCA.translate('MainWindow', "静音切除参数"),
+            childItemText = QCA.translate('MainWindow', "均方根阈值")
         )
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_Process_HopSize,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "跃点大小 (ms)\n每个RMS帧的长度，增加该值能够提高分割精度但会减慢进程。")
+        QFunc.setText(
+            widget = self.ui.Label_Process_HopSize,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "跃点大小 (ms)\n每个RMS帧的长度，增加该值能够提高分割精度但会减慢进程。")
             )
         )
         self.ui.SpinBox_Process_HopSize.setRange(0, 100)
         self.ui.SpinBox_Process_HopSize.setSingleStep(1)
         ParamsManager_Process.SetParam(
-            Widget = self.ui.SpinBox_Process_HopSize,
-            Section = 'Slicer Params',
-            Option = 'Hop_Size',
-            DefaultValue = 10
+            widget = self.ui.SpinBox_Process_HopSize,
+            section = 'Slicer params',
+            option = 'Hop_Size',
+            defaultValue = 10
         )
         self.ui.Button_Process_HopSize_MoreActions.SetMenu(
             ActionEvents = {
@@ -2176,25 +2175,25 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_Process_HopSize,
-            TreeWidget = self.ui.TreeWidget_Catalogue_Process,
-            RootItemText = QCA.translate('MainWindow', "静音切除参数"),
-            ChildItemText = QCA.translate('MainWindow', "跃点大小")
+            widget = self.ui.Label_Process_HopSize,
+            treeWidget = self.ui.TreeWidget_Catalogue_Process,
+            rootItemText = QCA.translate('MainWindow', "静音切除参数"),
+            childItemText = QCA.translate('MainWindow', "跃点大小")
         )
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_Process_SilentIntervalMin,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "最小静音间隔 (ms)\n静音部分被分割成的最小长度，若音频只包含短暂中断可以减小该值。")
+        QFunc.setText(
+            widget = self.ui.Label_Process_SilentIntervalMin,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "最小静音间隔 (ms)\n静音部分被分割成的最小长度，若音频只包含短暂中断可以减小该值。")
             )
         )
         self.ui.SpinBox_Process_SilentIntervalMin.setRange(0, 3000)
         self.ui.SpinBox_Process_SilentIntervalMin.setSingleStep(1)
         ParamsManager_Process.SetParam(
-            Widget = self.ui.SpinBox_Process_SilentIntervalMin,
-            Section = 'Slicer Params',
-            Option = 'Silent_Interval_Min',
-            DefaultValue = 300
+            widget = self.ui.SpinBox_Process_SilentIntervalMin,
+            section = 'Slicer params',
+            option = 'Silent_Interval_Min',
+            defaultValue = 300
         )
         self.ui.SpinBox_Process_SilentIntervalMin.setToolTip(QCA.translate('MainWindow', "注意：这个值必须小于最小音频长度，大于跃点大小。"))
         self.ui.Button_Process_SilentIntervalMin_MoreActions.SetMenu(
@@ -2203,25 +2202,25 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_Process_SilentIntervalMin,
-            TreeWidget = self.ui.TreeWidget_Catalogue_Process,
-            RootItemText = QCA.translate('MainWindow', "静音切除参数"),
-            ChildItemText = QCA.translate('MainWindow', "最小静音间隔")
+            widget = self.ui.Label_Process_SilentIntervalMin,
+            treeWidget = self.ui.TreeWidget_Catalogue_Process,
+            rootItemText = QCA.translate('MainWindow', "静音切除参数"),
+            childItemText = QCA.translate('MainWindow', "最小静音间隔")
         )
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_Process_SilenceKeptMax,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "最大静音长度 (ms)\n被分割的音频周围保持静音的最大长度。")
+        QFunc.setText(
+            widget = self.ui.Label_Process_SilenceKeptMax,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "最大静音长度 (ms)\n被分割的音频周围保持静音的最大长度。")
             )
         )
         self.ui.SpinBox_Process_SilenceKeptMax.setRange(0, 10000)
         self.ui.SpinBox_Process_SilenceKeptMax.setSingleStep(1)
         ParamsManager_Process.SetParam(
-            Widget = self.ui.SpinBox_Process_SilenceKeptMax,
-            Section = 'Slicer Params',
-            Option = 'Silence_Kept_Max',
-            DefaultValue = 500
+            widget = self.ui.SpinBox_Process_SilenceKeptMax,
+            section = 'Slicer params',
+            option = 'Silence_Kept_Max',
+            defaultValue = 500
         )
         self.ui.SpinBox_Process_SilenceKeptMax.setToolTip(QCA.translate('MainWindow', "注意：这个值无需完全对应被分割音频中的静音长度。算法将自行检索最佳的分割位置。"))
         self.ui.Button_Process_SilenceKeptMax_MoreActions.SetMenu(
@@ -2230,25 +2229,25 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_Process_SilenceKeptMax,
-            TreeWidget = self.ui.TreeWidget_Catalogue_Process,
-            RootItemText = QCA.translate('MainWindow', "静音切除参数"),
-            ChildItemText = QCA.translate('MainWindow', "最大静音长度")
+            widget = self.ui.Label_Process_SilenceKeptMax,
+            treeWidget = self.ui.TreeWidget_Catalogue_Process,
+            rootItemText = QCA.translate('MainWindow', "静音切除参数"),
+            childItemText = QCA.translate('MainWindow', "最大静音长度")
         )
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_Process_AudioLengthMin,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "最小音频长度 (ms)\n每个被分割的音频片段所需的最小长度。")
+        QFunc.setText(
+            widget = self.ui.Label_Process_AudioLengthMin,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "最小音频长度 (ms)\n每个被分割的音频片段所需的最小长度。")
             )
         )
         self.ui.SpinBox_Process_AudioLengthMin.setRange(300, 30000)
         self.ui.SpinBox_Process_AudioLengthMin.setSingleStep(1)
         ParamsManager_Process.SetParam(
-            Widget = self.ui.SpinBox_Process_AudioLengthMin,
-            Section = 'Slicer Params',
-            Option = 'Audio_Length_Min',
-            DefaultValue = 4000
+            widget = self.ui.SpinBox_Process_AudioLengthMin,
+            section = 'Slicer params',
+            option = 'Audio_Length_Min',
+            defaultValue = 4000
         )
         self.ui.Button_Process_AudioLengthMin_MoreActions.SetMenu(
             ActionEvents = {
@@ -2256,31 +2255,31 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_Process_AudioLengthMin,
-            TreeWidget = self.ui.TreeWidget_Catalogue_Process,
-            RootItemText = QCA.translate('MainWindow', "静音切除参数"),
-            ChildItemText = QCA.translate('MainWindow', "最小音频长度")
+            widget = self.ui.Label_Process_AudioLengthMin,
+            treeWidget = self.ui.TreeWidget_Catalogue_Process,
+            rootItemText = QCA.translate('MainWindow', "静音切除参数"),
+            childItemText = QCA.translate('MainWindow', "最小音频长度")
         )
 
         self.ui.GroupBox_Process_OutputParams.setTitle(QCA.translate('MainWindow', "输出参数"))
         Function_AddToTreeWidget(
-            Widget = self.ui.GroupBox_Process_OutputParams,
-            TreeWidget = self.ui.TreeWidget_Catalogue_Process,
-            RootItemText = QCA.translate('MainWindow', "输出参数")
+            widget = self.ui.GroupBox_Process_OutputParams,
+            treeWidget = self.ui.TreeWidget_Catalogue_Process,
+            rootItemText = QCA.translate('MainWindow', "输出参数")
         )
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_Process_MediaFormatOutput,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "媒体输出格式\n媒体文件输出为音频文件的格式，若维持不变则保持'None'即可。")
+        QFunc.setText(
+            widget = self.ui.Label_Process_MediaFormatOutput,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "媒体输出格式\n媒体文件输出为音频文件的格式，若维持不变则保持'None'即可。")
             )
         )
         self.ui.ComboBox_Process_MediaFormatOutput.addItems(['flac', 'wav', 'mp3', 'aac', 'm4a', 'wma', 'aiff', 'au', 'ogg', 'None'])
         ParamsManager_Process.SetParam(
-            Widget = self.ui.ComboBox_Process_MediaFormatOutput,
-            Section = 'Output Params',
-            Option = 'Media_Format_Output',
-            DefaultValue = 'wav'
+            widget = self.ui.ComboBox_Process_MediaFormatOutput,
+            section = 'Output params',
+            option = 'Media_Format_Output',
+            defaultValue = 'wav'
         )
         self.ui.Button_Process_MediaFormatOutput_MoreActions.SetMenu(
             ActionEvents = {
@@ -2288,26 +2287,26 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_Process_AudioLengthMin,
-            TreeWidget = self.ui.TreeWidget_Catalogue_Process,
-            RootItemText = QCA.translate('MainWindow', "输出参数"),
-            ChildItemText = QCA.translate('MainWindow', "媒体输出格式")
+            widget = self.ui.Label_Process_AudioLengthMin,
+            treeWidget = self.ui.TreeWidget_Catalogue_Process,
+            rootItemText = QCA.translate('MainWindow', "输出参数"),
+            childItemText = QCA.translate('MainWindow', "媒体输出格式")
         )
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_Process_OutputDirName,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "输出目录名\n用于保存最后生成的音频文件的目录的名字。")
+        QFunc.setText(
+            widget = self.ui.Label_Process_OutputDirName,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "输出目录名\n用于保存最后生成的音频文件的目录的名字。")
             )
         )
         Process_OutputDirName_Default = str(date.today())
         ParamsManager_Process.SetParam(
-            Widget = self.ui.LineEdit_Process_OutputDirName,
-            Section = 'Output Params',
-            Option = 'Output_Dir_Name',
-            DefaultValue = '',
-            SetPlaceholderText = True,
-            PlaceholderText = Process_OutputDirName_Default
+            widget = self.ui.LineEdit_Process_OutputDirName,
+            section = 'Output params',
+            option = 'Output_Dir_Name',
+            defaultValue = '',
+            setPlaceholderText = True,
+            placeholderText = Process_OutputDirName_Default
         )
         self.ui.Button_Process_OutputDirName_MoreActions.SetMenu(
             ActionEvents = {
@@ -2316,10 +2315,10 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_Process_OutputDirName,
-            TreeWidget = self.ui.TreeWidget_Catalogue_Process,
-            RootItemText = QCA.translate('MainWindow', "输出参数"),
-            ChildItemText = QCA.translate('MainWindow', "输出目录名")
+            widget = self.ui.Label_Process_OutputDirName,
+            treeWidget = self.ui.TreeWidget_Catalogue_Process,
+            rootItemText = QCA.translate('MainWindow', "输出参数"),
+            childItemText = QCA.translate('MainWindow', "输出目录名")
         )
 
         LineEdit_Process_OutputDir = LineEditBase()
@@ -2332,27 +2331,27 @@ class MainWindow(Window_MainWindow):
         self.ui.ToolBox_Process_OutputParams_AdvanceSettings.widget(0).setText(QCA.translate('MainWindow', "高级设置"))
         self.ui.ToolBox_Process_OutputParams_AdvanceSettings.widget(0).collapse()
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_Process_ToMono,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "合并声道\n将输出音频的声道合并为单声道。")
+        QFunc.setText(
+            widget = self.ui.Label_Process_ToMono,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "合并声道\n将输出音频的声道合并为单声道。")
             )
         )
         ParamsManager_Process.SetParam(
-            Widget = self.ui.CheckBox_Process_ToMono,
-            Section = 'Output Params',
-            Option = 'ToMono',
-            DefaultValue = False
+            widget = self.ui.CheckBox_Process_ToMono,
+            section = 'Output params',
+            option = 'ToMono',
+            defaultValue = False
         )
         Function_ConfigureCheckBox(
-            CheckBox = self.ui.CheckBox_Process_ToMono,
-            CheckedText = "已启用",
-            CheckedEvents = [
+            checkBox = self.ui.CheckBox_Process_ToMono,
+            checkedText = "已启用",
+            checkedEvents = [
             ],
-            UncheckedText = "未启用",
-            UncheckedEvents = [
+            uncheckedText = "未启用",
+            uncheckedEvents = [
             ],
-            TakeEffect = True
+            takeEffect = True
         )
         self.ui.Button_Process_ToMono_MoreActions.SetMenu(
             ActionEvents = {
@@ -2360,24 +2359,24 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_Process_ToMono,
-            TreeWidget = self.ui.TreeWidget_Catalogue_Process,
-            RootItemText = QCA.translate('MainWindow', "输出参数"),
-            ChildItemText = QCA.translate('MainWindow', "合并声道")
+            widget = self.ui.Label_Process_ToMono,
+            treeWidget = self.ui.TreeWidget_Catalogue_Process,
+            rootItemText = QCA.translate('MainWindow', "输出参数"),
+            childItemText = QCA.translate('MainWindow', "合并声道")
         )
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_Process_SampleRate,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "输出采样率\n输出音频所拥有的采样率，若维持不变则保持'None'即可。")
+        QFunc.setText(
+            widget = self.ui.Label_Process_SampleRate,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "输出采样率\n输出音频所拥有的采样率，若维持不变则保持'None'即可。")
             )
         )
         self.ui.ComboBox_Process_SampleRate.addItems(['22050', '44100', '48000', '96000', '192000', 'None'])
         ParamsManager_Process.SetParam(
-            Widget = self.ui.ComboBox_Process_SampleRate,
-            Section = 'Output Params',
-            Option = 'SampleRate',
-            DefaultValue = None
+            widget = self.ui.ComboBox_Process_SampleRate,
+            section = 'Output params',
+            option = 'SampleRate',
+            defaultValue = None
         )
         self.ui.Button_Process_SampleRate_MoreActions.SetMenu(
             ActionEvents = {
@@ -2385,24 +2384,24 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_Process_SampleRate,
-            TreeWidget = self.ui.TreeWidget_Catalogue_Process,
-            RootItemText = QCA.translate('MainWindow', "输出参数"),
-            ChildItemText = QCA.translate('MainWindow', "输出采样率")
+            widget = self.ui.Label_Process_SampleRate,
+            treeWidget = self.ui.TreeWidget_Catalogue_Process,
+            rootItemText = QCA.translate('MainWindow', "输出参数"),
+            childItemText = QCA.translate('MainWindow', "输出采样率")
         )
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_Process_SampleWidth,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "输出采样位数\n输出音频所拥有的采样位数，若维持不变则保持'None'即可。")
+        QFunc.setText(
+            widget = self.ui.Label_Process_SampleWidth,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "输出采样位数\n输出音频所拥有的采样位数，若维持不变则保持'None'即可。")
             )
         )
         self.ui.ComboBox_Process_SampleWidth.addItems(['8', '16', '24', '32', '32 (Float)', 'None'])
         ParamsManager_Process.SetParam(
-            Widget = self.ui.ComboBox_Process_SampleWidth,
-            Section = 'Output Params',
-            Option = 'SampleWidth',
-            DefaultValue = None
+            widget = self.ui.ComboBox_Process_SampleWidth,
+            section = 'Output params',
+            option = 'SampleWidth',
+            defaultValue = None
         )
         self.ui.Button_Process_SampleWidth_MoreActions.SetMenu(
             ActionEvents = {
@@ -2410,10 +2409,10 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_Process_SampleWidth,
-            TreeWidget = self.ui.TreeWidget_Catalogue_Process,
-            RootItemText = QCA.translate('MainWindow', "输出参数"),
-            ChildItemText = QCA.translate('MainWindow', "输出采样位数")
+            widget = self.ui.Label_Process_SampleWidth,
+            treeWidget = self.ui.TreeWidget_Catalogue_Process,
+            rootItemText = QCA.translate('MainWindow', "输出参数"),
+            childItemText = QCA.translate('MainWindow', "输出采样位数")
         )
 
         # Right
@@ -2433,9 +2432,9 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_ImportSettings_Process.setText(QCA.translate('MainWindow', "导入配置"))
         self.ui.Button_ImportSettings_Process.clicked.connect(
             lambda: ParamsManager_Process.ImportSettings(
-                QFunc.Function_GetFileDialog(
-                    Mode = "SelectFile",
-                    FileType = "ini类型 (*.ini)"
+                QFunc.getFileDialog(
+                    mode = "SelectFile",
+                    fileType = "ini类型 (*.ini)"
                 )
             )
         )
@@ -2443,31 +2442,31 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_ExportSettings_Process.setText(QCA.translate('MainWindow', "导出配置"))
         self.ui.Button_ExportSettings_Process.clicked.connect(
             lambda: ParamsManager_Process.ExportSettings(
-                QFunc.Function_GetFileDialog(
-                    Mode = "SaveFile",
-                    FileType = "ini类型 (*.ini)"
+                QFunc.getFileDialog(
+                    mode = "SaveFile",
+                    fileType = "ini类型 (*.ini)"
                 )
             )
         )
 
         self.ui.Button_CheckOutput_Process.setText(QCA.translate('MainWindow', "打开输出目录"))
         Function_SetURL(
-            Button = self.ui.Button_CheckOutput_Process,
-            URL = self.ui.LineEdit_Process_OutputRoot,
-            ButtonTooltip = "Click to open",
-            CreateIfNotExist = True
+            button = self.ui.Button_CheckOutput_Process,
+            url = self.ui.LineEdit_Process_OutputRoot,
+            buttonTooltip = "Click to open",
+            createIfNotExist = True
         )
 
         # Bottom
         self.ui.Button_Process_Execute.setText(QCA.translate('MainWindow', "执行音频处理"))
         self.ui.Button_Process_Terminate.setText(QCA.translate('MainWindow', "终止音频处理"))
         Function_SetMethodExecutor(self,
-            ExecuteButton = self.ui.Button_Process_Execute,
-            TerminateButton = self.ui.Button_Process_Terminate,
-            ProgressBar = self.ui.ProgressBar_Process,
-            ConsoleWidget = self.ui.Frame_Console,
-            Method = Execute_Audio_Processing.Execute,
-            ParamsFrom = [
+            executeButton = self.ui.Button_Process_Execute,
+            terminateButton = self.ui.Button_Process_Terminate,
+            progressBar = self.ui.ProgressBar_Process,
+            consoleWidget = self.ui.Frame_Console,
+            method = Execute_Audio_Processing.Execute,
+            paramsFrom = [
                 self.ui.LineEdit_Process_MediaDirInput,
                 self.ui.ComboBox_Process_MediaFormatOutput,
                 self.ui.ComboBox_Process_SampleRate,
@@ -2485,12 +2484,12 @@ class MainWindow(Window_MainWindow):
                 self.ui.LineEdit_Process_OutputRoot,
                 self.ui.LineEdit_Process_OutputDirName
             ],
-            EmptyAllowed = [
+            emptyAllowed = [
                 self.ui.ComboBox_Process_MediaFormatOutput,
                 self.ui.ComboBox_Process_SampleRate,
                 self.ui.ComboBox_Process_SampleWidth
             ],
-            SuccessEvents = [
+            successEvents = [
                 lambda: MessageBoxBase.pop(self,
                     QMessageBox.Information, "Tip",
                     "当前任务已执行结束。"
@@ -2507,8 +2506,8 @@ class MainWindow(Window_MainWindow):
             lambda: self.showGuidance(
                 QCA.translate('MainWindow', "引导（仅出现一次）"),
                 [
-                    QFunc.NormPath(Path(ResourceDir).joinpath('assets/images/others/Guidance_VPR.png')),
-                    QFunc.NormPath(Path(ResourceDir).joinpath('assets/images/others/Guidance_Layout.png'))
+                    QFunc.normPath(Path(resourceDir).joinpath('assets/images/others/Guidance_VPR.png')),
+                    QFunc.normPath(Path(resourceDir).joinpath('assets/images/others/Guidance_Layout.png'))
                 ],
                 [
                     '欢迎来到语音识别工具界面\n该工具用于从不同说话人的音频中批量筛选出属于同一说话人的音频',
@@ -2520,12 +2519,12 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_Menu_VPR.clicked.connect(
             lambda: (
                 self.ui.Button_VoiceIdentifier_Help.click(),
-                Config.editConfig('Dialog', 'GuidanceShown_VPR', 'True')
-            ) if eval(Config.getValue('Dialog', 'GuidanceShown_VPR', 'False')) is False else None
+                config.editConfig('Dialog', 'GuidanceShown_VPR', 'True')
+            ) if eval(config.getValue('Dialog', 'GuidanceShown_VPR', 'False')) is False else None
         )
 
         # ParamsManager
-        Path_Config_VPR_TDNN = QFunc.NormPath(Path(ConfigDir).joinpath('Config_VPR_TDNN.ini'))
+        Path_Config_VPR_TDNN = QFunc.normPath(Path(configDir).joinpath('Config_VPR_TDNN.ini'))
         ParamsManager_VPR_TDNN = ParamsManager(Path_Config_VPR_TDNN)
 
         # Top
@@ -2534,8 +2533,8 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_VoiceIdentifier_Title.setChecked(True)
         self.ui.Button_VoiceIdentifier_Title.clicked.connect(
             lambda: Function_AnimateStackedWidget(
-                StackedWidget = self.ui.StackedWidget_Pages_VPR,
-                Target = 0
+                stackedWidget = self.ui.StackedWidget_Pages_VPR,
+                target = 0
             )
         )
 
@@ -2546,27 +2545,27 @@ class MainWindow(Window_MainWindow):
         # Middle
         self.ui.GroupBox_VPR_TDNN_InputParams.setTitle(QCA.translate('MainWindow', "输入参数"))
         Function_AddToTreeWidget(
-            Widget = self.ui.GroupBox_VPR_TDNN_InputParams,
-            TreeWidget = self.ui.TreeWidget_Catalogue_VPR_TDNN,
-            RootItemText = QCA.translate('MainWindow', "输入参数")
+            widget = self.ui.GroupBox_VPR_TDNN_InputParams,
+            treeWidget = self.ui.TreeWidget_Catalogue_VPR_TDNN,
+            rootItemText = QCA.translate('MainWindow', "输入参数")
         )
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_VPR_TDNN_AudioDirInput,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "音频输入目录\n需要进行语音识别筛选的音频文件的所在目录。")
+        QFunc.setText(
+            widget = self.ui.Label_VPR_TDNN_AudioDirInput,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "音频输入目录\n需要进行语音识别筛选的音频文件的所在目录。")
             )
         )
         ParamsManager_VPR_TDNN.SetParam(
-            Widget = self.ui.LineEdit_VPR_TDNN_AudioDirInput,
-            Section = 'Input Params',
-            Option = 'Audio_Dir_Input',
-            DefaultValue = '',
-            SetPlaceholderText = True
+            widget = self.ui.LineEdit_VPR_TDNN_AudioDirInput,
+            section = 'Input params',
+            option = 'Audio_Dir_Input',
+            defaultValue = '',
+            setPlaceholderText = True
         )
         self.ui.LineEdit_VPR_TDNN_AudioDirInput.setFileDialog(
-            Mode = "SelectFolder",
-            Directory = Path(CurrentDir).joinpath('音频处理结果').as_posix()
+            mode = "SelectFolder",
+            directory = Path(currentDir).joinpath('音频处理结果').as_posix()
         )
         self.ui.Button_VPR_TDNN_AudioDirInput_MoreActions.SetMenu(
             ActionEvents = {
@@ -2575,55 +2574,55 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_VPR_TDNN_AudioDirInput,
-            TreeWidget = self.ui.TreeWidget_Catalogue_VPR_TDNN,
-            RootItemText = QCA.translate('MainWindow', "输入参数"),
-            ChildItemText = QCA.translate('MainWindow', "音频输入目录")
+            widget = self.ui.Label_VPR_TDNN_AudioDirInput,
+            treeWidget = self.ui.TreeWidget_Catalogue_VPR_TDNN,
+            rootItemText = QCA.translate('MainWindow', "输入参数"),
+            childItemText = QCA.translate('MainWindow', "音频输入目录")
         )
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_VPR_TDNN_StdAudioSpeaker,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "目标人物与音频\n目标人物的名字及其语音文件的路径。")
+        QFunc.setText(
+            widget = self.ui.Label_VPR_TDNN_StdAudioSpeaker,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "目标人物与音频\n目标人物的名字及其语音文件的路径。")
             )
         )
         self.ui.Table_VPR_TDNN_StdAudioSpeaker.setHorizontalHeaderLabels(['人物姓名', '音频路径', '增删'])
         ParamsManager_VPR_TDNN.SetParam(
-            Widget = self.ui.Table_VPR_TDNN_StdAudioSpeaker,
-            Section = 'Input Params',
-            Option = 'StdAudioSpeaker',
-            DefaultValue = {"": ""}
+            widget = self.ui.Table_VPR_TDNN_StdAudioSpeaker,
+            section = 'Input params',
+            option = 'StdAudioSpeaker',
+            defaultValue = {"": ""}
         )
         self.ui.Table_VPR_TDNN_StdAudioSpeaker.setFileDialog(
-            FileType = "音频类型 (*.flac *.wav *.mp3 *.aac *.m4a *.wma *.aiff *.au *.ogg)"
+            fileType = "音频类型 (*.flac *.wav *.mp3 *.aac *.m4a *.wma *.aiff *.au *.ogg)"
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_VPR_TDNN_StdAudioSpeaker,
-            TreeWidget = self.ui.TreeWidget_Catalogue_VPR_TDNN,
-            RootItemText = QCA.translate('MainWindow', "输入参数"),
-            ChildItemText = QCA.translate('MainWindow', "目标人物与音频")
+            widget = self.ui.Label_VPR_TDNN_StdAudioSpeaker,
+            treeWidget = self.ui.TreeWidget_Catalogue_VPR_TDNN,
+            rootItemText = QCA.translate('MainWindow', "输入参数"),
+            childItemText = QCA.translate('MainWindow', "目标人物与音频")
         )
 
         self.ui.GroupBox_VPR_TDNN_VPRParams.setTitle(QCA.translate('MainWindow', "语音识别参数"))
         Function_AddToTreeWidget(
-            Widget = self.ui.GroupBox_VPR_TDNN_VPRParams,
-            TreeWidget = self.ui.TreeWidget_Catalogue_VPR_TDNN,
-            RootItemText = QCA.translate('MainWindow', "语音识别参数")
+            widget = self.ui.GroupBox_VPR_TDNN_VPRParams,
+            treeWidget = self.ui.TreeWidget_Catalogue_VPR_TDNN,
+            rootItemText = QCA.translate('MainWindow', "语音识别参数")
         )
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_VPR_TDNN_DecisionThreshold,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "判断阈值\n判断相似度的阈值，若参与比对的说话人声音相似度较高可以增加该值。")
+        QFunc.setText(
+            widget = self.ui.Label_VPR_TDNN_DecisionThreshold,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "判断阈值\n判断相似度的阈值，若参与比对的说话人声音相似度较高可以增加该值。")
             )
         )
         self.ui.DoubleSpinBox_VPR_TDNN_DecisionThreshold.setRange(0.5, 1)
         self.ui.DoubleSpinBox_VPR_TDNN_DecisionThreshold.setSingleStep(0.01)
         ParamsManager_VPR_TDNN.SetParam(
-            Widget = self.ui.DoubleSpinBox_VPR_TDNN_DecisionThreshold,
-            Section = 'VPR Params',
-            Option = 'DecisionThreshold',
-            DefaultValue = 0.75
+            widget = self.ui.DoubleSpinBox_VPR_TDNN_DecisionThreshold,
+            section = 'VPR params',
+            option = 'DecisionThreshold',
+            defaultValue = 0.75
         )
         self.ui.Button_VPR_TDNN_DecisionThreshold_MoreActions.SetMenu(
             ActionEvents = {
@@ -2631,31 +2630,31 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_VPR_TDNN_DecisionThreshold,
-            TreeWidget = self.ui.TreeWidget_Catalogue_VPR_TDNN,
-            RootItemText = QCA.translate('MainWindow', "语音识别参数"),
-            ChildItemText = QCA.translate('MainWindow', "判断阈值")
+            widget = self.ui.Label_VPR_TDNN_DecisionThreshold,
+            treeWidget = self.ui.TreeWidget_Catalogue_VPR_TDNN,
+            rootItemText = QCA.translate('MainWindow', "语音识别参数"),
+            childItemText = QCA.translate('MainWindow', "判断阈值")
         )
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_VPR_TDNN_ModelPath,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "模型加载路径\n用于加载的声纹识别模型的路径。")
+        QFunc.setText(
+            widget = self.ui.Label_VPR_TDNN_ModelPath,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "模型加载路径\n用于加载的声纹识别模型的路径。")
             )
         )
         VPR_TDNN_ModelPath_Default = Path(ModelDir).joinpath('VPR', 'TDNN', 'Downloaded', 'Ecapa-Tdnn_spectrogram.pth').as_posix()
         ParamsManager_VPR_TDNN.SetParam(
-            Widget = self.ui.LineEdit_VPR_TDNN_ModelPath,
-            Section = 'VPR Params',
-            Option = 'Model_Path',
-            DefaultValue = VPR_TDNN_ModelPath_Default,
-            SetPlaceholderText = True,
-            PlaceholderText = VPR_TDNN_ModelPath_Default
+            widget = self.ui.LineEdit_VPR_TDNN_ModelPath,
+            section = 'VPR params',
+            option = 'Model_Path',
+            defaultValue = VPR_TDNN_ModelPath_Default,
+            setPlaceholderText = True,
+            placeholderText = VPR_TDNN_ModelPath_Default
         )
         self.ui.LineEdit_VPR_TDNN_ModelPath.setFileDialog(
-            Mode = "SelectFile",
-            FileType = "pth类型 (*.pth)",
-            Directory = QFunc.NormPath(Path(ModelDir).joinpath('VPR', 'TDNN', 'Downloaded'))
+            mode = "SelectFile",
+            fileType = "pth类型 (*.pth)",
+            directory = QFunc.normPath(Path(ModelDir).joinpath('VPR', 'TDNN', 'Downloaded'))
         )
         self.ui.Button_VPR_TDNN_ModelPath_MoreActions.SetMenu(
             ActionEvents = {
@@ -2664,27 +2663,27 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_VPR_TDNN_ModelPath,
-            TreeWidget = self.ui.TreeWidget_Catalogue_VPR_TDNN,
-            RootItemText = QCA.translate('MainWindow', "语音识别参数"),
-            ChildItemText = QCA.translate('MainWindow', "模型加载路径")
+            widget = self.ui.Label_VPR_TDNN_ModelPath,
+            treeWidget = self.ui.TreeWidget_Catalogue_VPR_TDNN,
+            rootItemText = QCA.translate('MainWindow', "语音识别参数"),
+            childItemText = QCA.translate('MainWindow', "模型加载路径")
         )
 
         self.ui.ToolBox_VPR_TDNN_VPRParams_AdvanceSettings.widget(0).setText(QCA.translate('MainWindow', "高级设置"))
         self.ui.ToolBox_VPR_TDNN_VPRParams_AdvanceSettings.widget(0).collapse()
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_VPR_TDNN_ModelType,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "模型类型\n声纹识别模型的类型。")
+        QFunc.setText(
+            widget = self.ui.Label_VPR_TDNN_ModelType,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "模型类型\n声纹识别模型的类型。")
             )
         )
         self.ui.ComboBox_VPR_TDNN_ModelType.addItems(['Ecapa-Tdnn'])
         ParamsManager_VPR_TDNN.SetParam(
-            Widget = self.ui.ComboBox_VPR_TDNN_ModelType,
-            Section = 'VPR Params',
-            Option = 'Model_Type',
-            DefaultValue = 'Ecapa-Tdnn'
+            widget = self.ui.ComboBox_VPR_TDNN_ModelType,
+            section = 'VPR params',
+            option = 'Model_Type',
+            defaultValue = 'Ecapa-Tdnn'
         )
         self.ui.Button_VPR_TDNN_ModelPath_MoreActions.SetMenu(
             ActionEvents = {
@@ -2692,24 +2691,24 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_VPR_TDNN_ModelType,
-            TreeWidget = self.ui.TreeWidget_Catalogue_VPR_TDNN,
-            RootItemText = QCA.translate('MainWindow', "语音识别参数"),
-            ChildItemText = QCA.translate('MainWindow', "模型类型")
+            widget = self.ui.Label_VPR_TDNN_ModelType,
+            treeWidget = self.ui.TreeWidget_Catalogue_VPR_TDNN,
+            rootItemText = QCA.translate('MainWindow', "语音识别参数"),
+            childItemText = QCA.translate('MainWindow', "模型类型")
         )
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_VPR_TDNN_FeatureMethod,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "预处理方法\n音频的预处理方法。")
+        QFunc.setText(
+            widget = self.ui.Label_VPR_TDNN_FeatureMethod,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "预处理方法\n音频的预处理方法。")
             )
         )
         self.ui.ComboBox_VPR_TDNN_FeatureMethod.addItems(['spectrogram', 'melspectrogram'])
         ParamsManager_VPR_TDNN.SetParam(
-            Widget = self.ui.ComboBox_VPR_TDNN_FeatureMethod,
-            Section = 'VPR Params',
-            Option = 'Feature_Method',
-            DefaultValue = 'spectrogram'
+            widget = self.ui.ComboBox_VPR_TDNN_FeatureMethod,
+            section = 'VPR params',
+            option = 'Feature_Method',
+            defaultValue = 'spectrogram'
         )
         self.ui.Button_VPR_TDNN_FeatureMethod_MoreActions.SetMenu(
             ActionEvents = {
@@ -2717,25 +2716,25 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_VPR_TDNN_FeatureMethod,
-            TreeWidget = self.ui.TreeWidget_Catalogue_VPR_TDNN,
-            RootItemText = QCA.translate('MainWindow', "语音识别参数"),
-            ChildItemText = QCA.translate('MainWindow', "预处理方法")
+            widget = self.ui.Label_VPR_TDNN_FeatureMethod,
+            treeWidget = self.ui.TreeWidget_Catalogue_VPR_TDNN,
+            rootItemText = QCA.translate('MainWindow', "语音识别参数"),
+            childItemText = QCA.translate('MainWindow', "预处理方法")
         )
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_VPR_TDNN_DurationOfAudio,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "音频长度\n用于预测的音频长度。")
+        QFunc.setText(
+            widget = self.ui.Label_VPR_TDNN_DurationOfAudio,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "音频长度\n用于预测的音频长度。")
             )
         )
         self.ui.DoubleSpinBox_VPR_TDNN_DurationOfAudio.setRange(0, 30)
         #self.ui.DoubleSpinBox_VPR_TDNN_DurationOfAudio.setSingleStep(0.01)
         ParamsManager_VPR_TDNN.SetParam(
-            Widget = self.ui.DoubleSpinBox_VPR_TDNN_DurationOfAudio,
-            Section = 'VPR Params',
-            Option = 'Duration_of_Audio',
-            DefaultValue = 3.00
+            widget = self.ui.DoubleSpinBox_VPR_TDNN_DurationOfAudio,
+            section = 'VPR params',
+            option = 'Duration_of_Audio',
+            defaultValue = 3.00
         )
         self.ui.Button_VPR_TDNN_DurationOfAudio_MoreActions.SetMenu(
             ActionEvents = {
@@ -2743,33 +2742,33 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_VPR_TDNN_DurationOfAudio,
-            TreeWidget = self.ui.TreeWidget_Catalogue_VPR_TDNN,
-            RootItemText = QCA.translate('MainWindow', "语音识别参数"),
-            ChildItemText = QCA.translate('MainWindow', "音频长度")
+            widget = self.ui.Label_VPR_TDNN_DurationOfAudio,
+            treeWidget = self.ui.TreeWidget_Catalogue_VPR_TDNN,
+            rootItemText = QCA.translate('MainWindow', "语音识别参数"),
+            childItemText = QCA.translate('MainWindow', "音频长度")
         )
 
         self.ui.GroupBox_VPR_TDNN_OutputParams.setTitle(QCA.translate('MainWindow', "输出参数"))
         Function_AddToTreeWidget(
-            Widget = self.ui.GroupBox_VPR_TDNN_OutputParams,
-            TreeWidget = self.ui.TreeWidget_Catalogue_VPR_TDNN,
-            RootItemText = QCA.translate('MainWindow', "输出参数")
+            widget = self.ui.GroupBox_VPR_TDNN_OutputParams,
+            treeWidget = self.ui.TreeWidget_Catalogue_VPR_TDNN,
+            rootItemText = QCA.translate('MainWindow', "输出参数")
         )
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_VPR_TDNN_OutputDirName,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "输出目录名\n用于保存最后生成的结果文件的目录的名字。")
+        QFunc.setText(
+            widget = self.ui.Label_VPR_TDNN_OutputDirName,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "输出目录名\n用于保存最后生成的结果文件的目录的名字。")
             )
         )
         VPR_TDNN_OutputDirName_Default = str(date.today())
         ParamsManager_VPR_TDNN.SetParam(
-            Widget = self.ui.LineEdit_VPR_TDNN_OutputDirName,
-            Section = 'Output Params',
-            Option = 'Audio_Dir_Output',
-            DefaultValue = '',
-            SetPlaceholderText = True,
-            PlaceholderText = VPR_TDNN_OutputDirName_Default
+            widget = self.ui.LineEdit_VPR_TDNN_OutputDirName,
+            section = 'Output params',
+            option = 'Audio_Dir_Output',
+            defaultValue = '',
+            setPlaceholderText = True,
+            placeholderText = VPR_TDNN_OutputDirName_Default
         )
         self.ui.Button_VPR_TDNN_OutputDirName_MoreActions.SetMenu(
             ActionEvents = {
@@ -2778,29 +2777,29 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_VPR_TDNN_OutputDirName,
-            TreeWidget = self.ui.TreeWidget_Catalogue_VPR_TDNN,
-            RootItemText = QCA.translate('MainWindow', "输出参数"),
-            ChildItemText = QCA.translate('MainWindow', "输出目录名")
+            widget = self.ui.Label_VPR_TDNN_OutputDirName,
+            treeWidget = self.ui.TreeWidget_Catalogue_VPR_TDNN,
+            rootItemText = QCA.translate('MainWindow', "输出参数"),
+            childItemText = QCA.translate('MainWindow', "输出目录名")
         )
 
         self.ui.ToolBox_VPR_TDNN_OutputParams_AdvanceSettings.widget(0).setText(QCA.translate('MainWindow', "高级设置"))
         self.ui.ToolBox_VPR_TDNN_OutputParams_AdvanceSettings.widget(0).collapse()
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_VPR_TDNN_AudioSpeakersDataName,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "识别结果文本名\n用于保存最后生成的记录音频文件与对应说话人的txt文件的名字。")
+        QFunc.setText(
+            widget = self.ui.Label_VPR_TDNN_AudioSpeakersDataName,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "识别结果文本名\n用于保存最后生成的记录音频文件与对应说话人的txt文件的名字。")
             )
         )
         VPR_TDNN_AudioSpeakersDataName_Default = "Recgonition_" + str(date.today())
         ParamsManager_VPR_TDNN.SetParam(
-            Widget = self.ui.LineEdit_VPR_TDNN_AudioSpeakersDataName,
-            Section = 'Output Params',
-            Option = 'FileList_Name',
-            DefaultValue = VPR_TDNN_AudioSpeakersDataName_Default,
-            SetPlaceholderText = True,
-            PlaceholderText = VPR_TDNN_AudioSpeakersDataName_Default
+            widget = self.ui.LineEdit_VPR_TDNN_AudioSpeakersDataName,
+            section = 'Output params',
+            option = 'FileList_Name',
+            defaultValue = VPR_TDNN_AudioSpeakersDataName_Default,
+            setPlaceholderText = True,
+            placeholderText = VPR_TDNN_AudioSpeakersDataName_Default
         )
         self.ui.Button_VPR_TDNN_AudioSpeakersDataName_MoreActions.SetMenu(
             ActionEvents = {
@@ -2809,10 +2808,10 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_VPR_TDNN_AudioSpeakersDataName,
-            TreeWidget = self.ui.TreeWidget_Catalogue_VPR_TDNN,
-            RootItemText = QCA.translate('MainWindow', "输出参数"),
-            ChildItemText = QCA.translate('MainWindow', "识别结果文本名")
+            widget = self.ui.Label_VPR_TDNN_AudioSpeakersDataName,
+            treeWidget = self.ui.TreeWidget_Catalogue_VPR_TDNN,
+            rootItemText = QCA.translate('MainWindow', "输出参数"),
+            childItemText = QCA.translate('MainWindow', "识别结果文本名")
         )
 
         LineEdit_VPR_TDNN_OutputDir = LineEditBase()
@@ -2847,9 +2846,9 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_ImportSettings_VPR_TDNN.setText(QCA.translate('MainWindow', "导入配置"))
         self.ui.Button_ImportSettings_VPR_TDNN.clicked.connect(
             lambda: ParamsManager_VPR_TDNN.ImportSettings(
-                QFunc.Function_GetFileDialog(
-                    Mode = "SelectFile",
-                    FileType = "ini类型 (*.ini)"
+                QFunc.getFileDialog(
+                    mode = "SelectFile",
+                    fileType = "ini类型 (*.ini)"
                 )
             )
         )
@@ -2857,22 +2856,22 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_ExportSettings_VPR_TDNN.setText(QCA.translate('MainWindow', "导出配置"))
         self.ui.Button_ExportSettings_VPR_TDNN.clicked.connect(
             lambda: ParamsManager_VPR_TDNN.ExportSettings(
-                QFunc.Function_GetFileDialog(
-                    Mode = "SaveFile",
-                    FileType = "ini类型 (*.ini)"
+                QFunc.getFileDialog(
+                    mode = "SaveFile",
+                    fileType = "ini类型 (*.ini)"
                 )
             )
         )
 
         self.ui.Button_EditResult_VPR_TDNN.setText(QCA.translate('MainWindow', "编辑识别结果"))
         def EditVPRResult():
-            VPRResultPath = QFunc.Function_GetFileDialog(
-                Mode = "SelectFile",
-                FileType = "txt类型 (*.txt)",
-                Directory = Path(CurrentDir).joinpath('语音识别结果', 'VPR').as_posix()
+            VPRResultPath = QFunc.getFileDialog(
+                mode = "SelectFile",
+                fileType = "txt类型 (*.txt)",
+                directory = Path(currentDir).joinpath('语音识别结果', 'VPR').as_posix()
             )
-            if QFunc.NormPath(VPRResultPath) is not None:
-                self.ShowMask(True, "正在加载表单")
+            if QFunc.normPath(VPRResultPath) is not None:
+                self.showMask(True, "正在加载表单")
                 self.showVPRResult(
                     LineEdit_VPR_TDNN_OutputDir.text(),
                     VPRResultPath,
@@ -2882,22 +2881,22 @@ class MainWindow(Window_MainWindow):
 
         self.ui.Button_CheckOutput_VPR_TDNN.setText(QCA.translate('MainWindow', "打开输出目录"))
         Function_SetURL(
-            Button = self.ui.Button_CheckOutput_VPR_TDNN,
-            URL = self.ui.LineEdit_VPR_TDNN_OutputRoot,
-            ButtonTooltip = "Click to open",
-            CreateIfNotExist = True
+            button = self.ui.Button_CheckOutput_VPR_TDNN,
+            url = self.ui.LineEdit_VPR_TDNN_OutputRoot,
+            buttonTooltip = "Click to open",
+            createIfNotExist = True
         )
 
         # Bottom
         self.ui.Button_VPR_TDNN_Execute.setText(QCA.translate('MainWindow', "执行语音识别"))
         self.ui.Button_VPR_TDNN_Terminate.setText(QCA.translate('MainWindow', "终止语音识别"))
         Function_SetMethodExecutor(self,
-            ExecuteButton = self.ui.Button_VPR_TDNN_Execute,
-            TerminateButton = self.ui.Button_VPR_TDNN_Terminate,
-            ProgressBar = self.ui.ProgressBar_VPR_TDNN,
-            ConsoleWidget = self.ui.Frame_Console,
-            Method = Execute_Voice_Identifying_VPR.Execute,
-            ParamsFrom = [
+            executeButton = self.ui.Button_VPR_TDNN_Execute,
+            terminateButton = self.ui.Button_VPR_TDNN_Terminate,
+            progressBar = self.ui.ProgressBar_VPR_TDNN,
+            consoleWidget = self.ui.Frame_Console,
+            method = Execute_Voice_Identifying_VPR.Execute,
+            paramsFrom = [
                 self.ui.Table_VPR_TDNN_StdAudioSpeaker,
                 self.ui.LineEdit_VPR_TDNN_AudioDirInput,
                 self.ui.LineEdit_VPR_TDNN_ModelPath,
@@ -2909,8 +2908,8 @@ class MainWindow(Window_MainWindow):
                 self.ui.LineEdit_VPR_TDNN_OutputDirName,
                 self.ui.LineEdit_VPR_TDNN_AudioSpeakersDataName
             ],
-            SuccessEvents = [
-                lambda: self.ShowMask(True, "正在加载表单"),
+            successEvents = [
+                lambda: self.showMask(True, "正在加载表单"),
                 lambda: self.showVPRResult(
                     LineEdit_VPR_TDNN_OutputDir.text(),
                     LineEdit_VPR_TDNN_AudioSpeakersDataPath.text(),
@@ -2932,8 +2931,8 @@ class MainWindow(Window_MainWindow):
             lambda: self.showGuidance(
                 QCA.translate('MainWindow', "引导（仅出现一次）"),
                 [
-                    QFunc.NormPath(Path(ResourceDir).joinpath('assets/images/others/Guidance_ASR.png')),
-                    QFunc.NormPath(Path(ResourceDir).joinpath('assets/images/others/Guidance_Layout.png'))
+                    QFunc.normPath(Path(resourceDir).joinpath('assets/images/others/Guidance_ASR.png')),
+                    QFunc.normPath(Path(resourceDir).joinpath('assets/images/others/Guidance_Layout.png'))
                 ],
                 [
                     '欢迎来到语音转录工具界面\n该工具用于将语音文件批量转换为字幕文件并进行语言标注等操作',
@@ -2945,12 +2944,12 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_Menu_ASR.clicked.connect(
             lambda: (
                 self.ui.Button_VoiceTranscriber_Help.click(),
-                Config.editConfig('Dialog', 'GuidanceShown_ASR', 'True')
-            ) if eval(Config.getValue('Dialog', 'GuidanceShown_ASR', 'False')) is False else None
+                config.editConfig('Dialog', 'GuidanceShown_ASR', 'True')
+            ) if eval(config.getValue('Dialog', 'GuidanceShown_ASR', 'False')) is False else None
         )
 
         # ParamsManager
-        Path_Config_ASR_Whisper = QFunc.NormPath(Path(ConfigDir).joinpath('Config_ASR_Whisper.ini'))
+        Path_Config_ASR_Whisper = QFunc.normPath(Path(configDir).joinpath('Config_ASR_Whisper.ini'))
         ParamsManager_ASR_Whisper = ParamsManager(Path_Config_ASR_Whisper)
 
         # Top
@@ -2959,8 +2958,8 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_VoiceTranscriber_Title.setChecked(True)
         self.ui.Button_VoiceTranscriber_Title.clicked.connect(
             lambda: Function_AnimateStackedWidget(
-                StackedWidget = self.ui.StackedWidget_Pages_ASR,
-                Target = 0
+                stackedWidget = self.ui.StackedWidget_Pages_ASR,
+                target = 0
             )
         )
 
@@ -2971,26 +2970,26 @@ class MainWindow(Window_MainWindow):
         # Middle
         self.ui.GroupBox_ASR_Whisper_InputParams.setTitle(QCA.translate('MainWindow', "输入参数"))
         Function_AddToTreeWidget(
-            Widget = self.ui.GroupBox_ASR_Whisper_InputParams,
-            TreeWidget = self.ui.TreeWidget_Catalogue_ASR_Whisper,
-            RootItemText = QCA.translate('MainWindow', "输入参数")
+            widget = self.ui.GroupBox_ASR_Whisper_InputParams,
+            treeWidget = self.ui.TreeWidget_Catalogue_ASR_Whisper,
+            rootItemText = QCA.translate('MainWindow', "输入参数")
         )
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_ASR_Whisper_AudioDir,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "音频输入目录\n需要将语音内容转为文字的音频文件的所在目录。")
+        QFunc.setText(
+            widget = self.ui.Label_ASR_Whisper_AudioDir,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "音频输入目录\n需要将语音内容转为文字的音频文件的所在目录。")
             )
         )
         ParamsManager_ASR_Whisper.SetParam(
-            Widget = self.ui.LineEdit_ASR_Whisper_AudioDir,
-            Section = 'Input Params',
-            Option = 'Audio_Dir',
-            DefaultValue = '',
-            SetPlaceholderText = True
+            widget = self.ui.LineEdit_ASR_Whisper_AudioDir,
+            section = 'Input params',
+            option = 'Audio_Dir',
+            defaultValue = '',
+            setPlaceholderText = True
         )
         self.ui.LineEdit_ASR_Whisper_AudioDir.setFileDialog(
-            Mode = "SelectFolder"
+            mode = "SelectFolder"
         )
         self.ui.Button_ASR_Whisper_AudioDir_MoreActions.SetMenu(
             ActionEvents = {
@@ -2999,40 +2998,40 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_ASR_Whisper_AudioDir,
-            TreeWidget = self.ui.TreeWidget_Catalogue_ASR_Whisper,
-            RootItemText = QCA.translate('MainWindow', "输入参数"),
-            ChildItemText = QCA.translate('MainWindow', "音频输入目录")
+            widget = self.ui.Label_ASR_Whisper_AudioDir,
+            treeWidget = self.ui.TreeWidget_Catalogue_ASR_Whisper,
+            rootItemText = QCA.translate('MainWindow', "输入参数"),
+            childItemText = QCA.translate('MainWindow', "音频输入目录")
         )
 
         self.ui.GroupBox_ASR_Whisper_WhisperParams.setTitle(QCA.translate('MainWindow', "语音转录参数"))
         Function_AddToTreeWidget(
-            Widget = self.ui.GroupBox_ASR_Whisper_WhisperParams,
-            TreeWidget = self.ui.TreeWidget_Catalogue_ASR_Whisper,
-            RootItemText = QCA.translate('MainWindow', "语音转录参数")
+            widget = self.ui.GroupBox_ASR_Whisper_WhisperParams,
+            treeWidget = self.ui.TreeWidget_Catalogue_ASR_Whisper,
+            rootItemText = QCA.translate('MainWindow', "语音转录参数")
         )
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_ASR_Whisper_AddLanguageInfo,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "语种标注\n标注音频中说话人所使用的语言，若用于数据集制作则建议启用。")
+        QFunc.setText(
+            widget = self.ui.Label_ASR_Whisper_AddLanguageInfo,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "语种标注\n标注音频中说话人所使用的语言，若用于数据集制作则建议启用。")
             )
         )
         ParamsManager_ASR_Whisper.SetParam(
-            Widget = self.ui.CheckBox_ASR_Whisper_AddLanguageInfo,
-            Section = 'Whisper Params',
-            Option = 'Add_LanguageInfo',
-            DefaultValue = True
+            widget = self.ui.CheckBox_ASR_Whisper_AddLanguageInfo,
+            section = 'Whisper params',
+            option = 'Add_LanguageInfo',
+            defaultValue = True
         )
         Function_ConfigureCheckBox(
-            CheckBox = self.ui.CheckBox_ASR_Whisper_AddLanguageInfo,
-            CheckedText = "已启用",
-            CheckedEvents = [
+            checkBox = self.ui.CheckBox_ASR_Whisper_AddLanguageInfo,
+            checkedText = "已启用",
+            checkedEvents = [
             ],
-            UncheckedText = "未启用",
-            UncheckedEvents = [
+            uncheckedText = "未启用",
+            uncheckedEvents = [
             ],
-            TakeEffect = True
+            takeEffect = True
         )
         self.ui.Button_ASR_Whisper_AddLanguageInfo_MoreActions.SetMenu(
             ActionEvents = {
@@ -3040,31 +3039,31 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_ASR_Whisper_AddLanguageInfo,
-            TreeWidget = self.ui.TreeWidget_Catalogue_ASR_Whisper,
-            RootItemText = QCA.translate('MainWindow', "语音转录参数"),
-            ChildItemText = QCA.translate('MainWindow', "语种标注")
+            widget = self.ui.Label_ASR_Whisper_AddLanguageInfo,
+            treeWidget = self.ui.TreeWidget_Catalogue_ASR_Whisper,
+            rootItemText = QCA.translate('MainWindow', "语音转录参数"),
+            childItemText = QCA.translate('MainWindow', "语种标注")
         )
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_ASR_Whisper_ModelPath,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "模型加载路径\n用于加载的Whisper模型的路径。")
+        QFunc.setText(
+            widget = self.ui.Label_ASR_Whisper_ModelPath,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "模型加载路径\n用于加载的Whisper模型的路径。")
             )
         )
         ASR_Whisper_ModelPath_Default = Path(ModelDir).joinpath('ASR', 'Whisper', 'Downloaded', 'small.pt').as_posix()
         ParamsManager_ASR_Whisper.SetParam(
-            Widget = self.ui.LineEdit_ASR_Whisper_ModelPath,
-            Section = 'Whisper Params',
-            Option = 'Model_Path',
-            DefaultValue = ASR_Whisper_ModelPath_Default,
-            SetPlaceholderText = True,
-            PlaceholderText = ASR_Whisper_ModelPath_Default
+            widget = self.ui.LineEdit_ASR_Whisper_ModelPath,
+            section = 'Whisper params',
+            option = 'Model_Path',
+            defaultValue = ASR_Whisper_ModelPath_Default,
+            setPlaceholderText = True,
+            placeholderText = ASR_Whisper_ModelPath_Default
         )
         self.ui.LineEdit_ASR_Whisper_ModelPath.setFileDialog(
-            Mode = "SelectFile",
-            FileType = "pt类型 (*.pt)",
-            Directory = QFunc.NormPath(Path(ModelDir).joinpath('ASR', 'Whisper', 'Downloaded'))
+            mode = "SelectFile",
+            fileType = "pt类型 (*.pt)",
+            directory = QFunc.normPath(Path(ModelDir).joinpath('ASR', 'Whisper', 'Downloaded'))
         )
         self.ui.Button_ASR_Whisper_ModelPath_MoreActions.SetMenu(
             ActionEvents = {
@@ -3073,36 +3072,36 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_ASR_Whisper_ModelPath,
-            TreeWidget = self.ui.TreeWidget_Catalogue_ASR_Whisper,
-            RootItemText = QCA.translate('MainWindow', "语音转录参数"),
-            ChildItemText = QCA.translate('MainWindow', "模型加载路径")
+            widget = self.ui.Label_ASR_Whisper_ModelPath,
+            treeWidget = self.ui.TreeWidget_Catalogue_ASR_Whisper,
+            rootItemText = QCA.translate('MainWindow', "语音转录参数"),
+            childItemText = QCA.translate('MainWindow', "模型加载路径")
         )
 
         self.ui.ToolBox_ASR_Whisper_WhisperParams_AdvanceSettings.widget(0).setText(QCA.translate('MainWindow', "高级设置"))
         self.ui.ToolBox_ASR_Whisper_WhisperParams_AdvanceSettings.widget(0).collapse()
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_ASR_Whisper_Verbose,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "显示转录内容\n启用该项后会在运行过程中显示转录的内容，否则只显示进度。")
+        QFunc.setText(
+            widget = self.ui.Label_ASR_Whisper_Verbose,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "显示转录内容\n启用该项后会在运行过程中显示转录的内容，否则只显示进度。")
             )
         )
         ParamsManager_ASR_Whisper.SetParam(
-            Widget = self.ui.CheckBox_ASR_Whisper_Verbose,
-            Section = 'Whisper Params',
-            Option = 'Verbose',
-            DefaultValue = True
+            widget = self.ui.CheckBox_ASR_Whisper_Verbose,
+            section = 'Whisper params',
+            option = 'Verbose',
+            defaultValue = True
         )
         Function_ConfigureCheckBox(
-            CheckBox = self.ui.CheckBox_ASR_Whisper_Verbose,
-            CheckedText = "已启用",
-            CheckedEvents = [
+            checkBox = self.ui.CheckBox_ASR_Whisper_Verbose,
+            checkedText = "已启用",
+            checkedEvents = [
             ],
-            UncheckedText = "未启用",
-            UncheckedEvents = [
+            uncheckedText = "未启用",
+            uncheckedEvents = [
             ],
-            TakeEffect = True
+            takeEffect = True
         )
         self.ui.Button_ASR_Whisper_Verbose_MoreActions.SetMenu(
             ActionEvents = {
@@ -3110,33 +3109,33 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_ASR_Whisper_Verbose,
-            TreeWidget = self.ui.TreeWidget_Catalogue_ASR_Whisper,
-            RootItemText = QCA.translate('MainWindow', "语音转录参数"),
-            ChildItemText = QCA.translate('MainWindow', "显示转录内容")
+            widget = self.ui.Label_ASR_Whisper_Verbose,
+            treeWidget = self.ui.TreeWidget_Catalogue_ASR_Whisper,
+            rootItemText = QCA.translate('MainWindow', "语音转录参数"),
+            childItemText = QCA.translate('MainWindow', "显示转录内容")
         )
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_ASR_Whisper_fp16,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "半精度计算\n主要使用半精度浮点数进行计算，若GPU不可用则忽略或禁用此项。")
+        QFunc.setText(
+            widget = self.ui.Label_ASR_Whisper_fp16,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "半精度计算\n主要使用半精度浮点数进行计算，若GPU不可用则忽略或禁用此项。")
             )
         )
         ParamsManager_ASR_Whisper.SetParam(
-            Widget = self.ui.CheckBox_ASR_Whisper_fp16,
-            Section = 'Whisper Params',
-            Option = 'fp16',
-            DefaultValue = True
+            widget = self.ui.CheckBox_ASR_Whisper_fp16,
+            section = 'Whisper params',
+            option = 'fp16',
+            defaultValue = True
         )
         Function_ConfigureCheckBox(
-            CheckBox = self.ui.CheckBox_ASR_Whisper_fp16,
-            CheckedText = "已启用",
-            CheckedEvents = [
+            checkBox = self.ui.CheckBox_ASR_Whisper_fp16,
+            checkedText = "已启用",
+            checkedEvents = [
             ],
-            UncheckedText = "未启用",
-            UncheckedEvents = [
+            uncheckedText = "未启用",
+            uncheckedEvents = [
             ],
-            TakeEffect = True
+            takeEffect = True
         )
         self.ui.Button_ASR_Whisper_fp16_MoreActions.SetMenu(
             ActionEvents = {
@@ -3144,33 +3143,33 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_ASR_Whisper_fp16,
-            TreeWidget = self.ui.TreeWidget_Catalogue_ASR_Whisper,
-            RootItemText = QCA.translate('MainWindow', "语音转录参数"),
-            ChildItemText = QCA.translate('MainWindow', "半精度计算")
+            widget = self.ui.Label_ASR_Whisper_fp16,
+            treeWidget = self.ui.TreeWidget_Catalogue_ASR_Whisper,
+            rootItemText = QCA.translate('MainWindow', "语音转录参数"),
+            childItemText = QCA.translate('MainWindow', "半精度计算")
         )
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_ASR_Whisper_ConditionOnPreviousText,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "关联上下文\n在音频之间的内容具有关联性时启用该项可以获得更好的效果。")
+        QFunc.setText(
+            widget = self.ui.Label_ASR_Whisper_ConditionOnPreviousText,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "关联上下文\n在音频之间的内容具有关联性时启用该项可以获得更好的效果。")
             )
         )
         ParamsManager_ASR_Whisper.SetParam(
-            Widget = self.ui.CheckBox_ASR_Whisper_ConditionOnPreviousText,
-            Section = 'Whisper Params',
-            Option = 'Condition_on_Previous_Text',
-            DefaultValue = False
+            widget = self.ui.CheckBox_ASR_Whisper_ConditionOnPreviousText,
+            section = 'Whisper params',
+            option = 'Condition_on_Previous_Text',
+            defaultValue = False
         )
         Function_ConfigureCheckBox(
-            CheckBox = self.ui.CheckBox_ASR_Whisper_ConditionOnPreviousText,
-            CheckedText = "已启用",
-            CheckedEvents = [
+            checkBox = self.ui.CheckBox_ASR_Whisper_ConditionOnPreviousText,
+            checkedText = "已启用",
+            checkedEvents = [
             ],
-            UncheckedText = "未启用",
-            UncheckedEvents = [
+            uncheckedText = "未启用",
+            uncheckedEvents = [
             ],
-            TakeEffect = True
+            takeEffect = True
         )
         self.ui.Button_ASR_Whisper_ConditionOnPreviousText_MoreActions.SetMenu(
             ActionEvents = {
@@ -3178,33 +3177,33 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_ASR_Whisper_ConditionOnPreviousText,
-            TreeWidget = self.ui.TreeWidget_Catalogue_ASR_Whisper,
-            RootItemText = QCA.translate('MainWindow', "语音转录参数"),
-            ChildItemText = QCA.translate('MainWindow', "关联上下文")
+            widget = self.ui.Label_ASR_Whisper_ConditionOnPreviousText,
+            treeWidget = self.ui.TreeWidget_Catalogue_ASR_Whisper,
+            rootItemText = QCA.translate('MainWindow', "语音转录参数"),
+            childItemText = QCA.translate('MainWindow', "关联上下文")
         )
 
         self.ui.GroupBox_ASR_Whisper_OutputParams.setTitle(QCA.translate('MainWindow', "输出参数"))
         Function_AddToTreeWidget(
-            Widget = self.ui.GroupBox_ASR_Whisper_OutputParams,
-            TreeWidget = self.ui.TreeWidget_Catalogue_ASR_Whisper,
-            RootItemText = QCA.translate('MainWindow', "输出参数")
+            widget = self.ui.GroupBox_ASR_Whisper_OutputParams,
+            treeWidget = self.ui.TreeWidget_Catalogue_ASR_Whisper,
+            rootItemText = QCA.translate('MainWindow', "输出参数")
         )
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_ASR_Whisper_OutputDirName,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "输出目录名\n用于保存最后生成的字幕文件的目录的名字。")
+        QFunc.setText(
+            widget = self.ui.Label_ASR_Whisper_OutputDirName,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "输出目录名\n用于保存最后生成的字幕文件的目录的名字。")
             )
         )
         ASR_Whisper_OutputDirName_Default = str(date.today())
         ParamsManager_ASR_Whisper.SetParam(
-            Widget = self.ui.LineEdit_ASR_Whisper_OutputDirName,
-            Section = 'Output Params',
-            Option = 'SRT_Dir_Name',
-            DefaultValue = '',
-            SetPlaceholderText = True,
-            PlaceholderText = ASR_Whisper_OutputDirName_Default
+            widget = self.ui.LineEdit_ASR_Whisper_OutputDirName,
+            section = 'Output params',
+            option = 'SRT_Dir_Name',
+            defaultValue = '',
+            setPlaceholderText = True,
+            placeholderText = ASR_Whisper_OutputDirName_Default
         )
         self.ui.Button_ASR_Whisper_OutputDirName_MoreActions.SetMenu(
             ActionEvents = {
@@ -3213,10 +3212,10 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_ASR_Whisper_OutputDirName,
-            TreeWidget = self.ui.TreeWidget_Catalogue_ASR_Whisper,
-            RootItemText = QCA.translate('MainWindow', "输出参数"),
-            ChildItemText = QCA.translate('MainWindow', "输出目录名")
+            widget = self.ui.Label_ASR_Whisper_OutputDirName,
+            treeWidget = self.ui.TreeWidget_Catalogue_ASR_Whisper,
+            rootItemText = QCA.translate('MainWindow', "输出参数"),
+            childItemText = QCA.translate('MainWindow', "输出目录名")
         )
 
         LineEdit_ASR_Whisper_OutputDir = LineEditBase()
@@ -3243,9 +3242,9 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_ImportSettings_ASR_Whisper.setText(QCA.translate('MainWindow', "导入配置"))
         self.ui.Button_ImportSettings_ASR_Whisper.clicked.connect(
             lambda: ParamsManager_ASR_Whisper.ImportSettings(
-                QFunc.Function_GetFileDialog(
-                    Mode = "SelectFile",
-                    FileType = "ini类型 (*.ini)"
+                QFunc.getFileDialog(
+                    mode = "SelectFile",
+                    fileType = "ini类型 (*.ini)"
                 )
             )
         )
@@ -3253,31 +3252,31 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_ExportSettings_ASR_Whisper.setText(QCA.translate('MainWindow', "导出配置"))
         self.ui.Button_ExportSettings_ASR_Whisper.clicked.connect(
             lambda: ParamsManager_ASR_Whisper.ExportSettings(
-                QFunc.Function_GetFileDialog(
-                    Mode = "SaveFile",
-                    FileType = "ini类型 (*.ini)"
+                QFunc.getFileDialog(
+                    mode = "SaveFile",
+                    fileType = "ini类型 (*.ini)"
                 )
             )
         )
 
         self.ui.Button_CheckOutput_ASR_Whisper.setText(QCA.translate('MainWindow', "打开输出目录"))
         Function_SetURL(
-            Button = self.ui.Button_CheckOutput_ASR_Whisper,
-            URL = self.ui.LineEdit_ASR_Whisper_OutputRoot,
-            ButtonTooltip = "Click to open",
-            CreateIfNotExist = True
+            button = self.ui.Button_CheckOutput_ASR_Whisper,
+            url = self.ui.LineEdit_ASR_Whisper_OutputRoot,
+            buttonTooltip = "Click to open",
+            createIfNotExist = True
         )
 
         # Bottom
         self.ui.Button_ASR_Whisper_Execute.setText(QCA.translate('MainWindow', "执行语音转录"))
         self.ui.Button_ASR_Whisper_Terminate.setText(QCA.translate('MainWindow', "终止语音转录"))
         Function_SetMethodExecutor(self,
-            ExecuteButton = self.ui.Button_ASR_Whisper_Execute,
-            TerminateButton = self.ui.Button_ASR_Whisper_Terminate,
-            ProgressBar = self.ui.ProgressBar_ASR_Whisper,
-            ConsoleWidget = self.ui.Frame_Console,
-            Method = Execute_Voice_Transcribing_Whisper.Execute,
-            ParamsFrom = [
+            executeButton = self.ui.Button_ASR_Whisper_Execute,
+            terminateButton = self.ui.Button_ASR_Whisper_Terminate,
+            progressBar = self.ui.ProgressBar_ASR_Whisper,
+            consoleWidget = self.ui.Frame_Console,
+            method = Execute_Voice_Transcribing_Whisper.Execute,
+            paramsFrom = [
                 self.ui.LineEdit_ASR_Whisper_ModelPath,
                 self.ui.LineEdit_ASR_Whisper_AudioDir,
                 self.ui.CheckBox_ASR_Whisper_Verbose,
@@ -3287,8 +3286,8 @@ class MainWindow(Window_MainWindow):
                 self.ui.LineEdit_ASR_Whisper_OutputRoot,
                 self.ui.LineEdit_ASR_Whisper_OutputDirName
             ],
-            SuccessEvents = [
-                lambda: self.ShowMask(True, "正在加载表单"),
+            successEvents = [
+                lambda: self.showMask(True, "正在加载表单"),
                 lambda: self.showASRResult(
                     LineEdit_ASR_Whisper_OutputDir.text(), self.ui.LineEdit_ASR_Whisper_AudioDir.text()
                 ),
@@ -3308,8 +3307,8 @@ class MainWindow(Window_MainWindow):
             lambda: self.showGuidance(
                 QCA.translate('MainWindow', "引导（仅出现一次）"),
                 [
-                    QFunc.NormPath(Path(ResourceDir).joinpath('assets/images/others/Guidance_Dataset.png')),
-                    QFunc.NormPath(Path(ResourceDir).joinpath('assets/images/others/Guidance_Layout.png'))
+                    QFunc.normPath(Path(resourceDir).joinpath('assets/images/others/Guidance_Dataset.png')),
+                    QFunc.normPath(Path(resourceDir).joinpath('assets/images/others/Guidance_Layout.png'))
                 ],
                 [
                     '欢迎来到数据集工具界面\n该工具用于生成适用于语音模型训练的数据集',
@@ -3321,12 +3320,12 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_Menu_Dataset.clicked.connect(
             lambda: (
                 self.ui.Button_DatasetCreator_Help.click(),
-                Config.editConfig('Dialog', 'GuidanceShown_Dataset', 'True')
-            ) if eval(Config.getValue('Dialog', 'GuidanceShown_Dataset', 'False')) is False else None
+                config.editConfig('Dialog', 'GuidanceShown_Dataset', 'True')
+            ) if eval(config.getValue('Dialog', 'GuidanceShown_Dataset', 'False')) is False else None
         )
 
         # GPT-SoVITS - ParamsManager
-        Path_Config_DAT_GPTSoVITS = QFunc.NormPath(Path(ConfigDir).joinpath('Config_DAT_GPT-SoVITS.ini'))
+        Path_Config_DAT_GPTSoVITS = QFunc.normPath(Path(configDir).joinpath('Config_DAT_GPT-SoVITS.ini'))
         ParamsManager_DAT_GPTSoVITS = ParamsManager(Path_Config_DAT_GPTSoVITS)
 
         # GPT-SoVITS - Top
@@ -3335,8 +3334,8 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_DatasetCreator_Title_GPTSoVITS.setChecked(True)
         self.ui.Button_DatasetCreator_Title_GPTSoVITS.clicked.connect(
             lambda: Function_AnimateStackedWidget(
-                StackedWidget = self.ui.StackedWidget_Pages_Dataset,
-                Target = 0
+                stackedWidget = self.ui.StackedWidget_Pages_Dataset,
+                target = 0
             )
         )
 
@@ -3347,23 +3346,23 @@ class MainWindow(Window_MainWindow):
         # GPT-SoVITS - Middle
         self.ui.GroupBox_DAT_GPTSoVITS_InputParams.setTitle(QCA.translate('MainWindow', "输入参数"))
         Function_AddToTreeWidget(
-            Widget = self.ui.GroupBox_DAT_GPTSoVITS_InputParams,
-            TreeWidget = self.ui.TreeWidget_Catalogue_DAT_GPTSoVITS,
-            RootItemText = QCA.translate('MainWindow', "输入参数")
+            widget = self.ui.GroupBox_DAT_GPTSoVITS_InputParams,
+            treeWidget = self.ui.TreeWidget_Catalogue_DAT_GPTSoVITS,
+            rootItemText = QCA.translate('MainWindow', "输入参数")
         )
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_DAT_GPTSoVITS_AudioSpeakersDataPath,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "音频文件目录/语音识别结果文本路径\n音频文件的所在目录，或者提供由语音识别得到的文本文件。")
+        QFunc.setText(
+            widget = self.ui.Label_DAT_GPTSoVITS_AudioSpeakersDataPath,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "音频文件目录/语音识别结果文本路径\n音频文件的所在目录，或者提供由语音识别得到的文本文件。")
             )
         )
         ParamsManager_DAT_GPTSoVITS.SetParam(
-            Widget = self.ui.LineEdit_DAT_GPTSoVITS_AudioSpeakersDataPath,
-            Section = 'Input Params',
-            Option = 'WAV_Dir',
-            DefaultValue = '',
-            SetPlaceholderText = True
+            widget = self.ui.LineEdit_DAT_GPTSoVITS_AudioSpeakersDataPath,
+            section = 'Input params',
+            option = 'WAV_Dir',
+            defaultValue = '',
+            setPlaceholderText = True
         )
         self.ui.LineEdit_DAT_GPTSoVITS_AudioSpeakersDataPath.fileButton.clicked.connect(self.setAudioSpeakersDataPath)
         self.ui.Button_DAT_GPTSoVITS_AudioSpeakersDataPath_MoreActions.SetMenu(
@@ -3373,28 +3372,28 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_DAT_GPTSoVITS_AudioSpeakersDataPath,
-            TreeWidget = self.ui.TreeWidget_Catalogue_DAT_GPTSoVITS,
-            RootItemText = QCA.translate('MainWindow', "输入参数"),
-            ChildItemText = QCA.translate('MainWindow', "音频文件目录")
+            widget = self.ui.Label_DAT_GPTSoVITS_AudioSpeakersDataPath,
+            treeWidget = self.ui.TreeWidget_Catalogue_DAT_GPTSoVITS,
+            rootItemText = QCA.translate('MainWindow', "输入参数"),
+            childItemText = QCA.translate('MainWindow', "音频文件目录")
         )
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_DAT_GPTSoVITS_SRTDir,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "字幕输入目录\n字幕文件的所在目录，字幕文件须与对应音频文件同名且在文本中注明所属语言。")
+        QFunc.setText(
+            widget = self.ui.Label_DAT_GPTSoVITS_SRTDir,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "字幕输入目录\n字幕文件的所在目录，字幕文件须与对应音频文件同名且在文本中注明所属语言。")
             )
         )
         ParamsManager_DAT_GPTSoVITS.SetParam(
-            Widget = self.ui.LineEdit_DAT_GPTSoVITS_SRTDir,
-            Section = 'Input Params',
-            Option = 'SRT_Dir',
-            DefaultValue = '',
-            SetPlaceholderText = True
+            widget = self.ui.LineEdit_DAT_GPTSoVITS_SRTDir,
+            section = 'Input params',
+            option = 'SRT_Dir',
+            defaultValue = '',
+            setPlaceholderText = True
         )
         self.ui.LineEdit_DAT_GPTSoVITS_SRTDir.setFileDialog(
-            Mode = "SelectFolder",
-            Directory = Path(CurrentDir).joinpath('语音转录结果', 'Whisper').as_posix()
+            mode = "SelectFolder",
+            directory = Path(currentDir).joinpath('语音转录结果', 'Whisper').as_posix()
         )
         self.ui.Button_DAT_GPTSoVITS_SRTDir_MoreActions.SetMenu(
             ActionEvents = {
@@ -3403,43 +3402,42 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_DAT_GPTSoVITS_SRTDir,
-            TreeWidget = self.ui.TreeWidget_Catalogue_DAT_GPTSoVITS,
-            RootItemText = QCA.translate('MainWindow', "输入参数"),
-            ChildItemText = QCA.translate('MainWindow', "字幕输入目录")
+            widget = self.ui.Label_DAT_GPTSoVITS_SRTDir,
+            treeWidget = self.ui.TreeWidget_Catalogue_DAT_GPTSoVITS,
+            rootItemText = QCA.translate('MainWindow', "输入参数"),
+            childItemText = QCA.translate('MainWindow', "字幕输入目录")
         )
 
         self.ui.GroupBox_DAT_GPTSoVITS_GPTSoVITSParams.setTitle(QCA.translate('MainWindow', "数据集参数"))
         Function_AddToTreeWidget(
-            Widget = self.ui.GroupBox_DAT_GPTSoVITS_GPTSoVITSParams,
-            TreeWidget = self.ui.TreeWidget_Catalogue_DAT_GPTSoVITS,
-            RootItemText = QCA.translate('MainWindow', "数据集参数")
+            widget = self.ui.GroupBox_DAT_GPTSoVITS_GPTSoVITSParams,
+            treeWidget = self.ui.TreeWidget_Catalogue_DAT_GPTSoVITS,
+            rootItemText = QCA.translate('MainWindow', "数据集参数")
         )
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_DAT_GPTSoVITS_DataFormat,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "数据文本格式\n数据集的文本格式，默认使用GPT-SoVITS的标准。")
+        QFunc.setText(
+            widget = self.ui.Label_DAT_GPTSoVITS_DataFormat,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "数据文本格式\n数据集的文本格式，默认使用GPT-SoVITS的标准。")
             )
         )
         DAT_GPTSoVITS_DataFormat_Default = '路径|人名|语言|文本'
         ParamsManager_DAT_GPTSoVITS.SetParam(
-            Widget = self.ui.LineEdit_DAT_GPTSoVITS_DataFormat,
-            Section = 'GPT-SoVITS Params',
-            Option = 'DataFormat_Path',
-            DefaultValue = DAT_GPTSoVITS_DataFormat_Default,
-            SetPlaceholderText = True,
-            PlaceholderText = DAT_GPTSoVITS_DataFormat_Default
+            widget = self.ui.LineEdit_DAT_GPTSoVITS_DataFormat,
+            section = 'GPT-SoVITS params',
+            option = 'DataFormat_Path',
+            defaultValue = DAT_GPTSoVITS_DataFormat_Default,
+            setPlaceholderText = True,
+            placeholderText = DAT_GPTSoVITS_DataFormat_Default
         )
         self.ui.LineEdit_DAT_GPTSoVITS_DataFormat.textChanged.connect(
-            lambda Value: (
+            lambda value: (
                 MessageBoxBase.pop(self,
-                    MessageType = QMessageBox.Warning,
-                    WindowTitle = "Warning",
-                    Text = "请保留关键词：'路径'，'人名'，'语言'，'文本'",
+                    QMessageBox.Warning, "Warning",
+                    "请保留关键词：'路径'，'人名'，'语言'，'文本'",
                 ),
                 ParamsManager_DAT_GPTSoVITS.ResetParam(self.ui.LineEdit_DAT_GPTSoVITS_DataFormat),
-            ) if not all(Keyword in Value for Keyword in ['路径', '人名', '语言', '文本']) else None
+            ) if not all(Keyword in value for Keyword in ['路径', '人名', '语言', '文本']) else None
         )
         self.ui.Button_DAT_GPTSoVITS_DataFormat_MoreActions.SetMenu(
             ActionEvents = {
@@ -3448,33 +3446,33 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_DAT_GPTSoVITS_DataFormat,
-            TreeWidget = self.ui.TreeWidget_Catalogue_DAT_GPTSoVITS,
-            RootItemText = QCA.translate('MainWindow', "数据集参数"),
-            ChildItemText = QCA.translate('MainWindow', "数据文本格式")
+            widget = self.ui.Label_DAT_GPTSoVITS_DataFormat,
+            treeWidget = self.ui.TreeWidget_Catalogue_DAT_GPTSoVITS,
+            rootItemText = QCA.translate('MainWindow', "数据集参数"),
+            childItemText = QCA.translate('MainWindow', "数据文本格式")
         )
 
         self.ui.GroupBox_DAT_GPTSoVITS_OutputParams.setTitle(QCA.translate('MainWindow', "输出参数"))
         Function_AddToTreeWidget(
-            Widget = self.ui.GroupBox_DAT_GPTSoVITS_OutputParams,
-            TreeWidget = self.ui.TreeWidget_Catalogue_DAT_GPTSoVITS,
-            RootItemText = QCA.translate('MainWindow', "输出参数")
+            widget = self.ui.GroupBox_DAT_GPTSoVITS_OutputParams,
+            treeWidget = self.ui.TreeWidget_Catalogue_DAT_GPTSoVITS,
+            rootItemText = QCA.translate('MainWindow', "输出参数")
         )
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_DAT_GPTSoVITS_OutputDirName,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "输出目录名\n用于保存最后生成的数据集文件的目录的名字。")
+        QFunc.setText(
+            widget = self.ui.Label_DAT_GPTSoVITS_OutputDirName,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "输出目录名\n用于保存最后生成的数据集文件的目录的名字。")
             )
         )
         DAT_GPTSoVITS_OutputDirName_Default = str(date.today())
         ParamsManager_DAT_GPTSoVITS.SetParam(
-            Widget = self.ui.LineEdit_DAT_GPTSoVITS_OutputDirName,
-            Section = 'Output Params',
-            Option = 'Output_Dir_Name',
-            DefaultValue = '',
-            SetPlaceholderText = True,
-            PlaceholderText = DAT_GPTSoVITS_OutputDirName_Default
+            widget = self.ui.LineEdit_DAT_GPTSoVITS_OutputDirName,
+            section = 'Output params',
+            option = 'Output_Dir_Name',
+            defaultValue = '',
+            setPlaceholderText = True,
+            placeholderText = DAT_GPTSoVITS_OutputDirName_Default
         )
         self.ui.Button_DAT_GPTSoVITS_OutputDirName_MoreActions.SetMenu(
             ActionEvents = {
@@ -3483,29 +3481,29 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_DAT_GPTSoVITS_OutputDirName,
-            TreeWidget = self.ui.TreeWidget_Catalogue_DAT_GPTSoVITS,
-            RootItemText = QCA.translate('MainWindow', "输出参数"),
-            ChildItemText = QCA.translate('MainWindow', "输出目录名")
+            widget = self.ui.Label_DAT_GPTSoVITS_OutputDirName,
+            treeWidget = self.ui.TreeWidget_Catalogue_DAT_GPTSoVITS,
+            rootItemText = QCA.translate('MainWindow', "输出参数"),
+            childItemText = QCA.translate('MainWindow', "输出目录名")
         )
 
         self.ui.ToolBox_DAT_GPTSoVITS_OutputParams_AdvanceSettings.widget(0).setText(QCA.translate('MainWindow', "高级设置"))
         self.ui.ToolBox_DAT_GPTSoVITS_OutputParams_AdvanceSettings.widget(0).collapse()
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_DAT_GPTSoVITS_FileListName,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "数据集文本名\n用于保存最后生成的数据集txt文件的名字。")
+        QFunc.setText(
+            widget = self.ui.Label_DAT_GPTSoVITS_FileListName,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "数据集文本名\n用于保存最后生成的数据集txt文件的名字。")
             )
         )
         DAT_GPTSoVITS_FileListName_Default = "Train_" + str(date.today())
         ParamsManager_DAT_GPTSoVITS.SetParam(
-            Widget = self.ui.LineEdit_DAT_GPTSoVITS_FileListName,
-            Section = 'Output Params',
-            Option = 'FileList_Name',
-            DefaultValue = DAT_GPTSoVITS_FileListName_Default,
-            SetPlaceholderText = True,
-            PlaceholderText = DAT_GPTSoVITS_FileListName_Default
+            widget = self.ui.LineEdit_DAT_GPTSoVITS_FileListName,
+            section = 'Output params',
+            option = 'FileList_Name',
+            defaultValue = DAT_GPTSoVITS_FileListName_Default,
+            setPlaceholderText = True,
+            placeholderText = DAT_GPTSoVITS_FileListName_Default
         )
         self.ui.Button_DAT_GPTSoVITS_FileListName_MoreActions.SetMenu(
             ActionEvents = {
@@ -3514,10 +3512,10 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_DAT_GPTSoVITS_FileListName,
-            TreeWidget = self.ui.TreeWidget_Catalogue_DAT_GPTSoVITS,
-            RootItemText = QCA.translate('MainWindow', "输出参数"),
-            ChildItemText = QCA.translate('MainWindow', "数据集文本名")
+            widget = self.ui.Label_DAT_GPTSoVITS_FileListName,
+            treeWidget = self.ui.TreeWidget_Catalogue_DAT_GPTSoVITS,
+            rootItemText = QCA.translate('MainWindow', "输出参数"),
+            childItemText = QCA.translate('MainWindow', "数据集文本名")
         )
 
         LineEdit_DAT_GPTSoVITS_OutputDir = LineEditBase()
@@ -3552,9 +3550,9 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_ImportSettings_DAT_GPTSoVITS.setText(QCA.translate('MainWindow', "导入配置"))
         self.ui.Button_ImportSettings_DAT_GPTSoVITS.clicked.connect(
             lambda: ParamsManager_DAT_GPTSoVITS.ImportSettings(
-                QFunc.Function_GetFileDialog(
-                    Mode = "SelectFile",
-                    FileType = "ini类型 (*.ini)"
+                QFunc.getFileDialog(
+                    mode = "SelectFile",
+                    fileType = "ini类型 (*.ini)"
                 )
             )
         )
@@ -3562,31 +3560,31 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_ExportSettings_DAT_GPTSoVITS.setText(QCA.translate('MainWindow', "导出配置"))
         self.ui.Button_ExportSettings_DAT_GPTSoVITS.clicked.connect(
             lambda: ParamsManager_DAT_GPTSoVITS.ExportSettings(
-                QFunc.Function_GetFileDialog(
-                    Mode = "SaveFile",
-                    FileType = "ini类型 (*.ini)"
+                QFunc.getFileDialog(
+                    mode = "SaveFile",
+                    fileType = "ini类型 (*.ini)"
                 )
             )
         )
 
         self.ui.Button_CheckOutput_DAT_GPTSoVITS.setText(QCA.translate('MainWindow', "打开输出目录"))
         Function_SetURL(
-            Button = self.ui.Button_CheckOutput_DAT_GPTSoVITS,
-            URL = self.ui.LineEdit_DAT_GPTSoVITS_OutputRoot,
-            ButtonTooltip = "Click to open",
-            CreateIfNotExist = True
+            button = self.ui.Button_CheckOutput_DAT_GPTSoVITS,
+            url = self.ui.LineEdit_DAT_GPTSoVITS_OutputRoot,
+            buttonTooltip = "Click to open",
+            createIfNotExist = True
         )
 
         # GPT-SoVITS - Bottom
         self.ui.Button_DAT_GPTSoVITS_Execute.setText(QCA.translate('MainWindow', "执行数据集制作"))
         self.ui.Button_DAT_GPTSoVITS_Terminate.setText(QCA.translate('MainWindow', "终止数据集制作"))
         Function_SetMethodExecutor(self,
-            ExecuteButton = self.ui.Button_DAT_GPTSoVITS_Execute,
-            TerminateButton = self.ui.Button_DAT_GPTSoVITS_Terminate,
-            ProgressBar = self.ui.ProgressBar_DAT_GPTSoVITS,
-            ConsoleWidget = self.ui.Frame_Console,
-            Method = Execute_Dataset_Creating_GPTSoVITS.Execute,
-            ParamsFrom = [
+            executeButton = self.ui.Button_DAT_GPTSoVITS_Execute,
+            terminateButton = self.ui.Button_DAT_GPTSoVITS_Terminate,
+            progressBar = self.ui.ProgressBar_DAT_GPTSoVITS,
+            consoleWidget = self.ui.Frame_Console,
+            method = Execute_Dataset_Creating_GPTSoVITS.Execute,
+            paramsFrom = [
                 self.ui.LineEdit_DAT_GPTSoVITS_SRTDir,
                 self.ui.LineEdit_DAT_GPTSoVITS_AudioSpeakersDataPath,
                 self.ui.LineEdit_DAT_GPTSoVITS_DataFormat,
@@ -3594,10 +3592,10 @@ class MainWindow(Window_MainWindow):
                 self.ui.LineEdit_DAT_GPTSoVITS_OutputDirName,
                 self.ui.LineEdit_DAT_GPTSoVITS_FileListName
             ],
-            EmptyAllowed = [
+            emptyAllowed = [
             ],
-            SuccessEvents = [
-                lambda: self.ShowMask(True, "正在加载表单"),
+            successEvents = [
+                lambda: self.showMask(True, "正在加载表单"),
                 lambda: self.showDATResult(
                     LineEdit_DAT_GPTSoVITS_FileListPath.text(),
                     None
@@ -3610,7 +3608,7 @@ class MainWindow(Window_MainWindow):
         )
 
         # VITS - ParamsManager
-        Path_Config_DAT_VITS = QFunc.NormPath(Path(ConfigDir).joinpath('Config_DAT_VITS.ini'))
+        Path_Config_DAT_VITS = QFunc.normPath(Path(configDir).joinpath('Config_DAT_VITS.ini'))
         ParamsManager_DAT_VITS = ParamsManager(Path_Config_DAT_VITS)
 
         # VITS - Top
@@ -3619,8 +3617,8 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_DatasetCreator_Title_VITS.setChecked(False)
         self.ui.Button_DatasetCreator_Title_VITS.clicked.connect(
             lambda: Function_AnimateStackedWidget(
-                StackedWidget = self.ui.StackedWidget_Pages_Dataset,
-                Target = 1
+                stackedWidget = self.ui.StackedWidget_Pages_Dataset,
+                target = 1
             )
         )
 
@@ -3631,23 +3629,23 @@ class MainWindow(Window_MainWindow):
         # VITS - Middle
         self.ui.GroupBox_DAT_VITS_InputParams.setTitle(QCA.translate('MainWindow', "输入参数"))
         Function_AddToTreeWidget(
-            Widget = self.ui.GroupBox_DAT_VITS_InputParams,
-            TreeWidget = self.ui.TreeWidget_Catalogue_DAT_VITS,
-            RootItemText = QCA.translate('MainWindow', "输入参数")
+            widget = self.ui.GroupBox_DAT_VITS_InputParams,
+            treeWidget = self.ui.TreeWidget_Catalogue_DAT_VITS,
+            rootItemText = QCA.translate('MainWindow', "输入参数")
         )
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_DAT_VITS_AudioSpeakersDataPath,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "音频文件目录/语音识别结果文本路径\n音频文件的所在目录（要求按说话人分类），或者提供由语音识别得到的文本文件。")
+        QFunc.setText(
+            widget = self.ui.Label_DAT_VITS_AudioSpeakersDataPath,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "音频文件目录/语音识别结果文本路径\n音频文件的所在目录（要求按说话人分类），或者提供由语音识别得到的文本文件。")
             )
         )
         ParamsManager_DAT_VITS.SetParam(
-            Widget = self.ui.LineEdit_DAT_VITS_AudioSpeakersDataPath,
-            Section = 'Input Params',
-            Option = 'WAV_Dir',
-            DefaultValue = '',
-            SetPlaceholderText = True
+            widget = self.ui.LineEdit_DAT_VITS_AudioSpeakersDataPath,
+            section = 'Input params',
+            option = 'WAV_Dir',
+            defaultValue = '',
+            setPlaceholderText = True
         )
         self.ui.LineEdit_DAT_VITS_AudioSpeakersDataPath.fileButton.clicked.connect(self.setAudioSpeakersDataPath)
         self.ui.Button_DAT_VITS_AudioSpeakersDataPath_MoreActions.SetMenu(
@@ -3657,28 +3655,28 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_DAT_VITS_AudioSpeakersDataPath,
-            TreeWidget = self.ui.TreeWidget_Catalogue_DAT_VITS,
-            RootItemText = QCA.translate('MainWindow', "输入参数"),
-            ChildItemText = QCA.translate('MainWindow', "音频文件目录")
+            widget = self.ui.Label_DAT_VITS_AudioSpeakersDataPath,
+            treeWidget = self.ui.TreeWidget_Catalogue_DAT_VITS,
+            rootItemText = QCA.translate('MainWindow', "输入参数"),
+            childItemText = QCA.translate('MainWindow', "音频文件目录")
         )
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_DAT_VITS_SRTDir,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "字幕输入目录\n字幕文件的所在目录，字幕文件须与对应音频文件同名且在文本中注明所属语言。")
+        QFunc.setText(
+            widget = self.ui.Label_DAT_VITS_SRTDir,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "字幕输入目录\n字幕文件的所在目录，字幕文件须与对应音频文件同名且在文本中注明所属语言。")
             )
         )
         ParamsManager_DAT_VITS.SetParam(
-            Widget = self.ui.LineEdit_DAT_VITS_SRTDir,
-            Section = 'Input Params',
-            Option = 'SRT_Dir',
-            DefaultValue = '',
-            SetPlaceholderText = True
+            widget = self.ui.LineEdit_DAT_VITS_SRTDir,
+            section = 'Input params',
+            option = 'SRT_Dir',
+            defaultValue = '',
+            setPlaceholderText = True
         )
         self.ui.LineEdit_DAT_VITS_SRTDir.setFileDialog(
-            Mode = "SelectFolder",
-            Directory = Path(CurrentDir).joinpath('语音转录结果', 'Whisper').as_posix()
+            mode = "SelectFolder",
+            directory = Path(currentDir).joinpath('语音转录结果', 'Whisper').as_posix()
         )
         self.ui.Button_DAT_VITS_SRTDir_MoreActions.SetMenu(
             ActionEvents = {
@@ -3687,43 +3685,42 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_DAT_VITS_SRTDir,
-            TreeWidget = self.ui.TreeWidget_Catalogue_DAT_VITS,
-            RootItemText = QCA.translate('MainWindow', "输入参数"),
-            ChildItemText = QCA.translate('MainWindow', "字幕输入目录")
+            widget = self.ui.Label_DAT_VITS_SRTDir,
+            treeWidget = self.ui.TreeWidget_Catalogue_DAT_VITS,
+            rootItemText = QCA.translate('MainWindow', "输入参数"),
+            childItemText = QCA.translate('MainWindow', "字幕输入目录")
         )
 
         self.ui.GroupBox_DAT_VITS_VITSParams.setTitle(QCA.translate('MainWindow', "数据集参数"))
         Function_AddToTreeWidget(
-            Widget = self.ui.GroupBox_DAT_VITS_VITSParams,
-            TreeWidget = self.ui.TreeWidget_Catalogue_DAT_VITS,
-            RootItemText = QCA.translate('MainWindow', "数据集参数")
+            widget = self.ui.GroupBox_DAT_VITS_VITSParams,
+            treeWidget = self.ui.TreeWidget_Catalogue_DAT_VITS,
+            rootItemText = QCA.translate('MainWindow', "数据集参数")
         )
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_DAT_VITS_DataFormat,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "数据文本格式\n数据集的文本格式，默认使用VITS的标准。")
+        QFunc.setText(
+            widget = self.ui.Label_DAT_VITS_DataFormat,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "数据文本格式\n数据集的文本格式，默认使用VITS的标准。")
             )
         )
         DAT_VITS_DataFormat_Default = '路径|人名|[语言]文本[语言]'
         ParamsManager_DAT_VITS.SetParam(
-            Widget = self.ui.LineEdit_DAT_VITS_DataFormat,
-            Section = 'VITS Params',
-            Option = 'DataFormat_Path',
-            DefaultValue = DAT_VITS_DataFormat_Default,
-            SetPlaceholderText = True,
-            PlaceholderText = DAT_VITS_DataFormat_Default
+            widget = self.ui.LineEdit_DAT_VITS_DataFormat,
+            section = 'VITS params',
+            option = 'DataFormat_Path',
+            defaultValue = DAT_VITS_DataFormat_Default,
+            setPlaceholderText = True,
+            placeholderText = DAT_VITS_DataFormat_Default
         )
         self.ui.LineEdit_DAT_VITS_DataFormat.textChanged.connect(
-            lambda Value: (
+            lambda value: (
                 MessageBoxBase.pop(self,
-                    MessageType = QMessageBox.Warning,
-                    WindowTitle = "Warning",
-                    Text = "请保留关键词：'路径'，'人名'，'语言'，'文本'",
+                    QMessageBox.Warning, "Warning",
+                    "请保留关键词：'路径'，'人名'，'语言'，'文本'",
                 ),
                 ParamsManager_DAT_VITS.ResetParam(self.ui.LineEdit_DAT_VITS_DataFormat),
-            ) if not all(Keyword in Value for Keyword in ['路径', '人名', '语言', '文本']) else None
+            ) if not all(Keyword in value for Keyword in ['路径', '人名', '语言', '文本']) else None
         )
         self.ui.Button_DAT_VITS_DataFormat_MoreActions.SetMenu(
             ActionEvents = {
@@ -3732,28 +3729,28 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_DAT_VITS_DataFormat,
-            TreeWidget = self.ui.TreeWidget_Catalogue_DAT_VITS,
-            RootItemText = QCA.translate('MainWindow', "数据集参数"),
-            ChildItemText = QCA.translate('MainWindow', "数据文本格式")
+            widget = self.ui.Label_DAT_VITS_DataFormat,
+            treeWidget = self.ui.TreeWidget_Catalogue_DAT_VITS,
+            rootItemText = QCA.translate('MainWindow', "数据集参数"),
+            childItemText = QCA.translate('MainWindow', "数据文本格式")
         )
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_DAT_VITS_AddAuxiliaryData,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "添加辅助数据\n添加用以辅助训练的数据集，若当前语音数据的质量/数量较低则建议启用。")
+        QFunc.setText(
+            widget = self.ui.Label_DAT_VITS_AddAuxiliaryData,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "添加辅助数据\n添加用以辅助训练的数据集，若当前语音数据的质量/数量较低则建议启用。")
             )
         )
         ParamsManager_DAT_VITS.SetParam(
-            Widget = self.ui.CheckBox_DAT_VITS_AddAuxiliaryData,
-            Section = 'VITS Params',
-            Option = 'Add_AuxiliaryData',
-            DefaultValue = False
+            widget = self.ui.CheckBox_DAT_VITS_AddAuxiliaryData,
+            section = 'VITS params',
+            option = 'Add_AuxiliaryData',
+            defaultValue = False
         )
         Function_ConfigureCheckBox(
-            CheckBox = self.ui.CheckBox_DAT_VITS_AddAuxiliaryData,
-            CheckedText = "已启用",
-            CheckedEvents = [
+            checkBox = self.ui.CheckBox_DAT_VITS_AddAuxiliaryData,
+            checkedText = "已启用",
+            checkedEvents = [
                 lambda: Function_SetChildWidgetsVisibility(
                     self.ui.Frame_DAT_VITS_VITSParams_BasicSettings,
                     [
@@ -3762,8 +3759,8 @@ class MainWindow(Window_MainWindow):
                     True
                 )
             ],
-            UncheckedText = "未启用",
-            UncheckedEvents = [
+            uncheckedText = "未启用",
+            uncheckedEvents = [
                 lambda: Function_SetChildWidgetsVisibility(
                     self.ui.Frame_DAT_VITS_VITSParams_BasicSettings,
                     [
@@ -3772,7 +3769,7 @@ class MainWindow(Window_MainWindow):
                     False
                 )
             ],
-            TakeEffect = True
+            takeEffect = True
         )
         self.ui.Button_DAT_VITS_AddAuxiliaryData_MoreActions.SetMenu(
             ActionEvents = {
@@ -3780,31 +3777,31 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_DAT_VITS_AddAuxiliaryData,
-            TreeWidget = self.ui.TreeWidget_Catalogue_DAT_VITS,
-            RootItemText = QCA.translate('MainWindow', "数据集参数"),
-            ChildItemText = QCA.translate('MainWindow', "添加辅助数据")
+            widget = self.ui.Label_DAT_VITS_AddAuxiliaryData,
+            treeWidget = self.ui.TreeWidget_Catalogue_DAT_VITS,
+            rootItemText = QCA.translate('MainWindow', "数据集参数"),
+            childItemText = QCA.translate('MainWindow', "添加辅助数据")
         )
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_DAT_VITS_AuxiliaryDataPath,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "辅助数据文本路径\n辅助数据集的文本的路径。")
+        QFunc.setText(
+            widget = self.ui.Label_DAT_VITS_AuxiliaryDataPath,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "辅助数据文本路径\n辅助数据集的文本的路径。")
             )
         )
-        DAT_VITS_AuxiliaryDataPath_Default = Path(CurrentDir).joinpath('AuxiliaryData', 'VITS', 'AuxiliaryData.txt').as_posix()
+        DAT_VITS_AuxiliaryDataPath_Default = Path(currentDir).joinpath('AuxiliaryData', 'VITS', 'AuxiliaryData.txt').as_posix()
         ParamsManager_DAT_VITS.SetParam(
-            Widget = self.ui.LineEdit_DAT_VITS_AuxiliaryDataPath,
-            Section = 'VITS Params',
-            Option = 'AuxiliaryData_Path',
-            DefaultValue = DAT_VITS_AuxiliaryDataPath_Default,
-            SetPlaceholderText = True,
-            PlaceholderText = DAT_VITS_AuxiliaryDataPath_Default
+            widget = self.ui.LineEdit_DAT_VITS_AuxiliaryDataPath,
+            section = 'VITS params',
+            option = 'AuxiliaryData_Path',
+            defaultValue = DAT_VITS_AuxiliaryDataPath_Default,
+            setPlaceholderText = True,
+            placeholderText = DAT_VITS_AuxiliaryDataPath_Default
         )
         self.ui.LineEdit_DAT_VITS_AuxiliaryDataPath.setFileDialog(
-            Mode = "SelectFile",
-            FileType = "文本类型 (*.csv *.txt)",
-            Directory = QFunc.NormPath(Path(CurrentDir).joinpath('AuxiliaryData', 'VITS'))
+            mode = "SelectFile",
+            fileType = "文本类型 (*.csv *.txt)",
+            directory = QFunc.normPath(Path(currentDir).joinpath('AuxiliaryData', 'VITS'))
         )
         self.ui.Button_DAT_VITS_AuxiliaryDataPath_MoreActions.SetMenu(
             ActionEvents = {
@@ -3813,28 +3810,28 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_DAT_VITS_AuxiliaryDataPath,
-            TreeWidget = self.ui.TreeWidget_Catalogue_DAT_VITS,
-            RootItemText = QCA.translate('MainWindow', "数据集参数"),
-            ChildItemText = QCA.translate('MainWindow', "辅助数据文本路径")
+            widget = self.ui.Label_DAT_VITS_AuxiliaryDataPath,
+            treeWidget = self.ui.TreeWidget_Catalogue_DAT_VITS,
+            rootItemText = QCA.translate('MainWindow', "数据集参数"),
+            childItemText = QCA.translate('MainWindow', "辅助数据文本路径")
         )
 
         self.ui.ToolBox_DAT_VITS_VITSParams_AdvanceSettings.widget(0).setText(QCA.translate('MainWindow', "高级设置"))
         self.ui.ToolBox_DAT_VITS_VITSParams_AdvanceSettings.widget(0).collapse()
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_DAT_VITS_TrainRatio,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "训练集占比\n划分给训练集的数据在数据集中所占的比例。")
+        QFunc.setText(
+            widget = self.ui.Label_DAT_VITS_TrainRatio,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "训练集占比\n划分给训练集的数据在数据集中所占的比例。")
             )
         )
         self.ui.DoubleSpinBox_DAT_VITS_TrainRatio.setRange(0.5, 0.9)
         self.ui.DoubleSpinBox_DAT_VITS_TrainRatio.setSingleStep(0.1)
         ParamsManager_DAT_VITS.SetParam(
-            Widget = self.ui.DoubleSpinBox_DAT_VITS_TrainRatio,
-            Section = 'VITS Params',
-            Option = 'TrainRatio',
-            DefaultValue = 0.7
+            widget = self.ui.DoubleSpinBox_DAT_VITS_TrainRatio,
+            section = 'VITS params',
+            option = 'TrainRatio',
+            defaultValue = 0.7
         )
         self.ui.Button_DAT_VITS_TrainRatio_MoreActions.SetMenu(
             ActionEvents = {
@@ -3842,24 +3839,24 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_DAT_VITS_TrainRatio,
-            TreeWidget = self.ui.TreeWidget_Catalogue_DAT_VITS,
-            RootItemText = QCA.translate('MainWindow', "数据集参数"),
-            ChildItemText = QCA.translate('MainWindow', "训练集占比")
+            widget = self.ui.Label_DAT_VITS_TrainRatio,
+            treeWidget = self.ui.TreeWidget_Catalogue_DAT_VITS,
+            rootItemText = QCA.translate('MainWindow', "数据集参数"),
+            childItemText = QCA.translate('MainWindow', "训练集占比")
         )
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_DAT_VITS_SampleRate,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "采样率 (HZ)\n数据集所要求的音频采样率，若维持不变则保持'None'即可。")
+        QFunc.setText(
+            widget = self.ui.Label_DAT_VITS_SampleRate,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "采样率 (HZ)\n数据集所要求的音频采样率，若维持不变则保持'None'即可。")
             )
         )
         self.ui.ComboBox_DAT_VITS_SampleRate.addItems(['22050', '44100', '48000', '96000', '192000', 'None'])
         ParamsManager_DAT_VITS.SetParam(
-            Widget = self.ui.ComboBox_DAT_VITS_SampleRate,
-            Section = 'VITS Params',
-            Option = 'SampleRate',
-            DefaultValue = 22050
+            widget = self.ui.ComboBox_DAT_VITS_SampleRate,
+            section = 'VITS params',
+            option = 'SampleRate',
+            defaultValue = 22050
         )
         self.ui.Button_DAT_VITS_SampleRate_MoreActions.SetMenu(
             ActionEvents = {
@@ -3867,24 +3864,24 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_DAT_VITS_SampleRate,
-            TreeWidget = self.ui.TreeWidget_Catalogue_DAT_VITS,
-            RootItemText = QCA.translate('MainWindow', "数据集参数"),
-            ChildItemText = QCA.translate('MainWindow', "采样率")
+            widget = self.ui.Label_DAT_VITS_SampleRate,
+            treeWidget = self.ui.TreeWidget_Catalogue_DAT_VITS,
+            rootItemText = QCA.translate('MainWindow', "数据集参数"),
+            childItemText = QCA.translate('MainWindow', "采样率")
         )
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_DAT_VITS_SampleWidth,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "采样位数\n数据集所要求的音频采样位数，若维持不变则保持'None'即可。")
+        QFunc.setText(
+            widget = self.ui.Label_DAT_VITS_SampleWidth,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "采样位数\n数据集所要求的音频采样位数，若维持不变则保持'None'即可。")
             )
         )
         self.ui.ComboBox_DAT_VITS_SampleWidth.addItems(['8', '16', '24', '32', '32 (Float)', 'None'])
         ParamsManager_DAT_VITS.SetParam(
-            Widget = self.ui.ComboBox_DAT_VITS_SampleWidth,
-            Section = 'VITS Params',
-            Option = 'SampleWidth',
-            DefaultValue = 16
+            widget = self.ui.ComboBox_DAT_VITS_SampleWidth,
+            section = 'VITS params',
+            option = 'SampleWidth',
+            defaultValue = 16
         )
         self.ui.Button_DAT_VITS_SampleWidth_MoreActions.SetMenu(
             ActionEvents = {
@@ -3892,33 +3889,33 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_DAT_VITS_SampleWidth,
-            TreeWidget = self.ui.TreeWidget_Catalogue_DAT_VITS,
-            RootItemText = QCA.translate('MainWindow', "数据集参数"),
-            ChildItemText = QCA.translate('MainWindow', "采样位数")
+            widget = self.ui.Label_DAT_VITS_SampleWidth,
+            treeWidget = self.ui.TreeWidget_Catalogue_DAT_VITS,
+            rootItemText = QCA.translate('MainWindow', "数据集参数"),
+            childItemText = QCA.translate('MainWindow', "采样位数")
         )
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_DAT_VITS_ToMono,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "合并声道\n将数据集音频的声道合并为单声道。")
+        QFunc.setText(
+            widget = self.ui.Label_DAT_VITS_ToMono,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "合并声道\n将数据集音频的声道合并为单声道。")
             )
         )
         ParamsManager_DAT_VITS.SetParam(
-            Widget = self.ui.CheckBox_DAT_VITS_ToMono,
-            Section = 'VITS Params',
-            Option = 'ToMono',
-            DefaultValue = True
+            widget = self.ui.CheckBox_DAT_VITS_ToMono,
+            section = 'VITS params',
+            option = 'ToMono',
+            defaultValue = True
         )
         Function_ConfigureCheckBox(
-            CheckBox = self.ui.CheckBox_DAT_VITS_ToMono,
-            CheckedText = "已启用",
-            CheckedEvents = [
+            checkBox = self.ui.CheckBox_DAT_VITS_ToMono,
+            checkedText = "已启用",
+            checkedEvents = [
             ],
-            UncheckedText = "未启用",
-            UncheckedEvents = [
+            uncheckedText = "未启用",
+            uncheckedEvents = [
             ],
-            TakeEffect = True
+            takeEffect = True
         )
         self.ui.Button_DAT_VITS_ToMono_MoreActions.SetMenu(
             ActionEvents = {
@@ -3926,33 +3923,33 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_DAT_VITS_ToMono,
-            TreeWidget = self.ui.TreeWidget_Catalogue_DAT_VITS,
-            RootItemText = QCA.translate('MainWindow', "数据集参数"),
-            ChildItemText = QCA.translate('MainWindow', "合并声道")
+            widget = self.ui.Label_DAT_VITS_ToMono,
+            treeWidget = self.ui.TreeWidget_Catalogue_DAT_VITS,
+            rootItemText = QCA.translate('MainWindow', "数据集参数"),
+            childItemText = QCA.translate('MainWindow', "合并声道")
         )
 
         self.ui.GroupBox_DAT_VITS_OutputParams.setTitle(QCA.translate('MainWindow', "输出参数"))
         Function_AddToTreeWidget(
-            Widget = self.ui.GroupBox_DAT_VITS_OutputParams,
-            TreeWidget = self.ui.TreeWidget_Catalogue_DAT_VITS,
-            RootItemText = QCA.translate('MainWindow', "输出参数")
+            widget = self.ui.GroupBox_DAT_VITS_OutputParams,
+            treeWidget = self.ui.TreeWidget_Catalogue_DAT_VITS,
+            rootItemText = QCA.translate('MainWindow', "输出参数")
         )
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_DAT_VITS_OutputDirName,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "输出目录名\n用于保存最后生成的数据集文件的目录的名字。")
+        QFunc.setText(
+            widget = self.ui.Label_DAT_VITS_OutputDirName,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "输出目录名\n用于保存最后生成的数据集文件的目录的名字。")
             )
         )
         DAT_VITS_OutputDirName_Default = str(date.today())
         ParamsManager_DAT_VITS.SetParam(
-            Widget = self.ui.LineEdit_DAT_VITS_OutputDirName,
-            Section = 'Output Params',
-            Option = 'Output_Dir_Name',
-            DefaultValue = '',
-            SetPlaceholderText = True,
-            PlaceholderText = DAT_VITS_OutputDirName_Default
+            widget = self.ui.LineEdit_DAT_VITS_OutputDirName,
+            section = 'Output params',
+            option = 'Output_Dir_Name',
+            defaultValue = '',
+            setPlaceholderText = True,
+            placeholderText = DAT_VITS_OutputDirName_Default
         )
         self.ui.Button_DAT_VITS_OutputDirName_MoreActions.SetMenu(
             ActionEvents = {
@@ -3961,29 +3958,29 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_DAT_VITS_OutputDirName,
-            TreeWidget = self.ui.TreeWidget_Catalogue_DAT_VITS,
-            RootItemText = QCA.translate('MainWindow', "输出参数"),
-            ChildItemText = QCA.translate('MainWindow', "输出目录名")
+            widget = self.ui.Label_DAT_VITS_OutputDirName,
+            treeWidget = self.ui.TreeWidget_Catalogue_DAT_VITS,
+            rootItemText = QCA.translate('MainWindow', "输出参数"),
+            childItemText = QCA.translate('MainWindow', "输出目录名")
         )
 
         self.ui.ToolBox_DAT_VITS_OutputParams_AdvanceSettings.widget(0).setText(QCA.translate('MainWindow', "高级设置"))
         self.ui.ToolBox_DAT_VITS_OutputParams_AdvanceSettings.widget(0).collapse()
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_DAT_VITS_FileListNameTraining,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "训练集文本名\n用于保存最后生成的训练集txt文件的名字。")
+        QFunc.setText(
+            widget = self.ui.Label_DAT_VITS_FileListNameTraining,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "训练集文本名\n用于保存最后生成的训练集txt文件的名字。")
             )
         )
         DAT_VITS_FileListNameTraining_Default = "Train_" + str(date.today())
         ParamsManager_DAT_VITS.SetParam(
-            Widget = self.ui.LineEdit_DAT_VITS_FileListNameTraining,
-            Section = 'Output Params',
-            Option = 'FileList_Name_Training',
-            DefaultValue = DAT_VITS_FileListNameTraining_Default,
-            SetPlaceholderText = True,
-            PlaceholderText = DAT_VITS_FileListNameTraining_Default
+            widget = self.ui.LineEdit_DAT_VITS_FileListNameTraining,
+            section = 'Output params',
+            option = 'FileList_Name_Training',
+            defaultValue = DAT_VITS_FileListNameTraining_Default,
+            setPlaceholderText = True,
+            placeholderText = DAT_VITS_FileListNameTraining_Default
         )
         self.ui.Button_DAT_VITS_FileListNameTraining_MoreActions.SetMenu(
             ActionEvents = {
@@ -3992,26 +3989,26 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_DAT_VITS_FileListNameTraining,
-            TreeWidget = self.ui.TreeWidget_Catalogue_DAT_VITS,
-            RootItemText = QCA.translate('MainWindow', "输出参数"),
-            ChildItemText = QCA.translate('MainWindow', "训练集文本名")
+            widget = self.ui.Label_DAT_VITS_FileListNameTraining,
+            treeWidget = self.ui.TreeWidget_Catalogue_DAT_VITS,
+            rootItemText = QCA.translate('MainWindow', "输出参数"),
+            childItemText = QCA.translate('MainWindow', "训练集文本名")
         )
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_DAT_VITS_FileListNameValidation,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "验证集文本名\n用于保存最后生成的验证集txt文件的名字。")
+        QFunc.setText(
+            widget = self.ui.Label_DAT_VITS_FileListNameValidation,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "验证集文本名\n用于保存最后生成的验证集txt文件的名字。")
             )
         )
         DAT_VITS_FileListNameValidation_Default = "Val_" + str(date.today())
         ParamsManager_DAT_VITS.SetParam(
-            Widget = self.ui.LineEdit_DAT_VITS_FileListNameValidation,
-            Section = 'Output Params',
-            Option = 'FileList_Name_Validation',
-            DefaultValue = DAT_VITS_FileListNameValidation_Default,
-            SetPlaceholderText = True,
-            PlaceholderText = DAT_VITS_FileListNameValidation_Default
+            widget = self.ui.LineEdit_DAT_VITS_FileListNameValidation,
+            section = 'Output params',
+            option = 'FileList_Name_Validation',
+            defaultValue = DAT_VITS_FileListNameValidation_Default,
+            setPlaceholderText = True,
+            placeholderText = DAT_VITS_FileListNameValidation_Default
         )
         self.ui.Button_DAT_VITS_FileListNameValidation_MoreActions.SetMenu(
             ActionEvents = {
@@ -4020,10 +4017,10 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_DAT_VITS_FileListNameValidation,
-            TreeWidget = self.ui.TreeWidget_Catalogue_DAT_VITS,
-            RootItemText = QCA.translate('MainWindow', "输出参数"),
-            ChildItemText = QCA.translate('MainWindow', "验证集文本名")
+            widget = self.ui.Label_DAT_VITS_FileListNameValidation,
+            treeWidget = self.ui.TreeWidget_Catalogue_DAT_VITS,
+            rootItemText = QCA.translate('MainWindow', "输出参数"),
+            childItemText = QCA.translate('MainWindow', "验证集文本名")
         )
 
         LineEdit_DAT_VITS_OutputDir = LineEditBase()
@@ -4066,9 +4063,9 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_ImportSettings_DAT_VITS.setText(QCA.translate('MainWindow', "导入配置"))
         self.ui.Button_ImportSettings_DAT_VITS.clicked.connect(
             lambda: ParamsManager_DAT_VITS.ImportSettings(
-                QFunc.Function_GetFileDialog(
-                    Mode = "SelectFile",
-                    FileType = "ini类型 (*.ini)"
+                QFunc.getFileDialog(
+                    mode = "SelectFile",
+                    fileType = "ini类型 (*.ini)"
                 )
             )
         )
@@ -4076,31 +4073,31 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_ExportSettings_DAT_VITS.setText(QCA.translate('MainWindow', "导出配置"))
         self.ui.Button_ExportSettings_DAT_VITS.clicked.connect(
             lambda: ParamsManager_DAT_VITS.ExportSettings(
-                QFunc.Function_GetFileDialog(
-                    Mode = "SaveFile",
-                    FileType = "ini类型 (*.ini)"
+                QFunc.getFileDialog(
+                    mode = "SaveFile",
+                    fileType = "ini类型 (*.ini)"
                 )
             )
         )
 
         self.ui.Button_CheckOutput_DAT_VITS.setText(QCA.translate('MainWindow', "打开输出目录"))
         Function_SetURL(
-            Button = self.ui.Button_CheckOutput_DAT_VITS,
-            URL = self.ui.LineEdit_DAT_VITS_OutputRoot,
-            ButtonTooltip = "Click to open",
-            CreateIfNotExist = True
+            button = self.ui.Button_CheckOutput_DAT_VITS,
+            url = self.ui.LineEdit_DAT_VITS_OutputRoot,
+            buttonTooltip = "Click to open",
+            createIfNotExist = True
         )
 
         # VITS - Bottom
         self.ui.Button_DAT_VITS_Execute.setText(QCA.translate('MainWindow', "执行数据集制作"))
         self.ui.Button_DAT_VITS_Terminate.setText(QCA.translate('MainWindow', "终止数据集制作"))
         Function_SetMethodExecutor(self,
-            ExecuteButton = self.ui.Button_DAT_VITS_Execute,
-            TerminateButton = self.ui.Button_DAT_VITS_Terminate,
-            ProgressBar = self.ui.ProgressBar_DAT_VITS,
-            ConsoleWidget = self.ui.Frame_Console,
-            Method = Execute_Dataset_Creating_VITS.Execute,
-            ParamsFrom = [
+            executeButton = self.ui.Button_DAT_VITS_Execute,
+            terminateButton = self.ui.Button_DAT_VITS_Terminate,
+            progressBar = self.ui.ProgressBar_DAT_VITS,
+            consoleWidget = self.ui.Frame_Console,
+            method = Execute_Dataset_Creating_VITS.Execute,
+            paramsFrom = [
                 self.ui.LineEdit_DAT_VITS_SRTDir,
                 self.ui.LineEdit_DAT_VITS_AudioSpeakersDataPath,
                 self.ui.ComboBox_DAT_VITS_SampleRate,
@@ -4115,13 +4112,13 @@ class MainWindow(Window_MainWindow):
                 self.ui.LineEdit_DAT_VITS_FileListNameTraining,
                 self.ui.LineEdit_DAT_VITS_FileListNameValidation
             ],
-            EmptyAllowed = [
+            emptyAllowed = [
                 self.ui.ComboBox_DAT_VITS_SampleRate,
                 self.ui.ComboBox_DAT_VITS_SampleWidth,
                 self.ui.LineEdit_DAT_VITS_AuxiliaryDataPath
             ],
-            SuccessEvents = [
-                lambda: self.ShowMask(True, "正在加载表单"),
+            successEvents = [
+                lambda: self.showMask(True, "正在加载表单"),
                 lambda: self.showDATResult(
                     LineEdit_DAT_VITS_FileListPathTraining.text(),
                     LineEdit_DAT_VITS_FileListPathValidation.text()
@@ -4142,8 +4139,8 @@ class MainWindow(Window_MainWindow):
             lambda: self.showGuidance(
                 QCA.translate('MainWindow', "引导（仅出现一次）"),
                 [
-                    QFunc.NormPath(Path(ResourceDir).joinpath('assets/images/others/Guidance_Train.png')),
-                    QFunc.NormPath(Path(ResourceDir).joinpath('assets/images/others/Guidance_Layout.png'))
+                    QFunc.normPath(Path(resourceDir).joinpath('assets/images/others/Guidance_Train.png')),
+                    QFunc.normPath(Path(resourceDir).joinpath('assets/images/others/Guidance_Layout.png'))
                 ],
                 [
                     '欢迎来到语音训练工具界面\n该工具用于训练出适用于语音合成的模型文件',
@@ -4155,12 +4152,12 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_Menu_Train.clicked.connect(
             lambda: (
                 self.ui.Button_VoiceTrainer_Help.click(),
-                Config.editConfig('Dialog', 'GuidanceShown_Train', 'True')
-            ) if eval(Config.getValue('Dialog', 'GuidanceShown_Train', 'False')) is False else None
+                config.editConfig('Dialog', 'GuidanceShown_Train', 'True')
+            ) if eval(config.getValue('Dialog', 'GuidanceShown_Train', 'False')) is False else None
         )
 
         # GPT-SoVITS - ParamsManager
-        Path_Config_Train_GPTSoVITS = QFunc.NormPath(Path(ConfigDir).joinpath('Config_Train_GPT-SoVITS.ini'))
+        Path_Config_Train_GPTSoVITS = QFunc.normPath(Path(configDir).joinpath('Config_Train_GPT-SoVITS.ini'))
         ParamsManager_Train_GPTSoVITS = ParamsManager(Path_Config_Train_GPTSoVITS)
 
         # GPT-SoVITS - Top
@@ -4169,8 +4166,8 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_VoiceTrainer_Title_GPTSoVITS.setChecked(True)
         self.ui.Button_VoiceTrainer_Title_GPTSoVITS.clicked.connect(
             lambda: Function_AnimateStackedWidget(
-                StackedWidget = self.ui.StackedWidget_Pages_Train,
-                Target = 0
+                stackedWidget = self.ui.StackedWidget_Pages_Train,
+                target = 0
             )
         )
 
@@ -4181,28 +4178,28 @@ class MainWindow(Window_MainWindow):
         # GPT-SoVITS - Midlle
         self.ui.GroupBox_Train_GPTSoVITS_InputParams.setTitle(QCA.translate('MainWindow', "输入参数"))
         Function_AddToTreeWidget(
-            Widget = self.ui.GroupBox_Train_GPTSoVITS_InputParams,
-            TreeWidget = self.ui.TreeWidget_Catalogue_Train_GPTSoVITS,
-            RootItemText = QCA.translate('MainWindow', "输入参数")
+            widget = self.ui.GroupBox_Train_GPTSoVITS_InputParams,
+            treeWidget = self.ui.TreeWidget_Catalogue_Train_GPTSoVITS,
+            rootItemText = QCA.translate('MainWindow', "输入参数")
         )
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_Train_GPTSoVITS_FileListPath,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "训练集文本路径\n用于提供训练集音频路径及其语音内容的训练集txt文件的路径。")
+        QFunc.setText(
+            widget = self.ui.Label_Train_GPTSoVITS_FileListPath,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "训练集文本路径\n用于提供训练集音频路径及其语音内容的训练集txt文件的路径。")
             )
         )
         ParamsManager_Train_GPTSoVITS.SetParam(
-            Widget = self.ui.LineEdit_Train_GPTSoVITS_FileListPath,
-            Section = 'Input Params',
-            Option = 'FileList_Path',
-            DefaultValue = '',
-            SetPlaceholderText = True
+            widget = self.ui.LineEdit_Train_GPTSoVITS_FileListPath,
+            section = 'Input params',
+            option = 'FileList_Path',
+            defaultValue = '',
+            setPlaceholderText = True
         )
         self.ui.LineEdit_Train_GPTSoVITS_FileListPath.setFileDialog(
-            Mode = "SelectFile",
-            FileType = "txt类型 (*.txt)",
-            Directory = Path(CurrentDir).joinpath('数据集制作结果', 'GPT-SoVITS').as_posix()
+            mode = "SelectFile",
+            fileType = "txt类型 (*.txt)",
+            directory = Path(currentDir).joinpath('数据集制作结果', 'GPT-SoVITS').as_posix()
         )
         self.ui.Button_Train_GPTSoVITS_FileListPath_MoreActions.SetMenu(
             ActionEvents = {
@@ -4211,33 +4208,33 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_Train_GPTSoVITS_FileListPath,
-            TreeWidget = self.ui.TreeWidget_Catalogue_Train_GPTSoVITS,
-            RootItemText = QCA.translate('MainWindow', "输入参数"),
-            ChildItemText = QCA.translate('MainWindow', "训练集文本路径")
+            widget = self.ui.Label_Train_GPTSoVITS_FileListPath,
+            treeWidget = self.ui.TreeWidget_Catalogue_Train_GPTSoVITS,
+            rootItemText = QCA.translate('MainWindow', "输入参数"),
+            childItemText = QCA.translate('MainWindow', "训练集文本路径")
         )
 
         self.ui.GroupBox_Train_GPTSoVITS_GPTSoVITSParams.setTitle(QCA.translate('MainWindow', "训练参数"))
         Function_AddToTreeWidget(
-            Widget = self.ui.GroupBox_Train_GPTSoVITS_GPTSoVITSParams,
-            TreeWidget = self.ui.TreeWidget_Catalogue_Train_GPTSoVITS,
-            RootItemText = QCA.translate('MainWindow', "训练参数")
+            widget = self.ui.GroupBox_Train_GPTSoVITS_GPTSoVITSParams,
+            treeWidget = self.ui.TreeWidget_Catalogue_Train_GPTSoVITS,
+            rootItemText = QCA.translate('MainWindow', "训练参数")
         )
 
         '''
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_Train_GPTSoVITS_Epochs,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "s1迭代轮数\n将全部样本完整迭代一轮的次数。")
+        QFunc.setText(
+            widget = self.ui.Label_Train_GPTSoVITS_Epochs,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "s1迭代轮数\n将全部样本完整迭代一轮的次数。")
             )
         )
         self.ui.SpinBox_Train_GPTSoVITS_S1Epochs.setRange(1, 100)
         self.ui.SpinBox_Train_GPTSoVITS_S1Epochs.setSingleStep(1)
         ParamsManager_Train_GPTSoVITS.SetParam(
-            Widget = self.ui.SpinBox_Train_GPTSoVITS_S1Epochs,
-            Section = 'GPT-SoVITS Params',
-            Option = 'Epochs',
-            DefaultValue = 8
+            widget = self.ui.SpinBox_Train_GPTSoVITS_S1Epochs,
+            section = 'GPT-SoVITS params',
+            option = 'Epochs',
+            defaultValue = 8
         )
         self.ui.Button_Train_GPTSoVITS_S1Epochs_MoreActions.SetMenu(
             ActionEvents = {
@@ -4245,25 +4242,25 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_Train_GPTSoVITS_Epochs,
-            TreeWidget = self.ui.TreeWidget_Catalogue_Train_GPTSoVITS,
-            RootItemText = QCA.translate('MainWindow', "训练参数"),
-            ChildItemText = QCA.translate('MainWindow', "s1迭代轮数")
+            widget = self.ui.Label_Train_GPTSoVITS_Epochs,
+            treeWidget = self.ui.TreeWidget_Catalogue_Train_GPTSoVITS,
+            rootItemText = QCA.translate('MainWindow', "训练参数"),
+            childItemText = QCA.translate('MainWindow', "s1迭代轮数")
         )
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_Train_GPTSoVITS_S2Epochs,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "s2迭代轮数\n将全部样本完整迭代一轮的次数。")
+        QFunc.setText(
+            widget = self.ui.Label_Train_GPTSoVITS_S2Epochs,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "s2迭代轮数\n将全部样本完整迭代一轮的次数。")
             )
         )
         self.ui.SpinBox_Train_GPTSoVITS_S2Epochs.setRange(1, 100)
         self.ui.SpinBox_Train_GPTSoVITS_S2Epochs.setSingleStep(1)
         ParamsManager_Train_GPTSoVITS.SetParam(
-            Widget = self.ui.SpinBox_Train_GPTSoVITS_S2Epochs,
-            Section = 'GPT-SoVITS Params',
-            Option = 'Epochs',
-            DefaultValue = 15
+            widget = self.ui.SpinBox_Train_GPTSoVITS_S2Epochs,
+            section = 'GPT-SoVITS params',
+            option = 'Epochs',
+            defaultValue = 15
         )
         self.ui.Button_Train_GPTSoVITS_S2Epochs_MoreActions.SetMenu(
             ActionEvents = {
@@ -4271,32 +4268,32 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_Train_GPTSoVITS_S2Epochs,
-            TreeWidget = self.ui.TreeWidget_Catalogue_Train_GPTSoVITS,
-            RootItemText = QCA.translate('MainWindow', "训练参数"),
-            ChildItemText = QCA.translate('MainWindow', "s2迭代轮数")
+            widget = self.ui.Label_Train_GPTSoVITS_S2Epochs,
+            treeWidget = self.ui.TreeWidget_Catalogue_Train_GPTSoVITS,
+            rootItemText = QCA.translate('MainWindow', "训练参数"),
+            childItemText = QCA.translate('MainWindow', "s2迭代轮数")
         )
         '''
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_Train_GPTSoVITS_ModelPathPretrainedS1,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "预训练s1模型路径\n预训练s1模型的路径。")
+        QFunc.setText(
+            widget = self.ui.Label_Train_GPTSoVITS_ModelPathPretrainedS1,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "预训练s1模型路径\n预训练s1模型的路径。")
             )
         )
         Train_GPTSoVITS_ModelPathPretrainedS1_Default = Path(ModelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's1bert25hz-5kh-longer-epoch=12-step=369668.ckpt').as_posix()
         ParamsManager_Train_GPTSoVITS.SetParam(
-            Widget = self.ui.LineEdit_Train_GPTSoVITS_ModelPathPretrainedS1,
-            Section = 'GPT-SoVITS Params',
-            Option = 'Model_Path_Pretrained_s1',
-            DefaultValue = Train_GPTSoVITS_ModelPathPretrainedS1_Default,
-            SetPlaceholderText = True,
-            PlaceholderText = Train_GPTSoVITS_ModelPathPretrainedS1_Default
+            widget = self.ui.LineEdit_Train_GPTSoVITS_ModelPathPretrainedS1,
+            section = 'GPT-SoVITS params',
+            option = 'Model_Path_Pretrained_s1',
+            defaultValue = Train_GPTSoVITS_ModelPathPretrainedS1_Default,
+            setPlaceholderText = True,
+            placeholderText = Train_GPTSoVITS_ModelPathPretrainedS1_Default
         )
         self.ui.LineEdit_Train_GPTSoVITS_ModelPathPretrainedS1.setFileDialog(
-            Mode = "SelectFile",
-            FileType = "ckpt类型 (*.ckpt)",
-            Directory = QFunc.NormPath(Path(ModelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2'))
+            mode = "SelectFile",
+            fileType = "ckpt类型 (*.ckpt)",
+            directory = QFunc.normPath(Path(ModelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2'))
         )
         self.ui.Button_Train_GPTSoVITS_ModelPathPretrainedS1_MoreActions.SetMenu(
             ActionEvents = {
@@ -4305,31 +4302,31 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_Train_GPTSoVITS_ModelPathPretrainedS1,
-            TreeWidget = self.ui.TreeWidget_Catalogue_Train_GPTSoVITS,
-            RootItemText = QCA.translate('MainWindow', "训练参数"),
-            ChildItemText = QCA.translate('MainWindow', "预训练s1模型路径")
+            widget = self.ui.Label_Train_GPTSoVITS_ModelPathPretrainedS1,
+            treeWidget = self.ui.TreeWidget_Catalogue_Train_GPTSoVITS,
+            rootItemText = QCA.translate('MainWindow', "训练参数"),
+            childItemText = QCA.translate('MainWindow', "预训练s1模型路径")
         )
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_Train_GPTSoVITS_ModelPathPretrainedS2G,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "预训练s2G模型路径\n预训练s2G模型的路径。")
+        QFunc.setText(
+            widget = self.ui.Label_Train_GPTSoVITS_ModelPathPretrainedS2G,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "预训练s2G模型路径\n预训练s2G模型的路径。")
             )
         )
         Train_GPTSoVITS_ModelPathPretrainedS2G_Default = Path(ModelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's2G2333k.pth').as_posix()
         ParamsManager_Train_GPTSoVITS.SetParam(
-            Widget = self.ui.LineEdit_Train_GPTSoVITS_ModelPathPretrainedS2G,
-            Section = 'GPT-SoVITS Params',
-            Option = 'Model_Path_Pretrained_s2G',
-            DefaultValue = Train_GPTSoVITS_ModelPathPretrainedS2G_Default,
-            SetPlaceholderText = True,
-            PlaceholderText = Train_GPTSoVITS_ModelPathPretrainedS2G_Default
+            widget = self.ui.LineEdit_Train_GPTSoVITS_ModelPathPretrainedS2G,
+            section = 'GPT-SoVITS params',
+            option = 'Model_Path_Pretrained_s2G',
+            defaultValue = Train_GPTSoVITS_ModelPathPretrainedS2G_Default,
+            setPlaceholderText = True,
+            placeholderText = Train_GPTSoVITS_ModelPathPretrainedS2G_Default
         )
         self.ui.LineEdit_Train_GPTSoVITS_ModelPathPretrainedS2G.setFileDialog(
-            Mode = "SelectFile",
-            FileType = "pth类型 (*.pth)",
-            Directory = QFunc.NormPath(Path(ModelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2'))
+            mode = "SelectFile",
+            fileType = "pth类型 (*.pth)",
+            directory = QFunc.normPath(Path(ModelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2'))
         )
         self.ui.Button_Train_GPTSoVITS_ModelPathPretrainedS2G_MoreActions.SetMenu(
             ActionEvents = {
@@ -4338,31 +4335,31 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_Train_GPTSoVITS_ModelPathPretrainedS2G,
-            TreeWidget = self.ui.TreeWidget_Catalogue_Train_GPTSoVITS,
-            RootItemText = QCA.translate('MainWindow', "训练参数"),
-            ChildItemText = QCA.translate('MainWindow', "预训练s2G模型路径")
+            widget = self.ui.Label_Train_GPTSoVITS_ModelPathPretrainedS2G,
+            treeWidget = self.ui.TreeWidget_Catalogue_Train_GPTSoVITS,
+            rootItemText = QCA.translate('MainWindow', "训练参数"),
+            childItemText = QCA.translate('MainWindow', "预训练s2G模型路径")
         )
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_Train_GPTSoVITS_ModelPathPretrainedS2D,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "预训练s2D模型路径\n预训练s2D模型的路径。")
+        QFunc.setText(
+            widget = self.ui.Label_Train_GPTSoVITS_ModelPathPretrainedS2D,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "预训练s2D模型路径\n预训练s2D模型的路径。")
             )
         )
         Train_GPTSoVITS_ModelPathPretrainedS2D_Default = Path(ModelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's2D2333k.pth').as_posix()
         ParamsManager_Train_GPTSoVITS.SetParam(
-            Widget = self.ui.LineEdit_Train_GPTSoVITS_ModelPathPretrainedS2D,
-            Section = 'GPT-SoVITS Params',
-            Option = 'Model_Path_Pretrained_s2D',
-            DefaultValue = Train_GPTSoVITS_ModelPathPretrainedS2D_Default,
-            SetPlaceholderText = True,
-            PlaceholderText = Train_GPTSoVITS_ModelPathPretrainedS2D_Default
+            widget = self.ui.LineEdit_Train_GPTSoVITS_ModelPathPretrainedS2D,
+            section = 'GPT-SoVITS params',
+            option = 'Model_Path_Pretrained_s2D',
+            defaultValue = Train_GPTSoVITS_ModelPathPretrainedS2D_Default,
+            setPlaceholderText = True,
+            placeholderText = Train_GPTSoVITS_ModelPathPretrainedS2D_Default
         )
         self.ui.LineEdit_Train_GPTSoVITS_ModelPathPretrainedS2D.setFileDialog(
-            Mode = "SelectFile",
-            FileType = "pth类型 (*.pth)",
-            Directory = QFunc.NormPath(Path(ModelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2'))
+            mode = "SelectFile",
+            fileType = "pth类型 (*.pth)",
+            directory = QFunc.normPath(Path(ModelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2'))
         )
         self.ui.Button_Train_GPTSoVITS_ModelPathPretrainedS2D_MoreActions.SetMenu(
             ActionEvents = {
@@ -4371,30 +4368,30 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_Train_GPTSoVITS_ModelPathPretrainedS2D,
-            TreeWidget = self.ui.TreeWidget_Catalogue_Train_GPTSoVITS,
-            RootItemText = QCA.translate('MainWindow', "训练参数"),
-            ChildItemText = QCA.translate('MainWindow', "预训练s2D模型路径")
+            widget = self.ui.Label_Train_GPTSoVITS_ModelPathPretrainedS2D,
+            treeWidget = self.ui.TreeWidget_Catalogue_Train_GPTSoVITS,
+            rootItemText = QCA.translate('MainWindow', "训练参数"),
+            childItemText = QCA.translate('MainWindow', "预训练s2D模型路径")
         )
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_Train_GPTSoVITS_ModelDirPretrainedBert,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "预训练bert模型路径\n预训练bert模型（文件夹）的路径。")
+        QFunc.setText(
+            widget = self.ui.Label_Train_GPTSoVITS_ModelDirPretrainedBert,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "预训练bert模型路径\n预训练bert模型（文件夹）的路径。")
             )
         )
         Train_GPTSoVITS_ModelDirPretrainedBert_Default = Path(ModelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 'chinese-roberta-wwm-ext-large').as_posix()
         ParamsManager_Train_GPTSoVITS.SetParam(
-            Widget = self.ui.LineEdit_Train_GPTSoVITS_ModelDirPretrainedBert,
-            Section = 'GPT-SoVITS Params',
-            Option = 'Model_Dir_Pretrained_bert',
-            DefaultValue = Train_GPTSoVITS_ModelDirPretrainedBert_Default,
-            SetPlaceholderText = True,
-            PlaceholderText = Train_GPTSoVITS_ModelDirPretrainedBert_Default
+            widget = self.ui.LineEdit_Train_GPTSoVITS_ModelDirPretrainedBert,
+            section = 'GPT-SoVITS params',
+            option = 'Model_Dir_Pretrained_bert',
+            defaultValue = Train_GPTSoVITS_ModelDirPretrainedBert_Default,
+            setPlaceholderText = True,
+            placeholderText = Train_GPTSoVITS_ModelDirPretrainedBert_Default
         )
         self.ui.LineEdit_Train_GPTSoVITS_ModelDirPretrainedBert.setFileDialog(
-            Mode = "SelectFolder",
-            Directory = QFunc.NormPath(Path(ModelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded'))
+            mode = "SelectFolder",
+            directory = QFunc.normPath(Path(ModelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded'))
         )
         self.ui.Button_Train_GPTSoVITS_ModelDirPretrainedBert_MoreActions.SetMenu(
             ActionEvents = {
@@ -4403,30 +4400,30 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_Train_GPTSoVITS_ModelDirPretrainedBert,
-            TreeWidget = self.ui.TreeWidget_Catalogue_Train_GPTSoVITS,
-            RootItemText = QCA.translate('MainWindow', "训练参数"),
-            ChildItemText = QCA.translate('MainWindow', "预训练bert模型路径")
+            widget = self.ui.Label_Train_GPTSoVITS_ModelDirPretrainedBert,
+            treeWidget = self.ui.TreeWidget_Catalogue_Train_GPTSoVITS,
+            rootItemText = QCA.translate('MainWindow', "训练参数"),
+            childItemText = QCA.translate('MainWindow', "预训练bert模型路径")
         )
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_Train_GPTSoVITS_ModelDirPretrainedSSL,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "预训练ssl模型路径\n预训练ssl模型（文件夹）的路径。")
+        QFunc.setText(
+            widget = self.ui.Label_Train_GPTSoVITS_ModelDirPretrainedSSL,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "预训练ssl模型路径\n预训练ssl模型（文件夹）的路径。")
             )
         )
         Train_GPTSoVITS_ModelDirPretrainedSSL_Default = Path(ModelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 'chinese-hubert-base').as_posix()
         ParamsManager_Train_GPTSoVITS.SetParam(
-            Widget = self.ui.LineEdit_Train_GPTSoVITS_ModelDirPretrainedSSL,
-            Section = 'GPT-SoVITS Params',
-            Option = 'Model_Dir_Pretrained_ssl',
-            DefaultValue = Train_GPTSoVITS_ModelDirPretrainedSSL_Default,
-            SetPlaceholderText = True,
-            PlaceholderText = Train_GPTSoVITS_ModelDirPretrainedSSL_Default
+            widget = self.ui.LineEdit_Train_GPTSoVITS_ModelDirPretrainedSSL,
+            section = 'GPT-SoVITS params',
+            option = 'Model_Dir_Pretrained_ssl',
+            defaultValue = Train_GPTSoVITS_ModelDirPretrainedSSL_Default,
+            setPlaceholderText = True,
+            placeholderText = Train_GPTSoVITS_ModelDirPretrainedSSL_Default
         )
         self.ui.LineEdit_Train_GPTSoVITS_ModelDirPretrainedSSL.setFileDialog(
-            Mode = "SelectFolder",
-            Directory = QFunc.NormPath(Path(ModelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded'))
+            mode = "SelectFolder",
+            directory = QFunc.normPath(Path(ModelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded'))
         )
         self.ui.Button_Train_GPTSoVITS_ModelDirPretrainedSSL_MoreActions.SetMenu(
             ActionEvents = {
@@ -4435,36 +4432,36 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_Train_GPTSoVITS_ModelDirPretrainedSSL,
-            TreeWidget = self.ui.TreeWidget_Catalogue_Train_GPTSoVITS,
-            RootItemText = QCA.translate('MainWindow', "训练参数"),
-            ChildItemText = QCA.translate('MainWindow', "预训练ssl模型路径")
+            widget = self.ui.Label_Train_GPTSoVITS_ModelDirPretrainedSSL,
+            treeWidget = self.ui.TreeWidget_Catalogue_Train_GPTSoVITS,
+            rootItemText = QCA.translate('MainWindow', "训练参数"),
+            childItemText = QCA.translate('MainWindow', "预训练ssl模型路径")
         )
 
         self.ui.ToolBox_Train_GPTSoVITS_GPTSoVITSParams_AdvanceSettings.widget(0).setText(QCA.translate('MainWindow', "高级设置"))
         self.ui.ToolBox_Train_GPTSoVITS_GPTSoVITSParams_AdvanceSettings.widget(0).collapse()
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_Train_GPTSoVITS_FP16Run,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "半精度训练\n通过混合了float16精度的训练方式减小显存占用。")
+        QFunc.setText(
+            widget = self.ui.Label_Train_GPTSoVITS_FP16Run,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "半精度训练\n通过混合了float16精度的训练方式减小显存占用。")
             )
         )
         ParamsManager_Train_GPTSoVITS.SetParam(
-            Widget = self.ui.CheckBox_Train_GPTSoVITS_FP16Run,
-            Section = 'GPT-SoVITS Params',
-            Option = 'FP16_Run',
-            DefaultValue = False
+            widget = self.ui.CheckBox_Train_GPTSoVITS_FP16Run,
+            section = 'GPT-SoVITS params',
+            option = 'FP16_Run',
+            defaultValue = False
         )
         Function_ConfigureCheckBox(
-            CheckBox = self.ui.CheckBox_Train_GPTSoVITS_FP16Run,
-            CheckedText = "已启用",
-            CheckedEvents = [
+            checkBox = self.ui.CheckBox_Train_GPTSoVITS_FP16Run,
+            checkedText = "已启用",
+            checkedEvents = [
             ],
-            UncheckedText = "未启用",
-            UncheckedEvents = [
+            uncheckedText = "未启用",
+            uncheckedEvents = [
             ],
-            TakeEffect = True
+            takeEffect = True
         )
         self.ui.Button_Train_GPTSoVITS_FP16Run_MoreActions.SetMenu(
             ActionEvents = {
@@ -4472,33 +4469,33 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_Train_GPTSoVITS_FP16Run,
-            TreeWidget = self.ui.TreeWidget_Catalogue_Train_GPTSoVITS,
-            RootItemText = QCA.translate('MainWindow', "训练参数"),
-            ChildItemText = QCA.translate('MainWindow', "半精度训练")
+            widget = self.ui.Label_Train_GPTSoVITS_FP16Run,
+            treeWidget = self.ui.TreeWidget_Catalogue_Train_GPTSoVITS,
+            rootItemText = QCA.translate('MainWindow', "训练参数"),
+            childItemText = QCA.translate('MainWindow', "半精度训练")
         )
 
         self.ui.GroupBox_Train_GPTSoVITS_OutputParams.setTitle(QCA.translate('MainWindow', "输出参数"))
         Function_AddToTreeWidget(
-            Widget = self.ui.GroupBox_Train_GPTSoVITS_OutputParams,
-            TreeWidget = self.ui.TreeWidget_Catalogue_Train_GPTSoVITS,
-            RootItemText = QCA.translate('MainWindow', "输出参数")
+            widget = self.ui.GroupBox_Train_GPTSoVITS_OutputParams,
+            treeWidget = self.ui.TreeWidget_Catalogue_Train_GPTSoVITS,
+            rootItemText = QCA.translate('MainWindow', "输出参数")
         )
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_Train_GPTSoVITS_OutputDirName,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "输出目录名\n存放训练所得模型的目录的名字。")
+        QFunc.setText(
+            widget = self.ui.Label_Train_GPTSoVITS_OutputDirName,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "输出目录名\n存放训练所得模型的目录的名字。")
             )
         )
         Train_GPTSoVITS_OutputDirName_Default = str(date.today())
         ParamsManager_Train_GPTSoVITS.SetParam(
-            Widget = self.ui.LineEdit_Train_GPTSoVITS_OutputDirName,
-            Section = 'Output Params',
-            Option = 'Output_Dir_Name',
-            DefaultValue = '',
-            SetPlaceholderText = True,
-            PlaceholderText = Train_GPTSoVITS_OutputDirName_Default
+            widget = self.ui.LineEdit_Train_GPTSoVITS_OutputDirName,
+            section = 'Output params',
+            option = 'Output_Dir_Name',
+            defaultValue = '',
+            setPlaceholderText = True,
+            placeholderText = Train_GPTSoVITS_OutputDirName_Default
         )
         self.ui.Button_Train_GPTSoVITS_OutputDirName_MoreActions.SetMenu(
             ActionEvents = {
@@ -4507,43 +4504,42 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.LineEdit_Train_GPTSoVITS_OutputDirName,
-            TreeWidget = self.ui.TreeWidget_Catalogue_Train_GPTSoVITS,
-            RootItemText = QCA.translate('MainWindow', "输出参数"),
-            ChildItemText = QCA.translate('MainWindow', "输出目录名")
+            widget = self.ui.LineEdit_Train_GPTSoVITS_OutputDirName,
+            treeWidget = self.ui.TreeWidget_Catalogue_Train_GPTSoVITS,
+            rootItemText = QCA.translate('MainWindow', "输出参数"),
+            childItemText = QCA.translate('MainWindow', "输出目录名")
         )
 
         self.ui.ToolBox_Train_GPTSoVITS_OutputParams_AdvanceSettings.widget(0).setText(QCA.translate('MainWindow', "高级设置"))
         self.ui.ToolBox_Train_GPTSoVITS_OutputParams_AdvanceSettings.widget(0).collapse()
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_Train_GPTSoVITS_LogDir,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "日志输出目录\n训练时生成的日志的存放目录。")
+        QFunc.setText(
+            widget = self.ui.Label_Train_GPTSoVITS_LogDir,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "日志输出目录\n训练时生成的日志的存放目录。")
             )
         )
-        Train_GPTSoVITS_LogDir_Default = Path(Path(CurrentDir).root).joinpath('EVT_TrainLog', 'GPT-SoVITS', str(date.today())).as_posix()
+        Train_GPTSoVITS_LogDir_Default = Path(Path(currentDir).root).joinpath('EVT_TrainLog', 'GPT-SoVITS', str(date.today())).as_posix()
         ParamsManager_Train_GPTSoVITS.SetParam(
-            Widget = self.ui.LineEdit_Train_GPTSoVITS_LogDir,
-            Section = 'Output Params',
-            Option = 'Output_LogDir',
-            DefaultValue = Train_GPTSoVITS_LogDir_Default,
-            SetPlaceholderText = True,
-            PlaceholderText = Train_GPTSoVITS_LogDir_Default
+            widget = self.ui.LineEdit_Train_GPTSoVITS_LogDir,
+            section = 'Output params',
+            option = 'Output_LogDir',
+            defaultValue = Train_GPTSoVITS_LogDir_Default,
+            setPlaceholderText = True,
+            placeholderText = Train_GPTSoVITS_LogDir_Default
         )
         self.ui.LineEdit_Train_GPTSoVITS_LogDir.textChanged.connect(
-            lambda Value: (
+            lambda value: (
                 MessageBoxBase.pop(self,
-                    MessageType = QMessageBox.Warning,
-                    WindowTitle = "Warning",
-                    Text = "保存路径不支持非ASCII字符，请使用英文路径以避免训练报错",
+                    QMessageBox.Warning, "Warning",
+                    "保存路径不支持非ASCII字符，请使用英文路径以避免训练报错",
                 ),
                 self.ui.LineEdit_Train_GPTSoVITS_LogDir.clear()
-            ) if not all(Char.isascii() for Char in Value) else None
+            ) if not all(Char.isascii() for Char in value) else None
         )
         self.ui.LineEdit_Train_GPTSoVITS_LogDir.setFileDialog(
-            Mode = "SelectFolder",
-            Directory = QFunc.NormPath(Path(Train_GPTSoVITS_LogDir_Default).parent)
+            mode = "SelectFolder",
+            directory = QFunc.normPath(Path(Train_GPTSoVITS_LogDir_Default).parent)
         )
         self.ui.Button_Train_GPTSoVITS_LogDir_MoreActions.SetMenu(
             ActionEvents = {
@@ -4552,10 +4548,10 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_Train_GPTSoVITS_LogDir,
-            TreeWidget = self.ui.TreeWidget_Catalogue_Train_GPTSoVITS,
-            RootItemText = QCA.translate('MainWindow', "输出参数"),
-            ChildItemText = QCA.translate('MainWindow', "日志输出目录")
+            widget = self.ui.Label_Train_GPTSoVITS_LogDir,
+            treeWidget = self.ui.TreeWidget_Catalogue_Train_GPTSoVITS,
+            rootItemText = QCA.translate('MainWindow', "输出参数"),
+            childItemText = QCA.translate('MainWindow', "日志输出目录")
         )
 
         LineEdit_Train_GPTSoVITS_OutputDir = LineEditBase()
@@ -4582,9 +4578,9 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_ImportSettings_Train_GPTSoVITS.setText(QCA.translate('MainWindow', "导入配置"))
         self.ui.Button_ImportSettings_Train_GPTSoVITS.clicked.connect(
             lambda: ParamsManager_Train_GPTSoVITS.ImportSettings(
-                QFunc.Function_GetFileDialog(
-                    Mode = "SelectFile",
-                    FileType = "ini类型 (*.ini)"
+                QFunc.getFileDialog(
+                    mode = "SelectFile",
+                    fileType = "ini类型 (*.ini)"
                 )
             )
         )
@@ -4592,40 +4588,40 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_ExportSettings_Train_GPTSoVITS.setText(QCA.translate('MainWindow', "导出配置"))
         self.ui.Button_ExportSettings_Train_GPTSoVITS.clicked.connect(
             lambda: ParamsManager_Train_GPTSoVITS.ExportSettings(
-                QFunc.Function_GetFileDialog(
-                    Mode = "SaveFile",
-                    FileType = "ini类型 (*.ini)"
+                QFunc.getFileDialog(
+                    mode = "SaveFile",
+                    fileType = "ini类型 (*.ini)"
                 )
             )
         )
 
         self.ui.Button_RunTensorboard_Train_GPTSoVITS.setText(QCA.translate('MainWindow', "启动Tensorboard"))
         Function_SetMethodExecutor(self,
-            ExecuteButton = self.ui.Button_RunTensorboard_Train_GPTSoVITS,
-            Method = Tensorboard_Runner.Execute,
-            ParamsFrom = [
+            executeButton = self.ui.Button_RunTensorboard_Train_GPTSoVITS,
+            method = Tensorboard_Runner.Execute,
+            paramsFrom = [
                 self.ui.LineEdit_Train_GPTSoVITS_LogDir
             ]
         )
 
         self.ui.Button_CheckOutput_Train_GPTSoVITS.setText(QCA.translate('MainWindow', "打开输出目录"))
         Function_SetURL(
-            Button = self.ui.Button_CheckOutput_Train_GPTSoVITS,
-            URL = self.ui.LineEdit_Train_GPTSoVITS_OutputRoot,
-            ButtonTooltip = "Click to open",
-            CreateIfNotExist = True
+            button = self.ui.Button_CheckOutput_Train_GPTSoVITS,
+            url = self.ui.LineEdit_Train_GPTSoVITS_OutputRoot,
+            buttonTooltip = "Click to open",
+            createIfNotExist = True
         )
 
         # GPT-SoVITS - Bottom
         self.ui.Button_Train_GPTSoVITS_Execute.setText(QCA.translate('MainWindow', "执行模型训练"))
         self.ui.Button_Train_GPTSoVITS_Terminate.setText(QCA.translate('MainWindow', "终止模型训练"))
         Function_SetMethodExecutor(self,
-            ExecuteButton = self.ui.Button_Train_GPTSoVITS_Execute,
-            TerminateButton = self.ui.Button_Train_GPTSoVITS_Terminate,
-            ProgressBar = self.ui.ProgressBar_Train_GPTSoVITS,
-            ConsoleWidget = self.ui.Frame_Console,
-            Method = Execute_Voice_Training_GPTSoVITS.Execute,
-            ParamsFrom = [
+            executeButton = self.ui.Button_Train_GPTSoVITS_Execute,
+            terminateButton = self.ui.Button_Train_GPTSoVITS_Terminate,
+            progressBar = self.ui.ProgressBar_Train_GPTSoVITS,
+            consoleWidget = self.ui.Frame_Console,
+            method = Execute_Voice_Training_GPTSoVITS.Execute,
+            paramsFrom = [
                 self.ui.LineEdit_Train_GPTSoVITS_FileListPath,
                 #self.ui.SpinBox_Train_GPTSoVITS_S1Epochs,
                 #self.ui.SpinBox_Train_GPTSoVITS_S1SaveInterval,
@@ -4642,7 +4638,7 @@ class MainWindow(Window_MainWindow):
                 self.ui.LineEdit_Train_GPTSoVITS_OutputDirName,
                 self.ui.LineEdit_Train_GPTSoVITS_LogDir
             ],
-            SuccessEvents = [
+            successEvents = [
                 lambda: MessageBoxBase.pop(self,
                     QMessageBox.Information, "Tip",
                     "当前任务已执行结束。"
@@ -4651,16 +4647,15 @@ class MainWindow(Window_MainWindow):
         )
         FunctionSignals.Signal_TaskStatus.connect(
             lambda Task, Status: MessageBoxBase.pop(self,
-                MessageType = QMessageBox.Question,
-                WindowTitle = "Ask",
-                Text = "是否稍后启用tensorboard？",
-                Buttons = QMessageBox.Yes|QMessageBox.No,
-                ButtonEvents = {QMessageBox.Yes: lambda: self.ui.Button_RunTensorboard_Train_GPTSoVITS.click()}
+                QMessageBox.Question, "Ask",
+                text = "是否稍后启用tensorboard？",
+                buttons = QMessageBox.Yes|QMessageBox.No,
+                buttonEvents = {QMessageBox.Yes: lambda: self.ui.Button_RunTensorboard_Train_GPTSoVITS.click()}
             ) if Task == 'Execute_Voice_Training_GPTSoVITS.Execute' and Status == 'Started' else None
         )
 
         # VITS - ParamsManager
-        Path_Config_Train_VITS = QFunc.NormPath(Path(ConfigDir).joinpath('Config_Train_VITS.ini'))
+        Path_Config_Train_VITS = QFunc.normPath(Path(configDir).joinpath('Config_Train_VITS.ini'))
         ParamsManager_Train_VITS = ParamsManager(Path_Config_Train_VITS)
 
         # VITS - Top
@@ -4669,8 +4664,8 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_VoiceTrainer_Title_VITS.setChecked(False)
         self.ui.Button_VoiceTrainer_Title_VITS.clicked.connect(
             lambda: Function_AnimateStackedWidget(
-                StackedWidget = self.ui.StackedWidget_Pages_Train,
-                Target = 1
+                stackedWidget = self.ui.StackedWidget_Pages_Train,
+                target = 1
             )
         )
 
@@ -4681,28 +4676,28 @@ class MainWindow(Window_MainWindow):
         # VITS - Midlle
         self.ui.GroupBox_Train_VITS_InputParams.setTitle(QCA.translate('MainWindow', "输入参数"))
         Function_AddToTreeWidget(
-            Widget = self.ui.GroupBox_Train_VITS_InputParams,
-            TreeWidget = self.ui.TreeWidget_Catalogue_Train_VITS,
-            RootItemText = QCA.translate('MainWindow', "输入参数")
+            widget = self.ui.GroupBox_Train_VITS_InputParams,
+            treeWidget = self.ui.TreeWidget_Catalogue_Train_VITS,
+            rootItemText = QCA.translate('MainWindow', "输入参数")
         )
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_Train_VITS_FileListPathTraining,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "训练集文本路径\n用于提供训练集音频路径及其语音内容的训练集txt文件的路径。")
+        QFunc.setText(
+            widget = self.ui.Label_Train_VITS_FileListPathTraining,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "训练集文本路径\n用于提供训练集音频路径及其语音内容的训练集txt文件的路径。")
             )
         )
         ParamsManager_Train_VITS.SetParam(
-            Widget = self.ui.LineEdit_Train_VITS_FileListPathTraining,
-            Section = 'Input Params',
-            Option = 'FileList_Path_Training',
-            DefaultValue = '',
-            SetPlaceholderText = True
+            widget = self.ui.LineEdit_Train_VITS_FileListPathTraining,
+            section = 'Input params',
+            option = 'FileList_Path_Training',
+            defaultValue = '',
+            setPlaceholderText = True
         )
         self.ui.LineEdit_Train_VITS_FileListPathTraining.setFileDialog(
-            Mode = "SelectFile",
-            FileType = "txt类型 (*.txt)",
-            Directory = Path(CurrentDir).joinpath('数据集制作结果', 'VITS').as_posix()
+            mode = "SelectFile",
+            fileType = "txt类型 (*.txt)",
+            directory = Path(currentDir).joinpath('数据集制作结果', 'VITS').as_posix()
         )
         self.ui.Button_Train_VITS_FileListPathTraining_MoreActions.SetMenu(
             ActionEvents = {
@@ -4711,29 +4706,29 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_Train_VITS_FileListPathTraining,
-            TreeWidget = self.ui.TreeWidget_Catalogue_Train_VITS,
-            RootItemText = QCA.translate('MainWindow', "输入参数"),
-            ChildItemText = QCA.translate('MainWindow', "训练集文本路径")
+            widget = self.ui.Label_Train_VITS_FileListPathTraining,
+            treeWidget = self.ui.TreeWidget_Catalogue_Train_VITS,
+            rootItemText = QCA.translate('MainWindow', "输入参数"),
+            childItemText = QCA.translate('MainWindow', "训练集文本路径")
         )
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_Train_VITS_FileListPathValidation,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "验证集文本路径\n用于提供验证集音频路径及其语音内容的验证集txt文件的路径。")
+        QFunc.setText(
+            widget = self.ui.Label_Train_VITS_FileListPathValidation,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "验证集文本路径\n用于提供验证集音频路径及其语音内容的验证集txt文件的路径。")
             )
         )
         ParamsManager_Train_VITS.SetParam(
-            Widget = self.ui.LineEdit_Train_VITS_FileListPathValidation,
-            Section = 'Input Params',
-            Option = 'FileList_Path_Validation',
-            DefaultValue = '',
-            SetPlaceholderText = True
+            widget = self.ui.LineEdit_Train_VITS_FileListPathValidation,
+            section = 'Input params',
+            option = 'FileList_Path_Validation',
+            defaultValue = '',
+            setPlaceholderText = True
         )
         self.ui.LineEdit_Train_VITS_FileListPathValidation.setFileDialog(
-            Mode = "SelectFile",
-            FileType = "txt类型 (*.txt)",
-            Directory = Path(CurrentDir).joinpath('数据集制作结果', 'VITS').as_posix()
+            mode = "SelectFile",
+            fileType = "txt类型 (*.txt)",
+            directory = Path(currentDir).joinpath('数据集制作结果', 'VITS').as_posix()
         )
         self.ui.Button_Train_VITS_FileListPathValidation_MoreActions.SetMenu(
             ActionEvents = {
@@ -4742,32 +4737,32 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_Train_VITS_FileListPathValidation,
-            TreeWidget = self.ui.TreeWidget_Catalogue_Train_VITS,
-            RootItemText = QCA.translate('MainWindow', "输入参数"),
-            ChildItemText = QCA.translate('MainWindow', "验证集文本路径")
+            widget = self.ui.Label_Train_VITS_FileListPathValidation,
+            treeWidget = self.ui.TreeWidget_Catalogue_Train_VITS,
+            rootItemText = QCA.translate('MainWindow', "输入参数"),
+            childItemText = QCA.translate('MainWindow', "验证集文本路径")
         )
 
         self.ui.GroupBox_Train_VITS_VITSParams.setTitle(QCA.translate('MainWindow', "训练参数"))
         Function_AddToTreeWidget(
-            Widget = self.ui.GroupBox_Train_VITS_VITSParams,
-            TreeWidget = self.ui.TreeWidget_Catalogue_Train_VITS,
-            RootItemText = QCA.translate('MainWindow', "训练参数")
+            widget = self.ui.GroupBox_Train_VITS_VITSParams,
+            treeWidget = self.ui.TreeWidget_Catalogue_Train_VITS,
+            rootItemText = QCA.translate('MainWindow', "训练参数")
         )
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_Train_VITS_Epochs,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "迭代轮数\n将全部样本完整迭代一轮的次数。")
+        QFunc.setText(
+            widget = self.ui.Label_Train_VITS_Epochs,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "迭代轮数\n将全部样本完整迭代一轮的次数。")
             )
         )
         self.ui.SpinBox_Train_VITS_Epochs.setRange(10, 100000)
         self.ui.SpinBox_Train_VITS_Epochs.setSingleStep(1)
         ParamsManager_Train_VITS.SetParam(
-            Widget = self.ui.SpinBox_Train_VITS_Epochs,
-            Section = 'VITS Params',
-            Option = 'Epochs',
-            DefaultValue = 1000
+            widget = self.ui.SpinBox_Train_VITS_Epochs,
+            section = 'VITS params',
+            option = 'Epochs',
+            defaultValue = 1000
         )
         self.ui.Button_Train_VITS_Epochs_MoreActions.SetMenu(
             ActionEvents = {
@@ -4775,25 +4770,25 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_Train_VITS_Epochs,
-            TreeWidget = self.ui.TreeWidget_Catalogue_Train_VITS,
-            RootItemText = QCA.translate('MainWindow', "训练参数"),
-            ChildItemText = QCA.translate('MainWindow', "迭代轮数")
+            widget = self.ui.Label_Train_VITS_Epochs,
+            treeWidget = self.ui.TreeWidget_Catalogue_Train_VITS,
+            rootItemText = QCA.translate('MainWindow', "训练参数"),
+            childItemText = QCA.translate('MainWindow', "迭代轮数")
         )
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_Train_VITS_BatchSize,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "批处理量\n每轮迭代中单位批次的样本数量，需根据GPU的性能调节该值。")
+        QFunc.setText(
+            widget = self.ui.Label_Train_VITS_BatchSize,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "批处理量\n每轮迭代中单位批次的样本数量，需根据GPU的性能调节该值。")
             )
         )
         self.ui.SpinBox_Train_VITS_BatchSize.setRange(2, 128)
         self.ui.SpinBox_Train_VITS_BatchSize.setSingleStep(1)
         ParamsManager_Train_VITS.SetParam(
-            Widget = self.ui.SpinBox_Train_VITS_BatchSize,
-            Section = 'VITS Params',
-            Option = 'Batch_Size',
-            DefaultValue = 4
+            widget = self.ui.SpinBox_Train_VITS_BatchSize,
+            section = 'VITS params',
+            option = 'Batch_Size',
+            defaultValue = 4
         )
         self.ui.SpinBox_Train_VITS_BatchSize.setToolTip(QCA.translate('MainWindow', "建议：2~4G: 2\n6~8G: 4\n10~12G: 8\n14~16G: 16"))
         self.ui.Button_Train_VITS_BatchSize_MoreActions.SetMenu(
@@ -4802,28 +4797,28 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_Train_VITS_BatchSize,
-            TreeWidget = self.ui.TreeWidget_Catalogue_Train_VITS,
-            RootItemText = QCA.translate('MainWindow', "训练参数"),
-            ChildItemText = QCA.translate('MainWindow', "批处理量")
+            widget = self.ui.Label_Train_VITS_BatchSize,
+            treeWidget = self.ui.TreeWidget_Catalogue_Train_VITS,
+            rootItemText = QCA.translate('MainWindow', "训练参数"),
+            childItemText = QCA.translate('MainWindow', "批处理量")
         )
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_Train_VITS_UsePretrainedModels,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "使用预训练模型\n使用预训练模型（底模），其载入优先级高于检查点。")
+        QFunc.setText(
+            widget = self.ui.Label_Train_VITS_UsePretrainedModels,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "使用预训练模型\n使用预训练模型（底模），其载入优先级高于检查点。")
             )
         )
         ParamsManager_Train_VITS.SetParam(
-            Widget = self.ui.CheckBox_Train_VITS_UsePretrainedModels,
-            Section = 'VITS Params',
-            Option = 'Use_PretrainedModels',
-            DefaultValue = True
+            widget = self.ui.CheckBox_Train_VITS_UsePretrainedModels,
+            section = 'VITS params',
+            option = 'Use_PretrainedModels',
+            defaultValue = True
         )
         Function_ConfigureCheckBox(
-            CheckBox = self.ui.CheckBox_Train_VITS_UsePretrainedModels,
-            CheckedText = "已启用",
-            CheckedEvents = [
+            checkBox = self.ui.CheckBox_Train_VITS_UsePretrainedModels,
+            checkedText = "已启用",
+            checkedEvents = [
                 lambda: Function_SetChildWidgetsVisibility(
                     self.ui.Frame_Train_VITS_VITSParams_BasicSettings,
                     [
@@ -4835,8 +4830,8 @@ class MainWindow(Window_MainWindow):
                     True
                 )
             ],
-            UncheckedText = "未启用",
-            UncheckedEvents = [
+            uncheckedText = "未启用",
+            uncheckedEvents = [
                 lambda: Function_SetChildWidgetsVisibility(
                     self.ui.Frame_Train_VITS_VITSParams_BasicSettings,
                     [
@@ -4848,7 +4843,7 @@ class MainWindow(Window_MainWindow):
                     False
                 )
             ],
-            TakeEffect = True
+            takeEffect = True
         )
         self.ui.Button_Train_VITS_UsePretrainedModels_MoreActions.SetMenu(
             ActionEvents = {
@@ -4856,31 +4851,31 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_Train_VITS_UsePretrainedModels,
-            TreeWidget = self.ui.TreeWidget_Catalogue_Train_VITS,
-            RootItemText = QCA.translate('MainWindow', "训练参数"),
-            ChildItemText = QCA.translate('MainWindow', "使用预训练模型")
+            widget = self.ui.Label_Train_VITS_UsePretrainedModels,
+            treeWidget = self.ui.TreeWidget_Catalogue_Train_VITS,
+            rootItemText = QCA.translate('MainWindow', "训练参数"),
+            childItemText = QCA.translate('MainWindow', "使用预训练模型")
         )
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_Train_VITS_ModelPathPretrainedG,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "预训练G模型路径\n预训练生成器（Generator）模型的路径。")
+        QFunc.setText(
+            widget = self.ui.Label_Train_VITS_ModelPathPretrainedG,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "预训练G模型路径\n预训练生成器（Generator）模型的路径。")
             )
         )
         Train_VITS_ModelPathPretrainedG_Default = Path(ModelDir).joinpath('TTS', 'VITS', 'Downloaded', 'standard_G.pth').as_posix()
         ParamsManager_Train_VITS.SetParam(
-            Widget = self.ui.LineEdit_Train_VITS_ModelPathPretrainedG,
-            Section = 'VITS Params',
-            Option = 'Model_Path_Pretrained_G',
-            DefaultValue = Train_VITS_ModelPathPretrainedG_Default,
-            SetPlaceholderText = True,
-            PlaceholderText = Train_VITS_ModelPathPretrainedG_Default
+            widget = self.ui.LineEdit_Train_VITS_ModelPathPretrainedG,
+            section = 'VITS params',
+            option = 'Model_Path_Pretrained_G',
+            defaultValue = Train_VITS_ModelPathPretrainedG_Default,
+            setPlaceholderText = True,
+            placeholderText = Train_VITS_ModelPathPretrainedG_Default
         )
         self.ui.LineEdit_Train_VITS_ModelPathPretrainedG.setFileDialog(
-            Mode = "SelectFile",
-            FileType = "pth类型 (*.pth)",
-            Directory = QFunc.NormPath(Path(ModelDir).joinpath('TTS', 'VITS', 'Downloaded'))
+            mode = "SelectFile",
+            fileType = "pth类型 (*.pth)",
+            directory = QFunc.normPath(Path(ModelDir).joinpath('TTS', 'VITS', 'Downloaded'))
         )
         self.ui.Button_Train_VITS_ModelPathPretrainedG_MoreActions.SetMenu(
             ActionEvents = {
@@ -4889,31 +4884,31 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_Train_VITS_ModelPathPretrainedG,
-            TreeWidget = self.ui.TreeWidget_Catalogue_Train_VITS,
-            RootItemText = QCA.translate('MainWindow', "训练参数"),
-            ChildItemText = QCA.translate('MainWindow', "预训练G模型路径")
+            widget = self.ui.Label_Train_VITS_ModelPathPretrainedG,
+            treeWidget = self.ui.TreeWidget_Catalogue_Train_VITS,
+            rootItemText = QCA.translate('MainWindow', "训练参数"),
+            childItemText = QCA.translate('MainWindow', "预训练G模型路径")
         )
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_Train_VITS_ModelPathPretrainedD,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "预训练D模型路径\n预训练判别器（Discriminator）模型的路径。")
+        QFunc.setText(
+            widget = self.ui.Label_Train_VITS_ModelPathPretrainedD,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "预训练D模型路径\n预训练判别器（Discriminator）模型的路径。")
             )
         )
         Train_VITS_ModelPathPretrainedD_Default = Path(ModelDir).joinpath('TTS', 'VITS', 'Downloaded', 'standard_D.pth').as_posix()
         ParamsManager_Train_VITS.SetParam(
-            Widget = self.ui.LineEdit_Train_VITS_ModelPathPretrainedD,
-            Section = 'VITS Params',
-            Option = 'Model_Path_Pretrained_D',
-            DefaultValue = Train_VITS_ModelPathPretrainedD_Default,
-            SetPlaceholderText = True,
-            PlaceholderText = Train_VITS_ModelPathPretrainedD_Default
+            widget = self.ui.LineEdit_Train_VITS_ModelPathPretrainedD,
+            section = 'VITS params',
+            option = 'Model_Path_Pretrained_D',
+            defaultValue = Train_VITS_ModelPathPretrainedD_Default,
+            setPlaceholderText = True,
+            placeholderText = Train_VITS_ModelPathPretrainedD_Default
         )
         self.ui.LineEdit_Train_VITS_ModelPathPretrainedD.setFileDialog(
-            Mode = "SelectFile",
-            FileType = "pth类型 (*.pth)",
-            Directory = QFunc.NormPath(Path(ModelDir).joinpath('TTS', 'VITS', 'Downloaded'))
+            mode = "SelectFile",
+            fileType = "pth类型 (*.pth)",
+            directory = QFunc.normPath(Path(ModelDir).joinpath('TTS', 'VITS', 'Downloaded'))
         )
         self.ui.Button_Train_VITS_ModelPathPretrainedD_MoreActions.SetMenu(
             ActionEvents = {
@@ -4922,28 +4917,28 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_Train_VITS_ModelPathPretrainedD,
-            TreeWidget = self.ui.TreeWidget_Catalogue_Train_VITS,
-            RootItemText = QCA.translate('MainWindow', "训练参数"),
-            ChildItemText = QCA.translate('MainWindow', "预训练D模型路径")
+            widget = self.ui.Label_Train_VITS_ModelPathPretrainedD,
+            treeWidget = self.ui.TreeWidget_Catalogue_Train_VITS,
+            rootItemText = QCA.translate('MainWindow', "训练参数"),
+            childItemText = QCA.translate('MainWindow', "预训练D模型路径")
         )
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_Train_VITS_KeepOriginalSpeakers,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "保留原说话人（实验性）\n保留预训练模型中原有的说话人。")
+        QFunc.setText(
+            widget = self.ui.Label_Train_VITS_KeepOriginalSpeakers,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "保留原说话人（实验性）\n保留预训练模型中原有的说话人。")
             )
         )
         ParamsManager_Train_VITS.SetParam(
-            Widget = self.ui.CheckBox_Train_VITS_KeepOriginalSpeakers,
-            Section = 'VITS Params',
-            Option = 'Keep_Original_Speakers',
-            DefaultValue = False
+            widget = self.ui.CheckBox_Train_VITS_KeepOriginalSpeakers,
+            section = 'VITS params',
+            option = 'Keep_Original_Speakers',
+            defaultValue = False
         )
         Function_ConfigureCheckBox(
-            CheckBox = self.ui.CheckBox_Train_VITS_KeepOriginalSpeakers,
-            CheckedText = "已启用",
-            CheckedEvents = [
+            checkBox = self.ui.CheckBox_Train_VITS_KeepOriginalSpeakers,
+            checkedText = "已启用",
+            checkedEvents = [
                 lambda: Function_SetChildWidgetsVisibility(
                     self.ui.Frame_Train_VITS_VITSParams_BasicSettings,
                     [
@@ -4952,8 +4947,8 @@ class MainWindow(Window_MainWindow):
                     True
                 )
             ],
-            UncheckedText = "未启用",
-            UncheckedEvents = [
+            uncheckedText = "未启用",
+            uncheckedEvents = [
                 lambda: Function_SetChildWidgetsVisibility(
                     self.ui.Frame_Train_VITS_VITSParams_BasicSettings,
                     [
@@ -4962,24 +4957,23 @@ class MainWindow(Window_MainWindow):
                     False
                 )
             ],
-            TakeEffect = True
+            takeEffect = True
         )
         Function_ConfigureCheckBox(
-            CheckBox = self.ui.CheckBox_Train_VITS_KeepOriginalSpeakers,
-            CheckedEvents = [
+            checkBox = self.ui.CheckBox_Train_VITS_KeepOriginalSpeakers,
+            checkedEvents = [
                 lambda: MessageBoxBase.pop(self,
-                    MessageType = QMessageBox.Question,
-                    WindowTitle = "Tip",
-                    Text = """
+                    QMessageBox.Question, "Tip",
+                    text = """
                         开启该实验性功能需要注意以下几点：
                         1. 为防止老角色的音色在训练过程中被逐渐遗忘，请保证每个原角色至少有一两条音频参与训练。\n
                         2. 为防止老角色的顺序被重组（导致音色混乱），请在下方设置包含了底模角色信息的配置文件路径。
                     """,
-                    Buttons = QMessageBox.Yes|QMessageBox.No,
-                    ButtonEvents = {QMessageBox.No: lambda: self.ui.CheckBox_Train_VITS_KeepOriginalSpeakers.setChecked(False)}
+                    buttons = QMessageBox.Yes|QMessageBox.No,
+                    buttonEvents = {QMessageBox.No: lambda: self.ui.CheckBox_Train_VITS_KeepOriginalSpeakers.setChecked(False)}
                 )
             ],
-            TakeEffect = False
+            takeEffect = False
         )
         self.ui.Button_Train_VITS_KeepOriginalSpeakers_MoreActions.SetMenu(
             ActionEvents = {
@@ -4987,31 +4981,31 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_Train_VITS_KeepOriginalSpeakers,
-            TreeWidget = self.ui.TreeWidget_Catalogue_Train_VITS,
-            RootItemText = QCA.translate('MainWindow', "训练参数"),
-            ChildItemText = QCA.translate('MainWindow', "保留原说话人")
+            widget = self.ui.Label_Train_VITS_KeepOriginalSpeakers,
+            treeWidget = self.ui.TreeWidget_Catalogue_Train_VITS,
+            rootItemText = QCA.translate('MainWindow', "训练参数"),
+            childItemText = QCA.translate('MainWindow', "保留原说话人")
         )
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_Train_VITS_ConfigPathLoad,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "配置加载路径\n用于加载底模人物信息的配置文件的路径")
+        QFunc.setText(
+            widget = self.ui.Label_Train_VITS_ConfigPathLoad,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "配置加载路径\n用于加载底模人物信息的配置文件的路径")
             )
         )
         Train_VITS_ConfigPathLoad_Default = Path(ModelDir).joinpath('TTS', 'VITS', 'Downloaded', 'standard_Config.json').as_posix()
         ParamsManager_Train_VITS.SetParam(
-            Widget = self.ui.LineEdit_Train_VITS_ConfigPathLoad,
-            Section = 'VITS Params',
-            Option = 'Config_Path_Load',
-            DefaultValue = Train_VITS_ConfigPathLoad_Default,
-            SetPlaceholderText = True,
-            PlaceholderText = Train_VITS_ConfigPathLoad_Default
+            widget = self.ui.LineEdit_Train_VITS_ConfigPathLoad,
+            section = 'VITS params',
+            option = 'Config_Path_Load',
+            defaultValue = Train_VITS_ConfigPathLoad_Default,
+            setPlaceholderText = True,
+            placeholderText = Train_VITS_ConfigPathLoad_Default
         )
         self.ui.LineEdit_Train_VITS_ConfigPathLoad.setFileDialog(
-            Mode = "SelectFile",
-            FileType = "json类型 (*.json)",
-            Directory = QFunc.NormPath(Path(ModelDir).joinpath('TTS', 'VITS', 'Downloaded'))
+            mode = "SelectFile",
+            fileType = "json类型 (*.json)",
+            directory = QFunc.normPath(Path(ModelDir).joinpath('TTS', 'VITS', 'Downloaded'))
         )
         self.ui.Button_Train_VITS_ConfigPathLoad_MoreActions.SetMenu(
             ActionEvents = {
@@ -5020,28 +5014,28 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_Train_VITS_ConfigPathLoad,
-            TreeWidget = self.ui.TreeWidget_Catalogue_Train_VITS,
-            RootItemText = QCA.translate('MainWindow', "训练参数"),
-            ChildItemText = QCA.translate('MainWindow', "配置加载路径")
+            widget = self.ui.Label_Train_VITS_ConfigPathLoad,
+            treeWidget = self.ui.TreeWidget_Catalogue_Train_VITS,
+            rootItemText = QCA.translate('MainWindow', "训练参数"),
+            childItemText = QCA.translate('MainWindow', "配置加载路径")
         )
 
         self.ui.ToolBox_Train_VITS_VITSParams_AdvanceSettings.widget(0).setText(QCA.translate('MainWindow', "高级设置"))
         self.ui.ToolBox_Train_VITS_VITSParams_AdvanceSettings.widget(0).collapse()
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_Train_VITS_NumWorkers,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "进程数量\n进行数据加载时可并行的进程数量，需根据CPU的性能调节该值。")
+        QFunc.setText(
+            widget = self.ui.Label_Train_VITS_NumWorkers,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "进程数量\n进行数据加载时可并行的进程数量，需根据CPU的性能调节该值。")
             )
         )
         self.ui.SpinBox_Train_VITS_NumWorkers.setRange(2, 128)
         self.ui.SpinBox_Train_VITS_NumWorkers.setSingleStep(2)
         ParamsManager_Train_VITS.SetParam(
-            Widget = self.ui.SpinBox_Train_VITS_NumWorkers,
-            Section = 'VITS Params',
-            Option = 'Num_Workers',
-            DefaultValue = 4
+            widget = self.ui.SpinBox_Train_VITS_NumWorkers,
+            section = 'VITS params',
+            option = 'Num_Workers',
+            defaultValue = 4
         )
         self.ui.Button_Train_VITS_NumWorkers_MoreActions.SetMenu(
             ActionEvents = {
@@ -5049,33 +5043,33 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_Train_VITS_NumWorkers,
-            TreeWidget = self.ui.TreeWidget_Catalogue_Train_VITS,
-            RootItemText = QCA.translate('MainWindow', "训练参数"),
-            ChildItemText = QCA.translate('MainWindow', "进程数量")
+            widget = self.ui.Label_Train_VITS_NumWorkers,
+            treeWidget = self.ui.TreeWidget_Catalogue_Train_VITS,
+            rootItemText = QCA.translate('MainWindow', "训练参数"),
+            childItemText = QCA.translate('MainWindow', "进程数量")
         )
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_Train_VITS_FP16Run,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "半精度训练\n通过混合了float16精度的训练方式减小显存占用以支持更大的批处理量。")
+        QFunc.setText(
+            widget = self.ui.Label_Train_VITS_FP16Run,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "半精度训练\n通过混合了float16精度的训练方式减小显存占用以支持更大的批处理量。")
             )
         )
         ParamsManager_Train_VITS.SetParam(
-            Widget = self.ui.CheckBox_Train_VITS_FP16Run,
-            Section = 'VITS Params',
-            Option = 'FP16_Run',
-            DefaultValue = False
+            widget = self.ui.CheckBox_Train_VITS_FP16Run,
+            section = 'VITS params',
+            option = 'FP16_Run',
+            defaultValue = False
         )
         Function_ConfigureCheckBox(
-            CheckBox = self.ui.CheckBox_Train_VITS_FP16Run,
-            CheckedText = "已启用",
-            CheckedEvents = [
+            checkBox = self.ui.CheckBox_Train_VITS_FP16Run,
+            checkedText = "已启用",
+            checkedEvents = [
             ],
-            UncheckedText = "未启用",
-            UncheckedEvents = [
+            uncheckedText = "未启用",
+            uncheckedEvents = [
             ],
-            TakeEffect = True
+            takeEffect = True
         )
         self.ui.Button_Train_VITS_FP16Run_MoreActions.SetMenu(
             ActionEvents = {
@@ -5083,32 +5077,32 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_Train_VITS_FP16Run,
-            TreeWidget = self.ui.TreeWidget_Catalogue_Train_VITS,
-            RootItemText = QCA.translate('MainWindow', "训练参数"),
-            ChildItemText = QCA.translate('MainWindow', "半精度训练")
+            widget = self.ui.Label_Train_VITS_FP16Run,
+            treeWidget = self.ui.TreeWidget_Catalogue_Train_VITS,
+            rootItemText = QCA.translate('MainWindow', "训练参数"),
+            childItemText = QCA.translate('MainWindow', "半精度训练")
         )
 
         self.ui.GroupBox_Train_VITS_OutputParams.setTitle(QCA.translate('MainWindow', "输出参数"))
         Function_AddToTreeWidget(
-            Widget = self.ui.GroupBox_Train_VITS_OutputParams,
-            TreeWidget = self.ui.TreeWidget_Catalogue_Train_VITS,
-            RootItemText = QCA.translate('MainWindow', "输出参数")
+            widget = self.ui.GroupBox_Train_VITS_OutputParams,
+            treeWidget = self.ui.TreeWidget_Catalogue_Train_VITS,
+            rootItemText = QCA.translate('MainWindow', "输出参数")
         )
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_Train_VITS_EvalInterval,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "保存间隔\n每次保存模型所间隔的步数。PS: 步数 ≈ 迭代轮次 * 训练样本数 / 批处理量")
+        QFunc.setText(
+            widget = self.ui.Label_Train_VITS_EvalInterval,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "保存间隔\n每次保存模型所间隔的步数。PS: 步数 ≈ 迭代轮次 * 训练样本数 / 批处理量")
             )
         )
         self.ui.SpinBox_Train_VITS_EvalInterval.setRange(10, 100000)
         self.ui.SpinBox_Train_VITS_EvalInterval.setSingleStep(1)
         ParamsManager_Train_VITS.SetParam(
-            Widget = self.ui.SpinBox_Train_VITS_EvalInterval,
-            Section = 'Output Params',
-            Option = 'Eval_Interval',
-            DefaultValue = 1000
+            widget = self.ui.SpinBox_Train_VITS_EvalInterval,
+            section = 'Output params',
+            option = 'Eval_Interval',
+            defaultValue = 1000
         )
         self.ui.SpinBox_Train_VITS_EvalInterval.setToolTip(QCA.translate('MainWindow', "提示：设置过小可能导致磁盘占用激增哦"))
         self.ui.Button_Train_VITS_EvalInterval_MoreActions.SetMenu(
@@ -5117,29 +5111,29 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_Train_VITS_EvalInterval,
-            TreeWidget = self.ui.TreeWidget_Catalogue_Train_VITS,
-            RootItemText = QCA.translate('MainWindow', "输出参数"),
-            ChildItemText = QCA.translate('MainWindow', "保存间隔")
+            widget = self.ui.Label_Train_VITS_EvalInterval,
+            treeWidget = self.ui.TreeWidget_Catalogue_Train_VITS,
+            rootItemText = QCA.translate('MainWindow', "输出参数"),
+            childItemText = QCA.translate('MainWindow', "保存间隔")
         )
 
         self.ui.ToolBox_Train_VITS_OutputParams_AdvanceSettings.widget(0).setText(QCA.translate('MainWindow', "高级设置"))
         self.ui.ToolBox_Train_VITS_OutputParams_AdvanceSettings.widget(0).collapse()
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_Train_VITS_OutputDirName,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "输出目录名\n存放训练所得模型的目录的名字，若目录中已存在模型则会将其视为检查点。")
+        QFunc.setText(
+            widget = self.ui.Label_Train_VITS_OutputDirName,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "输出目录名\n存放训练所得模型的目录的名字，若目录中已存在模型则会将其视为检查点。")
             )
         )
         Train_VITS_OutputDirName_Default = str(date.today())
         ParamsManager_Train_VITS.SetParam(
-            Widget = self.ui.LineEdit_Train_VITS_OutputDirName,
-            Section = 'Output Params',
-            Option = 'Output_Dir_Name',
-            DefaultValue = '',
-            SetPlaceholderText = True,
-            PlaceholderText = Train_VITS_OutputDirName_Default
+            widget = self.ui.LineEdit_Train_VITS_OutputDirName,
+            section = 'Output params',
+            option = 'Output_Dir_Name',
+            defaultValue = '',
+            setPlaceholderText = True,
+            placeholderText = Train_VITS_OutputDirName_Default
         )
         self.ui.Button_Train_VITS_OutputDirName_MoreActions.SetMenu(
             ActionEvents = {
@@ -5148,10 +5142,10 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_Train_VITS_OutputDirName,
-            TreeWidget = self.ui.TreeWidget_Catalogue_Train_VITS,
-            RootItemText = QCA.translate('MainWindow', "输出参数"),
-            ChildItemText = QCA.translate('MainWindow', "输出目录名")
+            widget = self.ui.Label_Train_VITS_OutputDirName,
+            treeWidget = self.ui.TreeWidget_Catalogue_Train_VITS,
+            rootItemText = QCA.translate('MainWindow', "输出参数"),
+            childItemText = QCA.translate('MainWindow', "输出目录名")
         )
 
         LineEdit_Train_VITS_OutputDir = LineEditBase()
@@ -5161,34 +5155,33 @@ class MainWindow(Window_MainWindow):
             DirEdit = LineEdit_Train_VITS_OutputDir
         )
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_Train_VITS_LogDir,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "日志输出目录\n训练时生成的日志的存放目录。")
+        QFunc.setText(
+            widget = self.ui.Label_Train_VITS_LogDir,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "日志输出目录\n训练时生成的日志的存放目录。")
             )
         )
-        Train_VITS_LogDir_Default = Path(Path(CurrentDir).root).joinpath('EVT_TrainLog', 'VITS', str(date.today())).as_posix()
+        Train_VITS_LogDir_Default = Path(Path(currentDir).root).joinpath('EVT_TrainLog', 'VITS', str(date.today())).as_posix()
         ParamsManager_Train_VITS.SetParam(
-            Widget = self.ui.LineEdit_Train_VITS_LogDir,
-            Section = 'Output Params',
-            Option = 'Output_LogDir',
-            DefaultValue = Train_VITS_LogDir_Default,
-            SetPlaceholderText = True,
-            PlaceholderText = Train_VITS_LogDir_Default
+            widget = self.ui.LineEdit_Train_VITS_LogDir,
+            section = 'Output params',
+            option = 'Output_LogDir',
+            defaultValue = Train_VITS_LogDir_Default,
+            setPlaceholderText = True,
+            placeholderText = Train_VITS_LogDir_Default
         )
         self.ui.LineEdit_Train_VITS_LogDir.textChanged.connect(
-            lambda Value: (
+            lambda value: (
                 MessageBoxBase.pop(self,
-                    MessageType = QMessageBox.Warning,
-                    WindowTitle = "Warning",
-                    Text = "保存路径不支持非ASCII字符，请使用英文路径以避免训练报错",
+                    QMessageBox.Warning, "Warning",
+                    text = "保存路径不支持非ASCII字符，请使用英文路径以避免训练报错",
                 ),
                 self.ui.LineEdit_Train_VITS_LogDir.clear()
-            ) if not all(Char.isascii() for Char in Value) else None
+            ) if not all(Char.isascii() for Char in value) else None
         )
         self.ui.LineEdit_Train_VITS_LogDir.setFileDialog(
-            Mode = "SelectFolder",
-            Directory = QFunc.NormPath(Path(Train_VITS_LogDir_Default).parent)
+            mode = "SelectFolder",
+            directory = QFunc.normPath(Path(Train_VITS_LogDir_Default).parent)
         )
         self.ui.Button_Train_VITS_LogDir_MoreActions.SetMenu(
             ActionEvents = {
@@ -5197,10 +5190,10 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_Train_VITS_LogDir,
-            TreeWidget = self.ui.TreeWidget_Catalogue_Train_VITS,
-            RootItemText = QCA.translate('MainWindow', "输出参数"),
-            ChildItemText = QCA.translate('MainWindow', "日志输出目录")
+            widget = self.ui.Label_Train_VITS_LogDir,
+            treeWidget = self.ui.TreeWidget_Catalogue_Train_VITS,
+            rootItemText = QCA.translate('MainWindow', "输出参数"),
+            childItemText = QCA.translate('MainWindow', "日志输出目录")
         )
 
         # VITS - Right
@@ -5220,9 +5213,9 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_ImportSettings_Train_VITS.setText(QCA.translate('MainWindow', "导入配置"))
         self.ui.Button_ImportSettings_Train_VITS.clicked.connect(
             lambda: ParamsManager_Train_VITS.ImportSettings(
-                QFunc.Function_GetFileDialog(
-                    Mode = "SelectFile",
-                    FileType = "ini类型 (*.ini)"
+                QFunc.getFileDialog(
+                    mode = "SelectFile",
+                    fileType = "ini类型 (*.ini)"
                 )
             )
         )
@@ -5230,40 +5223,40 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_ExportSettings_Train_VITS.setText(QCA.translate('MainWindow', "导出配置"))
         self.ui.Button_ExportSettings_Train_VITS.clicked.connect(
             lambda: ParamsManager_Train_VITS.ExportSettings(
-                QFunc.Function_GetFileDialog(
-                    Mode = "SaveFile",
-                    FileType = "ini类型 (*.ini)"
+                QFunc.getFileDialog(
+                    mode = "SaveFile",
+                    fileType = "ini类型 (*.ini)"
                 )
             )
         )
 
         self.ui.Button_RunTensorboard_Train_VITS.setText(QCA.translate('MainWindow', "启动Tensorboard"))
         Function_SetMethodExecutor(self,
-            ExecuteButton = self.ui.Button_RunTensorboard_Train_VITS,
-            Method = Tensorboard_Runner.Execute,
-            ParamsFrom = [
+            executeButton = self.ui.Button_RunTensorboard_Train_VITS,
+            method = Tensorboard_Runner.Execute,
+            paramsFrom = [
                 self.ui.LineEdit_Train_VITS_LogDir
             ]
         )
 
         self.ui.Button_CheckOutput_Train_VITS.setText(QCA.translate('MainWindow', "打开输出目录"))
         Function_SetURL(
-            Button = self.ui.Button_CheckOutput_Train_VITS,
-            URL = self.ui.LineEdit_Train_VITS_OutputRoot,
-            ButtonTooltip = "Click to open",
-            CreateIfNotExist = True
+            button = self.ui.Button_CheckOutput_Train_VITS,
+            url = self.ui.LineEdit_Train_VITS_OutputRoot,
+            buttonTooltip = "Click to open",
+            createIfNotExist = True
         )
 
         # VITS - Bottom
         self.ui.Button_Train_VITS_Execute.setText(QCA.translate('MainWindow', "执行模型训练"))
         self.ui.Button_Train_VITS_Terminate.setText(QCA.translate('MainWindow', "终止模型训练"))
         Function_SetMethodExecutor(self,
-            ExecuteButton = self.ui.Button_Train_VITS_Execute,
-            TerminateButton = self.ui.Button_Train_VITS_Terminate,
-            ProgressBar = self.ui.ProgressBar_Train_VITS,
-            ConsoleWidget = self.ui.Frame_Console,
-            Method = Execute_Voice_Training_VITS.Execute,
-            ParamsFrom = [
+            executeButton = self.ui.Button_Train_VITS_Execute,
+            terminateButton = self.ui.Button_Train_VITS_Terminate,
+            progressBar = self.ui.ProgressBar_Train_VITS,
+            consoleWidget = self.ui.Frame_Console,
+            method = Execute_Voice_Training_VITS.Execute,
+            paramsFrom = [
                 self.ui.LineEdit_Train_VITS_FileListPathTraining,
                 self.ui.LineEdit_Train_VITS_FileListPathValidation,
                 self.ui.SpinBox_Train_VITS_Epochs,
@@ -5278,15 +5271,15 @@ class MainWindow(Window_MainWindow):
                 self.ui.LineEdit_Train_VITS_ModelPathPretrainedD,
                 self.ui.LineEdit_Train_VITS_OutputRoot,
                 self.ui.LineEdit_Train_VITS_OutputDirName,
-                'Config.json',
+                'config.json',
                 self.ui.LineEdit_Train_VITS_LogDir
             ],
-            EmptyAllowed = [
+            emptyAllowed = [
                 self.ui.LineEdit_Train_VITS_ConfigPathLoad,
                 self.ui.LineEdit_Train_VITS_ModelPathPretrainedG,
                 self.ui.LineEdit_Train_VITS_ModelPathPretrainedD
             ],
-            SuccessEvents = [
+            successEvents = [
                 lambda: MessageBoxBase.pop(self,
                     QMessageBox.Information, "Tip",
                     "当前任务已执行结束。"
@@ -5295,11 +5288,10 @@ class MainWindow(Window_MainWindow):
         )
         FunctionSignals.Signal_TaskStatus.connect(
             lambda Task, Status: MessageBoxBase.pop(self,
-                MessageType = QMessageBox.Question,
-                WindowTitle = "Ask",
-                Text = "是否稍后启用tensorboard？",
-                Buttons = QMessageBox.Yes|QMessageBox.No,
-                ButtonEvents = {QMessageBox.Yes: lambda: self.ui.Button_RunTensorboard_Train_VITS.click()}
+                QMessageBox.Question, "Ask",
+                text = "是否稍后启用tensorboard？",
+                buttons = QMessageBox.Yes|QMessageBox.No,
+                buttonEvents = {QMessageBox.Yes: lambda: self.ui.Button_RunTensorboard_Train_VITS.click()}
             ) if Task == 'Execute_Voice_Training_VITS.Execute' and Status == 'Started' else None
         )
 
@@ -5312,8 +5304,8 @@ class MainWindow(Window_MainWindow):
             lambda: self.showGuidance(
                 QCA.translate('MainWindow', "引导（仅出现一次）"),
                 [
-                    QFunc.NormPath(Path(ResourceDir).joinpath('assets/images/others/Guidance_TTS.png')),
-                    QFunc.NormPath(Path(ResourceDir).joinpath('assets/images/others/Guidance_Layout.png'))
+                    QFunc.normPath(Path(resourceDir).joinpath('assets/images/others/Guidance_TTS.png')),
+                    QFunc.normPath(Path(resourceDir).joinpath('assets/images/others/Guidance_Layout.png'))
                 ],
                 [
                     '欢迎来到语音合成工具界面\n该工具用于将文字转为语音，用户需要提供相应的模型和配置文件',
@@ -5325,12 +5317,12 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_Menu_TTS.clicked.connect(
             lambda: (
                 self.ui.Button_VoiceConverter_Help.click(),
-                Config.editConfig('Dialog', 'GuidanceShown_TTS', 'True')
-            ) if eval(Config.getValue('Dialog', 'GuidanceShown_TTS', 'False')) is False else None
+                config.editConfig('Dialog', 'GuidanceShown_TTS', 'True')
+            ) if eval(config.getValue('Dialog', 'GuidanceShown_TTS', 'False')) is False else None
         )
 
         # GPT-SoVITS - ParamsManager
-        Path_Config_TTS_GPTSoVITS = QFunc.NormPath(Path(ConfigDir).joinpath('Config_TTS_GPT-SoVITS.ini'))
+        Path_Config_TTS_GPTSoVITS = QFunc.normPath(Path(configDir).joinpath('Config_TTS_GPT-SoVITS.ini'))
         ParamsManager_TTS_GPTSoVITS = ParamsManager(Path_Config_TTS_GPTSoVITS)
 
         # GPT-SoVITS - Top
@@ -5339,8 +5331,8 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_VoiceConverter_Title_GPTSoVITS.setChecked(True)
         self.ui.Button_VoiceConverter_Title_GPTSoVITS.clicked.connect(
             lambda: Function_AnimateStackedWidget(
-                StackedWidget = self.ui.StackedWidget_Pages_TTS,
-                Target = 0
+                stackedWidget = self.ui.StackedWidget_Pages_TTS,
+                target = 0
             )
         )
 
@@ -5351,30 +5343,30 @@ class MainWindow(Window_MainWindow):
         # GPT-SoVTIS - Middle
         self.ui.GroupBox_TTS_GPTSoVITS_InputParams.setTitle(QCA.translate('MainWindow', "输入参数"))
         Function_AddToTreeWidget(
-            Widget = self.ui.GroupBox_TTS_GPTSoVITS_InputParams,
-            TreeWidget = self.ui.TreeWidget_Catalogue_TTS_GPTSoVITS,
-            RootItemText = QCA.translate('MainWindow', "输入参数")
+            widget = self.ui.GroupBox_TTS_GPTSoVITS_InputParams,
+            treeWidget = self.ui.TreeWidget_Catalogue_TTS_GPTSoVITS,
+            rootItemText = QCA.translate('MainWindow', "输入参数")
         )
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_TTS_GPTSoVITS_ModelPathLoadS1,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "s1模型加载路径\ns1模型的路径。")
+        QFunc.setText(
+            widget = self.ui.Label_TTS_GPTSoVITS_ModelPathLoadS1,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "s1模型加载路径\ns1模型的路径。")
             )
         )
         TTS_GPTSoVITS_ModelPathLoadS1_Default = Path(ModelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's1bert25hz-5kh-longer-epoch=12-step=369668.ckpt').as_posix()
         ParamsManager_TTS_GPTSoVITS.SetParam(
-            Widget = self.ui.LineEdit_TTS_GPTSoVITS_ModelPathLoadS1,
-            Section = 'Input Params',
-            Option = 'Model_Path_Load_s1',
-            DefaultValue = TTS_GPTSoVITS_ModelPathLoadS1_Default,
-            SetPlaceholderText = True,
-            PlaceholderText = TTS_GPTSoVITS_ModelPathLoadS1_Default
+            widget = self.ui.LineEdit_TTS_GPTSoVITS_ModelPathLoadS1,
+            section = 'Input params',
+            option = 'Model_Path_Load_s1',
+            defaultValue = TTS_GPTSoVITS_ModelPathLoadS1_Default,
+            setPlaceholderText = True,
+            placeholderText = TTS_GPTSoVITS_ModelPathLoadS1_Default
         )
         self.ui.LineEdit_TTS_GPTSoVITS_ModelPathLoadS1.setFileDialog(
-            Mode = "SelectFile",
-            FileType = "ckpt类型 (*.ckpt)",
-            Directory = Path(CurrentDir).joinpath('模型训练结果', 'GPT-SoVITS').as_posix()
+            mode = "SelectFile",
+            fileType = "ckpt类型 (*.ckpt)",
+            directory = Path(currentDir).joinpath('模型训练结果', 'GPT-SoVITS').as_posix()
         )
         self.ui.Button_TTS_GPTSoVITS_ModelPathLoadS1_MoreActions.SetMenu(
             ActionEvents = {
@@ -5383,31 +5375,31 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_TTS_GPTSoVITS_ModelPathLoadS1,
-            TreeWidget = self.ui.TreeWidget_Catalogue_TTS_GPTSoVITS,
-            RootItemText = QCA.translate('MainWindow', "输入参数"),
-            ChildItemText = QCA.translate('MainWindow', "s1模型加载路径")
+            widget = self.ui.Label_TTS_GPTSoVITS_ModelPathLoadS1,
+            treeWidget = self.ui.TreeWidget_Catalogue_TTS_GPTSoVITS,
+            rootItemText = QCA.translate('MainWindow', "输入参数"),
+            childItemText = QCA.translate('MainWindow', "s1模型加载路径")
         )
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_TTS_GPTSoVITS_ModelPathLoadS2G,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "s2G模型加载路径\ns2G模型的路径。")
+        QFunc.setText(
+            widget = self.ui.Label_TTS_GPTSoVITS_ModelPathLoadS2G,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "s2G模型加载路径\ns2G模型的路径。")
             )
         )
         TTS_GPTSoVITS_ModelPathLoadS2G_Default = Path(ModelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's2G2333k.pth').as_posix()
         ParamsManager_TTS_GPTSoVITS.SetParam(
-            Widget = self.ui.LineEdit_TTS_GPTSoVITS_ModelPathLoadS2G,
-            Section = 'Input Params',
-            Option = 'Model_Path_Load_s2G',
-            DefaultValue = TTS_GPTSoVITS_ModelPathLoadS2G_Default,
-            SetPlaceholderText = True,
-            PlaceholderText = TTS_GPTSoVITS_ModelPathLoadS2G_Default
+            widget = self.ui.LineEdit_TTS_GPTSoVITS_ModelPathLoadS2G,
+            section = 'Input params',
+            option = 'Model_Path_Load_s2G',
+            defaultValue = TTS_GPTSoVITS_ModelPathLoadS2G_Default,
+            setPlaceholderText = True,
+            placeholderText = TTS_GPTSoVITS_ModelPathLoadS2G_Default
         )
         self.ui.LineEdit_TTS_GPTSoVITS_ModelPathLoadS2G.setFileDialog(
-            Mode = "SelectFile",
-            FileType = "pth类型 (*.pth)",
-            Directory = Path(CurrentDir).joinpath('模型训练结果', 'GPT-SoVITS').as_posix()
+            mode = "SelectFile",
+            fileType = "pth类型 (*.pth)",
+            directory = Path(currentDir).joinpath('模型训练结果', 'GPT-SoVITS').as_posix()
         )
         self.ui.Button_TTS_GPTSoVITS_ModelPathLoadS2G_MoreActions.SetMenu(
             ActionEvents = {
@@ -5416,30 +5408,30 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_TTS_GPTSoVITS_ModelPathLoadS2G,
-            TreeWidget = self.ui.TreeWidget_Catalogue_TTS_GPTSoVITS,
-            RootItemText = QCA.translate('MainWindow', "输入参数"),
-            ChildItemText = QCA.translate('MainWindow', "s2G模型加载路径")
+            widget = self.ui.Label_TTS_GPTSoVITS_ModelPathLoadS2G,
+            treeWidget = self.ui.TreeWidget_Catalogue_TTS_GPTSoVITS,
+            rootItemText = QCA.translate('MainWindow', "输入参数"),
+            childItemText = QCA.translate('MainWindow', "s2G模型加载路径")
         )
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_TTS_GPTSoVITS_ModelDirLoadBert,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "预训练bert模型加载路径\n预训练bert模型（文件夹）的路径。")
+        QFunc.setText(
+            widget = self.ui.Label_TTS_GPTSoVITS_ModelDirLoadBert,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "预训练bert模型加载路径\n预训练bert模型（文件夹）的路径。")
             )
         )
         TTS_GPTSoVITS_ModelDirLoadBert_Default = Path(ModelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 'chinese-roberta-wwm-ext-large').as_posix()
         ParamsManager_TTS_GPTSoVITS.SetParam(
-            Widget = self.ui.LineEdit_TTS_GPTSoVITS_ModelDirLoadBert,
-            Section = 'Input Params',
-            Option = 'Model_Dir_Load_bert',
-            DefaultValue = TTS_GPTSoVITS_ModelDirLoadBert_Default,
-            SetPlaceholderText = True,
-            PlaceholderText = TTS_GPTSoVITS_ModelDirLoadBert_Default
+            widget = self.ui.LineEdit_TTS_GPTSoVITS_ModelDirLoadBert,
+            section = 'Input params',
+            option = 'Model_Dir_Load_bert',
+            defaultValue = TTS_GPTSoVITS_ModelDirLoadBert_Default,
+            setPlaceholderText = True,
+            placeholderText = TTS_GPTSoVITS_ModelDirLoadBert_Default
         )
         self.ui.LineEdit_TTS_GPTSoVITS_ModelDirLoadBert.setFileDialog(
-            Mode = "SelectFolder",
-            Directory = QFunc.NormPath(Path(ModelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded'))
+            mode = "SelectFolder",
+            directory = QFunc.normPath(Path(ModelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded'))
         )
         self.ui.Button_TTS_GPTSoVITS_ModelDirLoadBert_MoreActions.SetMenu(
             ActionEvents = {
@@ -5448,30 +5440,30 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_TTS_GPTSoVITS_ModelDirLoadBert,
-            TreeWidget = self.ui.TreeWidget_Catalogue_TTS_GPTSoVITS,
-            RootItemText = QCA.translate('MainWindow', "输入参数"),
-            ChildItemText = QCA.translate('MainWindow', "预训练bert模型加载路径")
+            widget = self.ui.Label_TTS_GPTSoVITS_ModelDirLoadBert,
+            treeWidget = self.ui.TreeWidget_Catalogue_TTS_GPTSoVITS,
+            rootItemText = QCA.translate('MainWindow', "输入参数"),
+            childItemText = QCA.translate('MainWindow', "预训练bert模型加载路径")
         )
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_TTS_GPTSoVITS_ModelDirLoadSSL,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "预训练ssl模型加载路径\n预训练ssl模型的路径。")
+        QFunc.setText(
+            widget = self.ui.Label_TTS_GPTSoVITS_ModelDirLoadSSL,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "预训练ssl模型加载路径\n预训练ssl模型的路径。")
             )
         )
         TTS_GPTSoVITS_ModelDirLoadSSL_Default = Path(ModelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 'chinese-hubert-base').as_posix()
         ParamsManager_TTS_GPTSoVITS.SetParam(
-            Widget = self.ui.LineEdit_TTS_GPTSoVITS_ModelDirLoadSSL,
-            Section = 'Input Params',
-            Option = 'Model_Dir_Load_ssl',
-            DefaultValue = TTS_GPTSoVITS_ModelDirLoadSSL_Default,
-            SetPlaceholderText = True,
-            PlaceholderText = TTS_GPTSoVITS_ModelDirLoadSSL_Default
+            widget = self.ui.LineEdit_TTS_GPTSoVITS_ModelDirLoadSSL,
+            section = 'Input params',
+            option = 'Model_Dir_Load_ssl',
+            defaultValue = TTS_GPTSoVITS_ModelDirLoadSSL_Default,
+            setPlaceholderText = True,
+            placeholderText = TTS_GPTSoVITS_ModelDirLoadSSL_Default
         )
         self.ui.LineEdit_TTS_GPTSoVITS_ModelDirLoadSSL.setFileDialog(
-            Mode = "SelectFolder",
-            Directory = QFunc.NormPath(Path(ModelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded'))
+            mode = "SelectFolder",
+            directory = QFunc.normPath(Path(ModelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded'))
         )
         self.ui.Button_TTS_GPTSoVITS_ModelDirLoadSSL_MoreActions.SetMenu(
             ActionEvents = {
@@ -5480,33 +5472,33 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_TTS_GPTSoVITS_ModelDirLoadSSL,
-            TreeWidget = self.ui.TreeWidget_Catalogue_TTS_GPTSoVITS,
-            RootItemText = QCA.translate('MainWindow', "输入参数"),
-            ChildItemText = QCA.translate('MainWindow', "预训练ssl模型加载路径")
+            widget = self.ui.Label_TTS_GPTSoVITS_ModelDirLoadSSL,
+            treeWidget = self.ui.TreeWidget_Catalogue_TTS_GPTSoVITS,
+            rootItemText = QCA.translate('MainWindow', "输入参数"),
+            childItemText = QCA.translate('MainWindow', "预训练ssl模型加载路径")
         )
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_TTS_GPTSoVITS_UseWebUI,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "使用WebUI界面\n开启后会使用WebUI界面而非GUI窗口。")
+        QFunc.setText(
+            widget = self.ui.Label_TTS_GPTSoVITS_UseWebUI,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "使用WebUI界面\n开启后会使用WebUI界面而非GUI窗口。")
             )
         )
         ParamsManager_TTS_GPTSoVITS.SetParam(
-            Widget = self.ui.CheckBox_TTS_GPTSoVITS_UseWebUI,
-            Section = 'Input Params',
-            Option = 'Use_WebUI',
-            DefaultValue = True
+            widget = self.ui.CheckBox_TTS_GPTSoVITS_UseWebUI,
+            section = 'Input params',
+            option = 'Use_WebUI',
+            defaultValue = True
         )
         Function_ConfigureCheckBox(
-            CheckBox = self.ui.CheckBox_TTS_GPTSoVITS_UseWebUI,
-            CheckedText = "已启用",
-            CheckedEvents = [
+            checkBox = self.ui.CheckBox_TTS_GPTSoVITS_UseWebUI,
+            checkedText = "已启用",
+            checkedEvents = [
             ],
-            UncheckedText = "未启用",
-            UncheckedEvents = [
+            uncheckedText = "未启用",
+            uncheckedEvents = [
             ],
-            TakeEffect = True
+            takeEffect = True
         )
         self.ui.Button_TTS_GPTSoVITS_UseWebUI_MoreActions.SetMenu(
             ActionEvents = {
@@ -5514,10 +5506,10 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_TTS_GPTSoVITS_UseWebUI,
-            TreeWidget = self.ui.TreeWidget_Catalogue_TTS_GPTSoVITS,
-            RootItemText = QCA.translate('MainWindow', "输入参数"),
-            ChildItemText = QCA.translate('MainWindow', "使用WebUI界面")
+            widget = self.ui.Label_TTS_GPTSoVITS_UseWebUI,
+            treeWidget = self.ui.TreeWidget_Catalogue_TTS_GPTSoVITS,
+            rootItemText = QCA.translate('MainWindow', "输入参数"),
+            childItemText = QCA.translate('MainWindow', "使用WebUI界面")
         )
 
         # GPT-SoVITS - Right
@@ -5537,9 +5529,9 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_ImportSettings_TTS_GPTSoVITS.setText(QCA.translate('MainWindow', "导入配置"))
         self.ui.Button_ImportSettings_TTS_GPTSoVITS.clicked.connect(
             lambda: ParamsManager_TTS_GPTSoVITS.ImportSettings(
-                QFunc.Function_GetFileDialog(
-                    Mode = "SelectFile",
-                    FileType = "ini类型 (*.ini)"
+                QFunc.getFileDialog(
+                    mode = "SelectFile",
+                    fileType = "ini类型 (*.ini)"
                 )
             )
         )
@@ -5547,9 +5539,9 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_ExportSettings_TTS_GPTSoVITS.setText(QCA.translate('MainWindow', "导出配置"))
         self.ui.Button_ExportSettings_TTS_GPTSoVITS.clicked.connect(
             lambda: ParamsManager_TTS_GPTSoVITS.ExportSettings(
-                QFunc.Function_GetFileDialog(
-                    Mode = "SaveFile",
-                    FileType = "ini类型 (*.ini)"
+                QFunc.getFileDialog(
+                    mode = "SaveFile",
+                    fileType = "ini类型 (*.ini)"
                 )
             )
         )
@@ -5558,12 +5550,12 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_TTS_GPTSoVITS_Execute.setText(QCA.translate('MainWindow', "执行语音合成"))
         self.ui.Button_TTS_GPTSoVITS_Terminate.setText(QCA.translate('MainWindow', "终止语音合成"))
         Function_SetMethodExecutor(self,
-            ExecuteButton = self.ui.Button_TTS_GPTSoVITS_Execute,
-            TerminateButton = self.ui.Button_TTS_GPTSoVITS_Terminate,
-            ProgressBar = self.ui.ProgressBar_TTS_GPTSoVITS,
-            ConsoleWidget = self.ui.Frame_Console,
-            Method = Execute_Voice_Converting_GPTSoVITS.Execute,
-            ParamsFrom = [
+            executeButton = self.ui.Button_TTS_GPTSoVITS_Execute,
+            terminateButton = self.ui.Button_TTS_GPTSoVITS_Terminate,
+            progressBar = self.ui.ProgressBar_TTS_GPTSoVITS,
+            consoleWidget = self.ui.Frame_Console,
+            method = Execute_Voice_Converting_GPTSoVITS.Execute,
+            paramsFrom = [
                 self.ui.LineEdit_TTS_GPTSoVITS_ModelPathLoadS1,
                 self.ui.LineEdit_TTS_GPTSoVITS_ModelPathLoadS2G,
                 self.ui.LineEdit_TTS_GPTSoVITS_ModelDirLoadBert,
@@ -5572,9 +5564,9 @@ class MainWindow(Window_MainWindow):
                 False, # Enable_Batched_Infer
                 self.ui.CheckBox_TTS_GPTSoVITS_UseWebUI,
             ],
-            EmptyAllowed = [
+            emptyAllowed = [
             ],
-            SuccessEvents = [
+            successEvents = [
                 lambda: MessageBoxBase.pop(self,
                     QMessageBox.Information, "Tip",
                     "当前任务已执行结束。"
@@ -5583,7 +5575,7 @@ class MainWindow(Window_MainWindow):
         )
 
         # VITS - ParamsManager
-        Path_Config_TTS_VITS = QFunc.NormPath(Path(ConfigDir).joinpath('Config_TTS_VITS.ini'))
+        Path_Config_TTS_VITS = QFunc.normPath(Path(configDir).joinpath('Config_TTS_VITS.ini'))
         ParamsManager_TTS_VITS = ParamsManager(Path_Config_TTS_VITS)
 
         # VITS - Top
@@ -5592,8 +5584,8 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_VoiceConverter_Title_VITS.setChecked(False)
         self.ui.Button_VoiceConverter_Title_VITS.clicked.connect(
             lambda: Function_AnimateStackedWidget(
-                StackedWidget = self.ui.StackedWidget_Pages_TTS,
-                Target = 1
+                stackedWidget = self.ui.StackedWidget_Pages_TTS,
+                target = 1
             )
         )
 
@@ -5604,25 +5596,25 @@ class MainWindow(Window_MainWindow):
         # VTIS - Middle
         self.ui.GroupBox_TTS_VITS_InputParams.setTitle(QCA.translate('MainWindow', "输入参数"))
         Function_AddToTreeWidget(
-            Widget = self.ui.GroupBox_TTS_VITS_InputParams,
-            TreeWidget = self.ui.TreeWidget_Catalogue_TTS_VITS,
-            RootItemText = QCA.translate('MainWindow', "输入参数")
+            widget = self.ui.GroupBox_TTS_VITS_InputParams,
+            treeWidget = self.ui.TreeWidget_Catalogue_TTS_VITS,
+            rootItemText = QCA.translate('MainWindow', "输入参数")
         )
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_TTS_VITS_ConfigPathLoad,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "配置加载路径\n用于推理的配置文件的路径。")
+        QFunc.setText(
+            widget = self.ui.Label_TTS_VITS_ConfigPathLoad,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "配置加载路径\n用于推理的配置文件的路径。")
             )
         )
         TTS_VITS_ConfigPathLoad_Default = Path(ModelDir).joinpath('TTS', 'VITS', 'Downloaded', 'standard_Config.json').as_posix()
         ParamsManager_TTS_VITS.SetParam(
-            Widget = self.ui.LineEdit_TTS_VITS_ConfigPathLoad,
-            Section = 'Input Params',
-            Option = 'Config_Path_Load',
-            DefaultValue = '',
-            SetPlaceholderText = True,
-            PlaceholderText = TTS_VITS_ConfigPathLoad_Default
+            widget = self.ui.LineEdit_TTS_VITS_ConfigPathLoad,
+            section = 'Input params',
+            option = 'Config_Path_Load',
+            defaultValue = '',
+            setPlaceholderText = True,
+            placeholderText = TTS_VITS_ConfigPathLoad_Default
         )
         self.ui.LineEdit_TTS_VITS_ConfigPathLoad.textChanged.connect(
             lambda Path: (
@@ -5631,9 +5623,9 @@ class MainWindow(Window_MainWindow):
             )
         )
         self.ui.LineEdit_TTS_VITS_ConfigPathLoad.setFileDialog(
-            Mode = "SelectFile",
-            FileType = "json类型 (*.json)",
-            Directory = Path(CurrentDir).joinpath('模型训练结果', 'VITS').as_posix()
+            mode = "SelectFile",
+            fileType = "json类型 (*.json)",
+            directory = Path(currentDir).joinpath('模型训练结果', 'VITS').as_posix()
         )
         self.ui.Button_TTS_VITS_ConfigPathLoad_MoreActions.SetMenu(
             ActionEvents = {
@@ -5642,31 +5634,31 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_TTS_VITS_ConfigPathLoad,
-            TreeWidget = self.ui.TreeWidget_Catalogue_TTS_VITS,
-            RootItemText = QCA.translate('MainWindow', "输入参数"),
-            ChildItemText = QCA.translate('MainWindow', "配置加载路径")
+            widget = self.ui.Label_TTS_VITS_ConfigPathLoad,
+            treeWidget = self.ui.TreeWidget_Catalogue_TTS_VITS,
+            rootItemText = QCA.translate('MainWindow', "输入参数"),
+            childItemText = QCA.translate('MainWindow', "配置加载路径")
         )
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_TTS_VITS_ModelPathLoad,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "G模型加载路径\n用于推理的生成器（Generator）模型的路径。")
+        QFunc.setText(
+            widget = self.ui.Label_TTS_VITS_ModelPathLoad,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "G模型加载路径\n用于推理的生成器（Generator）模型的路径。")
             )
         )
         TTS_VITS_ModelPathLoad_Default = Path(ModelDir).joinpath('TTS', 'VITS', 'Downloaded', 'standard_G.pth').as_posix()
         ParamsManager_TTS_VITS.SetParam(
-            Widget = self.ui.LineEdit_TTS_VITS_ModelPathLoad,
-            Section = 'Input Params',
-            Option = 'Model_Path_Load',
-            DefaultValue = '',
-            SetPlaceholderText = True,
-            PlaceholderText = TTS_VITS_ModelPathLoad_Default
+            widget = self.ui.LineEdit_TTS_VITS_ModelPathLoad,
+            section = 'Input params',
+            option = 'Model_Path_Load',
+            defaultValue = '',
+            setPlaceholderText = True,
+            placeholderText = TTS_VITS_ModelPathLoad_Default
         )
         self.ui.LineEdit_TTS_VITS_ModelPathLoad.setFileDialog(
-            Mode = "SelectFile",
-            FileType = "pth类型 (*.pth)",
-            Directory = Path(CurrentDir).joinpath('模型训练结果', 'VITS').as_posix()
+            mode = "SelectFile",
+            fileType = "pth类型 (*.pth)",
+            directory = Path(currentDir).joinpath('模型训练结果', 'VITS').as_posix()
         )
         self.ui.Button_TTS_VITS_ModelPathLoad_MoreActions.SetMenu(
             ActionEvents = {
@@ -5675,52 +5667,52 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_TTS_VITS_ModelPathLoad,
-            TreeWidget = self.ui.TreeWidget_Catalogue_TTS_VITS,
-            RootItemText = QCA.translate('MainWindow', "输入参数"),
-            ChildItemText = QCA.translate('MainWindow', "G模型加载路径")
+            widget = self.ui.Label_TTS_VITS_ModelPathLoad,
+            treeWidget = self.ui.TreeWidget_Catalogue_TTS_VITS,
+            rootItemText = QCA.translate('MainWindow', "输入参数"),
+            childItemText = QCA.translate('MainWindow', "G模型加载路径")
         )
 
         self.ui.GroupBox_TTS_VITS_VITSParams.setTitle(QCA.translate('MainWindow', "语音合成参数"))
         Function_AddToTreeWidget(
-            Widget = self.ui.GroupBox_TTS_VITS_VITSParams,
-            TreeWidget = self.ui.TreeWidget_Catalogue_TTS_VITS,
-            RootItemText = QCA.translate('MainWindow', "语音合成参数")
+            widget = self.ui.GroupBox_TTS_VITS_VITSParams,
+            treeWidget = self.ui.TreeWidget_Catalogue_TTS_VITS,
+            rootItemText = QCA.translate('MainWindow', "语音合成参数")
         )
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_TTS_VITS_Text,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "输入文字\n输入的文字会作为说话人的语音内容。")
+        QFunc.setText(
+            widget = self.ui.Label_TTS_VITS_Text,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "输入文字\n输入的文字会作为说话人的语音内容。")
             )
         )
         ParamsManager_TTS_VITS.SetParam(
-            Widget = self.ui.PlainTextEdit_TTS_VITS_Text,
-            Section = 'VITS Params',
-            Option = 'Text',
-            DefaultValue = '',
-            SetPlaceholderText = True,
-            PlaceholderText = '请输入语句'
+            widget = self.ui.PlainTextEdit_TTS_VITS_Text,
+            section = 'VITS params',
+            option = 'text',
+            defaultValue = '',
+            setPlaceholderText = True,
+            placeholderText = '请输入语句'
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_TTS_VITS_Text,
-            TreeWidget = self.ui.TreeWidget_Catalogue_TTS_VITS,
-            RootItemText = QCA.translate('MainWindow', "语音合成参数"),
-            ChildItemText = QCA.translate('MainWindow', "输入文字")
+            widget = self.ui.Label_TTS_VITS_Text,
+            treeWidget = self.ui.TreeWidget_Catalogue_TTS_VITS,
+            rootItemText = QCA.translate('MainWindow', "语音合成参数"),
+            childItemText = QCA.translate('MainWindow', "输入文字")
         )
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_TTS_VITS_Language,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "所属语言\n文字所属的语言，若使用自动检测则保持'None'即可（有概率报错）。")
+        QFunc.setText(
+            widget = self.ui.Label_TTS_VITS_Language,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "所属语言\n文字所属的语言，若使用自动检测则保持'None'即可（有概率报错）。")
             )
         )
         self.ui.ComboBox_TTS_VITS_Language.addItems(['None', QCA.translate('MainWindow', '中'), QCA.translate('MainWindow', '英'), QCA.translate('MainWindow', '日')])
         ParamsManager_TTS_VITS.SetParam(
-            Widget = self.ui.ComboBox_TTS_VITS_Language,
-            Section = 'VITS Params',
-            Option = 'Language',
-            DefaultValue = None
+            widget = self.ui.ComboBox_TTS_VITS_Language,
+            section = 'VITS params',
+            option = 'Language',
+            defaultValue = None
         )
         self.ui.Button_TTS_VITS_Language_MoreActions.SetMenu(
             ActionEvents = {
@@ -5728,51 +5720,51 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_TTS_VITS_Language,
-            TreeWidget = self.ui.TreeWidget_Catalogue_TTS_VITS,
-            RootItemText = QCA.translate('MainWindow', "语音合成参数"),
-            ChildItemText = QCA.translate('MainWindow', "所属语言")
+            widget = self.ui.Label_TTS_VITS_Language,
+            treeWidget = self.ui.TreeWidget_Catalogue_TTS_VITS,
+            rootItemText = QCA.translate('MainWindow', "语音合成参数"),
+            childItemText = QCA.translate('MainWindow', "所属语言")
         )
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_TTS_VITS_Speaker,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "人物名字\n说话人物的名字。")
+        QFunc.setText(
+            widget = self.ui.Label_TTS_VITS_Speaker,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "人物名字\n说话人物的名字。")
             )
         )
         self.ui.ComboBox_TTS_VITS_Speaker.addItems(
             Get_Speakers(self.ui.LineEdit_TTS_VITS_ConfigPathLoad.text())
         )
         ParamsManager_TTS_VITS.SetParam(
-            Widget = self.ui.ComboBox_TTS_VITS_Speaker,
-            Section = 'VITS Params',
-            Option = 'Speaker',
-            DefaultValue = ''
+            widget = self.ui.ComboBox_TTS_VITS_Speaker,
+            section = 'VITS params',
+            option = 'Speaker',
+            defaultValue = ''
         )
         self.ui.ComboBox_TTS_VITS_Speaker.setCurrentIndex(0)
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_TTS_VITS_Speaker,
-            TreeWidget = self.ui.TreeWidget_Catalogue_TTS_VITS,
-            RootItemText = QCA.translate('MainWindow', "语音合成参数"),
-            ChildItemText = QCA.translate('MainWindow', "人物名字")
+            widget = self.ui.Label_TTS_VITS_Speaker,
+            treeWidget = self.ui.TreeWidget_Catalogue_TTS_VITS,
+            rootItemText = QCA.translate('MainWindow', "语音合成参数"),
+            childItemText = QCA.translate('MainWindow', "人物名字")
         )
 
         self.ui.ToolBox_TTS_VITS_VITSParams_AdvanceSettings.widget(0).setText(QCA.translate('MainWindow', "高级设置"))
         self.ui.ToolBox_TTS_VITS_VITSParams_AdvanceSettings.widget(0).collapse()
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_TTS_VITS_EmotionStrength,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "情感强度\n情感的变化程度。")
+        QFunc.setText(
+            widget = self.ui.Label_TTS_VITS_EmotionStrength,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "情感强度\n情感的变化程度。")
             )
         )
         self.ui.HorizontalSlider_TTS_VITS_EmotionStrength.setRange(0, 1)
         self.ui.HorizontalSlider_TTS_VITS_EmotionStrength.setSingleStep(0.01)
         ParamsManager_TTS_VITS.SetParam(
-            Widget = self.ui.HorizontalSlider_TTS_VITS_EmotionStrength,
-            Section = 'VITS Params',
-            Option = 'EmotionStrength',
-            DefaultValue = 0.67
+            widget = self.ui.HorizontalSlider_TTS_VITS_EmotionStrength,
+            section = 'VITS params',
+            option = 'EmotionStrength',
+            defaultValue = 0.67
         )
         self.ui.Button_TTS_VITS_EmotionStrength_MoreActions.SetMenu(
             ActionEvents = {
@@ -5780,25 +5772,25 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_TTS_VITS_EmotionStrength,
-            TreeWidget = self.ui.TreeWidget_Catalogue_TTS_VITS,
-            RootItemText = QCA.translate('MainWindow', "语音合成参数"),
-            ChildItemText = QCA.translate('MainWindow', "情感强度")
+            widget = self.ui.Label_TTS_VITS_EmotionStrength,
+            treeWidget = self.ui.TreeWidget_Catalogue_TTS_VITS,
+            rootItemText = QCA.translate('MainWindow', "语音合成参数"),
+            childItemText = QCA.translate('MainWindow', "情感强度")
         )
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_TTS_VITS_PhonemeDuration,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "音素音长\n音素的发音长度。")
+        QFunc.setText(
+            widget = self.ui.Label_TTS_VITS_PhonemeDuration,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "音素音长\n音素的发音长度。")
             )
         )
         self.ui.HorizontalSlider_TTS_VITS_PhonemeDuration.setRange(0, 1)
         self.ui.HorizontalSlider_TTS_VITS_PhonemeDuration.setSingleStep(0.1)
         ParamsManager_TTS_VITS.SetParam(
-            Widget = self.ui.HorizontalSlider_TTS_VITS_PhonemeDuration,
-            Section = 'VITS Params',
-            Option = 'PhonemeDuration',
-            DefaultValue = 0.8
+            widget = self.ui.HorizontalSlider_TTS_VITS_PhonemeDuration,
+            section = 'VITS params',
+            option = 'PhonemeDuration',
+            defaultValue = 0.8
         )
         self.ui.Button_TTS_VITS_PhonemeDuration_MoreActions.SetMenu(
             ActionEvents = {
@@ -5806,25 +5798,25 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_TTS_VITS_PhonemeDuration,
-            TreeWidget = self.ui.TreeWidget_Catalogue_TTS_VITS,
-            RootItemText = QCA.translate('MainWindow', "语音合成参数"),
-            ChildItemText = QCA.translate('MainWindow', "音素音长")
+            widget = self.ui.Label_TTS_VITS_PhonemeDuration,
+            treeWidget = self.ui.TreeWidget_Catalogue_TTS_VITS,
+            rootItemText = QCA.translate('MainWindow', "语音合成参数"),
+            childItemText = QCA.translate('MainWindow', "音素音长")
         )
 
-        QFunc.Function_SetText(
-            Widget = self.ui.Label_TTS_VITS_SpeechRate,
-            Text = QFunc.SetRichText(
-                Body = QCA.translate('MainWindow', "整体语速\n整体的说话速度。")
+        QFunc.setText(
+            widget = self.ui.Label_TTS_VITS_SpeechRate,
+            text = QFunc.setRichText(
+                QCA.translate('MainWindow', "整体语速\n整体的说话速度。")
             )
         )
         self.ui.HorizontalSlider_TTS_VITS_SpeechRate.setRange(0, 20)
         self.ui.HorizontalSlider_TTS_VITS_SpeechRate.setSingleStep(1)
         ParamsManager_TTS_VITS.SetParam(
-            Widget = self.ui.HorizontalSlider_TTS_VITS_SpeechRate,
-            Section = 'VITS Params',
-            Option = 'SpeechRate',
-            DefaultValue = 1.
+            widget = self.ui.HorizontalSlider_TTS_VITS_SpeechRate,
+            section = 'VITS params',
+            option = 'SpeechRate',
+            defaultValue = 1.
         )
         self.ui.Button_TTS_VITS_SpeechRate_MoreActions.SetMenu(
             ActionEvents = {
@@ -5832,13 +5824,13 @@ class MainWindow(Window_MainWindow):
             }
         )
         Function_AddToTreeWidget(
-            Widget = self.ui.Label_TTS_VITS_SpeechRate,
-            TreeWidget = self.ui.TreeWidget_Catalogue_TTS_VITS,
-            RootItemText = QCA.translate('MainWindow', "语音合成参数"),
-            ChildItemText = QCA.translate('MainWindow', "整体语速")
+            widget = self.ui.Label_TTS_VITS_SpeechRate,
+            treeWidget = self.ui.TreeWidget_Catalogue_TTS_VITS,
+            rootItemText = QCA.translate('MainWindow', "语音合成参数"),
+            childItemText = QCA.translate('MainWindow', "整体语速")
         )
 
-        TTS_VITS_AudioDirSave = Path(CurrentDir).joinpath('语音合成结果', 'VITS').as_posix()
+        TTS_VITS_AudioDirSave = Path(currentDir).joinpath('语音合成结果', 'VITS').as_posix()
         TTS_VITS_AudioPathSave = Path(TTS_VITS_AudioDirSave).joinpath("temp.wav").as_posix()
         os.makedirs(TTS_VITS_AudioDirSave) if not Path(TTS_VITS_AudioDirSave).exists() else None
 
@@ -5859,9 +5851,9 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_ImportSettings_TTS_VITS.setText(QCA.translate('MainWindow', "导入配置"))
         self.ui.Button_ImportSettings_TTS_VITS.clicked.connect(
             lambda: ParamsManager_TTS_VITS.ImportSettings(
-                QFunc.Function_GetFileDialog(
-                    Mode = "SelectFile",
-                    FileType = "ini类型 (*.ini)"
+                QFunc.getFileDialog(
+                    mode = "SelectFile",
+                    fileType = "ini类型 (*.ini)"
                 )
             )
         )
@@ -5869,31 +5861,31 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_ExportSettings_TTS_VITS.setText(QCA.translate('MainWindow', "导出配置"))
         self.ui.Button_ExportSettings_TTS_VITS.clicked.connect(
             lambda: ParamsManager_TTS_VITS.ExportSettings(
-                QFunc.Function_GetFileDialog(
-                    Mode = "SaveFile",
-                    FileType = "ini类型 (*.ini)"
+                QFunc.getFileDialog(
+                    mode = "SaveFile",
+                    fileType = "ini类型 (*.ini)"
                 )
             )
         )
 
         self.ui.Button_CheckOutput_TTS_VITS.setText(QCA.translate('MainWindow', "查看输出文件"))
         Function_SetURL(
-            Button = self.ui.Button_CheckOutput_TTS_VITS,
-            URL = TTS_VITS_AudioDirSave,
-            ButtonTooltip = "Click to open",
-            CreateIfNotExist = True
+            button = self.ui.Button_CheckOutput_TTS_VITS,
+            url = TTS_VITS_AudioDirSave,
+            buttonTooltip = "Click to open",
+            createIfNotExist = True
         )
 
         # VITS - Bottom
         self.ui.Button_TTS_VITS_Execute.setText(QCA.translate('MainWindow', "执行语音合成"))
         self.ui.Button_TTS_VITS_Terminate.setText(QCA.translate('MainWindow', "终止语音合成"))
         Function_SetMethodExecutor(self,
-            ExecuteButton = self.ui.Button_TTS_VITS_Execute,
-            TerminateButton = self.ui.Button_TTS_VITS_Terminate,
-            ProgressBar = self.ui.ProgressBar_TTS_VITS,
-            ConsoleWidget = self.ui.Frame_Console,
-            Method = Execute_Voice_Converting_VITS.Execute,
-            ParamsFrom = [
+            executeButton = self.ui.Button_TTS_VITS_Execute,
+            terminateButton = self.ui.Button_TTS_VITS_Terminate,
+            progressBar = self.ui.ProgressBar_TTS_VITS,
+            consoleWidget = self.ui.Frame_Console,
+            method = Execute_Voice_Converting_VITS.Execute,
+            paramsFrom = [
                 self.ui.LineEdit_TTS_VITS_ConfigPathLoad,
                 self.ui.LineEdit_TTS_VITS_ModelPathLoad,
                 self.ui.PlainTextEdit_TTS_VITS_Text,
@@ -5904,12 +5896,12 @@ class MainWindow(Window_MainWindow):
                 self.ui.HorizontalSlider_TTS_VITS_SpeechRate,
                 TTS_VITS_AudioPathSave
             ],
-            EmptyAllowed = [
+            emptyAllowed = [
                 self.ui.ComboBox_TTS_VITS_Language,
                 self.ui.ComboBox_TTS_VITS_Speaker
             ],
-            SuccessEvents = [
-                lambda: self.ShowMask(True, "正在加载播放器"),
+            successEvents = [
+                lambda: self.showMask(True, "正在加载播放器"),
                 lambda: self.showTTSResult(
                     TTS_VITS_AudioPathSave
                 ),
@@ -5930,8 +5922,8 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_Settings_Title_Client.setChecked(True)
         self.ui.Button_Settings_Title_Client.clicked.connect(
             lambda: Function_AnimateStackedWidget(
-                StackedWidget = self.ui.StackedWidget_Pages_Settings,
-                Target = 0
+                stackedWidget = self.ui.StackedWidget_Pages_Settings,
+                target = 0
             )
         )
 
@@ -5946,12 +5938,12 @@ class MainWindow(Window_MainWindow):
         }
         ComponentsSignals.Signal_SetTheme.connect(
             lambda Theme: self.ui.ComboBox_Setting_Theme.setCurrentText(
-                QCA.translate('MainWindow', QFunc.FindKey(ThemeDict, Theme))
+                QCA.translate('MainWindow', QFunc.findKey(ThemeDict, Theme))
             )
         )
         self.ui.ComboBox_Setting_Theme.currentIndexChanged.connect(
             lambda: (
-                Config.editConfig(
+                config.editConfig(
                     'Settings', 'Theme', ThemeDict.get(self.ui.ComboBox_Setting_Theme.currentText())
                 ),
                 ComponentsSignals.Signal_SetTheme.emit(
@@ -5969,12 +5961,12 @@ class MainWindow(Window_MainWindow):
         }
         ComponentsSignals.Signal_SetLanguage.connect(
             lambda Language: self.ui.ComboBox_Setting_Language.setCurrentText(
-                QCA.translate('MainWindow', QFunc.FindKey(LanguageDict, Language))
+                QCA.translate('MainWindow', QFunc.findKey(LanguageDict, Language))
             )
         )
         self.ui.ComboBox_Setting_Language.currentIndexChanged.connect(
             lambda: (
-                Config.editConfig(
+                config.editConfig(
                     'Settings', 'Language', LanguageDict.get(self.ui.ComboBox_Setting_Language.currentText())
                 ),
                 ComponentsSignals.Signal_SetLanguage.emit(
@@ -5990,27 +5982,27 @@ class MainWindow(Window_MainWindow):
             {
                 'Enabled': True,
                 'Disabled': False
-            }.get(Config.getValue('Settings', 'AutoUpdate', 'Enabled'))
+            }.get(config.getValue('Settings', 'AutoUpdate', 'Enabled'))
         )
         Function_ConfigureCheckBox(
-            CheckBox = self.ui.CheckBox_Setting_AutoUpdate,
-            CheckedText = "已启用",
-            CheckedEvents = [
-                lambda: Config.editConfig('Settings', 'AutoUpdate', 'Enabled'),
+            checkBox = self.ui.CheckBox_Setting_AutoUpdate,
+            checkedText = "已启用",
+            checkedEvents = [
+                lambda: config.editConfig('Settings', 'AutoUpdate', 'Enabled'),
             ],
-            UncheckedText = "未启用",
-            UncheckedEvents = [
-                lambda: Config.editConfig('Settings', 'AutoUpdate', 'Disabled')
+            uncheckedText = "未启用",
+            uncheckedEvents = [
+                lambda: config.editConfig('Settings', 'AutoUpdate', 'Disabled')
             ],
-            TakeEffect = True
+            takeEffect = True
         )
 
         self.ui.GroupBox_Settings_Client_Operation.setTitle(QCA.translate('MainWindow', "操作"))
 
         Function_SetMethodExecutor(self,
-            ExecuteButton = self.ui.Button_Setting_IntegrityChecker,
-            Method = Integrity_Checker.Execute,
-            Params = ()
+            executeButton = self.ui.Button_Setting_IntegrityChecker,
+            method = Integrity_Checker.Execute,
+            params = ()
         )
         FunctionSignals.Signal_TaskStatus.connect(
             lambda Task, Status: self.ui.Button_Setting_IntegrityChecker.setCheckable(
@@ -6026,8 +6018,8 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_Settings_Title_Tools.setChecked(False)
         self.ui.Button_Settings_Title_Tools.clicked.connect(
             lambda: Function_AnimateStackedWidget(
-                StackedWidget = self.ui.StackedWidget_Pages_Settings,
-                Target = 1
+                stackedWidget = self.ui.StackedWidget_Pages_Settings,
+                target = 1
             )
         )
 
@@ -6038,13 +6030,13 @@ class MainWindow(Window_MainWindow):
             {
                 'Enabled': True,
                 'Disabled': False
-            }.get(Config.getValue('Tools', 'AutoReset', 'Enabled'))
+            }.get(config.getValue('Tools', 'AutoReset', 'Enabled'))
         )
         Function_ConfigureCheckBox(
-            CheckBox = self.ui.CheckBox_Setting_AutoReset,
-            CheckedText = "已启用",
-            CheckedEvents = [
-                lambda: Config.editConfig('Tools', 'AutoReset', 'Enabled'),
+            checkBox = self.ui.CheckBox_Setting_AutoReset,
+            checkedText = "已启用",
+            checkedEvents = [
+                lambda: config.editConfig('Tools', 'AutoReset', 'Enabled'),
                 lambda: MainWindowSignals.Signal_MainWindowShown.connect(
                     lambda: (
                         ParamsManager_Process.ResetSettings(),
@@ -6059,11 +6051,11 @@ class MainWindow(Window_MainWindow):
                     )
                 )
             ],
-            UncheckedText = "未启用",
-            UncheckedEvents = [
-                lambda: Config.editConfig('Tools', 'AutoReset', 'Disabled'),
+            uncheckedText = "未启用",
+            uncheckedEvents = [
+                lambda: config.editConfig('Tools', 'AutoReset', 'Disabled'),
             ],
-            TakeEffect = True
+            takeEffect = True
         )
 
         self.ui.Label_Setting_Synchronizer.setText(QCA.translate('MainWindow', "自动关联前后工具的部分参数设置"))
@@ -6071,13 +6063,13 @@ class MainWindow(Window_MainWindow):
             {
                 'Enabled': True,
                 'Disabled': False
-            }.get(Config.getValue('Tools', 'Synchronizer', 'Enabled'))
+            }.get(config.getValue('Tools', 'Synchronizer', 'Enabled'))
         )
         Function_ConfigureCheckBox(
-            CheckBox = self.ui.CheckBox_Setting_Synchronizer,
-            CheckedText = "已启用",
-            CheckedEvents = [
-                lambda: Config.editConfig('Tools', 'Synchronizer', 'Enabled'),
+            checkBox = self.ui.CheckBox_Setting_Synchronizer,
+            checkedText = "已启用",
+            checkedEvents = [
+                lambda: config.editConfig('Tools', 'Synchronizer', 'Enabled'),
                 lambda: Function_ParamsSynchronizer(
                     LineEdit_Process_OutputDir,
                     {LineEdit_Process_OutputDir: self.ui.LineEdit_VPR_TDNN_AudioDirInput}
@@ -6103,21 +6095,21 @@ class MainWindow(Window_MainWindow):
                     {LineEdit_DAT_VITS_FileListPathTraining: self.ui.LineEdit_Train_VITS_FileListPathTraining, LineEdit_DAT_VITS_FileListPathValidation: self.ui.LineEdit_Train_VITS_FileListPathValidation}
                 )
             ],
-            UncheckedText = "未启用",
-            UncheckedEvents = [
-                lambda: Config.editConfig('Tools', 'Synchronizer', 'Disabled'),
+            uncheckedText = "未启用",
+            uncheckedEvents = [
+                lambda: config.editConfig('Tools', 'Synchronizer', 'Disabled'),
             ],
-            TakeEffect = True
+            takeEffect = True
         )
         Function_ConfigureCheckBox(
-            CheckBox = self.ui.CheckBox_Setting_Synchronizer,
-            UncheckedEvents = [
+            checkBox = self.ui.CheckBox_Setting_Synchronizer,
+            uncheckedEvents = [
                 lambda: MessageBoxBase.pop(self,
                     QMessageBox.Information, "Tip",
                     "该设置将于重启之后生效"
                 )
             ],
-            TakeEffect = False
+            takeEffect = False
         )
 
         self.ui.GroupBox_Settings_Tools_Path.setTitle(QCA.translate('MainWindow', "路径设置"))
@@ -6125,16 +6117,16 @@ class MainWindow(Window_MainWindow):
         self.ui.Label_Process_OutputRoot.setText(QCA.translate('MainWindow', "音频处理输出目录"))
         Process_OutputRoot_Default = Path(OutputDir).joinpath('音频处理结果').as_posix()
         ParamsManager_Process.SetParam(
-            Widget = self.ui.LineEdit_Process_OutputRoot,
-            Section = 'Output Params',
-            Option = 'Output_Root',
-            DefaultValue = Process_OutputRoot_Default,
-            SetPlaceholderText = True,
-            PlaceholderText = Process_OutputRoot_Default
+            widget = self.ui.LineEdit_Process_OutputRoot,
+            section = 'Output params',
+            option = 'Output_Root',
+            defaultValue = Process_OutputRoot_Default,
+            setPlaceholderText = True,
+            placeholderText = Process_OutputRoot_Default
         )
         self.ui.LineEdit_Process_OutputRoot.setFileDialog(
-            Mode = "SelectFolder",
-            Directory = QFunc.NormPath(Path(Process_OutputRoot_Default).parent)
+            mode = "SelectFolder",
+            directory = QFunc.normPath(Path(Process_OutputRoot_Default).parent)
         )
         self.ui.Button_Process_OutputRoot_MoreActions.SetMenu(
             ActionEvents = {
@@ -6143,18 +6135,18 @@ class MainWindow(Window_MainWindow):
         )
 
         self.ui.Label_VPR_TDNN_OutputRoot.setText(QCA.translate('MainWindow', "声纹识别结果输出目录"))
-        VPR_TDNN_AudioSpeakersDataRoot_Default = Path(CurrentDir).joinpath('语音识别结果', 'VPR').as_posix()
+        VPR_TDNN_AudioSpeakersDataRoot_Default = Path(currentDir).joinpath('语音识别结果', 'VPR').as_posix()
         ParamsManager_VPR_TDNN.SetParam(
-            Widget = self.ui.LineEdit_VPR_TDNN_OutputRoot,
-            Section = 'Output Params',
-            Option = 'Audio_Root_Output',
-            DefaultValue = VPR_TDNN_AudioSpeakersDataRoot_Default,
-            SetPlaceholderText = True,
-            PlaceholderText = VPR_TDNN_AudioSpeakersDataRoot_Default
+            widget = self.ui.LineEdit_VPR_TDNN_OutputRoot,
+            section = 'Output params',
+            option = 'Audio_Root_Output',
+            defaultValue = VPR_TDNN_AudioSpeakersDataRoot_Default,
+            setPlaceholderText = True,
+            placeholderText = VPR_TDNN_AudioSpeakersDataRoot_Default
         )
         self.ui.LineEdit_VPR_TDNN_OutputRoot.setFileDialog(
-            Mode = "SelectFolder",
-            Directory = QFunc.NormPath(Path(VPR_TDNN_AudioSpeakersDataRoot_Default).parent)
+            mode = "SelectFolder",
+            directory = QFunc.normPath(Path(VPR_TDNN_AudioSpeakersDataRoot_Default).parent)
         )
         self.ui.Button_VPR_TDNN_OutputRoot_MoreActions.SetMenu(
             ActionEvents = {
@@ -6166,16 +6158,16 @@ class MainWindow(Window_MainWindow):
         self.ui.Label_ASR_Whisper_OutputRoot.setText(QCA.translate('MainWindow', "Whisper转录输出目录"))
         ASR_Whisper_OutputRoot_Default = Path(OutputDir).joinpath('语音转录结果', 'Whisper').as_posix()
         ParamsManager_ASR_Whisper.SetParam(
-            Widget = self.ui.LineEdit_ASR_Whisper_OutputRoot,
-            Section = 'Output Params',
-            Option = 'Output_Root',
-            DefaultValue = ASR_Whisper_OutputRoot_Default,
-            SetPlaceholderText = True,
-            PlaceholderText = ASR_Whisper_OutputRoot_Default
+            widget = self.ui.LineEdit_ASR_Whisper_OutputRoot,
+            section = 'Output params',
+            option = 'Output_Root',
+            defaultValue = ASR_Whisper_OutputRoot_Default,
+            setPlaceholderText = True,
+            placeholderText = ASR_Whisper_OutputRoot_Default
         )
         self.ui.LineEdit_ASR_Whisper_OutputRoot.setFileDialog(
-            Mode = "SelectFolder",
-            Directory = QFunc.NormPath(Path(ASR_Whisper_OutputRoot_Default).parent)
+            mode = "SelectFolder",
+            directory = QFunc.normPath(Path(ASR_Whisper_OutputRoot_Default).parent)
         )
         self.ui.Button_ASR_Whisper_OutputRoot_MoreActions.SetMenu(
             ActionEvents = {
@@ -6187,16 +6179,16 @@ class MainWindow(Window_MainWindow):
         self.ui.Label_DAT_GPTSoVITS_OutputRoot.setText( QCA.translate('MainWindow', "GPTSoVITS数据集输出目录"))
         DAT_GPTSoVITS_OutputRoot_Default = Path(OutputDir).joinpath('数据集制作结果', 'GPT-SoVITS').as_posix()
         ParamsManager_DAT_GPTSoVITS.SetParam(
-            Widget = self.ui.LineEdit_DAT_GPTSoVITS_OutputRoot,
-            Section = 'Output Params',
-            Option = 'Output_Root',
-            DefaultValue = DAT_GPTSoVITS_OutputRoot_Default,
-            SetPlaceholderText = True,
-            PlaceholderText = DAT_GPTSoVITS_OutputRoot_Default
+            widget = self.ui.LineEdit_DAT_GPTSoVITS_OutputRoot,
+            section = 'Output params',
+            option = 'Output_Root',
+            defaultValue = DAT_GPTSoVITS_OutputRoot_Default,
+            setPlaceholderText = True,
+            placeholderText = DAT_GPTSoVITS_OutputRoot_Default
         )
         self.ui.LineEdit_DAT_GPTSoVITS_OutputRoot.setFileDialog(
-            Mode = "SelectFolder",
-            Directory = QFunc.NormPath(Path(DAT_GPTSoVITS_OutputRoot_Default).parent)
+            mode = "SelectFolder",
+            directory = QFunc.normPath(Path(DAT_GPTSoVITS_OutputRoot_Default).parent)
         )
         self.ui.Button_DAT_GPTSoVITS_OutputRoot_MoreActions.SetMenu(
             ActionEvents = {
@@ -6208,16 +6200,16 @@ class MainWindow(Window_MainWindow):
         self.ui.Label_DAT_VITS_OutputRoot.setText(QCA.translate('MainWindow', "VITS数据集输出目录"))
         DAT_VITS_OutputRoot_Default = Path(OutputDir).joinpath('数据集制作结果', 'VITS').as_posix()
         ParamsManager_DAT_VITS.SetParam(
-            Widget = self.ui.LineEdit_DAT_VITS_OutputRoot,
-            Section = 'Output Params',
-            Option = 'Output_Root',
-            DefaultValue = DAT_VITS_OutputRoot_Default,
-            SetPlaceholderText = True,
-            PlaceholderText = DAT_VITS_OutputRoot_Default
+            widget = self.ui.LineEdit_DAT_VITS_OutputRoot,
+            section = 'Output params',
+            option = 'Output_Root',
+            defaultValue = DAT_VITS_OutputRoot_Default,
+            setPlaceholderText = True,
+            placeholderText = DAT_VITS_OutputRoot_Default
         )
         self.ui.LineEdit_DAT_VITS_OutputRoot.setFileDialog(
-            Mode = "SelectFolder",
-            Directory = QFunc.NormPath(Path(DAT_VITS_OutputRoot_Default).parent)
+            mode = "SelectFolder",
+            directory = QFunc.normPath(Path(DAT_VITS_OutputRoot_Default).parent)
         )
         self.ui.Button_DAT_VITS_OutputRoot_MoreActions.SetMenu(
             ActionEvents = {
@@ -6229,16 +6221,16 @@ class MainWindow(Window_MainWindow):
         self.ui.Label_Train_GPTSoVITS_OutputRoot.setText(QCA.translate('MainWindow', "GPTSoVITS训练输出目录"))
         Train_GPTSoVITS_OutputRoot_Default = Path(OutputDir).joinpath('模型训练结果', 'GPT-SoVITS').as_posix()
         ParamsManager_Train_GPTSoVITS.SetParam(
-            Widget = self.ui.LineEdit_Train_GPTSoVITS_OutputRoot,
-            Section = 'Output Params',
-            Option = 'Output_Root',
-            DefaultValue = Train_GPTSoVITS_OutputRoot_Default,
-            SetPlaceholderText = True,
-            PlaceholderText = Train_GPTSoVITS_OutputRoot_Default
+            widget = self.ui.LineEdit_Train_GPTSoVITS_OutputRoot,
+            section = 'Output params',
+            option = 'Output_Root',
+            defaultValue = Train_GPTSoVITS_OutputRoot_Default,
+            setPlaceholderText = True,
+            placeholderText = Train_GPTSoVITS_OutputRoot_Default
         )
         self.ui.LineEdit_Train_GPTSoVITS_OutputRoot.setFileDialog(
-            Mode = "SelectFolder",
-            Directory = QFunc.NormPath(Path(Train_GPTSoVITS_OutputRoot_Default).parent)
+            mode = "SelectFolder",
+            directory = QFunc.normPath(Path(Train_GPTSoVITS_OutputRoot_Default).parent)
         )
         self.ui.Button_Train_GPTSoVITS_OutputRoot_MoreActions.SetMenu(
             ActionEvents = {
@@ -6250,16 +6242,16 @@ class MainWindow(Window_MainWindow):
         self.ui.Label_Train_VITS_OutputRoot.setText(QCA.translate('MainWindow', "VITS训练输出目录"))
         Train_VITS_OutputRoot_Default = Path(OutputDir).joinpath('模型训练结果', 'VITS').as_posix()
         ParamsManager_Train_VITS.SetParam(
-            Widget = self.ui.LineEdit_Train_VITS_OutputRoot,
-            Section = 'Output Params',
-            Option = 'Output_Root',
-            DefaultValue = Train_VITS_OutputRoot_Default,
-            SetPlaceholderText = True,
-            PlaceholderText = Train_VITS_OutputRoot_Default
+            widget = self.ui.LineEdit_Train_VITS_OutputRoot,
+            section = 'Output params',
+            option = 'Output_Root',
+            defaultValue = Train_VITS_OutputRoot_Default,
+            setPlaceholderText = True,
+            placeholderText = Train_VITS_OutputRoot_Default
         )
         self.ui.LineEdit_Train_VITS_OutputRoot.setFileDialog(
-            Mode = "SelectFolder",
-            Directory = QFunc.NormPath(Path(Train_VITS_OutputRoot_Default).parent)
+            mode = "SelectFolder",
+            directory = QFunc.normPath(Path(Train_VITS_OutputRoot_Default).parent)
         )
         self.ui.Button_Train_VITS_OutputRoot_MoreActions.SetMenu(
             ActionEvents = {
@@ -6274,14 +6266,15 @@ class MainWindow(Window_MainWindow):
 
         self.ui.Button_Info_Title.setText(QCA.translate('MainWindow', "用户须知"))
 
-        QFunc.Function_SetText(
-            Widget = self.ui.TextBrowser_Text_Info,
-            Text = QFunc.SetRichText(
-                Title = QCA.translate('MainWindow', "声明"),
-                TitleAlign = "left",
-                TitleSize = 24,
-                TitleWeight = 840,
-                Body = QCA.translate('MainWindow',
+        QFunc.setText(
+            widget = self.ui.TextBrowser_Text_Info,
+            text = QFunc.richTextManager().addTitle(
+                text = QCA.translate('MainWindow', "声明"),
+                align = "left",
+                size = 24,
+                weight = 840
+            ).addBody(
+                text = QCA.translate('MainWindow',
                     """
                     请自行解决数据集的授权问题。对于使用未经授权的数据集进行训练所导致的任何问题，您将承担全部责任，并且该仓库及其维护者不承担任何后果！
 
@@ -6294,11 +6287,11 @@ class MainWindow(Window_MainWindow):
                     5. 如果您将此项目用于任何其他计划，请提前与本仓库的作者联系并告知。
                     """
                 ),
-                BodyAlign = "left",
-                BodySize = 12,
-                BodyWeight = 420,
-                BodyLineHeight = 27
-            )
+                align = "left",
+                size = 12,
+                weight = 420,
+                lineHeight = 27
+            ).richText()
         )
 
         #############################################################
@@ -6307,7 +6300,7 @@ class MainWindow(Window_MainWindow):
 
         self.ui.Button_Console_Title.setText(QCA.translate('MainWindow', "终端"))
 
-        MonitorLog = QTasks.MonitorLogFile(LogPath)
+        MonitorLog = QTasks.MonitorLogFile(logPath)
         MonitorLog.start()
         MonitorLog.Signal_ConsoleInfo.connect(
             lambda Info: (
@@ -6319,7 +6312,7 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_Console_Copy.clicked.connect(
             lambda: (
                 QApplication.clipboard().setText(self.ui.PlainTextEdit_Console.toPlainText()),
-                MessageBoxBase.pop(self, WindowTitle = "Tip", Text = "已复制输出日志到剪切板")
+                MessageBoxBase.pop(self, windowTitle = "Tip", text = "已复制输出日志到剪切板")
             )
         )
 
@@ -6335,10 +6328,10 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_Toggle_Console.setToolTip(QCA.translate('MainWindow', "点击以展开/折叠终端"))
         self.ui.Button_Toggle_Console.clicked.connect(
             lambda: Function_AnimateFrame(
-                Frame = self.ui.Frame_Console,
-                MinHeight = 0,
-                MaxHeight = 210,
-                SupportSplitter = True
+                frame = self.ui.Frame_Console,
+                minHeight = 0,
+                maxHeight = 210,
+                supportSplitter = True
             )
         )
         self.ui.Frame_Console.setFixedHeight(0)
@@ -6367,13 +6360,13 @@ class MainWindow(Window_MainWindow):
         )
 
         # Display Version
-        self.ui.Label_Version.setText(CurrentVersion)
+        self.ui.Label_Version.setText(currentVersion)
 
         # Set Theme
-        ComponentsSignals.Signal_SetTheme.emit(Config.getValue('Settings', 'Theme', Theme.Auto))
+        ComponentsSignals.Signal_SetTheme.emit(config.getValue('Settings', 'Theme', Theme.Auto))
 
         # Set Language
-        ComponentsSignals.Signal_SetLanguage.emit(Config.getValue('Settings', 'Language', Language.Auto))
+        ComponentsSignals.Signal_SetLanguage.emit(config.getValue('Settings', 'Language', Language.Auto))
 
         # Show MainWindow (and emit signal)
         self.show()
@@ -6385,13 +6378,13 @@ if __name__ == "__main__":
     App = QApplication(sys.argv)
 
     # Create&Show SplashScreen
-    SC = QSplashScreen(QPixmap(QFunc.NormPath(Path(ResourceDir).joinpath('assets/images/others/SplashScreen.png'))))
+    SC = QSplashScreen(QPixmap(QFunc.normPath(Path(resourceDir).joinpath('assets/images/others/SplashScreen.png'))))
     #SC.showMessage('Loading...', alignment = Qt.AlignmentFlag.AlignCenter)
     SC.show()
 
     # Init&Show MainWindow
     MW = MainWindow()
-    MW.Main()
+    MW.main()
 
     # Close SplashScreen
     SC.finish(MW) #SC.close()

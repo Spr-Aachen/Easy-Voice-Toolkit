@@ -30,8 +30,8 @@ class Table_ViewModels(TableBase):
         self.ColumnCount = len(Headers)
         self.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
 
-    def addRow(self, Param: tuple):
-        ModelName, ModelType, ModelSize, ModelDate, DownloadParam = Param
+    def addRow(self, param: tuple):
+        ModelName, ModelType, ModelSize, ModelDate, DownloadParam = param
 
         RowHeight = 36
         def SetColumnLayout(ColumnLayout):
@@ -39,57 +39,57 @@ class Table_ViewModels(TableBase):
             ColumnLayout.setSpacing(0)
 
         Label_ModelName = LabelBase()
-        QFunc.Function_SetText(Label_ModelName, ModelName)
+        QFunc.setText(Label_ModelName, ModelName)
         ColumnLayout_ModelName = QHBoxLayout()
         SetColumnLayout(ColumnLayout_ModelName)
         ColumnLayout_ModelName.addWidget(Label_ModelName)
 
         Label_ModelType = LabelBase()
-        QFunc.Function_SetText(Label_ModelType, ModelType)
+        QFunc.setText(Label_ModelType, ModelType)
         ColumnLayout_ModelType = QHBoxLayout()
         SetColumnLayout(ColumnLayout_ModelType)
         ColumnLayout_ModelType.addWidget(Label_ModelType)
 
         Label_ModelSize = LabelBase()
-        QFunc.Function_SetText(Label_ModelSize, ModelSize)
+        QFunc.setText(Label_ModelSize, ModelSize)
         ColumnLayout_ModelSize = QHBoxLayout()
         SetColumnLayout(ColumnLayout_ModelSize)
         ColumnLayout_ModelSize.addWidget(Label_ModelSize)
 
         Label_ModelDate = LabelBase()
-        QFunc.Function_SetText(Label_ModelDate, ModelDate)
+        QFunc.setText(Label_ModelDate, ModelDate)
         ColumnLayout_ModelDate = QHBoxLayout()
         SetColumnLayout(ColumnLayout_ModelDate)
         ColumnLayout_ModelDate.addWidget(Label_ModelDate)
 
-        StackedWidget = QStackedWidget()
-        StackedWidget.setContentsMargins(0, 0, 0, 0)
+        stackedWidget = QStackedWidget()
+        stackedWidget.setContentsMargins(0, 0, 0, 0)
         OpenButton = ButtonBase()
         OpenButton.setBorderless(True)
         OpenButton.setTransparent(True)
         OpenButton.setIcon(IconBase.OpenedFolder)
-        OpenButton.clicked.connect(lambda: QFunc.Function_OpenURL(DownloadParam if isinstance(DownloadParam, str) else DownloadParam[1]))
+        OpenButton.clicked.connect(lambda: QFunc.openURL(DownloadParam if isinstance(DownloadParam, str) else DownloadParam[1]))
         DownloadButton = ButtonBase()
         DownloadButton.setBorderless(True)
         DownloadButton.setTransparent(True)
         DownloadButton.setIcon(IconBase.Download)
         DownloadButton.clicked.connect(lambda: self.Download.emit(DownloadParam) if isinstance(DownloadParam, tuple) else None)
-        DownloadButton.clicked.connect(lambda: StackedWidget.setCurrentWidget(OpenButton))
-        StackedWidget.addWidget(OpenButton)
-        StackedWidget.addWidget(DownloadButton)
-        StackedWidget.setCurrentWidget(OpenButton) if isinstance(DownloadParam, str) else StackedWidget.setCurrentWidget(DownloadButton)
+        DownloadButton.clicked.connect(lambda: stackedWidget.setCurrentWidget(OpenButton))
+        stackedWidget.addWidget(OpenButton)
+        stackedWidget.addWidget(DownloadButton)
+        stackedWidget.setCurrentWidget(OpenButton) if isinstance(DownloadParam, str) else stackedWidget.setCurrentWidget(DownloadButton)
         CopyButton = ButtonBase()
         CopyButton.setBorderless(True)
         CopyButton.setTransparent(True)
         CopyButton.setIcon(IconBase.Clipboard)
         CopyButton.clicked.connect(lambda: self.Clipboard.setText(DownloadParam[0]) if isinstance(DownloadParam, tuple) else None)
-        CopyButton.clicked.connect(lambda: MessageBoxBase.pop(WindowTitle = "Tip", Text = "已复制链接到剪切板"))
-        QFunc.Function_SetRetainSizeWhenHidden(CopyButton)
-        CopyButton.hide() if StackedWidget.currentWidget() == OpenButton else None
-        StackedWidget.currentChanged.connect(lambda: CopyButton.hide() if StackedWidget.currentWidget() == OpenButton else None)
+        CopyButton.clicked.connect(lambda: MessageBoxBase.pop(windowTitle = "Tip", text = "已复制链接到剪切板"))
+        QFunc.setRetainSizeWhenHidden(CopyButton)
+        CopyButton.hide() if stackedWidget.currentWidget() == OpenButton else None
+        stackedWidget.currentChanged.connect(lambda: CopyButton.hide() if stackedWidget.currentWidget() == OpenButton else None)
         ColumnLayout_Management = QHBoxLayout()
         SetColumnLayout(ColumnLayout_Management)
-        ColumnLayout_Management.addWidget(StackedWidget)
+        ColumnLayout_Management.addWidget(stackedWidget)
         ColumnLayout_Management.addWidget(CopyButton)
 
         super().addRow(
@@ -99,13 +99,13 @@ class Table_ViewModels(TableBase):
             RowHeight
         )
 
-    def setValue(self, Params: list = [['name', 'type', 'size', 'date', 'url'], ]):
+    def setValue(self, params: list = [['name', 'type', 'size', 'date', 'url'], ]):
         self.clearRows()
         super().setColumnCount(self.columnCount())
         super().setHorizontalHeaderLabels(self.HorizontalHeaderLabels)
-        for Param in Params:
+        for param in params:
             QApplication.instance().processEvents()
-            self.addRow(Param)
+            self.addRow(param)
 
 
 class Table_EditAudioSpeaker(TableBase):
@@ -113,7 +113,7 @@ class Table_EditAudioSpeaker(TableBase):
     '''
     ValueChanged = Signal(dict)
 
-    FileType = None
+    fileType = None
 
     def __init__(self, parent: QWidget = None):
         super().__init__(parent)
@@ -137,7 +137,7 @@ class Table_EditAudioSpeaker(TableBase):
         '''
         )
 
-    def addRow(self, Param: Optional[tuple] = None):
+    def addRow(self, param: Optional[tuple] = None):
         RowHeight = 30
         def SetColumnLayout(ColumnLayout):
             ColumnLayout.setContentsMargins(0, 0, 0, 0)
@@ -146,7 +146,7 @@ class Table_EditAudioSpeaker(TableBase):
         LineEdit0 = LineEditBase()
         LineEdit0.setBorderless(True)
         LineEdit0.setTransparent(True)
-        QFunc.Function_SetText(LineEdit0, Param[0] if Param else '', SetPlaceholderText = True)
+        QFunc.setText(LineEdit0, param[0] if param else '', setPlaceholderText = True)
         LineEdit0.textChanged.connect(
             lambda: self.ValueChanged.emit(self.getValue())
         )
@@ -157,8 +157,8 @@ class Table_EditAudioSpeaker(TableBase):
         LineEdit1 = LineEditBase()
         LineEdit1.setBorderless(True)
         LineEdit1.setTransparent(True)
-        LineEdit1.setFileDialog("SelectFile", self.FileType)
-        QFunc.Function_SetText(LineEdit1, Param[1] if Param else '', SetPlaceholderText = True)
+        LineEdit1.setFileDialog("SelectFile", self.fileType)
+        QFunc.setText(LineEdit1, param[1] if param else '', setPlaceholderText = True)
         LineEdit1.textChanged.connect(
             lambda: self.ValueChanged.emit(self.getValue())
         )
@@ -190,30 +190,30 @@ class Table_EditAudioSpeaker(TableBase):
             RowHeight
         )
 
-    def setValue(self, Params: dict = {'%Speaker%': '%Path%'}):
+    def setValue(self, params: dict = {'%Speaker%': '%Path%'}):
         self.clearRows()
         super().setColumnCount(self.columnCount())
         super().setHorizontalHeaderLabels(self.HorizontalHeaderLabels)
-        ParamDict = QFunc.ToIterable(Params if Params is None or len(Params) != 0 else {'': ''})
+        ParamDict = QFunc.toIterable(params if params is None or len(params) != 0 else {'': ''})
         for Key, Value in ParamDict.items():
             QApplication.instance().processEvents()
-            Param = (Key, Value)
+            param = (Key, Value)
             #Index = next((i for i, key in enumerate(ParamDict) if key == Key), None)
-            self.addRow(Param)
+            self.addRow(param)
 
-    def setFileDialog(self, FileType: Optional[str] = None):
+    def setFileDialog(self, fileType: Optional[str] = None):
         '''
         for RowCount in range(self.rowCount()):
-            self.cellWidget(RowCount, 1).findChild(LineEditBase).setFileDialog("SelectFile", FileType)
+            self.cellWidget(RowCount, 1).findChild(LineEditBase).setFileDialog("SelectFile", fileType)
         '''
-        self.FileType = FileType
+        self.fileType = fileType
 
     def getValue(self):
         ValueDict = {}
         for RowCount in range(self.rowCount()):
             try:
-                Key = QFunc.Function_GetText(self.cellWidget(RowCount, 0).findChild(QLineEdit))
-                Value = QFunc.Function_GetText(self.cellWidget(RowCount, 1).findChild(QLineEdit))
+                Key = QFunc.getText(self.cellWidget(RowCount, 0).findChild(QLineEdit))
+                Value = QFunc.getText(self.cellWidget(RowCount, 1).findChild(QLineEdit))
                 ValueDict[Key] = Value
             except:
                 pass
@@ -241,14 +241,14 @@ class Table_VPRResult(TableBase):
         '''
         )
 
-    def addRow(self, Param: tuple, ComboItems: list):
+    def addRow(self, param: tuple, ComboItems: list):
         RowHeight = 30
         def SetColumnLayout(ColumnLayout):
             ColumnLayout.setContentsMargins(0, 0, 0, 0)
             ColumnLayout.setSpacing(0)
 
         Label0 = LabelBase()
-        QFunc.Function_SetText(Label0, Param[0])
+        QFunc.setText(Label0, param[0])
         Column0Layout = QHBoxLayout()
         SetColumnLayout(Column0Layout)
         Column0Layout.addWidget(Label0)
@@ -257,13 +257,13 @@ class Table_VPRResult(TableBase):
         ComboBox.setBorderless(True)
         ComboBox.setTransparent(True)
         ComboBox.addItems(ComboItems)
-        ComboBox.setCurrentText(Param[1])
+        ComboBox.setCurrentText(param[1])
         Column1Layout = QHBoxLayout()
         SetColumnLayout(Column1Layout)
         Column1Layout.addWidget(ComboBox)
 
         Label2 = LabelBase()
-        QFunc.Function_SetText(Label2, Param[2])
+        QFunc.setText(Label2, param[2])
         Column2Layout = QHBoxLayout()
         SetColumnLayout(Column2Layout)
         Column2Layout.addWidget(Label2)
@@ -271,7 +271,7 @@ class Table_VPRResult(TableBase):
         PlayerWidget = MediaPlayerBase()
         PlayerWidget.setBorderless(True)
         PlayerWidget.setTransparent(True)
-        PlayerWidget.SetMediaPlayer(Param[0])
+        PlayerWidget.SetMediaPlayer(param[0])
         PlayerWidget.layout().setContentsMargins(6, 6, 6, 6)
         PlayerWidget.Slider.hide()
         Column3Layout = QHBoxLayout()
@@ -306,24 +306,24 @@ class Table_VPRResult(TableBase):
             RowHeight
         )
 
-    def setValue(self, Params: list = [['%Path%', '%Namex%', '%Sim%'], ], ComboItems: Optional[list] = ['%Name1%', ]):
+    def setValue(self, params: list = [['%Path%', '%Namex%', '%Sim%'], ], ComboItems: Optional[list] = ['%Name1%', ]):
         self.clearRows()
         super().setColumnCount(self.columnCount())
         super().setHorizontalHeaderLabels(self.HorizontalHeaderLabels)
         if ComboItems is None:
             ComboItems = []
-            for Param in Params:
-                ComboItem = Param[1]
+            for param in params:
+                ComboItem = param[1]
                 ComboItems.append(ComboItem) if ComboItem not in ComboItems else None
-        for Param in Params:
+        for param in params:
             QApplication.instance().processEvents()
-            self.addRow(Param, ComboItems + [''])
+            self.addRow(param, ComboItems + [''])
 
     def getValue(self):
         ValueDict = {}
         for RowCount in range(self.rowCount()):
             try:
-                Key = QFunc.Function_GetText(self.cellWidget(RowCount, 0).findChild(LabelBase))
+                Key = QFunc.getText(self.cellWidget(RowCount, 0).findChild(LabelBase))
                 Value = self.cellWidget(RowCount, 1).findChild(ComboBoxBase).currentText()
                 ValueDict[Key] = Value
             except:
@@ -352,14 +352,14 @@ class Table_ASRResult(TableBase):
         '''
         )
 
-    def addRow(self, Param: tuple):
+    def addRow(self, param: tuple):
         RowHeight = 30
         def SetColumnLayout(ColumnLayout):
             ColumnLayout.setContentsMargins(0, 0, 0, 0)
             ColumnLayout.setSpacing(0)
 
         Label0 = LabelBase()
-        QFunc.Function_SetText(Label0, Param[0])
+        QFunc.setText(Label0, param[0])
         Column0Layout = QHBoxLayout()
         SetColumnLayout(Column0Layout)
         Column0Layout.addWidget(Label0)
@@ -367,7 +367,7 @@ class Table_ASRResult(TableBase):
         LineEdit = LineEditBase()
         LineEdit.setBorderless(True)
         LineEdit.setTransparent(True)
-        QFunc.Function_SetText(LineEdit, Param[1], SetPlaceholderText = True)
+        QFunc.setText(LineEdit, param[1], setPlaceholderText = True)
         Column1Layout = QHBoxLayout()
         SetColumnLayout(Column1Layout)
         Column1Layout.addWidget(LineEdit)
@@ -375,7 +375,7 @@ class Table_ASRResult(TableBase):
         PlayerWidget = MediaPlayerBase()
         PlayerWidget.setBorderless(True)
         PlayerWidget.setTransparent(True)
-        PlayerWidget.SetMediaPlayer(Param[0])
+        PlayerWidget.SetMediaPlayer(param[0])
         PlayerWidget.layout().setContentsMargins(6, 6, 6, 6)
         PlayerWidget.Slider.hide()
         Column2Layout = QHBoxLayout()
@@ -389,22 +389,22 @@ class Table_ASRResult(TableBase):
             RowHeight
         )
 
-    def setValue(self, Params: dict = {'%Path%': '%Transcription%'}):
+    def setValue(self, params: dict = {'%Path%': '%Transcription%'}):
         self.clearRows()
         super().setColumnCount(self.columnCount())
         super().setHorizontalHeaderLabels(self.HorizontalHeaderLabels)
-        ParamDict = QFunc.ToIterable(Params)
+        ParamDict = QFunc.toIterable(params)
         for Key, Value in ParamDict.items():
             QApplication.instance().processEvents()
-            Param = (Key, Value)
-            self.addRow(Param)
+            param = (Key, Value)
+            self.addRow(param)
 
     def getValue(self):
         ValueDict = {}
         for RowCount in range(self.rowCount()):
             try:
-                Key = QFunc.Function_GetText(self.cellWidget(RowCount, 0).findChild(LabelBase))
-                Value = QFunc.Function_GetText(self.cellWidget(RowCount, 1).findChild(QLineEdit))
+                Key = QFunc.getText(self.cellWidget(RowCount, 0).findChild(LabelBase))
+                Value = QFunc.getText(self.cellWidget(RowCount, 1).findChild(QLineEdit))
                 ValueDict[Key] = Value
             except:
                 pass
@@ -432,7 +432,7 @@ class Table_DATResult(TableBase):
         '''
         )
 
-    def addRow(self, Param: tuple):
+    def addRow(self, param: tuple):
         RowHeight = 30
         def SetColumnLayout(ColumnLayout):
             ColumnLayout.setContentsMargins(0, 0, 0, 0)
@@ -441,7 +441,7 @@ class Table_DATResult(TableBase):
         LineEdit = LineEditBase()
         LineEdit.setBorderless(True)
         LineEdit.setTransparent(True)
-        QFunc.Function_SetText(LineEdit, Param[1], SetPlaceholderText = True)
+        QFunc.setText(LineEdit, param[1], setPlaceholderText = True)
         Column0Layout = QHBoxLayout()
         SetColumnLayout(Column0Layout)
         Column0Layout.addWidget(LineEdit)
@@ -449,7 +449,7 @@ class Table_DATResult(TableBase):
         PlayerWidget = MediaPlayerBase()
         PlayerWidget.setBorderless(True)
         PlayerWidget.setTransparent(True)
-        PlayerWidget.SetMediaPlayer(Param[0])
+        PlayerWidget.SetMediaPlayer(param[0])
         PlayerWidget.layout().setContentsMargins(6, 6, 6, 6)
         PlayerWidget.Slider.hide()
         Column1Layout = QHBoxLayout()
@@ -463,21 +463,21 @@ class Table_DATResult(TableBase):
             RowHeight
         )
 
-    def setValue(self, Params: dict = {'%Path%': '%Data%'}):
+    def setValue(self, params: dict = {'%Path%': '%Data%'}):
         self.clearRows()
         super().setColumnCount(self.columnCount())
         super().setHorizontalHeaderLabels(self.HorizontalHeaderLabels)
-        ParamDict = QFunc.ToIterable(Params)
+        ParamDict = QFunc.toIterable(params)
         for Key, Value in ParamDict.items():
             QApplication.instance().processEvents()
-            Param = (Key, Value)
-            self.addRow(Param)
+            param = (Key, Value)
+            self.addRow(param)
 
     def getValue(self):
         ValueList = []
         for RowCount in range(self.rowCount()):
             try:
-                Value = QFunc.Function_GetText(self.cellWidget(RowCount, 0).findChild(QLineEdit))
+                Value = QFunc.getText(self.cellWidget(RowCount, 0).findChild(QLineEdit))
                 ValueList.append(Value)
             except:
                 pass

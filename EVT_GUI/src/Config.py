@@ -5,26 +5,26 @@ from QEasyWidgets import QFunctions as QFunc
 ##############################################################################################################################
 
 # Set current version
-CurrentVersion = "v1.2.1"
+currentVersion = "v1.2.1"
 
 # Set info for update url
-RepoOwner = 'Spr-Aachen'
-RepoName = 'Easy-Voice-Toolkit'
-FileName = 'EVT_windows_x64'
-FileFormat = 'zip'
+repoOwner = 'Spr-Aachen'
+repoName = 'Easy-Voice-Toolkit'
+fileName = 'EVT_windows_x64'
+fileFormat = 'zip'
 
 ##############################################################################################################################
 
 # Check whether python file is compiled
-_, IsFileCompiled = QFunc.GetFileInfo()
+_, isFileCompiled = QFunc.getFileInfo()
 
 # Get current directory
-CurrentDir = QFunc.GetBaseDir(__file__ if IsFileCompiled == False else sys.executable)
+currentDir = QFunc.getBaseDir(__file__ if isFileCompiled == False else sys.executable)
 
 # Set path to store log
-LogPath = QFunc.NormPath(Path(CurrentDir).joinpath('log.txt'))
+logPath = QFunc.normPath(Path(currentDir).joinpath('log.txt'))
 
 # Set directory to load static dependencies
-ResourceDir = CurrentDir if QFunc.GetBaseDir(SearchMEIPASS = True) is None else QFunc.GetBaseDir(SearchMEIPASS = True)
+resourceDir = currentDir if QFunc.getBaseDir(searchMEIPASS = True) is None else QFunc.getBaseDir(searchMEIPASS = True)
 
 ##############################################################################################################################

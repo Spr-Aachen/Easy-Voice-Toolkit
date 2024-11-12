@@ -40,479 +40,479 @@ FunctionSignals = CustomSignals_Functions()
 ##############################################################################################################################
 
 def Function_ScrollToWidget(
-    Trigger: QWidget,
-    TargetWidget: QWidget,
-    ScrollArea: Optional[QScrollArea] = None,
-    #Alignment: str = 'Top'
+    trigger: QWidget,
+    targetWidget: QWidget,
+    scrollArea: Optional[QScrollArea] = None,
+    #alignment: str = 'Top'
 ):
     '''
     '''
-    if ScrollArea is None:
-        ScrollArea = QFunc.Function_FindParentUI(TargetWidget, QScrollArea)
+    if scrollArea is None:
+        scrollArea = QFunc.findParentUI(targetWidget, QScrollArea)
 
     def ScrollToWidget():
-        TargetRect = TargetWidget.mapToGlobal(QPoint(0, 0))
-        TargetYPos = TargetRect.y() - ScrollArea.widget().mapToGlobal(QPoint(0, 0)).y()
+        TargetRect = targetWidget.mapToGlobal(QPoint(0, 0))
+        TargetYPos = TargetRect.y() - scrollArea.widget().mapToGlobal(QPoint(0, 0)).y()
 
-        ScrollArea.verticalScrollBar().setValue(TargetYPos)
+        scrollArea.verticalScrollBar().setValue(TargetYPos)
 
-    if isinstance(Trigger, QTreeWidgetItem):
+    if isinstance(trigger, QTreeWidgetItem):
         def TreeWidgetEvent(Item, Column):
-            ScrollToWidget() if Item == Trigger else None
-        Trigger.treeWidget().itemClicked.connect(TreeWidgetEvent)
+            ScrollToWidget() if Item == trigger else None
+        trigger.treeWidget().itemClicked.connect(TreeWidgetEvent)
 
-    if isinstance(Trigger, QAbstractButton):
-        Trigger.clicked.connect(ScrollToWidget)
+    if isinstance(trigger, QAbstractButton):
+        trigger.clicked.connect(ScrollToWidget)
 
 
 def Function_AddToTreeWidget(
-    Widget: QWidget,
-    TreeWidget: TreeWidgetBase,
-    RootItemText: str,
-    ChildItemText: Optional[str] = None,
-    ScrollArea: Optional[QScrollArea] = None
+    widget: QWidget,
+    treeWidget: TreeWidgetBase,
+    rootItemText: str,
+    childItemText: Optional[str] = None,
+    scrollArea: Optional[QScrollArea] = None
 ):
     '''
     '''
-    RootItemTexts = TreeWidget.rootItemTexts()
-    if RootItemText in RootItemTexts:
-        RootItem = TreeWidget.topLevelItem(RootItemTexts.index(RootItemText))
+    RootItemTexts = treeWidget.rootItemTexts()
+    if rootItemText in RootItemTexts:
+        RootItem = treeWidget.topLevelItem(RootItemTexts.index(rootItemText))
     else:
-        RootItem = QTreeWidgetItem(TreeWidget)
-        RootItem.setText(0, RootItemText)
+        RootItem = QTreeWidgetItem(treeWidget)
+        RootItem.setText(0, rootItemText)
         RootItemTextFont = QFont()
         RootItemTextFont.setPixelSize(15)
         RootItem.setFont(0, RootItemTextFont)
     RootItem.setExpanded(True) if not RootItem.isExpanded() else None
 
-    ChildItemTexts = TreeWidget.childItemTexts(RootItem)
-    if ChildItemText is None:
+    ChildItemTexts = treeWidget.childItemTexts(RootItem)
+    if childItemText is None:
         ChildItem = None
-    elif ChildItemText in ChildItemTexts:
-        ChildItem = RootItem.child(ChildItemTexts.index(ChildItemText))
+    elif childItemText in ChildItemTexts:
+        ChildItem = RootItem.child(ChildItemTexts.index(childItemText))
     else:
         ChildItem = QTreeWidgetItem(RootItem)
-        ChildItem.setText(0, ChildItemText)
+        ChildItem.setText(0, childItemText)
         ChildItemTextFont = QFont()
         ChildItemTextFont.setPixelSize(12)
         ChildItem.setFont(0, ChildItemTextFont)
 
     Function_ScrollToWidget(
-        Trigger = ChildItem if ChildItem is not None else RootItem,
-        TargetWidget = Widget,
-        ScrollArea = ScrollArea
+        trigger = ChildItem if ChildItem is not None else RootItem,
+        targetWidget = widget,
+        scrollArea = scrollArea
     )
 
 
 def Function_SetChildWidgetsVisibility(
-    Container: QWidget,
-    ChildWidgets: list[Optional[QWidget]],
-    SetVisible: bool,
-    AdjustContainer: bool = True
+    container: QWidget,
+    childWidgets: list[Optional[QWidget]],
+    setVisible: bool,
+    adjustContainer: bool = True
 ):
     '''
     Function to set the visibility of child-widgets
     '''
-    ChildWidgets = [ChildWidget for ChildWidget in ChildWidgets if ChildWidget is not None]
-    for ChildWidget in ChildWidgets:
-        ChildWidget.setVisible(SetVisible)
-    if AdjustContainer:
-        CurrentHeight = Container.height()
-        #Container.updateGeometry()
-        AdjustedHeight = Container.minimumSizeHint().height()
+    childWidgets = [ChildWidget for ChildWidget in childWidgets if ChildWidget is not None]
+    for ChildWidget in childWidgets:
+        ChildWidget.setVisible(setVisible)
+    if adjustContainer:
+        CurrentHeight = container.height()
+        #container.updateGeometry()
+        AdjustedHeight = container.minimumSizeHint().height()
         Function_AnimateFrame(
-            Frame = Container,
-            MinHeight = CurrentHeight if SetVisible else AdjustedHeight,
-            MaxHeight = AdjustedHeight if SetVisible else CurrentHeight,
-            Mode = 'Extend' if SetVisible else 'Reduce'
+            frame = container,
+            minHeight = CurrentHeight if setVisible else AdjustedHeight,
+            maxHeight = AdjustedHeight if setVisible else CurrentHeight,
+            mode = 'Extend' if setVisible else 'Reduce'
         )
 
 
 def Function_ConfigureCheckBox(
-    CheckBox: QCheckBox,
-    CheckedText: Optional[str] = None,
-    CheckedEvents: list = [],
-    UncheckedText: Optional[str] = None,
-    UncheckedEvents: list = [],
-    TakeEffect: bool = False
+    checkBox: QCheckBox,
+    checkedText: Optional[str] = None,
+    checkedEvents: list = [],
+    uncheckedText: Optional[str] = None,
+    uncheckedEvents: list = [],
+    takeEffect: bool = False
 ):
     '''
     Function to configure checkbox
     '''
-    if CheckedText is not None:
-        CheckedEvents.append(lambda: CheckBox.setText(CheckedText))
-    if UncheckedText is not None:
-        UncheckedEvents.append(lambda: CheckBox.setText(UncheckedText))
+    if checkedText is not None:
+        checkedEvents.append(lambda: checkBox.setText(checkedText))
+    if uncheckedText is not None:
+        uncheckedEvents.append(lambda: checkBox.setText(uncheckedText))
 
-    CheckBox.toggled.connect(
-        lambda IsChecked: QFunc.RunEvents(CheckedEvents if IsChecked else UncheckedEvents)
+    checkBox.toggled.connect(
+        lambda IsChecked: QFunc.runEvents(checkedEvents if IsChecked else uncheckedEvents)
     )
 
-    QFunc.RunEvents(CheckedEvents) if TakeEffect and CheckBox.isChecked() else None
-    QFunc.RunEvents(UncheckedEvents) if TakeEffect and not CheckBox.isChecked() else None
+    QFunc.runEvents(checkedEvents) if takeEffect and checkBox.isChecked() else None
+    QFunc.runEvents(uncheckedEvents) if takeEffect and not checkBox.isChecked() else None
 
 
 def Function_SetURL(
-    Button: QAbstractButton,
-    URL: Union[str, QWidget, list],
-    ButtonTooltip: str = "Open",
-    CreateIfNotExist: bool = False
+    button: QAbstractButton,
+    url: Union[str, QWidget, list],
+    buttonTooltip: str = "Open",
+    createIfNotExist: bool = False
 ):
     '''
-    Function to open URL (through button)
+    Function to open url (through button)
     '''
-    Button.clicked.connect(
-        lambda: QFunc.Function_OpenURL([(Function_GetParam(URL) if isinstance(URL, QWidget) else URL) for URL in QFunc.ToIterable(URL)], CreateIfNotExist)
+    button.clicked.connect(
+        lambda: QFunc.openURL([(Function_GetParam(url) if isinstance(url, QWidget) else url) for url in QFunc.toIterable(url)], createIfNotExist)
     )
-    Button.setToolTipDuration(-1)
-    Button.setToolTip(ButtonTooltip)
+    button.setToolTipDuration(-1)
+    button.setToolTip(buttonTooltip)
 
 ##############################################################################################################################
 
 def Function_GetParam(
-    UI: QObject
+    ui: QObject
 ):
     '''
-    Function to get the param of UI
+    Function to get the param of ui
     '''
-    if isinstance(UI, (QLineEdit, QTextEdit, QPlainTextEdit)):
-        return QFunc.Function_GetText(UI)
-    if isinstance(UI, QComboBox):
-        return UI.currentText()
-    if isinstance(UI, (QAbstractSpinBox, QSlider, Frame_RangeSetting)):
-        return UI.value()
-    if isinstance(UI, (QCheckBox, QRadioButton)):
-        return UI.isChecked()
+    if isinstance(ui, (QLineEdit, QTextEdit, QPlainTextEdit)):
+        return QFunc.getText(ui)
+    if isinstance(ui, QComboBox):
+        return ui.currentText()
+    if isinstance(ui, (QAbstractSpinBox, QSlider, Frame_RangeSetting)):
+        return ui.value()
+    if isinstance(ui, (QCheckBox, QRadioButton)):
+        return ui.isChecked()
 
-    if isinstance(UI, Table_EditAudioSpeaker):
-        return UI.getValue()
+    if isinstance(ui, Table_EditAudioSpeaker):
+        return ui.getValue()
 
 
 def Function_SetParam(
-    UI: QObject,
-    Param: Optional[str]
+    ui: QObject,
+    param: Optional[str]
 ):
     '''
-    Function to set the param of UI
+    Function to set the param of ui
     '''
-    if isinstance(UI, (QLineEdit, QTextEdit)):
-        UI.setText(Param)
-    if isinstance(UI, QPlainTextEdit):
-        UI.setPlainText(Param)
-    if isinstance(UI, QComboBox):
-        UI.setCurrentText(Param)
-    if isinstance(UI, (QAbstractSpinBox, QSlider, Frame_RangeSetting)):
-        UI.setValue(Param)
-    if isinstance(UI, (QCheckBox, QRadioButton)):
-        UI.setChecked(Param)
+    if isinstance(ui, (QLineEdit, QTextEdit)):
+        ui.setText(param)
+    if isinstance(ui, QPlainTextEdit):
+        ui.setPlainText(param)
+    if isinstance(ui, QComboBox):
+        ui.setCurrentText(param)
+    if isinstance(ui, (QAbstractSpinBox, QSlider, Frame_RangeSetting)):
+        ui.setValue(param)
+    if isinstance(ui, (QCheckBox, QRadioButton)):
+        ui.setChecked(param)
 
-    if isinstance(UI, Table_EditAudioSpeaker):
-        UI.setValue(Param)
+    if isinstance(ui, Table_EditAudioSpeaker):
+        ui.setValue(param)
 
 
 def Function_ParamsSynchronizer(
-    Trigger: Union[QObject, list],
-    FromTo: dict = {},
-    Times: Union[int, float] = 1,
-    Connection: str = "Connect"
+    trigger: Union[QObject, list],
+    fromTo: dict = {},
+    times: Union[int, float] = 1,
+    connection: str = "Connect"
 ):
     '''
-    Function to synchronize params (ParamsFrom.value * Times = ParamsTo.value)
+    Function to synchronize params (paramsFrom.value * times = ParamsTo.value)
     '''
     @Slot()
     def ParamsSynchronizer():
-        for UI_Get, UI_Set in FromTo.items():
+        for UI_Get, UI_Set in fromTo.items():
             Param_Get = Function_GetParam(UI_Get)
-            Param_Get = Param_Get * Times if isinstance(Param_Get, (int, float, complex)) else Param_Get
-            for UI_Set in QFunc.ToIterable(UI_Set):
+            Param_Get = Param_Get * times if isinstance(Param_Get, (int, float, complex)) else Param_Get
+            for UI_Set in QFunc.toIterable(UI_Set):
                 Function_SetParam(UI_Set, Param_Get)
 
-    TriggerList = QFunc.ToIterable(Trigger)
+    TriggerList = QFunc.toIterable(trigger)
 
-    for Trigger in TriggerList:
-        if isinstance(Trigger, QAbstractButton):
-            Trigger.clicked.connect(ParamsSynchronizer) if Connection == "Connect" else Trigger.clicked.disconnect(ParamsSynchronizer)
-        if isinstance(Trigger, QAbstractSlider):
-            Trigger.sliderMoved.connect(ParamsSynchronizer) if Connection == "Connect" else Trigger.sliderMoved.disconnect(ParamsSynchronizer)
-        if isinstance(Trigger, QAbstractSpinBox):
-            Trigger.valueChanged.connect(ParamsSynchronizer) if Connection == "Connect" else Trigger.valueChanged.disconnect(ParamsSynchronizer)
-        if isinstance(Trigger, (QLineEdit)):
-            Trigger.textChanged.connect(ParamsSynchronizer) if Connection == "Connect" else Trigger.textChanged.disconnect(ParamsSynchronizer)
+    for trigger in TriggerList:
+        if isinstance(trigger, QAbstractButton):
+            trigger.clicked.connect(ParamsSynchronizer) if connection == "Connect" else trigger.clicked.disconnect(ParamsSynchronizer)
+        if isinstance(trigger, QAbstractSlider):
+            trigger.sliderMoved.connect(ParamsSynchronizer) if connection == "Connect" else trigger.sliderMoved.disconnect(ParamsSynchronizer)
+        if isinstance(trigger, QAbstractSpinBox):
+            trigger.valueChanged.connect(ParamsSynchronizer) if connection == "Connect" else trigger.valueChanged.disconnect(ParamsSynchronizer)
+        if isinstance(trigger, (QLineEdit)):
+            trigger.textChanged.connect(ParamsSynchronizer) if connection == "Connect" else trigger.textChanged.disconnect(ParamsSynchronizer)
 
 
 def Function_ParamsChecker(
-    ParamsFrom: list = [],
-    EmptyAllowed: list = []
+    paramsFrom: list = [],
+    emptyAllowed: list = []
 ):
     '''
     Function to return handled params
     '''
-    Params = []
+    params = []
 
-    for UI in ParamsFrom:
-        Param = Function_GetParam(UI) if isinstance(UI, QWidget) else UI
-        if isinstance(Param, str):
-            if Param.strip() == "None" or Param.strip() == "":
-                if UI in QFunc.ToIterable(EmptyAllowed):
-                    Param = None
+    for ui in paramsFrom:
+        param = Function_GetParam(ui) if isinstance(ui, QWidget) else ui
+        if isinstance(param, str):
+            if param.strip() == "None" or param.strip() == "":
+                if ui in QFunc.toIterable(emptyAllowed):
+                    param = None
                 else:
                     MessageBoxBase.pop(
-                        MessageType = QMessageBox.Warning,
-                        WindowTitle = "Warning",
-                        Text = "Empty param detected!\n检测到参数空缺！"
+                        messageType = QMessageBox.Warning,
+                        windowTitle = "Warning",
+                        text = "Empty param detected!\n检测到参数空缺！"
                     )
                     return "Abort"
             else:
                 '''
-                if "，" in Param or "," in Param:
-                    Param = re.split(
+                if "，" in param or "," in param:
+                    param = re.split(
                         pattern = '[，,]',
-                        string = Param,
+                        string = param,
                         maxsplit = 0
                     )
                 '''
-        if isinstance(Param, dict):
-            if "None" in list(Param.keys()&Param.values()) or "" in list(Param.keys()&Param.values()):
-                if UI in QFunc.ToIterable(EmptyAllowed):
-                    Param = None
+        if isinstance(param, dict):
+            if "None" in list(param.keys()&param.values()) or "" in list(param.keys()&param.values()):
+                if ui in QFunc.toIterable(emptyAllowed):
+                    param = None
                 else:
                     MessageBoxBase.pop(
-                        MessageType = QMessageBox.Warning,
-                        WindowTitle = "Warning",
-                        Text = "Empty param detected!\n检测到参数空缺！"
+                        messageType = QMessageBox.Warning,
+                        windowTitle = "Warning",
+                        text = "Empty param detected!\n检测到参数空缺！"
                     )
                     return "Abort"
             else:
                 pass
         else:
             pass
-        Params.append(Param)
+        params.append(param)
 
-    Args = tuple(Params)#if Params != [] else None
+    Args = tuple(params)#if params != [] else None
 
     return Args
 
 ##############################################################################################################################
 
 def Function_AnimateStackedWidget(
-    StackedWidget: QStackedWidget,
-    Target: Union[int, QWidget] = 0,
-    Duration: int = 99
+    stackedWidget: QStackedWidget,
+    target: Union[int, QWidget] = 0,
+    duration: int = 99
 ):
     '''
     Function to animate stackedwidget
     '''
-    OriginalWidget = StackedWidget.currentWidget()
+    OriginalWidget = stackedWidget.currentWidget()
     OriginalGeometry = OriginalWidget.geometry()
 
-    if isinstance(Target, int):
-        TargetIndex = Target
-    if isinstance(Target, QWidget):
-        TargetIndex = StackedWidget.indexOf(Target)
+    if isinstance(target, int):
+        TargetIndex = target
+    if isinstance(target, QWidget):
+        TargetIndex = stackedWidget.indexOf(target)
 
-    WidgetAnimation = QFunc.Function_SetWidgetPosAnimation(OriginalWidget, Duration)
+    WidgetAnimation = QFunc.setWidgetPosAnimation(OriginalWidget, duration)
     WidgetAnimation.finished.connect(
-        lambda: StackedWidget.setCurrentIndex(TargetIndex),
+        lambda: stackedWidget.setCurrentIndex(TargetIndex),
         type = Qt.QueuedConnection
     )
     WidgetAnimation.finished.connect(
         lambda: OriginalWidget.setGeometry(OriginalGeometry),
         type = Qt.QueuedConnection
     )
-    WidgetAnimation.start() if StackedWidget.currentIndex() != TargetIndex else None
+    WidgetAnimation.start() if stackedWidget.currentIndex() != TargetIndex else None
 
 
 def Function_AnimateFrame(
-    Frame: QWidget,
-    MinWidth: Optional[int] = None,
-    MaxWidth: Optional[int] = None,
-    MinHeight: Optional[int] = None,
-    MaxHeight: Optional[int] = None,
-    Duration: int = 210,
-    Mode: str = "Toggle",
-    SupportSplitter: bool = False
+    frame: QWidget,
+    minWidth: Optional[int] = None,
+    maxWidth: Optional[int] = None,
+    minHeight: Optional[int] = None,
+    maxHeight: Optional[int] = None,
+    duration: int = 210,
+    mode: str = "Toggle",
+    supportSplitter: bool = False
 ):
     '''
     Function to animate frame
     '''
     def ExtendFrame():
-        QFunc.Function_SetWidgetSizeAnimation(Frame, MaxWidth, None, Duration, SupportSplitter).start() if MaxWidth not in (None, Frame.width()) else None
-        QFunc.Function_SetWidgetSizeAnimation(Frame, None, MaxHeight, Duration, SupportSplitter).start() if MaxHeight not in (None, Frame.height()) else None
+        QFunc.setWidgetSizeAnimation(frame, maxWidth, None, duration, supportSplitter).start() if maxWidth not in (None, frame.width()) else None
+        QFunc.setWidgetSizeAnimation(frame, None, maxHeight, duration, supportSplitter).start() if maxHeight not in (None, frame.height()) else None
 
     def ReduceFrame():
-        QFunc.Function_SetWidgetSizeAnimation(Frame, MinWidth, None, Duration, SupportSplitter).start() if MinWidth not in (None, Frame.width()) else None
-        QFunc.Function_SetWidgetSizeAnimation(Frame, None, MinHeight, Duration, SupportSplitter).start() if MinHeight not in (None, Frame.height()) else None
+        QFunc.setWidgetSizeAnimation(frame, minWidth, None, duration, supportSplitter).start() if minWidth not in (None, frame.width()) else None
+        QFunc.setWidgetSizeAnimation(frame, None, minHeight, duration, supportSplitter).start() if minHeight not in (None, frame.height()) else None
 
-    if Mode == "Extend":
+    if mode == "Extend":
         ExtendFrame()
-    if Mode == "Reduce":
+    if mode == "Reduce":
         ReduceFrame()
-    if Mode == "Toggle":
-        ExtendFrame() if Frame.width() == MinWidth or Frame.height() == MinHeight else ReduceFrame()
+    if mode == "Toggle":
+        ExtendFrame() if frame.width() == minWidth or frame.height() == minHeight else ReduceFrame()
 
 
 def Function_AnimateProgressBar(
-    ProgressBar: QProgressBar,
-    MinValue: int = 0,
-    MaxValue: int = 100,
-    DisplayValue: bool = False,
-    IsTaskAlive: bool = False
+    progressBar: QProgressBar,
+    minValue: int = 0,
+    maxValue: int = 100,
+    displayValue: bool = False,
+    isTaskAlive: bool = False
 ):
     '''
     Function to animate progressbar
     '''
-    ProgressBar.setTextVisible(DisplayValue)
-    ProgressBar.setRange(MinValue, MaxValue)
-    ProgressBar.setValue(MinValue)
+    progressBar.setTextVisible(displayValue)
+    progressBar.setRange(minValue, maxValue)
+    progressBar.setValue(minValue)
 
-    if IsTaskAlive == True:
-        ProgressBar.setRange(0, 0)
+    if isTaskAlive == True:
+        progressBar.setRange(0, 0)
         #QApplication.processEvents()
     else:
-        ProgressBar.setRange(MinValue, MaxValue)
-        ProgressBar.setValue(MaxValue)
+        progressBar.setRange(minValue, maxValue)
+        progressBar.setValue(maxValue)
 
 ##############################################################################################################################
 
 def Function_SetWidgetValue(
-    Widget: QWidget,
-    Config: QFunc.ManageConfig,
-    Section: str = ...,
-    Option: str = ...,
-    Value = ...,
-    Times: Union[int, float] = 1,
-    SetPlaceholderText: bool = False,
-    PlaceholderText: Optional[str] = None
+    widget: QWidget,
+    config: QFunc.configManager,
+    section: str = ...,
+    option: str = ...,
+    value = ...,
+    times: Union[int, float] = 1,
+    setPlaceholderText: bool = False,
+    placeholderText: Optional[str] = None
 ):
-    if isinstance(Widget, (QLineEdit, QTextEdit, QPlainTextEdit)):
-        QFunc.Function_SetText(Widget, Value, SetPlaceholderText = SetPlaceholderText, PlaceholderText = PlaceholderText)
-        def EditConfig(Value):
-            Config.editConfig(Section, Option, str(Value))
-        if Config is not None:
-            Widget.textChanged.connect(lambda: EditConfig(Widget.text() if isinstance(Widget, (QLineEdit)) else Widget.toPlainText()))
-            EditConfig(Value)
+    if isinstance(widget, (QLineEdit, QTextEdit, QPlainTextEdit)):
+        QFunc.setText(widget, value, setPlaceholderText = setPlaceholderText, placeholderText = placeholderText)
+        def EditConfig(value):
+            config.editConfig(section, option, str(value))
+        if config is not None:
+            widget.textChanged.connect(lambda: EditConfig(widget.text() if isinstance(widget, (QLineEdit)) else widget.toPlainText()))
+            EditConfig(value)
 
-    if isinstance(Widget, (QComboBox)):
+    if isinstance(widget, (QComboBox)):
         itemTexts = []
-        for index in range(Widget.count()):
-            itemTexts.append(Widget.itemText(index))
-        Widget.setCurrentText(str(Value)) if str(Value) in itemTexts else None
-        def EditConfig(Value):
-            Config.editConfig(Section, Option, str(Value))
-        if Config is not None:
-            Widget.currentTextChanged.connect(EditConfig)
-            EditConfig(Value) if str(Value) in itemTexts else None
+        for index in range(widget.count()):
+            itemTexts.append(widget.itemText(index))
+        widget.setCurrentText(str(value)) if str(value) in itemTexts else None
+        def EditConfig(value):
+            config.editConfig(section, option, str(value))
+        if config is not None:
+            widget.currentTextChanged.connect(EditConfig)
+            EditConfig(value) if str(value) in itemTexts else None
 
-    if isinstance(Widget, (QSpinBox, QSlider)):
-        Widget.setValue(int(eval(str(Value)) * Times))
-        def EditConfig(Value):
-            Config.editConfig(Section, Option, str(eval(str(Value)) / Times))
-        if Config is not None:
-            Widget.valueChanged.connect(EditConfig)
-            EditConfig(Value)
+    if isinstance(widget, (QSpinBox, QSlider)):
+        widget.setValue(int(eval(str(value)) * times))
+        def EditConfig(value):
+            config.editConfig(section, option, str(eval(str(value)) / times))
+        if config is not None:
+            widget.valueChanged.connect(EditConfig)
+            EditConfig(value)
 
-    if isinstance(Widget, (QDoubleSpinBox, SliderBase, Frame_RangeSetting)):
-        Widget.setValue(float(eval(str(Value)) * Times))
-        def EditConfig(Value):
-            Config.editConfig(Section, Option, str(eval(str(Value)) / Times))
-        if Config is not None:
-            Widget.valueChanged.connect(EditConfig)
-            EditConfig(Value)
+    if isinstance(widget, (QDoubleSpinBox, SliderBase, Frame_RangeSetting)):
+        widget.setValue(float(eval(str(value)) * times))
+        def EditConfig(value):
+            config.editConfig(section, option, str(eval(str(value)) / times))
+        if config is not None:
+            widget.valueChanged.connect(EditConfig)
+            EditConfig(value)
 
-    if isinstance(Widget, (QCheckBox, QRadioButton)):
-        Widget.setChecked(eval(str(Value)))
-        def EditConfig(Value):
-            Config.editConfig(Section, Option, str(Value))
-        if Config is not None:
-            Widget.toggled.connect(EditConfig)
-            EditConfig(Value)
+    if isinstance(widget, (QCheckBox, QRadioButton)):
+        widget.setChecked(eval(str(value)))
+        def EditConfig(value):
+            config.editConfig(section, option, str(value))
+        if config is not None:
+            widget.toggled.connect(EditConfig)
+            EditConfig(value)
 
-    if isinstance(Widget, Table_EditAudioSpeaker):
-        Widget.setValue(eval(str(Value)))
-        def EditConfig(Value):
-            Config.editConfig(Section, Option, str(Value))
-        if Config is not None:
-            Widget.ValueChanged.connect(EditConfig)
-            EditConfig(Value)
+    if isinstance(widget, Table_EditAudioSpeaker):
+        widget.setValue(eval(str(value)))
+        def EditConfig(value):
+            config.editConfig(section, option, str(value))
+        if config is not None:
+            widget.ValueChanged.connect(EditConfig)
+            EditConfig(value)
 
 
 class ParamsManager:
     def __init__(self,
-        ConfigPath: str,
+        configPath: str,
     ):
-        self.ConfigPath = ConfigPath
-        self.Config = QFunc.ManageConfig(ConfigPath)
+        self.configPath = configPath
+        self.config = QFunc.configManager(configPath)
 
         self.RegistratedWidgets = {}
 
-    def Registrate(self, Widget: QWidget, value: tuple):
-        self.RegistratedWidgets[Widget] = value
+    def registrate(self, widget: QWidget, value: tuple):
+        self.RegistratedWidgets[widget] = value
 
     def SetParam(self,
-        Widget: QWidget,
-        Section: str = ...,
-        Option: str = ...,
-        DefaultValue = None,
-        Times: Union[int, float] = 1,
-        SetPlaceholderText: bool = False,
-        PlaceholderText: Optional[str] = None,
-        Registrate: bool = True
+        widget: QWidget,
+        section: str = ...,
+        option: str = ...,
+        defaultValue = None,
+        times: Union[int, float] = 1,
+        setPlaceholderText: bool = False,
+        placeholderText: Optional[str] = None,
+        registrate: bool = True
     ):
-        Value = self.Config.getValue(Section, Option, str(DefaultValue))
-        Function_SetWidgetValue(Widget, self.Config, Section, Option, Value, Times, SetPlaceholderText, PlaceholderText)
-        self.Registrate(Widget, (Section, Option, DefaultValue, Times, SetPlaceholderText, PlaceholderText)) if Registrate else None
+        value = self.config.getValue(section, option, str(defaultValue))
+        Function_SetWidgetValue(widget, self.config, section, option, value, times, setPlaceholderText, placeholderText)
+        self.registrate(widget, (section, option, defaultValue, times, setPlaceholderText, placeholderText)) if registrate else None
 
-    def ResetParam(self, Widget: QWidget):
-        value = self.RegistratedWidgets[Widget]
-        Function_SetWidgetValue(Widget, self.Config, *value)
+    def ResetParam(self, widget: QWidget):
+        value = self.RegistratedWidgets[widget]
+        Function_SetWidgetValue(widget, self.config, *value)
 
     def ClearSettings(self):
-        with open(self.ConfigPath, 'w'):
+        with open(self.configPath, 'w'):
             pass
-        self.Config = QFunc.ManageConfig(self.ConfigPath)
+        self.config = QFunc.configManager(self.configPath)
 
     def ResetSettings(self):
         self.ClearSettings()
-        for Widget in list(self.RegistratedWidgets.keys()):
-            self.ResetParam(Widget)
+        for widget in list(self.RegistratedWidgets.keys()):
+            self.ResetParam(widget)
 
-    def ImportSettings(self, ReadPath: str):
-        ConfigParser = QFunc.ManageConfig(ReadPath).parser()
-        with open(self.ConfigPath, 'w', encoding = 'utf-8') as Config:
-            ConfigParser.write(Config)
-        for Widget, value in list(self.RegistratedWidgets.items()):
-            self.SetParam(Widget, *value)
+    def ImportSettings(self, readPath: str):
+        configParser = QFunc.configManager(readPath).parser()
+        with open(self.configPath, 'w', encoding = 'utf-8') as config:
+            configParser.write(config)
+        for widget, value in list(self.RegistratedWidgets.items()):
+            self.SetParam(widget, *value)
 
-    def ExportSettings(self, SavePath: str):
-        with open(SavePath, 'w', encoding = 'utf-8') as Config:
-            self.Config.parser().write(Config)
+    def ExportSettings(self, savePath: str):
+        with open(savePath, 'w', encoding = 'utf-8') as config:
+            self.config.parser().write(config)
 
 ##############################################################################################################################
 
 def Function_SetMethodExecutor(
-    ParentWindow: Optional[QWidget] = None,
-    ExecuteButton: Optional[QAbstractButton] = None,
-    TerminateButton: Optional[QAbstractButton] = None,
-    ProgressBar: Optional[QProgressBar] = None,
-    ConsoleWidget: Optional[QWidget] = None,
-    Method: object = ...,
-    Params: Optional[tuple] = None,
-    ParamsFrom: Optional[list[QObject]] = None,
-    EmptyAllowed: Optional[list[QObject]] = None,
-    SuccessEvents: Optional[list] = None
+    parentWindow: Optional[QWidget] = None,
+    executeButton: Optional[QAbstractButton] = None,
+    terminateButton: Optional[QAbstractButton] = None,
+    progressBar: Optional[QProgressBar] = None,
+    consoleWidget: Optional[QWidget] = None,
+    method: object = ...,
+    params: Optional[tuple] = None,
+    paramsFrom: Optional[list[QObject]] = None,
+    emptyAllowed: Optional[list[QObject]] = None,
+    successEvents: Optional[list] = None
 ):
     '''
     Function to execute outer class methods
     '''
-    QualName = str(Method.__qualname__)
+    QualName = str(method.__qualname__)
     MethodName = QualName.split('.')[1]
 
-    ClassInstance = QFunc.GetClassFromMethod(Method)()
+    ClassInstance = QFunc.getClassFromMethod(method)()
     ClassInstance.started.connect(lambda: FunctionSignals.Signal_TaskStatus.emit(QualName, 'Started')) if hasattr(ClassInstance, 'started') else None
     ClassInstance.errChk.connect(
         lambda Err: (
-            QFunc.RunEvents(SuccessEvents) if Err == str(None) else None,
-            MessageBoxBase.pop(ParentWindow, QMessageBox.Warning, 'Failure', f'发生异常：\n{Err}') if Err != str(None) else None,
+            QFunc.runEvents(successEvents) if Err == str(None) else None,
+            MessageBoxBase.pop(parentWindow, QMessageBox.Warning, 'Failure', f'发生异常：\n{Err}') if Err != str(None) else None,
             FunctionSignals.Signal_TaskStatus.emit(QualName, 'Failed') if Err != str(None) else None
         )
     ) if hasattr(ClassInstance, 'errChk') else None
@@ -530,9 +530,9 @@ def Function_SetMethodExecutor(
         '''
         Update the attributes for outer class methods and wait to execute with multithreading
         '''
-        Args = Params#if Params != () else None
-        if ParamsFrom not in ([], None):
-            Args = Function_ParamsChecker(ParamsFrom, EmptyAllowed)
+        Args = params#if params != () else None
+        if paramsFrom not in ([], None):
+            Args = Function_ParamsChecker(paramsFrom, emptyAllowed)
             if Args == "Abort":
                 return print("Aborted.")
             else:
@@ -541,22 +541,22 @@ def Function_SetMethodExecutor(
         FunctionSignals = CustomSignals_Functions()
         FunctionSignals.Signal_ExecuteTask.connect(getattr(ClassInstance, MethodName)) #FunctionSignals.Signal_ExecuteTask.connect(lambda Args: getattr(ClassInstance, MethodName)(*Args))
 
-        WorkerThread.started.connect(lambda: Function_AnimateFrame(ConsoleWidget, MinHeight = 0, MaxHeight = 210, Mode = "Extend")) if ConsoleWidget else None
-        WorkerThread.started.connect(lambda: Function_AnimateProgressBar(ProgressBar, IsTaskAlive = True)) if ProgressBar else None
-        WorkerThread.started.connect(lambda: Function_AnimateStackedWidget(QFunc.Function_FindParentUI(ExecuteButton, QStackedWidget), Target = 1)) if TerminateButton else None
-        WorkerThread.finished.connect(lambda: Function_AnimateFrame(ConsoleWidget, MinHeight = 0, MaxHeight = 210, Mode = "Reduce")) if ConsoleWidget else None
-        WorkerThread.finished.connect(lambda: Function_AnimateProgressBar(ProgressBar, IsTaskAlive = False)) if ProgressBar else None
-        WorkerThread.finished.connect(lambda: Function_AnimateStackedWidget(QFunc.Function_FindParentUI(ExecuteButton, QStackedWidget), Target = 0)) if TerminateButton else None
+        WorkerThread.started.connect(lambda: Function_AnimateFrame(consoleWidget, minHeight = 0, maxHeight = 210, mode = "Extend")) if consoleWidget else None
+        WorkerThread.started.connect(lambda: Function_AnimateProgressBar(progressBar, isTaskAlive = True)) if progressBar else None
+        WorkerThread.started.connect(lambda: Function_AnimateStackedWidget(QFunc.findParentUI(executeButton, QStackedWidget), target = 1)) if terminateButton else None
+        WorkerThread.finished.connect(lambda: Function_AnimateFrame(consoleWidget, minHeight = 0, maxHeight = 210, mode = "Reduce")) if consoleWidget else None
+        WorkerThread.finished.connect(lambda: Function_AnimateProgressBar(progressBar, isTaskAlive = False)) if progressBar else None
+        WorkerThread.finished.connect(lambda: Function_AnimateStackedWidget(QFunc.findParentUI(executeButton, QStackedWidget), target = 0)) if terminateButton else None
         #WorkerThread.finished.connect(lambda: FunctionSignals.Signal_ExecuteTask.disconnect(getattr(ClassInstance, MethodName)))
 
         FunctionSignals.Signal_ExecuteTask.emit(Args)
 
         WorkerThread.start()
 
-    if ExecuteButton is not None:
-        ExecuteButton.clicked.connect(ExecuteMethod)
+    if executeButton is not None:
+        executeButton.clicked.connect(ExecuteMethod)
     else:
-        TempButton = QPushButton(ParentWindow)
+        TempButton = QPushButton(parentWindow)
         TempButton.clicked.connect(ExecuteMethod)
         TempButton.setVisible(False)
         TempButton.click()
@@ -573,20 +573,20 @@ def Function_SetMethodExecutor(
             except:
                 WorkerThread.quit()
 
-        ClassInstance.Terminate() if hasattr(ClassInstance, 'Terminate') else QFunc.ProcessTerminator('python.exe', SearchKeyword = True)
+        ClassInstance.Terminate() if hasattr(ClassInstance, 'Terminate') else QFunc.processTerminator('python.exe', searchKeyword = True)
 
         FunctionSignals.Signal_TaskStatus.emit(QualName, 'Failed') if hasattr(ClassInstance, 'errChk') else None
 
-        ProgressBar.setValue(0) if ProgressBar else None
+        progressBar.setValue(0) if progressBar else None
 
-    if TerminateButton is not None:
-        TerminateButton.clicked.connect(
-            lambda: MessageBoxBase.pop(ParentWindow,
-                MessageType = QMessageBox.Question,
-                WindowTitle = "Ask",
-                Text = "当前任务仍在执行中，是否确认终止？",
-                Buttons = QMessageBox.Yes|QMessageBox.No,
-                ButtonEvents = {QMessageBox.Yes: lambda: TerminateMethod()}
+    if terminateButton is not None:
+        terminateButton.clicked.connect(
+            lambda: MessageBoxBase.pop(parentWindow,
+                messageType = QMessageBox.Question,
+                windowTitle = "Ask",
+                text = "当前任务仍在执行中，是否确认终止？",
+                buttons = QMessageBox.Yes|QMessageBox.No,
+                buttonEvents = {QMessageBox.Yes: lambda: TerminateMethod()}
             )
         )
         FunctionSignals.Signal_ForceQuit.connect(TerminateMethod)
@@ -596,23 +596,17 @@ def Function_SetMethodExecutor(
 ##############################################################################################################################
 
 def Function_UpdateChecker(
-    RepoOwner: str,
-    RepoName: str,
-    FileName: str,
-    FileFormat: str,
-    CurrentVersion: str = ...,
+    repoOwner: str,
+    repoName: str,
+    fileName: str,
+    fileFormat: str,
+    currentVersion: str = ...,
 ):
     '''
     '''
     try:
         FunctionSignals.Signal_UpdateMessage.emit("正在检查更新，请稍等...\nChecking for updates, please wait...")
-        IsUpdateNeeded, DownloadURL, VersionInfo = QFunc.CheckUpdateFromGithub(
-            RepoOwner = RepoOwner,
-            RepoName = RepoName,
-            FileName = FileName,
-            FileFormat = FileFormat,
-            Version_Current = CurrentVersion
-        )
+        IsUpdateNeeded, DownloadURL, VersionInfo = QFunc.checkUpdateFromGithub(repoOwner, repoName, fileName, fileFormat, currentVersion)
 
     except:
         #FunctionSignals.Signal_Message.emit("更新检查失败！\nFailed to check for updates!")
