@@ -622,7 +622,7 @@ class Ui_MainWindow(object):
         self.ScrollArea_Env_Install.setWidgetResizable(True)
         self.ScrollAreaWidgetContents_Env_Install = QWidget()
         self.ScrollAreaWidgetContents_Env_Install.setObjectName(u"ScrollAreaWidgetContents_Env_Install")
-        self.ScrollAreaWidgetContents_Env_Install.setGeometry(QRect(0, 0, 242, 495))
+        self.ScrollAreaWidgetContents_Env_Install.setGeometry(QRect(0, 0, 1014, 495))
         self.verticalLayout_130 = QVBoxLayout(self.ScrollAreaWidgetContents_Env_Install)
         self.verticalLayout_130.setSpacing(0)
         self.verticalLayout_130.setObjectName(u"verticalLayout_130")
@@ -1038,7 +1038,7 @@ class Ui_MainWindow(object):
         self.ScrollArea_Env_Manage.setWidgetResizable(True)
         self.ScrollAreaWidgetContents_Env_Manage = QWidget()
         self.ScrollAreaWidgetContents_Env_Manage.setObjectName(u"ScrollAreaWidgetContents_Env_Manage")
-        self.ScrollAreaWidgetContents_Env_Manage.setGeometry(QRect(0, 0, 86, 84))
+        self.ScrollAreaWidgetContents_Env_Manage.setGeometry(QRect(0, 0, 1026, 359))
         self.verticalLayout_81 = QVBoxLayout(self.ScrollAreaWidgetContents_Env_Manage)
         self.verticalLayout_81.setSpacing(0)
         self.verticalLayout_81.setObjectName(u"verticalLayout_81")
@@ -1047,7 +1047,7 @@ class Ui_MainWindow(object):
         self.ToolBox_Env_Manage_Pytorch.setObjectName(u"ToolBox_Env_Manage_Pytorch")
         self.ToolBox_Env_Manage_Pytorch_Page1Content = WidgetBase()
         self.ToolBox_Env_Manage_Pytorch_Page1Content.setObjectName(u"ToolBox_Env_Manage_Pytorch_Page1Content")
-        self.ToolBox_Env_Manage_Pytorch_Page1Content.setGeometry(QRect(0, 0, 292, 204))
+        self.ToolBox_Env_Manage_Pytorch_Page1Content.setGeometry(QRect(0, 0, 1014, 204))
         self.verticalLayout_105 = QVBoxLayout(self.ToolBox_Env_Manage_Pytorch_Page1Content)
         self.verticalLayout_105.setSpacing(0)
         self.verticalLayout_105.setObjectName(u"verticalLayout_105")
@@ -1114,22 +1114,9 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_26.addItem(self.HorizontalSpacer_Env_Manage_Pytorch_Install)
 
-        self.Button_Env_Manage_Pytorch_Install = QPushButton(self.Frame_Env_Manage_Pytorch_Install)
+        self.Button_Env_Manage_Pytorch_Install = HollowButton(self.Frame_Env_Manage_Pytorch_Install)
         self.Button_Env_Manage_Pytorch_Install.setObjectName(u"Button_Env_Manage_Pytorch_Install")
         self.Button_Env_Manage_Pytorch_Install.setMinimumSize(QSize(123, 0))
-        self.Button_Env_Manage_Pytorch_Install.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	font-size: 15px;\n"
-"	background-color: transparent;\n"
-"	padding: 12px;\n"
-"	border-width: 1.5px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgb(120, 120, 120);\n"
-"}")
 
         self.horizontalLayout_26.addWidget(self.Button_Env_Manage_Pytorch_Install)
 
@@ -1782,7 +1769,7 @@ class Ui_MainWindow(object):
         self.ToolBox_Process_SlicerParams_AdvanceSettings.setObjectName(u"ToolBox_Process_SlicerParams_AdvanceSettings")
         self.ToolBox_Process_SlicerParams_AdvanceSettings_Page1Content = WidgetBase()
         self.ToolBox_Process_SlicerParams_AdvanceSettings_Page1Content.setObjectName(u"ToolBox_Process_SlicerParams_AdvanceSettings_Page1Content")
-        self.ToolBox_Process_SlicerParams_AdvanceSettings_Page1Content.setGeometry(QRect(0, 0, 147, 525))
+        self.ToolBox_Process_SlicerParams_AdvanceSettings_Page1Content.setGeometry(QRect(0, 0, 548, 525))
         self.verticalLayout_54 = QVBoxLayout(self.ToolBox_Process_SlicerParams_AdvanceSettings_Page1Content)
         self.verticalLayout_54.setSpacing(0)
         self.verticalLayout_54.setObjectName(u"verticalLayout_54")
@@ -2209,7 +2196,7 @@ class Ui_MainWindow(object):
         self.ToolBox_Process_OutputParams_AdvanceSettings.setObjectName(u"ToolBox_Process_OutputParams_AdvanceSettings")
         self.ToolBox_Process_OutputParams_AdvanceSettings_Page1Content = WidgetBase()
         self.ToolBox_Process_OutputParams_AdvanceSettings_Page1Content.setObjectName(u"ToolBox_Process_OutputParams_AdvanceSettings_Page1Content")
-        self.ToolBox_Process_OutputParams_AdvanceSettings_Page1Content.setGeometry(QRect(0, 0, 147, 315))
+        self.ToolBox_Process_OutputParams_AdvanceSettings_Page1Content.setGeometry(QRect(0, 0, 548, 315))
         self.verticalLayout_67 = QVBoxLayout(self.ToolBox_Process_OutputParams_AdvanceSettings_Page1Content)
         self.verticalLayout_67.setSpacing(0)
         self.verticalLayout_67.setObjectName(u"verticalLayout_67")
@@ -2888,7 +2875,7 @@ class Ui_MainWindow(object):
         self.ToolBox_VPR_TDNN_VPRParams_AdvanceSettings.setObjectName(u"ToolBox_VPR_TDNN_VPRParams_AdvanceSettings")
         self.ToolBox_VPR_TDNN_VPRParams_AdvanceSettings_Page1Content = WidgetBase()
         self.ToolBox_VPR_TDNN_VPRParams_AdvanceSettings_Page1Content.setObjectName(u"ToolBox_VPR_TDNN_VPRParams_AdvanceSettings_Page1Content")
-        self.ToolBox_VPR_TDNN_VPRParams_AdvanceSettings_Page1Content.setGeometry(QRect(0, 0, 147, 315))
+        self.ToolBox_VPR_TDNN_VPRParams_AdvanceSettings_Page1Content.setGeometry(QRect(0, 0, 548, 315))
         self.verticalLayout_21 = QVBoxLayout(self.ToolBox_VPR_TDNN_VPRParams_AdvanceSettings_Page1Content)
         self.verticalLayout_21.setSpacing(0)
         self.verticalLayout_21.setObjectName(u"verticalLayout_21")
@@ -3144,7 +3131,7 @@ class Ui_MainWindow(object):
         self.ToolBox_VPR_TDNN_OutputParams_AdvanceSettings.setFrameShadow(QFrame.Shadow.Raised)
         self.ToolBox_VPR_TDNN_OutputParams_AdvanceSettings_Page1Content = WidgetBase()
         self.ToolBox_VPR_TDNN_OutputParams_AdvanceSettings_Page1Content.setObjectName(u"ToolBox_VPR_TDNN_OutputParams_AdvanceSettings_Page1Content")
-        self.ToolBox_VPR_TDNN_OutputParams_AdvanceSettings_Page1Content.setGeometry(QRect(0, 0, 147, 105))
+        self.ToolBox_VPR_TDNN_OutputParams_AdvanceSettings_Page1Content.setGeometry(QRect(0, 0, 546, 105))
         self.verticalLayout_110 = QVBoxLayout(self.ToolBox_VPR_TDNN_OutputParams_AdvanceSettings_Page1Content)
         self.verticalLayout_110.setSpacing(0)
         self.verticalLayout_110.setObjectName(u"verticalLayout_110")
@@ -3672,7 +3659,7 @@ class Ui_MainWindow(object):
         self.ToolBox_ASR_Whisper_WhisperParams_AdvanceSettings.setObjectName(u"ToolBox_ASR_Whisper_WhisperParams_AdvanceSettings")
         self.ToolBox_ASR_Whisper_WhisperParams_AdvanceSettings_Page1Content = WidgetBase()
         self.ToolBox_ASR_Whisper_WhisperParams_AdvanceSettings_Page1Content.setObjectName(u"ToolBox_ASR_Whisper_WhisperParams_AdvanceSettings_Page1Content")
-        self.ToolBox_ASR_Whisper_WhisperParams_AdvanceSettings_Page1Content.setGeometry(QRect(0, 0, 147, 315))
+        self.ToolBox_ASR_Whisper_WhisperParams_AdvanceSettings_Page1Content.setGeometry(QRect(0, 0, 548, 315))
         self.verticalLayout_15 = QVBoxLayout(self.ToolBox_ASR_Whisper_WhisperParams_AdvanceSettings_Page1Content)
         self.verticalLayout_15.setSpacing(0)
         self.verticalLayout_15.setObjectName(u"verticalLayout_15")
@@ -4464,7 +4451,7 @@ class Ui_MainWindow(object):
         self.ToolBox_DAT_GPTSoVITS_OutputParams_AdvanceSettings.setFrameShadow(QFrame.Shadow.Raised)
         self.ToolBox_DAT_GPTSoVITS_OutputParams_AdvanceSettings_Page1Content = WidgetBase()
         self.ToolBox_DAT_GPTSoVITS_OutputParams_AdvanceSettings_Page1Content.setObjectName(u"ToolBox_DAT_GPTSoVITS_OutputParams_AdvanceSettings_Page1Content")
-        self.ToolBox_DAT_GPTSoVITS_OutputParams_AdvanceSettings_Page1Content.setGeometry(QRect(0, 0, 147, 105))
+        self.ToolBox_DAT_GPTSoVITS_OutputParams_AdvanceSettings_Page1Content.setGeometry(QRect(0, 0, 546, 105))
         self.verticalLayout_108 = QVBoxLayout(self.ToolBox_DAT_GPTSoVITS_OutputParams_AdvanceSettings_Page1Content)
         self.verticalLayout_108.setSpacing(0)
         self.verticalLayout_108.setObjectName(u"verticalLayout_108")
@@ -6109,7 +6096,7 @@ class Ui_MainWindow(object):
         self.ToolBox_Train_GPTSoVITS_GPTSoVITSParams_AdvanceSettings.setFrameShadow(QFrame.Shadow.Raised)
         self.ToolBox_Train_GPTSoVITS_GPTSoVITSParams_AdvanceSettings_Page1Content = WidgetBase()
         self.ToolBox_Train_GPTSoVITS_GPTSoVITSParams_AdvanceSettings_Page1Content.setObjectName(u"ToolBox_Train_GPTSoVITS_GPTSoVITSParams_AdvanceSettings_Page1Content")
-        self.ToolBox_Train_GPTSoVITS_GPTSoVITSParams_AdvanceSettings_Page1Content.setGeometry(QRect(0, 0, 147, 105))
+        self.ToolBox_Train_GPTSoVITS_GPTSoVITSParams_AdvanceSettings_Page1Content.setGeometry(QRect(0, 0, 546, 105))
         self.verticalLayout_57 = QVBoxLayout(self.ToolBox_Train_GPTSoVITS_GPTSoVITSParams_AdvanceSettings_Page1Content)
         self.verticalLayout_57.setSpacing(0)
         self.verticalLayout_57.setObjectName(u"verticalLayout_57")
@@ -6250,7 +6237,7 @@ class Ui_MainWindow(object):
         self.ToolBox_Train_GPTSoVITS_OutputParams_AdvanceSettings.setObjectName(u"ToolBox_Train_GPTSoVITS_OutputParams_AdvanceSettings")
         self.ToolBox_Train_GPTSoVITS_OutputParams_AdvanceSettings_Page1Content = WidgetBase()
         self.ToolBox_Train_GPTSoVITS_OutputParams_AdvanceSettings_Page1Content.setObjectName(u"ToolBox_Train_GPTSoVITS_OutputParams_AdvanceSettings_Page1Content")
-        self.ToolBox_Train_GPTSoVITS_OutputParams_AdvanceSettings_Page1Content.setGeometry(QRect(0, 0, 147, 105))
+        self.ToolBox_Train_GPTSoVITS_OutputParams_AdvanceSettings_Page1Content.setGeometry(QRect(0, 0, 548, 105))
         self.verticalLayout_60 = QVBoxLayout(self.ToolBox_Train_GPTSoVITS_OutputParams_AdvanceSettings_Page1Content)
         self.verticalLayout_60.setSpacing(0)
         self.verticalLayout_60.setObjectName(u"verticalLayout_60")
@@ -8867,7 +8854,7 @@ class Ui_MainWindow(object):
         self.ScrollArea_Settings_Client.setWidgetResizable(True)
         self.ScrollAreaWidgetContents_Settings_Client = QWidget()
         self.ScrollAreaWidgetContents_Settings_Client.setObjectName(u"ScrollAreaWidgetContents_Settings_Client")
-        self.ScrollAreaWidgetContents_Settings_Client.setGeometry(QRect(0, 0, 246, 483))
+        self.ScrollAreaWidgetContents_Settings_Client.setGeometry(QRect(0, 0, 1014, 483))
         self.verticalLayout_106 = QVBoxLayout(self.ScrollAreaWidgetContents_Settings_Client)
         self.verticalLayout_106.setSpacing(0)
         self.verticalLayout_106.setObjectName(u"verticalLayout_106")
@@ -9000,9 +8987,7 @@ class Ui_MainWindow(object):
 
         self.CheckBox_Setting_AutoUpdate = CheckBoxBase(self.Frame_Setting_AutoUpdate)
         self.CheckBox_Setting_AutoUpdate.setObjectName(u"CheckBox_Setting_AutoUpdate")
-        sizePolicy5.setHeightForWidth(self.CheckBox_Setting_AutoUpdate.sizePolicy().hasHeightForWidth())
-        self.CheckBox_Setting_AutoUpdate.setSizePolicy(sizePolicy5)
-        self.CheckBox_Setting_AutoUpdate.setMinimumSize(QSize(0, 30))
+        self.CheckBox_Setting_AutoUpdate.setMinimumSize(QSize(123, 30))
 
         self.horizontalLayout_65.addWidget(self.CheckBox_Setting_AutoUpdate)
 
@@ -9033,21 +9018,8 @@ class Ui_MainWindow(object):
         self.horizontalLayout_6.setSpacing(42)
         self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
         self.horizontalLayout_6.setContentsMargins(21, 12, 21, 12)
-        self.Button_Setting_IntegrityChecker = QPushButton(self.Frame_Setting_Operation)
+        self.Button_Setting_IntegrityChecker = HollowButton(self.Frame_Setting_Operation)
         self.Button_Setting_IntegrityChecker.setObjectName(u"Button_Setting_IntegrityChecker")
-        self.Button_Setting_IntegrityChecker.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	font-size: 12px;\n"
-"	background-color: transparent;\n"
-"	padding: 12px;\n"
-"	border-width: 1.5px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgb(120, 120, 120);\n"
-"}")
 
         self.horizontalLayout_6.addWidget(self.Button_Setting_IntegrityChecker)
 
@@ -9083,7 +9055,7 @@ class Ui_MainWindow(object):
         self.ScrollArea_Settings_Tools.setWidgetResizable(True)
         self.ScrollAreaWidgetContents_Settings_Tools = QWidget()
         self.ScrollAreaWidgetContents_Settings_Tools.setObjectName(u"ScrollAreaWidgetContents_Settings_Tools")
-        self.ScrollAreaWidgetContents_Settings_Tools.setGeometry(QRect(0, 0, 211, 907))
+        self.ScrollAreaWidgetContents_Settings_Tools.setGeometry(QRect(0, 0, 246, 907))
         self.verticalLayout_34 = QVBoxLayout(self.ScrollAreaWidgetContents_Settings_Tools)
         self.verticalLayout_34.setSpacing(0)
         self.verticalLayout_34.setObjectName(u"verticalLayout_34")
@@ -9127,9 +9099,7 @@ class Ui_MainWindow(object):
 
         self.CheckBox_Setting_AutoReset = CheckBoxBase(self.Frame_Setting_AutoReset)
         self.CheckBox_Setting_AutoReset.setObjectName(u"CheckBox_Setting_AutoReset")
-        sizePolicy5.setHeightForWidth(self.CheckBox_Setting_AutoReset.sizePolicy().hasHeightForWidth())
-        self.CheckBox_Setting_AutoReset.setSizePolicy(sizePolicy5)
-        self.CheckBox_Setting_AutoReset.setMinimumSize(QSize(0, 30))
+        self.CheckBox_Setting_AutoReset.setMinimumSize(QSize(123, 30))
 
         self.horizontalLayout_75.addWidget(self.CheckBox_Setting_AutoReset)
 
@@ -9169,9 +9139,7 @@ class Ui_MainWindow(object):
 
         self.CheckBox_Setting_Synchronizer = CheckBoxBase(self.Frame_Setting_Synchronizer)
         self.CheckBox_Setting_Synchronizer.setObjectName(u"CheckBox_Setting_Synchronizer")
-        sizePolicy5.setHeightForWidth(self.CheckBox_Setting_Synchronizer.sizePolicy().hasHeightForWidth())
-        self.CheckBox_Setting_Synchronizer.setSizePolicy(sizePolicy5)
-        self.CheckBox_Setting_Synchronizer.setMinimumSize(QSize(0, 30))
+        self.CheckBox_Setting_Synchronizer.setMinimumSize(QSize(123, 30))
 
         self.horizontalLayout_74.addWidget(self.CheckBox_Setting_Synchronizer)
 

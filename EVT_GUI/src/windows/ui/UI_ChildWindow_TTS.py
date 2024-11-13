@@ -1,7 +1,7 @@
 from PySide6.QtCore import (QCoreApplication, QMetaObject, QSize)
 from PySide6.QtWidgets import *
 
-from components.Components import LabelBase, MediaPlayerBase
+from components.Components import LabelBase, HollowButton, MediaPlayerBase
 from assets import Sources
 
 
@@ -106,7 +106,7 @@ class Ui_ChildWindow_TTS(object):
         self.Widget = MediaPlayerBase(self.CentralWidget)
         self.Widget.setObjectName(u"Widget")
 
-        self.gridLayout.addWidget(self.Widget, 2, 0, 1, 1)
+        self.gridLayout.addWidget(self.Widget, 2, 0, 1, 2)
 
 
         self.verticalLayout.addWidget(self.CentralWidget)
@@ -115,55 +115,13 @@ class Ui_ChildWindow_TTS(object):
         self.horizontalLayout.setSpacing(12)
         self.horizontalLayout.setObjectName(u"horizontalLayout")
         self.horizontalLayout.setContentsMargins(21, 12, 21, 12)
-        self.Button_Cancel = QPushButton(ChildWindow_TTS)
+        self.Button_Cancel = HollowButton(ChildWindow_TTS)
         self.Button_Cancel.setObjectName(u"Button_Cancel")
-        self.Button_Cancel.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	font-size: 12px;\n"
-"	background-color: transparent;\n"
-"	padding: 9.9px;\n"
-"	border-width: 1.5px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgb(120, 120, 120);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
 
         self.horizontalLayout.addWidget(self.Button_Cancel)
 
-        self.Button_Confirm = QPushButton(ChildWindow_TTS)
+        self.Button_Confirm = HollowButton(ChildWindow_TTS)
         self.Button_Confirm.setObjectName(u"Button_Confirm")
-        self.Button_Confirm.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	font-size: 12px;\n"
-"	background-color: transparent;\n"
-"	padding: 9.9px;\n"
-"	border-width: 1.5px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(90, 90, 90);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgb(120, 120, 120);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
 
         self.horizontalLayout.addWidget(self.Button_Confirm)
 
