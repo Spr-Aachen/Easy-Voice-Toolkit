@@ -1572,7 +1572,8 @@ class MainWindow(Window_MainWindow):
         EnvConfiguratorSignals.Signal_Aria2InstallFailed.connect(
             lambda Exception: MessageBoxBase.pop(self,
                 QMessageBox.Warning, "Warning",
-                text = f"安装Aria2出错：\n{Exception}",
+                text = f"安装Aria2出错",
+                detailedText = Exception
             )
         )
         EnvConfiguratorSignals.Signal_Aria2Detected.connect(
@@ -1607,7 +1608,8 @@ class MainWindow(Window_MainWindow):
         EnvConfiguratorSignals.Signal_FFmpegInstallFailed.connect(
             lambda Exception: MessageBoxBase.pop(self,
                 QMessageBox.Warning, "Warning",
-                text = f"安装FFmpeg出错：\n{Exception}",
+                text = f"安装FFmpeg出错",
+                detailedText = Exception
             )
         )
         EnvConfiguratorSignals.Signal_FFmpegDetected.connect(
@@ -1642,7 +1644,8 @@ class MainWindow(Window_MainWindow):
         EnvConfiguratorSignals.Signal_PythonInstallFailed.connect(
             lambda Exception: MessageBoxBase.pop(self,
                 QMessageBox.Warning, "Warning",
-                text = f"安装Python出错：\n{Exception}",
+                text = f"安装Python出错",
+                detailedText = Exception
             )
         )
         EnvConfiguratorSignals.Signal_PythonDetected.connect(
@@ -1677,7 +1680,8 @@ class MainWindow(Window_MainWindow):
         EnvConfiguratorSignals.Signal_PyReqsInstallFailed.connect(
             lambda Exception: MessageBoxBase.pop(self,
                 QMessageBox.Warning, "Warning",
-                text = f"安装Python依赖库出错：\n{Exception}"
+                text = f"安装Python依赖库出错",
+                detailedText = Exception
             )
         )
         EnvConfiguratorSignals.Signal_PyReqsDetected.connect(
@@ -1712,7 +1716,8 @@ class MainWindow(Window_MainWindow):
         EnvConfiguratorSignals.Signal_PytorchInstallFailed.connect(
             lambda Exception: MessageBoxBase.pop(self,
                 QMessageBox.Warning, "Warning",
-                text = f"安装Pytorch出错：\n{Exception}",
+                text = f"安装Pytorch出错",
+                detailedText = Exception
             )
         )
         EnvConfiguratorSignals.Signal_PytorchDetected.connect(

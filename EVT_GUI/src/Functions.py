@@ -512,7 +512,7 @@ def Function_SetMethodExecutor(
     ClassInstance.errChk.connect(
         lambda Err: (
             QFunc.runEvents(successEvents) if Err == str(None) else None,
-            MessageBoxBase.pop(parentWindow, QMessageBox.Warning, 'Failure', f'发生异常：\n{Err}') if Err != str(None) else None,
+            MessageBoxBase.pop(parentWindow, QMessageBox.Warning, "Failure", "发生异常", Err) if Err != str(None) else None,
             FunctionSignals.Signal_TaskStatus.emit(QualName, 'Failed') if Err != str(None) else None
         )
     ) if hasattr(ClassInstance, 'errChk') else None
