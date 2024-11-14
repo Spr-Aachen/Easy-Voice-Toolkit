@@ -567,13 +567,9 @@ def Function_SetMethodExecutor(
         '''
         Terminate the running thread
         '''
-        if not WorkerThread.isFinished():
-            try:
-                WorkerThread.terminate()
-            except:
-                WorkerThread.quit()
+        ClassInstance.Terminate() if hasattr(ClassInstance, 'Terminate') else None
 
-        ClassInstance.Terminate() if hasattr(ClassInstance, 'Terminate') else QFunc.processTerminator('python.exe', searchKeyword = True)
+        WorkerThread.quit() if not WorkerThread.isFinished() else None
 
         FunctionSignals.Signal_TaskStatus.emit(QualName, 'Failed') if hasattr(ClassInstance, 'errChk') else None
 
@@ -589,9 +585,10 @@ def Function_SetMethodExecutor(
                 buttonEvents = {QMessageBox.Yes: lambda: TerminateMethod()}
             )
         )
-        FunctionSignals.Signal_ForceQuit.connect(TerminateMethod)
     else:
         pass
+
+    FunctionSignals.Signal_ForceQuit.connect(TerminateMethod)
 
 ##############################################################################################################################
 

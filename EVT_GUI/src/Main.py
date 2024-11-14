@@ -880,9 +880,8 @@ class MainWindow(Window_MainWindow):
         self.MonitorUsage.start()
 
     def closeEvent(self, event):
+        FunctionSignals.Signal_TaskStatus.connect(lambda: QApplication.instance().exit())
         FunctionSignals.Signal_ForceQuit.emit()
-        FunctionSignals.Signal_TaskStatus.connect(QApplication.instance().exit)
-        super().closeEvent(event)
 
     def showGuidance(self, windowTitle: str, Images: list, Texts: list):
         DialogBox = MessageBox_Stacked(self)

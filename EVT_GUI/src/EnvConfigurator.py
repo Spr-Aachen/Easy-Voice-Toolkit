@@ -7,8 +7,9 @@ import pynvml
 #import pkg_resources
 from packaging import version
 from pathlib import Path
+from threading import Event
 from typing import Optional
-from PySide6.QtCore import QObject, Signal
+from PySide6.QtCore import QObject, Signal, Slot
 from QEasyWidgets import QFunctions as QFunc
 
 ##############################################################################################################################
@@ -67,10 +68,13 @@ EnvConfiguratorSignals = CustomSignals_EnvConfigurator()
 class Aria2_Installer(QObject):
     '''
     '''
-    finished = Signal(str)
+    started = Signal()
+    finished = Signal()
 
     def __init__(self):
         super().__init__()
+
+        self.stopEvent = Event()
 
     def Check_Aria2(self):
         try:
@@ -87,13 +91,25 @@ class Aria2_Installer(QObject):
             File_Format = 'zip'
             Path_Download = os.path.join(Dir_Download, f"{File_Name}.{File_Format}")
             Dir_Install = Path(f"{os.getenv('SystemDrive')}/Aria2").__str__()
+            if self.stopEvent.isSet():
+                return
             QFunc.downloadFile(URL, Dir_Download, File_Name, File_Format, None)
+            if self.stopEvent.isSet():
+                return
             shutil.unpack_archive(Path_Download, Dir_Install, Path_Download.rsplit('.', 1)[-1])
+            if self.stopEvent.isSet():
+                return
             QFunc.moveFiles(os.path.dirname(QFunc.getPaths(Dir_Install, 'aria2c.exe')[0]), Dir_Install)
+            if self.stopEvent.isSet():
+                return
             QFunc.setEnvVar('PATH', Dir_Install, 'User')
+            if self.stopEvent.isSet():
+                return
             os.remove(Path_Download)
 
         if platform.system() == 'Linux':
+            if self.stopEvent.isSet():
+                return
             QFunc.runCMD(['sudo apt-get update', 'sudo apt-get install aria2'])
 
     def Execute_Aria2_Installation(self):
@@ -112,24 +128,27 @@ class Aria2_Installer(QObject):
             EnvConfiguratorSignals.Signal_Aria2Detected.emit()
             EnvConfiguratorSignals.Signal_Aria2Status.emit(f"Aria2 detected. Version: {Result}")
 
+    @Slot(tuple)
     def Execute(self, Params: tuple):
-        self.executor = QFunc.taskAccelerationManager.ThreadPool.createPool(
-            {self.Execute_Aria2_Installation: Params},
-            asynchronous = False
-        )
+        self.started.emit()
 
-        self.finished.emit(str(None))
+        self.Execute_Aria2_Installation(*Params)
+
+        self.finished.emit()
 
     def Terminate(self):
-        self.executor.shutdown(False, True) if hasattr(self, 'executor') else None
+        self.stopEvent.set()
 
 class FFmpeg_Installer(QObject):
     '''
     '''
-    finished = Signal(str)
+    started = Signal()
+    finished = Signal()
 
     def __init__(self):
         super().__init__()
+
+        self.stopEvent = Event()
 
     def Check_FFmpeg(self):
         try:
@@ -147,13 +166,25 @@ class FFmpeg_Installer(QObject):
             Path_Download = os.path.join(Dir_Download, f"{File_Name}.{File_Format}")
             Dir_Install = Path(f"{os.getenv('SystemDrive')}/FFmpeg").__str__()
             Path_Binary = os.path.normpath(os.path.join(Dir_Install, 'bin'))
+            if self.stopEvent.isSet():
+                return
             QFunc.downloadFile(URL, Dir_Download, File_Name, File_Format, None)
+            if self.stopEvent.isSet():
+                return
             shutil.unpack_archive(Path_Download, Dir_Install, Path_Download.rsplit('.', 1)[-1])
+            if self.stopEvent.isSet():
+                return
             QFunc.moveFiles(os.path.dirname(QFunc.getPaths(Dir_Install, 'bin')[0]), Dir_Install)
+            if self.stopEvent.isSet():
+                return
             QFunc.setEnvVar('PATH', Path_Binary, 'User')
+            if self.stopEvent.isSet():
+                return
             os.remove(Path_Download)
 
         if platform.system() == 'Linux':
+            if self.stopEvent.isSet():
+                return
             QFunc.runCMD(['sudo apt-get update', 'sudo apt-get install ffmpeg'])
 
     def Execute_FFmpeg_Installation(self):
@@ -172,26 +203,29 @@ class FFmpeg_Installer(QObject):
             EnvConfiguratorSignals.Signal_FFmpegDetected.emit()
             EnvConfiguratorSignals.Signal_FFmpegStatus.emit(f"FFmpeg detected. Version: {Result}")
 
+    @Slot(tuple)
     def Execute(self, Params: tuple):
-        self.executor = QFunc.taskAccelerationManager.ThreadPool.createPool(
-            {self.Execute_FFmpeg_Installation: Params},
-            asynchronous = False
-        )
+        self.started.emit()
 
-        self.finished.emit(str(None))
+        self.Execute_FFmpeg_Installation(*Params)
+
+        self.finished.emit()
 
     def Terminate(self):
-        self.executor.shutdown(False, True) if hasattr(self, 'executor') else None
+        self.stopEvent.set()
 
 """
 class GCC_Installer(QObject):
     '''
     '''
-    finished = Signal(str)
+    started = Signal()
+    finished = Signal()
 
     def __init__(self):
         super().__init__()
 
+        self.stopEvent = Event()
+        
     def Check_GCC(self):
         try:
             GCCVersion = str(QFunc.runCMD([['gcc', '--version']], decodeResult = True)[0])
@@ -208,13 +242,25 @@ class GCC_Installer(QObject):
             Path_Download = os.path.join(Dir_Download, f"{File_Name}.{File_Format}")
             Dir_Install = Path(f"{os.getenv('SystemDrive')}/MinGW").__str__()
             Path_Binary = os.path.normpath(os.path.join(Dir_Install, 'bin'))
+            if self.stopEvent.isSet():
+                return
             QFunc.downloadFile(URL, Dir_Download, File_Name, File_Format, None)
+            if self.stopEvent.isSet():
+                return
             shutil.unpack_archive(Path_Download, Dir_Install, Path_Download.rsplit('.', 1)[-1])
+            if self.stopEvent.isSet():
+                return
             QFunc.moveFiles(os.path.dirname(QFunc.getPaths(Dir_Install, 'bin')[0]), Dir_Install)
+            if self.stopEvent.isSet():
+                return
             QFunc.setEnvVar('PATH', Path_Binary, 'User')
+            if self.stopEvent.isSet():
+                return
             os.remove(Path_Download)
 
         if platform.system() == 'Linux':
+            if self.stopEvent.isSet():
+                return
             QFunc.runCMD(['sudo apt-get update', 'sudo apt-get install build-essential'])
 
     def Execute_GCC_Installation(self):
@@ -233,26 +279,29 @@ class GCC_Installer(QObject):
             EnvConfiguratorSignals.Signal_GCCDetected.emit()
             EnvConfiguratorSignals.Signal_GCCStatus.emit(f"GCC detected. Version: {Result}")
 
+    @Slot(tuple)
     def Execute(self, Params: tuple):
-        self.executor = QFunc.taskAccelerationManager.ThreadPool.createPool(
-            {self.Execute_GCC_Installation: Params},
-            asynchronous = False
-        )
+        self.started.emit()
 
-        self.finished.emit(str(None))
+        self.Execute_GCC_Installation(*Params)
+
+        self.finished.emit()
 
     def Terminate(self):
-        self.executor.shutdown(False, True) if hasattr(self, 'executor') else None
+        self.stopEvent.set()
 
 
 class CMake_Installer(QObject):
     '''
     '''
-    finished = Signal(str)
+    started = Signal()
+    finished = Signal()
 
     def __init__(self):
         super().__init__()
 
+        self.stopEvent = Event()
+        
     def Check_CMake(self):
         try:
             CMakeVersion = str(QFunc.runCMD([['cmake', '--version']], decodeResult = True)[0])
@@ -269,13 +318,25 @@ class CMake_Installer(QObject):
             Path_Download = os.path.join(Dir_Download, f"{File_Name}.{File_Format}")
             Dir_Install = Path(f"{os.getenv('SystemDrive')}/CMake").__str__()
             Path_Binary = os.path.normpath(os.path.join(Dir_Install, 'bin'))
+            if self.stopEvent.isSet():
+                return
             QFunc.downloadFile(URL, Dir_Download, File_Name, File_Format, None)
+            if self.stopEvent.isSet():
+                return
             shutil.unpack_archive(Path_Download, Dir_Install, Path_Download.rsplit('.', 1)[-1])
+            if self.stopEvent.isSet():
+                return
             QFunc.moveFiles(os.path.dirname(QFunc.getPaths(Dir_Install, 'bin')[0]), Dir_Install)
+            if self.stopEvent.isSet():
+                return
             QFunc.setEnvVar('PATH', Path_Binary, 'User')
+            if self.stopEvent.isSet():
+                return
             os.remove(Path_Download)
 
         if platform.system() == 'Linux':
+            if self.stopEvent.isSet():
+                return
             QFunc.runCMD(['sudo apt-get update', 'sudo apt-get install build-essential'])
 
     def Execute_CMake_Installation(self):
@@ -307,25 +368,28 @@ class CMake_Installer(QObject):
         QFunc.runCMD(['set CC={}'.format(os.path.join(self.MinGW_Bin_Path, 'gcc.exe'))])
         QFunc.runCMD(['set CXX={}'.format(os.path.join(self.MinGW_Bin_Path, 'g++.exe'))])
 
+    @Slot(tuple)
     def Execute(self, Params: tuple):
-        self.executor = QFunc.taskAccelerationManager.ThreadPool.createPool(
-            {self.Execute_CMake_Installation: Params},
-            asynchronous = False
-        )
+        self.started.emit()
 
-        self.finished.emit(str(None))
+        self.Execute_CMake_Installation(*Params)
+
+        self.finished.emit()
 
     def Terminate(self):
-        self.executor.shutdown(False, True) if hasattr(self, 'executor') else None
+        self.stopEvent.set()
 """
 
 class Python_Installer(QObject):
     '''
     '''
-    finished = Signal(str)
+    started = Signal()
+    finished = Signal()
 
     def __init__(self):
         super().__init__()
+
+        self.stopEvent = Event()
 
     def Check_Python(self):
         '''
@@ -354,11 +418,19 @@ class Python_Installer(QObject):
             File_Name = 'python'
             File_Format = 'exe'
             Path_Download = os.path.join(Dir_Download, f"{File_Name}.{File_Format}")
+            if self.stopEvent.isSet():
+                return
             QFunc.downloadFile(URL, Dir_Download, File_Name, File_Format, None)
+            if self.stopEvent.isSet():
+                return
             QFunc.runCMD([f'{Path_Download} /quiet InstallAllUsers=1 PrependPath=1'])
+            if self.stopEvent.isSet():
+                return
             os.remove(Path_Download)
 
         if platform.system() == 'Linux':
+            if self.stopEvent.isSet():
+                return
             QFunc.runCMD(['sudo apt-get update', 'sudo apt-get install -y python3'])
 
     def Execute_Python_Installation(self, Version_Download: str):
@@ -377,25 +449,28 @@ class Python_Installer(QObject):
             EnvConfiguratorSignals.Signal_PythonDetected.emit()
             EnvConfiguratorSignals.Signal_PythonStatus.emit(f"Python detected. Version: {Result}")
 
+    @Slot(tuple)
     def Execute(self, Params: tuple):
-        self.executor = QFunc.taskAccelerationManager.ThreadPool.createPool(
-            {self.Execute_Python_Installation: Params},
-            asynchronous = False
-        )
+        self.started.emit()
 
-        self.finished.emit(str(None))
+        self.Execute_Python_Installation(*Params)
+
+        self.finished.emit()
 
     def Terminate(self):
-        self.executor.shutdown(False, True) if hasattr(self, 'executor') else None
+        self.stopEvent.set()
 
 
 class PyReqs_Installer(QObject):
     '''
     '''
-    finished = Signal(str)
+    started = Signal()
+    finished = Signal()
 
     def __init__(self):
         super().__init__()
+
+        self.stopEvent = Event()
 
         self.EmitFlag = True
 
@@ -426,16 +501,8 @@ class PyReqs_Installer(QObject):
     def Install_PyReq(self, Package: str):
         MirrorList = ['https://pypi.org/simple', 'https://pypi.tuna.tsinghua.edu.cn/simple']
         for Mirror in MirrorList:
-            '''
-            Ask = "This script requires {0}. Do you want to install {0}? [y/n]".format(Package)
-            Inquiry = input(Ask)
-            while Inquiry not in ("y", "n"):
-                Inquiry = input(Ask)
-            if Inquiry == "y":
-                os.system("pip3 install {0} --index-url {1}".format(Package, Mirror))
-            else:
-                exit(-1)
-            '''
+            if self.stopEvent.isSet():
+                return
             _, _, ReturnCode = QFunc.runCMD([f'pip3 install {Package} --index-url {Mirror}'])
             if ReturnCode == 0:
                 break
@@ -473,25 +540,28 @@ class PyReqs_Installer(QObject):
                 EnvConfiguratorSignals.Signal_PyReqsInstallFailed.emit(e)
                 EnvConfiguratorSignals.Signal_PyReqsStatus.emit("Installation failed:(")
 
+    @Slot(tuple)
     def Execute(self, Params: tuple):
-        self.executor = QFunc.taskAccelerationManager.ThreadPool.createPool(
-            {self.Execute_PyReqs_Installation: Params},
-            asynchronous = False
-        )
+        self.started.emit()
 
-        self.finished.emit(str(None))
+        self.Execute_PyReqs_Installation(*Params)
+
+        self.finished.emit()
 
     def Terminate(self):
-        self.executor.shutdown(False, True) if hasattr(self, 'executor') else None
+        self.stopEvent.set()
 
 
 class Pytorch_Installer(QObject):
     '''
     '''
-    finished = Signal(str)
+    started = Signal()
+    finished = Signal()
 
     def __init__(self):
         super().__init__()
+
+        self.stopEvent = Event()
 
         self.EmitFlag = True
 
@@ -518,6 +588,8 @@ class Pytorch_Installer(QObject):
     def Install_Pytorch(self, Package: str, Reinstall: bool):
         DisplayCommand = 'cmd /c start cmd /k ' if platform.system() == 'Windows' else 'x-terminal-emulator -e '
         if Package in ('torch', 'torchvision', 'torchaudio'):
+            if self.stopEvent.isSet():
+                return
             try:
                 pynvml.nvmlInit()
             except:
@@ -526,12 +598,16 @@ class Pytorch_Installer(QObject):
             CudaVersion = min(CudaList, key = lambda Cuda: abs(Cuda - pynvml.nvmlSystemGetCudaDriverVersion()//100))
             MirrorList = [f'https://download.pytorch.org/whl/cu{CudaVersion}', '']
             for Mirror in MirrorList:
+                if self.stopEvent.isSet():
+                    return
                 Result = QFunc.runCMD([
                     DisplayCommand if Reinstall else '' + f'pip3 install {Package} --index-url {Mirror}' + '--force-reinstall' if Reinstall else ''
                 ])
                 if Result.returncode == 0:
                     break
         else:
+            if self.stopEvent.isSet():
+                return
             QFunc.runCMD(
                 [DisplayCommand if Reinstall else '' + f'pip3 uninstall {Package} -y'] if Reinstall else [] +
                 [DisplayCommand if Reinstall else '' + f'pip3 install {Package} -y']
@@ -562,15 +638,15 @@ class Pytorch_Installer(QObject):
                 EnvConfiguratorSignals.Signal_PytorchDetected.emit() if Index + 1 == len(PackageList) else None
                 EnvConfiguratorSignals.Signal_PytorchStatus.emit(f"{Package} detected. Version: {Result}")
 
+    @Slot(tuple)
     def Execute(self, Params: tuple):
-        self.executor = QFunc.taskAccelerationManager.ThreadPool.createPool(
-            {self.Execute_Pytorch_Installation: Params},
-            asynchronous = False
-        )
+        self.started.emit()
 
-        self.finished.emit(str(None))
+        self.Execute_Pytorch_Installation(*Params)
+
+        self.finished.emit()
 
     def Terminate(self):
-        self.executor.shutdown(False, True) if hasattr(self, 'executor') else None
+        self.stopEvent.set()
 
 ##############################################################################################################################
