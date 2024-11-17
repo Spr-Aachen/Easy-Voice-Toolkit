@@ -18,10 +18,10 @@ from QEasyWidgets import QTasks
 from QEasyWidgets import ComponentsSignals, Theme, EasyTheme, Language, EasyLanguage, IconBase
 from QEasyWidgets.Windows import MessageBoxBase
 
-from windows.Windows import *
-from Functions import *
-from EnvConfigurator import *
-from Config import *
+from windows.windows import *
+from functions import *
+from envConfigurator import *
+from config import *
 
 ##############################################################################################################################
 

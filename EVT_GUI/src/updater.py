@@ -11,8 +11,8 @@ from PySide6.QtWidgets import QApplication, QVBoxLayout, QSizePolicy, QWidget, Q
 from QEasyWidgets import QFunctions as QFunc
 from QEasyWidgets.Windows import MessageBoxBase
 
-from Functions import FunctionSignals, Function_SetMethodExecutor, Function_UpdateChecker
-from Config import *
+from functions import FunctionSignals, Function_SetMethodExecutor, Function_UpdateChecker
+from config import *
 
 ##############################################################################################################################
 

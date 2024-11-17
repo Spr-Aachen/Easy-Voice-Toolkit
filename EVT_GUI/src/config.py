@@ -5,7 +5,7 @@ from QEasyWidgets import QFunctions as QFunc
 ##############################################################################################################################
 
 # Set current version
-currentVersion = "v1.2.2"
+currentVersion = "v1.2.3"
 
 # Set info for update url
 repoOwner = 'Spr-Aachen'

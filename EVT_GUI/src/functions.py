@@ -8,8 +8,8 @@ from PySide6.QtWidgets import QMessageBox
 from QEasyWidgets import QFunctions as QFunc
 from QEasyWidgets.Components import *
 
-from components.Components import *
-from windows.Windows import *
+from components.components import *
+from windows.windows import *
 
 ##############################################################################################################################
 

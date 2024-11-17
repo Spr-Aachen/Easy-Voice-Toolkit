@@ -38,11 +38,11 @@ Functions that are currently included in the toolkit are as follows:
 
 - [Voice Transcription](/docs/EN/Voice-Transcriber.md)
 
-- [Dataset Creating (SRT Converting & WAV Splitting)](/docs/EN/Dataset-Creator.md)
+- [Dataset Creating (For Voice Conversion)](/docs/EN/Dataset-Creator.md)
 
-- [Model Training](/docs/EN/Voice-Trainer.md)
+- [Model Training (For Voice Conversion)](/docs/EN/Voice-Trainer.md)
 
-- [Voice Convertion](/docs/EN/Voice-Converter.md)
+- [Voice Conversion](/docs/EN/Voice-Converter.md)
 
 <br>These functions can be seamlessly integrated to form a complete workflow
 <br>Users can use these tools selectively according to their own needs, or use them in sequence to gradually transform raw audio files into ideal speech models
@@ -174,15 +174,15 @@ Please make sure that you've installed [Python](https://www.python.org/downloads
 
 - Activate GUI
     ```shell
-    Run.py
+    run.py
     ```
 
 ### Cloud Deployment
 
 #### Google Colab
 
-[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Spr-Aachen/Easy-Voice-Toolkit/blob/main/Run.ipynb)
-<br>Click to use the demo above, or access to Colab and upload [Run.ipynb](https://github.com/Spr-Aachen/Easy-Voice-Toolkit/blob/main/Run.ipynb)
+[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Spr-Aachen/Easy-Voice-Toolkit/blob/main/run.ipynb)
+<br>Click to use the demo above, or access to Colab and upload [run.ipynb](https://github.com/Spr-Aachen/Easy-Voice-Toolkit/blob/main/run.ipynb)
 
 
 ## Future Features

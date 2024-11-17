@@ -1,8 +1,8 @@
 from PySide6.QtCore import (QCoreApplication, QMetaObject, QSize)
 from PySide6.QtWidgets import *
 
-from components.Components import LabelBase, Table_VPRResult, LineEditBase, HollowButton
-from assets import Sources
+from components.components import LabelBase, Table_VPRResult, LineEditBase, HollowButton
+from assets import sources
 
 
 class Ui_ChildWindow_VPR(object):
