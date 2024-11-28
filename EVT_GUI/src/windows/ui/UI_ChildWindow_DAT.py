@@ -2,7 +2,6 @@ from PySide6.QtCore import (QCoreApplication, QMetaObject, QSize)
 from PySide6.QtWidgets import *
 
 from components.components import LabelBase, HollowButton, Table_DATResult, TabWidgetBase
-from assets import sources
 
 
 class Ui_ChildWindow_DAT(object):

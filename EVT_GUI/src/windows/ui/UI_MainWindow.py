@@ -3,7 +3,6 @@ from PySide6.QtGui import (QIcon, QFont)
 from PySide6.QtWidgets import *
 
 from components.components import WidgetBase, ButtonBase, NavigationButton, HollowButton, MenuButton, CheckBoxBase, LabelBase, LineEditBase, TextEditBase, TextBrowserBase, ComboBoxBase, Frame_RangeSetting, SpinBoxBase, DoubleSpinBoxBase, ProgressBarBase, ToolBoxBase, GroupBoxBase, ScrollAreaBase, TreeWidgetBase, TabWidgetBase, Table_ViewModels, Table_EditAudioSpeaker
-from assets import sources
 
 
 class Ui_MainWindow(object):

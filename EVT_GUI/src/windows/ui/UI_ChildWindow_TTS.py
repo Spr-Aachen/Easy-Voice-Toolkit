@@ -2,7 +2,6 @@ from PySide6.QtCore import (QCoreApplication, QMetaObject, QSize)
 from PySide6.QtWidgets import *
 
 from components.components import LabelBase, HollowButton, MediaPlayerBase
-from assets import sources
 
 
 class Ui_ChildWindow_TTS(object):
@@ -103,10 +102,10 @@ class Ui_ChildWindow_TTS(object):
 
         self.gridLayout.addWidget(self.Label_Text, 1, 0, 1, 2)
 
-        self.Widget = MediaPlayerBase(self.CentralWidget)
-        self.Widget.setObjectName(u"Widget")
+        self.widget = MediaPlayerBase(self.CentralWidget)
+        self.widget.setObjectName(u"widget")
 
-        self.gridLayout.addWidget(self.Widget, 2, 0, 1, 2)
+        self.gridLayout.addWidget(self.widget, 2, 0, 1, 2)
 
 
         self.verticalLayout.addWidget(self.CentralWidget)
