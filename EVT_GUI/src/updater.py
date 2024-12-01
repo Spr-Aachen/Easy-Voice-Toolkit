@@ -31,13 +31,9 @@ extractDir = QFunc.normPath(Path(currentDir).joinpath('Temp'))
 config = QFunc.configManager(configPath)
 
 # Set path of executer
-try:
-    executerName = str(config.getValue('Info', 'executerName'))
-    executerPath = QFunc.normPath(Path(currentDir).joinpath(executerName))
-except:
-    BootExecuter = False
-else:
-    BootExecuter = True
+executerName = str(config.getValue('Info', 'executerName', ''))
+executerPath = QFunc.normPath(Path(currentDir).joinpath(executerName))
+bootExecuter = True if executerName.strip() != '' else False
 
 ##############################################################################################################################
 
@@ -244,8 +240,8 @@ class Widget_Updater(QWidget):
                 MessageBoxBase.pop(None,
                     QMessageBox.Warning, "Warning",
                     text = Info
-                ) if not Succeeded and len(Info) > 0 else None,
-                (RebootIfSucceeded() if Succeeded else RebootIfFailed()) if BootExecuter else None,
+                ) if not Succeeded else None,
+                (RebootIfSucceeded() if Succeeded else RebootIfFailed()) if bootExecuter else None,
                 QApplication.instance().exit()
             )
         )

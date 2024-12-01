@@ -1,8 +1,6 @@
 import os
-import platform
 from typing import Union, Optional
 from PySide6.QtCore import Qt, QObject, Signal, Slot, QThread, QPoint
-from PySide6.QtCore import QCoreApplication as QCA
 from PySide6.QtGui import QFont
 from PySide6.QtWidgets import QMessageBox
 from QEasyWidgets import QFunctions as QFunc
@@ -613,7 +611,6 @@ def Function_UpdateChecker(
         if IsUpdateNeeded:
             FunctionSignals.Signal_ReadyToUpdate.emit(DownloadURL, VersionInfo)
         else:
-            FunctionSignals.Signal_UpdateMessage.emit("已是最新版本！\nAlready up to date!")
-            FunctionSignals.Signal_IsUpdateSucceeded.emit(False, "")
+            FunctionSignals.Signal_IsUpdateSucceeded.emit(False, "已是最新版本！\nAlready up to date!")
 
 ##############################################################################################################################

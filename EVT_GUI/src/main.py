@@ -880,6 +880,7 @@ class MainWindow(Window_MainWindow):
         self.MonitorUsage.start()
 
     def closeEvent(self, event):
+        config.editConfig('Info', 'executerName', '')
         FunctionSignals.Signal_TaskStatus.connect(lambda: QApplication.instance().exit())
         FunctionSignals.Signal_ForceQuit.emit()
 
@@ -1277,7 +1278,7 @@ class MainWindow(Window_MainWindow):
                     buttonEvents = {
                         QMessageBox.Yes: lambda: (
                             config.editConfig('Updater', 'Asked', 'True'),
-                            subprocess.Popen((['python', UpdaterPath] if isFileCompiled == False else [UpdaterPath]) + [f'--config "{configPath}"'], shell = True, env = os.environ),
+                            subprocess.Popen(f'{"python" if isFileCompiled == False else ""} "{UpdaterPath}" --config "{configPath}"', shell = True, env = os.environ),
                             QApplication.instance().exit()
                         ),
                         QMessageBox.No: lambda: (
