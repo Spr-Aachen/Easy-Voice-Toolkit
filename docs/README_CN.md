@@ -170,15 +170,15 @@
 
 - 启动图形界面
     ```shell
-    Run.py
+    run.py
     ```
 
 ### 云端部署
 
 #### Google Colab
 
-[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Spr-Aachen/Easy-Voice-Toolkit/blob/main/Run.ipynb)
-<br>点击以使用上面的demo，或者在Colab中上传[Run.ipynb](https://github.com/Spr-Aachen/Easy-Voice-Toolkit/blob/main/Run.ipynb)
+[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Spr-Aachen/Easy-Voice-Toolkit/blob/main/run.ipynb)
+<br>点击以使用上面的demo，或者在Colab中上传[run.ipynb](https://github.com/Spr-Aachen/Easy-Voice-Toolkit/blob/main/run.ipynb)
 
 
 ## 迭代计划
