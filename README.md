@@ -71,7 +71,7 @@ Currently the released versions only support Windows system
 
 ### Language
 
-Languages that are currently supported/unsupported by the tools are shown as follows:
+Languages that are currently supported/unsupported by the toolkit are shown as follows:
 
 <table border = "1">
     <tr>
@@ -105,7 +105,7 @@ Languages that are currently supported/unsupported by the tools are shown as fol
         <th style = "text-align:center;">&#10004</th>
     </tr>
     <tr>
-        <th style = "text-align:center;">Voice Trainer</th>
+        <th style = "text-align:center;">Model Trainer</th>
         <th style = "text-align:center;">&#10004</th>
         <th style = "text-align:center;">&#10004</th>
         <th style = "text-align:center;">&#10004</th>
@@ -132,7 +132,7 @@ You have two options：
 
 #### Run
 
-Just click on the .exe file or its shortcut
+Just click on the Main.exe file or its shortcut
 
 ### Local Deployment - Developer
 
@@ -165,14 +165,14 @@ Please make sure that you've installed [Python](https://www.python.org/downloads
     pip install -r requirements.txt
     ```
 
-- Install GUI dependency
+- Install [GUI dependency](https://github.com/Spr-Aachen/QEasyWidgets)
     ```shell
     pip install QEasyWidgets
     ```
 
 #### Run Programm
 
-- Activate GUI
+- Start the client
     ```shell
     run.py
     ```
@@ -187,11 +187,12 @@ Please make sure that you've installed [Python](https://www.python.org/downloads
 
 ## Future Features
 
-### To Do
+### ToDo
 - Add chatbot (LLM) integration
+- Refactor frontend with C++ (Qt)
 
 ### WIP
-- Frontend-Backend Separation
+- Backend development
 - Internationalization
 - Add support for Linux OS
 

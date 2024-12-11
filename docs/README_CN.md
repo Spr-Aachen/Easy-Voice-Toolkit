@@ -128,7 +128,7 @@
 
 #### 运行
 
-点击.exe文件或其快捷方式即可
+点击Main.exe文件或其快捷方式即可
 
 ### 本地部署 - 开发者
 
@@ -161,14 +161,14 @@
     pip install -r requirements.txt
     ```
 
-- 安装GUI依赖
+- 安装[GUI依赖](https://github.com/Spr-Aachen/QEasyWidgets)
     ```shell
     pip install QEasyWidgets
     ```
 
 #### 运行程序
 
-- 启动图形界面
+- 启动客户端
     ```shell
     run.py
     ```
@@ -183,11 +183,12 @@
 
 ## 迭代计划
 
-### To Do
+### ToDo
 - 添加LLM联动功能
+- 使用C++重构前端
 
 ### 开发中
-- 前后端分离
+- 后端开发
 - 语言国际化
 - 兼容Linux系统
 
