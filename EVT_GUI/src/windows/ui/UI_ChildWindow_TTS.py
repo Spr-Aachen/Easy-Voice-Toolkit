@@ -1,7 +1,7 @@
 from PySide6.QtCore import (QCoreApplication, QMetaObject, QSize)
 from PySide6.QtWidgets import *
 
-from components.components import LabelBase, HollowButton, MediaPlayerBase
+from components import LabelBase, HollowButton, MediaPlayerBase
 
 
 class Ui_ChildWindow_TTS(object):

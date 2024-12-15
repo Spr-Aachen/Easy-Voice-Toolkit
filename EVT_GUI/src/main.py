@@ -18,7 +18,7 @@ from QEasyWidgets import QTasks
 from QEasyWidgets import ComponentsSignals, Theme, EasyTheme, Language, EasyLanguage, IconBase
 from QEasyWidgets.Windows import MessageBoxBase
 
-from windows.windows import *
+from windows import *
 from functions import *
 from envConfigurator import *
 from config import *
@@ -1203,7 +1203,7 @@ class MainWindow(Window_MainWindow):
                 buttons = QMessageBox.Yes|QMessageBox.No,
                 buttonEvents = {
                     QMessageBox.Yes: lambda: (
-                        ChildWindow_TTS.ui.widget.ReleaseMediaPlayer(),
+                        ChildWindow_TTS.ui.widget.releaseMediaPlayer(),
                         ChildWindow_TTS.close()
                     )
                 } 
@@ -1233,7 +1233,7 @@ class MainWindow(Window_MainWindow):
                 buttons = QMessageBox.Yes|QMessageBox.No,
                 buttonEvents = {
                     QMessageBox.Yes: lambda: (
-                        ChildWindow_TTS.ui.widget.ReleaseMediaPlayer(),
+                        ChildWindow_TTS.ui.widget.releaseMediaPlayer(),
                         os.remove(MediaPath),
                         ChildWindow_TTS.close()
                     )
@@ -1248,7 +1248,7 @@ class MainWindow(Window_MainWindow):
                 buttons = QMessageBox.Yes|QMessageBox.No,
                 buttonEvents = {
                     QMessageBox.Yes: lambda: (
-                        ChildWindow_TTS.ui.widget.ReleaseMediaPlayer(),
+                        ChildWindow_TTS.ui.widget.releaseMediaPlayer(),
                         shutil.move(
                             MediaPath,
                             QFunc.getFileDialog(
@@ -1262,7 +1262,7 @@ class MainWindow(Window_MainWindow):
             )
         )
 
-        ChildWindow_TTS.ui.widget.SetMediaPlayer(
+        ChildWindow_TTS.ui.widget.setMediaPlayer(
             MediaPath
         )
         ChildWindow_TTS.exec()
