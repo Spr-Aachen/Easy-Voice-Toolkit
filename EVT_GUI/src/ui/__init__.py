@@ -1,0 +1,6 @@
+from .UI_MainWindow import Ui_MainWindow
+from .UI_ChildWindow_VPR import Ui_ChildWindow_VPR
+from .UI_ChildWindow_ASR import Ui_ChildWindow_ASR
+from .UI_ChildWindow_DAT import Ui_ChildWindow_DAT
+from .UI_ChildWindow_DAT import Ui_ChildWindow_DAT
+from .UI_ChildWindow_TTS import Ui_ChildWindow_TTS
