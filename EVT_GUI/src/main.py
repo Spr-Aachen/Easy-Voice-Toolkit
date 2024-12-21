@@ -923,7 +923,7 @@ class MainWindow(Window_MainWindow):
             return
         ToolIndexList = ['Process', 'VPR', 'ASR', 'TTS']
         ToolIndex = self.ui.StackedWidget_Pages_Models.currentIndex()
-        TabWidget = QFunc.findChildUI(self.ui.StackedWidget_Pages_Models.currentWidget(), QTabWidget)
+        TabWidget = QFunc.findChild(self.ui.StackedWidget_Pages_Models.currentWidget(), QTabWidget)
         TypeIndex = TabWidget.currentIndex()
         Sector = [
             ToolIndexList[ToolIndex],

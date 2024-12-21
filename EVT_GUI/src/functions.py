@@ -2,12 +2,12 @@ import os
 from typing import Union, Optional
 from PySide6.QtCore import Qt, QObject, Signal, Slot, QThread, QPoint
 from PySide6.QtGui import QFont
-from PySide6.QtWidgets import QMessageBox
+from PySide6.QtWidgets import *
 from QEasyWidgets import QFunctions as QFunc
 from QEasyWidgets.Components import *
+from QEasyWidgets.Windows import *
 
 from components import *
-from windows import *
 
 ##############################################################################################################################
 
@@ -46,7 +46,7 @@ def Function_ScrollToWidget(
     '''
     '''
     if scrollArea is None:
-        scrollArea = QFunc.findParentUI(targetWidget, QScrollArea)
+        scrollArea = QFunc.findParent(targetWidget, QScrollArea)
 
     def ScrollToWidget():
         TargetRect = targetWidget.mapToGlobal(QPoint(0, 0))
@@ -541,10 +541,10 @@ def Function_SetMethodExecutor(
 
         WorkerThread.started.connect(lambda: Function_AnimateFrame(consoleWidget, minHeight = 0, maxHeight = 210, mode = "Extend")) if consoleWidget else None
         WorkerThread.started.connect(lambda: Function_AnimateProgressBar(progressBar, isTaskAlive = True)) if progressBar else None
-        WorkerThread.started.connect(lambda: Function_AnimateStackedWidget(QFunc.findParentUI(executeButton, QStackedWidget), target = 1)) if terminateButton else None
+        WorkerThread.started.connect(lambda: Function_AnimateStackedWidget(QFunc.findParent(executeButton, QStackedWidget), target = 1)) if terminateButton else None
         WorkerThread.finished.connect(lambda: Function_AnimateFrame(consoleWidget, minHeight = 0, maxHeight = 210, mode = "Reduce")) if consoleWidget else None
         WorkerThread.finished.connect(lambda: Function_AnimateProgressBar(progressBar, isTaskAlive = False)) if progressBar else None
-        WorkerThread.finished.connect(lambda: Function_AnimateStackedWidget(QFunc.findParentUI(executeButton, QStackedWidget), target = 0)) if terminateButton else None
+        WorkerThread.finished.connect(lambda: Function_AnimateStackedWidget(QFunc.findParent(executeButton, QStackedWidget), target = 0)) if terminateButton else None
         #WorkerThread.finished.connect(lambda: FunctionSignals.Signal_ExecuteTask.disconnect(getattr(ClassInstance, MethodName)))
 
         FunctionSignals.Signal_ExecuteTask.emit(Args)
