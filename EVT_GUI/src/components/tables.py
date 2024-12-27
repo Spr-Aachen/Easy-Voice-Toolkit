@@ -6,7 +6,7 @@ from QEasyWidgets import IconBase
 from QEasyWidgets.Components import *
 from QEasyWidgets.Windows import MessageBoxBase
 
-from assets.sources import *
+from assets import *
 
 ##############################################################################################################################
 
