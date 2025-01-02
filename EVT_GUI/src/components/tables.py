@@ -194,8 +194,7 @@ class Table_EditAudioSpeaker(TableBase):
         self.clearRows()
         super().setColumnCount(self.columnCount())
         super().setHorizontalHeaderLabels(self.HorizontalHeaderLabels)
-        ParamDict = QFunc.toIterable(params if params is None or len(params) != 0 else {'': ''})
-        for Key, Value in ParamDict.items():
+        for Key, Value in (params if isinstance(params, dict) else (eval(params) if not (params is None or len(params) == 0) else {'': ''})).items():
             QApplication.instance().processEvents()
             param = (Key, Value)
             #Index = next((i for i, key in enumerate(ParamDict) if key == Key), None)
@@ -271,7 +270,7 @@ class Table_VPRResult(TableBase):
         PlayerWidget = MediaPlayerBase()
         PlayerWidget.setBorderless(True)
         PlayerWidget.setTransparent(True)
-        PlayerWidget.SetMediaPlayer(param[0])
+        PlayerWidget.setMediaPlayer(param[0])
         PlayerWidget.layout().setContentsMargins(6, 6, 6, 6)
         PlayerWidget.Slider.hide()
         Column3Layout = QHBoxLayout()
@@ -375,7 +374,7 @@ class Table_ASRResult(TableBase):
         PlayerWidget = MediaPlayerBase()
         PlayerWidget.setBorderless(True)
         PlayerWidget.setTransparent(True)
-        PlayerWidget.SetMediaPlayer(param[0])
+        PlayerWidget.setMediaPlayer(param[0])
         PlayerWidget.layout().setContentsMargins(6, 6, 6, 6)
         PlayerWidget.Slider.hide()
         Column2Layout = QHBoxLayout()
@@ -393,8 +392,7 @@ class Table_ASRResult(TableBase):
         self.clearRows()
         super().setColumnCount(self.columnCount())
         super().setHorizontalHeaderLabels(self.HorizontalHeaderLabels)
-        ParamDict = QFunc.toIterable(params)
-        for Key, Value in ParamDict.items():
+        for Key, Value in (params if isinstance(params, dict) else eval(params)).items():
             QApplication.instance().processEvents()
             param = (Key, Value)
             self.addRow(param)
@@ -449,7 +447,7 @@ class Table_DATResult(TableBase):
         PlayerWidget = MediaPlayerBase()
         PlayerWidget.setBorderless(True)
         PlayerWidget.setTransparent(True)
-        PlayerWidget.SetMediaPlayer(param[0])
+        PlayerWidget.setMediaPlayer(param[0])
         PlayerWidget.layout().setContentsMargins(6, 6, 6, 6)
         PlayerWidget.Slider.hide()
         Column1Layout = QHBoxLayout()
@@ -467,8 +465,7 @@ class Table_DATResult(TableBase):
         self.clearRows()
         super().setColumnCount(self.columnCount())
         super().setHorizontalHeaderLabels(self.HorizontalHeaderLabels)
-        ParamDict = QFunc.toIterable(params)
-        for Key, Value in ParamDict.items():
+        for Key, Value in (params if isinstance(params, dict) else eval(params)).items():
             QApplication.instance().processEvents()
             param = (Key, Value)
             self.addRow(param)
