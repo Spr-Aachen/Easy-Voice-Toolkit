@@ -5,12 +5,12 @@ import platform
 import shutil
 import pynvml
 #import pkg_resources
+import PyEasyUtils as EasyUtils
 from packaging import version
 from pathlib import Path
 from threading import Event
 from typing import Optional
 from PySide6.QtCore import QObject, Signal, Slot
-from QEasyWidgets import QFunctions as QFunc
 
 ##############################################################################################################################
 
@@ -78,7 +78,7 @@ class Aria2_Installer(QObject):
 
     def Check_Aria2(self):
         try:
-            Aria2Version = str(QFunc.runCMD([['aria2c', '-v']], decodeResult = True)[0])
+            Aria2Version = str(EasyUtils.runCMD([['aria2c', '-v']], decodeResult = True)[0])
             return Aria2Version
         except OSError:
             return False
@@ -93,16 +93,16 @@ class Aria2_Installer(QObject):
             Dir_Install = Path(f"{os.getenv('SystemDrive')}/Aria2").__str__()
             if self.stopEvent.isSet():
                 return
-            QFunc.downloadFile(URL, Dir_Download, File_Name, File_Format, None)
+            EasyUtils.downloadFile(URL, Dir_Download, File_Name, File_Format, None)
             if self.stopEvent.isSet():
                 return
             shutil.unpack_archive(Path_Download, Dir_Install, Path_Download.rsplit('.', 1)[-1])
             if self.stopEvent.isSet():
                 return
-            QFunc.moveFiles(os.path.dirname(QFunc.getPaths(Dir_Install, 'aria2c.exe')[0]), Dir_Install)
+            EasyUtils.moveFiles(os.path.dirname(EasyUtils.getPaths(Dir_Install, 'aria2c.exe')[0]), Dir_Install)
             if self.stopEvent.isSet():
                 return
-            QFunc.setEnvVar('PATH', Dir_Install, 'User')
+            EasyUtils.setEnvVar('PATH', Dir_Install, 'User')
             if self.stopEvent.isSet():
                 return
             os.remove(Path_Download)
@@ -110,7 +110,7 @@ class Aria2_Installer(QObject):
         if platform.system() == 'Linux':
             if self.stopEvent.isSet():
                 return
-            QFunc.runCMD(['sudo apt-get update', 'sudo apt-get install aria2'])
+            EasyUtils.runCMD(['sudo apt-get update', 'sudo apt-get install aria2'])
 
     def Execute_Aria2_Installation(self):
         Result = self.Check_Aria2()
@@ -152,7 +152,7 @@ class FFmpeg_Installer(QObject):
 
     def Check_FFmpeg(self):
         try:
-            FFmpegVersion = str(QFunc.runCMD([['ffmpeg', '-version']], decodeResult = True)[0])
+            FFmpegVersion = str(EasyUtils.runCMD([['ffmpeg', '-version']], decodeResult = True)[0])
             return FFmpegVersion
         except OSError:
             return False
@@ -168,16 +168,16 @@ class FFmpeg_Installer(QObject):
             Path_Binary = os.path.normpath(os.path.join(Dir_Install, 'bin'))
             if self.stopEvent.isSet():
                 return
-            QFunc.downloadFile(URL, Dir_Download, File_Name, File_Format, None)
+            EasyUtils.downloadFile(URL, Dir_Download, File_Name, File_Format, None)
             if self.stopEvent.isSet():
                 return
             shutil.unpack_archive(Path_Download, Dir_Install, Path_Download.rsplit('.', 1)[-1])
             if self.stopEvent.isSet():
                 return
-            QFunc.moveFiles(os.path.dirname(QFunc.getPaths(Dir_Install, 'bin')[0]), Dir_Install)
+            EasyUtils.moveFiles(os.path.dirname(EasyUtils.getPaths(Dir_Install, 'bin')[0]), Dir_Install)
             if self.stopEvent.isSet():
                 return
-            QFunc.setEnvVar('PATH', Path_Binary, 'User')
+            EasyUtils.setEnvVar('PATH', Path_Binary, 'User')
             if self.stopEvent.isSet():
                 return
             os.remove(Path_Download)
@@ -185,7 +185,7 @@ class FFmpeg_Installer(QObject):
         if platform.system() == 'Linux':
             if self.stopEvent.isSet():
                 return
-            QFunc.runCMD(['sudo apt-get update', 'sudo apt-get install ffmpeg'])
+            EasyUtils.runCMD(['sudo apt-get update', 'sudo apt-get install ffmpeg'])
 
     def Execute_FFmpeg_Installation(self):
         Result = self.Check_FFmpeg()
@@ -228,7 +228,7 @@ class GCC_Installer(QObject):
         
     def Check_GCC(self):
         try:
-            GCCVersion = str(QFunc.runCMD([['gcc', '--version']], decodeResult = True)[0])
+            GCCVersion = str(EasyUtils.runCMD([['gcc', '--version']], decodeResult = True)[0])
             return GCCVersion
         except OSError:
             return False
@@ -244,16 +244,16 @@ class GCC_Installer(QObject):
             Path_Binary = os.path.normpath(os.path.join(Dir_Install, 'bin'))
             if self.stopEvent.isSet():
                 return
-            QFunc.downloadFile(URL, Dir_Download, File_Name, File_Format, None)
+            EasyUtils.downloadFile(URL, Dir_Download, File_Name, File_Format, None)
             if self.stopEvent.isSet():
                 return
             shutil.unpack_archive(Path_Download, Dir_Install, Path_Download.rsplit('.', 1)[-1])
             if self.stopEvent.isSet():
                 return
-            QFunc.moveFiles(os.path.dirname(QFunc.getPaths(Dir_Install, 'bin')[0]), Dir_Install)
+            EasyUtils.moveFiles(os.path.dirname(EasyUtils.getPaths(Dir_Install, 'bin')[0]), Dir_Install)
             if self.stopEvent.isSet():
                 return
-            QFunc.setEnvVar('PATH', Path_Binary, 'User')
+            EasyUtils.setEnvVar('PATH', Path_Binary, 'User')
             if self.stopEvent.isSet():
                 return
             os.remove(Path_Download)
@@ -261,7 +261,7 @@ class GCC_Installer(QObject):
         if platform.system() == 'Linux':
             if self.stopEvent.isSet():
                 return
-            QFunc.runCMD(['sudo apt-get update', 'sudo apt-get install build-essential'])
+            EasyUtils.runCMD(['sudo apt-get update', 'sudo apt-get install build-essential'])
 
     def Execute_GCC_Installation(self):
         Result = self.Check_GCC()
@@ -304,7 +304,7 @@ class CMake_Installer(QObject):
         
     def Check_CMake(self):
         try:
-            CMakeVersion = str(QFunc.runCMD([['cmake', '--version']], decodeResult = True)[0])
+            CMakeVersion = str(EasyUtils.runCMD([['cmake', '--version']], decodeResult = True)[0])
             return CMakeVersion
         except OSError:
             return False
@@ -320,16 +320,16 @@ class CMake_Installer(QObject):
             Path_Binary = os.path.normpath(os.path.join(Dir_Install, 'bin'))
             if self.stopEvent.isSet():
                 return
-            QFunc.downloadFile(URL, Dir_Download, File_Name, File_Format, None)
+            EasyUtils.downloadFile(URL, Dir_Download, File_Name, File_Format, None)
             if self.stopEvent.isSet():
                 return
             shutil.unpack_archive(Path_Download, Dir_Install, Path_Download.rsplit('.', 1)[-1])
             if self.stopEvent.isSet():
                 return
-            QFunc.moveFiles(os.path.dirname(QFunc.getPaths(Dir_Install, 'bin')[0]), Dir_Install)
+            EasyUtils.moveFiles(os.path.dirname(EasyUtils.getPaths(Dir_Install, 'bin')[0]), Dir_Install)
             if self.stopEvent.isSet():
                 return
-            QFunc.setEnvVar('PATH', Path_Binary, 'User')
+            EasyUtils.setEnvVar('PATH', Path_Binary, 'User')
             if self.stopEvent.isSet():
                 return
             os.remove(Path_Download)
@@ -337,7 +337,7 @@ class CMake_Installer(QObject):
         if platform.system() == 'Linux':
             if self.stopEvent.isSet():
                 return
-            QFunc.runCMD(['sudo apt-get update', 'sudo apt-get install build-essential'])
+            EasyUtils.runCMD(['sudo apt-get update', 'sudo apt-get install build-essential'])
 
     def Execute_CMake_Installation(self):
         PathList = os.environ['PATH'].split(os.pathsep)
@@ -364,9 +364,9 @@ class CMake_Installer(QObject):
             EnvConfiguratorSignals.Signal_CMakeDetected.emit()
             EnvConfiguratorSignals.Signal_CMakeStatus.emit(f"CMake detected. Version: {Result}")
 
-        QFunc.runCMD(['set CMAKE_MAKE_PROGRAM={}'.format(os.path.join(self.MinGW_Bin_Path, 'mingw32-make.exe'))])
-        QFunc.runCMD(['set CC={}'.format(os.path.join(self.MinGW_Bin_Path, 'gcc.exe'))])
-        QFunc.runCMD(['set CXX={}'.format(os.path.join(self.MinGW_Bin_Path, 'g++.exe'))])
+        EasyUtils.runCMD(['set CMAKE_MAKE_PROGRAM={}'.format(os.path.join(self.MinGW_Bin_Path, 'mingw32-make.exe'))])
+        EasyUtils.runCMD(['set CC={}'.format(os.path.join(self.MinGW_Bin_Path, 'gcc.exe'))])
+        EasyUtils.runCMD(['set CXX={}'.format(os.path.join(self.MinGW_Bin_Path, 'g++.exe'))])
 
     @Slot(tuple)
     def Execute(self, Params: tuple):
@@ -403,7 +403,7 @@ class Python_Installer(QObject):
             return False
         '''
         try:
-            PythonVersion = str(QFunc.runCMD([['python', '--version']], decodeResult = True)[0])
+            PythonVersion = str(EasyUtils.runCMD([['python', '--version']], decodeResult = True)[0])
             if PythonVersion.split('.')[0] == 'Python 3' and int(PythonVersion.split('.')[1]) >= 8:
                 return PythonVersion
             else:
@@ -420,10 +420,10 @@ class Python_Installer(QObject):
             Path_Download = os.path.join(Dir_Download, f"{File_Name}.{File_Format}")
             if self.stopEvent.isSet():
                 return
-            QFunc.downloadFile(URL, Dir_Download, File_Name, File_Format, None)
+            EasyUtils.downloadFile(URL, Dir_Download, File_Name, File_Format, None)
             if self.stopEvent.isSet():
                 return
-            QFunc.runCMD([f'{Path_Download} /quiet InstallAllUsers=1 PrependPath=1'])
+            EasyUtils.runCMD([f'{Path_Download} /quiet InstallAllUsers=1 PrependPath=1'])
             if self.stopEvent.isSet():
                 return
             os.remove(Path_Download)
@@ -431,7 +431,7 @@ class Python_Installer(QObject):
         if platform.system() == 'Linux':
             if self.stopEvent.isSet():
                 return
-            QFunc.runCMD(['sudo apt-get update', 'sudo apt-get install -y python3'])
+            EasyUtils.runCMD(['sudo apt-get update', 'sudo apt-get install -y python3'])
 
     def Execute_Python_Installation(self, Version_Download: str):
         Result = self.Check_Python()
@@ -484,7 +484,7 @@ class PyReqs_Installer(QObject):
             return False
         '''
         try:
-            PackageInfos = str(QFunc.runCMD([['pip', 'show', PackageName]], decodeResult = True)[0])
+            PackageInfos = str(EasyUtils.runCMD([['pip', 'show', PackageName]], decodeResult = True)[0])
             if PackageInfos != 'None':
                 CurrentVersion = None
                 for PackageInfo in PackageInfos.splitlines():
@@ -492,7 +492,7 @@ class PyReqs_Installer(QObject):
                         CurrentVersion = PackageInfo[len('Version:'):].strip()
                         continue
                 CurrentVersion = PackageInfos if CurrentVersion is None else CurrentVersion
-                return CurrentVersion if QFunc.isVersionSatisfied(CurrentVersion, PackageVersionReqs) or not QFunc.isSystemSatisfied(SystemReqs) else False
+                return CurrentVersion if EasyUtils.isVersionSatisfied(CurrentVersion, PackageVersionReqs) or not EasyUtils.isSystemSatisfied(SystemReqs) else False
             else:
                 return False
         except OSError:
@@ -503,7 +503,7 @@ class PyReqs_Installer(QObject):
         for Mirror in MirrorList:
             if self.stopEvent.isSet():
                 return
-            _, _, ReturnCode = QFunc.runCMD([f'pip3 install {Package} --index-url {Mirror}'])
+            _, _, ReturnCode = EasyUtils.runCMD([f'pip3 install {Package} --index-url {Mirror}'])
             if ReturnCode == 0:
                 break
 
@@ -577,7 +577,7 @@ class Pytorch_Installer(QObject):
             return False
         '''
         try:
-            PackageInfos = str(QFunc.runCMD([['pip', 'show', Package]], decodeResult = True)[0])
+            PackageInfos = str(EasyUtils.runCMD([['pip', 'show', Package]], decodeResult = True)[0])
             if PackageInfos != 'None':
                 return PackageInfos
             else:
@@ -600,7 +600,7 @@ class Pytorch_Installer(QObject):
             for Mirror in MirrorList:
                 if self.stopEvent.isSet():
                     return
-                Result = QFunc.runCMD([
+                Result = EasyUtils.runCMD([
                     DisplayCommand if Reinstall else '' + f'pip3 install {Package} --index-url {Mirror}' + '--force-reinstall' if Reinstall else ''
                 ])
                 if Result.returncode == 0:
@@ -608,7 +608,7 @@ class Pytorch_Installer(QObject):
         else:
             if self.stopEvent.isSet():
                 return
-            QFunc.runCMD(
+            EasyUtils.runCMD(
                 [DisplayCommand if Reinstall else '' + f'pip3 uninstall {Package} -y'] if Reinstall else [] +
                 [DisplayCommand if Reinstall else '' + f'pip3 install {Package} -y']
             )

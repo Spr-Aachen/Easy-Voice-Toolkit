@@ -3,6 +3,7 @@ from PySide6.QtCore import Qt, Signal
 from PySide6.QtWidgets import *
 from QEasyWidgets import QFunctions as QFunc
 from QEasyWidgets import IconBase
+from QEasyWidgets.Common import FileDialogMode
 from QEasyWidgets.Components import *
 from QEasyWidgets.Windows import MessageBoxBase
 
@@ -25,9 +26,9 @@ class Table_ViewModels(TableBase):
 
         self.Clipboard = QApplication.instance().clipboard()
 
-    def setHorizontalHeaderLabels(self, Headers: list):
-        self.HorizontalHeaderLabels = Headers
-        self.ColumnCount = len(Headers)
+    def setHorizontalHeaderLabels(self, headers: list):
+        self.HorizontalHeaderLabels = headers
+        self.ColumnCount = len(headers)
         self.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
 
     def addRow(self, param: tuple):
@@ -127,12 +128,12 @@ class Table_EditAudioSpeaker(TableBase):
             lambda: self.ValueChanged.emit(self.getValue())
         )
 
-    def setHorizontalHeaderLabels(self, Headers: list):
-        self.HorizontalHeaderLabels = Headers
-        self.ColumnCount = len(Headers)
+    def setHorizontalHeaderLabels(self, headers: list):
+        self.HorizontalHeaderLabels = headers
+        self.ColumnCount = len(headers)
 
-    def setStyleSheet(self, StyleSheet: str):
-        super().setStyleSheet(StyleSheet + '''
+    def setStyleSheet(self, styleSheet: str):
+        super().setStyleSheet(styleSheet + '''
             QHeaderView::section, QTableView::item {padding: 0px;}
         '''
         )
@@ -157,7 +158,7 @@ class Table_EditAudioSpeaker(TableBase):
         LineEdit1 = LineEditBase()
         LineEdit1.setBorderless(True)
         LineEdit1.setTransparent(True)
-        LineEdit1.setFileDialog("SelectFile", self.fileType)
+        LineEdit1.setFileDialog(FileDialogMode.SelectFile, self.fileType)
         QFunc.setText(LineEdit1, param[1] if param else '', setPlaceholderText = True)
         LineEdit1.textChanged.connect(
             lambda: self.ValueChanged.emit(self.getValue())
@@ -203,7 +204,7 @@ class Table_EditAudioSpeaker(TableBase):
     def setFileDialog(self, fileType: Optional[str] = None):
         '''
         for RowCount in range(self.rowCount()):
-            self.cellWidget(RowCount, 1).findChild(LineEditBase).setFileDialog("SelectFile", fileType)
+            self.cellWidget(RowCount, 1).findChild(LineEditBase).setFileDialog(FileDialogMode.SelectFile, fileType)
         '''
         self.fileType = fileType
 
@@ -230,17 +231,17 @@ class Table_VPRResult(TableBase):
         self.setIndexHeaderVisible(True)
         self.verticalHeader().setSectionResizeMode(QHeaderView.Fixed)
 
-    def setHorizontalHeaderLabels(self, Headers: list):
-        self.HorizontalHeaderLabels = Headers
-        self.ColumnCount = len(Headers)
+    def setHorizontalHeaderLabels(self, headers: list):
+        self.HorizontalHeaderLabels = headers
+        self.ColumnCount = len(headers)
 
-    def setStyleSheet(self, StyleSheet: str):
-        super().setStyleSheet(StyleSheet + '''
+    def setStyleSheet(self, styleSheet: str):
+        super().setStyleSheet(styleSheet + '''
             QHeaderView::section, QTableView::item {padding: 0px;}
         '''
         )
 
-    def addRow(self, param: tuple, ComboItems: list):
+    def addRow(self, param: tuple, comboItems: list):
         RowHeight = 30
         def SetColumnLayout(ColumnLayout):
             ColumnLayout.setContentsMargins(0, 0, 0, 0)
@@ -255,7 +256,7 @@ class Table_VPRResult(TableBase):
         ComboBox = ComboBoxBase()
         ComboBox.setBorderless(True)
         ComboBox.setTransparent(True)
-        ComboBox.addItems(ComboItems)
+        ComboBox.addItems(comboItems)
         ComboBox.setCurrentText(param[1])
         Column1Layout = QHBoxLayout()
         SetColumnLayout(Column1Layout)
@@ -305,18 +306,18 @@ class Table_VPRResult(TableBase):
             RowHeight
         )
 
-    def setValue(self, params: list = [['%Path%', '%Namex%', '%Sim%'], ], ComboItems: Optional[list] = ['%Name1%', ]):
+    def setValue(self, params: list = [['%Path%', '%Namex%', '%Sim%'], ], comboItems: Optional[list] = ['%Name1%', ]):
         self.clearRows()
         super().setColumnCount(self.columnCount())
         super().setHorizontalHeaderLabels(self.HorizontalHeaderLabels)
-        if ComboItems is None:
-            ComboItems = []
+        if comboItems is None:
+            comboItems = []
             for param in params:
-                ComboItem = param[1]
-                ComboItems.append(ComboItem) if ComboItem not in ComboItems else None
+                comboItem = param[1]
+                comboItems.append(comboItem) if comboItem not in comboItems else None
         for param in params:
             QApplication.instance().processEvents()
-            self.addRow(param, ComboItems + [''])
+            self.addRow(param, comboItems + [''])
 
     def getValue(self):
         ValueDict = {}
@@ -341,12 +342,12 @@ class Table_ASRResult(TableBase):
         self.setIndexHeaderVisible(True)
         self.verticalHeader().setSectionResizeMode(QHeaderView.Fixed)
 
-    def setHorizontalHeaderLabels(self, Headers: list):
-        self.HorizontalHeaderLabels = Headers
-        self.ColumnCount = len(Headers)
+    def setHorizontalHeaderLabels(self, headers: list):
+        self.HorizontalHeaderLabels = headers
+        self.ColumnCount = len(headers)
 
-    def setStyleSheet(self, StyleSheet: str):
-        super().setStyleSheet(StyleSheet + '''
+    def setStyleSheet(self, styleSheet: str):
+        super().setStyleSheet(styleSheet + '''
             QHeaderView::section, QTableView::item {padding: 0px;}
         '''
         )
@@ -420,12 +421,12 @@ class Table_DATResult(TableBase):
         self.setIndexHeaderVisible(True)
         self.verticalHeader().setSectionResizeMode(QHeaderView.Fixed)
 
-    def setHorizontalHeaderLabels(self, Headers: list):
-        self.HorizontalHeaderLabels = Headers
-        self.ColumnCount = len(Headers)
+    def setHorizontalHeaderLabels(self, headers: list):
+        self.HorizontalHeaderLabels = headers
+        self.ColumnCount = len(headers)
 
-    def setStyleSheet(self, StyleSheet: str):
-        super().setStyleSheet(StyleSheet + '''
+    def setStyleSheet(self, styleSheet: str):
+        super().setStyleSheet(styleSheet + '''
             QHeaderView::section, QTableView::item {padding: 0px;}
         '''
         )

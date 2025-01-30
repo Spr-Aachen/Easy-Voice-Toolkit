@@ -1,6 +1,6 @@
 import sys
 from pathlib import Path
-from QEasyWidgets import QFunctions as QFunc
+from PyEasyUtils import getFileInfo, getBaseDir, normPath
 
 ##############################################################################################################################
 
@@ -16,15 +16,15 @@ fileFormat = 'zip'
 ##############################################################################################################################
 
 # Check whether python file is compiled
-_, isFileCompiled = QFunc.getFileInfo()
+_, isFileCompiled = getFileInfo()
 
 # Get current directory
-currentDir = QFunc.getBaseDir(__file__ if isFileCompiled == False else sys.executable)
+currentDir = getBaseDir(sys.argv[0])
 
 # Set path to store log
-logPath = QFunc.normPath(Path(currentDir).joinpath('log.txt'))
+logPath = normPath(Path(currentDir).joinpath('log.txt'))
 
 # Set directory to load static dependencies
-resourceDir = currentDir if QFunc.getBaseDir(searchMEIPASS = True) is None else QFunc.getBaseDir(searchMEIPASS = True)
+resourceDir = currentDir if getBaseDir(searchMEIPASS = True) is None else getBaseDir(searchMEIPASS = True)
 
 ##############################################################################################################################

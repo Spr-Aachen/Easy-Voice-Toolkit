@@ -1,4 +1,4 @@
-import os
+import PyEasyUtils as EasyUtils
 from typing import Union, Optional
 from PySide6.QtCore import Qt, QObject, Signal, Slot, QThread, QPoint
 from PySide6.QtGui import QFont
@@ -143,11 +143,11 @@ def Function_ConfigureCheckBox(
         uncheckedEvents.append(lambda: checkBox.setText(uncheckedText))
 
     checkBox.toggled.connect(
-        lambda IsChecked: QFunc.runEvents(checkedEvents if IsChecked else uncheckedEvents)
+        lambda IsChecked: EasyUtils.runEvents(checkedEvents if IsChecked else uncheckedEvents)
     )
 
-    QFunc.runEvents(checkedEvents) if takeEffect and checkBox.isChecked() else None
-    QFunc.runEvents(uncheckedEvents) if takeEffect and not checkBox.isChecked() else None
+    EasyUtils.runEvents(checkedEvents) if takeEffect and checkBox.isChecked() else None
+    EasyUtils.runEvents(uncheckedEvents) if takeEffect and not checkBox.isChecked() else None
 
 
 def Function_SetURL(
@@ -160,7 +160,7 @@ def Function_SetURL(
     Function to open url (through button)
     '''
     button.clicked.connect(
-        lambda: QFunc.openURL([(Function_GetParam(url) if isinstance(url, QWidget) else url) for url in QFunc.toIterable(url)], createIfNotExist)
+        lambda: QFunc.openURL([(Function_GetParam(url) if isinstance(url, QWidget) else url) for url in EasyUtils.toIterable(url)], createIfNotExist)
     )
     button.setToolTipDuration(-1)
     button.setToolTip(buttonTooltip)
@@ -222,10 +222,10 @@ def Function_ParamsSynchronizer(
         for UI_Get, UI_Set in fromTo.items():
             Param_Get = Function_GetParam(UI_Get)
             Param_Get = Param_Get * times if isinstance(Param_Get, (int, float, complex)) else Param_Get
-            for UI_Set in QFunc.toIterable(UI_Set):
+            for UI_Set in EasyUtils.toIterable(UI_Set):
                 Function_SetParam(UI_Set, Param_Get)
 
-    TriggerList = QFunc.toIterable(trigger)
+    TriggerList = EasyUtils.toIterable(trigger)
 
     for trigger in TriggerList:
         if isinstance(trigger, QAbstractButton):
@@ -251,7 +251,7 @@ def Function_ParamsChecker(
         param = Function_GetParam(ui) if isinstance(ui, QWidget) else ui
         if isinstance(param, str):
             if param.strip() == "None" or param.strip() == "":
-                if ui in QFunc.toIterable(emptyAllowed):
+                if ui in EasyUtils.toIterable(emptyAllowed):
                     param = None
                 else:
                     MessageBoxBase.pop(
@@ -271,7 +271,7 @@ def Function_ParamsChecker(
                 '''
         if isinstance(param, dict):
             if "None" in list(param.keys()&param.values()) or "" in list(param.keys()&param.values()):
-                if ui in QFunc.toIterable(emptyAllowed):
+                if ui in EasyUtils.toIterable(emptyAllowed):
                     param = None
                 else:
                     MessageBoxBase.pop(
@@ -374,7 +374,7 @@ def Function_AnimateProgressBar(
 
 def Function_SetWidgetValue(
     widget: QWidget,
-    config: QFunc.configManager,
+    config: EasyUtils.configManager,
     section: str = ...,
     option: str = ...,
     value = ...,
@@ -439,7 +439,7 @@ class ParamsManager:
         configPath: str,
     ):
         self.configPath = configPath
-        self.config = QFunc.configManager(configPath)
+        self.config = EasyUtils.configManager(configPath)
 
         self.RegistratedWidgets = {}
 
@@ -467,7 +467,7 @@ class ParamsManager:
     def ClearSettings(self):
         with open(self.configPath, 'w'):
             pass
-        self.config = QFunc.configManager(self.configPath)
+        self.config = EasyUtils.configManager(self.configPath)
 
     def ResetSettings(self):
         self.ClearSettings()
@@ -475,7 +475,7 @@ class ParamsManager:
             self.ResetParam(widget)
 
     def ImportSettings(self, readPath: str):
-        configParser = QFunc.configManager(readPath).parser()
+        configParser = EasyUtils.configManager(readPath).parser()
         with open(self.configPath, 'w', encoding = 'utf-8') as config:
             configParser.write(config)
         for widget, value in list(self.RegistratedWidgets.items()):
@@ -505,11 +505,11 @@ def Function_SetMethodExecutor(
     QualName = str(method.__qualname__)
     MethodName = QualName.split('.')[1]
 
-    ClassInstance = QFunc.getClassFromMethod(method)()
+    ClassInstance = EasyUtils.getClassFromMethod(method)()
     ClassInstance.started.connect(lambda: FunctionSignals.Signal_TaskStatus.emit(QualName, 'Started')) if hasattr(ClassInstance, 'started') else None
     ClassInstance.errChk.connect(
         lambda Err: (
-            QFunc.runEvents(successEvents) if Err == str(None) else None,
+            EasyUtils.runEvents(successEvents) if Err == str(None) else None,
             MessageBoxBase.pop(parentWindow, QMessageBox.Warning, "Failure", "发生异常", Err) if Err != str(None) else None,
             FunctionSignals.Signal_TaskStatus.emit(QualName, 'Failed') if Err != str(None) else None
         )
@@ -601,7 +601,7 @@ def Function_UpdateChecker(
     '''
     try:
         FunctionSignals.Signal_UpdateMessage.emit("正在检查更新，请稍等...\nChecking for updates, please wait...")
-        IsUpdateNeeded, DownloadURL, VersionInfo = QFunc.checkUpdateFromGithub(repoOwner, repoName, fileName, fileFormat, currentVersion)
+        IsUpdateNeeded, DownloadURL, VersionInfo = EasyUtils.checkUpdateFromGithub(repoOwner, repoName, fileName, fileFormat, currentVersion)
 
     except:
         #FunctionSignals.Signal_Message.emit("更新检查失败！\nFailed to check for updates!")

@@ -1,3 +1,4 @@
+import PyEasyUtils as EasyUtils
 from typing import Optional
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import *
@@ -42,17 +43,17 @@ class MessageBox_Stacked(MessageBoxBase):
         Layout.addWidget(self.ButtonN)
         self.layout().insertLayout(0, Layout)
 
-    def SetContent(self, Images: list, Texts: list):
+    def setContent(self, Images: list, Texts: list):
         QFunc.setNoContents(self.StackedWidget)
 
-        for Index, Image in enumerate(QFunc.toIterable(Images)):
+        for Index, Image in enumerate(EasyUtils.toIterable(Images)):
             Label = LabelBase()
-            QFunc.setText(Label, QFunc.setRichText(QFunc.toIterable(Texts)[Index], 'left', 9.9, 420))
+            QFunc.setText(Label, EasyUtils.setRichText(EasyUtils.toIterable(Texts)[Index], 'left', 9.9, 420))
 
             TextBrowser = QTextBrowser()
             TextBrowser.setStyleSheet(
                 "QTextBrowser {"
-                f"    background-image: url({QFunc.normPath(Image, 'Posix')});"
+                f"    background-image: url({EasyUtils.normPath(Image, 'Posix')});"
                 "    background-repeat: no-repeat;"
                 "    background-position: center 0px;"
                 "    padding: 0px;"
