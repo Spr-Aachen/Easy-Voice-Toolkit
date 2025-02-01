@@ -73,9 +73,23 @@ Currently the released versions only support Windows system
 
 Languages that are currently supported/unsupported by the toolkit are shown as follows:
 
-<table border = "1">
+<table cellspacing = "0" cellpadding = "0">
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+        td {
+            background-color: white;
+        }
+        td#cellSlashedTd {
+            background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxsaW5lIHgxPSIwIiB5MT0iMCIgeDI9IjEwMCUiIHkyPSIxMDAlIiBzdHJva2U9ImJsYWNrIiBzdHJva2Utd2lkdGg9IjEiLz48L3N2Zz4=);
+        }
+    </style>
     <tr>
-        <th style = "text-align:center;">Tool</th>
+        <td id = "cellSlashedTd">
+            <span style = "float:left; margin-top:20px;">Tool</span>
+            <span style = "float:right; margin-top:-10px;">Language</span>
+        </td>
         <th style = "text-align:center;">Chinese</th>
         <th style = "text-align:center;">English</th>
         <th style = "text-align:center;">Japnese</th>
@@ -189,7 +203,7 @@ Please make sure that you've installed [Python](https://www.python.org/downloads
 
 ### ToDo
 - Add chatbot (LLM) integration
-- Refactor frontend with C++ (Qt)
+- Refactor client with C++ (Qt)
 
 ### WIP
 - Backend development

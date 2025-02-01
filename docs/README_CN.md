@@ -69,9 +69,23 @@
 
 目前各个工具对语言的支持情况如下：
 
-<table border = "1">
+<table cellspacing = "0" cellpadding = "0">
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+        td {
+            background-color: white;
+        }
+        td#cellSlashedTd {
+            background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxsaW5lIHgxPSIwIiB5MT0iMCIgeDI9IjEwMCUiIHkyPSIxMDAlIiBzdHJva2U9ImJsYWNrIiBzdHJva2Utd2lkdGg9IjEiLz48L3N2Zz4=);
+        }
+    </style>
     <tr>
-        <th style = "text-align:center;">工具</th>
+        <td id = "cellSlashedTd">
+            <span style = "float:left; margin-top:20px;">工具</span>
+            <span style = "float:right; margin-top:-10px;">语言</span>
+        </td>
         <th style = "text-align:center;">中文</th>
         <th style = "text-align:center;">英文</th>
         <th style = "text-align:center;">日文</th>
@@ -185,7 +199,7 @@
 
 ### ToDo
 - 添加LLM联动功能
-- 使用C++重构前端
+- 使用C++重构客户端
 
 ### 开发中
 - 后端开发
