@@ -70,19 +70,8 @@
 目前各个工具对语言的支持情况如下：
 
 <table cellspacing = "0" cellpadding = "0">
-    <style>
-        table {
-            border-collapse: collapse;
-        }
-        td {
-            background-color: white;
-        }
-        td#cellSlashedTd {
-            background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxsaW5lIHgxPSIwIiB5MT0iMCIgeDI9IjEwMCUiIHkyPSIxMDAlIiBzdHJva2U9ImJsYWNrIiBzdHJva2Utd2lkdGg9IjEiLz48L3N2Zz4=);
-        }
-    </style>
     <tr>
-        <td id = "cellSlashedTd">
+        <td style="background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxsaW5lIHgxPSIwIiB5MT0iMCIgeDI9IjEwMCUiIHkyPSIxMDAlIiBzdHJva2U9ImJsYWNrIiBzdHJva2Utd2lkdGg9IjEiLz48L3N2Zz4=);">
             <span style = "float:left; margin-top:20px;">工具</span>
             <span style = "float:right; margin-top:-10px;">语言</span>
         </td>
@@ -120,11 +109,12 @@
         <th style = "text-align:center;">&#10004</th>
         <th style = "text-align:center;">&#10004</th>
     </tr>
-    </tr>
+    <tr>
         <th style = "text-align:center;">语音合成</th>
         <th style = "text-align:center;">&#10004</th>
         <th style = "text-align:center;">&#10004</th>
         <th style = "text-align:center;">&#10004</th>
+    </tr>
 </table>
 
 
@@ -205,26 +195,6 @@
 - 后端开发
 - 语言国际化
 - 兼容Linux系统
-
-
-## 测试平台
-
-### Windows 系统
-
-#### Honor Hunter V700
-- **Type**: Laptop
-- **GPU**: GTX 1660Ti
-- **CPU**: i5-10300H
-- **RAM**: 16G
-- **OS**: Win10
-- **Python**: 3.9
-- **Torch**: 2.0.1
-
-#### (待添加)
-
-### Linux 系统
-
-#### (待添加)
 
 
 ## 疑问解答

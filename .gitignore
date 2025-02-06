@@ -21,4 +21,5 @@
 
 # Others
 **/venv/
+**/*.spec
 **/*.ipynb

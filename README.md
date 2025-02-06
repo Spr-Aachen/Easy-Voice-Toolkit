@@ -74,19 +74,8 @@ Currently the released versions only support Windows system
 Languages that are currently supported/unsupported by the toolkit are shown as follows:
 
 <table cellspacing = "0" cellpadding = "0">
-    <style>
-        table {
-            border-collapse: collapse;
-        }
-        td {
-            background-color: white;
-        }
-        td#cellSlashedTd {
-            background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxsaW5lIHgxPSIwIiB5MT0iMCIgeDI9IjEwMCUiIHkyPSIxMDAlIiBzdHJva2U9ImJsYWNrIiBzdHJva2Utd2lkdGg9IjEiLz48L3N2Zz4=);
-        }
-    </style>
     <tr>
-        <td id = "cellSlashedTd">
+        <td style="background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxsaW5lIHgxPSIwIiB5MT0iMCIgeDI9IjEwMCUiIHkyPSIxMDAlIiBzdHJva2U9ImJsYWNrIiBzdHJva2Utd2lkdGg9IjEiLz48L3N2Zz4=);">
             <span style = "float:left; margin-top:20px;">Tool</span>
             <span style = "float:right; margin-top:-10px;">Language</span>
         </td>
@@ -124,11 +113,12 @@ Languages that are currently supported/unsupported by the toolkit are shown as f
         <th style = "text-align:center;">&#10004</th>
         <th style = "text-align:center;">&#10004</th>
     </tr>
-    </tr>
+    <tr>
         <th style = "text-align:center;">Voice Converter</th>
         <th style = "text-align:center;">&#10004</th>
         <th style = "text-align:center;">&#10004</th>
         <th style = "text-align:center;">&#10004</th>
+    </tr>
 </table>
 
 
@@ -209,26 +199,6 @@ Please make sure that you've installed [Python](https://www.python.org/downloads
 - Backend development
 - Internationalization
 - Add support for Linux OS
-
-
-## Tested Devices
-
-### Windows OS
-
-#### Honor Hunter V700
-- **Type**: Laptop
-- **GPU**: GTX 1660Ti
-- **CPU**: i5-10300H
-- **RAM**: 16G
-- **OS**: Win10
-- **Python**: 3.9
-- **Torch**: 2.0.1
-
-#### (Waiting to add other devices)
-
-### Linux OS
-
-#### (Waiting to add other devices)
 
 
 ## FAQ
