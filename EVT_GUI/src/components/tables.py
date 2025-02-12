@@ -285,7 +285,7 @@ class Table_VPRResult(TableBase):
         DelButton.clicked.connect(
             lambda: MessageBoxBase.pop(None,
                 QMessageBox.Question, "Ask",
-                "确认删除该行？",
+                "确认删除该行？", None,
                 QMessageBox.Yes|QMessageBox.No,
                 {
                     QMessageBox.Yes: lambda: (

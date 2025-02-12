@@ -129,25 +129,23 @@ def Function_SetChildWidgetsVisibility(
 def Function_ConfigureCheckBox(
     checkBox: QCheckBox,
     checkedText: Optional[str] = None,
-    checkedEvents: list = [],
+    checkedEvents: dict = {},
     uncheckedText: Optional[str] = None,
-    uncheckedEvents: list = [],
-    takeEffect: bool = False
+    uncheckedEvents: dict = {},
 ):
     '''
     Function to configure checkbox
     '''
     if checkedText is not None:
-        checkedEvents.append(lambda: checkBox.setText(checkedText))
+        checkedEvents[lambda: checkBox.setText(checkedText)] = True
     if uncheckedText is not None:
-        uncheckedEvents.append(lambda: checkBox.setText(uncheckedText))
+        uncheckedEvents[lambda: checkBox.setText(uncheckedText)] = True
 
     checkBox.toggled.connect(
-        lambda IsChecked: EasyUtils.runEvents(checkedEvents if IsChecked else uncheckedEvents)
+        lambda isChecked: EasyUtils.runEvents(checkedEvents.keys() if isChecked else uncheckedEvents.keys())
     )
 
-    EasyUtils.runEvents(checkedEvents) if takeEffect and checkBox.isChecked() else None
-    EasyUtils.runEvents(uncheckedEvents) if takeEffect and not checkBox.isChecked() else None
+    EasyUtils.runEvents([event for event, takeEffect in (checkedEvents if checkBox.isChecked() else uncheckedEvents).items() if takeEffect])
 
 
 def Function_SetURL(
@@ -215,7 +213,7 @@ def Function_ParamsSynchronizer(
     connection: str = "Connect"
 ):
     '''
-    Function to synchronize params (paramsFrom.value * times = ParamsTo.value)
+    Function to synchronize params (paramTargets.value * times = ParamsTo.value)
     '''
     @Slot()
     def ParamsSynchronizer():
@@ -239,7 +237,7 @@ def Function_ParamsSynchronizer(
 
 
 def Function_ParamsChecker(
-    paramsFrom: list = [],
+    paramTargets: list = [],
     emptyAllowed: list = []
 ):
     '''
@@ -247,7 +245,7 @@ def Function_ParamsChecker(
     '''
     params = []
 
-    for ui in paramsFrom:
+    for ui in paramTargets:
         param = Function_GetParam(ui) if isinstance(ui, QWidget) else ui
         if isinstance(param, str):
             if param.strip() == "None" or param.strip() == "":
@@ -446,7 +444,7 @@ class ParamsManager:
     def registrate(self, widget: QWidget, value: tuple):
         self.RegistratedWidgets[widget] = value
 
-    def SetParam(self,
+    def setParam(self,
         widget: QWidget,
         section: str = ...,
         option: str = ...,
@@ -460,28 +458,28 @@ class ParamsManager:
         Function_SetWidgetValue(widget, self.config, section, option, value, times, setPlaceholderText, placeholderText)
         self.registrate(widget, (section, option, defaultValue, times, setPlaceholderText, placeholderText)) if registrate else None
 
-    def ResetParam(self, widget: QWidget):
+    def resetParam(self, widget: QWidget):
         value = self.RegistratedWidgets[widget]
         Function_SetWidgetValue(widget, self.config, *value)
 
-    def ClearSettings(self):
+    def clearSettings(self):
         with open(self.configPath, 'w'):
             pass
         self.config = EasyUtils.configManager(self.configPath)
 
-    def ResetSettings(self):
-        self.ClearSettings()
+    def resetSettings(self):
+        self.clearSettings()
         for widget in list(self.RegistratedWidgets.keys()):
-            self.ResetParam(widget)
+            self.resetParam(widget)
 
-    def ImportSettings(self, readPath: str):
+    def importSettings(self, readPath: str):
         configParser = EasyUtils.configManager(readPath).parser()
         with open(self.configPath, 'w', encoding = 'utf-8') as config:
             configParser.write(config)
         for widget, value in list(self.RegistratedWidgets.items()):
-            self.SetParam(widget, *value)
+            self.setParam(widget, *value)
 
-    def ExportSettings(self, savePath: str):
+    def exportSettings(self, savePath: str):
         with open(savePath, 'w', encoding = 'utf-8') as config:
             self.config.parser().write(config)
 
@@ -495,7 +493,7 @@ def Function_SetMethodExecutor(
     consoleWidget: Optional[QWidget] = None,
     method: object = ...,
     params: Optional[tuple] = None,
-    paramsFrom: Optional[list[QObject]] = None,
+    paramTargets: Optional[list[QObject]] = None,
     emptyAllowed: Optional[list[QObject]] = None,
     successEvents: Optional[list] = None
 ):
@@ -509,7 +507,7 @@ def Function_SetMethodExecutor(
     ClassInstance.started.connect(lambda: FunctionSignals.Signal_TaskStatus.emit(QualName, 'Started')) if hasattr(ClassInstance, 'started') else None
     ClassInstance.errChk.connect(
         lambda Err: (
-            EasyUtils.runEvents(successEvents) if Err == str(None) else None,
+            EasyUtils.runEvents(successEvents) if Err == str(None) and successEvents is not None else None,
             MessageBoxBase.pop(parentWindow, QMessageBox.Warning, "Failure", "发生异常", Err) if Err != str(None) else None,
             FunctionSignals.Signal_TaskStatus.emit(QualName, 'Failed') if Err != str(None) else None
         )
@@ -529,8 +527,8 @@ def Function_SetMethodExecutor(
         Update the attributes for outer class methods and wait to execute with multithreading
         '''
         Args = params#if params != () else None
-        if paramsFrom not in ([], None):
-            Args = Function_ParamsChecker(paramsFrom, emptyAllowed)
+        if paramTargets not in ([], None):
+            Args = Function_ParamsChecker(paramTargets, emptyAllowed)
             if Args == "Abort":
                 return print("Aborted.")
             else:

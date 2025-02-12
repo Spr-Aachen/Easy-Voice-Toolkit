@@ -18,11 +18,11 @@ from functions import *
 class SubPage(QWidget):
     """
     """
-    widgets = {}
-    paramWidgets = {}
-
     def __init__(self, parent = None, paramsManager: ParamsManager = ...):
         super().__init__(parent)
+
+        self.widgets = {}
+        self.paramWidgets = {}
 
         self.paramsManager = paramsManager
 
@@ -47,9 +47,9 @@ class SubPage(QWidget):
         middleWidget.setWidget(self.middleWidget_contentWidget)
 
         rightWidget = QWidget(self)
-        rightWidget_layout = QGridLayout(rightWidget)
-        rightWidget_layout.setSpacing(12)
-        rightWidget_layout.setContentsMargins(12, 12, 12, 12)
+        self.rightWidget_layout = QGridLayout(rightWidget)
+        self.rightWidget_layout.setSpacing(12)
+        self.rightWidget_layout.setContentsMargins(12, 12, 12, 12)
         rightWidget.setStyleSheet("""
             QWidget:hover {
                 background-color: rgba(36, 36, 36, 3);
@@ -63,38 +63,35 @@ class SubPage(QWidget):
                 fileContent
             )
         )
-        rightWidget_layout.addWidget(textBrowser_params, 0, 0, 1, 3)
+        self.rightWidget_layout.addWidget(textBrowser_params, 0, 0, 1, 3)
         button_resetSettings = HollowButton()
         button_resetSettings.setText(QCA.translate('MainWindow', "全部重置"))
         button_resetSettings.clicked.connect(
-            lambda: self.paramsManager.ResetSettings()
+            lambda: self.paramsManager.resetSettings()
         )
-        rightWidget_layout.addWidget(button_resetSettings, 1, 0, 1, 1)
+        self.rightWidget_layout.addWidget(button_resetSettings, 1, 0, 1, 1)
         button_importSettings = HollowButton()
         button_importSettings.setText(QCA.translate('MainWindow', "导入配置"))
         button_importSettings.clicked.connect(
-            lambda: self.paramsManager.ImportSettings(
+            lambda: self.paramsManager.importSettings(
                 QFunc.getFileDialog(
                     mode = FileDialogMode.SelectFile,
                     fileType = "ini类型 (*.ini)"
                 )
             )
         )
-        rightWidget_layout.addWidget(button_importSettings, 1, 1, 1, 1)
+        self.rightWidget_layout.addWidget(button_importSettings, 1, 1, 1, 1)
         button_exportSettings = HollowButton()
         button_exportSettings.setText(QCA.translate('MainWindow', "导出配置"))
         button_exportSettings.clicked.connect(
-            lambda: self.paramsManager.ExportSettings(
+            lambda: self.paramsManager.exportSettings(
                 QFunc.getFileDialog(
                     mode = FileDialogMode.SaveFile,
                     fileType = "ini类型 (*.ini)"
                 )
             )
         )
-        rightWidget_layout.addWidget(button_exportSettings, 1, 2, 1, 1)
-        self.chkOutputButton = HollowButton()
-        self.chkOutputButton.setText(QCA.translate('MainWindow', "打开输出目录"))
-        rightWidget_layout.addWidget(self.chkOutputButton, 2, 0, 1, 3)
+        self.rightWidget_layout.addWidget(button_exportSettings, 1, 2, 1, 1)
 
         self.progressBar = ProgressBarBase(self)
         self.progressBar.setMinimumSize(QSize(0, 30))
@@ -156,9 +153,9 @@ class SubPage(QWidget):
         )
 
     def _setButtonMenu(self, menuButton: MenuButton, widget):
-        menuButton.SetMenu(
-            ActionEvents = {
-                "重置": lambda: self.paramsManager.ResetParam(widget),
+        menuButton.setMenu(
+            actionEvents = {
+                "重置": lambda: self.paramsManager.resetParam(widget),
                 "复制": lambda: QApplication.clipboard().setText(str(Function_GetParam(widget))),
             }
         )
@@ -173,10 +170,10 @@ class SubPage(QWidget):
 
     def _addToContainer(self, label: LabelBase, inputWidget: QWidget, menuButton: MenuButton, rootItemText: str, toolBoxText: Optional[str] = None, text: str = ...):
         menuButton.setFixedSize(QSize(27, 27))
-        inputWidget.setMaximumHeight(27) if not isinstance(inputWidget, TextBrowserBase) else None
+        inputWidget.setMaximumHeight(27) if isinstance(inputWidget, (QLineEdit, QComboBox, QCheckBox, QSpinBox, QDoubleSpinBox, QSlider)) else None
         # Add to childFrame
         childFrame = QFrame()
-        childFrame.setMinimumHeight(105)
+        childFrame.setMinimumHeight(105 if not isinstance(inputWidget, (QTextBrowser, QTextEdit, QTableView)) else 210)
         childFrame.setStyleSheet("""
             QFrame {
                 background-color: transparent;
@@ -224,8 +221,8 @@ class SubPage(QWidget):
             groupBox_layout.setContentsMargins(0, 12, 0, 12)
             groupBox_layout.addWidget(toolBox)
             groupBox.setTitle(rootItemText)
+            self.middleWidget_contentWidget.layout().addWidget(groupBox)
             self.widgets[(rootItemText,)] = groupBox # record the groupbox
-        self.middleWidget_contentWidget.layout().addWidget(groupBox)
 
     def addLineEditFrame(self,
         rootItemText: str = ..., toolBoxText: Optional[str] = None, text: str = ..., toolTip: Optional[str] = None,
@@ -240,7 +237,7 @@ class SubPage(QWidget):
         self._setLabelText(label, text)
         lineEdit.setToolTip(toolTip) if toolTip is not None else None
         lineEdit.setFileDialog(fileDialogMode, fileType, directory) if fileDialogMode is not None else None
-        self.paramsManager.SetParam(lineEdit, section, option, defaultValue,
+        self.paramsManager.setParam(lineEdit, section, option, defaultValue,
             setPlaceholderText = True,
             placeholderText = placeholderText
         )
@@ -260,7 +257,7 @@ class SubPage(QWidget):
         button = MenuButton()
         self._setLabelText(label, text)
         textEdit.setToolTip(toolTip) if toolTip is not None else None
-        self.paramsManager.SetParam(textEdit, section, option, defaultValue,
+        self.paramsManager.setParam(textEdit, section, option, defaultValue,
             setPlaceholderText = True,
             placeholderText = placeholderText
         )
@@ -280,7 +277,7 @@ class SubPage(QWidget):
         button = MenuButton()
         self._setLabelText(label, text)
         checkBox.setToolTip(toolTip) if toolTip is not None else None
-        self.paramsManager.SetParam(checkBox, section, option, defaultValue)
+        self.paramsManager.setParam(checkBox, section, option, defaultValue)
         self._setButtonMenu(button, checkBox)
         self._addToContainer(label, checkBox, button, rootItemText, toolBoxText, text)
         self._connectToTreeWidget(label, rootItemText, text)
@@ -299,7 +296,7 @@ class SubPage(QWidget):
         self._setLabelText(label, text)
         comboBox.setToolTip(toolTip) if toolTip is not None else None
         comboBox.addItems(items)
-        self.paramsManager.SetParam(comboBox, section, option, defaultValue)
+        self.paramsManager.setParam(comboBox, section, option, defaultValue)
         comboBox.setCurrentIndex(currentIndex) if currentIndex is not None else None
         self._setButtonMenu(button, comboBox)
         self._addToContainer(label, comboBox, button, rootItemText, toolBoxText, text)
@@ -320,7 +317,7 @@ class SubPage(QWidget):
         spinBox.setToolTip(toolTip) if toolTip is not None else None
         spinBox.setRange(minimum, maximum)
         spinBox.setSingleStep(step) if step is not None else None
-        self.paramsManager.SetParam(spinBox, section, option, defaultValue)
+        self.paramsManager.setParam(spinBox, section, option, defaultValue)
         self._setButtonMenu(button, spinBox)
         self._addToContainer(label, spinBox, button, rootItemText, toolBoxText, text)
         self._connectToTreeWidget(label, rootItemText, text)
@@ -340,7 +337,7 @@ class SubPage(QWidget):
         doubleSpinBox.setToolTip(toolTip) if toolTip is not None else None
         doubleSpinBox.setRange(minimum, maximum)
         doubleSpinBox.setSingleStep(step) if step is not None else None
-        self.paramsManager.SetParam(doubleSpinBox, section, option, defaultValue)
+        self.paramsManager.setParam(doubleSpinBox, section, option, defaultValue)
         self._setButtonMenu(button, doubleSpinBox)
         self._addToContainer(label, doubleSpinBox, button, rootItemText, toolBoxText, text)
         self._connectToTreeWidget(label, rootItemText, text)
@@ -348,7 +345,7 @@ class SubPage(QWidget):
 
     def addRangeSettingFrame(self,
         rootItemText: str = ..., toolBoxText: Optional[str] = None, text: str = ..., toolTip: Optional[str] = None,
-        valueChangedEvent: object = ...,
+        minimum: float = ..., maximum: float = ..., step: Optional[float] = None,
         section: str = ..., option: str = ..., defaultValue: str = ...,
         emptyAllowed: bool = False
     ):
@@ -358,18 +355,49 @@ class SubPage(QWidget):
         button = MenuButton()
         self._setLabelText(label, text)
         rangeSetting.setToolTip(toolTip) if toolTip is not None else None
-        rangeSetting.valueChanged.connect(valueChangedEvent)
-        self.paramsManager.SetParam(rangeSetting, section, option, defaultValue)
+        rangeSetting.setRange(minimum, maximum)
+        rangeSetting.setSingleStep(step) if step is not None else None
+        self.paramsManager.setParam(rangeSetting, section, option, defaultValue)
         self._setButtonMenu(button, rangeSetting)
         self._addToContainer(label, rangeSetting, button, rootItemText, toolBoxText, text)
         self._connectToTreeWidget(label, rootItemText, text)
         self.paramWidgets[rangeSetting] = emptyAllowed
 
-    def setCheckOutputBtn(self,
+    def addEditAudioSpeakerTableFrame(self,
+        rootItemText: str = ..., toolBoxText: Optional[str] = None, text: str = ...,
+        headerLabels: list = ...,
+        fileType: Optional[str] = None,
+        section: str = ..., option: str = ..., defaultValue: str = ...,
+    ):
+        label = LabelBase()
+        table = Table_EditAudioSpeaker()
+        button = MenuButton()
+        self._setLabelText(label, text)
+        table.setHorizontalHeaderLabels(headerLabels)
+        table.setFileDialog(fileType)
+        self.paramsManager.setParam(table, section, option, defaultValue)
+        #self._setButtonMenu(button, table)
+        self._addToContainer(label, table, button, rootItemText, toolBoxText, text)
+        self._connectToTreeWidget(label, rootItemText, text)
+
+    def addSideBtn(self,
+        text: str = ...,
+        events: list = [],
+    ):
+        sideButton = HollowButton()
+        sideButton.setText(text)
+        sideButton.clicked.connect(lambda: EasyUtils.runEvents(events))
+        self.rightWidget_layout.addWidget(sideButton, self.rightWidget_layout.rowCount(), 0, 1, 3)
+        self.widgets[(text.splitlines()[0],)] = sideButton
+
+    def addChkOutputSideBtn(self,
         outputRootEdit: QLineEdit
     ):
+        chkOutputButton = HollowButton()
+        chkOutputButton.setText(QCA.translate('MainWindow', "打开输出目录"))
+        self.rightWidget_layout.addWidget(chkOutputButton, self.rightWidget_layout.rowCount(), 0, 1, 3)
         Function_SetURL(
-            button = self.chkOutputButton,
+            button = chkOutputButton,
             url = outputRootEdit,
             buttonTooltip = "Click to open",
             createIfNotExist = True
@@ -378,17 +406,25 @@ class SubPage(QWidget):
     def setExecutor(self,
         consoleWidget: QWidget,
         method: object,
+        paramTargets: list,
         successEvents: list
     ):
         self.executeButton.setText(QCA.translate('MainWindow', "执行"))
         self.terminateButton.setText(QCA.translate('MainWindow', "终止"))
+        def _findParamWidget(paramTarget):
+            if isinstance(paramTarget, QFrame):
+                for type in (QLineEdit, QComboBox, QCheckBox, QSpinBox, QDoubleSpinBox, QSlider, QTextBrowser, QTextEdit, QTableView):
+                    target = QFunc.findChild(paramTarget, type)
+                    if target is not None:
+                        return target
+            return paramTarget
         Function_SetMethodExecutor(self,
             executeButton = self.executeButton,
             terminateButton = self.terminateButton,
             progressBar = self.progressBar,
             consoleWidget = consoleWidget,
             method = method,
-            paramsFrom = list(self.paramWidgets.keys()),
+            paramTargets = [_findParamWidget(paramTarget) for paramTarget in paramTargets], #paramTargets = list(self.paramWidgets.keys()),
             emptyAllowed = [paramWidget for paramWidget in self.paramWidgets.keys() if self.paramWidgets[paramWidget] == True],
             successEvents = successEvents
         )
@@ -452,7 +488,7 @@ class ToolPage(QWidget):
         navigationButton.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
         navigationButton.setText(title)
         navigationButton.setHorizontal(True)
-        navigationButton.setChecked(True)
+        navigationButton.setAutoExclusive(True)
         navigationButton.clicked.connect(
             lambda: Function_AnimateStackedWidget(
                 stackedWidget = self.stackedWidget,
@@ -460,6 +496,7 @@ class ToolPage(QWidget):
             )
         )
         self.navigationAreaLayout.insertWidget(self.navigationAreaLayout.indexOf(self.horizontalSpacer), navigationButton)
+        navigationButton.setChecked(True) if self.stackedWidget.indexOf(subPage) == 0 else None
 
     def setHelpBtnEvent(self,
         event
