@@ -274,6 +274,7 @@ class SubPage(QWidget):
         label = LabelBase()
         checkBox = CheckBoxBase(self)
         checkBox.setObjectName(text.splitlines()[0])
+        Function_ConfigureCheckBox(checkBox, checkedText = "已启动", uncheckedText = "未启动")
         button = MenuButton()
         self._setLabelText(label, text)
         checkBox.setToolTip(toolTip) if toolTip is not None else None

@@ -3,6 +3,7 @@ import sys
 import platform
 import shutil
 import argparse
+import PyEasyUtils as EasyUtils
 from pathlib import Path
 from typing import Optional
 from PySide6.QtCore import Qt, QObject, QThread, Signal
@@ -25,14 +26,14 @@ configPath = args.config
 
 # Set downloadDir&extractDir
 downloadDir = currentDir
-extractDir = QFunc.normPath(Path(currentDir).joinpath('Temp'))
+extractDir = EasyUtils.normPath(Path(currentDir).joinpath('Temp'))
 
 # Set up client config
-config = QFunc.configManager(configPath)
+config = EasyUtils.configManager(configPath)
 
 # Set path of executer
 executerName = str(config.getValue('Info', 'executerName', ''))
-executerPath = QFunc.normPath(Path(currentDir).joinpath(executerName))
+executerPath = EasyUtils.normPath(Path(currentDir).joinpath(executerName))
 bootExecuter = True if executerName.strip() != '' else False
 
 ##############################################################################################################################
@@ -43,16 +44,16 @@ def RebootIfFailed():
     if platform.system() == 'Linux':
         ScriptName = 'Booter.sh'
     if ScriptName:
-        QFunc.bootWithScript(
+        EasyUtils.bootWithScript(
             programPath = executerPath,
             delayTime = 0,
-            scriptPath = Path(QFunc.normPath(currentDir)).joinpath(ScriptName)
+            scriptPath = Path(EasyUtils.normPath(currentDir)).joinpath(ScriptName)
         )
 
 
 def RebootIfSucceeded():
     if platform.system() == 'Windows':
-        QFunc.runScript(
+        EasyUtils.runScript(
             commandList = [
                 '@echo off',
                 'echo Ready to move files and reboot',
@@ -63,10 +64,10 @@ def RebootIfSucceeded():
                 f'start "Programm Running" "{executerPath}"',
                 'del "%~f0"'
             ],
-            scriptPath = QFunc.normPath(Path(currentDir).joinpath('Updater.bat'))
+            scriptPath = EasyUtils.normPath(Path(currentDir).joinpath('Updater.bat'))
         )
     if platform.system() == 'Linux':
-        QFunc.runScript(
+        EasyUtils.runScript(
             commandList = [
                 'echo Ready to move files and reboot',
                 #f'kill -9 {os.getpid()}',
@@ -76,7 +77,7 @@ def RebootIfSucceeded():
                 f'./{executerName}', #f'nohup ./{executerName} &',
                 'rm -rf Updater.sh'
             ],
-            scriptPath = QFunc.normPath(Path(currentDir).joinpath('Updater.sh'))
+            scriptPath = EasyUtils.normPath(Path(currentDir).joinpath('Updater.sh'))
         )
 
 
@@ -91,7 +92,7 @@ def UpdateDownloader(
     try:
         # Download
         FunctionSignals.Signal_UpdateMessage.emit("正在下载文件...\nDownloading files...")
-        FileInfo = QFunc.downloadFile(
+        FileInfo = EasyUtils.downloadFile(
             downloadURL = downloadURL,
             downloadDir = downloadDir,
             fileName = name,
@@ -104,7 +105,7 @@ def UpdateDownloader(
     else:
         # Unpack
         FunctionSignals.Signal_UpdateMessage.emit("正在解压文件...\nUnpacking files...")
-        extractDir = QFunc.normPath(Path(targetDir).joinpath('Temp')) if extractDir == targetDir else extractDir
+        extractDir = EasyUtils.normPath(Path(targetDir).joinpath('Temp')) if extractDir == targetDir else extractDir
         shutil.unpack_archive(
             filename = FileInfo[1],
             extract_dir = extractDir
@@ -173,7 +174,7 @@ class Widget_Updater(QWidget):
             self.height()
         )
 
-        self.setWindowIcon(QIcon(QFunc.normPath(Path(resourceDir).joinpath('assets/images/Logo.ico'))))
+        self.setWindowIcon(QIcon(EasyUtils.normPath(Path(resourceDir).joinpath('assets/images/Logo.ico'))))
 
         self.Label = QLabel()
         self.Label.setVisible(True)
@@ -206,7 +207,7 @@ class Widget_Updater(QWidget):
         FunctionSignals.Signal_UpdateMessage.connect(
             lambda Message: QFunc.setText(
                 self.Label,
-                QFunc.setRichText(Message, 'center', 9, 420, 0.3, 12)
+                EasyUtils.setRichText(Message, 'center', 9, 420, 0.3, 12)
             )
         )
         FunctionSignals.Signal_ReadyToUpdate.connect(

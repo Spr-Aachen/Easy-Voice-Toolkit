@@ -688,7 +688,7 @@ class Model_Downloader(QObject):
 
     def DownloadModel(self, DownloadParams: tuple):
         try:
-            FilePath = EasyUtils.downloadFile(*DownloadParams, CreateNewConsole = True)[1]
+            FilePath = EasyUtils.downloadFile(*DownloadParams, createNewConsole = True)[1]
             FileSuffix = Path(FilePath).suffix
             shutil.unpack_archive(FilePath, DownloadParams[1], FileSuffix) if FileSuffix in ('zip', 'tar', 'gztar', 'bztar') else None
             return None
