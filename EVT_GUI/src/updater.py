@@ -5,7 +5,6 @@ import shutil
 import argparse
 import PyEasyUtils as EasyUtils
 from pathlib import Path
-from typing import Optional
 from PySide6.QtCore import Qt, QObject, QThread, Signal
 from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import QApplication, QVBoxLayout, QSizePolicy, QWidget, QMessageBox, QPushButton, QProgressBar, QLabel
@@ -26,7 +25,7 @@ configPath = args.config
 
 # Set downloadDir&extractDir
 downloadDir = currentDir
-extractDir = EasyUtils.normPath(Path(currentDir).joinpath('Temp'))
+extractDir = EasyUtils.normPath(Path(currentDir).joinpath(currentVersion))
 
 # Set up client config
 config = EasyUtils.configManager(configPath)
@@ -86,7 +85,6 @@ def UpdateDownloader(
     downloadDir: str = ...,
     name: str = ...,
     extractDir: str = ...,
-    targetDir: str = ...,
     #executerPath: str = ...
 ):
     try:
@@ -105,7 +103,6 @@ def UpdateDownloader(
     else:
         # Unpack
         FunctionSignals.Signal_UpdateMessage.emit("正在解压文件...\nUnpacking files...")
-        extractDir = EasyUtils.normPath(Path(targetDir).joinpath('Temp')) if extractDir == targetDir else extractDir
         shutil.unpack_archive(
             filename = FileInfo[1],
             extract_dir = extractDir
@@ -150,7 +147,6 @@ class Execute_Update_Downloading(QObject):
             downloadDir = downloadDir,
             name = "EVT Update",
             extractDir = extractDir,
-            targetDir = currentDir
         )
 
         self.finished.emit()
@@ -201,7 +197,7 @@ class Widget_Updater(QWidget):
 
     def main(self):
         self.downloadURL = str()
-        def UpdateDownloadURL(downloadURL):
+        def _updateDownloadURL(downloadURL):
             self.downloadURL = downloadURL
 
         FunctionSignals.Signal_UpdateMessage.connect(
@@ -212,7 +208,7 @@ class Widget_Updater(QWidget):
         )
         FunctionSignals.Signal_ReadyToUpdate.connect(
             lambda downloadURL, VersionInfo: (
-                UpdateDownloadURL(downloadURL),
+                _updateDownloadURL(downloadURL),
                 MessageBoxBase.pop(None,
                     QMessageBox.Question, "Ask",
                     text = "检测到可用的新版本，是否更新？\nNew version available, wanna update?",
