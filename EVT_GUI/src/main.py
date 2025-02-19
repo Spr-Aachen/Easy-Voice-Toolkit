@@ -892,6 +892,10 @@ class MainWindow(Window_MainWindow):
         stackedMsgBox.setContent(images, texts)
         stackedMsgBox.exec()
 
+    def _getFileDialog(self, widget, **kwargs):
+        text = QFunc.getFileDialog(**kwargs)
+        Function_SetParam(widget, text) if text != '' else None
+
     def appendModels(self):
         LineEdit_Models_Append = QLineEdit()
         DialogBox_Models_Append = MessageBox_Buttons(self)
@@ -899,10 +903,9 @@ class MainWindow(Window_MainWindow):
         DialogBox_Models_Append.Button1.setText(QCA.translate('MainWindow', "模型文件目录（多文件）"))
         DialogBox_Models_Append.Button1.clicked.connect(
             lambda: (
-                LineEdit_Models_Append.setText(
-                    QFunc.getFileDialog(
-                        mode = FileDialogMode.SelectFolder
-                    )
+                self._getFileDialog(
+                    LineEdit_Models_Append,
+                    mode = FileDialogMode.SelectFolder
                 ),
                 DialogBox_Models_Append.close(),
             )
@@ -910,11 +913,10 @@ class MainWindow(Window_MainWindow):
         DialogBox_Models_Append.Button2.setText(QCA.translate('MainWindow', "模型文件路径（单文件）"))
         DialogBox_Models_Append.Button2.clicked.connect(
             lambda: (
-                LineEdit_Models_Append.setText(
-                    QFunc.getFileDialog(
-                        mode = FileDialogMode.SelectFile,
-                        fileType = "模型文件 (*.pt *.pth *.ckpt *.bin *.json')"
-                    )
+                self._getFileDialog(
+                    LineEdit_Models_Append,
+                    mode = FileDialogMode.SelectFile,
+                    fileType = "模型文件 (*.pt *.pth *.ckpt *.bin *.json')"
                 ),
                 DialogBox_Models_Append.close(),
             )
@@ -966,10 +968,9 @@ class MainWindow(Window_MainWindow):
         dirPathSelectionDialogBox.Button1.setText(pathSelectionText)
         dirPathSelectionDialogBox.Button1.clicked.connect(
             lambda: (
-                textReciever.setText(
-                    QFunc.getFileDialog(
-                        mode = FileDialogMode.SelectFolder,
-                    )
+                self._getFileDialog(
+                    textReciever,
+                    mode = FileDialogMode.SelectFolder,
                 ),
                 dirPathSelectionDialogBox.close(),
             )
@@ -977,12 +978,11 @@ class MainWindow(Window_MainWindow):
         dirPathSelectionDialogBox.Button2.setText(dirSelectionText)
         dirPathSelectionDialogBox.Button2.clicked.connect(
             lambda: (
-                textReciever.setText(
-                    QFunc.getFileDialog(
-                        mode = FileDialogMode.SelectFile,
-                        filetype = fileType,
-                        directory = directory
-                    )
+                self._getFileDialog(
+                    textReciever,
+                    mode = FileDialogMode.SelectFile,
+                    filetype = fileType,
+                    directory = directory
                 ),
                 dirPathSelectionDialogBox.close(),
             )
