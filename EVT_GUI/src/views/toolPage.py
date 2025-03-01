@@ -9,19 +9,19 @@ from QEasyWidgets.Common import FileDialogMode
 from QEasyWidgets.Components import *
 from QEasyWidgets import QTasks
 
+from .common import SubPage, Page
 from components import Frame_RangeSetting
 #from assets import *
 from functions import *
 
 ##############################################################################################################################
 
-class SubPage(QWidget):
+class SubToolPage(SubPage):
     """
     """
     def __init__(self, parent = None, paramsManager: ParamsManager = ...):
         super().__init__(parent)
 
-        self.widgets = {}
         self.paramWidgets = {}
 
         self.paramsManager = paramsManager
@@ -36,15 +36,8 @@ class SubPage(QWidget):
         self.catalogueWidget.setHeaderHidden(True)
         leftWidget_layout.addWidget(self.catalogueWidget)
 
-        middleWidget = ScrollAreaBase(self)
+        middleWidget = self.contentWidget
         middleWidget.setMinimumSize(QSize(600, 0))
-        middleWidget.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOn)
-        middleWidget.setWidgetResizable(True)
-        self.middleWidget_contentWidget = QWidget()
-        middleWidget_contentWidget_layout = QVBoxLayout(self.middleWidget_contentWidget)
-        middleWidget_contentWidget_layout.setSpacing(12)
-        middleWidget_contentWidget_layout.setContentsMargins(12, 12, 12, 12)
-        middleWidget.setWidget(self.middleWidget_contentWidget)
 
         rightWidget = QWidget(self)
         self.rightWidget_layout = QGridLayout(rightWidget)
@@ -125,9 +118,7 @@ class SubPage(QWidget):
         progressBar_layout.setSpacing(0)
         progressBar_layout.addWidget(progressBar_stackedWidget)
 
-        layout = QGridLayout(self)
-        layout.setSpacing(12)
-        layout.setContentsMargins(0, 0, 0, 0)
+        layout = self.cleanLayout()
         layout.addWidget(leftWidget, 0, 0, 1, 1)
         layout.setColumnStretch(0, 3)
         layout.addWidget(middleWidget, 0, 1, 1, 1)
@@ -135,14 +126,6 @@ class SubPage(QWidget):
         layout.addWidget(rightWidget, 0, 2, 1, 1)
         layout.setColumnStretch(2, 7)
         layout.addWidget(self.progressBar, 1, 0, 1, 3)
-
-    def findChildWidget(self, *args, type: Optional[Type[QWidget]] = None):
-        if len(args) > 3:
-            args, type = args[:-1], args[-1]
-        childWidget = self.widgets.get(args, None)
-        if type is not None and not isinstance(childWidget, type):
-            childWidget = QFunc.findChild(childWidget, type)
-        return childWidget
 
     def _setLabelText(self, label, text):
         QFunc.setText(
@@ -168,7 +151,7 @@ class SubPage(QWidget):
             childItemText = QCA.translate('MainWindow', childItemText.splitlines()[0]),
         )
 
-    def _addToContainer(self, label: LabelBase, inputWidget: QWidget, menuButton: MenuButton, rootItemText: str, toolBoxText: Optional[str] = None, text: str = ...):
+    def _addToChildFrame(self, label: LabelBase, inputWidget: QWidget, menuButton: MenuButton):
         menuButton.setFixedSize(QSize(27, 27))
         inputWidget.setMaximumHeight(27) if isinstance(inputWidget, (QLineEdit, QComboBox, QCheckBox, QSpinBox, QDoubleSpinBox, QSlider)) else None
         # Add to childFrame
@@ -190,39 +173,7 @@ class SubPage(QWidget):
         childFrame_layout.addItem(QSpacerItem(0, 0, QSizePolicy.Expanding, QSizePolicy.Minimum), 0, 1, 1, 1)
         childFrame_layout.addWidget(menuButton, 0, 2, 1, 1)
         childFrame_layout.addWidget(inputWidget, 1, 0, 1, 3)
-        self.widgets[(rootItemText, toolBoxText, text.splitlines()[0])] = childFrame # record the childFrame
-        # Add to toolBox
-        if toolBoxText is None:
-            toolBox = childFrame
-        else:
-            toolBoxText = toolBoxText.splitlines()[0]
-            toolBox = self.findChildWidget(rootItemText, toolBoxText)
-            if isinstance(toolBox, ToolBoxBase):
-                toolBox.widget(0).addWidget(childFrame)
-            else:
-                toolBox = ToolBoxBase()
-                toolPageItem = QWidget()
-                toolPageItem_layout = QGridLayout(toolPageItem)
-                toolPageItem_layout.setSpacing(0)
-                toolPageItem_layout.setContentsMargins(0, 0, 0, 0)
-                toolPageItem_layout.addWidget(childFrame)
-                toolBox.addItem(toolPageItem, toolBoxText)
-                self.widgets[(rootItemText, toolBoxText)] = toolBox # record the toolBox
-            toolBox.widget(0).collapse()
-        # Add to groupBox
-        rootItemText = rootItemText.splitlines()[0]
-        groupBox = self.findChildWidget(rootItemText)
-        if isinstance(groupBox, GroupBoxBase):
-            groupBox.layout().addWidget(toolBox)
-        else:
-            groupBox = GroupBoxBase()
-            groupBox_layout = QGridLayout(groupBox)
-            groupBox_layout.setSpacing(0)
-            groupBox_layout.setContentsMargins(0, 12, 0, 12)
-            groupBox_layout.addWidget(toolBox)
-            groupBox.setTitle(rootItemText)
-            self.middleWidget_contentWidget.layout().addWidget(groupBox)
-            self.widgets[(rootItemText,)] = groupBox # record the groupbox
+        return childFrame
 
     def addLineEditFrame(self,
         rootItemText: str = ..., toolBoxText: Optional[str] = None, text: str = ..., toolTip: Optional[str] = None,
@@ -242,7 +193,7 @@ class SubPage(QWidget):
             placeholderText = placeholderText
         )
         self._setButtonMenu(button, lineEdit)
-        self._addToContainer(label, lineEdit, button, rootItemText, toolBoxText, text)
+        self._addToContainer(rootItemText, toolBoxText, text, label, lineEdit, button)
         self._connectToTreeWidget(label, rootItemText, text)
         self.paramWidgets[lineEdit] = emptyAllowed
 
@@ -262,7 +213,7 @@ class SubPage(QWidget):
             placeholderText = placeholderText
         )
         self._setButtonMenu(button, textEdit)
-        self._addToContainer(label, textEdit, button, rootItemText, toolBoxText, text)
+        self._addToContainer(rootItemText, toolBoxText, text, label, textEdit, button)
         self._connectToTreeWidget(label, rootItemText, text)
         self.paramWidgets[textEdit] = emptyAllowed
 
@@ -280,7 +231,7 @@ class SubPage(QWidget):
         checkBox.setToolTip(toolTip) if toolTip is not None else None
         self.paramsManager.setParam(checkBox, section, option, defaultValue)
         self._setButtonMenu(button, checkBox)
-        self._addToContainer(label, checkBox, button, rootItemText, toolBoxText, text)
+        self._addToContainer(rootItemText, toolBoxText, text, label, checkBox, button)
         self._connectToTreeWidget(label, rootItemText, text)
         self.paramWidgets[checkBox] = emptyAllowed
 
@@ -300,7 +251,7 @@ class SubPage(QWidget):
         self.paramsManager.setParam(comboBox, section, option, defaultValue)
         comboBox.setCurrentIndex(currentIndex) if currentIndex is not None else None
         self._setButtonMenu(button, comboBox)
-        self._addToContainer(label, comboBox, button, rootItemText, toolBoxText, text)
+        self._addToContainer(rootItemText, toolBoxText, text, label, comboBox, button)
         self._connectToTreeWidget(label, rootItemText, text)
         self.paramWidgets[comboBox] = emptyAllowed
 
@@ -320,7 +271,7 @@ class SubPage(QWidget):
         spinBox.setSingleStep(step) if step is not None else None
         self.paramsManager.setParam(spinBox, section, option, defaultValue)
         self._setButtonMenu(button, spinBox)
-        self._addToContainer(label, spinBox, button, rootItemText, toolBoxText, text)
+        self._addToContainer(rootItemText, toolBoxText, text, label, spinBox, button)
         self._connectToTreeWidget(label, rootItemText, text)
         self.paramWidgets[spinBox] = emptyAllowed
 
@@ -340,7 +291,7 @@ class SubPage(QWidget):
         doubleSpinBox.setSingleStep(step) if step is not None else None
         self.paramsManager.setParam(doubleSpinBox, section, option, defaultValue)
         self._setButtonMenu(button, doubleSpinBox)
-        self._addToContainer(label, doubleSpinBox, button, rootItemText, toolBoxText, text)
+        self._addToContainer(rootItemText, toolBoxText, text, label, doubleSpinBox, button)
         self._connectToTreeWidget(label, rootItemText, text)
         self.paramWidgets[doubleSpinBox] = emptyAllowed
 
@@ -360,7 +311,7 @@ class SubPage(QWidget):
         rangeSetting.setSingleStep(step) if step is not None else None
         self.paramsManager.setParam(rangeSetting, section, option, defaultValue)
         self._setButtonMenu(button, rangeSetting)
-        self._addToContainer(label, rangeSetting, button, rootItemText, toolBoxText, text)
+        self._addToContainer(rootItemText, toolBoxText, text, label, rangeSetting, button)
         self._connectToTreeWidget(label, rootItemText, text)
         self.paramWidgets[rangeSetting] = emptyAllowed
 
@@ -378,7 +329,7 @@ class SubPage(QWidget):
         table.setFileDialog(fileType)
         self.paramsManager.setParam(table, section, option, defaultValue)
         #self._setButtonMenu(button, table)
-        self._addToContainer(label, table, button, rootItemText, toolBoxText, text)
+        self._addToContainer(rootItemText, toolBoxText, text, label, table, button)
         self._connectToTreeWidget(label, rootItemText, text)
 
     def addSideBtn(self,
@@ -431,26 +382,12 @@ class SubPage(QWidget):
         )
 
 
-class ToolPage(QWidget):
+class ToolPage(Page):
     """
     """
     def __init__(self, parent = None):
         super().__init__(parent)
 
-        navigationArea = QWidget()
-        navigationArea.setMinimumHeight(60)
-        navigationArea.setStyleSheet("""
-            QWidget {
-                border-width: 0px 0px 3px 0px;
-                border-style: solid;
-                border-bottom-color: rgba(123, 123, 123, 123);
-            }
-        """)
-        self.navigationAreaLayout = QHBoxLayout(navigationArea)
-        self.navigationAreaLayout.setSpacing(0)
-        self.navigationAreaLayout.setContentsMargins(0, 0, 0, 0)
-        self.horizontalSpacer = QSpacerItem(0, 0, QSizePolicy.Expanding, QSizePolicy.Minimum)
-        self.navigationAreaLayout.addItem(self.horizontalSpacer)
         self.helpButton = QPushButton()
         self.helpButton.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
         self.helpButton.setStyleSheet("""
@@ -467,37 +404,6 @@ class ToolPage(QWidget):
             }
         """)
         self.navigationAreaLayout.addWidget(self.helpButton)
-
-        self.stackedWidget = QStackedWidget()
-        self.stackedWidget.setStyleSheet("""
-            QWidget {
-                background-color: transparent;
-            }
-        """)
-
-        layout = QVBoxLayout(self)
-        layout.setSpacing(21)
-        layout.setContentsMargins(21, 12, 21, 12)
-        layout.addWidget(navigationArea)
-        layout.addWidget(self.stackedWidget)
-
-    def addSubPage(self,
-        title, subPage
-    ):
-        self.stackedWidget.addWidget(subPage)
-        navigationButton = NavigationButton()
-        navigationButton.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
-        navigationButton.setText(title)
-        navigationButton.setHorizontal(True)
-        navigationButton.setAutoExclusive(True)
-        navigationButton.clicked.connect(
-            lambda: Function_AnimateStackedWidget(
-                stackedWidget = self.stackedWidget,
-                target = subPage
-            )
-        )
-        self.navigationAreaLayout.insertWidget(self.navigationAreaLayout.indexOf(self.horizontalSpacer), navigationButton)
-        navigationButton.setChecked(True) if self.stackedWidget.indexOf(subPage) == 0 else None
 
     def setHelpBtnEvent(self,
         event

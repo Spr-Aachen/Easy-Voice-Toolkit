@@ -1900,7 +1900,7 @@ class MainWindow(Window_MainWindow):
         configPath_process = EasyUtils.normPath(Path(configDir).joinpath('config_process.ini'))
         paramsManager_process = ParamsManager(configPath_process)
 
-        subPage_process = SubPage(self.ui.Page_Process, paramsManager_process)
+        subPage_process = SubToolPage(self.ui.Page_Process, paramsManager_process)
         subPage_process.addLineEditFrame(
             rootItemText = QCA.translate('MainWindow', "输入参数"),
             text = QCA.translate('MainWindow', "媒体输入目录\n需要处理的音频文件的所在目录。"),
@@ -2159,7 +2159,7 @@ class MainWindow(Window_MainWindow):
         configPath_VPR_TDNN = EasyUtils.normPath(Path(configDir).joinpath('config_VPR_TDNN.ini'))
         paramsManager_VPR_TDNN = ParamsManager(configPath_VPR_TDNN)
 
-        subPage_VPR = SubPage(self.ui.Page_VPR, paramsManager_VPR_TDNN)
+        subPage_VPR = SubToolPage(self.ui.Page_VPR, paramsManager_VPR_TDNN)
         subPage_VPR.addLineEditFrame(
             rootItemText = QCA.translate('MainWindow', "输入参数"),
             text = QCA.translate('MainWindow', "音频输入目录\n需要进行语音识别筛选的音频文件的所在目录。"),
@@ -2346,7 +2346,7 @@ class MainWindow(Window_MainWindow):
         configPath_ASR_Whisper = EasyUtils.normPath(Path(configDir).joinpath('Config_ASR_Whisper.ini'))
         paramsManager_ASR_Whisper = ParamsManager(configPath_ASR_Whisper)
 
-        subPage_ASR = SubPage(self.ui.Page_ASR, paramsManager_ASR_Whisper)
+        subPage_ASR = SubToolPage(self.ui.Page_ASR, paramsManager_ASR_Whisper)
         subPage_ASR.addLineEditFrame(
             rootItemText = QCA.translate('MainWindow', "输入参数"),
             text = QCA.translate('MainWindow', "音频输入目录\n需要将语音内容转为文字的音频文件的所在目录。"),
@@ -2476,7 +2476,7 @@ class MainWindow(Window_MainWindow):
         configPath_DAT_GPTSoVITS = EasyUtils.normPath(Path(configDir).joinpath('Config_DAT_GPT-SoVITS.ini'))
         paramsManager_DAT_GPTSoVITS = ParamsManager(configPath_DAT_GPTSoVITS)
 
-        subPage_dataset_GPTSoVITS = SubPage(self.ui.Page_Dataset, paramsManager_DAT_GPTSoVITS)
+        subPage_dataset_GPTSoVITS = SubToolPage(self.ui.Page_Dataset, paramsManager_DAT_GPTSoVITS)
         subPage_dataset_GPTSoVITS.addLineEditFrame(
             rootItemText = QCA.translate('MainWindow', "输入参数"),
             text = QCA.translate('MainWindow', "音频文件目录/语音识别结果文本路径\n音频文件的所在目录，或者提供由语音识别得到的文本文件。"),
@@ -2587,7 +2587,7 @@ class MainWindow(Window_MainWindow):
         configPath_DAT_VITS = EasyUtils.normPath(Path(configDir).joinpath('Config_DAT_VITS.ini'))
         paramsManager_DAT_VITS = ParamsManager(configPath_DAT_VITS)
 
-        subPage_dataset_VITS = SubPage(self.ui.Page_Dataset, paramsManager_DAT_VITS)
+        subPage_dataset_VITS = SubToolPage(self.ui.Page_Dataset, paramsManager_DAT_VITS)
         subPage_dataset_VITS.addLineEditFrame(
             rootItemText = QCA.translate('MainWindow', "输入参数"),
             text = QCA.translate('MainWindow', "音频文件目录/语音识别结果文本路径\n音频文件的所在目录（要求按说话人分类），或者提供由语音识别得到的文本文件。"),
@@ -2828,7 +2828,7 @@ class MainWindow(Window_MainWindow):
         configPath_Train_GPTSoVITS = EasyUtils.normPath(Path(configDir).joinpath('Config_Train_GPT-SoVITS.ini'))
         paramsManager_Train_GPTSoVITS = ParamsManager(configPath_Train_GPTSoVITS)
 
-        subPage_train_GPTSoVITS = SubPage(self.ui.Page_Train, paramsManager_Train_GPTSoVITS)
+        subPage_train_GPTSoVITS = SubToolPage(self.ui.Page_Train, paramsManager_Train_GPTSoVITS)
         subPage_train_GPTSoVITS.addLineEditFrame(
             rootItemText = QCA.translate('MainWindow', "输入参数"),
             text = QCA.translate('MainWindow', "训练集文本路径\n用于提供训练集音频路径及其语音内容的训练集txt文件的路径。"),
@@ -3016,7 +3016,7 @@ class MainWindow(Window_MainWindow):
         configPath_Train_VITS = EasyUtils.normPath(Path(configDir).joinpath('Config_Train_VITS.ini'))
         paramsManager_Train_VITS = ParamsManager(configPath_Train_VITS)
 
-        subPage_train_VITS = SubPage(self.ui.Page_Train, paramsManager_Train_VITS)
+        subPage_train_VITS = SubToolPage(self.ui.Page_Train, paramsManager_Train_VITS)
         subPage_train_VITS.addLineEditFrame(
             rootItemText = QCA.translate('MainWindow', "输入参数"),
             text = QCA.translate('MainWindow', "训练集文本路径\n用于提供训练集音频路径及其语音内容的训练集txt文件的路径。"),
@@ -3320,7 +3320,7 @@ class MainWindow(Window_MainWindow):
         configPath_TTS_GPTSoVITS = EasyUtils.normPath(Path(configDir).joinpath('Config_TTS_GPT-SoVITS.ini'))
         paramsManager_TTS_GPTSoVITS = ParamsManager(configPath_TTS_GPTSoVITS)
 
-        subPage_TTS_GPTSoVITS = SubPage(self.ui.Page_TTS, paramsManager_TTS_GPTSoVITS)
+        subPage_TTS_GPTSoVITS = SubToolPage(self.ui.Page_TTS, paramsManager_TTS_GPTSoVITS)
         TTS_GPTSoVITS_ModelPathLoadS1_Default = Path(ModelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's1bert25hz-5kh-longer-epoch=12-step=369668.ckpt').as_posix()
         subPage_TTS_GPTSoVITS.addLineEditFrame(
             rootItemText = QCA.translate('MainWindow', "输入参数"),
@@ -3402,7 +3402,7 @@ class MainWindow(Window_MainWindow):
         configPath_TTS_VITS = EasyUtils.normPath(Path(configDir).joinpath('Config_TTS_VITS.ini'))
         paramsManager_TTS_VITS = ParamsManager(configPath_TTS_VITS)
      
-        subPage_TTS_VITS = SubPage(self.ui.Page_TTS, paramsManager_TTS_VITS)
+        subPage_TTS_VITS = SubToolPage(self.ui.Page_TTS, paramsManager_TTS_VITS)
         TTS_VITS_ConfigPathLoad_Default = Path(ModelDir).joinpath('TTS', 'VITS', 'Downloaded', 'standard_Config.json').as_posix()
         subPage_TTS_VITS.addLineEditFrame(
             rootItemText = QCA.translate('MainWindow', "输入参数"),
