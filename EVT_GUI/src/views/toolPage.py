@@ -176,7 +176,7 @@ class SubToolPage(SubPage):
         return childFrame
 
     def addLineEditFrame(self,
-        rootItemText: str = ..., toolBoxText: Optional[str] = None, text: str = ..., toolTip: Optional[str] = None,
+        rootItemText: Optional[str] = None, toolBoxText: Optional[str] = None, text: str = ..., toolTip: Optional[str] = None,
         fileDialogMode: Optional[FileDialogMode] = None, fileType: Optional[str] = None, directory: Optional[str] = None,
         section: str = ..., option: str = ..., defaultValue: str = ..., placeholderText: str = "",
         emptyAllowed: bool = False
@@ -198,7 +198,7 @@ class SubToolPage(SubPage):
         self.paramWidgets[lineEdit] = emptyAllowed
 
     def addTextEditFrame(self,
-        rootItemText: str = ..., toolBoxText: Optional[str] = None, text: str = ..., toolTip: Optional[str] = None,
+        rootItemText: Optional[str] = None, toolBoxText: Optional[str] = None, text: str = ..., toolTip: Optional[str] = None,
         section: str = ..., option: str = ..., defaultValue: str = ..., placeholderText: str = "",
         emptyAllowed: bool = False
     ):
@@ -218,7 +218,7 @@ class SubToolPage(SubPage):
         self.paramWidgets[textEdit] = emptyAllowed
 
     def addCheckBoxFrame(self,
-        rootItemText: str = ..., toolBoxText: Optional[str] = None, text: str = ..., toolTip: Optional[str] = None,
+        rootItemText: Optional[str] = None, toolBoxText: Optional[str] = None, text: str = ..., toolTip: Optional[str] = None,
         section: str = ..., option: str = ..., defaultValue: str = ...,
         emptyAllowed: bool = False
     ):
@@ -236,7 +236,7 @@ class SubToolPage(SubPage):
         self.paramWidgets[checkBox] = emptyAllowed
 
     def addComboBoxFrame(self,
-        rootItemText: str = ..., toolBoxText: Optional[str] = None, text: str = ..., toolTip: Optional[str] = None,
+        rootItemText: Optional[str] = None, toolBoxText: Optional[str] = None, text: str = ..., toolTip: Optional[str] = None,
         items: list = ..., currentIndex: Optional[int] = None,
         section: str = ..., option: str = ..., defaultValue: str = ...,
         emptyAllowed: bool = False
@@ -256,7 +256,7 @@ class SubToolPage(SubPage):
         self.paramWidgets[comboBox] = emptyAllowed
 
     def addSpinBoxFrame(self,
-        rootItemText: str = ..., toolBoxText: Optional[str] = None, text: str = ..., toolTip: Optional[str] = None,
+        rootItemText: Optional[str] = None, toolBoxText: Optional[str] = None, text: str = ..., toolTip: Optional[str] = None,
         minimum: int = ..., maximum: int = ..., step: Optional[int] = ...,
         section: str = ..., option: str = ..., defaultValue: str = ...,
         emptyAllowed: bool = False
@@ -276,7 +276,7 @@ class SubToolPage(SubPage):
         self.paramWidgets[spinBox] = emptyAllowed
 
     def addDoubleSpinBoxFrame(self,
-        rootItemText: str = ..., toolBoxText: Optional[str] = None, text: str = ..., toolTip: Optional[str] = None,
+        rootItemText: Optional[str] = None, toolBoxText: Optional[str] = None, text: str = ..., toolTip: Optional[str] = None,
         minimum: float = ..., maximum: float = ..., step: Optional[float] = None,
         section: str = ..., option: str = ..., defaultValue: str = ...,
         emptyAllowed: bool = False
@@ -296,7 +296,7 @@ class SubToolPage(SubPage):
         self.paramWidgets[doubleSpinBox] = emptyAllowed
 
     def addRangeSettingFrame(self,
-        rootItemText: str = ..., toolBoxText: Optional[str] = None, text: str = ..., toolTip: Optional[str] = None,
+        rootItemText: Optional[str] = None, toolBoxText: Optional[str] = None, text: str = ..., toolTip: Optional[str] = None,
         minimum: float = ..., maximum: float = ..., step: Optional[float] = None,
         section: str = ..., option: str = ..., defaultValue: str = ...,
         emptyAllowed: bool = False
@@ -316,7 +316,7 @@ class SubToolPage(SubPage):
         self.paramWidgets[rangeSetting] = emptyAllowed
 
     def addEditAudioSpeakerTableFrame(self,
-        rootItemText: str = ..., toolBoxText: Optional[str] = None, text: str = ...,
+        rootItemText: Optional[str] = None, toolBoxText: Optional[str] = None, text: str = ...,
         headerLabels: list = ...,
         fileType: Optional[str] = None,
         section: str = ..., option: str = ..., defaultValue: str = ...,

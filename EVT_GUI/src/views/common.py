@@ -44,12 +44,15 @@ class SubPage(QWidget):
         layout.removeWidget(self.contentWidget)
         return layout
 
-    def _addToChildFrame(self, inputWidget: QWidget):
+    def _addToChildFrame(self, widget: Union[QWidget, QLayout]):
         childFrame = QFrame()
-        childFrame_layout = QGridLayout(childFrame)
-        childFrame_layout.setSpacing(12)
-        childFrame_layout.setContentsMargins(21, 12, 21, 12)
-        childFrame_layout.addWidget(inputWidget)
+        if isinstance(widget, QWidget):
+            childFrame_layout = QGridLayout(childFrame)
+            childFrame_layout.setSpacing(12)
+            childFrame_layout.setContentsMargins(21, 12, 21, 12)
+            childFrame_layout.addWidget(widget)
+        if isinstance(widget, QLayout):
+            childFrame.setLayout(widget)
         return childFrame
 
     def _addToContainer(self, rootItemText: Optional[str] = None, toolBoxText: Optional[str] = None, text: str = ..., *args):

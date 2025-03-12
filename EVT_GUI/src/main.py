@@ -16,7 +16,7 @@ from PySide6.QtCore import QCoreApplication as QCA
 from PySide6.QtGui import QColor, QPixmap, QIcon, QTextCursor
 from QEasyWidgets import QFunctions as QFunc
 from QEasyWidgets import QTasks
-from QEasyWidgets import ComponentsSignals, Theme, EasyTheme, Language, EasyLanguage, IconBase
+from QEasyWidgets import ComponentsSignals, Theme, currentTheme, Language, currentLanguage, IconBase
 from QEasyWidgets.Windows import MessageBoxBase
 
 from views import *
@@ -1313,18 +1313,18 @@ class MainWindow(Window_MainWindow):
         # Theme toggler
         ComponentsSignals.Signal_SetTheme.connect(
             lambda: self.ui.CheckBox_SwitchTheme.setChecked(
-                {Theme.Light: True, Theme.Dark: False}.get(EasyTheme.THEME)
+                {Theme.Light: True, Theme.Dark: False}.get(currentTheme())
             )
         )
         Function_ConfigureCheckBox(
             checkBox = self.ui.CheckBox_SwitchTheme,
             checkedEvents = {
                 lambda: config.editConfig('Settings', 'Theme', Theme.Light): False,
-                lambda: ComponentsSignals.Signal_SetTheme.emit(Theme.Light) if EasyTheme.THEME != Theme.Light else None : False
+                lambda: ComponentsSignals.Signal_SetTheme.emit(Theme.Light) if currentTheme() != Theme.Light else None : False
             },
             uncheckedEvents = {
                 lambda: config.editConfig('Settings', 'Theme', Theme.Dark) : False,
-                lambda: ComponentsSignals.Signal_SetTheme.emit(Theme.Dark) if EasyTheme.THEME != Theme.Dark else None : False
+                lambda: ComponentsSignals.Signal_SetTheme.emit(Theme.Dark) if currentTheme() != Theme.Dark else None : False
             }
         )
 
@@ -1539,33 +1539,16 @@ class MainWindow(Window_MainWindow):
         #############################################################
 
         # EnvInstallation
-        self.ui.Button_Env_Install_Title.setText(QCA.translate('MainWindow', "自动配置"))
-        self.ui.Button_Env_Install_Title.setHorizontal(True)
-        self.ui.Button_Env_Install_Title.setChecked(True)
-        self.ui.Button_Env_Install_Title.clicked.connect(
-            lambda: Function_AnimateStackedWidget(
-                stackedWidget = self.ui.StackedWidget_Pages_Env,
-                target = 0
-            )
-        )
-
-        self.ui.Label_Env_Install_Aria2.setText(QCA.translate('MainWindow', "Aria2"))
-        Function_SetMethodExecutor(self,
-            executeButton = self.ui.Button_Install_Aria2,
-            progressBar = self.ui.ProgressBar_Env_Install_Aria2,
-            method = Aria2_Installer.Execute,
-            params = ()
-        )
-        MainWindowSignals.Signal_MainWindowShown.connect(
-            self.ui.Button_Install_Aria2.click
-        )
-        self.ui.Button_Install_Aria2.setToolTip(QCA.translate('MainWindow', "重新检测安装"))
-        EnvConfiguratorSignals.Signal_Aria2Undetected.connect(
-            lambda: MessageBoxBase.pop(self,
-                QMessageBox.Information, "Tip",
-                text = "未检测到Aria2，已开始下载",
-                buttonEvents = {QMessageBox.Ok: lambda: self.ui.Button_Menu_Env.click()}
-            )
+        subEnvPage_detection = SubEnvPage_Detector(self.ui.Page_Env)
+        subEnvPage_detection.addDetectorFrame(
+            text = QCA.translate('MainWindow', "Aria2"),
+            toolTip = QCA.translate('MainWindow', "重新检测安装"),
+            detectMethod = Aria2_Installer.Execute,
+            params = (),
+            signal_detect = MainWindowSignals.Signal_MainWindowShown,
+            signal_detected = EnvConfiguratorSignals.Signal_Aria2Detected,
+            signal_undetected = EnvConfiguratorSignals.Signal_Aria2Undetected,
+            statusSignal = EnvConfiguratorSignals.Signal_Aria2Status
         )
         EnvConfiguratorSignals.Signal_Aria2Installed.connect(#self.ui.Button_Install_Aria2.click)
             lambda: EnvConfiguratorSignals.Signal_Aria2Detected.emit()
@@ -1577,31 +1560,15 @@ class MainWindow(Window_MainWindow):
                 detailedText = Exception
             )
         )
-        EnvConfiguratorSignals.Signal_Aria2Detected.connect(
-            lambda: self.ui.ProgressBar_Env_Install_Aria2.setValue(100),
-            type = Qt.QueuedConnection
-        )
-        EnvConfiguratorSignals.Signal_Aria2Status.connect(
-            lambda Status: self.ui.Label_Env_Install_Aria2_Status.setText(Status)
-        )
-
-        self.ui.Label_Env_Install_FFmpeg.setText(QCA.translate('MainWindow', "FFmpeg"))
-        Function_SetMethodExecutor(self,
-            executeButton = self.ui.Button_Install_FFmpeg,
-            progressBar = self.ui.ProgressBar_Env_Install_FFmpeg,
-            method = FFmpeg_Installer.Execute,
-            params = ()
-        )
-        MainWindowSignals.Signal_MainWindowShown.connect(
-            self.ui.Button_Install_FFmpeg.click
-        )
-        self.ui.Button_Install_FFmpeg.setToolTip(QCA.translate('MainWindow', "重新检测安装"))
-        EnvConfiguratorSignals.Signal_FFmpegUndetected.connect(
-            lambda: MessageBoxBase.pop(self,
-                QMessageBox.Information, "Tip",
-                text = "未检测到FFmpeg，已开始下载",
-                buttonEvents = {QMessageBox.Ok: lambda: self.ui.Button_Menu_Env.click()}
-            )
+        subEnvPage_detection.addDetectorFrame(
+            text = QCA.translate('MainWindow', "FFmpeg"),
+            toolTip = QCA.translate('MainWindow', "重新检测安装"),
+            detectMethod = FFmpeg_Installer.Execute,
+            params = (),
+            signal_detect = MainWindowSignals.Signal_MainWindowShown,
+            signal_detected = EnvConfiguratorSignals.Signal_FFmpegDetected,
+            signal_undetected = EnvConfiguratorSignals.Signal_FFmpegUndetected,
+            statusSignal = EnvConfiguratorSignals.Signal_FFmpegStatus
         )
         EnvConfiguratorSignals.Signal_FFmpegInstalled.connect(#self.ui.Button_Install_FFmpeg.click)
             lambda: EnvConfiguratorSignals.Signal_FFmpegDetected.emit()
@@ -1613,31 +1580,15 @@ class MainWindow(Window_MainWindow):
                 detailedText = Exception
             )
         )
-        EnvConfiguratorSignals.Signal_FFmpegDetected.connect(
-            lambda: self.ui.ProgressBar_Env_Install_FFmpeg.setValue(100),
-            type = Qt.QueuedConnection
-        )
-        EnvConfiguratorSignals.Signal_FFmpegStatus.connect(
-            lambda Status: self.ui.Label_Env_Install_FFmpeg_Status.setText(Status)
-        )
-
-        self.ui.Label_Env_Install_Python.setText(QCA.translate('MainWindow', "Python"))
-        Function_SetMethodExecutor(self,
-            executeButton = self.ui.Button_Install_Python,
-            progressBar = self.ui.ProgressBar_Env_Install_Python,
-            method = Python_Installer.Execute,
-            params = ('3.9.0', )
-        )
-        MainWindowSignals.Signal_MainWindowShown.connect( #EnvConfiguratorSignals.Signal_CMakeDetected.connect(
-            self.ui.Button_Install_Python.click
-        )
-        self.ui.Button_Install_Python.setToolTip(QCA.translate('MainWindow', "重新检测安装"))
-        EnvConfiguratorSignals.Signal_PythonUndetected.connect(
-            lambda: MessageBoxBase.pop(self,
-                QMessageBox.Information, "Tip",
-                text = "未检测到3.8版本以上的Python，已开始下载",
-                buttonEvents = {QMessageBox.Ok: lambda: self.ui.Button_Menu_Env.click()}
-            )
+        subEnvPage_detection.addDetectorFrame(
+            text = QCA.translate('MainWindow', "Python"),
+            toolTip = QCA.translate('MainWindow', "重新检测安装"),
+            detectMethod = Python_Installer.Execute,
+            params = ('3.9.0', ),
+            signal_detect = MainWindowSignals.Signal_MainWindowShown,
+            signal_detected = EnvConfiguratorSignals.Signal_PythonDetected,
+            signal_undetected = EnvConfiguratorSignals.Signal_PythonUndetected,
+            statusSignal = EnvConfiguratorSignals.Signal_PythonStatus
         )
         EnvConfiguratorSignals.Signal_PythonInstalled.connect(#self.ui.Button_Install_Python.click)
             lambda: EnvConfiguratorSignals.Signal_PythonDetected.emit()
@@ -1649,31 +1600,15 @@ class MainWindow(Window_MainWindow):
                 detailedText = Exception
             )
         )
-        EnvConfiguratorSignals.Signal_PythonDetected.connect(
-            lambda: self.ui.ProgressBar_Env_Install_Python.setValue(100),
-            type = Qt.QueuedConnection
-        )
-        EnvConfiguratorSignals.Signal_PythonStatus.connect(
-            lambda Status: self.ui.Label_Env_Install_Python_Status.setText(Status)
-        )
-
-        self.ui.Label_Env_Install_PyReqs.setText(QCA.translate('MainWindow', "Python Requirements"))
-        Function_SetMethodExecutor(self,
-            executeButton = self.ui.Button_Install_PyReqs,
-            progressBar = self.ui.ProgressBar_Env_Install_PyReqs,
-            method = PyReqs_Installer.Execute,
-            params = (EasyUtils.normPath(RequirementsPath), )
-        ) if Path(RequirementsPath).exists() else None
-        EnvConfiguratorSignals.Signal_PythonDetected.connect(
-            self.ui.Button_Install_PyReqs.click
-        )
-        self.ui.Button_Install_PyReqs.setToolTip(QCA.translate('MainWindow', "重新检测安装"))
-        EnvConfiguratorSignals.Signal_PyReqsUndetected.connect(
-            lambda: MessageBoxBase.pop(self,
-                QMessageBox.Information, "Tip",
-                text = "缺失Python依赖库，已开始下载",
-                buttonEvents = {QMessageBox.Ok: lambda: self.ui.Button_Menu_Env.click()}
-            )
+        subEnvPage_detection.addDetectorFrame(
+            text = QCA.translate('MainWindow', "Python 依赖库 (Requirements)"),
+            toolTip = QCA.translate('MainWindow', "重新检测安装"),
+            detectMethod = PyReqs_Installer.Execute,
+            params = (EasyUtils.normPath(RequirementsPath), ),
+            signal_detect = EnvConfiguratorSignals.Signal_PythonDetected,
+            signal_detected = EnvConfiguratorSignals.Signal_PyReqsDetected,
+            signal_undetected = EnvConfiguratorSignals.Signal_PyReqsUndetected,
+            statusSignal = EnvConfiguratorSignals.Signal_PyReqsStatus
         )
         EnvConfiguratorSignals.Signal_PyReqsInstalled.connect(#self.ui.Button_Install_PyReqs.click)
             lambda: EnvConfiguratorSignals.Signal_PyReqsDetected.emit()
@@ -1685,31 +1620,15 @@ class MainWindow(Window_MainWindow):
                 detailedText = Exception
             )
         )
-        EnvConfiguratorSignals.Signal_PyReqsDetected.connect(
-            lambda: self.ui.ProgressBar_Env_Install_PyReqs.setValue(100),
-            type = Qt.QueuedConnection
-        )
-        EnvConfiguratorSignals.Signal_PyReqsStatus.connect(
-            lambda Status: self.ui.Label_Env_Install_PyReqs_Status.setText(Status)
-        )
-
-        self.ui.Label_Env_Install_Pytorch.setText(QCA.translate('MainWindow', "Pytorch"))
-        Function_SetMethodExecutor(self,
-            executeButton = self.ui.Button_Install_Pytorch,
-            progressBar = self.ui.ProgressBar_Env_Install_Pytorch,
-            method = Pytorch_Installer.Execute,
-            params = ()
-        )
-        EnvConfiguratorSignals.Signal_PyReqsDetected.connect(
-            self.ui.Button_Install_Pytorch.click
-        )
-        self.ui.Button_Install_Pytorch.setToolTip(QCA.translate('MainWindow', "重新检测安装"))
-        EnvConfiguratorSignals.Signal_PytorchUndetected.connect(
-            lambda: MessageBoxBase.pop(self,
-                QMessageBox.Information, "Tip",
-                text = "缺失Pytorch相关库，已开始下载",
-                buttonEvents = {QMessageBox.Ok: lambda: self.ui.Button_Menu_Env.click()}
-            )
+        subEnvPage_detection.addDetectorFrame(
+            text = QCA.translate('MainWindow', "Pytorch 相关库"),
+            toolTip = QCA.translate('MainWindow', "重新检测安装"),
+            detectMethod = Pytorch_Installer.Execute,
+            params = (),
+            signal_detect = EnvConfiguratorSignals.Signal_PyReqsDetected,
+            signal_detected = EnvConfiguratorSignals.Signal_PytorchDetected,
+            signal_undetected = EnvConfiguratorSignals.Signal_PytorchUndetected,
+            statusSignal = EnvConfiguratorSignals.Signal_PytorchStatus
         )
         EnvConfiguratorSignals.Signal_PytorchInstalled.connect(#self.ui.Button_Install_Pytorch.click)
             lambda: EnvConfiguratorSignals.Signal_PytorchDetected.emit()
@@ -1721,39 +1640,27 @@ class MainWindow(Window_MainWindow):
                 detailedText = Exception
             )
         )
-        EnvConfiguratorSignals.Signal_PytorchDetected.connect(
-            lambda: self.ui.ProgressBar_Env_Install_Pytorch.setValue(100),
-            type = Qt.QueuedConnection
-        )
-        EnvConfiguratorSignals.Signal_PytorchStatus.connect(
-            lambda Status: self.ui.Label_Env_Install_Pytorch_Status.setText(Status)
+
+        self.ui.Page_Env.addSubPage(
+            QCA.translate('MainWindow', "自动配置"), subEnvPage_detection
         )
 
         # EnvManagement
-        self.ui.Button_Env_Manage_Title.setText(QCA.translate('MainWindow', "安装管理"))
-        self.ui.Button_Env_Manage_Title.setHorizontal(True)
-        self.ui.Button_Env_Manage_Title.setChecked(False)
-        self.ui.Button_Env_Manage_Title.clicked.connect(
-            lambda: Function_AnimateStackedWidget(
-                stackedWidget = self.ui.StackedWidget_Pages_Env,
-                target = 1
-            )
-        )
-
-        self.ui.ToolBox_Env_Manage_Pytorch.widget(0).setText(QCA.translate('MainWindow', "Pytorch"))
-        self.ui.ToolBox_Env_Manage_Pytorch.widget(0).collapse()
-
-        self.ui.Label_Env_Manage_Pytorch_Version.setText(QCA.translate('MainWindow', "选择Pytorch版本"))
-        self.ui.ComboBox_Env_Manage_Pytorch_Version.addItems([ '2.0.1', '2.2.2'])
-
-        self.ui.Button_Env_Manage_Pytorch_Install.setText(QCA.translate('MainWindow', "重装"))
-        Function_SetMethodExecutor(self,
-            executeButton = self.ui.Button_Env_Manage_Pytorch_Install,
+        subEnvPage_manager = SubEnvPage_Manager(self.ui.Page_Env)
+        subEnvPage_manager.addComboBoxFrame(
+            toolBoxText = QCA.translate('MainWindow', "Pytorch"),
+            text = QCA.translate('MainWindow', "选择Pytorch版本"),
+            items = [ '2.0.1', '2.2.2'],
+            executorText = QCA.translate('MainWindow', "安装"),
             method = Pytorch_Installer.Execute,
             paramTargets = [
-                self.ui.ComboBox_Env_Manage_Pytorch_Version,
+                QComboBox,
                 True
             ]
+        )
+
+        self.ui.Page_Env.addSubPage(
+            QCA.translate('MainWindow', "安装管理"), subEnvPage_manager
         )
 
         #############################################################
@@ -3567,7 +3474,7 @@ class MainWindow(Window_MainWindow):
                 ),
                 ComponentsSignals.Signal_SetTheme.emit(
                     ThemeDict.get(self.ui.ComboBox_Setting_Theme.currentText())
-                ) if EasyTheme.THEME != ThemeDict.get(self.ui.ComboBox_Setting_Theme.currentText()) else None
+                ) if currentTheme() != ThemeDict.get(self.ui.ComboBox_Setting_Theme.currentText()) else None
             )
         )
 
@@ -3590,7 +3497,7 @@ class MainWindow(Window_MainWindow):
                 ),
                 ComponentsSignals.Signal_SetLanguage.emit(
                     LanguageDict.get(self.ui.ComboBox_Setting_Language.currentText())
-                ) if EasyLanguage.LANG != LanguageDict.get(self.ui.ComboBox_Setting_Language.currentText()) else None
+                ) if currentLanguage() != LanguageDict.get(self.ui.ComboBox_Setting_Language.currentText()) else None
             )
         )
 

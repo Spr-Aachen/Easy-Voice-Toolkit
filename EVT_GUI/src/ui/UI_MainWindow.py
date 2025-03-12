@@ -2,8 +2,8 @@ from PySide6.QtCore import (QCoreApplication, QMetaObject, Qt, QRect, QSize)
 from PySide6.QtGui import (QIcon, QFont)
 from PySide6.QtWidgets import *
 
-from components import WidgetBase, ButtonBase, NavigationButton, HollowButton, MenuButton, CheckBoxBase, LabelBase, LineEditBase, TextEditBase, TextBrowserBase, ComboBoxBase, Frame_RangeSetting, SpinBoxBase, DoubleSpinBoxBase, ProgressBarBase, ToolBoxBase, GroupBoxBase, ScrollAreaBase, TreeWidgetBase, TabWidgetBase, Table_ViewModels, Table_EditAudioSpeaker
-from views import ToolPage
+from components import ButtonBase, NavigationButton, HollowButton, MenuButton, CheckBoxBase, LabelBase, LineEditBase, TextEditBase, TextBrowserBase, ComboBoxBase, GroupBoxBase, ScrollAreaBase, TabWidgetBase, Table_ViewModels
+from views import EnvPage, ToolPage
 
 
 class Ui_MainWindow(object):
@@ -564,581 +564,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_99.addWidget(self.Frame_Low_Home)
 
         self.StackedWidget_Pages.addWidget(self.Page_Home)
-        self.Page_Env = QWidget()
+        self.Page_Env = EnvPage()
         self.Page_Env.setObjectName(u"Page_Env")
-        self.verticalLayout_128 = QVBoxLayout(self.Page_Env)
-        self.verticalLayout_128.setSpacing(21)
-        self.verticalLayout_128.setObjectName(u"verticalLayout_128")
-        self.verticalLayout_128.setContentsMargins(21, 12, 21, 12)
-        self.Frame_Env_Install_Top = QFrame(self.Page_Env)
-        self.Frame_Env_Install_Top.setObjectName(u"Frame_Env_Install_Top")
-        self.Frame_Env_Install_Top.setMinimumSize(QSize(0, 60))
-        self.Frame_Env_Install_Top.setStyleSheet(u"QFrame {\n"
-"	border-top-width: 0px;\n"
-"	border-right-width: 0px;\n"
-"	border-bottom-width: 3px;\n"
-"	border-left-width: 0px;\n"
-"	border-style: solid;\n"
-"	border-bottom-color: rgba(123, 123, 123, 123);\n"
-"}")
-        self.horizontalLayout_3 = QHBoxLayout(self.Frame_Env_Install_Top)
-        self.horizontalLayout_3.setSpacing(0)
-        self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
-        self.horizontalLayout_3.setContentsMargins(0, 0, 0, 0)
-        self.Button_Env_Install_Title = NavigationButton(self.Frame_Env_Install_Top)
-        self.Button_Env_Install_Title.setObjectName(u"Button_Env_Install_Title")
-        sizePolicy1.setHeightForWidth(self.Button_Env_Install_Title.sizePolicy().hasHeightForWidth())
-        self.Button_Env_Install_Title.setSizePolicy(sizePolicy1)
-
-        self.horizontalLayout_3.addWidget(self.Button_Env_Install_Title)
-
-        self.Button_Env_Manage_Title = NavigationButton(self.Frame_Env_Install_Top)
-        self.Button_Env_Manage_Title.setObjectName(u"Button_Env_Manage_Title")
-        sizePolicy1.setHeightForWidth(self.Button_Env_Manage_Title.sizePolicy().hasHeightForWidth())
-        self.Button_Env_Manage_Title.setSizePolicy(sizePolicy1)
-
-        self.horizontalLayout_3.addWidget(self.Button_Env_Manage_Title)
-
-        self.HorizontalSpacer_Env_Title = QSpacerItem(0, 0, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
-
-        self.horizontalLayout_3.addItem(self.HorizontalSpacer_Env_Title)
-
-
-        self.verticalLayout_128.addWidget(self.Frame_Env_Install_Top)
-
-        self.StackedWidget_Pages_Env = QStackedWidget(self.Page_Env)
-        self.StackedWidget_Pages_Env.setObjectName(u"StackedWidget_Pages_Env")
-        self.StackedWidget_Pages_Env.setStyleSheet(u"QWidget {\n"
-"	background-color: transparent;\n"
-"}")
-        self.SubPage_Env_Install = QWidget()
-        self.SubPage_Env_Install.setObjectName(u"SubPage_Env_Install")
-        self.gridLayout_103 = QGridLayout(self.SubPage_Env_Install)
-        self.gridLayout_103.setSpacing(12)
-        self.gridLayout_103.setObjectName(u"gridLayout_103")
-        self.gridLayout_103.setContentsMargins(0, 0, 0, 0)
-        self.ScrollArea_Env_Install = ScrollAreaBase(self.SubPage_Env_Install)
-        self.ScrollArea_Env_Install.setObjectName(u"ScrollArea_Env_Install")
-        self.ScrollArea_Env_Install.setWidgetResizable(True)
-        self.ScrollAreaWidgetContents_Env_Install = QWidget()
-        self.ScrollAreaWidgetContents_Env_Install.setObjectName(u"ScrollAreaWidgetContents_Env_Install")
-        self.ScrollAreaWidgetContents_Env_Install.setGeometry(QRect(0, 0, 1014, 495))
-        self.verticalLayout_130 = QVBoxLayout(self.ScrollAreaWidgetContents_Env_Install)
-        self.verticalLayout_130.setSpacing(0)
-        self.verticalLayout_130.setObjectName(u"verticalLayout_130")
-        self.verticalLayout_130.setContentsMargins(0, 0, 0, 0)
-        self.Frame_Env_Install_Middle = QFrame(self.ScrollAreaWidgetContents_Env_Install)
-        self.Frame_Env_Install_Middle.setObjectName(u"Frame_Env_Install_Middle")
-        self.Frame_Env_Install_Middle.setStyleSheet(u"QFrame {\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}")
-        self.verticalLayout_127 = QVBoxLayout(self.Frame_Env_Install_Middle)
-        self.verticalLayout_127.setSpacing(0)
-        self.verticalLayout_127.setObjectName(u"verticalLayout_127")
-        self.verticalLayout_127.setContentsMargins(0, 0, 0, 0)
-        self.Frame_Env_Install_Aria2 = QFrame(self.Frame_Env_Install_Middle)
-        self.Frame_Env_Install_Aria2.setObjectName(u"Frame_Env_Install_Aria2")
-        self.Frame_Env_Install_Aria2.setMinimumSize(QSize(0, 99))
-        self.Frame_Env_Install_Aria2.setMaximumSize(QSize(16777215, 99))
-        self.Frame_Env_Install_Aria2.setStyleSheet(u"QFrame {\n"
-"	background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QFrame:hover {\n"
-"	background-color: rgba(36, 36, 36, 12);\n"
-"}")
-        self.gridLayout_118 = QGridLayout(self.Frame_Env_Install_Aria2)
-        self.gridLayout_118.setSpacing(12)
-        self.gridLayout_118.setObjectName(u"gridLayout_118")
-        self.gridLayout_118.setContentsMargins(21, 12, 21, 12)
-        self.Button_Install_Aria2 = QPushButton(self.Frame_Env_Install_Aria2)
-        self.Button_Install_Aria2.setObjectName(u"Button_Install_Aria2")
-        self.Button_Install_Aria2.setMaximumSize(QSize(33, 33))
-        self.Button_Install_Aria2.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	font-size: 15px;\n"
-"	image: url(:/Button_Icon/images/icons/Refresh.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
-"}")
-
-        self.gridLayout_118.addWidget(self.Button_Install_Aria2, 0, 2, 3, 1)
-
-        self.ProgressBar_Env_Install_Aria2 = ProgressBarBase(self.Frame_Env_Install_Aria2)
-        self.ProgressBar_Env_Install_Aria2.setObjectName(u"ProgressBar_Env_Install_Aria2")
-        self.ProgressBar_Env_Install_Aria2.setMaximumSize(QSize(16777215, 3))
-
-        self.gridLayout_118.addWidget(self.ProgressBar_Env_Install_Aria2, 1, 0, 1, 2)
-
-        self.Label_Env_Install_Aria2_Status = LabelBase(self.Frame_Env_Install_Aria2)
-        self.Label_Env_Install_Aria2_Status.setObjectName(u"Label_Env_Install_Aria2_Status")
-        sizePolicy3 = QSizePolicy(QSizePolicy.Policy.Ignored, QSizePolicy.Policy.Preferred)
-        sizePolicy3.setHorizontalStretch(0)
-        sizePolicy3.setVerticalStretch(0)
-        sizePolicy3.setHeightForWidth(self.Label_Env_Install_Aria2_Status.sizePolicy().hasHeightForWidth())
-        self.Label_Env_Install_Aria2_Status.setSizePolicy(sizePolicy3)
-        self.Label_Env_Install_Aria2_Status.setStyleSheet(u"QLabel {\n"
-"	font-size: 9.9px;\n"
-"	/*text-align: center;*/\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.gridLayout_118.addWidget(self.Label_Env_Install_Aria2_Status, 2, 0, 1, 2)
-
-        self.Label_Env_Install_Aria2 = LabelBase(self.Frame_Env_Install_Aria2)
-        self.Label_Env_Install_Aria2.setObjectName(u"Label_Env_Install_Aria2")
-        self.Label_Env_Install_Aria2.setStyleSheet(u"QLabel {\n"
-"	font-size: 15px;\n"
-"	/*text-align: center;*/\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.gridLayout_118.addWidget(self.Label_Env_Install_Aria2, 0, 0, 1, 2)
-
-
-        self.verticalLayout_127.addWidget(self.Frame_Env_Install_Aria2)
-
-        self.Frame_Env_Install_FFmpeg = QFrame(self.Frame_Env_Install_Middle)
-        self.Frame_Env_Install_FFmpeg.setObjectName(u"Frame_Env_Install_FFmpeg")
-        self.Frame_Env_Install_FFmpeg.setMinimumSize(QSize(0, 99))
-        self.Frame_Env_Install_FFmpeg.setMaximumSize(QSize(16777215, 99))
-        self.Frame_Env_Install_FFmpeg.setStyleSheet(u"QFrame {\n"
-"	background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QFrame:hover {\n"
-"	background-color: rgba(36, 36, 36, 12);\n"
-"}")
-        self.gridLayout_119 = QGridLayout(self.Frame_Env_Install_FFmpeg)
-        self.gridLayout_119.setSpacing(12)
-        self.gridLayout_119.setObjectName(u"gridLayout_119")
-        self.gridLayout_119.setContentsMargins(21, 12, 21, 12)
-        self.Button_Install_FFmpeg = QPushButton(self.Frame_Env_Install_FFmpeg)
-        self.Button_Install_FFmpeg.setObjectName(u"Button_Install_FFmpeg")
-        self.Button_Install_FFmpeg.setMaximumSize(QSize(33, 33))
-        self.Button_Install_FFmpeg.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	font-size: 15px;\n"
-"	image: url(:/Button_Icon/images/icons/Refresh.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
-"}")
-
-        self.gridLayout_119.addWidget(self.Button_Install_FFmpeg, 0, 2, 3, 1)
-
-        self.ProgressBar_Env_Install_FFmpeg = ProgressBarBase(self.Frame_Env_Install_FFmpeg)
-        self.ProgressBar_Env_Install_FFmpeg.setObjectName(u"ProgressBar_Env_Install_FFmpeg")
-        self.ProgressBar_Env_Install_FFmpeg.setMaximumSize(QSize(16777215, 3))
-
-        self.gridLayout_119.addWidget(self.ProgressBar_Env_Install_FFmpeg, 1, 0, 1, 2)
-
-        self.Label_Env_Install_FFmpeg_Status = LabelBase(self.Frame_Env_Install_FFmpeg)
-        self.Label_Env_Install_FFmpeg_Status.setObjectName(u"Label_Env_Install_FFmpeg_Status")
-        sizePolicy3.setHeightForWidth(self.Label_Env_Install_FFmpeg_Status.sizePolicy().hasHeightForWidth())
-        self.Label_Env_Install_FFmpeg_Status.setSizePolicy(sizePolicy3)
-        self.Label_Env_Install_FFmpeg_Status.setStyleSheet(u"QLabel {\n"
-"	font-size: 9.9px;\n"
-"	/*text-align: center;*/\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.gridLayout_119.addWidget(self.Label_Env_Install_FFmpeg_Status, 2, 0, 1, 2)
-
-        self.Label_Env_Install_FFmpeg = LabelBase(self.Frame_Env_Install_FFmpeg)
-        self.Label_Env_Install_FFmpeg.setObjectName(u"Label_Env_Install_FFmpeg")
-        self.Label_Env_Install_FFmpeg.setStyleSheet(u"QLabel {\n"
-"	font-size: 15px;\n"
-"	/*text-align: center;*/\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.gridLayout_119.addWidget(self.Label_Env_Install_FFmpeg, 0, 0, 1, 2)
-
-
-        self.verticalLayout_127.addWidget(self.Frame_Env_Install_FFmpeg)
-
-        self.Frame_Env_Install_Python = QFrame(self.Frame_Env_Install_Middle)
-        self.Frame_Env_Install_Python.setObjectName(u"Frame_Env_Install_Python")
-        self.Frame_Env_Install_Python.setMinimumSize(QSize(0, 99))
-        self.Frame_Env_Install_Python.setMaximumSize(QSize(16777215, 99))
-        self.Frame_Env_Install_Python.setStyleSheet(u"QFrame {\n"
-"	background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QFrame:hover {\n"
-"	background-color: rgba(36, 36, 36, 12);\n"
-"}")
-        self.gridLayout_120 = QGridLayout(self.Frame_Env_Install_Python)
-        self.gridLayout_120.setSpacing(12)
-        self.gridLayout_120.setObjectName(u"gridLayout_120")
-        self.gridLayout_120.setContentsMargins(21, 12, 21, 12)
-        self.Button_Install_Python = QPushButton(self.Frame_Env_Install_Python)
-        self.Button_Install_Python.setObjectName(u"Button_Install_Python")
-        self.Button_Install_Python.setMaximumSize(QSize(33, 33))
-        self.Button_Install_Python.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	font-size: 15px;\n"
-"	image: url(:/Button_Icon/images/icons/Refresh.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
-"}")
-
-        self.gridLayout_120.addWidget(self.Button_Install_Python, 0, 2, 3, 1)
-
-        self.ProgressBar_Env_Install_Python = ProgressBarBase(self.Frame_Env_Install_Python)
-        self.ProgressBar_Env_Install_Python.setObjectName(u"ProgressBar_Env_Install_Python")
-        self.ProgressBar_Env_Install_Python.setMaximumSize(QSize(16777215, 3))
-
-        self.gridLayout_120.addWidget(self.ProgressBar_Env_Install_Python, 1, 0, 1, 2)
-
-        self.Label_Env_Install_Python_Status = LabelBase(self.Frame_Env_Install_Python)
-        self.Label_Env_Install_Python_Status.setObjectName(u"Label_Env_Install_Python_Status")
-        sizePolicy3.setHeightForWidth(self.Label_Env_Install_Python_Status.sizePolicy().hasHeightForWidth())
-        self.Label_Env_Install_Python_Status.setSizePolicy(sizePolicy3)
-        self.Label_Env_Install_Python_Status.setStyleSheet(u"QLabel {\n"
-"	font-size: 9.9px;\n"
-"	/*text-align: center;*/\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.gridLayout_120.addWidget(self.Label_Env_Install_Python_Status, 2, 0, 1, 2)
-
-        self.Label_Env_Install_Python = LabelBase(self.Frame_Env_Install_Python)
-        self.Label_Env_Install_Python.setObjectName(u"Label_Env_Install_Python")
-        self.Label_Env_Install_Python.setStyleSheet(u"QLabel {\n"
-"	font-size: 15px;\n"
-"	/*text-align: center;*/\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.gridLayout_120.addWidget(self.Label_Env_Install_Python, 0, 0, 1, 2)
-
-
-        self.verticalLayout_127.addWidget(self.Frame_Env_Install_Python)
-
-        self.Frame_Env_Install_PyReqs = QFrame(self.Frame_Env_Install_Middle)
-        self.Frame_Env_Install_PyReqs.setObjectName(u"Frame_Env_Install_PyReqs")
-        self.Frame_Env_Install_PyReqs.setMinimumSize(QSize(0, 99))
-        self.Frame_Env_Install_PyReqs.setMaximumSize(QSize(16777215, 99))
-        self.Frame_Env_Install_PyReqs.setStyleSheet(u"QFrame {\n"
-"	background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QFrame:hover {\n"
-"	background-color: rgba(36, 36, 36, 12);\n"
-"}")
-        self.gridLayout_121 = QGridLayout(self.Frame_Env_Install_PyReqs)
-        self.gridLayout_121.setSpacing(12)
-        self.gridLayout_121.setObjectName(u"gridLayout_121")
-        self.gridLayout_121.setContentsMargins(21, 12, 21, 12)
-        self.Button_Install_PyReqs = QPushButton(self.Frame_Env_Install_PyReqs)
-        self.Button_Install_PyReqs.setObjectName(u"Button_Install_PyReqs")
-        self.Button_Install_PyReqs.setMaximumSize(QSize(33, 33))
-        self.Button_Install_PyReqs.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	font-size: 15px;\n"
-"	image: url(:/Button_Icon/images/icons/Refresh.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
-"}")
-
-        self.gridLayout_121.addWidget(self.Button_Install_PyReqs, 0, 2, 3, 1)
-
-        self.ProgressBar_Env_Install_PyReqs = ProgressBarBase(self.Frame_Env_Install_PyReqs)
-        self.ProgressBar_Env_Install_PyReqs.setObjectName(u"ProgressBar_Env_Install_PyReqs")
-        self.ProgressBar_Env_Install_PyReqs.setMaximumSize(QSize(16777215, 3))
-
-        self.gridLayout_121.addWidget(self.ProgressBar_Env_Install_PyReqs, 1, 0, 1, 2)
-
-        self.Label_Env_Install_PyReqs_Status = LabelBase(self.Frame_Env_Install_PyReqs)
-        self.Label_Env_Install_PyReqs_Status.setObjectName(u"Label_Env_Install_PyReqs_Status")
-        sizePolicy3.setHeightForWidth(self.Label_Env_Install_PyReqs_Status.sizePolicy().hasHeightForWidth())
-        self.Label_Env_Install_PyReqs_Status.setSizePolicy(sizePolicy3)
-        self.Label_Env_Install_PyReqs_Status.setStyleSheet(u"QLabel {\n"
-"	font-size: 9.9px;\n"
-"	/*text-align: center;*/\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.gridLayout_121.addWidget(self.Label_Env_Install_PyReqs_Status, 2, 0, 1, 2)
-
-        self.Label_Env_Install_PyReqs = LabelBase(self.Frame_Env_Install_PyReqs)
-        self.Label_Env_Install_PyReqs.setObjectName(u"Label_Env_Install_PyReqs")
-        self.Label_Env_Install_PyReqs.setStyleSheet(u"QLabel {\n"
-"	font-size: 15px;\n"
-"	/*text-align: center;*/\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.gridLayout_121.addWidget(self.Label_Env_Install_PyReqs, 0, 0, 1, 2)
-
-
-        self.verticalLayout_127.addWidget(self.Frame_Env_Install_PyReqs)
-
-        self.Frame_Env_Install_Pytorch = QFrame(self.Frame_Env_Install_Middle)
-        self.Frame_Env_Install_Pytorch.setObjectName(u"Frame_Env_Install_Pytorch")
-        self.Frame_Env_Install_Pytorch.setMinimumSize(QSize(0, 99))
-        self.Frame_Env_Install_Pytorch.setMaximumSize(QSize(16777215, 99))
-        self.Frame_Env_Install_Pytorch.setStyleSheet(u"QFrame {\n"
-"	background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QFrame:hover {\n"
-"	background-color: rgba(36, 36, 36, 12);\n"
-"}")
-        self.gridLayout_122 = QGridLayout(self.Frame_Env_Install_Pytorch)
-        self.gridLayout_122.setSpacing(12)
-        self.gridLayout_122.setObjectName(u"gridLayout_122")
-        self.gridLayout_122.setContentsMargins(21, 12, 21, 12)
-        self.Button_Install_Pytorch = QPushButton(self.Frame_Env_Install_Pytorch)
-        self.Button_Install_Pytorch.setObjectName(u"Button_Install_Pytorch")
-        self.Button_Install_Pytorch.setMaximumSize(QSize(33, 33))
-        self.Button_Install_Pytorch.setStyleSheet(u"QPushButton {\n"
-"	text-align: center;\n"
-"	font-size: 15px;\n"
-"	image: url(:/Button_Icon/images/icons/Refresh.png);\n"
-"	background-color: transparent;\n"
-"	padding: 4.5px;\n"
-"	border-width: 1.2px;\n"
-"	border-radius: 6px;\n"
-"	border-style: solid;\n"
-"	border-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"QPushButton:hover {\n"
-"	border-color: rgba(123, 123, 123, 210);\n"
-"}")
-
-        self.gridLayout_122.addWidget(self.Button_Install_Pytorch, 0, 2, 3, 1)
-
-        self.ProgressBar_Env_Install_Pytorch = ProgressBarBase(self.Frame_Env_Install_Pytorch)
-        self.ProgressBar_Env_Install_Pytorch.setObjectName(u"ProgressBar_Env_Install_Pytorch")
-        self.ProgressBar_Env_Install_Pytorch.setMaximumSize(QSize(16777215, 3))
-
-        self.gridLayout_122.addWidget(self.ProgressBar_Env_Install_Pytorch, 1, 0, 1, 2)
-
-        self.Label_Env_Install_Pytorch_Status = LabelBase(self.Frame_Env_Install_Pytorch)
-        self.Label_Env_Install_Pytorch_Status.setObjectName(u"Label_Env_Install_Pytorch_Status")
-        sizePolicy3.setHeightForWidth(self.Label_Env_Install_Pytorch_Status.sizePolicy().hasHeightForWidth())
-        self.Label_Env_Install_Pytorch_Status.setSizePolicy(sizePolicy3)
-        self.Label_Env_Install_Pytorch_Status.setStyleSheet(u"QLabel {\n"
-"	font-size: 9.9px;\n"
-"	/*text-align: center;*/\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.gridLayout_122.addWidget(self.Label_Env_Install_Pytorch_Status, 2, 0, 1, 2)
-
-        self.Label_Env_Install_Pytorch = LabelBase(self.Frame_Env_Install_Pytorch)
-        self.Label_Env_Install_Pytorch.setObjectName(u"Label_Env_Install_Pytorch")
-        self.Label_Env_Install_Pytorch.setStyleSheet(u"QLabel {\n"
-"	font-size: 15px;\n"
-"	/*text-align: center;*/\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.gridLayout_122.addWidget(self.Label_Env_Install_Pytorch, 0, 0, 1, 2)
-
-
-        self.verticalLayout_127.addWidget(self.Frame_Env_Install_Pytorch)
-
-
-        self.verticalLayout_130.addWidget(self.Frame_Env_Install_Middle)
-
-        self.VerticalSpacer_Env_Install = QSpacerItem(17, 84, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
-
-        self.verticalLayout_130.addItem(self.VerticalSpacer_Env_Install)
-
-        self.ScrollArea_Env_Install.setWidget(self.ScrollAreaWidgetContents_Env_Install)
-
-        self.gridLayout_103.addWidget(self.ScrollArea_Env_Install, 0, 0, 1, 1)
-
-        self.StackedWidget_Pages_Env.addWidget(self.SubPage_Env_Install)
-        self.SubPage_Env_Manage = QWidget()
-        self.SubPage_Env_Manage.setObjectName(u"SubPage_Env_Manage")
-        self.gridLayout_113 = QGridLayout(self.SubPage_Env_Manage)
-        self.gridLayout_113.setSpacing(12)
-        self.gridLayout_113.setObjectName(u"gridLayout_113")
-        self.gridLayout_113.setContentsMargins(0, 0, 0, 0)
-        self.ScrollArea_Env_Manage = ScrollAreaBase(self.SubPage_Env_Manage)
-        self.ScrollArea_Env_Manage.setObjectName(u"ScrollArea_Env_Manage")
-        self.ScrollArea_Env_Manage.setWidgetResizable(True)
-        self.ScrollAreaWidgetContents_Env_Manage = QWidget()
-        self.ScrollAreaWidgetContents_Env_Manage.setObjectName(u"ScrollAreaWidgetContents_Env_Manage")
-        self.ScrollAreaWidgetContents_Env_Manage.setGeometry(QRect(0, 0, 86, 84))
-        self.verticalLayout_81 = QVBoxLayout(self.ScrollAreaWidgetContents_Env_Manage)
-        self.verticalLayout_81.setSpacing(0)
-        self.verticalLayout_81.setObjectName(u"verticalLayout_81")
-        self.verticalLayout_81.setContentsMargins(0, 0, 0, 0)
-        self.ToolBox_Env_Manage_Pytorch = ToolBoxBase(self.ScrollAreaWidgetContents_Env_Manage)
-        self.ToolBox_Env_Manage_Pytorch.setObjectName(u"ToolBox_Env_Manage_Pytorch")
-        self.ToolBox_Env_Manage_Pytorch_Page1Content = WidgetBase()
-        self.ToolBox_Env_Manage_Pytorch_Page1Content.setObjectName(u"ToolBox_Env_Manage_Pytorch_Page1Content")
-        self.ToolBox_Env_Manage_Pytorch_Page1Content.setGeometry(QRect(0, 0, 292, 204))
-        self.verticalLayout_105 = QVBoxLayout(self.ToolBox_Env_Manage_Pytorch_Page1Content)
-        self.verticalLayout_105.setSpacing(0)
-        self.verticalLayout_105.setObjectName(u"verticalLayout_105")
-        self.verticalLayout_105.setContentsMargins(0, 12, 0, 12)
-        self.Frame_Env_Manage_Pytorch_Version = QFrame(self.ToolBox_Env_Manage_Pytorch_Page1Content)
-        self.Frame_Env_Manage_Pytorch_Version.setObjectName(u"Frame_Env_Manage_Pytorch_Version")
-        self.Frame_Env_Manage_Pytorch_Version.setMinimumSize(QSize(0, 90))
-        self.Frame_Env_Manage_Pytorch_Version.setStyleSheet(u"QFrame {\n"
-"	background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QFrame:hover {\n"
-"	background-color: rgba(36, 36, 36, 12);\n"
-"}")
-        self.horizontalLayout_67 = QHBoxLayout(self.Frame_Env_Manage_Pytorch_Version)
-        self.horizontalLayout_67.setSpacing(12)
-        self.horizontalLayout_67.setObjectName(u"horizontalLayout_67")
-        self.horizontalLayout_67.setContentsMargins(21, 12, 21, 12)
-        self.Label_Env_Manage_Pytorch_Version = LabelBase(self.Frame_Env_Manage_Pytorch_Version)
-        self.Label_Env_Manage_Pytorch_Version.setObjectName(u"Label_Env_Manage_Pytorch_Version")
-        sizePolicy4 = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Preferred)
-        sizePolicy4.setHorizontalStretch(0)
-        sizePolicy4.setVerticalStretch(0)
-        sizePolicy4.setHeightForWidth(self.Label_Env_Manage_Pytorch_Version.sizePolicy().hasHeightForWidth())
-        self.Label_Env_Manage_Pytorch_Version.setSizePolicy(sizePolicy4)
-        self.Label_Env_Manage_Pytorch_Version.setStyleSheet(u"QLabel {\n"
-"	font-size: 15px;\n"
-"	/*text-align: center;*/\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.horizontalLayout_67.addWidget(self.Label_Env_Manage_Pytorch_Version)
-
-        self.ComboBox_Env_Manage_Pytorch_Version = ComboBoxBase(self.Frame_Env_Manage_Pytorch_Version)
-        self.ComboBox_Env_Manage_Pytorch_Version.setObjectName(u"ComboBox_Env_Manage_Pytorch_Version")
-        self.ComboBox_Env_Manage_Pytorch_Version.setMinimumSize(QSize(123, 30))
-
-        self.horizontalLayout_67.addWidget(self.ComboBox_Env_Manage_Pytorch_Version)
-
-
-        self.verticalLayout_105.addWidget(self.Frame_Env_Manage_Pytorch_Version)
-
-        self.Frame_Env_Manage_Pytorch_Install = QFrame(self.ToolBox_Env_Manage_Pytorch_Page1Content)
-        self.Frame_Env_Manage_Pytorch_Install.setObjectName(u"Frame_Env_Manage_Pytorch_Install")
-        self.Frame_Env_Manage_Pytorch_Install.setMinimumSize(QSize(0, 90))
-        self.Frame_Env_Manage_Pytorch_Install.setStyleSheet(u"QFrame {\n"
-"	background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QFrame:hover {\n"
-"	background-color: rgba(36, 36, 36, 12);\n"
-"}")
-        self.horizontalLayout_26 = QHBoxLayout(self.Frame_Env_Manage_Pytorch_Install)
-        self.horizontalLayout_26.setSpacing(12)
-        self.horizontalLayout_26.setObjectName(u"horizontalLayout_26")
-        self.horizontalLayout_26.setContentsMargins(21, 12, 21, 12)
-        self.HorizontalSpacer_Env_Manage_Pytorch_Install = QSpacerItem(844, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
-
-        self.horizontalLayout_26.addItem(self.HorizontalSpacer_Env_Manage_Pytorch_Install)
-
-        self.Button_Env_Manage_Pytorch_Install = HollowButton(self.Frame_Env_Manage_Pytorch_Install)
-        self.Button_Env_Manage_Pytorch_Install.setObjectName(u"Button_Env_Manage_Pytorch_Install")
-        self.Button_Env_Manage_Pytorch_Install.setMinimumSize(QSize(123, 0))
-
-        self.horizontalLayout_26.addWidget(self.Button_Env_Manage_Pytorch_Install)
-
-
-        self.verticalLayout_105.addWidget(self.Frame_Env_Manage_Pytorch_Install)
-
-        self.ToolBox_Env_Manage_Pytorch.addItem(self.ToolBox_Env_Manage_Pytorch_Page1Content, u"")
-
-        self.verticalLayout_81.addWidget(self.ToolBox_Env_Manage_Pytorch)
-
-        self.VerticalSpacer_Env_Manage = QSpacerItem(17, 250, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
-
-        self.verticalLayout_81.addItem(self.VerticalSpacer_Env_Manage)
-
-        self.ScrollArea_Env_Manage.setWidget(self.ScrollAreaWidgetContents_Env_Manage)
-
-        self.gridLayout_113.addWidget(self.ScrollArea_Env_Manage, 0, 0, 1, 1)
-
-        self.StackedWidget_Pages_Env.addWidget(self.SubPage_Env_Manage)
-
-        self.verticalLayout_128.addWidget(self.StackedWidget_Pages_Env)
-
         self.StackedWidget_Pages.addWidget(self.Page_Env)
         self.Page_Models = QWidget()
         self.Page_Models.setObjectName(u"Page_Models")
@@ -1195,11 +622,11 @@ class Ui_MainWindow(object):
 
         self.Button_Models_Refresh = ButtonBase(self.Frame_Models_Top)
         self.Button_Models_Refresh.setObjectName(u"Button_Models_Refresh")
-        sizePolicy5 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
-        sizePolicy5.setHorizontalStretch(0)
-        sizePolicy5.setVerticalStretch(0)
-        sizePolicy5.setHeightForWidth(self.Button_Models_Refresh.sizePolicy().hasHeightForWidth())
-        self.Button_Models_Refresh.setSizePolicy(sizePolicy5)
+        sizePolicy3 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
+        sizePolicy3.setHorizontalStretch(0)
+        sizePolicy3.setVerticalStretch(0)
+        sizePolicy3.setHeightForWidth(self.Button_Models_Refresh.sizePolicy().hasHeightForWidth())
+        self.Button_Models_Refresh.setSizePolicy(sizePolicy3)
         self.Button_Models_Refresh.setMinimumSize(QSize(84, 0))
         icon11 = QIcon()
         icon11.addFile(u":/Button_Icon/images/icons/Refresh.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
@@ -1210,8 +637,8 @@ class Ui_MainWindow(object):
 
         self.Button_Models_Append = ButtonBase(self.Frame_Models_Top)
         self.Button_Models_Append.setObjectName(u"Button_Models_Append")
-        sizePolicy5.setHeightForWidth(self.Button_Models_Append.sizePolicy().hasHeightForWidth())
-        self.Button_Models_Append.setSizePolicy(sizePolicy5)
+        sizePolicy3.setHeightForWidth(self.Button_Models_Append.sizePolicy().hasHeightForWidth())
+        self.Button_Models_Append.setSizePolicy(sizePolicy3)
         self.Button_Models_Append.setMinimumSize(QSize(84, 0))
         icon12 = QIcon()
         icon12.addFile(u":/Button_Icon/images/icons/Plus.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
@@ -1416,7 +843,7 @@ class Ui_MainWindow(object):
         self.ScrollArea_Settings_Client.setWidgetResizable(True)
         self.ScrollAreaWidgetContents_Settings_Client = QWidget()
         self.ScrollAreaWidgetContents_Settings_Client.setObjectName(u"ScrollAreaWidgetContents_Settings_Client")
-        self.ScrollAreaWidgetContents_Settings_Client.setGeometry(QRect(0, 0, 1014, 483))
+        self.ScrollAreaWidgetContents_Settings_Client.setGeometry(QRect(0, 0, 246, 483))
         self.verticalLayout_106 = QVBoxLayout(self.ScrollAreaWidgetContents_Settings_Client)
         self.verticalLayout_106.setSpacing(0)
         self.verticalLayout_106.setObjectName(u"verticalLayout_106")
@@ -1444,6 +871,9 @@ class Ui_MainWindow(object):
         self.horizontalLayout_72.setContentsMargins(21, 12, 21, 12)
         self.Label_Setting_Theme = LabelBase(self.Frame_Setting_Theme)
         self.Label_Setting_Theme.setObjectName(u"Label_Setting_Theme")
+        sizePolicy4 = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Preferred)
+        sizePolicy4.setHorizontalStretch(0)
+        sizePolicy4.setVerticalStretch(0)
         sizePolicy4.setHeightForWidth(self.Label_Setting_Theme.sizePolicy().hasHeightForWidth())
         self.Label_Setting_Theme.setSizePolicy(sizePolicy4)
         self.Label_Setting_Theme.setStyleSheet(u"QLabel {\n"
@@ -2556,7 +1986,6 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
 
         self.StackedWidget_Pages.setCurrentIndex(0)
-        self.StackedWidget_Pages_Env.setCurrentIndex(0)
         self.StackedWidget_Pages_Models.setCurrentIndex(0)
         self.StackedWidget_Pages_Settings.setCurrentIndex(0)
 
@@ -2626,36 +2055,6 @@ class Ui_MainWindow(object):
         self.Label_Server_Text.setText(QCoreApplication.translate("MainWindow", u"<font size=4>\u4e91\u7aef\u7248\u672c</font>", None))
         self.Label_Repo_Text.setText(QCoreApplication.translate("MainWindow", u"<font size=4>\u9879\u76ee\u4ed3\u5e93</font>", None))
         self.Label_Donate_Text.setText(QCoreApplication.translate("MainWindow", u"<font size=4>\u8d5e\u52a9\u4f5c\u8005</font>", None))
-        self.Button_Env_Install_Title.setText(QCoreApplication.translate("MainWindow", u"\u81ea\u52a8\u914d\u7f6e", None))
-        self.Button_Env_Manage_Title.setText(QCoreApplication.translate("MainWindow", u"\u5b89\u88c5\u7ba1\u7406", None))
-#if QT_CONFIG(tooltip)
-        self.Button_Install_Aria2.setToolTip(QCoreApplication.translate("MainWindow", u"\u91cd\u65b0\u68c0\u6d4b\u5b89\u88c5", None))
-#endif // QT_CONFIG(tooltip)
-        self.Label_Env_Install_Aria2_Status.setText(QCoreApplication.translate("MainWindow", u"--", None))
-        self.Label_Env_Install_Aria2.setText(QCoreApplication.translate("MainWindow", u"Aria2", None))
-#if QT_CONFIG(tooltip)
-        self.Button_Install_FFmpeg.setToolTip(QCoreApplication.translate("MainWindow", u"\u91cd\u65b0\u68c0\u6d4b\u5b89\u88c5", None))
-#endif // QT_CONFIG(tooltip)
-        self.Label_Env_Install_FFmpeg_Status.setText(QCoreApplication.translate("MainWindow", u"--", None))
-        self.Label_Env_Install_FFmpeg.setText(QCoreApplication.translate("MainWindow", u"FFmpeg", None))
-#if QT_CONFIG(tooltip)
-        self.Button_Install_Python.setToolTip(QCoreApplication.translate("MainWindow", u"\u91cd\u65b0\u68c0\u6d4b\u5b89\u88c5", None))
-#endif // QT_CONFIG(tooltip)
-        self.Label_Env_Install_Python_Status.setText(QCoreApplication.translate("MainWindow", u"--", None))
-        self.Label_Env_Install_Python.setText(QCoreApplication.translate("MainWindow", u"Python", None))
-#if QT_CONFIG(tooltip)
-        self.Button_Install_PyReqs.setToolTip(QCoreApplication.translate("MainWindow", u"\u91cd\u65b0\u68c0\u6d4b\u5b89\u88c5", None))
-#endif // QT_CONFIG(tooltip)
-        self.Label_Env_Install_PyReqs_Status.setText(QCoreApplication.translate("MainWindow", u"--", None))
-        self.Label_Env_Install_PyReqs.setText(QCoreApplication.translate("MainWindow", u"Python Requirements", None))
-#if QT_CONFIG(tooltip)
-        self.Button_Install_Pytorch.setToolTip(QCoreApplication.translate("MainWindow", u"\u91cd\u65b0\u68c0\u6d4b\u5b89\u88c5", None))
-#endif // QT_CONFIG(tooltip)
-        self.Label_Env_Install_Pytorch_Status.setText(QCoreApplication.translate("MainWindow", u"--", None))
-        self.Label_Env_Install_Pytorch.setText(QCoreApplication.translate("MainWindow", u"Pytorch", None))
-        self.Label_Env_Manage_Pytorch_Version.setText(QCoreApplication.translate("MainWindow", u"\u9009\u62e9Pytorch\u7248\u672c", None))
-        self.Button_Env_Manage_Pytorch_Install.setText(QCoreApplication.translate("MainWindow", u"\u91cd\u88c5", None))
-        self.ToolBox_Env_Manage_Pytorch.setItemText(self.ToolBox_Env_Manage_Pytorch.indexOf(self.ToolBox_Env_Manage_Pytorch_Page1Content), "")
         self.Button_Models_Process_Title.setText(QCoreApplication.translate("MainWindow", u"Label", None))
         self.Button_Models_VPR_Title.setText(QCoreApplication.translate("MainWindow", u"Label", None))
         self.Button_Models_ASR_Title.setText(QCoreApplication.translate("MainWindow", u"Label", None))
