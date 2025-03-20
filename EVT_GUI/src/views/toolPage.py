@@ -2,7 +2,6 @@ from typing import Type, Optional
 from PyEasyUtils import setRichText
 from PySide6.QtCore import Qt, QRect, QSize
 from PySide6.QtCore import QCoreApplication as QCA
-from PySide6.QtGui import QIcon, QFont
 from PySide6.QtWidgets import *
 from QEasyWidgets import QFunctions as QFunc
 from QEasyWidgets.Common import FileDialogMode
@@ -359,7 +358,8 @@ class SubToolPage(SubPage):
         consoleWidget: QWidget,
         method: object,
         paramTargets: list,
-        successEvents: list
+        successEvents: list,
+        threadPool,
     ):
         self.executeButton.setText(QCA.translate('MainWindow', "执行"))
         self.terminateButton.setText(QCA.translate('MainWindow', "终止"))
@@ -370,15 +370,19 @@ class SubToolPage(SubPage):
                     if target is not None:
                         return target
             return paramTarget
-        Function_SetMethodExecutor(self,
+        executeParams = [_findParamWidget(paramTarget) for paramTarget in paramTargets] #executeParams = list(self.paramWidgets.keys())
+        emptyAllowed = [paramWidget for paramWidget in self.paramWidgets.keys() if self.paramWidgets[paramWidget] == True]
+        executeParams = {executeParam: executeParam in emptyAllowed for executeParam in executeParams}
+        Function_SetMethodExecutor(
             executeButton = self.executeButton,
             terminateButton = self.terminateButton,
             progressBar = self.progressBar,
             consoleWidget = consoleWidget,
-            method = method,
-            paramTargets = [_findParamWidget(paramTarget) for paramTarget in paramTargets], #paramTargets = list(self.paramWidgets.keys()),
-            emptyAllowed = [paramWidget for paramWidget in self.paramWidgets.keys() if self.paramWidgets[paramWidget] == True],
-            successEvents = successEvents
+            executeMethod = method,
+            executeParams = executeParams,
+            successEvents = successEvents,
+            threadPool = threadPool,
+            parentWindow = self,
         )
 
 

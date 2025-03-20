@@ -1,9 +1,9 @@
 import PyEasyUtils as EasyUtils
 from typing import Union, Optional
-from PySide6.QtCore import Qt, QObject, Signal, Slot, QThread, QPoint
+from PySide6.QtCore import Qt, QObject, Signal, QThreadPool, QPoint
 from PySide6.QtGui import QFont
 from PySide6.QtWidgets import *
-from QEasyWidgets import QFunctions as QFunc
+from QEasyWidgets import QFunctions as QFunc, QWorker
 from QEasyWidgets.Components import *
 from QEasyWidgets.Windows import *
 
@@ -16,9 +16,6 @@ class CustomSignals_Functions(QObject):
     '''
     Set up signals for functions
     '''
-    # Run task
-    Signal_ExecuteTask = Signal(tuple)
-
     # Monitor task
     Signal_TaskStatus = Signal(str, str)
 
@@ -146,147 +143,6 @@ def Function_ConfigureCheckBox(
     )
 
     EasyUtils.runEvents([event for event, takeEffect in (checkedEvents if checkBox.isChecked() else uncheckedEvents).items() if takeEffect])
-
-
-def Function_SetURL(
-    button: QAbstractButton,
-    url: Union[str, QWidget, list],
-    buttonTooltip: str = "Open",
-    createIfNotExist: bool = False
-):
-    '''
-    Function to open url (through button)
-    '''
-    button.clicked.connect(
-        lambda: QFunc.openURL([(Function_GetParam(url) if isinstance(url, QWidget) else url) for url in EasyUtils.toIterable(url)], createIfNotExist)
-    )
-    button.setToolTipDuration(-1)
-    button.setToolTip(buttonTooltip)
-
-##############################################################################################################################
-
-def Function_GetParam(
-    ui: QObject
-):
-    '''
-    Function to get the param of ui
-    '''
-    if isinstance(ui, (QLineEdit, QTextEdit, QPlainTextEdit)):
-        return QFunc.getText(ui)
-    if isinstance(ui, QComboBox):
-        return ui.currentText()
-    if isinstance(ui, (QAbstractSpinBox, QSlider, Frame_RangeSetting)):
-        return ui.value()
-    if isinstance(ui, (QCheckBox, QRadioButton)):
-        return ui.isChecked()
-
-    if isinstance(ui, Table_EditAudioSpeaker):
-        return ui.getValue()
-
-
-def Function_SetParam(
-    ui: QObject,
-    param: Optional[str]
-):
-    '''
-    Function to set the param of ui
-    '''
-    if isinstance(ui, (QLineEdit, QTextEdit)):
-        ui.setText(param)
-    if isinstance(ui, QPlainTextEdit):
-        ui.setPlainText(param)
-    if isinstance(ui, QComboBox):
-        ui.setCurrentText(param)
-    if isinstance(ui, (QAbstractSpinBox, QSlider, Frame_RangeSetting)):
-        ui.setValue(param)
-    if isinstance(ui, (QCheckBox, QRadioButton)):
-        ui.setChecked(param)
-
-    if isinstance(ui, Table_EditAudioSpeaker):
-        ui.setValue(param)
-
-
-def Function_ParamsSynchronizer(
-    trigger: Union[QObject, list],
-    fromTo: dict = {},
-    times: Union[int, float] = 1,
-    connection: str = "Connect"
-):
-    '''
-    Function to synchronize params (paramTargets.value * times = ParamsTo.value)
-    '''
-    @Slot()
-    def ParamsSynchronizer():
-        for UI_Get, UI_Set in fromTo.items():
-            Param_Get = Function_GetParam(UI_Get)
-            Param_Get = Param_Get * times if isinstance(Param_Get, (int, float, complex)) else Param_Get
-            for UI_Set in EasyUtils.toIterable(UI_Set):
-                Function_SetParam(UI_Set, Param_Get)
-
-    TriggerList = EasyUtils.toIterable(trigger)
-
-    for trigger in TriggerList:
-        if isinstance(trigger, QAbstractButton):
-            trigger.clicked.connect(ParamsSynchronizer) if connection == "Connect" else trigger.clicked.disconnect(ParamsSynchronizer)
-        if isinstance(trigger, QAbstractSlider):
-            trigger.sliderMoved.connect(ParamsSynchronizer) if connection == "Connect" else trigger.sliderMoved.disconnect(ParamsSynchronizer)
-        if isinstance(trigger, QAbstractSpinBox):
-            trigger.valueChanged.connect(ParamsSynchronizer) if connection == "Connect" else trigger.valueChanged.disconnect(ParamsSynchronizer)
-        if isinstance(trigger, (QLineEdit)):
-            trigger.textChanged.connect(ParamsSynchronizer) if connection == "Connect" else trigger.textChanged.disconnect(ParamsSynchronizer)
-
-
-def Function_ParamsChecker(
-    paramTargets: list = [],
-    emptyAllowed: list = []
-):
-    '''
-    Function to return handled params
-    '''
-    params = []
-
-    for ui in paramTargets:
-        param = Function_GetParam(ui) if isinstance(ui, QWidget) else ui
-        if isinstance(param, str):
-            if param.strip() == "None" or param.strip() == "":
-                if ui in EasyUtils.toIterable(emptyAllowed):
-                    param = None
-                else:
-                    MessageBoxBase.pop(
-                        messageType = QMessageBox.Warning,
-                        windowTitle = "Warning",
-                        text = "Empty param detected!\n检测到参数空缺！"
-                    )
-                    return "Abort"
-            else:
-                '''
-                if "，" in param or "," in param:
-                    param = re.split(
-                        pattern = '[，,]',
-                        string = param,
-                        maxsplit = 0
-                    )
-                '''
-        if isinstance(param, dict):
-            if "None" in list(param.keys()&param.values()) or "" in list(param.keys()&param.values()):
-                if ui in EasyUtils.toIterable(emptyAllowed):
-                    param = None
-                else:
-                    MessageBoxBase.pop(
-                        messageType = QMessageBox.Warning,
-                        windowTitle = "Warning",
-                        text = "Empty param detected!\n检测到参数空缺！"
-                    )
-                    return "Abort"
-            else:
-                pass
-        else:
-            pass
-        params.append(param)
-
-    Args = tuple(params)#if params != [] else None
-
-    return Args
 
 ##############################################################################################################################
 
@@ -485,92 +341,217 @@ class ParamsManager:
 
 ##############################################################################################################################
 
-def Function_SetMethodExecutor(
-    parentWindow: Optional[QWidget] = None,
-    executeButton: Optional[QAbstractButton] = None,
-    terminateButton: Optional[QAbstractButton] = None,
-    progressBar: Optional[QProgressBar] = None,
-    consoleWidget: Optional[QWidget] = None,
-    method: object = ...,
-    params: Optional[tuple] = None,
-    paramTargets: Optional[list[QObject]] = None,
-    emptyAllowed: Optional[list[QObject]] = None,
-    successEvents: Optional[list] = None
+def Function_GetParam(
+    ui: QObject
 ):
     '''
-    Function to execute outer class methods
+    Function to get the param of ui
     '''
-    QualName = str(method.__qualname__)
-    MethodName = QualName.split('.')[1]
+    if isinstance(ui, (QLineEdit, QTextEdit, QPlainTextEdit)):
+        return QFunc.getText(ui)
+    if isinstance(ui, QComboBox):
+        return ui.currentText()
+    if isinstance(ui, (QAbstractSpinBox, QSlider)):
+        return ui.value()
+    if isinstance(ui, (QCheckBox, QRadioButton)):
+        return ui.isChecked()
 
-    ClassInstance = EasyUtils.getClassFromMethod(method)()
-    ClassInstance.started.connect(lambda: FunctionSignals.Signal_TaskStatus.emit(QualName, 'Started')) if hasattr(ClassInstance, 'started') else None
-    ClassInstance.errChk.connect(
-        lambda Err: (
-            EasyUtils.runEvents(successEvents) if Err == str(None) and successEvents is not None else None,
-            MessageBoxBase.pop(parentWindow, QMessageBox.Warning, "Failure", "发生异常", Err) if Err != str(None) else None,
-            FunctionSignals.Signal_TaskStatus.emit(QualName, 'Failed') if Err != str(None) else None
-        )
-    ) if hasattr(ClassInstance, 'errChk') else None
-    ClassInstance.finished.connect(lambda: FunctionSignals.Signal_TaskStatus.emit(QualName, 'Finished')) if hasattr(ClassInstance, 'finished') else None
+    if isinstance(ui, Frame_RangeSetting):
+        return ui.value()
+    if isinstance(ui, Table_EditAudioSpeaker):
+        return ui.getValue()
 
-    if not isinstance(ClassInstance, QThread):
-        WorkerThread = QThread()
-        ClassInstance.moveToThread(WorkerThread)
-        ClassInstance.finished.connect(WorkerThread.quit) if hasattr(ClassInstance, 'finished') else None
-    else:
-        WorkerThread = ClassInstance
 
-    @Slot()
-    def ExecuteMethod():
-        '''
-        Update the attributes for outer class methods and wait to execute with multithreading
-        '''
-        Args = params#if params != () else None
-        if paramTargets not in ([], None):
-            Args = Function_ParamsChecker(paramTargets, emptyAllowed)
-            if Args == "Abort":
+def Function_SetParam(
+    ui: QObject,
+    param: Optional[str]
+):
+    '''
+    Function to set the param of ui
+    '''
+    if isinstance(ui, (QLineEdit, QTextEdit)):
+        ui.setText(param)
+    if isinstance(ui, QPlainTextEdit):
+        ui.setPlainText(param)
+    if isinstance(ui, QComboBox):
+        ui.setCurrentText(param)
+    if isinstance(ui, (QAbstractSpinBox, QSlider)):
+        ui.setValue(param)
+    if isinstance(ui, (QCheckBox, QRadioButton)):
+        ui.setChecked(param)
+
+    if isinstance(ui, Frame_RangeSetting):
+        ui.setValue(param)
+    if isinstance(ui, Table_EditAudioSpeaker):
+        ui.setValue(param)
+
+
+def Function_ParamsSynchronizer(
+    trigger: Union[QObject, list],
+    fromTo: dict = {},
+    times: Union[int, float] = 1,
+    connection: str = "Connect"
+):
+    '''
+    Function to synchronize params (paramTargets.value * times = ParamsTo.value)
+    '''
+    def _paramsSynchronizer():
+        for UI_Get, UI_Set in fromTo.items():
+            Param_Get = Function_GetParam(UI_Get)
+            Param_Get = Param_Get * times if isinstance(Param_Get, (int, float, complex)) else Param_Get
+            for UI_Set in EasyUtils.toIterable(UI_Set):
+                Function_SetParam(UI_Set, Param_Get)
+
+    TriggerList = EasyUtils.toIterable(trigger)
+
+    for trigger in TriggerList:
+        if isinstance(trigger, QAbstractButton):
+            trigger.clicked.connect(_paramsSynchronizer) if connection == "Connect" else trigger.clicked.disconnect(_paramsSynchronizer)
+        if isinstance(trigger, QAbstractSlider):
+            trigger.sliderMoved.connect(_paramsSynchronizer) if connection == "Connect" else trigger.sliderMoved.disconnect(_paramsSynchronizer)
+        if isinstance(trigger, QAbstractSpinBox):
+            trigger.valueChanged.connect(_paramsSynchronizer) if connection == "Connect" else trigger.valueChanged.disconnect(_paramsSynchronizer)
+        if isinstance(trigger, (QLineEdit)):
+            trigger.textChanged.connect(_paramsSynchronizer) if connection == "Connect" else trigger.textChanged.disconnect(_paramsSynchronizer)
+
+
+def Function_ParamsChecker(
+    paramTarget: object,
+    emptyAllowed: bool
+):
+    '''
+    Function to return handled param
+    '''
+    param = Function_GetParam(paramTarget) if isinstance(paramTarget, QWidget) else paramTarget
+    if isinstance(param, str):
+        if param.strip() == "None" or param.strip() == "":
+            if emptyAllowed:
+                param = None
+            else:
+                MessageBoxBase.pop(
+                    messageType = QMessageBox.Warning,
+                    windowTitle = "Warning",
+                    text = "Empty param detected!\n检测到参数空缺！"
+                )
+                return "Abort"
+        else:
+            '''
+            if "，" in param or "," in param:
+                param = re.split(
+                    pattern = '[，,]',
+                    string = param,
+                    maxsplit = 0
+                )
+            '''
+    if isinstance(param, dict):
+        if "None" in list(param.keys()&param.values()) or "" in list(param.keys()&param.values()):
+            if emptyAllowed:
+                param = None
+            else:
+                MessageBoxBase.pop(
+                    messageType = QMessageBox.Warning,
+                    windowTitle = "Warning",
+                    text = "Empty param detected!\n检测到参数空缺！"
+                )
+                return "Abort"
+        else:
+            pass
+
+    return param
+
+##############################################################################################################################
+
+def Function_SetURL(
+    button: QAbstractButton,
+    url: Union[str, QWidget, list],
+    buttonTooltip: str = "Open",
+    createIfNotExist: bool = False
+):
+    '''
+    Function to open url (through button)
+    '''
+    button.clicked.connect(
+        lambda: QFunc.openURL([(Function_GetParam(url) if isinstance(url, QWidget) else url) for url in EasyUtils.toIterable(url)], createIfNotExist)
+    )
+    button.setToolTipDuration(-1)
+    button.setToolTip(buttonTooltip)
+
+##############################################################################################################################
+
+def _validateParams(unvalidatedParams):
+    validatedParams = []
+    if unvalidatedParams is not None:
+        unvalidatedParams = [(unvalidatedParam, unvalidatedParams[unvalidatedParam] if isinstance(unvalidatedParams, dict) else True) for unvalidatedParam in EasyUtils.toIterable(unvalidatedParams)]
+        for paramTarget, emptyAllowed in unvalidatedParams:
+            param = Function_ParamsChecker(paramTarget, emptyAllowed)
+            if param == "Abort":
                 return print("Aborted.")
             else:
                 pass #print("Continued.\n")
+            validatedParams.append(param)
+    return validatedParams
 
-        FunctionSignals = CustomSignals_Functions()
-        FunctionSignals.Signal_ExecuteTask.connect(getattr(ClassInstance, MethodName)) #FunctionSignals.Signal_ExecuteTask.connect(lambda Args: getattr(ClassInstance, MethodName)(*Args))
 
-        WorkerThread.started.connect(lambda: Function_AnimateFrame(consoleWidget, minHeight = 0, maxHeight = 210, mode = "Extend")) if consoleWidget else None
-        WorkerThread.started.connect(lambda: Function_AnimateProgressBar(progressBar, isTaskAlive = True)) if progressBar else None
-        WorkerThread.started.connect(lambda: Function_AnimateStackedWidget(QFunc.findParent(executeButton, QStackedWidget), target = 1)) if terminateButton else None
-        WorkerThread.finished.connect(lambda: Function_AnimateFrame(consoleWidget, minHeight = 0, maxHeight = 210, mode = "Reduce")) if consoleWidget else None
-        WorkerThread.finished.connect(lambda: Function_AnimateProgressBar(progressBar, isTaskAlive = False)) if progressBar else None
-        WorkerThread.finished.connect(lambda: Function_AnimateStackedWidget(QFunc.findParent(executeButton, QStackedWidget), target = 0)) if terminateButton else None
-        #WorkerThread.finished.connect(lambda: FunctionSignals.Signal_ExecuteTask.disconnect(getattr(ClassInstance, MethodName)))
+def Function_SetMethodExecutor(
+    executeMethod: object = ...,
+    executeParams: Optional[dict] = None,
+    executeButton: Optional[QAbstractButton] = None,
+    terminateMethod: Optional[object] = None,
+    terminateButton: Optional[QAbstractButton] = None,
+    progressBar: Optional[QProgressBar] = None,
+    consoleWidget: Optional[QWidget] = None,
+    successEvents: Optional[list] = None,
+    threadPool: Optional[QThreadPool] = None,
+    parentWindow: Optional[QWidget] = None,
+):
+    '''
+    Function to run outer class methods
+    '''
+    executeMethodName = executeMethod.__qualname__
+    workerManager = QWorker.WorkerManager(
+        executeMethod,
+        terminateMethod,
+        threadPool
+    )
+    workerManager.worker.signals.started.connect(
+        lambda: (
+            FunctionSignals.Signal_TaskStatus.emit(executeMethodName, 'Started'),
+            Function_AnimateFrame(consoleWidget, minHeight = 0, maxHeight = 210, mode = "Extend") if consoleWidget else None,
+            Function_AnimateProgressBar(progressBar, isTaskAlive = True) if progressBar else None,
+            Function_AnimateStackedWidget(QFunc.findParent(executeButton, QStackedWidget), target = 1) if terminateButton else None
+        )
+    )
+    workerManager.worker.signals.errChk.connect(
+        lambda err: (
+            EasyUtils.runEvents(successEvents) if err == str(None) and successEvents is not None else None,
+            MessageBoxBase.pop(parentWindow, QMessageBox.Warning, "Failure", "发生异常", err) if err != str(None) else None,
+            FunctionSignals.Signal_TaskStatus.emit(executeMethodName, 'Failed') if err != str(None) else None
+        )
+    )
+    workerManager.worker.signals.finished.connect(
+        lambda: (
+            FunctionSignals.Signal_TaskStatus.emit(executeMethodName, 'Finished'),
+            Function_AnimateFrame(consoleWidget, minHeight = 0, maxHeight = 210, mode = "Reduce") if consoleWidget else None,
+            Function_AnimateProgressBar(progressBar, isTaskAlive = False) if progressBar else None,
+            Function_AnimateStackedWidget(QFunc.findParent(executeButton, QStackedWidget), target = 0) if terminateButton else None
+        )
+    )
 
-        FunctionSignals.Signal_ExecuteTask.emit(Args)
-
-        WorkerThread.start()
-
+    # Execution
     if executeButton is not None:
-        executeButton.clicked.connect(ExecuteMethod)
+        executeButton.clicked.connect(lambda: 
+            workerManager.execute(*_validateParams(executeParams))
+        )
     else:
-        TempButton = QPushButton(parentWindow)
-        TempButton.clicked.connect(ExecuteMethod)
-        TempButton.setVisible(False)
-        TempButton.click()
-        WorkerThread.finished.connect(TempButton.deleteLater)
+        tempButton = QPushButton(parentWindow)
+        tempButton.clicked.connect(lambda: 
+            workerManager.execute(*_validateParams(executeParams))
+        )
+        tempButton.setVisible(False)
+        tempButton.click()
+        workerManager.worker.signals.finished.connect(tempButton.deleteLater)
 
-    @Slot()
-    def TerminateMethod():
-        '''
-        Terminate the running thread
-        '''
-        ClassInstance.Terminate() if hasattr(ClassInstance, 'Terminate') else None
-
-        WorkerThread.quit() if not WorkerThread.isFinished() else None
-
-        FunctionSignals.Signal_TaskStatus.emit(QualName, 'Failed') if hasattr(ClassInstance, 'errChk') else None
-
-        progressBar.setValue(0) if progressBar else None
-
+    # Termination
     if terminateButton is not None:
         terminateButton.clicked.connect(
             lambda: MessageBoxBase.pop(parentWindow,
@@ -578,13 +559,16 @@ def Function_SetMethodExecutor(
                 windowTitle = "Ask",
                 text = "当前任务仍在执行中，是否确认终止？",
                 buttons = QMessageBox.Yes|QMessageBox.No,
-                buttonEvents = {QMessageBox.Yes: lambda: TerminateMethod()}
+                buttonEvents = {QMessageBox.Yes: lambda: (
+                    workerManager.terminate(),
+                    FunctionSignals.Signal_TaskStatus.emit(executeMethodName, 'Failed')
+                )}
             )
         )
     else:
         pass
 
-    FunctionSignals.Signal_ForceQuit.connect(TerminateMethod)
+    FunctionSignals.Signal_ForceQuit.connect(lambda: workerManager.terminate())
 
 ##############################################################################################################################
 

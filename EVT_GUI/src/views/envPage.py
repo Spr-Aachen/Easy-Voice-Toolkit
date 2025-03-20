@@ -1,8 +1,7 @@
 from typing import Type, Optional
 from PyEasyUtils import setRichText
-from PySide6.QtCore import Qt, QRect, QSize
+from PySide6.QtCore import Qt, QRect, QSize, SignalInstance
 from PySide6.QtCore import QCoreApplication as QCA
-from PySide6.QtGui import QIcon, QFont
 from PySide6.QtWidgets import *
 from QEasyWidgets import QFunctions as QFunc
 from QEasyWidgets.Common import FileDialogMode
@@ -45,8 +44,8 @@ class SubEnvPage_Detector(SubPage):
 
     def addDetectorFrame(self,
         rootItemText: Optional[str] = None, toolBoxText: Optional[str] = None, text: str = ..., toolTip: str = ...,
-        detectMethod: object = ..., params: tuple = ...,
-        signal_detect: Signal = ..., signal_detected: Signal = ..., signal_undetected: Signal = ..., statusSignal: Signal = ...,
+        detectMethod: object = ..., params = [], threadPool = ..., 
+        signal_detect: SignalInstance = ..., signal_detected: SignalInstance = ..., signal_undetected: SignalInstance = ..., statusSignal: SignalInstance = ...,
     ):
         titleLabel = LabelBase(self)
         titleLabel.setStyleSheet(u"QLabel {\n"
@@ -92,11 +91,13 @@ class SubEnvPage_Detector(SubPage):
         "}")
         detectButton.setToolTip(toolTip)
         self._addToContainer(rootItemText, toolBoxText, text, titleLabel, progressBar, statusBrowser, detectButton)
-        Function_SetMethodExecutor(self,
+        Function_SetMethodExecutor(
             executeButton = detectButton,
             progressBar = progressBar,
-            method = detectMethod,
-            params = params
+            executeMethod = detectMethod,
+            executeParams = params,
+            threadPool = threadPool,
+            parentWindow = self,
         )
         signal_detect.connect(
             detectButton.click
@@ -148,7 +149,7 @@ class SubEnvPage_Manager(SubPage):
     def addComboBoxFrame(self,
         rootItemText: Optional[str] = None, toolBoxText: Optional[str] = None, text: str = ..., toolTip: Optional[str] = None,
         items: list = ..., currentIndex: Optional[int] = None,
-        executorText: str = ..., method: object = ..., paramTargets: list[QObject] = ...,
+        executorText: str = ..., method: object = ..., paramTargets: list[QObject] = [], threadPool = ...,
     ):
         titleLabel = LabelBase(self)
         titleLabel.setStyleSheet(u"QLabel {\n"
@@ -171,10 +172,12 @@ class SubEnvPage_Manager(SubPage):
         executeButton.setObjectName(text.splitlines()[0])
         executeButton.setText(executorText)
         self._addToContainer(rootItemText, toolBoxText, text, titleLabel, comboBox, executeButton)
-        Function_SetMethodExecutor(self,
+        Function_SetMethodExecutor(
             executeButton = executeButton,
-            method = method,
-            paramTargets = [paramTarget if not isinstance(paramTarget, QComboBox) else comboBox for paramTarget in paramTargets]
+            executeMethod = method,
+            executeParams = [paramTarget() if hasattr(paramTarget, '__call__') else paramTarget for paramTarget in paramTargets],
+            threadPool = threadPool,
+            parentWindow = self,
         )
 
 

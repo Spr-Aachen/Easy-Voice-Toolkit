@@ -5,7 +5,7 @@ import shutil
 import argparse
 import PyEasyUtils as EasyUtils
 from pathlib import Path
-from PySide6.QtCore import Qt, QObject, QThread, Signal
+from PySide6.QtCore import Qt, QObject, QThreadPool
 from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import QApplication, QVBoxLayout, QSizePolicy, QWidget, QMessageBox, QPushButton, QProgressBar, QLabel
 from QEasyWidgets import QFunctions as QFunc
@@ -116,8 +116,6 @@ def UpdateDownloader(
 class Execute_Update_Checking(QObject):
     '''
     '''
-    finished = Signal()
-
     def __init__(self):
         super().__init__()
 
@@ -130,14 +128,10 @@ class Execute_Update_Checking(QObject):
             currentVersion = currentVersion
         )
 
-        self.finished.emit()
-
 
 class Execute_Update_Downloading(QObject):
     '''
     '''
-    finished = Signal()
-
     def __init__(self):
         super().__init__()
 
@@ -149,8 +143,6 @@ class Execute_Update_Downloading(QObject):
             extractDir = extractDir,
         )
 
-        self.finished.emit()
-
 
 # Show GUI
 class Widget_Updater(QWidget):
@@ -161,6 +153,8 @@ class Widget_Updater(QWidget):
             parent = None,
             f = Qt.Widget #| Qt.FramelessWindowHint
         )
+
+        self.threadPool = QThreadPool()
 
         self.setMaximumSize(246, 123)
         self.setGeometry(
@@ -215,19 +209,23 @@ class Widget_Updater(QWidget):
                     detailedText = VersionInfo,
                     buttons = QMessageBox.Yes|QMessageBox.No,
                     buttonEvents = {
-                        QMessageBox.Yes: lambda: Function_SetMethodExecutor(self,
+                        QMessageBox.Yes: lambda: Function_SetMethodExecutor(
                             progressBar = self.progressBar,
-                            method = Execute_Update_Downloading.Execute,
-                            params = (self.downloadURL)
+                            executeMethod = Execute_Update_Downloading.Execute,
+                            executeParams = (self.downloadURL),
+                            threadPool = self.threadPool,
+                            parentWindow = self,
                         ),
                         QMessageBox.No: lambda: FunctionSignals.Signal_IsUpdateSucceeded.emit(False, "已取消下载更新！\nDownload canceled!")
                     }
                 )
             ) if eval(config.getValue('Updater', 'Asked', 'False')) is False else (
-                Function_SetMethodExecutor(self,
+                Function_SetMethodExecutor(
                     progressBar = self.progressBar,
-                    method = Execute_Update_Downloading.Execute,
-                    params = (self.downloadURL)
+                    executeMethod = Execute_Update_Downloading.Execute,
+                    executeParams = (self.downloadURL),
+                    threadPool = self.threadPool,
+                    parentWindow = self
                 ),
                 config.editConfig('Updater', 'Asked', 'False')
             )
@@ -245,8 +243,9 @@ class Widget_Updater(QWidget):
 
         Function_SetMethodExecutor(self,
             progressBar = self.progressBar,
-            method = Execute_Update_Checking.Execute,
-            params = ()
+            executeMethod = Execute_Update_Checking.Execute,
+            threadPool = self.threadPool,
+            parentWindow = self
         )
 
         self.SkipButton.setText("跳过")

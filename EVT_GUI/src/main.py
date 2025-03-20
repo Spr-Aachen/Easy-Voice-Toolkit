@@ -7,12 +7,11 @@ import argparse
 import subprocess
 import PyEasyUtils as EasyUtils
 from pathlib import Path
-from glob import glob
 from datetime import date, datetime
 from concurrent.futures import ThreadPoolExecutor
 from PySide6 import __file__ as PySide6_File
-from PySide6.QtCore import Qt, QObject, Signal, Slot, QThread
-from PySide6.QtCore import QCoreApplication as QCA
+from PySide6.QtCore import Qt, QObject, Signal
+from PySide6.QtCore import QCoreApplication as QCA, QThreadPool
 from PySide6.QtGui import QColor, QPixmap, QIcon, QTextCursor
 from QEasyWidgets import QFunctions as QFunc
 from QEasyWidgets import QTasks
@@ -23,6 +22,7 @@ from views import *
 from windows import *
 from functions import *
 from envConfigurator import *
+from toolsExecutor import *
 from config import *
 
 ##############################################################################################################################
@@ -93,12 +93,10 @@ if Path(DependencyDir).joinpath('Python').exists():
 class Execute_Update_Checking(QObject):
     '''
     '''
-    finished = Signal()
-
     def __init__(self):
         super().__init__()
 
-    def Execute(self):
+    def execute(self):
         Function_UpdateChecker(
             repoOwner = repoOwner,
             repoName = repoName,
@@ -107,444 +105,9 @@ class Execute_Update_Checking(QObject):
             currentVersion = currentVersion
         )
 
-        self.finished.emit()
-
 ##############################################################################################################################
 
-# Tools: AudioProcessor
-class Execute_Audio_Processing(QObject):
-    '''
-    Change media format to WAV (and denoise) and cut off the silent parts
-    '''
-    started = Signal()
-    finished = Signal()
-
-    errChk = Signal(str)
-
-    def __init__(self):
-        super().__init__()
-
-    @Slot(tuple)
-    def Execute(self, params: tuple):
-        self.started.emit()
-
-        CMD = EasyUtils.subprocessManager(communicateThroughConsole = True)
-        self.Process = CMD.create(
-            args = [
-                f'cd "{CoreDir}"',
-                'python -c "'
-                'from AudioProcessor.Process import Audio_Processing; '
-                f"AudioConvertandSlice = Audio_Processing{str(params)}; "
-                'AudioConvertandSlice.Process_Audio()"'
-            ]
-        )
-        Output, Error = CMD.monitor(
-            showProgress = True,
-            decodeResult = True,
-            logPath = logPath
-        )[:2]
-        if 'error' in str(Error).lower():
-            Error += "（详情请见终端输出信息）"
-        elif 'traceback' in str(Output).lower():
-            Error = "执行完成，但疑似中途出错\n（详情请见终端输出信息）"
-        else:
-            Error = None
-        self.errChk.emit(str(Error))
-
-        self.finished.emit()
-
-    def Terminate(self):
-        EasyUtils.processTerminator(self.Process.pid) if hasattr(self, 'Process') else None
-
-
-# Tools: VoiceIdentifier
-class Execute_Voice_Identifying_VPR(QObject):
-    '''
-    Contrast the voice and filter out the similar ones
-    '''
-    started = Signal()
-    finished = Signal()
-
-    errChk = Signal(str)
-
-    def __init__(self):
-        super().__init__()
-
-    @Slot(tuple)
-    def Execute(self, params: tuple):
-        self.started.emit()
-
-        CMD = EasyUtils.subprocessManager(communicateThroughConsole = True)
-        self.Process = CMD.create(
-            args = [
-                f'cd "{CoreDir}"',
-                'python -c "'
-                'from VPR.Identify import Voice_Identifying; '
-                f"AudioContrastInference = Voice_Identifying{str(params)}; "
-                'AudioContrastInference.GetModel(); '
-                'AudioContrastInference.Inference()"'
-            ]
-        )
-        Output, Error = CMD.monitor(
-            showProgress = True,
-            decodeResult = True,
-            logPath = logPath
-        )[:2]
-        if 'error' in str(Error).lower():
-            Error += "（详情请见终端输出信息）"
-        elif 'traceback' in str(Output).lower():
-            Error = "执行完成，但疑似中途出错\n（详情请见终端输出信息）"
-        else:
-            Error = None
-        self.errChk.emit(str(Error))
-
-        self.finished.emit()
-
-    def Terminate(self):
-        EasyUtils.processTerminator(self.Process.pid) if hasattr(self, 'Process') else None
-
-
-# Tools: VoiceTranscriber
-class Execute_Voice_Transcribing_Whisper(QObject):
-    '''
-    Transcribe WAV content to SRT
-    '''
-    started = Signal()
-    finished = Signal()
-
-    errChk = Signal(str)
-
-    def __init__(self):
-        super().__init__()
-
-    @Slot(tuple)
-    def Execute(self, params: tuple):
-        self.started.emit()
-
-        LANGUAGES = {
-            "中":       "zh",
-            "Chinese":  "zh",
-            "英":       "en",
-            "English":  "en",
-            "日":       "ja",
-            "japanese": "ja"
-        }
-        CMD = EasyUtils.subprocessManager(communicateThroughConsole = True)
-        self.Process = CMD.create(
-            args = [
-                f'cd "{CoreDir}"',
-                'python -c "'
-                'from Whisper.Transcribe import Voice_Transcribing; '
-                f"WAVtoSRT = Voice_Transcribing{str(EasyUtils.itemReplacer(LANGUAGES, params))}; "
-                'WAVtoSRT.Transcriber()"'
-            ]
-        )
-        Output, Error = CMD.monitor(
-            showProgress = True,
-            decodeResult = True,
-            logPath = logPath
-        )[:2]
-        if 'error' in str(Error).lower():
-            Error += "（详情请见终端输出信息）"
-        elif 'traceback' in str(Output).lower():
-            Error = "执行完成，但疑似中途出错\n（详情请见终端输出信息）"
-        else:
-            Error = None
-        self.errChk.emit(str(Error))
-
-        self.finished.emit()
-
-    def Terminate(self):
-        EasyUtils.processTerminator(self.Process.pid) if hasattr(self, 'Process') else None
-
-
-# Tools: DatasetCreator
-class Execute_Dataset_Creating_GPTSoVITS(QObject):
-    '''
-    Convert the whisper-generated SRT to CSV and split the WAV
-    '''
-    started = Signal()
-    finished = Signal()
-
-    errChk = Signal(str)
-
-    def __init__(self):
-        super().__init__()
-
-    @Slot(tuple)
-    def Execute(self, params: tuple):
-        self.started.emit()
-
-        CMD = EasyUtils.subprocessManager(communicateThroughConsole = True)
-        self.Process = CMD.create(
-            args = [
-                f'cd "{CoreDir}"',
-                'python -c "'
-                'from GPT_SoVITS.Create import Dataset_Creating; '
-                f"SRTtoCSVandSplitAudio = Dataset_Creating{str(params)}; "
-                'SRTtoCSVandSplitAudio.CallingFunctions()"'
-            ]
-        )
-        Output, Error = CMD.monitor(
-            showProgress = True,
-            decodeResult = True,
-            logPath = logPath
-        )[:2]
-        if 'error' in str(Error).lower():
-            Error += "（详情请见终端输出信息）"
-        elif 'traceback' in str(Output).lower():
-            Error = "执行完成，但疑似中途出错\n（详情请见终端输出信息）"
-        else:
-            Error = None
-        self.errChk.emit(str(Error))
-
-        self.finished.emit()
-
-    def Terminate(self):
-        EasyUtils.processTerminator(self.Process.pid) if hasattr(self, 'Process') else None
-
-
-class Execute_Dataset_Creating_VITS(QObject):
-    '''
-    Convert the whisper-generated SRT to CSV and split the WAV
-    '''
-    started = Signal()
-    finished = Signal()
-
-    errChk = Signal(str)
-
-    def __init__(self):
-        super().__init__()
-
-    @Slot(tuple)
-    def Execute(self, params: tuple):
-        self.started.emit()
-
-        CMD = EasyUtils.subprocessManager(communicateThroughConsole = True)
-        self.Process = CMD.create(
-            args = [
-                f'cd "{CoreDir}"',
-                'python -c "'
-                'from VITS.Create import Dataset_Creating; '
-                f"SRTtoCSVandSplitAudio = Dataset_Creating{str(params)}; "
-                'SRTtoCSVandSplitAudio.CallingFunctions()"'
-            ]
-        )
-        Output, Error = CMD.monitor(
-            showProgress = True,
-            decodeResult = True,
-            logPath = logPath
-        )[:2]
-        if 'error' in str(Error).lower():
-            Error += "（详情请见终端输出信息）"
-        elif 'traceback' in str(Output).lower():
-            Error = "执行完成，但疑似中途出错\n（详情请见终端输出信息）"
-        else:
-            Error = None
-        self.errChk.emit(str(Error))
-
-        self.finished.emit()
-
-    def Terminate(self):
-        EasyUtils.processTerminator(self.Process.pid) if hasattr(self, 'Process') else None
-
-
-# Tools: VoiceTrainer
-class Execute_Voice_Training_GPTSoVITS(QObject):
-    '''
-    Preprocess and then start training
-    '''
-    started = Signal()
-    finished = Signal()
-
-    errChk = Signal(str)
-
-    def __init__(self):
-        super().__init__()
-
-    @Slot(tuple)
-    def Execute(self, params: tuple):
-        self.started.emit()
-
-        CMD = EasyUtils.subprocessManager(communicateThroughConsole = True)
-        self.Process = CMD.create(
-            args = [
-                f'cd "{CoreDir}"',
-                'python -c "'
-                'from GPT_SoVITS.Train import Train; '
-                f'Train{str(params)}"'
-            ]
-        )
-        Output, Error = CMD.monitor(
-            showProgress = True,
-            decodeResult = True,
-            logPath = logPath
-        )[:2]
-        if 'error' in str(Error).lower():
-            Error += "（详情请见终端输出信息）"
-        elif 'traceback' in str(Output).lower():
-            Error = "执行完成，但疑似中途出错\n（详情请见终端输出信息）"
-        else:
-            Error = None
-        self.errChk.emit(str(Error))
-
-        self.finished.emit()
-
-    def Terminate(self):
-        EasyUtils.processTerminator(self.Process.pid) if hasattr(self, 'Process') else None
-
-
-class Execute_Voice_Training_VITS(QObject):
-    '''
-    Preprocess and then start training
-    '''
-    started = Signal()
-    finished = Signal()
-
-    errChk = Signal(str)
-
-    def __init__(self):
-        super().__init__()
-
-    @Slot(tuple)
-    def Execute(self, params: tuple):
-        self.started.emit()
-
-        CMD = EasyUtils.subprocessManager(communicateThroughConsole = True)
-        self.Process = CMD.create(
-            args = [
-                f'cd "{CoreDir}"',
-                'python -c "'
-                'from VITS.Train import Train; '
-                f'Train{str(params)}"'
-            ]
-        )
-        Output, Error = CMD.monitor(
-            showProgress = True,
-            decodeResult = True,
-            logPath = logPath
-        )[:2]
-        if 'error' in str(Error).lower():
-            Error += "（详情请见终端输出信息）"
-        elif 'traceback' in str(Output).lower():
-            Error = "执行完成，但疑似中途出错\n（详情请见终端输出信息）"
-        else:
-            Error = None
-        self.errChk.emit(str(Error))
-
-        self.finished.emit()
-
-    def Terminate(self):
-        EasyUtils.processTerminator(self.Process.pid) if hasattr(self, 'Process') else None
-
-
-# Tools: VoiceConverter
-class Execute_Voice_Converting_GPTSoVITS(QObject):
-    '''
-    Inference model
-    '''
-    started = Signal()
-    finished = Signal()
-
-    errChk = Signal(str)
-
-    def __init__(self):
-        super().__init__()
-
-    @Slot(tuple)
-    def Execute(self, params: tuple):
-        self.started.emit()
-
-        CMD = EasyUtils.subprocessManager(communicateThroughConsole = True)
-        self.Process = CMD.create(
-            args = [
-                f'cd "{CoreDir}"',
-                'python -c "'
-                'from GPT_SoVITS.Convert import Convert; '
-                f'Convert{str(params)}"'
-            ]
-        )
-        Output, Error = CMD.monitor(
-            showProgress = True,
-            decodeResult = True,
-            logPath = logPath
-        )[:2]
-        if 'error' in str(Error).lower():
-            Error += "（详情请见终端输出信息）"
-        elif 'traceback' in str(Output).lower():
-            Error = "执行完成，但疑似中途出错\n（详情请见终端输出信息）"
-        else:
-            Error = None
-        self.errChk.emit(str(Error))
-
-        self.finished.emit()
-
-    def Terminate(self):
-        EasyUtils.processTerminator(self.Process.pid) if hasattr(self, 'Process') else None
-
-
-def Get_Speakers(Config_Path_Load):
-    try:
-        with open(Config_Path_Load, 'r', encoding = 'utf-8') as File:
-            params = json.load(File)
-        Speakers = params["speakers"]
-        return Speakers
-    except:
-        return str()
-
-class Execute_Voice_Converting_VITS(QObject):
-    '''
-    Inference model
-    '''
-    started = Signal()
-    finished = Signal()
-
-    errChk = Signal(str)
-
-    def __init__(self):
-        super().__init__()
-
-    @Slot(tuple)
-    def Execute(self, params: tuple):
-        self.started.emit()
-
-        LANGUAGES = {
-            "中":       "ZH",
-            "Chinese":  "ZH",
-            "英":       "EN",
-            "English":  "EN",
-            "日":       "JA",
-            "Japanese": "JA"
-        }
-        CMD = EasyUtils.subprocessManager(communicateThroughConsole = True)
-        self.Process = CMD.create(
-            args = [
-                f'cd "{CoreDir}"',
-                'python -c "'
-                'from VITS.Convert import Convert; '
-                f'Convert{str(EasyUtils.itemReplacer(LANGUAGES, params))}"'
-            ]
-        )
-        Output, Error = CMD.monitor(
-            showProgress = True,
-            decodeResult = True,
-            logPath = logPath
-        )[:2]
-        if 'error' in str(Error).lower():
-            Error += "（详情请见终端输出信息）"
-        elif 'traceback' in str(Output).lower():
-            Error = "执行完成，但疑似中途出错\n（详情请见终端输出信息）"
-        else:
-            Error = None
-        self.errChk.emit(str(Error))
-
-        self.finished.emit()
-
-    def Terminate(self):
-        EasyUtils.processTerminator(self.Process.pid) if hasattr(self, 'Process') else None
-
-
-# ClientFunc: GetModelsInfo
+# ClientFunc: _getModelsInfo
 class CustomSignals_ModelView(QObject):
     '''
     Set up signals for model view
@@ -565,14 +128,10 @@ class Model_View(QObject):
     '''
     View model
     '''
-    finished = Signal()
-
-    errChk = Signal(str)
-
     def __init__(self):
         super().__init__()
 
-    def GetModelsInfo(self, ModelsDir: str, ModelsFormats: list):
+    def _getModelsInfo(self, ModelsDir: str, ModelsFormats: list):
         ModelsInfo = {}
         os.makedirs(ModelsDir, exist_ok = True)
 
@@ -585,7 +144,7 @@ class Model_View(QObject):
         for ModelDict in param["models"]:
             if ModelDict["tags"] == Tags:
                 ModelDicts_Cloud.append(ModelDict)
-        def GetModelInfo_Cloud(ModelDict):
+        def _getModelInfo_Cloud(ModelDict):
             if isinstance(ModelDict["SHA"], dict):
                 Name = ModelDict["name"]
                 for Model, ModelSHA in ModelDict["SHA"].items():
@@ -610,7 +169,7 @@ class Model_View(QObject):
                 ModelsInfo[ModelSHA] = [str(ModelName), str(ModelType), str(ModelSize), str(ModelDate), tuple(DownloadParam)]
         with ThreadPoolExecutor(max_workers = os.cpu_count()) as Executor:
             Executor.map(
-                GetModelInfo_Cloud,
+                _getModelInfo_Cloud,
                 ModelDicts_Cloud
             ) if ModelDicts_Cloud is not None else None
 
@@ -639,39 +198,37 @@ class Model_View(QObject):
 
         return list(ModelsInfo.values())
 
-    @Slot()
-    def Execute(self):
+    def execute(self):
         ModelViewSignals.Signal_Process_UVR.emit(
-            self.GetModelsInfo(
+            self._getModelsInfo(
                 EasyUtils.normPath(Path(ModelDir).joinpath('Process', 'UVR')),
                 ['pth', 'onnx']
             )
         )
         ModelViewSignals.Signal_VPR_TDNN.emit(
-            self.GetModelsInfo(
+            self._getModelsInfo(
                 EasyUtils.normPath(Path(ModelDir).joinpath('VPR', 'TDNN')),
                 ['pth']
             )
         )
         ModelViewSignals.Signal_ASR_Whisper.emit(
-            self.GetModelsInfo(
+            self._getModelsInfo(
                 EasyUtils.normPath(Path(ModelDir).joinpath('ASR', 'Whisper')),
                 ['pt']
             )
         )
         ModelViewSignals.Signal_TTS_GPTSoVITS.emit(
-            self.GetModelsInfo(
+            self._getModelsInfo(
                 EasyUtils.normPath(Path(ModelDir).joinpath('TTS', 'GPT-SoVITS')),
                 ['pth', 'ckpt', 'bin', 'json']
             )
         )
         ModelViewSignals.Signal_TTS_VITS.emit(
-            self.GetModelsInfo(
+            self._getModelsInfo(
                 EasyUtils.normPath(Path(ModelDir).joinpath('TTS', 'VITS')),
                 ['pth', 'json']
             )
         )
-        self.finished.emit()
 
 
 # ClientFunc: ModelDownloader
@@ -679,14 +236,10 @@ class Model_Downloader(QObject):
     '''
     Download model
     '''
-    finished = Signal()
-
-    errChk = Signal(str)
-
     def __init__(self):
         super().__init__()
 
-    def DownloadModel(self, DownloadParams: tuple):
+    def _downloadModel(self, DownloadParams: tuple):
         try:
             FilePath = EasyUtils.downloadFile(*DownloadParams, createNewConsole = True)[1]
             FileSuffix = Path(FilePath).suffix
@@ -695,12 +248,9 @@ class Model_Downloader(QObject):
         except Exception as e:
             return e
 
-    @Slot(tuple)
-    def Execute(self, params: tuple):
-        Error = self.DownloadModel(params)
-        self.errChk.emit(str(Error))
-
-        self.finished.emit()
+    def execute(self, *params):
+        error = self._downloadModel(params)
+        return error
 
 
 # ClientFunc: AddLocalModel
@@ -709,96 +259,16 @@ def AddLocalModel(modelPath: str, sector: list[str] = ['Tool', 'type']):
     shutil.move(modelPath, moveToDst)
 
 
-# ClientFunc: GetVPRResult
-def VPRResult_Get(audioSpeakersData_path: str):
-    AudioSpeakerSimList = []
-    with open(audioSpeakersData_path, mode = 'r', encoding = 'utf-8') as AudioSpeakersData:
-        AudioSpeakerSimLines = AudioSpeakersData.readlines()
-    for AudioSpeakerSimLine in AudioSpeakerSimLines:
-        AudioSpeakerSim = AudioSpeakerSimLine.strip().split('|')
-        if len(AudioSpeakerSim) == 2:
-            AudioSpeakerSim.append('')
-        AudioSpeakerSimList.append(AudioSpeakerSim)
-    return AudioSpeakerSimList
-
-
-# ClientFunc: SaveVPRResult
-def VPRResult_Save(audioSpeakers: dict, audioSpeakersData_path: str, moveAudio: bool, moveToDst: Optional[str] = None):
-    with open(audioSpeakersData_path, mode = 'w', encoding = 'utf-8') as AudioSpeakersData:
-        Lines = []
-        for Audio, Speaker in audioSpeakers.items():
-            Speaker = Speaker.strip()
-            if Speaker == '':
-                continue
-            if moveAudio:
-                if moveToDst is None:
-                    raise Exception("Destination shouldn't be 'None'")
-                MoveToDst_Sub = EasyUtils.normPath(Path(moveToDst).joinpath(Speaker))
-                os.makedirs(MoveToDst_Sub, exist_ok = True) if Path(MoveToDst_Sub).exists() == False else None
-                Audio_Dst = EasyUtils.normPath(Path(MoveToDst_Sub).joinpath(Path(Audio).name).as_posix())
-                shutil.copy(Audio, MoveToDst_Sub) if not Path(Audio_Dst).exists() else None
-                Lines.append(f"{Audio_Dst}|{Speaker}\n")
-            else:
-                Lines.append(f"{Audio}|{Speaker}\n")
-        AudioSpeakersData.writelines(Lines)
-
-
-# ClientFunc: GetASRResult
-def ASRResult_Get(srtDir: str, audioDir: str):
-    asrResult = {}
-    for SRTFile in glob(EasyUtils.normPath(Path(srtDir).joinpath('*.srt'))):
-        AudioFiles = glob(EasyUtils.normPath(Path(audioDir).joinpath('**', f'{Path(SRTFile).stem}.*')), recursive = True)
-        if len(AudioFiles) == 0:
-            continue
-        with open(SRTFile, mode = 'r', encoding = 'utf-8') as SRT:
-            SRTContent = SRT.read()
-        asrResult[AudioFiles[0]] = SRTContent
-    return asrResult
-
-
-# ClientFunc: SaveASRResult
-def ASRResult_Save(asrResult: dict, srtDir: str):
-    for AudioFile in asrResult.keys():
-        SRTFiles = glob(EasyUtils.normPath(Path(srtDir).joinpath(f'{Path(AudioFile).stem}.*')))
-        if len(SRTFiles) == 0:
-            continue
-        with open(SRTFiles[0], mode = 'w', encoding = 'utf-8') as SRT:
-            SRT.write(asrResult[AudioFile])
-
-
-# ClientFunc: GetDATResult
-def DATResult_Get(datPath: str):
-    datResult = {}
-    with open(datPath, mode = 'r', encoding = 'utf-8') as DAT:
-        DATLines = DAT.readlines()
-    for DATLine in DATLines:
-        Audio = EasyUtils.normPath(Path(datPath).parent.joinpath(DATLine.split('|')[0]))
-        datResult[Audio] = DATLine.strip()
-    return datResult
-
-
-# ClientFunc: SaveDATResult
-def DATResult_Save(datResult: list, datPath: str):
-    with open(datPath, mode = 'w', encoding = 'utf-8') as DAT:
-        DATLines = '\n'.join(datResult)
-        DAT.write(DATLines)
-
-
 # ClientFunc: IntegrityChecker
 class Integrity_Checker(QObject):
     '''
     Check File integrity
     '''
-    finished = Signal()
-
-    errChk = Signal(str)
-
     def __init__(self):
         super().__init__()
 
-    @Slot()
-    def Execute(self):
-        Error = EasyUtils.runCMD(
+    def execute(self):
+        error = EasyUtils.runCMD(
             args = [
                 f'cd "{CoreDir}"',
                 'python -c "'
@@ -816,9 +286,7 @@ class Integrity_Checker(QObject):
             decodeResult = True,
             logPath = logPath
         )[1]
-        self.errChk.emit(str(Error))
-
-        self.finished.emit()
+        return error
 
 
 # ClientFunc: TensorboardRunner
@@ -826,16 +294,12 @@ class Tensorboard_Runner(QObject):
     '''
     Check File integrity
     '''
-    finished = Signal()
-
-    errChk = Signal(str)
-
     def __init__(self):
         super().__init__()
 
-    def RunTensorboard(self, LogDir):
+    def _runTensorboard(self, LogDir):
         try:
-            Error = None
+            error = None
             InitialWaitTime = 0
             MaximumWaitTime = 30
             while EasyUtils.getPaths(LogDir, 'events.out.tfevents') == None:
@@ -847,16 +311,13 @@ class Tensorboard_Runner(QObject):
             time.sleep(9)
             QFunc.openURL('http://localhost:6006/')
         except Exception as e:
-            Error = e
+            error = e
         finally:
-            return Error
+            return error
 
-    @Slot(tuple)
-    def Execute(self, params: tuple):
-        Error = self.RunTensorboard(*params)
-        self.errChk.emit(str(Error))
-
-        self.finished.emit()
+    def execute(self, params):
+        error = self._runTensorboard(*params)
+        return error
 
 ##############################################################################################################################
 
@@ -877,6 +338,8 @@ class MainWindow(Window_MainWindow):
     '''
     def __init__(self):
         super().__init__()
+
+        self.threadPool = QThreadPool()
 
         self.MonitorUsage = QTasks.MonitorUsage()
         self.MonitorUsage.start()
@@ -1291,9 +754,10 @@ class MainWindow(Window_MainWindow):
             )
         )
 
-        Function_SetMethodExecutor(self,
-            method = Execute_Update_Checking.Execute,
-            params = ()
+        Function_SetMethodExecutor(
+            executeMethod = Execute_Update_Checking.execute,
+            threadPool = self.threadPool,
+            parentWindow = self,
         )
 
     def main(self):
@@ -1543,12 +1007,12 @@ class MainWindow(Window_MainWindow):
         subEnvPage_detection.addDetectorFrame(
             text = QCA.translate('MainWindow', "Aria2"),
             toolTip = QCA.translate('MainWindow', "重新检测安装"),
-            detectMethod = Aria2_Installer.Execute,
-            params = (),
+            detectMethod = Aria2_Installer.execute,
+            threadPool = self.threadPool,
             signal_detect = MainWindowSignals.Signal_MainWindowShown,
             signal_detected = EnvConfiguratorSignals.Signal_Aria2Detected,
             signal_undetected = EnvConfiguratorSignals.Signal_Aria2Undetected,
-            statusSignal = EnvConfiguratorSignals.Signal_Aria2Status
+            statusSignal = EnvConfiguratorSignals.Signal_Aria2Status,
         )
         EnvConfiguratorSignals.Signal_Aria2Installed.connect(#self.ui.Button_Install_Aria2.click)
             lambda: EnvConfiguratorSignals.Signal_Aria2Detected.emit()
@@ -1563,12 +1027,12 @@ class MainWindow(Window_MainWindow):
         subEnvPage_detection.addDetectorFrame(
             text = QCA.translate('MainWindow', "FFmpeg"),
             toolTip = QCA.translate('MainWindow', "重新检测安装"),
-            detectMethod = FFmpeg_Installer.Execute,
-            params = (),
+            detectMethod = FFmpeg_Installer.execute,
+            threadPool = self.threadPool,
             signal_detect = MainWindowSignals.Signal_MainWindowShown,
             signal_detected = EnvConfiguratorSignals.Signal_FFmpegDetected,
             signal_undetected = EnvConfiguratorSignals.Signal_FFmpegUndetected,
-            statusSignal = EnvConfiguratorSignals.Signal_FFmpegStatus
+            statusSignal = EnvConfiguratorSignals.Signal_FFmpegStatus,
         )
         EnvConfiguratorSignals.Signal_FFmpegInstalled.connect(#self.ui.Button_Install_FFmpeg.click)
             lambda: EnvConfiguratorSignals.Signal_FFmpegDetected.emit()
@@ -1583,12 +1047,13 @@ class MainWindow(Window_MainWindow):
         subEnvPage_detection.addDetectorFrame(
             text = QCA.translate('MainWindow', "Python"),
             toolTip = QCA.translate('MainWindow', "重新检测安装"),
-            detectMethod = Python_Installer.Execute,
-            params = ('3.9.0', ),
+            detectMethod = Python_Installer.execute,
+            params = ('3.9.0'),
+            threadPool = self.threadPool,
             signal_detect = MainWindowSignals.Signal_MainWindowShown,
             signal_detected = EnvConfiguratorSignals.Signal_PythonDetected,
             signal_undetected = EnvConfiguratorSignals.Signal_PythonUndetected,
-            statusSignal = EnvConfiguratorSignals.Signal_PythonStatus
+            statusSignal = EnvConfiguratorSignals.Signal_PythonStatus,
         )
         EnvConfiguratorSignals.Signal_PythonInstalled.connect(#self.ui.Button_Install_Python.click)
             lambda: EnvConfiguratorSignals.Signal_PythonDetected.emit()
@@ -1603,12 +1068,13 @@ class MainWindow(Window_MainWindow):
         subEnvPage_detection.addDetectorFrame(
             text = QCA.translate('MainWindow', "Python 依赖库 (Requirements)"),
             toolTip = QCA.translate('MainWindow', "重新检测安装"),
-            detectMethod = PyReqs_Installer.Execute,
-            params = (EasyUtils.normPath(RequirementsPath), ),
+            detectMethod = PyReqs_Installer.execute,
+            params = (EasyUtils.normPath(RequirementsPath)),
+            threadPool = self.threadPool,
             signal_detect = EnvConfiguratorSignals.Signal_PythonDetected,
             signal_detected = EnvConfiguratorSignals.Signal_PyReqsDetected,
             signal_undetected = EnvConfiguratorSignals.Signal_PyReqsUndetected,
-            statusSignal = EnvConfiguratorSignals.Signal_PyReqsStatus
+            statusSignal = EnvConfiguratorSignals.Signal_PyReqsStatus,
         )
         EnvConfiguratorSignals.Signal_PyReqsInstalled.connect(#self.ui.Button_Install_PyReqs.click)
             lambda: EnvConfiguratorSignals.Signal_PyReqsDetected.emit()
@@ -1623,12 +1089,12 @@ class MainWindow(Window_MainWindow):
         subEnvPage_detection.addDetectorFrame(
             text = QCA.translate('MainWindow', "Pytorch 相关库"),
             toolTip = QCA.translate('MainWindow', "重新检测安装"),
-            detectMethod = Pytorch_Installer.Execute,
-            params = (),
+            detectMethod = Pytorch_Installer.execute,
+            threadPool = self.threadPool,
             signal_detect = EnvConfiguratorSignals.Signal_PyReqsDetected,
             signal_detected = EnvConfiguratorSignals.Signal_PytorchDetected,
             signal_undetected = EnvConfiguratorSignals.Signal_PytorchUndetected,
-            statusSignal = EnvConfiguratorSignals.Signal_PytorchStatus
+            statusSignal = EnvConfiguratorSignals.Signal_PytorchStatus,
         )
         EnvConfiguratorSignals.Signal_PytorchInstalled.connect(#self.ui.Button_Install_Pytorch.click)
             lambda: EnvConfiguratorSignals.Signal_PytorchDetected.emit()
@@ -1652,11 +1118,12 @@ class MainWindow(Window_MainWindow):
             text = QCA.translate('MainWindow', "选择Pytorch版本"),
             items = [ '2.0.1', '2.2.2'],
             executorText = QCA.translate('MainWindow', "安装"),
-            method = Pytorch_Installer.Execute,
+            method = Pytorch_Installer.execute,
             paramTargets = [
-                QComboBox,
+                lambda: subEnvPage_manager.findChildWidget(None, "Pytorch", "选择Pytorch版本", QComboBox),
                 True
-            ]
+            ],
+            threadPool = self.threadPool,
         )
 
         self.ui.Page_Env.addSubPage(
@@ -1668,8 +1135,10 @@ class MainWindow(Window_MainWindow):
         #############################################################
 
         MainWindowSignals.Signal_MainWindowShown.connect(
-            lambda: Function_SetMethodExecutor(self,
-                method = Model_View.Execute
+            lambda: Function_SetMethodExecutor(
+                executeMethod = Model_View.execute,
+                threadPool = self.threadPool,
+                parentWindow = self,
             )
         )
 
@@ -1688,9 +1157,11 @@ class MainWindow(Window_MainWindow):
         self.ui.Table_Models_Process_UVR.setHorizontalHeaderLabels(['名字', '类型', '大小', '日期', '操作'])
         ModelViewSignals.Signal_Process_UVR.connect(self.ui.Table_Models_Process_UVR.setValue)
         self.ui.Table_Models_Process_UVR.Download.connect(
-            lambda params: Function_SetMethodExecutor(self,
-                method = Model_Downloader.Execute,
-                params = params
+            lambda params: Function_SetMethodExecutor(
+                executeMethod = Model_Downloader.execute,
+                executeParams = params,
+                threadPool = self.threadPool,
+                parentWindow = self,
             )
         )
 
@@ -1709,9 +1180,11 @@ class MainWindow(Window_MainWindow):
         self.ui.Table_Models_VPR_TDNN.setHorizontalHeaderLabels(['名字', '类型', '大小', '日期', '操作'])
         ModelViewSignals.Signal_VPR_TDNN.connect(self.ui.Table_Models_VPR_TDNN.setValue)
         self.ui.Table_Models_VPR_TDNN.Download.connect(
-            lambda params: Function_SetMethodExecutor(self,
-                method = Model_Downloader.Execute,
-                params = params
+            lambda params: Function_SetMethodExecutor(
+                executeMethod = Model_Downloader.execute,
+                executeParams = params,
+                threadPool = self.threadPool,
+                parentWindow = self,
             )
         )
 
@@ -1730,9 +1203,11 @@ class MainWindow(Window_MainWindow):
         self.ui.Table_Models_ASR_Whisper.setHorizontalHeaderLabels(['名字', '类型', '大小', '日期', '操作'])
         ModelViewSignals.Signal_ASR_Whisper.connect(self.ui.Table_Models_ASR_Whisper.setValue)
         self.ui.Table_Models_ASR_Whisper.Download.connect(
-            lambda params: Function_SetMethodExecutor(self,
-                method = Model_Downloader.Execute,
-                params = params
+            lambda params: Function_SetMethodExecutor(
+                executeMethod = Model_Downloader.execute,
+                executeParams = params,
+                threadPool = self.threadPool,
+                parentWindow = self,
             )
         )
 
@@ -1751,9 +1226,11 @@ class MainWindow(Window_MainWindow):
         self.ui.Table_Models_TTS_GPTSoVITS.setHorizontalHeaderLabels(['名字', '类型', '大小', '日期', '操作'])
         ModelViewSignals.Signal_TTS_GPTSoVITS.connect(self.ui.Table_Models_TTS_GPTSoVITS.setValue)
         self.ui.Table_Models_TTS_GPTSoVITS.Download.connect(
-            lambda params: Function_SetMethodExecutor(self,
-                method = Model_Downloader.Execute,
-                params = params
+            lambda params: Function_SetMethodExecutor(
+                executeMethod = Model_Downloader.execute,
+                executeParams = params,
+                threadPool = self.threadPool,
+                parentWindow = self,
             )
         )
 
@@ -1761,16 +1238,20 @@ class MainWindow(Window_MainWindow):
         self.ui.Table_Models_TTS_VITS.setHorizontalHeaderLabels(['名字', '类型', '大小', '日期', '操作'])
         ModelViewSignals.Signal_TTS_VITS.connect(self.ui.Table_Models_TTS_VITS.setValue)
         self.ui.Table_Models_TTS_VITS.Download.connect(
-            lambda params: Function_SetMethodExecutor(self,
-                method = Model_Downloader.Execute,
-                params = params
+            lambda params: Function_SetMethodExecutor(
+                executeMethod = Model_Downloader.execute,
+                executeParams = params,
+                threadPool = self.threadPool,
+                parentWindow = self,
             )
         )
 
         self.ui.Button_Models_Refresh.setText(QCA.translate('MainWindow', '刷新'))
         self.ui.Button_Models_Refresh.clicked.connect(
-            lambda: Function_SetMethodExecutor(self,
-                method = Model_View.Execute
+            lambda: Function_SetMethodExecutor(
+                executeMethod = Model_View.execute,
+                threadPool = self.threadPool,
+                parentWindow = self,
             )
         )
 
@@ -1951,7 +1432,7 @@ class MainWindow(Window_MainWindow):
         )
         subPage_process.setExecutor(
             consoleWidget = self.ui.Frame_Console,
-            method = Execute_Audio_Processing.Execute,
+            method = Execute_Audio_Processing.execute,
             paramTargets = [
                 subPage_process.findChildWidget("输入参数", None, "媒体输入目录"),
                 subPage_process.findChildWidget("输出参数", None, "媒体输出格式"),
@@ -1975,7 +1456,8 @@ class MainWindow(Window_MainWindow):
                     QMessageBox.Information, "Tip",
                     "当前任务已执行结束。"
                 )
-            ]
+            ],
+            threadPool = self.threadPool,
         )
         Function_ConfigureCheckBox(
             checkBox = subPage_process.findChildWidget("降噪参数", None, "启用杂音去除", QCheckBox),
@@ -2192,7 +1674,7 @@ class MainWindow(Window_MainWindow):
         )
         subPage_VPR.setExecutor(
             consoleWidget = self.ui.Frame_Console,
-            method = Execute_Voice_Identifying_VPR.Execute,
+            method = Execute_Voice_Identifying_VPR.execute,
             paramTargets = [
                 subPage_VPR.findChildWidget("输入参数", None, "目标人物与音频"),
                 subPage_VPR.findChildWidget("输入参数", None, "音频输入目录"),
@@ -2216,7 +1698,8 @@ class MainWindow(Window_MainWindow):
                     QMessageBox.Information, "Tip",
                     "当前任务已执行结束。"
                 )
-            ]
+            ],
+            threadPool = self.threadPool,
         )
 
         self.ui.Page_VPR.addSubPage(
@@ -2325,7 +1808,7 @@ class MainWindow(Window_MainWindow):
         )
         subPage_ASR.setExecutor(
             consoleWidget = self.ui.Frame_Console,
-            method = Execute_Voice_Transcribing_Whisper.Execute,
+            method = Execute_Voice_Transcribing_Whisper.execute,
             paramTargets = [
                 subPage_ASR.findChildWidget("语音转录参数", None, "模型加载路径"),
                 subPage_ASR.findChildWidget("输入参数", None, "音频输入目录"),
@@ -2346,7 +1829,8 @@ class MainWindow(Window_MainWindow):
                     QMessageBox.Information, "Tip",
                     "当前任务已执行结束。"
                 )
-            ]
+            ],
+            threadPool = self.threadPool,
         )
 
         self.ui.Page_ASR.addSubPage(
@@ -2464,7 +1948,7 @@ class MainWindow(Window_MainWindow):
         )
         subPage_dataset_GPTSoVITS.setExecutor(
             consoleWidget = self.ui.Frame_Console,
-            method = Execute_Dataset_Creating_GPTSoVITS.Execute,
+            method = Execute_Dataset_Creating_GPTSoVITS.execute,
             paramTargets = [
                 subPage_dataset_GPTSoVITS.findChildWidget("输入参数", None, "字幕输入目录"),
                 subPage_dataset_GPTSoVITS.findChildWidget("输入参数", None, "音频文件目录/语音识别结果文本路径"),
@@ -2483,7 +1967,8 @@ class MainWindow(Window_MainWindow):
                     QMessageBox.Information, "Tip",
                     "当前任务已执行结束。"
                 )
-            ]
+            ],
+            threadPool = self.threadPool,
         )
 
         self.ui.Page_Dataset.addSubPage(
@@ -2651,7 +2136,7 @@ class MainWindow(Window_MainWindow):
         )
         subPage_dataset_VITS.setExecutor(
             consoleWidget = self.ui.Frame_Console,
-            method = Execute_Dataset_Creating_VITS.Execute,
+            method = Execute_Dataset_Creating_VITS.execute,
             paramTargets = [
                 subPage_dataset_VITS.findChildWidget("输入参数", None, "字幕输入目录"),
                 subPage_dataset_VITS.findChildWidget("输入参数", None, "音频文件目录/语音识别结果文本路径"),
@@ -2677,7 +2162,8 @@ class MainWindow(Window_MainWindow):
                     QMessageBox.Information, "Tip",
                     "当前任务已执行结束。"
                 )
-            ]
+            ],
+            threadPool = self.threadPool,
         )
         Function_ConfigureCheckBox(
             checkBox = subPage_dataset_VITS.findChildWidget("数据集参数", None, "添加辅助数据", CheckBoxBase),
@@ -2876,17 +2362,17 @@ class MainWindow(Window_MainWindow):
         subPage_train_GPTSoVITS.addSideBtn(
             text = QCA.translate('MainWindow', "启动Tensorboard"),
             events = [
-                lambda: Function_SetMethodExecutor(self, 
-                    method = Tensorboard_Runner.Execute,
-                    paramTargets = [
-                        subPage_train_GPTSoVITS.findChildWidget("输出参数", "高级设置", "日志输出目录", LineEditBase).text()
-                    ]
+                lambda: Function_SetMethodExecutor(
+                    executeMethod = Tensorboard_Runner.execute,
+                    executeParams = subPage_train_GPTSoVITS.findChildWidget("输出参数", "高级设置", "日志输出目录", LineEditBase).text(),
+                    threadPool = self.threadPool,
+                    parentWindow = self,
                 )
             ]
         )
         subPage_train_GPTSoVITS.setExecutor(
             consoleWidget = self.ui.Frame_Console,
-            method = Execute_Voice_Training_GPTSoVITS.Execute,
+            method = Execute_Voice_Training_GPTSoVITS.execute,
             paramTargets = [
                 subPage_train_GPTSoVITS.findChildWidget("输入参数", None, "训练集文本路径"),
                 subPage_train_GPTSoVITS.findChildWidget("训练参数", "高级设置", "半精度训练"),
@@ -2904,7 +2390,8 @@ class MainWindow(Window_MainWindow):
                     QMessageBox.Information, "Tip",
                     "当前任务已执行结束。"
                 )
-            ]
+            ],
+            threadPool = self.threadPool,
         )
         FunctionSignals.Signal_TaskStatus.connect(
             lambda Task, Status: MessageBoxBase.pop(self,
@@ -2912,7 +2399,7 @@ class MainWindow(Window_MainWindow):
                 text = "是否稍后启用tensorboard？",
                 buttons = QMessageBox.Yes|QMessageBox.No,
                 buttonEvents = {QMessageBox.Yes: lambda: subPage_train_GPTSoVITS.findChildWidget("启动Tensorboard").click()}
-            ) if Task == 'Execute_Voice_Training_GPTSoVITS.Execute' and Status == 'Started' else None
+            ) if Task == 'Execute_Voice_Training_GPTSoVITS.execute' and Status == 'Started' else None
         )
 
         self.ui.Page_Train.addSubPage(
@@ -3090,17 +2577,17 @@ class MainWindow(Window_MainWindow):
         subPage_train_VITS.addSideBtn(
             text = QCA.translate('MainWindow', "启动Tensorboard"),
             events = [
-                lambda: Function_SetMethodExecutor(self, 
-                    method = Tensorboard_Runner.Execute,
-                    paramTargets = [
-                        subPage_train_VITS.findChildWidget("输出参数", "高级设置", "日志输出目录", LineEditBase).text()
-                    ]
+                lambda: Function_SetMethodExecutor(
+                    executeMethod = Tensorboard_Runner.execute,
+                    executeParams = subPage_train_VITS.findChildWidget("输出参数", "高级设置", "日志输出目录", LineEditBase).text(),
+                    threadPool = self.threadPool,
+                    parentWindow = self,
                 )
             ]
         )
         subPage_train_VITS.setExecutor(
             consoleWidget = self.ui.Frame_Console,
-            method = Execute_Voice_Training_VITS.Execute,
+            method = Execute_Voice_Training_VITS.execute,
             paramTargets = [
                 subPage_train_VITS.findChildWidget("输入参数", None, "训练集文本路径"),
                 subPage_train_VITS.findChildWidget("输入参数", None, "验证集文本路径"),
@@ -3124,7 +2611,8 @@ class MainWindow(Window_MainWindow):
                     QMessageBox.Information, "Tip",
                     "当前任务已执行结束。"
                 )
-            ]
+            ],
+            threadPool = self.threadPool,
         )
         FunctionSignals.Signal_TaskStatus.connect(
             lambda Task, Status: MessageBoxBase.pop(self,
@@ -3132,7 +2620,7 @@ class MainWindow(Window_MainWindow):
                 text = "是否稍后启用tensorboard？",
                 buttons = QMessageBox.Yes|QMessageBox.No,
                 buttonEvents = {QMessageBox.Yes: lambda: subPage_train_VITS.findChildWidget("启动Tensorboard").click()}
-            ) if Task == 'Execute_Voice_Training_VITS.Execute' and Status == 'Started' else None
+            ) if Task == 'Execute_Voice_Training_VITS.execute' and Status == 'Started' else None
         )
         Function_ConfigureCheckBox(
             checkBox = subPage_train_VITS.findChildWidget("训练参数", None, "使用预训练模型", CheckBoxBase),
@@ -3283,7 +2771,7 @@ class MainWindow(Window_MainWindow):
         )
         subPage_TTS_GPTSoVITS.setExecutor(
             consoleWidget = self.ui.Frame_Console,
-            method = Execute_Voice_Converting_GPTSoVITS.Execute,
+            method = Execute_Voice_Converting_GPTSoVITS.execute,
             paramTargets = [
                 subPage_TTS_GPTSoVITS.findChildWidget("输入参数", None, "s1模型加载路径"),
                 subPage_TTS_GPTSoVITS.findChildWidget("输入参数", None, "s2G模型加载路径"),
@@ -3298,7 +2786,8 @@ class MainWindow(Window_MainWindow):
                     QMessageBox.Information, "Tip",
                     "当前任务已执行结束。"
                 )
-            ]
+            ],
+            threadPool = self.threadPool,
         )
 
         self.ui.Page_TTS.addSubPage(
@@ -3410,7 +2899,7 @@ class MainWindow(Window_MainWindow):
         )
         subPage_TTS_VITS.setExecutor(
             consoleWidget = self.ui.Frame_Console,
-            method = Execute_Voice_Converting_VITS.Execute,
+            method = Execute_Voice_Converting_VITS.execute,
             paramTargets = [
                 subPage_TTS_VITS.findChildWidget("语音合成参数", None, "配置加载路径"),
                 subPage_TTS_VITS.findChildWidget("语音合成参数", None, "G模型加载路径"),
@@ -3431,7 +2920,8 @@ class MainWindow(Window_MainWindow):
                     QMessageBox.Information, "Tip",
                     "当前任务已执行结束。"
                 )
-            ]
+            ],
+            threadPool = self.threadPool,
         )
 
         self.ui.Page_TTS.addSubPage(
@@ -3524,10 +3014,11 @@ class MainWindow(Window_MainWindow):
 
         self.ui.GroupBox_Settings_Client_Operation.setTitle(QCA.translate('MainWindow', "操作"))
 
-        Function_SetMethodExecutor(self,
+        Function_SetMethodExecutor(
             executeButton = self.ui.Button_Setting_IntegrityChecker,
-            method = Integrity_Checker.Execute,
-            params = ()
+            executeMethod = Integrity_Checker.execute,
+            threadPool = self.threadPool,
+            parentWindow = self,
         )
         FunctionSignals.Signal_TaskStatus.connect(
             lambda Task, Status: self.ui.Button_Setting_IntegrityChecker.setCheckable(
@@ -3850,12 +3341,12 @@ class MainWindow(Window_MainWindow):
             lambda Task, Status: self.ui.Label_ToolsStatus.setText(
                 f"工具状态：{'忙碌' if Status == 'Started' else '空闲'}"
             ) if Task in [
-                'Execute_Audio_Processing.Execute',
-                'Execute_Voice_Identifying_VPR.Execute',
-                'Execute_Voice_Transcribing_Whisper.Execute',
-                'Execute_Dataset_Creating_VITS.Execute',
-                'Execute_Voice_Training_VITS.Execute',
-                'Execute_Voice_Converting_VITS.Execute'
+                'Execute_Audio_Processing.execute',
+                'Execute_Voice_Identifying_VPR.execute',
+                'Execute_Voice_Transcribing_Whisper.execute',
+                'Execute_Dataset_Creating_VITS.execute',
+                'Execute_Voice_Training_VITS.execute',
+                'Execute_Voice_Converting_VITS.execute'
             ] else None
         )
 

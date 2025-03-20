@@ -10,7 +10,7 @@ from packaging import version
 from pathlib import Path
 from threading import Event
 from typing import Optional
-from PySide6.QtCore import QObject, Signal, Slot
+from PySide6.QtCore import QObject, Signal
 
 ##############################################################################################################################
 
@@ -65,12 +65,9 @@ class CustomSignals_EnvConfigurator(QObject):
 EnvConfiguratorSignals = CustomSignals_EnvConfigurator()
 
 
-class Aria2_Installer(QObject):
+class Aria2_Installer:
     '''
     '''
-    started = Signal()
-    finished = Signal()
-
     def __init__(self):
         super().__init__()
 
@@ -128,23 +125,16 @@ class Aria2_Installer(QObject):
             EnvConfiguratorSignals.Signal_Aria2Detected.emit()
             EnvConfiguratorSignals.Signal_Aria2Status.emit(f"Aria2 detected. Version: {Result}")
 
-    @Slot(tuple)
-    def Execute(self, Params: tuple):
-        self.started.emit()
+    def execute(self):
+        self.Execute_Aria2_Installation()
 
-        self.Execute_Aria2_Installation(*Params)
-
-        self.finished.emit()
-
-    def Terminate(self):
+    def terminate(self):
         self.stopEvent.set()
 
-class FFmpeg_Installer(QObject):
-    '''
-    '''
-    started = Signal()
-    finished = Signal()
 
+class FFmpeg_Installer:
+    '''
+    '''
     def __init__(self):
         super().__init__()
 
@@ -203,24 +193,16 @@ class FFmpeg_Installer(QObject):
             EnvConfiguratorSignals.Signal_FFmpegDetected.emit()
             EnvConfiguratorSignals.Signal_FFmpegStatus.emit(f"FFmpeg detected. Version: {Result}")
 
-    @Slot(tuple)
-    def Execute(self, Params: tuple):
-        self.started.emit()
+    def execute(self):
+        self.Execute_FFmpeg_Installation()
 
-        self.Execute_FFmpeg_Installation(*Params)
-
-        self.finished.emit()
-
-    def Terminate(self):
+    def terminate(self):
         self.stopEvent.set()
 
 """
-class GCC_Installer(QObject):
+class GCC_Installer:
     '''
     '''
-    started = Signal()
-    finished = Signal()
-
     def __init__(self):
         super().__init__()
 
@@ -279,24 +261,16 @@ class GCC_Installer(QObject):
             EnvConfiguratorSignals.Signal_GCCDetected.emit()
             EnvConfiguratorSignals.Signal_GCCStatus.emit(f"GCC detected. Version: {Result}")
 
-    @Slot(tuple)
-    def Execute(self, Params: tuple):
-        self.started.emit()
+    def execute(self):
+        self.Execute_GCC_Installation()
 
-        self.Execute_GCC_Installation(*Params)
-
-        self.finished.emit()
-
-    def Terminate(self):
+    def terminate(self):
         self.stopEvent.set()
 
 
-class CMake_Installer(QObject):
+class CMake_Installer:
     '''
     '''
-    started = Signal()
-    finished = Signal()
-
     def __init__(self):
         super().__init__()
 
@@ -368,24 +342,16 @@ class CMake_Installer(QObject):
         EasyUtils.runCMD(['set CC={}'.format(os.path.join(self.MinGW_Bin_Path, 'gcc.exe'))])
         EasyUtils.runCMD(['set CXX={}'.format(os.path.join(self.MinGW_Bin_Path, 'g++.exe'))])
 
-    @Slot(tuple)
-    def Execute(self, Params: tuple):
-        self.started.emit()
+    def execute(self):
+        self.Execute_CMake_Installation()
 
-        self.Execute_CMake_Installation(*Params)
-
-        self.finished.emit()
-
-    def Terminate(self):
+    def terminate(self):
         self.stopEvent.set()
 """
 
-class Python_Installer(QObject):
+class Python_Installer:
     '''
     '''
-    started = Signal()
-    finished = Signal()
-
     def __init__(self):
         super().__init__()
 
@@ -449,24 +415,16 @@ class Python_Installer(QObject):
             EnvConfiguratorSignals.Signal_PythonDetected.emit()
             EnvConfiguratorSignals.Signal_PythonStatus.emit(f"Python detected. Version: {Result}")
 
-    @Slot(tuple)
-    def Execute(self, Params: tuple):
-        self.started.emit()
+    def execute(self, version: str):
+        self.Execute_Python_Installation(version)
 
-        self.Execute_Python_Installation(*Params)
-
-        self.finished.emit()
-
-    def Terminate(self):
+    def terminate(self):
         self.stopEvent.set()
 
 
-class PyReqs_Installer(QObject):
+class PyReqs_Installer:
     '''
     '''
-    started = Signal()
-    finished = Signal()
-
     def __init__(self):
         super().__init__()
 
@@ -540,24 +498,16 @@ class PyReqs_Installer(QObject):
                 EnvConfiguratorSignals.Signal_PyReqsInstallFailed.emit(e)
                 EnvConfiguratorSignals.Signal_PyReqsStatus.emit("Installation failed:(")
 
-    @Slot(tuple)
-    def Execute(self, Params: tuple):
-        self.started.emit()
+    def execute(self, filePath: str):
+        self.Execute_PyReqs_Installation(filePath)
 
-        self.Execute_PyReqs_Installation(*Params)
-
-        self.finished.emit()
-
-    def Terminate(self):
+    def terminate(self):
         self.stopEvent.set()
 
 
-class Pytorch_Installer(QObject):
+class Pytorch_Installer:
     '''
     '''
-    started = Signal()
-    finished = Signal()
-
     def __init__(self):
         super().__init__()
 
@@ -638,15 +588,10 @@ class Pytorch_Installer(QObject):
                 EnvConfiguratorSignals.Signal_PytorchDetected.emit() if Index + 1 == len(PackageList) else None
                 EnvConfiguratorSignals.Signal_PytorchStatus.emit(f"{Package} detected. Version: {Result}")
 
-    @Slot(tuple)
-    def Execute(self, Params: tuple):
-        self.started.emit()
+    def execute(self, version: Optional[str] = None, reinstall: bool = False):
+        self.Execute_Pytorch_Installation(version, reinstall)
 
-        self.Execute_Pytorch_Installation(*Params)
-
-        self.finished.emit()
-
-    def Terminate(self):
+    def terminate(self):
         self.stopEvent.set()
 
 ##############################################################################################################################
