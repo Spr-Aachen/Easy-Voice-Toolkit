@@ -35,7 +35,7 @@ g2p_en
 pypinyin
 jieba_fast
 cn2an
-pyjyutping
+ToJyutping
 opencc; sys_platform != 'linux'
 opencc==1.1.1; sys_platform == 'linux'
 python_mecab_ko; sys_platform != 'win32' 
