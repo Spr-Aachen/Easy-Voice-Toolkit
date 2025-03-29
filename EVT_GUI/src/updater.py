@@ -37,7 +37,7 @@ bootExecuter = True if executerName.strip() != '' else False
 
 ##############################################################################################################################
 
-def RebootIfFailed():
+def rebootIfFailed():
     if platform.system() == 'Windows':
         ScriptName = 'Booter.bat'
     if platform.system() == 'Linux':
@@ -50,37 +50,33 @@ def RebootIfFailed():
         )
 
 
-def RebootIfSucceeded():
+def rebootIfSucceeded():
     if platform.system() == 'Windows':
         EasyUtils.runScript(
-            commandList = [
-                '@echo off',
-                'echo Ready to move files and reboot',
-                #f'taskkill /pid {os.getpid()} /f /t',
-                'timeout /t 2 /nobreak',
-                'echo Moving files...',
-                f'robocopy "{extractDir}" "{currentDir}" /E /MOVE /R:3 /W:1 /NP',
-                f'start "Programm Running" "{executerPath}"',
-                'del "%~f0"'
-            ],
+            '@echo off',
+            'echo Ready to move files and reboot',
+            #f'taskkill /pid {os.getpid()} /f /t',
+            'timeout /t 2 /nobreak',
+            'echo Moving files...',
+            f'robocopy "{extractDir}" "{currentDir}" /E /MOVE /R:3 /W:1 /NP',
+            f'start "Programm Running" "{executerPath}"',
+            'del "%~f0"',
             scriptPath = EasyUtils.normPath(Path(currentDir).joinpath('Updater.bat'))
         )
     if platform.system() == 'Linux':
         EasyUtils.runScript(
-            commandList = [
-                'echo Ready to move files and reboot',
-                #f'kill -9 {os.getpid()}',
-                'sleep 2',
-                'echo Moving files...',
-                f'rsync -a --delete "{extractDir}" "{currentDir}"',
-                f'./{executerName}', #f'nohup ./{executerName} &',
-                'rm -rf Updater.sh'
-            ],
+            'echo Ready to move files and reboot',
+            #f'kill -9 {os.getpid()}',
+            'sleep 2',
+            'echo Moving files...',
+            f'rsync -a --delete "{extractDir}" "{currentDir}"',
+            f'./{executerName}', #f'nohup ./{executerName} &',
+            'rm -rf Updater.sh',
             scriptPath = EasyUtils.normPath(Path(currentDir).joinpath('Updater.sh'))
         )
 
 
-def UpdateDownloader(
+def updateDownloader(
     downloadURL: str = ...,
     downloadDir: str = ...,
     name: str = ...,
@@ -111,37 +107,6 @@ def UpdateDownloader(
         # Cover old files (About to finish)
         FunctionSignals.Signal_UpdateMessage.emit("即将重启客户端...\nRebooting client...")
         FunctionSignals.Signal_IsUpdateSucceeded.emit(True, "")
-
-
-class Execute_Update_Checking(QObject):
-    '''
-    '''
-    def __init__(self):
-        super().__init__()
-
-    def Execute(self):
-        Function_UpdateChecker(
-            repoOwner = repoOwner,
-            repoName = repoName,
-            fileName = fileName,
-            fileFormat = fileFormat,
-            currentVersion = currentVersion
-        )
-
-
-class Execute_Update_Downloading(QObject):
-    '''
-    '''
-    def __init__(self):
-        super().__init__()
-
-    def Execute(self, downloadURL):
-        UpdateDownloader(
-            downloadURL = downloadURL,
-            downloadDir = downloadDir,
-            name = "EVT Update",
-            extractDir = extractDir,
-        )
 
 
 # Show GUI
@@ -189,6 +154,35 @@ class Widget_Updater(QWidget):
         self.Layout.addWidget(self.progressBar)
         self.Layout.addWidget(self.SkipButton)
 
+    def checkUpdate(self):
+        Function_SetMethodExecutor(
+            executeMethod = Function_UpdateChecker,
+            executeParams = (
+                repoOwner,
+                repoName,
+                fileName,
+                fileFormat,
+                currentVersion
+            ),
+            progressBar = self.progressBar,
+            threadPool = self.threadPool,
+            parentWindow = self,
+        )
+
+    def downloadUpdate(self, downloadURL):
+        Function_SetMethodExecutor(
+            executeMethod = updateDownloader,
+            executeParams = (
+                downloadURL,
+                downloadDir,
+                "EVT Update",
+                extractDir
+            ),
+            progressBar = self.progressBar,
+            threadPool = self.threadPool,
+            parentWindow = self,
+        )
+
     def main(self):
         self.downloadURL = str()
         def _updateDownloadURL(downloadURL):
@@ -209,24 +203,12 @@ class Widget_Updater(QWidget):
                     detailedText = VersionInfo,
                     buttons = QMessageBox.Yes|QMessageBox.No,
                     buttonEvents = {
-                        QMessageBox.Yes: lambda: Function_SetMethodExecutor(
-                            progressBar = self.progressBar,
-                            executeMethod = Execute_Update_Downloading.Execute,
-                            executeParams = (self.downloadURL),
-                            threadPool = self.threadPool,
-                            parentWindow = self,
-                        ),
+                        QMessageBox.Yes: lambda: self.downloadUpdate(self.downloadURL),
                         QMessageBox.No: lambda: FunctionSignals.Signal_IsUpdateSucceeded.emit(False, "已取消下载更新！\nDownload canceled!")
                     }
                 )
             ) if eval(config.getValue('Updater', 'Asked', 'False')) is False else (
-                Function_SetMethodExecutor(
-                    progressBar = self.progressBar,
-                    executeMethod = Execute_Update_Downloading.Execute,
-                    executeParams = (self.downloadURL),
-                    threadPool = self.threadPool,
-                    parentWindow = self
-                ),
+                self.downloadUpdate(self.downloadURL),
                 config.editConfig('Updater', 'Asked', 'False')
             )
         )
@@ -236,17 +218,12 @@ class Widget_Updater(QWidget):
                     QMessageBox.Warning, "Warning",
                     text = Info
                 ) if not Succeeded else None,
-                (RebootIfSucceeded() if Succeeded else RebootIfFailed()) if bootExecuter else None,
+                (rebootIfSucceeded() if Succeeded else rebootIfFailed()) if bootExecuter else None,
                 QApplication.instance().exit()
             )
         )
 
-        Function_SetMethodExecutor(self,
-            progressBar = self.progressBar,
-            executeMethod = Execute_Update_Checking.Execute,
-            threadPool = self.threadPool,
-            parentWindow = self
-        )
+        self.checkUpdate()
 
         self.SkipButton.setText("跳过")
         self.SkipButton.clicked.connect(

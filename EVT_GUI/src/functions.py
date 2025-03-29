@@ -478,18 +478,59 @@ def Function_SetURL(
 
 ##############################################################################################################################
 
-def _validateParams(unvalidatedParams):
-    validatedParams = []
-    if unvalidatedParams is not None:
-        unvalidatedParams = [(unvalidatedParam, unvalidatedParams[unvalidatedParam] if isinstance(unvalidatedParams, dict) else True) for unvalidatedParam in EasyUtils.toIterable(unvalidatedParams)]
-        for paramTarget, emptyAllowed in unvalidatedParams:
-            param = Function_ParamsChecker(paramTarget, emptyAllowed)
-            if param == "Abort":
-                return print("Aborted.")
-            else:
-                pass #print("Continued.\n")
-            validatedParams.append(param)
-    return validatedParams
+class TaskStatus:
+    Started = 'Started'
+    Finished = 'Finished'
+    Failed = 'Failed'
+
+
+class WorkerManager(QWorker.WorkerManager):
+    def __init__(self,
+        executeMethod: object = ...,
+        executeParams: Optional[dict] = None,
+        terminateMethod: Optional[object] = None,
+        threadPool: Optional[QThreadPool] = None,
+    ):
+        super().__init__(executeMethod, terminateMethod, threadPool)
+
+        self.executeMethodName = executeMethod.__qualname__
+        self.executeParams = executeParams
+
+        self.signals = QWorker.WorkerSignals()
+        self.worker.signals.started.connect(self.signals.started.emit)
+        self.worker.signals.result.connect(self.signals.result.emit)
+        self.worker.signals.finished.connect(self.signals.finished.emit)
+        self.signals.started.connect(
+            lambda: FunctionSignals.Signal_TaskStatus.emit(self.executeMethodName, TaskStatus.Started)
+        )
+        self.signals.error.connect(
+            lambda: FunctionSignals.Signal_TaskStatus.emit(self.executeMethodName, TaskStatus.Failed)
+        )
+        self.signals.finished.connect(
+            lambda: FunctionSignals.Signal_TaskStatus.emit(self.executeMethodName, TaskStatus.Finished)
+        )
+
+        FunctionSignals.Signal_ForceQuit.connect(self.terminate)
+
+    def _validateParams(self, unvalidatedParams):
+        validatedParams = []
+        if unvalidatedParams is not None:
+            unvalidatedParams = [(unvalidatedParam, unvalidatedParams[unvalidatedParam] if isinstance(unvalidatedParams, dict) else True) for unvalidatedParam in EasyUtils.toIterable(unvalidatedParams)]
+            for paramTarget, emptyAllowed in unvalidatedParams:
+                param = Function_ParamsChecker(paramTarget, emptyAllowed)
+                if param == "Abort":
+                    return print("Aborted.")
+                else:
+                    pass #print("Continued.\n")
+                validatedParams.append(param)
+        return validatedParams
+
+    def execute(self):
+        super().execute(*self._validateParams(self.executeParams))
+
+    def terminate(self):
+        super().terminate()
+        FunctionSignals.Signal_TaskStatus.emit(self.executeMethodName, TaskStatus.Failed)
 
 
 def Function_SetMethodExecutor(
@@ -505,32 +546,24 @@ def Function_SetMethodExecutor(
     parentWindow: Optional[QWidget] = None,
 ):
     '''
-    Function to run outer class methods
     '''
-    executeMethodName = executeMethod.__qualname__
-    workerManager = QWorker.WorkerManager(
-        executeMethod,
-        terminateMethod,
-        threadPool
-    )
-    workerManager.worker.signals.started.connect(
+    workerManager = WorkerManager(executeMethod, executeParams, terminateMethod, threadPool)
+
+    workerManager.signals.started.connect(
         lambda: (
-            FunctionSignals.Signal_TaskStatus.emit(executeMethodName, 'Started'),
             Function_AnimateFrame(consoleWidget, minHeight = 0, maxHeight = 210, mode = "Extend") if consoleWidget else None,
             Function_AnimateProgressBar(progressBar, isTaskAlive = True) if progressBar else None,
             Function_AnimateStackedWidget(QFunc.findParent(executeButton, QStackedWidget), target = 1) if terminateButton else None
         )
     )
-    workerManager.worker.signals.errChk.connect(
+    workerManager.signals.error.connect(
         lambda err: (
-            EasyUtils.runEvents(successEvents) if err == str(None) and successEvents is not None else None,
-            MessageBoxBase.pop(parentWindow, QMessageBox.Warning, "Failure", "发生异常", err) if err != str(None) else None,
-            FunctionSignals.Signal_TaskStatus.emit(executeMethodName, 'Failed') if err != str(None) else None
+            EasyUtils.runEvents(successEvents) if successEvents is not None else None,
+            MessageBoxBase.pop(parentWindow, QMessageBox.Warning, "Failure", "发生异常", err)
         )
     )
-    workerManager.worker.signals.finished.connect(
+    workerManager.signals.finished.connect(
         lambda: (
-            FunctionSignals.Signal_TaskStatus.emit(executeMethodName, 'Finished'),
             Function_AnimateFrame(consoleWidget, minHeight = 0, maxHeight = 210, mode = "Reduce") if consoleWidget else None,
             Function_AnimateProgressBar(progressBar, isTaskAlive = False) if progressBar else None,
             Function_AnimateStackedWidget(QFunc.findParent(executeButton, QStackedWidget), target = 0) if terminateButton else None
@@ -539,17 +572,13 @@ def Function_SetMethodExecutor(
 
     # Execution
     if executeButton is not None:
-        executeButton.clicked.connect(lambda: 
-            workerManager.execute(*_validateParams(executeParams))
-        )
+        executeButton.clicked.connect(workerManager.execute)
     else:
         tempButton = QPushButton(parentWindow)
-        tempButton.clicked.connect(lambda: 
-            workerManager.execute(*_validateParams(executeParams))
-        )
+        tempButton.clicked.connect(workerManager.terminate)
         tempButton.setVisible(False)
         tempButton.click()
-        workerManager.worker.signals.finished.connect(tempButton.deleteLater)
+        workerManager.signals.finished.connect(tempButton.deleteLater)
 
     # Termination
     if terminateButton is not None:
@@ -559,16 +588,11 @@ def Function_SetMethodExecutor(
                 windowTitle = "Ask",
                 text = "当前任务仍在执行中，是否确认终止？",
                 buttons = QMessageBox.Yes|QMessageBox.No,
-                buttonEvents = {QMessageBox.Yes: lambda: (
-                    workerManager.terminate(),
-                    FunctionSignals.Signal_TaskStatus.emit(executeMethodName, 'Failed')
-                )}
+                buttonEvents = {QMessageBox.Yes: workerManager.terminate}
             )
         )
     else:
         pass
-
-    FunctionSignals.Signal_ForceQuit.connect(lambda: workerManager.terminate())
 
 ##############################################################################################################################
 

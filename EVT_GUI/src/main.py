@@ -43,18 +43,18 @@ parser.add_argument("--output",       help = "dir of output",            default
 parser.add_argument("--profile",      help = "dir of profile",           default = Path(currentDir).joinpath(''))
 args = parser.parse_args()
 
-UpdaterPath = args.updater
-CoreDir = args.core
-ManifestPath = args.manifest
-RequirementsPath = args.requirements
-DependencyDir = args.dependencies
-ModelDir = args.models
-OutputDir = args.output
-ProfileDir = args.profile
+updaterPath = args.updater
+coreDir = args.core
+manifestPath = args.manifest
+requirementsPath = args.requirements
+dependencyDir = args.dependencies
+modelDir = args.models
+outputDir = args.output
+profileDir = args.profile
 
 
 # Set up client config
-configDir = EasyUtils.normPath(Path(ProfileDir).joinpath('config'))
+configDir = EasyUtils.normPath(Path(profileDir).joinpath('config'))
 configPath = EasyUtils.normPath(Path(configDir).joinpath('config.ini'))
 config = EasyUtils.configManager(configPath)
 config.editConfig('Info', 'currentVersion', str(currentVersion))
@@ -68,274 +68,173 @@ if isFileCompiled == False:
         value = EasyUtils.normPath(Path(EasyUtils.getBaseDir(PySide6_File)).joinpath('plugins', 'platforms'))
     )
 # Set up environment variables while environment is configured
-if Path(DependencyDir).joinpath('Aria2').exists():
+if Path(dependencyDir).joinpath('Aria2').exists():
     EasyUtils.setEnvVar(
         variable = 'PATH',
-        value = EasyUtils.normPath(Path(DependencyDir).joinpath('Aria2'))
+        value = EasyUtils.normPath(Path(dependencyDir).joinpath('Aria2'))
     )
-if Path(DependencyDir).joinpath('FFmpeg').exists():
+if Path(dependencyDir).joinpath('FFmpeg').exists():
     EasyUtils.setEnvVar(
         variable = 'PATH',
-        value = EasyUtils.normPath(Path(DependencyDir).joinpath('FFmpeg', 'bin'))
+        value = EasyUtils.normPath(Path(dependencyDir).joinpath('FFmpeg', 'bin'))
     )
-if Path(DependencyDir).joinpath('Python').exists():
+if Path(dependencyDir).joinpath('Python').exists():
     EasyUtils.setEnvVar(
         variable = 'PATH',
-        value = EasyUtils.normPath(Path(DependencyDir).joinpath('Python'), trailingSlash = True)
+        value = EasyUtils.normPath(Path(dependencyDir).joinpath('Python'), trailingSlash = True)
     )
     EasyUtils.setEnvVar(
         variable = 'PATH',
-        value = EasyUtils.normPath(Path(DependencyDir).joinpath('Python', 'Scripts'), trailingSlash = True)
+        value = EasyUtils.normPath(Path(dependencyDir).joinpath('Python', 'Scripts'), trailingSlash = True)
     )
 
 ##############################################################################################################################
 
-class Execute_Update_Checking(QObject):
-    '''
-    '''
-    def __init__(self):
-        super().__init__()
+def getModelsInfo(modelsDir: str, modelsFormats: list):
+    """
+    ClientFunc: view model
+    """
+    modelsInfo = {}
+    os.makedirs(modelsDir, exist_ok = True)
 
-    def execute(self):
-        Function_UpdateChecker(
-            repoOwner = repoOwner,
-            repoName = repoName,
-            fileName = fileName,
-            fileFormat = fileFormat,
-            currentVersion = currentVersion
-        )
+    modelDicts_cloud = []
+    tags = [Path(modelsDir).parts[-2], Path(modelsDir).parts[-1]]
+    if not Path(manifestPath).exists():
+        return []
+    with open(EasyUtils.normPath(manifestPath), 'r', encoding = 'utf-8') as File:
+        param = json.load(File)
+    for modelDict in param["models"]:
+        if modelDict["tags"] == tags:
+            modelDicts_cloud.append(modelDict)
+    def _getModelInfo_cloud(modelDict):
+        if isinstance(modelDict["SHA"], dict):
+            name = modelDict["name"]
+            for Model, modelSHA in modelDict["SHA"].items():
+                modelName = Model
+                modelName, modelType = modelName.rsplit('.', 1)
+                modelSize = modelDict["size"][Model]
+                modelDate = modelDict["date"][Model]
+                modelSHA = modelSHA
+                modelURL = modelDict["downloadurl"][Model]
+                modelDir = Path(modelsDir).joinpath("Downloaded", name)
+                downloadParam = (modelURL, modelDir, modelName, Path(modelURL).suffix, modelSHA)
+                modelsInfo[modelSHA] = [str(f"[{name}]{modelName}"), str(modelType), str(modelSize), str(modelDate), tuple(downloadParam)]
+        else:
+            modelName = modelDict["name"]
+            modelName, modelType = modelName.rsplit('.', 1)
+            modelSize = modelDict["size"]
+            modelDate = modelDict["date"]
+            modelSHA = modelDict["SHA"]
+            modelURL = modelDict["downloadurl"]
+            modelDir = Path(modelsDir).joinpath("Downloaded")
+            downloadParam = (modelURL, modelDir, modelName, Path(modelURL).suffix, modelSHA)
+            modelsInfo[modelSHA] = [str(modelName), str(modelType), str(modelSize), str(modelDate), tuple(downloadParam)]
+    with ThreadPoolExecutor(max_workers = os.cpu_count()) as executor:
+        executor.map(
+            _getModelInfo_cloud,
+            modelDicts_cloud
+        ) if modelDicts_cloud is not None else None
 
-##############################################################################################################################
+    modelPaths_local = []
+    for modelsFormat in modelsFormats:
+        modelPaths_local_sep = EasyUtils.toIterable(EasyUtils.getPaths(modelsDir, modelsFormat))
+        modelPaths_local_sep = [modelPath_local_sep for modelPath_local_sep in modelPaths_local_sep if modelPath_local_sep is not None and modelPath_local_sep.endswith(modelsFormat)]
+        modelPaths_local.extend(modelPaths_local_sep) if modelPaths_local_sep is not None else None
+    modelPaths_local = list(set(modelPaths_local))
+    def _getModelInfo_local(modelPath):
+        name = Path(modelPath).parts[-2] if Path(modelPath).parent.__str__() not in Path(modelsDir).joinpath("Downloaded").__str__() else None
+        modelName = Path(modelPath).name
+        modelName, modelType = modelName.rsplit('.', 1)
+        modelSize = round(Path(modelPath).stat().st_size / (1024 ** 2), 1)
+        modelDate = datetime.fromtimestamp(Path(modelPath).stat().st_mtime)
+        with open(modelPath, "rb") as m:
+            ModelBytes = m.read()
+        modelSHA = hashlib.sha256(ModelBytes).hexdigest()
+        modelDir = Path(modelPath).parent
+        modelsInfo[modelSHA] = [str(f"[{name}]{modelName}" if name is not None else modelName), str(modelType), str(modelSize)+'MB', str(modelDate), str(modelDir)]
+    with ThreadPoolExecutor(max_workers = os.cpu_count()) as executor:
+        executor.map(
+            _getModelInfo_local,
+            modelPaths_local
+        ) if modelPaths_local is not None else None
 
-# ClientFunc: _getModelsInfo
-class CustomSignals_ModelView(QObject):
-    '''
-    Set up signals for model view
-    '''
-    Signal_Process_UVR = Signal(list)
-
-    Signal_VPR_TDNN = Signal(list)
-
-    Signal_ASR_Whisper = Signal(list)
-
-    Signal_TTS_GPTSoVITS = Signal(list)
-
-    Signal_TTS_VITS = Signal(list)
-
-ModelViewSignals = CustomSignals_ModelView()
-
-class Model_View(QObject):
-    '''
-    View model
-    '''
-    def __init__(self):
-        super().__init__()
-
-    def _getModelsInfo(self, ModelsDir: str, ModelsFormats: list):
-        ModelsInfo = {}
-        os.makedirs(ModelsDir, exist_ok = True)
-
-        ModelDicts_Cloud = []
-        Tags = [Path(ModelsDir).parts[-2], Path(ModelsDir).parts[-1]]
-        if not Path(ManifestPath).exists():
-            return []
-        with open(EasyUtils.normPath(ManifestPath), 'r', encoding = 'utf-8') as File:
-            param = json.load(File)
-        for ModelDict in param["models"]:
-            if ModelDict["tags"] == Tags:
-                ModelDicts_Cloud.append(ModelDict)
-        def _getModelInfo_Cloud(ModelDict):
-            if isinstance(ModelDict["SHA"], dict):
-                Name = ModelDict["name"]
-                for Model, ModelSHA in ModelDict["SHA"].items():
-                    ModelName = Model
-                    ModelName, ModelType = ModelName.rsplit('.', 1)
-                    ModelSize = ModelDict["size"][Model]
-                    ModelDate = ModelDict["date"][Model]
-                    ModelSHA = ModelSHA
-                    ModelURL = ModelDict["downloadurl"][Model]
-                    ModelDir = Path(ModelsDir).joinpath("Downloaded", Name)
-                    DownloadParam = (ModelURL, ModelDir, ModelName, Path(ModelURL).suffix, ModelSHA)
-                    ModelsInfo[ModelSHA] = [str(f"[{Name}]{ModelName}"), str(ModelType), str(ModelSize), str(ModelDate), tuple(DownloadParam)]
-            else:
-                ModelName = ModelDict["name"]
-                ModelName, ModelType = ModelName.rsplit('.', 1)
-                ModelSize = ModelDict["size"]
-                ModelDate = ModelDict["date"]
-                ModelSHA = ModelDict["SHA"]
-                ModelURL = ModelDict["downloadurl"]
-                ModelDir = Path(ModelsDir).joinpath("Downloaded")
-                DownloadParam = (ModelURL, ModelDir, ModelName, Path(ModelURL).suffix, ModelSHA)
-                ModelsInfo[ModelSHA] = [str(ModelName), str(ModelType), str(ModelSize), str(ModelDate), tuple(DownloadParam)]
-        with ThreadPoolExecutor(max_workers = os.cpu_count()) as Executor:
-            Executor.map(
-                _getModelInfo_Cloud,
-                ModelDicts_Cloud
-            ) if ModelDicts_Cloud is not None else None
-
-        ModelPaths_Local = []
-        for ModelsFormat in ModelsFormats:
-            ModelPaths_Local_Sep = EasyUtils.toIterable(EasyUtils.getPaths(ModelsDir, ModelsFormat))
-            ModelPaths_Local_Sep = [ModelPath_Local_Sep for ModelPath_Local_Sep in ModelPaths_Local_Sep if ModelPath_Local_Sep is not None and ModelPath_Local_Sep.endswith(ModelsFormat)]
-            ModelPaths_Local.extend(ModelPaths_Local_Sep) if ModelPaths_Local_Sep is not None else None
-        ModelPaths_Local = list(set(ModelPaths_Local))
-        def GetModelInfo_Local(modelPath):
-            Name = Path(modelPath).parts[-2] if Path(modelPath).parent.__str__() not in Path(ModelsDir).joinpath("Downloaded").__str__() else None
-            ModelName = Path(modelPath).name
-            ModelName, ModelType = ModelName.rsplit('.', 1)
-            ModelSize = round(Path(modelPath).stat().st_size / (1024 ** 2), 1)
-            ModelDate = datetime.fromtimestamp(Path(modelPath).stat().st_mtime)
-            with open(modelPath, "rb") as m:
-                ModelBytes = m.read()
-            ModelSHA = hashlib.sha256(ModelBytes).hexdigest()
-            ModelDir = Path(modelPath).parent
-            ModelsInfo[ModelSHA] = [str(f"[{Name}]{ModelName}" if Name is not None else ModelName), str(ModelType), str(ModelSize)+'MB', str(ModelDate), str(ModelDir)]
-        with ThreadPoolExecutor(max_workers = os.cpu_count()) as Executor:
-            Executor.map(
-                GetModelInfo_Local,
-                ModelPaths_Local
-            ) if ModelPaths_Local is not None else None
-
-        return list(ModelsInfo.values())
-
-    def execute(self):
-        ModelViewSignals.Signal_Process_UVR.emit(
-            self._getModelsInfo(
-                EasyUtils.normPath(Path(ModelDir).joinpath('Process', 'UVR')),
-                ['pth', 'onnx']
-            )
-        )
-        ModelViewSignals.Signal_VPR_TDNN.emit(
-            self._getModelsInfo(
-                EasyUtils.normPath(Path(ModelDir).joinpath('VPR', 'TDNN')),
-                ['pth']
-            )
-        )
-        ModelViewSignals.Signal_ASR_Whisper.emit(
-            self._getModelsInfo(
-                EasyUtils.normPath(Path(ModelDir).joinpath('ASR', 'Whisper')),
-                ['pt']
-            )
-        )
-        ModelViewSignals.Signal_TTS_GPTSoVITS.emit(
-            self._getModelsInfo(
-                EasyUtils.normPath(Path(ModelDir).joinpath('TTS', 'GPT-SoVITS')),
-                ['pth', 'ckpt', 'bin', 'json']
-            )
-        )
-        ModelViewSignals.Signal_TTS_VITS.emit(
-            self._getModelsInfo(
-                EasyUtils.normPath(Path(ModelDir).joinpath('TTS', 'VITS')),
-                ['pth', 'json']
-            )
-        )
+    return list(modelsInfo.values())
 
 
-# ClientFunc: ModelDownloader
-class Model_Downloader(QObject):
-    '''
-    Download model
-    '''
-    def __init__(self):
-        super().__init__()
-
-    def _downloadModel(self, DownloadParams: tuple):
-        try:
-            FilePath = EasyUtils.downloadFile(*DownloadParams, createNewConsole = True)[1]
-            FileSuffix = Path(FilePath).suffix
-            shutil.unpack_archive(FilePath, DownloadParams[1], FileSuffix) if FileSuffix in ('zip', 'tar', 'gztar', 'bztar') else None
-            return None
-        except Exception as e:
-            return e
-
-    def execute(self, *params):
-        error = self._downloadModel(params)
-        return error
+def downloadModel(downloadParams: tuple):
+    """
+    ClientFunc: download model
+    """
+    filePath = EasyUtils.downloadFile(*downloadParams, createNewConsole = True)[1]
+    fileSuffix = Path(filePath).suffix
+    shutil.unpack_archive(filePath, downloadParams[1], fileSuffix) if fileSuffix in ('zip', 'tar', 'gztar', 'bztar') else None
 
 
-# ClientFunc: AddLocalModel
-def AddLocalModel(modelPath: str, sector: list[str] = ['Tool', 'type']):
-    moveToDst = EasyUtils.normPath(Path(ModelDir).joinpath(*sector))
+def addLocalModel(modelPath: str, sector: list[str] = ['Tool', 'type']):
+    """
+    ClientFunc: add local model
+    """
+    moveToDst = EasyUtils.normPath(Path(modelDir).joinpath(*sector))
     shutil.move(modelPath, moveToDst)
 
 
-# ClientFunc: IntegrityChecker
-class Integrity_Checker(QObject):
-    '''
-    Check File integrity
-    '''
-    def __init__(self):
-        super().__init__()
-
-    def execute(self):
-        error = EasyUtils.runCMD(
-            args = [
-                f'cd "{CoreDir}"',
-                'python -c "'
-                'from AudioProcessor.Process import Audio_Processing; '
-                'from VPR.Identify import Voice_Identifying; '
-                'from Whisper.Transcribe import Voice_Transcribing; '
-                'from GPT_SoVITS.Create import Dataset_Creating; '
-                'from GPT_SoVITS.Train import Train; '
-                'from GPT_SoVITS.Convert import Convert; '
-                'from VITS.Create import Dataset_Creating; '
-                'from VITS.Train import Train; '
-                'from VITS.Convert import Convert"'
-            ],
-            communicateThroughConsole = True,
-            decodeResult = True,
-            logPath = logPath
-        )[1]
-        return error
+def checkIntegrity():
+    """
+    ClientFunc: check file integrity
+    """
+    error = EasyUtils.runCMD(
+        args = [
+            f'cd "{coreDir}"',
+            'python -c "'
+            'from AudioProcessor.Process import Audio_Processing; '
+            'from VPR.Identify import Voice_Identifying; '
+            'from Whisper.Transcribe import Voice_Transcribing; '
+            'from GPT_SoVITS.Create import Dataset_Creating; '
+            'from GPT_SoVITS.Train import Train; '
+            'from GPT_SoVITS.Convert import Convert; '
+            'from VITS.Create import Dataset_Creating; '
+            'from VITS.Train import Train; '
+            'from VITS.Convert import Convert"'
+        ],
+        communicateThroughConsole = True,
+        decodeResult = True,
+        logPath = logPath
+    )[1]
+    if 'error' in str(error).lower():
+        error += "（详情请见终端输出信息）"
+        raise Exception(error)
 
 
-# ClientFunc: TensorboardRunner
-class Tensorboard_Runner(QObject):
-    '''
-    Check File integrity
-    '''
-    def __init__(self):
-        super().__init__()
-
-    def _runTensorboard(self, LogDir):
-        try:
-            error = None
-            InitialWaitTime = 0
-            MaximumWaitTime = 30
-            while EasyUtils.getPaths(LogDir, 'events.out.tfevents') == None:
-                time.sleep(3)
-                InitialWaitTime += 3
-                if InitialWaitTime >= MaximumWaitTime:
-                    break
-            subprocess.Popen(['python', '-m', 'tensorboard.main', '--logdir', LogDir], env = os.environ)
-            time.sleep(9)
-            QFunc.openURL('http://localhost:6006/')
-        except Exception as e:
-            error = e
-        finally:
-            return error
-
-    def execute(self, params):
-        error = self._runTensorboard(*params)
-        return error
+def runTensorboard(logDir):
+    """
+    ClientFunc: run tensorboard
+    """
+    initialWaitTime = 0
+    maximumWaitTime = 30
+    while EasyUtils.getPaths(logDir, 'events.out.tfevents') == None:
+        time.sleep(3)
+        initialWaitTime += 3
+        if initialWaitTime >= maximumWaitTime:
+            break
+    subprocess.Popen(['python', '-m', 'tensorboard.main', '--logdir', logDir], env = os.environ)
+    time.sleep(9)
+    QFunc.openURL('http://localhost:6006/')
 
 ##############################################################################################################################
-
-# Where to store custom signals
-class CustomSignals_MainWindow(QObject):
-    '''
-    Set up signals for MainWindow
-    '''
-    Signal_MainWindowShown = Signal()
-
-MainWindowSignals = CustomSignals_MainWindow()
-
 
 # Show GUI
 class MainWindow(Window_MainWindow):
     '''
     Show the user interface
     '''
+    Signal_MainWindowShown = Signal()
+
+    Signal_ModelView_Process_UVR = Signal(list)
+    Signal_ModelView_VPR_TDNN = Signal(list)
+    Signal_ModelView_ASR_Whisper = Signal(list)
+    Signal_ModelView_TTS_GPTSoVITS = Signal(list)
+    Signal_ModelView_TTS_VITS = Signal(list)
+
     def __init__(self):
         super().__init__()
 
@@ -358,6 +257,62 @@ class MainWindow(Window_MainWindow):
     def _getFileDialog(self, widget, **kwargs):
         text = QFunc.getFileDialog(**kwargs)
         Function_SetParam(widget, text) if text != '' else None
+
+    def viewModels(self):
+        worker_modelView_Process_UVR = WorkerManager(
+            executeMethod = getModelsInfo,
+            executeParams = (
+                EasyUtils.normPath(Path(modelDir).joinpath('Process', 'UVR')),
+                ['pth', 'onnx']
+            ),
+            threadPool = self.threadPool,
+        )
+        worker_modelView_Process_UVR.signals.result.connect(self.Signal_ModelView_Process_UVR.emit)
+        worker_modelView_Process_UVR.execute()
+
+        worker_modelView_VPR_TDNN = WorkerManager(
+            executeMethod = getModelsInfo,
+            executeParams = (
+                EasyUtils.normPath(Path(modelDir).joinpath('VPR', 'TDNN')),
+                ['pth']
+            ),
+            threadPool = self.threadPool,
+        )
+        worker_modelView_VPR_TDNN.signals.result.connect(self.Signal_ModelView_VPR_TDNN.emit)
+        worker_modelView_VPR_TDNN.execute()
+
+        worker_modelView_ASR_Whisper = WorkerManager(
+            executeMethod = getModelsInfo,
+            executeParams = (
+                EasyUtils.normPath(Path(modelDir).joinpath('ASR', 'Whisper')),
+                ['pt']
+            ),
+            threadPool = self.threadPool,
+        )
+        worker_modelView_ASR_Whisper.signals.result.connect(self.Signal_ModelView_ASR_Whisper.emit)
+        worker_modelView_ASR_Whisper.execute()
+
+        worker_modelView_TTS_GPTSoVITS = WorkerManager(
+            executeMethod = getModelsInfo,
+            executeParams = (
+                EasyUtils.normPath(Path(modelDir).joinpath('TTS', 'GPT-SoVITS')),
+                ['pth', 'ckpt', 'bin', 'json']
+            ),
+            threadPool = self.threadPool,
+        )
+        worker_modelView_TTS_GPTSoVITS.signals.result.connect(self.Signal_ModelView_TTS_GPTSoVITS.emit)
+        worker_modelView_TTS_GPTSoVITS.execute()
+
+        worker_modelView_TTS_VITS = WorkerManager(
+            executeMethod = getModelsInfo,
+            executeParams = (
+                EasyUtils.normPath(Path(modelDir).joinpath('TTS', 'VITS')),
+                ['pth', 'json']
+            ),
+            threadPool = self.threadPool,
+        )
+        worker_modelView_TTS_VITS.signals.result.connect(self.Signal_ModelView_TTS_VITS.emit)
+        worker_modelView_TTS_VITS.execute()
 
     def appendModels(self):
         LineEdit_Models_Append = QLineEdit()
@@ -396,7 +351,7 @@ class MainWindow(Window_MainWindow):
             ToolIndexList[ToolIndex],
             TabWidget.tabText(TypeIndex).rsplit('（')[0],
         ]
-        AddLocalModel(modelPath, sector)
+        addLocalModel(modelPath, sector)
         self.ui.Button_Models_Refresh.click()
 
     def setDirAlert(self, dirNameEdit: LineEditBase, rootEdit: LineEditBase, dirEdit: QLineEdit):
@@ -743,7 +698,7 @@ class MainWindow(Window_MainWindow):
                     buttonEvents = {
                         QMessageBox.Yes: lambda: (
                             config.editConfig('Updater', 'Asked', 'True'),
-                            subprocess.Popen(f'{"python" if isFileCompiled == False else ""} "{UpdaterPath}" --config "{configPath}"', shell = True, env = os.environ),
+                            subprocess.Popen(f'{"python" if isFileCompiled == False else ""} "{updaterPath}" --config "{configPath}"', shell = True, env = os.environ),
                             QApplication.instance().exit()
                         ),
                         QMessageBox.No: lambda: (
@@ -755,7 +710,14 @@ class MainWindow(Window_MainWindow):
         )
 
         Function_SetMethodExecutor(
-            executeMethod = Execute_Update_Checking.execute,
+            executeMethod = Function_UpdateChecker,
+            executeParams = (
+                repoOwner,
+                repoName,
+                fileName,
+                fileFormat,
+                currentVersion
+            ),
             threadPool = self.threadPool,
             parentWindow = self,
         )
@@ -1009,7 +971,7 @@ class MainWindow(Window_MainWindow):
             toolTip = QCA.translate('MainWindow', "重新检测安装"),
             detectMethod = Aria2_Installer.execute,
             threadPool = self.threadPool,
-            signal_detect = MainWindowSignals.Signal_MainWindowShown,
+            signal_detect = self.Signal_MainWindowShown,
             signal_detected = EnvConfiguratorSignals.Signal_Aria2Detected,
             signal_undetected = EnvConfiguratorSignals.Signal_Aria2Undetected,
             statusSignal = EnvConfiguratorSignals.Signal_Aria2Status,
@@ -1021,7 +983,7 @@ class MainWindow(Window_MainWindow):
             lambda Exception: MessageBoxBase.pop(self,
                 QMessageBox.Warning, "Warning",
                 text = f"安装Aria2出错",
-                detailedText = Exception
+                detailedText = str(Exception)
             )
         )
         subEnvPage_detection.addDetectorFrame(
@@ -1029,7 +991,7 @@ class MainWindow(Window_MainWindow):
             toolTip = QCA.translate('MainWindow', "重新检测安装"),
             detectMethod = FFmpeg_Installer.execute,
             threadPool = self.threadPool,
-            signal_detect = MainWindowSignals.Signal_MainWindowShown,
+            signal_detect = self.Signal_MainWindowShown,
             signal_detected = EnvConfiguratorSignals.Signal_FFmpegDetected,
             signal_undetected = EnvConfiguratorSignals.Signal_FFmpegUndetected,
             statusSignal = EnvConfiguratorSignals.Signal_FFmpegStatus,
@@ -1041,7 +1003,7 @@ class MainWindow(Window_MainWindow):
             lambda Exception: MessageBoxBase.pop(self,
                 QMessageBox.Warning, "Warning",
                 text = f"安装FFmpeg出错",
-                detailedText = Exception
+                detailedText = str(Exception)
             )
         )
         subEnvPage_detection.addDetectorFrame(
@@ -1050,7 +1012,7 @@ class MainWindow(Window_MainWindow):
             detectMethod = Python_Installer.execute,
             params = ('3.9.0'),
             threadPool = self.threadPool,
-            signal_detect = MainWindowSignals.Signal_MainWindowShown,
+            signal_detect = self.Signal_MainWindowShown,
             signal_detected = EnvConfiguratorSignals.Signal_PythonDetected,
             signal_undetected = EnvConfiguratorSignals.Signal_PythonUndetected,
             statusSignal = EnvConfiguratorSignals.Signal_PythonStatus,
@@ -1062,14 +1024,14 @@ class MainWindow(Window_MainWindow):
             lambda Exception: MessageBoxBase.pop(self,
                 QMessageBox.Warning, "Warning",
                 text = f"安装Python出错",
-                detailedText = Exception
+                detailedText = str(Exception)
             )
         )
         subEnvPage_detection.addDetectorFrame(
             text = QCA.translate('MainWindow', "Python 依赖库 (Requirements)"),
             toolTip = QCA.translate('MainWindow', "重新检测安装"),
             detectMethod = PyReqs_Installer.execute,
-            params = (EasyUtils.normPath(RequirementsPath)),
+            params = (EasyUtils.normPath(requirementsPath)),
             threadPool = self.threadPool,
             signal_detect = EnvConfiguratorSignals.Signal_PythonDetected,
             signal_detected = EnvConfiguratorSignals.Signal_PyReqsDetected,
@@ -1083,7 +1045,7 @@ class MainWindow(Window_MainWindow):
             lambda Exception: MessageBoxBase.pop(self,
                 QMessageBox.Warning, "Warning",
                 text = f"安装Python依赖库出错",
-                detailedText = Exception
+                detailedText = str(Exception)
             )
         )
         subEnvPage_detection.addDetectorFrame(
@@ -1103,7 +1065,7 @@ class MainWindow(Window_MainWindow):
             lambda Exception: MessageBoxBase.pop(self,
                 QMessageBox.Warning, "Warning",
                 text = f"安装Pytorch出错",
-                detailedText = Exception
+                detailedText = str(Exception)
             )
         )
 
@@ -1134,13 +1096,7 @@ class MainWindow(Window_MainWindow):
         ####################### Content: Models #####################
         #############################################################
 
-        MainWindowSignals.Signal_MainWindowShown.connect(
-            lambda: Function_SetMethodExecutor(
-                executeMethod = Model_View.execute,
-                threadPool = self.threadPool,
-                parentWindow = self,
-            )
-        )
+        self.Signal_MainWindowShown.connect(self.viewModels)
 
         self.ui.Button_Models_Process_Title.setText(QCA.translate('MainWindow', '基本处理'))
         self.ui.Button_Models_Process_Title.setHorizontal(True)
@@ -1155,10 +1111,10 @@ class MainWindow(Window_MainWindow):
 
         self.ui.TabWidget_Models_Process.setTabText(0, 'UVR（人声分离）')
         self.ui.Table_Models_Process_UVR.setHorizontalHeaderLabels(['名字', '类型', '大小', '日期', '操作'])
-        ModelViewSignals.Signal_Process_UVR.connect(self.ui.Table_Models_Process_UVR.setValue)
+        self.Signal_ModelView_Process_UVR.connect(self.ui.Table_Models_Process_UVR.setValue)
         self.ui.Table_Models_Process_UVR.Download.connect(
             lambda params: Function_SetMethodExecutor(
-                executeMethod = Model_Downloader.execute,
+                executeMethod = downloadModel,
                 executeParams = params,
                 threadPool = self.threadPool,
                 parentWindow = self,
@@ -1178,10 +1134,10 @@ class MainWindow(Window_MainWindow):
 
         self.ui.TabWidget_Models_VPR.setTabText(0, 'VPR（声纹识别）')
         self.ui.Table_Models_VPR_TDNN.setHorizontalHeaderLabels(['名字', '类型', '大小', '日期', '操作'])
-        ModelViewSignals.Signal_VPR_TDNN.connect(self.ui.Table_Models_VPR_TDNN.setValue)
+        self.Signal_ModelView_VPR_TDNN.connect(self.ui.Table_Models_VPR_TDNN.setValue)
         self.ui.Table_Models_VPR_TDNN.Download.connect(
             lambda params: Function_SetMethodExecutor(
-                executeMethod = Model_Downloader.execute,
+                executeMethod = downloadModel,
                 executeParams = params,
                 threadPool = self.threadPool,
                 parentWindow = self,
@@ -1201,10 +1157,10 @@ class MainWindow(Window_MainWindow):
 
         self.ui.TabWidget_Models_ASR.setTabText(0, 'Whisper')
         self.ui.Table_Models_ASR_Whisper.setHorizontalHeaderLabels(['名字', '类型', '大小', '日期', '操作'])
-        ModelViewSignals.Signal_ASR_Whisper.connect(self.ui.Table_Models_ASR_Whisper.setValue)
+        self.Signal_ModelView_ASR_Whisper.connect(self.ui.Table_Models_ASR_Whisper.setValue)
         self.ui.Table_Models_ASR_Whisper.Download.connect(
             lambda params: Function_SetMethodExecutor(
-                executeMethod = Model_Downloader.execute,
+                executeMethod = downloadModel,
                 executeParams = params,
                 threadPool = self.threadPool,
                 parentWindow = self,
@@ -1224,10 +1180,10 @@ class MainWindow(Window_MainWindow):
 
         self.ui.TabWidget_Models_TTS.setTabText(0, 'GPT-SoVITS')
         self.ui.Table_Models_TTS_GPTSoVITS.setHorizontalHeaderLabels(['名字', '类型', '大小', '日期', '操作'])
-        ModelViewSignals.Signal_TTS_GPTSoVITS.connect(self.ui.Table_Models_TTS_GPTSoVITS.setValue)
+        self.Signal_ModelView_TTS_GPTSoVITS.connect(self.ui.Table_Models_TTS_GPTSoVITS.setValue)
         self.ui.Table_Models_TTS_GPTSoVITS.Download.connect(
             lambda params: Function_SetMethodExecutor(
-                executeMethod = Model_Downloader.execute,
+                executeMethod = downloadModel,
                 executeParams = params,
                 threadPool = self.threadPool,
                 parentWindow = self,
@@ -1236,10 +1192,10 @@ class MainWindow(Window_MainWindow):
 
         self.ui.TabWidget_Models_TTS.setTabText(1, 'VITS')
         self.ui.Table_Models_TTS_VITS.setHorizontalHeaderLabels(['名字', '类型', '大小', '日期', '操作'])
-        ModelViewSignals.Signal_TTS_VITS.connect(self.ui.Table_Models_TTS_VITS.setValue)
+        self.Signal_ModelView_TTS_VITS.connect(self.ui.Table_Models_TTS_VITS.setValue)
         self.ui.Table_Models_TTS_VITS.Download.connect(
             lambda params: Function_SetMethodExecutor(
-                executeMethod = Model_Downloader.execute,
+                executeMethod = downloadModel,
                 executeParams = params,
                 threadPool = self.threadPool,
                 parentWindow = self,
@@ -1247,13 +1203,7 @@ class MainWindow(Window_MainWindow):
         )
 
         self.ui.Button_Models_Refresh.setText(QCA.translate('MainWindow', '刷新'))
-        self.ui.Button_Models_Refresh.clicked.connect(
-            lambda: Function_SetMethodExecutor(
-                executeMethod = Model_View.execute,
-                threadPool = self.threadPool,
-                parentWindow = self,
-            )
-        )
+        self.ui.Button_Models_Refresh.clicked.connect(self.viewModels)
 
         self.ui.Button_Models_Append.setText(QCA.translate('MainWindow', '添加'))
         self.ui.Button_Models_Append.clicked.connect(self.appendModels)
@@ -1309,10 +1259,10 @@ class MainWindow(Window_MainWindow):
             text = QCA.translate('MainWindow', "uvr5模型路径\n用于uvr5降噪的模型文件的路径。"),
             fileDialogMode = FileDialogMode.SelectFile,
             fileType = "pth类型/onnx类型 (*.pth *.onnx)",
-            directory = EasyUtils.normPath(Path(ModelDir).joinpath('Process', 'UVR', 'Downloaded')),
+            directory = EasyUtils.normPath(Path(modelDir).joinpath('Process', 'UVR', 'Downloaded')),
             section = 'Denoiser params',
             option = 'Denoise_Model_Path',
-            defaultValue = Path(ModelDir).joinpath('Process', 'UVR', 'Downloaded', 'HP5_only_main_vocal.pth').as_posix()
+            defaultValue = Path(modelDir).joinpath('Process', 'UVR', 'Downloaded', 'HP5_only_main_vocal.pth').as_posix()
         )
         subPage_process.addComboBoxFrame(
             rootItemText = QCA.translate('MainWindow', "降噪参数"),
@@ -1577,13 +1527,13 @@ class MainWindow(Window_MainWindow):
             option = 'DecisionThreshold',
             defaultValue = 0.75
         )
-        VPR_TDNN_ModelPath_Default = Path(ModelDir).joinpath('VPR', 'TDNN', 'Downloaded', 'Ecapa-Tdnn_spectrogram.pth').as_posix()
+        VPR_TDNN_ModelPath_Default = Path(modelDir).joinpath('VPR', 'TDNN', 'Downloaded', 'Ecapa-Tdnn_spectrogram.pth').as_posix()
         subPage_VPR.addLineEditFrame(
             rootItemText = QCA.translate('MainWindow', "语音识别参数"),
             text = QCA.translate('MainWindow', "模型加载路径\n用于加载的声纹识别模型的路径。"),
             fileDialogMode = FileDialogMode.SelectFile,
             fileType = "pth类型 (*.pth)",
-            directory = EasyUtils.normPath(Path(ModelDir).joinpath('VPR', 'TDNN', 'Downloaded')),
+            directory = EasyUtils.normPath(Path(modelDir).joinpath('VPR', 'TDNN', 'Downloaded')),
             section = 'VPR params',
             option = 'Model_Path',
             defaultValue = VPR_TDNN_ModelPath_Default,
@@ -1752,13 +1702,13 @@ class MainWindow(Window_MainWindow):
             option = 'Add_LanguageInfo',
             defaultValue = True
         )
-        ASR_Whisper_ModelPath_Default = Path(ModelDir).joinpath('ASR', 'Whisper', 'Downloaded', 'small.pt').as_posix()
+        ASR_Whisper_ModelPath_Default = Path(modelDir).joinpath('ASR', 'Whisper', 'Downloaded', 'small.pt').as_posix()
         subPage_ASR.addLineEditFrame(
             rootItemText = QCA.translate('MainWindow', "语音转录参数"),
             text = QCA.translate('MainWindow', "模型加载路径\n用于加载的Whisper模型的路径。"),
             fileDialogMode = FileDialogMode.SelectFile,
             fileType = "pt类型 (*.pt)",
-            directory = EasyUtils.normPath(Path(ModelDir).joinpath('ASR', 'Whisper', 'Downloaded')),
+            directory = EasyUtils.normPath(Path(modelDir).joinpath('ASR', 'Whisper', 'Downloaded')),
             section = 'Whisper params',
             option = 'Model_Path',
             defaultValue = ASR_Whisper_ModelPath_Default,
@@ -2254,59 +2204,59 @@ class MainWindow(Window_MainWindow):
             defaultValue = 15
         )
         '''
-        Train_GPTSoVITS_ModelPathPretrainedS1_Default = Path(ModelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's1bert25hz-5kh-longer-epoch=12-step=369668.ckpt').as_posix()
+        Train_GPTSoVITS_ModelPathPretrainedS1_Default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's1bert25hz-5kh-longer-epoch=12-step=369668.ckpt').as_posix()
         subPage_train_GPTSoVITS.addLineEditFrame(
             rootItemText = QCA.translate('MainWindow', "训练参数"),
             text = QCA.translate('MainWindow', "预训练s1模型路径\n预训练s1模型的路径。"),
             fileDialogMode = FileDialogMode.SelectFile,
             fileType = "ckpt类型 (*.ckpt)",
-            directory = EasyUtils.normPath(Path(ModelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2')),
+            directory = EasyUtils.normPath(Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2')),
             section = 'GPT-SoVITS params',
             option = 'Model_Path_Pretrained_s1',
             defaultValue = Train_GPTSoVITS_ModelPathPretrainedS1_Default,
             placeholderText = Train_GPTSoVITS_ModelPathPretrainedS1_Default
         )
-        Train_GPTSoVITS_ModelPathPretrainedS2G_Default = Path(ModelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's2G2333k.pth').as_posix()
+        Train_GPTSoVITS_ModelPathPretrainedS2G_Default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's2G2333k.pth').as_posix()
         subPage_train_GPTSoVITS.addLineEditFrame(
             rootItemText = QCA.translate('MainWindow', "训练参数"),
             text = QCA.translate('MainWindow', "预训练s2G模型路径\n预训练s2G模型的路径。"),
             fileDialogMode = FileDialogMode.SelectFile,
             fileType = "pth类型 (*.pth)",
-            directory = EasyUtils.normPath(Path(ModelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2')),
+            directory = EasyUtils.normPath(Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2')),
             section = 'GPT-SoVITS params',
             option = 'Model_Path_Pretrained_s2G',
             defaultValue = Train_GPTSoVITS_ModelPathPretrainedS2G_Default,
             placeholderText = Train_GPTSoVITS_ModelPathPretrainedS2G_Default
         )
-        Train_GPTSoVITS_ModelPathPretrainedS2D_Default = Path(ModelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's2D2333k.pth').as_posix()
+        Train_GPTSoVITS_ModelPathPretrainedS2D_Default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's2D2333k.pth').as_posix()
         subPage_train_GPTSoVITS.addLineEditFrame(
             rootItemText = QCA.translate('MainWindow', "训练参数"),
             text = QCA.translate('MainWindow', "预训练s2D模型路径\n预训练s2D模型的路径。"),
             fileDialogMode = FileDialogMode.SelectFile,
             fileType = "pth类型 (*.pth)",
-            directory = EasyUtils.normPath(Path(ModelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2')),
+            directory = EasyUtils.normPath(Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2')),
             section = 'GPT-SoVITS params',
             option = 'Model_Path_Pretrained_s2D',
             defaultValue = Train_GPTSoVITS_ModelPathPretrainedS2D_Default,
             placeholderText = Train_GPTSoVITS_ModelPathPretrainedS2D_Default
         )
-        Train_GPTSoVITS_ModelDirPretrainedBert_Default = Path(ModelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 'chinese-roberta-wwm-ext-large').as_posix()
+        Train_GPTSoVITS_ModelDirPretrainedBert_Default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 'chinese-roberta-wwm-ext-large').as_posix()
         subPage_train_GPTSoVITS.addLineEditFrame(
             rootItemText = QCA.translate('MainWindow', "训练参数"),
             text = QCA.translate('MainWindow', "预训练bert模型路径\n预训练bert模型（文件夹）的路径。"),
             fileDialogMode = FileDialogMode.SelectFolder,
-            directory = EasyUtils.normPath(Path(ModelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded')),
+            directory = EasyUtils.normPath(Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded')),
             section = 'GPT-SoVITS params',
             option = 'Model_Dir_Pretrained_bert',
             defaultValue = Train_GPTSoVITS_ModelDirPretrainedBert_Default,
             placeholderText = Train_GPTSoVITS_ModelDirPretrainedBert_Default
         )
-        Train_GPTSoVITS_ModelDirPretrainedSSL_Default = Path(ModelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 'chinese-hubert-base').as_posix()
+        Train_GPTSoVITS_ModelDirPretrainedSSL_Default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 'chinese-hubert-base').as_posix()
         subPage_train_GPTSoVITS.addLineEditFrame(
             rootItemText = QCA.translate('MainWindow', "训练参数"),
             text = QCA.translate('MainWindow', "预训练ssl模型路径\n预训练ssl模型（文件夹）的路径。"),
             fileDialogMode = FileDialogMode.SelectFolder,
-            directory = EasyUtils.normPath(Path(ModelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded')),
+            directory = EasyUtils.normPath(Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded')),
             section = 'GPT-SoVITS params',
             option = 'Model_Dir_Pretrained_ssl',
             defaultValue = Train_GPTSoVITS_ModelDirPretrainedSSL_Default,
@@ -2363,7 +2313,7 @@ class MainWindow(Window_MainWindow):
             text = QCA.translate('MainWindow', "启动Tensorboard"),
             events = [
                 lambda: Function_SetMethodExecutor(
-                    executeMethod = Tensorboard_Runner.execute,
+                    executeMethod = runTensorboard,
                     executeParams = subPage_train_GPTSoVITS.findChildWidget("输出参数", "高级设置", "日志输出目录", LineEditBase).text(),
                     threadPool = self.threadPool,
                     parentWindow = self,
@@ -2399,7 +2349,7 @@ class MainWindow(Window_MainWindow):
                 text = "是否稍后启用tensorboard？",
                 buttons = QMessageBox.Yes|QMessageBox.No,
                 buttonEvents = {QMessageBox.Yes: lambda: subPage_train_GPTSoVITS.findChildWidget("启动Tensorboard").click()}
-            ) if Task == 'Execute_Voice_Training_GPTSoVITS.execute' and Status == 'Started' else None
+            ) if Task == Execute_Voice_Training_GPTSoVITS.__qualname__ and Status == TaskStatus.Started else None
         )
 
         self.ui.Page_Train.addSubPage(
@@ -2459,26 +2409,26 @@ class MainWindow(Window_MainWindow):
             option = 'Use_PretrainedModels',
             defaultValue = True
         )
-        Train_VITS_ModelPathPretrainedG_Default = Path(ModelDir).joinpath('TTS', 'VITS', 'Downloaded', 'standard_G.pth').as_posix()
+        Train_VITS_ModelPathPretrainedG_Default = Path(modelDir).joinpath('TTS', 'VITS', 'Downloaded', 'standard_G.pth').as_posix()
         subPage_train_VITS.addLineEditFrame(
             rootItemText = QCA.translate('MainWindow', "训练参数"),
             text = QCA.translate('MainWindow', "预训练G模型路径\n预训练生成器（Generator）模型的路径。"),
             fileDialogMode = FileDialogMode.SelectFile,
             fileType = "pth类型 (*.pth)",
-            directory = EasyUtils.normPath(Path(ModelDir).joinpath('TTS', 'VITS', 'Downloaded')),
+            directory = EasyUtils.normPath(Path(modelDir).joinpath('TTS', 'VITS', 'Downloaded')),
             section = 'VITS params',
             option = 'Model_Path_Pretrained_G',
             defaultValue = Train_VITS_ModelPathPretrainedG_Default,
             placeholderText = Train_VITS_ModelPathPretrainedG_Default,
             emptyAllowed = True
         )
-        Train_VITS_ModelPathPretrainedD_Default = Path(ModelDir).joinpath('TTS', 'VITS', 'Downloaded', 'standard_D.pth').as_posix()
+        Train_VITS_ModelPathPretrainedD_Default = Path(modelDir).joinpath('TTS', 'VITS', 'Downloaded', 'standard_D.pth').as_posix()
         subPage_train_VITS.addLineEditFrame(
             rootItemText = QCA.translate('MainWindow', "训练参数"),
             text = QCA.translate('MainWindow', "预训练D模型路径\n预训练判别器（Discriminator）模型的路径。"),
             fileDialogMode = FileDialogMode.SelectFile,
             fileType = "pth类型 (*.pth)",
-            directory = EasyUtils.normPath(Path(ModelDir).joinpath('TTS', 'VITS', 'Downloaded')),
+            directory = EasyUtils.normPath(Path(modelDir).joinpath('TTS', 'VITS', 'Downloaded')),
             section = 'VITS params',
             option = 'Model_Path_Pretrained_D',
             defaultValue = Train_VITS_ModelPathPretrainedD_Default,
@@ -2492,13 +2442,13 @@ class MainWindow(Window_MainWindow):
             option = 'Keep_Original_Speakers',
             defaultValue = False
         )
-        Train_VITS_ConfigPathLoad_Default = Path(ModelDir).joinpath('TTS', 'VITS', 'Downloaded', 'standard_Config.json').as_posix()
+        Train_VITS_ConfigPathLoad_Default = Path(modelDir).joinpath('TTS', 'VITS', 'Downloaded', 'standard_Config.json').as_posix()
         subPage_train_VITS.addLineEditFrame(
             rootItemText = QCA.translate('MainWindow', "训练参数"),
             text = QCA.translate('MainWindow', "配置加载路径\n用于加载底模人物信息的配置文件的路径"),
             fileDialogMode = FileDialogMode.SelectFile,
             fileType = "json类型 (*.json)",
-            directory = EasyUtils.normPath(Path(ModelDir).joinpath('TTS', 'VITS', 'Downloaded')),
+            directory = EasyUtils.normPath(Path(modelDir).joinpath('TTS', 'VITS', 'Downloaded')),
             section = 'VITS params',
             option = 'Config_Path_Load',
             defaultValue = Train_VITS_ConfigPathLoad_Default,
@@ -2578,7 +2528,7 @@ class MainWindow(Window_MainWindow):
             text = QCA.translate('MainWindow', "启动Tensorboard"),
             events = [
                 lambda: Function_SetMethodExecutor(
-                    executeMethod = Tensorboard_Runner.execute,
+                    executeMethod = runTensorboard,
                     executeParams = subPage_train_VITS.findChildWidget("输出参数", "高级设置", "日志输出目录", LineEditBase).text(),
                     threadPool = self.threadPool,
                     parentWindow = self,
@@ -2620,7 +2570,7 @@ class MainWindow(Window_MainWindow):
                 text = "是否稍后启用tensorboard？",
                 buttons = QMessageBox.Yes|QMessageBox.No,
                 buttonEvents = {QMessageBox.Yes: lambda: subPage_train_VITS.findChildWidget("启动Tensorboard").click()}
-            ) if Task == 'Execute_Voice_Training_VITS.execute' and Status == 'Started' else None
+            ) if Task == Execute_Voice_Training_VITS.__qualname__ and Status == TaskStatus.Started else None
         )
         Function_ConfigureCheckBox(
             checkBox = subPage_train_VITS.findChildWidget("训练参数", None, "使用预训练模型", CheckBoxBase),
@@ -2716,7 +2666,7 @@ class MainWindow(Window_MainWindow):
         paramsManager_TTS_GPTSoVITS = ParamsManager(configPath_TTS_GPTSoVITS)
 
         subPage_TTS_GPTSoVITS = SubToolPage(self.ui.Page_TTS, paramsManager_TTS_GPTSoVITS)
-        TTS_GPTSoVITS_ModelPathLoadS1_Default = Path(ModelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's1bert25hz-5kh-longer-epoch=12-step=369668.ckpt').as_posix()
+        TTS_GPTSoVITS_ModelPathLoadS1_Default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's1bert25hz-5kh-longer-epoch=12-step=369668.ckpt').as_posix()
         subPage_TTS_GPTSoVITS.addLineEditFrame(
             rootItemText = QCA.translate('MainWindow', "输入参数"),
             text = QCA.translate('MainWindow', "s1模型加载路径\ns1模型的路径。"),
@@ -2728,7 +2678,7 @@ class MainWindow(Window_MainWindow):
             defaultValue = TTS_GPTSoVITS_ModelPathLoadS1_Default,
             placeholderText = TTS_GPTSoVITS_ModelPathLoadS1_Default
         )
-        TTS_GPTSoVITS_ModelPathLoadS2G_Default = Path(ModelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's2G2333k.pth').as_posix()
+        TTS_GPTSoVITS_ModelPathLoadS2G_Default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's2G2333k.pth').as_posix()
         subPage_TTS_GPTSoVITS.addLineEditFrame(
             rootItemText = QCA.translate('MainWindow', "输入参数"),
             text = QCA.translate('MainWindow', "s2G模型加载路径\ns2G模型的路径。"),
@@ -2740,23 +2690,23 @@ class MainWindow(Window_MainWindow):
             defaultValue = TTS_GPTSoVITS_ModelPathLoadS2G_Default,
             placeholderText = TTS_GPTSoVITS_ModelPathLoadS2G_Default
         )
-        TTS_GPTSoVITS_ModelDirLoadBert_Default = Path(ModelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 'chinese-roberta-wwm-ext-large').as_posix()
+        TTS_GPTSoVITS_ModelDirLoadBert_Default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 'chinese-roberta-wwm-ext-large').as_posix()
         subPage_TTS_GPTSoVITS.addLineEditFrame(
             rootItemText = QCA.translate('MainWindow', "输入参数"),
             text = QCA.translate('MainWindow', "预训练bert模型加载路径\n预训练bert模型（文件夹）的路径。"),
             fileDialogMode = FileDialogMode.SelectFolder,
-            directory = EasyUtils.normPath(Path(ModelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded')),
+            directory = EasyUtils.normPath(Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded')),
             section = 'Input params',
             option = 'Model_Dir_Load_bert',
             defaultValue = TTS_GPTSoVITS_ModelDirLoadBert_Default,
             placeholderText = TTS_GPTSoVITS_ModelDirLoadBert_Default
         )
-        TTS_GPTSoVITS_ModelDirLoadSSL_Default = Path(ModelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 'chinese-hubert-base').as_posix()
+        TTS_GPTSoVITS_ModelDirLoadSSL_Default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 'chinese-hubert-base').as_posix()
         subPage_TTS_GPTSoVITS.addLineEditFrame(
             rootItemText = QCA.translate('MainWindow', "输入参数"),
             text = QCA.translate('MainWindow', "预训练ssl模型加载路径\n预训练ssl模型的路径。"),
             fileDialogMode = FileDialogMode.SelectFolder,
-            directory = EasyUtils.normPath(Path(ModelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded')),
+            directory = EasyUtils.normPath(Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded')),
             section = 'Input params',
             option = 'Model_Dir_Load_ssl',
             defaultValue = TTS_GPTSoVITS_ModelDirLoadSSL_Default,
@@ -2799,7 +2749,7 @@ class MainWindow(Window_MainWindow):
         paramsManager_TTS_VITS = ParamsManager(configPath_TTS_VITS)
      
         subPage_TTS_VITS = SubToolPage(self.ui.Page_TTS, paramsManager_TTS_VITS)
-        TTS_VITS_ConfigPathLoad_Default = Path(ModelDir).joinpath('TTS', 'VITS', 'Downloaded', 'standard_Config.json').as_posix()
+        TTS_VITS_ConfigPathLoad_Default = Path(modelDir).joinpath('TTS', 'VITS', 'Downloaded', 'standard_Config.json').as_posix()
         subPage_TTS_VITS.addLineEditFrame(
             rootItemText = QCA.translate('MainWindow', "输入参数"),
             text = QCA.translate('MainWindow', "配置加载路径\n用于推理的配置文件的路径。"),
@@ -2817,7 +2767,7 @@ class MainWindow(Window_MainWindow):
                 subPage_TTS_VITS.findChildWidget("语音合成参数", None, "人物名字", ComboBoxBase).addItems(Get_Speakers(Path))
             )
         )
-        TTS_VITS_ModelPathLoad_Default = Path(ModelDir).joinpath('TTS', 'VITS', 'Downloaded', 'standard_G.pth').as_posix()
+        TTS_VITS_ModelPathLoad_Default = Path(modelDir).joinpath('TTS', 'VITS', 'Downloaded', 'standard_G.pth').as_posix()
         subPage_TTS_VITS.addLineEditFrame(
             rootItemText = QCA.translate('MainWindow', "输入参数"),
             text = QCA.translate('MainWindow', "G模型加载路径\n用于推理的生成器（Generator）模型的路径。"),
@@ -3016,13 +2966,13 @@ class MainWindow(Window_MainWindow):
 
         Function_SetMethodExecutor(
             executeButton = self.ui.Button_Setting_IntegrityChecker,
-            executeMethod = Integrity_Checker.execute,
+            executeMethod = checkIntegrity,
             threadPool = self.threadPool,
             parentWindow = self,
         )
         FunctionSignals.Signal_TaskStatus.connect(
             lambda Task, Status: self.ui.Button_Setting_IntegrityChecker.setCheckable(
-                False if Status == 'Started' else True
+                False if Status == TaskStatus.Started else True
             )
         )
         self.ui.Button_Setting_IntegrityChecker.setText(QCA.translate('MainWindow', "检查完整性"))
@@ -3053,7 +3003,7 @@ class MainWindow(Window_MainWindow):
             checkedText = "已启用",
             checkedEvents = {
                 lambda: config.editConfig('Tools', 'AutoReset', 'Enabled') : True,
-                lambda: MainWindowSignals.Signal_MainWindowShown.connect(
+                lambda: self.Signal_MainWindowShown.connect(
                     lambda: (
                         paramsManager_process.resetSettings(),
                         paramsManager_VPR_TDNN.resetSettings(),
@@ -3121,7 +3071,7 @@ class MainWindow(Window_MainWindow):
         self.ui.GroupBox_Settings_Tools_Path.setTitle(QCA.translate('MainWindow', "路径设置"))
 
         self.ui.Label_Process_OutputRoot.setText(QCA.translate('MainWindow', "音频处理输出目录"))
-        Process_OutputRoot_Default = Path(OutputDir).joinpath('音频处理结果').as_posix()
+        Process_OutputRoot_Default = Path(outputDir).joinpath('音频处理结果').as_posix()
         paramsManager_process.setParam(
             widget = self.ui.LineEdit_Process_OutputRoot,
             section = 'Output params',
@@ -3160,7 +3110,7 @@ class MainWindow(Window_MainWindow):
         )
 
         self.ui.Label_ASR_Whisper_OutputRoot.setText(QCA.translate('MainWindow', "Whisper转录输出目录"))
-        ASR_Whisper_OutputRoot_Default = Path(OutputDir).joinpath('语音转录结果', 'Whisper').as_posix()
+        ASR_Whisper_OutputRoot_Default = Path(outputDir).joinpath('语音转录结果', 'Whisper').as_posix()
         paramsManager_ASR_Whisper.setParam(
             widget = self.ui.LineEdit_ASR_Whisper_OutputRoot,
             section = 'Output params',
@@ -3180,7 +3130,7 @@ class MainWindow(Window_MainWindow):
         )
 
         self.ui.Label_DAT_GPTSoVITS_OutputRoot.setText( QCA.translate('MainWindow', "GPTSoVITS数据集输出目录"))
-        DAT_GPTSoVITS_OutputRoot_Default = Path(OutputDir).joinpath('数据集制作结果', 'GPT-SoVITS').as_posix()
+        DAT_GPTSoVITS_OutputRoot_Default = Path(outputDir).joinpath('数据集制作结果', 'GPT-SoVITS').as_posix()
         paramsManager_DAT_GPTSoVITS.setParam(
             widget = self.ui.LineEdit_DAT_GPTSoVITS_OutputRoot,
             section = 'Output params',
@@ -3200,7 +3150,7 @@ class MainWindow(Window_MainWindow):
         )
 
         self.ui.Label_DAT_VITS_OutputRoot.setText(QCA.translate('MainWindow', "VITS数据集输出目录"))
-        DAT_VITS_OutputRoot_Default = Path(OutputDir).joinpath('数据集制作结果', 'VITS').as_posix()
+        DAT_VITS_OutputRoot_Default = Path(outputDir).joinpath('数据集制作结果', 'VITS').as_posix()
         paramsManager_DAT_VITS.setParam(
             widget = self.ui.LineEdit_DAT_VITS_OutputRoot,
             section = 'Output params',
@@ -3220,7 +3170,7 @@ class MainWindow(Window_MainWindow):
         )
 
         self.ui.Label_Train_GPTSoVITS_OutputRoot.setText(QCA.translate('MainWindow', "GPTSoVITS训练输出目录"))
-        Train_GPTSoVITS_OutputRoot_Default = Path(OutputDir).joinpath('模型训练结果', 'GPT-SoVITS').as_posix()
+        Train_GPTSoVITS_OutputRoot_Default = Path(outputDir).joinpath('模型训练结果', 'GPT-SoVITS').as_posix()
         paramsManager_Train_GPTSoVITS.setParam(
             widget = self.ui.LineEdit_Train_GPTSoVITS_OutputRoot,
             section = 'Output params',
@@ -3240,7 +3190,7 @@ class MainWindow(Window_MainWindow):
         )
 
         self.ui.Label_Train_VITS_OutputRoot.setText(QCA.translate('MainWindow', "VITS训练输出目录"))
-        Train_VITS_OutputRoot_Default = Path(OutputDir).joinpath('模型训练结果', 'VITS').as_posix()
+        Train_VITS_OutputRoot_Default = Path(outputDir).joinpath('模型训练结果', 'VITS').as_posix()
         paramsManager_Train_VITS.setParam(
             widget = self.ui.LineEdit_Train_VITS_OutputRoot,
             section = 'Output params',
@@ -3339,14 +3289,14 @@ class MainWindow(Window_MainWindow):
         self.ui.Label_ToolsStatus.clear()
         FunctionSignals.Signal_TaskStatus.connect(
             lambda Task, Status: self.ui.Label_ToolsStatus.setText(
-                f"工具状态：{'忙碌' if Status == 'Started' else '空闲'}"
+                f"工具状态：{'忙碌' if Status == TaskStatus.Started else '空闲'}"
             ) if Task in [
-                'Execute_Audio_Processing.execute',
-                'Execute_Voice_Identifying_VPR.execute',
-                'Execute_Voice_Transcribing_Whisper.execute',
-                'Execute_Dataset_Creating_VITS.execute',
-                'Execute_Voice_Training_VITS.execute',
-                'Execute_Voice_Converting_VITS.execute'
+                Execute_Audio_Processing.execute.__qualname__,
+                Execute_Voice_Identifying_VPR.__qualname__,
+                Execute_Voice_Transcribing_Whisper.__qualname__,
+                Execute_Dataset_Creating_VITS.__qualname__,
+                Execute_Voice_Training_VITS.__qualname__,
+                Execute_Voice_Converting_VITS.__qualname__
             ] else None
         )
 
@@ -3369,7 +3319,7 @@ class MainWindow(Window_MainWindow):
 
         # Show MainWindow (and emit signal)
         self.show()
-        MainWindowSignals.Signal_MainWindowShown.emit()
+        self.Signal_MainWindowShown.emit()
 
 ##############################################################################################################################
 

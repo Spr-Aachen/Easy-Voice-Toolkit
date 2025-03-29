@@ -41,8 +41,8 @@ class Execute_Audio_Processing(QObject):
         elif 'traceback' in str(Output).lower():
             error = "执行完成，但疑似中途出错\n（详情请见终端输出信息）"
         else:
-            error = None
-        return error
+            return
+        raise Exception(error)
 
     def terminate(self):
         EasyUtils.processTerminator(self.Process.pid) if hasattr(self, 'Process') else None
@@ -78,8 +78,8 @@ class Execute_Voice_Identifying_VPR(QObject):
         elif 'traceback' in str(Output).lower():
             error = "执行完成，但疑似中途出错\n（详情请见终端输出信息）"
         else:
-            error = None
-        return error
+            return
+        raise Exception(error)
 
     def terminate(self):
         EasyUtils.processTerminator(self.Process.pid) if hasattr(self, 'Process') else None
@@ -122,8 +122,8 @@ class Execute_Voice_Transcribing_Whisper(QObject):
         elif 'traceback' in str(Output).lower():
             error = "执行完成，但疑似中途出错\n（详情请见终端输出信息）"
         else:
-            error = None
-        return error
+            return
+        raise Exception(error)
 
     def terminate(self):
         EasyUtils.processTerminator(self.Process.pid) if hasattr(self, 'Process') else None
@@ -158,8 +158,8 @@ class Execute_Dataset_Creating_GPTSoVITS(QObject):
         elif 'traceback' in str(Output).lower():
             error = "执行完成，但疑似中途出错\n（详情请见终端输出信息）"
         else:
-            error = None
-        return error
+            return
+        raise Exception(error)
 
     def terminate(self):
         EasyUtils.processTerminator(self.Process.pid) if hasattr(self, 'Process') else None
@@ -193,8 +193,8 @@ class Execute_Dataset_Creating_VITS(QObject):
         elif 'traceback' in str(Output).lower():
             error = "执行完成，但疑似中途出错\n（详情请见终端输出信息）"
         else:
-            error = None
-        return error
+            return
+        raise Exception(error)
 
     def terminate(self):
         EasyUtils.processTerminator(self.Process.pid) if hasattr(self, 'Process') else None
@@ -228,8 +228,8 @@ class Execute_Voice_Training_GPTSoVITS(QObject):
         elif 'traceback' in str(Output).lower():
             error = "执行完成，但疑似中途出错\n（详情请见终端输出信息）"
         else:
-            error = None
-        return error
+            return
+        raise Exception(error)
 
     def terminate(self):
         EasyUtils.processTerminator(self.Process.pid) if hasattr(self, 'Process') else None
@@ -262,8 +262,8 @@ class Execute_Voice_Training_VITS(QObject):
         elif 'traceback' in str(Output).lower():
             error = "执行完成，但疑似中途出错\n（详情请见终端输出信息）"
         else:
-            error = None
-        return error
+            return
+        raise Exception(error)
 
     def terminate(self):
         EasyUtils.processTerminator(self.Process.pid) if hasattr(self, 'Process') else None
@@ -297,8 +297,8 @@ class Execute_Voice_Converting_GPTSoVITS(QObject):
         elif 'traceback' in str(Output).lower():
             error = "执行完成，但疑似中途出错\n（详情请见终端输出信息）"
         else:
-            error = None
-        return error
+            return
+        raise Exception(error)
 
     def terminate(self):
         EasyUtils.processTerminator(self.Process.pid) if hasattr(self, 'Process') else None
@@ -348,8 +348,8 @@ class Execute_Voice_Converting_VITS(QObject):
         elif 'traceback' in str(Output).lower():
             error = "执行完成，但疑似中途出错\n（详情请见终端输出信息）"
         else:
-            error = None
-        return error
+            return
+        raise Exception(error)
 
     def terminate(self):
         EasyUtils.processTerminator(self.Process.pid) if hasattr(self, 'Process') else None
