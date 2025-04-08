@@ -256,7 +256,7 @@ class SubToolPage(SubPage):
 
     def addSpinBoxFrame(self,
         rootItemText: Optional[str] = None, toolBoxText: Optional[str] = None, text: str = ..., toolTip: Optional[str] = None,
-        minimum: int = ..., maximum: int = ..., step: Optional[int] = ...,
+        minimum: int = ..., maximum: int = ..., step: Optional[int] = None,
         section: str = ..., option: str = ..., defaultValue: str = ...,
         emptyAllowed: bool = False
     ):
@@ -356,7 +356,8 @@ class SubToolPage(SubPage):
 
     def setExecutor(self,
         consoleWidget: QWidget,
-        method: object,
+        executeMethod: object,
+        terminateMethod: object,
         paramTargets: list,
         successEvents: list,
         threadPool,
@@ -374,12 +375,13 @@ class SubToolPage(SubPage):
         emptyAllowed = [paramWidget for paramWidget in self.paramWidgets.keys() if self.paramWidgets[paramWidget] == True]
         executeParams = {executeParam: executeParam in emptyAllowed for executeParam in executeParams}
         Function_SetMethodExecutor(
+            executeMethod = executeMethod,
+            executeParams = executeParams,
             executeButton = self.executeButton,
+            terminateMethod = terminateMethod,
             terminateButton = self.terminateButton,
             progressBar = self.progressBar,
             consoleWidget = consoleWidget,
-            executeMethod = method,
-            executeParams = executeParams,
             successEvents = successEvents,
             threadPool = threadPool,
             parentWindow = self,

@@ -17,14 +17,16 @@ class Execute_Audio_Processing(QObject):
     '''
     Change media format to WAV (and denoise) and cut off the silent parts
     '''
-    def __init__(self):
+    def __init__(self, coreDir):
         super().__init__()
+
+        self.coreDir = coreDir
 
     def execute(self, *params):
         CMD = EasyUtils.subprocessManager(communicateThroughConsole = True)
         self.Process = CMD.create(
             args = [
-                f'cd "{CoreDir}"',
+                f'cd "{self.coreDir}"',
                 'python -c "'
                 'from AudioProcessor.Process import Audio_Processing; '
                 f"AudioConvertandSlice = Audio_Processing{str(params)}; "
@@ -53,14 +55,16 @@ class Execute_Voice_Identifying_VPR(QObject):
     '''
     Contrast the voice and filter out the similar ones
     '''
-    def __init__(self):
+    def __init__(self, coreDir):
         super().__init__()
+
+        self.coreDir = coreDir
 
     def execute(self, *params):
         CMD = EasyUtils.subprocessManager(communicateThroughConsole = True)
         self.Process = CMD.create(
             args = [
-                f'cd "{CoreDir}"',
+                f'cd "{self.coreDir}"',
                 'python -c "'
                 'from VPR.Identify import Voice_Identifying; '
                 f"AudioContrastInference = Voice_Identifying{str(params)}; "
@@ -90,8 +94,10 @@ class Execute_Voice_Transcribing_Whisper(QObject):
     '''
     Transcribe WAV content to SRT
     '''
-    def __init__(self):
+    def __init__(self, coreDir):
         super().__init__()
+
+        self.coreDir = coreDir
 
     def execute(self, *params):
         LANGUAGES = {
@@ -105,7 +111,7 @@ class Execute_Voice_Transcribing_Whisper(QObject):
         CMD = EasyUtils.subprocessManager(communicateThroughConsole = True)
         self.Process = CMD.create(
             args = [
-                f'cd "{CoreDir}"',
+                f'cd "{self.coreDir}"',
                 'python -c "'
                 'from Whisper.Transcribe import Voice_Transcribing; '
                 f"WAVtoSRT = Voice_Transcribing{str(EasyUtils.itemReplacer(LANGUAGES, params))}; "
@@ -134,14 +140,16 @@ class Execute_Dataset_Creating_GPTSoVITS(QObject):
     '''
     Convert the whisper-generated SRT to CSV and split the WAV
     '''
-    def __init__(self):
+    def __init__(self, coreDir):
         super().__init__()
+
+        self.coreDir = coreDir
 
     def execute(self, *params):
         CMD = EasyUtils.subprocessManager(communicateThroughConsole = True)
         self.Process = CMD.create(
             args = [
-                f'cd "{CoreDir}"',
+                f'cd "{self.coreDir}"',
                 'python -c "'
                 'from GPT_SoVITS.Create import Dataset_Creating; '
                 f"SRTtoCSVandSplitAudio = Dataset_Creating{str(params)}; "
@@ -169,14 +177,16 @@ class Execute_Dataset_Creating_VITS(QObject):
     '''
     Convert the whisper-generated SRT to CSV and split the WAV
     '''
-    def __init__(self):
+    def __init__(self, coreDir):
         super().__init__()
+
+        self.coreDir = coreDir
 
     def execute(self, *params):
         CMD = EasyUtils.subprocessManager(communicateThroughConsole = True)
         self.Process = CMD.create(
             args = [
-                f'cd "{CoreDir}"',
+                f'cd "{self.coreDir}"',
                 'python -c "'
                 'from VITS.Create import Dataset_Creating; '
                 f"SRTtoCSVandSplitAudio = Dataset_Creating{str(params)}; "
@@ -205,17 +215,19 @@ class Execute_Voice_Training_GPTSoVITS(QObject):
     '''
     Preprocess and then start training
     '''
-    def __init__(self):
+    def __init__(self, coreDir):
         super().__init__()
+
+        self.coreDir = coreDir
 
     def execute(self, *params):
         CMD = EasyUtils.subprocessManager(communicateThroughConsole = True)
         self.Process = CMD.create(
             args = [
-                f'cd "{CoreDir}"',
+                f'cd "{self.coreDir}"',
                 'python -c "'
-                'from GPT_SoVITS.Train import Train; '
-                f'Train{str(params)}"'
+                'from GPT_SoVITS.Train import train; '
+                f'train{str(params)}"'
             ]
         )
         Output, error = CMD.monitor(
@@ -239,14 +251,16 @@ class Execute_Voice_Training_VITS(QObject):
     '''
     Preprocess and then start training
     '''
-    def __init__(self):
+    def __init__(self, coreDir):
         super().__init__()
+
+        self.coreDir = coreDir
 
     def execute(self, *params):
         CMD = EasyUtils.subprocessManager(communicateThroughConsole = True)
         self.Process = CMD.create(
             args = [
-                f'cd "{CoreDir}"',
+                f'cd "{self.coreDir}"',
                 'python -c "'
                 'from VITS.Train import Train; '
                 f'Train{str(params)}"'
@@ -274,34 +288,36 @@ class Execute_Voice_Converting_GPTSoVITS(QObject):
     '''
     Inference model
     '''
-    def __init__(self):
+    def __init__(self, coreDir):
         super().__init__()
+
+        self.coreDir = coreDir
 
     def execute(self, *params):
         CMD = EasyUtils.subprocessManager(communicateThroughConsole = True)
-        self.Process = CMD.create(
+        self.process = CMD.create(
             args = [
-                f'cd "{CoreDir}"',
+                f'cd "{self.coreDir}"',
                 'python -c "'
-                'from GPT_SoVITS.Convert import Convert; '
-                f'Convert{str(params)}"'
+                'from GPT_SoVITS.Convert import convert; '
+                f'convert{str(params)}"'
             ]
         )
-        Output, error = CMD.monitor(
+        output, error = CMD.monitor(
             showProgress = True,
             decodeResult = True,
             logPath = logPath
         )[:2]
         if 'error' in str(error).lower():
             error += "（详情请见终端输出信息）"
-        elif 'traceback' in str(Output).lower():
+        elif 'traceback' in str(output).lower():
             error = "执行完成，但疑似中途出错\n（详情请见终端输出信息）"
         else:
             return
         raise Exception(error)
 
     def terminate(self):
-        EasyUtils.processTerminator(self.Process.pid) if hasattr(self, 'Process') else None
+        EasyUtils.processTerminator(self.process.pid) if hasattr(self, 'process') else None
 
 
 def Get_Speakers(Config_Path_Load):
@@ -317,8 +333,10 @@ class Execute_Voice_Converting_VITS(QObject):
     '''
     Inference model
     '''
-    def __init__(self):
+    def __init__(self, coreDir):
         super().__init__()
+
+        self.coreDir = coreDir
 
     def execute(self, *params):
         LANGUAGES = {
@@ -332,7 +350,7 @@ class Execute_Voice_Converting_VITS(QObject):
         CMD = EasyUtils.subprocessManager(communicateThroughConsole = True)
         self.Process = CMD.create(
             args = [
-                f'cd "{CoreDir}"',
+                f'cd "{self.coreDir}"',
                 'python -c "'
                 'from VITS.Convert import Convert; '
                 f'Convert{str(EasyUtils.itemReplacer(LANGUAGES, params))}"'

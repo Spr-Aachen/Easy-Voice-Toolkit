@@ -112,36 +112,33 @@
             ],
             "name": "s1&s2",
             "size": {
-                "s1bert25hz-2kh-longer-epoch=68e-step=50232.ckpt": "",
-                "s2G488k.pth": "106MB",
-                "s2D488k.pth": "93.5MB",
                 "s1bert25hz-5kh-longer-epoch=12-step=369668.ckpt": "148.1MB",
                 "s2G2333k.pth": "101.1MB",
-                "s2D2333k.pth": "89.2MB"
+                "s2D2333k.pth": "89.2MB",
+                "s1v3.pth": "",
+                "s2Gv3.pth": ""
             },
             "date": {
-                "s1bert25hz-2kh-longer-epoch=68e-step=50232.ckpt": "",
-                "s2G488k.pth": "",
-                "s2D488k.pth": "",
-                "s1bert25hz-5kh-longer-epoch=12-step=369668.ckpt": "",
-                "s2G2333k.pth": "",
-                "s2D2333k.pth": ""
+                "s1bert25hz-5kh-longer-epoch=12-step=369668.ckpt": "2024-08-07",
+                "s2G2333k.pth": "2024-08-07",
+                "s2D2333k.pth": "2024-08-07",
+                "s1v3.pth": "2025-02-11",
+                "s2Gv3.pth": "2025-02-11"
             },
             "SHA": {
-                "s1bert25hz-2kh-longer-epoch=68e-step=50232.ckpt": "b1c1e17e9c99547a89388f72048cd6e1b41b5a18b170e86a46dfde0324d63eb1",
-                "s2G488k.pth": "020a014e1e01e550e510f2f61fae5e5f5b6aab40f15c22f1f12f724df507e835",
-                "s2D488k.pth": "fc579c1db3c1e21b721001cf99d7a584214280df19b002e200b630a34fa06eb8",
                 "s1bert25hz-5kh-longer-epoch=12-step=369668.ckpt": "732f94e63b148066e24c7f9d2637f3374083e637635f07fbdb695dee20ddbe1f",
                 "s2G2333k.pth": "924fdccaa3c574bf139c25c9759aa1ed3b3f99e19a7c529ee996c2bc17663695",
-                "s2D2333k.pth": "8ae7fe8dd8c8f2e718de359e00edac88b0c71ab2fd10b07ad4cc45070eb8a836"
+                "s2D2333k.pth": "8ae7fe8dd8c8f2e718de359e00edac88b0c71ab2fd10b07ad4cc45070eb8a836",
+                "s1v3.pth": "87133414860ea14ff6620c483a3db5ed07b44be42e2c3fcdad65523a729a745a",
+                "s2Gv3.pth": "f33abb1920076d988e1711d5f41b5c9c6d7f92575b4acf0ad4fae6a4ebf0cf19"
+
             },
             "downloadurl": {
-                "s1bert25hz-2kh-longer-epoch=68e-step=50232.ckpt": "https://huggingface.co/lj1995/GPT-SoVITS/resolve/main/s1bert25hz-2kh-longer-epoch%3D68e-step%3D50232.ckpt?download=true",
-                "s2G488k.pth": "https://huggingface.co/lj1995/GPT-SoVITS/resolve/main/s2G488k.pth?download=true",
-                "s2D488k.pth": "https://huggingface.co/lj1995/GPT-SoVITS/resolve/main/s2D488k.pth?download=true",
                 "s1bert25hz-5kh-longer-epoch=12-step=369668.ckpt": "https://huggingface.co/lj1995/GPT-SoVITS/resolve/main/gsv-v2final-pretrained/s1bert25hz-5kh-longer-epoch%3D12-step%3D369668.ckpt?download=true",
                 "s2G2333k.pth": "https://huggingface.co/lj1995/GPT-SoVITS/resolve/main/gsv-v2final-pretrained/s2G2333k.pth?download=true",
-                "s2D2333k.pth": "https://huggingface.co/lj1995/GPT-SoVITS/resolve/main/gsv-v2final-pretrained/s2D2333k.pth?download=true"
+                "s2D2333k.pth": "https://huggingface.co/lj1995/GPT-SoVITS/resolve/main/gsv-v2final-pretrained/s2D2333k.pth?download=true",
+                "s1v3.pth": "https://huggingface.co/lj1995/GPT-SoVITS/resolve/main/s1v3.ckpt?download=true",
+                "s2Gv3.pth": "https://huggingface.co/lj1995/GPT-SoVITS/resolve/main/s2Gv3.pth?download=true"
             },
             "link": "https://huggingface.co/lj1995/GPT-SoVITS"
         },
@@ -157,9 +154,9 @@
                 "pytorch_model.bin": "180.1"
             },
             "date": {
-                "config.json": "2024-03-09 10:43:20.473571",
-                "preprocessor_config.json": "2024-03-09 10:43:15.740161",
-                "pytorch_model.bin": "2024-03-09 10:43:36.856372"
+                "config.json": "2024-01-16",
+                "preprocessor_config.json": "2024-01-16",
+                "pytorch_model.bin": "2024-01-16"
             },
             "SHA": {
                 "config.json": "c3e5060a1277e0f078cc6be9da4528a605dba6ece93018981fe2c820e5c7b103",
@@ -185,9 +182,9 @@
                 "pytorch_model.bin": "621.1MB"
             },
             "date": {
-                "config.json": "2024-03-09 10:43:29.774951",
-                "tokenizer.json": "2024-03-09 10:43:34.205848",
-                "pytorch_model.bin": "2024-03-09 10:45:27.980667"
+                "config.json": "2024-01-16",
+                "tokenizer.json": "2024-01-16",
+                "pytorch_model.bin": "2024-01-16"
             },
             "SHA": {
                 "config.json": "3d57de2fd7e80d0e5c8ff194f0bbb6baa10df7e43fc262a0cc71298a78b0a3e5",
@@ -198,6 +195,30 @@
                 "config.json": "https://huggingface.co/lj1995/GPT-SoVITS/resolve/main/chinese-roberta-wwm-ext-large/config.json?download=true",
                 "tokenizer.json": "https://huggingface.co/lj1995/GPT-SoVITS/resolve/main/chinese-roberta-wwm-ext-large/tokenizer.json?download=true",
                 "pytorch_model.bin": "https://huggingface.co/lj1995/GPT-SoVITS/resolve/main/chinese-roberta-wwm-ext-large/pytorch_model.bin?download=true"
+            },
+            "link": "https://huggingface.co/lj1995/GPT-SoVITS"
+        },
+        {
+            "tags": [
+                "TTS",
+                "GPT-SoVITS"
+            ],
+            "name": "nvidia--bigvgan",
+            "size": {
+                "config.json": "0.0MB",
+                "bigvgan_generator.pt": ""
+            },
+            "date": {
+                "config.json": "2025-02-11",
+                "bigvgan_generator.pt": "2025-02-11"
+            },
+            "SHA": {
+                "config.json": "d77e2c96583ca2296ac112a56ec7cc6bd5da4bf7681ceff18448bedc4fcf6512",
+                "bigvgan_generator.pt": "6f9c5715550c9d0f11159ceb8935638da5aeb19e27d1e63677632df095e376f5"
+            },
+            "downloadurl": {
+                "config.json": "https://huggingface.co/lj1995/GPT-SoVITS/resolve/main/models--nvidia--bigvgan_v2_24khz_100band_256x/config.json?download=true",
+                "bigvgan_generator.pt": "https://huggingface.co/lj1995/GPT-SoVITS/resolve/main/models--nvidia--bigvgan_v2_24khz_100band_256x/bigvgan_generator.pt?download=true"
             },
             "link": "https://huggingface.co/lj1995/GPT-SoVITS"
         },

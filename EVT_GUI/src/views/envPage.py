@@ -44,7 +44,7 @@ class SubEnvPage_Detector(SubPage):
 
     def addDetectorFrame(self,
         rootItemText: Optional[str] = None, toolBoxText: Optional[str] = None, text: str = ..., toolTip: str = ...,
-        detectMethod: object = ..., params = [], threadPool = ..., 
+        detectMethod: object = ..., params = [], terminateMethod: object = ..., threadPool = ..., 
         signal_detect: SignalInstance = ..., signal_detected: SignalInstance = ..., signal_undetected: SignalInstance = ..., statusSignal: SignalInstance = ...,
     ):
         titleLabel = LabelBase(self)
@@ -96,6 +96,7 @@ class SubEnvPage_Detector(SubPage):
             progressBar = progressBar,
             executeMethod = detectMethod,
             executeParams = params,
+            terminateMethod = terminateMethod,
             threadPool = threadPool,
             parentWindow = self,
         )
@@ -148,8 +149,8 @@ class SubEnvPage_Manager(SubPage):
 
     def addComboBoxFrame(self,
         rootItemText: Optional[str] = None, toolBoxText: Optional[str] = None, text: str = ..., toolTip: Optional[str] = None,
-        items: list = ..., currentIndex: Optional[int] = None,
-        executorText: str = ..., method: object = ..., paramTargets: list[QObject] = [], threadPool = ...,
+        items: list = ...,
+        executorText: str = ..., executeMethod: object = ..., paramTargets: list[QObject] = [], terminateMethod: object = ..., threadPool = ...,
     ):
         titleLabel = LabelBase(self)
         titleLabel.setStyleSheet(u"QLabel {\n"
@@ -166,7 +167,6 @@ class SubEnvPage_Manager(SubPage):
         comboBox.setMinimumSize(QSize(123, 30))
         comboBox.setToolTip(toolTip) if toolTip is not None else None
         comboBox.addItems(items)
-        comboBox.setCurrentIndex(currentIndex) if currentIndex is not None else None
         executeButton = HollowButton(self)
         executeButton.setFixedSize(QSize(123, 30))
         executeButton.setObjectName(text.splitlines()[0])
@@ -174,8 +174,9 @@ class SubEnvPage_Manager(SubPage):
         self._addToContainer(rootItemText, toolBoxText, text, titleLabel, comboBox, executeButton)
         Function_SetMethodExecutor(
             executeButton = executeButton,
-            executeMethod = method,
+            executeMethod = executeMethod,
             executeParams = [paramTarget() if hasattr(paramTarget, '__call__') else paramTarget for paramTarget in paramTargets],
+            terminateMethod = terminateMethod,
             threadPool = threadPool,
             parentWindow = self,
         )

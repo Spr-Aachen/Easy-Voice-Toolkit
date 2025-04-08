@@ -399,7 +399,7 @@ class MainWindow(Window_MainWindow):
                 self._getFileDialog(
                     textReciever,
                     mode = FileDialogMode.SelectFile,
-                    filetype = fileType,
+                    fileType = fileType,
                     directory = directory
                 ),
                 dirPathSelectionDialogBox.close(),
@@ -970,6 +970,7 @@ class MainWindow(Window_MainWindow):
             text = QCA.translate('MainWindow', "Aria2"),
             toolTip = QCA.translate('MainWindow', "重新检测安装"),
             detectMethod = Aria2_Installer.execute,
+            terminateMethod = Aria2_Installer.terminate,
             threadPool = self.threadPool,
             signal_detect = self.Signal_MainWindowShown,
             signal_detected = EnvConfiguratorSignals.Signal_Aria2Detected,
@@ -990,6 +991,7 @@ class MainWindow(Window_MainWindow):
             text = QCA.translate('MainWindow', "FFmpeg"),
             toolTip = QCA.translate('MainWindow', "重新检测安装"),
             detectMethod = FFmpeg_Installer.execute,
+            terminateMethod = FFmpeg_Installer.terminate,
             threadPool = self.threadPool,
             signal_detect = self.Signal_MainWindowShown,
             signal_detected = EnvConfiguratorSignals.Signal_FFmpegDetected,
@@ -1011,6 +1013,7 @@ class MainWindow(Window_MainWindow):
             toolTip = QCA.translate('MainWindow', "重新检测安装"),
             detectMethod = Python_Installer.execute,
             params = ('3.9.0'),
+            terminateMethod = Python_Installer.terminate,
             threadPool = self.threadPool,
             signal_detect = self.Signal_MainWindowShown,
             signal_detected = EnvConfiguratorSignals.Signal_PythonDetected,
@@ -1032,6 +1035,7 @@ class MainWindow(Window_MainWindow):
             toolTip = QCA.translate('MainWindow', "重新检测安装"),
             detectMethod = PyReqs_Installer.execute,
             params = (EasyUtils.normPath(requirementsPath)),
+            terminateMethod = PyReqs_Installer.terminate,
             threadPool = self.threadPool,
             signal_detect = EnvConfiguratorSignals.Signal_PythonDetected,
             signal_detected = EnvConfiguratorSignals.Signal_PyReqsDetected,
@@ -1052,6 +1056,7 @@ class MainWindow(Window_MainWindow):
             text = QCA.translate('MainWindow', "Pytorch 相关库"),
             toolTip = QCA.translate('MainWindow', "重新检测安装"),
             detectMethod = Pytorch_Installer.execute,
+            terminateMethod = Pytorch_Installer.terminate,
             threadPool = self.threadPool,
             signal_detect = EnvConfiguratorSignals.Signal_PyReqsDetected,
             signal_detected = EnvConfiguratorSignals.Signal_PytorchDetected,
@@ -1080,7 +1085,8 @@ class MainWindow(Window_MainWindow):
             text = QCA.translate('MainWindow', "选择Pytorch版本"),
             items = [ '2.0.1', '2.2.2'],
             executorText = QCA.translate('MainWindow', "安装"),
-            method = Pytorch_Installer.execute,
+            executeMethod = Pytorch_Installer.execute,
+            terminateMethod = Pytorch_Installer.terminate,
             paramTargets = [
                 lambda: subEnvPage_manager.findChildWidget(None, "Pytorch", "选择Pytorch版本", QComboBox),
                 True
@@ -1380,9 +1386,10 @@ class MainWindow(Window_MainWindow):
         subPage_process.addChkOutputSideBtn(
             outputRootEdit = self.ui.LineEdit_Process_OutputRoot,
         )
+        self.task_audioProcessing = Execute_Audio_Processing(coreDir)
         subPage_process.setExecutor(
             consoleWidget = self.ui.Frame_Console,
-            method = Execute_Audio_Processing.execute,
+            executeMethod = self.task_audioProcessing.execute,
             paramTargets = [
                 subPage_process.findChildWidget("输入参数", None, "媒体输入目录"),
                 subPage_process.findChildWidget("输出参数", None, "媒体输出格式"),
@@ -1401,6 +1408,7 @@ class MainWindow(Window_MainWindow):
                 self.ui.LineEdit_Process_OutputRoot,
                 subPage_process.findChildWidget("输出参数", None, "输出目录名")
             ],
+            terminateMethod = self.task_audioProcessing.terminate,
             successEvents = [
                 lambda: MessageBoxBase.pop(self,
                     QMessageBox.Information, "Tip",
@@ -1414,21 +1422,19 @@ class MainWindow(Window_MainWindow):
             checkedEvents = {
                 lambda: Function_SetChildWidgetsVisibility(
                     container = subPage_process.findChildWidget("降噪参数"),
-                    childWidgets = [
-                        subPage_process.findChildWidget("降噪参数", None, "uvr5模型路径"),
-                        subPage_process.findChildWidget("降噪参数", None, "提取目标"),
-                    ],
-                    setVisible = True
+                    childWidgetsVisibility = {
+                        subPage_process.findChildWidget("降噪参数", None, "uvr5模型路径"): True,
+                        subPage_process.findChildWidget("降噪参数", None, "提取目标"): True,
+                    },
                 ) : True
             },
             uncheckedEvents = {
                 lambda: Function_SetChildWidgetsVisibility(
                     container = subPage_process.findChildWidget("降噪参数"),
-                    childWidgets = [
-                        subPage_process.findChildWidget("降噪参数", None, "uvr5模型路径"),
-                        subPage_process.findChildWidget("降噪参数", None, "提取目标"),
-                    ],
-                    setVisible = False
+                    childWidgetsVisibility = {
+                        subPage_process.findChildWidget("降噪参数", None, "uvr5模型路径"): False,
+                        subPage_process.findChildWidget("降噪参数", None, "提取目标"): False,
+                    },
                 ) : True
             },
         )
@@ -1437,29 +1443,25 @@ class MainWindow(Window_MainWindow):
             checkedEvents = {
                 lambda: Function_SetChildWidgetsVisibility(
                     container = subPage_process.findChildWidget("静音切除参数", "高级设置"),
-                    childWidgets = [
-                        subPage_process.findChildWidget("静音切除参数", "高级设置", "均方根阈值 (db)"),
-                        subPage_process.findChildWidget("静音切除参数", "高级设置", "跃点大小 (ms)"),
-                        subPage_process.findChildWidget("静音切除参数", "高级设置", "最小静音间隔 (ms)"),
-                        subPage_process.findChildWidget("静音切除参数", "高级设置", "最大静音长度 (ms)"),
-                        subPage_process.findChildWidget("静音切除参数", "高级设置", "最小音频长度 (ms)"),
-                    ],
-                    setVisible = True,
-                    adjustContainer = True
+                    childWidgetsVisibility = {
+                        subPage_process.findChildWidget("静音切除参数", "高级设置", "均方根阈值 (db)"): True,
+                        subPage_process.findChildWidget("静音切除参数", "高级设置", "跃点大小 (ms)"): True,
+                        subPage_process.findChildWidget("静音切除参数", "高级设置", "最小静音间隔 (ms)"): True,
+                        subPage_process.findChildWidget("静音切除参数", "高级设置", "最大静音长度 (ms)"): True,
+                        subPage_process.findChildWidget("静音切除参数", "高级设置", "最小音频长度 (ms)"): True,
+                    },
                 ) : True
             },
             uncheckedEvents = {
                 lambda: Function_SetChildWidgetsVisibility(
                     container = subPage_process.findChildWidget("静音切除参数", "高级设置"),
-                    childWidgets = [
-                        subPage_process.findChildWidget("静音切除参数", "高级设置", "均方根阈值 (db)"),
-                        subPage_process.findChildWidget("静音切除参数", "高级设置", "跃点大小 (ms)"),
-                        subPage_process.findChildWidget("静音切除参数", "高级设置", "最小静音间隔 (ms)"),
-                        subPage_process.findChildWidget("静音切除参数", "高级设置", "最大静音长度 (ms)"),
-                        subPage_process.findChildWidget("静音切除参数", "高级设置", "最小音频长度 (ms)"),
-                    ],
-                    setVisible = False,
-                    adjustContainer = True
+                    childWidgetsVisibility = {
+                        subPage_process.findChildWidget("静音切除参数", "高级设置", "均方根阈值 (db)"): False,
+                        subPage_process.findChildWidget("静音切除参数", "高级设置", "跃点大小 (ms)"): False,
+                        subPage_process.findChildWidget("静音切除参数", "高级设置", "最小静音间隔 (ms)"): False,
+                        subPage_process.findChildWidget("静音切除参数", "高级设置", "最大静音长度 (ms)"): False,
+                        subPage_process.findChildWidget("静音切除参数", "高级设置", "最小音频长度 (ms)"): False,
+                    },
                 ) : True
             },
         )
@@ -1622,9 +1624,10 @@ class MainWindow(Window_MainWindow):
                 EditVPRResult
             ]
         )
+        self.task_voiceIdentifying_vpr = Execute_Voice_Identifying_VPR(coreDir)
         subPage_VPR.setExecutor(
             consoleWidget = self.ui.Frame_Console,
-            method = Execute_Voice_Identifying_VPR.execute,
+            executeMethod = self.task_voiceIdentifying_vpr.execute,
             paramTargets = [
                 subPage_VPR.findChildWidget("输入参数", None, "目标人物与音频"),
                 subPage_VPR.findChildWidget("输入参数", None, "音频输入目录"),
@@ -1637,6 +1640,7 @@ class MainWindow(Window_MainWindow):
                 subPage_VPR.findChildWidget("输出参数", None, "输出目录名"),
                 subPage_VPR.findChildWidget("输出参数", "高级设置", "识别结果文本名")
             ],
+            terminateMethod = self.task_voiceIdentifying_vpr.terminate,
             successEvents = [
                 lambda: self.showMask(True, "正在加载表单"),
                 lambda: self.showVPRResult(
@@ -1756,9 +1760,10 @@ class MainWindow(Window_MainWindow):
         subPage_ASR.addChkOutputSideBtn(
             outputRootEdit = self.ui.LineEdit_ASR_Whisper_OutputRoot
         )
+        self.task_voiceTranscribing_whisper = Execute_Voice_Transcribing_Whisper(coreDir)
         subPage_ASR.setExecutor(
             consoleWidget = self.ui.Frame_Console,
-            method = Execute_Voice_Transcribing_Whisper.execute,
+            executeMethod = self.task_voiceTranscribing_whisper.execute,
             paramTargets = [
                 subPage_ASR.findChildWidget("语音转录参数", None, "模型加载路径"),
                 subPage_ASR.findChildWidget("输入参数", None, "音频输入目录"),
@@ -1769,6 +1774,7 @@ class MainWindow(Window_MainWindow):
                 self.ui.LineEdit_ASR_Whisper_OutputRoot,
                 subPage_ASR.findChildWidget("输出参数", None, "输出目录名")
             ],
+            terminateMethod = self.task_voiceTranscribing_whisper.terminate,
             successEvents = [
                 lambda: self.showMask(True, "正在加载表单"),
                 lambda: self.showASRResult(
@@ -1896,9 +1902,10 @@ class MainWindow(Window_MainWindow):
         subPage_dataset_GPTSoVITS.addChkOutputSideBtn(
             outputRootEdit = self.ui.LineEdit_DAT_GPTSoVITS_OutputRoot
         )
+        self.task_datasetCreating_gptsovits = Execute_Dataset_Creating_GPTSoVITS(coreDir)
         subPage_dataset_GPTSoVITS.setExecutor(
             consoleWidget = self.ui.Frame_Console,
-            method = Execute_Dataset_Creating_GPTSoVITS.execute,
+            executeMethod = self.task_datasetCreating_gptsovits.execute,
             paramTargets = [
                 subPage_dataset_GPTSoVITS.findChildWidget("输入参数", None, "字幕输入目录"),
                 subPage_dataset_GPTSoVITS.findChildWidget("输入参数", None, "音频文件目录/语音识别结果文本路径"),
@@ -1907,6 +1914,7 @@ class MainWindow(Window_MainWindow):
                 subPage_dataset_GPTSoVITS.findChildWidget("输出参数", None, "输出目录名"),
                 subPage_dataset_GPTSoVITS.findChildWidget("输出参数", "高级设置", "数据集文本名")
             ],
+            terminateMethod = self.task_datasetCreating_gptsovits.terminate,
             successEvents = [
                 lambda: self.showMask(True, "正在加载表单"),
                 lambda: self.showDATResult(
@@ -2084,9 +2092,10 @@ class MainWindow(Window_MainWindow):
         subPage_dataset_VITS.addChkOutputSideBtn(
             outputRootEdit = self.ui.LineEdit_DAT_VITS_OutputRoot
         )
+        self.task_datasetCreating_vits = Execute_Dataset_Creating_VITS(coreDir)
         subPage_dataset_VITS.setExecutor(
             consoleWidget = self.ui.Frame_Console,
-            method = Execute_Dataset_Creating_VITS.execute,
+            executeMethod = self.task_datasetCreating_vits.execute,
             paramTargets = [
                 subPage_dataset_VITS.findChildWidget("输入参数", None, "字幕输入目录"),
                 subPage_dataset_VITS.findChildWidget("输入参数", None, "音频文件目录/语音识别结果文本路径"),
@@ -2102,6 +2111,7 @@ class MainWindow(Window_MainWindow):
                 subPage_dataset_VITS.findChildWidget("输出参数", "高级设置", "训练集文本名"),
                 subPage_dataset_VITS.findChildWidget("输出参数", "高级设置", "验证集文本名")
             ],
+            terminateMethod = self.task_datasetCreating_vits.terminate,
             successEvents = [
                 lambda: self.showMask(True, "正在加载表单"),
                 lambda: self.showDATResult(
@@ -2120,19 +2130,17 @@ class MainWindow(Window_MainWindow):
             checkedEvents = {
                 lambda: Function_SetChildWidgetsVisibility(
                     subPage_dataset_VITS.findChildWidget("数据集参数"),
-                    [
-                        subPage_dataset_VITS.findChildWidget("数据集参数", None, "辅助数据文本路径")
-                    ],
-                    True
+                    childWidgetsVisibility = {
+                        subPage_dataset_VITS.findChildWidget("数据集参数", None, "辅助数据文本路径"): True
+                    },
                 ) : True
             },
             uncheckedEvents = {
                 lambda: Function_SetChildWidgetsVisibility(
                     subPage_dataset_VITS.findChildWidget("数据集参数"),
-                    [
-                        subPage_dataset_VITS.findChildWidget("数据集参数", None, "辅助数据文本路径")
-                    ],
-                    False
+                    childWidgetsVisibility = {
+                        subPage_dataset_VITS.findChildWidget("数据集参数", None, "辅助数据文本路径"): False
+                    },
                 ) : True
             },
         )
@@ -2168,11 +2176,19 @@ class MainWindow(Window_MainWindow):
         )
 
         # ParamsManager - GPT-SoVITS
-        configPath_Train_GPTSoVITS = EasyUtils.normPath(Path(configDir).joinpath('Config_Train_GPT-SoVITS.ini'))
-        paramsManager_Train_GPTSoVITS = ParamsManager(configPath_Train_GPTSoVITS)
+        configPath_train_gptsovits = EasyUtils.normPath(Path(configDir).joinpath('Config_Train_GPT-SoVITS.ini'))
+        paramsManager_train_gptsovits = ParamsManager(configPath_train_gptsovits)
 
-        subPage_train_GPTSoVITS = SubToolPage(self.ui.Page_Train, paramsManager_Train_GPTSoVITS)
-        subPage_train_GPTSoVITS.addLineEditFrame(
+        subPage_train_gptsovits = SubToolPage(self.ui.Page_Train, paramsManager_train_gptsovits)
+        subPage_train_gptsovits.addComboBoxFrame(
+            rootItemText = QCA.translate('MainWindow', "全局设置"),
+            text = QCA.translate('MainWindow', "训练版本\nGPT-SoVITS模型的训练版本，注意v3训练需要8G以上的显存。"),
+            items = ['v2', 'v3'],
+            section = 'Input params',
+            option = 'version',
+            defaultValue = 'v2'
+        )
+        subPage_train_gptsovits.addLineEditFrame(
             rootItemText = QCA.translate('MainWindow', "输入参数"),
             text = QCA.translate('MainWindow', "训练集文本路径\n用于提供训练集音频路径及其语音内容的训练集txt文件的路径。"),
             fileDialogMode = FileDialogMode.SelectFile,
@@ -2182,32 +2198,10 @@ class MainWindow(Window_MainWindow):
             option = 'FileList_Path',
             defaultValue = ''
         )
-        '''
-        subPage_train_GPTSoVITS.addSpinBoxFrame(
-            rootItemText = QCA.translate('MainWindow', "训练参数"),
-            text = QCA.translate('MainWindow', "s1迭代轮数\n将全部样本完整迭代一轮的次数。"),
-            minimum = 1,
-            maximum = 100,
-            step = 1,
-            section = 'GPT-SoVITS params',
-            option = 'Epochs',
-            defaultValue = 8
-        )
-        subPage_train_GPTSoVITS.addSpinBoxFrame(
-            rootItemText = QCA.translate('MainWindow', "训练参数"),
-            text = QCA.translate('MainWindow', "s2迭代轮数\n将全部样本完整迭代一轮的次数。"),
-            minimum = 1,
-            maximum = 100,
-            step = 1,
-            section = 'GPT-SoVITS params',
-            option = 'Epochs',
-            defaultValue = 15
-        )
-        '''
         Train_GPTSoVITS_ModelPathPretrainedS1_Default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's1bert25hz-5kh-longer-epoch=12-step=369668.ckpt').as_posix()
-        subPage_train_GPTSoVITS.addLineEditFrame(
-            rootItemText = QCA.translate('MainWindow', "训练参数"),
-            text = QCA.translate('MainWindow', "预训练s1模型路径\n预训练s1模型的路径。"),
+        subPage_train_gptsovits.addLineEditFrame(
+            rootItemText = QCA.translate('MainWindow', "输入参数"),
+            text = QCA.translate('MainWindow', "预训练GPT模型路径\n预训练GPT（s1）模型的路径。"),
             fileDialogMode = FileDialogMode.SelectFile,
             fileType = "ckpt类型 (*.ckpt)",
             directory = EasyUtils.normPath(Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2')),
@@ -2217,9 +2211,9 @@ class MainWindow(Window_MainWindow):
             placeholderText = Train_GPTSoVITS_ModelPathPretrainedS1_Default
         )
         Train_GPTSoVITS_ModelPathPretrainedS2G_Default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's2G2333k.pth').as_posix()
-        subPage_train_GPTSoVITS.addLineEditFrame(
-            rootItemText = QCA.translate('MainWindow', "训练参数"),
-            text = QCA.translate('MainWindow', "预训练s2G模型路径\n预训练s2G模型的路径。"),
+        subPage_train_gptsovits.addLineEditFrame(
+            rootItemText = QCA.translate('MainWindow', "输入参数"),
+            text = QCA.translate('MainWindow', "预训练SoVITS生成器模型路径\n预训练SoVITS生成器（s2G）模型的路径。"),
             fileDialogMode = FileDialogMode.SelectFile,
             fileType = "pth类型 (*.pth)",
             directory = EasyUtils.normPath(Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2')),
@@ -2229,9 +2223,9 @@ class MainWindow(Window_MainWindow):
             placeholderText = Train_GPTSoVITS_ModelPathPretrainedS2G_Default
         )
         Train_GPTSoVITS_ModelPathPretrainedS2D_Default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's2D2333k.pth').as_posix()
-        subPage_train_GPTSoVITS.addLineEditFrame(
-            rootItemText = QCA.translate('MainWindow', "训练参数"),
-            text = QCA.translate('MainWindow', "预训练s2D模型路径\n预训练s2D模型的路径。"),
+        subPage_train_gptsovits.addLineEditFrame(
+            rootItemText = QCA.translate('MainWindow', "输入参数"),
+            text = QCA.translate('MainWindow', "预训练SoVITS判别器模型路径\n预训练SoVITS判别器（s2D）模型的路径。"),
             fileDialogMode = FileDialogMode.SelectFile,
             fileType = "pth类型 (*.pth)",
             directory = EasyUtils.normPath(Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2')),
@@ -2241,9 +2235,9 @@ class MainWindow(Window_MainWindow):
             placeholderText = Train_GPTSoVITS_ModelPathPretrainedS2D_Default
         )
         Train_GPTSoVITS_ModelDirPretrainedBert_Default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 'chinese-roberta-wwm-ext-large').as_posix()
-        subPage_train_GPTSoVITS.addLineEditFrame(
-            rootItemText = QCA.translate('MainWindow', "训练参数"),
-            text = QCA.translate('MainWindow', "预训练bert模型路径\n预训练bert模型（文件夹）的路径。"),
+        subPage_train_gptsovits.addLineEditFrame(
+            rootItemText = QCA.translate('MainWindow', "输入参数"),
+            text = QCA.translate('MainWindow', "预训练BERT模型路径\n预训练BERT模型（文件夹）的路径。"),
             fileDialogMode = FileDialogMode.SelectFolder,
             directory = EasyUtils.normPath(Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded')),
             section = 'GPT-SoVITS params',
@@ -2252,9 +2246,9 @@ class MainWindow(Window_MainWindow):
             placeholderText = Train_GPTSoVITS_ModelDirPretrainedBert_Default
         )
         Train_GPTSoVITS_ModelDirPretrainedSSL_Default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 'chinese-hubert-base').as_posix()
-        subPage_train_GPTSoVITS.addLineEditFrame(
-            rootItemText = QCA.translate('MainWindow', "训练参数"),
-            text = QCA.translate('MainWindow', "预训练ssl模型路径\n预训练ssl模型（文件夹）的路径。"),
+        subPage_train_gptsovits.addLineEditFrame(
+            rootItemText = QCA.translate('MainWindow', "输入参数"),
+            text = QCA.translate('MainWindow', "预训练HuBERT模型路径\n预训练HuBERT模型（文件夹）的路径。"),
             fileDialogMode = FileDialogMode.SelectFolder,
             directory = EasyUtils.normPath(Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded')),
             section = 'GPT-SoVITS params',
@@ -2262,16 +2256,50 @@ class MainWindow(Window_MainWindow):
             defaultValue = Train_GPTSoVITS_ModelDirPretrainedSSL_Default,
             placeholderText = Train_GPTSoVITS_ModelDirPretrainedSSL_Default
         )
-        subPage_train_GPTSoVITS.addCheckBoxFrame(
+        # subPage_train_gptsovits.addSpinBoxFrame(
+        #     rootItemText = QCA.translate('MainWindow', "训练参数"),
+        #     text = QCA.translate('MainWindow', "GPT模型模型迭代轮数\nGPT模型训练时将全部样本完整迭代一轮的次数。"),
+        #     minimum = 1,
+        #     maximum = 100,
+        #     step = 1,
+        #     section = 'GPT-SoVITS params',
+        #     option = 'gpt_epochs',
+        #     defaultValue = 8
+        # )
+        # subPage_train_gptsovits.addSpinBoxFrame(
+        #     rootItemText = QCA.translate('MainWindow', "训练参数"),
+        #     text = QCA.translate('MainWindow', "SoVITS模型迭代轮数\nSoVITS模型训练时将全部样本完整迭代一轮的次数。"),
+        #     minimum = 1,
+        #     maximum = 100,
+        #     step = 1,
+        #     section = 'GPT-SoVITS params',
+        #     option = 'sovits_epochs',
+        #     defaultValue = 15
+        # )
+        subPage_train_gptsovits.addCheckBoxFrame(
             rootItemText = QCA.translate('MainWindow', "训练参数"),
-            toolBoxText = QCA.translate('MainWindow', "高级设置"),
             text = QCA.translate('MainWindow', "半精度训练\n通过混合了float16精度的训练方式减小显存占用。"),
             section = 'GPT-SoVITS params',
-            option = 'FP16_Run',
+            option = 'half_precision',
             defaultValue = False
         )
+        subPage_train_gptsovits.addCheckBoxFrame(
+            rootItemText = QCA.translate('MainWindow', "训练参数"),
+            text = QCA.translate('MainWindow', "梯度检查点\n是否开启梯度检查点节省显存占用。"),
+            section = 'GPT-SoVITS params',
+            option = 'if_grad_ckpt',
+            defaultValue = False
+        )
+        subPage_train_gptsovits.addComboBoxFrame(
+            rootItemText = QCA.translate('MainWindow', "训练参数"),
+            text = QCA.translate('MainWindow', "Lora秩\n。"),
+            items = ['16', '32', '64', '128'],
+            section = 'GPT-SoVITS params',
+            option = 'lora_rank',
+            defaultValue = '32'
+        )
         Train_GPTSoVITS_OutputDirName_Default = str(date.today())
-        subPage_train_GPTSoVITS.addLineEditFrame(
+        subPage_train_gptsovits.addLineEditFrame(
             rootItemText = QCA.translate('MainWindow', "输出参数"),
             text = QCA.translate('MainWindow', "输出目录名\n存放训练所得模型的目录的名字。"),
             section = 'Output params',
@@ -2281,12 +2309,12 @@ class MainWindow(Window_MainWindow):
         )
         LineEdit_Train_GPTSoVITS_OutputDir = LineEditBase()
         self.setDirAlert(
-            dirNameEdit = subPage_train_GPTSoVITS.findChildWidget("输出参数", None, "输出目录名", LineEditBase),
+            dirNameEdit = subPage_train_gptsovits.findChildWidget("输出参数", None, "输出目录名", LineEditBase),
             rootEdit = self.ui.LineEdit_Train_GPTSoVITS_OutputRoot,
             dirEdit = LineEdit_Train_GPTSoVITS_OutputDir
         )
         Train_GPTSoVITS_LogDir_Default = Path(Path(currentDir).root).joinpath('EVT_TrainLog', 'GPT-SoVITS', str(date.today())).as_posix()
-        subPage_train_GPTSoVITS.addLineEditFrame(
+        subPage_train_gptsovits.addLineEditFrame(
             rootItemText = QCA.translate('MainWindow', "输出参数"),
             toolBoxText = QCA.translate('MainWindow', "高级设置"),
             text = QCA.translate('MainWindow', "日志输出目录\n训练时生成的日志的存放目录。"),
@@ -2297,44 +2325,49 @@ class MainWindow(Window_MainWindow):
             defaultValue = Train_GPTSoVITS_LogDir_Default,
             placeholderText = Train_GPTSoVITS_LogDir_Default
         )
-        subPage_train_GPTSoVITS.findChildWidget("输出参数", "高级设置", "日志输出目录", LineEditBase).textChanged.connect(
+        subPage_train_gptsovits.findChildWidget("输出参数", "高级设置", "日志输出目录", LineEditBase).textChanged.connect(
             lambda value: (
                 MessageBoxBase.pop(self,
                     QMessageBox.Warning, "Warning",
                     "保存路径不支持非ASCII字符，请使用英文路径以避免训练报错",
                 ),
-                subPage_train_GPTSoVITS.findChildWidget("输出参数", "高级设置", "日志输出目录", LineEditBase).clear()
+                subPage_train_gptsovits.findChildWidget("输出参数", "高级设置", "日志输出目录", LineEditBase).clear()
             ) if not all(Char.isascii() for Char in value) else None
         )
-        subPage_train_GPTSoVITS.addChkOutputSideBtn(
+        subPage_train_gptsovits.addChkOutputSideBtn(
             outputRootEdit = self.ui.LineEdit_Train_GPTSoVITS_OutputRoot
         )
-        subPage_train_GPTSoVITS.addSideBtn(
+        subPage_train_gptsovits.addSideBtn(
             text = QCA.translate('MainWindow', "启动Tensorboard"),
             events = [
                 lambda: Function_SetMethodExecutor(
                     executeMethod = runTensorboard,
-                    executeParams = subPage_train_GPTSoVITS.findChildWidget("输出参数", "高级设置", "日志输出目录", LineEditBase).text(),
+                    executeParams = subPage_train_gptsovits.findChildWidget("输出参数", "高级设置", "日志输出目录", LineEditBase).text(),
                     threadPool = self.threadPool,
                     parentWindow = self,
                 )
             ]
         )
-        subPage_train_GPTSoVITS.setExecutor(
+        self.task_voiceTraining_gptsovits = Execute_Voice_Training_GPTSoVITS(coreDir)
+        subPage_train_gptsovits.setExecutor(
             consoleWidget = self.ui.Frame_Console,
-            method = Execute_Voice_Training_GPTSoVITS.execute,
+            executeMethod = self.task_voiceTraining_gptsovits.execute,
             paramTargets = [
-                subPage_train_GPTSoVITS.findChildWidget("输入参数", None, "训练集文本路径"),
-                subPage_train_GPTSoVITS.findChildWidget("训练参数", "高级设置", "半精度训练"),
-                subPage_train_GPTSoVITS.findChildWidget("训练参数", None, "预训练bert模型路径"),
-                subPage_train_GPTSoVITS.findChildWidget("训练参数", None, "预训练ssl模型路径"),
-                subPage_train_GPTSoVITS.findChildWidget("训练参数", None, "预训练s1模型路径"),
-                subPage_train_GPTSoVITS.findChildWidget("训练参数", None, "预训练s2G模型路径"),
-                subPage_train_GPTSoVITS.findChildWidget("训练参数", None, "预训练s2D模型路径"),
+                subPage_train_gptsovits.findChildWidget("全局设置", None, "训练版本"),
+                subPage_train_gptsovits.findChildWidget("输入参数", None, "训练集文本路径"),
+                subPage_train_gptsovits.findChildWidget("输入参数", None, "预训练BERT模型路径"),
+                subPage_train_gptsovits.findChildWidget("输入参数", None, "预训练HuBERT模型路径"),
+                subPage_train_gptsovits.findChildWidget("输入参数", None, "预训练GPT模型路径"),
+                subPage_train_gptsovits.findChildWidget("输入参数", None, "预训练SoVITS生成器模型路径"),
+                subPage_train_gptsovits.findChildWidget("输入参数", None, "预训练SoVITS判别器模型路径"),
+                subPage_train_gptsovits.findChildWidget("训练参数", None, "半精度训练"),
+                subPage_train_gptsovits.findChildWidget("训练参数", None, "梯度检查点"),
+                subPage_train_gptsovits.findChildWidget("训练参数", None, "Lora秩"),
                 self.ui.LineEdit_Train_GPTSoVITS_OutputRoot,
-                subPage_train_GPTSoVITS.findChildWidget("输出参数", None, "输出目录名"),
-                subPage_train_GPTSoVITS.findChildWidget("输出参数", "高级设置", "日志输出目录")
+                subPage_train_gptsovits.findChildWidget("输出参数", None, "输出目录名"),
+                subPage_train_gptsovits.findChildWidget("输出参数", "高级设置", "日志输出目录")
             ],
+            terminateMethod = self.task_voiceTraining_gptsovits.terminate,
             successEvents = [
                 lambda: MessageBoxBase.pop(self,
                     QMessageBox.Information, "Tip",
@@ -2348,12 +2381,34 @@ class MainWindow(Window_MainWindow):
                 QMessageBox.Question, "Ask",
                 text = "是否稍后启用tensorboard？",
                 buttons = QMessageBox.Yes|QMessageBox.No,
-                buttonEvents = {QMessageBox.Yes: lambda: subPage_train_GPTSoVITS.findChildWidget("启动Tensorboard").click()}
-            ) if Task == Execute_Voice_Training_GPTSoVITS.__qualname__ and Status == TaskStatus.Started else None
+                buttonEvents = {QMessageBox.Yes: lambda: subPage_train_gptsovits.findChildWidget("启动Tensorboard").click()}
+            ) if Task == self.task_voiceTraining_gptsovits.__qualname__ and Status == TaskStatus.Started else None
+        )
+        Function_ConfigureComboBox(
+            comboBox = subPage_train_gptsovits.findChildWidget("全局设置", None, "训练版本", ComboBoxBase),
+            textChangedEvents = {
+                'v2': lambda: Function_SetChildWidgetsVisibility(
+                    container = subPage_train_gptsovits.findChildWidget("输入参数"),
+                    childWidgetsVisibility = {
+                        subPage_train_gptsovits.findChildWidget("输入参数", None, "预训练SoVITS判别器模型路径"): True,
+                        subPage_train_gptsovits.findChildWidget("训练参数", None, "梯度检查点"): False,
+                        subPage_train_gptsovits.findChildWidget("训练参数", None, "Lora秩"): False,
+                    }
+                ),
+                'v3': lambda: Function_SetChildWidgetsVisibility(
+                    container = subPage_train_gptsovits.findChildWidget("输入参数"),
+                    childWidgetsVisibility = {
+                        subPage_train_gptsovits.findChildWidget("输入参数", None, "预训练SoVITS判别器模型路径"): False,
+                        subPage_train_gptsovits.findChildWidget("训练参数", None, "梯度检查点"): True,
+                        subPage_train_gptsovits.findChildWidget("训练参数", None, "Lora秩"): True,
+                    }
+                ),
+            },
+            takeEffect = True
         )
 
         self.ui.Page_Train.addSubPage(
-            QCA.translate('MainWindow', 'GPT-SoVITS'), subPage_train_GPTSoVITS
+            QCA.translate('MainWindow', 'GPT-SoVITS'), subPage_train_gptsovits
         )
 
         # ParamsManager - VITS
@@ -2535,9 +2590,10 @@ class MainWindow(Window_MainWindow):
                 )
             ]
         )
+        self.task_voiceTraining_vits = Execute_Voice_Training_VITS(coreDir)
         subPage_train_VITS.setExecutor(
             consoleWidget = self.ui.Frame_Console,
-            method = Execute_Voice_Training_VITS.execute,
+            executeMethod = self.task_voiceTraining_vits.execute,
             paramTargets = [
                 subPage_train_VITS.findChildWidget("输入参数", None, "训练集文本路径"),
                 subPage_train_VITS.findChildWidget("输入参数", None, "验证集文本路径"),
@@ -2556,6 +2612,7 @@ class MainWindow(Window_MainWindow):
                 'config.json',
                 subPage_train_VITS.findChildWidget("输出参数", "高级设置", "日志输出目录")
             ],
+            terminateMethod = self.task_voiceTraining_vits.terminate,
             successEvents = [
                 lambda: MessageBoxBase.pop(self,
                     QMessageBox.Information, "Tip",
@@ -2570,32 +2627,30 @@ class MainWindow(Window_MainWindow):
                 text = "是否稍后启用tensorboard？",
                 buttons = QMessageBox.Yes|QMessageBox.No,
                 buttonEvents = {QMessageBox.Yes: lambda: subPage_train_VITS.findChildWidget("启动Tensorboard").click()}
-            ) if Task == Execute_Voice_Training_VITS.__qualname__ and Status == TaskStatus.Started else None
+            ) if Task == self.task_voiceTraining_vits.__qualname__ and Status == TaskStatus.Started else None
         )
         Function_ConfigureCheckBox(
             checkBox = subPage_train_VITS.findChildWidget("训练参数", None, "使用预训练模型", CheckBoxBase),
             checkedEvents = {
                 lambda: Function_SetChildWidgetsVisibility(
                     subPage_train_VITS.findChildWidget("训练参数"),
-                    [
-                        subPage_train_VITS.findChildWidget("训练参数", None, "预训练G模型路径"),
-                        subPage_train_VITS.findChildWidget("训练参数", None, "预训练D模型路径"),
-                        subPage_train_VITS.findChildWidget("训练参数", None, "保留原说话人（实验性）"),
-                        subPage_train_VITS.findChildWidget("训练参数", None, "配置加载路径") if subPage_train_VITS.findChildWidget("训练参数", None, "保留原说话人（实验性）", CheckBoxBase).isChecked() else None
-                    ],
-                    True
+                    childWidgetsVisibility = {
+                        subPage_train_VITS.findChildWidget("训练参数", None, "预训练G模型路径"): True,
+                        subPage_train_VITS.findChildWidget("训练参数", None, "预训练D模型路径"): True,
+                        subPage_train_VITS.findChildWidget("训练参数", None, "保留原说话人（实验性）"): True,
+                        subPage_train_VITS.findChildWidget("训练参数", None, "配置加载路径") if subPage_train_VITS.findChildWidget("训练参数", None, "保留原说话人（实验性）", CheckBoxBase).isChecked() else None: True
+                    },
                 ) : True
             },
             uncheckedEvents = {
                 lambda: Function_SetChildWidgetsVisibility(
                     subPage_train_VITS.findChildWidget("训练参数"),
-                    [
-                        subPage_train_VITS.findChildWidget("训练参数", None, "预训练G模型路径"),
-                        subPage_train_VITS.findChildWidget("训练参数", None, "预训练D模型路径"),
-                        subPage_train_VITS.findChildWidget("训练参数", None, "保留原说话人（实验性）"),
-                        subPage_train_VITS.findChildWidget("训练参数", None, "配置加载路径")
-                    ],
-                    False
+                    childWidgetsVisibility = {
+                        subPage_train_VITS.findChildWidget("训练参数", None, "预训练G模型路径"): False,
+                        subPage_train_VITS.findChildWidget("训练参数", None, "预训练D模型路径"): False,
+                        subPage_train_VITS.findChildWidget("训练参数", None, "保留原说话人（实验性）"): False,
+                        subPage_train_VITS.findChildWidget("训练参数", None, "配置加载路径"): False
+                    },
                 ) : True
             },
         )
@@ -2604,10 +2659,9 @@ class MainWindow(Window_MainWindow):
             checkedEvents = {
                 lambda: Function_SetChildWidgetsVisibility(
                     subPage_train_VITS.findChildWidget("训练参数"),
-                    [
-                        subPage_train_VITS.findChildWidget("训练参数", None, "配置加载路径")
-                    ],
-                    True
+                    childWidgetsVisibility = {
+                        subPage_train_VITS.findChildWidget("训练参数", None, "配置加载路径"): True
+                    },
                 ) : True,
                 lambda: MessageBoxBase.pop(self,
                     QMessageBox.Question, "Tip",
@@ -2623,10 +2677,9 @@ class MainWindow(Window_MainWindow):
             uncheckedEvents = {
                 lambda: Function_SetChildWidgetsVisibility(
                     subPage_train_VITS.findChildWidget("训练参数"),
-                    [
-                        subPage_train_VITS.findChildWidget("训练参数", None, "配置加载路径")
-                    ],
-                    False
+                    childWidgetsVisibility = {
+                        subPage_train_VITS.findChildWidget("训练参数", None, "配置加载路径"): False
+                    },
                 ) : True
             },
         )
@@ -2662,14 +2715,22 @@ class MainWindow(Window_MainWindow):
         )
 
         # ParamsManager - GPT-SoVITS
-        configPath_TTS_GPTSoVITS = EasyUtils.normPath(Path(configDir).joinpath('Config_TTS_GPT-SoVITS.ini'))
-        paramsManager_TTS_GPTSoVITS = ParamsManager(configPath_TTS_GPTSoVITS)
+        configPath_tts_gptsovits = EasyUtils.normPath(Path(configDir).joinpath('Config_TTS_GPT-SoVITS.ini'))
+        paramsManager_tts_gptsovits = ParamsManager(configPath_tts_gptsovits)
 
-        subPage_TTS_GPTSoVITS = SubToolPage(self.ui.Page_TTS, paramsManager_TTS_GPTSoVITS)
-        TTS_GPTSoVITS_ModelPathLoadS1_Default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's1bert25hz-5kh-longer-epoch=12-step=369668.ckpt').as_posix()
-        subPage_TTS_GPTSoVITS.addLineEditFrame(
+        subPage_tts_gptsovits = SubToolPage(self.ui.Page_TTS, paramsManager_tts_gptsovits)
+        subPage_tts_gptsovits.addComboBoxFrame(
+            rootItemText = QCA.translate('MainWindow', "全局设置"),
+            text = QCA.translate('MainWindow', "推理版本\nGPT-SoVITS模型的推理版本。"),
+            items = ['v2', 'v3'],
+            section = 'Input params',
+            option = 'version',
+            defaultValue = 'v2'
+        )
+        TTS_GPTSoVITS_ModelPathLoadS1_Default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's1v3.ckpt').as_posix()
+        subPage_tts_gptsovits.addLineEditFrame(
             rootItemText = QCA.translate('MainWindow', "输入参数"),
-            text = QCA.translate('MainWindow', "s1模型加载路径\ns1模型的路径。"),
+            text = QCA.translate('MainWindow', "GPT模型加载路径\nGPT（s1）模型的路径。"),
             fileDialogMode = FileDialogMode.SelectFile,
             fileType = "ckpt类型 (*.ckpt)",
             directory = Path(currentDir).joinpath('模型训练结果', 'GPT-SoVITS').as_posix(),
@@ -2678,10 +2739,10 @@ class MainWindow(Window_MainWindow):
             defaultValue = TTS_GPTSoVITS_ModelPathLoadS1_Default,
             placeholderText = TTS_GPTSoVITS_ModelPathLoadS1_Default
         )
-        TTS_GPTSoVITS_ModelPathLoadS2G_Default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's2G2333k.pth').as_posix()
-        subPage_TTS_GPTSoVITS.addLineEditFrame(
+        TTS_GPTSoVITS_ModelPathLoadS2G_Default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's2Gv3.pth').as_posix()
+        subPage_tts_gptsovits.addLineEditFrame(
             rootItemText = QCA.translate('MainWindow', "输入参数"),
-            text = QCA.translate('MainWindow', "s2G模型加载路径\ns2G模型的路径。"),
+            text = QCA.translate('MainWindow', "SoVITS模型加载路径\nSoVITS（s2G）模型的路径。"),
             fileDialogMode = FileDialogMode.SelectFile,
             fileType = "pth类型 (*.pth)",
             directory = Path(currentDir).joinpath('模型训练结果', 'GPT-SoVITS').as_posix(),
@@ -2690,10 +2751,21 @@ class MainWindow(Window_MainWindow):
             defaultValue = TTS_GPTSoVITS_ModelPathLoadS2G_Default,
             placeholderText = TTS_GPTSoVITS_ModelPathLoadS2G_Default
         )
-        TTS_GPTSoVITS_ModelDirLoadBert_Default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 'chinese-roberta-wwm-ext-large').as_posix()
-        subPage_TTS_GPTSoVITS.addLineEditFrame(
+        subPage_tts_gptsovits.addLineEditFrame(
             rootItemText = QCA.translate('MainWindow', "输入参数"),
-            text = QCA.translate('MainWindow', "预训练bert模型加载路径\n预训练bert模型（文件夹）的路径。"),
+            text = QCA.translate('MainWindow', "SoVITSv3底模加载路径\nSoVITSv3（s2G2333k）底模的路径，用于加载lora。"),
+            fileDialogMode = FileDialogMode.SelectFile,
+            fileType = "pth类型 (*.pth)",
+            directory = EasyUtils.normPath(Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded')),
+            section = 'Input params',
+            option = 'Model_Path_Load_s2Gv3',
+            defaultValue = TTS_GPTSoVITS_ModelPathLoadS2G_Default,
+            placeholderText = TTS_GPTSoVITS_ModelPathLoadS2G_Default
+        )
+        TTS_GPTSoVITS_ModelDirLoadBert_Default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 'chinese-roberta-wwm-ext-large').as_posix()
+        subPage_tts_gptsovits.addLineEditFrame(
+            rootItemText = QCA.translate('MainWindow', "输入参数"),
+            text = QCA.translate('MainWindow', "预训练BERT模型加载路径\n预训练BERT模型（文件夹）的路径。"),
             fileDialogMode = FileDialogMode.SelectFolder,
             directory = EasyUtils.normPath(Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded')),
             section = 'Input params',
@@ -2702,9 +2774,9 @@ class MainWindow(Window_MainWindow):
             placeholderText = TTS_GPTSoVITS_ModelDirLoadBert_Default
         )
         TTS_GPTSoVITS_ModelDirLoadSSL_Default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 'chinese-hubert-base').as_posix()
-        subPage_TTS_GPTSoVITS.addLineEditFrame(
+        subPage_tts_gptsovits.addLineEditFrame(
             rootItemText = QCA.translate('MainWindow', "输入参数"),
-            text = QCA.translate('MainWindow', "预训练ssl模型加载路径\n预训练ssl模型的路径。"),
+            text = QCA.translate('MainWindow', "预训练HuBERT模型加载路径\n预训练HuBERT模型（文件夹）的路径。"),
             fileDialogMode = FileDialogMode.SelectFolder,
             directory = EasyUtils.normPath(Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded')),
             section = 'Input params',
@@ -2712,26 +2784,209 @@ class MainWindow(Window_MainWindow):
             defaultValue = TTS_GPTSoVITS_ModelDirLoadSSL_Default,
             placeholderText = TTS_GPTSoVITS_ModelDirLoadSSL_Default
         )
-        subPage_TTS_GPTSoVITS.addCheckBoxFrame(
+        TTS_GPTSoVITS_ModelDirLoadBigVGAN_Default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 'nvidia--bigvgan').as_posix()
+        subPage_tts_gptsovits.addLineEditFrame(
             rootItemText = QCA.translate('MainWindow', "输入参数"),
-            text = QCA.translate('MainWindow', "使用WebUI界面\n开启后会使用WebUI界面而非GUI窗口。"),
+            text = QCA.translate('MainWindow', "预训练BigVGan模型加载路径\n预训练BigVGan模型的路径。"),
+            fileDialogMode = FileDialogMode.SelectFolder,
+            directory = EasyUtils.normPath(Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded')),
             section = 'Input params',
-            option = 'Use_WebUI',
+            option = 'Model_Dir_Load_bigvgan',
+            defaultValue = TTS_GPTSoVITS_ModelDirLoadBigVGAN_Default,
+            placeholderText = TTS_GPTSoVITS_ModelDirLoadBigVGAN_Default
+        )
+        subPage_tts_gptsovits.addLineEditFrame(
+            rootItemText = QCA.translate('MainWindow', "输入参数"),
+            text = QCA.translate('MainWindow', "参考音频路径\n"),
+            fileDialogMode = FileDialogMode.SelectFile,
+            fileType = "wav类型 (*.wav)",
+            section = 'Input params',
+            option = 'refer_wav_path',
+            defaultValue = ''
+        )
+        subPage_tts_gptsovits.addLineEditFrame(
+            rootItemText = QCA.translate('MainWindow', "输入参数"),
+            text = QCA.translate('MainWindow', "参考音频文本\n"),
+            section = 'Input params',
+            option = 'prompt_text',
+            defaultValue = '',
+            emptyAllowed = True
+        )
+        subPage_tts_gptsovits.addComboBoxFrame(
+            rootItemText = QCA.translate('MainWindow', "输入参数"),
+            text = QCA.translate('MainWindow', "参考音频语言\n"),
+            items = ['zh', 'yue', 'en', 'ja', 'ko', 'auto'],
+            section = 'Input params',
+            option = 'prompt_language',
+            defaultValue = 'auto'
+        )
+        subPage_tts_gptsovits.addComboBoxFrame(
+            rootItemText = QCA.translate('MainWindow', "输入参数"),
+            text = QCA.translate('MainWindow', "生成引擎\n"),
+            items = ['cuda', 'cpu'],
+            section = 'Input params',
+            option = 'device',
+            defaultValue = 'cuda' # TODO Add cuda detection
+        )
+        subPage_tts_gptsovits.addCheckBoxFrame(
+            rootItemText = QCA.translate('MainWindow', "输入参数"),
+            text = QCA.translate('MainWindow', "是否使用半精度\n"),
+            section = 'Input params',
+            option = 'half_precision',
             defaultValue = True
         )
-        subPage_TTS_GPTSoVITS.setExecutor(
+        subPage_tts_gptsovits.addComboBoxFrame(
+            rootItemText = QCA.translate('MainWindow', "输入参数"),
+            toolBoxText = QCA.translate('MainWindow', "高级设置"),
+            text = QCA.translate('MainWindow', "音频格式\n"),
+            items = ['wav', 'ogg', 'aac'],
+            section = 'Input params',
+            option = 'media_type',
+            defaultValue = 'wav'
+        )
+        subPage_tts_gptsovits.addComboBoxFrame(
+            rootItemText = QCA.translate('MainWindow', "输入参数"),
+            toolBoxText = QCA.translate('MainWindow', "高级设置"),
+            text = QCA.translate('MainWindow', "数据类型\n"),
+            items = ['int16', 'int32'],
+            section = 'Input params',
+            option = 'sub_type',
+            defaultValue = 'int16'
+        )
+        subPage_tts_gptsovits.addComboBoxFrame(
+            rootItemText = QCA.translate('MainWindow', "输入参数"),
+            toolBoxText = QCA.translate('MainWindow', "高级设置"),
+            text = QCA.translate('MainWindow', "流式模式\n"),
+            items = ['close', 'normal', 'keepalive'],
+            section = 'Input params',
+            option = 'stream_mode',
+            defaultValue = 'close'
+        )
+        subPage_tts_gptsovits.addTextEditFrame(
+            rootItemText = QCA.translate('MainWindow', "语音合成参数"),
+            text = QCA.translate('MainWindow', "待合成文本\n"),
+            section = 'TTS params',
+            option = 'text',
+            defaultValue = ''
+        )
+        subPage_tts_gptsovits.addComboBoxFrame(
+            rootItemText = QCA.translate('MainWindow', "语音合成参数"),
+            text = QCA.translate('MainWindow', "目标文本语言\n"),
+            items = ['zh', 'yue', 'en', 'ja', 'ko', 'auto', 'auto_yue'],
+            section = 'TTS params',
+            option = 'text_language',
+            defaultValue = 'auto'
+        )
+        subPage_tts_gptsovits.addComboBoxFrame(
+            rootItemText = QCA.translate('MainWindow', "语音合成参数"),
+            text = QCA.translate('MainWindow', "文本切分符号\n"),
+            items = [',', '.', ';', '?', '!', '、', '，', '。', '？', '！', '；', '：', '…', 'None'],
+            section = 'TTS params',
+            option = 'cut_punc',
+            defaultValue = 'None',
+            emptyAllowed = True
+        )
+        subPage_tts_gptsovits.addRangeSettingFrame(
+            rootItemText = QCA.translate('MainWindow', "语音合成参数"),
+            text = QCA.translate('MainWindow', "语速因子\n控制生成语音的语速。值越高，语速越快。"),
+            minimum = 0,
+            maximum = 2.0,
+            step = 0.01,
+            section = 'TTS params',
+            option = 'speed',
+            defaultValue = 1.0
+        )
+        subPage_tts_gptsovits.addRangeSettingFrame(
+            rootItemText = QCA.translate('MainWindow', "语音合成参数"),
+            toolBoxText = QCA.translate('MainWindow', "高级设置"),
+            text = QCA.translate('MainWindow', "Top-K采样值\n限制每次采样的候选词数量，仅从前k个高概率词中选择。"),
+            minimum = 1,
+            maximum = 999,
+            step = 1,
+            section = 'TTS params',
+            option = 'top_k',
+            defaultValue = 5
+        )
+        subPage_tts_gptsovits.addRangeSettingFrame(
+            rootItemText = QCA.translate('MainWindow', "语音合成参数"),
+            toolBoxText = QCA.translate('MainWindow', "高级设置"),
+            text = QCA.translate('MainWindow', "Top-P采样值\n动态选择累积概率达到阈值的候选词，避免低概率词干扰。"),
+            minimum = 0,
+            maximum = 1.0,
+            step = 0.01,
+            section = 'TTS params',
+            option = 'top_p',
+            defaultValue = 1.0
+        )
+        subPage_tts_gptsovits.addRangeSettingFrame(
+            rootItemText = QCA.translate('MainWindow', "语音合成参数"),
+            toolBoxText = QCA.translate('MainWindow', "高级设置"),
+            text = QCA.translate('MainWindow', "温度值\n控制生成文本的随机性。值越高，输出越随机。"),
+            minimum = 0,
+            maximum = 2.0,
+            step = 0.01,
+            section = 'TTS params',
+            option = 'temperature',
+            defaultValue = 1.0
+        )
+        subPage_tts_gptsovits.addComboBoxFrame(
+            rootItemText = QCA.translate('MainWindow', "语音合成参数"),
+            toolBoxText = QCA.translate('MainWindow', "高级设置"),
+            text = QCA.translate('MainWindow', "采样步数\n"),
+            items = ['4', '8', '16', '32'],
+            section = 'TTS params',
+            option = 'sample_steps',
+            defaultValue = '32'
+        )
+        TTS_GPTSoVITS_AudioDirSave = Path(currentDir).joinpath('语音合成结果', 'GPTSoVITS').as_posix()
+        TTS_GPTSoVITS_AudioPathSave = Path(TTS_GPTSoVITS_AudioDirSave).joinpath("temp.wav").as_posix()
+        os.makedirs(TTS_GPTSoVITS_AudioDirSave) if not Path(TTS_GPTSoVITS_AudioDirSave).exists() else None
+        subPage_tts_gptsovits.addSideBtn(
+            text = QCA.translate('MainWindow', "查看输出文件"),
+            events = [
+                lambda: QFunc.openURL(
+                    url = Function_GetParam(TTS_GPTSoVITS_AudioDirSave),
+                    createIfNotExist = True
+                )
+            ]
+        )
+        self.task_voiceConverting_gptsovits = Execute_Voice_Converting_GPTSoVITS(coreDir)
+        subPage_tts_gptsovits.setExecutor(
             consoleWidget = self.ui.Frame_Console,
-            method = Execute_Voice_Converting_GPTSoVITS.execute,
+            executeMethod = self.task_voiceConverting_gptsovits.execute,
             paramTargets = [
-                subPage_TTS_GPTSoVITS.findChildWidget("输入参数", None, "s1模型加载路径"),
-                subPage_TTS_GPTSoVITS.findChildWidget("输入参数", None, "s2G模型加载路径"),
-                subPage_TTS_GPTSoVITS.findChildWidget("输入参数", None, "预训练bert模型加载路径"),
-                subPage_TTS_GPTSoVITS.findChildWidget("输入参数", None, "预训练ssl模型加载路径"),
-                False, # Set_FP16_Run
-                False, # Enable_Batched_Infer
-                subPage_TTS_GPTSoVITS.findChildWidget("输入参数", None, "使用WebUI界面"),
+                subPage_tts_gptsovits.findChildWidget("输入参数", None, "SoVITS模型加载路径"),
+                subPage_tts_gptsovits.findChildWidget("输入参数", None, "SoVITSv3模型加载路径"),
+                subPage_tts_gptsovits.findChildWidget("输入参数", None, "GPT模型加载路径"),
+                subPage_tts_gptsovits.findChildWidget("输入参数", None, "预训练HuBERT模型加载路径"),
+                subPage_tts_gptsovits.findChildWidget("输入参数", None, "预训练BERT模型加载路径"),
+                subPage_tts_gptsovits.findChildWidget("输入参数", None, "预训练BigVGan模型加载路径"),
+                subPage_tts_gptsovits.findChildWidget("输入参数", None, "参考音频路径"),
+                subPage_tts_gptsovits.findChildWidget("输入参数", None, "参考音频文本"),
+                subPage_tts_gptsovits.findChildWidget("输入参数", None, "参考音频语言"),
+                subPage_tts_gptsovits.findChildWidget("输入参数", None, "生成引擎"),
+                subPage_tts_gptsovits.findChildWidget("输入参数", None, "是否使用半精度"),
+                subPage_tts_gptsovits.findChildWidget("输入参数", None, "音频格式"),
+                subPage_tts_gptsovits.findChildWidget("输入参数", None, "数据类型"),
+                subPage_tts_gptsovits.findChildWidget("输入参数", None, "流式模式"),
+                None, #inp_refs: Optional[list] = None, # 辅助参考音频路径列表
+                subPage_tts_gptsovits.findChildWidget("语音合成参数", None, "待合成文本"),
+                subPage_tts_gptsovits.findChildWidget("语音合成参数", None, "目标文本语言"),
+                subPage_tts_gptsovits.findChildWidget("语音合成参数", None, "文本切分符号"),
+                subPage_tts_gptsovits.findChildWidget("语音合成参数", None, "Top-K采样值"),
+                subPage_tts_gptsovits.findChildWidget("语音合成参数", None, "Top-P采样值"),
+                subPage_tts_gptsovits.findChildWidget("语音合成参数", None, "温度值"),
+                subPage_tts_gptsovits.findChildWidget("语音合成参数", None, "语速因子"),
+                subPage_tts_gptsovits.findChildWidget("语音合成参数", None, "采样步数"),
+                False, #if_sr: bool = False, # 是否超分
+                TTS_GPTSoVITS_AudioPathSave
             ],
+            terminateMethod = self.task_voiceConverting_gptsovits.terminate,
             successEvents = [
+                lambda: self.showMask(True, "正在加载播放器"),
+                lambda: self.showTTSResult(
+                    TTS_GPTSoVITS_AudioPathSave
+                ),
                 lambda: MessageBoxBase.pop(self,
                     QMessageBox.Information, "Tip",
                     "当前任务已执行结束。"
@@ -2739,9 +2994,29 @@ class MainWindow(Window_MainWindow):
             ],
             threadPool = self.threadPool,
         )
+        Function_ConfigureComboBox(
+            comboBox = subPage_tts_gptsovits.findChildWidget("全局设置", None, "推理版本", ComboBoxBase),
+            textChangedEvents = {
+                "v2": lambda: Function_SetChildWidgetsVisibility(
+                    container = subPage_tts_gptsovits.findChildWidget("输入参数"),
+                    childWidgetsVisibility = {
+                        subPage_tts_gptsovits.findChildWidget("输入参数", None, "SoVITSv3底模加载路径"): False,
+                        subPage_tts_gptsovits.findChildWidget("输入参数", None, "预训练BigVGan模型加载路径"): False,
+                    },
+                ),
+                "v3": lambda: Function_SetChildWidgetsVisibility(
+                    container = subPage_tts_gptsovits.findChildWidget("输入参数"),
+                    childWidgetsVisibility = {
+                        subPage_tts_gptsovits.findChildWidget("输入参数", None, "SoVITSv3底模加载路径"): True,
+                        subPage_tts_gptsovits.findChildWidget("输入参数", None, "预训练BigVGan模型加载路径"): True,
+                    },
+                ),
+            },
+            takeEffect = True
+        )
 
         self.ui.Page_TTS.addSubPage(
-            QCA.translate('MainWindow', 'GPT-SoVITS'), subPage_TTS_GPTSoVITS
+            QCA.translate('MainWindow', 'GPT-SoVITS'), subPage_tts_gptsovits
         )
 
         # ParamsManager - VITS
@@ -2847,9 +3122,10 @@ class MainWindow(Window_MainWindow):
                 )
             ]
         )
+        self.task_voiceConverting_vits = Execute_Voice_Converting_VITS(coreDir)
         subPage_TTS_VITS.setExecutor(
             consoleWidget = self.ui.Frame_Console,
-            method = Execute_Voice_Converting_VITS.execute,
+            executeMethod = self.task_voiceTraining_vits.execute,
             paramTargets = [
                 subPage_TTS_VITS.findChildWidget("语音合成参数", None, "配置加载路径"),
                 subPage_TTS_VITS.findChildWidget("语音合成参数", None, "G模型加载路径"),
@@ -2861,6 +3137,7 @@ class MainWindow(Window_MainWindow):
                 subPage_TTS_VITS.findChildWidget("语音合成参数", "高级设置", "整体语速"),
                 TTS_VITS_AudioPathSave
             ],
+            terminateMethod = self.task_voiceTraining_vits.terminate,
             successEvents = [
                 lambda: self.showMask(True, "正在加载播放器"),
                 lambda: self.showTTSResult(
@@ -3010,9 +3287,9 @@ class MainWindow(Window_MainWindow):
                         paramsManager_ASR_Whisper.resetSettings(),
                         paramsManager_DAT_GPTSoVITS.resetSettings(),
                         paramsManager_DAT_VITS.resetSettings(),
-                        paramsManager_Train_GPTSoVITS.resetSettings(),
+                        paramsManager_train_gptsovits.resetSettings(),
                         paramsManager_Train_VITS.resetSettings(),
-                        paramsManager_TTS_GPTSoVITS.resetSettings(),
+                        paramsManager_tts_gptsovits.resetSettings(),
                         paramsManager_TTS_VITS.resetSettings()
                     )
                 ) : True
@@ -3052,7 +3329,7 @@ class MainWindow(Window_MainWindow):
                 ) : True,
                 lambda: Function_ParamsSynchronizer(
                     LineEdit_DAT_GPTSoVITS_FileListPath,
-                    {LineEdit_DAT_GPTSoVITS_FileListPath: subPage_train_GPTSoVITS.findChildWidget("输入参数", None, "训练集文本路径", LineEditBase)}
+                    {LineEdit_DAT_GPTSoVITS_FileListPath: subPage_train_gptsovits.findChildWidget("输入参数", None, "训练集文本路径", LineEditBase)}
                 ) : True,
                 lambda: Function_ParamsSynchronizer(
                     [LineEdit_DAT_VITS_FileListPathTraining, LineEdit_DAT_VITS_FileListPathValidation],
@@ -3171,7 +3448,7 @@ class MainWindow(Window_MainWindow):
 
         self.ui.Label_Train_GPTSoVITS_OutputRoot.setText(QCA.translate('MainWindow', "GPTSoVITS训练输出目录"))
         Train_GPTSoVITS_OutputRoot_Default = Path(outputDir).joinpath('模型训练结果', 'GPT-SoVITS').as_posix()
-        paramsManager_Train_GPTSoVITS.setParam(
+        paramsManager_train_gptsovits.setParam(
             widget = self.ui.LineEdit_Train_GPTSoVITS_OutputRoot,
             section = 'Output params',
             option = 'Output_Root',
@@ -3184,7 +3461,7 @@ class MainWindow(Window_MainWindow):
         )
         self.ui.Button_Train_GPTSoVITS_OutputRoot_MoreActions.setMenu(
             actionEvents = {
-                "重置": lambda: paramsManager_Train_GPTSoVITS.resetParam(self.ui.LineEdit_Train_GPTSoVITS_OutputRoot),
+                "重置": lambda: paramsManager_train_gptsovits.resetParam(self.ui.LineEdit_Train_GPTSoVITS_OutputRoot),
                 "复制": lambda: QApplication.clipboard().setText(self.ui.LineEdit_Train_GPTSoVITS_OutputRoot.text())
             }
         )
@@ -3291,12 +3568,15 @@ class MainWindow(Window_MainWindow):
             lambda Task, Status: self.ui.Label_ToolsStatus.setText(
                 f"工具状态：{'忙碌' if Status == TaskStatus.Started else '空闲'}"
             ) if Task in [
-                Execute_Audio_Processing.execute.__qualname__,
-                Execute_Voice_Identifying_VPR.__qualname__,
-                Execute_Voice_Transcribing_Whisper.__qualname__,
-                Execute_Dataset_Creating_VITS.__qualname__,
-                Execute_Voice_Training_VITS.__qualname__,
-                Execute_Voice_Converting_VITS.__qualname__
+                self.task_audioProcessing.execute.__qualname__,
+                self.task_voiceIdentifying_vpr.execute.__qualname__,
+                self.task_voiceTranscribing_whisper.execute.__qualname__,
+                self.task_datasetCreating_gptsovits.execute.__qualname__,
+                self.task_datasetCreating_vits.execute.__qualname__,
+                self.task_voiceTraining_gptsovits.execute.__qualname__,
+                self.task_voiceTraining_vits.execute.__qualname__,
+                self.task_voiceConverting_gptsovits.execute.__qualname__,
+                self.task_voiceConverting_vits.execute.__qualname__
             ] else None
         )
 

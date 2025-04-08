@@ -101,16 +101,17 @@ def Function_AddToTreeWidget(
 
 def Function_SetChildWidgetsVisibility(
     container: QWidget,
-    childWidgets: list[Optional[QWidget]],
-    setVisible: bool,
+    childWidgetsVisibility: dict,
     adjustContainer: bool = True
 ):
     '''
     Function to set the visibility of child-widgets
     '''
-    childWidgets = [ChildWidget for ChildWidget in childWidgets if ChildWidget is not None]
-    for ChildWidget in childWidgets:
-        ChildWidget.setVisible(setVisible)
+    for childWidget, visibility in childWidgetsVisibility.items():
+        if childWidget is None:
+            continue
+        childWidget.setVisible(visibility)
+    setVisible = True in childWidgetsVisibility.values()
     if adjustContainer:
         CurrentHeight = container.height()
         #container.updateGeometry()
@@ -143,6 +144,21 @@ def Function_ConfigureCheckBox(
     )
 
     EasyUtils.runEvents([event for event, takeEffect in (checkedEvents if checkBox.isChecked() else uncheckedEvents).items() if takeEffect])
+
+
+def Function_ConfigureComboBox(
+    comboBox: QComboBox,
+    textChangedEvents: dict = {},
+    takeEffect = False
+):
+    '''
+    Function to configure checkbox
+    '''
+    comboBox.currentTextChanged.connect(
+        lambda text: EasyUtils.runEvents(EasyUtils.toIterable(textChangedEvents[text]))
+    )
+
+    EasyUtils.runEvents(EasyUtils.toIterable(textChangedEvents[comboBox.currentText()])) if takeEffect else None
 
 ##############################################################################################################################
 
@@ -553,12 +569,11 @@ def Function_SetMethodExecutor(
         lambda: (
             Function_AnimateFrame(consoleWidget, minHeight = 0, maxHeight = 210, mode = "Extend") if consoleWidget else None,
             Function_AnimateProgressBar(progressBar, isTaskAlive = True) if progressBar else None,
-            Function_AnimateStackedWidget(QFunc.findParent(executeButton, QStackedWidget), target = 1) if terminateButton else None
+            Function_AnimateStackedWidget(QFunc.findParent(executeButton, QStackedWidget), target = 1) if terminateButton else None,
         )
     )
     workerManager.signals.error.connect(
         lambda err: (
-            EasyUtils.runEvents(successEvents) if successEvents is not None else None,
             MessageBoxBase.pop(parentWindow, QMessageBox.Warning, "Failure", "发生异常", err)
         )
     )
@@ -566,7 +581,8 @@ def Function_SetMethodExecutor(
         lambda: (
             Function_AnimateFrame(consoleWidget, minHeight = 0, maxHeight = 210, mode = "Reduce") if consoleWidget else None,
             Function_AnimateProgressBar(progressBar, isTaskAlive = False) if progressBar else None,
-            Function_AnimateStackedWidget(QFunc.findParent(executeButton, QStackedWidget), target = 0) if terminateButton else None
+            Function_AnimateStackedWidget(QFunc.findParent(executeButton, QStackedWidget), target = 0) if terminateButton else None,
+            EasyUtils.runEvents(successEvents) if successEvents is not None else None
         )
     )
 
