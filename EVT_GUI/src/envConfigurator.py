@@ -73,14 +73,14 @@ class Aria2_Installer:
 
         self.stopEvent = Event()
 
-    def Check_Aria2(self):
+    def _checkAria2(self):
         try:
             Aria2Version = str(EasyUtils.runCMD([['aria2c', '-v']], decodeResult = True)[0])
             return Aria2Version
         except OSError:
             return False
 
-    def Install_Aria2(self):
+    def _installAria2(self):
         if platform.system() == 'Windows':
             URL = "https://github.com/aria2/aria2/releases/download/release-1.37.0/aria2-1.37.0-win-64bit-build1.zip"
             Dir_Download = './'
@@ -109,13 +109,13 @@ class Aria2_Installer:
                 return
             EasyUtils.runCMD(['sudo apt-get update', 'sudo apt-get install aria2'])
 
-    def Execute_Aria2_Installation(self):
-        Result = self.Check_Aria2()
-        if Result == False:
+    def executeAria2Installation(self):
+        result = self._checkAria2()
+        if result == False:
             EnvConfiguratorSignals.Signal_Aria2Undetected.emit()
             EnvConfiguratorSignals.Signal_Aria2Status.emit("Installing Aria2. Please wait...")
             try:
-                self.Install_Aria2()
+                self._installAria2()
                 EnvConfiguratorSignals.Signal_Aria2Installed.emit()
                 EnvConfiguratorSignals.Signal_Aria2Status.emit("Successfully installed!")
             except Exception as e:
@@ -123,10 +123,10 @@ class Aria2_Installer:
                 EnvConfiguratorSignals.Signal_Aria2Status.emit("Installation failed:(")
         else:
             EnvConfiguratorSignals.Signal_Aria2Detected.emit()
-            EnvConfiguratorSignals.Signal_Aria2Status.emit(f"Aria2 detected. Version: {Result}")
+            EnvConfiguratorSignals.Signal_Aria2Status.emit(f"Aria2 detected. Version: {result}")
 
     def execute(self):
-        self.Execute_Aria2_Installation()
+        self.executeAria2Installation()
 
     def terminate(self):
         self.stopEvent.set()
@@ -140,14 +140,14 @@ class FFmpeg_Installer:
 
         self.stopEvent = Event()
 
-    def Check_FFmpeg(self):
+    def _checkFFmpeg(self):
         try:
             FFmpegVersion = str(EasyUtils.runCMD([['ffmpeg', '-version']], decodeResult = True)[0])
             return FFmpegVersion
         except OSError:
             return False
 
-    def Install_FFmpeg(self):
+    def _installFFmpeg(self):
         if platform.system() == 'Windows':
             URL = "https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/ffmpeg-master-latest-win64-gpl-shared.zip"
             Dir_Download = './'
@@ -177,13 +177,13 @@ class FFmpeg_Installer:
                 return
             EasyUtils.runCMD(['sudo apt-get update', 'sudo apt-get install ffmpeg'])
 
-    def Execute_FFmpeg_Installation(self):
-        Result = self.Check_FFmpeg()
-        if Result == False:
+    def executeFFmpegInstallation(self):
+        result = self._checkFFmpeg()
+        if result == False:
             EnvConfiguratorSignals.Signal_FFmpegUndetected.emit()
             EnvConfiguratorSignals.Signal_FFmpegStatus.emit("Installing FFmpeg. Please wait...")
             try:
-                self.Install_FFmpeg()
+                self._installFFmpeg()
                 EnvConfiguratorSignals.Signal_FFmpegInstalled.emit()
                 EnvConfiguratorSignals.Signal_FFmpegStatus.emit("Successfully installed!")
             except Exception as e:
@@ -191,10 +191,10 @@ class FFmpeg_Installer:
                 EnvConfiguratorSignals.Signal_FFmpegStatus.emit("Installation failed:(")
         else:
             EnvConfiguratorSignals.Signal_FFmpegDetected.emit()
-            EnvConfiguratorSignals.Signal_FFmpegStatus.emit(f"FFmpeg detected. Version: {Result}")
+            EnvConfiguratorSignals.Signal_FFmpegStatus.emit(f"FFmpeg detected. Version: {result}")
 
     def execute(self):
-        self.Execute_FFmpeg_Installation()
+        self.executeFFmpegInstallation()
 
     def terminate(self):
         self.stopEvent.set()
@@ -208,14 +208,14 @@ class GCC_Installer:
 
         self.stopEvent = Event()
         
-    def Check_GCC(self):
+    def _checkGCC(self):
         try:
             GCCVersion = str(EasyUtils.runCMD([['gcc', '--version']], decodeResult = True)[0])
             return GCCVersion
         except OSError:
             return False
 
-    def Install_GCC(self):
+    def _installGCC(self):
         if platform.system() == 'Windows':
             URL = "https://github.com/Spr-Aachen/EVT-Resources/raw/main/Environment%20Dependency/GCC/MinGW.zip"
             Dir_Download = './'
@@ -245,13 +245,13 @@ class GCC_Installer:
                 return
             EasyUtils.runCMD(['sudo apt-get update', 'sudo apt-get install build-essential'])
 
-    def Execute_GCC_Installation(self):
-        Result = self.Check_GCC()
-        if Result == False:
+    def executeGCCInstallation(self):
+        result = self._checkGCC()
+        if result == False:
             EnvConfiguratorSignals.Signal_GCCUndetected.emit()
             EnvConfiguratorSignals.Signal_GCCStatus.emit("Installing GCC. Please wait...")
             try:
-                self.Install_GCC()
+                self._installGCC()
                 EnvConfiguratorSignals.Signal_GCCInstalled.emit()
                 EnvConfiguratorSignals.Signal_GCCStatus.emit("Successfully installed!")
             except Exception as e:
@@ -259,10 +259,10 @@ class GCC_Installer:
                 EnvConfiguratorSignals.Signal_GCCStatus.emit("Installation failed:(")
         else:
             EnvConfiguratorSignals.Signal_GCCDetected.emit()
-            EnvConfiguratorSignals.Signal_GCCStatus.emit(f"GCC detected. Version: {Result}")
+            EnvConfiguratorSignals.Signal_GCCStatus.emit(f"GCC detected. Version: {result}")
 
     def execute(self):
-        self.Execute_GCC_Installation()
+        self.executeGCCInstallation()
 
     def terminate(self):
         self.stopEvent.set()
@@ -276,14 +276,14 @@ class CMake_Installer:
 
         self.stopEvent = Event()
         
-    def Check_CMake(self):
+    def _checkCMake(self):
         try:
             CMakeVersion = str(EasyUtils.runCMD([['cmake', '--version']], decodeResult = True)[0])
             return CMakeVersion
         except OSError:
             return False
 
-    def Install_CMake(self):
+    def installCMake(self):
         if platform.system() == 'Windows':
             URL = "https://github.com/Kitware/CMake/releases/download/v3.27.0/cmake-3.27.0-windows-x86_64.zip"
             Dir_Download = './'
@@ -313,22 +313,22 @@ class CMake_Installer:
                 return
             EasyUtils.runCMD(['sudo apt-get update', 'sudo apt-get install build-essential'])
 
-    def Execute_CMake_Installation(self):
+    def executeCMakeInstallation(self):
         PathList = os.environ['PATH'].split(os.pathsep)
-        for Index, Path in enumerate(PathList):
+        for index, Path in enumerate(PathList):
             if 'mingw' in Path.lower() and 'bin' in Path.lower():
                 self.MinGW_Bin_Path = Path
                 break
-            elif Index == len(PathList) - 1:
+            elif index == len(PathList) - 1:
                 self.MinGW_Bin_Path = Path(f"{os.getenv('SystemDrive')}/MinGW/bin").__str__()
         #shutil.copy2(os.path.join(self.MinGW_Bin_Path, 'mingw32-make.exe'), os.path.join(self.MinGW_Bin_Path, 'make.exe')) if not os.path.isfile(os.path.join(self.MinGW_Bin_Path, 'make.exe')) else None
 
-        Result = self.Check_CMake()
-        if Result == False:
+        result = self._checkCMake()
+        if result == False:
             EnvConfiguratorSignals.Signal_CMakeUndetected.emit()
             EnvConfiguratorSignals.Signal_CMakeStatus.emit("Installing CMake. Please wait...")
             try:
-                self.Install_CMake()
+                self.installCMake()
                 EnvConfiguratorSignals.Signal_CMakeInstalled.emit()
                 EnvConfiguratorSignals.Signal_CMakeStatus.emit("Successfully installed!")
             except Exception as e:
@@ -336,14 +336,14 @@ class CMake_Installer:
                 EnvConfiguratorSignals.Signal_CMakeStatus.emit("Installation failed:(")
         else:
             EnvConfiguratorSignals.Signal_CMakeDetected.emit()
-            EnvConfiguratorSignals.Signal_CMakeStatus.emit(f"CMake detected. Version: {Result}")
+            EnvConfiguratorSignals.Signal_CMakeStatus.emit(f"CMake detected. Version: {result}")
 
         EasyUtils.runCMD(['set CMAKE_MAKE_PROGRAM={}'.format(os.path.join(self.MinGW_Bin_Path, 'mingw32-make.exe'))])
         EasyUtils.runCMD(['set CC={}'.format(os.path.join(self.MinGW_Bin_Path, 'gcc.exe'))])
         EasyUtils.runCMD(['set CXX={}'.format(os.path.join(self.MinGW_Bin_Path, 'g++.exe'))])
 
     def execute(self):
-        self.Execute_CMake_Installation()
+        self.executeCMakeInstallation()
 
     def terminate(self):
         self.stopEvent.set()
@@ -357,7 +357,7 @@ class Python_Installer:
 
         self.stopEvent = Event()
 
-    def Check_Python(self):
+    def _checkPython(self):
         '''
         try:
             Version_Current = "%d.%d.%d" % (sys.version_info.major, sys.version_info.minor, sys.version_info.micro)
@@ -377,7 +377,7 @@ class Python_Installer:
         except OSError:
             return False
 
-    def Install_Python(self, Version_Download: str):
+    def _installPython(self, Version_Download: str):
         if platform.system() == 'Windows':
             URL = "https://www.python.org/ftp/python/{0}/python-{0}.exe".format(Version_Download)
             Dir_Download = './'
@@ -399,13 +399,13 @@ class Python_Installer:
                 return
             EasyUtils.runCMD(['sudo apt-get update', 'sudo apt-get install -y python3'])
 
-    def Execute_Python_Installation(self, Version_Download: str):
-        Result = self.Check_Python()
-        if Result == False:
+    def executePythonInstallation(self, Version_Download: str):
+        result = self._checkPython()
+        if result == False:
             EnvConfiguratorSignals.Signal_PythonUndetected.emit()
             EnvConfiguratorSignals.Signal_PythonStatus.emit("Installing Python. Please wait...")
             try:
-                self.Install_Python(Version_Download)
+                self._installPython(Version_Download)
                 EnvConfiguratorSignals.Signal_PythonInstalled.emit()
                 EnvConfiguratorSignals.Signal_PythonStatus.emit("Successfully installed!")
             except Exception as e:
@@ -413,10 +413,10 @@ class Python_Installer:
                 EnvConfiguratorSignals.Signal_PythonStatus.emit("Installation failed:(")
         else:
             EnvConfiguratorSignals.Signal_PythonDetected.emit()
-            EnvConfiguratorSignals.Signal_PythonStatus.emit(f"Python detected. Version: {Result}")
+            EnvConfiguratorSignals.Signal_PythonStatus.emit(f"Python detected. Version: {result}")
 
     def execute(self, version: str):
-        self.Execute_Python_Installation(version)
+        self.executePythonInstallation(version)
 
     def terminate(self):
         self.stopEvent.set()
@@ -430,76 +430,76 @@ class PyReqs_Installer:
 
         self.stopEvent = Event()
 
-        self.EmitFlag = True
+        self.emitFlag = True
 
-    def Check_PyReq(self, PackageName: str, PackageVersionReqs: str, SystemReqs: str):
+    def _checkPyReq(self, packageName: str, packageVersionReqs: str, systemReqs: str):
         '''
         try:
-            Version_Current = pkg_resources.get_distribution(Package).version #exec("import {0}".format(Package))
-            Location_Current = pkg_resources.get_distribution(Package).location
+            Version_Current = pkg_resources.get_distribution(package).version #exec("import {0}".format(package))
+            Location_Current = pkg_resources.get_distribution(package).location
             return Version_Current#, Location_Current
         except pkg_resources.DistributionNotFound: #except ModuleNotFoundError:
             return False
         '''
         try:
-            PackageInfos = str(EasyUtils.runCMD([['pip', 'show', PackageName]], decodeResult = True)[0])
-            if PackageInfos != 'None':
-                CurrentVersion = None
-                for PackageInfo in PackageInfos.splitlines():
-                    if PackageInfo.startswith('Version:'):
-                        CurrentVersion = PackageInfo[len('Version:'):].strip()
+            packageInfos = str(EasyUtils.runCMD([['pip', 'show', packageName]], decodeResult = True)[0])
+            if packageInfos != 'None':
+                currentVersion = None
+                for packageInfo in packageInfos.splitlines():
+                    if packageInfo.startswith('Version:'):
+                        currentVersion = packageInfo[len('Version:'):].strip()
                         continue
-                CurrentVersion = PackageInfos if CurrentVersion is None else CurrentVersion
-                return CurrentVersion if EasyUtils.isVersionSatisfied(CurrentVersion, PackageVersionReqs) or not EasyUtils.isSystemSatisfied(SystemReqs) else False
+                currentVersion = packageInfos if currentVersion is None else currentVersion
+                return currentVersion if EasyUtils.isVersionSatisfied(currentVersion, packageVersionReqs) or not EasyUtils.isSystemSatisfied(systemReqs) else False
             else:
-                return False
+                return False if EasyUtils.isSystemSatisfied(systemReqs) else None
         except OSError:
             return False
 
-    def Install_PyReq(self, Package: str):
-        MirrorList = ['https://pypi.org/simple', 'https://pypi.tuna.tsinghua.edu.cn/simple']
-        for Mirror in MirrorList:
+    def _installPyReq(self, package: str):
+        mirrorList = ['https://pypi.org/simple', 'https://pypi.tuna.tsinghua.edu.cn/simple']
+        for mirror in mirrorList:
             if self.stopEvent.isSet():
                 return
-            _, _, ReturnCode = EasyUtils.runCMD([f'pip3 install {Package} --index-url {Mirror}'])
+            _, _, ReturnCode = EasyUtils.runCMD([f'pip3 install {package} --index-url {mirror}'])
             if ReturnCode == 0:
                 break
 
-    def Execute_PyReqs_Installation(self, FilePath: str):
-        MissingRequirementList = []
-        with open(FilePath, 'r') as f:
-            Requirements = f.read().splitlines() #Requirements = f.readlines()
-        for Index, Requirement in enumerate(Requirements):
-            if not (Requirement.startswith('#') or Requirement.strip() == ''):
-                SplitRequirement = re.split(';', Requirement, 1)
-                Package = SplitRequirement[0]
-                SystemReqs = SplitRequirement[1] if len(SplitRequirement) == 2 else None
-                SplitPackage = re.split('=|>|<', Package, 1)
-                PackageName = SplitPackage[0]
-                PackageVersionReqs = Package[len(PackageName):] if len(SplitPackage) == 2 else None
-                Result = self.Check_PyReq(PackageName, PackageVersionReqs, SystemReqs)
-                if Result == False:
-                    if self.EmitFlag == True:
+    def executePyReqsInstallation(self, filePath: str):
+        missingRequirementList = []
+        with open(filePath, 'r') as f:
+            requirements = f.read().splitlines() #requirements = f.readlines()
+        for index, requirement in enumerate(requirements):
+            if not (requirement.startswith('#') or requirement.strip() == ''):
+                splitRequirement = re.split(';', requirement, 1)
+                package = splitRequirement[0]
+                systemReqs = splitRequirement[1] if len(splitRequirement) == 2 else None
+                splitPackage = re.split('!|=|>|<', package, 1)
+                packageName = splitPackage[0]
+                packageVersionReqs = package[len(packageName):] if len(splitPackage) == 2 else None
+                result = self._checkPyReq(packageName, packageVersionReqs, systemReqs)
+                if result == False:
+                    if self.emitFlag == True:
                         EnvConfiguratorSignals.Signal_PyReqsUndetected.emit()
-                        self.EmitFlag = False
-                    MissingRequirementList.append(Package)
+                        self.emitFlag = False
+                    missingRequirementList.append(package)
                 else:
-                    EnvConfiguratorSignals.Signal_PyReqsDetected.emit() if Index + 1 == len(Requirements) and MissingRequirementList == [] else None
-                    EnvConfiguratorSignals.Signal_PyReqsStatus.emit(f"{PackageName} detected. Version: {Result}")
+                    EnvConfiguratorSignals.Signal_PyReqsDetected.emit() if index + 1 == len(requirements) and missingRequirementList == [] else None
+                    EnvConfiguratorSignals.Signal_PyReqsStatus.emit(f"{packageName} detected. Version: {result}") if result is not None else None
             else:
                 continue
-        for Index, MissingRequirement in enumerate(MissingRequirementList):
-            EnvConfiguratorSignals.Signal_PyReqsStatus.emit(f"Installing {MissingRequirement}. Please wait...")
+        for index, missingRequirement in enumerate(missingRequirementList):
+            EnvConfiguratorSignals.Signal_PyReqsStatus.emit(f"Installing {missingRequirement}. Please wait...")
             try:
-                self.Install_PyReq(MissingRequirement)
-                EnvConfiguratorSignals.Signal_PyReqsInstalled.emit() if Index + 1 == len(MissingRequirementList) else None
-                EnvConfiguratorSignals.Signal_PyReqsStatus.emit("Successfully installed!") if Index + 1 == len(MissingRequirementList) else None
+                self._installPyReq(missingRequirement)
+                EnvConfiguratorSignals.Signal_PyReqsInstalled.emit() if index + 1 == len(missingRequirementList) else None
+                EnvConfiguratorSignals.Signal_PyReqsStatus.emit(f"{missingRequirement} is successfully installed!") if index + 1 == len(missingRequirementList) else None
             except Exception as e:
                 EnvConfiguratorSignals.Signal_PyReqsInstallFailed.emit(e)
-                EnvConfiguratorSignals.Signal_PyReqsStatus.emit("Installation failed:(")
+                EnvConfiguratorSignals.Signal_PyReqsStatus.emit(f"{missingRequirement} installation failed:(")
 
     def execute(self, filePath: str):
-        self.Execute_PyReqs_Installation(filePath)
+        self.executePyReqsInstallation(filePath)
 
     def terminate(self):
         self.stopEvent.set()
@@ -513,13 +513,13 @@ class Pytorch_Installer:
 
         self.stopEvent = Event()
 
-        self.EmitFlag = True
+        self.emitFlag = True
 
-    def Check_Pytorch(self, Package: str):
+    def _checkPytorch(self, package: str):
         '''
         try:
-            Version_Current = version.parse(pkg_resources.get_distribution(Package).version) #exec("import {0}".format(Package))
-            if Package == 'torch':
+            Version_Current = version.parse(pkg_resources.get_distribution(package).version) #exec("import {0}".format(package))
+            if package == 'torch':
                 return Version_Current if Version_Current.major >= 2 or (Version_Current.major == 1 and Version_Current.minor >= 13) else False
             else:
                 return Version_Current
@@ -527,17 +527,17 @@ class Pytorch_Installer:
             return False
         '''
         try:
-            PackageInfos = str(EasyUtils.runCMD([['pip', 'show', Package]], decodeResult = True)[0])
-            if PackageInfos != 'None':
-                return PackageInfos
+            packageInfos = str(EasyUtils.runCMD([['pip', 'show', package]], decodeResult = True)[0])
+            if packageInfos != 'None':
+                return packageInfos
             else:
                 return False
         except OSError:
             return False
 
-    def Install_Pytorch(self, Package: str, Reinstall: bool):
+    def _installPytorch(self, package: str, Reinstall: bool):
         DisplayCommand = 'cmd /c start cmd /k ' if platform.system() == 'Windows' else 'x-terminal-emulator -e '
-        if Package in ('torch', 'torchvision', 'torchaudio'):
+        if package in ('torch', 'torchvision', 'torchaudio'):
             if self.stopEvent.isSet():
                 return
             try:
@@ -546,50 +546,50 @@ class Pytorch_Installer:
                 raise Exception("Failed to get NVIDIA GPUs' info.")
             CudaList = [117, 118, 121]
             CudaVersion = min(CudaList, key = lambda Cuda: abs(Cuda - pynvml.nvmlSystemGetCudaDriverVersion()//100))
-            MirrorList = [f'https://download.pytorch.org/whl/cu{CudaVersion}', '']
-            for Mirror in MirrorList:
+            mirrorList = [f'https://download.pytorch.org/whl/cu{CudaVersion}', '']
+            for mirror in mirrorList:
                 if self.stopEvent.isSet():
                     return
-                Result = EasyUtils.runCMD([
-                    DisplayCommand if Reinstall else '' + f'pip3 install {Package} --index-url {Mirror}' + '--force-reinstall' if Reinstall else ''
+                result = EasyUtils.runCMD([
+                    DisplayCommand if Reinstall else '' + f'pip3 install {package} --index-url {mirror}' + '--force-reinstall' if Reinstall else ''
                 ])
-                if Result.returncode == 0:
+                if result.returncode == 0:
                     break
         else:
             if self.stopEvent.isSet():
                 return
             EasyUtils.runCMD(
-                [DisplayCommand if Reinstall else '' + f'pip3 uninstall {Package} -y'] if Reinstall else [] +
-                [DisplayCommand if Reinstall else '' + f'pip3 install {Package} -y']
+                [DisplayCommand if Reinstall else '' + f'pip3 uninstall {package} -y'] if Reinstall else [] +
+                [DisplayCommand if Reinstall else '' + f'pip3 install {package} -y']
             )
 
-    def Execute_Pytorch_Installation(self, Version: Optional[str] = None, Reinstall: bool = False):
+    def executePytorchInstallation(self, Version: Optional[str] = None, Reinstall: bool = False):
         PackageList = ['torch', 'torchvision', 'torchaudio', 'pytorch-lightning']
         VersionDict = {
             '2.0.1': {'torch': '2.0.1', 'torchvision': '0.15.2', 'torchaudio': '2.0.2', 'pytorch-lightning': '2.1'},
             '2.2.2': {'torch': '2.2.2', 'torchvision': '0.17.2', 'torchaudio': '2.2.2', 'pytorch-lightning': '2.2'}
         }.get(Version)
-        for Index, Package in enumerate(PackageList if VersionDict is None else [f'{Package}=={VersionDict[Package]}' for Package in PackageList]):
-            Result = self.Check_Pytorch(Package)
-            if Result == False:
-                if self.EmitFlag == True:
+        for index, package in enumerate(PackageList if VersionDict is None else [f'{package}=={VersionDict[package]}' for package in PackageList]):
+            result = self._checkPytorch(package)
+            if result == False:
+                if self.emitFlag == True:
                     EnvConfiguratorSignals.Signal_PytorchUndetected.emit()
-                    self.EmitFlag = False
-                EnvConfiguratorSignals.Signal_PytorchStatus.emit(f"Installing {Package}. Please wait...")
+                    self.emitFlag = False
+                EnvConfiguratorSignals.Signal_PytorchStatus.emit(f"Installing {package}. Please wait...")
                 try:
-                    self.Install_Pytorch(Package, Reinstall = False)
-                    EnvConfiguratorSignals.Signal_PytorchInstalled.emit() if Index + 1 == len(PackageList) else None
-                    EnvConfiguratorSignals.Signal_PytorchStatus.emit("Successfully installed!") if Index + 1 == len(PackageList) else None
+                    self._installPytorch(package, Reinstall = False)
+                    EnvConfiguratorSignals.Signal_PytorchInstalled.emit() if index + 1 == len(PackageList) else None
+                    EnvConfiguratorSignals.Signal_PytorchStatus.emit(f"{package} is successfully installed!") if index + 1 == len(PackageList) else None
                 except Exception as e:
                     EnvConfiguratorSignals.Signal_PytorchInstallFailed.emit(e)
-                    EnvConfiguratorSignals.Signal_PytorchStatus.emit("Installation failed:(")
+                    EnvConfiguratorSignals.Signal_PytorchStatus.emit(f"{package} installation failed:(")
             else:
-                self.Install_Pytorch(Package, Reinstall) if Reinstall else None
-                EnvConfiguratorSignals.Signal_PytorchDetected.emit() if Index + 1 == len(PackageList) else None
-                EnvConfiguratorSignals.Signal_PytorchStatus.emit(f"{Package} detected. Version: {Result}")
+                self._installPytorch(package, Reinstall) if Reinstall else None
+                EnvConfiguratorSignals.Signal_PytorchDetected.emit() if index + 1 == len(PackageList) else None
+                EnvConfiguratorSignals.Signal_PytorchStatus.emit(f"{package} detected. Version: {result}")
 
     def execute(self, version: Optional[str] = None, reinstall: bool = False):
-        self.Execute_Pytorch_Installation(version, reinstall)
+        self.executePytorchInstallation(version, reinstall)
 
     def terminate(self):
         self.stopEvent.set()
