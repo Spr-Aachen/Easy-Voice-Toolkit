@@ -357,9 +357,9 @@ class SubToolPage(SubPage):
     def setExecutor(self,
         consoleWidget: QWidget,
         executeMethod: object,
+        executeParamTargets: list,
         terminateMethod: object,
-        paramTargets: list,
-        successEvents: list,
+        finishedEvents: dict,
         threadPool,
     ):
         self.executeButton.setText(QCA.translate('MainWindow', "执行"))
@@ -371,7 +371,7 @@ class SubToolPage(SubPage):
                     if target is not None:
                         return target
             return paramTarget
-        executeParams = [_findParamWidget(paramTarget) for paramTarget in paramTargets] #executeParams = list(self.paramWidgets.keys())
+        executeParams = [_findParamWidget(paramTarget) for paramTarget in executeParamTargets] #params = list(self.paramWidgets.keys())
         emptyAllowed = [paramWidget for paramWidget in self.paramWidgets.keys() if self.paramWidgets[paramWidget] == True]
         executeParams = {executeParam: executeParam in emptyAllowed for executeParam in executeParams}
         Function_SetMethodExecutor(
@@ -382,7 +382,8 @@ class SubToolPage(SubPage):
             terminateButton = self.terminateButton,
             progressBar = self.progressBar,
             consoleWidget = consoleWidget,
-            successEvents = successEvents,
+            finishedEvents = finishedEvents,
+            autoDelete = False,
             threadPool = threadPool,
             parentWindow = self,
         )

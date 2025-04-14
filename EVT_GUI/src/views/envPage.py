@@ -150,7 +150,7 @@ class SubEnvPage_Manager(SubPage):
     def addComboBoxFrame(self,
         rootItemText: Optional[str] = None, toolBoxText: Optional[str] = None, text: str = ..., toolTip: Optional[str] = None,
         items: list = ...,
-        executorText: str = ..., executeMethod: object = ..., paramTargets: list[QObject] = [], terminateMethod: object = ..., threadPool = ...,
+        executorText: str = ..., executeMethod: object = ..., executeParamTargets: list[QObject] = [], terminateMethod: object = ..., threadPool = ...,
     ):
         titleLabel = LabelBase(self)
         titleLabel.setStyleSheet(u"QLabel {\n"
@@ -175,7 +175,7 @@ class SubEnvPage_Manager(SubPage):
         Function_SetMethodExecutor(
             executeButton = executeButton,
             executeMethod = executeMethod,
-            executeParams = [paramTarget() if hasattr(paramTarget, '__call__') else paramTarget for paramTarget in paramTargets],
+            executeParams = [paramTarget() if hasattr(paramTarget, '__call__') else paramTarget for paramTarget in executeParamTargets],
             terminateMethod = terminateMethod,
             threadPool = threadPool,
             parentWindow = self,

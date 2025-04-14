@@ -498,6 +498,7 @@ class TaskStatus:
     Started = 'Started'
     Finished = 'Finished'
     Failed = 'Failed'
+    Succeeded = 'Succeeded'
 
 
 class WorkerManager(QWorker.WorkerManager):
@@ -505,9 +506,10 @@ class WorkerManager(QWorker.WorkerManager):
         executeMethod: object = ...,
         executeParams: Optional[dict] = None,
         terminateMethod: Optional[object] = None,
+        autoDelete: bool = True,
         threadPool: Optional[QThreadPool] = None,
     ):
-        super().__init__(executeMethod, terminateMethod, threadPool)
+        super().__init__(executeMethod, terminateMethod, autoDelete, threadPool)
 
         self.executeMethodName = executeMethod.__qualname__
         self.executeParams = executeParams
@@ -557,13 +559,19 @@ def Function_SetMethodExecutor(
     terminateButton: Optional[QAbstractButton] = None,
     progressBar: Optional[QProgressBar] = None,
     consoleWidget: Optional[QWidget] = None,
-    successEvents: Optional[list] = None,
+    finishedEvents: Optional[dict] = None,
+    autoDelete: bool = True,
     threadPool: Optional[QThreadPool] = None,
     parentWindow: Optional[QWidget] = None,
 ):
     '''
     '''
-    workerManager = WorkerManager(executeMethod, executeParams, terminateMethod, threadPool)
+    workerManager = WorkerManager(executeMethod, executeParams, terminateMethod, autoDelete, threadPool)
+
+    isErrorOccurred = False
+    def _setErrorOccuredFlag():
+        global isErrorOccurred
+        isErrorOccurred = True
 
     workerManager.signals.started.connect(
         lambda: (
@@ -574,7 +582,9 @@ def Function_SetMethodExecutor(
     )
     workerManager.signals.error.connect(
         lambda err: (
-            MessageBoxBase.pop(parentWindow, QMessageBox.Warning, "Failure", "发生异常", err)
+            _setErrorOccuredFlag(),
+            MessageBoxBase.pop(parentWindow, QMessageBox.Warning, "Failure", "发生异常", err),
+            EasyUtils.runEvents([event for event, status in finishedEvents.items() if status == TaskStatus.Failed]) if finishedEvents is not None else None,
         )
     )
     workerManager.signals.finished.connect(
@@ -582,7 +592,7 @@ def Function_SetMethodExecutor(
             Function_AnimateFrame(consoleWidget, minHeight = 0, maxHeight = 210, mode = "Reduce") if consoleWidget else None,
             Function_AnimateProgressBar(progressBar, isTaskAlive = False) if progressBar else None,
             Function_AnimateStackedWidget(QFunc.findParent(executeButton, QStackedWidget), target = 0) if terminateButton else None,
-            EasyUtils.runEvents(successEvents) if successEvents is not None else None
+            EasyUtils.runEvents([event for event, status in finishedEvents.items() if (not isErrorOccurred and status == TaskStatus.Succeeded) or TaskStatus.Finished]) if finishedEvents is not None else None,
         )
     )
 
