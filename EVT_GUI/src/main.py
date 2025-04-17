@@ -2196,14 +2196,14 @@ class MainWindow(Window_MainWindow):
             text = QCA.translate('MainWindow', "半精度训练\n通过混合了float16精度的训练方式减小显存占用。"),
             section = 'GPT-SoVITS params',
             option = 'half_precision',
-            defaultValue = False
+            defaultValue = True
         )
         subPage_train_gptsovits.addCheckBoxFrame(
             rootItemText = QCA.translate('MainWindow', "训练参数"),
             text = QCA.translate('MainWindow', "梯度检查点\n是否开启梯度检查点节省显存占用。"),
             section = 'GPT-SoVITS params',
             option = 'if_grad_ckpt',
-            defaultValue = False
+            defaultValue = True
         )
         subPage_train_gptsovits.addComboBoxFrame(
             rootItemText = QCA.translate('MainWindow', "训练参数"),
@@ -2642,7 +2642,7 @@ class MainWindow(Window_MainWindow):
             option = 'version',
             defaultValue = 'v2'
         )
-        TTS_GPTSoVITS_ModelPathLoadS1_Default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's1v3.ckpt').as_posix()
+        TTS_GPTSoVITS_ModelPathLoadS1_Default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's1bert25hz-5kh-longer-epoch=12-step=369668.ckpt').as_posix()
         subPage_tts_gptsovits.addLineEditFrame(
             rootItemText = QCA.translate('MainWindow', "输入参数"),
             text = QCA.translate('MainWindow', "GPT模型加载路径\nGPT（s1）模型的路径。"),
@@ -2654,7 +2654,7 @@ class MainWindow(Window_MainWindow):
             defaultValue = TTS_GPTSoVITS_ModelPathLoadS1_Default,
             placeholderText = TTS_GPTSoVITS_ModelPathLoadS1_Default
         )
-        TTS_GPTSoVITS_ModelPathLoadS2G_Default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's2Gv3.pth').as_posix()
+        TTS_GPTSoVITS_ModelPathLoadS2G_Default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's2G2333k.pth').as_posix()
         subPage_tts_gptsovits.addLineEditFrame(
             rootItemText = QCA.translate('MainWindow', "输入参数"),
             text = QCA.translate('MainWindow', "SoVITS模型加载路径\nSoVITS（s2G）模型的路径。"),
@@ -2666,6 +2666,7 @@ class MainWindow(Window_MainWindow):
             defaultValue = TTS_GPTSoVITS_ModelPathLoadS2G_Default,
             placeholderText = TTS_GPTSoVITS_ModelPathLoadS2G_Default
         )
+        TTS_GPTSoVITS_ModelPathLoadS2Gv3_Default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's2Gv3.pth').as_posix()
         subPage_tts_gptsovits.addLineEditFrame(
             rootItemText = QCA.translate('MainWindow', "输入参数"),
             text = QCA.translate('MainWindow', "SoVITSv3底模加载路径\nSoVITSv3（s2G2333k）底模的路径，用于加载lora。"),
@@ -2674,8 +2675,8 @@ class MainWindow(Window_MainWindow):
             directory = EasyUtils.normPath(Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded')),
             section = 'Input params',
             option = 'Model_Path_Load_s2Gv3',
-            defaultValue = TTS_GPTSoVITS_ModelPathLoadS2G_Default,
-            placeholderText = TTS_GPTSoVITS_ModelPathLoadS2G_Default
+            defaultValue = TTS_GPTSoVITS_ModelPathLoadS2Gv3_Default,
+            placeholderText = TTS_GPTSoVITS_ModelPathLoadS2Gv3_Default
         )
         TTS_GPTSoVITS_ModelDirLoadBert_Default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 'chinese-roberta-wwm-ext-large').as_posix()
         subPage_tts_gptsovits.addLineEditFrame(
@@ -2710,151 +2711,7 @@ class MainWindow(Window_MainWindow):
             defaultValue = TTS_GPTSoVITS_ModelDirLoadBigVGAN_Default,
             placeholderText = TTS_GPTSoVITS_ModelDirLoadBigVGAN_Default
         )
-        subPage_tts_gptsovits.addLineEditFrame(
-            rootItemText = QCA.translate('MainWindow', "输入参数"),
-            text = QCA.translate('MainWindow', "参考音频路径\n"),
-            fileDialogMode = FileDialogMode.SelectFile,
-            fileType = "wav类型 (*.wav)",
-            section = 'Input params',
-            option = 'refer_wav_path',
-            defaultValue = ''
-        )
-        subPage_tts_gptsovits.addLineEditFrame(
-            rootItemText = QCA.translate('MainWindow', "输入参数"),
-            text = QCA.translate('MainWindow', "参考音频文本\n"),
-            section = 'Input params',
-            option = 'prompt_text',
-            defaultValue = '',
-            emptyAllowed = True
-        )
-        subPage_tts_gptsovits.addComboBoxFrame(
-            rootItemText = QCA.translate('MainWindow', "输入参数"),
-            text = QCA.translate('MainWindow', "参考音频语言\n"),
-            items = ['zh', 'yue', 'en', 'ja', 'ko', 'auto'],
-            section = 'Input params',
-            option = 'prompt_language',
-            defaultValue = 'auto'
-        )
-        subPage_tts_gptsovits.addComboBoxFrame(
-            rootItemText = QCA.translate('MainWindow', "输入参数"),
-            text = QCA.translate('MainWindow', "生成引擎\n"),
-            items = ['cuda', 'cpu'],
-            section = 'Input params',
-            option = 'device',
-            defaultValue = 'cuda' # TODO Add cuda detection
-        )
-        subPage_tts_gptsovits.addCheckBoxFrame(
-            rootItemText = QCA.translate('MainWindow', "输入参数"),
-            text = QCA.translate('MainWindow', "是否使用半精度\n"),
-            section = 'Input params',
-            option = 'half_precision',
-            defaultValue = True
-        )
-        subPage_tts_gptsovits.addComboBoxFrame(
-            rootItemText = QCA.translate('MainWindow', "输入参数"),
-            toolBoxText = QCA.translate('MainWindow', "高级设置"),
-            text = QCA.translate('MainWindow', "音频格式\n"),
-            items = ['wav', 'ogg', 'aac'],
-            section = 'Input params',
-            option = 'media_type',
-            defaultValue = 'wav'
-        )
-        subPage_tts_gptsovits.addComboBoxFrame(
-            rootItemText = QCA.translate('MainWindow', "输入参数"),
-            toolBoxText = QCA.translate('MainWindow', "高级设置"),
-            text = QCA.translate('MainWindow', "数据类型\n"),
-            items = ['int16', 'int32'],
-            section = 'Input params',
-            option = 'sub_type',
-            defaultValue = 'int16'
-        )
-        subPage_tts_gptsovits.addComboBoxFrame(
-            rootItemText = QCA.translate('MainWindow', "输入参数"),
-            toolBoxText = QCA.translate('MainWindow', "高级设置"),
-            text = QCA.translate('MainWindow', "流式模式\n"),
-            items = ['close', 'normal', 'keepalive'],
-            section = 'Input params',
-            option = 'stream_mode',
-            defaultValue = 'close'
-        )
-        subPage_tts_gptsovits.addTextEditFrame(
-            rootItemText = QCA.translate('MainWindow', "语音合成参数"),
-            text = QCA.translate('MainWindow', "待合成文本\n"),
-            section = 'TTS params',
-            option = 'text',
-            defaultValue = ''
-        )
-        subPage_tts_gptsovits.addComboBoxFrame(
-            rootItemText = QCA.translate('MainWindow', "语音合成参数"),
-            text = QCA.translate('MainWindow', "目标文本语言\n"),
-            items = ['zh', 'yue', 'en', 'ja', 'ko', 'auto', 'auto_yue'],
-            section = 'TTS params',
-            option = 'text_language',
-            defaultValue = 'auto'
-        )
-        subPage_tts_gptsovits.addComboBoxFrame(
-            rootItemText = QCA.translate('MainWindow', "语音合成参数"),
-            text = QCA.translate('MainWindow', "文本切分符号\n"),
-            items = [',', '.', ';', '?', '!', '、', '，', '。', '？', '！', '；', '：', '…', 'None'],
-            section = 'TTS params',
-            option = 'cut_punc',
-            defaultValue = 'None',
-            emptyAllowed = True
-        )
-        subPage_tts_gptsovits.addRangeSettingFrame(
-            rootItemText = QCA.translate('MainWindow', "语音合成参数"),
-            text = QCA.translate('MainWindow', "语速因子\n控制生成语音的语速。值越高，语速越快。"),
-            minimum = 0,
-            maximum = 2.0,
-            step = 0.01,
-            section = 'TTS params',
-            option = 'speed',
-            defaultValue = 1.0
-        )
-        subPage_tts_gptsovits.addRangeSettingFrame(
-            rootItemText = QCA.translate('MainWindow', "语音合成参数"),
-            toolBoxText = QCA.translate('MainWindow', "高级设置"),
-            text = QCA.translate('MainWindow', "Top-K采样值\n限制每次采样的候选词数量，仅从前k个高概率词中选择。"),
-            minimum = 1,
-            maximum = 999,
-            step = 1,
-            section = 'TTS params',
-            option = 'top_k',
-            defaultValue = 5
-        )
-        subPage_tts_gptsovits.addRangeSettingFrame(
-            rootItemText = QCA.translate('MainWindow', "语音合成参数"),
-            toolBoxText = QCA.translate('MainWindow', "高级设置"),
-            text = QCA.translate('MainWindow', "Top-P采样值\n动态选择累积概率达到阈值的候选词，避免低概率词干扰。"),
-            minimum = 0,
-            maximum = 1.0,
-            step = 0.01,
-            section = 'TTS params',
-            option = 'top_p',
-            defaultValue = 1.0
-        )
-        subPage_tts_gptsovits.addRangeSettingFrame(
-            rootItemText = QCA.translate('MainWindow', "语音合成参数"),
-            toolBoxText = QCA.translate('MainWindow', "高级设置"),
-            text = QCA.translate('MainWindow', "温度值\n控制生成文本的随机性。值越高，输出越随机。"),
-            minimum = 0,
-            maximum = 2.0,
-            step = 0.01,
-            section = 'TTS params',
-            option = 'temperature',
-            defaultValue = 1.0
-        )
-        subPage_tts_gptsovits.addComboBoxFrame(
-            rootItemText = QCA.translate('MainWindow', "语音合成参数"),
-            toolBoxText = QCA.translate('MainWindow', "高级设置"),
-            text = QCA.translate('MainWindow', "采样步数\n"),
-            items = ['4', '8', '16', '32'],
-            section = 'TTS params',
-            option = 'sample_steps',
-            defaultValue = '32'
-        )
         TTS_GPTSoVITS_AudioDirSave = Path(currentDir).joinpath('语音合成结果', 'GPTSoVITS').as_posix()
-        TTS_GPTSoVITS_AudioPathSave = Path(TTS_GPTSoVITS_AudioDirSave).joinpath("temp.wav").as_posix()
         os.makedirs(TTS_GPTSoVITS_AudioDirSave) if not Path(TTS_GPTSoVITS_AudioDirSave).exists() else None
         subPage_tts_gptsovits.addSideBtn(
             text = QCA.translate('MainWindow', "查看输出文件"),
@@ -2870,38 +2727,20 @@ class MainWindow(Window_MainWindow):
             consoleWidget = self.ui.Frame_Console,
             executeMethod = self.task_voiceConverting_gptsovits.execute,
             executeParamTargets = [
+                subPage_tts_gptsovits.findChildWidget("全局设置", None, "推理版本"),
                 subPage_tts_gptsovits.findChildWidget("输入参数", None, "SoVITS模型加载路径"),
-                subPage_tts_gptsovits.findChildWidget("输入参数", None, "SoVITSv3模型加载路径"),
+                subPage_tts_gptsovits.findChildWidget("输入参数", None, "SoVITSv3底模加载路径"),
                 subPage_tts_gptsovits.findChildWidget("输入参数", None, "GPT模型加载路径"),
                 subPage_tts_gptsovits.findChildWidget("输入参数", None, "预训练HuBERT模型加载路径"),
                 subPage_tts_gptsovits.findChildWidget("输入参数", None, "预训练BERT模型加载路径"),
                 subPage_tts_gptsovits.findChildWidget("输入参数", None, "预训练BigVGan模型加载路径"),
-                subPage_tts_gptsovits.findChildWidget("输入参数", None, "参考音频路径"),
-                subPage_tts_gptsovits.findChildWidget("输入参数", None, "参考音频文本"),
-                subPage_tts_gptsovits.findChildWidget("输入参数", None, "参考音频语言"),
-                subPage_tts_gptsovits.findChildWidget("输入参数", None, "生成引擎"),
-                subPage_tts_gptsovits.findChildWidget("输入参数", None, "是否使用半精度"),
-                subPage_tts_gptsovits.findChildWidget("输入参数", None, "音频格式"),
-                subPage_tts_gptsovits.findChildWidget("输入参数", None, "数据类型"),
-                subPage_tts_gptsovits.findChildWidget("输入参数", None, "流式模式"),
-                None, #inp_refs: Optional[list] = None, # 辅助参考音频路径列表
-                subPage_tts_gptsovits.findChildWidget("语音合成参数", None, "待合成文本"),
-                subPage_tts_gptsovits.findChildWidget("语音合成参数", None, "目标文本语言"),
-                subPage_tts_gptsovits.findChildWidget("语音合成参数", None, "文本切分符号"),
-                subPage_tts_gptsovits.findChildWidget("语音合成参数", None, "Top-K采样值"),
-                subPage_tts_gptsovits.findChildWidget("语音合成参数", None, "Top-P采样值"),
-                subPage_tts_gptsovits.findChildWidget("语音合成参数", None, "温度值"),
-                subPage_tts_gptsovits.findChildWidget("语音合成参数", None, "语速因子"),
-                subPage_tts_gptsovits.findChildWidget("语音合成参数", None, "采样步数"),
-                False, #if_sr: bool = False, # 是否超分
-                TTS_GPTSoVITS_AudioPathSave
             ],
             terminateMethod = self.task_voiceConverting_gptsovits.terminate,
             finishedEvents = {
-                lambda: self.showMask(True, "正在加载播放器"): TaskStatus.Succeeded,
-                lambda: self.showTTSResult(
-                    TTS_GPTSoVITS_AudioPathSave
-                ): TaskStatus.Succeeded,
+                # lambda: self.showMask(True, "正在加载播放器"): TaskStatus.Succeeded,
+                # lambda: self.showTTSResult(
+                #     TTS_GPTSoVITS_AudioDirSave
+                # ): TaskStatus.Succeeded,
                 lambda: MessageBoxBase.pop(self,
                     QMessageBox.Information, "Tip",
                     "当前任务已执行结束。"
@@ -3224,6 +3063,7 @@ class MainWindow(Window_MainWindow):
         )
         Function_ConfigureCheckBox(
             checkBox = self.ui.CheckBox_Setting_Synchronizer,
+            checkedText = "已启用",
             checkedEvents = {
                 lambda: config.editConfig('Tools', 'Synchronizer', 'Enabled') : True,
                 lambda: Function_ParamsSynchronizer(
@@ -3251,6 +3091,7 @@ class MainWindow(Window_MainWindow):
                     {LineEdit_DAT_VITS_FileListPathTraining: subPage_train_VITS.findChildWidget("输入参数", None, "训练集文本路径", LineEditBase), LineEdit_DAT_VITS_FileListPathValidation: subPage_train_VITS.findChildWidget("输入参数", None, "验证集文本路径", LineEditBase)}
                 ) : True
             },
+            uncheckedText = "未启用",
             uncheckedEvents = {
                 lambda: config.editConfig('Tools', 'Synchronizer', 'Disabled') : True,
                 lambda: MessageBoxBase.pop(self,
