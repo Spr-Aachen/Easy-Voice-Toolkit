@@ -8,8 +8,6 @@ from pathlib import Path
 from typing import Optional
 from PySide6.QtCore import QObject, Signal
 
-from config import *
-
 ##############################################################################################################################
 
 # Tools: AudioProcessor
@@ -17,10 +15,11 @@ class Execute_Audio_Processing(QObject):
     '''
     Change media format to WAV (and denoise) and cut off the silent parts
     '''
-    def __init__(self, coreDir):
+    def __init__(self, coreDir, logPath):
         super().__init__()
 
         self.coreDir = coreDir
+        self.logPath = logPath
 
     def execute(self, *params):
         CMD = EasyUtils.subprocessManager(communicateThroughConsole = True)
@@ -36,7 +35,7 @@ class Execute_Audio_Processing(QObject):
         Output, error = CMD.monitor(
             showProgress = True,
             decodeResult = True,
-            logPath = logPath
+            logPath = self.logPath
         )[:2]
         if 'error' in str(error).lower():
             error += "（详情请见终端输出信息）"
@@ -55,10 +54,11 @@ class Execute_Voice_Identifying_VPR(QObject):
     '''
     Contrast the voice and filter out the similar ones
     '''
-    def __init__(self, coreDir):
+    def __init__(self, coreDir, logPath):
         super().__init__()
 
         self.coreDir = coreDir
+        self.logPath = logPath
 
     def execute(self, *params):
         CMD = EasyUtils.subprocessManager(communicateThroughConsole = True)
@@ -75,7 +75,7 @@ class Execute_Voice_Identifying_VPR(QObject):
         Output, error = CMD.monitor(
             showProgress = True,
             decodeResult = True,
-            logPath = logPath
+            logPath = self.logPath
         )[:2]
         if 'error' in str(error).lower():
             error += "（详情请见终端输出信息）"
@@ -94,10 +94,11 @@ class Execute_Voice_Transcribing_Whisper(QObject):
     '''
     Transcribe WAV content to SRT
     '''
-    def __init__(self, coreDir):
+    def __init__(self, coreDir, logPath):
         super().__init__()
 
         self.coreDir = coreDir
+        self.logPath = logPath
 
     def execute(self, *params):
         LANGUAGES = {
@@ -121,7 +122,7 @@ class Execute_Voice_Transcribing_Whisper(QObject):
         Output, error = CMD.monitor(
             showProgress = True,
             decodeResult = True,
-            logPath = logPath
+            logPath = self.logPath
         )[:2]
         if 'error' in str(error).lower():
             error += "（详情请见终端输出信息）"
@@ -140,10 +141,11 @@ class Execute_Dataset_Creating_GPTSoVITS(QObject):
     '''
     Convert the whisper-generated SRT to CSV and split the WAV
     '''
-    def __init__(self, coreDir):
+    def __init__(self, coreDir, logPath):
         super().__init__()
 
         self.coreDir = coreDir
+        self.logPath = logPath
 
     def execute(self, *params):
         CMD = EasyUtils.subprocessManager(communicateThroughConsole = True)
@@ -159,7 +161,7 @@ class Execute_Dataset_Creating_GPTSoVITS(QObject):
         Output, error = CMD.monitor(
             showProgress = True,
             decodeResult = True,
-            logPath = logPath
+            logPath = self.logPath
         )[:2]
         if 'error' in str(error).lower():
             error += "（详情请见终端输出信息）"
@@ -177,10 +179,11 @@ class Execute_Dataset_Creating_VITS(QObject):
     '''
     Convert the whisper-generated SRT to CSV and split the WAV
     '''
-    def __init__(self, coreDir):
+    def __init__(self, coreDir, logPath):
         super().__init__()
 
         self.coreDir = coreDir
+        self.logPath = logPath
 
     def execute(self, *params):
         CMD = EasyUtils.subprocessManager(communicateThroughConsole = True)
@@ -196,7 +199,7 @@ class Execute_Dataset_Creating_VITS(QObject):
         Output, error = CMD.monitor(
             showProgress = True,
             decodeResult = True,
-            logPath = logPath
+            logPath = self.logPath
         )[:2]
         if 'error' in str(error).lower():
             error += "（详情请见终端输出信息）"
@@ -215,10 +218,11 @@ class Execute_Voice_Training_GPTSoVITS(QObject):
     '''
     Preprocess and then start training
     '''
-    def __init__(self, coreDir):
+    def __init__(self, coreDir, logPath):
         super().__init__()
 
         self.coreDir = coreDir
+        self.logPath = logPath
 
     def execute(self, *params):
         CMD = EasyUtils.subprocessManager(communicateThroughConsole = True)
@@ -233,7 +237,7 @@ class Execute_Voice_Training_GPTSoVITS(QObject):
         Output, error = CMD.monitor(
             showProgress = True,
             decodeResult = True,
-            logPath = logPath
+            logPath = self.logPath
         )[:2]
         if 'error' in str(error).lower():
             error += "（详情请见终端输出信息）"
@@ -251,10 +255,11 @@ class Execute_Voice_Training_VITS(QObject):
     '''
     Preprocess and then start training
     '''
-    def __init__(self, coreDir):
+    def __init__(self, coreDir, logPath):
         super().__init__()
 
         self.coreDir = coreDir
+        self.logPath = logPath
 
     def execute(self, *params):
         CMD = EasyUtils.subprocessManager(communicateThroughConsole = True)
@@ -269,7 +274,7 @@ class Execute_Voice_Training_VITS(QObject):
         Output, error = CMD.monitor(
             showProgress = True,
             decodeResult = True,
-            logPath = logPath
+            logPath = self.logPath
         )[:2]
         if 'error' in str(error).lower():
             error += "（详情请见终端输出信息）"
@@ -288,10 +293,11 @@ class Execute_Voice_Converting_GPTSoVITS(QObject):
     '''
     Inference model
     '''
-    def __init__(self, coreDir):
+    def __init__(self, coreDir, logPath):
         super().__init__()
 
         self.coreDir = coreDir
+        self.logPath = logPath
 
     def execute(self, *params):
         CMD = EasyUtils.subprocessManager(communicateThroughConsole = True)
@@ -306,7 +312,7 @@ class Execute_Voice_Converting_GPTSoVITS(QObject):
         output, error = CMD.monitor(
             showProgress = True,
             decodeResult = True,
-            logPath = logPath
+            logPath = self.logPath
         )[:2]
         if 'error' in str(error).lower():
             error += "（详情请见终端输出信息）"
@@ -333,10 +339,11 @@ class Execute_Voice_Converting_VITS(QObject):
     '''
     Inference model
     '''
-    def __init__(self, coreDir):
+    def __init__(self, coreDir, logPath):
         super().__init__()
 
         self.coreDir = coreDir
+        self.logPath = logPath
 
     def execute(self, *params):
         LANGUAGES = {
@@ -359,7 +366,7 @@ class Execute_Voice_Converting_VITS(QObject):
         Output, error = CMD.monitor(
             showProgress = True,
             decodeResult = True,
-            logPath = logPath
+            logPath = self.logPath
         )[:2]
         if 'error' in str(error).lower():
             error += "（详情请见终端输出信息）"

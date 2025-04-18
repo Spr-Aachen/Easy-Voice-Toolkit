@@ -3,6 +3,7 @@ import sys
 import platform
 import shutil
 import argparse
+import subprocess
 import PyEasyUtils as EasyUtils
 from pathlib import Path
 from PySide6.QtCore import Qt, QObject, QThreadPool
@@ -16,77 +17,48 @@ from config import *
 
 ##############################################################################################################################
 
-# Parse path settings
-parser = argparse.ArgumentParser()
-parser.add_argument("--config",    help = "path to config",    default = Path(currentDir).joinpath('config', 'config.ini'))
-args = parser.parse_args()
+# Get current path
+currentPath = EasyUtils.getCurrentPath()
 
-configPath = args.config
+# Get current directory
+currentDir = Path(currentPath).parent.as_posix()
 
-# Set downloadDir&extractDir
-downloadDir = currentDir
-extractDir = EasyUtils.normPath(Path(currentDir).joinpath(currentVersion))
+# Set directory to load static dependencies
+resourceDir = EasyUtils.getBaseDir(searchMEIPASS = True) or currentDir
 
-# Set up client config
-config = EasyUtils.configManager(configPath)
-
-# Set path of executer
-executerName = str(config.getValue('Info', 'executerName', ''))
-executerPath = EasyUtils.normPath(Path(currentDir).joinpath(executerName))
-bootExecuter = True if executerName.strip() != '' else False
+# Check whether python file is compiled
+_, isFileCompiled = EasyUtils.getFileInfo()
 
 ##############################################################################################################################
 
-def rebootIfFailed():
-    if platform.system() == 'Windows':
-        ScriptName = 'Booter.bat'
-    if platform.system() == 'Linux':
-        ScriptName = 'Booter.sh'
-    if ScriptName:
-        EasyUtils.bootWithScript(
-            programPath = executerPath,
-            delayTime = 0,
-            scriptPath = Path(EasyUtils.normPath(currentDir)).joinpath(ScriptName)
-        )
+# Parse path settings
+parser = argparse.ArgumentParser()
+parser.add_argument("--programPath",    help = "path to main program", default = None)
+parser.add_argument("--currentVersion", help = "dir of core files",    default = None)
+parser.add_argument("--downloadURL",    help = "url for download",     default = None)
+args = parser.parse_args()
 
+programPath = args.programPath
+currentVersion = args.currentVersion
+downloadURL = args.downloadURL
 
-def rebootIfSucceeded():
-    if platform.system() == 'Windows':
-        EasyUtils.runScript(
-            '@echo off',
-            'echo Ready to move files and reboot',
-            #f'taskkill /pid {os.getpid()} /f /t',
-            'timeout /t 2 /nobreak',
-            'echo Moving files...',
-            f'robocopy "{extractDir}" "{currentDir}" /E /MOVE /R:3 /W:1 /NP',
-            f'start "Programm Running" "{executerPath}"',
-            'del "%~f0"',
-            scriptPath = EasyUtils.normPath(Path(currentDir).joinpath('Updater.bat'))
-        )
-    if platform.system() == 'Linux':
-        EasyUtils.runScript(
-            'echo Ready to move files and reboot',
-            #f'kill -9 {os.getpid()}',
-            'sleep 2',
-            'echo Moving files...',
-            f'rsync -a --delete "{extractDir}" "{currentDir}"',
-            f'./{executerName}', #f'nohup ./{executerName} &',
-            'rm -rf Updater.sh',
-            scriptPath = EasyUtils.normPath(Path(currentDir).joinpath('Updater.sh'))
-        )
+# Set downloadDir&extractDir
+programDir = Path(programPath).parent.as_posix()
+downloadDir = programDir
+extractDir = programDir
 
+##############################################################################################################################
 
 def updateDownloader(
     downloadURL: str = ...,
     downloadDir: str = ...,
     name: str = ...,
     extractDir: str = ...,
-    #executerPath: str = ...
 ):
     try:
         # Download
         FunctionSignals.Signal_UpdateMessage.emit("正在下载文件...\nDownloading files...")
-        FileInfo = EasyUtils.downloadFile(
+        fileInfo = EasyUtils.downloadFile(
             downloadURL = downloadURL,
             downloadDir = downloadDir,
             fileName = name,
@@ -99,18 +71,22 @@ def updateDownloader(
     else:
         # Unpack
         FunctionSignals.Signal_UpdateMessage.emit("正在解压文件...\nUnpacking files...")
-        shutil.unpack_archive(
-            filename = FileInfo[1],
-            extract_dir = extractDir
-        )
-        os.remove(FileInfo[1])
+        try:
+            shutil.unpack_archive(
+                filename = fileInfo[1],
+                extract_dir = extractDir
+            )
+        except:
+            FunctionSignals.Signal_IsUpdateSucceeded.emit(False, "文件解压失败！\nFailed to unpack files!")
+            return
+        os.remove(fileInfo[1])
         # Cover old files (About to finish)
         FunctionSignals.Signal_UpdateMessage.emit("即将重启客户端...\nRebooting client...")
         FunctionSignals.Signal_IsUpdateSucceeded.emit(True, "")
 
 
 # Show GUI
-class Widget_Updater(QWidget):
+class MainWindow(QWidget):
     '''
     '''
     def __init__(self):
@@ -131,28 +107,26 @@ class Widget_Updater(QWidget):
 
         self.setWindowIcon(QIcon(EasyUtils.normPath(Path(resourceDir).joinpath('assets/images/Logo.ico'))))
 
-        self.Label = QLabel()
-        self.Label.setVisible(True)
-        self.Label.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
-        #self.Label.setStyleSheet("text-align: center; font-size: 11.1px;")
+        self.label = QLabel()
+        self.label.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
+        self.label.setStyleSheet("text-align: center; font-size: 11.1px;")
 
         self.progressBar = QProgressBar()
-        self.progressBar.setVisible(True)
         self.progressBar.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
         #self.progressBar.setStyleSheet("text-align: center;")
+        self.progressBar.setTextVisible(False)
 
-        self.SkipButton = QPushButton()
-        self.SkipButton.setVisible(True)
-        self.SkipButton.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
-        self.SkipButton.setStyleSheet("text-align: center;")
+        self.skipButton = QPushButton()
+        self.skipButton.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
+        self.skipButton.setStyleSheet("text-align: center;")
 
-        self.Layout = QVBoxLayout(self)
-        self.Layout.setAlignment(Qt.AlignCenter)
-        self.Layout.setContentsMargins(21, 12, 21, 12)
-        self.Layout.setSpacing(12)
-        self.Layout.addWidget(self.Label)
-        self.Layout.addWidget(self.progressBar)
-        self.Layout.addWidget(self.SkipButton)
+        layout = QVBoxLayout(self)
+        layout.setAlignment(Qt.AlignCenter)
+        layout.setContentsMargins(21, 12, 21, 12)
+        layout.setSpacing(12)
+        layout.addWidget(self.label)
+        layout.addWidget(self.progressBar)
+        layout.addWidget(self.skipButton)
 
     def checkUpdate(self):
         Function_SetMethodExecutor(
@@ -184,62 +158,57 @@ class Widget_Updater(QWidget):
         )
 
     def main(self):
-        self.downloadURL = str()
-        def _updateDownloadURL(downloadURL):
-            self.downloadURL = downloadURL
-
         FunctionSignals.Signal_UpdateMessage.connect(
-            lambda Message: QFunc.setText(
-                self.Label,
-                EasyUtils.setRichText(Message, 'center', 9, 420, 0.3, 12)
+            lambda message: QFunc.setText(
+                self.label,
+                EasyUtils.setRichText(message, 'center', 9, 420, 0.3, 12)
             )
         )
         FunctionSignals.Signal_ReadyToUpdate.connect(
-            lambda downloadURL, VersionInfo: (
-                _updateDownloadURL(downloadURL),
+            lambda downloadURL, versionInfo: (
                 MessageBoxBase.pop(None,
                     QMessageBox.Question, "Ask",
                     text = "检测到可用的新版本，是否更新？\nNew version available, wanna update?",
-                    detailedText = VersionInfo,
+                    detailedText = versionInfo,
                     buttons = QMessageBox.Yes|QMessageBox.No,
                     buttonEvents = {
-                        QMessageBox.Yes: lambda: self.downloadUpdate(self.downloadURL),
+                        QMessageBox.Yes: lambda: self.downloadUpdate(downloadURL),
                         QMessageBox.No: lambda: FunctionSignals.Signal_IsUpdateSucceeded.emit(False, "已取消下载更新！\nDownload canceled!")
                     }
                 )
-            ) if eval(config.getValue('Updater', 'Asked', 'False')) is False else (
-                self.downloadUpdate(self.downloadURL),
-                config.editConfig('Updater', 'Asked', 'False')
             )
         )
         FunctionSignals.Signal_IsUpdateSucceeded.connect(
-            lambda Succeeded, Info: (
+            lambda succeeded, info: (
                 MessageBoxBase.pop(None,
                     QMessageBox.Warning, "Warning",
-                    text = Info
-                ) if not Succeeded else None,
-                (rebootIfSucceeded() if Succeeded else rebootIfFailed()) if bootExecuter else None,
-                QApplication.instance().exit()
+                    text = info,
+                ) if not succeeded and len(info) > 0 else None,
+                subprocess.Popen(f'{"python" if isFileCompiled == False else ""} "{programPath}" {f"--deprecatedVersion {currentVersion}" if succeeded else ""}', shell = True),
+                QApplication.instance().exit(),
+                sys.exit(0) # In case the main event loop is not entered
             )
         )
 
-        self.checkUpdate()
-
-        self.SkipButton.setText("跳过")
-        self.SkipButton.clicked.connect(
+        self.skipButton.setText("跳过")
+        self.skipButton.clicked.connect(
             lambda: FunctionSignals.Signal_IsUpdateSucceeded.emit(False, "")
         )
+
+        self.checkUpdate() if downloadURL is None else self.downloadUpdate(downloadURL)
 
         self.show()
 
 ##############################################################################################################################
 
 if __name__ == "__main__":
-    App = QApplication(sys.argv) #App = QApplication([])
+    sys.exit(0) if programPath is None else None
 
-    UpdaterWidget = Widget_Updater()
-    UpdaterWidget.main() #UpdaterWidget.show()
+    App = QApplication(sys.argv)
 
-    sys.exit(App.exec()) #App.exec()
+    MW = MainWindow()
+    MW.main()
+
+    sys.exit(App.exec())
 
 ##############################################################################################################################

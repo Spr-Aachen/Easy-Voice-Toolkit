@@ -8,7 +8,7 @@ from pathlib import Path
 from datetime import date
 from PySide6 import __file__ as PySide6_File
 from PySide6.QtCore import Qt, QObject, Signal
-from PySide6.QtCore import QCoreApplication as QCA, QThreadPool
+from PySide6.QtCore import QCoreApplication as QCA, QThreadPool, QTimer
 from PySide6.QtGui import QColor, QPixmap, QIcon, QTextCursor
 from QEasyWidgets import QFunctions as QFunc
 from QEasyWidgets import QTasks
@@ -25,20 +25,41 @@ from config import *
 
 ##############################################################################################################################
 
+# Get current path
+currentPath = EasyUtils.getCurrentPath()
+
+# Get current directory
+currentDir = Path(currentPath).parent.as_posix()
+
+# Set path to store log
+logPath = EasyUtils.normPath(Path(currentDir).joinpath('log.txt'))
+
+# Set directory to load static dependencies
+resourceDir = EasyUtils.getBaseDir(searchMEIPASS = True) or currentDir
+
+# Check whether python file is compiled
+_, isFileCompiled = EasyUtils.getFileInfo()
+
+# Get current version (assume resourceDir is the name of current version after being compiled)
+currentVersion = Path(resourceDir).name if isFileCompiled else 'beta version'
+
+##############################################################################################################################
+
 # Change working directory to current directory
 os.chdir(currentDir)
 
 
 # Parse path settings
 parser = argparse.ArgumentParser()
-parser.add_argument("--updater",      help = "path to updater",          default = Path(currentDir).joinpath('Updater.py' if isFileCompiled == False else 'Updater.exe'))
-parser.add_argument("--core",         help = "dir of core files",        default = Path(resourceDir).joinpath('EVT_Core'))
-parser.add_argument("--manifest",     help = "path to manifest.json",    default = Path(resourceDir).joinpath('manifest.json'))
-parser.add_argument("--requirements", help = "path to requirements.txt", default = Path(resourceDir).joinpath('requirements.txt'))
-parser.add_argument("--dependencies", help = "dir of dependencies",      default = Path(currentDir).joinpath(''))
-parser.add_argument("--models",       help = "dir of models",            default = Path(currentDir).joinpath('Models'))
-parser.add_argument("--output",       help = "dir of output",            default = Path(currentDir).joinpath(''))
-parser.add_argument("--profile",      help = "dir of profile",           default = Path(currentDir).joinpath(''))
+parser.add_argument("--updater",           help = "path to updater",          default = Path(resourceDir).joinpath('updater.exe') if isFileCompiled else Path(currentDir).joinpath('updater.py'))
+parser.add_argument("--core",              help = "dir of core files",        default = Path(resourceDir).joinpath('EVT_Core'))
+parser.add_argument("--manifest",          help = "path to manifest.json",    default = Path(resourceDir).joinpath('manifest.json'))
+parser.add_argument("--requirements",      help = "path to requirements.txt", default = Path(resourceDir).joinpath('requirements.txt'))
+parser.add_argument("--dependencies",      help = "dir of dependencies",      default = Path(currentDir).joinpath(''))
+parser.add_argument("--models",            help = "dir of models",            default = Path(currentDir).joinpath('Models'))
+parser.add_argument("--output",            help = "dir of output",            default = Path(currentDir).joinpath(''))
+parser.add_argument("--profile",           help = "dir of profile",           default = Path(currentDir).joinpath(''))
+parser.add_argument("--deprecatedVersion", help = "deprecated version",       default = None)
 args = parser.parse_args()
 
 updaterPath = args.updater
@@ -49,14 +70,13 @@ dependencyDir = args.dependencies
 modelDir = args.models
 outputDir = args.output
 profileDir = args.profile
+deprecatedVersion = args.deprecatedVersion
 
 
 # Set up client config
 configDir = EasyUtils.normPath(Path(profileDir).joinpath('config'))
 configPath = EasyUtils.normPath(Path(configDir).joinpath('config.ini'))
 config = EasyUtils.configManager(configPath)
-config.editConfig('Info', 'currentVersion', str(currentVersion))
-config.editConfig('Info', 'executerName', str(EasyUtils.getFileInfo()[0]))
 
 
 # Set up environment variables while python file is not compiled
@@ -154,7 +174,6 @@ class MainWindow(Window_MainWindow):
         self.MonitorUsage.start()
 
     def closeEvent(self, event):
-        config.editConfig('Info', 'executerName', '')
         FunctionSignals.Signal_TaskStatus.connect(lambda: QApplication.instance().exit())
         FunctionSignals.Signal_ForceQuit.emit()
 
@@ -602,19 +621,31 @@ class MainWindow(Window_MainWindow):
         )
         ChildWindow_TTS.exec()
 
-    def chkUpdate(self):
+    def chkUpdate(self, runUpdateChecker: bool):
+        recordedVersion = deprecatedVersion or config.getValue('Info', 'RecordedVersion', currentVersion)
+        if not EasyUtils.isVersionSatisfied(recordedVersion, currentVersion):
+            deprecatedDir = Path(resourceDir).parent.joinpath(recordedVersion).as_posix()
+            time.sleep(3)
+            try:
+                shutil.rmtree(deprecatedDir)
+            except:
+                pass
+            else:
+                config.editConfig('Info', 'RecordedVersion', currentVersion)
+
         FunctionSignals.Signal_ReadyToUpdate.connect(
-            lambda DownloadURL, VersionInfo: (
+            lambda downloadURL, versionInfo: (
                 MessageBoxBase.pop(None,
                     QMessageBox.Question, "Ask",
                     text = "检测到可用的新版本，是否更新？\nNew version available, wanna update?",
-                    detailedText = VersionInfo,
+                    detailedText = versionInfo,
                     buttons = QMessageBox.Yes|QMessageBox.No,
                     buttonEvents = {
                         QMessageBox.Yes: lambda: (
                             config.editConfig('Updater', 'Asked', 'True'),
-                            subprocess.Popen(f'{"python" if isFileCompiled == False else ""} "{updaterPath}" --config "{configPath}"', shell = True, env = os.environ),
-                            QApplication.instance().exit()
+                            subprocess.Popen(f'{"python" if isFileCompiled == False else ""} "{updaterPath}" --programPath "{currentPath}" --currentVersion {currentVersion} --downloadURL "{downloadURL}"', shell = True, env = os.environ),
+                            QApplication.instance().exit(),
+                            sys.exit(0) # In case the main event loop is not entered
                         ),
                         QMessageBox.No: lambda: (
                             config.editConfig('Updater', 'Asked', 'False'),
@@ -623,7 +654,6 @@ class MainWindow(Window_MainWindow):
                 )
             )
         )
-
         Function_SetMethodExecutor(
             executeMethod = Function_UpdateChecker,
             executeParams = (
@@ -635,14 +665,14 @@ class MainWindow(Window_MainWindow):
             ),
             threadPool = self.threadPool,
             parentWindow = self,
-        )
+        ) if runUpdateChecker else None
 
     def main(self):
         '''
         Main funtion to orgnize all the subfunctions
         '''
         # Check for updates
-        self.chkUpdate() if config.getValue('Settings', 'AutoUpdate', 'Enabled') == 'Enabled' else None
+        self.chkUpdate(config.getValue('Settings', 'AutoUpdate', 'Enabled') == 'Enabled') if isFileCompiled else None
 
         # Logo
         self.setWindowIcon(QIcon(EasyUtils.normPath(Path(resourceDir).joinpath('assets/images/Logo.ico'))))
@@ -871,7 +901,7 @@ class MainWindow(Window_MainWindow):
         self.ui.Label_Donate_Text.setText(QCA.translate('MainWindow', "赞助作者"))
         Function_SetURL(
             button = self.ui.Button_Donate,
-            url = "https://ko-fi.com/spr_aachen",
+            url = "https://afdian.tv/a/Spr_Aachen/plan",
             buttonTooltip = "Click to buy author a coffee"
         )
 
@@ -1301,7 +1331,7 @@ class MainWindow(Window_MainWindow):
         subPage_process.addChkOutputSideBtn(
             outputRootEdit = self.ui.LineEdit_Process_OutputRoot,
         )
-        self.task_audioProcessing = Execute_Audio_Processing(coreDir)
+        self.task_audioProcessing = Execute_Audio_Processing(coreDir, logPath)
         subPage_process.setExecutor(
             consoleWidget = self.ui.Frame_Console,
             executeMethod = self.task_audioProcessing.execute,
@@ -1539,7 +1569,7 @@ class MainWindow(Window_MainWindow):
                 EditVPRResult
             ]
         )
-        self.task_voiceIdentifying_vpr = Execute_Voice_Identifying_VPR(coreDir)
+        self.task_voiceIdentifying_vpr = Execute_Voice_Identifying_VPR(coreDir, logPath)
         subPage_VPR.setExecutor(
             consoleWidget = self.ui.Frame_Console,
             executeMethod = self.task_voiceIdentifying_vpr.execute,
@@ -1675,7 +1705,7 @@ class MainWindow(Window_MainWindow):
         subPage_ASR.addChkOutputSideBtn(
             outputRootEdit = self.ui.LineEdit_ASR_Whisper_OutputRoot
         )
-        self.task_voiceTranscribing_whisper = Execute_Voice_Transcribing_Whisper(coreDir)
+        self.task_voiceTranscribing_whisper = Execute_Voice_Transcribing_Whisper(coreDir, logPath)
         subPage_ASR.setExecutor(
             consoleWidget = self.ui.Frame_Console,
             executeMethod = self.task_voiceTranscribing_whisper.execute,
@@ -1817,7 +1847,7 @@ class MainWindow(Window_MainWindow):
         subPage_dataset_GPTSoVITS.addChkOutputSideBtn(
             outputRootEdit = self.ui.LineEdit_DAT_GPTSoVITS_OutputRoot
         )
-        self.task_datasetCreating_gptsovits = Execute_Dataset_Creating_GPTSoVITS(coreDir)
+        self.task_datasetCreating_gptsovits = Execute_Dataset_Creating_GPTSoVITS(coreDir, logPath)
         subPage_dataset_GPTSoVITS.setExecutor(
             consoleWidget = self.ui.Frame_Console,
             executeMethod = self.task_datasetCreating_gptsovits.execute,
@@ -2007,7 +2037,7 @@ class MainWindow(Window_MainWindow):
         subPage_dataset_VITS.addChkOutputSideBtn(
             outputRootEdit = self.ui.LineEdit_DAT_VITS_OutputRoot
         )
-        self.task_datasetCreating_vits = Execute_Dataset_Creating_VITS(coreDir)
+        self.task_datasetCreating_vits = Execute_Dataset_Creating_VITS(coreDir, logPath)
         subPage_dataset_VITS.setExecutor(
             consoleWidget = self.ui.Frame_Console,
             executeMethod = self.task_datasetCreating_vits.execute,
@@ -2263,7 +2293,7 @@ class MainWindow(Window_MainWindow):
                 )
             ]
         )
-        self.task_voiceTraining_gptsovits = Execute_Voice_Training_GPTSoVITS(coreDir)
+        self.task_voiceTraining_gptsovits = Execute_Voice_Training_GPTSoVITS(coreDir, logPath)
         subPage_train_gptsovits.setExecutor(
             consoleWidget = self.ui.Frame_Console,
             executeMethod = self.task_voiceTraining_gptsovits.execute,
@@ -2505,7 +2535,7 @@ class MainWindow(Window_MainWindow):
                 )
             ]
         )
-        self.task_voiceTraining_vits = Execute_Voice_Training_VITS(coreDir)
+        self.task_voiceTraining_vits = Execute_Voice_Training_VITS(coreDir, logPath)
         subPage_train_VITS.setExecutor(
             consoleWidget = self.ui.Frame_Console,
             executeMethod = self.task_voiceTraining_vits.execute,
@@ -2722,7 +2752,7 @@ class MainWindow(Window_MainWindow):
                 )
             ]
         )
-        self.task_voiceConverting_gptsovits = Execute_Voice_Converting_GPTSoVITS(coreDir)
+        self.task_voiceConverting_gptsovits = Execute_Voice_Converting_GPTSoVITS(coreDir, logPath)
         subPage_tts_gptsovits.setExecutor(
             consoleWidget = self.ui.Frame_Console,
             executeMethod = self.task_voiceConverting_gptsovits.execute,
@@ -2876,7 +2906,7 @@ class MainWindow(Window_MainWindow):
                 )
             ]
         )
-        self.task_voiceConverting_vits = Execute_Voice_Converting_VITS(coreDir)
+        self.task_voiceConverting_vits = Execute_Voice_Converting_VITS(coreDir, logPath)
         subPage_TTS_VITS.setExecutor(
             consoleWidget = self.ui.Frame_Console,
             executeMethod = self.task_voiceConverting_vits.execute,
