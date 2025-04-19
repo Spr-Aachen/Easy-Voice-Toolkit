@@ -27,9 +27,9 @@ class Execute_Audio_Processing(QObject):
             args = [
                 f'cd "{self.coreDir}"',
                 'python -c "'
-                'from AudioProcessor.Process import Audio_Processing; '
+                'from AudioProcessor.process import Audio_Processing; '
                 f"AudioConvertandSlice = Audio_Processing{str(params)}; "
-                'AudioConvertandSlice.Process_Audio()"'
+                'AudioConvertandSlice.processAudio()"'
             ]
         )
         Output, error = CMD.monitor(
@@ -66,10 +66,10 @@ class Execute_Voice_Identifying_VPR(QObject):
             args = [
                 f'cd "{self.coreDir}"',
                 'python -c "'
-                'from VPR.Identify import Voice_Identifying; '
+                'from VPR.identify import Voice_Identifying; '
                 f"AudioContrastInference = Voice_Identifying{str(params)}; "
-                'AudioContrastInference.GetModel(); '
-                'AudioContrastInference.Inference()"'
+                'AudioContrastInference.getModel(); '
+                'AudioContrastInference.inference()"'
             ]
         )
         Output, error = CMD.monitor(
@@ -114,9 +114,9 @@ class Execute_Voice_Transcribing_Whisper(QObject):
             args = [
                 f'cd "{self.coreDir}"',
                 'python -c "'
-                'from Whisper.Transcribe import Voice_Transcribing; '
+                'from Whisper.transcribe import Voice_Transcribing; '
                 f"WAVtoSRT = Voice_Transcribing{str(EasyUtils.itemReplacer(LANGUAGES, params))}; "
-                'WAVtoSRT.Transcriber()"'
+                'WAVtoSRT.transcriber()"'
             ]
         )
         Output, error = CMD.monitor(
@@ -153,9 +153,9 @@ class Execute_Dataset_Creating_GPTSoVITS(QObject):
             args = [
                 f'cd "{self.coreDir}"',
                 'python -c "'
-                'from GPT_SoVITS.Create import Dataset_Creating; '
+                'from GPT_SoVITS.create import Dataset_Creating; '
                 f"SRTtoCSVandSplitAudio = Dataset_Creating{str(params)}; "
-                'SRTtoCSVandSplitAudio.CallingFunctions()"'
+                'SRTtoCSVandSplitAudio.run()"'
             ]
         )
         Output, error = CMD.monitor(
@@ -191,9 +191,9 @@ class Execute_Dataset_Creating_VITS(QObject):
             args = [
                 f'cd "{self.coreDir}"',
                 'python -c "'
-                'from VITS.Create import Dataset_Creating; '
+                'from VITS.create import Dataset_Creating; '
                 f"SRTtoCSVandSplitAudio = Dataset_Creating{str(params)}; "
-                'SRTtoCSVandSplitAudio.CallingFunctions()"'
+                'SRTtoCSVandSplitAudio.run()"'
             ]
         )
         Output, error = CMD.monitor(
@@ -230,7 +230,7 @@ class Execute_Voice_Training_GPTSoVITS(QObject):
             args = [
                 f'cd "{self.coreDir}"',
                 'python -c "'
-                'from GPT_SoVITS.Train import train; '
+                'from GPT_SoVITS.train import train; '
                 f'train{str(params)}"'
             ]
         )
@@ -267,8 +267,8 @@ class Execute_Voice_Training_VITS(QObject):
             args = [
                 f'cd "{self.coreDir}"',
                 'python -c "'
-                'from VITS.Train import Train; '
-                f'Train{str(params)}"'
+                'from VITS.train import train; '
+                f'train{str(params)}"'
             ]
         )
         Output, error = CMD.monitor(
@@ -305,7 +305,7 @@ class Execute_Voice_Converting_GPTSoVITS(QObject):
             args = [
                 f'cd "{self.coreDir}"',
                 'python -c "'
-                'from GPT_SoVITS.Convert import convert; '
+                'from GPT_SoVITS.convert_webui import convert; '
                 f'convert{str(params)}"'
             ]
         )
@@ -359,8 +359,8 @@ class Execute_Voice_Converting_VITS(QObject):
             args = [
                 f'cd "{self.coreDir}"',
                 'python -c "'
-                'from VITS.Convert import Convert; '
-                f'Convert{str(EasyUtils.itemReplacer(LANGUAGES, params))}"'
+                'from VITS.convert import convert; '
+                f'convert{str(EasyUtils.itemReplacer(LANGUAGES, params))}"'
             ]
         )
         Output, error = CMD.monitor(
