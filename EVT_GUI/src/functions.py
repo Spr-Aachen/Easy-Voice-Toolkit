@@ -601,7 +601,7 @@ def Function_SetMethodExecutor(
         executeButton.clicked.connect(workerManager.execute)
     else:
         tempButton = QPushButton(parentWindow)
-        tempButton.clicked.connect(workerManager.terminate)
+        tempButton.clicked.connect(workerManager.execute)
         tempButton.setVisible(False)
         tempButton.click()
         workerManager.signals.finished.connect(tempButton.deleteLater)

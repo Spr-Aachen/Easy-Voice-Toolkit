@@ -44,14 +44,17 @@ class SubPage(QWidget):
         layout.removeWidget(self.contentWidget)
         return layout
 
-    def _addToChildFrame(self, widget: Union[QWidget, QLayout]):
+    def _addToChildFrame(self, widget: Union[QWidget, QLayout], sizePolicy: Optional[QSizePolicy] = None):
         childFrame = QFrame()
+        childFrame.setSizePolicy(sizePolicy) if sizePolicy is not None else None
         if isinstance(widget, QWidget):
             childFrame_layout = QGridLayout(childFrame)
             childFrame_layout.setSpacing(12)
             childFrame_layout.setContentsMargins(21, 12, 21, 12)
             childFrame_layout.addWidget(widget)
         if isinstance(widget, QLayout):
+            widget.setSpacing(12)
+            widget.setContentsMargins(21, 12, 21, 12)
             childFrame.setLayout(widget)
         return childFrame
 
@@ -93,7 +96,7 @@ class SubPage(QWidget):
                 groupBox_layout.addWidget(toolBox)
                 groupBox.setTitle(rootItemText)
                 self.widgets[(rootItemText,)] = groupBox # record the groupbox
-        self.container.layout().addWidget(groupBox)
+        self.container.layout().addWidget(groupBox, alignment = Qt.AlignTop)
 
 ##############################################################################################################################
 

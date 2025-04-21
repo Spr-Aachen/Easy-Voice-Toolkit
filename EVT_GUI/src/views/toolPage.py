@@ -151,8 +151,8 @@ class SubToolPage(SubPage):
         )
 
     def _addToChildFrame(self, label: LabelBase, inputWidget: QWidget, menuButton: MenuButton):
-        menuButton.setFixedSize(QSize(27, 27))
         inputWidget.setMaximumHeight(27) if isinstance(inputWidget, (QLineEdit, QComboBox, QCheckBox, QSpinBox, QDoubleSpinBox, QSlider)) else None
+        menuButton.setFixedSize(QSize(27, 27))
         # Add to childFrame
         childFrame = QFrame()
         childFrame.setMinimumHeight(105 if not isinstance(inputWidget, (QTextBrowser, QTextEdit, QTableView)) else 210)
@@ -224,9 +224,9 @@ class SubToolPage(SubPage):
         label = LabelBase()
         checkBox = CheckBoxBase(self)
         checkBox.setObjectName(text.splitlines()[0])
-        Function_ConfigureCheckBox(checkBox, checkedText = "已启动", uncheckedText = "未启动")
         button = MenuButton()
         self._setLabelText(label, text)
+        Function_ConfigureCheckBox(checkBox, checkedText = "已启动", uncheckedText = "未启动")
         checkBox.setToolTip(toolTip) if toolTip is not None else None
         self.paramsManager.setParam(checkBox, section, option, defaultValue)
         self._setButtonMenu(button, checkBox)

@@ -22,7 +22,20 @@ class SubEnvPage_Detector(SubPage):
         layout = self.cleanLayout()
         layout.addWidget(self.contentWidget, 0, 0)
 
-    def _addToChildFrame(self, titleLabel: QLabel, progressBar: QWidget, statusBrowser: QTextBrowser, detectButton: QPushButton):
+    def _setLabelText(self, label, text, size = 12):
+        QFunc.setText(
+            widget = label,
+            text = setRichText(
+                size = size,
+                text = QCA.translate('MainWindow', text),
+            )
+        )
+
+    def _addToChildFrame(self, label: QLabel, progressBar: QWidget, statusBrowser: QTextBrowser, detectButton: QPushButton):
+        progressBar.setMaximumHeight(3)
+        statusBrowser.setSizePolicy(QSizePolicy(QSizePolicy.Policy.Ignored, QSizePolicy.Policy.Preferred))
+        detectButton.setFixedSize(QSize(30, 30))
+        # 
         childFrame = QFrame()
         childFrame.setStyleSheet("""
             QFrame {
@@ -36,7 +49,7 @@ class SubEnvPage_Detector(SubPage):
         childFrame_layout = QGridLayout(childFrame)
         childFrame_layout.setSpacing(12)
         childFrame_layout.setContentsMargins(21, 12, 21, 12)
-        childFrame_layout.addWidget(titleLabel, 0, 0, 1, 2)
+        childFrame_layout.addWidget(label, 0, 0, 1, 2)
         childFrame_layout.addWidget(progressBar, 1, 0, 1, 2)
         childFrame_layout.addWidget(statusBrowser, 2, 0, 1, 2)
         childFrame_layout.addWidget(detectButton, 0, 2, 3, 1)
@@ -47,21 +60,12 @@ class SubEnvPage_Detector(SubPage):
         detectMethod: object = ..., params = [], terminateMethod: object = ..., threadPool = ..., 
         signal_detect: SignalInstance = ..., signal_detected: SignalInstance = ..., signal_undetected: SignalInstance = ..., statusSignal: SignalInstance = ...,
     ):
-        titleLabel = LabelBase(self)
-        titleLabel.setStyleSheet(u"QLabel {\n"
-        "	font-size: 15px;\n"
-        "	/*text-align: center;*/\n"
-        "	background-color: transparent;\n"
-        "	padding: 0px;\n"
-        "	border-width: 0px;\n"
-        "	border-radius: 0px;\n"
-        "	border-style: solid;\n"
-        "}")
-        titleLabel.setText(text)
+        label = LabelBase(self)
         progressBar = ProgressBarBase(self)
-        progressBar.setMaximumHeight(3)
         statusBrowser = TextBrowserBase(self)
-        statusBrowser.setSizePolicy(QSizePolicy(QSizePolicy.Policy.Ignored, QSizePolicy.Policy.Preferred))
+        detectButton = HollowButton(self)
+        detectButton.setObjectName(text.splitlines()[0])
+        self._setLabelText(label, text)
         statusBrowser.setStyleSheet(u"QTextBrowser {\n"
         "	font-size: 9.9px;\n"
         "	/*text-align: center;*/\n"
@@ -72,25 +76,9 @@ class SubEnvPage_Detector(SubPage):
         "	border-style: solid;\n"
         "}")
         statusBrowser.setText("--")
-        detectButton = QPushButton(self)
-        detectButton.setFixedSize(QSize(33, 33))
-        detectButton.setObjectName(text.splitlines()[0])
-        detectButton.setStyleSheet(u"QPushButton {\n"
-        "	text-align: center;\n"
-        "	font-size: 15px;\n"
-        "	image: url(:/Button_Icon/images/icons/Refresh.png);\n"
-        "	background-color: transparent;\n"
-        "	padding: 4.5px;\n"
-        "	border-width: 1.2px;\n"
-        "	border-radius: 6px;\n"
-        "	border-style: solid;\n"
-        "	border-color: rgba(123, 123, 123, 123);\n"
-        "}\n"
-        "QPushButton:hover {\n"
-        "	border-color: rgba(123, 123, 123, 210);\n"
-        "}")
+        detectButton.setIcon(IconBase.Arrow_Clockwise)
         detectButton.setToolTip(toolTip)
-        self._addToContainer(rootItemText, toolBoxText, text, titleLabel, progressBar, statusBrowser, detectButton)
+        self._addToContainer(rootItemText, toolBoxText, text, label, progressBar, statusBrowser, detectButton)
         Function_SetMethodExecutor(
             executeButton = detectButton,
             progressBar = progressBar,
@@ -126,8 +114,20 @@ class SubEnvPage_Manager(SubPage):
         layout = self.cleanLayout()
         layout.addWidget(self.contentWidget, 0, 0)
 
-    def _addToChildFrame(self, titleLabel: QLabel, comboBox: QComboBox, executeButton: QPushButton):
-        titleLabel.setSizePolicy(QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Preferred))
+    def _setLabelText(self, label, text, size = 12):
+        QFunc.setText(
+            widget = label,
+            text = setRichText(
+                size = size,
+                text = QCA.translate('MainWindow', text),
+            )
+        )
+
+    def _addToChildFrame(self, label: QLabel, comboBox: QComboBox, executeButton: QPushButton):
+        label.setSizePolicy(QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Preferred))
+        comboBox.setMinimumSize(QSize(123, 30))
+        executeButton.setFixedSize(QSize(123, 30))
+        # 
         childFrame = QFrame()
         childFrame.setMinimumSize(QSize(0, 90))
         childFrame.setStyleSheet("""
@@ -142,7 +142,7 @@ class SubEnvPage_Manager(SubPage):
         childFrame_layout = QGridLayout(childFrame)
         childFrame_layout.setSpacing(12)
         childFrame_layout.setContentsMargins(21, 12, 21, 12)
-        childFrame_layout.addWidget(titleLabel, 0, 0)
+        childFrame_layout.addWidget(label, 0, 0)
         childFrame_layout.addWidget(comboBox, 0, 1, Qt.AlignRight)
         childFrame_layout.addWidget(executeButton, 1, 1, Qt.AlignRight)
         return childFrame
@@ -150,28 +150,18 @@ class SubEnvPage_Manager(SubPage):
     def addComboBoxFrame(self,
         rootItemText: Optional[str] = None, toolBoxText: Optional[str] = None, text: str = ..., toolTip: Optional[str] = None,
         items: list = ...,
+        # section: str = ..., option: str = ..., defaultValue: str = ..., placeholderText: str = "",
         executorText: str = ..., executeMethod: object = ..., executeParamTargets: list[QObject] = [], terminateMethod: object = ..., threadPool = ...,
     ):
-        titleLabel = LabelBase(self)
-        titleLabel.setStyleSheet(u"QLabel {\n"
-        "	font-size: 15px;\n"
-        "	/*text-align: center;*/\n"
-        "	background-color: transparent;\n"
-        "	padding: 0px;\n"
-        "	border-width: 0px;\n"
-        "	border-radius: 0px;\n"
-        "	border-style: solid;\n"
-        "}")
-        titleLabel.setText(text)
+        label = LabelBase(self)
         comboBox = ComboBoxBase(self)
-        comboBox.setMinimumSize(QSize(123, 30))
+        executeButton = HollowButton(self)
+        self._setLabelText(label, text)
         comboBox.setToolTip(toolTip) if toolTip is not None else None
         comboBox.addItems(items)
-        executeButton = HollowButton(self)
-        executeButton.setFixedSize(QSize(123, 30))
         executeButton.setObjectName(text.splitlines()[0])
         executeButton.setText(executorText)
-        self._addToContainer(rootItemText, toolBoxText, text, titleLabel, comboBox, executeButton)
+        self._addToContainer(rootItemText, toolBoxText, text, label, comboBox, executeButton)
         Function_SetMethodExecutor(
             executeButton = executeButton,
             executeMethod = executeMethod,

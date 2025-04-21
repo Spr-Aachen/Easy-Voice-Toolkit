@@ -625,7 +625,6 @@ class MainWindow(Window_MainWindow):
         recordedVersion = deprecatedVersion or config.getValue('Info', 'RecordedVersion', currentVersion)
         if not EasyUtils.isVersionSatisfied(recordedVersion, currentVersion):
             deprecatedDir = Path(resourceDir).parent.joinpath(recordedVersion).as_posix()
-            time.sleep(3)
             try:
                 shutil.rmtree(deprecatedDir)
             except:
@@ -3397,12 +3396,16 @@ if __name__ == "__main__":
     #SC.showMessage('Loading...', alignment = Qt.AlignmentFlag.AlignCenter)
     SC.show()
 
-    # Init&Show MainWindow
-    MW = MainWindow()
-    MW.main()
+    def showMainWindow():
+        # Flush UI
+        App.processEvents()
+        # Init&Show MainWindow
+        MW = MainWindow()
+        MW.main()
+        # Close SplashScreen
+        SC.finish(MW) #SC.close()
 
-    # Close SplashScreen
-    SC.finish(MW) #SC.close()
+    QTimer.singleShot(1984, showMainWindow)
 
     sys.exit(App.exec())
 
