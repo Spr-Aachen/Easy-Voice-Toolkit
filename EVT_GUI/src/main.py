@@ -1062,7 +1062,7 @@ class MainWindow(Window_MainWindow):
         self.ui.TabWidget_Models_Process.setTabText(0, 'UVR（人声分离）')
         self.ui.Table_Models_Process_UVR.setHorizontalHeaderLabels(['名字', '类型', '大小', '日期', '操作'])
         self.Signal_ModelView_Process_UVR.connect(self.ui.Table_Models_Process_UVR.setValue)
-        self.ui.Table_Models_Process_UVR.Download.connect(
+        self.ui.Table_Models_Process_UVR.download.connect(
             lambda params: Function_SetMethodExecutor(
                 executeMethod = downloadModel,
                 executeParams = params,
@@ -1085,7 +1085,7 @@ class MainWindow(Window_MainWindow):
         self.ui.TabWidget_Models_VPR.setTabText(0, 'VPR（声纹识别）')
         self.ui.Table_Models_VPR_TDNN.setHorizontalHeaderLabels(['名字', '类型', '大小', '日期', '操作'])
         self.Signal_ModelView_VPR_TDNN.connect(self.ui.Table_Models_VPR_TDNN.setValue)
-        self.ui.Table_Models_VPR_TDNN.Download.connect(
+        self.ui.Table_Models_VPR_TDNN.download.connect(
             lambda params: Function_SetMethodExecutor(
                 executeMethod = downloadModel,
                 executeParams = params,
@@ -1108,7 +1108,7 @@ class MainWindow(Window_MainWindow):
         self.ui.TabWidget_Models_ASR.setTabText(0, 'Whisper')
         self.ui.Table_Models_ASR_Whisper.setHorizontalHeaderLabels(['名字', '类型', '大小', '日期', '操作'])
         self.Signal_ModelView_ASR_Whisper.connect(self.ui.Table_Models_ASR_Whisper.setValue)
-        self.ui.Table_Models_ASR_Whisper.Download.connect(
+        self.ui.Table_Models_ASR_Whisper.download.connect(
             lambda params: Function_SetMethodExecutor(
                 executeMethod = downloadModel,
                 executeParams = params,
@@ -1131,7 +1131,7 @@ class MainWindow(Window_MainWindow):
         self.ui.TabWidget_Models_TTS.setTabText(0, 'GPT-SoVITS')
         self.ui.Table_Models_TTS_GPTSoVITS.setHorizontalHeaderLabels(['名字', '类型', '大小', '日期', '操作'])
         self.Signal_ModelView_TTS_GPTSoVITS.connect(self.ui.Table_Models_TTS_GPTSoVITS.setValue)
-        self.ui.Table_Models_TTS_GPTSoVITS.Download.connect(
+        self.ui.Table_Models_TTS_GPTSoVITS.download.connect(
             lambda params: Function_SetMethodExecutor(
                 executeMethod = downloadModel,
                 executeParams = params,
@@ -1143,7 +1143,7 @@ class MainWindow(Window_MainWindow):
         self.ui.TabWidget_Models_TTS.setTabText(1, 'VITS')
         self.ui.Table_Models_TTS_VITS.setHorizontalHeaderLabels(['名字', '类型', '大小', '日期', '操作'])
         self.Signal_ModelView_TTS_VITS.connect(self.ui.Table_Models_TTS_VITS.setValue)
-        self.ui.Table_Models_TTS_VITS.Download.connect(
+        self.ui.Table_Models_TTS_VITS.download.connect(
             lambda params: Function_SetMethodExecutor(
                 executeMethod = downloadModel,
                 executeParams = params,

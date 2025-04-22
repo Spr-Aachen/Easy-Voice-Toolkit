@@ -300,7 +300,7 @@ def Function_SetWidgetValue(
         def EditConfig(value):
             config.editConfig(section, option, str(value))
         if config is not None:
-            widget.ValueChanged.connect(EditConfig)
+            widget.valueChanged.connect(EditConfig)
             EditConfig(value)
 
 

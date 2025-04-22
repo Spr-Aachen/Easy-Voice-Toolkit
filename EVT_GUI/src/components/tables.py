@@ -14,7 +14,7 @@ from assets import *
 class Table_ViewModels(TableBase):
     '''
     '''
-    Download = Signal(tuple)
+    download = Signal(tuple)
 
     def __init__(self, parent: QWidget = None):
         super().__init__(parent)
@@ -24,86 +24,84 @@ class Table_ViewModels(TableBase):
         self.setIndexHeaderVisible(False)
         self.verticalHeader().setSectionResizeMode(QHeaderView.Fixed)
 
-        self.Clipboard = QApplication.instance().clipboard()
+        self.clipboard = QApplication.instance().clipboard()
 
     def setHorizontalHeaderLabels(self, headers: list):
-        self.HorizontalHeaderLabels = headers
-        self.ColumnCount = len(headers)
+        super().setHorizontalHeaderLabels(headers)
         self.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
 
     def addRow(self, param: tuple):
-        ModelName, ModelType, ModelSize, ModelDate, DownloadParam = param
+        modelName, modelType, modelSize, modelDate, downloadParam = param
 
-        RowHeight = 36
-        def SetColumnLayout(ColumnLayout):
-            ColumnLayout.setContentsMargins(0, 0, 0, 0)
-            ColumnLayout.setSpacing(0)
+        rowHeight = 36
+        def _setColumnLayout(columnLayout):
+            columnLayout.setContentsMargins(0, 0, 0, 0)
+            columnLayout.setSpacing(0)
 
-        Label_ModelName = LabelBase()
-        QFunc.setText(Label_ModelName, ModelName)
-        ColumnLayout_ModelName = QHBoxLayout()
-        SetColumnLayout(ColumnLayout_ModelName)
-        ColumnLayout_ModelName.addWidget(Label_ModelName)
+        label_modelName = LabelBase()
+        QFunc.setText(label_modelName, modelName)
+        columnLayout_modelName = QHBoxLayout()
+        _setColumnLayout(columnLayout_modelName)
+        columnLayout_modelName.addWidget(label_modelName)
 
-        Label_ModelType = LabelBase()
-        QFunc.setText(Label_ModelType, ModelType)
-        ColumnLayout_ModelType = QHBoxLayout()
-        SetColumnLayout(ColumnLayout_ModelType)
-        ColumnLayout_ModelType.addWidget(Label_ModelType)
+        label_modelType = LabelBase()
+        QFunc.setText(label_modelType, modelType)
+        columnLayout_modelType = QHBoxLayout()
+        _setColumnLayout(columnLayout_modelType)
+        columnLayout_modelType.addWidget(label_modelType)
 
-        Label_ModelSize = LabelBase()
-        QFunc.setText(Label_ModelSize, ModelSize)
-        ColumnLayout_ModelSize = QHBoxLayout()
-        SetColumnLayout(ColumnLayout_ModelSize)
-        ColumnLayout_ModelSize.addWidget(Label_ModelSize)
+        label_modelSize = LabelBase()
+        QFunc.setText(label_modelSize, modelSize)
+        columnLayout_modelSize = QHBoxLayout()
+        _setColumnLayout(columnLayout_modelSize)
+        columnLayout_modelSize.addWidget(label_modelSize)
 
-        Label_ModelDate = LabelBase()
-        QFunc.setText(Label_ModelDate, ModelDate)
-        ColumnLayout_ModelDate = QHBoxLayout()
-        SetColumnLayout(ColumnLayout_ModelDate)
-        ColumnLayout_ModelDate.addWidget(Label_ModelDate)
+        label_modelDate = LabelBase()
+        QFunc.setText(label_modelDate, modelDate)
+        columnLayout_modelDate = QHBoxLayout()
+        _setColumnLayout(columnLayout_modelDate)
+        columnLayout_modelDate.addWidget(label_modelDate)
 
         stackedWidget = QStackedWidget()
         stackedWidget.setContentsMargins(0, 0, 0, 0)
-        OpenButton = ButtonBase()
-        OpenButton.setBorderless(True)
-        OpenButton.setTransparent(True)
-        OpenButton.setIcon(IconBase.OpenedFolder)
-        OpenButton.clicked.connect(lambda: QFunc.openURL(DownloadParam if isinstance(DownloadParam, str) else DownloadParam[1]))
-        DownloadButton = ButtonBase()
-        DownloadButton.setBorderless(True)
-        DownloadButton.setTransparent(True)
-        DownloadButton.setIcon(IconBase.Download)
-        DownloadButton.clicked.connect(lambda: self.Download.emit(DownloadParam) if isinstance(DownloadParam, tuple) else None)
-        DownloadButton.clicked.connect(lambda: stackedWidget.setCurrentWidget(OpenButton))
-        stackedWidget.addWidget(OpenButton)
-        stackedWidget.addWidget(DownloadButton)
-        stackedWidget.setCurrentWidget(OpenButton) if isinstance(DownloadParam, str) else stackedWidget.setCurrentWidget(DownloadButton)
-        CopyButton = ButtonBase()
-        CopyButton.setBorderless(True)
-        CopyButton.setTransparent(True)
-        CopyButton.setIcon(IconBase.Clipboard)
-        CopyButton.clicked.connect(lambda: self.Clipboard.setText(DownloadParam[0]) if isinstance(DownloadParam, tuple) else None)
-        CopyButton.clicked.connect(lambda: MessageBoxBase.pop(windowTitle = "Tip", text = "已复制链接到剪切板"))
-        QFunc.setRetainSizeWhenHidden(CopyButton)
-        CopyButton.hide() if stackedWidget.currentWidget() == OpenButton else None
-        stackedWidget.currentChanged.connect(lambda: CopyButton.hide() if stackedWidget.currentWidget() == OpenButton else None)
-        ColumnLayout_Management = QHBoxLayout()
-        SetColumnLayout(ColumnLayout_Management)
-        ColumnLayout_Management.addWidget(stackedWidget)
-        ColumnLayout_Management.addWidget(CopyButton)
+        openButton = ButtonBase()
+        openButton.setBorderless(True)
+        openButton.setTransparent(True)
+        openButton.setIcon(IconBase.OpenedFolder)
+        openButton.clicked.connect(lambda: QFunc.openURL(downloadParam if isinstance(downloadParam, str) else downloadParam[1]))
+        downloadButton = ButtonBase()
+        downloadButton.setBorderless(True)
+        downloadButton.setTransparent(True)
+        downloadButton.setIcon(IconBase.Download)
+        downloadButton.clicked.connect(lambda: self.download.emit(downloadParam) if isinstance(downloadParam, tuple) else None)
+        downloadButton.clicked.connect(lambda: stackedWidget.setCurrentWidget(openButton))
+        stackedWidget.addWidget(openButton)
+        stackedWidget.addWidget(downloadButton)
+        stackedWidget.setCurrentWidget(openButton) if isinstance(downloadParam, str) else stackedWidget.setCurrentWidget(downloadButton)
+        copyButton = ButtonBase()
+        copyButton.setBorderless(True)
+        copyButton.setTransparent(True)
+        copyButton.setIcon(IconBase.Clipboard)
+        copyButton.clicked.connect(lambda: self.clipboard.setText(downloadParam[0]) if isinstance(downloadParam, tuple) else None)
+        copyButton.clicked.connect(lambda: MessageBoxBase.pop(windowTitle = "Tip", text = "已复制链接到剪切板"))
+        QFunc.setRetainSizeWhenHidden(copyButton)
+        copyButton.hide() if stackedWidget.currentWidget() == openButton else None
+        stackedWidget.currentChanged.connect(lambda: copyButton.hide() if stackedWidget.currentWidget() == openButton else None)
+        columnLayout_management = QHBoxLayout()
+        _setColumnLayout(columnLayout_management)
+        columnLayout_management.addWidget(stackedWidget)
+        columnLayout_management.addWidget(copyButton)
 
         super().addRow(
-            [ColumnLayout_ModelName, ColumnLayout_ModelType, ColumnLayout_ModelSize, ColumnLayout_ModelDate, ColumnLayout_Management],
+            [columnLayout_modelName, columnLayout_modelType, columnLayout_modelSize, columnLayout_modelDate, columnLayout_management],
             [QHeaderView.Stretch, QHeaderView.Interactive, QHeaderView.Interactive, QHeaderView.Stretch, QHeaderView.Fixed],
-            [None, None, None, None, 2 * RowHeight],
-            RowHeight
+            [None, None, None, None, 2 * rowHeight],
+            rowHeight
         )
 
     def setValue(self, params: list = [['name', 'type', 'size', 'date', 'url'], ]):
         self.clearRows()
         super().setColumnCount(self.columnCount())
-        super().setHorizontalHeaderLabels(self.HorizontalHeaderLabels)
         for param in params:
             QApplication.instance().processEvents()
             self.addRow(param)
@@ -112,7 +110,7 @@ class Table_ViewModels(TableBase):
 class Table_EditAudioSpeaker(TableBase):
     '''
     '''
-    ValueChanged = Signal(dict)
+    valueChanged = Signal(dict)
 
     fileType = None
 
@@ -125,12 +123,8 @@ class Table_EditAudioSpeaker(TableBase):
         self.verticalHeader().setSectionResizeMode(QHeaderView.Fixed)
 
         self.model().dataChanged.connect(
-            lambda: self.ValueChanged.emit(self.getValue())
+            lambda: self.valueChanged.emit(self.getValue())
         )
-
-    def setHorizontalHeaderLabels(self, headers: list):
-        self.HorizontalHeaderLabels = headers
-        self.ColumnCount = len(headers)
 
     def setStyleSheet(self, styleSheet: str):
         super().setStyleSheet(styleSheet + '''
@@ -139,85 +133,84 @@ class Table_EditAudioSpeaker(TableBase):
         )
 
     def addRow(self, param: Optional[tuple] = None):
-        RowHeight = 30
-        def SetColumnLayout(ColumnLayout):
-            ColumnLayout.setContentsMargins(0, 0, 0, 0)
-            ColumnLayout.setSpacing(0)
+        rowHeight = 30
+        def _setColumnLayout(columnLayout):
+            columnLayout.setContentsMargins(0, 0, 0, 0)
+            columnLayout.setSpacing(0)
 
-        LineEdit0 = LineEditBase()
-        LineEdit0.setBorderless(True)
-        LineEdit0.setTransparent(True)
-        QFunc.setText(LineEdit0, param[0] if param else '', setPlaceholderText = True)
-        LineEdit0.textChanged.connect(
-            lambda: self.ValueChanged.emit(self.getValue())
+        lineEdit0 = LineEditBase()
+        lineEdit0.setBorderless(True)
+        lineEdit0.setTransparent(True)
+        lineEdit0.textChanged.connect(
+            lambda: self.valueChanged.emit(self.getValue())
         )
-        Column0Layout = QHBoxLayout()
-        SetColumnLayout(Column0Layout)
-        Column0Layout.addWidget(LineEdit0)
+        QFunc.setText(lineEdit0, param[0] if param else '', setPlaceholderText = True)
+        column0Layout = QHBoxLayout()
+        _setColumnLayout(column0Layout)
+        column0Layout.addWidget(lineEdit0)
 
-        LineEdit1 = LineEditBase()
-        LineEdit1.setBorderless(True)
-        LineEdit1.setTransparent(True)
-        LineEdit1.setFileDialog(FileDialogMode.SelectFile, self.fileType)
-        QFunc.setText(LineEdit1, param[1] if param else '', setPlaceholderText = True)
-        LineEdit1.textChanged.connect(
-            lambda: self.ValueChanged.emit(self.getValue())
+        lineEdit1 = LineEditBase()
+        lineEdit1.setBorderless(True)
+        lineEdit1.setTransparent(True)
+        lineEdit1.setFileDialog(FileDialogMode.SelectFile, self.fileType)
+        lineEdit1.textChanged.connect(
+            lambda: self.valueChanged.emit(self.getValue())
         )
-        Column1Layout = QHBoxLayout()
-        SetColumnLayout(Column1Layout)
-        Column1Layout.addWidget(LineEdit1)
+        QFunc.setText(lineEdit1, param[1] if param else '', setPlaceholderText = True)
+        column1Layout = QHBoxLayout()
+        _setColumnLayout(column1Layout)
+        column1Layout.addWidget(lineEdit1)
 
-        AddButton = ButtonBase()
-        AddButton.setBorderless(True)
-        AddButton.setTransparent(True)
-        AddButton.setText("+")
-        AddButton.clicked.connect(lambda: self.selectOuterRow(AddButton), Qt.QueuedConnection)
-        AddButton.clicked.connect(self.addRow, Qt.QueuedConnection)
-        DelButton = ButtonBase()
-        DelButton.setBorderless(True)
-        DelButton.setTransparent(True)
-        DelButton.setText("-")
-        DelButton.clicked.connect(lambda: self.selectOuterRow(DelButton), Qt.QueuedConnection)
-        DelButton.clicked.connect(self.delRow, Qt.QueuedConnection)
-        Column2Layout = QHBoxLayout()
-        SetColumnLayout(Column2Layout)
-        Column2Layout.addWidget(AddButton)
-        Column2Layout.addWidget(DelButton)
+        addButton = ButtonBase()
+        addButton.setBorderless(True)
+        addButton.setTransparent(True)
+        addButton.setText("+")
+        addButton.clicked.connect(lambda: self.selectOuterRow(addButton), Qt.QueuedConnection)
+        addButton.clicked.connect(self.addRow, Qt.QueuedConnection)
+        delButton = ButtonBase()
+        delButton.setBorderless(True)
+        delButton.setTransparent(True)
+        delButton.setText("-")
+        delButton.clicked.connect(lambda: self.selectOuterRow(delButton), Qt.QueuedConnection)
+        delButton.clicked.connect(self.delRow, Qt.QueuedConnection)
+        column2Layout = QHBoxLayout()
+        _setColumnLayout(column2Layout)
+        column2Layout.addWidget(addButton)
+        column2Layout.addWidget(delButton)
 
         super().addRow(
-            [Column0Layout, Column1Layout, Column2Layout],
+            [column0Layout, column1Layout, column2Layout],
             [QHeaderView.ResizeToContents, QHeaderView.Stretch, QHeaderView.Fixed],
-            [None, None, 2 * RowHeight],
-            RowHeight
+            [None, None, 2 * rowHeight],
+            rowHeight
         )
 
     def setValue(self, params: dict = {'%Speaker%': '%Path%'}):
         self.clearRows()
         super().setColumnCount(self.columnCount())
-        super().setHorizontalHeaderLabels(self.HorizontalHeaderLabels)
-        for Key, Value in (params if isinstance(params, dict) else (eval(params) if not (params is None or len(params) == 0) else {'': ''})).items():
+        for key, value in (params if isinstance(params, dict) else (eval(params) if not (params is None or len(params) == 0) else {'': ''})).items():
             QApplication.instance().processEvents()
-            param = (Key, Value)
-            #Index = next((i for i, key in enumerate(ParamDict) if key == Key), None)
+            param = (key, value)
+            #Index = next((i for i, key in enumerate(ParamDict) if key == key), None)
             self.addRow(param)
 
     def setFileDialog(self, fileType: Optional[str] = None):
         '''
-        for RowCount in range(self.rowCount()):
-            self.cellWidget(RowCount, 1).findChild(LineEditBase).setFileDialog(FileDialogMode.SelectFile, fileType)
+        for rowCount in range(self.rowCount()):
+            self.cellWidget(rowCount, 1).findChild(LineEditBase).setFileDialog(FileDialogMode.SelectFile, fileType)
         '''
         self.fileType = fileType
 
     def getValue(self):
-        ValueDict = {}
-        for RowCount in range(self.rowCount()):
+        valueDict = {}
+        for rowCount in range(self.rowCount()):
             try:
-                Key = QFunc.getText(self.cellWidget(RowCount, 0).findChild(QLineEdit))
-                Value = QFunc.getText(self.cellWidget(RowCount, 1).findChild(QLineEdit))
-                ValueDict[Key] = Value
+                key = QFunc.getText(self.cellWidget(rowCount, 0).findChild(QLineEdit))
+                value = QFunc.getText(self.cellWidget(rowCount, 1).findChild(QLineEdit))
+                valueDict[key] = value
             except:
                 pass
-        return ValueDict
+        return valueDict
 
 
 class Table_VPRResult(TableBase):
@@ -231,10 +224,6 @@ class Table_VPRResult(TableBase):
         self.setIndexHeaderVisible(True)
         self.verticalHeader().setSectionResizeMode(QHeaderView.Fixed)
 
-    def setHorizontalHeaderLabels(self, headers: list):
-        self.HorizontalHeaderLabels = headers
-        self.ColumnCount = len(headers)
-
     def setStyleSheet(self, styleSheet: str):
         super().setStyleSheet(styleSheet + '''
             QHeaderView::section, QTableView::item {padding: 0px;}
@@ -242,74 +231,73 @@ class Table_VPRResult(TableBase):
         )
 
     def addRow(self, param: tuple, comboItems: list):
-        RowHeight = 30
-        def SetColumnLayout(ColumnLayout):
-            ColumnLayout.setContentsMargins(0, 0, 0, 0)
-            ColumnLayout.setSpacing(0)
+        rowHeight = 30
+        def _setColumnLayout(columnLayout):
+            columnLayout.setContentsMargins(0, 0, 0, 0)
+            columnLayout.setSpacing(0)
 
-        Label0 = LabelBase()
-        QFunc.setText(Label0, param[0])
-        Column0Layout = QHBoxLayout()
-        SetColumnLayout(Column0Layout)
-        Column0Layout.addWidget(Label0)
+        label0 = LabelBase()
+        QFunc.setText(label0, param[0])
+        column0Layout = QHBoxLayout()
+        _setColumnLayout(column0Layout)
+        column0Layout.addWidget(label0)
 
-        ComboBox = ComboBoxBase()
-        ComboBox.setBorderless(True)
-        ComboBox.setTransparent(True)
-        ComboBox.addItems(comboItems)
-        ComboBox.setCurrentText(param[1])
-        Column1Layout = QHBoxLayout()
-        SetColumnLayout(Column1Layout)
-        Column1Layout.addWidget(ComboBox)
+        comboBox = ComboBoxBase()
+        comboBox.setBorderless(True)
+        comboBox.setTransparent(True)
+        comboBox.addItems(comboItems)
+        comboBox.setCurrentText(param[1])
+        column1Layout = QHBoxLayout()
+        _setColumnLayout(column1Layout)
+        column1Layout.addWidget(comboBox)
 
-        Label2 = LabelBase()
-        QFunc.setText(Label2, param[2])
-        Column2Layout = QHBoxLayout()
-        SetColumnLayout(Column2Layout)
-        Column2Layout.addWidget(Label2)
+        label2 = LabelBase()
+        QFunc.setText(label2, param[2])
+        column2Layout = QHBoxLayout()
+        _setColumnLayout(column2Layout)
+        column2Layout.addWidget(label2)
 
-        PlayerWidget = MediaPlayerBase()
-        PlayerWidget.setBorderless(True)
-        PlayerWidget.setTransparent(True)
-        PlayerWidget.setMediaPlayer(param[0])
-        PlayerWidget.layout().setContentsMargins(6, 6, 6, 6)
-        PlayerWidget.Slider.hide()
-        Column3Layout = QHBoxLayout()
-        SetColumnLayout(Column3Layout)
-        Column3Layout.addWidget(PlayerWidget)
+        playerWidget = MediaPlayerBase()
+        playerWidget.setBorderless(True)
+        playerWidget.setTransparent(True)
+        playerWidget.setMediaPlayer(param[0])
+        playerWidget.layout().setContentsMargins(6, 6, 6, 6)
+        playerWidget.Slider.hide()
+        column3Layout = QHBoxLayout()
+        _setColumnLayout(column3Layout)
+        column3Layout.addWidget(playerWidget)
 
-        DelButton = ButtonBase()
-        DelButton.setBorderless(True)
-        DelButton.setTransparent(True)
-        DelButton.setText("删除")
-        DelButton.clicked.connect(
+        delButton = ButtonBase()
+        delButton.setBorderless(True)
+        delButton.setTransparent(True)
+        delButton.setText("删除")
+        delButton.clicked.connect(
             lambda: MessageBoxBase.pop(None,
                 QMessageBox.Question, "Ask",
                 "确认删除该行？", None,
                 QMessageBox.Yes|QMessageBox.No,
                 {
                     QMessageBox.Yes: lambda: (
-                        self.selectOuterRow(DelButton),
+                        self.selectOuterRow(delButton),
                         self.delRow()
                     )
                 }
             )
         )
-        Column4Layout = QHBoxLayout()
-        SetColumnLayout(Column4Layout)
-        Column4Layout.addWidget(DelButton)
+        column4Layout = QHBoxLayout()
+        _setColumnLayout(column4Layout)
+        column4Layout.addWidget(delButton)
 
         super().addRow(
-            [Column0Layout, Column1Layout, Column2Layout, Column3Layout, Column4Layout],
+            [column0Layout, column1Layout, column2Layout, column3Layout, column4Layout],
             [QHeaderView.Stretch, QHeaderView.Stretch, QHeaderView.Stretch, QHeaderView.Fixed, QHeaderView.Fixed],
-            [None, None, None, RowHeight, 1.5 * RowHeight],
-            RowHeight
+            [None, None, None, rowHeight, 1.5 * rowHeight],
+            rowHeight
         )
 
     def setValue(self, params: list = [['%Path%', '%Namex%', '%Sim%'], ], comboItems: Optional[list] = ['%Name1%', ]):
         self.clearRows()
         super().setColumnCount(self.columnCount())
-        super().setHorizontalHeaderLabels(self.HorizontalHeaderLabels)
         if comboItems is None:
             comboItems = []
             for param in params:
@@ -320,15 +308,15 @@ class Table_VPRResult(TableBase):
             self.addRow(param, comboItems + [''])
 
     def getValue(self):
-        ValueDict = {}
-        for RowCount in range(self.rowCount()):
+        valueDict = {}
+        for rowCount in range(self.rowCount()):
             try:
-                Key = QFunc.getText(self.cellWidget(RowCount, 0).findChild(LabelBase))
-                Value = self.cellWidget(RowCount, 1).findChild(ComboBoxBase).currentText()
-                ValueDict[Key] = Value
+                key = QFunc.getText(self.cellWidget(rowCount, 0).findChild(LabelBase))
+                value = self.cellWidget(rowCount, 1).findChild(ComboBoxBase).currentText()
+                valueDict[key] = value
             except:
                 pass
-        return ValueDict
+        return valueDict
 
 
 class Table_ASRResult(TableBase):
@@ -342,10 +330,6 @@ class Table_ASRResult(TableBase):
         self.setIndexHeaderVisible(True)
         self.verticalHeader().setSectionResizeMode(QHeaderView.Fixed)
 
-    def setHorizontalHeaderLabels(self, headers: list):
-        self.HorizontalHeaderLabels = headers
-        self.ColumnCount = len(headers)
-
     def setStyleSheet(self, styleSheet: str):
         super().setStyleSheet(styleSheet + '''
             QHeaderView::section, QTableView::item {padding: 0px;}
@@ -353,61 +337,60 @@ class Table_ASRResult(TableBase):
         )
 
     def addRow(self, param: tuple):
-        RowHeight = 30
-        def SetColumnLayout(ColumnLayout):
-            ColumnLayout.setContentsMargins(0, 0, 0, 0)
-            ColumnLayout.setSpacing(0)
+        rowHeight = 30
+        def _setColumnLayout(columnLayout):
+            columnLayout.setContentsMargins(0, 0, 0, 0)
+            columnLayout.setSpacing(0)
 
-        Label0 = LabelBase()
-        QFunc.setText(Label0, param[0])
-        Column0Layout = QHBoxLayout()
-        SetColumnLayout(Column0Layout)
-        Column0Layout.addWidget(Label0)
+        label0 = LabelBase()
+        QFunc.setText(label0, param[0])
+        column0Layout = QHBoxLayout()
+        _setColumnLayout(column0Layout)
+        column0Layout.addWidget(label0)
 
-        LineEdit = LineEditBase()
-        LineEdit.setBorderless(True)
-        LineEdit.setTransparent(True)
-        QFunc.setText(LineEdit, param[1], setPlaceholderText = True)
-        Column1Layout = QHBoxLayout()
-        SetColumnLayout(Column1Layout)
-        Column1Layout.addWidget(LineEdit)
+        lineEdit = LineEditBase()
+        lineEdit.setBorderless(True)
+        lineEdit.setTransparent(True)
+        QFunc.setText(lineEdit, param[1], setPlaceholderText = True)
+        column1Layout = QHBoxLayout()
+        _setColumnLayout(column1Layout)
+        column1Layout.addWidget(lineEdit)
 
-        PlayerWidget = MediaPlayerBase()
-        PlayerWidget.setBorderless(True)
-        PlayerWidget.setTransparent(True)
-        PlayerWidget.setMediaPlayer(param[0])
-        PlayerWidget.layout().setContentsMargins(6, 6, 6, 6)
-        PlayerWidget.Slider.hide()
-        Column2Layout = QHBoxLayout()
-        SetColumnLayout(Column2Layout)
-        Column2Layout.addWidget(PlayerWidget)
+        playerWidget = MediaPlayerBase()
+        playerWidget.setBorderless(True)
+        playerWidget.setTransparent(True)
+        playerWidget.setMediaPlayer(param[0])
+        playerWidget.layout().setContentsMargins(6, 6, 6, 6)
+        playerWidget.Slider.hide()
+        column2Layout = QHBoxLayout()
+        _setColumnLayout(column2Layout)
+        column2Layout.addWidget(playerWidget)
 
         super().addRow(
-            [Column0Layout, Column1Layout, Column2Layout],
+            [column0Layout, column1Layout, column2Layout],
             [QHeaderView.Stretch, QHeaderView.Stretch, QHeaderView.Fixed],
-            [None, None, RowHeight],
-            RowHeight
+            [None, None, rowHeight],
+            rowHeight
         )
 
     def setValue(self, params: dict = {'%Path%': '%Transcription%'}):
         self.clearRows()
         super().setColumnCount(self.columnCount())
-        super().setHorizontalHeaderLabels(self.HorizontalHeaderLabels)
-        for Key, Value in (params if isinstance(params, dict) else eval(params)).items():
+        for key, value in (params if isinstance(params, dict) else eval(params)).items():
             QApplication.instance().processEvents()
-            param = (Key, Value)
+            param = (key, value)
             self.addRow(param)
 
     def getValue(self):
-        ValueDict = {}
-        for RowCount in range(self.rowCount()):
+        valueDict = {}
+        for rowCount in range(self.rowCount()):
             try:
-                Key = QFunc.getText(self.cellWidget(RowCount, 0).findChild(LabelBase))
-                Value = QFunc.getText(self.cellWidget(RowCount, 1).findChild(QLineEdit))
-                ValueDict[Key] = Value
+                key = QFunc.getText(self.cellWidget(rowCount, 0).findChild(LabelBase))
+                value = QFunc.getText(self.cellWidget(rowCount, 1).findChild(QLineEdit))
+                valueDict[key] = value
             except:
                 pass
-        return ValueDict
+        return valueDict
 
 
 class Table_DATResult(TableBase):
@@ -421,10 +404,6 @@ class Table_DATResult(TableBase):
         self.setIndexHeaderVisible(True)
         self.verticalHeader().setSectionResizeMode(QHeaderView.Fixed)
 
-    def setHorizontalHeaderLabels(self, headers: list):
-        self.HorizontalHeaderLabels = headers
-        self.ColumnCount = len(headers)
-
     def setStyleSheet(self, styleSheet: str):
         super().setStyleSheet(styleSheet + '''
             QHeaderView::section, QTableView::item {padding: 0px;}
@@ -432,53 +411,52 @@ class Table_DATResult(TableBase):
         )
 
     def addRow(self, param: tuple):
-        RowHeight = 30
-        def SetColumnLayout(ColumnLayout):
-            ColumnLayout.setContentsMargins(0, 0, 0, 0)
-            ColumnLayout.setSpacing(0)
+        rowHeight = 30
+        def _setColumnLayout(columnLayout):
+            columnLayout.setContentsMargins(0, 0, 0, 0)
+            columnLayout.setSpacing(0)
 
-        LineEdit = LineEditBase()
-        LineEdit.setBorderless(True)
-        LineEdit.setTransparent(True)
-        QFunc.setText(LineEdit, param[1], setPlaceholderText = True)
-        Column0Layout = QHBoxLayout()
-        SetColumnLayout(Column0Layout)
-        Column0Layout.addWidget(LineEdit)
+        lineEdit = LineEditBase()
+        lineEdit.setBorderless(True)
+        lineEdit.setTransparent(True)
+        QFunc.setText(lineEdit, param[1], setPlaceholderText = True)
+        column0Layout = QHBoxLayout()
+        _setColumnLayout(column0Layout)
+        column0Layout.addWidget(lineEdit)
 
-        PlayerWidget = MediaPlayerBase()
-        PlayerWidget.setBorderless(True)
-        PlayerWidget.setTransparent(True)
-        PlayerWidget.setMediaPlayer(param[0])
-        PlayerWidget.layout().setContentsMargins(6, 6, 6, 6)
-        PlayerWidget.Slider.hide()
-        Column1Layout = QHBoxLayout()
-        SetColumnLayout(Column1Layout)
-        Column1Layout.addWidget(PlayerWidget)
+        playerWidget = MediaPlayerBase()
+        playerWidget.setBorderless(True)
+        playerWidget.setTransparent(True)
+        playerWidget.setMediaPlayer(param[0])
+        playerWidget.layout().setContentsMargins(6, 6, 6, 6)
+        playerWidget.Slider.hide()
+        column1Layout = QHBoxLayout()
+        _setColumnLayout(column1Layout)
+        column1Layout.addWidget(playerWidget)
 
         super().addRow(
-            [Column0Layout, Column1Layout],
+            [column0Layout, column1Layout],
             [QHeaderView.Stretch, QHeaderView.Fixed],
-            [None, RowHeight],
-            RowHeight
+            [None, rowHeight],
+            rowHeight
         )
 
     def setValue(self, params: dict = {'%Path%': '%Data%'}):
         self.clearRows()
         super().setColumnCount(self.columnCount())
-        super().setHorizontalHeaderLabels(self.HorizontalHeaderLabels)
-        for Key, Value in (params if isinstance(params, dict) else eval(params)).items():
+        for key, value in (params if isinstance(params, dict) else eval(params)).items():
             QApplication.instance().processEvents()
-            param = (Key, Value)
+            param = (key, value)
             self.addRow(param)
 
     def getValue(self):
-        ValueList = []
-        for RowCount in range(self.rowCount()):
+        valueList = []
+        for rowCount in range(self.rowCount()):
             try:
-                Value = QFunc.getText(self.cellWidget(RowCount, 0).findChild(QLineEdit))
-                ValueList.append(Value)
+                value = QFunc.getText(self.cellWidget(rowCount, 0).findChild(QLineEdit))
+                valueList.append(value)
             except:
                 pass
-        return ValueList
+        return valueList
 
 ##############################################################################################################################
