@@ -305,8 +305,8 @@ class Execute_Voice_Converting_GPTSoVITS(QObject):
             args = [
                 f'cd "{self.coreDir}"',
                 'python -c "'
-                'from GPT_SoVITS.convert_webui import convert; '
-                f'convert{str(params)}"'
+                'from GPT_SoVITS.infer_webui import infer; '
+                f'infer{str(params)}"'
             ]
         )
         output, error = CMD.monitor(
@@ -359,8 +359,8 @@ class Execute_Voice_Converting_VITS(QObject):
             args = [
                 f'cd "{self.coreDir}"',
                 'python -c "'
-                'from VITS.convert import convert; '
-                f'convert{str(EasyUtils.itemReplacer(LANGUAGES, params))}"'
+                'from VITS.infer import infer; '
+                f'infer{str(EasyUtils.itemReplacer(LANGUAGES, params))}"'
             ]
         )
         Output, error = CMD.monitor(
