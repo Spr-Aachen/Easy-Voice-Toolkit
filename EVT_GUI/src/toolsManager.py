@@ -11,7 +11,7 @@ from PySide6.QtCore import QObject, Signal
 ##############################################################################################################################
 
 # Tools: AudioProcessor
-class Execute_Audio_Processing(QObject):
+class Execute_AudioProcessing(QObject):
     '''
     Change media format to WAV (and denoise) and cut off the silent parts
     '''
@@ -50,7 +50,7 @@ class Execute_Audio_Processing(QObject):
 
 
 # Tools: VoiceIdentifier
-class Execute_Voice_Identifying_VPR(QObject):
+class Execute_VPR_VPR(QObject):
     '''
     Contrast the voice and filter out the similar ones
     '''
@@ -90,7 +90,7 @@ class Execute_Voice_Identifying_VPR(QObject):
 
 
 # Tools: VoiceTranscriber
-class Execute_Voice_Transcribing_Whisper(QObject):
+class Execute_ASR_Whisper(QObject):
     '''
     Transcribe WAV content to SRT
     '''
@@ -137,7 +137,7 @@ class Execute_Voice_Transcribing_Whisper(QObject):
 
 
 # Tools: DatasetCreator
-class Execute_Dataset_Creating_GPTSoVITS(QObject):
+class Execute_DatasetCreating_GPTSoVITS(QObject):
     '''
     Convert the whisper-generated SRT to CSV and split the WAV
     '''
@@ -175,7 +175,7 @@ class Execute_Dataset_Creating_GPTSoVITS(QObject):
         EasyUtils.processTerminator(self.Process.pid) if hasattr(self, 'Process') else None
 
 
-class Execute_Dataset_Creating_VITS(QObject):
+class Execute_DatasetCreating_VITS(QObject):
     '''
     Convert the whisper-generated SRT to CSV and split the WAV
     '''
@@ -214,7 +214,7 @@ class Execute_Dataset_Creating_VITS(QObject):
 
 
 # Tools: VoiceTrainer
-class Execute_Voice_Training_GPTSoVITS(QObject):
+class Execute_Training_GPTSoVITS(QObject):
     '''
     Preprocess and then start training
     '''
@@ -251,7 +251,7 @@ class Execute_Voice_Training_GPTSoVITS(QObject):
         EasyUtils.processTerminator(self.Process.pid) if hasattr(self, 'Process') else None
 
 
-class Execute_Voice_Training_VITS(QObject):
+class Execute_Training_VITS(QObject):
     '''
     Preprocess and then start training
     '''
@@ -289,7 +289,7 @@ class Execute_Voice_Training_VITS(QObject):
 
 
 # Tools: VoiceConverter
-class Execute_Voice_Converting_GPTSoVITS(QObject):
+class Execute_TTS_GPTSoVITS(QObject):
     '''
     Inference model
     '''
@@ -335,7 +335,7 @@ def Get_Speakers(Config_Path_Load):
     except:
         return str()
 
-class Execute_Voice_Converting_VITS(QObject):
+class Execute_TTS_VITS(QObject):
     '''
     Inference model
     '''

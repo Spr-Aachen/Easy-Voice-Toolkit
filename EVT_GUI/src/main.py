@@ -1330,7 +1330,7 @@ class MainWindow(Window_MainWindow):
         subPage_process.addChkOutputSideBtn(
             outputRootEdit = self.ui.LineEdit_Process_OutputRoot,
         )
-        self.task_audioProcessing = Execute_Audio_Processing(coreDir, logPath)
+        self.task_audioProcessing = Execute_AudioProcessing(coreDir, logPath)
         subPage_process.setExecutor(
             consoleWidget = self.ui.Frame_Console,
             executeMethod = self.task_audioProcessing.execute,
@@ -1568,7 +1568,7 @@ class MainWindow(Window_MainWindow):
                 EditVPRResult
             ]
         )
-        self.task_voiceIdentifying_vpr = Execute_Voice_Identifying_VPR(coreDir, logPath)
+        self.task_voiceIdentifying_vpr = Execute_VPR_VPR(coreDir, logPath)
         subPage_VPR.setExecutor(
             consoleWidget = self.ui.Frame_Console,
             executeMethod = self.task_voiceIdentifying_vpr.execute,
@@ -1704,7 +1704,7 @@ class MainWindow(Window_MainWindow):
         subPage_ASR.addChkOutputSideBtn(
             outputRootEdit = self.ui.LineEdit_ASR_Whisper_OutputRoot
         )
-        self.task_voiceTranscribing_whisper = Execute_Voice_Transcribing_Whisper(coreDir, logPath)
+        self.task_voiceTranscribing_whisper = Execute_ASR_Whisper(coreDir, logPath)
         subPage_ASR.setExecutor(
             consoleWidget = self.ui.Frame_Console,
             executeMethod = self.task_voiceTranscribing_whisper.execute,
@@ -1846,7 +1846,7 @@ class MainWindow(Window_MainWindow):
         subPage_dataset_GPTSoVITS.addChkOutputSideBtn(
             outputRootEdit = self.ui.LineEdit_DAT_GPTSoVITS_OutputRoot
         )
-        self.task_datasetCreating_gptsovits = Execute_Dataset_Creating_GPTSoVITS(coreDir, logPath)
+        self.task_datasetCreating_gptsovits = Execute_DatasetCreating_GPTSoVITS(coreDir, logPath)
         subPage_dataset_GPTSoVITS.setExecutor(
             consoleWidget = self.ui.Frame_Console,
             executeMethod = self.task_datasetCreating_gptsovits.execute,
@@ -2036,7 +2036,7 @@ class MainWindow(Window_MainWindow):
         subPage_dataset_VITS.addChkOutputSideBtn(
             outputRootEdit = self.ui.LineEdit_DAT_VITS_OutputRoot
         )
-        self.task_datasetCreating_vits = Execute_Dataset_Creating_VITS(coreDir, logPath)
+        self.task_datasetCreating_vits = Execute_DatasetCreating_VITS(coreDir, logPath)
         subPage_dataset_VITS.setExecutor(
             consoleWidget = self.ui.Frame_Console,
             executeMethod = self.task_datasetCreating_vits.execute,
@@ -2292,7 +2292,7 @@ class MainWindow(Window_MainWindow):
                 )
             ]
         )
-        self.task_voiceTraining_gptsovits = Execute_Voice_Training_GPTSoVITS(coreDir, logPath)
+        self.task_voiceTraining_gptsovits = Execute_Training_GPTSoVITS(coreDir, logPath)
         subPage_train_gptsovits.setExecutor(
             consoleWidget = self.ui.Frame_Console,
             executeMethod = self.task_voiceTraining_gptsovits.execute,
@@ -2534,7 +2534,7 @@ class MainWindow(Window_MainWindow):
                 )
             ]
         )
-        self.task_voiceTraining_vits = Execute_Voice_Training_VITS(coreDir, logPath)
+        self.task_voiceTraining_vits = Execute_Training_VITS(coreDir, logPath)
         subPage_train_VITS.setExecutor(
             consoleWidget = self.ui.Frame_Console,
             executeMethod = self.task_voiceTraining_vits.execute,
@@ -2751,7 +2751,7 @@ class MainWindow(Window_MainWindow):
                 )
             ]
         )
-        self.task_voiceConverting_gptsovits = Execute_Voice_Converting_GPTSoVITS(coreDir, logPath)
+        self.task_voiceConverting_gptsovits = Execute_TTS_GPTSoVITS(coreDir, logPath)
         subPage_tts_gptsovits.setExecutor(
             consoleWidget = self.ui.Frame_Console,
             executeMethod = self.task_voiceConverting_gptsovits.execute,
@@ -2905,7 +2905,7 @@ class MainWindow(Window_MainWindow):
                 )
             ]
         )
-        self.task_voiceConverting_vits = Execute_Voice_Converting_VITS(coreDir, logPath)
+        self.task_voiceConverting_vits = Execute_TTS_VITS(coreDir, logPath)
         subPage_TTS_VITS.setExecutor(
             consoleWidget = self.ui.Frame_Console,
             executeMethod = self.task_voiceConverting_vits.execute,
