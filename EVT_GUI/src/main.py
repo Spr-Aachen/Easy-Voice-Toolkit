@@ -126,7 +126,7 @@ def checkIntegrity():
             'from VITS.Train import Train; '
             'from VITS.Convert import Convert"'
         ],
-        communicateThroughConsole = True,
+        shell = True,
         decodeResult = True,
         logPath = logPath
     )[1]
@@ -172,6 +172,12 @@ class MainWindow(Window_MainWindow):
 
         self.MonitorUsage = QTasks.MonitorUsage()
         self.MonitorUsage.start()
+
+        self.task_audioProcessor = Tool_AudioProcessor(coreDir, logPath)
+        self.task_vpr = Tool_VPR(coreDir, logPath)
+        self.task_whisper = Tool_Whisper(coreDir, logPath)
+        self.task_gptsovits = Tool_GPTSoVITS(coreDir, logPath)
+        self.task_vits = Tool_VITS(coreDir, logPath)
 
     def closeEvent(self, event):
         FunctionSignals.Signal_TaskStatus.connect(lambda: QApplication.instance().exit())
@@ -1302,10 +1308,9 @@ class MainWindow(Window_MainWindow):
         subPage_process.addChkOutputSideBtn(
             outputRootEdit = self.ui.LineEdit_Process_OutputRoot,
         )
-        self.task_audioProcessing = Execute_AudioProcessing(coreDir, logPath)
         subPage_process.setExecutor(
             consoleWidget = self.ui.Frame_Console,
-            executeMethod = self.task_audioProcessing.execute,
+            executeMethod = self.task_audioProcessor.processAudio,
             executeParamTargets = [
                 subPage_process.findChildWidget("输入参数", None, "媒体输入目录"),
                 subPage_process.findChildWidget("输出参数", None, "媒体输出格式"),
@@ -1324,7 +1329,7 @@ class MainWindow(Window_MainWindow):
                 self.ui.LineEdit_Process_OutputRoot,
                 subPage_process.findChildWidget("输出参数", None, "输出目录名")
             ],
-            terminateMethod = self.task_audioProcessing.terminate,
+            terminateMethod = self.task_audioProcessor.terminate,
             finishedEvents = {
                 lambda: MessageBoxBase.pop(self,
                     QMessageBox.Information, "Tip",
@@ -1540,10 +1545,9 @@ class MainWindow(Window_MainWindow):
                 EditVPRResult
             ]
         )
-        self.task_voiceIdentifying_vpr = Execute_VPR_VPR(coreDir, logPath)
         subPage_VPR.setExecutor(
             consoleWidget = self.ui.Frame_Console,
-            executeMethod = self.task_voiceIdentifying_vpr.execute,
+            executeMethod = self.task_vpr.infer,
             executeParamTargets = [
                 subPage_VPR.findChildWidget("输入参数", None, "目标人物与音频"),
                 subPage_VPR.findChildWidget("输入参数", None, "音频输入目录"),
@@ -1556,7 +1560,7 @@ class MainWindow(Window_MainWindow):
                 subPage_VPR.findChildWidget("输出参数", None, "输出目录名"),
                 subPage_VPR.findChildWidget("输出参数", "高级设置", "识别结果文本名")
             ],
-            terminateMethod = self.task_voiceIdentifying_vpr.terminate,
+            terminateMethod = self.task_vpr.terminate,
             finishedEvents = {
                 lambda: self.showMask(True, "正在加载表单"): TaskStatus.Succeeded,
                 lambda: self.showVPRResult(
@@ -1676,10 +1680,9 @@ class MainWindow(Window_MainWindow):
         subPage_ASR.addChkOutputSideBtn(
             outputRootEdit = self.ui.LineEdit_ASR_Whisper_OutputRoot
         )
-        self.task_voiceTranscribing_whisper = Execute_ASR_Whisper(coreDir, logPath)
         subPage_ASR.setExecutor(
             consoleWidget = self.ui.Frame_Console,
-            executeMethod = self.task_voiceTranscribing_whisper.execute,
+            executeMethod = self.task_whisper.infer,
             executeParamTargets = [
                 subPage_ASR.findChildWidget("语音转录参数", None, "模型加载路径"),
                 subPage_ASR.findChildWidget("输入参数", None, "音频输入目录"),
@@ -1690,7 +1693,7 @@ class MainWindow(Window_MainWindow):
                 self.ui.LineEdit_ASR_Whisper_OutputRoot,
                 subPage_ASR.findChildWidget("输出参数", None, "输出目录名")
             ],
-            terminateMethod = self.task_voiceTranscribing_whisper.terminate,
+            terminateMethod = self.task_whisper.terminate,
             finishedEvents = {
                 lambda: self.showMask(True, "正在加载表单"): TaskStatus.Succeeded,
                 lambda: self.showASRResult(
@@ -1818,10 +1821,9 @@ class MainWindow(Window_MainWindow):
         subPage_dataset_GPTSoVITS.addChkOutputSideBtn(
             outputRootEdit = self.ui.LineEdit_DAT_GPTSoVITS_OutputRoot
         )
-        self.task_datasetCreating_gptsovits = Execute_DatasetCreating_GPTSoVITS(coreDir, logPath)
         subPage_dataset_GPTSoVITS.setExecutor(
             consoleWidget = self.ui.Frame_Console,
-            executeMethod = self.task_datasetCreating_gptsovits.execute,
+            executeMethod = self.task_gptsovits.preprocess,
             executeParamTargets = [
                 subPage_dataset_GPTSoVITS.findChildWidget("输入参数", None, "字幕输入目录"),
                 subPage_dataset_GPTSoVITS.findChildWidget("输入参数", None, "音频文件目录/语音识别结果文本路径"),
@@ -1830,7 +1832,7 @@ class MainWindow(Window_MainWindow):
                 subPage_dataset_GPTSoVITS.findChildWidget("输出参数", None, "输出目录名"),
                 subPage_dataset_GPTSoVITS.findChildWidget("输出参数", "高级设置", "数据集文本名")
             ],
-            terminateMethod = self.task_datasetCreating_gptsovits.terminate,
+            terminateMethod = self.task_gptsovits.terminate,
             finishedEvents = {
                 lambda: self.showMask(True, "正在加载表单"): TaskStatus.Succeeded,
                 lambda: self.showDATResult(
@@ -2008,10 +2010,9 @@ class MainWindow(Window_MainWindow):
         subPage_dataset_VITS.addChkOutputSideBtn(
             outputRootEdit = self.ui.LineEdit_DAT_VITS_OutputRoot
         )
-        self.task_datasetCreating_vits = Execute_DatasetCreating_VITS(coreDir, logPath)
         subPage_dataset_VITS.setExecutor(
             consoleWidget = self.ui.Frame_Console,
-            executeMethod = self.task_datasetCreating_vits.execute,
+            executeMethod = self.task_vits.preprocess,
             executeParamTargets = [
                 subPage_dataset_VITS.findChildWidget("输入参数", None, "字幕输入目录"),
                 subPage_dataset_VITS.findChildWidget("输入参数", None, "音频文件目录/语音识别结果文本路径"),
@@ -2027,7 +2028,7 @@ class MainWindow(Window_MainWindow):
                 subPage_dataset_VITS.findChildWidget("输出参数", "高级设置", "训练集文本名"),
                 subPage_dataset_VITS.findChildWidget("输出参数", "高级设置", "验证集文本名")
             ],
-            terminateMethod = self.task_datasetCreating_vits.terminate,
+            terminateMethod = self.task_vits.terminate,
             finishedEvents = {
                 lambda: self.showMask(True, "正在加载表单"): TaskStatus.Succeeded,
                 lambda: self.showDATResult(
@@ -2264,10 +2265,9 @@ class MainWindow(Window_MainWindow):
                 )
             ]
         )
-        self.task_voiceTraining_gptsovits = Execute_Training_GPTSoVITS(coreDir, logPath)
         subPage_train_gptsovits.setExecutor(
             consoleWidget = self.ui.Frame_Console,
-            executeMethod = self.task_voiceTraining_gptsovits.execute,
+            executeMethod = self.task_gptsovits.train,
             executeParamTargets = [
                 subPage_train_gptsovits.findChildWidget("全局设置", None, "训练版本"),
                 subPage_train_gptsovits.findChildWidget("输入参数", None, "训练集文本路径"),
@@ -2283,7 +2283,7 @@ class MainWindow(Window_MainWindow):
                 subPage_train_gptsovits.findChildWidget("输出参数", None, "输出目录名"),
                 subPage_train_gptsovits.findChildWidget("输出参数", "高级设置", "日志输出目录")
             ],
-            terminateMethod = self.task_voiceTraining_gptsovits.terminate,
+            terminateMethod = self.task_gptsovits.terminate,
             finishedEvents = {
                 lambda: MessageBoxBase.pop(self,
                     QMessageBox.Information, "Tip",
@@ -2298,7 +2298,7 @@ class MainWindow(Window_MainWindow):
                 text = "是否稍后启用tensorboard？",
                 buttons = QMessageBox.Yes|QMessageBox.No,
                 buttonEvents = {QMessageBox.Yes: lambda: subPage_train_gptsovits.findChildWidget("启动Tensorboard").click()}
-            ) if Task == self.task_voiceTraining_gptsovits.__class__.execute.__qualname__ and Status == TaskStatus.Started else None
+            ) if Task == self.task_gptsovits.__class__.train.__qualname__ and Status == TaskStatus.Started else None
         )
         Function_ConfigureComboBox(
             comboBox = subPage_train_gptsovits.findChildWidget("全局设置", None, "训练版本", ComboBoxBase),
@@ -2506,10 +2506,9 @@ class MainWindow(Window_MainWindow):
                 )
             ]
         )
-        self.task_voiceTraining_vits = Execute_Training_VITS(coreDir, logPath)
         subPage_train_VITS.setExecutor(
             consoleWidget = self.ui.Frame_Console,
-            executeMethod = self.task_voiceTraining_vits.execute,
+            executeMethod = self.task_vits.train,
             executeParamTargets = [
                 subPage_train_VITS.findChildWidget("输入参数", None, "训练集文本路径"),
                 subPage_train_VITS.findChildWidget("输入参数", None, "验证集文本路径"),
@@ -2528,7 +2527,7 @@ class MainWindow(Window_MainWindow):
                 'config.json',
                 subPage_train_VITS.findChildWidget("输出参数", "高级设置", "日志输出目录")
             ],
-            terminateMethod = self.task_voiceTraining_vits.terminate,
+            terminateMethod = self.task_vits.terminate,
             finishedEvents = {
                 lambda: MessageBoxBase.pop(self,
                     QMessageBox.Information, "Tip",
@@ -2543,7 +2542,7 @@ class MainWindow(Window_MainWindow):
                 text = "是否稍后启用tensorboard？",
                 buttons = QMessageBox.Yes|QMessageBox.No,
                 buttonEvents = {QMessageBox.Yes: lambda: subPage_train_VITS.findChildWidget("启动Tensorboard").click()}
-            ) if Task == self.task_voiceTraining_vits.__class__.execute.__qualname__ and Status == TaskStatus.Started else None
+            ) if Task == self.task_vits.__class__.train.__qualname__ and Status == TaskStatus.Started else None
         )
         Function_ConfigureCheckBox(
             checkBox = subPage_train_VITS.findChildWidget("训练参数", None, "使用预训练模型", CheckBoxBase),
@@ -2723,10 +2722,9 @@ class MainWindow(Window_MainWindow):
                 )
             ]
         )
-        self.task_voiceConverting_gptsovits = Execute_TTS_GPTSoVITS(coreDir, logPath)
         subPage_tts_gptsovits.setExecutor(
             consoleWidget = self.ui.Frame_Console,
-            executeMethod = self.task_voiceConverting_gptsovits.execute,
+            executeMethod = self.task_gptsovits.infer,
             executeParamTargets = [
                 subPage_tts_gptsovits.findChildWidget("全局设置", None, "推理版本"),
                 subPage_tts_gptsovits.findChildWidget("输入参数", None, "SoVITS模型加载路径"),
@@ -2736,7 +2734,7 @@ class MainWindow(Window_MainWindow):
                 subPage_tts_gptsovits.findChildWidget("输入参数", None, "预训练BERT模型加载路径"),
                 subPage_tts_gptsovits.findChildWidget("输入参数", None, "预训练BigVGan模型加载路径"),
             ],
-            terminateMethod = self.task_voiceConverting_gptsovits.terminate,
+            terminateMethod = self.task_gptsovits.terminate,
             finishedEvents = {
                 # lambda: self.showMask(True, "正在加载播放器"): TaskStatus.Succeeded,
                 # lambda: self.showTTSResult(
@@ -2794,7 +2792,7 @@ class MainWindow(Window_MainWindow):
         subPage_TTS_VITS.findChildWidget("输入参数", None, "配置加载路径", LineEditBase).textChanged.connect(
             lambda Path: (
                 subPage_TTS_VITS.findChildWidget("语音合成参数", None, "人物名字", ComboBoxBase).clear(),
-                subPage_TTS_VITS.findChildWidget("语音合成参数", None, "人物名字", ComboBoxBase).addItems(Get_Speakers(Path))
+                subPage_TTS_VITS.findChildWidget("语音合成参数", None, "人物名字", ComboBoxBase).addItems(getSpeakers(Path))
             )
         )
         TTS_VITS_ModelPathLoad_Default = Path(modelDir).joinpath('TTS', 'VITS', 'Downloaded', 'standard_G.pth').as_posix()
@@ -2877,10 +2875,9 @@ class MainWindow(Window_MainWindow):
                 )
             ]
         )
-        self.task_voiceConverting_vits = Execute_TTS_VITS(coreDir, logPath)
         subPage_TTS_VITS.setExecutor(
             consoleWidget = self.ui.Frame_Console,
-            executeMethod = self.task_voiceConverting_vits.execute,
+            executeMethod = self.task_vits.infer,
             executeParamTargets = [
                 subPage_TTS_VITS.findChildWidget("语音合成参数", None, "配置加载路径"),
                 subPage_TTS_VITS.findChildWidget("语音合成参数", None, "G模型加载路径"),
@@ -2892,7 +2889,7 @@ class MainWindow(Window_MainWindow):
                 subPage_TTS_VITS.findChildWidget("语音合成参数", "高级设置", "整体语速"),
                 TTS_VITS_AudioPathSave
             ],
-            terminateMethod = self.task_voiceConverting_vits.terminate,
+            terminateMethod = self.task_vits.terminate,
             finishedEvents = {
                 lambda: self.showMask(True, "正在加载播放器"): TaskStatus.Succeeded,
                 lambda: self.showTTSResult(
@@ -3300,15 +3297,15 @@ class MainWindow(Window_MainWindow):
             lambda Task, Status: self.ui.Label_ToolsStatus.setText(
                 f"工具状态：{'忙碌' if Status == TaskStatus.Started else '空闲'}"
             ) if Task in [
-                self.task_audioProcessing.__class__.execute.__qualname__,
-                self.task_voiceIdentifying_vpr.__class__.execute.__qualname__,
-                self.task_voiceTranscribing_whisper.__class__.execute.__qualname__,
-                self.task_datasetCreating_gptsovits.__class__.execute.__qualname__,
-                self.task_datasetCreating_vits.__class__.execute.__qualname__,
-                self.task_voiceTraining_gptsovits.__class__.execute.__qualname__,
-                self.task_voiceTraining_vits.__class__.execute.__qualname__,
-                self.task_voiceConverting_gptsovits.__class__.execute.__qualname__,
-                self.task_voiceConverting_vits.__class__.execute.__qualname__
+                self.task_audioProcessor.__class__.processAudio.__qualname__,
+                self.task_vpr.__class__.infer.__qualname__,
+                self.task_whisper.__class__.infer.__qualname__,
+                self.task_gptsovits.__class__.preprocess.__qualname__,
+                self.task_vits.__class__.preprocess.__qualname__,
+                self.task_gptsovits.__class__.train.__qualname__,
+                self.task_vits.__class__.train.__qualname__,
+                self.task_gptsovits.__class__.infer.__qualname__,
+                self.task_vits.__class__.infer.__qualname__,
             ] else None
         )
 

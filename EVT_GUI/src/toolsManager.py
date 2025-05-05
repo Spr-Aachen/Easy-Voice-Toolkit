@@ -5,311 +5,40 @@ import json
 import PyEasyUtils as EasyUtils
 from glob import glob
 from pathlib import Path
-from typing import Optional
+from typing import Union, Optional
 from PySide6.QtCore import QObject, Signal
 
 ##############################################################################################################################
 
-def _mkPyCommand(fileDir, *commands):
+def mkPyCommand(fileDir, *commands):
     return [
-        f'cd "{fileDir}"',
+        'cd "%s"' % fileDir,
         'python -c "%s"' % ';'.join(EasyUtils.toIterable(commands))
     ]
 
+##############################################################################################################################
 
-# Tools: AudioProcessor
-class Execute_AudioProcessing(QObject):
+class Tool_AudioProcessor(QObject):
     '''
     Start audio processing
     '''
-    def __init__(self, coreDir, logPath):
+    def __init__(self, fileDir, logPath):
         super().__init__()
 
-        self.coreDir = coreDir
+        self.fileDir = fileDir
         self.logPath = logPath
 
-    def execute(self, *params):
-        CMD = EasyUtils.subprocessManager(communicateThroughConsole = True)
-        self.Process = CMD.create(
-            args = _mkPyCommand(
-                self.coreDir,
+    def processAudio(self, *params):
+        self.spm = EasyUtils.subprocessManager(shell = True)
+        self.spm.create(
+            args = mkPyCommand(
+                self.fileDir,
                 'from AudioProcessor.process import Audio_Processing',
                 f'AudioConvertandSlice = Audio_Processing{str(params)}',
                 'AudioConvertandSlice.processAudio()',
             )
         )
-        Output, error = CMD.monitor(
-            showProgress = True,
-            decodeResult = True,
-            logPath = self.logPath
-        )[:2]
-        if 'error' in str(error).lower():
-            error += "（详情请见终端输出信息）"
-        elif 'traceback' in str(Output).lower():
-            error = "执行完成，但疑似中途出错\n（详情请见终端输出信息）"
-        else:
-            return
-        raise Exception(error)
-
-    def terminate(self):
-        EasyUtils.processTerminator(self.Process.pid) if hasattr(self, 'Process') else None
-
-
-# Tools: VoiceIdentifier
-class Execute_VPR_VPR(QObject):
-    '''
-    Start VPR inferencing
-    '''
-    def __init__(self, coreDir, logPath):
-        super().__init__()
-
-        self.coreDir = coreDir
-        self.logPath = logPath
-
-    def execute(self, *params):
-        CMD = EasyUtils.subprocessManager(communicateThroughConsole = True)
-        self.Process = CMD.create(
-            args = _mkPyCommand(
-                self.coreDir,
-                'from VPR.infer import Voice_Contrasting',
-                f'AudioContrastInference = Voice_Contrasting{str(params)}',
-                'AudioContrastInference.getModel()',
-                'AudioContrastInference.inference()',
-            )
-        )
-        Output, error = CMD.monitor(
-            showProgress = True,
-            decodeResult = True,
-            logPath = self.logPath
-        )[:2]
-        if 'error' in str(error).lower():
-            error += "（详情请见终端输出信息）"
-        elif 'traceback' in str(Output).lower():
-            error = "执行完成，但疑似中途出错\n（详情请见终端输出信息）"
-        else:
-            return
-        raise Exception(error)
-
-    def terminate(self):
-        EasyUtils.processTerminator(self.Process.pid) if hasattr(self, 'Process') else None
-
-
-# Tools: VoiceTranscriber
-class Execute_ASR_Whisper(QObject):
-    '''
-    Start Whisper transcribing
-    '''
-    def __init__(self, coreDir, logPath):
-        super().__init__()
-
-        self.coreDir = coreDir
-        self.logPath = logPath
-
-    def execute(self, *params):
-        LANGUAGES = {
-            "中":       "zh",
-            "Chinese":  "zh",
-            "英":       "en",
-            "English":  "en",
-            "日":       "ja",
-            "japanese": "ja"
-        }
-        CMD = EasyUtils.subprocessManager(communicateThroughConsole = True)
-        self.Process = CMD.create(
-            args = _mkPyCommand(
-                self.coreDir,
-                'from Whisper.transcribe import Voice_Transcribing',
-                f'WAVtoSRT = Voice_Transcribing{str(EasyUtils.itemReplacer(LANGUAGES, params))}',
-                'WAVtoSRT.transcribe()',
-            )
-        )
-        Output, error = CMD.monitor(
-            showProgress = True,
-            decodeResult = True,
-            logPath = self.logPath
-        )[:2]
-        if 'error' in str(error).lower():
-            error += "（详情请见终端输出信息）"
-        elif 'traceback' in str(Output).lower():
-            error = "执行完成，但疑似中途出错\n（详情请见终端输出信息）"
-        else:
-            return
-        raise Exception(error)
-
-    def terminate(self):
-        EasyUtils.processTerminator(self.Process.pid) if hasattr(self, 'Process') else None
-
-
-# Tools: DatasetCreator
-class Execute_DatasetCreating_GPTSoVITS(QObject):
-    '''
-    Start GPTSoVITS preprocessing
-    '''
-    def __init__(self, coreDir, logPath):
-        super().__init__()
-
-        self.coreDir = coreDir
-        self.logPath = logPath
-
-    def execute(self, *params):
-        CMD = EasyUtils.subprocessManager(communicateThroughConsole = True)
-        self.Process = CMD.create(
-            args = _mkPyCommand(
-                self.coreDir,
-                'from GPT_SoVITS.preprocess import Dataset_Creating',
-                f'SRTtoCSVandSplitAudio = Dataset_Creating{str(params)}',
-                'SRTtoCSVandSplitAudio.run()',
-            )
-        )
-        Output, error = CMD.monitor(
-            showProgress = True,
-            decodeResult = True,
-            logPath = self.logPath
-        )[:2]
-        if 'error' in str(error).lower():
-            error += "（详情请见终端输出信息）"
-        elif 'traceback' in str(Output).lower():
-            error = "执行完成，但疑似中途出错\n（详情请见终端输出信息）"
-        else:
-            return
-        raise Exception(error)
-
-    def terminate(self):
-        EasyUtils.processTerminator(self.Process.pid) if hasattr(self, 'Process') else None
-
-
-class Execute_DatasetCreating_VITS(QObject):
-    '''
-    Start VITS preprocessing
-    '''
-    def __init__(self, coreDir, logPath):
-        super().__init__()
-
-        self.coreDir = coreDir
-        self.logPath = logPath
-
-    def execute(self, *params):
-        CMD = EasyUtils.subprocessManager(communicateThroughConsole = True)
-        self.Process = CMD.create(
-            args = _mkPyCommand(
-                self.coreDir,
-                'from VITS.preprocess import Dataset_Creating',
-                f'SRTtoCSVandSplitAudio = Dataset_Creating{str(params)}',
-                'SRTtoCSVandSplitAudio.run()',
-            )
-        )
-        Output, error = CMD.monitor(
-            showProgress = True,
-            decodeResult = True,
-            logPath = self.logPath
-        )[:2]
-        if 'error' in str(error).lower():
-            error += "（详情请见终端输出信息）"
-        elif 'traceback' in str(Output).lower():
-            error = "执行完成，但疑似中途出错\n（详情请见终端输出信息）"
-        else:
-            return
-        raise Exception(error)
-
-    def terminate(self):
-        EasyUtils.processTerminator(self.Process.pid) if hasattr(self, 'Process') else None
-
-
-# Tools: VoiceTrainer
-class Execute_Training_GPTSoVITS(QObject):
-    '''
-    Start GPTSoVITS training
-    '''
-    def __init__(self, coreDir, logPath):
-        super().__init__()
-
-        self.coreDir = coreDir
-        self.logPath = logPath
-
-    def execute(self, *params):
-        CMD = EasyUtils.subprocessManager(communicateThroughConsole = True)
-        self.Process = CMD.create(
-            args = _mkPyCommand(
-                self.coreDir,
-                'from GPT_SoVITS.train import train',
-                f'train{str(params)}',
-            )
-        )
-        Output, error = CMD.monitor(
-            showProgress = True,
-            decodeResult = True,
-            logPath = self.logPath
-        )[:2]
-        if 'error' in str(error).lower():
-            error += "（详情请见终端输出信息）"
-        elif 'traceback' in str(Output).lower():
-            error = "执行完成，但疑似中途出错\n（详情请见终端输出信息）"
-        else:
-            return
-        raise Exception(error)
-
-    def terminate(self):
-        EasyUtils.processTerminator(self.Process.pid) if hasattr(self, 'Process') else None
-
-
-class Execute_Training_VITS(QObject):
-    '''
-    Start VITS training
-    '''
-    def __init__(self, coreDir, logPath):
-        super().__init__()
-
-        self.coreDir = coreDir
-        self.logPath = logPath
-
-    def execute(self, *params):
-        CMD = EasyUtils.subprocessManager(communicateThroughConsole = True)
-        self.Process = CMD.create(
-            args = _mkPyCommand(
-                self.coreDir,
-                'from VITS.train import train',
-                f'train{str(params)}',
-            )
-        )
-        Output, error = CMD.monitor(
-            showProgress = True,
-            decodeResult = True,
-            logPath = self.logPath
-        )[:2]
-        if 'error' in str(error).lower():
-            error += "（详情请见终端输出信息）"
-        elif 'traceback' in str(Output).lower():
-            error = "执行完成，但疑似中途出错\n（详情请见终端输出信息）"
-        else:
-            return
-        raise Exception(error)
-
-    def terminate(self):
-        EasyUtils.processTerminator(self.Process.pid) if hasattr(self, 'Process') else None
-
-
-# Tools: VoiceConverter
-class Execute_TTS_GPTSoVITS(QObject):
-    '''
-    Start GPTSoVITS inferencing
-    '''
-    def __init__(self, coreDir, logPath):
-        super().__init__()
-
-        self.coreDir = coreDir
-        self.logPath = logPath
-
-    def execute(self, *params):
-        CMD = EasyUtils.subprocessManager(communicateThroughConsole = True)
-        self.process = CMD.create(
-            args = _mkPyCommand(
-                self.coreDir,
-                'from GPT_SoVITS.infer_webui import infer',
-                f'infer{str(params)}',
-            )
-        )
-        output, error = CMD.monitor(
-            showProgress = True,
+        output, error = self.spm.result(
             decodeResult = True,
             logPath = self.logPath
         )[:2]
@@ -322,10 +51,173 @@ class Execute_TTS_GPTSoVITS(QObject):
         raise Exception(error)
 
     def terminate(self):
-        EasyUtils.processTerminator(self.process.pid) if hasattr(self, 'process') else None
+        if not hasattr(self, 'spm'):
+            return
+        for subprocess in self.spm.subprocesses:
+            EasyUtils.terminateProcess(subprocess.pid)
 
 
-def Get_Speakers(Config_Path_Load):
+class Tool_VPR(QObject):
+    '''
+    Start VPR inferencing
+    '''
+    def __init__(self, fileDir, logPath):
+        super().__init__()
+
+        self.fileDir = fileDir
+        self.logPath = logPath
+
+    def infer(self, *params):
+        self.spm = EasyUtils.subprocessManager(shell = True)
+        self.spm.create(
+            args = mkPyCommand(
+                self.fileDir,
+                'from VPR.infer import Voice_Contrasting',
+                f'AudioContrastInference = Voice_Contrasting{str(params)}',
+                'AudioContrastInference.getModel()',
+                'AudioContrastInference.inference()',
+            )
+        )
+        output, error = self.spm.result(
+            decodeResult = True,
+            logPath = self.logPath
+        )[:2]
+        if 'error' in str(error).lower():
+            error += "（详情请见终端输出信息）"
+        elif 'traceback' in str(output).lower():
+            error = "执行完成，但疑似中途出错\n（详情请见终端输出信息）"
+        else:
+            return
+        raise Exception(error)
+
+    def terminate(self):
+        if not hasattr(self, 'spm'):
+            return
+        for subprocess in self.spm.subprocesses:
+            EasyUtils.terminateProcess(subprocess.pid)
+
+
+class Tool_Whisper(QObject):
+    '''
+    Start Whisper transcribing
+    '''
+    def __init__(self, fileDir, logPath):
+        super().__init__()
+
+        self.fileDir = fileDir
+        self.logPath = logPath
+
+    def infer(self, *params):
+        self.spm = EasyUtils.subprocessManager(shell = True)
+        self.spm.create(
+            args = mkPyCommand(
+                self.fileDir,
+                'from Whisper.transcribe import Voice_Transcribing',
+                f'WAVtoSRT = Voice_Transcribing{str(params)}',
+                'WAVtoSRT.transcribe()',
+            )
+        )
+        output, error = self.spm.result(
+            decodeResult = True,
+            logPath = self.logPath
+        )[:2]
+        if 'error' in str(error).lower():
+            error += "（详情请见终端输出信息）"
+        elif 'traceback' in str(output).lower():
+            error = "执行完成，但疑似中途出错\n（详情请见终端输出信息）"
+        else:
+            return
+        raise Exception(error)
+
+    def terminate(self):
+        if not hasattr(self, 'spm'):
+            return
+        for subprocess in self.spm.subprocesses:
+            EasyUtils.terminateProcess(subprocess.pid)
+
+
+class Tool_GPTSoVITS(QObject):
+    '''
+    Start GPTSoVITS preprocessing
+    '''
+    def __init__(self, fileDir, logPath):
+        super().__init__()
+
+        self.fileDir = fileDir
+        self.logPath = logPath
+
+    def preprocess(self, *params):
+        self.spm = EasyUtils.subprocessManager(shell = True)
+        self.spm.create(
+            args = mkPyCommand(
+                self.fileDir,
+                'from GPT_SoVITS.preprocess import Dataset_Creating',
+                f'SRTtoCSVandSplitAudio = Dataset_Creating{str(params)}',
+                'SRTtoCSVandSplitAudio.run()',
+            )
+        )
+        output, error = self.spm.result(
+            decodeResult = True,
+            logPath = self.logPath
+        )[:2]
+        if 'error' in str(error).lower():
+            error += "（详情请见终端输出信息）"
+        elif 'traceback' in str(output).lower():
+            error = "执行完成，但疑似中途出错\n（详情请见终端输出信息）"
+        else:
+            return
+        raise Exception(error)
+
+    def train(self, *params):
+        self.spm = EasyUtils.subprocessManager(shell = True)
+        self.spm.create(
+            args = mkPyCommand(
+                self.fileDir,
+                'from GPT_SoVITS.train import train',
+                f'train{str(params)}',
+            )
+        )
+        output, error = self.spm.result(
+            decodeResult = True,
+            logPath = self.logPath
+        )[:2]
+        if 'error' in str(error).lower():
+            error += "（详情请见终端输出信息）"
+        elif 'traceback' in str(output).lower():
+            error = "执行完成，但疑似中途出错\n（详情请见终端输出信息）"
+        else:
+            return
+        raise Exception(error)
+
+    def infer(self, *params):
+        self.spm = EasyUtils.subprocessManager(shell = True)
+        self.spm.create(
+            args = mkPyCommand(
+                self.fileDir,
+                'from GPT_SoVITS.infer_webui import infer',
+                f'infer{str(params)}',
+            )
+        )
+        output, error = self.spm.result(
+            decodeResult = True,
+            logPath = self.logPath
+        )[:2]
+        if 'error' in str(error).lower():
+            error += "（详情请见终端输出信息）"
+        elif 'traceback' in str(output).lower():
+            error = "执行完成，但疑似中途出错\n（详情请见终端输出信息）"
+        else:
+            return
+        raise Exception(error)
+
+    def terminate(self):
+        if not hasattr(self, 'spm'):
+            return
+        for subprocess in self.spm.subprocesses:
+            EasyUtils.terminateProcess(subprocess.pid)
+
+
+def getSpeakers(Config_Path_Load):
     try:
         with open(Config_Path_Load, 'r', encoding = 'utf-8') as File:
             params = json.load(File)
@@ -334,17 +226,61 @@ def Get_Speakers(Config_Path_Load):
     except:
         return str()
 
-class Execute_TTS_VITS(QObject):
+
+class Tool_VITS(QObject):
     '''
-    Start VITS inferencing
+    Start VITS preprocessing
     '''
-    def __init__(self, coreDir, logPath):
+    def __init__(self, fileDir, logPath):
         super().__init__()
 
-        self.coreDir = coreDir
+        self.fileDir = fileDir
         self.logPath = logPath
 
-    def execute(self, *params):
+    def preprocess(self, *params):
+        self.spm = EasyUtils.subprocessManager(shell = True)
+        self.spm.create(
+            args = mkPyCommand(
+                self.fileDir,
+                'from VITS.preprocess import Dataset_Creating',
+                f'SRTtoCSVandSplitAudio = Dataset_Creating{str(params)}',
+                'SRTtoCSVandSplitAudio.run()',
+            )
+        )
+        output, error = self.spm.result(
+            decodeResult = True,
+            logPath = self.logPath
+        )[:2]
+        if 'error' in str(error).lower():
+            error += "（详情请见终端输出信息）"
+        elif 'traceback' in str(output).lower():
+            error = "执行完成，但疑似中途出错\n（详情请见终端输出信息）"
+        else:
+            return
+        raise Exception(error)
+
+    def train(self, *params):
+        self.spm = EasyUtils.subprocessManager(shell = True)
+        self.spm.create(
+            args = mkPyCommand(
+                self.fileDir,
+                'from VITS.train import train',
+                f'train{str(params)}',
+            )
+        )
+        output, error = self.spm.result(
+            decodeResult = True,
+            logPath = self.logPath
+        )[:2]
+        if 'error' in str(error).lower():
+            error += "（详情请见终端输出信息）"
+        elif 'traceback' in str(output).lower():
+            error = "执行完成，但疑似中途出错\n（详情请见终端输出信息）"
+        else:
+            return
+        raise Exception(error)
+
+    def infer(self, *params):
         LANGUAGES = {
             "中":       "ZH",
             "Chinese":  "ZH",
@@ -353,29 +289,31 @@ class Execute_TTS_VITS(QObject):
             "日":       "JA",
             "Japanese": "JA"
         }
-        CMD = EasyUtils.subprocessManager(communicateThroughConsole = True)
-        self.Process = CMD.create(
-            args = _mkPyCommand(
-                self.coreDir,
+        self.spm = EasyUtils.subprocessManager(shell = True)
+        self.spm.create(
+            args = mkPyCommand(
+                self.fileDir,
                 'from VITS.infer import infer',
                 f'infer{str(EasyUtils.itemReplacer(LANGUAGES, params))}',
             )
         )
-        Output, error = CMD.monitor(
-            showProgress = True,
+        output, error = self.spm.result(
             decodeResult = True,
             logPath = self.logPath
         )[:2]
         if 'error' in str(error).lower():
             error += "（详情请见终端输出信息）"
-        elif 'traceback' in str(Output).lower():
+        elif 'traceback' in str(output).lower():
             error = "执行完成，但疑似中途出错\n（详情请见终端输出信息）"
         else:
             return
         raise Exception(error)
 
     def terminate(self):
-        EasyUtils.processTerminator(self.Process.pid) if hasattr(self, 'Process') else None
+        if not hasattr(self, 'spm'):
+            return
+        for subprocess in self.spm.subprocesses:
+            EasyUtils.terminateProcess(subprocess.pid)
 
 ##############################################################################################################################
 
