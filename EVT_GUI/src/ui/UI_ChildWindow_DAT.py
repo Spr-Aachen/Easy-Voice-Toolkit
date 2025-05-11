@@ -161,8 +161,8 @@ class Ui_ChildWindow_DAT(object):
         ChildWindow_DAT.setWindowTitle(QCoreApplication.translate("ChildWindow_DAT", u"Form", None))
         self.Label_Title.setText(QCoreApplication.translate("ChildWindow_DAT", u"Title", None))
         self.Label_Text.setText(QCoreApplication.translate("ChildWindow_DAT", u"Text", None))
-        self.TabWidget.setTabText(self.TabWidget.indexOf(self.Tab_Train), QCoreApplication.translate("ChildWindow_DAT", u"\u9875", None))
-        self.TabWidget.setTabText(self.TabWidget.indexOf(self.Tab_Val), QCoreApplication.translate("ChildWindow_DAT", u"Tab 1", None))
+        self.TabWidget.setTabText(self.TabWidget.indexOf(self.Tab_Train), QCoreApplication.translate("ChildWindow_DAT", u"Train", None))
+        self.TabWidget.setTabText(self.TabWidget.indexOf(self.Tab_Val), QCoreApplication.translate("ChildWindow_DAT", u"Val", None))
         self.Button_Cancel.setText(QCoreApplication.translate("ChildWindow_DAT", u"PushButton", None))
         self.Button_Confirm.setText(QCoreApplication.translate("ChildWindow_DAT", u"PushButton", None))
     # retranslateUi
