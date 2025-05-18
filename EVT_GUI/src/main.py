@@ -168,7 +168,10 @@ class MainWindow(Window_MainWindow):
     def __init__(self):
         super().__init__()
 
-        self.threadPool = QThreadPool()
+        self.threadPool_client = QThreadPool()
+        self.threadPool_env = QThreadPool()
+        self.threadPool_models = QThreadPool()
+        self.threadPool_tasks = QThreadPool()
 
         self.MonitorUsage = QTasks.MonitorUsage()
         self.MonitorUsage.start()
@@ -201,7 +204,7 @@ class MainWindow(Window_MainWindow):
                 EasyUtils.normPath(Path(modelDir).joinpath('Process', 'UVR')),
                 ['pth', 'onnx']
             ),
-            threadPool = self.threadPool,
+            threadPool = self.threadPool_models,
         )
         worker_modelView_Process_UVR.signals.result.connect(self.Signal_ModelView_Process_UVR.emit)
         worker_modelView_Process_UVR.execute()
@@ -213,7 +216,7 @@ class MainWindow(Window_MainWindow):
                 EasyUtils.normPath(Path(modelDir).joinpath('VPR', 'TDNN')),
                 ['pth']
             ),
-            threadPool = self.threadPool,
+            threadPool = self.threadPool_models,
         )
         worker_modelView_VPR_TDNN.signals.result.connect(self.Signal_ModelView_VPR_TDNN.emit)
         worker_modelView_VPR_TDNN.execute()
@@ -225,7 +228,7 @@ class MainWindow(Window_MainWindow):
                 EasyUtils.normPath(Path(modelDir).joinpath('ASR', 'Whisper')),
                 ['pt']
             ),
-            threadPool = self.threadPool,
+            threadPool = self.threadPool_models,
         )
         worker_modelView_ASR_Whisper.signals.result.connect(self.Signal_ModelView_ASR_Whisper.emit)
         worker_modelView_ASR_Whisper.execute()
@@ -237,7 +240,7 @@ class MainWindow(Window_MainWindow):
                 EasyUtils.normPath(Path(modelDir).joinpath('TTS', 'GPT-SoVITS')),
                 ['pth', 'ckpt', 'bin', 'json']
             ),
-            threadPool = self.threadPool,
+            threadPool = self.threadPool_models,
         )
         worker_modelView_TTS_GPTSoVITS.signals.result.connect(self.Signal_ModelView_TTS_GPTSoVITS.emit)
         worker_modelView_TTS_GPTSoVITS.execute()
@@ -249,7 +252,7 @@ class MainWindow(Window_MainWindow):
                 EasyUtils.normPath(Path(modelDir).joinpath('TTS', 'VITS')),
                 ['pth', 'json']
             ),
-            threadPool = self.threadPool,
+            threadPool = self.threadPool_models,
         )
         worker_modelView_TTS_VITS.signals.result.connect(self.Signal_ModelView_TTS_VITS.emit)
         worker_modelView_TTS_VITS.execute()
@@ -668,7 +671,7 @@ class MainWindow(Window_MainWindow):
                 fileFormat,
                 currentVersion
             ),
-            threadPool = self.threadPool,
+            threadPool = self.threadPool_client,
             parentWindow = self,
         ) if runUpdateChecker else None
 
@@ -893,7 +896,7 @@ class MainWindow(Window_MainWindow):
             toolTip = QCA.translate('MainWindow', "重新检测安装"),
             detectMethod = Aria2_Installer.execute,
             terminateMethod = Aria2_Installer.terminate,
-            threadPool = self.threadPool,
+            threadPool = self.threadPool_env,
             signal_detect = self.Signal_MainWindowShown,
             signal_detected = EnvConfiguratorSignals.Signal_Aria2Detected,
             signal_undetected = EnvConfiguratorSignals.Signal_Aria2Undetected,
@@ -914,7 +917,7 @@ class MainWindow(Window_MainWindow):
             toolTip = QCA.translate('MainWindow', "重新检测安装"),
             detectMethod = FFmpeg_Installer.execute,
             terminateMethod = FFmpeg_Installer.terminate,
-            threadPool = self.threadPool,
+            threadPool = self.threadPool_env,
             signal_detect = self.Signal_MainWindowShown,
             signal_detected = EnvConfiguratorSignals.Signal_FFmpegDetected,
             signal_undetected = EnvConfiguratorSignals.Signal_FFmpegUndetected,
@@ -936,7 +939,7 @@ class MainWindow(Window_MainWindow):
             detectMethod = Python_Installer.execute,
             params = ('3.9.0'),
             terminateMethod = Python_Installer.terminate,
-            threadPool = self.threadPool,
+            threadPool = self.threadPool_env,
             signal_detect = self.Signal_MainWindowShown,
             signal_detected = EnvConfiguratorSignals.Signal_PythonDetected,
             signal_undetected = EnvConfiguratorSignals.Signal_PythonUndetected,
@@ -958,7 +961,7 @@ class MainWindow(Window_MainWindow):
             detectMethod = PyReqs_Installer.execute,
             params = (EasyUtils.normPath(requirementsPath)),
             terminateMethod = PyReqs_Installer.terminate,
-            threadPool = self.threadPool,
+            threadPool = self.threadPool_env,
             signal_detect = EnvConfiguratorSignals.Signal_PythonDetected,
             signal_detected = EnvConfiguratorSignals.Signal_PyReqsDetected,
             signal_undetected = EnvConfiguratorSignals.Signal_PyReqsUndetected,
@@ -979,7 +982,7 @@ class MainWindow(Window_MainWindow):
             toolTip = QCA.translate('MainWindow', "重新检测安装"),
             detectMethod = Pytorch_Installer.execute,
             terminateMethod = Pytorch_Installer.terminate,
-            threadPool = self.threadPool,
+            threadPool = self.threadPool_env,
             signal_detect = EnvConfiguratorSignals.Signal_PyReqsDetected,
             signal_detected = EnvConfiguratorSignals.Signal_PytorchDetected,
             signal_undetected = EnvConfiguratorSignals.Signal_PytorchUndetected,
@@ -1013,7 +1016,7 @@ class MainWindow(Window_MainWindow):
                 lambda: subEnvPage_manager.findChildWidget(None, "Pytorch", "选择Pytorch版本", QComboBox),
                 True
             ],
-            threadPool = self.threadPool,
+            threadPool = self.threadPool_env,
         )
 
         self.ui.Page_Env.addSubPage(
@@ -1090,7 +1093,7 @@ class MainWindow(Window_MainWindow):
             lambda params: Function_SetMethodExecutor(
                 executeMethod = downloadModel,
                 executeParams = params,
-                threadPool = self.threadPool,
+                threadPool = self.threadPool_models,
                 parentWindow = self,
             )
         )
@@ -1113,7 +1116,7 @@ class MainWindow(Window_MainWindow):
             lambda params: Function_SetMethodExecutor(
                 executeMethod = downloadModel,
                 executeParams = params,
-                threadPool = self.threadPool,
+                threadPool = self.threadPool_models,
                 parentWindow = self,
             )
         )
@@ -1125,7 +1128,7 @@ class MainWindow(Window_MainWindow):
             lambda params: Function_SetMethodExecutor(
                 executeMethod = downloadModel,
                 executeParams = params,
-                threadPool = self.threadPool,
+                threadPool = self.threadPool_models,
                 parentWindow = self,
             )
         )
@@ -1336,7 +1339,7 @@ class MainWindow(Window_MainWindow):
                     "当前任务已执行结束。"
                 ): TaskStatus.Succeeded
             },
-            threadPool = self.threadPool,
+            threadPool = self.threadPool_tasks,
         )
         Function_ConfigureCheckBox(
             checkBox = subPage_process.findChildWidget("降噪参数", None, "启用杂音去除", QCheckBox),
@@ -1573,7 +1576,7 @@ class MainWindow(Window_MainWindow):
                     "当前任务已执行结束。"
                 ): TaskStatus.Succeeded
             },
-            threadPool = self.threadPool,
+            threadPool = self.threadPool_tasks,
         )
 
         self.ui.Page_VPR.addSubPage(
@@ -1705,7 +1708,7 @@ class MainWindow(Window_MainWindow):
                     "当前任务已执行结束。"
                 ): TaskStatus.Succeeded
             },
-            threadPool = self.threadPool,
+            threadPool = self.threadPool_tasks,
         )
 
         self.ui.Page_ASR.addSubPage(
@@ -1844,7 +1847,7 @@ class MainWindow(Window_MainWindow):
                     "当前任务已执行结束。"
                 ): TaskStatus.Succeeded
             },
-            threadPool = self.threadPool,
+            threadPool = self.threadPool_tasks,
         )
 
         self.ui.Page_Dataset.addSubPage(
@@ -2040,7 +2043,7 @@ class MainWindow(Window_MainWindow):
                     "当前任务已执行结束。"
                 ): TaskStatus.Succeeded
             },
-            threadPool = self.threadPool,
+            threadPool = self.threadPool_tasks,
         )
         Function_ConfigureCheckBox(
             checkBox = subPage_dataset_VITS.findChildWidget("数据集参数", None, "添加辅助数据", CheckBoxBase),
@@ -2260,7 +2263,7 @@ class MainWindow(Window_MainWindow):
                 lambda: Function_SetMethodExecutor(
                     executeMethod = runTensorboard,
                     executeParams = subPage_train_gptsovits.findChildWidget("输出参数", "高级设置", "日志输出目录", LineEditBase).text(),
-                    threadPool = self.threadPool,
+                    threadPool = self.threadPool_tasks,
                     parentWindow = self,
                 )
             ]
@@ -2290,7 +2293,7 @@ class MainWindow(Window_MainWindow):
                     "当前任务已执行结束。"
                 ): TaskStatus.Succeeded
             },
-            threadPool = self.threadPool,
+            threadPool = self.threadPool_tasks,
         )
         FunctionSignals.Signal_TaskStatus.connect(
             lambda Task, Status: MessageBoxBase.pop(self,
@@ -2501,7 +2504,7 @@ class MainWindow(Window_MainWindow):
                 lambda: Function_SetMethodExecutor(
                     executeMethod = runTensorboard,
                     executeParams = subPage_train_VITS.findChildWidget("输出参数", "高级设置", "日志输出目录", LineEditBase).text(),
-                    threadPool = self.threadPool,
+                    threadPool = self.threadPool_tasks,
                     parentWindow = self,
                 )
             ]
@@ -2534,7 +2537,7 @@ class MainWindow(Window_MainWindow):
                     "当前任务已执行结束。"
                 ): TaskStatus.Succeeded
             },
-            threadPool = self.threadPool,
+            threadPool = self.threadPool_tasks,
         )
         FunctionSignals.Signal_TaskStatus.connect(
             lambda Task, Status: MessageBoxBase.pop(self,
@@ -2745,7 +2748,7 @@ class MainWindow(Window_MainWindow):
                     "当前任务已执行结束。"
                 ): TaskStatus.Succeeded
             },
-            threadPool = self.threadPool,
+            threadPool = self.threadPool_tasks,
         )
         Function_ConfigureComboBox(
             comboBox = subPage_tts_gptsovits.findChildWidget("全局设置", None, "推理版本", ComboBoxBase),
@@ -2900,7 +2903,7 @@ class MainWindow(Window_MainWindow):
                     "当前任务已执行结束。"
                 ): TaskStatus.Succeeded
             },
-            threadPool = self.threadPool,
+            threadPool = self.threadPool_tasks,
         )
 
         self.ui.Page_TTS.addSubPage(
@@ -2996,7 +2999,7 @@ class MainWindow(Window_MainWindow):
         Function_SetMethodExecutor(
             executeButton = self.ui.Button_Setting_IntegrityChecker,
             executeMethod = checkIntegrity,
-            threadPool = self.threadPool,
+            threadPool = self.threadPool_client,
             parentWindow = self,
         )
         FunctionSignals.Signal_TaskStatus.connect(
