@@ -45,19 +45,19 @@ def Function_ScrollToWidget(
     if scrollArea is None:
         scrollArea = QFunc.findParent(targetWidget, QScrollArea)
 
-    def ScrollToWidget():
+    def _scrollToWidget():
         TargetRect = targetWidget.mapToGlobal(QPoint(0, 0))
         TargetYPos = TargetRect.y() - scrollArea.widget().mapToGlobal(QPoint(0, 0)).y()
 
         scrollArea.verticalScrollBar().setValue(TargetYPos)
 
     if isinstance(trigger, QTreeWidgetItem):
-        def TreeWidgetEvent(Item, Column):
-            ScrollToWidget() if Item == trigger else None
-        trigger.treeWidget().itemClicked.connect(TreeWidgetEvent)
+        def _treeWidgetEvent(Item, Column):
+            _scrollToWidget() if Item == trigger else None
+        trigger.treeWidget().itemClicked.connect(_treeWidgetEvent)
 
     if isinstance(trigger, QAbstractButton):
-        trigger.clicked.connect(ScrollToWidget)
+        trigger.clicked.connect(_scrollToWidget)
 
 
 def Function_AddToTreeWidget(

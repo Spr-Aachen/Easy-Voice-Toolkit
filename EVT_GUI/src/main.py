@@ -60,7 +60,7 @@ parser.add_argument("--models",            help = "dir of models",            de
 parser.add_argument("--output",            help = "dir of output",            default = Path(currentDir).joinpath(''))
 parser.add_argument("--profile",           help = "dir of profile",           default = Path(currentDir).joinpath(''))
 parser.add_argument("--deprecatedVersion", help = "deprecated version",       default = None)
-args = parser.parse_args()
+args = parser.parse_known_args()[0]
 
 updaterPath = args.updater
 coreDir = args.core
@@ -112,27 +112,7 @@ def checkIntegrity():
     """
     ClientFunc: check file integrity
     """
-    error = EasyUtils.runCMD(
-        args = [
-            f'cd "{coreDir}"',
-            'python -c "'
-            'from AudioProcessor.Process import Audio_Processing; '
-            'from VPR.Identify import Voice_Identifying; '
-            'from Whisper.Transcribe import Voice_Transcribing; '
-            'from GPT_SoVITS.Create import Dataset_Creating; '
-            'from GPT_SoVITS.Train import Train; '
-            'from GPT_SoVITS.Convert import Convert; '
-            'from VITS.Create import Dataset_Creating; '
-            'from VITS.Train import Train; '
-            'from VITS.Convert import Convert"'
-        ],
-        shell = True,
-        decodeResult = True,
-        logPath = logPath
-    )[1]
-    if 'error' in str(error).lower():
-        error += "（详情请见终端输出信息）"
-        raise Exception(error)
+    # TODO: etwas
 
 
 def runTensorboard(logDir):
@@ -1047,7 +1027,7 @@ class MainWindow(Window_MainWindow):
             lambda params: Function_SetMethodExecutor(
                 executeMethod = downloadModel,
                 executeParams = params,
-                threadPool = self.threadPool,
+                threadPool = self.threadPool_models,
                 parentWindow = self,
             )
         )
@@ -1070,7 +1050,7 @@ class MainWindow(Window_MainWindow):
             lambda params: Function_SetMethodExecutor(
                 executeMethod = downloadModel,
                 executeParams = params,
-                threadPool = self.threadPool,
+                threadPool = self.threadPool_models,
                 parentWindow = self,
             )
         )

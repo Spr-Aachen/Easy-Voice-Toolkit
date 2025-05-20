@@ -85,6 +85,7 @@ class SubEnvPage_Detector(SubPage):
             executeMethod = detectMethod,
             executeParams = params,
             terminateMethod = terminateMethod,
+            autoDelete = False,
             threadPool = threadPool,
             parentWindow = self,
         )
