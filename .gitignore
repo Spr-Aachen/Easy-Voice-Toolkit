@@ -15,9 +15,9 @@
 **/*.dist/
 **/build/
 **/dist/
-**/Config/
-**/Models/
-**/log.txt
+*/config/
+*/models/
+*/log.txt
 
 # Others
 **/venv/
