@@ -143,7 +143,6 @@ class MainWindow(Window_MainWindow):
     Signal_ModelView_VPR_TDNN = Signal(list)
     Signal_ModelView_ASR_Whisper = Signal(list)
     Signal_ModelView_TTS_GPTSoVITS = Signal(list)
-    Signal_ModelView_TTS_VITS = Signal(list)
 
     def __init__(self):
         super().__init__()
@@ -160,7 +159,6 @@ class MainWindow(Window_MainWindow):
         self.task_vpr = Tool_VPR(coreDir, logPath)
         self.task_whisper = Tool_Whisper(coreDir, logPath)
         self.task_gptsovits = Tool_GPTSoVITS(coreDir, logPath)
-        self.task_vits = Tool_VITS(coreDir, logPath)
 
     def closeEvent(self, event):
         FunctionSignals.Signal_TaskStatus.connect(lambda: QApplication.instance().exit())
@@ -224,18 +222,6 @@ class MainWindow(Window_MainWindow):
         )
         worker_modelView_TTS_GPTSoVITS.signals.result.connect(self.Signal_ModelView_TTS_GPTSoVITS.emit)
         worker_modelView_TTS_GPTSoVITS.execute()
-
-        worker_modelView_TTS_VITS = WorkerManager(
-            executeMethod = getModelsInfo,
-            executeParams = (
-                manifestPath,
-                EasyUtils.normPath(Path(modelDir).joinpath('TTS', 'VITS')),
-                ['pth', 'json']
-            ),
-            threadPool = self.threadPool_models,
-        )
-        worker_modelView_TTS_VITS.signals.result.connect(self.Signal_ModelView_TTS_VITS.emit)
-        worker_modelView_TTS_VITS.execute()
 
     def appendModels(self):
         LineEdit_Models_Append = QLineEdit()
@@ -1101,18 +1087,6 @@ class MainWindow(Window_MainWindow):
             )
         )
 
-        self.ui.TabWidget_Models_TTS.setTabText(1, 'VITS')
-        self.ui.Table_Models_TTS_VITS.setHorizontalHeaderLabels(['名字', '类型', '大小', '日期', '操作'])
-        self.Signal_ModelView_TTS_VITS.connect(self.ui.Table_Models_TTS_VITS.setValue)
-        self.ui.Table_Models_TTS_VITS.download.connect(
-            lambda params: Function_SetMethodExecutor(
-                executeMethod = downloadModel,
-                executeParams = params,
-                threadPool = self.threadPool_models,
-                parentWindow = self,
-            )
-        )
-
         self.ui.Button_Models_Refresh.setText(QCA.translate('MainWindow', '刷新'))
         self.ui.Button_Models_Refresh.clicked.connect(self.viewModels)
 
@@ -1834,221 +1808,6 @@ class MainWindow(Window_MainWindow):
             QCA.translate('MainWindow', 'GPT-SoVITS'), subPage_dataset_GPTSoVITS
         )
 
-        # ParamsManager - VITS
-        configPath_DAT_VITS = EasyUtils.normPath(Path(configDir).joinpath('Config_DAT_VITS.ini'))
-        paramsManager_DAT_VITS = ParamsManager(configPath_DAT_VITS)
-
-        subPage_dataset_VITS = SubToolPage(self.ui.Page_Dataset, paramsManager_DAT_VITS)
-        subPage_dataset_VITS.addLineEditFrame(
-            rootItemText = QCA.translate('MainWindow', "输入参数"),
-            text = QCA.translate('MainWindow', "音频文件目录/语音识别结果文本路径\n音频文件的所在目录（要求按说话人分类），或者提供由语音识别得到的文本文件。"),
-            section = 'Input params',
-            option = 'WAV_Dir',
-            defaultValue = ''
-        )
-        subPage_dataset_VITS.findChildWidget("输入参数", None, "音频文件目录/语音识别结果文本路径", LineEditBase).fileButton.clicked.connect(
-            lambda: self.setDirPathSelection(
-                textReciever = subPage_dataset_VITS.findChildWidget("输入参数", None, "音频文件目录/语音识别结果文本路径", LineEditBase),
-                dirSelectionText = "语音识别结果文本路径",
-                pathSelectionText = "音频文件目录",
-                fileType = "txt类型 (*.txt)",
-                directory = Path(currentDir).joinpath('语音识别结果', 'VPR').as_posix()
-            )
-        )
-        subPage_dataset_VITS.addLineEditFrame(
-            rootItemText = QCA.translate('MainWindow', "输入参数"),
-            text = QCA.translate('MainWindow', "字幕输入目录\n字幕文件的所在目录，字幕文件须与对应音频文件同名且在文本中注明所属语言。"),
-            fileDialogMode = FileDialogMode.SelectFolder,
-            directory = Path(currentDir).joinpath('语音转录结果', 'Whisper').as_posix(),
-            section = 'Input params',
-            option = 'SRT_Dir',
-            defaultValue = ''
-        )
-        DAT_VITS_DataFormat_Default = '路径|人名|[语言]文本[语言]'
-        subPage_dataset_VITS.addLineEditFrame(
-            rootItemText = QCA.translate('MainWindow', "数据集参数"),
-            text = QCA.translate('MainWindow', "数据文本格式\n数据集的文本格式，默认使用VITS的标准。"),
-            section = 'VITS params',
-            option = 'DataFormat_Path',
-            defaultValue = DAT_VITS_DataFormat_Default,
-            placeholderText = DAT_VITS_DataFormat_Default
-        )
-        subPage_dataset_VITS.findChildWidget("数据集参数", None, "数据文本格式", LineEditBase).textChanged.connect(
-            lambda value: (
-                MessageBoxBase.pop(self,
-                    QMessageBox.Warning, "Warning",
-                    "请保留关键词：'路径'，'人名'，'语言'，'文本'",
-                ),
-                paramsManager_DAT_VITS.resetParam(subPage_dataset_VITS.findChildWidget("数据集参数", None, "数据文本格式")),
-            ) if not all(Keyword in value for Keyword in ['路径', '人名', '语言', '文本']) else None
-        )
-        subPage_dataset_VITS.addCheckBoxFrame(
-            rootItemText = QCA.translate('MainWindow', "数据集参数"),
-            text = QCA.translate('MainWindow', "添加辅助数据\n添加用以辅助训练的数据集，若当前语音数据的质量/数量较低则建议启用。"),
-            section = 'VITS params',
-            option = 'Add_AuxiliaryData',
-            defaultValue = False
-        )
-        DAT_VITS_AuxiliaryDataPath_Default = Path(currentDir).joinpath('AuxiliaryData', 'VITS', 'AuxiliaryData.txt').as_posix()
-        subPage_dataset_VITS.addLineEditFrame(
-            rootItemText = QCA.translate('MainWindow', "数据集参数"),
-            text = QCA.translate('MainWindow', "辅助数据文本路径\n辅助数据集的文本的路径。"),
-            fileDialogMode = FileDialogMode.SelectFile,
-            fileType = "文本类型 (*.csv *.txt)",
-            directory = EasyUtils.normPath(Path(currentDir).joinpath('AuxiliaryData', 'VITS')),
-            section = 'VITS params',
-            option = 'AuxiliaryData_Path',
-            defaultValue = DAT_VITS_AuxiliaryDataPath_Default,
-            placeholderText = DAT_VITS_AuxiliaryDataPath_Default,
-            emptyAllowed = True
-        )
-        subPage_dataset_VITS.addDoubleSpinBoxFrame(
-            rootItemText = QCA.translate('MainWindow', "数据集参数"),
-            toolBoxText = QCA.translate('MainWindow', "高级设置"),
-            text = QCA.translate('MainWindow', "训练集占比\n划分给训练集的数据在数据集中所占的比例。"),
-            minimum = 0.5,
-            maximum = 0.9,
-            step = 0.1,
-            section = 'VITS params',
-            option = 'TrainRatio',
-            defaultValue = 0.7
-        )
-        subPage_dataset_VITS.addComboBoxFrame(
-            rootItemText = QCA.translate('MainWindow', "数据集参数"),
-            toolBoxText = QCA.translate('MainWindow', "高级设置"),
-            text = QCA.translate('MainWindow', "采样率 (HZ)\n数据集所要求的音频采样率，若维持不变则保持'None'即可。"),
-            items = ['22050', '44100', '48000', '96000', '192000', 'None'],
-            section = 'VITS params',
-            option = 'SampleRate',
-            defaultValue = 22050,
-            emptyAllowed = True
-        )
-        subPage_dataset_VITS.addComboBoxFrame(
-            rootItemText = QCA.translate('MainWindow', "数据集参数"),
-            toolBoxText = QCA.translate('MainWindow', "高级设置"),
-            text = QCA.translate('MainWindow', "采样位数\n数据集所要求的音频采样位数，若维持不变则保持'None'即可。"),
-            items = ['8', '16', '24', '32', '32 (Float)', 'None'],
-            section = 'VITS params',
-            option = 'SampleWidth',
-            defaultValue = 16,
-            emptyAllowed = True
-        )
-        subPage_dataset_VITS.addCheckBoxFrame(
-            rootItemText = QCA.translate('MainWindow', "数据集参数"),
-            toolBoxText = QCA.translate('MainWindow', "高级设置"),
-            text = QCA.translate('MainWindow', "合并声道\n将数据集音频的声道合并为单声道。"),
-            section = 'VITS params',
-            option = 'ToMono',
-            defaultValue = True
-        )
-        DAT_VITS_OutputDirName_Default = str(date.today())
-        subPage_dataset_VITS.addLineEditFrame(
-            rootItemText = QCA.translate('MainWindow', "输出参数"),
-            text = QCA.translate('MainWindow', "输出目录名\n用于保存最后生成的数据集文件的目录的名字。"),
-            section = 'Output params',
-            option = 'Output_Dir_Name',
-            defaultValue = '',
-            placeholderText = DAT_VITS_OutputDirName_Default
-        )
-        LineEdit_DAT_VITS_OutputDir = LineEditBase()
-        self.setDirAlert(
-            dirNameEdit = subPage_dataset_VITS.findChildWidget("输出参数", None, "输出目录名", LineEditBase),
-            rootEdit = self.ui.LineEdit_DAT_VITS_OutputRoot,
-            dirEdit = LineEdit_DAT_VITS_OutputDir
-        )
-        DAT_VITS_FileListNameTraining_Default = "Train_" + str(date.today())
-        subPage_dataset_VITS.addLineEditFrame(
-            rootItemText = QCA.translate('MainWindow', "输出参数"),
-            toolBoxText = QCA.translate('MainWindow', "高级设置"),
-            text = QCA.translate('MainWindow', "训练集文本名\n用于保存最后生成的训练集txt文件的名字。"),
-            section = 'Output params',
-            option = 'FileList_Name_Training',
-            defaultValue = DAT_VITS_FileListNameTraining_Default,
-            placeholderText = DAT_VITS_FileListNameTraining_Default
-        )
-        LineEdit_DAT_VITS_FileListPathTraining = LineEditBase()
-        self.setPathAlert(
-            fileNameEdit = subPage_dataset_VITS.findChildWidget("输出参数", "高级设置", "训练集文本名", LineEditBase),
-            dirEdit = LineEdit_DAT_VITS_OutputDir,
-            suffix = ".txt",
-            fileEdit = LineEdit_DAT_VITS_FileListPathTraining
-        )
-        DAT_VITS_FileListNameValidation_Default = "Val_" + str(date.today())
-        subPage_dataset_VITS.addLineEditFrame(
-            rootItemText = QCA.translate('MainWindow', "输出参数"),
-            toolBoxText = QCA.translate('MainWindow', "高级设置"),
-            text = QCA.translate('MainWindow', "验证集文本名\n用于保存最后生成的验证集txt文件的名字。"),
-            section = 'Output params',
-            option = 'FileList_Name_Validation',
-            defaultValue = DAT_VITS_FileListNameValidation_Default,
-            placeholderText = DAT_VITS_FileListNameValidation_Default
-        )
-        LineEdit_DAT_VITS_FileListPathValidation = LineEditBase()
-        self.setPathAlert(
-            fileNameEdit = subPage_dataset_VITS.findChildWidget("输出参数", "高级设置", "验证集文本名", LineEditBase),
-            dirEdit = LineEdit_DAT_VITS_OutputDir,
-            suffix = ".txt",
-            fileEdit = LineEdit_DAT_VITS_FileListPathValidation
-        )
-        subPage_dataset_VITS.addChkOutputSideBtn(
-            outputRootEdit = self.ui.LineEdit_DAT_VITS_OutputRoot
-        )
-        subPage_dataset_VITS.setExecutor(
-            consoleWidget = self.ui.Frame_Console,
-            executeMethod = self.task_vits.preprocess,
-            executeParamTargets = [
-                subPage_dataset_VITS.findChildWidget("输入参数", None, "字幕输入目录"),
-                subPage_dataset_VITS.findChildWidget("输入参数", None, "音频文件目录/语音识别结果文本路径"),
-                subPage_dataset_VITS.findChildWidget("数据集参数", "高级设置", "采样率 (HZ)"),
-                subPage_dataset_VITS.findChildWidget("数据集参数", "高级设置", "采样位数"),
-                subPage_dataset_VITS.findChildWidget("数据集参数", "高级设置", "合并声道"),
-                subPage_dataset_VITS.findChildWidget("数据集参数", None, "数据文本格式"),
-                subPage_dataset_VITS.findChildWidget("数据集参数", None, "添加辅助数据"),
-                subPage_dataset_VITS.findChildWidget("数据集参数", None, "辅助数据文本路径"),
-                subPage_dataset_VITS.findChildWidget("数据集参数", "高级设置", "训练集占比"),
-                self.ui.LineEdit_DAT_VITS_OutputRoot,
-                subPage_dataset_VITS.findChildWidget("输出参数", None, "输出目录名"),
-                subPage_dataset_VITS.findChildWidget("输出参数", "高级设置", "训练集文本名"),
-                subPage_dataset_VITS.findChildWidget("输出参数", "高级设置", "验证集文本名")
-            ],
-            terminateMethod = self.task_vits.terminate,
-            finishedEvents = {
-                lambda: self.showMask(True, "正在加载表单"): TaskStatus.Succeeded,
-                lambda: self.showDATResult(
-                    LineEdit_DAT_VITS_FileListPathTraining.text(),
-                    LineEdit_DAT_VITS_FileListPathValidation.text()
-                ): TaskStatus.Succeeded,
-                lambda: MessageBoxBase.pop(self,
-                    QMessageBox.Information, "Tip",
-                    "当前任务已执行结束。"
-                ): TaskStatus.Succeeded
-            },
-            threadPool = self.threadPool_tasks,
-        )
-        Function_ConfigureCheckBox(
-            checkBox = subPage_dataset_VITS.findChildWidget("数据集参数", None, "添加辅助数据", CheckBoxBase),
-            checkedEvents = {
-                lambda: Function_SetChildWidgetsVisibility(
-                    subPage_dataset_VITS.findChildWidget("数据集参数"),
-                    childWidgetsVisibility = {
-                        subPage_dataset_VITS.findChildWidget("数据集参数", None, "辅助数据文本路径"): True
-                    },
-                ) : True
-            },
-            uncheckedEvents = {
-                lambda: Function_SetChildWidgetsVisibility(
-                    subPage_dataset_VITS.findChildWidget("数据集参数"),
-                    childWidgetsVisibility = {
-                        subPage_dataset_VITS.findChildWidget("数据集参数", None, "辅助数据文本路径"): False
-                    },
-                ) : True
-            },
-        )
-
-        self.ui.Page_Dataset.addSubPage(
-            QCA.translate('MainWindow', 'VITS2'), subPage_dataset_VITS
-        )
-
         #############################################################
         ####################### Content: Train ######################
         #############################################################
@@ -2310,282 +2069,6 @@ class MainWindow(Window_MainWindow):
             QCA.translate('MainWindow', 'GPT-SoVITS'), subPage_train_gptsovits
         )
 
-        # ParamsManager - VITS
-        configPath_Train_VITS = EasyUtils.normPath(Path(configDir).joinpath('Config_Train_VITS.ini'))
-        paramsManager_Train_VITS = ParamsManager(configPath_Train_VITS)
-
-        subPage_train_VITS = SubToolPage(self.ui.Page_Train, paramsManager_Train_VITS)
-        subPage_train_VITS.addLineEditFrame(
-            rootItemText = QCA.translate('MainWindow', "输入参数"),
-            text = QCA.translate('MainWindow', "训练集文本路径\n用于提供训练集音频路径及其语音内容的训练集txt文件的路径。"),
-            fileDialogMode = FileDialogMode.SelectFile,
-            fileType = "txt类型 (*.txt)",
-            directory = Path(currentDir).joinpath('数据集制作结果', 'VITS').as_posix(),
-            section = 'Input params',
-            option = 'FileList_Path_Training',
-            defaultValue = ''
-        )
-        subPage_train_VITS.addLineEditFrame(
-            rootItemText = QCA.translate('MainWindow', "输入参数"),
-            text = QCA.translate('MainWindow', "验证集文本路径\n用于提供验证集音频路径及其语音内容的验证集txt文件的路径。"),
-            fileDialogMode = FileDialogMode.SelectFile,
-            fileType = "txt类型 (*.txt)",
-            directory = Path(currentDir).joinpath('数据集制作结果', 'VITS').as_posix(),
-            section = 'Input params',
-            option = 'FileList_Path_Validation',
-            defaultValue = ''
-        )
-        subPage_train_VITS.addSpinBoxFrame(
-            rootItemText = QCA.translate('MainWindow', "训练参数"),
-            text = QCA.translate('MainWindow', "迭代轮数\n将全部样本完整迭代一轮的次数。"),
-            minimum = 10,
-            maximum = 100000,
-            step = 1,
-            section = 'VITS params',
-            option = 'Epochs',
-            defaultValue = 1000
-        )
-        subPage_train_VITS.addSpinBoxFrame(
-            rootItemText = QCA.translate('MainWindow', "训练参数"),
-            text = QCA.translate('MainWindow', "批处理量\n每轮迭代中单位批次的样本数量，需根据GPU的性能调节该值。"),
-            toolTip = QCA.translate('MainWindow', "建议：2~4G: 2\n6~8G: 4\n10~12G: 8\n14~16G: 16"),
-            minimum = 2,
-            maximum = 128,
-            step = 1,
-            section = 'VITS params',
-            option = 'Batch_Size',
-            defaultValue = 4
-        )
-        subPage_train_VITS.addCheckBoxFrame(
-            rootItemText = QCA.translate('MainWindow', "训练参数"),
-            text = QCA.translate('MainWindow', "使用预训练模型\n使用预训练模型（底模），其载入优先级高于检查点。"),
-            section = 'VITS params',
-            option = 'Use_PretrainedModels',
-            defaultValue = True
-        )
-        Train_VITS_ModelPathPretrainedG_Default = Path(modelDir).joinpath('TTS', 'VITS', 'Downloaded', 'standard_G.pth').as_posix()
-        subPage_train_VITS.addLineEditFrame(
-            rootItemText = QCA.translate('MainWindow', "训练参数"),
-            text = QCA.translate('MainWindow', "预训练G模型路径\n预训练生成器（Generator）模型的路径。"),
-            fileDialogMode = FileDialogMode.SelectFile,
-            fileType = "pth类型 (*.pth)",
-            directory = EasyUtils.normPath(Path(modelDir).joinpath('TTS', 'VITS', 'Downloaded')),
-            section = 'VITS params',
-            option = 'Model_Path_Pretrained_G',
-            defaultValue = Train_VITS_ModelPathPretrainedG_Default,
-            placeholderText = Train_VITS_ModelPathPretrainedG_Default,
-            emptyAllowed = True
-        )
-        Train_VITS_ModelPathPretrainedD_Default = Path(modelDir).joinpath('TTS', 'VITS', 'Downloaded', 'standard_D.pth').as_posix()
-        subPage_train_VITS.addLineEditFrame(
-            rootItemText = QCA.translate('MainWindow', "训练参数"),
-            text = QCA.translate('MainWindow', "预训练D模型路径\n预训练判别器（Discriminator）模型的路径。"),
-            fileDialogMode = FileDialogMode.SelectFile,
-            fileType = "pth类型 (*.pth)",
-            directory = EasyUtils.normPath(Path(modelDir).joinpath('TTS', 'VITS', 'Downloaded')),
-            section = 'VITS params',
-            option = 'Model_Path_Pretrained_D',
-            defaultValue = Train_VITS_ModelPathPretrainedD_Default,
-            placeholderText = Train_VITS_ModelPathPretrainedD_Default,
-            emptyAllowed = True
-        )
-        subPage_train_VITS.addCheckBoxFrame(
-            rootItemText = QCA.translate('MainWindow', "训练参数"),
-            text = QCA.translate('MainWindow', "保留原说话人（实验性）\n保留预训练模型中原有的说话人。"),
-            section = 'VITS params',
-            option = 'Keep_Original_Speakers',
-            defaultValue = False
-        )
-        Train_VITS_ConfigPathLoad_Default = Path(modelDir).joinpath('TTS', 'VITS', 'Downloaded', 'standard_Config.json').as_posix()
-        subPage_train_VITS.addLineEditFrame(
-            rootItemText = QCA.translate('MainWindow', "训练参数"),
-            text = QCA.translate('MainWindow', "配置加载路径\n用于加载底模人物信息的配置文件的路径"),
-            fileDialogMode = FileDialogMode.SelectFile,
-            fileType = "json类型 (*.json)",
-            directory = EasyUtils.normPath(Path(modelDir).joinpath('TTS', 'VITS', 'Downloaded')),
-            section = 'VITS params',
-            option = 'Config_Path_Load',
-            defaultValue = Train_VITS_ConfigPathLoad_Default,
-            placeholderText = Train_VITS_ConfigPathLoad_Default,
-            emptyAllowed = True
-        )
-        subPage_train_VITS.addSpinBoxFrame(
-            rootItemText = QCA.translate('MainWindow', "训练参数"),
-            toolBoxText = QCA.translate('MainWindow', "高级设置"),
-            text = QCA.translate('MainWindow', "进程数量\n进行数据加载时可并行的进程数量，需根据CPU的性能调节该值。"),
-            minimum = 2,
-            maximum = 128,
-            step = 2,
-            section = 'VITS params',
-            option = 'Num_Workers',
-            defaultValue = 4
-        )
-        subPage_train_VITS.addCheckBoxFrame(
-            rootItemText = QCA.translate('MainWindow', "训练参数"),
-            toolBoxText = QCA.translate('MainWindow', "高级设置"),
-            text = QCA.translate('MainWindow', "半精度训练\n通过混合了float16精度的训练方式减小显存占用以支持更大的批处理量。"),
-            section = 'VITS params',
-            option = 'FP16_Run',
-            defaultValue = False
-        )
-        subPage_train_VITS.addSpinBoxFrame(
-            rootItemText = QCA.translate('MainWindow', "输出参数"),
-            text = QCA.translate('MainWindow', "保存间隔\n每次保存模型所间隔的步数。PS: 步数 ≈ 迭代轮次 * 训练样本数 / 批处理量"),
-            toolTip = QCA.translate('MainWindow', "提示：设置过小可能导致磁盘占用激增哦"),
-            minimum = 10,
-            maximum = 100000,
-            step = 1,
-            section = 'Output params',
-            option = 'Eval_Interval',
-            defaultValue = 1000
-        )
-        Train_VITS_OutputDirName_Default = str(date.today())
-        subPage_train_VITS.addLineEditFrame(
-            rootItemText = QCA.translate('MainWindow', "输出参数"),
-            text = QCA.translate('MainWindow', "输出目录名\n存放训练所得模型的目录的名字，若目录中已存在模型则会将其视为检查点。"),
-            section = 'Output params',
-            option = 'Output_Dir_Name',
-            defaultValue = '',
-            placeholderText = Train_VITS_OutputDirName_Default
-        )
-        LineEdit_Train_VITS_OutputDir = LineEditBase()
-        self.setDirAlert(
-            dirNameEdit = subPage_train_VITS.findChildWidget("输出参数", None, "输出目录名", LineEditBase),
-            rootEdit = self.ui.LineEdit_Train_VITS_OutputRoot,
-            dirEdit = LineEdit_Train_VITS_OutputDir
-        )
-        Train_VITS_LogDir_Default = Path(Path(currentDir).root).joinpath('EVT_TrainLog', 'VITS', str(date.today())).as_posix()
-        subPage_train_VITS.addLineEditFrame(
-            rootItemText = QCA.translate('MainWindow', "输出参数"),
-            toolBoxText = QCA.translate('MainWindow', "高级设置"),
-            text = QCA.translate('MainWindow', "日志输出目录\n训练时生成的日志的存放目录。"),
-            fileDialogMode = FileDialogMode.SelectFolder,
-            directory = EasyUtils.normPath(Path(Train_VITS_LogDir_Default).parent),
-            section = 'Output params',
-            option = 'Output_LogDir',
-            defaultValue = Train_VITS_LogDir_Default,
-            placeholderText = Train_VITS_LogDir_Default
-        )
-        subPage_train_VITS.findChildWidget("输出参数", "高级设置", "日志输出目录", LineEditBase).textChanged.connect(
-            lambda value: (
-                MessageBoxBase.pop(self,
-                    QMessageBox.Warning, "Warning",
-                    text = "保存路径不支持非ASCII字符，请使用英文路径以避免训练报错",
-                ),
-                subPage_train_VITS.findChildWidget("输出参数", "高级设置", "日志输出目录", LineEditBase).clear()
-            ) if not all(Char.isascii() for Char in value) else None
-        )
-        subPage_train_VITS.addChkOutputSideBtn(
-            outputRootEdit = self.ui.LineEdit_Train_VITS_OutputRoot
-        )
-        subPage_train_VITS.addSideBtn(
-            text = QCA.translate('MainWindow', "启动Tensorboard"),
-            events = [
-                lambda: Function_SetMethodExecutor(
-                    executeMethod = runTensorboard,
-                    executeParams = subPage_train_VITS.findChildWidget("输出参数", "高级设置", "日志输出目录", LineEditBase).text(),
-                    threadPool = self.threadPool_tasks,
-                    parentWindow = self,
-                )
-            ]
-        )
-        subPage_train_VITS.setExecutor(
-            consoleWidget = self.ui.Frame_Console,
-            executeMethod = self.task_vits.train,
-            executeParamTargets = [
-                subPage_train_VITS.findChildWidget("输入参数", None, "训练集文本路径"),
-                subPage_train_VITS.findChildWidget("输入参数", None, "验证集文本路径"),
-                subPage_train_VITS.findChildWidget("训练参数", None, "迭代轮数"),
-                subPage_train_VITS.findChildWidget("训练参数", None, "保存间隔"),
-                subPage_train_VITS.findChildWidget("训练参数", None, "批处理量"),
-                subPage_train_VITS.findChildWidget("训练参数", "高级设置", "半精度训练"),
-                subPage_train_VITS.findChildWidget("训练参数", None, "保留原说话人（实验性）"),
-                subPage_train_VITS.findChildWidget("训练参数", None, "配置加载路径"),
-                subPage_train_VITS.findChildWidget("训练参数", "高级设置", "进程数量"),
-                subPage_train_VITS.findChildWidget("训练参数", None, "使用预训练模型"),
-                subPage_train_VITS.findChildWidget("训练参数", None, "预训练G模型路径"),
-                subPage_train_VITS.findChildWidget("训练参数", None, "预训练D模型路径"),
-                self.ui.LineEdit_Train_VITS_OutputRoot,
-                subPage_train_VITS.findChildWidget("输出参数", None, "输出目录名"),
-                'config.json',
-                subPage_train_VITS.findChildWidget("输出参数", "高级设置", "日志输出目录")
-            ],
-            terminateMethod = self.task_vits.terminate,
-            finishedEvents = {
-                lambda: MessageBoxBase.pop(self,
-                    QMessageBox.Information, "Tip",
-                    "当前任务已执行结束。"
-                ): TaskStatus.Succeeded
-            },
-            threadPool = self.threadPool_tasks,
-        )
-        FunctionSignals.Signal_TaskStatus.connect(
-            lambda Task, Status: MessageBoxBase.pop(self,
-                QMessageBox.Question, "Ask",
-                text = "是否稍后启用tensorboard？",
-                buttons = QMessageBox.Yes|QMessageBox.No,
-                buttonEvents = {QMessageBox.Yes: lambda: subPage_train_VITS.findChildWidget("启动Tensorboard").click()}
-            ) if Task == self.task_vits.__class__.train.__qualname__ and Status == TaskStatus.Started else None
-        )
-        Function_ConfigureCheckBox(
-            checkBox = subPage_train_VITS.findChildWidget("训练参数", None, "使用预训练模型", CheckBoxBase),
-            checkedEvents = {
-                lambda: Function_SetChildWidgetsVisibility(
-                    subPage_train_VITS.findChildWidget("训练参数"),
-                    childWidgetsVisibility = {
-                        subPage_train_VITS.findChildWidget("训练参数", None, "预训练G模型路径"): True,
-                        subPage_train_VITS.findChildWidget("训练参数", None, "预训练D模型路径"): True,
-                        subPage_train_VITS.findChildWidget("训练参数", None, "保留原说话人（实验性）"): True,
-                        subPage_train_VITS.findChildWidget("训练参数", None, "配置加载路径") if subPage_train_VITS.findChildWidget("训练参数", None, "保留原说话人（实验性）", CheckBoxBase).isChecked() else None: True
-                    },
-                ) : True
-            },
-            uncheckedEvents = {
-                lambda: Function_SetChildWidgetsVisibility(
-                    subPage_train_VITS.findChildWidget("训练参数"),
-                    childWidgetsVisibility = {
-                        subPage_train_VITS.findChildWidget("训练参数", None, "预训练G模型路径"): False,
-                        subPage_train_VITS.findChildWidget("训练参数", None, "预训练D模型路径"): False,
-                        subPage_train_VITS.findChildWidget("训练参数", None, "保留原说话人（实验性）"): False,
-                        subPage_train_VITS.findChildWidget("训练参数", None, "配置加载路径"): False
-                    },
-                ) : True
-            },
-        )
-        Function_ConfigureCheckBox(
-            checkBox = subPage_train_VITS.findChildWidget("训练参数", None, "保留原说话人（实验性）", CheckBoxBase),
-            checkedEvents = {
-                lambda: Function_SetChildWidgetsVisibility(
-                    subPage_train_VITS.findChildWidget("训练参数"),
-                    childWidgetsVisibility = {
-                        subPage_train_VITS.findChildWidget("训练参数", None, "配置加载路径"): True
-                    },
-                ) : True,
-                lambda: MessageBoxBase.pop(self,
-                    QMessageBox.Question, "Tip",
-                    text = """
-                        开启该实验性功能需要注意以下几点：
-                        1. 为防止老角色的音色在训练过程中被逐渐遗忘，请保证每个原角色至少有一两条音频参与训练。\n
-                        2. 为防止老角色的顺序被重组（导致音色混乱），请在下方设置包含了底模角色信息的配置文件路径。
-                    """,
-                    buttons = QMessageBox.Yes|QMessageBox.No,
-                    buttonEvents = {QMessageBox.No: lambda: subPage_train_VITS.findChildWidget("训练参数", None, "保留原说话人（实验性）", CheckBoxBase).setChecked(False)}
-                ) : False
-            },
-            uncheckedEvents = {
-                lambda: Function_SetChildWidgetsVisibility(
-                    subPage_train_VITS.findChildWidget("训练参数"),
-                    childWidgetsVisibility = {
-                        subPage_train_VITS.findChildWidget("训练参数", None, "配置加载路径"): False
-                    },
-                ) : True
-            },
-        )
-
-        self.ui.Page_Train.addSubPage(
-            QCA.translate('MainWindow', 'VITS2'), subPage_train_VITS
-        )
-
         #############################################################
         ######################## Content: TTS #######################
         #############################################################
@@ -2755,141 +2238,6 @@ class MainWindow(Window_MainWindow):
             QCA.translate('MainWindow', 'GPT-SoVITS'), subPage_tts_gptsovits
         )
 
-        # ParamsManager - VITS
-        configPath_TTS_VITS = EasyUtils.normPath(Path(configDir).joinpath('Config_TTS_VITS.ini'))
-        paramsManager_TTS_VITS = ParamsManager(configPath_TTS_VITS)
-     
-        subPage_TTS_VITS = SubToolPage(self.ui.Page_TTS, paramsManager_TTS_VITS)
-        TTS_VITS_ConfigPathLoad_Default = Path(modelDir).joinpath('TTS', 'VITS', 'Downloaded', 'standard_Config.json').as_posix()
-        subPage_TTS_VITS.addLineEditFrame(
-            rootItemText = QCA.translate('MainWindow', "输入参数"),
-            text = QCA.translate('MainWindow', "配置加载路径\n用于推理的配置文件的路径。"),
-            fileDialogMode = FileDialogMode.SelectFile,
-            fileType = "json类型 (*.json)",
-            directory = Path(currentDir).joinpath('模型训练结果', 'VITS').as_posix(),
-            section = 'Input params',
-            option = 'Config_Path_Load',
-            defaultValue = '',
-            placeholderText = TTS_VITS_ConfigPathLoad_Default
-        )
-        subPage_TTS_VITS.findChildWidget("输入参数", None, "配置加载路径", LineEditBase).textChanged.connect(
-            lambda Path: (
-                subPage_TTS_VITS.findChildWidget("语音合成参数", None, "人物名字", ComboBoxBase).clear(),
-                subPage_TTS_VITS.findChildWidget("语音合成参数", None, "人物名字", ComboBoxBase).addItems(getSpeakers(Path))
-            )
-        )
-        TTS_VITS_ModelPathLoad_Default = Path(modelDir).joinpath('TTS', 'VITS', 'Downloaded', 'standard_G.pth').as_posix()
-        subPage_TTS_VITS.addLineEditFrame(
-            rootItemText = QCA.translate('MainWindow', "输入参数"),
-            text = QCA.translate('MainWindow', "G模型加载路径\n用于推理的生成器（Generator）模型的路径。"),
-            fileDialogMode = FileDialogMode.SelectFile,
-            fileType = "pth类型 (*.pth)",
-            directory = Path(currentDir).joinpath('模型训练结果', 'VITS').as_posix(),
-            section = 'Input params',
-            option = 'Model_Path_Load',
-            defaultValue = '',
-            placeholderText = TTS_VITS_ModelPathLoad_Default
-        )
-        subPage_TTS_VITS.addTextEditFrame(
-            rootItemText = QCA.translate('MainWindow', "语音合成参数"),
-            text = QCA.translate('MainWindow', "输入文字\n输入的文字会作为说话人的语音内容。"),
-            section = 'VITS params',
-            option = 'text',
-            defaultValue = '',
-            placeholderText = '请输入语句'
-        )
-        subPage_TTS_VITS.addComboBoxFrame(
-            rootItemText = QCA.translate('MainWindow', "语音合成参数"),
-            text = QCA.translate('MainWindow', "所属语言\n文字所属的语言，若使用自动检测则保持'None'即可（有概率报错）。"),
-            items = ['None', QCA.translate('MainWindow', '中'), QCA.translate('MainWindow', '英'), QCA.translate('MainWindow', '日')],
-            section = 'VITS params',
-            option = 'Language',
-            defaultValue = None,
-            emptyAllowed = True
-        )
-        subPage_TTS_VITS.addComboBoxFrame(
-            rootItemText = QCA.translate('MainWindow', "语音合成参数"),
-            text = QCA.translate('MainWindow', "人物名字\n说话人物的名字。"),
-            items = [],
-            section = 'VITS params',
-            option = 'Speaker',
-            defaultValue = '',
-            emptyAllowed = True
-        )
-        subPage_TTS_VITS.addRangeSettingFrame(
-            rootItemText = QCA.translate('MainWindow', "语音合成参数"),
-            text = QCA.translate('MainWindow', "情感强度\n情感的变化程度。"),
-            minimum = 0,
-            maximum = 1,
-            step = 0.01,
-            section = 'VITS params',
-            option = 'EmotionStrength',
-            defaultValue = 0.67
-        )
-        subPage_TTS_VITS.addRangeSettingFrame(
-            rootItemText = QCA.translate('MainWindow', "语音合成参数"),
-            text = QCA.translate('MainWindow', "音素音长\n音素的发音长度。"),
-            minimum = 0,
-            maximum = 1,
-            step = 0.1,
-            section = 'VITS params',
-            option = 'PhonemeDuration',
-            defaultValue = 0.8
-        )
-        subPage_TTS_VITS.addRangeSettingFrame(
-            rootItemText = QCA.translate('MainWindow', "语音合成参数"),
-            text = QCA.translate('MainWindow', "整体语速\n整体的说话速度。"),
-            minimum = 0,
-            maximum = 20,
-            step = 1,
-            section = 'VITS params',
-            option = 'SpeechRate',
-            defaultValue = 1.
-        )
-        TTS_VITS_AudioDirSave = Path(currentDir).joinpath('语音合成结果', 'VITS').as_posix()
-        TTS_VITS_AudioPathSave = Path(TTS_VITS_AudioDirSave).joinpath("temp.wav").as_posix()
-        os.makedirs(TTS_VITS_AudioDirSave) if not Path(TTS_VITS_AudioDirSave).exists() else None
-        subPage_TTS_VITS.addSideBtn(
-            text = QCA.translate('MainWindow', "查看输出文件"),
-            events = [
-                lambda: QFunc.openURL(
-                    url = Function_GetParam(TTS_VITS_AudioDirSave),
-                    createIfNotExist = True
-                )
-            ]
-        )
-        subPage_TTS_VITS.setExecutor(
-            consoleWidget = self.ui.Frame_Console,
-            executeMethod = self.task_vits.infer,
-            executeParamTargets = [
-                subPage_TTS_VITS.findChildWidget("语音合成参数", None, "配置加载路径"),
-                subPage_TTS_VITS.findChildWidget("语音合成参数", None, "G模型加载路径"),
-                subPage_TTS_VITS.findChildWidget("语音合成参数", None, "输入文字"),
-                subPage_TTS_VITS.findChildWidget("语音合成参数", None, "所属语言"),
-                subPage_TTS_VITS.findChildWidget("语音合成参数", None, "人物名字"),
-                subPage_TTS_VITS.findChildWidget("语音合成参数", "高级设置", "情感强度"),
-                subPage_TTS_VITS.findChildWidget("语音合成参数", "高级设置", "音素音长"),
-                subPage_TTS_VITS.findChildWidget("语音合成参数", "高级设置", "整体语速"),
-                TTS_VITS_AudioPathSave
-            ],
-            terminateMethod = self.task_vits.terminate,
-            finishedEvents = {
-                lambda: self.showMask(True, "正在加载播放器"): TaskStatus.Succeeded,
-                lambda: self.showTTSResult(
-                    TTS_VITS_AudioPathSave
-                ): TaskStatus.Succeeded,
-                lambda: MessageBoxBase.pop(self,
-                    QMessageBox.Information, "Tip",
-                    "当前任务已执行结束。"
-                ): TaskStatus.Succeeded
-            },
-            threadPool = self.threadPool_tasks,
-        )
-
-        self.ui.Page_TTS.addSubPage(
-            QCA.translate('MainWindow', 'VITS2'), subPage_TTS_VITS
-        )
-
         #############################################################
         ##################### Content: Settings #####################
         #############################################################
@@ -3021,11 +2369,8 @@ class MainWindow(Window_MainWindow):
                         paramsManager_VPR_TDNN.resetSettings(),
                         paramsManager_ASR_Whisper.resetSettings(),
                         paramsManager_DAT_GPTSoVITS.resetSettings(),
-                        paramsManager_DAT_VITS.resetSettings(),
                         paramsManager_train_gptsovits.resetSettings(),
-                        paramsManager_Train_VITS.resetSettings(),
                         paramsManager_tts_gptsovits.resetSettings(),
-                        paramsManager_TTS_VITS.resetSettings()
                     )
                 ) : True
             },
@@ -3053,7 +2398,7 @@ class MainWindow(Window_MainWindow):
                 ) : True,
                 lambda: Function_ParamsSynchronizer(
                     LineEdit_VPR_TDNN_AudioSpeakersDataPath,
-                    {LineEdit_VPR_TDNN_AudioSpeakersDataPath: [subPage_dataset_GPTSoVITS.findChildWidget("输入参数", None, "音频文件目录/语音识别结果文本路径", LineEditBase), subPage_dataset_VITS.findChildWidget("输入参数", None, "音频文件目录/语音识别结果文本路径", LineEditBase)]}
+                    {LineEdit_VPR_TDNN_AudioSpeakersDataPath: subPage_dataset_GPTSoVITS.findChildWidget("输入参数", None, "音频文件目录/语音识别结果文本路径", LineEditBase)}
                 ) : True,
                 lambda: Function_ParamsSynchronizer(
                     LineEdit_VPR_TDNN_OutputDir,
@@ -3061,16 +2406,12 @@ class MainWindow(Window_MainWindow):
                 ) : True,
                 lambda: Function_ParamsSynchronizer(
                     LineEdit_ASR_Whisper_OutputDir,
-                    {LineEdit_ASR_Whisper_OutputDir: [subPage_dataset_GPTSoVITS.findChildWidget("输入参数", None, "字幕输入目录", LineEditBase), subPage_dataset_VITS.findChildWidget("输入参数", None, "字幕输入目录", LineEditBase)]}
+                    {LineEdit_ASR_Whisper_OutputDir: subPage_dataset_GPTSoVITS.findChildWidget("输入参数", None, "字幕输入目录", LineEditBase)}
                 ) : True,
                 lambda: Function_ParamsSynchronizer(
                     LineEdit_DAT_GPTSoVITS_FileListPath,
                     {LineEdit_DAT_GPTSoVITS_FileListPath: subPage_train_gptsovits.findChildWidget("输入参数", None, "训练集文本路径", LineEditBase)}
                 ) : True,
-                lambda: Function_ParamsSynchronizer(
-                    [LineEdit_DAT_VITS_FileListPathTraining, LineEdit_DAT_VITS_FileListPathValidation],
-                    {LineEdit_DAT_VITS_FileListPathTraining: subPage_train_VITS.findChildWidget("输入参数", None, "训练集文本路径", LineEditBase), LineEdit_DAT_VITS_FileListPathValidation: subPage_train_VITS.findChildWidget("输入参数", None, "验证集文本路径", LineEditBase)}
-                ) : True
             },
             uncheckedText = "未启用",
             uncheckedEvents = {
@@ -3163,26 +2504,6 @@ class MainWindow(Window_MainWindow):
             }
         )
 
-        self.ui.Label_DAT_VITS_OutputRoot.setText(QCA.translate('MainWindow', "VITS数据集输出目录"))
-        DAT_VITS_OutputRoot_Default = Path(outputDir).joinpath('数据集制作结果', 'VITS').as_posix()
-        paramsManager_DAT_VITS.setParam(
-            widget = self.ui.LineEdit_DAT_VITS_OutputRoot,
-            section = 'Output params',
-            option = 'Output_Root',
-            defaultValue = DAT_VITS_OutputRoot_Default,
-            placeholderText = DAT_VITS_OutputRoot_Default
-        )
-        self.ui.LineEdit_DAT_VITS_OutputRoot.setFileDialog(
-            mode = FileDialogMode.SelectFolder,
-            directory = EasyUtils.normPath(Path(DAT_VITS_OutputRoot_Default).parent)
-        )
-        self.ui.Button_DAT_VITS_OutputRoot_MoreActions.setMenu(
-            actionEvents = {
-                "重置": lambda: paramsManager_DAT_VITS.resetParam(self.ui.LineEdit_DAT_VITS_OutputRoot),
-                "复制": lambda: QApplication.clipboard().setText(self.ui.LineEdit_DAT_VITS_OutputRoot.text())
-            }
-        )
-
         self.ui.Label_Train_GPTSoVITS_OutputRoot.setText(QCA.translate('MainWindow', "GPTSoVITS训练输出目录"))
         Train_GPTSoVITS_OutputRoot_Default = Path(outputDir).joinpath('模型训练结果', 'GPT-SoVITS').as_posix()
         paramsManager_train_gptsovits.setParam(
@@ -3200,26 +2521,6 @@ class MainWindow(Window_MainWindow):
             actionEvents = {
                 "重置": lambda: paramsManager_train_gptsovits.resetParam(self.ui.LineEdit_Train_GPTSoVITS_OutputRoot),
                 "复制": lambda: QApplication.clipboard().setText(self.ui.LineEdit_Train_GPTSoVITS_OutputRoot.text())
-            }
-        )
-
-        self.ui.Label_Train_VITS_OutputRoot.setText(QCA.translate('MainWindow', "VITS训练输出目录"))
-        Train_VITS_OutputRoot_Default = Path(outputDir).joinpath('模型训练结果', 'VITS').as_posix()
-        paramsManager_Train_VITS.setParam(
-            widget = self.ui.LineEdit_Train_VITS_OutputRoot,
-            section = 'Output params',
-            option = 'Output_Root',
-            defaultValue = Train_VITS_OutputRoot_Default,
-            placeholderText = Train_VITS_OutputRoot_Default
-        )
-        self.ui.LineEdit_Train_VITS_OutputRoot.setFileDialog(
-            mode = FileDialogMode.SelectFolder,
-            directory = EasyUtils.normPath(Path(Train_VITS_OutputRoot_Default).parent)
-        )
-        self.ui.Button_Train_VITS_OutputRoot_MoreActions.setMenu(
-            actionEvents = {
-                "重置": lambda: paramsManager_Train_VITS.resetParam(self.ui.LineEdit_Train_VITS_OutputRoot),
-                "复制": lambda: QApplication.clipboard().setText(self.ui.LineEdit_Train_VITS_OutputRoot.text())
             }
         )
 
@@ -3284,11 +2585,8 @@ class MainWindow(Window_MainWindow):
                 self.task_vpr.__class__.infer.__qualname__,
                 self.task_whisper.__class__.infer.__qualname__,
                 self.task_gptsovits.__class__.preprocess.__qualname__,
-                self.task_vits.__class__.preprocess.__qualname__,
                 self.task_gptsovits.__class__.train.__qualname__,
-                self.task_vits.__class__.train.__qualname__,
                 self.task_gptsovits.__class__.infer.__qualname__,
-                self.task_vits.__class__.infer.__qualname__,
             ] else None
         )
 

@@ -59,7 +59,6 @@ I'd like to express my sincere gratitude to the authors of the following project
 - [VoiceprintRecognition](https://github.com/yeyupiaoling/VoiceprintRecognition-Pytorch/tree/release/1.0)
 - [whisper](https://github.com/openai/whisper)
 - [SRT-to-CSV-and-audio-split](https://github.com/tobiasrordorf/SRT-to-CSV-and-audio-split)
-- [vits](https://github.com/CjangCjengh/vits)
 - [GPT-SoVITS](https://github.com/RVC-Boss/GPT-SoVITS)
 
 

@@ -17,8 +17,3 @@
 	path = EVT_Core/GPT_SoVITS
 	url = https://github.com/Spr-Aachen/EVT-Core-GPT-SoVITS
 	ignore = dirty
-
-[submodule "EVT_Core/VITS"]
-	path = EVT_Core/VITS
-	url = https://github.com/Spr-Aachen/EVT-Core-VITS
-	ignore = dirty
