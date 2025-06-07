@@ -15,7 +15,6 @@ isCompiled = False
 
 
 def run(
-    coreDir: str = ...,
     manifestPath: str = ...,
     requirementsPath: str = ...,
     dependencyDir: str = ...,
@@ -23,17 +22,17 @@ def run(
     outputDir: str = ...,
     profileDir: str = ...
 ):
+    serverPath = Path(currentDir).joinpath('server', 'main.py').as_posix()
     resourceDir = Path(sys._MEIPASS).as_posix() if getattr(sys, 'frozen', None) else currentDir
-    clientDir = Path(f'{resourceDir}{os.sep}{"EVT_GUI" if not isCompiled else "EVT"}').as_posix()
-    clientFile = Path(f'{clientDir}{os.sep}{f"src{os.sep}Main.py" if not isCompiled else "Main.exe"}').as_posix()
-    clientCommand = f'{"python" if not isCompiled else ""} "{clientFile}" --core "{coreDir}" --manifest "{manifestPath}" --requirements "{requirementsPath}" --dependencies "{dependencyDir}" --models "{modelDir}" --output "{outputDir}" --profile "{profileDir}"'
+    clientDir = Path(f'{resourceDir}{os.sep}{"client" if not isCompiled else "EVT"}').as_posix()
+    clientFile = Path(f'{clientDir}{os.sep}{f"src{os.sep}main.py" if not isCompiled else "Main.exe"}').as_posix()
+    clientCommand = f'{"python" if not isCompiled else ""} "{clientFile}" --server "{serverPath}" --manifest "{manifestPath}" --requirements "{requirementsPath}" --dependencies "{dependencyDir}" --models "{modelDir}" --output "{outputDir}" --profile "{profileDir}"'
     Popen(clientCommand.strip(), shell = True)
 
 ##############################################################################################################################
 
 if __name__ == "__main__":
     run(
-        coreDir = Path(currentDir).joinpath('EVT_Core').as_posix(),
         manifestPath = Path(currentDir).joinpath('manifest.json').as_posix(),
         requirementsPath = Path(currentDir).joinpath('requirements.txt').as_posix(),
         dependencyDir = Path(currentDir).as_posix(),

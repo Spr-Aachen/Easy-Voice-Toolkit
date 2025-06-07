@@ -52,7 +52,7 @@ os.chdir(currentDir)
 # Parse path settings
 parser = argparse.ArgumentParser()
 parser.add_argument("--updater",           help = "path to updater",          default = Path(resourceDir).joinpath('updater.exe') if isFileCompiled else Path(currentDir).joinpath('updater.py'))
-parser.add_argument("--core",              help = "dir of core files",        default = Path(resourceDir).joinpath('EVT_Core'))
+parser.add_argument("--server",            help = "path to server file",      default = Path(resourceDir).joinpath('server', 'main.py'))
 parser.add_argument("--manifest",          help = "path to manifest.json",    default = Path(resourceDir).joinpath('manifest.json'))
 parser.add_argument("--requirements",      help = "path to requirements.txt", default = Path(resourceDir).joinpath('requirements.txt'))
 parser.add_argument("--dependencies",      help = "dir of dependencies",      default = Path(currentDir).joinpath(''))
@@ -63,7 +63,7 @@ parser.add_argument("--deprecatedVersion", help = "deprecated version",       de
 args = parser.parse_known_args()[0]
 
 updaterPath = args.updater
-coreDir = args.core
+serverPath = args.server
 manifestPath = args.manifest
 requirementsPath = args.requirements
 dependencyDir = args.dependencies
@@ -155,10 +155,10 @@ class MainWindow(Window_MainWindow):
         self.MonitorUsage = QTasks.MonitorUsage()
         self.MonitorUsage.start()
 
-        self.task_audioProcessor = Tool_AudioProcessor(coreDir, logPath)
-        self.task_vpr = Tool_VPR(coreDir, logPath)
-        self.task_whisper = Tool_Whisper(coreDir, logPath)
-        self.task_gptsovits = Tool_GPTSoVITS(coreDir, logPath)
+        self.task_audioProcessor = Tool_AudioProcessor()
+        self.task_vpr = Tool_VPR()
+        self.task_whisper = Tool_Whisper()
+        self.task_gptsovits = Tool_GPTSoVITS()
 
     def closeEvent(self, event):
         FunctionSignals.Signal_TaskStatus.connect(lambda: QApplication.instance().exit())
@@ -315,6 +315,14 @@ class MainWindow(Window_MainWindow):
             )
         )
         dirPathSelectionDialogBox.exec()
+
+    def startServer(self):
+        WorkerManager(
+            executeMethod = startServer,
+            executeParams = (serverPath, logPath),
+            autoDelete = False,
+            threadPool = self.threadPool_tasks,
+        ).execute()
 
     def showVPRResult(self, audioSaveDir, audioSpeakersData_path, comboItems):
         ChildWindow_VPR = Window_ChildWindow_VPR(self)
@@ -2190,7 +2198,7 @@ class MainWindow(Window_MainWindow):
         )
         subPage_tts_gptsovits.setExecutor(
             consoleWidget = self.ui.Frame_Console,
-            executeMethod = self.task_gptsovits.infer,
+            executeMethod = self.task_gptsovits.infer_webui,
             executeParamTargets = [
                 subPage_tts_gptsovits.findChildWidget("全局设置", None, "推理版本"),
                 subPage_tts_gptsovits.findChildWidget("输入参数", None, "SoVITS模型加载路径"),
@@ -2586,7 +2594,7 @@ class MainWindow(Window_MainWindow):
                 self.task_whisper.__class__.infer.__qualname__,
                 self.task_gptsovits.__class__.preprocess.__qualname__,
                 self.task_gptsovits.__class__.train.__qualname__,
-                self.task_gptsovits.__class__.infer.__qualname__,
+                self.task_gptsovits.__class__.infer_webui.__qualname__,
             ] else None
         )
 
@@ -2610,6 +2618,9 @@ class MainWindow(Window_MainWindow):
         # Show MainWindow (and emit signal)
         self.show()
         self.Signal_MainWindowShown.emit()
+
+        # Start server
+        self.startServer()
 
 ##############################################################################################################################
 

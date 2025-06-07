@@ -1,3 +1,4 @@
+import os
 from typing import Type, Optional
 from PyEasyUtils import setRichText
 from PySide6.QtCore import Qt, QRect, QSize, SignalInstance
@@ -195,7 +196,7 @@ class EnvPage(Page):
             }
         """)
         self.consoleButton.clicked.connect(
-            lambda: EasyUtils.subprocessManager().create("cmd.exe /c start cmd.exe")
+            lambda: EasyUtils.subprocessManager().create("cmd.exe /c start cmd.exe", env = os.environ)
         )
         self.navigationAreaLayout.addWidget(self.consoleButton)
 

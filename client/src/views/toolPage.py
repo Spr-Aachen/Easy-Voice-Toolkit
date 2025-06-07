@@ -360,7 +360,7 @@ class SubToolPage(SubPage):
         executeParamTargets: list,
         terminateMethod: object,
         finishedEvents: dict,
-        threadPool,
+        threadPool: QThreadPool,
     ):
         self.executeButton.setText(QCA.translate('MainWindow', "执行"))
         self.terminateButton.setText(QCA.translate('MainWindow', "终止"))

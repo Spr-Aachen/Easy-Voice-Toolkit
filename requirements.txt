@@ -53,3 +53,5 @@ LangSegment>=0.2.0
 fastapi<0.112.2
 gradio>=4.0,<=4.24.0
 modelscope==1.10.0
+
+PyEasyUtils
