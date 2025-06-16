@@ -10,6 +10,16 @@ from PySide6.QtCore import QObject, Signal
 
 ##############################################################################################################################
 
+class CustomSignals_Tools(QObject):
+    '''
+    Set up signals for functions
+    '''
+    serverStarted = Signal()
+
+
+toolSignals = CustomSignals_Tools()
+
+
 host = None
 port = None
 subprocessMonitor = None
@@ -36,6 +46,7 @@ def startServer(
     for outputLine, errorLine in subprocessMonitor:
         if f"{host}:{port}" in outputLine.decode(errors = 'ignore'):
             isServerStarted = True
+            toolSignals.serverStarted.emit()
         yield isServerStarted
         if isServerStarted:
             break

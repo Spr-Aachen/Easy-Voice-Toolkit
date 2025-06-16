@@ -1274,6 +1274,7 @@ class MainWindow(Window_MainWindow):
             outputRootEdit = self.ui.LineEdit_Process_OutputRoot,
         )
         subPage_process.setExecutor(
+            prepareSignal = toolSignals.serverStarted,
             consoleWidget = self.ui.Frame_Console,
             executeMethod = self.task_audioProcessor.processAudio,
             executeParamTargets = [
@@ -1511,6 +1512,7 @@ class MainWindow(Window_MainWindow):
             ]
         )
         subPage_VPR.setExecutor(
+            prepareSignal = toolSignals.serverStarted,
             consoleWidget = self.ui.Frame_Console,
             executeMethod = self.task_vpr.infer,
             executeParamTargets = [
@@ -1646,6 +1648,7 @@ class MainWindow(Window_MainWindow):
             outputRootEdit = self.ui.LineEdit_ASR_Whisper_OutputRoot
         )
         subPage_ASR.setExecutor(
+            prepareSignal = toolSignals.serverStarted,
             consoleWidget = self.ui.Frame_Console,
             executeMethod = self.task_whisper.infer,
             executeParamTargets = [
@@ -1787,6 +1790,7 @@ class MainWindow(Window_MainWindow):
             outputRootEdit = self.ui.LineEdit_DAT_GPTSoVITS_OutputRoot
         )
         subPage_dataset_GPTSoVITS.setExecutor(
+            prepareSignal = toolSignals.serverStarted,
             consoleWidget = self.ui.Frame_Console,
             executeMethod = self.task_gptsovits.preprocess,
             executeParamTargets = [
@@ -2016,6 +2020,7 @@ class MainWindow(Window_MainWindow):
             ]
         )
         subPage_train_gptsovits.setExecutor(
+            prepareSignal = toolSignals.serverStarted,
             consoleWidget = self.ui.Frame_Console,
             executeMethod = self.task_gptsovits.train,
             executeParamTargets = [
@@ -2197,6 +2202,7 @@ class MainWindow(Window_MainWindow):
             ]
         )
         subPage_tts_gptsovits.setExecutor(
+            prepareSignal = toolSignals.serverStarted,
             consoleWidget = self.ui.Frame_Console,
             executeMethod = self.task_gptsovits.infer_webui,
             executeParamTargets = [

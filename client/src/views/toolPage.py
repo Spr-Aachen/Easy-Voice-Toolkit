@@ -355,6 +355,7 @@ class SubToolPage(SubPage):
         )
 
     def setExecutor(self,
+        prepareSignal: Signal,
         consoleWidget: QWidget,
         executeMethod: object,
         executeParamTargets: list,
@@ -364,6 +365,10 @@ class SubToolPage(SubPage):
     ):
         self.executeButton.setText(QCA.translate('MainWindow', "执行"))
         self.terminateButton.setText(QCA.translate('MainWindow', "终止"))
+        self.executeButton.setDisabled(True)
+        prepareSignal.connect(
+            lambda: self.executeButton.setDisabled(False)
+        )
         def _findParamWidget(paramTarget):
             if isinstance(paramTarget, QFrame):
                 for type in (QLineEdit, QComboBox, QCheckBox, QSpinBox, QDoubleSpinBox, QSlider, QTextBrowser, QTextEdit, QTableView):
