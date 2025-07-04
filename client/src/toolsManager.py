@@ -50,6 +50,7 @@ def startServer(
         yield isServerStarted
         if isServerStarted:
             break
+    EasyUtils.simpleRequest(EasyUtils.requestManager.Post, "http", host, port, "/setLogPath", f"logPath={logPath}")
 
 
 def sendRequest(

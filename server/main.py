@@ -8,7 +8,7 @@ from PyEasyUtils import isPortAvailable, findAvailablePorts, terminateProcess
 from typing import Union, Optional, List
 from pathlib import Path
 
-from tools import AudioProcessor, VPR, Whisper, GPT_SoVITS
+from tools import logPath_set, AudioProcessor, VPR, Whisper, GPT_SoVITS
 
 ##############################################################################################################################
 
@@ -61,6 +61,11 @@ async def default():
 async def shutdown():
     server.should_exit = True
     terminateProcess(os.getpid())
+
+
+@app.post("/setLogPath")
+async def setLogPath(logPath: str):
+    logPath_set(logPath)
 
 
 @app.get("/processAudio")

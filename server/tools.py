@@ -4,6 +4,15 @@ from typing import Union, Optional
 
 ##############################################################################################################################
 
+logPath = None
+
+
+def logPath_set(setlogPath: str):
+    global logPath
+    logPath = setlogPath
+
+##############################################################################################################################
+
 def mkPyCommand(fileDir, *commands):
     return [
         'cd "%s"' % fileDir,
@@ -29,7 +38,7 @@ class AudioProcessor:
             ),
             env = os.environ
         )
-        output, error, returnCode = self.spm.result(decodeResult = True)
+        output, error, returnCode = self.spm.result(decodeResult = True, logPath = logPath)
 
     def terminate(self):
         for subprocess in self.spm.subprocesses:
@@ -54,7 +63,7 @@ class VPR:
             ),
             env = os.environ
         )
-        output, error, returnCode = self.spm.result(decodeResult = True)
+        output, error, returnCode = self.spm.result(decodeResult = True, logPath = logPath)
 
     def terminate(self):
         for subprocess in self.spm.subprocesses:
@@ -78,7 +87,7 @@ class Whisper:
             ),
             env = os.environ
         )
-        output, error, returnCode = self.spm.result(decodeResult = True)
+        output, error, returnCode = self.spm.result(decodeResult = True, logPath = logPath)
 
     def terminate(self):
         for subprocess in self.spm.subprocesses:
@@ -102,7 +111,7 @@ class GPT_SoVITS:
             ),
             env = os.environ
         )
-        output, error, returnCode = self.spm.result(decodeResult = True)
+        output, error, returnCode = self.spm.result(decodeResult = True, logPath = logPath)
 
     def train(self,
         **kwargs
@@ -116,7 +125,7 @@ class GPT_SoVITS:
             ),
             env = os.environ
         )
-        output, error, returnCode = self.spm.result(decodeResult = True)
+        output, error, returnCode = self.spm.result(decodeResult = True, logPath = logPath)
 
     def infer_webui(self,
         **kwargs
@@ -130,7 +139,7 @@ class GPT_SoVITS:
             ),
             env = os.environ
         )
-        output, error, returnCode = self.spm.result(decodeResult = True)
+        output, error, returnCode = self.spm.result(decodeResult = True, logPath = logPath)
 
     def terminate(self):
         for subprocess in self.spm.subprocesses:
