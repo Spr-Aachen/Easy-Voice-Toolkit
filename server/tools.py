@@ -4,15 +4,6 @@ from typing import Union, Optional
 
 ##############################################################################################################################
 
-logPath = None
-
-
-def logPath_set(setlogPath: str):
-    global logPath
-    logPath = setlogPath
-
-##############################################################################################################################
-
 def mkPyCommand(fileDir, *commands):
     return [
         'cd "%s"' % fileDir,
@@ -25,11 +16,11 @@ class AudioProcessor:
     def __init__(self, toolDir):
         self.toolDir = toolDir
 
-    def processAudio(self,
+    async def processAudio(self,
         **kwargs
     ):
-        self.spm = EasyUtils.subprocessManager(shell = True)
-        self.spm.create(
+        self.spm = EasyUtils.asyncSubprocessManager(shell = True)
+        await self.spm.create(
             args = mkPyCommand(
                 self.toolDir,
                 'from AudioProcessor.process import Audio_Processing',
@@ -38,7 +29,9 @@ class AudioProcessor:
             ),
             env = os.environ
         )
-        output, error, returnCode = self.spm.result(decodeResult = True, logPath = logPath)
+        subprocessMonitor = self.spm.monitor()
+        async for outputLine, errorLine in subprocessMonitor:
+            yield outputLine.decode(self.spm.encoding, errors = 'replace')
 
     def terminate(self):
         for subprocess in self.spm.subprocesses:
@@ -49,11 +42,11 @@ class VPR:
     def __init__(self, toolDir):
         self.toolDir = toolDir
 
-    def infer(self,
+    async def infer(self,
         **kwargs
     ):
-        self.spm = EasyUtils.subprocessManager(shell = True)
-        self.spm.create(
+        self.spm = EasyUtils.asyncSubprocessManager(shell = True)
+        await self.spm.create(
             args = mkPyCommand(
                 self.toolDir,
                 'from VPR.infer import Voice_Contrasting',
@@ -63,7 +56,9 @@ class VPR:
             ),
             env = os.environ
         )
-        output, error, returnCode = self.spm.result(decodeResult = True, logPath = logPath)
+        subprocessMonitor = self.spm.monitor()
+        async for outputLine, errorLine in subprocessMonitor:
+            yield outputLine.decode(self.spm.encoding, errors = 'replace')
 
     def terminate(self):
         for subprocess in self.spm.subprocesses:
@@ -74,11 +69,11 @@ class Whisper:
     def __init__(self, toolDir):
         self.toolDir = toolDir
 
-    def infer(self,
+    async def infer(self,
         **kwargs
     ):
-        self.spm = EasyUtils.subprocessManager(shell = True)
-        self.spm.create(
+        self.spm = EasyUtils.asyncSubprocessManager(shell = True)
+        await self.spm.create(
             args = mkPyCommand(
                 self.toolDir,
                 'from Whisper.transcribe import Voice_Transcribing',
@@ -87,7 +82,9 @@ class Whisper:
             ),
             env = os.environ
         )
-        output, error, returnCode = self.spm.result(decodeResult = True, logPath = logPath)
+        subprocessMonitor = self.spm.monitor()
+        async for outputLine, errorLine in subprocessMonitor:
+            yield outputLine.decode(self.spm.encoding, errors = 'replace')
 
     def terminate(self):
         for subprocess in self.spm.subprocesses:
@@ -98,11 +95,11 @@ class GPT_SoVITS:
     def __init__(self, toolDir):
         self.toolDir = toolDir
 
-    def preprocess(self,
+    async def preprocess(self,
         **kwargs
     ):
-        self.spm = EasyUtils.subprocessManager(shell = True)
-        self.spm.create(
+        self.spm = EasyUtils.asyncSubprocessManager(shell = True)
+        await self.spm.create(
             args = mkPyCommand(
                 self.toolDir,
                 'from GPT_SoVITS.preprocess import Dataset_Creating',
@@ -111,13 +108,15 @@ class GPT_SoVITS:
             ),
             env = os.environ
         )
-        output, error, returnCode = self.spm.result(decodeResult = True, logPath = logPath)
+        subprocessMonitor = self.spm.monitor()
+        async for outputLine, errorLine in subprocessMonitor:
+            yield outputLine.decode(self.spm.encoding, errors = 'replace')
 
-    def train(self,
+    async def train(self,
         **kwargs
     ):
-        self.spm = EasyUtils.subprocessManager(shell = True)
-        self.spm.create(
+        self.spm = EasyUtils.asyncSubprocessManager(shell = True)
+        await self.spm.create(
             args = mkPyCommand(
                 self.toolDir,
                 'from GPT_SoVITS.train import train',
@@ -125,13 +124,15 @@ class GPT_SoVITS:
             ),
             env = os.environ
         )
-        output, error, returnCode = self.spm.result(decodeResult = True, logPath = logPath)
+        subprocessMonitor = self.spm.monitor()
+        async for outputLine, errorLine in subprocessMonitor:
+            yield outputLine.decode(self.spm.encoding, errors = 'replace')
 
-    def infer_webui(self,
+    async def infer_webui(self,
         **kwargs
     ):
-        self.spm = EasyUtils.subprocessManager(shell = True)
-        self.spm.create(
+        self.spm = EasyUtils.asyncSubprocessManager(shell = True)
+        await self.spm.create(
             args = mkPyCommand(
                 self.toolDir,
                 'from GPT_SoVITS.infer_webui import infer',
@@ -139,7 +140,9 @@ class GPT_SoVITS:
             ),
             env = os.environ
         )
-        output, error, returnCode = self.spm.result(decodeResult = True, logPath = logPath)
+        subprocessMonitor = self.spm.monitor()
+        async for outputLine, errorLine in subprocessMonitor:
+            yield outputLine.decode(self.spm.encoding, errors = 'replace')
 
     def terminate(self):
         for subprocess in self.spm.subprocesses:

@@ -4,11 +4,12 @@ import random
 import uvicorn
 from fastapi import FastAPI, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse, StreamingResponse
 from PyEasyUtils import isPortAvailable, findAvailablePorts, terminateProcess
 from typing import Union, Optional, List
 from pathlib import Path
 
-from tools import logPath_set, AudioProcessor, VPR, Whisper, GPT_SoVITS
+from tools import AudioProcessor, VPR, Whisper, GPT_SoVITS
 
 ##############################################################################################################################
 
@@ -63,15 +64,10 @@ async def shutdown():
     terminateProcess(os.getpid())
 
 
-@app.post("/setLogPath")
-async def setLogPath(logPath: str):
-    logPath_set(logPath)
-
-
 @app.get("/processAudio")
 async def processAudio(request: Request):
     reqJs: dict = await request.json()
-    audioProcessor.processAudio(
+    contentStream = audioProcessor.processAudio(
         inputDir = reqJs.get("inputDir"),
         outputFormat = reqJs.get("outputFormat"),
         sampleRate = reqJs.get("sampleRate"),
@@ -89,13 +85,16 @@ async def processAudio(request: Request):
         outputRoot = reqJs.get("outputRoot"),
         outputDirName = reqJs.get("outputDirName"),
     )
-    audioProcessor.terminate()
+    return StreamingResponse(
+        content = contentStream,
+        media_type = "text/plain"
+    )
 
 
 @app.get("/vpr_infer")
 async def vpr_infer(request: Request):
     reqJs: dict = await request.json()
-    voiceIdentifier.infer(
+    contentStream = voiceIdentifier.infer(
         stdAudioSpeaker = reqJs.get("stdAudioSpeaker"),
         audioDirInput = reqJs.get("audioDirInput"),
         modelPath = reqJs.get("modelPath"),
@@ -107,13 +106,16 @@ async def vpr_infer(request: Request):
         outputDirName = reqJs.get("outputDirName"),
         audioSpeakersDataName = reqJs.get("audioSpeakersDataName"),
     )
-    voiceIdentifier.terminate()
+    return StreamingResponse(
+        content = contentStream,
+        media_type = "text/plain"
+    )
 
 
 @app.get("/asr_infer")
 async def asr_infer(request: Request):
     reqJs: dict = await request.json()
-    whisper.infer(
+    contentStream = whisper.infer(
         modelPath = reqJs.get("modelPath"),
         audioDir = reqJs.get("audioDir"),
         verbose = reqJs.get("verbose"),
@@ -123,13 +125,16 @@ async def asr_infer(request: Request):
         outputRoot = reqJs.get("outputRoot"),
         outputDirName = reqJs.get("outputDirName"),
     )
-    whisper.terminate()
+    return StreamingResponse(
+        content = contentStream,
+        media_type = "text/plain"
+    )
 
 
 @app.get("/gptsovits_preprocess")
 async def preprocess(request: Request):
     reqJs: dict = await request.json()
-    gptsovits.preprocess(
+    contentStream = gptsovits.preprocess(
         srtDir = reqJs.get("srtDir"),
         audioSpeakersDataPath = reqJs.get("audioSpeakersDataPath"),
         dataFormat = reqJs.get("dataFormat"),
@@ -137,13 +142,16 @@ async def preprocess(request: Request):
         outputDirName = reqJs.get("outputDirName"),
         fileListName = reqJs.get("fileListName"),
     )
-    gptsovits.terminate()
+    return StreamingResponse(
+        content = contentStream,
+        media_type = "text/plain"
+    )
 
 
 @app.get("/gptsovits_train")
 async def train(request: Request):
     reqJs: dict = await request.json()
-    gptsovits.train(
+    contentStream = gptsovits.train(
         version = reqJs.get("version"),
         fileList_path = reqJs.get("fileList_path"),
         modelDir_bert = reqJs.get("modelDir_bert"),
@@ -158,13 +166,16 @@ async def train(request: Request):
         output_dirName = reqJs.get("output_dirName"),
         output_logDir = reqJs.get("output_logDir"),
     )
-    gptsovits.terminate()
+    return StreamingResponse(
+        content = contentStream,
+        media_type = "text/plain"
+    )
 
 
 @app.get("/gptsovits_infer_webui")
 async def infer_webui(request: Request):
     reqJs: dict = await request.json()
-    gptsovits.infer_webui(
+    contentStream = gptsovits.infer_webui(
         version = reqJs.get("version"),
         sovits_path = reqJs.get("sovits_path"),
         sovits_v3_path = reqJs.get("sovits_v3_path"),
@@ -175,7 +186,10 @@ async def infer_webui(request: Request):
         half_precision = reqJs.get("half_precision"),
         batched_infer = reqJs.get("batched_infer"),
     )
-    gptsovits.terminate()
+    return StreamingResponse(
+        content = contentStream,
+        media_type = "text/plain"
+    )
 
 ##############################################################################################################################
 
