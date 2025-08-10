@@ -1,14 +1,19 @@
 <div align = "center">
 
+![Title](/docs/media/Title.png)
+
 # Easy Voice Toolkit
 
-![Title](/docs/media/Title.png "Home Page")
+A toolkit based on open source voice projects，which provides a variety of automated audio tools:
+<br>[Audio Processing](/docs/EN/Audio-Processor.md), [Voice Recognition](/docs/EN/Voice-Recognizer.md), [Voice Transcription](/docs/EN/Voice-Transcriber.md), [Dataset Creating (For Voice Conversion)](/docs/EN/Dataset-Creator.md), [Model Training (For Voice Conversion)](/docs/EN/Voice-Trainer.md), and [Voice Conversion](/docs/EN/Voice-Converter.md)
+<br>Users can use these tools selectively according to their own needs, or use them in sequence to gradually transform raw audio files into ideal speech models
 
 [![Releases](https://img.shields.io/github/v/release/Spr-Aachen/Easy-Voice-Toolkit?color=green&label=Release&logo=Github&logoColor=white&style=for-the-badge)](https://github.com/Spr-Aachen/Easy-Voice-Toolkit/releases/latest)&nbsp;
 [![Bilibili](https://img.shields.io/badge/Bilibili-v1.0%20Intro-blue?logo=Bilibili&style=for-the-badge)](https://www.bilibili.com/video/BV1uJ4m157P2)&nbsp;
 [![YouTube](https://img.shields.io/badge/YouTube-v1.0%20Intro-red?logo=YouTube&style=for-the-badge)](https://www.youtube.com/watch?v=)
 
 </div>
+
 
 <p align = "center">
     <a href = "https://ko-fi.com/spr_aachen">
@@ -24,34 +29,7 @@
 </div>
 
 
-## Description
-
-### Overview
-
-A toolkit based on open source voice projects，which provides a variety of automated audio tools including speech model training
-
-Functions that are currently included in the toolkit are as follows:
-
-- [Audio Processing](/docs/EN/Audio-Processor.md)
-
-- [Voice Recognition](/docs/EN/Voice-Recognizer.md)
-
-- [Voice Transcription](/docs/EN/Voice-Transcriber.md)
-
-- [Dataset Creating (For Voice Conversion)](/docs/EN/Dataset-Creator.md)
-
-- [Model Training (For Voice Conversion)](/docs/EN/Voice-Trainer.md)
-
-- [Voice Conversion](/docs/EN/Voice-Converter.md)
-
-<br>These functions can be seamlessly integrated to form a complete workflow
-<br>Users can use these tools selectively according to their own needs, or use them in sequence to gradually transform raw audio files into ideal speech models
-
-### Frame
-
-[![Pytorch](https://img.shields.io/badge/PYtorch-test?style=for-the-badge&logo=pytorch&logoColor=white&color=orange)](https://pytorch.org/)[![Static Badge](https://img.shields.io/badge/Pyside6-test?style=for-the-badge&logo=qt&logoColor=white)](https://doc.qt.io/qtforpython-6/PySide6/QtWidgets/index.html)
-
-### Acknowledgement
+## Acknowledgement
 
 I'd like to express my sincere gratitude to the authors of the following projects, as their excellent work has contributed to the implementation of this toolkit
 
@@ -62,88 +40,31 @@ I'd like to express my sincere gratitude to the authors of the following project
 - [GPT-SoVITS](https://github.com/RVC-Boss/GPT-SoVITS)
 
 
-## Consideration
+## User Guide
 
-### System
+### Desktop Application
 
-Currently the released versions only support Windows system
-
-### Language
-
-Languages that are currently supported/unsupported by the toolkit are shown as follows:
-
-<table cellspacing = "0" cellpadding = "0">
-    <tr>
-        <td style="background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxsaW5lIHgxPSIwIiB5MT0iMCIgeDI9IjEwMCUiIHkyPSIxMDAlIiBzdHJva2U9ImJsYWNrIiBzdHJva2Utd2lkdGg9IjEiLz48L3N2Zz4=);">
-            <span style = "float:left; margin-top:20px;">Tool</span>
-            <span style = "float:right; margin-top:-10px;">Language</span>
-        </td>
-        <th style = "text-align:center;">Chinese</th>
-        <th style = "text-align:center;">English</th>
-        <th style = "text-align:center;">Japnese</th>
-    </tr>
-    <tr>
-        <th style = "text-align:center;">Audio Processor</th>
-        <th style = "text-align:center;">&#10004</th>
-        <th style = "text-align:center;">&#10004</th>
-        <th style = "text-align:center;">&#10004</th>
-    </tr>
-    <tr>
-        <th style = "text-align:center;">Voice Recognizer</th>
-        <th style = "text-align:center;">&#10004</th>
-        <th style = "text-align:center;">&#10004</th>
-        <th style = "text-align:center;">&#10004</th>
-    </tr>
-    <tr>
-        <th style = "text-align:center;">Voice Transcriber</th>
-        <th style = "text-align:center;">&#10004</th>
-        <th style = "text-align:center;">&#10004</th>
-        <th style = "text-align:center;">&#10004</th>
-    </tr>
-    <tr>
-        <th style = "text-align:center;">DataSet Creator</th>
-        <th style = "text-align:center;">&#10004</th>
-        <th style = "text-align:center;">&#10004</th>
-        <th style = "text-align:center;">&#10004</th>
-    </tr>
-    <tr>
-        <th style = "text-align:center;">Model Trainer</th>
-        <th style = "text-align:center;">&#10004</th>
-        <th style = "text-align:center;">&#10004</th>
-        <th style = "text-align:center;">&#10004</th>
-    </tr>
-    <tr>
-        <th style = "text-align:center;">Voice Converter</th>
-        <th style = "text-align:center;">&#10004</th>
-        <th style = "text-align:center;">&#10004</th>
-        <th style = "text-align:center;">&#10004</th>
-    </tr>
-</table>
-
-
-## Deployment
-
-### Local Deployment - User
-
-#### Download
+[![Download Windows Portable Version](https://img.shields.io/badge/Download-Windows%20Portable%20Version-yellow?logo=HuggingFace)](https://huggingface.co/SprAachen/Easy-Voice-Toolkit-Package/resolve/main/EVT_windows_x64.7z?download=true)
 
 You have two options：
 
 - Download the [lightweight installer](https://github.com/Spr-Aachen/Easy-Voice-Toolkit/releases/latest): small package comes with installation instructions, but without necessary environmental dependencies and models
 
-- Download the [Ready-to-use portable package](https://huggingface.co/SprAachen/Easy-Voice-Toolkit-Package/resolve/main/EVT_windows_x64.7z?download=true): huge package with all environmental dependencies and several model presets, need to unpack after download
+- Download the [Ready-to-use portable package for Windows](https://huggingface.co/SprAachen/Easy-Voice-Toolkit-Package/resolve/main/EVT_windows_x64.7z?download=true): huge package with all environmental dependencies and several model presets, need to unpack after download
 
-#### Run
+### Google Colab
 
-Just click on the Main.exe file or its shortcut
+[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Spr-Aachen/Easy-Voice-Toolkit/blob/main/run.ipynb)
+<br>Click to use the demo above, or access to Colab and upload [run.ipynb](https://github.com/Spr-Aachen/Easy-Voice-Toolkit/blob/main/run.ipynb)
 
-### Local Deployment - Developer
 
-#### Setup Environment
+## Developer Guide
+
+### 1. Setup Environment
 
 Please make sure that you've installed [Python](https://www.python.org/downloads/) `version 3.8 or higher`
 
-#### Obtain Project
+### 2. Obtain Project
 
 - Clone Repository
     ```shell
@@ -155,7 +76,7 @@ Please make sure that you've installed [Python](https://www.python.org/downloads
     %cd Easy-Voice-Toolkit
     ```
 
-#### Install Dependencies
+### 3. Install Dependencies
 
 - Install pytorch (Command can be get from the [official site](https://pytorch.org/get-started/locally/))
     ```shell
@@ -173,43 +94,12 @@ Please make sure that you've installed [Python](https://www.python.org/downloads
     pip install QEasyWidgets
     ```
 
-#### Run Programm
+### 4. Run Programm
 
-- Start the client
+- Start the client and server
     ```shell
     run.py
     ```
-
-### Cloud Deployment
-
-#### Google Colab
-
-[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Spr-Aachen/Easy-Voice-Toolkit/blob/main/run.ipynb)
-<br>Click to use the demo above, or access to Colab and upload [run.ipynb](https://github.com/Spr-Aachen/Easy-Voice-Toolkit/blob/main/run.ipynb)
-
-
-## Future Features
-
-### ToDo
-- Add chatbot (LLM) integration
-- Refactor client with C++ (Qt)
-
-### WIP
-- Backend development
-- Internationalization
-- Add support for Linux OS
-
-
-## FAQ
-
--   **Q**: What should I do if the client update / dependency download always fails or gives an error?
-<br>**A**: Use a proxy or switch to the Ready-to-use portable package.
-
--   **Q**: There are many parameter settings that I don't know how to deal with, what should I do?
-<br>**A**: Just use the default values.
-
--   **Q**: Free and open source ?
-<br>**A**: Natürlich~♪
 
 
 ## Terms of Use
@@ -229,6 +119,30 @@ Please make sure that you've installed [Python](https://www.python.org/downloads
 6. If you use this project for any other plan, please contact and inform the author of this repository in advance. Thank you very much.
 
 Reference: [so-vits-svc](https://github.com/svc-develop-team/so-vits-svc)
+
+
+## FAQ
+
+-   **Q**: What should I do if the client update / dependency download always fails or gives an error?
+<br>**A**: Use a proxy or switch to the Ready-to-use portable package.
+
+-   **Q**: There are many parameter settings that I don't know how to deal with, what should I do?
+<br>**A**: Just use the default values.
+
+-   **Q**: Free and open source ?
+<br>**A**: Natürlich~♪
+
+
+## Future Features
+
+### ToDo
+- Add chatbot (LLM) integration
+- Refactor client with C++ (Qt)
+
+### WIP
+- Backend development
+- Internationalization
+- Add support for Linux OS
 
 
 ## Contact Details
