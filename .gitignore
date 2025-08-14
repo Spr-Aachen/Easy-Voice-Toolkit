@@ -1,4 +1,4 @@
-# GUI
+# Client assets
 **/*.ui
 **/*.ts
 **/*.qm
@@ -6,20 +6,17 @@
 **/*.png
 **/*.ico
 
-# Core
-
-
 # Generated contents
 **/__pycache__/
-**/*.build/
-**/*.dist/
-**/build/
-**/dist/
 */config/
 */models/
 */log.txt
 
+# Built contents
+**/*.build/
+**/*.dist/
+
 # Others
-**/venv/
+**/.vscode/
 **/*.spec
 **/*.ipynb
