@@ -59,14 +59,15 @@ def sendRequest(
     host: str,
     port: int,
     pathParams: Union[str, list[str], None] = None,
+    stream: bool = False,
     **reqParams,
 ):
     """
     """
     payload = reqParams
-    with reqMethod.request(protocol, host, port, pathParams, None, None, json.dumps(payload), stream = True) as response:
+    with reqMethod.request(protocol, host, port, pathParams, None, None, json.dumps(payload), stream = stream) as response:
         if response.status_code == 200:
-            for parsed_content, status_code in EasyUtils.responseParser(response, stream = True):
+            for parsed_content, status_code in EasyUtils.responseParser(response, stream = stream):
                 result = parsed_content
                 yield result, status_code
         else:
@@ -104,7 +105,7 @@ class Tool_AudioProcessor(QObject):
     ):
         output, error = "", ""
         for outputLine, status_code in sendRequest(
-            EasyUtils.requestManager.Get, "http", host, port, "/processAudio",
+            EasyUtils.requestManager.Get, "http", host, port, "/processAudio", stream = True,
             inputDir = inputDir,
             outputFormat = outputFormat,
             sampleRate = sampleRate,
@@ -163,7 +164,7 @@ class Tool_VPR(QObject):
     ):
         output, error = "", ""
         for outputLine, status_code in sendRequest(
-            EasyUtils.requestManager.Get, "http", host, port, "/vpr_infer",
+            EasyUtils.requestManager.Get, "http", host, port, "/vpr_infer", stream = True,
             stdAudioSpeaker = stdAudioSpeaker,
             audioDirInput = audioDirInput,
             modelPath = modelPath,
@@ -213,7 +214,7 @@ class Tool_Whisper(QObject):
     ):
         output, error = "", ""
         for outputLine, status_code in sendRequest(
-            EasyUtils.requestManager.Get, "http", host, port, "/asr_infer",
+            EasyUtils.requestManager.Get, "http", host, port, "/asr_infer", stream = True,
             modelPath = modelPath,
             audioDir = audioDir,
             verbose = verbose,
@@ -259,7 +260,7 @@ class Tool_GPTSoVITS(QObject):
     ):
         output, error = "", ""
         for outputLine, status_code in sendRequest(
-            EasyUtils.requestManager.Get, "http", host, port, "/gptsovits_createDataset",
+            EasyUtils.requestManager.Get, "http", host, port, "/gptsovits_createDataset", stream = True,
             srtDir = srtDir,
             audioSpeakersDataPath = audioSpeakersDataPath,
             dataFormat = dataFormat,
@@ -297,7 +298,7 @@ class Tool_GPTSoVITS(QObject):
     ):
         output, error = "", ""
         for outputLine, status_code in sendRequest(
-            EasyUtils.requestManager.Get, "http", host, port, "/gptsovits_train",
+            EasyUtils.requestManager.Get, "http", host, port, "/gptsovits_train", stream = True,
             version = version,
             fileList_path = fileList_path,
             modelDir_bert = modelDir_bert,
@@ -338,7 +339,7 @@ class Tool_GPTSoVITS(QObject):
     ):
         output, error = "", ""
         for outputLine, status_code in sendRequest(
-            EasyUtils.requestManager.Get, "http", host, port, "/gptsovits_infer_webui",
+            EasyUtils.requestManager.Get, "http", host, port, "/gptsovits_infer_webui", stream = True,
             version = version,
             sovits_path = sovits_path,
             sovits_v3_path = sovits_v3_path,
@@ -380,7 +381,7 @@ class Tool_GPTSoVITS(QObject):
     ):
         output, error = "", ""
         for outputLine, status_code in sendRequest(
-            EasyUtils.requestManager.Get, "http", host, port, "/gptsovits_infer_init",
+            EasyUtils.requestManager.Get, "http", host, port, "/gptsovits_infer_init", stream = True,
             sovits_path = sovits_path,
             sovits_v3_path = sovits_v3_path,
             gpt_path = gpt_path,
@@ -426,7 +427,7 @@ class Tool_GPTSoVITS(QObject):
     ):
         output, error = "", ""
         for outputLine, status_code in sendRequest(
-            EasyUtils.requestManager.Get, "http", host, port, "/gptsovits_infer_handle",
+            EasyUtils.requestManager.Get, "http", host, port, "/gptsovits_infer_handle", stream = True,
             refer_wav_path = refer_wav_path,
             prompt_text = prompt_text,
             prompt_language = prompt_language,
