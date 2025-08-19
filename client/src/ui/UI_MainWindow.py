@@ -843,7 +843,7 @@ class Ui_MainWindow(object):
         self.ScrollArea_Settings_Client.setWidgetResizable(True)
         self.ScrollAreaWidgetContents_Settings_Client = QWidget()
         self.ScrollAreaWidgetContents_Settings_Client.setObjectName(u"ScrollAreaWidgetContents_Settings_Client")
-        self.ScrollAreaWidgetContents_Settings_Client.setGeometry(QRect(0, 0, 246, 483))
+        self.ScrollAreaWidgetContents_Settings_Client.setGeometry(QRect(0, 0, 1014, 483))
         self.verticalLayout_106 = QVBoxLayout(self.ScrollAreaWidgetContents_Settings_Client)
         self.verticalLayout_106.setSpacing(0)
         self.verticalLayout_106.setObjectName(u"verticalLayout_106")
@@ -1047,7 +1047,7 @@ class Ui_MainWindow(object):
         self.ScrollArea_Settings_Tools.setWidgetResizable(True)
         self.ScrollAreaWidgetContents_Settings_Tools = QWidget()
         self.ScrollAreaWidgetContents_Settings_Tools.setObjectName(u"ScrollAreaWidgetContents_Settings_Tools")
-        self.ScrollAreaWidgetContents_Settings_Tools.setGeometry(QRect(0, 0, 246, 907))
+        self.ScrollAreaWidgetContents_Settings_Tools.setGeometry(QRect(0, 0, 1014, 727))
         self.verticalLayout_34 = QVBoxLayout(self.ScrollAreaWidgetContents_Settings_Tools)
         self.verticalLayout_34.setSpacing(0)
         self.verticalLayout_34.setObjectName(u"verticalLayout_34")
@@ -1351,57 +1351,6 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_83.addWidget(self.Frame_DAT_GPTSoVITS_OutputRoot)
 
-        self.Frame_DAT_VITS_OutputRoot = QFrame(self.GroupBox_Settings_Tools_Path)
-        self.Frame_DAT_VITS_OutputRoot.setObjectName(u"Frame_DAT_VITS_OutputRoot")
-        self.Frame_DAT_VITS_OutputRoot.setMinimumSize(QSize(0, 90))
-        self.Frame_DAT_VITS_OutputRoot.setStyleSheet(u"QFrame {\n"
-"	background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QFrame:hover {\n"
-"	background-color: rgba(36, 36, 36, 12);\n"
-"}")
-        self.horizontalLayout_22 = QHBoxLayout(self.Frame_DAT_VITS_OutputRoot)
-        self.horizontalLayout_22.setSpacing(12)
-        self.horizontalLayout_22.setObjectName(u"horizontalLayout_22")
-        self.horizontalLayout_22.setContentsMargins(21, 12, 21, 12)
-        self.Label_DAT_VITS_OutputRoot = LabelBase(self.Frame_DAT_VITS_OutputRoot)
-        self.Label_DAT_VITS_OutputRoot.setObjectName(u"Label_DAT_VITS_OutputRoot")
-        sizePolicy4.setHeightForWidth(self.Label_DAT_VITS_OutputRoot.sizePolicy().hasHeightForWidth())
-        self.Label_DAT_VITS_OutputRoot.setSizePolicy(sizePolicy4)
-        self.Label_DAT_VITS_OutputRoot.setStyleSheet(u"QLabel {\n"
-"	font-size: 15px;\n"
-"	/*text-align: center;*/\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.horizontalLayout_22.addWidget(self.Label_DAT_VITS_OutputRoot)
-
-        self.LineEdit_DAT_VITS_OutputRoot = LineEditBase(self.Frame_DAT_VITS_OutputRoot)
-        self.LineEdit_DAT_VITS_OutputRoot.setObjectName(u"LineEdit_DAT_VITS_OutputRoot")
-        self.LineEdit_DAT_VITS_OutputRoot.setMaximumSize(QSize(16777215, 30))
-
-        self.horizontalLayout_22.addWidget(self.LineEdit_DAT_VITS_OutputRoot)
-
-        self.Button_DAT_VITS_OutputRoot_MoreActions = MenuButton(self.Frame_DAT_VITS_OutputRoot)
-        self.Button_DAT_VITS_OutputRoot_MoreActions.setObjectName(u"Button_DAT_VITS_OutputRoot_MoreActions")
-        self.Button_DAT_VITS_OutputRoot_MoreActions.setMaximumSize(QSize(30, 30))
-        self.Button_DAT_VITS_OutputRoot_MoreActions.setStyleSheet(u"QPushButton {\n"
-"	border-width: 1px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(123, 123, 123);\n"
-"}")
-
-        self.horizontalLayout_22.addWidget(self.Button_DAT_VITS_OutputRoot_MoreActions)
-
-
-        self.verticalLayout_83.addWidget(self.Frame_DAT_VITS_OutputRoot)
-
         self.Frame_Train_GPTSoVITS_OutputRoot = QFrame(self.GroupBox_Settings_Tools_Path)
         self.Frame_Train_GPTSoVITS_OutputRoot.setObjectName(u"Frame_Train_GPTSoVITS_OutputRoot")
         self.Frame_Train_GPTSoVITS_OutputRoot.setMinimumSize(QSize(0, 90))
@@ -1452,57 +1401,6 @@ class Ui_MainWindow(object):
 
 
         self.verticalLayout_83.addWidget(self.Frame_Train_GPTSoVITS_OutputRoot)
-
-        self.Frame_Train_VITS_OutputRoot = QFrame(self.GroupBox_Settings_Tools_Path)
-        self.Frame_Train_VITS_OutputRoot.setObjectName(u"Frame_Train_VITS_OutputRoot")
-        self.Frame_Train_VITS_OutputRoot.setMinimumSize(QSize(0, 90))
-        self.Frame_Train_VITS_OutputRoot.setStyleSheet(u"QFrame {\n"
-"	background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QFrame:hover {\n"
-"	background-color: rgba(36, 36, 36, 12);\n"
-"}")
-        self.horizontalLayout_24 = QHBoxLayout(self.Frame_Train_VITS_OutputRoot)
-        self.horizontalLayout_24.setSpacing(12)
-        self.horizontalLayout_24.setObjectName(u"horizontalLayout_24")
-        self.horizontalLayout_24.setContentsMargins(21, 12, 21, 12)
-        self.Label_Train_VITS_OutputRoot = LabelBase(self.Frame_Train_VITS_OutputRoot)
-        self.Label_Train_VITS_OutputRoot.setObjectName(u"Label_Train_VITS_OutputRoot")
-        sizePolicy4.setHeightForWidth(self.Label_Train_VITS_OutputRoot.sizePolicy().hasHeightForWidth())
-        self.Label_Train_VITS_OutputRoot.setSizePolicy(sizePolicy4)
-        self.Label_Train_VITS_OutputRoot.setStyleSheet(u"QLabel {\n"
-"	font-size: 15px;\n"
-"	/*text-align: center;*/\n"
-"	background-color: transparent;\n"
-"	padding: 0px;\n"
-"	border-width: 0px;\n"
-"	border-radius: 0px;\n"
-"	border-style: solid;\n"
-"}")
-
-        self.horizontalLayout_24.addWidget(self.Label_Train_VITS_OutputRoot)
-
-        self.LineEdit_Train_VITS_OutputRoot = LineEditBase(self.Frame_Train_VITS_OutputRoot)
-        self.LineEdit_Train_VITS_OutputRoot.setObjectName(u"LineEdit_Train_VITS_OutputRoot")
-        self.LineEdit_Train_VITS_OutputRoot.setMaximumSize(QSize(16777215, 30))
-
-        self.horizontalLayout_24.addWidget(self.LineEdit_Train_VITS_OutputRoot)
-
-        self.Button_Train_VITS_OutputRoot_MoreActions = MenuButton(self.Frame_Train_VITS_OutputRoot)
-        self.Button_Train_VITS_OutputRoot_MoreActions.setObjectName(u"Button_Train_VITS_OutputRoot_MoreActions")
-        self.Button_Train_VITS_OutputRoot_MoreActions.setMaximumSize(QSize(30, 30))
-        self.Button_Train_VITS_OutputRoot_MoreActions.setStyleSheet(u"QPushButton {\n"
-"	border-width: 1px;\n"
-"	border-style: solid;\n"
-"	border-color: rgb(123, 123, 123);\n"
-"}")
-
-        self.horizontalLayout_24.addWidget(self.Button_Train_VITS_OutputRoot_MoreActions)
-
-
-        self.verticalLayout_83.addWidget(self.Frame_Train_VITS_OutputRoot)
 
 
         self.verticalLayout_34.addWidget(self.GroupBox_Settings_Tools_Path)
@@ -2083,9 +1981,7 @@ class Ui_MainWindow(object):
         self.Label_VPR_TDNN_OutputRoot.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_ASR_Whisper_OutputRoot.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_DAT_GPTSoVITS_OutputRoot.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.Label_DAT_VITS_OutputRoot.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Label_Train_GPTSoVITS_OutputRoot.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.Label_Train_VITS_OutputRoot.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.Button_Info_Title.setText(QCoreApplication.translate("MainWindow", u"Label", None))
         self.Button_Console_Title.setText(QCoreApplication.translate("MainWindow", u"Label", None))
         self.Label_ToolsStatus.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
