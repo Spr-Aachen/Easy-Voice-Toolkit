@@ -2459,7 +2459,7 @@ class MainWindow(Window_MainWindow):
         )
 
         self.ui.Label_VPR_TDNN_OutputRoot.setText(QCA.translate('MainWindow', "声纹识别结果输出目录"))
-        VPR_TDNN_AudioSpeakersDataRoot_Default = Path(currentDir).joinpath('语音识别结果', 'VPR').as_posix()
+        VPR_TDNN_AudioSpeakersDataRoot_Default = Path(outputDir).joinpath('语音识别结果', 'VPR').as_posix()
         paramsManager_VPR_TDNN.setParam(
             widget = self.ui.LineEdit_VPR_TDNN_OutputRoot,
             section = 'Output params',
