@@ -59,15 +59,16 @@ def sendRequest(
     host: str,
     port: int,
     pathParams: Union[str, list[str], None] = None,
+    queryParams: Union[str, list[str], None] = None,
     stream: bool = False,
     **reqParams,
 ):
     """
     """
     payload = reqParams
-    with reqMethod.request(protocol, host, port, pathParams, None, None, json.dumps(payload), stream = stream) as response:
+    with reqMethod.request(protocol, host, port, pathParams, queryParams, None, json.dumps(payload), stream) as response:
         if response.status_code == 200:
-            for parsed_content, status_code in EasyUtils.responseParser(response, stream = stream):
+            for parsed_content, status_code in EasyUtils.responseParser(response, stream, decodeUnicode = True):
                 result = parsed_content
                 yield result, status_code
         else:
@@ -82,8 +83,6 @@ class Tool_AudioProcessor(QObject):
     '''
     def __init__(self):
         super().__init__()
-
-        self.terminateFlag = False
 
     def processAudio(self,
         inputDir: str,
@@ -105,7 +104,7 @@ class Tool_AudioProcessor(QObject):
     ):
         output, error = "", ""
         for outputLine, status_code in sendRequest(
-            EasyUtils.requestManager.Get, "http", host, port, "/processAudio", stream = True,
+            EasyUtils.requestManager.Get, "http", host, port, "/processAudio", "terminate=False", stream = True,
             inputDir = inputDir,
             outputFormat = outputFormat,
             sampleRate = sampleRate,
@@ -126,8 +125,6 @@ class Tool_AudioProcessor(QObject):
             with open(logPath, mode = 'a', encoding = 'utf-8') as log:
                 log.write(outputLine)
             output += outputLine
-            if self.terminateFlag:
-                break
         if 'error' in str(error).lower():
             error += "（详情请见终端输出信息）"
         elif 'traceback' in str(output).lower():
@@ -136,9 +133,12 @@ class Tool_AudioProcessor(QObject):
             return
         raise Exception(error)
 
-    def terminate(self):
-        EasyUtils.simpleRequest(EasyUtils.requestManager.Post, "http", host, port, "/terminate")
-        self.terminateFlag = True
+    def terminate_processAudio(self):
+        for outputLine, status_code in sendRequest(
+            EasyUtils.requestManager.Get, "http", host, port, "/processAudio", "terminate=True", stream = True,
+        ):
+            with open(logPath, mode = 'a', encoding = 'utf-8') as log:
+                log.write(outputLine)
 
 
 class Tool_VPR(QObject):
@@ -147,8 +147,6 @@ class Tool_VPR(QObject):
     '''
     def __init__(self):
         super().__init__()
-
-        self.terminateFlag = False
 
     def infer(self,
         stdAudioSpeaker: dict,
@@ -164,7 +162,7 @@ class Tool_VPR(QObject):
     ):
         output, error = "", ""
         for outputLine, status_code in sendRequest(
-            EasyUtils.requestManager.Get, "http", host, port, "/vpr_infer", stream = True,
+            EasyUtils.requestManager.Get, "http", host, port, "/vpr_infer", "terminate=False", stream = True,
             stdAudioSpeaker = stdAudioSpeaker,
             audioDirInput = audioDirInput,
             modelPath = modelPath,
@@ -179,8 +177,6 @@ class Tool_VPR(QObject):
             with open(logPath, mode = 'a', encoding = 'utf-8') as log:
                 log.write(outputLine)
             output += outputLine
-            if self.terminateFlag:
-                break
         if 'error' in str(error).lower():
             error += "（详情请见终端输出信息）"
         elif 'traceback' in str(output).lower():
@@ -189,8 +185,12 @@ class Tool_VPR(QObject):
             return
         raise Exception(error)
 
-    def terminate(self):
-        EasyUtils.simpleRequest(EasyUtils.requestManager.Post, "http", host, port, "/terminate")
+    def terminate_infer(self):
+        for outputLine, status_code in sendRequest(
+            EasyUtils.requestManager.Get, "http", host, port, "/vpr_infer", "terminate=True", stream = True,
+        ):
+            with open(logPath, mode = 'a', encoding = 'utf-8') as log:
+                log.write(outputLine)
 
 
 class Tool_Whisper(QObject):
@@ -199,8 +199,6 @@ class Tool_Whisper(QObject):
     '''
     def __init__(self):
         super().__init__()
-
-        self.terminateFlag = False
 
     def infer(self,
         modelPath: str = './Models/.pt',
@@ -214,7 +212,7 @@ class Tool_Whisper(QObject):
     ):
         output, error = "", ""
         for outputLine, status_code in sendRequest(
-            EasyUtils.requestManager.Get, "http", host, port, "/asr_infer", stream = True,
+            EasyUtils.requestManager.Get, "http", host, port, "/asr_infer", "terminate=False", stream = True,
             modelPath = modelPath,
             audioDir = audioDir,
             verbose = verbose,
@@ -227,8 +225,6 @@ class Tool_Whisper(QObject):
             with open(logPath, mode = 'a', encoding = 'utf-8') as log:
                 log.write(outputLine)
             output += outputLine
-            if self.terminateFlag:
-                break
         if 'error' in str(error).lower():
             error += "（详情请见终端输出信息）"
         elif 'traceback' in str(output).lower():
@@ -237,8 +233,12 @@ class Tool_Whisper(QObject):
             return
         raise Exception(error)
 
-    def terminate(self):
-        EasyUtils.simpleRequest(EasyUtils.requestManager.Post, "http", host, port, "/terminate")
+    def terminate_infer(self):
+        for outputLine, status_code in sendRequest(
+            EasyUtils.requestManager.Get, "http", host, port, "/asr_infer", "terminate=True", stream = True,
+        ):
+            with open(logPath, mode = 'a', encoding = 'utf-8') as log:
+                log.write(outputLine)
 
 
 class Tool_GPTSoVITS(QObject):
@@ -247,8 +247,6 @@ class Tool_GPTSoVITS(QObject):
     '''
     def __init__(self):
         super().__init__()
-
-        self.terminateFlag = False
 
     def preprocess(self,
         srtDir: str,
@@ -260,7 +258,7 @@ class Tool_GPTSoVITS(QObject):
     ):
         output, error = "", ""
         for outputLine, status_code in sendRequest(
-            EasyUtils.requestManager.Get, "http", host, port, "/gptsovits_createDataset", stream = True,
+            EasyUtils.requestManager.Get, "http", host, port, "/gptsovits_preprocess", "terminate=False", stream = True,
             srtDir = srtDir,
             audioSpeakersDataPath = audioSpeakersDataPath,
             dataFormat = dataFormat,
@@ -271,8 +269,6 @@ class Tool_GPTSoVITS(QObject):
             with open(logPath, mode = 'a', encoding = 'utf-8') as log:
                 log.write(outputLine)
             output += outputLine
-            if self.terminateFlag:
-                break
         if 'error' in str(error).lower():
             error += "（详情请见终端输出信息）"
         elif 'traceback' in str(output).lower():
@@ -280,6 +276,13 @@ class Tool_GPTSoVITS(QObject):
         else:
             return
         raise Exception(error)
+
+    def terminate_preprocess(self):
+        for outputLine, status_code in sendRequest(
+            EasyUtils.requestManager.Get, "http", host, port, "/gptsovits_preprocess", "terminate=True", stream = True,
+        ):
+            with open(logPath, mode = 'a', encoding = 'utf-8') as log:
+                log.write(outputLine)
 
     def train(self,
         version: str = "v3",
@@ -298,7 +301,7 @@ class Tool_GPTSoVITS(QObject):
     ):
         output, error = "", ""
         for outputLine, status_code in sendRequest(
-            EasyUtils.requestManager.Get, "http", host, port, "/gptsovits_train", stream = True,
+            EasyUtils.requestManager.Get, "http", host, port, "/gptsovits_train", "terminate=False", stream = True,
             version = version,
             fileList_path = fileList_path,
             modelDir_bert = modelDir_bert,
@@ -316,8 +319,6 @@ class Tool_GPTSoVITS(QObject):
             with open(logPath, mode = 'a', encoding = 'utf-8') as log:
                 log.write(outputLine)
             output += outputLine
-            if self.terminateFlag:
-                break
         if 'error' in str(error).lower():
             error += "（详情请见终端输出信息）"
         elif 'traceback' in str(output).lower():
@@ -325,6 +326,13 @@ class Tool_GPTSoVITS(QObject):
         else:
             return
         raise Exception(error)
+
+    def terminate_train(self):
+        for outputLine, status_code in sendRequest(
+            EasyUtils.requestManager.Get, "http", host, port, "/gptsovits_train", "terminate=True", stream = True,
+        ):
+            with open(logPath, mode = 'a', encoding = 'utf-8') as log:
+                log.write(outputLine)
 
     def infer_webui(self,
         version: str = "v3",
@@ -339,7 +347,7 @@ class Tool_GPTSoVITS(QObject):
     ):
         output, error = "", ""
         for outputLine, status_code in sendRequest(
-            EasyUtils.requestManager.Get, "http", host, port, "/gptsovits_infer_webui", stream = True,
+            EasyUtils.requestManager.Get, "http", host, port, "/gptsovits_infer_webui", "terminate=False", stream = True,
             version = version,
             sovits_path = sovits_path,
             sovits_v3_path = sovits_v3_path,
@@ -353,8 +361,6 @@ class Tool_GPTSoVITS(QObject):
             with open(logPath, mode = 'a', encoding = 'utf-8') as log:
                 log.write(outputLine)
             output += outputLine
-            if self.terminateFlag:
-                break
         if 'error' in str(error).lower():
             error += "（详情请见终端输出信息）"
         elif 'traceback' in str(output).lower():
@@ -363,8 +369,12 @@ class Tool_GPTSoVITS(QObject):
             return
         raise Exception(error)
 
-    def terminate(self):
-        EasyUtils.simpleRequest(EasyUtils.requestManager.Post, "http", host, port, "/terminate")
+    def terminate_infer_webui(self):
+        for outputLine, status_code in sendRequest(
+            EasyUtils.requestManager.Get, "http", host, port, "/gptsovits_infer_webui", "terminate=True", stream = True,
+        ):
+            with open(logPath, mode = 'a', encoding = 'utf-8') as log:
+                log.write(outputLine)
 
 ##############################################################################################################################
 

@@ -1295,7 +1295,7 @@ class MainWindow(Window_MainWindow):
                 self.ui.LineEdit_Process_OutputRoot,
                 subPage_process.findChildWidget("输出参数", None, "输出目录名")
             ],
-            terminateMethod = self.task_audioProcessor.terminate,
+            terminateMethod = self.task_audioProcessor.terminate_processAudio,
             finishedEvents = {
                 lambda: MessageBoxBase.pop(self,
                     QMessageBox.Information, "Tip",
@@ -1527,7 +1527,7 @@ class MainWindow(Window_MainWindow):
                 subPage_VPR.findChildWidget("输出参数", None, "输出目录名"),
                 subPage_VPR.findChildWidget("输出参数", "高级设置", "识别结果文本名")
             ],
-            terminateMethod = self.task_vpr.terminate,
+            terminateMethod = self.task_vpr.terminate_infer,
             finishedEvents = {
                 lambda: self.showMask(True, "正在加载表单"): TaskStatus.Succeeded,
                 lambda: self.showVPRResult(
@@ -1661,7 +1661,7 @@ class MainWindow(Window_MainWindow):
                 self.ui.LineEdit_ASR_Whisper_OutputRoot,
                 subPage_ASR.findChildWidget("输出参数", None, "输出目录名")
             ],
-            terminateMethod = self.task_whisper.terminate,
+            terminateMethod = self.task_whisper.terminate_infer,
             finishedEvents = {
                 lambda: self.showMask(True, "正在加载表单"): TaskStatus.Succeeded,
                 lambda: self.showASRResult(
@@ -1801,7 +1801,7 @@ class MainWindow(Window_MainWindow):
                 subPage_dataset_GPTSoVITS.findChildWidget("输出参数", None, "输出目录名"),
                 subPage_dataset_GPTSoVITS.findChildWidget("输出参数", "高级设置", "数据集文本名")
             ],
-            terminateMethod = self.task_gptsovits.terminate,
+            terminateMethod = self.task_gptsovits.terminate_preprocess,
             finishedEvents = {
                 lambda: self.showMask(True, "正在加载表单"): TaskStatus.Succeeded,
                 lambda: self.showDATResult(
@@ -2038,7 +2038,7 @@ class MainWindow(Window_MainWindow):
                 subPage_train_gptsovits.findChildWidget("输出参数", None, "输出目录名"),
                 subPage_train_gptsovits.findChildWidget("输出参数", "高级设置", "日志输出目录")
             ],
-            terminateMethod = self.task_gptsovits.terminate,
+            terminateMethod = self.task_gptsovits.terminate_train,
             finishedEvents = {
                 lambda: MessageBoxBase.pop(self,
                     QMessageBox.Information, "Tip",
@@ -2214,7 +2214,7 @@ class MainWindow(Window_MainWindow):
                 subPage_tts_gptsovits.findChildWidget("输入参数", None, "预训练BERT模型加载路径"),
                 subPage_tts_gptsovits.findChildWidget("输入参数", None, "预训练BigVGan模型加载路径"),
             ],
-            terminateMethod = self.task_gptsovits.terminate,
+            terminateMethod = self.task_gptsovits.terminate_infer_webui,
             finishedEvents = {
                 # lambda: self.showMask(True, "正在加载播放器"): TaskStatus.Succeeded,
                 # lambda: self.showTTSResult(
