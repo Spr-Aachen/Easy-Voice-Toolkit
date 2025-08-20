@@ -19,8 +19,8 @@ class AudioProcessor:
     async def processAudio(self,
         **kwargs
     ):
-        self.spm = EasyUtils.asyncSubprocessManager(shell = True)
-        await self.spm.create(
+        self.spm_processAudio = EasyUtils.asyncSubprocessManager(shell = True)
+        await self.spm_processAudio.create(
             args = mkPyCommand(
                 self.toolDir,
                 'from AudioProcessor.process import Audio_Processing',
@@ -29,13 +29,13 @@ class AudioProcessor:
             ),
             env = os.environ
         )
-        subprocessMonitor = self.spm.monitor()
+        subprocessMonitor = self.spm_processAudio.monitor()
         async for outputLine, errorLine in subprocessMonitor:
-            yield outputLine.decode(self.spm.encoding, errors = 'replace')
+            yield outputLine
 
-    def terminate(self):
-        for subprocess in self.spm.subprocesses:
-            subprocess.terminate()
+    def terminate_processAudio(self):
+        for subprocess in self.spm_processAudio.subprocesses:
+            EasyUtils.terminateProcess(subprocess.pid)
 
 
 class VPR:
@@ -45,8 +45,8 @@ class VPR:
     async def infer(self,
         **kwargs
     ):
-        self.spm = EasyUtils.asyncSubprocessManager(shell = True)
-        await self.spm.create(
+        self.spm_infer = EasyUtils.asyncSubprocessManager(shell = True)
+        await self.spm_infer.create(
             args = mkPyCommand(
                 self.toolDir,
                 'from VPR.infer import Voice_Contrasting',
@@ -56,13 +56,13 @@ class VPR:
             ),
             env = os.environ
         )
-        subprocessMonitor = self.spm.monitor()
+        subprocessMonitor = self.spm_infer.monitor()
         async for outputLine, errorLine in subprocessMonitor:
-            yield outputLine.decode(self.spm.encoding, errors = 'replace')
+            yield outputLine
 
-    def terminate(self):
-        for subprocess in self.spm.subprocesses:
-            subprocess.terminate()
+    def terminate_infer(self):
+        for subprocess in self.spm_infer.subprocesses:
+            EasyUtils.terminateProcess(subprocess.pid)
 
 
 class Whisper:
@@ -72,8 +72,8 @@ class Whisper:
     async def infer(self,
         **kwargs
     ):
-        self.spm = EasyUtils.asyncSubprocessManager(shell = True)
-        await self.spm.create(
+        self.spm_infer = EasyUtils.asyncSubprocessManager(shell = True)
+        await self.spm_infer.create(
             args = mkPyCommand(
                 self.toolDir,
                 'from Whisper.transcribe import Voice_Transcribing',
@@ -82,13 +82,13 @@ class Whisper:
             ),
             env = os.environ
         )
-        subprocessMonitor = self.spm.monitor()
+        subprocessMonitor = self.spm_infer.monitor()
         async for outputLine, errorLine in subprocessMonitor:
-            yield outputLine.decode(self.spm.encoding, errors = 'replace')
+            yield outputLine
 
-    def terminate(self):
-        for subprocess in self.spm.subprocesses:
-            subprocess.terminate()
+    def terminate_infer(self):
+        for subprocess in self.spm_infer.subprocesses:
+            EasyUtils.terminateProcess(subprocess.pid)
 
 
 class GPT_SoVITS:
@@ -98,8 +98,8 @@ class GPT_SoVITS:
     async def preprocess(self,
         **kwargs
     ):
-        self.spm = EasyUtils.asyncSubprocessManager(shell = True)
-        await self.spm.create(
+        self.spm_preprocess = EasyUtils.asyncSubprocessManager(shell = True)
+        await self.spm_preprocess.create(
             args = mkPyCommand(
                 self.toolDir,
                 'from GPT_SoVITS.preprocess import Dataset_Creating',
@@ -108,15 +108,19 @@ class GPT_SoVITS:
             ),
             env = os.environ
         )
-        subprocessMonitor = self.spm.monitor()
+        subprocessMonitor = self.spm_preprocess.monitor()
         async for outputLine, errorLine in subprocessMonitor:
-            yield outputLine.decode(self.spm.encoding, errors = 'replace')
+            yield outputLine
+
+    def terminate_preprocess(self):
+        for subprocess in self.spm_preprocess.subprocesses:
+            EasyUtils.terminateProcess(subprocess.pid)
 
     async def train(self,
         **kwargs
     ):
-        self.spm = EasyUtils.asyncSubprocessManager(shell = True)
-        await self.spm.create(
+        self.spm_train = EasyUtils.asyncSubprocessManager(shell = True)
+        await self.spm_train.create(
             args = mkPyCommand(
                 self.toolDir,
                 'from GPT_SoVITS.train import train',
@@ -124,15 +128,19 @@ class GPT_SoVITS:
             ),
             env = os.environ
         )
-        subprocessMonitor = self.spm.monitor()
+        subprocessMonitor = self.spm_train.monitor()
         async for outputLine, errorLine in subprocessMonitor:
-            yield outputLine.decode(self.spm.encoding, errors = 'replace')
+            yield outputLine
+
+    def terminate_train(self):
+        for subprocess in self.spm_train.subprocesses:
+            EasyUtils.terminateProcess(subprocess.pid)
 
     async def infer_webui(self,
         **kwargs
     ):
-        self.spm = EasyUtils.asyncSubprocessManager(shell = True)
-        await self.spm.create(
+        self.spm_infer_webui = EasyUtils.asyncSubprocessManager(shell = True)
+        await self.spm_infer_webui.create(
             args = mkPyCommand(
                 self.toolDir,
                 'from GPT_SoVITS.infer_webui import infer',
@@ -140,12 +148,12 @@ class GPT_SoVITS:
             ),
             env = os.environ
         )
-        subprocessMonitor = self.spm.monitor()
+        subprocessMonitor = self.spm_infer_webui.monitor()
         async for outputLine, errorLine in subprocessMonitor:
-            yield outputLine.decode(self.spm.encoding, errors = 'replace')
+            yield outputLine
 
-    def terminate(self):
-        for subprocess in self.spm.subprocesses:
-            subprocess.terminate()
+    def terminate_infer_webui(self):
+        for subprocess in self.spm_infer_webui.subprocesses:
+            EasyUtils.terminateProcess(subprocess.pid)
 
 ##############################################################################################################################

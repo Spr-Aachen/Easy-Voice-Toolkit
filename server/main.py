@@ -5,7 +5,7 @@ import uvicorn
 from fastapi import FastAPI, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, StreamingResponse
-from PyEasyUtils import isPortAvailable, findAvailablePorts, terminateProcess
+from PyEasyUtils import isPortAvailable, findAvailablePorts, terminateProcess, evalString
 from typing import Union, Optional, List
 from pathlib import Path
 
@@ -65,8 +65,11 @@ async def shutdown():
 
 
 @app.get("/processAudio")
-async def processAudio(request: Request):
+async def processAudio(request: Request, terminate: bool = False):
     reqJs: dict = await request.json()
+    if evalString(terminate):
+        audioProcessor.terminate_processAudio()
+        return
     contentStream = audioProcessor.processAudio(
         inputDir = reqJs.get("inputDir"),
         outputFormat = reqJs.get("outputFormat"),
@@ -92,8 +95,11 @@ async def processAudio(request: Request):
 
 
 @app.get("/vpr_infer")
-async def vpr_infer(request: Request):
+async def vpr_infer(request: Request, terminate: bool = False):
     reqJs: dict = await request.json()
+    if evalString(terminate):
+        voiceIdentifier.terminate_infer()
+        return
     contentStream = voiceIdentifier.infer(
         stdAudioSpeaker = reqJs.get("stdAudioSpeaker"),
         audioDirInput = reqJs.get("audioDirInput"),
@@ -113,13 +119,16 @@ async def vpr_infer(request: Request):
 
 
 @app.get("/asr_infer")
-async def asr_infer(request: Request):
+async def asr_infer(request: Request, terminate: bool = False):
     reqJs: dict = await request.json()
+    if evalString(terminate):
+        whisper.terminate_infer()
+        return
     contentStream = whisper.infer(
         modelPath = reqJs.get("modelPath"),
         audioDir = reqJs.get("audioDir"),
         verbose = reqJs.get("verbose"),
-        addLanguageInfo = reqJs.get("reqaddLanguageInfo"),
+        addLanguageInfo = reqJs.get("addLanguageInfo"),
         conditionOnPreviousText = reqJs.get("conditionOnPreviousText"),
         fp16 = reqJs.get("fp16"),
         outputRoot = reqJs.get("outputRoot"),
@@ -132,8 +141,11 @@ async def asr_infer(request: Request):
 
 
 @app.get("/gptsovits_preprocess")
-async def preprocess(request: Request):
+async def preprocess(request: Request, terminate: bool = False):
     reqJs: dict = await request.json()
+    if evalString(terminate):
+        gptsovits.terminate_preprocess()
+        return
     contentStream = gptsovits.preprocess(
         srtDir = reqJs.get("srtDir"),
         audioSpeakersDataPath = reqJs.get("audioSpeakersDataPath"),
@@ -149,8 +161,11 @@ async def preprocess(request: Request):
 
 
 @app.get("/gptsovits_train")
-async def train(request: Request):
+async def train(request: Request, terminate: bool = False):
     reqJs: dict = await request.json()
+    if evalString(terminate):
+        gptsovits.terminate_train()
+        return
     contentStream = gptsovits.train(
         version = reqJs.get("version"),
         fileList_path = reqJs.get("fileList_path"),
@@ -173,8 +188,11 @@ async def train(request: Request):
 
 
 @app.get("/gptsovits_infer_webui")
-async def infer_webui(request: Request):
+async def infer_webui(request: Request, terminate: bool = False):
     reqJs: dict = await request.json()
+    if evalString(terminate):
+        gptsovits.terminate_infer_webui()
+        return
     contentStream = gptsovits.infer_webui(
         version = reqJs.get("version"),
         sovits_path = reqJs.get("sovits_path"),
