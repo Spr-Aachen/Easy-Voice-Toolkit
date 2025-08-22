@@ -161,7 +161,7 @@ class MainWindow(Window_MainWindow):
         self.task_gptsovits = Tool_GPTSoVITS()
 
     def closeEvent(self, event):
-        FunctionSignals.Signal_TaskStatus.connect(lambda: QApplication.instance().exit())
+        toolSignals.serverEnded.connect(lambda: QApplication.instance().exit())
         FunctionSignals.Signal_ForceQuit.emit()
 
     def showGuidance(self, windowTitle: str, images: list, texts: list):

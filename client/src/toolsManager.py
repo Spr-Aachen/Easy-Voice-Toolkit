@@ -8,6 +8,8 @@ from pathlib import Path
 from typing import Union, Optional, Any
 from PySide6.QtCore import QObject, Signal
 
+from functions import FunctionSignals
+
 ##############################################################################################################################
 
 class CustomSignals_Tools(QObject):
@@ -15,7 +17,7 @@ class CustomSignals_Tools(QObject):
     Set up signals for functions
     '''
     serverStarted = Signal()
-
+    serverEnded = Signal()
 
 toolSignals = CustomSignals_Tools()
 
@@ -40,6 +42,12 @@ def startServer(
         port = port,
     )
     spm = EasyUtils.subprocessManager(shell = True)
+    FunctionSignals.Signal_ForceQuit.connect(
+        lambda: (
+            EasyUtils.terminateProcess(spm.subprocesses[-1].pid),
+            toolSignals.serverEnded.emit()
+        )
+    )
     spm.create(args, env = os.environ)
     subprocessMonitor = spm.monitor(logPath = logOutputPath)
     isServerStarted = False
