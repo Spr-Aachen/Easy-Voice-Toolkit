@@ -516,6 +516,7 @@ class WorkerManager(QWorker.WorkerManager):
 
         self.signals = QWorker.WorkerSignals()
         self.worker.signals.started.connect(self.signals.started.emit)
+        self.worker.signals.error.connect(self.signals.error.emit)
         self.worker.signals.result.connect(self.signals.result.emit)
         self.worker.signals.finished.connect(self.signals.finished.emit)
         self.signals.started.connect(
