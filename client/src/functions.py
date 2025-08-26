@@ -560,6 +560,7 @@ def Function_SetMethodExecutor(
     terminateButton: Optional[QAbstractButton] = None,
     progressBar: Optional[QProgressBar] = None,
     consoleWidget: Optional[QWidget] = None,
+    resultReciever: Optional[object] = None,
     finishedEvents: Optional[dict] = None,
     autoDelete: bool = True,
     threadPool: Optional[QThreadPool] = None,
@@ -581,18 +582,21 @@ def Function_SetMethodExecutor(
             Function_AnimateStackedWidget(QFunc.findParent(executeButton, QStackedWidget), target = 1) if terminateButton else None,
         )
     )
+    workerManager.signals.result.connect(
+        resultReciever
+    )
     workerManager.signals.error.connect(
         lambda err: (
             _setErrorOccuredFlag(),
-            MessageBoxBase.pop(parentWindow, QMessageBox.Warning, "Failure", "发生异常", err),
+            MessageBoxBase.pop(parentWindow, QMessageBox.Warning, "Failure", "发生异常", str(err)),
             EasyUtils.runEvents([event for event, status in finishedEvents.items() if status == TaskStatus.Failed]) if finishedEvents is not None else None,
         )
     )
     workerManager.signals.finished.connect(
         lambda: (
-            Function_AnimateFrame(consoleWidget, minHeight = 0, maxHeight = 210, mode = "Reduce") if consoleWidget else None,
-            Function_AnimateProgressBar(progressBar, isTaskAlive = False) if progressBar else None,
             Function_AnimateStackedWidget(QFunc.findParent(executeButton, QStackedWidget), target = 0) if terminateButton else None,
+            Function_AnimateProgressBar(progressBar, isTaskAlive = False) if progressBar else None,
+            Function_AnimateFrame(consoleWidget, minHeight = 0, maxHeight = 210, mode = "Reduce") if consoleWidget else None,
             EasyUtils.runEvents([event for event, status in finishedEvents.items() if (not isErrorOccurred and status == TaskStatus.Succeeded) or TaskStatus.Finished]) if finishedEvents is not None else None,
         )
     )
