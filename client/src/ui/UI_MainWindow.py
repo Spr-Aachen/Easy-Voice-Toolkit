@@ -737,28 +737,16 @@ class Ui_MainWindow(object):
         self.TabWidget_Models_TTS.setObjectName(u"TabWidget_Models_TTS")
         self.Tab_Models_TTS_GPTSoVITS = QWidget()
         self.Tab_Models_TTS_GPTSoVITS.setObjectName(u"Tab_Models_TTS_GPTSoVITS")
-        self.verticalLayout_72 = QVBoxLayout(self.Tab_Models_TTS_GPTSoVITS)
-        self.verticalLayout_72.setSpacing(0)
-        self.verticalLayout_72.setObjectName(u"verticalLayout_72")
-        self.verticalLayout_72.setContentsMargins(0, 0, 0, 0)
-        self.Table_Models_TTS_GPTSoVITS = Table_ViewModels(self.Tab_Models_TTS_GPTSoVITS)
-        self.Table_Models_TTS_GPTSoVITS.setObjectName(u"Table_Models_TTS_GPTSoVITS")
-
-        self.verticalLayout_72.addWidget(self.Table_Models_TTS_GPTSoVITS)
-
-        self.TabWidget_Models_TTS.addTab(self.Tab_Models_TTS_GPTSoVITS, "")
-        self.Tab_Models_TTS_VITS = QWidget()
-        self.Tab_Models_TTS_VITS.setObjectName(u"Tab_Models_TTS_VITS")
-        self.verticalLayout_38 = QVBoxLayout(self.Tab_Models_TTS_VITS)
+        self.verticalLayout_38 = QVBoxLayout(self.Tab_Models_TTS_GPTSoVITS)
         self.verticalLayout_38.setSpacing(0)
         self.verticalLayout_38.setObjectName(u"verticalLayout_38")
         self.verticalLayout_38.setContentsMargins(0, 0, 0, 0)
-        self.Table_Models_TTS_VITS = Table_ViewModels(self.Tab_Models_TTS_VITS)
-        self.Table_Models_TTS_VITS.setObjectName(u"Table_Models_TTS_VITS")
+        self.Table_Models_TTS_GPTSoVITS = Table_ViewModels(self.Tab_Models_TTS_GPTSoVITS)
+        self.Table_Models_TTS_GPTSoVITS.setObjectName(u"Table_Models_TTS_GPTSoVITS")
 
-        self.verticalLayout_38.addWidget(self.Table_Models_TTS_VITS)
+        self.verticalLayout_38.addWidget(self.Table_Models_TTS_GPTSoVITS)
 
-        self.TabWidget_Models_TTS.addTab(self.Tab_Models_TTS_VITS, "")
+        self.TabWidget_Models_TTS.addTab(self.Tab_Models_TTS_GPTSoVITS, "")
 
         self.gridLayout_10.addWidget(self.TabWidget_Models_TTS, 0, 0, 1, 1)
 
@@ -1960,8 +1948,7 @@ class Ui_MainWindow(object):
         self.TabWidget_Models_Process.setTabText(self.TabWidget_Models_Process.indexOf(self.Tab_Models_Process_UVR), QCoreApplication.translate("MainWindow", u"Tab 1", None))
         self.TabWidget_Models_VPR.setTabText(self.TabWidget_Models_VPR.indexOf(self.Tab_Models_VPR_TDNN), QCoreApplication.translate("MainWindow", u"Tab 1", None))
         self.TabWidget_Models_ASR.setTabText(self.TabWidget_Models_ASR.indexOf(self.Tab_Models_ASR_Whisper), QCoreApplication.translate("MainWindow", u"Tab 1", None))
-        self.TabWidget_Models_TTS.setTabText(self.TabWidget_Models_TTS.indexOf(self.Tab_Models_TTS_GPTSoVITS), QCoreApplication.translate("MainWindow", u"\u9875", None))
-        self.TabWidget_Models_TTS.setTabText(self.TabWidget_Models_TTS.indexOf(self.Tab_Models_TTS_VITS), QCoreApplication.translate("MainWindow", u"Tab 1", None))
+        self.TabWidget_Models_TTS.setTabText(self.TabWidget_Models_TTS.indexOf(self.Tab_Models_TTS_GPTSoVITS), QCoreApplication.translate("MainWindow", u"Tab 1", None))
         self.Button_Settings_Title_Client.setText(QCoreApplication.translate("MainWindow", u"Label", None))
         self.Button_Settings_Title_Tools.setText(QCoreApplication.translate("MainWindow", u"Label", None))
         self.GroupBox_Settings_Client_Outlook.setTitle(QCoreApplication.translate("MainWindow", u"GroupBox", None))
