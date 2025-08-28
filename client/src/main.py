@@ -2584,7 +2584,6 @@ class MainWindow(Window_MainWindow):
                 frame = self.ui.Frame_Console,
                 minHeight = 0,
                 maxHeight = 210,
-                supportSplitter = True
             )
         )
         self.ui.Frame_Console.setFixedHeight(0)

@@ -187,7 +187,7 @@ def Function_AnimateStackedWidget(
         lambda: OriginalWidget.setGeometry(OriginalGeometry),
         type = Qt.QueuedConnection
     )
-    WidgetAnimation.start() if stackedWidget.currentIndex() != TargetIndex else None
+    WidgetAnimation.start()
 
 
 def Function_AnimateFrame(
@@ -198,18 +198,17 @@ def Function_AnimateFrame(
     maxHeight: Optional[int] = None,
     duration: int = 210,
     mode: str = "Toggle",
-    supportSplitter: bool = False
 ):
     '''
     Function to animate frame
     '''
     def ExtendFrame():
-        QFunc.setWidgetSizeAnimation(frame, maxWidth, None, duration, supportSplitter).start() if maxWidth not in (None, frame.width()) else None
-        QFunc.setWidgetSizeAnimation(frame, None, maxHeight, duration, supportSplitter).start() if maxHeight not in (None, frame.height()) else None
+        QFunc.setWidgetSizeAnimation(frame, maxWidth, None, duration).start() if maxWidth not in (None, frame.width()) else None
+        QFunc.setWidgetSizeAnimation(frame, None, maxHeight, duration).start() if maxHeight not in (None, frame.height()) else None
 
     def ReduceFrame():
-        QFunc.setWidgetSizeAnimation(frame, minWidth, None, duration, supportSplitter).start() if minWidth not in (None, frame.width()) else None
-        QFunc.setWidgetSizeAnimation(frame, None, minHeight, duration, supportSplitter).start() if minHeight not in (None, frame.height()) else None
+        QFunc.setWidgetSizeAnimation(frame, minWidth, None, duration).start() if minWidth not in (None, frame.width()) else None
+        QFunc.setWidgetSizeAnimation(frame, None, minHeight, duration).start() if minHeight not in (None, frame.height()) else None
 
     if mode == "Extend":
         ExtendFrame()

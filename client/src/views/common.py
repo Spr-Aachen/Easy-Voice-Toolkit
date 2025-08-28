@@ -9,7 +9,7 @@ from functions import *
 
 ##############################################################################################################################
 
-class SubPage(QWidget):
+class SubPage(WidgetBase):
     """
     """
     def __init__(self, parent = None):
@@ -100,7 +100,7 @@ class SubPage(QWidget):
 
 ##############################################################################################################################
 
-class Page(QWidget):
+class Page(WidgetBase):
     """
     """
     def __init__(self, parent = None):

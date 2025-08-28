@@ -2,7 +2,7 @@ from PySide6.QtCore import (QCoreApplication, QMetaObject, Qt, QRect, QSize)
 from PySide6.QtGui import (QIcon, QFont)
 from PySide6.QtWidgets import *
 
-from components import ButtonBase, NavigationButton, HollowButton, MenuButton, CheckBoxBase, LabelBase, LineEditBase, TextEditBase, TextBrowserBase, ComboBoxBase, GroupBoxBase, ScrollAreaBase, TabWidgetBase, Table_ViewModels
+from components import WidgetBase, ButtonBase, NavigationButton, HollowButton, MenuButton, CheckBoxBase, LabelBase, LineEditBase, TextEditBase, TextBrowserBase, ComboBoxBase, GroupBoxBase, ScrollAreaBase, TabWidgetBase, Table_ViewModels
 from views import EnvPage, ToolPage
 
 
@@ -125,7 +125,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_2.setSpacing(0)
         self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
         self.horizontalLayout_2.setContentsMargins(0, 0, 0, 0)
-        self.Frame_Menu = QFrame(self.Content)
+        self.Frame_Menu = WidgetBase(self.Content)
         self.Frame_Menu.setObjectName(u"Frame_Menu")
         self.Frame_Menu.setMinimumSize(QSize(210, 0))
         self.Frame_Menu.setMaximumSize(QSize(210, 16777215))
@@ -843,7 +843,7 @@ class Ui_MainWindow(object):
         self.ScrollArea_Settings_Client.setWidgetResizable(True)
         self.ScrollAreaWidgetContents_Settings_Client = QWidget()
         self.ScrollAreaWidgetContents_Settings_Client.setObjectName(u"ScrollAreaWidgetContents_Settings_Client")
-        self.ScrollAreaWidgetContents_Settings_Client.setGeometry(QRect(0, 0, 1014, 483))
+        self.ScrollAreaWidgetContents_Settings_Client.setGeometry(QRect(0, 0, 246, 483))
         self.verticalLayout_106 = QVBoxLayout(self.ScrollAreaWidgetContents_Settings_Client)
         self.verticalLayout_106.setSpacing(0)
         self.verticalLayout_106.setObjectName(u"verticalLayout_106")
@@ -1047,7 +1047,7 @@ class Ui_MainWindow(object):
         self.ScrollArea_Settings_Tools.setWidgetResizable(True)
         self.ScrollAreaWidgetContents_Settings_Tools = QWidget()
         self.ScrollAreaWidgetContents_Settings_Tools.setObjectName(u"ScrollAreaWidgetContents_Settings_Tools")
-        self.ScrollAreaWidgetContents_Settings_Tools.setGeometry(QRect(0, 0, 1014, 727))
+        self.ScrollAreaWidgetContents_Settings_Tools.setGeometry(QRect(0, 0, 246, 727))
         self.verticalLayout_34 = QVBoxLayout(self.ScrollAreaWidgetContents_Settings_Tools)
         self.verticalLayout_34.setSpacing(0)
         self.verticalLayout_34.setObjectName(u"verticalLayout_34")
@@ -1586,7 +1586,7 @@ class Ui_MainWindow(object):
 
         self.StackedWidget_Pages.addWidget(self.Page_Info)
         self.Splitter_Pages.addWidget(self.StackedWidget_Pages)
-        self.Frame_Console = QFrame(self.Splitter_Pages)
+        self.Frame_Console = WidgetBase(self.Splitter_Pages)
         self.Frame_Console.setObjectName(u"Frame_Console")
         self.Frame_Console.setStyleSheet(u"QFrame {\n"
 "	background-color: transparent;\n"

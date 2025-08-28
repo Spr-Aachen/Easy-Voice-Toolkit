@@ -44,7 +44,7 @@ class MessageBox_Stacked(MessageBoxBase):
         self.layout().insertLayout(0, Layout)
 
     def setContent(self, Images: list, Texts: list):
-        QFunc.setNoContents(self.StackedWidget)
+        QFunc.removeSubWidgets(self.StackedWidget)
 
         for Index, Image in enumerate(EasyUtils.toIterable(Images)):
             Label = LabelBase()
