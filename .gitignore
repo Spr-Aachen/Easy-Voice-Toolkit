@@ -1,8 +1,6 @@
 # Client assets
-**/*.ui
-**/*.ts
-**/*.qm
 **/*.qrc
+**/*.ui
 **/*.png
 **/*.ico
 
