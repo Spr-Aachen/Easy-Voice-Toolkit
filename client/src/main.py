@@ -108,13 +108,6 @@ if Path(dependencyDir).joinpath('Python').exists():
 
 ##############################################################################################################################
 
-def checkIntegrity():
-    """
-    ClientFunc: check file integrity
-    """
-    # TODO: etwas
-
-
 def runTensorboard(logDir):
     """
     ClientFunc: run tensorboard
@@ -2335,22 +2328,6 @@ class MainWindow(Window_MainWindow):
                 lambda: config.editConfig('Settings', 'AutoUpdate', 'Disabled'): True
             },
         )
-
-        self.ui.GroupBox_Settings_Client_Operation.setTitle(QCA.translate('MainWindow', "操作"))
-
-        Function_SetMethodExecutor(
-            executeButton = self.ui.Button_Setting_IntegrityChecker,
-            executeMethod = checkIntegrity,
-            threadPool = self.threadPool_client,
-            parentWindow = self,
-        )
-        FunctionSignals.Signal_TaskStatus.connect(
-            lambda Task, Status: self.ui.Button_Setting_IntegrityChecker.setCheckable(
-                False if Status == TaskStatus.Started else True
-            )
-        )
-        self.ui.Button_Setting_IntegrityChecker.setText(QCA.translate('MainWindow', "检查完整性"))
-        self.ui.Button_Setting_IntegrityChecker.setToolTip(QCA.translate('MainWindow', "检查文件完整性"))
 
         # Tools
         self.ui.Button_Settings_Title_Tools.setText(QCA.translate('MainWindow', "工具选项"))

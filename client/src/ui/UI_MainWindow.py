@@ -831,7 +831,7 @@ class Ui_MainWindow(object):
         self.ScrollArea_Settings_Client.setWidgetResizable(True)
         self.ScrollAreaWidgetContents_Settings_Client = QWidget()
         self.ScrollAreaWidgetContents_Settings_Client.setObjectName(u"ScrollAreaWidgetContents_Settings_Client")
-        self.ScrollAreaWidgetContents_Settings_Client.setGeometry(QRect(0, 0, 246, 483))
+        self.ScrollAreaWidgetContents_Settings_Client.setGeometry(QRect(0, 0, 246, 352))
         self.verticalLayout_106 = QVBoxLayout(self.ScrollAreaWidgetContents_Settings_Client)
         self.verticalLayout_106.setSpacing(0)
         self.verticalLayout_106.setObjectName(u"verticalLayout_106")
@@ -976,44 +976,6 @@ class Ui_MainWindow(object):
 
 
         self.verticalLayout_106.addWidget(self.GroupBox_Settings_Client_Function)
-
-        self.GroupBox_Settings_Client_Operation = GroupBoxBase(self.ScrollAreaWidgetContents_Settings_Client)
-        self.GroupBox_Settings_Client_Operation.setObjectName(u"GroupBox_Settings_Client_Operation")
-        self.verticalLayout_85 = QVBoxLayout(self.GroupBox_Settings_Client_Operation)
-        self.verticalLayout_85.setSpacing(0)
-        self.verticalLayout_85.setObjectName(u"verticalLayout_85")
-        self.verticalLayout_85.setContentsMargins(0, 12, 0, 12)
-        self.Frame_Setting_Operation = QFrame(self.GroupBox_Settings_Client_Operation)
-        self.Frame_Setting_Operation.setObjectName(u"Frame_Setting_Operation")
-        self.Frame_Setting_Operation.setMinimumSize(QSize(0, 90))
-        self.Frame_Setting_Operation.setStyleSheet(u"QFrame {\n"
-"	background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
-"}\n"
-"QFrame:hover {\n"
-"	border-color: rgb(60, 60, 60);\n"
-"}")
-        self.horizontalLayout_6 = QHBoxLayout(self.Frame_Setting_Operation)
-        self.horizontalLayout_6.setSpacing(42)
-        self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
-        self.horizontalLayout_6.setContentsMargins(21, 12, 21, 12)
-        self.Button_Setting_IntegrityChecker = HollowButton(self.Frame_Setting_Operation)
-        self.Button_Setting_IntegrityChecker.setObjectName(u"Button_Setting_IntegrityChecker")
-
-        self.horizontalLayout_6.addWidget(self.Button_Setting_IntegrityChecker)
-
-        self.HorizontalSpacer_Setting_Operation = QSpacerItem(0, 0, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
-
-        self.horizontalLayout_6.addItem(self.HorizontalSpacer_Setting_Operation)
-
-        self.horizontalLayout_6.setStretch(0, 2)
-        self.horizontalLayout_6.setStretch(1, 6)
-
-        self.verticalLayout_85.addWidget(self.Frame_Setting_Operation)
-
-
-        self.verticalLayout_106.addWidget(self.GroupBox_Settings_Client_Operation)
 
         self.VerticalSpacer_Settings_Client = QSpacerItem(20, 174, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
@@ -1957,7 +1919,6 @@ class Ui_MainWindow(object):
         self.GroupBox_Settings_Client_Function.setTitle(QCoreApplication.translate("MainWindow", u"GroupBox", None))
         self.Label_Setting_AutoUpdate.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.CheckBox_Setting_AutoUpdate.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
-        self.GroupBox_Settings_Client_Operation.setTitle(QCoreApplication.translate("MainWindow", u"GroupBox", None))
         self.GroupBox_Settings_Tools_Function.setTitle(QCoreApplication.translate("MainWindow", u"GroupBox", None))
         self.Label_Setting_AutoReset.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.CheckBox_Setting_AutoReset.setText(QCoreApplication.translate("MainWindow", u"CheckBox", None))
