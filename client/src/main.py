@@ -2250,110 +2250,59 @@ class MainWindow(Window_MainWindow):
         #############################################################
 
         # Client
-        self.ui.Button_Settings_Title_Client.setText(QCA.translate('MainWindow', "系统选项"))
-        self.ui.Button_Settings_Title_Client.setHorizontal(True)
-        self.ui.Button_Settings_Title_Client.setChecked(True)
-        self.ui.Button_Settings_Title_Client.clicked.connect(
-            lambda: Function_AnimateStackedWidget(
-                stackedWidget = self.ui.StackedWidget_Pages_Settings,
-                target = 0
-            )
-        )
-
-        self.ui.GroupBox_Settings_Client_Outlook.setTitle(QCA.translate('MainWindow', "外观设置"))
-
-        self.ui.Label_Setting_Theme.setText(QCA.translate('MainWindow', "主题"))
-        self.ui.ComboBox_Setting_Theme.addItems([QCA.translate('MainWindow', '跟随系统'), QCA.translate('MainWindow', '亮色'), QCA.translate('MainWindow', '暗色')])
-        ThemeDict = {
-            '跟随系统': Theme.Auto,
-            '亮色': Theme.Light,
-            '暗色': Theme.Dark
+        subSettingsPage_Client = SubSettingsPage(self.ui.Page_Settings)
+        themeDict = {
+            QCA.translate('MainWindow', '跟随系统'): Theme.Auto,
+            QCA.translate('MainWindow', '亮色'): Theme.Light,
+            QCA.translate('MainWindow', '暗色'): Theme.Dark
         }
-        ComponentsSignals.Signal_SetTheme.connect(
-            lambda Theme: self.ui.ComboBox_Setting_Theme.setCurrentText(
-                QCA.translate('MainWindow', EasyUtils.findKey(ThemeDict, Theme))
-            )
+        subSettingsPage_Client.addComboBoxFrame(
+            rootItemText = QCA.translate('MainWindow', "外观设置"),
+            text = QCA.translate('MainWindow', "主题"),
+            items = themeDict.keys(),
+            signal = ComponentsSignals.Signal_SetTheme,
+            textDict = themeDict,
+            section = 'Settings',
+            option = 'Theme',
         )
-        self.ui.ComboBox_Setting_Theme.currentIndexChanged.connect(
-            lambda: (
-                config.editConfig(
-                    'Settings', 'Theme', ThemeDict.get(self.ui.ComboBox_Setting_Theme.currentText())
-                ),
-                ComponentsSignals.Signal_SetTheme.emit(
-                    ThemeDict.get(self.ui.ComboBox_Setting_Theme.currentText())
-                ) if currentTheme() != ThemeDict.get(self.ui.ComboBox_Setting_Theme.currentText()) else None
-            )
-        )
-
-        self.ui.Label_Setting_Language.setText(QCA.translate('MainWindow', "语言"))
-        self.ui.ComboBox_Setting_Language.addItems([QCA.translate('MainWindow', '跟随系统'), QCA.translate('MainWindow', '中文'), QCA.translate('MainWindow', '英文')])
-        LanguageDict = {
-            '跟随系统': Language.Auto,
-            '中文': Language.ZH,
-            '英文': Language.EN
+        languageDict = {
+            QCA.translate('MainWindow', '跟随系统'): Language.Auto,
+            QCA.translate('MainWindow', '中文'): Language.ZH,
+            QCA.translate('MainWindow', '英文'): Language.EN
         }
-        ComponentsSignals.Signal_SetLanguage.connect(
-            lambda Language: self.ui.ComboBox_Setting_Language.setCurrentText(
-                QCA.translate('MainWindow', EasyUtils.findKey(LanguageDict, Language))
-            )
+        subSettingsPage_Client.addComboBoxFrame(
+            rootItemText = QCA.translate('MainWindow', "外观设置"),
+            text = QCA.translate('MainWindow', "语言"),
+            items = languageDict.keys(),
+            signal = ComponentsSignals.Signal_SetLanguage,
+            textDict = languageDict,
+            section = 'Settings',
+            option = 'Language',
         )
-        self.ui.ComboBox_Setting_Language.currentIndexChanged.connect(
-            lambda: (
-                config.editConfig(
-                    'Settings', 'Language', LanguageDict.get(self.ui.ComboBox_Setting_Language.currentText())
-                ),
-                ComponentsSignals.Signal_SetLanguage.emit(
-                    LanguageDict.get(self.ui.ComboBox_Setting_Language.currentText())
-                ) if currentLanguage() != LanguageDict.get(self.ui.ComboBox_Setting_Language.currentText()) else None
-            )
+        subSettingsPage_Client.addCheckBoxFrame(
+            rootItemText = QCA.translate('MainWindow', "功能设置"),
+            text = QCA.translate('MainWindow', "自动检查版本并更新"),
+            section = 'Settings',
+            option = 'AutoUpdate',
+            defaultValue = True
         )
 
-        self.ui.GroupBox_Settings_Client_Function.setTitle(QCA.translate('MainWindow', "功能设置"))
-
-        self.ui.Label_Setting_AutoUpdate.setText(QCA.translate('MainWindow', "自动检查版本并更新"))
-        self.ui.CheckBox_Setting_AutoUpdate.setChecked(
-            {
-                'Enabled': True,
-                'Disabled': False
-            }.get(config.getValue('Settings', 'AutoUpdate', 'Enabled'))
-        )
-        Function_ConfigureCheckBox(
-            checkBox = self.ui.CheckBox_Setting_AutoUpdate,
-            checkedText = "已启用",
-            checkedEvents = {
-                lambda: config.editConfig('Settings', 'AutoUpdate', 'Enabled') : True,
-            },
-            uncheckedText = "未启用",
-            uncheckedEvents = {
-                lambda: config.editConfig('Settings', 'AutoUpdate', 'Disabled'): True
-            },
+        self.ui.Page_Settings.addSubPage(
+            QCA.translate('MainWindow', "系统选项"), subSettingsPage_Client
         )
 
         # Tools
-        self.ui.Button_Settings_Title_Tools.setText(QCA.translate('MainWindow', "工具选项"))
-        self.ui.Button_Settings_Title_Tools.setHorizontal(True)
-        self.ui.Button_Settings_Title_Tools.setChecked(False)
-        self.ui.Button_Settings_Title_Tools.clicked.connect(
-            lambda: Function_AnimateStackedWidget(
-                stackedWidget = self.ui.StackedWidget_Pages_Settings,
-                target = 1
-            )
-        )
-
-        self.ui.GroupBox_Settings_Tools_Function.setTitle(QCA.translate('MainWindow', "功能设置"))
-
-        self.ui.Label_Setting_AutoReset.setText(QCA.translate('MainWindow', "启动时重置所有工具的参数设置"))
-        self.ui.CheckBox_Setting_AutoReset.setChecked(
-            {
-                'Enabled': True,
-                'Disabled': False
-            }.get(config.getValue('Tools', 'AutoReset', 'Enabled'))
+        subSettingsPage_Tools = SubSettingsPage(self.ui.Page_Settings)
+        subSettingsPage_Tools.addCheckBoxFrame(
+            rootItemText = QCA.translate('MainWindow', "功能设置"),
+            text = QCA.translate('MainWindow', "启动时重置所有工具的参数设置"),
+            section = 'Settings',
+            option = 'AutoUpdate',
+            defaultValue = False
         )
         Function_ConfigureCheckBox(
-            checkBox = self.ui.CheckBox_Setting_AutoReset,
-            checkedText = "已启用",
+            checkBox = subSettingsPage_Tools.findChildWidget("功能设置", None, "启动时重置所有工具的参数设置", QCheckBox),
             checkedEvents = {
-                lambda: config.editConfig('Tools', 'AutoReset', 'Enabled') : True,
                 lambda: self.Signal_MainWindowShown.connect(
                     lambda: (
                         paramsManager_process.resetSettings(),
@@ -2365,24 +2314,19 @@ class MainWindow(Window_MainWindow):
                     )
                 ) : True
             },
-            uncheckedText = "未启用",
             uncheckedEvents = {
-                lambda: config.editConfig('Tools', 'AutoReset', 'Disabled') : True,
             },
         )
-
-        self.ui.Label_Setting_Synchronizer.setText(QCA.translate('MainWindow', "自动关联前后工具的部分参数设置"))
-        self.ui.CheckBox_Setting_Synchronizer.setChecked(
-            {
-                'Enabled': True,
-                'Disabled': False
-            }.get(config.getValue('Tools', 'Synchronizer', 'Enabled'))
+        subSettingsPage_Tools.addCheckBoxFrame(
+            rootItemText = QCA.translate('MainWindow', "功能设置"),
+            text = QCA.translate('MainWindow', "自动关联前后工具的部分参数设置"),
+            section = 'Settings',
+            option = 'AutoUpdate',
+            defaultValue = True
         )
         Function_ConfigureCheckBox(
-            checkBox = self.ui.CheckBox_Setting_Synchronizer,
-            checkedText = "已启用",
+            checkBox = subSettingsPage_Tools.findChildWidget("功能设置", None, "自动关联前后工具的部分参数设置", QCheckBox),
             checkedEvents = {
-                lambda: config.editConfig('Tools', 'Synchronizer', 'Enabled') : True,
                 lambda: Function_ParamsSynchronizer(
                     LineEdit_Process_OutputDir,
                     {LineEdit_Process_OutputDir: subPage_VPR.findChildWidget("输入参数", None, "音频输入目录", LineEditBase)}
@@ -2404,115 +2348,71 @@ class MainWindow(Window_MainWindow):
                     {LineEdit_DAT_GPTSoVITS_FileListPath: subPage_train_gptsovits.findChildWidget("输入参数", None, "训练集文本路径", LineEditBase)}
                 ) : True,
             },
-            uncheckedText = "未启用",
             uncheckedEvents = {
-                lambda: config.editConfig('Tools', 'Synchronizer', 'Disabled') : True,
                 lambda: MessageBoxBase.pop(self,
                     QMessageBox.Information, "Tip",
                     "该设置将于重启之后生效"
                 ) : False
             },
         )
-
-        self.ui.GroupBox_Settings_Tools_Path.setTitle(QCA.translate('MainWindow', "路径设置"))
-
-        self.ui.Label_Process_OutputRoot.setText(QCA.translate('MainWindow', "音频处理输出目录"))
         Process_OutputRoot_Default = Path(outputDir).joinpath('音频处理结果').as_posix()
-        paramsManager_process.setParam(
-            widget = self.ui.LineEdit_Process_OutputRoot,
+        subSettingsPage_Tools.addLineEditFrame(
+            rootItemText = QCA.translate('MainWindow', "路径设置"),
+            text = QCA.translate('MainWindow', "音频处理输出目录"),
+            fileDialogMode = FileDialogMode.SelectFolder,
+            directory = EasyUtils.normPath(Path(Process_OutputRoot_Default).parent),
             section = 'Output params',
-            option = 'Output_Root',
+            option = 'Process_OutputRoot',
             defaultValue = Process_OutputRoot_Default,
             placeholderText = Process_OutputRoot_Default
         )
-        self.ui.LineEdit_Process_OutputRoot.setFileDialog(
-            mode = FileDialogMode.SelectFolder,
-            directory = EasyUtils.normPath(Path(Process_OutputRoot_Default).parent)
-        )
-        self.ui.Button_Process_OutputRoot_MoreActions.setMenu(
-            actionEvents = {
-                "重置": lambda: paramsManager_process.resetParam(self.ui.LineEdit_Process_OutputRoot)
-            }
-        )
-
-        self.ui.Label_VPR_TDNN_OutputRoot.setText(QCA.translate('MainWindow', "声纹识别结果输出目录"))
         VPR_TDNN_AudioSpeakersDataRoot_Default = Path(outputDir).joinpath('语音识别结果', 'VPR').as_posix()
-        paramsManager_VPR_TDNN.setParam(
-            widget = self.ui.LineEdit_VPR_TDNN_OutputRoot,
+        subSettingsPage_Tools.addLineEditFrame(
+            rootItemText = QCA.translate('MainWindow', "路径设置"),
+            text = QCA.translate('MainWindow', "声纹识别结果输出目录"),
+            fileDialogMode = FileDialogMode.SelectFolder,
+            directory = EasyUtils.normPath(Path(VPR_TDNN_AudioSpeakersDataRoot_Default).parent),
             section = 'Output params',
-            option = 'Audio_Root_Output',
+            option = 'VPR_TDNN_OutputRoot',
             defaultValue = VPR_TDNN_AudioSpeakersDataRoot_Default,
             placeholderText = VPR_TDNN_AudioSpeakersDataRoot_Default
         )
-        self.ui.LineEdit_VPR_TDNN_OutputRoot.setFileDialog(
-            mode = FileDialogMode.SelectFolder,
-            directory = EasyUtils.normPath(Path(VPR_TDNN_AudioSpeakersDataRoot_Default).parent)
-        )
-        self.ui.Button_VPR_TDNN_OutputRoot_MoreActions.setMenu(
-            actionEvents = {
-                "重置": lambda: paramsManager_VPR_TDNN.resetParam(self.ui.LineEdit_VPR_TDNN_OutputRoot),
-                "复制": lambda: QApplication.clipboard().setText(self.ui.LineEdit_VPR_TDNN_OutputRoot.text())
-            }
-        )
-
-        self.ui.Label_ASR_Whisper_OutputRoot.setText(QCA.translate('MainWindow', "Whisper转录输出目录"))
         ASR_Whisper_OutputRoot_Default = Path(outputDir).joinpath('语音转录结果', 'Whisper').as_posix()
-        paramsManager_ASR_Whisper.setParam(
-            widget = self.ui.LineEdit_ASR_Whisper_OutputRoot,
+        subSettingsPage_Tools.addLineEditFrame(
+            rootItemText = QCA.translate('MainWindow', "路径设置"),
+            text = QCA.translate('MainWindow', "Whisper转录输出目录"),
+            fileDialogMode = FileDialogMode.SelectFolder,
+            directory = EasyUtils.normPath(Path(ASR_Whisper_OutputRoot_Default).parent),
             section = 'Output params',
-            option = 'Output_Root',
+            option = 'ASR_Whisper_OutputRoot',
             defaultValue = ASR_Whisper_OutputRoot_Default,
             placeholderText = ASR_Whisper_OutputRoot_Default
         )
-        self.ui.LineEdit_ASR_Whisper_OutputRoot.setFileDialog(
-            mode = FileDialogMode.SelectFolder,
-            directory = EasyUtils.normPath(Path(ASR_Whisper_OutputRoot_Default).parent)
-        )
-        self.ui.Button_ASR_Whisper_OutputRoot_MoreActions.setMenu(
-            actionEvents = {
-                "重置": lambda: paramsManager_ASR_Whisper.resetParam(self.ui.LineEdit_ASR_Whisper_OutputRoot),
-                "复制": lambda: QApplication.clipboard().setText(self.ui.LineEdit_ASR_Whisper_OutputRoot.text())
-            }
-        )
-
-        self.ui.Label_DAT_GPTSoVITS_OutputRoot.setText( QCA.translate('MainWindow', "GPTSoVITS数据集输出目录"))
         DAT_GPTSoVITS_OutputRoot_Default = Path(outputDir).joinpath('数据集制作结果', 'GPT-SoVITS').as_posix()
-        paramsManager_DAT_GPTSoVITS.setParam(
-            widget = self.ui.LineEdit_DAT_GPTSoVITS_OutputRoot,
+        subSettingsPage_Tools.addLineEditFrame(
+            rootItemText = QCA.translate('MainWindow', "路径设置"),
+            text = QCA.translate('MainWindow', "GPTSoVITS数据集输出目录"),
+            fileDialogMode = FileDialogMode.SelectFolder,
+            directory = EasyUtils.normPath(Path(DAT_GPTSoVITS_OutputRoot_Default).parent),
             section = 'Output params',
-            option = 'Output_Root',
+            option = 'DAT_GPTSoVITS_OutputRoot',
             defaultValue = DAT_GPTSoVITS_OutputRoot_Default,
             placeholderText = DAT_GPTSoVITS_OutputRoot_Default
         )
-        self.ui.LineEdit_DAT_GPTSoVITS_OutputRoot.setFileDialog(
-            mode = FileDialogMode.SelectFolder,
-            directory = EasyUtils.normPath(Path(DAT_GPTSoVITS_OutputRoot_Default).parent)
-        )
-        self.ui.Button_DAT_GPTSoVITS_OutputRoot_MoreActions.setMenu(
-            actionEvents = {
-                "重置": lambda: paramsManager_DAT_GPTSoVITS.resetParam(self.ui.LineEdit_DAT_GPTSoVITS_OutputRoot),
-                "复制": lambda: QApplication.clipboard().setText(self.ui.LineEdit_DAT_GPTSoVITS_OutputRoot.text())
-            }
-        )
-
-        self.ui.Label_Train_GPTSoVITS_OutputRoot.setText(QCA.translate('MainWindow', "GPTSoVITS训练输出目录"))
         Train_GPTSoVITS_OutputRoot_Default = Path(outputDir).joinpath('模型训练结果', 'GPT-SoVITS').as_posix()
-        paramsManager_train_gptsovits.setParam(
-            widget = self.ui.LineEdit_Train_GPTSoVITS_OutputRoot,
+        subSettingsPage_Tools.addLineEditFrame(
+            rootItemText = QCA.translate('MainWindow', "路径设置"),
+            text = QCA.translate('MainWindow', "GPTSoVITS训练输出目录"),
+            fileDialogMode = FileDialogMode.SelectFolder,
+            directory = EasyUtils.normPath(Path(Train_GPTSoVITS_OutputRoot_Default).parent),
             section = 'Output params',
-            option = 'Output_Root',
+            option = 'Train_GPTSoVITS_OutputRoot',
             defaultValue = Train_GPTSoVITS_OutputRoot_Default,
             placeholderText = Train_GPTSoVITS_OutputRoot_Default
         )
-        self.ui.LineEdit_Train_GPTSoVITS_OutputRoot.setFileDialog(
-            mode = FileDialogMode.SelectFolder,
-            directory = EasyUtils.normPath(Path(Train_GPTSoVITS_OutputRoot_Default).parent)
-        )
-        self.ui.Button_Train_GPTSoVITS_OutputRoot_MoreActions.setMenu(
-            actionEvents = {
-                "重置": lambda: paramsManager_train_gptsovits.resetParam(self.ui.LineEdit_Train_GPTSoVITS_OutputRoot),
-                "复制": lambda: QApplication.clipboard().setText(self.ui.LineEdit_Train_GPTSoVITS_OutputRoot.text())
-            }
+
+        self.ui.Page_Settings.addSubPage(
+            QCA.translate('MainWindow', "工具选项"), subSettingsPage_Tools
         )
 
         #############################################################
