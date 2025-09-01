@@ -2,7 +2,6 @@ import os
 from typing import Type, Optional
 from PyEasyUtils import setRichText
 from PySide6.QtCore import Qt, QRect, QSize, SignalInstance
-from PySide6.QtCore import QCoreApplication as QCA
 from PySide6.QtWidgets import *
 from QEasyWidgets import QFunctions as QFunc
 from QEasyWidgets.Common import FileDialogMode
@@ -28,7 +27,7 @@ class SubEnvPage_Detector(SubPage):
             widget = label,
             text = setRichText(
                 size = size,
-                text = QCA.translate('MainWindow', text),
+                text = text,
             )
         )
 
@@ -121,7 +120,7 @@ class SubEnvPage_Manager(SubPage):
             widget = label,
             text = setRichText(
                 size = size,
-                text = QCA.translate('MainWindow', text),
+                text = text,
             )
         )
 

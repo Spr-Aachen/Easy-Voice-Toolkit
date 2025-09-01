@@ -1,7 +1,6 @@
 from typing import Type, Optional
 from PyEasyUtils import setRichText
 from PySide6.QtCore import Qt, QRect, QSize
-from PySide6.QtCore import QCoreApplication as QCA
 from PySide6.QtWidgets import *
 from QEasyWidgets import QFunctions as QFunc
 from QEasyWidgets.Common import FileDialogMode
@@ -57,13 +56,13 @@ class SubToolPage(SubPage):
         )
         self.rightWidget_layout.addWidget(textBrowser_params, 0, 0, 1, 3)
         button_resetSettings = HollowButton()
-        button_resetSettings.setText(QCA.translate('MainWindow', "全部重置"))
+        button_resetSettings.setText(self.tr("全部重置"))
         button_resetSettings.clicked.connect(
             lambda: self.paramsManager.resetSettings()
         )
         self.rightWidget_layout.addWidget(button_resetSettings, 1, 0, 1, 1)
         button_importSettings = HollowButton()
-        button_importSettings.setText(QCA.translate('MainWindow', "导入配置"))
+        button_importSettings.setText(self.tr("导入配置"))
         button_importSettings.clicked.connect(
             lambda: self.paramsManager.importSettings(
                 QFunc.getFileDialog(
@@ -74,7 +73,7 @@ class SubToolPage(SubPage):
         )
         self.rightWidget_layout.addWidget(button_importSettings, 1, 1, 1, 1)
         button_exportSettings = HollowButton()
-        button_exportSettings.setText(QCA.translate('MainWindow', "导出配置"))
+        button_exportSettings.setText(self.tr("导出配置"))
         button_exportSettings.clicked.connect(
             lambda: self.paramsManager.exportSettings(
                 QFunc.getFileDialog(
@@ -130,15 +129,15 @@ class SubToolPage(SubPage):
         QFunc.setText(
             widget = label,
             text = setRichText(
-                text = QCA.translate('MainWindow', text),
+                text = text,
             )
         )
 
     def _setButtonMenu(self, menuButton: MenuButton, widget):
         menuButton.setMenu(
             actionEvents = {
-                "重置": lambda: self.paramsManager.resetParam(widget),
-                "复制": lambda: QApplication.clipboard().setText(str(Function_GetParam(widget))),
+                self.tr("重置"): lambda: self.paramsManager.resetParam(widget),
+                self.tr("复制"): lambda: QApplication.clipboard().setText(str(Function_GetParam(widget))),
             }
         )
 
@@ -146,8 +145,8 @@ class SubToolPage(SubPage):
         Function_AddToTreeWidget(
             widget = widget,
             treeWidget = self.catalogueWidget,
-            rootItemText = QCA.translate('MainWindow', rootItemText),
-            childItemText = QCA.translate('MainWindow', childItemText.splitlines()[0]),
+            rootItemText = rootItemText,
+            childItemText = childItemText.splitlines()[0],
         )
 
     def _addToChildFrame(self, label: LabelBase, inputWidget: QWidget, menuButton: MenuButton):
@@ -226,7 +225,7 @@ class SubToolPage(SubPage):
         checkBox.setObjectName(text.splitlines()[0])
         button = MenuButton()
         self._setLabelText(label, text)
-        Function_ConfigureCheckBox(checkBox, checkedText = "已启动", uncheckedText = "未启动")
+        Function_ConfigureCheckBox(checkBox, checkedText = self.tr("已启动"), uncheckedText = self.tr("未启动"))
         checkBox.setToolTip(toolTip) if toolTip is not None else None
         self.paramsManager.setParam(checkBox, section, option, defaultValue)
         self._setButtonMenu(button, checkBox)
@@ -345,7 +344,7 @@ class SubToolPage(SubPage):
         outputRootEdit: QLineEdit
     ):
         chkOutputButton = HollowButton()
-        chkOutputButton.setText(QCA.translate('MainWindow', "打开输出目录"))
+        chkOutputButton.setText(self.tr("打开输出目录"))
         self.rightWidget_layout.addWidget(chkOutputButton, self.rightWidget_layout.rowCount(), 0, 1, 3)
         Function_SetURL(
             button = chkOutputButton,
@@ -363,8 +362,8 @@ class SubToolPage(SubPage):
         finishedEvents: dict,
         threadPool: QThreadPool,
     ):
-        self.executeButton.setText(QCA.translate('MainWindow', "执行"))
-        self.terminateButton.setText(QCA.translate('MainWindow', "终止"))
+        self.executeButton.setText(self.tr("执行"))
+        self.terminateButton.setText(self.tr("终止"))
         self.executeButton.setDisabled(True)
         prepareSignal.connect(
             lambda: self.executeButton.setDisabled(False)

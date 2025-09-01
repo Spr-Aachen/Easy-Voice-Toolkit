@@ -1,7 +1,6 @@
 from typing import Type, Optional
 from PyEasyUtils import setRichText
 from PySide6.QtCore import Qt, QRect, QSize, SignalInstance
-from PySide6.QtCore import QCoreApplication as QCA
 from PySide6.QtWidgets import *
 from QEasyWidgets import QFunctions as QFunc
 from QEasyWidgets.Common import FileDialogMode
@@ -29,15 +28,15 @@ class SubSettingsPage(SubPage):
             widget = label,
             text = setRichText(
                 size = size,
-                text = QCA.translate('MainWindow', text),
+                text = text,
             )
         )
 
     def _setButtonMenu(self, menuButton: MenuButton, widget):
         menuButton.setMenu(
             actionEvents = {
-                "重置": lambda: self.paramsManager.resetParam(widget),
-                "复制": lambda: QApplication.clipboard().setText(str(Function_GetParam(widget))),
+                self.tr("重置"): lambda: self.paramsManager.resetParam(widget),
+                self.tr("复制"): lambda: QApplication.clipboard().setText(str(Function_GetParam(widget))),
             }
         )
 
@@ -88,7 +87,7 @@ class SubSettingsPage(SubPage):
         checkBox = CheckBoxBase(self)
         button = MenuButton()
         self._setLabelText(label, text)
-        Function_ConfigureCheckBox(checkBox, checkedText = "已启动", uncheckedText = "未启动")
+        Function_ConfigureCheckBox(checkBox, checkedText = self.tr("已启动"), uncheckedText = self.tr("未启动"))
         checkBox.setToolTip(toolTip) if toolTip is not None else None
         (paramsManager or self.paramsManager).setParam(checkBox, section, option, defaultValue)
         self._setButtonMenu(button, checkBox)
@@ -109,8 +108,8 @@ class SubSettingsPage(SubPage):
         if signal and textDict:
             signal.connect(
                 lambda val: comboBox.setCurrentText(
-                    QCA.translate('MainWindow', EasyUtils.findKey(textDict, val))
-                ) if QCA.translate('MainWindow', EasyUtils.findKey(textDict, val)) != comboBox.currentText() else None
+                    EasyUtils.findKey(textDict, val)
+                ) if EasyUtils.findKey(textDict, val) != comboBox.currentText() else None
             )
             comboBox.currentIndexChanged.connect(
                 lambda: (
