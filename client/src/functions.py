@@ -1,3 +1,5 @@
+import os
+import time
 import PyEasyUtils as EasyUtils
 from typing import Union, Optional
 from PySide6.QtCore import Qt, QObject, Signal, QThreadPool, QPoint
@@ -648,5 +650,23 @@ def Function_UpdateChecker(
             FunctionSignals.Signal_ReadyToUpdate.emit(DownloadURL, VersionInfo)
         else:
             FunctionSignals.Signal_IsUpdateSucceeded.emit(False, "已是最新版本！\nAlready up to date!")
+
+
+def Function_RunTensorboard(logDir, maximumWaitTime = 30, port = 6007):
+    """
+    Function to run tensorboard
+    """
+    initialWaitTime = 0
+    while EasyUtils.getPaths(logDir, 'events.out.tfevents') == None:
+        time.sleep(1)
+        initialWaitTime += 1
+        if initialWaitTime >= maximumWaitTime:
+            break
+    spm = EasyUtils.subprocessManager(shell = True)
+    spm.create(f'python -m tensorboard.main --logdir={logDir} --port={port}', env = os.environ)
+    for outputLine, errorLine in spm.monitor():
+        if f":{port}" in outputLine.decode(errors = 'ignore'):
+            break
+    QFunc.openURL(f'http://localhost:{port}/')
 
 ##############################################################################################################################

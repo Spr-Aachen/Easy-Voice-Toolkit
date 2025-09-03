@@ -1,6 +1,5 @@
 import os
 import sys
-import time
 import argparse
 import subprocess
 import PyEasyUtils as EasyUtils
@@ -105,23 +104,6 @@ if Path(dependencyDir).joinpath('Python').exists():
         variable = 'PATH',
         value = EasyUtils.normPath(Path(dependencyDir).joinpath('Python', 'Scripts'), trailingSlash = True)
     )
-
-##############################################################################################################################
-
-def runTensorboard(logDir):
-    """
-    ClientFunc: run tensorboard
-    """
-    initialWaitTime = 0
-    maximumWaitTime = 30
-    while EasyUtils.getPaths(logDir, 'events.out.tfevents') == None:
-        time.sleep(3)
-        initialWaitTime += 3
-        if initialWaitTime >= maximumWaitTime:
-            break
-    subprocess.Popen(['python', '-m', 'tensorboard.main', '--logdir', logDir], env = os.environ)
-    time.sleep(9)
-    QFunc.openURL('http://localhost:6006/')
 
 ##############################################################################################################################
 
@@ -2128,7 +2110,7 @@ class MainWindow(Window_MainWindow):
             text = self.tr("启动Tensorboard"),
             events = [
                 lambda: Function_SetMethodExecutor(
-                    executeMethod = runTensorboard,
+                    executeMethod = Function_RunTensorboard,
                     executeParams = component_train_gptsovits_outputLogDir.get(ComponentFlag.LineEdit).text(),
                     threadPool = self.threadPool_tasks,
                     parentWindow = self,
