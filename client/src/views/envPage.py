@@ -7,7 +7,7 @@ from QEasyWidgets import QFunctions as QFunc
 from QEasyWidgets.Common import FileDialogMode
 from QEasyWidgets.Components import *
 
-from .common import SubPage, Page
+from .common import ComponentFlag, SubPage, Page
 #from assets import *
 from functions import *
 
@@ -148,29 +148,26 @@ class SubEnvPage_Manager(SubPage):
         childFrame_layout.addWidget(executeButton, 1, 1, Qt.AlignRight)
         return childFrame
 
-    def addComboBoxFrame(self,
+    def addComboBoxButtonFrame(self,
         rootItemText: Optional[str] = None, toolBoxText: Optional[str] = None, text: str = ..., toolTip: Optional[str] = None,
         items: list = ...,
         # section: str = ..., option: str = ..., defaultValue: str = ..., placeholderText: str = "",
-        executorText: str = ..., executeMethod: object = ..., executeParamTargets: list[QObject] = [], terminateMethod: object = ..., threadPool = ...,
+        buttonText: str = ...,
     ):
         label = LabelBase(self)
         comboBox = ComboBoxBase(self)
-        executeButton = HollowButton(self)
+        button = HollowButton(self)
         self._setLabelText(label, text)
         comboBox.setToolTip(toolTip) if toolTip is not None else None
         comboBox.addItems(items)
-        executeButton.setObjectName(text.splitlines()[0])
-        executeButton.setText(executorText)
-        self._addToContainer(rootItemText, toolBoxText, text, label, comboBox, executeButton)
-        Function_SetMethodExecutor(
-            executeButton = executeButton,
-            executeMethod = executeMethod,
-            executeParams = [paramTarget() if hasattr(paramTarget, '__call__') else paramTarget for paramTarget in executeParamTargets],
-            terminateMethod = terminateMethod,
-            threadPool = threadPool,
-            parentWindow = self,
-        )
+        button.setObjectName(text.splitlines()[0])
+        button.setText(buttonText)
+        containerDict = self._addToContainer(rootItemText, toolBoxText, text, label, comboBox, button)
+        return {
+            ComponentFlag.ComboBox: comboBox,
+            ComponentFlag.Button: button,
+            **containerDict
+        }
 
 
 class EnvPage(Page):

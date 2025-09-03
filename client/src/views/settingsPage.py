@@ -6,7 +6,7 @@ from QEasyWidgets import QFunctions as QFunc
 from QEasyWidgets.Common import FileDialogMode
 from QEasyWidgets.Components import *
 
-from .common import SubPage, Page
+from .common import ComponentFlag, SubPage, Page
 #from assets import *
 from functions import *
 
@@ -77,7 +77,11 @@ class SubSettingsPage(SubPage):
         lineEdit.setFileDialog(fileDialogMode, fileType, directory) if fileDialogMode is not None else None
         (paramsManager or self.paramsManager).setParam(lineEdit, section, option, defaultValue, setPlaceholderText = True, placeholderText = placeholderText)
         self._setButtonMenu(button, lineEdit)
-        self._addToContainer(rootItemText, toolBoxText, text, label, lineEdit, button)
+        containerDict = self._addToContainer(rootItemText, toolBoxText, text, label, lineEdit, button)
+        return {
+            ComponentFlag.LineEdit: lineEdit,
+            **containerDict
+        }
 
     def addCheckBoxFrame(self,
         rootItemText: Optional[str] = None, toolBoxText: Optional[str] = None, text: str = ..., toolTip: Optional[str] = None,
@@ -91,7 +95,11 @@ class SubSettingsPage(SubPage):
         checkBox.setToolTip(toolTip) if toolTip is not None else None
         (paramsManager or self.paramsManager).setParam(checkBox, section, option, defaultValue)
         self._setButtonMenu(button, checkBox)
-        self._addToContainer(rootItemText, toolBoxText, text, label, checkBox, button)
+        containerDict = self._addToContainer(rootItemText, toolBoxText, text, label, checkBox, button)
+        return {
+            ComponentFlag.CheckBox: checkBox,
+            **containerDict
+        }
 
     def addComboBoxFrame(self,
         rootItemText: Optional[str] = None, toolBoxText: Optional[str] = None, text: str = ..., toolTip: Optional[str] = None,
@@ -125,7 +133,7 @@ class SubSettingsPage(SubPage):
             (paramsManager or self.paramsManager).setParam(comboBox, section, option, defaultValue)
         comboBox.setCurrentIndex(currentIndex) if currentIndex is not None else None
         self._setButtonMenu(button, comboBox)
-        self._addToContainer(rootItemText, toolBoxText, text, label, comboBox, button)
+        containerDict = self._addToContainer(rootItemText, toolBoxText, text, label, comboBox, button)
 
 
 class SettingsPage(Page):

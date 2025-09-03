@@ -7,7 +7,7 @@ from QEasyWidgets.Common import FileDialogMode
 from QEasyWidgets.Components import *
 from QEasyWidgets import QTasks
 
-from .common import SubPage, Page
+from .common import ComponentFlag, SubPage, Page
 from components import Frame_RangeSetting
 #from assets import *
 from functions import *
@@ -191,9 +191,13 @@ class SubToolPage(SubPage):
             placeholderText = placeholderText
         )
         self._setButtonMenu(button, lineEdit)
-        self._addToContainer(rootItemText, toolBoxText, text, label, lineEdit, button)
+        containerDict = self._addToContainer(rootItemText, toolBoxText, text, label, lineEdit, button)
         self._connectToTreeWidget(label, rootItemText, text)
         self.paramWidgets[lineEdit] = emptyAllowed
+        return {
+            ComponentFlag.LineEdit: lineEdit,
+            **containerDict
+        }
 
     def addTextEditFrame(self,
         rootItemText: Optional[str] = None, toolBoxText: Optional[str] = None, text: str = ..., toolTip: Optional[str] = None,
@@ -211,9 +215,13 @@ class SubToolPage(SubPage):
             placeholderText = placeholderText
         )
         self._setButtonMenu(button, textEdit)
-        self._addToContainer(rootItemText, toolBoxText, text, label, textEdit, button)
+        containerDict = self._addToContainer(rootItemText, toolBoxText, text, label, textEdit, button)
         self._connectToTreeWidget(label, rootItemText, text)
         self.paramWidgets[textEdit] = emptyAllowed
+        return {
+            ComponentFlag.TextEdit: textEdit,
+            **containerDict
+        }
 
     def addCheckBoxFrame(self,
         rootItemText: Optional[str] = None, toolBoxText: Optional[str] = None, text: str = ..., toolTip: Optional[str] = None,
@@ -229,9 +237,13 @@ class SubToolPage(SubPage):
         checkBox.setToolTip(toolTip) if toolTip is not None else None
         self.paramsManager.setParam(checkBox, section, option, defaultValue)
         self._setButtonMenu(button, checkBox)
-        self._addToContainer(rootItemText, toolBoxText, text, label, checkBox, button)
+        containerDict = self._addToContainer(rootItemText, toolBoxText, text, label, checkBox, button)
         self._connectToTreeWidget(label, rootItemText, text)
         self.paramWidgets[checkBox] = emptyAllowed
+        return {
+            ComponentFlag.CheckBox: checkBox,
+            **containerDict
+        }
 
     def addComboBoxFrame(self,
         rootItemText: Optional[str] = None, toolBoxText: Optional[str] = None, text: str = ..., toolTip: Optional[str] = None,
@@ -249,9 +261,13 @@ class SubToolPage(SubPage):
         self.paramsManager.setParam(comboBox, section, option, defaultValue)
         comboBox.setCurrentIndex(currentIndex) if currentIndex is not None else None
         self._setButtonMenu(button, comboBox)
-        self._addToContainer(rootItemText, toolBoxText, text, label, comboBox, button)
+        containerDict = self._addToContainer(rootItemText, toolBoxText, text, label, comboBox, button)
         self._connectToTreeWidget(label, rootItemText, text)
         self.paramWidgets[comboBox] = emptyAllowed
+        return {
+            ComponentFlag.ComboBox: comboBox,
+            **containerDict
+        }
 
     def addSpinBoxFrame(self,
         rootItemText: Optional[str] = None, toolBoxText: Optional[str] = None, text: str = ..., toolTip: Optional[str] = None,
@@ -269,9 +285,13 @@ class SubToolPage(SubPage):
         spinBox.setSingleStep(step) if step is not None else None
         self.paramsManager.setParam(spinBox, section, option, defaultValue)
         self._setButtonMenu(button, spinBox)
-        self._addToContainer(rootItemText, toolBoxText, text, label, spinBox, button)
+        containerDict = self._addToContainer(rootItemText, toolBoxText, text, label, spinBox, button)
         self._connectToTreeWidget(label, rootItemText, text)
         self.paramWidgets[spinBox] = emptyAllowed
+        return {
+            ComponentFlag.SpinBox: spinBox,
+            **containerDict
+        }
 
     def addDoubleSpinBoxFrame(self,
         rootItemText: Optional[str] = None, toolBoxText: Optional[str] = None, text: str = ..., toolTip: Optional[str] = None,
@@ -289,9 +309,13 @@ class SubToolPage(SubPage):
         doubleSpinBox.setSingleStep(step) if step is not None else None
         self.paramsManager.setParam(doubleSpinBox, section, option, defaultValue)
         self._setButtonMenu(button, doubleSpinBox)
-        self._addToContainer(rootItemText, toolBoxText, text, label, doubleSpinBox, button)
+        containerDict = self._addToContainer(rootItemText, toolBoxText, text, label, doubleSpinBox, button)
         self._connectToTreeWidget(label, rootItemText, text)
         self.paramWidgets[doubleSpinBox] = emptyAllowed
+        return {
+            ComponentFlag.DoubleSpinBox: doubleSpinBox,
+            **containerDict
+        }
 
     def addRangeSettingFrame(self,
         rootItemText: Optional[str] = None, toolBoxText: Optional[str] = None, text: str = ..., toolTip: Optional[str] = None,
@@ -310,8 +334,12 @@ class SubToolPage(SubPage):
         self.paramsManager.setParam(rangeSetting, section, option, defaultValue)
         self._setButtonMenu(button, rangeSetting)
         self._addToContainer(rootItemText, toolBoxText, text, label, rangeSetting, button)
-        self._connectToTreeWidget(label, rootItemText, text)
+        containerDict = self._connectToTreeWidget(label, rootItemText, text)
         self.paramWidgets[rangeSetting] = emptyAllowed
+        return {
+            ComponentFlag.RangeSetting: rangeSetting,
+            **containerDict
+        }
 
     def addEditAudioSpeakerTableFrame(self,
         rootItemText: Optional[str] = None, toolBoxText: Optional[str] = None, text: str = ...,
@@ -327,8 +355,12 @@ class SubToolPage(SubPage):
         table.setFileDialog(fileType)
         self.paramsManager.setParam(table, section, option, defaultValue)
         #self._setButtonMenu(button, table)
-        self._addToContainer(rootItemText, toolBoxText, text, label, table, button)
+        containerDict = self._addToContainer(rootItemText, toolBoxText, text, label, table, button)
         self._connectToTreeWidget(label, rootItemText, text)
+        return {
+            ComponentFlag.Table: table,
+            **containerDict
+        }
 
     def addSideBtn(self,
         text: str = ...,
@@ -338,7 +370,9 @@ class SubToolPage(SubPage):
         sideButton.setText(text)
         sideButton.clicked.connect(lambda: EasyUtils.runEvents(events))
         self.rightWidget_layout.addWidget(sideButton, self.rightWidget_layout.rowCount(), 0, 1, 3)
-        self.widgets[(text.splitlines()[0],)] = sideButton
+        return {
+            ComponentFlag.Button: sideButton,
+        }
 
     def addChkOutputSideBtn(self,
         outputRootEdit: QLineEdit

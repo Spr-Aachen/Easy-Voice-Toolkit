@@ -1,3 +1,4 @@
+from enum import Enum
 from typing import Type, Optional
 from PySide6.QtCore import Qt, QRect, QSize
 from PySide6.QtWidgets import *
@@ -8,6 +9,21 @@ from QEasyWidgets.Components import *
 from functions import *
 
 ##############################################################################################################################
+
+class ComponentFlag(Enum):
+    GroupBox = "GroupBox"
+    ToolBox = "ToolBox"
+    Frame = "Frame"
+    Button = "Button"
+    LineEdit = "LineEdit"
+    TextEdit = "TextEdit"
+    CheckBox = "CheckBox"
+    ComboBox = "ComboBox"
+    SpinBox = "SpinBox"
+    DoubleSpinBox = "DoubleSpinBox"
+    Table = "Table"
+    RangeSetting = "RangeSetting"
+
 
 class SubPage(WidgetBase):
     """
@@ -31,14 +47,6 @@ class SubPage(WidgetBase):
         layout.setContentsMargins(0, 0, 0, 0)
         layout.addWidget(self.contentWidget, 0, 0)
 
-    def findChildWidget(self, *args, type: Optional[Type[QWidget]] = None):
-        if len(args) > 3:
-            args, type = args[:-1], args[-1]
-        childWidget = self.widgets.get(args, None)
-        if type is not None and not isinstance(childWidget, type):
-            childWidget = QFunc.findChild(childWidget, type)
-        return childWidget
-
     def cleanLayout(self) -> QGridLayout:
         layout = self.layout()
         layout.removeWidget(self.contentWidget)
@@ -61,13 +69,12 @@ class SubPage(WidgetBase):
     def _addToContainer(self, rootItemText: Optional[str] = None, toolBoxText: Optional[str] = None, text: str = ..., *args):
         # Add to childFrame
         childFrame = self._addToChildFrame(*args)
-        self.widgets[(rootItemText, toolBoxText, text.splitlines()[0])] = childFrame # record the childFrame
         # Add to toolBox
         if toolBoxText is None:
             toolBox = childFrame
         else:
             toolBoxText = toolBoxText.splitlines()[0]
-            toolBox = self.findChildWidget(rootItemText, toolBoxText)
+            toolBox = self.widgets.get((rootItemText, toolBoxText))
             if isinstance(toolBox, ToolBoxBase):
                 toolBox.widget(0).addWidget(childFrame)
             else:
@@ -85,7 +92,7 @@ class SubPage(WidgetBase):
             groupBox = toolBox
         else:
             rootItemText = rootItemText.splitlines()[0]
-            groupBox = self.findChildWidget(rootItemText)
+            groupBox = self.widgets.get((rootItemText,))
             if isinstance(groupBox, GroupBoxBase):
                 groupBox.layout().addWidget(toolBox)
             else:
@@ -97,6 +104,11 @@ class SubPage(WidgetBase):
                 groupBox.setTitle(rootItemText)
                 self.widgets[(rootItemText,)] = groupBox # record the groupbox
         self.container.layout().addWidget(groupBox, alignment = Qt.AlignTop)
+        return {
+            ComponentFlag.Frame: childFrame,
+            ComponentFlag.ToolBox: toolBox,
+            ComponentFlag.GroupBox: groupBox,
+        }
 
 ##############################################################################################################################
 
