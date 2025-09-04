@@ -100,31 +100,7 @@ def Function_AddToTreeWidget(
         scrollArea = scrollArea
     )
 
-
-def Function_SetChildWidgetsVisibility(
-    container: QWidget,
-    childWidgetsVisibility: dict,
-    adjustContainer: bool = True
-):
-    '''
-    Function to set the visibility of child-widgets
-    '''
-    for childWidget, visibility in childWidgetsVisibility.items():
-        if childWidget is None:
-            continue
-        childWidget.setVisible(visibility)
-    setVisible = True in childWidgetsVisibility.values()
-    if adjustContainer:
-        CurrentHeight = container.height()
-        #container.updateGeometry()
-        AdjustedHeight = container.minimumSizeHint().height()
-        Function_AnimateFrame(
-            frame = container,
-            minHeight = CurrentHeight if setVisible else AdjustedHeight,
-            maxHeight = AdjustedHeight if setVisible else CurrentHeight,
-            mode = 'Extend' if setVisible else 'Reduce'
-        )
-
+##############################################################################################################################
 
 def Function_ConfigureCheckBox(
     checkBox: QCheckBox,
@@ -163,6 +139,27 @@ def Function_ConfigureComboBox(
     EasyUtils.runEvents(EasyUtils.toIterable(textChangedEvents[comboBox.currentText()])) if takeEffect else None
 
 ##############################################################################################################################
+
+def Function_AnimateProgressBar(
+    progressBar: QProgressBar,
+    minValue: int = 0,
+    maxValue: int = 100,
+    displayValue: bool = False,
+    isTaskAlive: bool = False
+):
+    '''
+    Function to animate progressbar
+    '''
+    progressBar.setTextVisible(displayValue)
+    progressBar.setRange(minValue, maxValue)
+    progressBar.setValue(minValue)
+
+    if isTaskAlive == True:
+        progressBar.setRange(0, 0)
+    else:
+        progressBar.setRange(minValue, maxValue)
+        progressBar.setValue(maxValue)
+
 
 def Function_AnimateStackedWidget(
     stackedWidget: QStackedWidget,
@@ -220,26 +217,28 @@ def Function_AnimateFrame(
         ExtendFrame() if frame.width() == minWidth or frame.height() == minHeight else ReduceFrame()
 
 
-def Function_AnimateProgressBar(
-    progressBar: QProgressBar,
-    minValue: int = 0,
-    maxValue: int = 100,
-    displayValue: bool = False,
-    isTaskAlive: bool = False
+def Function_SetChildWidgetsVisibility(
+    container: QWidget,
+    childWidgetsVisibility: dict,
+    adjustContainer: bool = True
 ):
     '''
-    Function to animate progressbar
+    Function to set the visibility of child-widgets
     '''
-    progressBar.setTextVisible(displayValue)
-    progressBar.setRange(minValue, maxValue)
-    progressBar.setValue(minValue)
-
-    if isTaskAlive == True:
-        progressBar.setRange(0, 0)
-        #QApplication.processEvents()
-    else:
-        progressBar.setRange(minValue, maxValue)
-        progressBar.setValue(maxValue)
+    for childWidget, visibility in childWidgetsVisibility.items():
+        if childWidget is None:
+            continue
+        childWidget.setVisible(visibility)
+    setVisible = True in childWidgetsVisibility.values()
+    if adjustContainer:
+        currentHeight = container.height()
+        adjustedHeight = container.minimumSizeHint().height()
+        Function_AnimateFrame(
+            frame = container,
+            minHeight = currentHeight if setVisible else adjustedHeight,
+            maxHeight = adjustedHeight if setVisible else currentHeight,
+            mode = 'Extend' if setVisible else 'Reduce'
+        )
 
 ##############################################################################################################################
 
