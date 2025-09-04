@@ -71,7 +71,7 @@ class SubPage(WidgetBase):
         childFrame = self._addToChildFrame(*args)
         # Add to toolBox
         if toolBoxText is None:
-            toolBox = childFrame
+            toolBox = None
         else:
             toolBoxText = toolBoxText.splitlines()[0]
             toolBox = self.widgets.get((rootItemText, toolBoxText))
@@ -89,21 +89,21 @@ class SubPage(WidgetBase):
             toolBox.widget(0).collapse()
         # Add to groupBox
         if rootItemText is None:
-            groupBox = toolBox
+            groupBox = None
         else:
             rootItemText = rootItemText.splitlines()[0]
             groupBox = self.widgets.get((rootItemText,))
             if isinstance(groupBox, GroupBoxBase):
-                groupBox.layout().addWidget(toolBox)
+                groupBox.layout().addWidget(toolBox or childFrame)
             else:
                 groupBox = GroupBoxBase()
                 groupBox_layout = QGridLayout(groupBox)
                 groupBox_layout.setSpacing(0)
                 groupBox_layout.setContentsMargins(0, 12, 0, 12)
-                groupBox_layout.addWidget(toolBox)
+                groupBox_layout.addWidget(toolBox or childFrame)
                 groupBox.setTitle(rootItemText)
                 self.widgets[(rootItemText,)] = groupBox # record the groupbox
-        self.container.layout().addWidget(groupBox, alignment = Qt.AlignTop)
+        self.container.layout().addWidget(groupBox or toolBox or childFrame, alignment = Qt.AlignTop)
         return {
             ComponentFlag.Frame: childFrame,
             ComponentFlag.ToolBox: toolBox,
