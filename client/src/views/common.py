@@ -66,7 +66,7 @@ class SubPage(WidgetBase):
             childFrame.setLayout(widget)
         return childFrame
 
-    def _addToContainer(self, rootItemText: Optional[str] = None, toolBoxText: Optional[str] = None, text: str = ..., *args):
+    def _addToContainer(self, rootItemText: Optional[str] = None, toolBoxText: Optional[str] = None, *args):
         # Add to childFrame
         childFrame = self._addToChildFrame(*args)
         # Add to toolBox

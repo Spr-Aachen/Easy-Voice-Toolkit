@@ -77,7 +77,7 @@ class SubSettingsPage(SubPage):
         lineEdit.setFileDialog(fileDialogMode, fileType, directory) if fileDialogMode is not None else None
         (paramsManager or self.paramsManager).setParam(lineEdit, section, option, defaultValue, setPlaceholderText = True, placeholderText = placeholderText)
         self._setButtonMenu(button, lineEdit)
-        containerDict = self._addToContainer(rootItemText, toolBoxText, text, label, lineEdit, button)
+        containerDict = self._addToContainer(rootItemText, toolBoxText, label, lineEdit, button)
         return {
             ComponentFlag.LineEdit: lineEdit,
             **containerDict
@@ -95,7 +95,7 @@ class SubSettingsPage(SubPage):
         checkBox.setToolTip(toolTip) if toolTip is not None else None
         (paramsManager or self.paramsManager).setParam(checkBox, section, option, defaultValue)
         self._setButtonMenu(button, checkBox)
-        containerDict = self._addToContainer(rootItemText, toolBoxText, text, label, checkBox, button)
+        containerDict = self._addToContainer(rootItemText, toolBoxText, label, checkBox, button)
         return {
             ComponentFlag.CheckBox: checkBox,
             **containerDict
@@ -133,7 +133,11 @@ class SubSettingsPage(SubPage):
             (paramsManager or self.paramsManager).setParam(comboBox, section, option, defaultValue)
         comboBox.setCurrentIndex(currentIndex) if currentIndex is not None else None
         self._setButtonMenu(button, comboBox)
-        containerDict = self._addToContainer(rootItemText, toolBoxText, text, label, comboBox, button)
+        containerDict = self._addToContainer(rootItemText, toolBoxText, label, comboBox, button)
+        return {
+            ComponentFlag.ComboBox: comboBox,
+            **containerDict
+        }
 
 
 class SettingsPage(Page):

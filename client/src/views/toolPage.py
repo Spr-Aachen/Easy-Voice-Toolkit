@@ -191,7 +191,7 @@ class SubToolPage(SubPage):
             placeholderText = placeholderText
         )
         self._setButtonMenu(button, lineEdit)
-        containerDict = self._addToContainer(rootItemText, toolBoxText, text, label, lineEdit, button)
+        containerDict = self._addToContainer(rootItemText, toolBoxText, label, lineEdit, button)
         self._connectToTreeWidget(label, rootItemText, text)
         self.paramWidgets[lineEdit] = emptyAllowed
         return {
@@ -215,7 +215,7 @@ class SubToolPage(SubPage):
             placeholderText = placeholderText
         )
         self._setButtonMenu(button, textEdit)
-        containerDict = self._addToContainer(rootItemText, toolBoxText, text, label, textEdit, button)
+        containerDict = self._addToContainer(rootItemText, toolBoxText, label, textEdit, button)
         self._connectToTreeWidget(label, rootItemText, text)
         self.paramWidgets[textEdit] = emptyAllowed
         return {
@@ -237,7 +237,7 @@ class SubToolPage(SubPage):
         checkBox.setToolTip(toolTip) if toolTip is not None else None
         self.paramsManager.setParam(checkBox, section, option, defaultValue)
         self._setButtonMenu(button, checkBox)
-        containerDict = self._addToContainer(rootItemText, toolBoxText, text, label, checkBox, button)
+        containerDict = self._addToContainer(rootItemText, toolBoxText, label, checkBox, button)
         self._connectToTreeWidget(label, rootItemText, text)
         self.paramWidgets[checkBox] = emptyAllowed
         return {
@@ -261,7 +261,7 @@ class SubToolPage(SubPage):
         self.paramsManager.setParam(comboBox, section, option, defaultValue)
         comboBox.setCurrentIndex(currentIndex) if currentIndex is not None else None
         self._setButtonMenu(button, comboBox)
-        containerDict = self._addToContainer(rootItemText, toolBoxText, text, label, comboBox, button)
+        containerDict = self._addToContainer(rootItemText, toolBoxText, label, comboBox, button)
         self._connectToTreeWidget(label, rootItemText, text)
         self.paramWidgets[comboBox] = emptyAllowed
         return {
@@ -285,7 +285,7 @@ class SubToolPage(SubPage):
         spinBox.setSingleStep(step) if step is not None else None
         self.paramsManager.setParam(spinBox, section, option, defaultValue)
         self._setButtonMenu(button, spinBox)
-        containerDict = self._addToContainer(rootItemText, toolBoxText, text, label, spinBox, button)
+        containerDict = self._addToContainer(rootItemText, toolBoxText, label, spinBox, button)
         self._connectToTreeWidget(label, rootItemText, text)
         self.paramWidgets[spinBox] = emptyAllowed
         return {
@@ -309,7 +309,7 @@ class SubToolPage(SubPage):
         doubleSpinBox.setSingleStep(step) if step is not None else None
         self.paramsManager.setParam(doubleSpinBox, section, option, defaultValue)
         self._setButtonMenu(button, doubleSpinBox)
-        containerDict = self._addToContainer(rootItemText, toolBoxText, text, label, doubleSpinBox, button)
+        containerDict = self._addToContainer(rootItemText, toolBoxText, label, doubleSpinBox, button)
         self._connectToTreeWidget(label, rootItemText, text)
         self.paramWidgets[doubleSpinBox] = emptyAllowed
         return {
@@ -333,7 +333,7 @@ class SubToolPage(SubPage):
         rangeSetting.setSingleStep(step) if step is not None else None
         self.paramsManager.setParam(rangeSetting, section, option, defaultValue)
         self._setButtonMenu(button, rangeSetting)
-        self._addToContainer(rootItemText, toolBoxText, text, label, rangeSetting, button)
+        self._addToContainer(rootItemText, toolBoxText, label, rangeSetting, button)
         containerDict = self._connectToTreeWidget(label, rootItemText, text)
         self.paramWidgets[rangeSetting] = emptyAllowed
         return {
@@ -355,7 +355,7 @@ class SubToolPage(SubPage):
         table.setFileDialog(fileType)
         self.paramsManager.setParam(table, section, option, defaultValue)
         #self._setButtonMenu(button, table)
-        containerDict = self._addToContainer(rootItemText, toolBoxText, text, label, table, button)
+        containerDict = self._addToContainer(rootItemText, toolBoxText, label, table, button)
         self._connectToTreeWidget(label, rootItemText, text)
         return {
             ComponentFlag.Table: table,

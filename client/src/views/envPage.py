@@ -78,7 +78,7 @@ class SubEnvPage_Detector(SubPage):
         statusBrowser.setText("--")
         detectButton.setIcon(IconBase.Arrow_Clockwise)
         detectButton.setToolTip(toolTip)
-        self._addToContainer(rootItemText, toolBoxText, text, label, progressBar, statusBrowser, detectButton)
+        self._addToContainer(rootItemText, toolBoxText, label, progressBar, statusBrowser, detectButton)
         Function_SetMethodExecutor(
             executeButton = detectButton,
             progressBar = progressBar,
@@ -162,7 +162,7 @@ class SubEnvPage_Manager(SubPage):
         comboBox.addItems(items)
         button.setObjectName(text.splitlines()[0])
         button.setText(buttonText)
-        containerDict = self._addToContainer(rootItemText, toolBoxText, text, label, comboBox, button)
+        containerDict = self._addToContainer(rootItemText, toolBoxText, label, comboBox, button)
         return {
             ComponentFlag.ComboBox: comboBox,
             ComponentFlag.Button: button,
