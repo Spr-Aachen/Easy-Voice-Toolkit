@@ -1434,7 +1434,7 @@ class MainWindow(Window_MainWindow):
             checkBox = component_process_sliceAudio.get(ComponentFlag.CheckBox),
             checkedEvents = {
                 lambda: Function_SetChildWidgetsVisibility(
-                    container = component_process_sliceAudio.get(ComponentFlag.ToolBox),
+                    container = component_process_rmsThreshold.get(ComponentFlag.ToolBox),
                     childWidgetsVisibility = {
                         component_process_rmsThreshold.get(ComponentFlag.Frame): True,
                         component_process_audioLength.get(ComponentFlag.Frame): True,
@@ -1446,7 +1446,7 @@ class MainWindow(Window_MainWindow):
             },
             uncheckedEvents = {
                 lambda: Function_SetChildWidgetsVisibility(
-                    container = component_process_sliceAudio.get(ComponentFlag.ToolBox),
+                    container = component_process_rmsThreshold.get(ComponentFlag.ToolBox),
                     childWidgetsVisibility = {
                         component_process_rmsThreshold.get(ComponentFlag.Frame): False,
                         component_process_audioLength.get(ComponentFlag.Frame): False,
