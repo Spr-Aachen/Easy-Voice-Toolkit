@@ -838,12 +838,19 @@ class MainWindow(Window_MainWindow):
             section = 'Settings',
             option = 'Language',
         )
-        subSettingsPage_Client.addCheckBoxFrame(
+        component_settings_autoUpdate = subSettingsPage_Client.addCheckBoxFrame(
             rootItemText = self.tr("功能设置"),
             text = self.tr("自动检查版本并更新"),
             section = 'Settings',
             option = 'AutoUpdate',
             defaultValue = True
+        )
+        Function_ConfigureCheckBox(
+            checkBox = component_settings_autoUpdate.get(ComponentFlag.CheckBox),
+            checkedEvents = {
+            },
+            uncheckedEvents = {
+            },
         )
         self.ui.Page_Settings.addSubPage(
             self.tr("系统选项"), subSettingsPage_Client
