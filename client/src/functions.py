@@ -104,9 +104,9 @@ def Function_AddToTreeWidget(
 
 def Function_ConfigureCheckBox(
     checkBox: QCheckBox,
-    checkedText: Optional[str] = None,
+    checkedText: Optional[str] = "On",
     checkedEvents: dict = {},
-    uncheckedText: Optional[str] = None,
+    uncheckedText: Optional[str] = "Off",
     uncheckedEvents: dict = {},
 ):
     '''

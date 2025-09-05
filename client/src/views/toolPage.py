@@ -233,7 +233,6 @@ class SubToolPage(SubPage):
         checkBox.setObjectName(text.splitlines()[0])
         button = MenuButton()
         self._setLabelText(label, text)
-        Function_ConfigureCheckBox(checkBox, checkedText = self.tr("已启动"), uncheckedText = self.tr("未启动"))
         checkBox.setToolTip(toolTip) if toolTip is not None else None
         self.paramsManager.setParam(checkBox, section, option, defaultValue)
         self._setButtonMenu(button, checkBox)
