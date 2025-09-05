@@ -646,10 +646,12 @@ class MainWindow(Window_MainWindow):
         )
         Function_ConfigureCheckBox(
             checkBox = self.ui.CheckBox_SwitchTheme,
+            checkedText = "☀",
             checkedEvents = {
                 lambda: config.editConfig('Settings', 'Theme', Theme.Light): False,
                 lambda: ComponentsSignals.Signal_SetTheme.emit(Theme.Light) if currentTheme() != Theme.Light else None : False
             },
+            uncheckedText = "☼",
             uncheckedEvents = {
                 lambda: config.editConfig('Settings', 'Theme', Theme.Dark) : False,
                 lambda: ComponentsSignals.Signal_SetTheme.emit(Theme.Dark) if currentTheme() != Theme.Dark else None : False
