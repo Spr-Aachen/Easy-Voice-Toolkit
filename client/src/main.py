@@ -330,8 +330,6 @@ class MainWindow(Window_MainWindow):
             )
         )
 
-        ChildWindow_VPR.ui.Table.setHorizontalHeaderLabels(['音频路径', '人物姓名', '相似度', '播放', '操作'])
-
         ChildWindow_VPR.ui.CheckBox.setText(self.tr("结束编辑时将拥有匹配人物的音频保存到:"))
         ChildWindow_VPR.ui.CheckBox.setChecked(True)
         ChildWindow_VPR.ui.LineEdit.clearDefaultStyleSheet()
@@ -412,8 +410,6 @@ class MainWindow(Window_MainWindow):
             )
         )
 
-        ChildWindow_ASR.ui.Table.setHorizontalHeaderLabels([self.tr('音频路径'), self.tr('音频内容'), self.tr('播放')])
-
         ChildWindow_ASR.ui.Button_Cancel.setText(self.tr("取消"))
         ChildWindow_ASR.ui.Button_Cancel.clicked.connect(ChildWindow_ASR.ui.Button_Close.click)
         ChildWindow_ASR.ui.Button_Confirm.setText(self.tr("确认"))
@@ -469,9 +465,6 @@ class MainWindow(Window_MainWindow):
                 self.tr("这里记录了每个语音文件与其对应的数据文本\n你可以对这些文本进行更改")
             )
         )
-
-        ChildWindow_DAT.ui.Table_Train.setHorizontalHeaderLabels([self.tr('数据文本'), self.tr('播放')])
-        ChildWindow_DAT.ui.Table_Val.setHorizontalHeaderLabels([self.tr('数据文本'), self.tr('播放')])
 
         ChildWindow_DAT.ui.Button_Cancel.setText(self.tr("取消"))
         ChildWindow_DAT.ui.Button_Cancel.clicked.connect(ChildWindow_DAT.ui.Button_Close.click)
@@ -1131,7 +1124,6 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_Models_Process_Title.setToolTip(self.tr("基本处理模型"))
 
         self.ui.TabWidget_Models_Process.setTabText(0, 'UVR（人声分离）')
-        self.ui.Table_Models_Process_UVR.setHorizontalHeaderLabels(['名字', '类型', '大小', '日期', '操作'])
         self.Signal_ModelView_Process_UVR.connect(self.ui.Table_Models_Process_UVR.setValue)
         self.ui.Table_Models_Process_UVR.download.connect(
             lambda params: Function_SetMethodExecutor(
@@ -1154,7 +1146,6 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_Models_VPR_Title.setToolTip(self.tr("语音识别模型"))
 
         self.ui.TabWidget_Models_VPR.setTabText(0, 'VPR（声纹识别）')
-        self.ui.Table_Models_VPR_TDNN.setHorizontalHeaderLabels(['名字', '类型', '大小', '日期', '操作'])
         self.Signal_ModelView_VPR_TDNN.connect(self.ui.Table_Models_VPR_TDNN.setValue)
         self.ui.Table_Models_VPR_TDNN.download.connect(
             lambda params: Function_SetMethodExecutor(
@@ -1177,7 +1168,6 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_Models_ASR_Title.setToolTip(self.tr("语音转录模型"))
 
         self.ui.TabWidget_Models_ASR.setTabText(0, 'Whisper')
-        self.ui.Table_Models_ASR_Whisper.setHorizontalHeaderLabels(['名字', '类型', '大小', '日期', '操作'])
         self.Signal_ModelView_ASR_Whisper.connect(self.ui.Table_Models_ASR_Whisper.setValue)
         self.ui.Table_Models_ASR_Whisper.download.connect(
             lambda params: Function_SetMethodExecutor(
@@ -1200,7 +1190,6 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_Models_TTS_Title.setToolTip(self.tr("语音合成模型"))
 
         self.ui.TabWidget_Models_TTS.setTabText(0, 'GPT-SoVITS')
-        self.ui.Table_Models_TTS_GPTSoVITS.setHorizontalHeaderLabels(['名字', '类型', '大小', '日期', '操作'])
         self.Signal_ModelView_TTS_GPTSoVITS.connect(self.ui.Table_Models_TTS_GPTSoVITS.setValue)
         self.ui.Table_Models_TTS_GPTSoVITS.download.connect(
             lambda params: Function_SetMethodExecutor(

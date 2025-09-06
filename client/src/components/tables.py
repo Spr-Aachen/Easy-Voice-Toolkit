@@ -23,12 +23,11 @@ class Table_ViewModels(TableBase):
         self.setColumnCount(0)
         self.setIndexHeaderVisible(False)
         self.verticalHeader().setSectionResizeMode(QHeaderView.Fixed)
+        self.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+
+        self.setHorizontalHeaderLabels([self.tr("名字"), self.tr("类型"), self.tr("大小"), self.tr("日期"), self.tr("操作")])
 
         self.clipboard = QApplication.instance().clipboard()
-
-    def setHorizontalHeaderLabels(self, headers: list):
-        super().setHorizontalHeaderLabels(headers)
-        self.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
 
     def addRow(self, param: tuple):
         modelName, modelType, modelSize, modelDate, downloadParam = param
@@ -224,6 +223,8 @@ class Table_VPRResult(TableBase):
         self.setIndexHeaderVisible(True)
         self.verticalHeader().setSectionResizeMode(QHeaderView.Fixed)
 
+        self.setHorizontalHeaderLabels([self.tr("音频路径"), self.tr("人物姓名"), self.tr("相似度"), self.tr("播放"), self.tr("操作")])
+
     def setStyleSheet(self, styleSheet: str):
         super().setStyleSheet(styleSheet + '''
             QHeaderView::section, QTableView::item {padding: 0px;}
@@ -330,6 +331,8 @@ class Table_ASRResult(TableBase):
         self.setIndexHeaderVisible(True)
         self.verticalHeader().setSectionResizeMode(QHeaderView.Fixed)
 
+        self.setHorizontalHeaderLabels([self.tr("音频路径"), self.tr("音频内容"), self.tr("播放")])
+
     def setStyleSheet(self, styleSheet: str):
         super().setStyleSheet(styleSheet + '''
             QHeaderView::section, QTableView::item {padding: 0px;}
@@ -403,6 +406,8 @@ class Table_DATResult(TableBase):
         self.setColumnCount(0)
         self.setIndexHeaderVisible(True)
         self.verticalHeader().setSectionResizeMode(QHeaderView.Fixed)
+
+        self.setHorizontalHeaderLabels([self.tr("数据文本"), self.tr("播放")])
 
     def setStyleSheet(self, styleSheet: str):
         super().setStyleSheet(styleSheet + '''
