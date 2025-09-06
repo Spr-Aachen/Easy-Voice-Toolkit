@@ -2168,17 +2168,17 @@ class MainWindow(Window_MainWindow):
                 'v2': lambda: Function_SetChildWidgetsVisibility(
                     container = component_train_gptsovits_version.get(ComponentFlag.GroupBox),
                     childWidgetsVisibility = {
-                        component_train_gptsovits_modelPathPretrainedS2D.get(ComponentFlag.LineEdit): True,
-                        component_train_gptsovits_ifGradCkpt.get(ComponentFlag.CheckBox): False,
-                        component_train_gptsovits_loraRank.get(ComponentFlag.ComboBox): False,
+                        component_train_gptsovits_modelPathPretrainedS2D.get(ComponentFlag.Frame): True,
+                        component_train_gptsovits_ifGradCkpt.get(ComponentFlag.Frame): False,
+                        component_train_gptsovits_loraRank.get(ComponentFlag.Frame): False,
                     }
                 ),
                 'v3': lambda: Function_SetChildWidgetsVisibility(
                     container = component_train_gptsovits_version.get(ComponentFlag.GroupBox),
                     childWidgetsVisibility = {
-                        component_train_gptsovits_modelPathPretrainedS2D.get(ComponentFlag.LineEdit): False,
-                        component_train_gptsovits_ifGradCkpt.get(ComponentFlag.CheckBox): True,
-                        component_train_gptsovits_loraRank.get(ComponentFlag.ComboBox): True,
+                        component_train_gptsovits_modelPathPretrainedS2D.get(ComponentFlag.Frame): False,
+                        component_train_gptsovits_ifGradCkpt.get(ComponentFlag.Frame): True,
+                        component_train_gptsovits_loraRank.get(ComponentFlag.Frame): True,
                     }
                 ),
             },
@@ -2339,15 +2339,15 @@ class MainWindow(Window_MainWindow):
                 "v2": lambda: Function_SetChildWidgetsVisibility(
                     container = component_tts_gptsovits_version.get(ComponentFlag.GroupBox),
                     childWidgetsVisibility = {
-                        component_tts_gptsovits_modelPathLoadS2Gv3.get(ComponentFlag.LineEdit): False,
-                        component_tts_gptsovits_modelDirLoadBigVGAN.get(ComponentFlag.LineEdit): False,
+                        component_tts_gptsovits_modelPathLoadS2Gv3.get(ComponentFlag.Frame): False,
+                        component_tts_gptsovits_modelDirLoadBigVGAN.get(ComponentFlag.Frame): False,
                     },
                 ),
                 "v3": lambda: Function_SetChildWidgetsVisibility(
                     container = component_tts_gptsovits_version.get(ComponentFlag.GroupBox),
                     childWidgetsVisibility = {
-                        component_tts_gptsovits_modelPathLoadS2Gv3.get(ComponentFlag.LineEdit): True,
-                        component_tts_gptsovits_modelDirLoadBigVGAN.get(ComponentFlag.LineEdit): True,
+                        component_tts_gptsovits_modelPathLoadS2Gv3.get(ComponentFlag.Frame): True,
+                        component_tts_gptsovits_modelDirLoadBigVGAN.get(ComponentFlag.Frame): True,
                     },
                 ),
             },
