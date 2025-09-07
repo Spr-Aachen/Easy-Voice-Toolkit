@@ -588,7 +588,7 @@ def Function_SetMethodExecutor(
     workerManager.signals.error.connect(
         lambda err: (
             _setErrorOccuredFlag(),
-            MessageBoxBase.pop(parentWindow, QMessageBox.Warning, "Failure", "发生异常", str(err)),
+            MessageBoxBase.pop(parentWindow, QMessageBox.Warning, "Failure", "Exception occurred:(\n发生异常", str(err)),
             EasyUtils.runEvents([event for event, status in finishedEvents.items() if status == TaskStatus.Failed]) if finishedEvents is not None else None,
         )
     )
@@ -617,7 +617,7 @@ def Function_SetMethodExecutor(
             lambda: MessageBoxBase.pop(parentWindow,
                 messageType = QMessageBox.Question,
                 windowTitle = "Ask",
-                text = "当前任务仍在执行中，是否确认终止？",
+                text = "The task is still running, do you wish to abort it?\n当前任务仍在执行中，是否确认终止？",
                 buttons = QMessageBox.Yes|QMessageBox.No,
                 buttonEvents = {QMessageBox.Yes: workerManager.terminate}
             )

@@ -416,7 +416,7 @@ class MainWindow(Window_MainWindow):
         ChildWindow_ASR.ui.Button_Confirm.clicked.connect(
             lambda: MessageBoxBase.pop(self,
                 QMessageBox.Question, "Ask",
-                text = self.tr("确认应用编辑？"),
+                text = self.tr("确认结束并应用编辑？"),
                 buttons = QMessageBox.Yes|QMessageBox.No,
                 buttonEvents = {
                     QMessageBox.Yes: lambda: (
@@ -455,7 +455,7 @@ class MainWindow(Window_MainWindow):
         QFunc.setText(
             widget = ChildWindow_DAT.ui.Label_Title,
             text = EasyUtils.setRichText(
-                self.tr("数据集制作结果"),
+                self.tr("数据预处理结果"),
                 size = 12
             )
         )
@@ -472,7 +472,7 @@ class MainWindow(Window_MainWindow):
         ChildWindow_DAT.ui.Button_Confirm.clicked.connect(
             lambda: MessageBoxBase.pop(self,
                 QMessageBox.Question, "Ask",
-                text = self.tr("确认应用编辑？"),
+                text = self.tr("确认结束并应用编辑？"),
                 buttons = QMessageBox.Yes|QMessageBox.No,
                 buttonEvents = {
                     QMessageBox.Yes: lambda: (
@@ -693,7 +693,6 @@ class MainWindow(Window_MainWindow):
             )
         )
         self.ui.Button_Menu_Home.setChecked(True)
-        self.ui.Button_Menu_Home.setToolTip(self.tr("主页"))
 
         self.ui.Button_Menu_Env.setText(self.tr("环境"))
         self.ui.Button_Menu_Env.clicked.connect(
@@ -703,7 +702,6 @@ class MainWindow(Window_MainWindow):
             )
         )
         self.ui.Button_Menu_Env.setChecked(False)
-        self.ui.Button_Menu_Env.setToolTip(self.tr("环境配置"))
 
         self.ui.Button_Menu_Models.setText(self.tr("模型"))
         self.ui.Button_Menu_Models.clicked.connect(
@@ -713,7 +711,6 @@ class MainWindow(Window_MainWindow):
             )
         )
         self.ui.Button_Menu_Models.setChecked(False)
-        self.ui.Button_Menu_Models.setToolTip(self.tr("模型管理"))
 
         self.ui.Button_Menu_Process.setText(self.tr("处理"))
         self.ui.Button_Menu_Process.clicked.connect(
@@ -723,7 +720,6 @@ class MainWindow(Window_MainWindow):
             )
         )
         self.ui.Button_Menu_Process.setChecked(False)
-        self.ui.Button_Menu_Process.setToolTip(self.tr("工具：音频处理"))
 
         self.ui.Button_Menu_VPR.setText(self.tr("识别"))
         self.ui.Button_Menu_VPR.clicked.connect(
@@ -733,7 +729,6 @@ class MainWindow(Window_MainWindow):
             )
         )
         self.ui.Button_Menu_VPR.setChecked(False)
-        self.ui.Button_Menu_VPR.setToolTip(self.tr("工具：语音识别"))
 
         self.ui.Button_Menu_ASR.setText(self.tr("转录"))
         self.ui.Button_Menu_ASR.clicked.connect(
@@ -743,9 +738,8 @@ class MainWindow(Window_MainWindow):
             )
         )
         self.ui.Button_Menu_ASR.setChecked(False)
-        self.ui.Button_Menu_ASR.setToolTip(self.tr("工具：语音转文字"))
 
-        self.ui.Button_Menu_Dataset.setText(self.tr("数据"))
+        self.ui.Button_Menu_Dataset.setText(self.tr("预处理"))
         self.ui.Button_Menu_Dataset.clicked.connect(
             lambda: Function_AnimateStackedWidget(
                 stackedWidget = self.ui.StackedWidget_Pages,
@@ -753,7 +747,6 @@ class MainWindow(Window_MainWindow):
             )
         )
         self.ui.Button_Menu_Dataset.setChecked(False)
-        self.ui.Button_Menu_Dataset.setToolTip(self.tr("工具：数据集制作"))
 
         self.ui.Button_Menu_Train.setText(self.tr("训练"))
         self.ui.Button_Menu_Train.clicked.connect(
@@ -763,7 +756,6 @@ class MainWindow(Window_MainWindow):
             )
         )
         self.ui.Button_Menu_Train.setChecked(False)
-        self.ui.Button_Menu_Train.setToolTip(self.tr("工具：模型训练"))
 
         self.ui.Button_Menu_TTS.setText(self.tr("合成"))
         self.ui.Button_Menu_TTS.clicked.connect(
@@ -773,7 +765,6 @@ class MainWindow(Window_MainWindow):
             )
         )
         self.ui.Button_Menu_TTS.setChecked(False)
-        self.ui.Button_Menu_TTS.setToolTip(self.tr("工具：语音合成"))
 
         self.ui.Button_Menu_Settings.setText(self.tr("设置"))
         self.ui.Button_Menu_Settings.clicked.connect(
@@ -783,7 +774,6 @@ class MainWindow(Window_MainWindow):
             )
         )
         self.ui.Button_Menu_Settings.setChecked(False)
-        self.ui.Button_Menu_Settings.setToolTip(self.tr("客户端设置"))
 
         self.ui.Button_Menu_Info.setText(self.tr("关于"))
         self.ui.Button_Menu_Info.clicked.connect(
@@ -793,7 +783,6 @@ class MainWindow(Window_MainWindow):
             )
         )
         self.ui.Button_Menu_Info.setChecked(False)
-        self.ui.Button_Menu_Info.setToolTip(self.tr("关于本软件"))
 
         #############################################################
         ##################### Content: Settings #####################
@@ -811,7 +800,7 @@ class MainWindow(Window_MainWindow):
             self.tr("暗色"): Theme.Dark
         }
         subSettingsPage_Client.addComboBoxFrame(
-            rootItemText = self.tr("外观设置"),
+            rootItemText = self.tr("界面设置"),
             text = self.tr("主题"),
             items = themeDict.keys(),
             signal = ComponentsSignals.Signal_SetTheme,
@@ -825,7 +814,7 @@ class MainWindow(Window_MainWindow):
             self.tr("英文"): Language.EN
         }
         subSettingsPage_Client.addComboBoxFrame(
-            rootItemText = self.tr("外观设置"),
+            rootItemText = self.tr("界面设置"),
             text = self.tr("语言"),
             items = languageDict.keys(),
             signal = ComponentsSignals.Signal_SetLanguage,
@@ -871,60 +860,64 @@ class MainWindow(Window_MainWindow):
             option = 'AutoCorrelate',
             defaultValue = True
         )
-        Process_OutputRoot_Default = Path(outputDir).joinpath('音频处理结果').as_posix()
+        process_outputRoot_default = Path(outputDir).joinpath("Process (音频处理) Results").as_posix()
         component_process_outputRoot = subSettingsPage_Tools.addLineEditFrame(
             rootItemText = self.tr("路径设置"),
             text = self.tr("音频处理输出目录"),
             fileDialogMode = FileDialogMode.SelectFolder,
-            directory = EasyUtils.normPath(Path(Process_OutputRoot_Default).parent),
+            directory = EasyUtils.normPath(Path(process_outputRoot_default).parent),
             section = 'Output params',
             option = 'Process_OutputRoot',
-            defaultValue = Process_OutputRoot_Default,
-            placeholderText = Process_OutputRoot_Default
+            defaultValue = process_outputRoot_default,
+            placeholderText = process_outputRoot_default
         )
-        VPT_TDNN_AudioSpeakersDataRoot_Default = Path(outputDir).joinpath('语音识别结果', 'VPR').as_posix()
+        vpr_outputRoot_default = Path(outputDir).joinpath("VPR (声纹识别) Results")
+        vpr_tdnn_audioSpeakersDataRoot_default = vpr_outputRoot_default.joinpath("TDNN").as_posix()
         component_vpr_tdnn_outputRoot = subSettingsPage_Tools.addLineEditFrame(
             rootItemText = self.tr("路径设置"),
-            text = self.tr("声纹识别结果输出目录"),
+            text = self.tr("TDNN识别结果输出目录"),
             fileDialogMode = FileDialogMode.SelectFolder,
-            directory = EasyUtils.normPath(Path(VPT_TDNN_AudioSpeakersDataRoot_Default).parent),
+            directory = EasyUtils.normPath(Path(vpr_tdnn_audioSpeakersDataRoot_default).parent),
             section = 'Output params',
-            option = 'VPT_TDNN_OutputRoot',
-            defaultValue = VPT_TDNN_AudioSpeakersDataRoot_Default,
-            placeholderText = VPT_TDNN_AudioSpeakersDataRoot_Default
+            option = 'VPR_TDNN_OutputRoot',
+            defaultValue = vpr_tdnn_audioSpeakersDataRoot_default,
+            placeholderText = vpr_tdnn_audioSpeakersDataRoot_default
         )
-        ASR_Whisper_OutputRoot_Default = Path(outputDir).joinpath('语音转录结果', 'Whisper').as_posix()
+        asr_outputRoot_default = Path(outputDir).joinpath("ASR (语音转录) Results")
+        asr_whisper_outputRoot_default = asr_outputRoot_default.joinpath("Whisper").as_posix()
         component_asr_whisper_outputRoot = subSettingsPage_Tools.addLineEditFrame(
             rootItemText = self.tr("路径设置"),
             text = self.tr("Whisper转录输出目录"),
             fileDialogMode = FileDialogMode.SelectFolder,
-            directory = EasyUtils.normPath(Path(ASR_Whisper_OutputRoot_Default).parent),
+            directory = EasyUtils.normPath(Path(asr_whisper_outputRoot_default).parent),
             section = 'Output params',
             option = 'ASR_Whisper_OutputRoot',
-            defaultValue = ASR_Whisper_OutputRoot_Default,
-            placeholderText = ASR_Whisper_OutputRoot_Default
+            defaultValue = asr_whisper_outputRoot_default,
+            placeholderText = asr_whisper_outputRoot_default
         )
-        DAT_GPTSoVITS_OutputRoot_Default = Path(outputDir).joinpath('数据集制作结果', 'GPT-SoVITS').as_posix()
+        dat_outputRoot_default = Path(outputDir).joinpath("Preprocess (数据预处理) Results")
+        dat_gptsovits_outputRoot_default = dat_outputRoot_default.joinpath("GPT-SoVITS").as_posix()
         component_dat_gptsovits_outputRoot = subSettingsPage_Tools.addLineEditFrame(
             rootItemText = self.tr("路径设置"),
             text = self.tr("GPTSoVITS数据集输出目录"),
             fileDialogMode = FileDialogMode.SelectFolder,
-            directory = EasyUtils.normPath(Path(DAT_GPTSoVITS_OutputRoot_Default).parent),
+            directory = EasyUtils.normPath(Path(dat_gptsovits_outputRoot_default).parent),
             section = 'Output params',
             option = 'DAT_GPTSoVITS_OutputRoot',
-            defaultValue = DAT_GPTSoVITS_OutputRoot_Default,
-            placeholderText = DAT_GPTSoVITS_OutputRoot_Default
+            defaultValue = dat_gptsovits_outputRoot_default,
+            placeholderText = dat_gptsovits_outputRoot_default
         )
-        Train_GPTSoVITS_OutputRoot_Default = Path(outputDir).joinpath('模型训练结果', 'GPT-SoVITS').as_posix()
+        train_outputRoot_default = Path(outputDir).joinpath("Train (模型训练) Results")
+        train_gptsovits_outputRoot_default = train_outputRoot_default.joinpath("GPT-SoVITS").as_posix()
         component_train_gptsovits_outputRoot = subSettingsPage_Tools.addLineEditFrame(
             rootItemText = self.tr("路径设置"),
             text = self.tr("GPTSoVITS训练输出目录"),
             fileDialogMode = FileDialogMode.SelectFolder,
-            directory = EasyUtils.normPath(Path(Train_GPTSoVITS_OutputRoot_Default).parent),
+            directory = EasyUtils.normPath(Path(train_gptsovits_outputRoot_default).parent),
             section = 'Output params',
             option = 'Train_GPTSoVITS_OutputRoot',
-            defaultValue = Train_GPTSoVITS_OutputRoot_Default,
-            placeholderText = Train_GPTSoVITS_OutputRoot_Default
+            defaultValue = train_gptsovits_outputRoot_default,
+            placeholderText = train_gptsovits_outputRoot_default
         )
         self.ui.Page_Settings.addSubPage(
             self.tr("工具选项"), subSettingsPage_Tools
@@ -968,7 +961,7 @@ class MainWindow(Window_MainWindow):
         ##################### Content: Environ ######################
         #############################################################
 
-        '''EnvInstallation'''
+        '''EnvDetection'''
         # Subpage
         subEnvPage_detection = SubEnvPage_Detector(self.ui.Page_Env)
         subEnvPage_detection.addDetectorFrame(
@@ -988,7 +981,7 @@ class MainWindow(Window_MainWindow):
         EnvConfiguratorSignals.Signal_Aria2InstallFailed.connect(
             lambda Exception: MessageBoxBase.pop(self,
                 QMessageBox.Warning, "Warning",
-                text = f"安装Aria2出错",
+                text = self.tr("安装Aria2出错"),
                 detailedText = str(Exception)
             )
         )
@@ -1009,7 +1002,7 @@ class MainWindow(Window_MainWindow):
         EnvConfiguratorSignals.Signal_FFmpegInstallFailed.connect(
             lambda Exception: MessageBoxBase.pop(self,
                 QMessageBox.Warning, "Warning",
-                text = f"安装FFmpeg出错",
+                text = self.tr("安装FFmpeg出错"),
                 detailedText = str(Exception)
             )
         )
@@ -1031,12 +1024,12 @@ class MainWindow(Window_MainWindow):
         EnvConfiguratorSignals.Signal_PythonInstallFailed.connect(
             lambda Exception: MessageBoxBase.pop(self,
                 QMessageBox.Warning, "Warning",
-                text = f"安装Python出错",
+                text = self.tr("安装Python出错"),
                 detailedText = str(Exception)
             )
         )
         subEnvPage_detection.addDetectorFrame(
-            text = self.tr("Python 依赖库 (Requirements)"),
+            text = self.tr("Python 依赖库"),
             toolTip = self.tr("重新检测安装"),
             detectMethod = PyReqs_Installer.execute,
             params = (EasyUtils.normPath(requirementsPath)),
@@ -1053,12 +1046,12 @@ class MainWindow(Window_MainWindow):
         EnvConfiguratorSignals.Signal_PyReqsInstallFailed.connect(
             lambda Exception: MessageBoxBase.pop(self,
                 QMessageBox.Warning, "Warning",
-                text = f"安装Python依赖库出错",
+                text = self.tr("安装Python依赖库出错"),
                 detailedText = str(Exception)
             )
         )
         subEnvPage_detection.addDetectorFrame(
-            text = self.tr("Pytorch 相关库"),
+            text = self.tr("Pytorch 框架"),
             toolTip = self.tr("重新检测安装"),
             detectMethod = Pytorch_Installer.execute,
             terminateMethod = Pytorch_Installer.terminate,
@@ -1074,7 +1067,7 @@ class MainWindow(Window_MainWindow):
         EnvConfiguratorSignals.Signal_PytorchInstallFailed.connect(
             lambda Exception: MessageBoxBase.pop(self,
                 QMessageBox.Warning, "Warning",
-                text = f"安装Pytorch出错",
+                text = self.tr("安装Pytorch出错"),
                 detailedText = str(Exception)
             )
         )
@@ -1112,7 +1105,7 @@ class MainWindow(Window_MainWindow):
 
         self.Signal_MainWindowShown.connect(self.viewModels)
 
-        self.ui.Button_Models_Process_Title.setText(self.tr("基本处理"))
+        self.ui.Button_Models_Process_Title.setText(self.tr("音频处理"))
         self.ui.Button_Models_Process_Title.setHorizontal(True)
         self.ui.Button_Models_Process_Title.setChecked(True)
         self.ui.Button_Models_Process_Title.clicked.connect(
@@ -1121,9 +1114,7 @@ class MainWindow(Window_MainWindow):
                 target = 0
             )
         )
-        self.ui.Button_Models_Process_Title.setToolTip(self.tr("基本处理模型"))
-
-        self.ui.TabWidget_Models_Process.setTabText(0, 'UVR（人声分离）')
+        self.ui.TabWidget_Models_Process.setTabText(0, "UVR")
         self.Signal_ModelView_Process_UVR.connect(self.ui.Table_Models_Process_UVR.setValue)
         self.ui.Table_Models_Process_UVR.download.connect(
             lambda params: Function_SetMethodExecutor(
@@ -1134,7 +1125,7 @@ class MainWindow(Window_MainWindow):
             )
         )
 
-        self.ui.Button_Models_VPR_Title.setText(self.tr("VPR（识别）"))
+        self.ui.Button_Models_VPR_Title.setText(self.tr("声纹识别 (VPR)"))
         self.ui.Button_Models_VPR_Title.setHorizontal(True)
         self.ui.Button_Models_VPR_Title.setChecked(False)
         self.ui.Button_Models_VPR_Title.clicked.connect(
@@ -1143,9 +1134,7 @@ class MainWindow(Window_MainWindow):
                 target = 1
             )
         )
-        self.ui.Button_Models_VPR_Title.setToolTip(self.tr("语音识别模型"))
-
-        self.ui.TabWidget_Models_VPR.setTabText(0, 'VPR（声纹识别）')
+        self.ui.TabWidget_Models_VPR.setTabText(0, "TDNN")
         self.Signal_ModelView_VPR_TDNN.connect(self.ui.Table_Models_VPR_TDNN.setValue)
         self.ui.Table_Models_VPR_TDNN.download.connect(
             lambda params: Function_SetMethodExecutor(
@@ -1156,7 +1145,7 @@ class MainWindow(Window_MainWindow):
             )
         )
 
-        self.ui.Button_Models_ASR_Title.setText(self.tr("ASR（转录）"))
+        self.ui.Button_Models_ASR_Title.setText(self.tr("语音转录 (ASR)"))
         self.ui.Button_Models_ASR_Title.setHorizontal(True)
         self.ui.Button_Models_ASR_Title.setChecked(False)
         self.ui.Button_Models_ASR_Title.clicked.connect(
@@ -1165,9 +1154,7 @@ class MainWindow(Window_MainWindow):
                 target = 2
             )
         )
-        self.ui.Button_Models_ASR_Title.setToolTip(self.tr("语音转录模型"))
-
-        self.ui.TabWidget_Models_ASR.setTabText(0, 'Whisper')
+        self.ui.TabWidget_Models_ASR.setTabText(0, "Whisper")
         self.Signal_ModelView_ASR_Whisper.connect(self.ui.Table_Models_ASR_Whisper.setValue)
         self.ui.Table_Models_ASR_Whisper.download.connect(
             lambda params: Function_SetMethodExecutor(
@@ -1178,7 +1165,7 @@ class MainWindow(Window_MainWindow):
             )
         )
 
-        self.ui.Button_Models_TTS_Title.setText(self.tr("TTS（合成）"))
+        self.ui.Button_Models_TTS_Title.setText(self.tr("语音合成 (TTS)"))
         self.ui.Button_Models_TTS_Title.setHorizontal(True)
         self.ui.Button_Models_TTS_Title.setChecked(False)
         self.ui.Button_Models_TTS_Title.clicked.connect(
@@ -1187,9 +1174,7 @@ class MainWindow(Window_MainWindow):
                 target = 3
             )
         )
-        self.ui.Button_Models_TTS_Title.setToolTip(self.tr("语音合成模型"))
-
-        self.ui.TabWidget_Models_TTS.setTabText(0, 'GPT-SoVITS')
+        self.ui.TabWidget_Models_TTS.setTabText(0, "GPT-SoVITS")
         self.Signal_ModelView_TTS_GPTSoVITS.connect(self.ui.Table_Models_TTS_GPTSoVITS.setValue)
         self.ui.Table_Models_TTS_GPTSoVITS.download.connect(
             lambda params: Function_SetMethodExecutor(
@@ -1338,11 +1323,11 @@ class MainWindow(Window_MainWindow):
             defaultValue = '',
             placeholderText = str(date.today())
         )
-        LineEdit_Process_OutputDir = LineEditBase()
+        lineEdit_process_outputDir = LineEditBase()
         self.setDirAlert(
             dirNameEdit = component_process_outputDirName.get(ComponentFlag.LineEdit),
             rootEdit = component_process_outputRoot.get(ComponentFlag.LineEdit),
-            dirEdit = LineEdit_Process_OutputDir
+            dirEdit = lineEdit_process_outputDir
         )
         component_process_toMono = subPage_process.addCheckBoxFrame(
             rootItemText = self.tr("输出参数"),
@@ -1456,7 +1441,7 @@ class MainWindow(Window_MainWindow):
             },
         )
         self.ui.Page_Process.addSubPage(
-            self.tr("音频基本处理"), subPage_process
+            self.tr("音频处理"), subPage_process
         )
 
         #############################################################
@@ -1493,7 +1478,7 @@ class MainWindow(Window_MainWindow):
             rootItemText = self.tr("输入参数"),
             text = self.tr("音频输入目录\n需要进行语音识别筛选的音频文件的所在目录。"),
             fileDialogMode = FileDialogMode.SelectFolder,
-            directory = Path(currentDir).joinpath('音频处理结果').as_posix(),
+            directory = process_outputRoot_default,
             section = 'Input params',
             option = 'AudioDirInput',
             defaultValue = '',
@@ -1517,7 +1502,7 @@ class MainWindow(Window_MainWindow):
             option = 'DecisionThreshold',
             defaultValue = 0.75
         )
-        VPR_TDNN_ModelPath_Default = Path(modelDir).joinpath('VPR', 'TDNN', 'Downloaded', 'Ecapa-Tdnn_spectrogram.pth').as_posix()
+        vpr_tdnn_modelPath_default = Path(modelDir).joinpath('VPR', 'TDNN', 'Downloaded', 'Ecapa-Tdnn_spectrogram.pth').as_posix()
         component_vpr_tdnn_modelPath = subPage_VPR.addLineEditFrame(
             rootItemText = self.tr("语音识别参数"),
             text = self.tr("模型加载路径\n用于加载的声纹识别模型的路径。"),
@@ -1526,8 +1511,8 @@ class MainWindow(Window_MainWindow):
             directory = EasyUtils.normPath(Path(modelDir).joinpath('VPR', 'TDNN', 'Downloaded')),
             section = 'VPR params',
             option = 'ModelPath',
-            defaultValue = VPR_TDNN_ModelPath_Default,
-            placeholderText = VPR_TDNN_ModelPath_Default
+            defaultValue = vpr_tdnn_modelPath_default,
+            placeholderText = vpr_tdnn_modelPath_default
         )
         component_vpr_tdnn_modelType = subPage_VPR.addComboBoxFrame(
             rootItemText = self.tr("语音识别参数"),
@@ -1558,37 +1543,37 @@ class MainWindow(Window_MainWindow):
             option = 'DurationOfAudio',
             defaultValue = 3.00
         )
-        VPR_TDNN_OutputDirName_Default = str(date.today())
+        vpr_tdnn_outputDirName_default = str(date.today())
         component_vpr_tdnn_audioDirOutput = subPage_VPR.addLineEditFrame(
             rootItemText = self.tr("输出参数"),
             text = self.tr("输出目录名\n用于保存最后生成的结果文件的目录的名字。"),
             section = 'Output params',
             option = 'AudioDirOutput',
             defaultValue = '',
-            placeholderText = VPR_TDNN_OutputDirName_Default
+            placeholderText = vpr_tdnn_outputDirName_default
         )
-        LineEdit_VPR_TDNN_OutputDir = LineEditBase()
+        lineEdit_vpr_tdnn_outputDir = LineEditBase()
         self.setDirAlert(
             dirNameEdit = component_vpr_tdnn_audioDirOutput.get(ComponentFlag.LineEdit),
             rootEdit = component_vpr_tdnn_outputRoot.get(ComponentFlag.LineEdit),
-            dirEdit = LineEdit_VPR_TDNN_OutputDir
+            dirEdit = lineEdit_vpr_tdnn_outputDir
         )
-        VPT_TDNN_AudioSpeakersDataName_Default = "Recgonition_" + str(date.today())
+        vpr_tdnn_audioSpeakersDataName_default = "Recgonition_" + str(date.today())
         component_vpr_tdnn_fileListName = subPage_VPR.addLineEditFrame(
             rootItemText = self.tr("输出参数"),
             toolBoxText = self.tr("高级设置"),
             text = self.tr("识别结果文本名\n用于保存最后生成的记录音频文件与对应说话人的txt文件的名字。"),
             section = 'Output params',
             option = 'FileListName',
-            defaultValue = VPT_TDNN_AudioSpeakersDataName_Default,
-            placeholderText = VPT_TDNN_AudioSpeakersDataName_Default
+            defaultValue = vpr_tdnn_audioSpeakersDataName_default,
+            placeholderText = vpr_tdnn_audioSpeakersDataName_default
         )
-        LineEdit_VPR_TDNN_AudioSpeakersDataPath = LineEditBase()
+        lineEdit_vpr_tdnn_audioSpeakersDataPath = LineEditBase()
         self.setPathAlert(
             fileNameEdit = component_vpr_tdnn_fileListName.get(ComponentFlag.LineEdit),
-            dirEdit = LineEdit_VPR_TDNN_OutputDir,
+            dirEdit = lineEdit_vpr_tdnn_outputDir,
             suffix = ".txt",
-            fileEdit = LineEdit_VPR_TDNN_AudioSpeakersDataPath
+            fileEdit = lineEdit_vpr_tdnn_audioSpeakersDataPath
         )
         subPage_VPR.addChkOutputSideBtn(
             outputRootEdit = component_vpr_tdnn_outputRoot.get(ComponentFlag.LineEdit),
@@ -1597,12 +1582,12 @@ class MainWindow(Window_MainWindow):
             VPRResultPath = QFunc.getFileDialog(
                 mode = FileDialogMode.SelectFile,
                 fileType = "txt类型 (*.txt)",
-                directory = Path(currentDir).joinpath('语音识别结果', 'VPR').as_posix()
+                directory = vpr_tdnn_audioSpeakersDataRoot_default
             )
             if EasyUtils.normPath(VPRResultPath) is not None:
-                self.showMask(True, "正在加载表单")
+                self.showMask(True, "Generating Form")
                 self.showVPRResult(
-                    LineEdit_VPR_TDNN_OutputDir.text(),
+                    lineEdit_vpr_tdnn_outputDir.text(),
                     VPRResultPath,
                     None
                 )
@@ -1630,10 +1615,10 @@ class MainWindow(Window_MainWindow):
             ],
             terminateMethod = self.task_vpr.terminate_infer,
             finishedEvents = {
-                lambda: self.showMask(True, "正在加载表单"): TaskStatus.Succeeded,
+                lambda: self.showMask(True, "Generating Form"): TaskStatus.Succeeded,
                 lambda: self.showVPRResult(
-                    LineEdit_VPR_TDNN_OutputDir.text(),
-                    LineEdit_VPR_TDNN_AudioSpeakersDataPath.text(),
+                    lineEdit_vpr_tdnn_outputDir.text(),
+                    lineEdit_vpr_tdnn_audioSpeakersDataPath.text(),
                     list(component_vpr_tdnn_stdAudioSpeaker.get(ComponentFlag.Table).getValue().keys()) + ['']
                 ): TaskStatus.Succeeded,
                 lambda: MessageBoxBase.pop(self,
@@ -1644,7 +1629,7 @@ class MainWindow(Window_MainWindow):
             threadPool = self.threadPool_tasks,
         )
         self.ui.Page_VPR.addSubPage(
-            self.tr("VPR（声纹识别）"), subPage_VPR
+            self.tr("TDNN"), subPage_VPR
         )
 
         #############################################################
@@ -1692,7 +1677,7 @@ class MainWindow(Window_MainWindow):
             option = 'AddLanguageInfo',
             defaultValue = True
         )
-        ASR_Whisper_ModelPath_Default = Path(modelDir).joinpath('ASR', 'Whisper', 'Downloaded', 'small.pt').as_posix()
+        asr_whisper_modelPath_default = Path(modelDir).joinpath('ASR', 'Whisper', 'Downloaded', 'small.pt').as_posix()
         component_asr_whisper_modelPath = subPage_ASR.addLineEditFrame(
             rootItemText = self.tr("语音转录参数"),
             text = self.tr("模型加载路径\n用于加载的Whisper模型的路径。"),
@@ -1701,8 +1686,8 @@ class MainWindow(Window_MainWindow):
             directory = EasyUtils.normPath(Path(modelDir).joinpath('ASR', 'Whisper', 'Downloaded')),
             section = 'Whisper params',
             option = 'ModelPath',
-            defaultValue = ASR_Whisper_ModelPath_Default,
-            placeholderText = ASR_Whisper_ModelPath_Default
+            defaultValue = asr_whisper_modelPath_default,
+            placeholderText = asr_whisper_modelPath_default
         )
         component_asr_whisper_verbose = subPage_ASR.addCheckBoxFrame(
             rootItemText = self.tr("语音转录参数"),
@@ -1728,20 +1713,20 @@ class MainWindow(Window_MainWindow):
             option = 'ConditionOnPreviousText',
             defaultValue = False
         )
-        ASR_Whisper_OutputDirName_Default = str(date.today())
+        asr_whisper_outputDirName_default = str(date.today())
         component_asr_whisper_srtDirName = subPage_ASR.addLineEditFrame(
             rootItemText = self.tr("输出参数"),
             text = self.tr("输出目录名\n用于保存最后生成的字幕文件的目录的名字。"),
             section = 'Output params',
             option = 'SRTDirName',
             defaultValue = '',
-            placeholderText = ASR_Whisper_OutputDirName_Default
+            placeholderText = asr_whisper_outputDirName_default
         )
-        LineEdit_ASR_Whisper_OutputDir = LineEditBase()
+        lineEdit_asr_whisper_outputDir = LineEditBase()
         self.setDirAlert(
             dirNameEdit = component_asr_whisper_srtDirName.get(ComponentFlag.LineEdit),
             rootEdit = component_asr_whisper_outputRoot.get(ComponentFlag.LineEdit),
-            dirEdit = LineEdit_ASR_Whisper_OutputDir
+            dirEdit = lineEdit_asr_whisper_outputDir
         )
         subPage_ASR.addChkOutputSideBtn(
             outputRootEdit = component_asr_whisper_outputRoot.get(ComponentFlag.LineEdit)
@@ -1762,9 +1747,9 @@ class MainWindow(Window_MainWindow):
             ],
             terminateMethod = self.task_whisper.terminate_infer,
             finishedEvents = {
-                lambda: self.showMask(True, "正在加载表单"): TaskStatus.Succeeded,
+                lambda: self.showMask(True, "Generating Form"): TaskStatus.Succeeded,
                 lambda: self.showASRResult(
-                    LineEdit_ASR_Whisper_OutputDir.text(),
+                    lineEdit_asr_whisper_outputDir.text(),
                     component_asr_whisper_audioDir.get(ComponentFlag.LineEdit).text()
                 ): TaskStatus.Succeeded,
                 lambda: MessageBoxBase.pop(self,
@@ -1792,7 +1777,7 @@ class MainWindow(Window_MainWindow):
                     EasyUtils.normPath(Path(resourceDir).joinpath('assets/images/others/Guidance_Layout.png'))
                 ],
                 texts = [
-                    '欢迎来到数据集工具界面\n该工具用于生成适用于语音模型训练的数据集',
+                    '欢迎来到数据预处理工具界面\n该工具用于生成适用于语音模型训练的数据集',
                     '顶部区域用于切换当前工具类型\n中间区域用于设置当前工具的各项参数；设置完毕后点击底部区域的按钮即可执行当前工具'
                 ]
             )
@@ -1821,26 +1806,26 @@ class MainWindow(Window_MainWindow):
                 dirSelectionText = "语音识别结果文本路径",
                 pathSelectionText = "音频文件目录",
                 fileType = "txt类型 (*.txt)",
-                directory = Path(currentDir).joinpath('语音识别结果', 'VPR').as_posix()
+                directory = vpr_tdnn_audioSpeakersDataRoot_default
             )
         )
         component_dat_gptsovits_srtDir = subPage_dataset_gptsovits.addLineEditFrame(
             rootItemText = self.tr("输入参数"),
             text = self.tr("字幕输入目录\n字幕文件的所在目录，字幕文件须与对应音频文件同名且在文本中注明所属语言。"),
             fileDialogMode = FileDialogMode.SelectFolder,
-            directory = Path(currentDir).joinpath('语音转录结果', 'Whisper').as_posix(),
+            directory = asr_whisper_outputRoot_default,
             section = 'Input params',
             option = 'SRTDir',
             defaultValue = ''
         )
-        DAT_GPTSoVITS_DataFormat_Default = '路径|人名|语言|文本'
+        asr_whisper_outputDirName_default = '路径|人名|语言|文本'
         component_dat_gptsovits_dataFormatPath = subPage_dataset_gptsovits.addLineEditFrame(
-            rootItemText = self.tr("数据集参数"),
+            rootItemText = self.tr("预处理参数"),
             text = self.tr("数据文本格式\n数据集的文本格式，默认使用GPT-SoVITS的标准。"),
             section = 'GPT-SoVITS params',
             option = 'DataFormatPath',
-            defaultValue = DAT_GPTSoVITS_DataFormat_Default,
-            placeholderText = DAT_GPTSoVITS_DataFormat_Default
+            defaultValue = asr_whisper_outputDirName_default,
+            placeholderText = asr_whisper_outputDirName_default
         )
         component_dat_gptsovits_dataFormatPath.get(ComponentFlag.LineEdit).textChanged.connect(
             lambda value: (
@@ -1851,37 +1836,37 @@ class MainWindow(Window_MainWindow):
                 paramsManager_dat_gptsovits.resetParam(component_dat_gptsovits_dataFormatPath.get(ComponentFlag.LineEdit)),
             ) if not all(Keyword in value for Keyword in ['路径', '人名', '语言', '文本']) else None
         )
-        DAT_GPTSoVITS_OutputDirName_Default = str(date.today())
+        dat_gptsovits_outputDirName_default = str(date.today())
         component_dat_gptsovits_outputDirName = subPage_dataset_gptsovits.addLineEditFrame(
             rootItemText = self.tr("输出参数"),
             text = self.tr("输出目录名\n用于保存最后生成的数据集文件的目录的名字。"),
             section = 'Output params',
             option = 'OutputDirName',
             defaultValue = '',
-            placeholderText = DAT_GPTSoVITS_OutputDirName_Default
+            placeholderText = dat_gptsovits_outputDirName_default
         )
-        LineEdit_DAT_GPTSoVITS_OutputDir = LineEditBase()
+        lineEdit_dat_gptsovits_outputDir = LineEditBase()
         self.setDirAlert(
             dirNameEdit = component_dat_gptsovits_outputDirName.get(ComponentFlag.LineEdit),
             rootEdit = component_dat_gptsovits_outputRoot.get(ComponentFlag.LineEdit),
-            dirEdit = LineEdit_DAT_GPTSoVITS_OutputDir
+            dirEdit = lineEdit_dat_gptsovits_outputDir
         )
-        DAT_GPTSoVITS_FileListName_Default = "Train_" + str(date.today())
+        dat_gptsovits_fileListName_default = "Train_" + str(date.today())
         component_dat_gptsovits_fileListName = subPage_dataset_gptsovits.addLineEditFrame(
             rootItemText = self.tr("输出参数"),
             toolBoxText = self.tr("高级设置"),
             text = self.tr("数据集文本名\n用于保存最后生成的数据集txt文件的名字。"),
             section = 'Output params',
             option = 'FileListName',
-            defaultValue = DAT_GPTSoVITS_FileListName_Default,
-            placeholderText = DAT_GPTSoVITS_FileListName_Default
+            defaultValue = dat_gptsovits_fileListName_default,
+            placeholderText = dat_gptsovits_fileListName_default
         )
-        LineEdit_DAT_GPTSoVITS_FileListPath = LineEditBase()
+        lineEdit_dat_gptsovits_fileListPath = LineEditBase()
         self.setPathAlert(
             fileNameEdit = component_dat_gptsovits_fileListName.get(ComponentFlag.LineEdit),
-            dirEdit = LineEdit_DAT_GPTSoVITS_OutputDir,
+            dirEdit = lineEdit_dat_gptsovits_outputDir,
             suffix = ".txt",
-            fileEdit = LineEdit_DAT_GPTSoVITS_FileListPath,
+            fileEdit = lineEdit_dat_gptsovits_fileListPath,
         )
         subPage_dataset_gptsovits.addChkOutputSideBtn(
             outputRootEdit = component_dat_gptsovits_outputRoot.get(ComponentFlag.LineEdit)
@@ -1900,9 +1885,9 @@ class MainWindow(Window_MainWindow):
             ],
             terminateMethod = self.task_gptsovits.terminate_preprocess,
             finishedEvents = {
-                lambda: self.showMask(True, "正在加载表单"): TaskStatus.Succeeded,
+                lambda: self.showMask(True, "Generating Form"): TaskStatus.Succeeded,
                 lambda: self.showDATResult(
-                    LineEdit_DAT_GPTSoVITS_FileListPath.text(),
+                    lineEdit_dat_gptsovits_fileListPath.text(),
                     None
                 ): TaskStatus.Succeeded,
                 lambda: MessageBoxBase.pop(self,
@@ -1960,12 +1945,12 @@ class MainWindow(Window_MainWindow):
             text = self.tr("训练集文本路径\n用于提供训练集音频路径及其语音内容的训练集txt文件的路径。"),
             fileDialogMode = FileDialogMode.SelectFile,
             fileType = "txt类型 (*.txt)",
-            directory = Path(currentDir).joinpath('数据集制作结果', 'GPT-SoVITS').as_posix(),
+            directory = dat_gptsovits_outputRoot_default,
             section = 'Input params',
             option = 'FileListPath',
             defaultValue = ''
         )
-        Train_GPTSoVITS_ModelPathPretrainedS1_Default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's1bert25hz-5kh-longer-epoch=12-step=369668.ckpt').as_posix()
+        train_gptsovits_modelPathPretrainedS1_default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's1bert25hz-5kh-longer-epoch=12-step=369668.ckpt').as_posix()
         component_train_gptsovits_modelPathPretrainedS1 = subPage_train_gptsovits.addLineEditFrame(
             rootItemText = self.tr("输入参数"),
             text = self.tr("预训练GPT模型路径\n预训练GPT（s1）模型的路径。"),
@@ -1974,10 +1959,10 @@ class MainWindow(Window_MainWindow):
             directory = EasyUtils.normPath(Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2')),
             section = 'GPT-SoVITS params',
             option = 'ModelPathPretrainedS1',
-            defaultValue = Train_GPTSoVITS_ModelPathPretrainedS1_Default,
-            placeholderText = Train_GPTSoVITS_ModelPathPretrainedS1_Default
+            defaultValue = train_gptsovits_modelPathPretrainedS1_default,
+            placeholderText = train_gptsovits_modelPathPretrainedS1_default
         )
-        Train_GPTSoVITS_ModelPathPretrainedS2G_Default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's2G2333k.pth').as_posix()
+        train_gptsovits_modelPathPretrainedS2G_default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's2G2333k.pth').as_posix()
         component_train_gptsovits_modelPathPretrainedS2G = subPage_train_gptsovits.addLineEditFrame(
             rootItemText = self.tr("输入参数"),
             text = self.tr("预训练SoVITS生成器模型路径\n预训练SoVITS生成器（s2G）模型的路径。"),
@@ -1986,10 +1971,10 @@ class MainWindow(Window_MainWindow):
             directory = EasyUtils.normPath(Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2')),
             section = 'GPT-SoVITS params',
             option = 'ModelPathPretrainedS2G',
-            defaultValue = Train_GPTSoVITS_ModelPathPretrainedS2G_Default,
-            placeholderText = Train_GPTSoVITS_ModelPathPretrainedS2G_Default
+            defaultValue = train_gptsovits_modelPathPretrainedS2G_default,
+            placeholderText = train_gptsovits_modelPathPretrainedS2G_default
         )
-        Train_GPTSoVITS_ModelPathPretrainedS2D_Default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's2D2333k.pth').as_posix()
+        train_gptsovits_modelPathPretrainedS2D_default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's2D2333k.pth').as_posix()
         component_train_gptsovits_modelPathPretrainedS2D = subPage_train_gptsovits.addLineEditFrame(
             rootItemText = self.tr("输入参数"),
             text = self.tr("预训练SoVITS判别器模型路径\n预训练SoVITS判别器（s2D）模型的路径。"),
@@ -1998,21 +1983,21 @@ class MainWindow(Window_MainWindow):
             directory = EasyUtils.normPath(Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2')),
             section = 'GPT-SoVITS params',
             option = 'ModelPathPretrainedS2D',
-            defaultValue = Train_GPTSoVITS_ModelPathPretrainedS2D_Default,
-            placeholderText = Train_GPTSoVITS_ModelPathPretrainedS2D_Default
+            defaultValue = train_gptsovits_modelPathPretrainedS2D_default,
+            placeholderText = train_gptsovits_modelPathPretrainedS2D_default
         )
-        Train_GPTSoVITS_ModelDirPretrainedBert_Default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 'chinese-roberta-wwm-ext-large').as_posix()
-        component_train_gptsovits_modelDirPretrainedBert = subPage_train_gptsovits.addLineEditFrame(
+        train_gptsovits_modelDirPretrainedBERT_default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 'chinese-roberta-wwm-ext-large').as_posix()
+        component_train_gptsovits_modelDirPretrainedBERT = subPage_train_gptsovits.addLineEditFrame(
             rootItemText = self.tr("输入参数"),
             text = self.tr("预训练BERT模型路径\n预训练BERT模型（文件夹）的路径。"),
             fileDialogMode = FileDialogMode.SelectFolder,
             directory = EasyUtils.normPath(Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded')),
             section = 'GPT-SoVITS params',
-            option = 'ModelDirPretrainedBert',
-            defaultValue = Train_GPTSoVITS_ModelDirPretrainedBert_Default,
-            placeholderText = Train_GPTSoVITS_ModelDirPretrainedBert_Default
+            option = 'ModelDirPretrainedBERT',
+            defaultValue = train_gptsovits_modelDirPretrainedBERT_default,
+            placeholderText = train_gptsovits_modelDirPretrainedBERT_default
         )
-        Train_GPTSoVITS_ModelDirPretrainedHuBERT_Default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 'chinese-hubert-base').as_posix()
+        train_gptsovits_modelDirPretrainedHuBERT_default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 'chinese-hubert-base').as_posix()
         component_train_gptsovits_modelDirPretrainedHuBERT = subPage_train_gptsovits.addLineEditFrame(
             rootItemText = self.tr("输入参数"),
             text = self.tr("预训练HuBERT模型路径\n预训练HuBERT模型（文件夹）的路径。"),
@@ -2020,8 +2005,8 @@ class MainWindow(Window_MainWindow):
             directory = EasyUtils.normPath(Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded')),
             section = 'GPT-SoVITS params',
             option = 'ModelDirPretrainedHuBERT',
-            defaultValue = Train_GPTSoVITS_ModelDirPretrainedHuBERT_Default,
-            placeholderText = Train_GPTSoVITS_ModelDirPretrainedHuBERT_Default
+            defaultValue = train_gptsovits_modelDirPretrainedHuBERT_default,
+            placeholderText = train_gptsovits_modelDirPretrainedHuBERT_default
         )
         # component_train_gptsovits_gptEpochs = subPage_train_gptsovits.addSpinBoxFrame(
         #     rootItemText = self.tr("训练参数"),
@@ -2065,32 +2050,32 @@ class MainWindow(Window_MainWindow):
             option = 'LoraRank',
             defaultValue = '32'
         )
-        Train_GPTSoVITS_OutputDirName_Default = str(date.today())
+        train_gptsovits_outputDirName_default = str(date.today())
         component_train_gptsovits_outputDirName = subPage_train_gptsovits.addLineEditFrame(
             rootItemText = self.tr("输出参数"),
             text = self.tr("输出目录名\n存放训练所得模型的目录的名字。"),
             section = 'Output params',
             option = 'OutputDirName',
             defaultValue = '',
-            placeholderText = Train_GPTSoVITS_OutputDirName_Default
+            placeholderText = train_gptsovits_outputDirName_default
         )
-        LineEdit_Train_GPTSoVITS_OutputDir = LineEditBase()
+        lineEdit_train_gptsovits_outputDir = LineEditBase()
         self.setDirAlert(
             dirNameEdit = component_train_gptsovits_outputDirName.get(ComponentFlag.LineEdit),
             rootEdit = component_train_gptsovits_outputRoot.get(ComponentFlag.LineEdit),
-            dirEdit = LineEdit_Train_GPTSoVITS_OutputDir
+            dirEdit = lineEdit_train_gptsovits_outputDir
         )
-        Train_GPTSoVITS_LogDir_Default = Path(Path(currentDir).root).joinpath('EVT_TrainLog', 'GPT-SoVITS', str(date.today())).as_posix()
+        train_gptsovits_logDir_default = Path(Path(currentDir).root).joinpath('EVT_TrainLog', 'GPT-SoVITS', str(date.today())).as_posix()
         component_train_gptsovits_outputLogDir = subPage_train_gptsovits.addLineEditFrame(
             rootItemText = self.tr("输出参数"),
             toolBoxText = self.tr("高级设置"),
             text = self.tr("日志输出目录\n训练时生成的日志的存放目录。"),
             fileDialogMode = FileDialogMode.SelectFolder,
-            directory = EasyUtils.normPath(Path(Train_GPTSoVITS_LogDir_Default).parent),
+            directory = EasyUtils.normPath(Path(train_gptsovits_logDir_default).parent),
             section = 'Output params',
             option = 'OutputLogDir',
-            defaultValue = Train_GPTSoVITS_LogDir_Default,
-            placeholderText = Train_GPTSoVITS_LogDir_Default
+            defaultValue = train_gptsovits_logDir_default,
+            placeholderText = train_gptsovits_logDir_default
         )
         component_train_gptsovits_outputLogDir.get(ComponentFlag.LineEdit).textChanged.connect(
             lambda value: (
@@ -2122,7 +2107,7 @@ class MainWindow(Window_MainWindow):
             executeParamTargets = [
                 component_train_gptsovits_version.get(ComponentFlag.ComboBox),
                 component_train_gptsovits_fileListPath.get(ComponentFlag.LineEdit),
-                component_train_gptsovits_modelDirPretrainedBert.get(ComponentFlag.LineEdit),
+                component_train_gptsovits_modelDirPretrainedBERT.get(ComponentFlag.LineEdit),
                 component_train_gptsovits_modelDirPretrainedHuBERT.get(ComponentFlag.LineEdit),
                 component_train_gptsovits_modelPathPretrainedS1.get(ComponentFlag.LineEdit),
                 component_train_gptsovits_modelPathPretrainedS2G.get(ComponentFlag.LineEdit),
@@ -2216,31 +2201,31 @@ class MainWindow(Window_MainWindow):
             option = 'Version',
             defaultValue = 'v2'
         )
-        TTS_GPTSoVITS_ModelPathLoadS1_Default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's1bert25hz-5kh-longer-epoch=12-step=369668.ckpt').as_posix()
+        tts_gptsovits_modelPathLoadS1_default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's1bert25hz-5kh-longer-epoch=12-step=369668.ckpt').as_posix()
         component_tts_gptsovits_modelPathLoadS1 = subPage_tts_gptsovits.addLineEditFrame(
             rootItemText = self.tr("输入参数"),
             text = self.tr("GPT模型加载路径\nGPT（s1）模型的路径。"),
             fileDialogMode = FileDialogMode.SelectFile,
             fileType = "ckpt类型 (*.ckpt)",
-            directory = Path(currentDir).joinpath('模型训练结果', 'GPT-SoVITS').as_posix(),
+            directory = train_gptsovits_outputRoot_default,
             section = 'Input params',
             option = 'ModelPathLoadS1',
-            defaultValue = TTS_GPTSoVITS_ModelPathLoadS1_Default,
-            placeholderText = TTS_GPTSoVITS_ModelPathLoadS1_Default
+            defaultValue = tts_gptsovits_modelPathLoadS1_default,
+            placeholderText = tts_gptsovits_modelPathLoadS1_default
         )
-        TTS_GPTSoVITS_ModelPathLoadS2G_Default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's2G2333k.pth').as_posix()
+        tts_gptsovits_modelPathLoadS2G_default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's2G2333k.pth').as_posix()
         component_tts_gptsovits_modelPathLoadS2 = subPage_tts_gptsovits.addLineEditFrame(
             rootItemText = self.tr("输入参数"),
             text = self.tr("SoVITS模型加载路径\nSoVITS（s2G）模型的路径。"),
             fileDialogMode = FileDialogMode.SelectFile,
             fileType = "pth类型 (*.pth)",
-            directory = Path(currentDir).joinpath('模型训练结果', 'GPT-SoVITS').as_posix(),
+            directory = train_gptsovits_outputRoot_default,
             section = 'Input params',
             option = 'ModelPathLoadS2G',
-            defaultValue = TTS_GPTSoVITS_ModelPathLoadS2G_Default,
-            placeholderText = TTS_GPTSoVITS_ModelPathLoadS2G_Default
+            defaultValue = tts_gptsovits_modelPathLoadS2G_default,
+            placeholderText = tts_gptsovits_modelPathLoadS2G_default
         )
-        TTS_GPTSoVITS_ModelPathLoadS2Gv3_Default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's2Gv3.pth').as_posix()
+        tts_gptsovits_modelPathLoadS2Gv3_default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's2Gv3.pth').as_posix()
         component_tts_gptsovits_modelPathLoadS2Gv3 = subPage_tts_gptsovits.addLineEditFrame(
             rootItemText = self.tr("输入参数"),
             text = self.tr("SoVITSv3底模加载路径\nSoVITSv3（s2G2333k）底模的路径，用于加载lora。"),
@@ -2249,21 +2234,21 @@ class MainWindow(Window_MainWindow):
             directory = EasyUtils.normPath(Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded')),
             section = 'Input params',
             option = 'ModelPathLoadS2Gv3',
-            defaultValue = TTS_GPTSoVITS_ModelPathLoadS2Gv3_Default,
-            placeholderText = TTS_GPTSoVITS_ModelPathLoadS2Gv3_Default
+            defaultValue = tts_gptsovits_modelPathLoadS2Gv3_default,
+            placeholderText = tts_gptsovits_modelPathLoadS2Gv3_default
         )
-        TTS_GPTSoVITS_ModelDirLoadBert_Default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 'chinese-roberta-wwm-ext-large').as_posix()
-        component_tts_gptsovits_modelDirLoadBert = subPage_tts_gptsovits.addLineEditFrame(
+        tts_gptsovits_modelDirLoadBERT_default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 'chinese-roberta-wwm-ext-large').as_posix()
+        component_tts_gptsovits_modelDirLoadBERT = subPage_tts_gptsovits.addLineEditFrame(
             rootItemText = self.tr("输入参数"),
             text = self.tr("预训练BERT模型加载路径\n预训练BERT模型（文件夹）的路径。"),
             fileDialogMode = FileDialogMode.SelectFolder,
             directory = EasyUtils.normPath(Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded')),
             section = 'Input params',
-            option = 'ModelDirLoadBert',
-            defaultValue = TTS_GPTSoVITS_ModelDirLoadBert_Default,
-            placeholderText = TTS_GPTSoVITS_ModelDirLoadBert_Default
+            option = 'ModelDirLoadBERT',
+            defaultValue = tts_gptsovits_modelDirLoadBERT_default,
+            placeholderText = tts_gptsovits_modelDirLoadBERT_default
         )
-        TTS_GPTSoVITS_ModelDirLoadHuBERT_Default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 'chinese-hubert-base').as_posix()
+        tts_gptsovits_modelDirLoadHuBERT_default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 'chinese-hubert-base').as_posix()
         component_tts_gptsovits_modelDirLoadHuBERT = subPage_tts_gptsovits.addLineEditFrame(
             rootItemText = self.tr("输入参数"),
             text = self.tr("预训练HuBERT模型加载路径\n预训练HuBERT模型（文件夹）的路径。"),
@@ -2271,10 +2256,10 @@ class MainWindow(Window_MainWindow):
             directory = EasyUtils.normPath(Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded')),
             section = 'Input params',
             option = 'ModelDirLoadHuBERT',
-            defaultValue = TTS_GPTSoVITS_ModelDirLoadHuBERT_Default,
-            placeholderText = TTS_GPTSoVITS_ModelDirLoadHuBERT_Default
+            defaultValue = tts_gptsovits_modelDirLoadHuBERT_default,
+            placeholderText = tts_gptsovits_modelDirLoadHuBERT_default
         )
-        TTS_GPTSoVITS_ModelDirLoadBigVGAN_Default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 'nvidia--bigvgan').as_posix()
+        tts_gptsovits_modelDirLoadBigVGAN_default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 'nvidia--bigvgan').as_posix()
         component_tts_gptsovits_modelDirLoadBigVGAN = subPage_tts_gptsovits.addLineEditFrame(
             rootItemText = self.tr("输入参数"),
             text = self.tr("预训练BigVGAN模型加载路径\n预训练BigVGAN模型的路径。"),
@@ -2282,16 +2267,16 @@ class MainWindow(Window_MainWindow):
             directory = EasyUtils.normPath(Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded')),
             section = 'Input params',
             option = 'ModelDirLoadBigVGAN',
-            defaultValue = TTS_GPTSoVITS_ModelDirLoadBigVGAN_Default,
-            placeholderText = TTS_GPTSoVITS_ModelDirLoadBigVGAN_Default
+            defaultValue = tts_gptsovits_modelDirLoadBigVGAN_default,
+            placeholderText = tts_gptsovits_modelDirLoadBigVGAN_default
         )
-        TTS_GPTSoVITS_AudioDirSave = Path(currentDir).joinpath('语音合成结果', 'GPTSoVITS').as_posix()
-        os.makedirs(TTS_GPTSoVITS_AudioDirSave) if not Path(TTS_GPTSoVITS_AudioDirSave).exists() else None
+        tts_gptsovits_audioDirSave = Path(outputDir).joinpath("语音合成结果", 'GPTSoVITS').as_posix()
+        os.makedirs(tts_gptsovits_audioDirSave) if not Path(tts_gptsovits_audioDirSave).exists() else None
         subPage_tts_gptsovits.addSideBtn(
             text = self.tr("查看输出文件"),
             events = [
                 lambda: QFunc.openURL(
-                    url = Function_GetParam(TTS_GPTSoVITS_AudioDirSave),
+                    url = Function_GetParam(tts_gptsovits_audioDirSave),
                     createIfNotExist = True
                 )
             ]
@@ -2306,14 +2291,14 @@ class MainWindow(Window_MainWindow):
                 component_tts_gptsovits_modelPathLoadS2Gv3.get(ComponentFlag.LineEdit),
                 component_tts_gptsovits_modelPathLoadS1.get(ComponentFlag.LineEdit),
                 component_tts_gptsovits_modelDirLoadHuBERT.get(ComponentFlag.LineEdit),
-                component_tts_gptsovits_modelDirLoadBert.get(ComponentFlag.LineEdit),
+                component_tts_gptsovits_modelDirLoadBERT.get(ComponentFlag.LineEdit),
                 component_tts_gptsovits_modelDirLoadBigVGAN.get(ComponentFlag.LineEdit),
             ],
             terminateMethod = self.task_gptsovits.terminate_infer_webui,
             finishedEvents = {
                 # lambda: self.showMask(True, "正在加载播放器"): TaskStatus.Succeeded,
                 # lambda: self.showTTSResult(
-                #     TTS_GPTSoVITS_AudioDirSave
+                #     tts_gptsovits_audioDirSave
                 # ): TaskStatus.Succeeded,
                 lambda: MessageBoxBase.pop(self,
                     QMessageBox.Information, "Tip",
@@ -2371,24 +2356,24 @@ class MainWindow(Window_MainWindow):
             checkBox = component_settings_autoCorrelate.get(ComponentFlag.CheckBox),
             checkedEvents = {
                 lambda: Function_ParamsSynchronizer(
-                    LineEdit_Process_OutputDir,
-                    {LineEdit_Process_OutputDir: component_vpr_tdnn_audioDirInput.get(ComponentFlag.LineEdit)}
+                    lineEdit_process_outputDir,
+                    {lineEdit_process_outputDir: component_vpr_tdnn_audioDirInput.get(ComponentFlag.LineEdit)}
                 ) : True,
                 lambda: Function_ParamsSynchronizer(
-                    LineEdit_VPR_TDNN_AudioSpeakersDataPath,
-                    {LineEdit_VPR_TDNN_AudioSpeakersDataPath: component_dat_gptsovits_wavDir.get(ComponentFlag.LineEdit)}
+                    lineEdit_vpr_tdnn_audioSpeakersDataPath,
+                    {lineEdit_vpr_tdnn_audioSpeakersDataPath: component_dat_gptsovits_wavDir.get(ComponentFlag.LineEdit)}
                 ) : True,
                 lambda: Function_ParamsSynchronizer(
-                    LineEdit_VPR_TDNN_OutputDir,
-                    {LineEdit_VPR_TDNN_OutputDir: component_asr_whisper_audioDir.get(ComponentFlag.LineEdit)}
+                    lineEdit_vpr_tdnn_outputDir,
+                    {lineEdit_vpr_tdnn_outputDir: component_asr_whisper_audioDir.get(ComponentFlag.LineEdit)}
                 ) : True,
                 lambda: Function_ParamsSynchronizer(
-                    LineEdit_ASR_Whisper_OutputDir,
-                    {LineEdit_ASR_Whisper_OutputDir: component_dat_gptsovits_srtDir.get(ComponentFlag.LineEdit)}
+                    lineEdit_asr_whisper_outputDir,
+                    {lineEdit_asr_whisper_outputDir: component_dat_gptsovits_srtDir.get(ComponentFlag.LineEdit)}
                 ) : True,
                 lambda: Function_ParamsSynchronizer(
-                    LineEdit_DAT_GPTSoVITS_FileListPath,
-                    {LineEdit_DAT_GPTSoVITS_FileListPath: component_train_gptsovits_fileListPath.get(ComponentFlag.LineEdit)}
+                    lineEdit_dat_gptsovits_fileListPath,
+                    {lineEdit_dat_gptsovits_fileListPath: component_train_gptsovits_fileListPath.get(ComponentFlag.LineEdit)}
                 ) : True,
             },
             uncheckedEvents = {
