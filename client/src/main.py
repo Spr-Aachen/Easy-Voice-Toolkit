@@ -11,7 +11,7 @@ from PySide6.QtCore import QThreadPool, QTimer
 from PySide6.QtGui import QColor, QPixmap, QIcon, QTextCursor
 from QEasyWidgets import QFunctions as QFunc
 from QEasyWidgets import QTasks
-from QEasyWidgets import ComponentsSignals, Theme, currentTheme, Language, currentLanguage, IconBase
+from QEasyWidgets import ComponentsSignals, Theme, currentTheme, Language, currentLanguage, updateLanguage, IconBase
 from QEasyWidgets.Windows import MessageBoxBase
 
 from views import *
@@ -821,6 +821,12 @@ class MainWindow(Window_MainWindow):
             textDict = languageDict,
             section = 'Settings',
             option = 'Language',
+        )
+        ComponentsSignals.Signal_SetLanguage.connect(
+            lambda: MessageBoxBase.pop(self,
+                QMessageBox.Information, "Tip",
+                "Restart to fully refresh.\n该设置将在重启后完全生效"
+            )
         )
         component_settings_autoUpdate = subSettingsPage_Client.addCheckBoxFrame(
             rootItemText = self.tr("功能设置"),
@@ -2379,7 +2385,7 @@ class MainWindow(Window_MainWindow):
             uncheckedEvents = {
                 lambda: MessageBoxBase.pop(self,
                     QMessageBox.Information, "Tip",
-                    "该设置将于重启之后生效"
+                    "The setting will take effect after restart.\n该设置将于重启之后生效"
                 ) : False
             },
         )
@@ -2463,9 +2469,6 @@ class MainWindow(Window_MainWindow):
         # Set Theme
         ComponentsSignals.Signal_SetTheme.emit(config.getValue('Settings', 'Theme', Theme.Auto))
 
-        # Set Language
-        ComponentsSignals.Signal_SetLanguage.emit(config.getValue('Settings', 'Language', Language.Auto))
-
         # Show MainWindow (and emit signal)
         self.show()
         self.Signal_MainWindowShown.emit()
@@ -2477,6 +2480,9 @@ class MainWindow(Window_MainWindow):
 
 if __name__ == "__main__":
     App = QApplication(sys.argv)
+
+    # Set Language
+    updateLanguage(config.getValue('Settings', 'Language', Language.Auto))
 
     # Create&Show SplashScreen
     SC = QSplashScreen(QPixmap(EasyUtils.normPath(Path(resourceDir).joinpath('assets/images/others/SplashScreen.png'))))
