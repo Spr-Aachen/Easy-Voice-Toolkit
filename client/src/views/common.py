@@ -37,9 +37,7 @@ class SubPage(WidgetBase):
         container_layout = QVBoxLayout(self.container)
         container_layout.setSpacing(12)
         container_layout.setContentsMargins(12, 12, 12, 12)
-        self.contentWidget = ScrollAreaBase(self)
-        self.contentWidget.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOn)
-        self.contentWidget.setWidgetResizable(True)
+        self.contentWidget = VerticalScrollArea(self)
         self.contentWidget.setWidget(self.container)
 
         layout = QGridLayout(self)
@@ -79,12 +77,7 @@ class SubPage(WidgetBase):
                 toolBox.widget(0).addWidget(childFrame)
             else:
                 toolBox = ToolBoxBase()
-                toolPageItem = QWidget()
-                toolPageItem_layout = QGridLayout(toolPageItem)
-                toolPageItem_layout.setSpacing(0)
-                toolPageItem_layout.setContentsMargins(0, 0, 0, 0)
-                toolPageItem_layout.addWidget(childFrame)
-                toolBox.addItem(toolPageItem, toolBoxText)
+                toolBox.addItem(childFrame, toolBoxText)
                 self.widgets[(rootItemText, toolBoxText)] = toolBox # record the toolBox
             toolBox.widget(0).collapse()
         # Add to groupBox

@@ -25,7 +25,6 @@ class SubToolPage(SubPage):
         self.paramsManager = paramsManager
 
         leftWidget = QWidget(self)
-        leftWidget.setMinimumSize(QSize(150, 0))
         leftWidget_layout = QVBoxLayout(leftWidget)
         leftWidget_layout.setSpacing(12)
         leftWidget_layout.setContentsMargins(12, 12, 12, 12)
@@ -35,7 +34,6 @@ class SubToolPage(SubPage):
         leftWidget_layout.addWidget(self.catalogueWidget)
 
         middleWidget = self.contentWidget
-        middleWidget.setMinimumSize(QSize(600, 0))
 
         rightWidget = QWidget(self)
         self.rightWidget_layout = QGridLayout(rightWidget)
@@ -168,9 +166,8 @@ class SubToolPage(SubPage):
         childFrame_layout.setSpacing(12)
         childFrame_layout.setContentsMargins(21, 12, 21, 12)
         childFrame_layout.addWidget(label, 0, 0, 1, 1)
-        childFrame_layout.addItem(QSpacerItem(0, 0, QSizePolicy.Expanding, QSizePolicy.Minimum), 0, 1, 1, 1)
-        childFrame_layout.addWidget(menuButton, 0, 2, 1, 1)
-        childFrame_layout.addWidget(inputWidget, 1, 0, 1, 3)
+        childFrame_layout.addWidget(menuButton, 0, 1, 1, 1)
+        childFrame_layout.addWidget(inputWidget, 1, 0, 1, 2)
         return childFrame
 
     def addLineEditFrame(self,
@@ -180,6 +177,7 @@ class SubToolPage(SubPage):
         emptyAllowed: bool = False
     ):
         label = LabelBase()
+        label.setWordWrap(True)
         lineEdit = LineEditBase(self)
         lineEdit.setObjectName(text.splitlines()[0])
         button = MenuButton()
