@@ -39,14 +39,6 @@ class Ui_ChildWindow_TTS(object):
 "}\n"
 "QPushButton:hover {\n"
 "	background-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
 "}")
 
         self.horizontalLayout_2.addWidget(self.Button_Maximize)
@@ -64,14 +56,6 @@ class Ui_ChildWindow_TTS(object):
 "}\n"
 "QPushButton:hover {\n"
 "	background-color: rgba(210, 123, 123, 210);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
 "}")
 
         self.horizontalLayout_2.addWidget(self.Button_Close)
@@ -102,10 +86,10 @@ class Ui_ChildWindow_TTS(object):
 
         self.gridLayout.addWidget(self.Label_Text, 1, 0, 1, 2)
 
-        self.widget = MediaPlayerBase(self.CentralWidget)
-        self.widget.setObjectName(u"widget")
+        self.Widget = MediaPlayerBase(self.CentralWidget)
+        self.Widget.setObjectName(u"Widget")
 
-        self.gridLayout.addWidget(self.widget, 2, 0, 1, 2)
+        self.gridLayout.addWidget(self.Widget, 2, 0, 1, 2)
 
 
         self.verticalLayout.addWidget(self.CentralWidget)

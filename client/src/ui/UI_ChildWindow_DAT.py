@@ -39,14 +39,6 @@ class Ui_ChildWindow_DAT(object):
 "}\n"
 "QPushButton:hover {\n"
 "	background-color: rgba(123, 123, 123, 123);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
 "}")
 
         self.horizontalLayout_2.addWidget(self.Button_Maximize)
@@ -64,14 +56,6 @@ class Ui_ChildWindow_DAT(object):
 "}\n"
 "QPushButton:hover {\n"
 "	background-color: rgba(210, 123, 123, 210);\n"
-"}\n"
-"\n"
-"\n"
-"QToolTip {\n"
-"	color: rgba(255, 255, 255, 210);\n"
-"    background-color: transparent;\n"
-"	border-width: 0px;\n"
-"	border-style: solid;\n"
 "}")
 
         self.horizontalLayout_2.addWidget(self.Button_Close)

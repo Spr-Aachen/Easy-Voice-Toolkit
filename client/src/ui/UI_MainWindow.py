@@ -1249,52 +1249,16 @@ class Ui_MainWindow(object):
     # setupUi
 
     def retranslateUi(self, MainWindow):
-#if QT_CONFIG(tooltip)
-        self.Button_Toggle_Menu.setToolTip(QCoreApplication.translate("MainWindow", u"\u70b9\u51fb\u4ee5\u5c55\u5f00/\u6298\u53e0\u83dc\u5355", None))
-#endif // QT_CONFIG(tooltip)
-#if QT_CONFIG(tooltip)
-        self.Button_Menu_Home.setToolTip(QCoreApplication.translate("MainWindow", u"\u4e3b\u9875", None))
-#endif // QT_CONFIG(tooltip)
         self.Button_Menu_Home.setText(QCoreApplication.translate("MainWindow", u"\u4e3b\u9875", None))
-#if QT_CONFIG(tooltip)
-        self.Button_Menu_Env.setToolTip(QCoreApplication.translate("MainWindow", u"\u73af\u5883\u914d\u7f6e", None))
-#endif // QT_CONFIG(tooltip)
         self.Button_Menu_Env.setText(QCoreApplication.translate("MainWindow", u"\u73af\u5883", None))
-#if QT_CONFIG(tooltip)
-        self.Button_Menu_Models.setToolTip(QCoreApplication.translate("MainWindow", u"\u6a21\u578b\u7ba1\u7406", None))
-#endif // QT_CONFIG(tooltip)
         self.Button_Menu_Models.setText(QCoreApplication.translate("MainWindow", u"\u6a21\u578b", None))
-#if QT_CONFIG(tooltip)
-        self.Button_Menu_Process.setToolTip(QCoreApplication.translate("MainWindow", u"\u5de5\u5177\uff1a\u97f3\u9891\u5904\u7406", None))
-#endif // QT_CONFIG(tooltip)
         self.Button_Menu_Process.setText(QCoreApplication.translate("MainWindow", u"\u5904\u7406", None))
-#if QT_CONFIG(tooltip)
-        self.Button_Menu_VPR.setToolTip(QCoreApplication.translate("MainWindow", u"\u5de5\u5177\uff1a\u8bed\u97f3\u8bc6\u522b", None))
-#endif // QT_CONFIG(tooltip)
         self.Button_Menu_VPR.setText(QCoreApplication.translate("MainWindow", u"\u8bc6\u522b", None))
-#if QT_CONFIG(tooltip)
-        self.Button_Menu_ASR.setToolTip(QCoreApplication.translate("MainWindow", u"\u5de5\u5177\uff1a\u8bed\u97f3\u8f6c\u6587\u5b57", None))
-#endif // QT_CONFIG(tooltip)
         self.Button_Menu_ASR.setText(QCoreApplication.translate("MainWindow", u"\u8f6c\u5f55", None))
-#if QT_CONFIG(tooltip)
-        self.Button_Menu_Dataset.setToolTip(QCoreApplication.translate("MainWindow", u"\u5de5\u5177\uff1a\u6570\u636e\u96c6\u5236\u4f5c", None))
-#endif // QT_CONFIG(tooltip)
-        self.Button_Menu_Dataset.setText(QCoreApplication.translate("MainWindow", u"\u6570\u636e", None))
-#if QT_CONFIG(tooltip)
-        self.Button_Menu_Train.setToolTip(QCoreApplication.translate("MainWindow", u"\u5de5\u5177\uff1a\u6a21\u578b\u8bad\u7ec3", None))
-#endif // QT_CONFIG(tooltip)
+        self.Button_Menu_Dataset.setText(QCoreApplication.translate("MainWindow", u"\u9884\u5904\u7406", None))
         self.Button_Menu_Train.setText(QCoreApplication.translate("MainWindow", u"\u8bad\u7ec3", None))
-#if QT_CONFIG(tooltip)
-        self.Button_Menu_TTS.setToolTip(QCoreApplication.translate("MainWindow", u"\u5de5\u5177\uff1a\u8bed\u97f3\u5408\u6210", None))
-#endif // QT_CONFIG(tooltip)
         self.Button_Menu_TTS.setText(QCoreApplication.translate("MainWindow", u"\u5408\u6210", None))
-#if QT_CONFIG(tooltip)
-        self.Button_Menu_Settings.setToolTip(QCoreApplication.translate("MainWindow", u"\u5ba2\u6237\u7aef\u8bbe\u7f6e", None))
-#endif // QT_CONFIG(tooltip)
         self.Button_Menu_Settings.setText(QCoreApplication.translate("MainWindow", u"\u8bbe\u7f6e", None))
-#if QT_CONFIG(tooltip)
-        self.Button_Menu_Info.setToolTip(QCoreApplication.translate("MainWindow", u"\u5173\u4e8e\u672c\u8f6f\u4ef6", None))
-#endif // QT_CONFIG(tooltip)
         self.Button_Menu_Info.setText(QCoreApplication.translate("MainWindow", u"\u5173\u4e8e", None))
         self.TextBrowser_Text_Home.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
@@ -1303,9 +1267,8 @@ class Ui_MainWindow(object):
 "li.unchecked::marker { content: \"\\2610\"; }\n"
 "li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:'Microsoft YaHei UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:24pt; font-weight:840;\">\u4ecb\u7ecd</span></p>\n"
-"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:12pt; font-weight:420;\"><br />\u4e00\u4e2a\u57fa\u4e8eWhisper\u3001VITS\u7b49\u9879\u76ee\u5b9e\u73b0\u7684\u7b80\u6613\u8bed\u97f3\u5de5\u5177\u7bb1\uff0c\u63d0\u4f9b"
-                        "\u4e86\u5305\u62ec\u8bed\u97f3\u6a21\u578b\u8bad\u7ec3\u5728\u5185\u7684\u591a\u79cd\u81ea\u52a8\u5316\u97f3\u9891\u5de5\u5177<br /><br />\u5de5\u5177\u7bb1\u76ee\u524d\u5305 \u542b\u4ee5\u4e0b\u529f\u80fd\uff1a<br />\u97f3\u9891\u5904\u7406<br />\u8bed\u97f3\u8bc6\u522b<br />\u8bed\u97f3\u8f6c\u5f55<br />\u6570\u636e\u96c6\u5236\u4f5c<br />\u6a21\u578b\u8bad\u7ec3<br />\u8bed\u97f3\u5408\u6210<br /><br />\u8fd9\u4e9b\u529f\u80fd\u5f7c\u6b64\u4e4b\u95f4\u76f8\u4e92\u72ec\u7acb\uff0c\u4f46\u53c8\u80fd\u65e0\u7f1d\u8854\u63a5\u5730\u5f62\u6210\u4e00\u5957\u5b8c\u6574\u7684\u5de5\u4f5c\u6d41<br />\u7528\u6237\u53ef\u4ee5\u6839\u636e\u81ea\u5df1\u7684\u9700\u6c42\u6709\u9009\u62e9\u6027\u5730\u4f7f\u7528\uff0c\u4ea6\u6216\u8005\u4f9d\u6b21\u901a\u8fc7\u8fd9\u4e9b\u5de5\u5177\u5c06\u672a\u7ecf\u5904\u7406\u7684\u8bed\u97f3\u6587\u4ef6\u9010\u6b65\u53d8\u4e3a\u7406\u60f3\u7684\u8bed\u97f3\u6a21\u578b<br /></span></p></body></html>", None))
+"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:24pt; font-weight:840;\">Intro</span></p>\n"
+"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:12pt; font-weight:420;\"><br />...<br /></span></p></body></html>", None))
         self.Label_Demo_Text.setText(QCoreApplication.translate("MainWindow", u"<font size=4>\u89c6\u9891\u6f14\u793a</font>", None))
         self.Label_Server_Text.setText(QCoreApplication.translate("MainWindow", u"<font size=4>\u4e91\u7aef\u7248\u672c</font>", None))
         self.Label_Repo_Text.setText(QCoreApplication.translate("MainWindow", u"<font size=4>\u9879\u76ee\u4ed3\u5e93</font>", None))
