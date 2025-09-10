@@ -56,8 +56,6 @@ def startServer(
             isServerStarted = True
             toolSignals.serverStarted.emit()
         yield isServerStarted
-        if isServerStarted:
-            break
     logPath = logOutputPath
 
 
