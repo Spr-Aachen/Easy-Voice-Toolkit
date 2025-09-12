@@ -24,7 +24,6 @@ toolSignals = CustomSignals_Tools()
 
 host = None
 port = None
-subprocessMonitor = None
 logPath = None
 
 def startServer(
@@ -33,7 +32,7 @@ def startServer(
 ):
     """
     """
-    global host, port, subprocessMonitor, logPath
+    global host, port, logPath
     host = "localhost"
     port = EasyUtils.findAvailablePorts((8000, 8080), host)[0]
     args = EasyUtils.mkPyFileCommand(
@@ -50,12 +49,9 @@ def startServer(
     )
     spm.create(args, env = os.environ)
     subprocessMonitor = spm.monitor(logPath = logOutputPath)
-    isServerStarted = False
     for outputLine, errorLine in subprocessMonitor:
         if f"{host}:{port}" in outputLine.decode(errors = 'ignore'):
-            isServerStarted = True
             toolSignals.serverStarted.emit()
-        yield isServerStarted
     logPath = logOutputPath
 
 
