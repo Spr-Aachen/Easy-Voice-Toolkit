@@ -148,11 +148,11 @@ class SubToolPage(SubPage):
         )
 
     def _addToChildFrame(self, label: LabelBase, inputWidget: QWidget, menuButton: MenuButton):
-        inputWidget.setMaximumHeight(27) if isinstance(inputWidget, (QLineEdit, QComboBox, QCheckBox, QSpinBox, QDoubleSpinBox, QSlider)) else None
+        inputWidget.setFixedHeight(27) if isinstance(inputWidget, (QLineEdit, QComboBox, QCheckBox, QSpinBox, QDoubleSpinBox, QSlider)) else None
         menuButton.setFixedSize(QSize(27, 27))
         # Add to childFrame
         childFrame = QFrame()
-        childFrame.setMinimumHeight(105 if not isinstance(inputWidget, (QTextBrowser, QTextEdit, QTableView)) else 210)
+        childFrame.setFixedHeight(105 if not isinstance(inputWidget, (QTextBrowser, QTextEdit, QTableView)) else 210)
         childFrame.setStyleSheet("""
             QFrame {
                 background-color: transparent;

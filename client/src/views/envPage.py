@@ -32,7 +32,7 @@ class SubEnvPage_Detector(SubPage):
         )
 
     def _addToChildFrame(self, label: QLabel, progressBar: QWidget, statusBrowser: QTextBrowser, detectButton: QPushButton):
-        progressBar.setMaximumHeight(3)
+        progressBar.setFixedHeight(3)
         statusBrowser.setSizePolicy(QSizePolicy(QSizePolicy.Policy.Ignored, QSizePolicy.Policy.Preferred))
         detectButton.setFixedSize(QSize(30, 30))
         # 
