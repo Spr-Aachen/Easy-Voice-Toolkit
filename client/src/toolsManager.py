@@ -35,6 +35,7 @@ def startServer(
     global host, port, logPath
     host = "localhost"
     port = EasyUtils.findAvailablePorts((8000, 8080), host)[0]
+    logPath = logOutputPath
     args = EasyUtils.mkPyFileCommand(
         filePath,
         host = host,
@@ -52,7 +53,6 @@ def startServer(
     for outputLine, errorLine in subprocessMonitor:
         if f"{host}:{port}" in outputLine.decode(errors = 'ignore'):
             toolSignals.serverStarted.emit()
-    logPath = logOutputPath
 
 
 def sendRequest(
