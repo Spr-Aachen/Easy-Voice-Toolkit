@@ -1401,18 +1401,16 @@ class MainWindow(Window_MainWindow):
         Function_ConfigureCheckBox(
             checkBox = component_process_denoiseAudio.get(ComponentFlag.CheckBox),
             checkedEvents = {
-                lambda: Function_SetChildWidgetsVisibility(
-                    container = component_process_denoiseAudio.get(ComponentFlag.GroupBox),
-                    childWidgetsVisibility = {
+                lambda: Function_SetWidgetsVisibility(
+                    widgetsVisibility = {
                         component_process_denoiseModelPath.get(ComponentFlag.Frame): True,
                         component_process_denoiseTarget.get(ComponentFlag.Frame): True,
                     },
                 ) : True
             },
             uncheckedEvents = {
-                lambda: Function_SetChildWidgetsVisibility(
-                    container = component_process_denoiseAudio.get(ComponentFlag.GroupBox),
-                    childWidgetsVisibility = {
+                lambda: Function_SetWidgetsVisibility(
+                    widgetsVisibility = {
                         component_process_denoiseModelPath.get(ComponentFlag.Frame): False,
                         component_process_denoiseTarget.get(ComponentFlag.Frame): False,
                     },
@@ -1422,9 +1420,8 @@ class MainWindow(Window_MainWindow):
         Function_ConfigureCheckBox(
             checkBox = component_process_sliceAudio.get(ComponentFlag.CheckBox),
             checkedEvents = {
-                lambda: Function_SetChildWidgetsVisibility(
-                    container = component_process_rmsThreshold.get(ComponentFlag.ToolBox),
-                    childWidgetsVisibility = {
+                lambda: Function_SetWidgetsVisibility(
+                    widgetsVisibility = {
                         component_process_rmsThreshold.get(ComponentFlag.Frame): True,
                         component_process_audioLength.get(ComponentFlag.Frame): True,
                         component_process_silentInterval.get(ComponentFlag.Frame): True,
@@ -1434,9 +1431,8 @@ class MainWindow(Window_MainWindow):
                 ) : True
             },
             uncheckedEvents = {
-                lambda: Function_SetChildWidgetsVisibility(
-                    container = component_process_rmsThreshold.get(ComponentFlag.ToolBox),
-                    childWidgetsVisibility = {
+                lambda: Function_SetWidgetsVisibility(
+                    widgetsVisibility = {
                         component_process_rmsThreshold.get(ComponentFlag.Frame): False,
                         component_process_audioLength.get(ComponentFlag.Frame): False,
                         component_process_silentInterval.get(ComponentFlag.Frame): False,
@@ -2145,17 +2141,15 @@ class MainWindow(Window_MainWindow):
         Function_ConfigureComboBox(
             comboBox = component_train_gptsovits_version.get(ComponentFlag.ComboBox),
             textChangedEvents = {
-                'v2': lambda: Function_SetChildWidgetsVisibility(
-                    container = component_train_gptsovits_version.get(ComponentFlag.GroupBox),
-                    childWidgetsVisibility = {
+                'v2': lambda: Function_SetWidgetsVisibility(
+                    widgetsVisibility = {
                         component_train_gptsovits_modelPathPretrainedS2D.get(ComponentFlag.Frame): True,
                         component_train_gptsovits_ifGradCkpt.get(ComponentFlag.Frame): False,
                         component_train_gptsovits_loraRank.get(ComponentFlag.Frame): False,
                     }
                 ),
-                'v3': lambda: Function_SetChildWidgetsVisibility(
-                    container = component_train_gptsovits_version.get(ComponentFlag.GroupBox),
-                    childWidgetsVisibility = {
+                'v3': lambda: Function_SetWidgetsVisibility(
+                    widgetsVisibility = {
                         component_train_gptsovits_modelPathPretrainedS2D.get(ComponentFlag.Frame): False,
                         component_train_gptsovits_ifGradCkpt.get(ComponentFlag.Frame): True,
                         component_train_gptsovits_loraRank.get(ComponentFlag.Frame): True,
@@ -2316,16 +2310,14 @@ class MainWindow(Window_MainWindow):
         Function_ConfigureComboBox(
             comboBox = component_tts_gptsovits_version.get(ComponentFlag.ComboBox),
             textChangedEvents = {
-                "v2": lambda: Function_SetChildWidgetsVisibility(
-                    container = component_tts_gptsovits_version.get(ComponentFlag.GroupBox),
-                    childWidgetsVisibility = {
+                "v2": lambda: Function_SetWidgetsVisibility(
+                    widgetsVisibility = {
                         component_tts_gptsovits_modelPathLoadS2Gv3.get(ComponentFlag.Frame): False,
                         component_tts_gptsovits_modelDirLoadBigVGAN.get(ComponentFlag.Frame): False,
                     },
                 ),
-                "v3": lambda: Function_SetChildWidgetsVisibility(
-                    container = component_tts_gptsovits_version.get(ComponentFlag.GroupBox),
-                    childWidgetsVisibility = {
+                "v3": lambda: Function_SetWidgetsVisibility(
+                    widgetsVisibility = {
                         component_tts_gptsovits_modelPathLoadS2Gv3.get(ComponentFlag.Frame): True,
                         component_tts_gptsovits_modelDirLoadBigVGAN.get(ComponentFlag.Frame): True,
                     },
