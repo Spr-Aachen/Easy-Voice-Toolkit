@@ -217,28 +217,16 @@ def Function_AnimateFrame(
         ExtendFrame() if frame.width() == minWidth or frame.height() == minHeight else ReduceFrame()
 
 
-def Function_SetChildWidgetsVisibility(
-    container: QWidget,
-    childWidgetsVisibility: dict,
-    adjustContainer: bool = True
+def Function_SetWidgetsVisibility(
+    widgetsVisibility: dict,
 ):
     '''
-    Function to set the visibility of child-widgets
+    Function to set the visibility of widgets
     '''
-    for childWidget, visibility in childWidgetsVisibility.items():
-        if childWidget is None:
+    for widget, visibility in widgetsVisibility.items():
+        if widget is None:
             continue
-        childWidget.setVisible(visibility)
-    setVisible = True in childWidgetsVisibility.values()
-    if adjustContainer:
-        currentHeight = container.height()
-        adjustedHeight = container.minimumSizeHint().height()
-        Function_AnimateFrame(
-            frame = container,
-            minHeight = currentHeight if setVisible else adjustedHeight,
-            maxHeight = adjustedHeight if setVisible else currentHeight,
-            mode = 'Extend' if setVisible else 'Reduce'
-        )
+        widget.setVisible(visibility)
 
 ##############################################################################################################################
 
