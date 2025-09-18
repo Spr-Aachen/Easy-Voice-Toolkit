@@ -11,7 +11,7 @@ from PySide6.QtCore import QThreadPool, QTimer
 from PySide6.QtGui import QColor, QPixmap, QIcon, QTextCursor
 from QEasyWidgets import QFunctions as QFunc
 from QEasyWidgets import QTasks
-from QEasyWidgets import ComponentsSignals, Theme, currentTheme, Language, currentLanguage, updateLanguage, IconBase
+from QEasyWidgets import componentsSignals, Theme, currentTheme, Language, currentLanguage, updateLanguage, IconBase
 from QEasyWidgets.Windows import MessageBoxBase
 
 from views import *
@@ -112,12 +112,12 @@ class MainWindow(Window_MainWindow):
     """
     Show the user interface
     """
-    Signal_MainWindowShown = Signal()
+    mainWindowShown = Signal()
 
-    Signal_ModelView_Process_UVR = Signal(list)
-    Signal_ModelView_VPR_TDNN = Signal(list)
-    Signal_ModelView_ASR_Whisper = Signal(list)
-    Signal_ModelView_TTS_GPTSoVITS = Signal(list)
+    modelView_process_uvr = Signal(list)
+    modelView_vpr_tdnn = Signal(list)
+    modelView_asr_whisper = Signal(list)
+    modelView_tts_gptsovits = Signal(list)
 
     def __init__(self):
         super().__init__()
@@ -137,7 +137,7 @@ class MainWindow(Window_MainWindow):
 
     def closeEvent(self, event):
         toolSignals.serverEnded.connect(lambda: QApplication.instance().exit())
-        FunctionSignals.Signal_ForceQuit.emit()
+        functionSignals.forceQuit.emit()
 
     def showGuidance(self, windowTitle: str, images: list, texts: list):
         stackedMsgBox = MessageBox_Stacked(self)
@@ -150,7 +150,7 @@ class MainWindow(Window_MainWindow):
         Function_SetParam(widget, text) if text != '' else None
 
     def viewModels(self):
-        worker_modelView_Process_UVR = WorkerManager(
+        worker_modelView_process_uvr = WorkerManager(
             executeMethod = getModelsInfo,
             executeParams = (
                 manifestPath,
@@ -159,10 +159,10 @@ class MainWindow(Window_MainWindow):
             ),
             threadPool = self.threadPool_models,
         )
-        worker_modelView_Process_UVR.signals.result.connect(self.Signal_ModelView_Process_UVR.emit)
-        worker_modelView_Process_UVR.execute()
+        worker_modelView_process_uvr.signals.result.connect(self.modelView_process_uvr.emit)
+        worker_modelView_process_uvr.execute()
 
-        worker_modelView_VPR_TDNN = WorkerManager(
+        worker_modelView_vpr_tdnn = WorkerManager(
             executeMethod = getModelsInfo,
             executeParams = (
                 manifestPath,
@@ -171,10 +171,10 @@ class MainWindow(Window_MainWindow):
             ),
             threadPool = self.threadPool_models,
         )
-        worker_modelView_VPR_TDNN.signals.result.connect(self.Signal_ModelView_VPR_TDNN.emit)
-        worker_modelView_VPR_TDNN.execute()
+        worker_modelView_vpr_tdnn.signals.result.connect(self.modelView_vpr_tdnn.emit)
+        worker_modelView_vpr_tdnn.execute()
 
-        worker_modelView_ASR_Whisper = WorkerManager(
+        worker_modelView_asr_whisper = WorkerManager(
             executeMethod = getModelsInfo,
             executeParams = (
                 manifestPath,
@@ -183,10 +183,10 @@ class MainWindow(Window_MainWindow):
             ),
             threadPool = self.threadPool_models,
         )
-        worker_modelView_ASR_Whisper.signals.result.connect(self.Signal_ModelView_ASR_Whisper.emit)
-        worker_modelView_ASR_Whisper.execute()
+        worker_modelView_asr_whisper.signals.result.connect(self.modelView_asr_whisper.emit)
+        worker_modelView_asr_whisper.execute()
 
-        worker_modelView_TTS_GPTSoVITS = WorkerManager(
+        worker_modelView_tts_gptsovits = WorkerManager(
             executeMethod = getModelsInfo,
             executeParams = (
                 manifestPath,
@@ -195,8 +195,8 @@ class MainWindow(Window_MainWindow):
             ),
             threadPool = self.threadPool_models,
         )
-        worker_modelView_TTS_GPTSoVITS.signals.result.connect(self.Signal_ModelView_TTS_GPTSoVITS.emit)
-        worker_modelView_TTS_GPTSoVITS.execute()
+        worker_modelView_tts_gptsovits.signals.result.connect(self.modelView_tts_gptsovits.emit)
+        worker_modelView_tts_gptsovits.execute()
 
     def appendModels(self):
         LineEdit_Models_Append = QLineEdit()
@@ -508,7 +508,7 @@ class MainWindow(Window_MainWindow):
                 buttons = QMessageBox.Yes|QMessageBox.No,
                 buttonEvents = {
                     QMessageBox.Yes: lambda: (
-                        ChildWindow_TTS.ui.widget.releaseMediaPlayer(),
+                        ChildWindow_TTS.ui.Widget.releaseMediaPlayer(),
                         ChildWindow_TTS.close()
                     )
                 } 
@@ -538,7 +538,7 @@ class MainWindow(Window_MainWindow):
                 buttons = QMessageBox.Yes|QMessageBox.No,
                 buttonEvents = {
                     QMessageBox.Yes: lambda: (
-                        ChildWindow_TTS.ui.widget.releaseMediaPlayer(),
+                        ChildWindow_TTS.ui.Widget.releaseMediaPlayer(),
                         os.remove(mediaPath),
                         ChildWindow_TTS.close()
                     )
@@ -553,7 +553,7 @@ class MainWindow(Window_MainWindow):
                 buttons = QMessageBox.Yes|QMessageBox.No,
                 buttonEvents = {
                     QMessageBox.Yes: lambda: (
-                        ChildWindow_TTS.ui.widget.releaseMediaPlayer(),
+                        ChildWindow_TTS.ui.Widget.releaseMediaPlayer(),
                         shutil.move(
                             mediaPath,
                             QFunc.getFileDialog(
@@ -567,7 +567,7 @@ class MainWindow(Window_MainWindow):
             )
         )
 
-        ChildWindow_TTS.ui.widget.setMediaPlayer(
+        ChildWindow_TTS.ui.Widget.setMediaPlayer(
             mediaPath
         )
         ChildWindow_TTS.exec()
@@ -583,7 +583,7 @@ class MainWindow(Window_MainWindow):
             else:
                 config.editConfig('Info', 'RecordedVersion', currentVersion)
 
-        FunctionSignals.Signal_ReadyToUpdate.connect(
+        functionSignals.readyToUpdate.connect(
             lambda downloadURL, versionInfo: (
                 MessageBoxBase.pop(None,
                     QMessageBox.Question, "Ask",
@@ -632,7 +632,7 @@ class MainWindow(Window_MainWindow):
         #############################################################
 
         # Theme toggler
-        ComponentsSignals.Signal_SetTheme.connect(
+        componentsSignals.setTheme.connect(
             lambda: self.ui.CheckBox_SwitchTheme.setChecked(
                 {Theme.Light: True, Theme.Dark: False}.get(currentTheme())
             )
@@ -642,12 +642,12 @@ class MainWindow(Window_MainWindow):
             checkedText = "☀",
             checkedEvents = {
                 lambda: config.editConfig('Settings', 'Theme', Theme.Light): False,
-                lambda: ComponentsSignals.Signal_SetTheme.emit(Theme.Light) if currentTheme() != Theme.Light else None : False
+                lambda: componentsSignals.setTheme.emit(Theme.Light) if currentTheme() != Theme.Light else None : False
             },
             uncheckedText = "☼",
             uncheckedEvents = {
                 lambda: config.editConfig('Settings', 'Theme', Theme.Dark) : False,
-                lambda: ComponentsSignals.Signal_SetTheme.emit(Theme.Dark) if currentTheme() != Theme.Dark else None : False
+                lambda: componentsSignals.setTheme.emit(Theme.Dark) if currentTheme() != Theme.Dark else None : False
             }
         )
 
@@ -803,7 +803,7 @@ class MainWindow(Window_MainWindow):
             rootItemText = self.tr("界面设置"),
             text = self.tr("主题"),
             items = themeDict.keys(),
-            signal = ComponentsSignals.Signal_SetTheme,
+            signal = componentsSignals.setTheme,
             textDict = themeDict,
             section = 'Settings',
             option = 'Theme',
@@ -817,12 +817,12 @@ class MainWindow(Window_MainWindow):
             rootItemText = self.tr("界面设置"),
             text = self.tr("语言"),
             items = languageDict.keys(),
-            signal = ComponentsSignals.Signal_SetLanguage,
+            signal = componentsSignals.setLanguage,
             textDict = languageDict,
             section = 'Settings',
             option = 'Language',
         )
-        ComponentsSignals.Signal_SetLanguage.connect(
+        componentsSignals.setLanguage.connect(
             lambda: MessageBoxBase.pop(self,
                 QMessageBox.Information, "Tip",
                 "Restart to fully refresh.\n该设置将在重启后完全生效"
@@ -976,15 +976,15 @@ class MainWindow(Window_MainWindow):
             detectMethod = Aria2_Installer.execute,
             terminateMethod = Aria2_Installer.terminate,
             threadPool = self.threadPool_env,
-            signal_detect = self.Signal_MainWindowShown,
-            signal_detected = EnvConfiguratorSignals.Signal_Aria2Detected,
-            signal_undetected = EnvConfiguratorSignals.Signal_Aria2Undetected,
-            statusSignal = EnvConfiguratorSignals.Signal_Aria2Status,
+            signal_detect = self.mainWindowShown,
+            signal_detected = envConfiguratorSignals.aria2Detected,
+            signal_undetected = envConfiguratorSignals.aria2Undetected,
+            statusSignal = envConfiguratorSignals.aria2Status,
         )
-        EnvConfiguratorSignals.Signal_Aria2Installed.connect(#self.ui.Button_Install_Aria2.click)
-            lambda: EnvConfiguratorSignals.Signal_Aria2Detected.emit()
+        envConfiguratorSignals.aria2Installed.connect(#self.ui.Button_Install_Aria2.click)
+            lambda: envConfiguratorSignals.aria2Detected.emit()
         )
-        EnvConfiguratorSignals.Signal_Aria2InstallFailed.connect(
+        envConfiguratorSignals.aria2InstallFailed.connect(
             lambda Exception: MessageBoxBase.pop(self,
                 QMessageBox.Warning, "Warning",
                 text = self.tr("安装Aria2出错"),
@@ -997,15 +997,15 @@ class MainWindow(Window_MainWindow):
             detectMethod = FFmpeg_Installer.execute,
             terminateMethod = FFmpeg_Installer.terminate,
             threadPool = self.threadPool_env,
-            signal_detect = self.Signal_MainWindowShown,
-            signal_detected = EnvConfiguratorSignals.Signal_FFmpegDetected,
-            signal_undetected = EnvConfiguratorSignals.Signal_FFmpegUndetected,
-            statusSignal = EnvConfiguratorSignals.Signal_FFmpegStatus,
+            signal_detect = self.mainWindowShown,
+            signal_detected = envConfiguratorSignals.ffmpegDetected,
+            signal_undetected = envConfiguratorSignals.ffmpegUndetected,
+            statusSignal = envConfiguratorSignals.ffmpegStatus,
         )
-        EnvConfiguratorSignals.Signal_FFmpegInstalled.connect(#self.ui.Button_Install_FFmpeg.click)
-            lambda: EnvConfiguratorSignals.Signal_FFmpegDetected.emit()
+        envConfiguratorSignals.ffmpegInstalled.connect(#self.ui.Button_Install_FFmpeg.click)
+            lambda: envConfiguratorSignals.ffmpegDetected.emit()
         )
-        EnvConfiguratorSignals.Signal_FFmpegInstallFailed.connect(
+        envConfiguratorSignals.ffmpegInstallFailed.connect(
             lambda Exception: MessageBoxBase.pop(self,
                 QMessageBox.Warning, "Warning",
                 text = self.tr("安装FFmpeg出错"),
@@ -1019,15 +1019,15 @@ class MainWindow(Window_MainWindow):
             params = ('3.9.0'),
             terminateMethod = Python_Installer.terminate,
             threadPool = self.threadPool_env,
-            signal_detect = self.Signal_MainWindowShown,
-            signal_detected = EnvConfiguratorSignals.Signal_PythonDetected,
-            signal_undetected = EnvConfiguratorSignals.Signal_PythonUndetected,
-            statusSignal = EnvConfiguratorSignals.Signal_PythonStatus,
+            signal_detect = self.mainWindowShown,
+            signal_detected = envConfiguratorSignals.pythonDetected,
+            signal_undetected = envConfiguratorSignals.pythonUndetected,
+            statusSignal = envConfiguratorSignals.pythonStatus,
         )
-        EnvConfiguratorSignals.Signal_PythonInstalled.connect(#self.ui.Button_Install_Python.click)
-            lambda: EnvConfiguratorSignals.Signal_PythonDetected.emit()
+        envConfiguratorSignals.pythonInstalled.connect(#self.ui.Button_Install_Python.click)
+            lambda: envConfiguratorSignals.pythonDetected.emit()
         )
-        EnvConfiguratorSignals.Signal_PythonInstallFailed.connect(
+        envConfiguratorSignals.pythonInstallFailed.connect(
             lambda Exception: MessageBoxBase.pop(self,
                 QMessageBox.Warning, "Warning",
                 text = self.tr("安装Python出错"),
@@ -1041,15 +1041,15 @@ class MainWindow(Window_MainWindow):
             params = (EasyUtils.normPath(requirementsPath)),
             terminateMethod = PyReqs_Installer.terminate,
             threadPool = self.threadPool_env,
-            signal_detect = EnvConfiguratorSignals.Signal_PythonDetected,
-            signal_detected = EnvConfiguratorSignals.Signal_PyReqsDetected,
-            signal_undetected = EnvConfiguratorSignals.Signal_PyReqsUndetected,
-            statusSignal = EnvConfiguratorSignals.Signal_PyReqsStatus,
+            signal_detect = envConfiguratorSignals.pythonDetected,
+            signal_detected = envConfiguratorSignals.pyReqsDetected,
+            signal_undetected = envConfiguratorSignals.pyReqsUndetected,
+            statusSignal = envConfiguratorSignals.pyReqsStatus,
         )
-        EnvConfiguratorSignals.Signal_PyReqsInstalled.connect(#self.ui.Button_Install_PyReqs.click)
-            lambda: EnvConfiguratorSignals.Signal_PyReqsDetected.emit()
+        envConfiguratorSignals.pyReqsInstalled.connect(#self.ui.Button_Install_PyReqs.click)
+            lambda: envConfiguratorSignals.pyReqsDetected.emit()
         )
-        EnvConfiguratorSignals.Signal_PyReqsInstallFailed.connect(
+        envConfiguratorSignals.pyReqsInstallFailed.connect(
             lambda Exception: MessageBoxBase.pop(self,
                 QMessageBox.Warning, "Warning",
                 text = self.tr("安装Python依赖库出错"),
@@ -1062,15 +1062,15 @@ class MainWindow(Window_MainWindow):
             detectMethod = Pytorch_Installer.execute,
             terminateMethod = Pytorch_Installer.terminate,
             threadPool = self.threadPool_env,
-            signal_detect = EnvConfiguratorSignals.Signal_PyReqsDetected,
-            signal_detected = EnvConfiguratorSignals.Signal_PytorchDetected,
-            signal_undetected = EnvConfiguratorSignals.Signal_PytorchUndetected,
-            statusSignal = EnvConfiguratorSignals.Signal_PytorchStatus,
+            signal_detect = envConfiguratorSignals.pyReqsDetected,
+            signal_detected = envConfiguratorSignals.pytorchDetected,
+            signal_undetected = envConfiguratorSignals.pytorchUndetected,
+            statusSignal = envConfiguratorSignals.pytorchStatus,
         )
-        EnvConfiguratorSignals.Signal_PytorchInstalled.connect(#self.ui.Button_Install_Pytorch.click)
-            lambda: EnvConfiguratorSignals.Signal_PytorchDetected.emit()
+        envConfiguratorSignals.pytorchInstalled.connect(#self.ui.Button_Install_Pytorch.click)
+            lambda: envConfiguratorSignals.pytorchDetected.emit()
         )
-        EnvConfiguratorSignals.Signal_PytorchInstallFailed.connect(
+        envConfiguratorSignals.pytorchInstallFailed.connect(
             lambda Exception: MessageBoxBase.pop(self,
                 QMessageBox.Warning, "Warning",
                 text = self.tr("安装Pytorch出错"),
@@ -1109,7 +1109,7 @@ class MainWindow(Window_MainWindow):
         ####################### Content: Models #####################
         #############################################################
 
-        self.Signal_MainWindowShown.connect(self.viewModels)
+        self.mainWindowShown.connect(self.viewModels)
 
         self.ui.Button_Models_Process_Title.setText(self.tr("音频处理"))
         self.ui.Button_Models_Process_Title.setHorizontal(True)
@@ -1121,7 +1121,7 @@ class MainWindow(Window_MainWindow):
             )
         )
         self.ui.TabWidget_Models_Process.setTabText(0, "UVR")
-        self.Signal_ModelView_Process_UVR.connect(self.ui.Table_Models_Process_UVR.setValue)
+        self.modelView_process_uvr.connect(self.ui.Table_Models_Process_UVR.setValue)
         self.ui.Table_Models_Process_UVR.download.connect(
             lambda params: Function_SetMethodExecutor(
                 executeMethod = downloadModel,
@@ -1141,7 +1141,7 @@ class MainWindow(Window_MainWindow):
             )
         )
         self.ui.TabWidget_Models_VPR.setTabText(0, "TDNN")
-        self.Signal_ModelView_VPR_TDNN.connect(self.ui.Table_Models_VPR_TDNN.setValue)
+        self.modelView_vpr_tdnn.connect(self.ui.Table_Models_VPR_TDNN.setValue)
         self.ui.Table_Models_VPR_TDNN.download.connect(
             lambda params: Function_SetMethodExecutor(
                 executeMethod = downloadModel,
@@ -1161,7 +1161,7 @@ class MainWindow(Window_MainWindow):
             )
         )
         self.ui.TabWidget_Models_ASR.setTabText(0, "Whisper")
-        self.Signal_ModelView_ASR_Whisper.connect(self.ui.Table_Models_ASR_Whisper.setValue)
+        self.modelView_asr_whisper.connect(self.ui.Table_Models_ASR_Whisper.setValue)
         self.ui.Table_Models_ASR_Whisper.download.connect(
             lambda params: Function_SetMethodExecutor(
                 executeMethod = downloadModel,
@@ -1181,7 +1181,7 @@ class MainWindow(Window_MainWindow):
             )
         )
         self.ui.TabWidget_Models_TTS.setTabText(0, "GPT-SoVITS")
-        self.Signal_ModelView_TTS_GPTSoVITS.connect(self.ui.Table_Models_TTS_GPTSoVITS.setValue)
+        self.modelView_tts_gptsovits.connect(self.ui.Table_Models_TTS_GPTSoVITS.setValue)
         self.ui.Table_Models_TTS_GPTSoVITS.download.connect(
             lambda params: Function_SetMethodExecutor(
                 executeMethod = downloadModel,
@@ -2130,7 +2130,7 @@ class MainWindow(Window_MainWindow):
             },
             threadPool = self.threadPool_tasks,
         )
-        FunctionSignals.Signal_TaskStatus.connect(
+        functionSignals.taskStatus.connect(
             lambda Task, Status: MessageBoxBase.pop(self,
                 QMessageBox.Question, "Ask",
                 text = "是否稍后启用tensorboard？",
@@ -2336,7 +2336,7 @@ class MainWindow(Window_MainWindow):
         Function_ConfigureCheckBox(
             checkBox = component_settings_autoReset.get(ComponentFlag.CheckBox),
             checkedEvents = {
-                lambda: self.Signal_MainWindowShown.connect(
+                lambda: self.mainWindowShown.connect(
                     lambda: (
                         paramsManager_process.resetSettings(),
                         paramsManager_vpr_tdnn.resetSettings(),
@@ -2399,7 +2399,7 @@ class MainWindow(Window_MainWindow):
 
         MonitorLog = QTasks.MonitorLogFile(logPath)
         MonitorLog.start()
-        MonitorLog.Signal_ConsoleInfo.connect(
+        MonitorLog.consoleInfo.connect(
             lambda Info: (
                 self.ui.PlainTextEdit_Console.setPlainText(Info),
                 self.ui.PlainTextEdit_Console.moveCursor(QTextCursor.End)
@@ -2434,7 +2434,7 @@ class MainWindow(Window_MainWindow):
 
         # Display ToolsStatus
         self.ui.Label_ToolsStatus.clear()
-        FunctionSignals.Signal_TaskStatus.connect(
+        functionSignals.taskStatus.connect(
             lambda Task, Status: self.ui.Label_ToolsStatus.setText(
                 f"工具状态：{'忙碌' if Status == TaskStatus.Started else '空闲'}"
             ) if Task in [
@@ -2448,7 +2448,7 @@ class MainWindow(Window_MainWindow):
         )
 
         # Display Usage
-        self.MonitorUsage.Signal_UsageInfo.connect(
+        self.MonitorUsage.usageInfo.connect(
             lambda Usage_CPU, Usage_GPU: (
                 self.ui.Label_Usage_CPU.setText(f"CPU: {Usage_CPU}"),
                 self.ui.Label_Usage_GPU.setText(f"GPU: {Usage_GPU}")
@@ -2459,11 +2459,11 @@ class MainWindow(Window_MainWindow):
         self.ui.Label_Version.setText(currentVersion)
 
         # Set Theme
-        ComponentsSignals.Signal_SetTheme.emit(config.getValue('Settings', 'Theme', Theme.Auto))
+        componentsSignals.setTheme.emit(config.getValue('Settings', 'Theme', Theme.Auto))
 
         # Show MainWindow (and emit signal)
         self.show()
-        self.Signal_MainWindowShown.emit()
+        self.mainWindowShown.emit()
 
         # Start server
         self.startServer()

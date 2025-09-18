@@ -12,7 +12,7 @@ from PySide6.QtWidgets import QApplication, QVBoxLayout, QSizePolicy, QWidget, Q
 from QEasyWidgets import QFunctions as QFunc
 from QEasyWidgets.Windows import MessageBoxBase
 
-from functions import FunctionSignals, Function_SetMethodExecutor, Function_UpdateChecker
+from functions import functionSignals, Function_SetMethodExecutor, Function_UpdateChecker
 from config import *
 
 ##############################################################################################################################
@@ -57,7 +57,7 @@ def updateDownloader(
 ):
     try:
         # Download
-        FunctionSignals.Signal_UpdateMessage.emit("正在下载文件...\nDownloading files...")
+        functionSignals.updateMessage.emit("正在下载文件...\nDownloading files...")
         fileInfo = EasyUtils.downloadFile(
             downloadURL = downloadURL,
             downloadDir = downloadDir,
@@ -66,23 +66,23 @@ def updateDownloader(
             sha = None
         )
     except Exception as e:
-        #FunctionSignals.Signal_UpdateMessage.emit("文件下载失败！\nFailed to download files!")
-        FunctionSignals.Signal_IsUpdateSucceeded.emit(False, "文件下载失败！\nFailed to download files!")
+        #functionSignals.updateMessage.emit("文件下载失败！\nFailed to download files!")
+        functionSignals.isUpdateSucceeded.emit(False, "文件下载失败！\nFailed to download files!")
     else:
         # Unpack
-        FunctionSignals.Signal_UpdateMessage.emit("正在解压文件...\nUnpacking files...")
+        functionSignals.updateMessage.emit("正在解压文件...\nUnpacking files...")
         try:
             shutil.unpack_archive(
                 filename = fileInfo[1],
                 extract_dir = extractDir
             )
         except:
-            FunctionSignals.Signal_IsUpdateSucceeded.emit(False, "文件解压失败！\nFailed to unpack files!")
+            functionSignals.isUpdateSucceeded.emit(False, "文件解压失败！\nFailed to unpack files!")
             return
         os.remove(fileInfo[1])
         # Cover old files (About to finish)
-        FunctionSignals.Signal_UpdateMessage.emit("即将重启客户端...\nRebooting client...")
-        FunctionSignals.Signal_IsUpdateSucceeded.emit(True, "")
+        functionSignals.updateMessage.emit("即将重启客户端...\nRebooting client...")
+        functionSignals.isUpdateSucceeded.emit(True, "")
 
 
 # Show GUI
@@ -158,13 +158,13 @@ class MainWindow(QWidget):
         )
 
     def main(self):
-        FunctionSignals.Signal_UpdateMessage.connect(
+        functionSignals.updateMessage.connect(
             lambda message: QFunc.setText(
                 self.label,
                 EasyUtils.setRichText(message, 'center', 9, 420, 0.3, 12)
             )
         )
-        FunctionSignals.Signal_ReadyToUpdate.connect(
+        functionSignals.readyToUpdate.connect(
             lambda downloadURL, versionInfo: (
                 MessageBoxBase.pop(None,
                     QMessageBox.Question, "Ask",
@@ -173,12 +173,12 @@ class MainWindow(QWidget):
                     buttons = QMessageBox.Yes|QMessageBox.No,
                     buttonEvents = {
                         QMessageBox.Yes: lambda: self.downloadUpdate(downloadURL),
-                        QMessageBox.No: lambda: FunctionSignals.Signal_IsUpdateSucceeded.emit(False, "已取消下载更新！\nDownload canceled!")
+                        QMessageBox.No: lambda: functionSignals.isUpdateSucceeded.emit(False, "已取消下载更新！\nDownload canceled!")
                     }
                 )
             )
         )
-        FunctionSignals.Signal_IsUpdateSucceeded.connect(
+        functionSignals.isUpdateSucceeded.connect(
             lambda succeeded, info: (
                 MessageBoxBase.pop(None,
                     QMessageBox.Warning, "Warning",
@@ -192,7 +192,7 @@ class MainWindow(QWidget):
 
         self.skipButton.setText("跳过")
         self.skipButton.clicked.connect(
-            lambda: FunctionSignals.Signal_IsUpdateSucceeded.emit(False, "")
+            lambda: functionSignals.isUpdateSucceeded.emit(False, "")
         )
 
         self.checkUpdate() if downloadURL is None else self.downloadUpdate(downloadURL)
