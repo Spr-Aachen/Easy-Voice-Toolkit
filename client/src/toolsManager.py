@@ -8,7 +8,7 @@ from pathlib import Path
 from typing import Union, Optional, Any
 from PySide6.QtCore import QObject, Signal
 
-from functions import FunctionSignals
+from functions import functionSignals
 
 ##############################################################################################################################
 
@@ -42,7 +42,7 @@ def startServer(
         port = port,
     )
     spm = EasyUtils.subprocessManager(shell = True)
-    FunctionSignals.Signal_ForceQuit.connect(
+    functionSignals.forceQuit.connect(
         lambda: (
             EasyUtils.terminateProcess(spm.subprocesses[-1].pid),
             toolSignals.serverEnded.emit()

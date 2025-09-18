@@ -16,38 +16,38 @@ class CustomSignals_EnvConfigurator(QObject):
     '''
     Set up signals for configurator functions
     '''
-    Signal_Aria2Status = Signal(str)
-    Signal_Aria2Detected = Signal()
-    Signal_Aria2Undetected = Signal()
-    Signal_Aria2Installed = Signal()
-    Signal_Aria2InstallFailed = Signal(Exception)
+    aria2Status = Signal(str)
+    aria2Detected = Signal()
+    aria2Undetected = Signal()
+    aria2Installed = Signal()
+    aria2InstallFailed = Signal(Exception)
 
-    Signal_FFmpegStatus = Signal(str)
-    Signal_FFmpegDetected = Signal()
-    Signal_FFmpegUndetected = Signal()
-    Signal_FFmpegInstalled = Signal()
-    Signal_FFmpegInstallFailed = Signal(Exception)
+    ffmpegStatus = Signal(str)
+    ffmpegDetected = Signal()
+    ffmpegUndetected = Signal()
+    ffmpegInstalled = Signal()
+    ffmpegInstallFailed = Signal(Exception)
 
-    Signal_PythonStatus = Signal(str)
-    Signal_PythonDetected = Signal()
-    Signal_PythonUndetected = Signal()
-    Signal_PythonInstalled = Signal()
-    Signal_PythonInstallFailed = Signal(Exception)
+    pythonStatus = Signal(str)
+    pythonDetected = Signal()
+    pythonUndetected = Signal()
+    pythonInstalled = Signal()
+    pythonInstallFailed = Signal(Exception)
 
-    Signal_PyReqsStatus = Signal(str)
-    Signal_PyReqsDetected = Signal()
-    Signal_PyReqsUndetected = Signal()
-    Signal_PyReqsInstalled = Signal()
-    Signal_PyReqsInstallFailed = Signal(Exception)
+    pyReqsStatus = Signal(str)
+    pyReqsDetected = Signal()
+    pyReqsUndetected = Signal()
+    pyReqsInstalled = Signal()
+    pyReqsInstallFailed = Signal(Exception)
 
-    Signal_PytorchStatus = Signal(str)
-    Signal_PytorchDetected = Signal()
-    Signal_PytorchUndetected = Signal()
-    Signal_PytorchInstalled = Signal()
-    Signal_PytorchInstallFailed = Signal(Exception)
+    pytorchStatus = Signal(str)
+    pytorchDetected = Signal()
+    pytorchUndetected = Signal()
+    pytorchInstalled = Signal()
+    pytorchInstallFailed = Signal(Exception)
 
 
-EnvConfiguratorSignals = CustomSignals_EnvConfigurator()
+envConfiguratorSignals = CustomSignals_EnvConfigurator()
 
 
 class Aria2_Installer:
@@ -97,18 +97,18 @@ class Aria2_Installer:
     def execute(self):
         result = self._checkAria2()
         if result == False:
-            EnvConfiguratorSignals.Signal_Aria2Undetected.emit()
-            EnvConfiguratorSignals.Signal_Aria2Status.emit("Installing Aria2. Please wait...")
+            envConfiguratorSignals.aria2Undetected.emit()
+            envConfiguratorSignals.aria2Status.emit("Installing Aria2. Please wait...")
             try:
                 self._installAria2()
-                EnvConfiguratorSignals.Signal_Aria2Installed.emit()
-                EnvConfiguratorSignals.Signal_Aria2Status.emit("Successfully installed!")
+                envConfiguratorSignals.aria2Installed.emit()
+                envConfiguratorSignals.aria2Status.emit("Successfully installed!")
             except Exception as e:
-                EnvConfiguratorSignals.Signal_Aria2InstallFailed.emit(e)
-                EnvConfiguratorSignals.Signal_Aria2Status.emit("Installation failed:(")
+                envConfiguratorSignals.aria2InstallFailed.emit(e)
+                envConfiguratorSignals.aria2Status.emit("Installation failed:(")
         else:
-            EnvConfiguratorSignals.Signal_Aria2Detected.emit()
-            EnvConfiguratorSignals.Signal_Aria2Status.emit(f"Aria2 detected. Version: {result}")
+            envConfiguratorSignals.aria2Detected.emit()
+            envConfiguratorSignals.aria2Status.emit(f"Aria2 detected. Version: {result}")
 
     def terminate(self):
         self.stopEvent.set()
@@ -162,18 +162,18 @@ class FFmpeg_Installer:
     def execute(self):
         result = self._checkFFmpeg()
         if result == False:
-            EnvConfiguratorSignals.Signal_FFmpegUndetected.emit()
-            EnvConfiguratorSignals.Signal_FFmpegStatus.emit("Installing FFmpeg. Please wait...")
+            envConfiguratorSignals.ffmpegUndetected.emit()
+            envConfiguratorSignals.ffmpegStatus.emit("Installing FFmpeg. Please wait...")
             try:
                 self._installFFmpeg()
-                EnvConfiguratorSignals.Signal_FFmpegInstalled.emit()
-                EnvConfiguratorSignals.Signal_FFmpegStatus.emit("Successfully installed!")
+                envConfiguratorSignals.ffmpegInstalled.emit()
+                envConfiguratorSignals.ffmpegStatus.emit("Successfully installed!")
             except Exception as e:
-                EnvConfiguratorSignals.Signal_FFmpegInstallFailed.emit(e)
-                EnvConfiguratorSignals.Signal_FFmpegStatus.emit("Installation failed:(")
+                envConfiguratorSignals.ffmpegInstallFailed.emit(e)
+                envConfiguratorSignals.ffmpegStatus.emit("Installation failed:(")
         else:
-            EnvConfiguratorSignals.Signal_FFmpegDetected.emit()
-            EnvConfiguratorSignals.Signal_FFmpegStatus.emit(f"FFmpeg detected. Version: {result}")
+            envConfiguratorSignals.ffmpegDetected.emit()
+            envConfiguratorSignals.ffmpegStatus.emit(f"FFmpeg detected. Version: {result}")
 
     def terminate(self):
         self.stopEvent.set()
@@ -222,18 +222,18 @@ class Python_Installer:
     def execute(self, Version_Download: str):
         result = self._checkPython()
         if result == False:
-            EnvConfiguratorSignals.Signal_PythonUndetected.emit()
-            EnvConfiguratorSignals.Signal_PythonStatus.emit("Installing Python. Please wait...")
+            envConfiguratorSignals.pythonUndetected.emit()
+            envConfiguratorSignals.pythonStatus.emit("Installing Python. Please wait...")
             try:
                 self._installPython(Version_Download)
-                EnvConfiguratorSignals.Signal_PythonInstalled.emit()
-                EnvConfiguratorSignals.Signal_PythonStatus.emit("Successfully installed!")
+                envConfiguratorSignals.pythonInstalled.emit()
+                envConfiguratorSignals.pythonStatus.emit("Successfully installed!")
             except Exception as e:
-                EnvConfiguratorSignals.Signal_PythonInstallFailed.emit(e)
-                EnvConfiguratorSignals.Signal_PythonStatus.emit("Installation failed:(")
+                envConfiguratorSignals.pythonInstallFailed.emit(e)
+                envConfiguratorSignals.pythonStatus.emit("Installation failed:(")
         else:
-            EnvConfiguratorSignals.Signal_PythonDetected.emit()
-            EnvConfiguratorSignals.Signal_PythonStatus.emit(f"Python detected. Version: {result}")
+            envConfiguratorSignals.pythonDetected.emit()
+            envConfiguratorSignals.pythonStatus.emit(f"Python detected. Version: {result}")
 
     def terminate(self):
         self.stopEvent.set()
@@ -289,23 +289,23 @@ class PyReqs_Installer:
                 result = self._checkPyReq(packageName, packageVersionReqs, systemReqs)
                 if result == False:
                     if self.emitFlag == True:
-                        EnvConfiguratorSignals.Signal_PyReqsUndetected.emit()
+                        envConfiguratorSignals.pyReqsUndetected.emit()
                         self.emitFlag = False
                     missingRequirementList.append(package)
                 else:
-                    EnvConfiguratorSignals.Signal_PyReqsDetected.emit() if index + 1 == len(requirements) and missingRequirementList == [] else None
-                    EnvConfiguratorSignals.Signal_PyReqsStatus.emit(f"{packageName} detected. Version: {result}") if result is not None else None
+                    envConfiguratorSignals.pyReqsDetected.emit() if index + 1 == len(requirements) and missingRequirementList == [] else None
+                    envConfiguratorSignals.pyReqsStatus.emit(f"{packageName} detected. Version: {result}") if result is not None else None
             else:
                 continue
         for index, missingRequirement in enumerate(missingRequirementList):
-            EnvConfiguratorSignals.Signal_PyReqsStatus.emit(f"Installing {missingRequirement}. Please wait...")
+            envConfiguratorSignals.pyReqsStatus.emit(f"Installing {missingRequirement}. Please wait...")
             try:
                 self._installPyReq(missingRequirement)
-                EnvConfiguratorSignals.Signal_PyReqsInstalled.emit() if index + 1 == len(missingRequirementList) else None
-                EnvConfiguratorSignals.Signal_PyReqsStatus.emit(f"{missingRequirement} is successfully installed!") if index + 1 == len(missingRequirementList) else None
+                envConfiguratorSignals.pyReqsInstalled.emit() if index + 1 == len(missingRequirementList) else None
+                envConfiguratorSignals.pyReqsStatus.emit(f"{missingRequirement} is successfully installed!") if index + 1 == len(missingRequirementList) else None
             except Exception as e:
-                EnvConfiguratorSignals.Signal_PyReqsInstallFailed.emit(e)
-                EnvConfiguratorSignals.Signal_PyReqsStatus.emit(f"{missingRequirement} installation failed:(")
+                envConfiguratorSignals.pyReqsInstallFailed.emit(e)
+                envConfiguratorSignals.pyReqsStatus.emit(f"{missingRequirement} installation failed:(")
 
     def terminate(self):
         self.stopEvent.set()
@@ -369,20 +369,20 @@ class Pytorch_Installer:
             result = self._checkPytorch(package)
             if result == False:
                 if self.emitFlag == True:
-                    EnvConfiguratorSignals.Signal_PytorchUndetected.emit()
+                    envConfiguratorSignals.pytorchUndetected.emit()
                     self.emitFlag = False
-                EnvConfiguratorSignals.Signal_PytorchStatus.emit(f"Installing {package}. Please wait...")
+                envConfiguratorSignals.pytorchStatus.emit(f"Installing {package}. Please wait...")
                 try:
                     self._installPytorch(package, Reinstall = False)
-                    EnvConfiguratorSignals.Signal_PytorchInstalled.emit() if index + 1 == len(PackageList) else None
-                    EnvConfiguratorSignals.Signal_PytorchStatus.emit(f"{package} is successfully installed!") if index + 1 == len(PackageList) else None
+                    envConfiguratorSignals.pytorchInstalled.emit() if index + 1 == len(PackageList) else None
+                    envConfiguratorSignals.pytorchStatus.emit(f"{package} is successfully installed!") if index + 1 == len(PackageList) else None
                 except Exception as e:
-                    EnvConfiguratorSignals.Signal_PytorchInstallFailed.emit(e)
-                    EnvConfiguratorSignals.Signal_PytorchStatus.emit(f"{package} installation failed:(")
+                    envConfiguratorSignals.pytorchInstallFailed.emit(e)
+                    envConfiguratorSignals.pytorchStatus.emit(f"{package} installation failed:(")
             else:
                 self._installPytorch(package, Reinstall) if Reinstall else None
-                EnvConfiguratorSignals.Signal_PytorchDetected.emit() if index + 1 == len(PackageList) else None
-                EnvConfiguratorSignals.Signal_PytorchStatus.emit(f"{package} detected. Version: {result}")
+                envConfiguratorSignals.pytorchDetected.emit() if index + 1 == len(PackageList) else None
+                envConfiguratorSignals.pytorchStatus.emit(f"{package} detected. Version: {result}")
 
     def terminate(self):
         self.stopEvent.set()

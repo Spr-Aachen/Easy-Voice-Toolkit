@@ -19,20 +19,20 @@ class CustomSignals_Functions(QObject):
     Set up signals for functions
     '''
     # Monitor task
-    Signal_TaskStatus = Signal(str, str)
+    taskStatus = Signal(str, str)
 
     # Force exit
-    Signal_ForceQuit = Signal()
+    forceQuit = Signal()
 
 
-    Signal_UpdateMessage = Signal(str)
+    updateMessage = Signal(str)
 
-    Signal_IsUpdateSucceeded = Signal(bool, str)
+    isUpdateSucceeded = Signal(bool, str)
 
-    Signal_ReadyToUpdate = Signal(str, str)
+    readyToUpdate = Signal(str, str)
 
 
-FunctionSignals = CustomSignals_Functions()
+functionSignals = CustomSignals_Functions()
 
 ##############################################################################################################################
 
@@ -508,16 +508,16 @@ class WorkerManager(QWorker.WorkerManager):
         self.worker.signals.result.connect(self.signals.result.emit)
         self.worker.signals.finished.connect(self.signals.finished.emit)
         self.signals.started.connect(
-            lambda: FunctionSignals.Signal_TaskStatus.emit(self.executeMethodName, TaskStatus.Started)
+            lambda: functionSignals.taskStatus.emit(self.executeMethodName, TaskStatus.Started)
         )
         self.signals.error.connect(
-            lambda: FunctionSignals.Signal_TaskStatus.emit(self.executeMethodName, TaskStatus.Failed)
+            lambda: functionSignals.taskStatus.emit(self.executeMethodName, TaskStatus.Failed)
         )
         self.signals.finished.connect(
-            lambda: FunctionSignals.Signal_TaskStatus.emit(self.executeMethodName, TaskStatus.Finished)
+            lambda: functionSignals.taskStatus.emit(self.executeMethodName, TaskStatus.Finished)
         )
 
-        FunctionSignals.Signal_ForceQuit.connect(self.terminate)
+        functionSignals.forceQuit.connect(self.terminate)
 
     def _validateParams(self, unvalidatedParams):
         validatedParams = []
@@ -537,7 +537,7 @@ class WorkerManager(QWorker.WorkerManager):
 
     def terminate(self):
         super().terminate()
-        FunctionSignals.Signal_TaskStatus.emit(self.executeMethodName, TaskStatus.Failed)
+        functionSignals.taskStatus.emit(self.executeMethodName, TaskStatus.Failed)
 
 
 def Function_SetMethodExecutor(
@@ -625,18 +625,18 @@ def Function_UpdateChecker(
     '''
     '''
     try:
-        FunctionSignals.Signal_UpdateMessage.emit("正在检查更新，请稍等...\nChecking for updates, please wait...")
+        functionSignals.updateMessage.emit("正在检查更新，请稍等...\nChecking for updates, please wait...")
         IsUpdateNeeded, DownloadURL, VersionInfo = EasyUtils.checkUpdateFromGithub(repoOwner, repoName, fileName, fileFormat, currentVersion)
 
     except:
-        #FunctionSignals.Signal_Message.emit("更新检查失败！\nFailed to check for updates!")
-        FunctionSignals.Signal_IsUpdateSucceeded.emit(False, "更新检查失败！\nFailed to check for updates!")
+        #functionSignals.Signal_Message.emit("更新检查失败！\nFailed to check for updates!")
+        functionSignals.isUpdateSucceeded.emit(False, "更新检查失败！\nFailed to check for updates!")
 
     else:
         if IsUpdateNeeded:
-            FunctionSignals.Signal_ReadyToUpdate.emit(DownloadURL, VersionInfo)
+            functionSignals.readyToUpdate.emit(DownloadURL, VersionInfo)
         else:
-            FunctionSignals.Signal_IsUpdateSucceeded.emit(False, "已是最新版本！\nAlready up to date!")
+            functionSignals.isUpdateSucceeded.emit(False, "已是最新版本！\nAlready up to date!")
 
 
 def Function_RunTensorboard(logDir, maximumWaitTime = 30, port = 6007):
