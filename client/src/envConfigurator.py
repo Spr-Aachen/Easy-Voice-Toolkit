@@ -251,8 +251,6 @@ class PyReqs_Installer:
 
     def _checkPyReq(self, packageName: str, packageVersionReqs: str, systemReqs: str):
         try:
-            if self.stopEvent.isSet():
-                return
             packageInfos = str(EasyUtils.runCMD([['pip', 'show', packageName]], decodeResult = True)[0])
             if packageInfos != 'None':
                 currentVersion = None
@@ -325,8 +323,6 @@ class Pytorch_Installer:
 
     def _checkPytorch(self, package: str):
         try:
-            if self.stopEvent.isSet():
-                return
             packageInfos = str(EasyUtils.runCMD([['pip', 'show', package]], decodeResult = True)[0])
             if packageInfos != 'None':
                 return packageInfos
