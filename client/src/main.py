@@ -136,13 +136,10 @@ class MainWindow(Window_MainWindow):
         self.task_gptsovits = Tool_GPTSoVITS()
 
     def closeEvent(self, event):
-        global areTasksEnded, isServerEnded
-        areTasksEnded, isServerEnded = False, False
-        def endEvent(statVar):
-            statVar = True
+        def _endEvent():
             QApplication.instance().exit() if areTasksEnded and isServerEnded else None
-        functionSignals.tasksEnded.connect(lambda: endEvent(areTasksEnded))
-        toolSignals.serverEnded.connect(lambda: endEvent(isServerEnded))
+        functionSignals.tasksEnded.connect(_endEvent)
+        toolSignals.serverEnded.connect(_endEvent)
         functionSignals.forceQuit.emit()
 
     def showGuidance(self, windowTitle: str, images: list, texts: list):
@@ -298,12 +295,16 @@ class MainWindow(Window_MainWindow):
         dirPathSelectionDialogBox.exec()
 
     def startServer(self):
+        global isServerEnded, forceQuit
+        if forceQuit or not isServerEnded:
+            return
         WorkerManager(
             executeMethod = startServer,
             executeParams = (serverPath, logPath),
             autoDelete = False,
             threadPool = self.threadPool_tasks,
         ).execute()
+        isServerEnded = False
 
     def showVPRResult(self, audioSaveDir, audioSpeakersData_path, comboItems):
         ChildWindow_VPR = Window_ChildWindow_VPR(self)
