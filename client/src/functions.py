@@ -20,6 +20,7 @@ class CustomSignals_Functions(QObject):
     '''
     # Monitor task
     taskStatus = Signal(str, str)
+    tasksEnded = Signal()
 
     # Force exit
     forceQuit = Signal()
@@ -489,7 +490,29 @@ class TaskStatus:
     Succeeded = 'Succeeded'
 
 
+areTasksEnded: bool = True
+
+def _updateAreTasksEnded(val):
+    global areTasksEnded
+    areTasksEnded = val
+
+functionSignals.taskStatus.connect(lambda executeMethodName, taskStatus: _updateAreTasksEnded(False) if taskStatus == TaskStatus.Started else None)
+functionSignals.tasksEnded.connect(lambda: _updateAreTasksEnded(True))
+
+
+forceQuit: bool = False
+
+def _updateForceQuit(val):
+    global forceQuit
+    forceQuit = val
+
+functionSignals.forceQuit.connect(lambda: _updateForceQuit(True))
+
+
 class WorkerManager(QWorker.WorkerManager):
+    tasks: dict = {}
+    endAllTasks: bool = False
+
     def __init__(self,
         executeMethod: object = ...,
         executeParams: Optional[dict] = None,
@@ -517,7 +540,7 @@ class WorkerManager(QWorker.WorkerManager):
             lambda: functionSignals.taskStatus.emit(self.executeMethodName, TaskStatus.Finished)
         )
 
-        functionSignals.forceQuit.connect(self.terminate)
+        functionSignals.forceQuit.connect(self.terminateAll)
 
     def _validateParams(self, unvalidatedParams):
         validatedParams = []
@@ -534,10 +557,17 @@ class WorkerManager(QWorker.WorkerManager):
 
     def execute(self):
         super().execute(*self._validateParams(self.executeParams))
+        self.tasks.update({self: TaskStatus.Started})
 
     def terminate(self):
         super().terminate()
+        self.tasks.update({self: TaskStatus.Failed})
         functionSignals.taskStatus.emit(self.executeMethodName, TaskStatus.Failed)
+
+    def terminateAll(self):
+        self.endAllTasks = True
+        self.terminate()
+        functionSignals.tasksEnded.emit() if not TaskStatus.Started in self.tasks.values() else None
 
 
 def Function_SetMethodExecutor(
@@ -571,14 +601,14 @@ def Function_SetMethodExecutor(
         )
     )
     workerManager.signals.result.connect(
-        resultReciever
+        lambda: resultReciever() if not workerManager.endAllTasks else None
     )
     workerManager.signals.error.connect(
         lambda err: (
             _setErrorOccuredFlag(),
             MessageBoxBase.pop(parentWindow, QMessageBox.Warning, "Failure", "Exception occurred:(\n发生异常", str(err)),
             EasyUtils.runEvents([event for event, status in finishedEvents.items() if status == TaskStatus.Failed]) if finishedEvents is not None else None,
-        )
+        ) if not workerManager.endAllTasks else None
     )
     workerManager.signals.finished.connect(
         lambda: (
@@ -586,7 +616,7 @@ def Function_SetMethodExecutor(
             Function_AnimateProgressBar(progressBar, isTaskAlive = False) if progressBar else None,
             Function_AnimateFrame(consoleWidget, minHeight = 0, maxHeight = 210, mode = "Reduce") if consoleWidget else None,
             EasyUtils.runEvents([event for event, status in finishedEvents.items() if (not isErrorOccurred and status == TaskStatus.Succeeded) or TaskStatus.Finished]) if finishedEvents is not None else None,
-        )
+        ) if not workerManager.endAllTasks else None
     )
 
     # Execution
