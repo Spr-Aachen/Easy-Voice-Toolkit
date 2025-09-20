@@ -13,27 +13,21 @@ from components import *
 
 ##############################################################################################################################
 
-# Where to store custom signals
-class CustomSignals_Functions(QObject):
+class FunctionSignals(QObject):
     '''
     Set up signals for functions
     '''
-    # Monitor task
+    updateMessage = Signal(str)
+    isUpdateSucceeded = Signal(bool, str)
+    readyToUpdate = Signal(str, str)
+
     taskStatus = Signal(str, str)
     tasksEnded = Signal()
 
-    # Force exit
     forceQuit = Signal()
 
 
-    updateMessage = Signal(str)
-
-    isUpdateSucceeded = Signal(bool, str)
-
-    readyToUpdate = Signal(str, str)
-
-
-functionSignals = CustomSignals_Functions()
+functionSignals = FunctionSignals()
 
 ##############################################################################################################################
 

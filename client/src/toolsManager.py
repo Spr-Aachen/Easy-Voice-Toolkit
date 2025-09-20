@@ -12,15 +12,17 @@ from functions import functionSignals
 
 ##############################################################################################################################
 
-class CustomSignals_Tools(QObject):
+class ToolSignals(QObject):
     '''
-    Set up signals for functions
+    Set up signals for tools
     '''
     serverStarted = Signal()
     serverEnded = Signal()
 
-toolSignals = CustomSignals_Tools()
 
+toolSignals = ToolSignals()
+
+##############################################################################################################################
 
 isServerEnded: bool = True
 

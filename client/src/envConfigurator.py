@@ -11,10 +11,9 @@ from PySide6.QtCore import QObject, Signal
 
 ##############################################################################################################################
 
-# Where to store custom signals
-class CustomSignals_EnvConfigurator(QObject):
+class EnvConfiguratorSignals(QObject):
     '''
-    Set up signals for configurator functions
+    Set up signals for env configurator
     '''
     aria2Status = Signal(str)
     aria2Detected = Signal()
@@ -47,8 +46,9 @@ class CustomSignals_EnvConfigurator(QObject):
     pytorchInstallFailed = Signal(Exception)
 
 
-envConfiguratorSignals = CustomSignals_EnvConfigurator()
+envConfiguratorSignals = EnvConfiguratorSignals()
 
+##############################################################################################################################
 
 class Aria2_Installer:
     '''
