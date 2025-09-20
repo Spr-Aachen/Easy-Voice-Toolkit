@@ -301,7 +301,7 @@ class MainWindow(Window_MainWindow):
         WorkerManager(
             executeMethod = startServer,
             executeParams = (serverPath, logPath),
-            autoDelete = False,
+            autoDelete = True,
             threadPool = self.threadPool_tasks,
         ).execute()
         isServerEnded = False
