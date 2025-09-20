@@ -22,6 +22,16 @@ class CustomSignals_Tools(QObject):
 toolSignals = CustomSignals_Tools()
 
 
+isServerEnded: bool = True
+
+def _updateIsServerEnded(val):
+    global isServerEnded
+    isServerEnded = val
+
+toolSignals.serverStarted.connect(lambda: _updateIsServerEnded(False))
+toolSignals.serverEnded.connect(lambda: _updateIsServerEnded(True))
+
+
 host = None
 port = None
 logPath = None

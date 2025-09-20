@@ -490,6 +490,25 @@ class TaskStatus:
     Succeeded = 'Succeeded'
 
 
+areTasksEnded: bool = True
+
+def _updateAreTasksEnded(val):
+    global areTasksEnded
+    areTasksEnded = val
+
+functionSignals.taskStatus.connect(lambda executeMethodName, taskStatus: _updateAreTasksEnded(False) if taskStatus == TaskStatus.Started else None)
+functionSignals.tasksEnded.connect(lambda: _updateAreTasksEnded(True))
+
+
+forceQuit: bool = False
+
+def _updateForceQuit(val):
+    global forceQuit
+    forceQuit = val
+
+functionSignals.forceQuit.connect(lambda: _updateForceQuit(True))
+
+
 class WorkerManager(QWorker.WorkerManager):
     tasks: dict = {}
     endAllTasks: bool = False
