@@ -1,12 +1,14 @@
 import os, sys
 import argparse
 import random
+import time
 import uvicorn
 from fastapi import FastAPI, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
 from PyEasyUtils import isPortAvailable, findAvailablePorts, terminateProcess
 from typing import Union, Optional, List
 
+from utils import infoLogger, errorLogger
 from routers import router
 
 ##############################################################################################################################
@@ -49,6 +51,22 @@ async def default():
 async def shutdown():
     server.should_exit = True
     terminateProcess(os.getpid())
+
+
+@app.middleware("http")
+async def log(request: Request, call_next):
+    startTime = time.perf_counter()
+    infoLogger.info(f"INFO: {request.method} {request.url}")
+
+    try:
+        response = await call_next(request)
+        infoLogger.info(f"INFO: {request.method} {request.url} {response.status_code} - ProcessTime: {(time.perf_counter() - startTime):.3f}sec")
+        return response
+
+    except Exception as e:
+        errorLogger.error(f"INFO: {request.method} {request.url} {response.status_code} - ProcessTime: {(time.perf_counter() - startTime):.3f}sec")
+        errorLogger.error(f"ERROR: {str(e)}")
+        raise e
 
 ##############################################################################################################################
 
