@@ -595,7 +595,7 @@ def Function_SetMethodExecutor(
         )
     )
     workerManager.signals.result.connect(
-        lambda: resultReciever() if not workerManager.endAllTasks else None
+        lambda: resultReciever() if callable(resultReciever) and not workerManager.endAllTasks else None
     )
     workerManager.signals.error.connect(
         lambda err: (
