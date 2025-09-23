@@ -57,16 +57,16 @@ async def shutdown():
 async def log(request: Request, call_next):
     startTime = time.perf_counter()
 
-    infoLogger.info(f"[Start] {request.method} {request.url.path}")
+    infoLogger.info(f"[Start] {request.method} {request.url}")
     
     try:
         response = await call_next(request)
         processTime = time.perf_counter() - startTime
-        infoLogger.info(f"[Complete] {request.method} {request.url.path} - StatusCode: {response.status_code} - ProcessTime: {processTime:.3f}sec")
+        infoLogger.info(f"[Complete] {request.method} {request.url} - StatusCode: {response.status_code} - ProcessTime: {processTime:.3f}sec")
         return response
 
     except Exception as e:
-        errorLogger.error(f"[Failed] {request.method} {request.url.path} - StatusCode: {response.status_code} - ProcessTime: {processTime:.3f}sec")
+        errorLogger.error(f"[Failed] {request.method} {request.url} - StatusCode: {response.status_code} - ProcessTime: {processTime:.3f}sec")
         errorLogger.error(f"Error: {str(e)}")
         raise e
 
