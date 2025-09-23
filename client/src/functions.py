@@ -13,27 +13,21 @@ from components import *
 
 ##############################################################################################################################
 
-# Where to store custom signals
-class CustomSignals_Functions(QObject):
+class FunctionSignals(QObject):
     '''
     Set up signals for functions
     '''
-    # Monitor task
+    updateMessage = Signal(str)
+    isUpdateSucceeded = Signal(bool, str)
+    readyToUpdate = Signal(str, str)
+
     taskStatus = Signal(str, str)
     tasksEnded = Signal()
 
-    # Force exit
     forceQuit = Signal()
 
 
-    updateMessage = Signal(str)
-
-    isUpdateSucceeded = Signal(bool, str)
-
-    readyToUpdate = Signal(str, str)
-
-
-functionSignals = CustomSignals_Functions()
+functionSignals = FunctionSignals()
 
 ##############################################################################################################################
 
@@ -105,9 +99,9 @@ def Function_AddToTreeWidget(
 
 def Function_ConfigureCheckBox(
     checkBox: QCheckBox,
-    checkedText: Optional[str] = "On",
+    checkedText: Optional[str] = None,
     checkedEvents: dict = {},
-    uncheckedText: Optional[str] = "Off",
+    uncheckedText: Optional[str] = None,
     uncheckedEvents: dict = {},
 ):
     '''
@@ -601,7 +595,7 @@ def Function_SetMethodExecutor(
         )
     )
     workerManager.signals.result.connect(
-        lambda: resultReciever() if not workerManager.endAllTasks else None
+        lambda: resultReciever() if callable(resultReciever) and not workerManager.endAllTasks else None
     )
     workerManager.signals.error.connect(
         lambda err: (
