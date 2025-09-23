@@ -60,12 +60,11 @@ async def log(request: Request, call_next):
 
     try:
         response = await call_next(request)
-        processTime = time.perf_counter() - startTime
-        infoLogger.info(f"INFO: {request.method} {request.url} {response.status_code} - ProcessTime: {processTime:.3f}sec")
+        infoLogger.info(f"INFO: {request.method} {request.url} {response.status_code} - ProcessTime: {(time.perf_counter() - startTime):.3f}sec")
         return response
 
     except Exception as e:
-        errorLogger.error(f"INFO: {request.method} {request.url} {response.status_code}")
+        errorLogger.error(f"INFO: {request.method} {request.url} {response.status_code} - ProcessTime: {(time.perf_counter() - startTime):.3f}sec")
         errorLogger.error(f"ERROR: {str(e)}")
         raise e
 
