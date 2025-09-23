@@ -190,7 +190,7 @@ class MainWindow(QWidget):
             )
         )
 
-        self.skipButton.setText("跳过")
+        self.skipButton.setText("Skip")
         self.skipButton.clicked.connect(
             lambda: functionSignals.isUpdateSucceeded.emit(False, "")
         )
