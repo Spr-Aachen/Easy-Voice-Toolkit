@@ -584,7 +584,7 @@ class MainWindow(Window_MainWindow):
         if not EasyUtils.isVersionSatisfied(recordedVersion, currentVersion):
             deprecatedDir = Path(resourceDir).parent.joinpath(recordedVersion).as_posix()
             try:
-                shutil.rmtree(deprecatedDir)
+                EasyUtils.rmtree(deprecatedDir)
             except:
                 pass
             else:
