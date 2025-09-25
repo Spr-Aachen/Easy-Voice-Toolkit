@@ -71,7 +71,7 @@ class Aria2_Installer:
             Dir_Download = './'
             File_Name = 'Aria2'
             File_Format = 'zip'
-            Path_Download = os.path.join(Dir_Download, f"{File_Name}.{File_Format}")
+            Path_Download = Path(Dir_Download).joinpath(f"{File_Name}.{File_Format}").as_posix()
             Dir_Install = Path(f"{os.getenv('SystemDrive')}/Aria2").__str__()
             if self.stopEvent.isSet():
                 return
@@ -81,7 +81,7 @@ class Aria2_Installer:
             shutil.unpack_archive(Path_Download, Dir_Install, Path_Download.rsplit('.', 1)[-1])
             if self.stopEvent.isSet():
                 return
-            EasyUtils.moveFiles(os.path.dirname(EasyUtils.getPaths(Dir_Install, 'aria2c.exe')[0]), Dir_Install)
+            EasyUtils.moveFiles(Path(EasyUtils.getPaths(Dir_Install, 'aria2c.exe')[0]).parent.name, Dir_Install)
             if self.stopEvent.isSet():
                 return
             EasyUtils.setEnvVar('PATH', Dir_Install, 'User')
@@ -135,9 +135,9 @@ class FFmpeg_Installer:
             Dir_Download = './'
             File_Name = 'FFmpeg'
             File_Format = 'zip'
-            Path_Download = os.path.join(Dir_Download, f"{File_Name}.{File_Format}")
+            Path_Download = Path(Dir_Download).joinpath(f"{File_Name}.{File_Format}").as_posix()
             Dir_Install = Path(f"{os.getenv('SystemDrive')}/FFmpeg").__str__()
-            Path_Binary = os.path.normpath(os.path.join(Dir_Install, 'bin'))
+            Path_Binary = Path(Dir_Install).joinpath('bin').as_posix()
             if self.stopEvent.isSet():
                 return
             EasyUtils.downloadFile(URL, Dir_Download, File_Name, File_Format, None)
@@ -146,7 +146,7 @@ class FFmpeg_Installer:
             shutil.unpack_archive(Path_Download, Dir_Install, Path_Download.rsplit('.', 1)[-1])
             if self.stopEvent.isSet():
                 return
-            EasyUtils.moveFiles(os.path.dirname(EasyUtils.getPaths(Dir_Install, 'bin')[0]), Dir_Install)
+            EasyUtils.moveFiles(Path(EasyUtils.getPaths(Dir_Install, 'bin')[0]).parent.name, Dir_Install)
             if self.stopEvent.isSet():
                 return
             EasyUtils.setEnvVar('PATH', Path_Binary, 'User')
@@ -203,13 +203,13 @@ class Python_Installer:
             Dir_Download = './'
             File_Name = 'python'
             File_Format = 'exe'
-            Path_Download = os.path.join(Dir_Download, f"{File_Name}.{File_Format}")
+            Path_Download = Path(Dir_Download).joinpath(f"{File_Name}.{File_Format}").as_posix()
             if self.stopEvent.isSet():
                 return
             EasyUtils.downloadFile(URL, Dir_Download, File_Name, File_Format, None)
             if self.stopEvent.isSet():
                 return
-            EasyUtils.runCMD([f'{Path_Download} /quiet InstallAllUsers=1 PrependPath=1'])
+            EasyUtils.runCMD([f'"{Path_Download}" /quiet InstallAllUsers=1 PrependPath=1'])
             if self.stopEvent.isSet():
                 return
             os.remove(Path_Download)
