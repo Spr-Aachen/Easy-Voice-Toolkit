@@ -11,7 +11,7 @@ logDir = Path(currentDir).joinpath('logs').as_posix()
 logger = loggerManager()
 
 infoLogger = logger.createLogger(
-    name = "router",
+    name = "info",
     level = "INFO",
     outputPath = Path(logDir).joinpath("server.log"),
 )
