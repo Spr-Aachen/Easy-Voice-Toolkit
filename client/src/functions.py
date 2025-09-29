@@ -235,6 +235,9 @@ def Function_SetWidgetValue(
     setPlaceholderText: bool = False,
     placeholderText: Optional[str] = None
 ):
+    fixDict = {'Enabled': True, 'Disabled': False}
+    value = fixDict.get(value, value)
+
     if isinstance(widget, (QLineEdit, QTextEdit, QPlainTextEdit)):
         QFunc.setText(widget, value, setPlaceholderText = setPlaceholderText, placeholderText = placeholderText)
         def EditConfig(value):
