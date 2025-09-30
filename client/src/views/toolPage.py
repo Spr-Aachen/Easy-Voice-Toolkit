@@ -399,14 +399,7 @@ class SubToolPage(SubPage):
         prepareSignal.connect(
             lambda: self.executeButton.setDisabled(False)
         )
-        def _findParamWidget(paramTarget):
-            if isinstance(paramTarget, QFrame):
-                for type in (QLineEdit, QComboBox, QCheckBox, QSpinBox, QDoubleSpinBox, QSlider, QTextBrowser, QTextEdit, QTableView):
-                    target = QFunc.findChild(paramTarget, type)
-                    if target is not None:
-                        return target
-            return paramTarget
-        executeParams = [_findParamWidget(paramTarget) for paramTarget in executeParamTargets] #params = list(self.paramWidgets.keys())
+        executeParams = executeParamTargets #executeParams = list(self.paramWidgets.keys())
         emptyAllowed = [paramWidget for paramWidget in self.paramWidgets.keys() if self.paramWidgets[paramWidget] == True]
         executeParams = {executeParam: executeParam in emptyAllowed for executeParam in executeParams}
         Function_SetMethodExecutor(
