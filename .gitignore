@@ -11,8 +11,8 @@
 */log.txt
 
 # Built contents
-**/*.build/
-**/*.dist/
+**/build/
+**/dist/
 
 # Others
 **/.vscode/
