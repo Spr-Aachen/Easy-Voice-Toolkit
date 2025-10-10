@@ -1,6 +1,6 @@
 <div align = "center">
 
-![标题](/docs/media/Title.png)
+![Title](/docs/media/Cover.jpg)
 
 # 简易语音工具箱
 
@@ -12,22 +12,15 @@
 [![Bilibili](https://img.shields.io/badge/Bilibili-v1.0%20Intro-blue?logo=Bilibili&style=for-the-badge)](https://www.bilibili.com/video/BV1uJ4m157P2)&nbsp;
 [![YouTube](https://img.shields.io/badge/YouTube-v1.0%20Intro-red?logo=YouTube&style=for-the-badge)](https://www.youtube.com/watch?v=)
 
-</div>
-
-
-<p align = "center">
-    <a href = "https://ko-fi.com/spr_aachen">
-        <img src = "https://cdn.ko-fi.com/cdn/kofi3.png?v=2" width = "150">
-    </a>
-</p>
-
-
-<div align = "center">
+<a href = "https://ko-fi.com/spr_aachen">
+    <img src = "https://cdn.ko-fi.com/cdn/kofi3.png?v=2" width = "150">
+</a>
 
 **简体中文** | [**English**](../README.md)
 
 </div>
 
+---
 
 ## 鸣谢
 
@@ -54,7 +47,7 @@
 
 ### 谷歌 Colab
 
-[![在Colab中打开](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Spr-Aachen/Easy-Voice-Toolkit/blob/main/run.ipynb)
+[![在Colab中打开](https://img.shields.io/badge/打开-Google%20Colab-orange?logo=GoogleColab)](https://colab.research.google.com/github/Spr-Aachen/Easy-Voice-Toolkit/blob/main/run.ipynb)
 <br>点击以使用上面的demo，或者在Colab中上传[run.ipynb](https://github.com/Spr-Aachen/Easy-Voice-Toolkit/blob/main/run.ipynb)
 
 
@@ -136,7 +129,6 @@ Reference: [so-vits-svc](https://github.com/svc-develop-team/so-vits-svc)
 
 ### 开发中
 - 后端开发
-- 语言国际化
 - 兼容Linux系统
 
 

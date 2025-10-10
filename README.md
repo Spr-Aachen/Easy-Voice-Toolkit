@@ -1,6 +1,6 @@
 <div align = "center">
 
-![Title](/docs/media/Title.png)
+![Title](/docs/media/Cover.jpg)
 
 # Easy Voice Toolkit
 
@@ -12,22 +12,15 @@ A toolkit based on open source voice projects，which provides a variety of auto
 [![Bilibili](https://img.shields.io/badge/Bilibili-v1.0%20Intro-blue?logo=Bilibili&style=for-the-badge)](https://www.bilibili.com/video/BV1uJ4m157P2)&nbsp;
 [![YouTube](https://img.shields.io/badge/YouTube-v1.0%20Intro-red?logo=YouTube&style=for-the-badge)](https://www.youtube.com/watch?v=)
 
-</div>
-
-
-<p align = "center">
-    <a href = "https://ko-fi.com/spr_aachen">
-        <img src = "https://cdn.ko-fi.com/cdn/kofi3.png?v=2" width = "150">
-    </a>
-</p>
-
-
-<div align = "center">
+<a href = "https://ko-fi.com/spr_aachen">
+    <img src = "https://cdn.ko-fi.com/cdn/kofi3.png?v=2" width = "150">
+</a>
 
 [**简体中文**](./docs/README_CN.md) | **English**
 
 </div>
 
+---
 
 ## Acknowledgement
 
@@ -54,7 +47,7 @@ You have two options：
 
 ### Google Colab
 
-[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Spr-Aachen/Easy-Voice-Toolkit/blob/main/run.ipynb)
+[![Open jupyter notebook in Colab](https://img.shields.io/badge/Open%20in-Google%20Colab-orange?logo=GoogleColab)](https://colab.research.google.com/github/Spr-Aachen/Easy-Voice-Toolkit/blob/main/run.ipynb)
 <br>Click to use the demo above, or access to Colab and upload [run.ipynb](https://github.com/Spr-Aachen/Easy-Voice-Toolkit/blob/main/run.ipynb)
 
 
@@ -141,7 +134,6 @@ Reference: [so-vits-svc](https://github.com/svc-develop-team/so-vits-svc)
 
 ### WIP
 - Backend development
-- Internationalization
 - Add support for Linux OS
 
 
