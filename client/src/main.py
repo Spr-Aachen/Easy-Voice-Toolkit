@@ -14,7 +14,7 @@ from QEasyWidgets import QTasks
 from QEasyWidgets import componentsSignals, Theme, currentTheme, Language, currentLanguage, updateLanguage, IconBase
 from QEasyWidgets.Windows import MessageBoxBase
 
-from views import *
+from pages import *
 from windows import *
 from functions import *
 from envConfigurator import *
