@@ -1,11 +1,11 @@
 from enum import Enum
-from typing import Type, Optional
+from typing import Optional, Union
+from PyEasyUtils import setRichText
 from PySide6.QtCore import Qt, QRect, QSize
 from PySide6.QtWidgets import *
 from QEasyWidgets import QFunctions as QFunc
 from QEasyWidgets.Components import *
 
-#from assets import *
 from functions import *
 
 ##############################################################################################################################
@@ -25,11 +25,24 @@ class ComponentFlag(Enum):
     RangeSetting = "RangeSetting"
 
 
+STYLE_CHILDFRAME = """
+    QFrame {
+        background-color: transparent;
+        border: none;
+    }
+    QFrame:hover {
+        background-color: rgba(36, 36, 36, 12);
+    }
+"""
+
+
 class SubPage(WidgetBase):
     """
     """
-    def __init__(self, parent = None):
+    def __init__(self, parent = None, paramsManager: ParamsManager = ...):
         super().__init__(parent)
+
+        self.paramsManager = paramsManager
 
         self.widgets = {}
 
@@ -50,8 +63,23 @@ class SubPage(WidgetBase):
         layout.removeWidget(self.contentWidget)
         return layout
 
+    def _setLabelText(self, label, text, size):
+        QFunc.setText(
+            widget = label,
+            text = setRichText(text = text, size = size)
+        )
+
+    def _setButtonMenu(self, menuButton: MenuButton, widget):
+        menuButton.setMenu(
+            actionEvents = {
+                self.tr("重置"): lambda: self.paramsManager.resetParam(widget),
+                self.tr("复制"): lambda: QApplication.clipboard().setText(str(Function_GetParam(widget))),
+            }
+        )
+
     def _addToChildFrame(self, widget: Union[QWidget, QLayout], sizePolicy: Optional[QSizePolicy] = None):
         childFrame = QFrame()
+        childFrame.setStyleSheet(STYLE_CHILDFRAME)
         childFrame.setSizePolicy(sizePolicy) if sizePolicy is not None else None
         if isinstance(widget, QWidget):
             childFrame_layout = QGridLayout(childFrame)

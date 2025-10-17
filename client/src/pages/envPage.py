@@ -1,14 +1,12 @@
 import os
-from typing import Type, Optional
-from PyEasyUtils import setRichText
+from typing import Optional
 from PySide6.QtCore import Qt, QRect, QSize, SignalInstance
 from PySide6.QtWidgets import *
 from QEasyWidgets import QFunctions as QFunc
 from QEasyWidgets.Common import FileDialogMode
 from QEasyWidgets.Components import *
 
-from .common import ComponentFlag, SubPage, Page
-#from assets import *
+from .common import ComponentFlag, SubPage, Page, STYLE_CHILDFRAME
 from functions import *
 
 ##############################################################################################################################
@@ -22,30 +20,13 @@ class SubEnvPage_Detector(SubPage):
         layout = self.cleanLayout()
         layout.addWidget(self.contentWidget, 0, 0)
 
-    def _setLabelText(self, label, text, size = 12):
-        QFunc.setText(
-            widget = label,
-            text = setRichText(
-                size = size,
-                text = text,
-            )
-        )
-
     def _addToChildFrame(self, label: QLabel, progressBar: QWidget, statusBrowser: QTextBrowser, detectButton: QPushButton):
         progressBar.setFixedHeight(3)
         statusBrowser.setSizePolicy(QSizePolicy(QSizePolicy.Policy.Ignored, QSizePolicy.Policy.Preferred))
         detectButton.setFixedSize(QSize(30, 30))
         # 
         childFrame = QFrame()
-        childFrame.setStyleSheet("""
-            QFrame {
-                background-color: transparent;
-                border: none;
-            }
-            QFrame:hover {
-                background-color: rgba(36, 36, 36, 12);
-            }
-        """)
+        childFrame.setStyleSheet(STYLE_CHILDFRAME)
         childFrame_layout = QGridLayout(childFrame)
         childFrame_layout.setSpacing(12)
         childFrame_layout.setContentsMargins(21, 12, 21, 12)
@@ -65,16 +46,8 @@ class SubEnvPage_Detector(SubPage):
         statusBrowser = TextBrowserBase(self)
         detectButton = HollowButton(self)
         detectButton.setObjectName(text.splitlines()[0])
-        self._setLabelText(label, text)
-        statusBrowser.setStyleSheet(u"QTextBrowser {\n"
-        "	font-size: 9.9px;\n"
-        "	/*text-align: center;*/\n"
-        "	background-color: transparent;\n"
-        "	padding: 0px;\n"
-        "	border-width: 0px;\n"
-        "	border-radius: 0px;\n"
-        "	border-style: solid;\n"
-        "}")
+        self._setLabelText(label, text, size = 10.5)
+        statusBrowser.setBorderless(True)
         statusBrowser.setText("--")
         detectButton.setIcon(IconBase.Arrow_Clockwise)
         detectButton.setToolTip(toolTip)
@@ -115,15 +88,6 @@ class SubEnvPage_Manager(SubPage):
         layout = self.cleanLayout()
         layout.addWidget(self.contentWidget, 0, 0)
 
-    def _setLabelText(self, label, text, size = 12):
-        QFunc.setText(
-            widget = label,
-            text = setRichText(
-                size = size,
-                text = text,
-            )
-        )
-
     def _addToChildFrame(self, label: QLabel, comboBox: QComboBox, executeButton: QPushButton):
         label.setSizePolicy(QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Preferred))
         comboBox.setMinimumSize(QSize(123, 30))
@@ -131,15 +95,7 @@ class SubEnvPage_Manager(SubPage):
         # 
         childFrame = QFrame()
         childFrame.setMinimumSize(QSize(0, 90))
-        childFrame.setStyleSheet("""
-            QFrame {
-                background-color: transparent;
-                border: none;
-            }
-            QFrame:hover {
-                background-color: rgba(36, 36, 36, 12);
-            }
-        """)
+        childFrame.setStyleSheet(STYLE_CHILDFRAME)
         childFrame_layout = QGridLayout(childFrame)
         childFrame_layout.setSpacing(12)
         childFrame_layout.setContentsMargins(21, 12, 21, 12)
@@ -157,7 +113,7 @@ class SubEnvPage_Manager(SubPage):
         label = LabelBase(self)
         comboBox = ComboBoxBase(self)
         button = HollowButton(self)
-        self._setLabelText(label, text)
+        self._setLabelText(label, text, size = 10.5)
         comboBox.setToolTip(toolTip) if toolTip is not None else None
         comboBox.addItems(items)
         button.setObjectName(text.splitlines()[0])

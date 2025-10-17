@@ -1,13 +1,11 @@
-from typing import Type, Optional
-from PyEasyUtils import setRichText
+from typing import Optional
 from PySide6.QtCore import Qt, QRect, QSize, SignalInstance
 from PySide6.QtWidgets import *
 from QEasyWidgets import QFunctions as QFunc
 from QEasyWidgets.Common import FileDialogMode
 from QEasyWidgets.Components import *
 
-from .common import ComponentFlag, SubPage, Page
-#from assets import *
+from .common import ComponentFlag, SubPage, Page, STYLE_CHILDFRAME
 from functions import *
 
 ##############################################################################################################################
@@ -23,23 +21,6 @@ class SubSettingsPage(SubPage):
         layout = self.cleanLayout()
         layout.addWidget(self.contentWidget, 0, 0)
 
-    def _setLabelText(self, label, text, size = 12):
-        QFunc.setText(
-            widget = label,
-            text = setRichText(
-                size = size,
-                text = text,
-            )
-        )
-
-    def _setButtonMenu(self, menuButton: MenuButton, widget):
-        menuButton.setMenu(
-            actionEvents = {
-                self.tr("重置"): lambda: self.paramsManager.resetParam(widget),
-                self.tr("复制"): lambda: QApplication.clipboard().setText(str(Function_GetParam(widget))),
-            }
-        )
-
     def _addToChildFrame(self, label: LabelBase, inputWidget: QWidget, menuButton: MenuButton):
         label.setSizePolicy(QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed))
         inputWidget.setMinimumSize(QSize(123, 30))
@@ -47,15 +28,7 @@ class SubSettingsPage(SubPage):
         # 
         childFrame = QFrame()
         childFrame.setMinimumSize(QSize(0, 90))
-        childFrame.setStyleSheet("""
-            QFrame {
-                background-color: transparent;
-                border: none;
-            }
-            QFrame:hover {
-                background-color: rgba(36, 36, 36, 12);
-            }
-        """)
+        childFrame.setStyleSheet(STYLE_CHILDFRAME)
         childFrame_layout = QGridLayout(childFrame)
         childFrame_layout.setSpacing(12)
         childFrame_layout.setContentsMargins(21, 12, 21, 12)
@@ -72,7 +45,7 @@ class SubSettingsPage(SubPage):
         label = LabelBase(self)
         lineEdit = LineEditBase(self)
         button = MenuButton()
-        self._setLabelText(label, text)
+        self._setLabelText(label, text, size = 10.5)
         lineEdit.setToolTip(toolTip) if toolTip is not None else None
         lineEdit.setFileDialog(fileDialogMode, fileType, directory) if fileDialogMode is not None else None
         (paramsManager or self.paramsManager).setParam(lineEdit, section, option, defaultValue, setPlaceholderText = True, placeholderText = placeholderText)
@@ -90,7 +63,7 @@ class SubSettingsPage(SubPage):
         label = LabelBase()
         checkBox = CheckBoxBase(self)
         button = MenuButton()
-        self._setLabelText(label, text)
+        self._setLabelText(label, text, size = 10.5)
         checkBox.setToolTip(toolTip) if toolTip is not None else None
         (paramsManager or self.paramsManager).setParam(checkBox, section, option, defaultValue)
         self._setButtonMenu(button, checkBox)
@@ -109,7 +82,7 @@ class SubSettingsPage(SubPage):
         label = LabelBase(self)
         comboBox = ComboBoxBase(self)
         button = MenuButton()
-        self._setLabelText(label, text)
+        self._setLabelText(label, text, size = 10.5)
         comboBox.setToolTip(toolTip) if toolTip is not None else None
         comboBox.addItems(items)
         if signal and textDict:

@@ -1,5 +1,4 @@
-from typing import Type, Optional
-from PyEasyUtils import setRichText
+from typing import Optional
 from PySide6.QtCore import Qt, QRect, QSize
 from PySide6.QtWidgets import *
 from QEasyWidgets import QFunctions as QFunc
@@ -7,9 +6,8 @@ from QEasyWidgets.Common import FileDialogMode
 from QEasyWidgets.Components import *
 from QEasyWidgets import QTasks
 
-from .common import ComponentFlag, SubPage, Page
+from .common import ComponentFlag, SubPage, Page, STYLE_CHILDFRAME
 from components import Frame_RangeSetting
-#from assets import *
 from functions import *
 
 ##############################################################################################################################
@@ -20,9 +18,9 @@ class SubToolPage(SubPage):
     def __init__(self, parent = None, paramsManager: ParamsManager = ...):
         super().__init__(parent)
 
-        self.paramWidgets = {}
-
         self.paramsManager = paramsManager
+
+        self.paramWidgets = {}
 
         leftWidget = QWidget(self)
         leftWidget_layout = QVBoxLayout(leftWidget)
@@ -123,22 +121,6 @@ class SubToolPage(SubPage):
         layout.setColumnStretch(2, 7)
         layout.addWidget(self.progressBar, 1, 0, 1, 3)
 
-    def _setLabelText(self, label, text):
-        QFunc.setText(
-            widget = label,
-            text = setRichText(
-                text = text,
-            )
-        )
-
-    def _setButtonMenu(self, menuButton: MenuButton, widget):
-        menuButton.setMenu(
-            actionEvents = {
-                self.tr("重置"): lambda: self.paramsManager.resetParam(widget),
-                self.tr("复制"): lambda: QApplication.clipboard().setText(str(Function_GetParam(widget))),
-            }
-        )
-
     def _connectToTreeWidget(self, widget, rootItemText: str, childItemText: str):
         Function_AddToTreeWidget(
             widget = widget,
@@ -153,15 +135,7 @@ class SubToolPage(SubPage):
         # Add to childFrame
         childFrame = QFrame()
         childFrame.setFixedHeight(105 if not isinstance(inputWidget, (QTextBrowser, QTextEdit, QTableView)) else 210)
-        childFrame.setStyleSheet("""
-            QFrame {
-                background-color: transparent;
-                border: none;
-            }
-            QFrame:hover {
-                background-color: rgba(36, 36, 36, 12);
-            }
-        """)
+        childFrame.setStyleSheet(STYLE_CHILDFRAME)
         childFrame_layout = QGridLayout(childFrame)
         childFrame_layout.setSpacing(12)
         childFrame_layout.setContentsMargins(21, 12, 21, 12)
@@ -181,7 +155,7 @@ class SubToolPage(SubPage):
         lineEdit = LineEditBase(self)
         lineEdit.setObjectName(text.splitlines()[0])
         button = MenuButton()
-        self._setLabelText(label, text)
+        self._setLabelText(label, text, size = 9.6)
         lineEdit.setToolTip(toolTip) if toolTip is not None else None
         lineEdit.setFileDialog(fileDialogMode, fileType, directory) if fileDialogMode is not None else None
         self.paramsManager.setParam(lineEdit, section, option, defaultValue,
@@ -206,7 +180,7 @@ class SubToolPage(SubPage):
         textEdit = TextEditBase(self)
         textEdit.setObjectName(text.splitlines()[0])
         button = MenuButton()
-        self._setLabelText(label, text)
+        self._setLabelText(label, text, size = 9.6)
         textEdit.setToolTip(toolTip) if toolTip is not None else None
         self.paramsManager.setParam(textEdit, section, option, defaultValue,
             setPlaceholderText = True,
@@ -230,7 +204,7 @@ class SubToolPage(SubPage):
         checkBox = CheckBoxBase(self)
         checkBox.setObjectName(text.splitlines()[0])
         button = MenuButton()
-        self._setLabelText(label, text)
+        self._setLabelText(label, text, size = 9.6)
         checkBox.setToolTip(toolTip) if toolTip is not None else None
         self.paramsManager.setParam(checkBox, section, option, defaultValue)
         self._setButtonMenu(button, checkBox)
@@ -252,7 +226,7 @@ class SubToolPage(SubPage):
         comboBox = ComboBoxBase(self)
         comboBox.setObjectName(text.splitlines()[0])
         button = MenuButton()
-        self._setLabelText(label, text)
+        self._setLabelText(label, text, size = 9.6)
         comboBox.setToolTip(toolTip) if toolTip is not None else None
         comboBox.addItems(items)
         self.paramsManager.setParam(comboBox, section, option, defaultValue)
@@ -276,7 +250,7 @@ class SubToolPage(SubPage):
         spinBox = SpinBoxBase(self)
         spinBox.setObjectName(text.splitlines()[0])
         button = MenuButton()
-        self._setLabelText(label, text)
+        self._setLabelText(label, text, size = 9.6)
         spinBox.setToolTip(toolTip) if toolTip is not None else None
         spinBox.setRange(minimum, maximum)
         spinBox.setSingleStep(step) if step is not None else None
@@ -300,7 +274,7 @@ class SubToolPage(SubPage):
         doubleSpinBox = DoubleSpinBoxBase(self)
         doubleSpinBox.setObjectName(text.splitlines()[0])
         button = MenuButton()
-        self._setLabelText(label, text)
+        self._setLabelText(label, text, size = 9.6)
         doubleSpinBox.setToolTip(toolTip) if toolTip is not None else None
         doubleSpinBox.setRange(minimum, maximum)
         doubleSpinBox.setSingleStep(step) if step is not None else None
@@ -324,7 +298,7 @@ class SubToolPage(SubPage):
         rangeSetting = Frame_RangeSetting(self)
         rangeSetting.setObjectName(text.splitlines()[0])
         button = MenuButton()
-        self._setLabelText(label, text)
+        self._setLabelText(label, text, size = 9.6)
         rangeSetting.setToolTip(toolTip) if toolTip is not None else None
         rangeSetting.setRange(minimum, maximum)
         rangeSetting.setSingleStep(step) if step is not None else None
@@ -347,7 +321,7 @@ class SubToolPage(SubPage):
         label = LabelBase()
         table = Table_EditAudioSpeaker()
         button = MenuButton()
-        self._setLabelText(label, text)
+        self._setLabelText(label, text, size = 9.6)
         table.setHorizontalHeaderLabels(headerLabels)
         table.setFileDialog(fileType)
         self.paramsManager.setParam(table, section, option, defaultValue)
