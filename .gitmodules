@@ -1,19 +1,19 @@
 [submodule "AudioProcessor"]
-	path = server/AudioProcessor
+	path = server/app/modules/AudioProcessor
 	url = https://github.com/Spr-Aachen/EVT-Core-AudioProcessor
 	ignore = dirty
 
 [submodule "VPR"]
-	path = server/VPR
+	path = server/app/modules/VPR
 	url = https://github.com/Spr-Aachen/EVT-Core-VPR
 	ignore = dirty
 
 [submodule "Whisper"]
-	path = server/Whisper
+	path = server/app/modules/Whisper
 	url = https://github.com/Spr-Aachen/EVT-Core-Whisper
 	ignore = dirty
 
 [submodule "GPT-SoVITS"]
-	path = server/GPT_SoVITS
+	path = server/app/modules/GPT_SoVITS
 	url = https://github.com/Spr-Aachen/EVT-Core-GPT-SoVITS
 	ignore = dirty
