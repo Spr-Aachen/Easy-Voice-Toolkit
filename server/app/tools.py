@@ -1,8 +1,13 @@
-import os
+import os, sys
 import PyEasyUtils as EasyUtils
-from typing import Union, Optional
+from pathlib import Path
 
 ##############################################################################################################################
+
+currentDir = Path(sys.argv[0]).parent.as_posix()
+
+toolDir = Path(currentDir).joinpath("modules").as_posix()
+
 
 def mkPyCommand(fileDir, *commands):
     return [
@@ -13,8 +18,8 @@ def mkPyCommand(fileDir, *commands):
 ##############################################################################################################################
 
 class AudioProcessor:
-    def __init__(self, toolDir):
-        self.toolDir = toolDir
+    def __init__(self):
+        self.spm_processAudio = None
 
     async def processAudio(self,
         **kwargs
@@ -22,7 +27,7 @@ class AudioProcessor:
         self.spm_processAudio = EasyUtils.asyncSubprocessManager(shell = True)
         await self.spm_processAudio.create(
             args = mkPyCommand(
-                self.toolDir,
+                toolDir,
                 'from AudioProcessor.process import Audio_Processing',
                 f'AudioConvertandSlice = Audio_Processing({",".join(f"{k}={v!r}" for k, v in kwargs.items())})',
                 'AudioConvertandSlice.processAudio()',
@@ -39,8 +44,8 @@ class AudioProcessor:
 
 
 class VPR:
-    def __init__(self, toolDir):
-        self.toolDir = toolDir
+    def __init__(self):
+        self.spm_processAudio = None
 
     async def infer(self,
         **kwargs
@@ -48,7 +53,7 @@ class VPR:
         self.spm_infer = EasyUtils.asyncSubprocessManager(shell = True)
         await self.spm_infer.create(
             args = mkPyCommand(
-                self.toolDir,
+                toolDir,
                 'from VPR.infer import Voice_Contrasting',
                 f'AudioContrastInference = Voice_Contrasting({",".join(f"{k}={v!r}" for k, v in kwargs.items())})',
                 'AudioContrastInference.getModel()',
@@ -66,8 +71,8 @@ class VPR:
 
 
 class Whisper:
-    def __init__(self, toolDir):
-        self.toolDir = toolDir
+    def __init__(self):
+        self.spm_processAudio = None
 
     async def infer(self,
         **kwargs
@@ -75,7 +80,7 @@ class Whisper:
         self.spm_infer = EasyUtils.asyncSubprocessManager(shell = True)
         await self.spm_infer.create(
             args = mkPyCommand(
-                self.toolDir,
+                toolDir,
                 'from Whisper.transcribe import Voice_Transcribing',
                 f'WAVtoSRT = Voice_Transcribing({",".join(f"{k}={v!r}" for k, v in kwargs.items())})',
                 'WAVtoSRT.transcribe()',
@@ -92,8 +97,8 @@ class Whisper:
 
 
 class GPT_SoVITS:
-    def __init__(self, toolDir):
-        self.toolDir = toolDir
+    def __init__(self):
+        self.spm_processAudio = None
 
     async def preprocess(self,
         **kwargs
@@ -101,7 +106,7 @@ class GPT_SoVITS:
         self.spm_preprocess = EasyUtils.asyncSubprocessManager(shell = True)
         await self.spm_preprocess.create(
             args = mkPyCommand(
-                self.toolDir,
+                toolDir,
                 'from GPT_SoVITS.preprocess import Dataset_Creating',
                 f'SRTtoCSVandSplitAudio = Dataset_Creating({",".join(f"{k}={v!r}" for k, v in kwargs.items())})',
                 'SRTtoCSVandSplitAudio.run()',
@@ -122,7 +127,7 @@ class GPT_SoVITS:
         self.spm_train = EasyUtils.asyncSubprocessManager(shell = True)
         await self.spm_train.create(
             args = mkPyCommand(
-                self.toolDir,
+                toolDir,
                 'from GPT_SoVITS.train import train',
                 f'train({",".join(f"{k}={v!r}" for k, v in kwargs.items())})',
             ),
@@ -142,7 +147,7 @@ class GPT_SoVITS:
         self.spm_infer_webui = EasyUtils.asyncSubprocessManager(shell = True)
         await self.spm_infer_webui.create(
             args = mkPyCommand(
-                self.toolDir,
+                toolDir,
                 'from GPT_SoVITS.infer_webui import infer',
                 f'infer({",".join(f"{k}={v!r}" for k, v in kwargs.items())})',
             ),

@@ -23,26 +23,14 @@ void RunProcess(
     const std::string &dependencyDir,
     const std::string &modelDir,
     const std::string &outputDir,
-    const std::string &profileDir,
-    const bool isCompiled = false
+    const std::string &profileDir
 ) {
     std::string currentDir = GetCurrentDir();
 
-    std::string resourceDir = currentDir; // For simplicity, same as currentDir (no MEIPASS equivalent)
+    std::string clientFile = currentDir + "\\client\\src\\main.py";
+    std::string serverPath = currentDir + "\\server\\app\\main.py";
 
-    std::string clientDir = resourceDir + "\\" + (isCompiled ? "EVT" : "client");
-
-    std::string clientFile;
-    if (isCompiled) {
-        clientFile = clientDir + "\\Main.exe";
-    }
-    else {
-        clientFile = clientDir + "\\src\\main.py";
-    }
-
-    std::string serverPath = currentDir + "\\server\\main.py";
-
-    std::string command = (isCompiled ? "" : "python \"") + clientFile + (isCompiled ? "\"" : "\"");
+    std::string command = "python \"" + clientFile + "\"";
     command += " --server \"" + serverPath + "\"";
     command += " --manifest \"" + manifestPath + "\"";
     command += " --requirements \"" + requirementsPath + "\"";
@@ -63,7 +51,7 @@ void RunProcess(
         FALSE,
         CREATE_NO_WINDOW,
         NULL,
-        clientDir.c_str(),
+        currentDir.c_str(),
         &si,
         &pi
     );
@@ -89,7 +77,8 @@ int main() {
         currentDir,
         currentDir + "\\Models",
         currentDir,
-        currentDir);
+        currentDir
+    );
 
     return 0;
 }

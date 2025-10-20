@@ -11,22 +11,17 @@ from subprocess import Popen
 currentDir = Path(sys.argv[0]).parent.as_posix()
 
 
-isCompiled = False
-
-
 def run(
     manifestPath: str = ...,
     requirementsPath: str = ...,
     dependencyDir: str = ...,
     modelDir: str = ...,
     outputDir: str = ...,
-    profileDir: str = ...
+    profileDir: str = ...,
 ):
-    serverPath = Path(currentDir).joinpath('server', 'main.py').as_posix()
-    resourceDir = Path(sys._MEIPASS).as_posix() if getattr(sys, 'frozen', None) else currentDir
-    clientDir = Path(f'{resourceDir}{os.sep}{"client" if not isCompiled else "EVT"}').as_posix()
-    clientFile = Path(f'{clientDir}{os.sep}{f"src{os.sep}main.py" if not isCompiled else "Main.exe"}').as_posix()
-    clientCommand = f'{"python" if not isCompiled else ""} "{clientFile}" --server "{serverPath}" --manifest "{manifestPath}" --requirements "{requirementsPath}" --dependencies "{dependencyDir}" --models "{modelDir}" --output "{outputDir}" --profile "{profileDir}"'
+    serverFile = Path(currentDir).joinpath('server', 'app', 'main.py').as_posix()
+    clientFile = Path(currentDir).joinpath('client', 'src', 'main.py').as_posix()
+    clientCommand = f'python "{clientFile}" --server "{serverFile}" --manifest "{manifestPath}" --requirements "{requirementsPath}" --dependencies "{dependencyDir}" --models "{modelDir}" --output "{outputDir}" --profile "{profileDir}"'
     Popen(clientCommand.strip(), shell = True)
 
 ##############################################################################################################################

@@ -10,13 +10,11 @@ from tools import AudioProcessor, VPR, Whisper, GPT_SoVITS
 
 currentDir = Path(sys.argv[0]).parent.as_posix()
 
-toolDir = currentDir
 
-
-audioProcessor = AudioProcessor(toolDir)
-voiceIdentifier = VPR(toolDir)
-whisper = Whisper(toolDir)
-gptsovits = GPT_SoVITS(toolDir)
+audioProcessor = AudioProcessor()
+voiceIdentifier = VPR()
+whisper = Whisper()
+gptsovits = GPT_SoVITS()
 
 ##############################################################################################################################
 
