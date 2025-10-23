@@ -4,7 +4,7 @@ from pathlib import Path
 
 ##############################################################################################################################
 
-currentDir = Path(sys.argv[0]).parent.as_posix()
+currentDir = Path(EasyUtils.getCurrentPath()).parent.as_posix()
 
 toolDir = Path(currentDir).joinpath("modules").as_posix()
 

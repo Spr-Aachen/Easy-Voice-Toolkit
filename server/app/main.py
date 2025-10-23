@@ -5,11 +5,18 @@ import time
 import uvicorn
 from fastapi import FastAPI, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
-from PyEasyUtils import isPortAvailable, findAvailablePorts, terminateProcess
+from PyEasyUtils import isPortAvailable, findAvailablePorts, getFileInfo, terminateProcess
 from typing import Union, Optional, List
 
 from utils import infoLogger, errorLogger
 from routers import router
+
+##############################################################################################################################
+
+# Ref: https://github.com/pallets/click/issues/2415
+_, isFileCompiled = getFileInfo()
+sys.stdin = open(os.devnull, 'w') if isFileCompiled else sys.stdin
+sys.stdout = open(os.devnull, 'w') if isFileCompiled else sys.stdin
 
 ##############################################################################################################################
 

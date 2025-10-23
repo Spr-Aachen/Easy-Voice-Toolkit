@@ -1,14 +1,12 @@
-import os, sys
 from fastapi import APIRouter, Request
 from fastapi.responses import Response, JSONResponse, StreamingResponse
-from pathlib import Path
-from PyEasyUtils import evalString
+from PyEasyUtils import getBaseDir, getCurrentPath, evalString
 
 from tools import AudioProcessor, VPR, Whisper, GPT_SoVITS
 
 ##############################################################################################################################
 
-currentDir = Path(sys.argv[0]).parent.as_posix()
+currentDir = getBaseDir(getCurrentPath())
 
 
 audioProcessor = AudioProcessor()

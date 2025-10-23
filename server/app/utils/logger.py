@@ -1,10 +1,9 @@
-import sys
 from pathlib import Path
-from PyEasyUtils import loggerManager
+from PyEasyUtils import loggerManager, getBaseDir, getCurrentPath
 
 #############################################################################################################
 
-currentDir = Path(sys.argv[0]).parent.as_posix()
+currentDir = getBaseDir(getCurrentPath())
 
 logDir = Path(currentDir).joinpath('logs').as_posix()
 
