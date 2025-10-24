@@ -873,7 +873,7 @@ class MainWindow(Window_MainWindow):
             option = 'AutoCorrelate',
             defaultValue = True
         )
-        process_outputRoot_default = Path(outputDir).joinpath("Process (音频处理) Results").as_posix()
+        process_outputRoot_default = Path(outputDir).joinpath("音频处理结果" if currentLanguage() == Language.ZH else "Process Results").as_posix()
         component_process_outputRoot = subSettingsPage_Tools.addLineEditFrame(
             rootItemText = self.tr("路径设置"),
             text = self.tr("音频处理输出目录"),
@@ -884,7 +884,7 @@ class MainWindow(Window_MainWindow):
             defaultValue = process_outputRoot_default,
             placeholderText = process_outputRoot_default
         )
-        vpr_outputRoot_default = Path(outputDir).joinpath("VPR (声纹识别) Results")
+        vpr_outputRoot_default = Path(outputDir).joinpath("声纹识别结果" if currentLanguage() == Language.ZH else "VPR Results")
         vpr_tdnn_audioSpeakersDataRoot_default = vpr_outputRoot_default.joinpath("TDNN").as_posix()
         component_vpr_tdnn_outputRoot = subSettingsPage_Tools.addLineEditFrame(
             rootItemText = self.tr("路径设置"),
@@ -896,7 +896,7 @@ class MainWindow(Window_MainWindow):
             defaultValue = vpr_tdnn_audioSpeakersDataRoot_default,
             placeholderText = vpr_tdnn_audioSpeakersDataRoot_default
         )
-        asr_outputRoot_default = Path(outputDir).joinpath("ASR (语音转录) Results")
+        asr_outputRoot_default = Path(outputDir).joinpath("语音转录结果" if currentLanguage() == Language.ZH else "ASR Results")
         asr_whisper_outputRoot_default = asr_outputRoot_default.joinpath("Whisper").as_posix()
         component_asr_whisper_outputRoot = subSettingsPage_Tools.addLineEditFrame(
             rootItemText = self.tr("路径设置"),
@@ -908,7 +908,7 @@ class MainWindow(Window_MainWindow):
             defaultValue = asr_whisper_outputRoot_default,
             placeholderText = asr_whisper_outputRoot_default
         )
-        dat_outputRoot_default = Path(outputDir).joinpath("Preprocess (数据预处理) Results")
+        dat_outputRoot_default = Path(outputDir).joinpath("数据预处理结果" if currentLanguage() == Language.ZH else "Preprocess Results")
         dat_gptsovits_outputRoot_default = dat_outputRoot_default.joinpath("GPT-SoVITS").as_posix()
         component_dat_gptsovits_outputRoot = subSettingsPage_Tools.addLineEditFrame(
             rootItemText = self.tr("路径设置"),
@@ -920,7 +920,7 @@ class MainWindow(Window_MainWindow):
             defaultValue = dat_gptsovits_outputRoot_default,
             placeholderText = dat_gptsovits_outputRoot_default
         )
-        train_outputRoot_default = Path(outputDir).joinpath("Train (模型训练) Results")
+        train_outputRoot_default = Path(outputDir).joinpath("模型训练结果" if currentLanguage() == Language.ZH else "Train Results")
         train_gptsovits_outputRoot_default = train_outputRoot_default.joinpath("GPT-SoVITS").as_posix()
         component_train_gptsovits_outputRoot = subSettingsPage_Tools.addLineEditFrame(
             rootItemText = self.tr("路径设置"),
