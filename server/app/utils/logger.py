@@ -1,5 +1,5 @@
 from pathlib import Path
-from PyEasyUtils import loggerManager, getBaseDir, getCurrentPath
+from PyEasyUtils import loggerLevel, loggerManager, getBaseDir, getCurrentPath
 
 #############################################################################################################
 
@@ -11,13 +11,13 @@ logger = loggerManager()
 
 infoLogger = logger.createLogger(
     name = "info",
-    level = "INFO",
+    level = loggerLevel.INFO,
     outputPath = Path(logDir).joinpath("server.log"),
 )
 
 errorLogger = logger.createLogger(
     name = "error",
-    level = "ERROR",
+    level = loggerLevel.ERROR,
     outputPath = Path(logDir).joinpath("server.log"),
 )
 
