@@ -16,7 +16,7 @@ from routers import router
 # Ref: https://github.com/pallets/click/issues/2415
 _, isFileCompiled = getFileInfo()
 sys.stdin = open(os.devnull, 'w') if isFileCompiled else sys.stdin
-sys.stdout = open(os.devnull, 'w') if isFileCompiled else sys.stdin
+sys.stdout = open(os.devnull, 'w') if isFileCompiled else sys.stdout
 
 ##############################################################################################################################
 
