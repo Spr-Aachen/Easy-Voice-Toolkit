@@ -50,14 +50,14 @@ os.chdir(currentDir)
 
 # Parse path settings
 parser = argparse.ArgumentParser()
-parser.add_argument("--updater",           help = "path to updater",          default = Path(resourceDir).joinpath('updater.exe') if isFileCompiled else Path(currentDir).joinpath('updater.py'))
-parser.add_argument("--server",            help = "path to server file",      default = Path(resourceDir).joinpath('server.exe') if isFileCompiled else Path(resourceDir).joinpath('server', 'app', 'main.py'))
-parser.add_argument("--manifest",          help = "path to manifest.json",    default = Path(resourceDir).joinpath('manifest.json'))
-parser.add_argument("--requirements",      help = "path to requirements.txt", default = Path(resourceDir).joinpath('requirements.txt'))
-parser.add_argument("--dependencies",      help = "dir of dependencies",      default = Path(currentDir).joinpath(''))
-parser.add_argument("--models",            help = "dir of models",            default = Path(currentDir).joinpath('Models'))
-parser.add_argument("--output",            help = "dir of output",            default = Path(currentDir).joinpath(''))
-parser.add_argument("--profile",           help = "dir of profile",           default = Path(currentDir).joinpath(''))
+parser.add_argument("--updater",           help = "path to updater",          default = EasyUtils.normPath(Path(resourceDir).joinpath('updater.exe') if isFileCompiled else Path(currentDir).joinpath('updater.py')))
+parser.add_argument("--server",            help = "path to server file",      default = EasyUtils.normPath(Path(resourceDir).joinpath('server.exe') if isFileCompiled else Path(resourceDir).joinpath('server', 'app', 'main.py')))
+parser.add_argument("--manifest",          help = "path to manifest.json",    default = EasyUtils.normPath(Path(resourceDir).joinpath('manifest.json')))
+parser.add_argument("--requirements",      help = "path to requirements.txt", default = EasyUtils.normPath(Path(resourceDir).joinpath('requirements.txt')))
+parser.add_argument("--dependencies",      help = "dir of dependencies",      default = EasyUtils.normPath(Path(currentDir).joinpath('')))
+parser.add_argument("--models",            help = "dir of models",            default = EasyUtils.normPath(Path(currentDir).joinpath('Models')))
+parser.add_argument("--output",            help = "dir of output",            default = EasyUtils.normPath(Path(currentDir).joinpath('')))
+parser.add_argument("--profile",           help = "dir of profile",           default = EasyUtils.normPath(Path(currentDir).joinpath('')))
 parser.add_argument("--deprecatedVersion", help = "deprecated version",       default = None)
 args = parser.parse_known_args()[0]
 
