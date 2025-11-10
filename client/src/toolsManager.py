@@ -299,30 +299,34 @@ class Tool_GPTSoVITS(QObject):
                 log.write(outputLine)
 
     def train(self,
-        version: str = "v3",
-        fileList_path: str = "GPT-SoVITS/raw/xxx.list",
-        modelDir_bert: str = "GPT_SoVITS/pretrained_models/chinese-roberta-wwm-ext-large",
-        modelDir_hubert: str = "GPT_SoVITS/pretrained_models/chinese-hubert-base",
-        modelPath_gpt: str = "GPT_SoVITS/pretrained_models/s1bert25hz-5kh-longer-epoch=12-step=369668.ckpt",
-        modelPath_sovitsG: str = "GPT_SoVITS/pretrained_models/s2G2333k.pth",
-        modelPath_sovitsD: str = "GPT_SoVITS/pretrained_models/s2D2333k.pth",
+        version: str = "v4",
+        fileList_path: str = ...,
+        modelPath_gpt: str = ...,
+        modelPath_sovitsG: str = ...,
+        modelPath_sovitsD: str = ...,
+        modelPath_sv: str = ...,
+        modelDir_bert: str = ...,
+        modelDir_hubert: str = ...,
+        modelDir_g2pw: str = ...,
         half_precision: bool = False, # 16系卡没有半精度
-        if_grad_ckpt: bool = False, # v3是否开启梯度检查点节省显存占用
+        if_grad_ckpt: bool = False, # v4是否开启梯度检查点节省显存占用
         lora_rank: int = 32, # Lora秩 choices=[16, 32, 64, 128]
-        output_root: str = "SoVITS_weights&GPT_weights",
-        output_dirName: str = "模型名",
-        output_logDir: str = "logs",
+        output_root: str = ...,
+        output_dirName: str = ...,
+        output_logDir: str = ...,
     ):
         output, error = "", ""
         for outputLine, status_code in sendRequest(
             EasyUtils.requestManager.Get, "http", host, port, "/gptsovits_train", "terminate=False", stream = True,
             version = version,
             fileList_path = fileList_path,
-            modelDir_bert = modelDir_bert,
-            modelDir_hubert = modelDir_hubert,
             modelPath_gpt = modelPath_gpt,
             modelPath_sovitsG = modelPath_sovitsG,
             modelPath_sovitsD = modelPath_sovitsD,
+            modelPath_sv = modelPath_sv,
+            modelDir_bert = modelDir_bert,
+            modelDir_hubert = modelDir_hubert,
+            modelDir_g2pw = modelDir_g2pw,
             half_precision = half_precision,
             if_grad_ckpt = if_grad_ckpt,
             lora_rank = lora_rank,
@@ -349,13 +353,16 @@ class Tool_GPTSoVITS(QObject):
                 log.write(outputLine)
 
     def infer_webui(self,
-        version: str = "v3",
+        version: str = "v4",
         sovits_path: str = ...,
-        sovits_v3_path: str = ...,
+        sovits_v4_path: str = ...,
         gpt_path: str = ...,
         cnhubert_base_path: str = ...,
         bert_path: str = ...,
         bigvgan_path: str = ...,
+        vocoder_path: str = ...,
+        sv_path: str = ...,
+        g2pw_path: str = ...,
         half_precision: bool = True,
         batched_infer: bool = False,
     ):
@@ -364,11 +371,14 @@ class Tool_GPTSoVITS(QObject):
             EasyUtils.requestManager.Get, "http", host, port, "/gptsovits_infer_webui", "terminate=False", stream = True,
             version = version,
             sovits_path = sovits_path,
-            sovits_v3_path = sovits_v3_path,
+            sovits_v4_path = sovits_v4_path,
             gpt_path = gpt_path,
             cnhubert_base_path = cnhubert_base_path,
             bert_path = bert_path,
             bigvgan_path = bigvgan_path,
+            vocoder_path = vocoder_path,
+            sv_path = sv_path,
+            g2pw_path = g2pw_path,
             half_precision = half_precision,
             batched_infer = batched_infer,
         ):

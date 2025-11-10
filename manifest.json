@@ -113,32 +113,52 @@
             "name": "s1&s2",
             "size": {
                 "s1bert25hz-5kh-longer-epoch=12-step=369668.ckpt": "148.1MB",
-                "s2G2333k.pth": "101.1MB",
-                "s2D2333k.pth": "89.2MB",
-                "s1v3.pth": "",
-                "s2Gv3.pth": ""
+                "s2Dv2Pro.pth": "120.6MB",
+                "s2Gv2Pro.pth": "154.8MB",
+                "s2Gv4.pth": "733.4MB",
+                "vocoder.pth": "55.1MB"
             },
             "date": {
                 "s1bert25hz-5kh-longer-epoch=12-step=369668.ckpt": "2024-08-07",
-                "s2G2333k.pth": "2024-08-07",
-                "s2D2333k.pth": "2024-08-07",
-                "s1v3.pth": "2025-02-11",
-                "s2Gv3.pth": "2025-02-11"
+                "s2Dv2Pro.pth": "2025-06-04",
+                "s2Gv2Pro.pth": "2025-06-04",
+                "s2Gv4.pth": "2025-04-20",
+                "vocoder.pth": "2025-04-20"
             },
             "SHA": {
                 "s1bert25hz-5kh-longer-epoch=12-step=369668.ckpt": "732f94e63b148066e24c7f9d2637f3374083e637635f07fbdb695dee20ddbe1f",
-                "s2G2333k.pth": "924fdccaa3c574bf139c25c9759aa1ed3b3f99e19a7c529ee996c2bc17663695",
-                "s2D2333k.pth": "8ae7fe8dd8c8f2e718de359e00edac88b0c71ab2fd10b07ad4cc45070eb8a836",
-                "s1v3.pth": "87133414860ea14ff6620c483a3db5ed07b44be42e2c3fcdad65523a729a745a",
-                "s2Gv3.pth": "f33abb1920076d988e1711d5f41b5c9c6d7f92575b4acf0ad4fae6a4ebf0cf19"
+                "s2Dv2Pro.pth": "257a7f36ae49e9ff08790d2cd3d398592530852caba810197f8606e884a52c54",
+                "s2Gv2Pro.pth": "0f8ead815234365edf045c6d86370ed6e4f440e8195be77ff0ea72684ad406a5",
+                "s2Gv4.pth": "906fe22f48c3e037a389df291d4d32a9414e15dbb8f9628643e83aaced109ea4",
+                "vocoder.pth": "4d611913df7b12d49e8976c944558d2d096816365edfc6c35a9e85b67dd14ed9"
 
             },
             "downloadurl": {
                 "s1bert25hz-5kh-longer-epoch=12-step=369668.ckpt": "https://huggingface.co/lj1995/GPT-SoVITS/resolve/main/gsv-v2final-pretrained/s1bert25hz-5kh-longer-epoch%3D12-step%3D369668.ckpt?download=true",
-                "s2G2333k.pth": "https://huggingface.co/lj1995/GPT-SoVITS/resolve/main/gsv-v2final-pretrained/s2G2333k.pth?download=true",
-                "s2D2333k.pth": "https://huggingface.co/lj1995/GPT-SoVITS/resolve/main/gsv-v2final-pretrained/s2D2333k.pth?download=true",
-                "s1v3.pth": "https://huggingface.co/lj1995/GPT-SoVITS/resolve/main/s1v3.ckpt?download=true",
-                "s2Gv3.pth": "https://huggingface.co/lj1995/GPT-SoVITS/resolve/main/s2Gv3.pth?download=true"
+                "s2Dv2Pro.pth": "https://huggingface.co/lj1995/GPT-SoVITS/resolve/main/v2Pro/s2Dv2Pro.pth?download=true",
+                "s2Gv2Pro.pth": "https://huggingface.co/lj1995/GPT-SoVITS/resolve/main/v2Pro/s2Gv2Pro.pth?download=true",
+                "s2Gv4.pth": "https://huggingface.co/lj1995/GPT-SoVITS/resolve/main/gsv-v4-pretrained/s2Gv4.pth?download=true",
+                "vocoder.pth": "https://huggingface.co/lj1995/GPT-SoVITS/resolve/main/gsv-v4-pretrained/vocoder.pth?download=true"
+            },
+            "link": "https://huggingface.co/lj1995/GPT-SoVITS"
+        },
+        {
+            "tags": [
+                "TTS",
+                "GPT-SoVITS"
+            ],
+            "name": "sv",
+            "size": {
+                "eres2netv2w24s4ep4.ckpt": "102.5MB"
+            },
+            "date": {
+                "eres2netv2w24s4ep4.ckpt": "2025-11-08 17:43:19.524185"
+            },
+            "SHA": {
+                "eres2netv2w24s4ep4.ckpt": "4f5a0bf73c61eb41b174e1bb54e7ee3c83233892be8e0af1f187024e8e581a35"
+            },
+            "downloadurl": {
+                "eres2netv2w24s4ep4.ckpt": "https://huggingface.co/lj1995/GPT-SoVITS/resolve/main/sv/pretrained_eres2netv2w24s4ep4.ckpt?download=true"
             },
             "link": "https://huggingface.co/lj1995/GPT-SoVITS"
         },

@@ -1943,11 +1943,11 @@ class MainWindow(Window_MainWindow):
         subPage_train_gptsovits = SubToolPage(self.ui.Page_Train, paramsManager_train_gptsovits)
         component_train_gptsovits_version = subPage_train_gptsovits.addComboBoxFrame(
             rootItemText = self.tr("全局设置"),
-            text = self.tr("训练版本\nGPT-SoVITS模型的训练版本，注意v3训练需要8G以上的显存。"),
-            items = ['v2', 'v3'],
+            text = self.tr("训练版本\nGPT-SoVITS模型的训练版本，注意v4训练需要8G以上的显存。"),
+            items = ['v2Pro', 'v4'],
             section = 'Input params',
             option = 'version',
-            defaultValue = 'v2'
+            defaultValue = 'v2Pro'
         )
         component_train_gptsovits_fileListPath = subPage_train_gptsovits.addLineEditFrame(
             rootItemText = self.tr("输入参数"),
@@ -1959,84 +1959,87 @@ class MainWindow(Window_MainWindow):
             option = 'FileListPath',
             defaultValue = ''
         )
-        train_gptsovits_modelPathPretrainedS1_default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's1bert25hz-5kh-longer-epoch=12-step=369668.ckpt').as_posix()
-        component_train_gptsovits_modelPathPretrainedS1 = subPage_train_gptsovits.addLineEditFrame(
+        train_gptsovits_modelPathS1_default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's1bert25hz-5kh-longer-epoch=12-step=369668.ckpt').as_posix()
+        component_train_gptsovits_modelPathS1 = subPage_train_gptsovits.addLineEditFrame(
             rootItemText = self.tr("输入参数"),
-            text = self.tr("预训练GPT模型路径\n预训练GPT（s1）模型的路径。"),
+            text = self.tr("GPT模型路径\nGPT（s1）模型的路径。"),
             fileDialogMode = FileDialogMode.SelectFile,
             fileType = "ckpt类型 (*.ckpt)",
             directory = EasyUtils.normPath(Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2')),
             section = 'GPT-SoVITS params',
-            option = 'ModelPathPretrainedS1',
-            defaultValue = train_gptsovits_modelPathPretrainedS1_default,
-            placeholderText = train_gptsovits_modelPathPretrainedS1_default
+            option = 'ModelPathS1',
+            defaultValue = train_gptsovits_modelPathS1_default,
+            placeholderText = train_gptsovits_modelPathS1_default
         )
-        train_gptsovits_modelPathPretrainedS2G_default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's2G2333k.pth').as_posix()
-        component_train_gptsovits_modelPathPretrainedS2G = subPage_train_gptsovits.addLineEditFrame(
+        train_gptsovits_modelPathS2G_default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's2Gv2Pro.pth').as_posix()
+        component_train_gptsovits_modelPathS2G = subPage_train_gptsovits.addLineEditFrame(
             rootItemText = self.tr("输入参数"),
-            text = self.tr("预训练SoVITS生成器模型路径\n预训练SoVITS生成器（s2G）模型的路径。"),
+            text = self.tr("SoVITS生成器底模路径\nSoVITS生成器（s2G）模型的路径。"),
             fileDialogMode = FileDialogMode.SelectFile,
             fileType = "pth类型 (*.pth)",
             directory = EasyUtils.normPath(Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2')),
             section = 'GPT-SoVITS params',
-            option = 'ModelPathPretrainedS2G',
-            defaultValue = train_gptsovits_modelPathPretrainedS2G_default,
-            placeholderText = train_gptsovits_modelPathPretrainedS2G_default
+            option = 'ModelPathS2G',
+            defaultValue = train_gptsovits_modelPathS2G_default,
+            placeholderText = train_gptsovits_modelPathS2G_default
         )
-        train_gptsovits_modelPathPretrainedS2D_default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's2D2333k.pth').as_posix()
-        component_train_gptsovits_modelPathPretrainedS2D = subPage_train_gptsovits.addLineEditFrame(
+        train_gptsovits_modelPathS2D_default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's2Dv2Pro.pth').as_posix()
+        component_train_gptsovits_modelPathS2D = subPage_train_gptsovits.addLineEditFrame(
             rootItemText = self.tr("输入参数"),
-            text = self.tr("预训练SoVITS判别器模型路径\n预训练SoVITS判别器（s2D）模型的路径。"),
+            text = self.tr("SoVITS判别器底模路径\nSoVITS判别器（s2D）模型的路径。"),
             fileDialogMode = FileDialogMode.SelectFile,
             fileType = "pth类型 (*.pth)",
             directory = EasyUtils.normPath(Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2')),
             section = 'GPT-SoVITS params',
-            option = 'ModelPathPretrainedS2D',
-            defaultValue = train_gptsovits_modelPathPretrainedS2D_default,
-            placeholderText = train_gptsovits_modelPathPretrainedS2D_default
+            option = 'ModelPathS2D',
+            defaultValue = train_gptsovits_modelPathS2D_default,
+            placeholderText = train_gptsovits_modelPathS2D_default
         )
-        train_gptsovits_modelDirPretrainedBERT_default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 'chinese-roberta-wwm-ext-large').as_posix()
-        component_train_gptsovits_modelDirPretrainedBERT = subPage_train_gptsovits.addLineEditFrame(
+        train_gptsovits_modelPathSV_default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 'sv', 'eres2netv2w24s4ep4.ckpt').as_posix()
+        component_train_gptsovits_modelPathSV = subPage_train_gptsovits.addLineEditFrame(
             rootItemText = self.tr("输入参数"),
-            text = self.tr("预训练BERT模型路径\n预训练BERT模型（文件夹）的路径。"),
+            text = self.tr("SV模型路径\nSV模型的路径。"),
+            fileDialogMode = FileDialogMode.SelectFile,
+            fileType = "ckpt类型 (*.ckpt)",
+            directory = EasyUtils.normPath(Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 'sv')),
+            section = 'GPT-SoVITS params',
+            option = 'ModelPathSV',
+            defaultValue = train_gptsovits_modelPathSV_default,
+            placeholderText = train_gptsovits_modelPathSV_default
+        )
+        train_gptsovits_modelDirBERT_default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 'chinese-roberta-wwm-ext-large').as_posix()
+        component_train_gptsovits_modelDirBERT = subPage_train_gptsovits.addLineEditFrame(
+            rootItemText = self.tr("输入参数"),
+            text = self.tr("BERT模型路径\nBERT模型（文件夹）的路径。"),
             fileDialogMode = FileDialogMode.SelectFolder,
             directory = EasyUtils.normPath(Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded')),
             section = 'GPT-SoVITS params',
-            option = 'ModelDirPretrainedBERT',
-            defaultValue = train_gptsovits_modelDirPretrainedBERT_default,
-            placeholderText = train_gptsovits_modelDirPretrainedBERT_default
+            option = 'ModelDirBERT',
+            defaultValue = train_gptsovits_modelDirBERT_default,
+            placeholderText = train_gptsovits_modelDirBERT_default
         )
-        train_gptsovits_modelDirPretrainedHuBERT_default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 'chinese-hubert-base').as_posix()
-        component_train_gptsovits_modelDirPretrainedHuBERT = subPage_train_gptsovits.addLineEditFrame(
+        train_gptsovits_modelDirHuBERT_default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 'chinese-hubert-base').as_posix()
+        component_train_gptsovits_modelDirHuBERT = subPage_train_gptsovits.addLineEditFrame(
             rootItemText = self.tr("输入参数"),
-            text = self.tr("预训练HuBERT模型路径\n预训练HuBERT模型（文件夹）的路径。"),
+            text = self.tr("HuBERT模型路径\nHuBERT模型（文件夹）的路径。"),
             fileDialogMode = FileDialogMode.SelectFolder,
             directory = EasyUtils.normPath(Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded')),
             section = 'GPT-SoVITS params',
-            option = 'ModelDirPretrainedHuBERT',
-            defaultValue = train_gptsovits_modelDirPretrainedHuBERT_default,
-            placeholderText = train_gptsovits_modelDirPretrainedHuBERT_default
+            option = 'ModelDirHuBERT',
+            defaultValue = train_gptsovits_modelDirHuBERT_default,
+            placeholderText = train_gptsovits_modelDirHuBERT_default
         )
-        # component_train_gptsovits_gptEpochs = subPage_train_gptsovits.addSpinBoxFrame(
-        #     rootItemText = self.tr("训练参数"),
-        #     text = self.tr("GPT模型模型迭代轮数\nGPT模型训练时将全部样本完整迭代一轮的次数。"),
-        #     minimum = 1,
-        #     maximum = 100,
-        #     step = 1,
-        #     section = 'GPT-SoVITS params',
-        #     option = 'gptEpochs',
-        #     defaultValue = 8
-        # )
-        # component_train_gptsovits_sovitsEpochs = subPage_train_gptsovits.addSpinBoxFrame(
-        #     rootItemText = self.tr("训练参数"),
-        #     text = self.tr("SoVITS模型迭代轮数\nSoVITS模型训练时将全部样本完整迭代一轮的次数。"),
-        #     minimum = 1,
-        #     maximum = 100,
-        #     step = 1,
-        #     section = 'GPT-SoVITS params',
-        #     option = 'sovitsEpochs',
-        #     defaultValue = 15
-        # )
+        train_gptsovits_modelDirG2PW_default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 'g2pw').as_posix()
+        component_train_gptsovits_modelDirG2PW = subPage_train_gptsovits.addLineEditFrame(
+            rootItemText = self.tr("输入参数"),
+            text = self.tr("G2PW模型路径\nG2PW模型（文件夹）的路径。"),
+            fileDialogMode = FileDialogMode.SelectFolder,
+            directory = EasyUtils.normPath(Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded')),
+            section = 'Input params',
+            option = 'ModelDirG2PW',
+            defaultValue = train_gptsovits_modelDirG2PW_default,
+            placeholderText = train_gptsovits_modelDirG2PW_default
+        )
         component_train_gptsovits_halfPrecision = subPage_train_gptsovits.addCheckBoxFrame(
             rootItemText = self.tr("训练参数"),
             text = self.tr("半精度训练\n通过混合了float16精度的训练方式减小显存占用。"),
@@ -2074,26 +2077,16 @@ class MainWindow(Window_MainWindow):
             rootEdit = component_train_gptsovits_outputRoot.get(ComponentFlag.LineEdit),
             dirEdit = lineEdit_train_gptsovits_outputDir
         )
-        train_gptsovits_logDir_default = Path(Path(currentDir).root).joinpath('EVT_TrainLog', 'GPT-SoVITS', str(date.today())).as_posix()
+        train_gptsovits_logDir_default = Path(currentDir).joinpath('EVT_TrainLog', 'GPT-SoVITS').as_posix()
         component_train_gptsovits_outputLogDir = subPage_train_gptsovits.addLineEditFrame(
             rootItemText = self.tr("输出参数"),
-            toolBoxText = self.tr("高级设置"),
-            text = self.tr("日志输出目录\n训练时生成的日志的存放目录。"),
+            text = self.tr("日志输出目录\n训练时生成的日志等文件的存放目录，子目录会使用输出目录名。"),
             fileDialogMode = FileDialogMode.SelectFolder,
             directory = EasyUtils.normPath(Path(train_gptsovits_logDir_default).parent),
             section = 'Output params',
             option = 'OutputLogDir',
             defaultValue = train_gptsovits_logDir_default,
             placeholderText = train_gptsovits_logDir_default
-        )
-        component_train_gptsovits_outputLogDir.get(ComponentFlag.LineEdit).textChanged.connect(
-            lambda value: (
-                MessageBoxBase.pop(self,
-                    QMessageBox.Warning, "Warning",
-                    "保存路径不支持非ASCII字符，请使用英文路径以避免训练报错",
-                ),
-                component_train_gptsovits_outputLogDir.get(ComponentFlag.LineEdit).clear()
-            ) if not all(Char.isascii() for Char in value) else None
         )
         subPage_train_gptsovits.addChkOutputSideBtn(
             outputRootEdit = component_train_gptsovits_outputRoot.get(ComponentFlag.LineEdit)
@@ -2116,11 +2109,13 @@ class MainWindow(Window_MainWindow):
             executeParamTargets = [
                 component_train_gptsovits_version.get(ComponentFlag.ComboBox),
                 component_train_gptsovits_fileListPath.get(ComponentFlag.LineEdit),
-                component_train_gptsovits_modelDirPretrainedBERT.get(ComponentFlag.LineEdit),
-                component_train_gptsovits_modelDirPretrainedHuBERT.get(ComponentFlag.LineEdit),
-                component_train_gptsovits_modelPathPretrainedS1.get(ComponentFlag.LineEdit),
-                component_train_gptsovits_modelPathPretrainedS2G.get(ComponentFlag.LineEdit),
-                component_train_gptsovits_modelPathPretrainedS2D.get(ComponentFlag.LineEdit),
+                component_train_gptsovits_modelPathS1.get(ComponentFlag.LineEdit),
+                component_train_gptsovits_modelPathS2G.get(ComponentFlag.LineEdit),
+                component_train_gptsovits_modelPathS2D.get(ComponentFlag.LineEdit),
+                component_train_gptsovits_modelPathSV.get(ComponentFlag.LineEdit),
+                component_train_gptsovits_modelDirBERT.get(ComponentFlag.LineEdit),
+                component_train_gptsovits_modelDirHuBERT.get(ComponentFlag.LineEdit),
+                component_train_gptsovits_modelDirG2PW.get(ComponentFlag.LineEdit),
                 component_train_gptsovits_halfPrecision.get(ComponentFlag.CheckBox),
                 component_train_gptsovits_ifGradCkpt.get(ComponentFlag.CheckBox),
                 component_train_gptsovits_loraRank.get(ComponentFlag.ComboBox),
@@ -2137,27 +2132,21 @@ class MainWindow(Window_MainWindow):
             },
             threadPool = self.threadPool_tasks,
         )
-        functionSignals.taskStatus.connect(
-            lambda Task, Status: MessageBoxBase.pop(self,
-                QMessageBox.Question, "Ask",
-                text = "是否稍后启用tensorboard？",
-                buttons = QMessageBox.Yes|QMessageBox.No,
-                buttonEvents = {QMessageBox.Yes: lambda: component_train_gptsovits_runTensorboard.get(ComponentFlag.Button).click()}
-            ) if Task == self.task_gptsovits.__class__.train.__qualname__ and Status == TaskStatus.Started else None
-        )
         Function_ConfigureComboBox(
             comboBox = component_train_gptsovits_version.get(ComponentFlag.ComboBox),
             textChangedEvents = {
-                'v2': lambda: Function_SetWidgetsVisibility(
+                'v2Pro': lambda: Function_SetWidgetsVisibility(
                     widgetsVisibility = {
-                        component_train_gptsovits_modelPathPretrainedS2D.get(ComponentFlag.Frame): True,
+                        component_train_gptsovits_modelPathS2D.get(ComponentFlag.Frame): True,
+                        component_train_gptsovits_modelPathSV.get(ComponentFlag.Frame): True,
                         component_train_gptsovits_ifGradCkpt.get(ComponentFlag.Frame): False,
                         component_train_gptsovits_loraRank.get(ComponentFlag.Frame): False,
                     }
                 ),
-                'v3': lambda: Function_SetWidgetsVisibility(
+                'v4': lambda: Function_SetWidgetsVisibility(
                     widgetsVisibility = {
-                        component_train_gptsovits_modelPathPretrainedS2D.get(ComponentFlag.Frame): False,
+                        component_train_gptsovits_modelPathS2D.get(ComponentFlag.Frame): False,
+                        component_train_gptsovits_modelPathSV.get(ComponentFlag.Frame): False,
                         component_train_gptsovits_ifGradCkpt.get(ComponentFlag.Frame): True,
                         component_train_gptsovits_loraRank.get(ComponentFlag.Frame): True,
                     }
@@ -2203,90 +2192,114 @@ class MainWindow(Window_MainWindow):
         component_tts_gptsovits_version = subPage_tts_gptsovits.addComboBoxFrame(
             rootItemText = self.tr("全局设置"),
             text = self.tr("推理版本\nGPT-SoVITS模型的推理版本。"),
-            items = ['v2', 'v3'],
+            items = ['v2Pro', 'v4'],
             section = 'Input params',
             option = 'Version',
-            defaultValue = 'v2'
+            defaultValue = 'v2Pro'
         )
-        tts_gptsovits_modelPathLoadS1_default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's1bert25hz-5kh-longer-epoch=12-step=369668.ckpt').as_posix()
-        component_tts_gptsovits_modelPathLoadS1 = subPage_tts_gptsovits.addLineEditFrame(
+        tts_gptsovits_modelPathS1_default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's1bert25hz-5kh-longer-epoch=12-step=369668.ckpt').as_posix()
+        component_tts_gptsovits_modelPathS1 = subPage_tts_gptsovits.addLineEditFrame(
             rootItemText = self.tr("输入参数"),
-            text = self.tr("GPT模型加载路径\nGPT（s1）模型的路径。"),
+            text = self.tr("GPT模型路径\nGPT（s1）模型的路径。"),
             fileDialogMode = FileDialogMode.SelectFile,
             fileType = "ckpt类型 (*.ckpt)",
             directory = train_gptsovits_outputRoot_default,
             section = 'Input params',
-            option = 'ModelPathLoadS1',
-            defaultValue = tts_gptsovits_modelPathLoadS1_default,
-            placeholderText = tts_gptsovits_modelPathLoadS1_default
+            option = 'ModelPathS1',
+            defaultValue = tts_gptsovits_modelPathS1_default,
+            placeholderText = tts_gptsovits_modelPathS1_default
         )
-        tts_gptsovits_modelPathLoadS2G_default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's2G2333k.pth').as_posix()
-        component_tts_gptsovits_modelPathLoadS2 = subPage_tts_gptsovits.addLineEditFrame(
+        tts_gptsovits_modelPathS2Gv2Pro_default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's2Gv2Pro.pth').as_posix()
+        component_tts_gptsovits_modelPathS2Gv2Pro = subPage_tts_gptsovits.addLineEditFrame(
             rootItemText = self.tr("输入参数"),
-            text = self.tr("SoVITS模型加载路径\nSoVITS（s2G）模型的路径。"),
+            text = self.tr("SoVITSv2Pro模型路径\nSoVITSv2Pro（s2Gv2Pro）模型的路径。"),
             fileDialogMode = FileDialogMode.SelectFile,
             fileType = "pth类型 (*.pth)",
             directory = train_gptsovits_outputRoot_default,
             section = 'Input params',
-            option = 'ModelPathLoadS2G',
-            defaultValue = tts_gptsovits_modelPathLoadS2G_default,
-            placeholderText = tts_gptsovits_modelPathLoadS2G_default
+            option = 'ModelPathS2Gv2Pro',
+            defaultValue = tts_gptsovits_modelPathS2Gv2Pro_default,
+            placeholderText = tts_gptsovits_modelPathS2Gv2Pro_default
         )
-        tts_gptsovits_modelPathLoadS2Gv3_default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's2Gv3.pth').as_posix()
-        component_tts_gptsovits_modelPathLoadS2Gv3 = subPage_tts_gptsovits.addLineEditFrame(
+        tts_gptsovits_modelPathS2Gv4_default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's2Gv4.pth').as_posix()
+        component_tts_gptsovits_modelPathS2Gv4 = subPage_tts_gptsovits.addLineEditFrame(
             rootItemText = self.tr("输入参数"),
-            text = self.tr("SoVITSv3底模加载路径\nSoVITSv3（s2G2333k）底模的路径，用于加载lora。"),
+            text = self.tr("SoVITSv4底模路径\nSoVITSv4（s2Gv4）底模的路径，用于加载lora。"),
             fileDialogMode = FileDialogMode.SelectFile,
             fileType = "pth类型 (*.pth)",
             directory = EasyUtils.normPath(Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded')),
             section = 'Input params',
-            option = 'ModelPathLoadS2Gv3',
-            defaultValue = tts_gptsovits_modelPathLoadS2Gv3_default,
-            placeholderText = tts_gptsovits_modelPathLoadS2Gv3_default
+            option = 'ModelPathS2Gv4',
+            defaultValue = tts_gptsovits_modelPathS2Gv4_default,
+            placeholderText = tts_gptsovits_modelPathS2Gv4_default
         )
-        tts_gptsovits_modelDirLoadBERT_default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 'chinese-roberta-wwm-ext-large').as_posix()
-        component_tts_gptsovits_modelDirLoadBERT = subPage_tts_gptsovits.addLineEditFrame(
+        tts_gptsovits_modelDirBERT_default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 'chinese-roberta-wwm-ext-large').as_posix()
+        component_tts_gptsovits_modelDirBERT = subPage_tts_gptsovits.addLineEditFrame(
             rootItemText = self.tr("输入参数"),
-            text = self.tr("预训练BERT模型加载路径\n预训练BERT模型（文件夹）的路径。"),
+            text = self.tr("BERT模型路径\nBERT模型（文件夹）的路径。"),
             fileDialogMode = FileDialogMode.SelectFolder,
             directory = EasyUtils.normPath(Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded')),
             section = 'Input params',
-            option = 'ModelDirLoadBERT',
-            defaultValue = tts_gptsovits_modelDirLoadBERT_default,
-            placeholderText = tts_gptsovits_modelDirLoadBERT_default
+            option = 'ModelDirBERT',
+            defaultValue = tts_gptsovits_modelDirBERT_default,
+            placeholderText = tts_gptsovits_modelDirBERT_default
         )
-        tts_gptsovits_modelDirLoadHuBERT_default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 'chinese-hubert-base').as_posix()
-        component_tts_gptsovits_modelDirLoadHuBERT = subPage_tts_gptsovits.addLineEditFrame(
+        tts_gptsovits_modelDirHuBERT_default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 'chinese-hubert-base').as_posix()
+        component_tts_gptsovits_modelDirHuBERT = subPage_tts_gptsovits.addLineEditFrame(
             rootItemText = self.tr("输入参数"),
-            text = self.tr("预训练HuBERT模型加载路径\n预训练HuBERT模型（文件夹）的路径。"),
+            text = self.tr("HuBERT模型路径\nHuBERT模型（文件夹）的路径。"),
             fileDialogMode = FileDialogMode.SelectFolder,
             directory = EasyUtils.normPath(Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded')),
             section = 'Input params',
-            option = 'ModelDirLoadHuBERT',
-            defaultValue = tts_gptsovits_modelDirLoadHuBERT_default,
-            placeholderText = tts_gptsovits_modelDirLoadHuBERT_default
+            option = 'ModelDirHuBERT',
+            defaultValue = tts_gptsovits_modelDirHuBERT_default,
+            placeholderText = tts_gptsovits_modelDirHuBERT_default
         )
-        tts_gptsovits_modelDirLoadBigVGAN_default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 'nvidia--bigvgan').as_posix()
-        component_tts_gptsovits_modelDirLoadBigVGAN = subPage_tts_gptsovits.addLineEditFrame(
+        tts_gptsovits_modelDirBigVGAN_default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 'nvidia--bigvgan').as_posix()
+        component_tts_gptsovits_modelDirBigVGAN = subPage_tts_gptsovits.addLineEditFrame(
             rootItemText = self.tr("输入参数"),
-            text = self.tr("预训练BigVGAN模型加载路径\n预训练BigVGAN模型的路径。"),
+            text = self.tr("BigVGAN模型路径\nBigVGAN模型的路径。"),
             fileDialogMode = FileDialogMode.SelectFolder,
             directory = EasyUtils.normPath(Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded')),
             section = 'Input params',
-            option = 'ModelDirLoadBigVGAN',
-            defaultValue = tts_gptsovits_modelDirLoadBigVGAN_default,
-            placeholderText = tts_gptsovits_modelDirLoadBigVGAN_default
+            option = 'ModelDirBigVGAN',
+            defaultValue = tts_gptsovits_modelDirBigVGAN_default,
+            placeholderText = tts_gptsovits_modelDirBigVGAN_default
         )
-        tts_gptsovits_audioDirSave = Path(outputDir).joinpath("语音合成结果", 'GPTSoVITS').as_posix()
-        os.makedirs(tts_gptsovits_audioDirSave) if not Path(tts_gptsovits_audioDirSave).exists() else None
-        subPage_tts_gptsovits.addSideBtn(
-            text = self.tr("查看输出文件"),
-            events = [
-                lambda: QFunc.openURL(
-                    url = Function_GetParam(tts_gptsovits_audioDirSave),
-                    createIfNotExist = True
-                )
-            ]
+        tts_gptsovits_modelPathVocoder_default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 'vocoder.pth').as_posix()
+        component_tts_gptsovits_modelPathVocoder = subPage_tts_gptsovits.addLineEditFrame(
+            rootItemText = self.tr("输入参数"),
+            text = self.tr("Vocoder模型路径\nVocoder模型的路径，。"),
+            fileDialogMode = FileDialogMode.SelectFile,
+            fileType = "pth类型 (*.pth)",
+            directory = EasyUtils.normPath(Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded')),
+            section = 'Input params',
+            option = 'ModelPathVocoder',
+            defaultValue = tts_gptsovits_modelPathVocoder_default,
+            placeholderText = tts_gptsovits_modelPathVocoder_default
+        )
+        tts_gptsovits_modelPathSV_default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 'sv', 'eres2netv2w24s4ep4.ckpt').as_posix()
+        component_tts_gptsovits_modelPathSV = subPage_tts_gptsovits.addLineEditFrame(
+            rootItemText = self.tr("输入参数"),
+            text = self.tr("SV模型路径\nSV模型的路径。"),
+            fileDialogMode = FileDialogMode.SelectFile,
+            fileType = "ckpt类型 (*.ckpt)",
+            directory = EasyUtils.normPath(Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 'sv')),
+            section = 'Input params',
+            option = 'ModelPathSV',
+            defaultValue = tts_gptsovits_modelPathSV_default,
+            placeholderText = tts_gptsovits_modelPathSV_default
+        )
+        tts_gptsovits_modelDirG2PW_default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 'g2pw').as_posix()
+        component_tts_gptsovits_modelDirG2PW = subPage_tts_gptsovits.addLineEditFrame(
+            rootItemText = self.tr("输入参数"),
+            text = self.tr("G2PW模型路径\nG2PW模型（文件夹）的路径。"),
+            fileDialogMode = FileDialogMode.SelectFolder,
+            directory = EasyUtils.normPath(Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded')),
+            section = 'Input params',
+            option = 'ModelDirG2PW',
+            defaultValue = tts_gptsovits_modelDirG2PW_default,
+            placeholderText = tts_gptsovits_modelDirG2PW_default
         )
         subPage_tts_gptsovits.setExecutor(
             prepareSignal = toolSignals.serverStarted,
@@ -2294,19 +2307,18 @@ class MainWindow(Window_MainWindow):
             executeMethod = self.task_gptsovits.infer_webui,
             executeParamTargets = [
                 component_tts_gptsovits_version.get(ComponentFlag.ComboBox),
-                component_tts_gptsovits_modelPathLoadS2.get(ComponentFlag.LineEdit),
-                component_tts_gptsovits_modelPathLoadS2Gv3.get(ComponentFlag.LineEdit),
-                component_tts_gptsovits_modelPathLoadS1.get(ComponentFlag.LineEdit),
-                component_tts_gptsovits_modelDirLoadHuBERT.get(ComponentFlag.LineEdit),
-                component_tts_gptsovits_modelDirLoadBERT.get(ComponentFlag.LineEdit),
-                component_tts_gptsovits_modelDirLoadBigVGAN.get(ComponentFlag.LineEdit),
+                component_tts_gptsovits_modelPathS2Gv2Pro.get(ComponentFlag.LineEdit),
+                component_tts_gptsovits_modelPathS2Gv4.get(ComponentFlag.LineEdit),
+                component_tts_gptsovits_modelPathS1.get(ComponentFlag.LineEdit),
+                component_tts_gptsovits_modelDirHuBERT.get(ComponentFlag.LineEdit),
+                component_tts_gptsovits_modelDirBERT.get(ComponentFlag.LineEdit),
+                component_tts_gptsovits_modelDirBigVGAN.get(ComponentFlag.LineEdit),
+                component_tts_gptsovits_modelPathVocoder.get(ComponentFlag.LineEdit),
+                component_tts_gptsovits_modelPathSV.get(ComponentFlag.LineEdit),
+                component_tts_gptsovits_modelDirG2PW.get(ComponentFlag.LineEdit),
             ],
             terminateMethod = self.task_gptsovits.terminate_infer_webui,
             finishedEvents = {
-                # lambda: self.showMask(True, "正在加载播放器"): TaskStatus.Succeeded,
-                # lambda: self.showTTSResult(
-                #     tts_gptsovits_audioDirSave
-                # ): TaskStatus.Succeeded,
                 lambda: MessageBoxBase.pop(self,
                     QMessageBox.Information, "Tip",
                     "当前任务已执行结束。"
@@ -2317,16 +2329,20 @@ class MainWindow(Window_MainWindow):
         Function_ConfigureComboBox(
             comboBox = component_tts_gptsovits_version.get(ComponentFlag.ComboBox),
             textChangedEvents = {
-                "v2": lambda: Function_SetWidgetsVisibility(
+                "v2Pro": lambda: Function_SetWidgetsVisibility(
                     widgetsVisibility = {
-                        component_tts_gptsovits_modelPathLoadS2Gv3.get(ComponentFlag.Frame): False,
-                        component_tts_gptsovits_modelDirLoadBigVGAN.get(ComponentFlag.Frame): False,
+                        component_tts_gptsovits_modelPathS2Gv4.get(ComponentFlag.Frame): False,
+                        component_tts_gptsovits_modelDirBigVGAN.get(ComponentFlag.Frame): False,
+                        component_tts_gptsovits_modelPathSV.get(ComponentFlag.Frame): True,
+                        component_tts_gptsovits_modelPathVocoder.get(ComponentFlag.Frame): False,
                     },
                 ),
-                "v3": lambda: Function_SetWidgetsVisibility(
+                "v4": lambda: Function_SetWidgetsVisibility(
                     widgetsVisibility = {
-                        component_tts_gptsovits_modelPathLoadS2Gv3.get(ComponentFlag.Frame): True,
-                        component_tts_gptsovits_modelDirLoadBigVGAN.get(ComponentFlag.Frame): True,
+                        component_tts_gptsovits_modelPathS2Gv4.get(ComponentFlag.Frame): True,
+                        component_tts_gptsovits_modelDirBigVGAN.get(ComponentFlag.Frame): True,
+                        component_tts_gptsovits_modelPathSV.get(ComponentFlag.Frame): False,
+                        component_tts_gptsovits_modelPathVocoder.get(ComponentFlag.Frame): True,
                     },
                 ),
             },
