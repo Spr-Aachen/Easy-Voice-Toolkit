@@ -1679,6 +1679,14 @@ class MainWindow(Window_MainWindow):
             option = 'AudioDir',
             defaultValue = ''
         )
+        component_asr_whisper_language = subPage_ASR.addComboBoxFrame(
+            rootItemText = self.tr("输入参数"),
+            text = self.tr("音频语种\n指定音频中的语言，若使用自动检测则选择'None'即可。"),
+            items = ['zh', 'en', 'de', 'ru', 'ko', 'ja', 'None'],
+            section = 'Input params',
+            option = 'Language',
+            defaultValue = None
+        )
         component_asr_whisper_addLanguageInfo = subPage_ASR.addCheckBoxFrame(
             rootItemText = self.tr("语音转录参数"),
             text = self.tr("语种标注\n标注音频中说话人所使用的语言，若用于数据集制作则建议启用。"),
@@ -1749,6 +1757,7 @@ class MainWindow(Window_MainWindow):
                 component_asr_whisper_audioDir.get(ComponentFlag.LineEdit),
                 component_asr_whisper_verbose.get(ComponentFlag.CheckBox),
                 component_asr_whisper_addLanguageInfo.get(ComponentFlag.CheckBox),
+                component_asr_whisper_language.get(ComponentFlag.ComboBox),
                 component_asr_whisper_conditionOnPreviousText.get(ComponentFlag.CheckBox),
                 component_asr_whisper_fp16.get(ComponentFlag.CheckBox),
                 component_asr_whisper_outputRoot.get(ComponentFlag.LineEdit),

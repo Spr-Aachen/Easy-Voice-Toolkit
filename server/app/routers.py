@@ -85,6 +85,7 @@ async def asr_infer(request: Request, terminate: bool = False):
         modelPath = reqJs.get("modelPath"),
         audioDir = reqJs.get("audioDir"),
         verbose = reqJs.get("verbose"),
+        language = reqJs.get("language"),
         addLanguageInfo = reqJs.get("addLanguageInfo"),
         conditionOnPreviousText = reqJs.get("conditionOnPreviousText"),
         fp16 = reqJs.get("fp16"),
