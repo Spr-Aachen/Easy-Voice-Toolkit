@@ -221,7 +221,13 @@ def Function_SetWidgetsVisibility(
     for widget, visibility in widgetsVisibility.items():
         if widget is None:
             continue
-        widget.setVisible(visibility)
+        animation = QFunc.setWidgetSizeAnimation(
+            widget,
+            targetHeight = widget.sizeHint().height() if visibility is True else 0,
+            duration = 210
+        )
+        animation.finished.connect(lambda: widget.setVisible(visibility))
+        animation.start()
 
 ##############################################################################################################################
 
