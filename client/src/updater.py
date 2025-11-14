@@ -95,7 +95,7 @@ class MainWindow(QWidget):
             f = Qt.Widget #| Qt.FramelessWindowHint
         )
 
-        self.threadPool = QThreadPool()
+        self.threadPool = QThreadPool.globalInstance()
 
         self.setMaximumSize(246, 123)
         self.setGeometry(

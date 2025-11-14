@@ -122,7 +122,7 @@ class MainWindow(Window_MainWindow):
     def __init__(self):
         super().__init__()
 
-        self.threadPool_client = QThreadPool()
+        self.threadPool = QThreadPool.globalInstance()
         self.threadPool_env = QThreadPool()
         self.threadPool_models = QThreadPool()
         self.threadPool_tasks = QThreadPool()
@@ -620,7 +620,7 @@ class MainWindow(Window_MainWindow):
                 fileFormat,
                 currentVersion
             ),
-            threadPool = self.threadPool_client,
+            threadPool = self.threadPool,
             parentWindow = self,
         ) if runUpdateChecker else None
 
