@@ -139,7 +139,7 @@ class MainWindow(Window_MainWindow):
         def _endEvent():
             QApplication.instance().exit() if areTasksEnded and isServerEnded else None
         functionSignals.tasksEnded.connect(_endEvent)
-        toolSignals.serverEnded.connect(_endEvent)
+        functionSignals.serverEnded.connect(_endEvent)
         functionSignals.forceQuit.emit()
 
     def showGuidance(self, windowTitle: str, images: list, texts: list):
@@ -1375,7 +1375,7 @@ class MainWindow(Window_MainWindow):
             outputRootEdit = component_process_outputRoot.get(ComponentFlag.LineEdit),
         )
         subPage_process.setExecutor(
-            prepareSignal = toolSignals.serverStarted,
+            prepareSignal = functionSignals.serverStarted,
             consoleWidget = self.ui.Frame_Console,
             executeMethod = self.task_audioProcessor.processAudio,
             executeParamTargets = [
@@ -1607,7 +1607,7 @@ class MainWindow(Window_MainWindow):
             ]
         )
         subPage_VPR.setExecutor(
-            prepareSignal = toolSignals.serverStarted,
+            prepareSignal = functionSignals.serverStarted,
             consoleWidget = self.ui.Frame_Console,
             executeMethod = self.task_vpr.infer,
             executeParamTargets = [
@@ -1749,7 +1749,7 @@ class MainWindow(Window_MainWindow):
             outputRootEdit = component_asr_whisper_outputRoot.get(ComponentFlag.LineEdit)
         )
         subPage_ASR.setExecutor(
-            prepareSignal = toolSignals.serverStarted,
+            prepareSignal = functionSignals.serverStarted,
             consoleWidget = self.ui.Frame_Console,
             executeMethod = self.task_whisper.infer,
             executeParamTargets = [
@@ -1890,7 +1890,7 @@ class MainWindow(Window_MainWindow):
             outputRootEdit = component_dat_gptsovits_outputRoot.get(ComponentFlag.LineEdit)
         )
         subPage_dataset_gptsovits.setExecutor(
-            prepareSignal = toolSignals.serverStarted,
+            prepareSignal = functionSignals.serverStarted,
             consoleWidget = self.ui.Frame_Console,
             executeMethod = self.task_gptsovits.preprocess,
             executeParamTargets = [
@@ -2112,7 +2112,7 @@ class MainWindow(Window_MainWindow):
             ]
         )
         subPage_train_gptsovits.setExecutor(
-            prepareSignal = toolSignals.serverStarted,
+            prepareSignal = functionSignals.serverStarted,
             consoleWidget = self.ui.Frame_Console,
             executeMethod = self.task_gptsovits.train,
             executeParamTargets = [
@@ -2311,7 +2311,7 @@ class MainWindow(Window_MainWindow):
             placeholderText = tts_gptsovits_modelDirG2PW_default
         )
         subPage_tts_gptsovits.setExecutor(
-            prepareSignal = toolSignals.serverStarted,
+            prepareSignal = functionSignals.serverStarted,
             consoleWidget = self.ui.Frame_Console,
             executeMethod = self.task_gptsovits.infer_webui,
             executeParamTargets = [

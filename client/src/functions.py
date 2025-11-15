@@ -1,5 +1,6 @@
 import os
 import time
+import json
 import PyEasyUtils as EasyUtils
 from typing import Union, Optional
 from PySide6.QtCore import Qt, QObject, Signal, QThreadPool, QPoint
@@ -20,6 +21,9 @@ class FunctionSignals(QObject):
     updateMessage = Signal(str)
     isUpdateSucceeded = Signal(bool, str)
     readyToUpdate = Signal(str, str)
+
+    serverStarted = Signal()
+    serverEnded = Signal()
 
     taskStatus = Signal(str, str)
     tasksEnded = Signal()
@@ -688,5 +692,67 @@ def Function_RunTensorboard(logDir, maximumWaitTime = 30, port = 6007):
         if f":{port}" in outputLine.decode(errors = 'ignore'):
             break
     QFunc.openURL(f'http://localhost:{port}/')
+
+##############################################################################################################################
+
+isServerEnded: bool = True
+
+def _updateIsServerEnded(val):
+    global isServerEnded
+    isServerEnded = val
+
+functionSignals.serverStarted.connect(lambda: _updateIsServerEnded(False))
+functionSignals.serverEnded.connect(lambda: _updateIsServerEnded(True))
+
+
+host = None
+port = None
+logPath = None
+
+def getHostPort():
+    return host, port
+
+def getLogPath():
+    return logPath
+
+def startServer(
+    filePath: str,
+    logOutputPath: str
+):
+    global host, port, logPath
+    host = "localhost"
+    port = EasyUtils.findAvailablePorts((8000, 8080), host)[0]
+    logPath = logOutputPath
+    args = EasyUtils.mkPyFileCommand(
+        filePath,
+        host = host,
+        port = port,
+    )
+    spm = EasyUtils.subprocessManager(shell = False)
+    functionSignals.forceQuit.connect(
+        lambda: (
+            EasyUtils.terminateProcess(spm.subprocesses[-1].pid),
+            functionSignals.serverEnded.emit()
+        )
+    )
+    spm.create(args, env = os.environ)
+    subprocessMonitor = spm.monitor(logPath = logOutputPath)
+    for outputLine, errorLine in subprocessMonitor:
+        if f"{host}:{port}" in outputLine.decode(errors = 'ignore'):
+            functionSignals.serverStarted.emit()
+
+
+def sendRequest(
+    reqMethod: EasyUtils.requestManager,
+    protocol: str,
+    host: str,
+    port: int,
+    pathParams: Union[str, List[str], None] = None,
+    queryParams: Union[str, List[str], None] = None,
+    stream: bool = False,
+    **reqParams,
+):
+    for parsed_content, status_code in reqMethod.response(protocol, host, port, pathParams, queryParams, None, json.dumps(reqParams), stream):
+        yield parsed_content, status_code
 
 ##############################################################################################################################

@@ -1,93 +1,12 @@
 import os
-import sys
 import shutil
-import json
 import PyEasyUtils as EasyUtils
 from glob import glob
 from pathlib import Path
 from typing import Union, Optional, Any
 from PySide6.QtCore import QObject, Signal
 
-from functions import functionSignals
-
-##############################################################################################################################
-
-class ToolSignals(QObject):
-    '''
-    Set up signals for tools
-    '''
-    serverStarted = Signal()
-    serverEnded = Signal()
-
-
-toolSignals = ToolSignals()
-
-##############################################################################################################################
-
-isServerEnded: bool = True
-
-def _updateIsServerEnded(val):
-    global isServerEnded
-    isServerEnded = val
-
-toolSignals.serverStarted.connect(lambda: _updateIsServerEnded(False))
-toolSignals.serverEnded.connect(lambda: _updateIsServerEnded(True))
-
-
-host = None
-port = None
-logPath = None
-
-def startServer(
-    filePath: str,
-    logOutputPath: str
-):
-    """
-    """
-    global host, port, logPath
-    host = "localhost"
-    port = EasyUtils.findAvailablePorts((8000, 8080), host)[0]
-    logPath = logOutputPath
-    args = EasyUtils.mkPyFileCommand(
-        filePath,
-        host = host,
-        port = port,
-    )
-    spm = EasyUtils.subprocessManager(shell = True)
-    functionSignals.forceQuit.connect(
-        lambda: (
-            EasyUtils.terminateProcess(spm.subprocesses[-1].pid),
-            toolSignals.serverEnded.emit()
-        )
-    )
-    spm.create(args, env = os.environ)
-    subprocessMonitor = spm.monitor(logPath = logOutputPath)
-    for outputLine, errorLine in subprocessMonitor:
-        if f"{host}:{port}" in outputLine.decode(errors = 'ignore'):
-            toolSignals.serverStarted.emit()
-
-
-def sendRequest(
-    reqMethod: EasyUtils.requestManager,
-    protocol: str,
-    host: str,
-    port: int,
-    pathParams: Union[str, list[str], None] = None,
-    queryParams: Union[str, list[str], None] = None,
-    stream: bool = False,
-    **reqParams,
-):
-    """
-    """
-    payload = reqParams
-    with reqMethod.request(protocol, host, port, pathParams, queryParams, None, json.dumps(payload), stream) as response:
-        if response.status_code == 200:
-            for parsed_content, status_code in EasyUtils.responseParser(response, stream, decodeUnicode = True):
-                result = parsed_content
-                yield result, status_code
-        else:
-            yield "Request failed", response.status_code
-            return
+from functions import getHostPort, getLogPath, sendRequest
 
 ##############################################################################################################################
 
@@ -118,7 +37,7 @@ class Tool_AudioProcessor(QObject):
     ):
         output, error = "", ""
         for outputLine, status_code in sendRequest(
-            EasyUtils.requestManager.Get, "http", host, port, "/processAudio", "terminate=False", stream = True,
+            EasyUtils.requestManager.Get, "http", *getHostPort(), "/processAudio", "terminate=False", stream = True,
             inputDir = inputDir,
             outputFormat = outputFormat,
             sampleRate = sampleRate,
@@ -136,7 +55,7 @@ class Tool_AudioProcessor(QObject):
             outputRoot = outputRoot,
             outputDirName = outputDirName,
         ):
-            with open(logPath, mode = 'a', encoding = 'utf-8') as log:
+            with open(getLogPath(), mode = 'a', encoding = 'utf-8') as log:
                 log.write(outputLine)
             output += outputLine
         if 'error' in str(error).lower():
@@ -149,9 +68,9 @@ class Tool_AudioProcessor(QObject):
 
     def terminate_processAudio(self):
         for outputLine, status_code in sendRequest(
-            EasyUtils.requestManager.Get, "http", host, port, "/processAudio", "terminate=True", stream = True,
+            EasyUtils.requestManager.Get, "http", *getHostPort(), "/processAudio", "terminate=True", stream = True,
         ):
-            with open(logPath, mode = 'a', encoding = 'utf-8') as log:
+            with open(getLogPath(), mode = 'a', encoding = 'utf-8') as log:
                 log.write(outputLine)
 
 
@@ -176,7 +95,7 @@ class Tool_VPR(QObject):
     ):
         output, error = "", ""
         for outputLine, status_code in sendRequest(
-            EasyUtils.requestManager.Get, "http", host, port, "/vpr_infer", "terminate=False", stream = True,
+            EasyUtils.requestManager.Get, "http", *getHostPort(), "/vpr_infer", "terminate=False", stream = True,
             stdAudioSpeaker = stdAudioSpeaker,
             audioDirInput = audioDirInput,
             modelPath = modelPath,
@@ -188,7 +107,7 @@ class Tool_VPR(QObject):
             outputDirName = outputDirName,
             audioSpeakersDataName = audioSpeakersDataName,
         ):
-            with open(logPath, mode = 'a', encoding = 'utf-8') as log:
+            with open(getLogPath(), mode = 'a', encoding = 'utf-8') as log:
                 log.write(outputLine)
             output += outputLine
         if 'error' in str(error).lower():
@@ -201,9 +120,9 @@ class Tool_VPR(QObject):
 
     def terminate_infer(self):
         for outputLine, status_code in sendRequest(
-            EasyUtils.requestManager.Get, "http", host, port, "/vpr_infer", "terminate=True", stream = True,
+            EasyUtils.requestManager.Get, "http", *getHostPort(), "/vpr_infer", "terminate=True", stream = True,
         ):
-            with open(logPath, mode = 'a', encoding = 'utf-8') as log:
+            with open(getLogPath(), mode = 'a', encoding = 'utf-8') as log:
                 log.write(outputLine)
 
 
@@ -227,7 +146,7 @@ class Tool_Whisper(QObject):
     ):
         output, error = "", ""
         for outputLine, status_code in sendRequest(
-            EasyUtils.requestManager.Get, "http", host, port, "/asr_infer", "terminate=False", stream = True,
+            EasyUtils.requestManager.Get, "http", *getHostPort(), "/asr_infer", "terminate=False", stream = True,
             modelPath = modelPath,
             audioDir = audioDir,
             verbose = verbose,
@@ -238,7 +157,7 @@ class Tool_Whisper(QObject):
             outputRoot = outputRoot,
             outputDirName = outputDirName,
         ):
-            with open(logPath, mode = 'a', encoding = 'utf-8') as log:
+            with open(getLogPath(), mode = 'a', encoding = 'utf-8') as log:
                 log.write(outputLine)
             output += outputLine
         if 'error' in str(error).lower():
@@ -251,9 +170,9 @@ class Tool_Whisper(QObject):
 
     def terminate_infer(self):
         for outputLine, status_code in sendRequest(
-            EasyUtils.requestManager.Get, "http", host, port, "/asr_infer", "terminate=True", stream = True,
+            EasyUtils.requestManager.Get, "http", *getHostPort(), "/asr_infer", "terminate=True", stream = True,
         ):
-            with open(logPath, mode = 'a', encoding = 'utf-8') as log:
+            with open(getLogPath(), mode = 'a', encoding = 'utf-8') as log:
                 log.write(outputLine)
 
 
@@ -274,7 +193,7 @@ class Tool_GPTSoVITS(QObject):
     ):
         output, error = "", ""
         for outputLine, status_code in sendRequest(
-            EasyUtils.requestManager.Get, "http", host, port, "/gptsovits_preprocess", "terminate=False", stream = True,
+            EasyUtils.requestManager.Get, "http", *getHostPort(), "/gptsovits_preprocess", "terminate=False", stream = True,
             srtDir = srtDir,
             audioSpeakersDataPath = audioSpeakersDataPath,
             dataFormat = dataFormat,
@@ -282,7 +201,7 @@ class Tool_GPTSoVITS(QObject):
             outputDirName = outputDirName,
             fileListName = fileListName,
         ):
-            with open(logPath, mode = 'a', encoding = 'utf-8') as log:
+            with open(getLogPath(), mode = 'a', encoding = 'utf-8') as log:
                 log.write(outputLine)
             output += outputLine
         if 'error' in str(error).lower():
@@ -295,9 +214,9 @@ class Tool_GPTSoVITS(QObject):
 
     def terminate_preprocess(self):
         for outputLine, status_code in sendRequest(
-            EasyUtils.requestManager.Get, "http", host, port, "/gptsovits_preprocess", "terminate=True", stream = True,
+            EasyUtils.requestManager.Get, "http", *getHostPort(), "/gptsovits_preprocess", "terminate=True", stream = True,
         ):
-            with open(logPath, mode = 'a', encoding = 'utf-8') as log:
+            with open(getLogPath(), mode = 'a', encoding = 'utf-8') as log:
                 log.write(outputLine)
 
     def train(self,
@@ -319,7 +238,7 @@ class Tool_GPTSoVITS(QObject):
     ):
         output, error = "", ""
         for outputLine, status_code in sendRequest(
-            EasyUtils.requestManager.Get, "http", host, port, "/gptsovits_train", "terminate=False", stream = True,
+            EasyUtils.requestManager.Get, "http", *getHostPort(), "/gptsovits_train", "terminate=False", stream = True,
             version = version,
             fileList_path = fileList_path,
             modelPath_gpt = modelPath_gpt,
@@ -336,7 +255,7 @@ class Tool_GPTSoVITS(QObject):
             output_dirName = output_dirName,
             output_logDir = output_logDir,
         ):
-            with open(logPath, mode = 'a', encoding = 'utf-8') as log:
+            with open(getLogPath(), mode = 'a', encoding = 'utf-8') as log:
                 log.write(outputLine)
             output += outputLine
         if 'error' in str(error).lower():
@@ -349,9 +268,9 @@ class Tool_GPTSoVITS(QObject):
 
     def terminate_train(self):
         for outputLine, status_code in sendRequest(
-            EasyUtils.requestManager.Get, "http", host, port, "/gptsovits_train", "terminate=True", stream = True,
+            EasyUtils.requestManager.Get, "http", *getHostPort(), "/gptsovits_train", "terminate=True", stream = True,
         ):
-            with open(logPath, mode = 'a', encoding = 'utf-8') as log:
+            with open(getLogPath(), mode = 'a', encoding = 'utf-8') as log:
                 log.write(outputLine)
 
     def infer_webui(self,
@@ -370,7 +289,7 @@ class Tool_GPTSoVITS(QObject):
     ):
         output, error = "", ""
         for outputLine, status_code in sendRequest(
-            EasyUtils.requestManager.Get, "http", host, port, "/gptsovits_infer_webui", "terminate=False", stream = True,
+            EasyUtils.requestManager.Get, "http", *getHostPort(), "/gptsovits_infer_webui", "terminate=False", stream = True,
             version = version,
             sovits_path = sovits_path,
             sovits_v4_path = sovits_v4_path,
@@ -384,7 +303,7 @@ class Tool_GPTSoVITS(QObject):
             half_precision = half_precision,
             batched_infer = batched_infer,
         ):
-            with open(logPath, mode = 'a', encoding = 'utf-8') as log:
+            with open(getLogPath(), mode = 'a', encoding = 'utf-8') as log:
                 log.write(outputLine)
             output += outputLine
         if 'error' in str(error).lower():
@@ -397,9 +316,9 @@ class Tool_GPTSoVITS(QObject):
 
     def terminate_infer_webui(self):
         for outputLine, status_code in sendRequest(
-            EasyUtils.requestManager.Get, "http", host, port, "/gptsovits_infer_webui", "terminate=True", stream = True,
+            EasyUtils.requestManager.Get, "http", *getHostPort(), "/gptsovits_infer_webui", "terminate=True", stream = True,
         ):
-            with open(logPath, mode = 'a', encoding = 'utf-8') as log:
+            with open(getLogPath(), mode = 'a', encoding = 'utf-8') as log:
                 log.write(outputLine)
 
 ##############################################################################################################################
