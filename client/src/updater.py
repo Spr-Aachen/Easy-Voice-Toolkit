@@ -58,7 +58,7 @@ def updateDownloader(
     try:
         # Download
         functionSignals.updateMessage.emit("正在下载文件...\nDownloading files...")
-        fileInfo = EasyUtils.downloadFile(
+        fileInfo = EasyUtils.downloadFromURL(
             downloadURL = downloadURL,
             downloadDir = downloadDir,
             fileName = name,
