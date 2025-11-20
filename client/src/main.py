@@ -2429,11 +2429,11 @@ class MainWindow(Window_MainWindow):
 
         self.ui.Button_Console_Title.setText(self.tr("终端"))
 
-        MonitorLog = QTasks.MonitorLogFile(logPath)
+        MonitorLog = QTasks.MonitorFile(logPath)
         MonitorLog.start()
-        MonitorLog.consoleInfo.connect(
-            lambda Info: (
-                self.ui.PlainTextEdit_Console.setPlainText(Info),
+        MonitorLog.contentChanged.connect(
+            lambda content: (
+                self.ui.PlainTextEdit_Console.clear() if content == "" else self.ui.PlainTextEdit_Console.append(content),
                 self.ui.PlainTextEdit_Console.moveCursor(QTextCursor.End)
             )
         )

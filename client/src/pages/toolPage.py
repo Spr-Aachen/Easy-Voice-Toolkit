@@ -45,10 +45,8 @@ class SubToolPage(SubPage):
         textBrowser_params = TextBrowserBase()
         monitorFile_config = QTasks.MonitorFile(self.paramsManager.configPath)
         monitorFile_config.start()
-        monitorFile_config.Signal_fileContent.connect(
-            lambda fileContent: textBrowser_params.setText(
-                fileContent
-            )
+        monitorFile_config.contentChanged.connect(
+            lambda content: textBrowser_params.append(content)
         )
         self.rightWidget_layout.addWidget(textBrowser_params, 0, 0, 1, 3)
         button_resetSettings = HollowButton()
