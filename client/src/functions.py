@@ -747,8 +747,8 @@ def sendRequest(
     protocol: str,
     host: str,
     port: int,
-    pathParams: Union[str, List[str], None] = None,
-    queryParams: Union[str, List[str], None] = None,
+    pathParams: Union[str, list[str], None] = None,
+    queryParams: Union[str, list[str], None] = None,
     stream: bool = False,
     **reqParams,
 ):
