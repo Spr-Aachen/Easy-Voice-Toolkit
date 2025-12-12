@@ -2429,9 +2429,10 @@ class MainWindow(Window_MainWindow):
 
         self.ui.Button_Console_Title.setText(self.tr("终端"))
 
-        MonitorLog = QTasks.MonitorFile(logPath)
-        MonitorLog.start()
-        MonitorLog.contentChanged.connect(
+        self.ui.PlainTextEdit_Console.setMaximumLines(333)
+        logMonitor = QTasks.MonitorFile(logPath, mode = 'append')
+        logMonitor.start()
+        logMonitor.contentChanged.connect(
             lambda content: (
                 self.ui.PlainTextEdit_Console.clear() if content == "" else self.ui.PlainTextEdit_Console.append(content),
                 self.ui.PlainTextEdit_Console.moveCursor(QTextCursor.End)
@@ -2445,7 +2446,7 @@ class MainWindow(Window_MainWindow):
             )
         )
 
-        self.ui.Button_Console_Clear.clicked.connect(MonitorLog.clear)
+        self.ui.Button_Console_Clear.clicked.connect(logMonitor.clear)
 
         self.ui.Button_Console_Fold.clicked.connect(self.ui.Button_Toggle_Console.click)
 
