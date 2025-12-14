@@ -2267,7 +2267,7 @@ class MainWindow(Window_MainWindow):
         tts_gptsovits_modelDirBigVGAN_default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 'nvidia--bigvgan').as_posix()
         component_tts_gptsovits_modelDirBigVGAN = subPage_tts_gptsovits.addLineEditFrame(
             rootItemText = self.tr("输入参数"),
-            text = self.tr("BigVGAN模型路径\nBigVGAN模型的路径。"),
+            text = self.tr("BigVGAN模型路径\nBigVGAN模型（文件夹）的路径。"),
             fileDialogMode = FileDialogMode.SelectFolder,
             directory = EasyUtils.normPath(Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded')),
             section = 'Input params',
@@ -2278,7 +2278,7 @@ class MainWindow(Window_MainWindow):
         tts_gptsovits_modelPathVocoder_default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 'vocoder.pth').as_posix()
         component_tts_gptsovits_modelPathVocoder = subPage_tts_gptsovits.addLineEditFrame(
             rootItemText = self.tr("输入参数"),
-            text = self.tr("Vocoder模型路径\nVocoder模型的路径，。"),
+            text = self.tr("Vocoder模型路径\nVocoder模型的路径。"),
             fileDialogMode = FileDialogMode.SelectFile,
             fileType = "pth类型 (*.pth)",
             directory = EasyUtils.normPath(Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded')),
