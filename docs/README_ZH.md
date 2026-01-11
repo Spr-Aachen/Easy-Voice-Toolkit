@@ -1,57 +1,59 @@
 <div align = "center">
 
-![Title](/docs/media/Cover.jpg)
-
 # 简易语音工具箱
 
 一个基于开源语音项目实现的简易语音工具箱，提供了包括语音模型训练在内的多种自动化音频工具
-<br>[音频处理](/docs/CN/Audio-Processor.md)、[语音识别](/docs/CN/Voice-Recognizer.md)、[语音转录](/docs/CN/Voice-Transcriber.md)、[数据集制作](/docs/CN/Dataset-Creator.md)、[模型训练](/docs/CN/Voice-Trainer.md)、[语音合成](/docs/CN/Voice-Converter.md)
-<br>用户可以根据自己的需求有选择性地使用，亦或者依次通过这些工具将未经处理的语音文件逐步变为理想的语音模型
 
-[![Releases](https://img.shields.io/github/v/release/Spr-Aachen/Easy-Voice-Toolkit?color=green&label=Release&logo=Github&logoColor=white&style=for-the-badge)](https://github.com/Spr-Aachen/Easy-Voice-Toolkit/releases/latest)&nbsp;
 [![Bilibili](https://img.shields.io/badge/Bilibili-v1.0%20Intro-blue?logo=Bilibili&style=for-the-badge)](https://www.bilibili.com/video/BV1uJ4m157P2)&nbsp;
 [![YouTube](https://img.shields.io/badge/YouTube-v1.0%20Intro-red?logo=YouTube&style=for-the-badge)](https://www.youtube.com/watch?v=)
 
+[![下载 Windows 懒人包](https://img.shields.io/badge/下载%20-Windows%20懒人包-yellow?logo=HuggingFace)](https://huggingface.co/SprAachen/Easy-Voice-Toolkit-Package/resolve/main/EVT_windows_x64.7z?download=true)&nbsp;
+[![打开 Google Colab](https://img.shields.io/badge/打开%20-Google%20Colab-orange?logo=GoogleColab)](https://colab.research.google.com/github/Spr-Aachen/Easy-Voice-Toolkit/blob/main/run.ipynb)
+
+
 <a href = "https://ko-fi.com/spr_aachen">
-    <img src = "https://cdn.ko-fi.com/cdn/kofi3.png?v=2" width = "150">
+    <img src = "https://cdn.ko-fi.com/cdn/kofi3.png?v=2" width = "123">
 </a>
 
-**简体中文** | [**English**](../README.md)
+![Title](/docs/media/Cover.jpg)
 
 </div>
 
 ---
 
-## 鸣谢
+<div align = "center">
 
-由衷感谢以下项目的作者，这个工具箱的实现正是得益于他们的优秀成果
+**简体中文** | [**English**](../README.md)
 
-- [audio-slicer](https://github.com/openvpi/audio-slicer)
-- [VoiceprintRecognition](https://github.com/yeyupiaoling/VoiceprintRecognition-Pytorch/tree/release/1.0)
-- [whisper](https://github.com/openai/whisper)
-- [SRT-to-CSV-and-audio-split](https://github.com/tobiasrordorf/SRT-to-CSV-and-audio-split)
-- [GPT-SoVITS](https://github.com/RVC-Boss/GPT-SoVITS)
+</div>
+
+
+## 功能特性
+
+- 音频处理
+- 语音识别
+- 语音转录
+- 数据集制作
+- 模型训练
+- 语音合成
+
+用户可以根据自己的需求有选择性地使用，亦或者依次通过这些工具将未经处理的语音文件逐步变为理想的语音模型
 
 
 ## 用户指南
 
 ### 桌面程序
 
-[![下载Windows懒人包](https://img.shields.io/badge/下载-Windows懒人包-yellow?logo=HuggingFace)](https://huggingface.co/SprAachen/Easy-Voice-Toolkit-Package/resolve/main/EVT_windows_x64.7z?download=true)
-
-您有两种选择：
-
-- 下载[轻量化的安装程序](https://github.com/Spr-Aachen/Easy-Voice-Toolkit/releases/latest)：包体小且拥有安装引导，但是未配置环境依赖且不带模型
-
-- 下载[解压即用的Windows懒人包](https://huggingface.co/SprAachen/Easy-Voice-Toolkit-Package/resolve/main/EVT_windows_x64.7z?download=true)：配置了所有环境依赖并附带有预设模型，但是包体较大且需要解压
+[![下载 Windows 懒人包](https://img.shields.io/badge/下载%20-Windows%20懒人包-yellow?logo=HuggingFace)](https://huggingface.co/SprAachen/Easy-Voice-Toolkit-Package/resolve/main/EVT_windows_x64.7z?download=true)
+<br>点击上面的 badge 以下载解压即用的 Windows 懒人包
 
 ### 谷歌 Colab
 
-[![在Colab中打开](https://img.shields.io/badge/打开-Google%20Colab-orange?logo=GoogleColab)](https://colab.research.google.com/github/Spr-Aachen/Easy-Voice-Toolkit/blob/main/run.ipynb)
-<br>点击以使用上面的demo，或者在Colab中上传[run.ipynb](https://github.com/Spr-Aachen/Easy-Voice-Toolkit/blob/main/run.ipynb)
+[![打开 Google Colab](https://img.shields.io/badge/打开%20-Google%20Colab-orange?logo=GoogleColab)](https://colab.research.google.com/github/Spr-Aachen/Easy-Voice-Toolkit/blob/main/run.ipynb)
+<br>点击上面的 badge 以使用 demo，或者在 Colab 中上传 [run.ipynb](https://github.com/Spr-Aachen/Easy-Voice-Toolkit/blob/main/run.ipynb)
 
 
-## 开发者指南
+## 开发指南
 
 ### 1. 搭建环境
 
@@ -97,16 +99,17 @@
 
 ## 使用条例
 
-**请自行解决数据集的授权问题。对于使用未经授权的数据集进行训练所导致的任何问题，您将承担全部责任，并且该仓库及其维护者不承担任何后果！相关法律请参照《中华人民共和国治安管理处罚法》和《中华人民共和国民法典》**
-
 0. 本项目仅用于学术交流目的，旨在促进沟通和学习。不适用于生产环境。
-1. 基于 Easy Voice Toolkit 发布的任何视频必须在描述中明确指出它们用于变声，并指定声音或音频的输入源，例如使用他人发布的视频或音频，并将分离出的人声作为转换的输入源，必须提供清晰的原始视频链接。如果您使用自己的声音或其他商业语音合成软件生成的声音作为转换的输入源，也必须在描述中说明。
-2. 您将对输入源引起的任何侵权问题负全部责任。当使用其他商业语音合成软件作为输入源时，请确保遵守该软件的使用条款。请注意，许多语音合成引擎在其使用条款中明确声明不能用于输入源转换。
-3. 继续使用本项目被视为同意本仓库 README 中所述的相关条款。本仓库的 README 有义务进行劝导，但不承担可能出现的任何后续问题的责任。
-4. 如果您分发此仓库的代码或将由此项目生成的任何结果公开发布（包括但不限于视频分享平台），请注明原始作者和代码来源（即此仓库）。
-5. 如果您将此项目用于任何其他计划，请提前与本仓库的作者联系并告知
 
-Reference: [so-vits-svc](https://github.com/svc-develop-team/so-vits-svc)
+1. 基于 Easy Voice Toolkit 发布的任何视频必须在描述中明确指出它们用于变声，并指定声音或音频的输入源，例如使用他人发布的视频或音频，并将分离出的人声作为转换的输入源，必须提供清晰的原始视频链接。如果您使用自己的声音或其他商业语音合成软件生成的声音作为转换的输入源，也必须在描述中说明。
+
+2. 您将对输入源引起的任何侵权问题负全部责任。当使用其他商业语音合成软件作为输入源时，请确保遵守该软件的使用条款。请注意，许多语音合成引擎在其使用条款中明确声明不能用于输入源转换。
+
+3. 继续使用本项目被视为同意本仓库 README 中所述的相关条款。本仓库的 README 有义务进行劝导，但不承担可能出现的任何后续问题的责任。
+
+4. 如果您分发此仓库的代码或将由此项目生成的任何结果公开发布（包括但不限于视频分享平台），请注明原始作者和代码来源（即此仓库）。
+
+5. 如果您将此项目用于任何其他计划，请提前与本仓库的作者联系并告知
 
 
 ## 疑问解答
@@ -124,18 +127,25 @@ Reference: [so-vits-svc](https://github.com/svc-develop-team/so-vits-svc)
 ## 迭代计划
 
 ### ToDo
+
 - 添加LLM联动功能
 - 使用C++重构客户端
 
 ### 开发中
+
 - 后端开发
 - 兼容Linux系统
 
 
-## 联系方式
+## 项目支持
 
-[![QQ](https://img.shields.io/badge/QQ-2835946988-brightgreen?style=for-the-badge&logo=tencent-qq&logoColor=white)]()
-<br>倘若大伙儿有什么好的建议欢迎随时叨扰哦~
+由衷感谢以下项目的作者，这个工具箱的实现正是得益于他们的优秀成果
+
+- [audio-slicer](https://github.com/openvpi/audio-slicer)
+- [VoiceprintRecognition](https://github.com/yeyupiaoling/VoiceprintRecognition-Pytorch/tree/release/1.0)
+- [whisper](https://github.com/openai/whisper)
+- [SRT-to-CSV-and-audio-split](https://github.com/tobiasrordorf/SRT-to-CSV-and-audio-split)
+- [GPT-SoVITS](https://github.com/RVC-Boss/GPT-SoVITS)
 
 
 ## 收藏趋势

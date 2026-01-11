@@ -1,54 +1,55 @@
 <div align = "center">
 
-![Title](/docs/media/Cover.jpg)
-
 # Easy Voice Toolkit
 
-A toolkit based on open source voice projects，which provides a variety of automated audio tools:
-<br>[Audio Processing](/docs/EN/Audio-Processor.md), [Voice Recognition](/docs/EN/Voice-Recognizer.md), [Voice Transcription](/docs/EN/Voice-Transcriber.md), [Dataset Creating (For Voice Conversion)](/docs/EN/Dataset-Creator.md), [Model Training (For Voice Conversion)](/docs/EN/Voice-Trainer.md), and [Voice Conversion](/docs/EN/Voice-Converter.md)
-<br>Users can use these tools selectively according to their own needs, or use them in sequence to gradually transform raw audio files into ideal speech models
+A toolkit based on open source voice projects，which provides a variety of automated audio tools
 
-[![Releases](https://img.shields.io/github/v/release/Spr-Aachen/Easy-Voice-Toolkit?color=green&label=Release&logo=Github&logoColor=white&style=for-the-badge)](https://github.com/Spr-Aachen/Easy-Voice-Toolkit/releases/latest)&nbsp;
 [![Bilibili](https://img.shields.io/badge/Bilibili-v1.0%20Intro-blue?logo=Bilibili&style=for-the-badge)](https://www.bilibili.com/video/BV1uJ4m157P2)&nbsp;
 [![YouTube](https://img.shields.io/badge/YouTube-v1.0%20Intro-red?logo=YouTube&style=for-the-badge)](https://www.youtube.com/watch?v=)
 
+[![Download Windows Portable Pkg](https://img.shields.io/badge/Download-Windows%20Portable%20Package-yellow?logo=HuggingFace)](https://huggingface.co/SprAachen/Easy-Voice-Toolkit-Package/resolve/main/EVT_windows_x64.7z?download=true)&nbsp;
+[![Run Google Colab Demo](https://img.shields.io/badge/Run-Google%20Colab%20Demo-orange?logo=GoogleColab)](https://colab.research.google.com/github/Spr-Aachen/Easy-Voice-Toolkit/blob/main/run.ipynb)
+
 <a href = "https://ko-fi.com/spr_aachen">
-    <img src = "https://cdn.ko-fi.com/cdn/kofi3.png?v=2" width = "150">
+    <img src = "https://cdn.ko-fi.com/cdn/kofi3.png?v=2" width = "123">
 </a>
 
-[**简体中文**](./docs/README_CN.md) | **English**
+![Title](/docs/media/Cover.jpg)
 
 </div>
 
 ---
 
-## Acknowledgement
+<div align = "center">
 
-I'd like to express my sincere gratitude to the authors of the following projects, as their excellent work has contributed to the implementation of this toolkit
+[**简体中文**](./docs/README_ZH.md) | **English**
 
-- [audio-slicer](https://github.com/openvpi/audio-slicer)
-- [VoiceprintRecognition](https://github.com/yeyupiaoling/VoiceprintRecognition-Pytorch/tree/release/1.0)
-- [whisper](https://github.com/openai/whisper)
-- [SRT-to-CSV-and-audio-split](https://github.com/tobiasrordorf/SRT-to-CSV-and-audio-split)
-- [GPT-SoVITS](https://github.com/RVC-Boss/GPT-SoVITS)
+</div>
+
+
+## Features
+
+- Audio Processing
+- Voice Recognition
+- Voice Transcription
+- Dataset Creating (For Voice Conversion)
+- Model Training (For Voice Conversion)
+- Voice Conversion
+
+Users can use these tools selectively according to their own needs, or use them in sequence to gradually transform raw audio files into ideal speech models
 
 
 ## User Guide
 
 ### Desktop Application
 
-[![Download Windows Portable Version](https://img.shields.io/badge/Download-Windows%20Portable%20Version-yellow?logo=HuggingFace)](https://huggingface.co/SprAachen/Easy-Voice-Toolkit-Package/resolve/main/EVT_windows_x64.7z?download=true)
-
-You have two options：
-
-- Download the [lightweight installer](https://github.com/Spr-Aachen/Easy-Voice-Toolkit/releases/latest): small package comes with installation instructions, but without necessary environmental dependencies and models
-
-- Download the [Ready-to-use portable package for Windows](https://huggingface.co/SprAachen/Easy-Voice-Toolkit-Package/resolve/main/EVT_windows_x64.7z?download=true): huge package with all environmental dependencies and several model presets, need to unpack after download
+[![Download Windows Portable Pkg](https://img.shields.io/badge/|-Windows%20Portable%20Package-yellow?logo=HuggingFace)](https://huggingface.co/SprAachen/Easy-Voice-Toolkit-Package/resolve/main/EVT_windows_x64.7z?download=true)
+<br>Click the badge above to download the Ready-to-use portable package for Windows
 
 ### Google Colab
 
-[![Open jupyter notebook in Colab](https://img.shields.io/badge/Open%20in-Google%20Colab-orange?logo=GoogleColab)](https://colab.research.google.com/github/Spr-Aachen/Easy-Voice-Toolkit/blob/main/run.ipynb)
-<br>Click to use the demo above, or access to Colab and upload [run.ipynb](https://github.com/Spr-Aachen/Easy-Voice-Toolkit/blob/main/run.ipynb)
+[![Run Google Colab Demo](https://img.shields.io/badge/|-Google%20Colab%20Demo-orange?logo=GoogleColab)](https://colab.research.google.com/github/Spr-Aachen/Easy-Voice-Toolkit/blob/main/run.ipynb)
+<br>Click the badge above to use the demo, or access to Colab and upload [run.ipynb](https://github.com/Spr-Aachen/Easy-Voice-Toolkit/blob/main/run.ipynb)
 
 
 ## Developer Guide
@@ -97,8 +98,6 @@ Please make sure that you've installed [Python](https://www.python.org/downloads
 
 ## Terms of Use
 
-**Please solve the authorization problem of the dataset on your own. You shall be solely responsible for any problems caused by the use of non-authorized datasets for training and all consequences thereof.The repository and its maintainer have nothing to do with the consequences!**
-
 1. This project is established for academic exchange purposes only and is intended for communication and learning purposes. It is not intended for production environments.
 
 2. Any videos based on Easy Voice Toolkit that are published on video platforms must clearly indicate in the description that they are used for voice changing and specify the input source of the voice or audio, for example, using videos or audios published by others and separating the vocals as input source for conversion, which must provide clear original video links. If your own voice or other synthesized voices from other commercial vocal synthesis software are used as the input source for conversion, you must also explain it in the description.
@@ -111,8 +110,6 @@ Please make sure that you've installed [Python](https://www.python.org/downloads
 
 6. If you use this project for any other plan, please contact and inform the author of this repository in advance. Thank you very much.
 
-Reference: [so-vits-svc](https://github.com/svc-develop-team/so-vits-svc)
-
 
 ## FAQ
 
@@ -122,25 +119,32 @@ Reference: [so-vits-svc](https://github.com/svc-develop-team/so-vits-svc)
 -   **Q**: There are many parameter settings that I don't know how to deal with, what should I do?
 <br>**A**: Just use the default values.
 
--   **Q**: Free and open source ?
+-   **Q**: Always free and open source?
 <br>**A**: Natürlich~♪
 
 
 ## Future Features
 
 ### ToDo
+
 - Add chatbot (LLM) integration
 - Refactor client with C++ (Qt)
 
 ### WIP
+
 - Backend development
 - Add support for Linux OS
 
 
-## Contact Details
+## Acknowledgement
 
-[![QQ](https://img.shields.io/badge/QQ-2835946988-brightgreen?style=for-the-badge&logo=tencent-qq&logoColor=white)]()
-<br>Feel free to contact me at any time, any comments and suggestions will be appreciated:)
+I'd like to express my sincere gratitude to the authors of the following projects, as their excellent work has contributed to the implementation of this toolkit
+
+- [audio-slicer](https://github.com/openvpi/audio-slicer)
+- [VoiceprintRecognition](https://github.com/yeyupiaoling/VoiceprintRecognition-Pytorch/tree/release/1.0)
+- [whisper](https://github.com/openai/whisper)
+- [SRT-to-CSV-and-audio-split](https://github.com/tobiasrordorf/SRT-to-CSV-and-audio-split)
+- [GPT-SoVITS](https://github.com/RVC-Boss/GPT-SoVITS)
 
 
 ## Stargazers over time
