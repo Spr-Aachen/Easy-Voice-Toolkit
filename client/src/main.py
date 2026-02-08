@@ -948,7 +948,7 @@ class MainWindow(Window_MainWindow):
         self.ui.Label_Demo_Text.setText(self.tr("视频演示"))
         Function_SetURL(
             button = self.ui.Button_Demo,
-            url = "https://www.bilibili.com/video/BV",
+            url = "https://space.bilibili.com/359461611/lists/2668347" if currentLanguage() == Language.ZH else "https://www.youtube.com/playlist?list=PLzjq8Hx1SRV7zJ9cQvzwOU_4yOE65UfVW",
             buttonTooltip = "Click to view demo video"
         )
         self.ui.Label_Server_Text.setText(self.tr("云端版本"))

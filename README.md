@@ -4,11 +4,11 @@
 
 A toolkit based on open source voice projects，which provides a variety of automated audio tools
 
-[![Bilibili](https://img.shields.io/badge/Bilibili-v1.0%20Intro-blue?logo=Bilibili&style=for-the-badge)](https://www.bilibili.com/video/BV1uJ4m157P2)&nbsp;
-[![YouTube](https://img.shields.io/badge/YouTube-v1.0%20Intro-red?logo=YouTube&style=for-the-badge)](https://www.youtube.com/watch?v=)
-
 [![Download Windows Portable Pkg](https://img.shields.io/badge/Download-Windows%20Portable%20Package-yellow?logo=HuggingFace)](https://huggingface.co/SprAachen/Easy-Voice-Toolkit-Package/resolve/main/EVT_windows_x64.7z?download=true)&nbsp;
 [![Run Google Colab Demo](https://img.shields.io/badge/Run-Google%20Colab%20Demo-orange?logo=GoogleColab)](https://colab.research.google.com/github/Spr-Aachen/Easy-Voice-Toolkit/blob/main/run.ipynb)
+
+[![Bilibili](https://img.shields.io/badge/Bilibili-Intro-blue?logo=Bilibili)](https://space.bilibili.com/359461611/lists/2668347)&nbsp;
+[![YouTube](https://img.shields.io/badge/YouTube-Intro-red?logo=YouTube)](https://www.youtube.com/playlist?list=PLzjq8Hx1SRV7zJ9cQvzwOU_4yOE65UfVW)
 
 <a href = "https://ko-fi.com/spr_aachen">
     <img src = "https://cdn.ko-fi.com/cdn/kofi3.png?v=2" width = "123">
@@ -22,7 +22,7 @@ A toolkit based on open source voice projects，which provides a variety of auto
 
 <div align = "center">
 
-[**简体中文**](./docs/README_ZH.md) | **English**
+[**中文**](./docs/README_ZH.md) | **English**
 
 </div>
 

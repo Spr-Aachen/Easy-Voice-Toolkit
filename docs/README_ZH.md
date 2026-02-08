@@ -4,12 +4,11 @@
 
 一个基于开源语音项目实现的简易语音工具箱，提供了包括语音模型训练在内的多种自动化音频工具
 
-[![Bilibili](https://img.shields.io/badge/Bilibili-v1.0%20Intro-blue?logo=Bilibili&style=for-the-badge)](https://www.bilibili.com/video/BV1uJ4m157P2)&nbsp;
-[![YouTube](https://img.shields.io/badge/YouTube-v1.0%20Intro-red?logo=YouTube&style=for-the-badge)](https://www.youtube.com/watch?v=)
-
 [![下载 Windows 懒人包](https://img.shields.io/badge/下载%20-Windows%20懒人包-yellow?logo=HuggingFace)](https://huggingface.co/SprAachen/Easy-Voice-Toolkit-Package/resolve/main/EVT_windows_x64.7z?download=true)&nbsp;
 [![打开 Google Colab](https://img.shields.io/badge/打开%20-Google%20Colab-orange?logo=GoogleColab)](https://colab.research.google.com/github/Spr-Aachen/Easy-Voice-Toolkit/blob/main/run.ipynb)
 
+[![Bilibili](https://img.shields.io/badge/Bilibili-Intro-blue?logo=Bilibili)](https://space.bilibili.com/359461611/lists/2668347)&nbsp;
+[![YouTube](https://img.shields.io/badge/YouTube-Intro-red?logo=YouTube)](https://www.youtube.com/playlist?list=PLzjq8Hx1SRV7zJ9cQvzwOU_4yOE65UfVW)
 
 <a href = "https://ko-fi.com/spr_aachen">
     <img src = "https://cdn.ko-fi.com/cdn/kofi3.png?v=2" width = "123">
@@ -23,7 +22,7 @@
 
 <div align = "center">
 
-**简体中文** | [**English**](../README.md)
+**中文** | [**English**](../README.md)
 
 </div>
 
