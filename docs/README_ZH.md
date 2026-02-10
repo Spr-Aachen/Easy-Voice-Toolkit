@@ -10,10 +10,6 @@
 [![Bilibili](https://img.shields.io/badge/Bilibili-Intro-blue?logo=Bilibili)](https://space.bilibili.com/359461611/lists/2668347)&nbsp;
 [![YouTube](https://img.shields.io/badge/YouTube-Intro-red?logo=YouTube)](https://www.youtube.com/playlist?list=PLzjq8Hx1SRV7zJ9cQvzwOU_4yOE65UfVW)
 
-<a href = "https://ko-fi.com/spr_aachen">
-    <img src = "https://cdn.ko-fi.com/cdn/kofi3.png?v=2" width = "123">
-</a>
-
 ![Title](/docs/media/Cover.jpg)
 
 </div>

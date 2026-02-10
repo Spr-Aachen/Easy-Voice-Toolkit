@@ -966,7 +966,7 @@ class MainWindow(Window_MainWindow):
         self.ui.Label_Donate_Text.setText(self.tr("赞助作者"))
         Function_SetURL(
             button = self.ui.Button_Donate,
-            url = "https://afdian.tv/a/Spr_Aachen/plan",
+            url = "https://afdian.com/a/Spr_Aachen" if currentLanguage() == Language.ZH else "https://ko-fi.com/spr_aachen",
             buttonTooltip = "Click to buy author a coffee"
         )
 
