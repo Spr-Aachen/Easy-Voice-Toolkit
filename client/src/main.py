@@ -943,7 +943,7 @@ class MainWindow(Window_MainWindow):
         self.ui.Label_Cover_Home.setPixmap(QPixmap(Path(resourceDir).joinpath('assets/images/others/Cover.png')))
 
         self.ui.TextBrowser_Text_Home.setFont(QFont("Microsoft YaHei", 12))
-        self.ui.TextBrowser_Text_Home.loadMarkdown(EasyUtils.normPath(Path(resourceDir).joinpath('assets/docs/intro.md')))
+        self.ui.TextBrowser_Text_Home.loadMarkdown(Path(resourceDir).joinpath('assets/docs/intro_zh.md').as_posix() if currentLanguage() == Language.ZH else Path(resourceDir).joinpath('assets/docs/intro.md').as_posix())
 
         self.ui.Label_Demo_Text.setText(self.tr("视频演示"))
         Function_SetURL(
@@ -2421,7 +2421,7 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_Info_Title.setText(self.tr("用户须知"))
 
         self.ui.TextBrowser_Text_Info.setFont(QFont("Microsoft YaHei", 12))
-        self.ui.TextBrowser_Text_Info.loadMarkdown(EasyUtils.normPath(Path(resourceDir).joinpath('assets/docs/announcement.md')))
+        self.ui.TextBrowser_Text_Info.loadMarkdown(Path(resourceDir).joinpath('assets/docs/announcement_zh.md').as_posix() if currentLanguage() == Language.ZH else Path(resourceDir).joinpath('assets/docs/announcement.md').as_posix())
 
         #############################################################
         ###################### Content: Console #####################
