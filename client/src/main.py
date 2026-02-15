@@ -1487,7 +1487,6 @@ class MainWindow(Window_MainWindow):
         component_vpr_tdnn_stdAudioSpeaker = subPage_VPR.addEditAudioSpeakerTableFrame(
             rootItemText = self.tr("输入参数"),
             text = self.tr("目标人物与音频\n目标人物的名字及其语音文件的路径。"),
-            headerLabels = ['人物姓名', '音频路径', '增删'],
             fileType = "音频类型 (*.flac *.wav *.mp3 *.aac *.m4a *.wma *.aiff *.au *.ogg)",
             section = 'Input params',
             option = 'StdAudioSpeaker',
