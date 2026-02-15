@@ -121,6 +121,8 @@ class Table_EditAudioSpeaker(TableBase):
         self.setIndexHeaderVisible(True)
         self.verticalHeader().setSectionResizeMode(QHeaderView.Fixed)
 
+        self.setHorizontalHeaderLabels([self.tr("人物姓名"), self.tr("音频路径"), self.tr("增删")])
+
         self.model().dataChanged.connect(
             lambda: self.valueChanged.emit(self.getValue())
         )
@@ -192,13 +194,6 @@ class Table_EditAudioSpeaker(TableBase):
             param = (key, value)
             #Index = next((i for i, key in enumerate(ParamDict) if key == key), None)
             self.addRow(param)
-
-    def setFileDialog(self, fileType: Optional[str] = None):
-        '''
-        for rowCount in range(self.rowCount()):
-            self.cellWidget(rowCount, 1).findChild(LineEditBase).setFileDialog(FileDialogMode.SelectFile, fileType)
-        '''
-        self.fileType = fileType
 
     def getValue(self):
         valueDict = {}

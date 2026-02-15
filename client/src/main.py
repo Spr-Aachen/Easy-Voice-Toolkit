@@ -142,10 +142,10 @@ class MainWindow(Window_MainWindow):
         functionSignals.serverEnded.connect(_endEvent)
         functionSignals.forceQuit.emit()
 
-    def showGuidance(self, windowTitle: str, images: list, texts: list):
+    def showGuidance(self, windowTitle: str, htmlPaths: list):
         stackedMsgBox = MessageBox_Stacked(self)
         stackedMsgBox.setWindowTitle(windowTitle)
-        stackedMsgBox.setContent(images, texts)
+        stackedMsgBox.setContent(htmlPaths)
         stackedMsgBox.exec()
 
     def _getFileDialog(self, widget, **kwargs):
@@ -943,7 +943,7 @@ class MainWindow(Window_MainWindow):
         self.ui.Label_Cover_Home.setPixmap(QPixmap(Path(resourceDir).joinpath('assets/images/others/Cover.png')))
 
         self.ui.TextBrowser_Text_Home.setFont(QFont("Microsoft YaHei", 12))
-        self.ui.TextBrowser_Text_Home.loadMarkdown(EasyUtils.normPath(Path(resourceDir).joinpath('assets/docs/intro.md')))
+        self.ui.TextBrowser_Text_Home.loadMarkdown(Path(resourceDir).joinpath('assets/docs/intro_zh.md').as_posix() if currentLanguage() == Language.ZH else Path(resourceDir).joinpath('assets/docs/intro.md').as_posix())
 
         self.ui.Label_Demo_Text.setText(self.tr("视频演示"))
         Function_SetURL(
@@ -1212,13 +1212,9 @@ class MainWindow(Window_MainWindow):
         self.ui.Page_Process.setHelpBtnEvent(
             lambda: self.showGuidance(
                 windowTitle = self.tr("引导（仅出现一次）"),
-                images = [
-                    EasyUtils.normPath(Path(resourceDir).joinpath('assets/images/others/Guidance_Process.png')),
-                    EasyUtils.normPath(Path(resourceDir).joinpath('assets/images/others/Guidance_Layout.png'))
-                ],
-                texts = [
-                    '欢迎来到音频处理工具界面\n该工具用于将媒体文件批量转换为音频文件并进行降噪、静音切除等操作',
-                    '顶部区域用于切换当前工具类型（目前仅有一种）\n中间区域用于设置当前工具的各项参数；设置完毕后点击底部区域的按钮即可执行当前工具'
+                htmlPaths = [
+                    Path(resourceDir).joinpath('assets/docs/guidance_process_1_zh.html' if currentLanguage() == Language.ZH else 'assets/docs/guidance_process_1.html'),
+                    Path(resourceDir).joinpath('assets/docs/guidance_process_2_zh.html' if currentLanguage() == Language.ZH else 'assets/docs/guidance_process_2.html')
                 ]
             )
         )
@@ -1462,13 +1458,9 @@ class MainWindow(Window_MainWindow):
         self.ui.Page_VPR.setHelpBtnEvent(
             lambda: self.showGuidance(
                 windowTitle = self.tr("引导（仅出现一次）"),
-                images = [
-                    EasyUtils.normPath(Path(resourceDir).joinpath('assets/images/others/Guidance_VPR.png')),
-                    EasyUtils.normPath(Path(resourceDir).joinpath('assets/images/others/Guidance_Layout.png'))
-                ],
-                texts = [
-                    '欢迎来到语音识别工具界面\n该工具用于从不同说话人的音频中批量筛选出属于同一说话人的音频',
-                    '顶部区域用于切换当前工具类型（目前仅有一种）\n中间区域用于设置当前工具的各项参数；设置完毕后点击底部区域的按钮即可执行当前工具'
+                htmlPaths = [
+                    EasyUtils.normPath(Path(resourceDir).joinpath('assets/docs/guidance_vpr_1_zh.html' if currentLanguage() == Language.ZH else 'assets/docs/guidance_vpr_1.html')),
+                    EasyUtils.normPath(Path(resourceDir).joinpath('assets/docs/guidance_vpr_2_zh.html' if currentLanguage() == Language.ZH else 'assets/docs/guidance_vpr_2.html'))
                 ]
             )
         )
@@ -1495,7 +1487,6 @@ class MainWindow(Window_MainWindow):
         component_vpr_tdnn_stdAudioSpeaker = subPage_VPR.addEditAudioSpeakerTableFrame(
             rootItemText = self.tr("输入参数"),
             text = self.tr("目标人物与音频\n目标人物的名字及其语音文件的路径。"),
-            headerLabels = ['人物姓名', '音频路径', '增删'],
             fileType = "音频类型 (*.flac *.wav *.mp3 *.aac *.m4a *.wma *.aiff *.au *.ogg)",
             section = 'Input params',
             option = 'StdAudioSpeaker',
@@ -1650,13 +1641,9 @@ class MainWindow(Window_MainWindow):
         self.ui.Page_ASR.setHelpBtnEvent(
             lambda: self.showGuidance(
                 windowTitle = self.tr("引导（仅出现一次）"),
-                images = [
-                    EasyUtils.normPath(Path(resourceDir).joinpath('assets/images/others/Guidance_ASR.png')),
-                    EasyUtils.normPath(Path(resourceDir).joinpath('assets/images/others/Guidance_Layout.png'))
-                ],
-                texts = [
-                    '欢迎来到语音转录工具界面\n该工具用于将语音文件批量转换为字幕文件并进行语言标注等操作',
-                    '顶部区域用于切换当前工具类型\n中间区域用于设置当前工具的各项参数；设置完毕后点击底部区域的按钮即可执行当前工具'
+                htmlPaths = [
+                    EasyUtils.normPath(Path(resourceDir).joinpath('assets/docs/guidance_asr_1_zh.html' if currentLanguage() == Language.ZH else 'assets/docs/guidance_asr_1.html')),
+                    EasyUtils.normPath(Path(resourceDir).joinpath('assets/docs/guidance_asr_2_zh.html' if currentLanguage() == Language.ZH else 'assets/docs/guidance_asr_2.html'))
                 ]
             )
         )
@@ -1790,13 +1777,9 @@ class MainWindow(Window_MainWindow):
         self.ui.Page_Dataset.setHelpBtnEvent(
             lambda: self.showGuidance(
                 windowTitle = self.tr("引导（仅出现一次）"),
-                images = [
-                    EasyUtils.normPath(Path(resourceDir).joinpath('assets/images/others/Guidance_Dataset.png')),
-                    EasyUtils.normPath(Path(resourceDir).joinpath('assets/images/others/Guidance_Layout.png'))
-                ],
-                texts = [
-                    '欢迎来到数据预处理工具界面\n该工具用于生成适用于语音模型训练的数据集',
-                    '顶部区域用于切换当前工具类型\n中间区域用于设置当前工具的各项参数；设置完毕后点击底部区域的按钮即可执行当前工具'
+                htmlPaths = [
+                    EasyUtils.normPath(Path(resourceDir).joinpath('assets/docs/guidance_dataset_1_zh.html' if currentLanguage() == Language.ZH else 'assets/docs/guidance_dataset_1.html')),
+                    EasyUtils.normPath(Path(resourceDir).joinpath('assets/docs/guidance_dataset_2_zh.html' if currentLanguage() == Language.ZH else 'assets/docs/guidance_dataset_2.html'))
                 ]
             )
         )
@@ -1928,13 +1911,9 @@ class MainWindow(Window_MainWindow):
         self.ui.Page_Train.setHelpBtnEvent(
             lambda: self.showGuidance(
                 windowTitle = self.tr("引导（仅出现一次）"),
-                images = [
-                    EasyUtils.normPath(Path(resourceDir).joinpath('assets/images/others/Guidance_Train.png')),
-                    EasyUtils.normPath(Path(resourceDir).joinpath('assets/images/others/Guidance_Layout.png'))
-                ],
-                texts = [
-                    '欢迎来到语音训练工具界面\n该工具用于训练出适用于语音合成的模型文件',
-                    '顶部区域用于切换当前工具类型（目前仅有一种）\n中间区域用于设置当前工具的各项参数；设置完毕后点击底部区域的按钮即可执行当前工具'
+                htmlPaths = [
+                    EasyUtils.normPath(Path(resourceDir).joinpath('assets/docs/guidance_train_1_zh.html' if currentLanguage() == Language.ZH else 'assets/docs/guidance_train_1.html')),
+                    EasyUtils.normPath(Path(resourceDir).joinpath('assets/docs/guidance_train_2_zh.html' if currentLanguage() == Language.ZH else 'assets/docs/guidance_train_2.html'))
                 ]
             )
         )
@@ -2176,13 +2155,9 @@ class MainWindow(Window_MainWindow):
         self.ui.Page_TTS.setHelpBtnEvent(
             lambda: self.showGuidance(
                 windowTitle = self.tr("引导（仅出现一次）"),
-                images = [
-                    EasyUtils.normPath(Path(resourceDir).joinpath('assets/images/others/Guidance_TTS.png')),
-                    EasyUtils.normPath(Path(resourceDir).joinpath('assets/images/others/Guidance_Layout.png'))
-                ],
-                texts = [
-                    '欢迎来到语音合成工具界面\n该工具用于将文字转为语音，用户需要提供相应的模型和配置文件',
-                    '顶部区域用于切换当前工具类型（目前仅有一种）\n中间区域用于设置当前工具的各项参数；设置完毕后点击底部区域的按钮即可执行当前工具'
+                htmlPaths = [
+                    EasyUtils.normPath(Path(resourceDir).joinpath('assets/docs/guidance_tts_1_zh.html' if currentLanguage() == Language.ZH else 'assets/docs/guidance_tts_1.html')),
+                    EasyUtils.normPath(Path(resourceDir).joinpath('assets/docs/guidance_tts_2_zh.html' if currentLanguage() == Language.ZH else 'assets/docs/guidance_tts_2.html'))
                 ]
             )
         )
@@ -2421,7 +2396,7 @@ class MainWindow(Window_MainWindow):
         self.ui.Button_Info_Title.setText(self.tr("用户须知"))
 
         self.ui.TextBrowser_Text_Info.setFont(QFont("Microsoft YaHei", 12))
-        self.ui.TextBrowser_Text_Info.loadMarkdown(EasyUtils.normPath(Path(resourceDir).joinpath('assets/docs/announcement.md')))
+        self.ui.TextBrowser_Text_Info.loadMarkdown(Path(resourceDir).joinpath('assets/docs/announcement_zh.md').as_posix() if currentLanguage() == Language.ZH else Path(resourceDir).joinpath('assets/docs/announcement.md').as_posix())
 
         #############################################################
         ###################### Content: Console #####################

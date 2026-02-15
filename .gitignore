@@ -3,6 +3,7 @@
 **/*.ui
 **/*.png
 **/*.ico
+**/sources.py
 
 # Generated contents
 **/__pycache__/

@@ -312,7 +312,6 @@ class SubToolPage(SubPage):
 
     def addEditAudioSpeakerTableFrame(self,
         rootItemText: Optional[str] = None, toolBoxText: Optional[str] = None, text: str = ...,
-        headerLabels: list = ...,
         fileType: Optional[str] = None,
         section: str = ..., option: str = ..., defaultValue: str = ...,
     ):
@@ -320,8 +319,7 @@ class SubToolPage(SubPage):
         table = Table_EditAudioSpeaker()
         button = MenuButton()
         self._setLabelText(label, text, size = 9.6)
-        table.setHorizontalHeaderLabels(headerLabels)
-        table.setFileDialog(fileType)
+        table.fileType = fileType
         self.paramsManager.setParam(table, section, option, defaultValue)
         #self._setButtonMenu(button, table)
         containerDict = self._addToContainer(rootItemText, toolBoxText, label, table, button)

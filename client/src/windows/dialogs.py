@@ -43,35 +43,13 @@ class MessageBox_Stacked(MessageBoxBase):
         Layout.addWidget(self.ButtonN)
         self.layout().insertLayout(0, Layout)
 
-    def setContent(self, Images: list, Texts: list):
+    def setContent(self, htmlPaths: list):
         QFunc.removeSubWidgets(self.StackedWidget)
 
-        for Index, Image in enumerate(EasyUtils.toIterable(Images)):
-            Label = LabelBase()
-            QFunc.setText(Label, EasyUtils.setRichText(EasyUtils.toIterable(Texts)[Index], 'left', 9.9, 420))
-
-            TextBrowser = QTextBrowser()
-            TextBrowser.setStyleSheet(
-                "QTextBrowser {"
-                f"    background-image: url({EasyUtils.normPath(Image, 'Posix')});"
-                "    background-repeat: no-repeat;"
-                "    background-position: center 0px;"
-                "    padding: 0px;"
-                "    border: none;"
-                "    border-radius: 6px;"
-                "}"
-            ) if Image is not None else None
-
-            SubLayout = QVBoxLayout()
-            SubLayout.setAlignment(Qt.AlignCenter)
-            SubLayout.setContentsMargins(0, 0, 0, 0)
-            SubLayout.setSpacing(self.layout().spacing())
-            SubLayout.addWidget(Label)
-            SubLayout.addWidget(TextBrowser)
-
-            Widget = QWidget()
-            Widget.setLayout(SubLayout)
-            self.StackedWidget.addWidget(Widget)
+        for htmlPath in EasyUtils.toIterable(htmlPaths):
+            TextBrowser = TextBrowserBase()
+            TextBrowser.loadHtml(htmlPath)
+            self.StackedWidget.addWidget(TextBrowser)
     
         self.StackedWidget.currentChanged.connect(lambda: self.ButtonP.setVisible(False) if self.StackedWidget.currentIndex() == 0 else self.ButtonP.setVisible(True))
         self.ButtonP.setVisible(False)
