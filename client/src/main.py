@@ -1672,7 +1672,8 @@ class MainWindow(Window_MainWindow):
             items = ['zh', 'en', 'de', 'ru', 'ko', 'ja', 'None'],
             section = 'Input params',
             option = 'Language',
-            defaultValue = None
+            defaultValue = 'None',
+            emptyAllowed = True
         )
         component_asr_whisper_addLanguageInfo = subPage_ASR.addCheckBoxFrame(
             rootItemText = self.tr("语音转录参数"),
@@ -1743,8 +1744,8 @@ class MainWindow(Window_MainWindow):
                 component_asr_whisper_modelPath.get(ComponentFlag.LineEdit),
                 component_asr_whisper_audioDir.get(ComponentFlag.LineEdit),
                 component_asr_whisper_verbose.get(ComponentFlag.CheckBox),
-                component_asr_whisper_addLanguageInfo.get(ComponentFlag.CheckBox),
                 component_asr_whisper_language.get(ComponentFlag.ComboBox),
+                component_asr_whisper_addLanguageInfo.get(ComponentFlag.CheckBox),
                 component_asr_whisper_conditionOnPreviousText.get(ComponentFlag.CheckBox),
                 component_asr_whisper_fp16.get(ComponentFlag.CheckBox),
                 component_asr_whisper_outputRoot.get(ComponentFlag.LineEdit),
