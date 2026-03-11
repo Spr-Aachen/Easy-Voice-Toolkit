@@ -3,6 +3,7 @@ import time
 import json
 import PyEasyUtils as EasyUtils
 from typing import Union, Optional
+from pathlib import Path
 from PySide6.QtCore import Qt, QObject, Signal, QThreadPool, QPoint
 from PySide6.QtGui import QFont
 from PySide6.QtWidgets import *
@@ -246,7 +247,7 @@ def Function_SetWidgetValue(
     placeholderText: Optional[str] = None
 ):
     fixDict = {'Enabled': True, 'Disabled': False}
-    value = fixDict.get(value, value)
+    value = fixDict.get(value, value) if isinstance(value, str) else value
 
     if isinstance(widget, (QLineEdit, QTextEdit, QPlainTextEdit)):
         QFunc.setText(widget, value, setPlaceholderText = setPlaceholderText, placeholderText = placeholderText)
@@ -470,6 +471,58 @@ def Function_ParamsChecker(
             pass
 
     return param
+
+##############################################################################################################################
+
+class AlertMode:
+    Exist = "Exist"
+    NotExist = "NotExist"
+
+
+def Function_SetAlert(widget: QWidget, alertMode: Optional[AlertMode] = None, alertTarget: Optional[QWidget] = None, alertRoot: Optional[QWidget] = None, alertSuffix: Optional[str] = None):
+    val = Function_GetParam(widget)
+    alert = False
+    alertMsg = ""
+    if not (alertTarget and alertRoot):
+        if '.' in val: # File alert
+            is_exists = Path(val).exists()
+            if alertMode == AlertMode.Exist:
+                alert = is_exists
+                alertMsg = "注意：文件已存在"
+            if alertMode == AlertMode.NotExist:
+                alert = not is_exists
+                alertMsg = "注意：文件不存在"
+        else: # Dir alert
+            is_exists = Path(val).exists()
+            is_empty = is_exists and not list(Path(val).iterdir())
+            if alertMode == AlertMode.Exist:
+                alert = is_exists and not is_empty
+                alertMsg = "注意：目录已包含文件"
+            if alertMode == AlertMode.NotExist:
+                alert = not is_exists or is_empty
+                alertMsg = "注意：目录为空或不存在"
+    elif len(val.strip()) != 0:
+        if alertSuffix: # File alert
+            path = Path(Function_GetParam(alertRoot)).joinpath(val).as_posix() + alertSuffix
+            is_exists = Path(path).exists()
+            if alertMode == AlertMode.Exist:
+                alert = is_exists
+                alertMsg = "注意：文件已存在"
+            if alertMode == AlertMode.NotExist:
+                alert = not is_exists
+                alertMsg = "注意：文件不存在"
+        else: # Dir alert
+            path = Path(Function_GetParam(alertRoot)).joinpath(val).as_posix()
+            is_exists = Path(path).exists()
+            is_empty = is_exists and not list(Path(path).iterdir())
+            if alertMode == AlertMode.Exist:
+                alert = is_exists and not is_empty
+                alertMsg = "注意：目录已包含文件"
+            if alertMode == AlertMode.NotExist:
+                alert = not is_exists or is_empty
+                alertMsg = "注意：目录为空或不存在"
+        Function_SetParam(alertTarget, path)
+    widget.alert(alert, alertMsg)
 
 ##############################################################################################################################
 

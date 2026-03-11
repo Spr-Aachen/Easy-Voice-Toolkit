@@ -146,7 +146,8 @@ class SubToolPage(SubPage):
         rootItemText: Optional[str] = None, toolBoxText: Optional[str] = None, text: str = ..., toolTip: Optional[str] = None,
         fileDialogMode: Optional[FileDialogMode] = None, fileType: Optional[str] = None, directory: Optional[str] = None,
         section: str = ..., option: str = ..., defaultValue: str = ..., placeholderText: str = "",
-        emptyAllowed: bool = False
+        emptyAllowed: bool = False,
+        alertMode: Optional[AlertMode] = None, alertTarget: Optional[QLineEdit] = None, alertRoot: Optional[LineEditBase] = None, alertSuffix: Optional[str] = None,
     ):
         label = LabelBase()
         label.setWordWrap(True)
@@ -164,6 +165,12 @@ class SubToolPage(SubPage):
         containerDict = self._addToContainer(rootItemText, toolBoxText, label, lineEdit, button)
         self._connectToTreeWidget(label, rootItemText, text)
         self.paramWidgets[lineEdit] = emptyAllowed
+        if alertMode:
+            def setAlert():
+                Function_SetAlert(lineEdit, alertMode, alertTarget, alertRoot, alertSuffix)
+            lineEdit.interacted.connect(setAlert)
+            alertRoot.interacted.connect(setAlert) if alertRoot else None
+            setAlert()
         return {
             ComponentFlag.LineEdit: lineEdit,
             **containerDict
