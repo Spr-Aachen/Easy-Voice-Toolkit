@@ -241,32 +241,6 @@ class MainWindow(Window_MainWindow):
         addLocalModel(modelDir, modelPath, sector)
         self.ui.Button_Models_Refresh.click()
 
-    def setDirAlert(self, dirNameEdit: LineEditBase, rootEdit: LineEditBase, dirEdit: QLineEdit):
-        def SetText_Dir():
-            DirName = dirNameEdit.text()
-            if len(DirName.strip()) == 0:
-                alert = False
-            else:
-                DirText = Path(rootEdit.text()).joinpath(DirName).as_posix()
-                alert = Path(DirText).exists() and list(Path(DirText).iterdir()) != []
-                dirEdit.setText(DirText)
-            dirNameEdit.alert(True if alert else False, "注意：目录已包含文件")
-        dirNameEdit.interacted.connect(SetText_Dir)
-        rootEdit.interacted.connect(SetText_Dir)
-
-    def setPathAlert(self, fileNameEdit: LineEditBase, dirEdit: LineEditBase, suffix: str, fileEdit: QLineEdit):
-        def SetText_File():
-            fileName = fileNameEdit.text()
-            if len(fileName.strip()) == 0:
-                alert = False
-            else:
-                FileText = Path(dirEdit.text()).joinpath(fileName).as_posix() + suffix
-                alert = Path(FileText).exists()
-                fileEdit.setText(FileText)
-            fileNameEdit.alert(True if alert else False, "注意：路径已存在")
-        fileNameEdit.interacted.connect(SetText_File)
-        dirEdit.interacted.connect(SetText_File)
-
     def setDirPathSelection(self, textReciever, dirSelectionText, pathSelectionText, fileType, directory):
         dirPathSelectionDialogBox = MessageBox_Buttons(self)
         dirPathSelectionDialogBox.setText(self.tr("请选择参数类型"))
@@ -1235,7 +1209,8 @@ class MainWindow(Window_MainWindow):
             fileDialogMode = FileDialogMode.SelectFolder,
             section = 'Input params',
             option = 'MediaDirInput',
-            defaultValue = ''
+            defaultValue = '',
+            alertMode = AlertMode.NotExist,
         )
         component_process_denoiseAudio = subPage_process.addCheckBoxFrame(
             rootItemText = self.tr("降噪参数"),
@@ -1324,19 +1299,17 @@ class MainWindow(Window_MainWindow):
             option = 'MediaFormatOutput',
             defaultValue = 'wav'
         )
+        lineEdit_process_outputDir = LineEditBase()
         component_process_outputDirName = subPage_process.addLineEditFrame(
             rootItemText = self.tr("输出参数"),
             text = self.tr("输出目录名\n用于保存最后生成的音频文件的目录的名字。"),
             section = 'Output params',
             option = 'OutputDirName',
             defaultValue = '',
-            placeholderText = str(date.today())
-        )
-        lineEdit_process_outputDir = LineEditBase()
-        self.setDirAlert(
-            dirNameEdit = component_process_outputDirName.get(ComponentFlag.LineEdit),
-            rootEdit = component_process_outputRoot.get(ComponentFlag.LineEdit),
-            dirEdit = lineEdit_process_outputDir
+            placeholderText = str(date.today()),
+            alertTarget = lineEdit_process_outputDir,
+            alertMode = AlertMode.Exist,
+            alertRoot = component_process_outputRoot.get(ComponentFlag.LineEdit)
         )
         component_process_toMono = subPage_process.addCheckBoxFrame(
             rootItemText = self.tr("输出参数"),
@@ -1483,6 +1456,7 @@ class MainWindow(Window_MainWindow):
             section = 'Input params',
             option = 'AudioDirInput',
             defaultValue = '',
+            alertMode = AlertMode.NotExist,
         )
         component_vpr_tdnn_stdAudioSpeaker = subPage_VPR.addEditAudioSpeakerTableFrame(
             rootItemText = self.tr("输入参数"),
@@ -1544,21 +1518,20 @@ class MainWindow(Window_MainWindow):
             defaultValue = 3.00
         )
         vpr_tdnn_outputDirName_default = str(date.today())
+        lineEdit_vpr_tdnn_outputDir = LineEditBase()
         component_vpr_tdnn_audioDirOutput = subPage_VPR.addLineEditFrame(
             rootItemText = self.tr("输出参数"),
             text = self.tr("输出目录名\n用于保存最后生成的结果文件的目录的名字。"),
             section = 'Output params',
             option = 'AudioDirOutput',
             defaultValue = '',
-            placeholderText = vpr_tdnn_outputDirName_default
-        )
-        lineEdit_vpr_tdnn_outputDir = LineEditBase()
-        self.setDirAlert(
-            dirNameEdit = component_vpr_tdnn_audioDirOutput.get(ComponentFlag.LineEdit),
-            rootEdit = component_vpr_tdnn_outputRoot.get(ComponentFlag.LineEdit),
-            dirEdit = lineEdit_vpr_tdnn_outputDir
+            placeholderText = vpr_tdnn_outputDirName_default,
+            alertTarget = lineEdit_vpr_tdnn_outputDir,
+            alertMode = AlertMode.Exist,
+            alertRoot = component_vpr_tdnn_outputRoot.get(ComponentFlag.LineEdit)
         )
         vpr_tdnn_audioSpeakersDataName_default = "Recgonition_" + str(date.today())
+        lineEdit_vpr_tdnn_audioSpeakersDataPath = LineEditBase()
         component_vpr_tdnn_fileListName = subPage_VPR.addLineEditFrame(
             rootItemText = self.tr("输出参数"),
             toolBoxText = self.tr("高级设置"),
@@ -1566,14 +1539,11 @@ class MainWindow(Window_MainWindow):
             section = 'Output params',
             option = 'FileListName',
             defaultValue = vpr_tdnn_audioSpeakersDataName_default,
-            placeholderText = vpr_tdnn_audioSpeakersDataName_default
-        )
-        lineEdit_vpr_tdnn_audioSpeakersDataPath = LineEditBase()
-        self.setPathAlert(
-            fileNameEdit = component_vpr_tdnn_fileListName.get(ComponentFlag.LineEdit),
-            dirEdit = lineEdit_vpr_tdnn_outputDir,
-            suffix = ".txt",
-            fileEdit = lineEdit_vpr_tdnn_audioSpeakersDataPath
+            placeholderText = vpr_tdnn_audioSpeakersDataName_default,
+            alertTarget = lineEdit_vpr_tdnn_audioSpeakersDataPath,
+            alertMode = AlertMode.Exist,
+            alertRoot = lineEdit_vpr_tdnn_outputDir,
+            alertSuffix = ".txt"
         )
         subPage_VPR.addChkOutputSideBtn(
             outputRootEdit = component_vpr_tdnn_outputRoot.get(ComponentFlag.LineEdit),
@@ -1664,7 +1634,8 @@ class MainWindow(Window_MainWindow):
             fileDialogMode = FileDialogMode.SelectFolder,
             section = 'Input params',
             option = 'AudioDir',
-            defaultValue = ''
+            defaultValue = '',
+            alertMode = AlertMode.NotExist,
         )
         component_asr_whisper_language = subPage_ASR.addComboBoxFrame(
             rootItemText = self.tr("输入参数"),
@@ -1719,19 +1690,17 @@ class MainWindow(Window_MainWindow):
             defaultValue = False
         )
         asr_whisper_outputDirName_default = str(date.today())
+        lineEdit_asr_whisper_outputDir = LineEditBase()
         component_asr_whisper_srtDirName = subPage_ASR.addLineEditFrame(
             rootItemText = self.tr("输出参数"),
             text = self.tr("输出目录名\n用于保存最后生成的字幕文件的目录的名字。"),
             section = 'Output params',
             option = 'SRTDirName',
             defaultValue = '',
-            placeholderText = asr_whisper_outputDirName_default
-        )
-        lineEdit_asr_whisper_outputDir = LineEditBase()
-        self.setDirAlert(
-            dirNameEdit = component_asr_whisper_srtDirName.get(ComponentFlag.LineEdit),
-            rootEdit = component_asr_whisper_outputRoot.get(ComponentFlag.LineEdit),
-            dirEdit = lineEdit_asr_whisper_outputDir
+            placeholderText = asr_whisper_outputDirName_default,
+            alertTarget = lineEdit_asr_whisper_outputDir,
+            alertMode = AlertMode.Exist,
+            alertRoot = component_asr_whisper_outputRoot.get(ComponentFlag.LineEdit)
         )
         subPage_ASR.addChkOutputSideBtn(
             outputRootEdit = component_asr_whisper_outputRoot.get(ComponentFlag.LineEdit)
@@ -1800,7 +1769,8 @@ class MainWindow(Window_MainWindow):
             text = self.tr("音频文件目录/语音识别结果文本路径\n音频文件的所在目录，或者提供由语音识别得到的文本文件。"),
             section = 'Input params',
             option = 'WAVDir',
-            defaultValue = ''
+            defaultValue = '',
+            alertMode = AlertMode.NotExist,
         )
         component_dat_gptsovits_wavDir.get(ComponentFlag.LineEdit).fileButton.clicked.connect(
             lambda: self.setDirPathSelection(
@@ -1818,7 +1788,8 @@ class MainWindow(Window_MainWindow):
             directory = asr_whisper_outputRoot_default,
             section = 'Input params',
             option = 'SRTDir',
-            defaultValue = ''
+            defaultValue = '',
+            alertMode = AlertMode.NotExist,
         )
         asr_whisper_outputDirName_default = '路径|人名|语言|文本'
         component_dat_gptsovits_dataFormatPath = subPage_dataset_gptsovits.addLineEditFrame(
@@ -1839,21 +1810,20 @@ class MainWindow(Window_MainWindow):
             ) if not all(Keyword in value for Keyword in ['路径', '人名', '语言', '文本']) else None
         )
         dat_gptsovits_outputDirName_default = str(date.today())
+        lineEdit_dat_gptsovits_outputDir = LineEditBase()
         component_dat_gptsovits_outputDirName = subPage_dataset_gptsovits.addLineEditFrame(
             rootItemText = self.tr("输出参数"),
             text = self.tr("输出目录名\n用于保存最后生成的数据集文件的目录的名字。"),
             section = 'Output params',
             option = 'OutputDirName',
             defaultValue = '',
-            placeholderText = dat_gptsovits_outputDirName_default
-        )
-        lineEdit_dat_gptsovits_outputDir = LineEditBase()
-        self.setDirAlert(
-            dirNameEdit = component_dat_gptsovits_outputDirName.get(ComponentFlag.LineEdit),
-            rootEdit = component_dat_gptsovits_outputRoot.get(ComponentFlag.LineEdit),
-            dirEdit = lineEdit_dat_gptsovits_outputDir
+            placeholderText = dat_gptsovits_outputDirName_default,
+            alertTarget = lineEdit_dat_gptsovits_outputDir,
+            alertMode = AlertMode.Exist,
+            alertRoot = component_dat_gptsovits_outputRoot.get(ComponentFlag.LineEdit)
         )
         dat_gptsovits_fileListName_default = "Train_" + str(date.today())
+        lineEdit_dat_gptsovits_fileListPath = LineEditBase()
         component_dat_gptsovits_fileListName = subPage_dataset_gptsovits.addLineEditFrame(
             rootItemText = self.tr("输出参数"),
             toolBoxText = self.tr("高级设置"),
@@ -1861,14 +1831,11 @@ class MainWindow(Window_MainWindow):
             section = 'Output params',
             option = 'FileListName',
             defaultValue = dat_gptsovits_fileListName_default,
-            placeholderText = dat_gptsovits_fileListName_default
-        )
-        lineEdit_dat_gptsovits_fileListPath = LineEditBase()
-        self.setPathAlert(
-            fileNameEdit = component_dat_gptsovits_fileListName.get(ComponentFlag.LineEdit),
-            dirEdit = lineEdit_dat_gptsovits_outputDir,
-            suffix = ".txt",
-            fileEdit = lineEdit_dat_gptsovits_fileListPath,
+            placeholderText = dat_gptsovits_fileListName_default,
+            alertTarget = lineEdit_dat_gptsovits_fileListPath,
+            alertMode = AlertMode.Exist,
+            alertRoot = lineEdit_dat_gptsovits_outputDir,
+            alertSuffix = ".txt"
         )
         subPage_dataset_gptsovits.addChkOutputSideBtn(
             outputRootEdit = component_dat_gptsovits_outputRoot.get(ComponentFlag.LineEdit)
@@ -1946,7 +1913,8 @@ class MainWindow(Window_MainWindow):
             directory = dat_gptsovits_outputRoot_default,
             section = 'Input params',
             option = 'FileListPath',
-            defaultValue = ''
+            defaultValue = '',
+            alertMode = AlertMode.NotExist,
         )
         train_gptsovits_modelPathS1_default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's1bert25hz-5kh-longer-epoch=12-step=369668.ckpt').as_posix()
         component_train_gptsovits_modelPathS1 = subPage_train_gptsovits.addLineEditFrame(
@@ -1958,7 +1926,8 @@ class MainWindow(Window_MainWindow):
             section = 'GPT-SoVITS params',
             option = 'ModelPathS1',
             defaultValue = train_gptsovits_modelPathS1_default,
-            placeholderText = train_gptsovits_modelPathS1_default
+            placeholderText = train_gptsovits_modelPathS1_default,
+            alertMode = AlertMode.NotExist,
         )
         train_gptsovits_modelPathS2G_default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's2Gv2Pro.pth').as_posix()
         component_train_gptsovits_modelPathS2G = subPage_train_gptsovits.addLineEditFrame(
@@ -1970,7 +1939,8 @@ class MainWindow(Window_MainWindow):
             section = 'GPT-SoVITS params',
             option = 'ModelPathS2G',
             defaultValue = train_gptsovits_modelPathS2G_default,
-            placeholderText = train_gptsovits_modelPathS2G_default
+            placeholderText = train_gptsovits_modelPathS2G_default,
+            alertMode = AlertMode.NotExist,
         )
         train_gptsovits_modelPathS2D_default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's2Dv2Pro.pth').as_posix()
         component_train_gptsovits_modelPathS2D = subPage_train_gptsovits.addLineEditFrame(
@@ -1982,7 +1952,8 @@ class MainWindow(Window_MainWindow):
             section = 'GPT-SoVITS params',
             option = 'ModelPathS2D',
             defaultValue = train_gptsovits_modelPathS2D_default,
-            placeholderText = train_gptsovits_modelPathS2D_default
+            placeholderText = train_gptsovits_modelPathS2D_default,
+            alertMode = AlertMode.NotExist,
         )
         train_gptsovits_modelPathSV_default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 'sv', 'eres2netv2w24s4ep4.ckpt').as_posix()
         component_train_gptsovits_modelPathSV = subPage_train_gptsovits.addLineEditFrame(
@@ -1994,7 +1965,8 @@ class MainWindow(Window_MainWindow):
             section = 'GPT-SoVITS params',
             option = 'ModelPathSV',
             defaultValue = train_gptsovits_modelPathSV_default,
-            placeholderText = train_gptsovits_modelPathSV_default
+            placeholderText = train_gptsovits_modelPathSV_default,
+            alertMode = AlertMode.NotExist,
         )
         train_gptsovits_modelDirBERT_default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 'chinese-roberta-wwm-ext-large').as_posix()
         component_train_gptsovits_modelDirBERT = subPage_train_gptsovits.addLineEditFrame(
@@ -2005,7 +1977,8 @@ class MainWindow(Window_MainWindow):
             section = 'GPT-SoVITS params',
             option = 'ModelDirBERT',
             defaultValue = train_gptsovits_modelDirBERT_default,
-            placeholderText = train_gptsovits_modelDirBERT_default
+            placeholderText = train_gptsovits_modelDirBERT_default,
+            alertMode = AlertMode.NotExist,
         )
         train_gptsovits_modelDirHuBERT_default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 'chinese-hubert-base').as_posix()
         component_train_gptsovits_modelDirHuBERT = subPage_train_gptsovits.addLineEditFrame(
@@ -2016,7 +1989,8 @@ class MainWindow(Window_MainWindow):
             section = 'GPT-SoVITS params',
             option = 'ModelDirHuBERT',
             defaultValue = train_gptsovits_modelDirHuBERT_default,
-            placeholderText = train_gptsovits_modelDirHuBERT_default
+            placeholderText = train_gptsovits_modelDirHuBERT_default,
+            alertMode = AlertMode.NotExist,
         )
         train_gptsovits_modelDirG2PW_default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 'g2pw').as_posix()
         component_train_gptsovits_modelDirG2PW = subPage_train_gptsovits.addLineEditFrame(
@@ -2027,7 +2001,8 @@ class MainWindow(Window_MainWindow):
             section = 'Input params',
             option = 'ModelDirG2PW',
             defaultValue = train_gptsovits_modelDirG2PW_default,
-            placeholderText = train_gptsovits_modelDirG2PW_default
+            placeholderText = train_gptsovits_modelDirG2PW_default,
+            alertMode = AlertMode.NotExist,
         )
         component_train_gptsovits_halfPrecision = subPage_train_gptsovits.addCheckBoxFrame(
             rootItemText = self.tr("训练参数"),
@@ -2052,19 +2027,17 @@ class MainWindow(Window_MainWindow):
             defaultValue = '32'
         )
         train_gptsovits_outputDirName_default = str(date.today())
+        lineEdit_train_gptsovits_outputDir = LineEditBase()
         component_train_gptsovits_outputDirName = subPage_train_gptsovits.addLineEditFrame(
             rootItemText = self.tr("输出参数"),
             text = self.tr("输出目录名\n存放训练所得模型的目录的名字。"),
             section = 'Output params',
             option = 'OutputDirName',
             defaultValue = '',
-            placeholderText = train_gptsovits_outputDirName_default
-        )
-        lineEdit_train_gptsovits_outputDir = LineEditBase()
-        self.setDirAlert(
-            dirNameEdit = component_train_gptsovits_outputDirName.get(ComponentFlag.LineEdit),
-            rootEdit = component_train_gptsovits_outputRoot.get(ComponentFlag.LineEdit),
-            dirEdit = lineEdit_train_gptsovits_outputDir
+            placeholderText = train_gptsovits_outputDirName_default,
+            alertTarget = lineEdit_train_gptsovits_outputDir,
+            alertMode = AlertMode.Exist,
+            alertRoot = component_train_gptsovits_outputRoot.get(ComponentFlag.LineEdit)
         )
         train_gptsovits_logDir_default = Path(currentDir).joinpath('EVT_TrainLog', 'GPT-SoVITS').as_posix()
         component_train_gptsovits_outputLogDir = subPage_train_gptsovits.addLineEditFrame(
@@ -2192,7 +2165,8 @@ class MainWindow(Window_MainWindow):
             section = 'Input params',
             option = 'ModelPathS1',
             defaultValue = tts_gptsovits_modelPathS1_default,
-            placeholderText = tts_gptsovits_modelPathS1_default
+            placeholderText = tts_gptsovits_modelPathS1_default,
+            alertMode = AlertMode.NotExist,
         )
         tts_gptsovits_modelPathS2Gv2Pro_default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's2Gv2Pro.pth').as_posix()
         component_tts_gptsovits_modelPathS2Gv2Pro = subPage_tts_gptsovits.addLineEditFrame(
@@ -2204,7 +2178,8 @@ class MainWindow(Window_MainWindow):
             section = 'Input params',
             option = 'ModelPathS2Gv2Pro',
             defaultValue = tts_gptsovits_modelPathS2Gv2Pro_default,
-            placeholderText = tts_gptsovits_modelPathS2Gv2Pro_default
+            placeholderText = tts_gptsovits_modelPathS2Gv2Pro_default,
+            alertMode = AlertMode.NotExist,
         )
         tts_gptsovits_modelPathS2Gv4_default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 's2Gv4.pth').as_posix()
         component_tts_gptsovits_modelPathS2Gv4 = subPage_tts_gptsovits.addLineEditFrame(
@@ -2216,7 +2191,8 @@ class MainWindow(Window_MainWindow):
             section = 'Input params',
             option = 'ModelPathS2Gv4',
             defaultValue = tts_gptsovits_modelPathS2Gv4_default,
-            placeholderText = tts_gptsovits_modelPathS2Gv4_default
+            placeholderText = tts_gptsovits_modelPathS2Gv4_default,
+            alertMode = AlertMode.NotExist,
         )
         tts_gptsovits_modelDirBERT_default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 'chinese-roberta-wwm-ext-large').as_posix()
         component_tts_gptsovits_modelDirBERT = subPage_tts_gptsovits.addLineEditFrame(
@@ -2227,7 +2203,8 @@ class MainWindow(Window_MainWindow):
             section = 'Input params',
             option = 'ModelDirBERT',
             defaultValue = tts_gptsovits_modelDirBERT_default,
-            placeholderText = tts_gptsovits_modelDirBERT_default
+            placeholderText = tts_gptsovits_modelDirBERT_default,
+            alertMode = AlertMode.NotExist,
         )
         tts_gptsovits_modelDirHuBERT_default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 'chinese-hubert-base').as_posix()
         component_tts_gptsovits_modelDirHuBERT = subPage_tts_gptsovits.addLineEditFrame(
@@ -2238,7 +2215,8 @@ class MainWindow(Window_MainWindow):
             section = 'Input params',
             option = 'ModelDirHuBERT',
             defaultValue = tts_gptsovits_modelDirHuBERT_default,
-            placeholderText = tts_gptsovits_modelDirHuBERT_default
+            placeholderText = tts_gptsovits_modelDirHuBERT_default,
+            alertMode = AlertMode.NotExist,
         )
         tts_gptsovits_modelDirBigVGAN_default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 'nvidia--bigvgan').as_posix()
         component_tts_gptsovits_modelDirBigVGAN = subPage_tts_gptsovits.addLineEditFrame(
@@ -2249,7 +2227,8 @@ class MainWindow(Window_MainWindow):
             section = 'Input params',
             option = 'ModelDirBigVGAN',
             defaultValue = tts_gptsovits_modelDirBigVGAN_default,
-            placeholderText = tts_gptsovits_modelDirBigVGAN_default
+            placeholderText = tts_gptsovits_modelDirBigVGAN_default,
+            alertMode = AlertMode.NotExist,
         )
         tts_gptsovits_modelPathVocoder_default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 's1&s2', 'vocoder.pth').as_posix()
         component_tts_gptsovits_modelPathVocoder = subPage_tts_gptsovits.addLineEditFrame(
@@ -2261,7 +2240,8 @@ class MainWindow(Window_MainWindow):
             section = 'Input params',
             option = 'ModelPathVocoder',
             defaultValue = tts_gptsovits_modelPathVocoder_default,
-            placeholderText = tts_gptsovits_modelPathVocoder_default
+            placeholderText = tts_gptsovits_modelPathVocoder_default,
+            alertMode = AlertMode.NotExist,
         )
         tts_gptsovits_modelPathSV_default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 'sv', 'eres2netv2w24s4ep4.ckpt').as_posix()
         component_tts_gptsovits_modelPathSV = subPage_tts_gptsovits.addLineEditFrame(
@@ -2273,7 +2253,8 @@ class MainWindow(Window_MainWindow):
             section = 'Input params',
             option = 'ModelPathSV',
             defaultValue = tts_gptsovits_modelPathSV_default,
-            placeholderText = tts_gptsovits_modelPathSV_default
+            placeholderText = tts_gptsovits_modelPathSV_default,
+            alertMode = AlertMode.NotExist,
         )
         tts_gptsovits_modelDirG2PW_default = Path(modelDir).joinpath('TTS', 'GPT-SoVITS', 'Downloaded', 'g2pw').as_posix()
         component_tts_gptsovits_modelDirG2PW = subPage_tts_gptsovits.addLineEditFrame(
@@ -2284,7 +2265,8 @@ class MainWindow(Window_MainWindow):
             section = 'Input params',
             option = 'ModelDirG2PW',
             defaultValue = tts_gptsovits_modelDirG2PW_default,
-            placeholderText = tts_gptsovits_modelDirG2PW_default
+            placeholderText = tts_gptsovits_modelDirG2PW_default,
+            alertMode = AlertMode.NotExist,
         )
         subPage_tts_gptsovits.setExecutor(
             prepareSignal = functionSignals.serverStarted,
