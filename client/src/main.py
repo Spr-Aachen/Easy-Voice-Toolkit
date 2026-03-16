@@ -148,10 +148,6 @@ class MainWindow(Window_MainWindow):
         stackedMsgBox.setContent(htmlPaths)
         stackedMsgBox.exec()
 
-    def _getFileDialog(self, widget, **kwargs):
-        text = QFunc.getFileDialog(**kwargs)
-        Function_SetParam(widget, text) if text != '' else None
-
     def viewModels(self):
         worker_modelView_process_uvr = WorkerManager(
             executeMethod = getModelsInfo,
@@ -208,7 +204,7 @@ class MainWindow(Window_MainWindow):
         DialogBox_Models_Append.Button1.setText(self.tr("模型文件目录（多文件）"))
         DialogBox_Models_Append.Button1.clicked.connect(
             lambda: (
-                self._getFileDialog(
+                Function_GetFileDialog(
                     LineEdit_Models_Append,
                     mode = FileDialogMode.SelectFolder
                 ),
@@ -218,7 +214,7 @@ class MainWindow(Window_MainWindow):
         DialogBox_Models_Append.Button2.setText(self.tr("模型文件路径（单文件）"))
         DialogBox_Models_Append.Button2.clicked.connect(
             lambda: (
-                self._getFileDialog(
+                Function_GetFileDialog(
                     LineEdit_Models_Append,
                     mode = FileDialogMode.SelectFile,
                     fileType = "模型文件 (*.pt *.pth *.ckpt *.bin *.json')"
@@ -241,23 +237,23 @@ class MainWindow(Window_MainWindow):
         addLocalModel(modelDir, modelPath, sector)
         self.ui.Button_Models_Refresh.click()
 
-    def setDirPathSelection(self, textReciever, dirSelectionText, pathSelectionText, fileType, directory):
+    def setDirPathSelection(self, textReciever, dirSelectionText, pathSelectionText, fileType = None, directory = None):
         dirPathSelectionDialogBox = MessageBox_Buttons(self)
         dirPathSelectionDialogBox.setText(self.tr("请选择参数类型"))
-        dirPathSelectionDialogBox.Button1.setText(pathSelectionText)
+        dirPathSelectionDialogBox.Button1.setText(dirSelectionText)
         dirPathSelectionDialogBox.Button1.clicked.connect(
             lambda: (
-                self._getFileDialog(
+                Function_GetFileDialog(
                     textReciever,
                     mode = FileDialogMode.SelectFolder,
                 ),
                 dirPathSelectionDialogBox.close(),
             )
         )
-        dirPathSelectionDialogBox.Button2.setText(dirSelectionText)
+        dirPathSelectionDialogBox.Button2.setText(pathSelectionText)
         dirPathSelectionDialogBox.Button2.clicked.connect(
             lambda: (
-                self._getFileDialog(
+                Function_GetFileDialog(
                     textReciever,
                     mode = FileDialogMode.SelectFile,
                     fileType = fileType,
@@ -1203,14 +1199,21 @@ class MainWindow(Window_MainWindow):
         paramsManager_process = ParamsManager(configPath_process)
         # Subpage
         subPage_process = SubToolPage(self.ui.Page_Process, paramsManager_process)
-        component_process_mediaDirInput = subPage_process.addLineEditFrame(
+        component_process_inputMedia = subPage_process.addLineEditFrame(
             rootItemText = self.tr("输入参数"),
-            text = self.tr("媒体输入目录\n需要处理的音频文件的所在目录。"),
-            fileDialogMode = FileDialogMode.SelectFolder,
+            text = self.tr("媒体输入目录/媒体文件路径\n需要处理的媒体文件的所在目录或者单个媒体文件的路径。"),
             section = 'Input params',
-            option = 'MediaDirInput',
+            option = 'InputMedia',
             defaultValue = '',
             alertMode = AlertMode.NotExist,
+        )
+        component_process_inputMedia.get(ComponentFlag.LineEdit).fileButton.clicked.connect(
+            lambda: self.setDirPathSelection(
+                textReciever = component_process_inputMedia.get(ComponentFlag.LineEdit),
+                dirSelectionText = "媒体文件目录",
+                pathSelectionText = "媒体文件路径",
+                fileType = "媒体文件 (*.flac *.wav *.mp3 *.aac *.m4a *.wma *.aiff *.au *.ogg *.mp4 *.flv *.mkv *.avi)",
+            )
         )
         component_process_denoiseAudio = subPage_process.addCheckBoxFrame(
             rootItemText = self.tr("降噪参数"),
@@ -1348,7 +1351,7 @@ class MainWindow(Window_MainWindow):
             consoleWidget = self.ui.Frame_Console,
             executeMethod = self.task_audioProcessor.processAudio,
             executeParamTargets = [
-                component_process_mediaDirInput.get(ComponentFlag.LineEdit),
+                component_process_inputMedia.get(ComponentFlag.LineEdit),
                 component_process_mediaFormatOutput.get(ComponentFlag.ComboBox),
                 component_process_sampleRate.get(ComponentFlag.ComboBox),
                 component_process_sampleWidth.get(ComponentFlag.ComboBox),
@@ -1775,8 +1778,8 @@ class MainWindow(Window_MainWindow):
         component_dat_gptsovits_wavDir.get(ComponentFlag.LineEdit).fileButton.clicked.connect(
             lambda: self.setDirPathSelection(
                 textReciever = component_dat_gptsovits_wavDir.get(ComponentFlag.LineEdit),
-                dirSelectionText = "语音识别结果文本路径",
-                pathSelectionText = "音频文件目录",
+                dirSelectionText = "音频文件目录",
+                pathSelectionText = "语音识别结果文本路径",
                 fileType = "txt类型 (*.txt)",
                 directory = vpr_tdnn_audioSpeakersDataRoot_default
             )

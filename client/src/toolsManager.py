@@ -18,7 +18,7 @@ class Tool_AudioProcessor(QObject):
         super().__init__()
 
     def processAudio(self,
-        inputDir: str,
+        inputMedia: str,
         outputFormat: Optional[str] = 'wav',
         sampleRate: Optional[Union[int, str]] = None,
         sampleWidth: Optional[Union[int, str]] = None,
@@ -38,7 +38,7 @@ class Tool_AudioProcessor(QObject):
         output, error = "", ""
         for outputLine, status_code in sendRequest(
             EasyUtils.requestManager.Get, "http", *getHostPort(), "/processAudio", "terminate=False", stream = True,
-            inputDir = inputDir,
+            inputMedia = inputMedia,
             outputFormat = outputFormat,
             sampleRate = sampleRate,
             sampleWidth = sampleWidth,

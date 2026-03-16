@@ -526,6 +526,11 @@ def Function_SetAlert(widget: QWidget, alertMode: Optional[AlertMode] = None, al
 
 ##############################################################################################################################
 
+def Function_GetFileDialog(widget, **kwargs):
+    text = QFunc.getFileDialog(**kwargs)
+    Function_SetParam(widget, text) if text != '' else None
+
+
 def Function_SetURL(
     button: QAbstractButton,
     url: Union[str, QWidget, list],

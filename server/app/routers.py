@@ -28,7 +28,7 @@ async def processAudio(request: Request, terminate: bool = False):
         audioProcessor.terminate_processAudio()
         return
     contentStream = audioProcessor.processAudio(
-        inputDir = reqJs.get("inputDir"),
+        inputMedia = reqJs.get("inputMedia"),
         outputFormat = reqJs.get("outputFormat"),
         sampleRate = reqJs.get("sampleRate"),
         sampleWidth = reqJs.get("sampleWidth"),
