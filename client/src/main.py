@@ -1210,8 +1210,8 @@ class MainWindow(Window_MainWindow):
         component_process_inputMedia.get(ComponentFlag.LineEdit).fileButton.clicked.connect(
             lambda: self.setDirPathSelection(
                 textReciever = component_process_inputMedia.get(ComponentFlag.LineEdit),
-                dirSelectionText = "媒体文件目录",
-                pathSelectionText = "媒体文件路径",
+                dirSelectionText = self.tr("媒体文件目录"),
+                pathSelectionText = self.tr("媒体文件路径"),
                 fileType = "媒体文件 (*.flac *.wav *.mp3 *.aac *.m4a *.wma *.aiff *.au *.ogg *.mp4 *.flv *.mkv *.avi)",
             )
         )
@@ -1778,8 +1778,8 @@ class MainWindow(Window_MainWindow):
         component_dat_gptsovits_wavDir.get(ComponentFlag.LineEdit).fileButton.clicked.connect(
             lambda: self.setDirPathSelection(
                 textReciever = component_dat_gptsovits_wavDir.get(ComponentFlag.LineEdit),
-                dirSelectionText = "音频文件目录",
-                pathSelectionText = "语音识别结果文本路径",
+                dirSelectionText = self.tr("音频文件目录"),
+                pathSelectionText = self.tr("语音识别结果文本路径"),
                 fileType = "txt类型 (*.txt)",
                 directory = vpr_tdnn_audioSpeakersDataRoot_default
             )

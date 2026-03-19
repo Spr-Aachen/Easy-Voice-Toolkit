@@ -4,7 +4,7 @@ import json
 import PyEasyUtils as EasyUtils
 from typing import Union, Optional
 from pathlib import Path
-from PySide6.QtCore import Qt, QObject, Signal, QThreadPool, QPoint
+from PySide6.QtCore import Qt, QObject, Signal, QThreadPool, QPoint, QCoreApplication as QCA
 from PySide6.QtGui import QFont
 from PySide6.QtWidgets import *
 from QEasyWidgets import QFunctions as QFunc, QWorker
@@ -444,7 +444,7 @@ def Function_ParamsChecker(
                 MessageBoxBase.pop(
                     messageType = QMessageBox.Warning,
                     windowTitle = "Warning",
-                    text = "Empty param detected!\n检测到参数空缺！"
+                    text = QCA.translate("Functions", "检测到参数空缺！")
                 )
                 return "Abort"
         else:
@@ -464,7 +464,7 @@ def Function_ParamsChecker(
                 MessageBoxBase.pop(
                     messageType = QMessageBox.Warning,
                     windowTitle = "Warning",
-                    text = "Empty param detected!\n检测到参数空缺！"
+                    text = QCA.translate("Functions", "检测到参数空缺！")
                 )
                 return "Abort"
         else:
@@ -488,39 +488,39 @@ def Function_SetAlert(widget: QWidget, alertMode: Optional[AlertMode] = None, al
             is_exists = Path(val).exists()
             if alertMode == AlertMode.Exist:
                 alert = is_exists
-                alertMsg = "注意：文件已存在"
+                alertMsg = QCA.translate("Functions", "注意：文件已存在")
             if alertMode == AlertMode.NotExist:
                 alert = not is_exists
-                alertMsg = "注意：文件不存在"
+                alertMsg = QCA.translate("Functions", "注意：文件不存在")
         else: # Dir alert
             is_exists = Path(val).exists()
             is_empty = is_exists and not list(Path(val).iterdir())
             if alertMode == AlertMode.Exist:
                 alert = is_exists and not is_empty
-                alertMsg = "注意：目录已包含文件"
+                alertMsg = QCA.translate("Functions", "注意：目录已包含文件")
             if alertMode == AlertMode.NotExist:
                 alert = not is_exists or is_empty
-                alertMsg = "注意：目录为空或不存在"
+                alertMsg = QCA.translate("Functions", "注意：目录为空或不存在")
     elif len(val.strip()) != 0:
         if alertSuffix: # File alert
             path = Path(Function_GetParam(alertRoot)).joinpath(val).as_posix() + alertSuffix
             is_exists = Path(path).exists()
             if alertMode == AlertMode.Exist:
                 alert = is_exists
-                alertMsg = "注意：文件已存在"
+                alertMsg = QCA.translate("Functions", "注意：文件已存在")
             if alertMode == AlertMode.NotExist:
                 alert = not is_exists
-                alertMsg = "注意：文件不存在"
+                alertMsg = QCA.translate("Functions", "注意：文件不存在")
         else: # Dir alert
             path = Path(Function_GetParam(alertRoot)).joinpath(val).as_posix()
             is_exists = Path(path).exists()
             is_empty = is_exists and not list(Path(path).iterdir())
             if alertMode == AlertMode.Exist:
                 alert = is_exists and not is_empty
-                alertMsg = "注意：目录已包含文件"
+                alertMsg = QCA.translate("Functions", "注意：目录已包含文件")
             if alertMode == AlertMode.NotExist:
                 alert = not is_exists or is_empty
-                alertMsg = "注意：目录为空或不存在"
+                alertMsg = QCA.translate("Functions", "注意：目录为空或不存在")
         Function_SetParam(alertTarget, path)
     widget.alert(alert, alertMsg)
 
@@ -534,7 +534,7 @@ def Function_GetFileDialog(widget, **kwargs):
 def Function_SetURL(
     button: QAbstractButton,
     url: Union[str, QWidget, list],
-    buttonTooltip: str = "Open",
+    buttonTooltip: str = QCA.translate("Functions", "打开"),
     createIfNotExist: bool = False
 ):
     '''
@@ -671,7 +671,7 @@ def Function_SetMethodExecutor(
     workerManager.signals.error.connect(
         lambda err: (
             _setErrorOccuredFlag(),
-            MessageBoxBase.pop(parentWindow, QMessageBox.Warning, "Failure", "Exception occurred:(\n发生异常", str(err)),
+            MessageBoxBase.pop(parentWindow, QMessageBox.Warning, "Failure", QCA.translate("Functions", "发生异常"), str(err)),
             EasyUtils.runEvents([event for event, status in finishedEvents.items() if status == TaskStatus.Failed]) if finishedEvents is not None else None,
         ) if not workerManager.endAllTasks else None
     )
@@ -700,7 +700,7 @@ def Function_SetMethodExecutor(
             lambda: MessageBoxBase.pop(parentWindow,
                 messageType = QMessageBox.Question,
                 windowTitle = "Ask",
-                text = "The task is still running, do you wish to abort it?\n当前任务仍在执行中，是否确认终止？",
+                text = QCA.translate("Functions", "当前任务仍在执行中，是否确认终止？"),
                 buttons = QMessageBox.Yes|QMessageBox.No,
                 buttonEvents = {QMessageBox.Yes: workerManager.terminate}
             )
@@ -720,18 +720,18 @@ def Function_UpdateChecker(
     '''
     '''
     try:
-        functionSignals.updateMessage.emit("正在检查更新，请稍等...\nChecking for updates, please wait...")
+        functionSignals.updateMessage.emit(QCA.translate("Functions", "正在检查更新，请稍等..."))
         IsUpdateNeeded, DownloadURL, VersionInfo = EasyUtils.checkUpdateFromGithub(repoOwner, repoName, fileName, fileFormat, currentVersion)
 
     except:
         #functionSignals.Signal_Message.emit("更新检查失败！\nFailed to check for updates!")
-        functionSignals.isUpdateSucceeded.emit(False, "更新检查失败！\nFailed to check for updates!")
+        functionSignals.isUpdateSucceeded.emit(False, QCA.translate("Functions", "更新检查失败！"))
 
     else:
         if IsUpdateNeeded:
             functionSignals.readyToUpdate.emit(DownloadURL, VersionInfo)
         else:
-            functionSignals.isUpdateSucceeded.emit(False, "已是最新版本！\nAlready up to date!")
+            functionSignals.isUpdateSucceeded.emit(False, QCA.translate("Functions", "已是最新版本！"))
 
 
 def Function_RunTensorboard(logDir, maximumWaitTime = 30, port = 6007):
