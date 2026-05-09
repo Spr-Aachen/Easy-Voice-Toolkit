@@ -181,7 +181,7 @@ class Table_EditAudioSpeaker(TableBase):
 
         super().addRow(
             [column0Layout, column1Layout, column2Layout],
-            [QHeaderView.ResizeToContents, QHeaderView.Stretch, QHeaderView.Fixed],
+            [QHeaderView.Stretch, QHeaderView.Stretch, QHeaderView.Fixed],
             [None, None, 2 * rowHeight],
             rowHeight
         )
