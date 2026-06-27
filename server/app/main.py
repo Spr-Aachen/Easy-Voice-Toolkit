@@ -46,7 +46,7 @@ app.add_middleware(
 )
 
 
-server = uvicorn.Server(uvicorn.Config(app))
+server = uvicorn.Server(uvicorn.Config(app, host = host, port = port))
 
 
 @app.get("/")
@@ -78,6 +78,6 @@ async def log(request: Request, call_next):
 ##############################################################################################################################
 
 if __name__ == "__main__":
-    uvicorn.run(app = app, host = host, port = port)
+    server.run()
 
 ##############################################################################################################################
