@@ -5,7 +5,7 @@ import time
 import uvicorn
 from fastapi import FastAPI, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
-from PyEasyUtils import isPortAvailable, findAvailablePorts, getFileInfo, terminateProcess
+from PyEasyUtils import isPortAvailable, findAvailablePorts, getFileInfo
 from typing import Union, Optional, List
 
 from utils import infoLogger, errorLogger
@@ -57,7 +57,6 @@ async def default():
 @app.post("/shutdown")
 async def shutdown():
     server.should_exit = True
-    terminateProcess(os.getpid())
 
 
 @app.middleware("http")
