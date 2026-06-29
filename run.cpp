@@ -19,7 +19,6 @@ std::string GetCurrentDir() {
 
 void RunProcess(
     const std::string &manifestPath,
-    const std::string &requirementsPath,
     const std::string &dependencyDir,
     const std::string &modelDir,
     const std::string &outputDir,
@@ -33,7 +32,6 @@ void RunProcess(
     std::string command = "python \"" + clientFile + "\"";
     command += " --server \"" + serverPath + "\"";
     command += " --manifest \"" + manifestPath + "\"";
-    command += " --requirements \"" + requirementsPath + "\"";
     command += " --dependencies \"" + dependencyDir + "\"";
     command += " --models \"" + modelDir + "\"";
     command += " --output \"" + outputDir + "\"";
@@ -73,7 +71,6 @@ int main() {
 
     RunProcess(
         currentDir + "\\manifest.json",
-        currentDir + "\\requirements.txt",
         currentDir,
         currentDir + "\\Models",
         currentDir,

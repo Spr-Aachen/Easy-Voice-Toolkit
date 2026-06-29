@@ -79,11 +79,6 @@ Please make sure that you've installed [Python](https://www.python.org/downloads
     pip install -r requirements.txt
     ```
 
-- Install [GUI dependency](https://github.com/Spr-Aachen/QEasyWidgets)
-    ```shell
-    pip install QEasyWidgets
-    ```
-
 ### 4. Run Programm
 
 - Start the client and server

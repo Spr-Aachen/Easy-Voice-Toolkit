@@ -1,0 +1,57 @@
+# _*_ coding:utf-8 _*_
+
+pydub
+soundfile
+librosa
+
+numpy
+visualdl
+pyaudio
+torchsummary
+
+psutil
+more-itertools
+transformers>=4.43
+ffmpeg-python
+
+num2words
+
+attrdict
+PyYAML
+numba
+scipy
+matplotlib
+protobuf
+onnxruntime; sys_platform == 'darwin'
+onnxruntime-gpu; sys_platform != 'darwin'
+tensorboard
+peft<0.18.0
+rotary_embedding_torch
+x_transformers
+torchmetrics<=1.5
+inflect
+chardet
+unidecode
+split-lang
+fast_langdetect>=0.3.0
+sentencepiece
+wordsegment
+nltk
+eng_to_ipa
+g2p_en
+pypinyin
+jieba_fast
+cn2an
+ToJyutping
+opencc; sys_platform != 'linux'
+opencc==1.1.1; sys_platform == 'linux'
+python_mecab_ko; sys_platform != 'win32' 
+g2pk2
+ko_pron
+pyopenjtalk>=0.3.4
+LangSegment>=0.2.0
+fastapi<0.112.2
+gradio>=4.0,<=4.24.0
+modelscope
+
+PyEasyUtils
