@@ -19,7 +19,6 @@ std::string GetCurrentDir() {
 
 void RunProcess(
     const std::string &dependencyDir,
-    const std::string &modelDir,
     const std::string &outputDir,
     const std::string &profileDir
 ) {
@@ -31,7 +30,6 @@ void RunProcess(
     std::string command = "python \"" + clientFile + "\"";
     command += " --server \"" + serverPath + "\"";
     command += " --dependencies \"" + dependencyDir + "\"";
-    command += " --models \"" + modelDir + "\"";
     command += " --output \"" + outputDir + "\"";
     command += " --profile \"" + profileDir + "\"";
 
@@ -69,7 +67,6 @@ int main() {
 
     RunProcess(
         currentDir,
-        currentDir + "\\Models",
         currentDir,
         currentDir
     );
